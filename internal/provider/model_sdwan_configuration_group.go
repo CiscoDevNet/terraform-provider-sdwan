@@ -20,6 +20,8 @@ package provider
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
+	"fmt"
+	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -37,6 +39,8 @@ type ConfigurationGroup struct {
 	FeatureProfiles     []ConfigurationGroupFeatureProfiles `tfsdk:"feature_profiles"`
 	TopologyDevices     []ConfigurationGroupTopologyDevices `tfsdk:"topology_devices"`
 	TopologySiteDevices types.Int64                         `tfsdk:"topology_site_devices"`
+	Devices             []ConfigurationGroupDevices         `tfsdk:"devices"`
+	FeatureVersions     types.List                          `tfsdk:"feature_versions"`
 }
 
 type ConfigurationGroupFeatureProfiles struct {
@@ -49,9 +53,20 @@ type ConfigurationGroupTopologyDevices struct {
 	UnsupportedFeatures []ConfigurationGroupTopologyDevicesUnsupportedFeatures `tfsdk:"unsupported_features"`
 }
 
+type ConfigurationGroupDevices struct {
+	Id        types.String                         `tfsdk:"id"`
+	Deploy    types.Bool                           `tfsdk:"deploy"`
+	Variables []ConfigurationGroupDevicesVariables `tfsdk:"variables"`
+}
+
 type ConfigurationGroupTopologyDevicesUnsupportedFeatures struct {
 	ParcelType types.String `tfsdk:"parcel_type"`
 	ParcelId   types.String `tfsdk:"parcel_id"`
+}
+
+type ConfigurationGroupDevicesVariables struct {
+	Name  types.String `tfsdk:"name"`
+	Value types.String `tfsdk:"value"`
 }
 
 // End of section. //template:end types
@@ -63,8 +78,7 @@ func (data ConfigurationGroup) getPath() string {
 
 // End of section. //template:end getPath
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data ConfigurationGroup) toBody(ctx context.Context) string {
+func (data ConfigurationGroup) toBodyConfigGroup(ctx context.Context) string {
 	body := ""
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
@@ -117,10 +131,92 @@ func (data ConfigurationGroup) toBody(ctx context.Context) string {
 	return body
 }
 
-// End of section. //template:end toBody
+func (data ConfigurationGroup) toBodyConfigGroupDevices(ctx context.Context) string {
+	body := ""
+	if true {
+		body, _ = sjson.Set(body, "devices", []interface{}{})
+		for _, item := range data.Devices {
+			itemBody := ""
+			if !item.Id.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "id", item.Id.ValueString())
+			}
+			body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
+		}
+	}
+	return body
+}
 
-// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ConfigurationGroup) fromBody(ctx context.Context, res gjson.Result) {
+func (data ConfigurationGroup) toBodyConfigGroupDeviceVariables(ctx context.Context) string {
+	body := ""
+	if !data.Solution.IsNull() {
+		body, _ = sjson.Set(body, "solution", data.Solution.ValueString())
+	}
+	if true {
+		//body, _ = sjson.Set(body, "devices", []interface{}{})
+		for _, item := range data.Devices {
+			itemBody := ""
+			if !item.Id.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "device-id", item.Id.ValueString())
+			}
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "variables", []interface{}{})
+				for _, childItem := range item.Variables {
+					itemChildBody := ""
+					if !childItem.Name.IsNull() {
+						itemChildBody, _ = sjson.Set(itemChildBody, "name", childItem.Name.ValueString())
+					}
+					if !childItem.Value.IsNull() {
+						if val, err := strconv.Atoi(childItem.Value.ValueString()); err == nil {
+							itemChildBody, _ = sjson.Set(itemChildBody, "value", val)
+						} else if val, err := strconv.ParseFloat(childItem.Value.ValueString(), 64); err == nil {
+							itemChildBody, _ = sjson.Set(itemChildBody, "value", val)
+						} else if val, err := strconv.ParseBool(childItem.Value.ValueString()); err == nil {
+							itemChildBody, _ = sjson.Set(itemChildBody, "value", val)
+						} else {
+							itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Value.ValueString())
+						}
+					}
+					itemBody, _ = sjson.SetRaw(itemBody, "variables.-1", itemChildBody)
+				}
+			}
+			body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
+		}
+	}
+	// if true {
+	// 	//body, _ = sjson.Set(body, "groups", []interface{}{})
+	// 	for _, item := range data.DeviceGroups {
+	// 		itemBody := ""
+	// 		if !item.Name.IsNull() {
+	// 			itemBody, _ = sjson.Set(itemBody, "name", item.Name.ValueString())
+	// 		}
+	// 		if true {
+	// 			itemBody, _ = sjson.Set(itemBody, "group-variables", []interface{}{})
+	// 			for _, childItem := range item.Variables {
+	// 				itemChildBody := ""
+	// 				if !childItem.Name.IsNull() {
+	// 					itemChildBody, _ = sjson.Set(itemChildBody, "name", childItem.Name.ValueString())
+	// 				}
+	// 				if !childItem.Value.IsNull() {
+	// 					if val, err := strconv.Atoi(childItem.Value.ValueString()); err == nil {
+	// 						itemChildBody, _ = sjson.Set(itemChildBody, "value", val)
+	// 					} else if val, err := strconv.ParseFloat(childItem.Value.ValueString(), 64); err == nil {
+	// 						itemChildBody, _ = sjson.Set(itemChildBody, "value", val)
+	// 					} else if val, err := strconv.ParseBool(childItem.Value.ValueString()); err == nil {
+	// 						itemChildBody, _ = sjson.Set(itemChildBody, "value", val)
+	// 					} else {
+	// 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Value.ValueString())
+	// 					}
+	// 				}
+	// 				itemBody, _ = sjson.SetRaw(itemBody, "group-variables.-1", itemChildBody)
+	// 			}
+	// 		}
+	// 		body, _ = sjson.SetRaw(body, "groups.-1", itemBody)
+	// 	}
+	// }
+	return body
+}
+
+func (data *ConfigurationGroup) fromBodyConfigGroup(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -204,61 +300,128 @@ func (data *ConfigurationGroup) fromBody(ctx context.Context, res gjson.Result) 
 	}
 }
 
-// End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
-func (data *ConfigurationGroup) hasChanges(ctx context.Context, state *ConfigurationGroup) bool {
-	hasChanges := false
-	if !data.Name.Equal(state.Name) {
-		hasChanges = true
-	}
-	if !data.Description.Equal(state.Description) {
-		hasChanges = true
-	}
-	if !data.Solution.Equal(state.Solution) {
-		hasChanges = true
-	}
-	if len(data.FeatureProfiles) != len(state.FeatureProfiles) {
-		hasChanges = true
-	} else {
-		for i := range data.FeatureProfiles {
-			if !data.FeatureProfiles[i].Id.Equal(state.FeatureProfiles[i].Id) {
-				hasChanges = true
-			}
-		}
-	}
-	if len(data.TopologyDevices) != len(state.TopologyDevices) {
-		hasChanges = true
-	} else {
-		for i := range data.TopologyDevices {
-			if !data.TopologyDevices[i].CriteriaAttribute.Equal(state.TopologyDevices[i].CriteriaAttribute) {
-				hasChanges = true
-			}
-			if !data.TopologyDevices[i].CriteriaValue.Equal(state.TopologyDevices[i].CriteriaValue) {
-				hasChanges = true
-			}
-			if len(data.TopologyDevices[i].UnsupportedFeatures) != len(state.TopologyDevices[i].UnsupportedFeatures) {
-				hasChanges = true
+func (data *ConfigurationGroup) fromBodyConfigGroupDevices(ctx context.Context, res gjson.Result) {
+	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
+		data.Devices = make([]ConfigurationGroupDevices, 0)
+		value.ForEach(func(k, v gjson.Result) bool {
+			item := ConfigurationGroupDevices{}
+			if cValue := v.Get("id"); cValue.Exists() {
+				item.Id = types.StringValue(cValue.String())
 			} else {
-				for ii := range data.TopologyDevices[i].UnsupportedFeatures {
-					if !data.TopologyDevices[i].UnsupportedFeatures[ii].ParcelType.Equal(state.TopologyDevices[i].UnsupportedFeatures[ii].ParcelType) {
-						hasChanges = true
-					}
-					if !data.TopologyDevices[i].UnsupportedFeatures[ii].ParcelId.Equal(state.TopologyDevices[i].UnsupportedFeatures[ii].ParcelId) {
-						hasChanges = true
-					}
-				}
+				item.Id = types.StringNull()
 			}
+			data.Devices = append(data.Devices, item)
+			return true
+		})
+	} else {
+		if len(data.Devices) > 0 {
+			data.Devices = []ConfigurationGroupDevices{}
 		}
 	}
-	if !data.TopologySiteDevices.Equal(state.TopologySiteDevices) {
-		hasChanges = true
-	}
-	return hasChanges
 }
 
-// End of section. //template:end hasChanges
+func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.Context, res gjson.Result) {
+	if value := res.Get("family"); value.Exists() {
+		data.Solution = types.StringValue(value.String())
+	} else {
+		data.Solution = types.StringNull()
+	}
+	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
+		data.Devices = make([]ConfigurationGroupDevices, 0)
+		value.ForEach(func(k, v gjson.Result) bool {
+			item := ConfigurationGroupDevices{}
+			if cValue := v.Get("device-id"); cValue.Exists() {
+				item.Id = types.StringValue(cValue.String())
+			} else {
+				item.Id = types.StringNull()
+			}
+			if cValue := v.Get("variables"); cValue.Exists() && len(cValue.Array()) > 0 {
+				item.Variables = make([]ConfigurationGroupDevicesVariables, 0)
+				cValue.ForEach(func(ck, cv gjson.Result) bool {
+					cItem := ConfigurationGroupDevicesVariables{}
+					if ccValue := cv.Get("name"); ccValue.Exists() {
+						cItem.Name = types.StringValue(ccValue.String())
+					} else {
+						cItem.Name = types.StringNull()
+					}
+					if ccValue := cv.Get("value"); ccValue.Exists() {
+						cItem.Value = types.StringValue(ccValue.String())
+					} else {
+						cItem.Value = types.StringNull()
+					}
+					item.Variables = append(item.Variables, cItem)
+					return true
+				})
+			} else {
+				if len(item.Variables) > 0 {
+					item.Variables = []ConfigurationGroupDevicesVariables{}
+				}
+			}
+			data.Devices = append(data.Devices, item)
+			return true
+		})
+	} else {
+		if len(data.Devices) > 0 {
+			data.Devices = []ConfigurationGroupDevices{}
+		}
+	}
+	// if value := res.Get("groups"); value.Exists() && len(value.Array()) > 0 {
+	// 	data.DeviceGroups = make([]ConfigurationGroupDeviceGroups, 0)
+	// 	value.ForEach(func(k, v gjson.Result) bool {
+	// 		item := ConfigurationGroupDeviceGroups{}
+	// 		if cValue := v.Get("name"); cValue.Exists() {
+	// 			item.Name = types.StringValue(cValue.String())
+	// 		} else {
+	// 			item.Name = types.StringNull()
+	// 		}
+	// 		if cValue := v.Get("group-variables"); cValue.Exists() && len(cValue.Array()) > 0 {
+	// 			item.Variables = make([]ConfigurationGroupDeviceGroupsVariables, 0)
+	// 			cValue.ForEach(func(ck, cv gjson.Result) bool {
+	// 				cItem := ConfigurationGroupDeviceGroupsVariables{}
+	// 				if ccValue := cv.Get("name"); ccValue.Exists() {
+	// 					cItem.Name = types.StringValue(ccValue.String())
+	// 				} else {
+	// 					cItem.Name = types.StringNull()
+	// 				}
+	// 				if ccValue := cv.Get("value"); ccValue.Exists() {
+	// 					cItem.Value = types.StringValue(ccValue.String())
+	// 				} else {
+	// 					cItem.Value = types.StringNull()
+	// 				}
+	// 				item.Variables = append(item.Variables, cItem)
+	// 				return true
+	// 			})
+	// 		} else {
+	// 			if len(item.Variables) > 0 {
+	// 				item.Variables = []ConfigurationGroupDeviceGroupsVariables{}
+	// 			}
+	// 		}
+	// 		data.DeviceGroups = append(data.DeviceGroups, item)
+	// 		return true
+	// 	})
+	// } else {
+	// 	if len(data.DeviceGroups) > 0 {
+	// 		data.DeviceGroups = []ConfigurationGroupDeviceGroups{}
+	// 	}
+	// }
+}
 
-// Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
-
-// End of section. //template:end updateVersions
+func (data *ConfigurationGroup) updateTfAttributes(ctx context.Context, state *ConfigurationGroup) {
+	data.FeatureVersions = state.FeatureVersions
+	for i := range data.Devices {
+		dataKeys := [...]string{fmt.Sprintf("%v", data.Devices[i].Id.ValueString())}
+		stateIndex := -1
+		for j := range state.Devices {
+			stateKeys := [...]string{fmt.Sprintf("%v", state.Devices[j].Id.ValueString())}
+			if dataKeys == stateKeys {
+				stateIndex = j
+				break
+			}
+		}
+		if stateIndex > -1 {
+			data.Devices[i].Deploy = state.Devices[stateIndex].Deploy
+		} else {
+			data.Devices[i].Deploy = types.BoolNull()
+		}
+	}
+}

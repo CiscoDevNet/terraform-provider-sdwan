@@ -38,8 +38,8 @@ provider "sdwan" {
 
 ### Optional
 
-- `insecure` (Boolean) Allow insecure HTTPS client. This can also be set as the SDWAN_INSECURE environment variable. Defaults to `true`.
-- `password` (String, Sensitive) Password for the SD-WAN Manager account. This can also be set as the SDWAN_PASSWORD environment variable.
-- `retries` (Number) Number of retries for REST API calls. This can also be set as the SDWAN_RETRIES environment variable. Defaults to `3`.
-- `url` (String) URL of the Cisco SD-WAN Manager device. This can also be set as the SDWAN_URL environment variable.
-- `username` (String) Username for the SD-WAN Manager account. This can also be set as the SDWAN_USERNAME environment variable.
+- `insecure` (Boolean) Allow insecure HTTPS client. This can also be set as the `SDWAN_INSECURE` environment variable. Defaults to `true`.
+- `password` (String, Sensitive) Password for the SD-WAN Manager account. This can also be set as the `SDWAN_PASSWORD` environment variable.
+- `retries` (Number) Number of retries for REST API calls. This can also be set as the `SDWAN_RETRIES` environment variable. Defaults to `3`.
+- `url` (String) URL of the Cisco SD-WAN Manager device. This can also be set as the `SDWAN_URL` environment variable.
+- `username` (String) Username for the SD-WAN Manager account. This can also be set as the `SDWAN_USERNAME` environment variable.

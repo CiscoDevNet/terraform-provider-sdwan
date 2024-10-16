@@ -3,7 +3,7 @@ name: Expanded Community List Policy Object
 rest_endpoint: /template/policy/list/expandedcommunity/
 has_version: true
 id_attribute: listId
-doc_category: Policy Objects
+doc_category: (Classic) Policy Objects
 attributes:
   - model_name: type
     type: String
@@ -22,6 +22,6 @@ attributes:
     attributes:
       - model_name: community
         type: String
-        mandatory: true
         description: Expanded community value, e.g. `100:1000`
         example: 100:1000
+        minimum_test_value: '"100:1000"'

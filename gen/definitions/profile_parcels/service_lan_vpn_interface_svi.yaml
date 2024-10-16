@@ -3,6 +3,7 @@ name: Service LAN VPN Interface SVI
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/lan/vpn/%s/interface/svi
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
+parcel_type: feature
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -11,17 +12,17 @@ attributes:
     description: Feature Profile ID
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_service_feature_profile.test.id
-  - tf_name: service_lan_vpn_profile_parcel_id
+  - tf_name: service_lan_vpn_feature_id
     reference: true
     type: String
-    description: Service LAN VPN Profile Profile ID
+    description: Service LAN VPN Feature ID
     example: 140331f6-5418-4755-a059-13c77eb96037
-    test_value: sdwan_service_lan_vpn_profile_parcel.test.id
+    test_value: sdwan_service_lan_vpn_feature.test.id
   - model_name: shutdown
     example: false
   - model_name: interfaceName
-    mandatory: true
     example: Vlan1
+    minimum_test_value: '"Vlan1"'
   - model_name: description
     tf_name: interface_description
     example: SVI
@@ -34,13 +35,13 @@ attributes:
   - model_name: ipAddress
     tf_name: ipv4_address
     data_path: [ipv4, addressV4]
-    mandatory: true
     example: 1.2.3.4
+    minimum_test_value: '"1.2.3.4"'
   - model_name: subnetMask
     data_path: [ipv4, addressV4]
     tf_name: ipv4_subnet_mask
-    mandatory: true
     example: 0.0.0.0
+    minimum_test_value: '"0.0.0.0"'
   - model_name: secondaryAddressV4
     tf_name: ipv4_secondary_addresses
     data_path: [ipv4]
@@ -142,18 +143,19 @@ attributes:
     - model_name: tlocPrefChangeValue
       tf_name: tloc_prefix_change_value
       example: 100
-    # - model_name: trackingObject
-    #   tf_name: tracking_objects
-    #   exclude_test: true
-    #   attributes:
-    #   - model_name: trackerId
-    #     tf_name: tracker_policy_id
-    #     id: true
-    #     example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
-    #   - model_name: trackerAction
-    #     example: decrement
-    #   - model_name: decrementValue
-    #     example: 100
+    - model_name: trackingObject
+      tf_name: tracking_objects
+      attributes:
+      - model_name: refId
+        tf_name: tracker_id
+        data_path: [trackerId]
+        id: true
+        example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+        test_value: sdwan_service_tracker_feature.test.id
+      - model_name: trackAction
+        example: decrement
+      - model_name: decrementValue
+        example: 100
   - model_name: vrrpIpv6
     tf_name: ipv6_vrrps
     attributes:
@@ -206,7 +208,22 @@ test_prerequisites: |
     description = "Terraform test"
   }
 
-  resource "sdwan_service_lan_vpn_profile_parcel" "test" {
+  resource "sdwan_service_lan_vpn_feature" "test" {
     name = "TF_TEST_SLAN"
     feature_profile_id = sdwan_service_feature_profile.test.id
+  }
+
+  resource "sdwan_service_tracker_feature" "test" {
+    name                  = "TF_TEST_TRACKER"
+    description           = "Terraform test"
+    feature_profile_id    = sdwan_service_feature_profile.test.id
+    tracker_name          = "TRACKER_1"
+    endpoint_api_url      = "google.com"
+    endpoint_dns_name     = "google.com"
+    endpoint_ip           = "1.2.3.4"
+    interval              = 30
+    multiplier            = 3
+    threshold             = 300
+    endpoint_tracker_type = "static-route"
+    tracker_type          = "endpoint"
   }

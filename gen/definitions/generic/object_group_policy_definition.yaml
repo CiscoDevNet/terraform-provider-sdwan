@@ -3,7 +3,7 @@ name: Object Group Policy Definition
 rest_endpoint: /template/policy/definition/securitygroup/
 has_version: true
 id_attribute: definitionId
-doc_category: Security Policies
+doc_category: (Classic) Security Policies
 attributes:
   - model_name: type
     type: String

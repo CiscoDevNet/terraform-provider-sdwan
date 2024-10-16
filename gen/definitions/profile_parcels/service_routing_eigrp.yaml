@@ -1,0 +1,110 @@
+---
+name: Service Routing EIGRP
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/routing/eigrp
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+parcel_type: feature
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_feature_profile.test.id
+  - model_name: asNum
+    tf_name: autonomous_system_id
+    example: 111
+    minimum_test_value: '"111"'
+  - model_name: redistribute
+    tf_name: redistributes
+    data_path: [addressFamily]
+    exclude_test: true
+    attributes:
+    - model_name: protocol
+      example: ospf
+    - model_name: refId
+      tf_name: route_policy_id
+      data_path: [routePolicy]
+      always_include_parent: true
+      example: 8bd324a6-c273-411b-a489-941865f58b66
+  - model_name: network
+    tf_name: networks
+    data_path: [addressFamily]
+    mandatory: true
+    attributes:
+    - model_name: address
+      tf_name: ip_address
+      data_path: [prefix]
+      mandatory: true
+      example: 100.2.2.3
+    - model_name: mask
+      data_path: [prefix]
+      mandatory: true
+      example: 255.255.255.0
+  - model_name: helloInterval
+    example: 5
+    minimum_test_value: '5'
+  - model_name: holdTime
+    example: 15
+    minimum_test_value: '15'
+  - model_name: type
+    tf_name: authentication_type
+    data_path: [authentication]
+    example: md5
+    minimum_test_value: '"md5"'
+  - model_name: authKey
+    tf_name: hmac_authentication_key
+    data_path: [authentication]
+    conditional_attribute:
+      name: authentication_type
+      value: hmac-sha-256
+    exclude_test: true
+    write_only: true
+    example: password123
+  - model_name: key
+    tf_name: md5_keys
+    data_path: [authentication]
+    conditional_attribute:
+      name: authentication_type
+      value: md5
+    attributes:
+    - model_name: keyId
+      tf_name: key_id
+      id: true
+      example: 2
+    - model_name: keystring
+      tf_name: key_string
+      write_only: true
+      example: password123
+  - model_name: afInterface
+    tf_name: interfaces
+    attributes:
+    - model_name: name
+      example: GigabitEthernet3
+    - model_name: shutdown
+      example: false
+    - model_name: summaryAddress
+      tf_name: summary_addresses
+      attributes:
+      - model_name: address
+        data_path: [prefix]
+        example: 10.0.0.1
+      - model_name: mask
+        data_path: [prefix]
+        example: 255.255.255.0
+  - model_name: refId
+    tf_name: route_policy_id
+    data_path: [tableMap, name]
+    always_include_parent: true
+    exclude_test: true
+    example: 8bd324a6-c273-411b-a489-941865f58b66
+  - model_name: filter
+    data_path: [tableMap]
+    example: false
+
+test_prerequisites: |
+  resource "sdwan_service_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }

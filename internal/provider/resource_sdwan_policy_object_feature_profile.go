@@ -60,7 +60,7 @@ func (r *PolicyObjectFeatureProfileResource) Metadata(ctx context.Context, req r
 func (r *PolicyObjectFeatureProfileResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Policy Object Feature Profile .").String,
+		MarkdownDescription: helpers.NewAttributeDescription("SD-WAN manager supports only a single policy object feature profile to be configured. This resource will therefore either create a new one if none exists or update the existing one.").AddMinimumVersionDescription("20.12.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -93,7 +93,6 @@ func (r *PolicyObjectFeatureProfileResource) Configure(_ context.Context, req re
 
 // End of section. //template:end model
 
-// Section below is generated&owned by "gen/generator.go". //template:begin create
 func (r *PolicyObjectFeatureProfileResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan PolicyObjectFeatureProfile
 
@@ -109,20 +108,32 @@ func (r *PolicyObjectFeatureProfileResource) Create(ctx context.Context, req res
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post(plan.getPath(), body)
+	res, err := r.client.Get(plan.getPath())
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
 		return
 	}
-	plan.Id = types.StringValue(res.Get("id").String())
+	if len(res.Array()) > 0 {
+		plan.Id = types.StringValue(res.Array()[0].Get("profileId").String())
+		res, err = r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), body)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
+			return
+		}
+	} else {
+		res, err = r.client.Post(plan.getPath(), body)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
+			return
+		}
+		plan.Id = types.StringValue(res.Get("id").String())
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 }
-
-// End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
 func (r *PolicyObjectFeatureProfileResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
@@ -138,7 +149,7 @@ func (r *PolicyObjectFeatureProfileResource) Read(ctx context.Context, req resou
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
 	res, err := r.client.Get(state.getPath() + url.QueryEscape(state.Id.ValueString()))
-	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") || strings.Contains(res.Get("error.message").String(), "Invalid Profile Id") || strings.Contains(res.Get("error.message").String(), "Invalid feature Id") {
+	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") || strings.Contains(res.Get("error.message").String(), "Invalid Profile Id") || strings.Contains(res.Get("error.message").String(), "Invalid feature Id") || strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
 		resp.State.RemoveResource(ctx)
 		return
 	} else if err != nil {
@@ -202,7 +213,6 @@ func (r *PolicyObjectFeatureProfileResource) Update(ctx context.Context, req res
 
 // End of section. //template:end update
 
-// Section below is generated&owned by "gen/generator.go". //template:begin delete
 func (r *PolicyObjectFeatureProfileResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 	var state PolicyObjectFeatureProfile
 
@@ -215,18 +225,10 @@ func (r *PolicyObjectFeatureProfileResource) Delete(ctx context.Context, req res
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
-	res, err := r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
-		return
-	}
-
 	tflog.Debug(ctx, fmt.Sprintf("%s: Delete finished successfully", state.Name.ValueString()))
 
 	resp.State.RemoveResource(ctx)
 }
-
-// End of section. //template:end delete
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *PolicyObjectFeatureProfileResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {

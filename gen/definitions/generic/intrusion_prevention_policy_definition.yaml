@@ -3,7 +3,7 @@ name: Intrusion Prevention Policy Definition
 rest_endpoint: /template/policy/definition/intrusionprevention/
 has_version: true
 id_attribute: definitionId
-doc_category: Security Policies
+doc_category: (Classic) Security Policies
 attributes:
   - model_name: type
     type: String
@@ -24,7 +24,7 @@ attributes:
     tf_name: mode
     type: String
     enum_values: [security, unified]
-    default_value: 
+    default_value:
     description: The policy mode
     example: security
   - model_name: inspectionMode
@@ -38,7 +38,8 @@ attributes:
     data_path: [definition]
     tf_name: log_level
     type: String
-    enum_values: [emergency, alert, critical, error, warning, notice, info, debug]
+    enum_values:
+      [emergency, alert, critical, error, warning, notice, info, debug]
     description: Log level
     example: alert
   - model_name: signatureSet

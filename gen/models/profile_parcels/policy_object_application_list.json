@@ -1,0 +1,117 @@
+{
+  "request": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/centralized-applist/post/request_schema.json",
+    "title": "Centralized Policy App List Parcel Schema",
+    "description": "Centralized Policy App List profile parcel schema for POST request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 32
+      },
+      "description": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "entries": {
+            "description": "Centralized Policy App List",
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "app": {
+                  "description": "",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "appFamily": {
+                  "description": "",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "oneOf": [
+                {
+                  "required": ["app"]
+                },
+                {
+                  "required": ["appFamily"]
+                }
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["entries"],
+        "additionalProperties": false
+      }
+    },
+    "required": ["data", "name"],
+    "additionalProperties": false,
+    "propertyNames": {
+      "description": "This is the documentation for POST request schema for Centralized Policy App List profile parcel",
+      "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+      "details-2": "variable name should not be present if optionType value is NOT variable",
+      "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+      "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+      "examples": {
+        "centralized-appListParcelGlobalDefault": {
+          "value": {
+            "data": {
+              "entries": [
+                {
+                  "app": {
+                    "optionType": "global",
+                    "value": "3com-amp3"
+                  }
+                },
+                {
+                  "appFamily": {
+                    "optionType": "global",
+                    "value": "web"
+                  }
+                }
+              ]
+            },
+            "name": "centralized-appListParcelGlobalDefault"
+          }
+        }
+      }
+    }
+  }
+}

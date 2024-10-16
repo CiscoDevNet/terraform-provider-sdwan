@@ -4,6 +4,7 @@ rest_endpoint: /v1/feature-profile/sdwan/other/%v/ucse
 minimum_version: 20.12.0
 id_attribute: parcelId
 test_tags: [SDWAN_2012]
+parcel_type: feature
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -34,12 +35,12 @@ attributes:
   - model_name: address
     tf_name: ipv4_address
     data_path: [imc, ip]
-    mandatory: true
     example: 2.2.2.2/24
+    minimum_test_value: '"2.2.2.2/24"'
   - model_name: defaultGateway
     data_path: [imc, ip]
-    mandatory: true
     example: 2.2.2.2
+    minimum_test_value: '"2.2.2.2"'
   - model_name: vlanId
     data_path: [imc, vlan]
     example: 3

@@ -37,13 +37,14 @@ const (
 type YamlConfig struct {
 	Name        string `yaml:"name"`
 	DocCategory string `yaml:"doc_category"`
+	ParcelType  string `yaml:"parcel_type"`
 }
 
 var docPaths = []string{"./docs/data-sources/", "./docs/resources/"}
 
 var extraDocs = map[string]string{
-	"attach_feature_device_template": "Device Templates",
-	"activate_centralized_policy":    "Centralized Policies",
+	"attach_feature_device_template": "(Classic) Device Templates",
+	"activate_centralized_policy":    "(Classic) Centralized Policies",
 }
 
 func SnakeCase(s string) string {
@@ -90,7 +91,7 @@ func main() {
 			}
 
 			s := string(content)
-			s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "Feature Templates"`)
+			s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "(Classic) Feature Templates"`)
 
 			os.WriteFile(filename, []byte(s), 0644)
 		}
@@ -114,14 +115,26 @@ func main() {
 	// Update profile parcel doc category
 	for i := range profileParcelConfigs {
 		for _, path := range docPaths {
-			filename := path + SnakeCase(profileParcelConfigs[i].Name) + "_profile_parcel.md"
+			extension := ""
+			category := ""
+			if profileParcelConfigs[i].ParcelType == "feature" {
+				extension = "_feature.md"
+				category = "Features"
+			} else if profileParcelConfigs[i].ParcelType == "policy" {
+				extension = "_policy.md"
+				category = "Policies"
+			} else if profileParcelConfigs[i].ParcelType == "policy_object" {
+				extension = ".md"
+				category = "Policy Objects"
+			}
+			filename := path + SnakeCase(profileParcelConfigs[i].Name) + extension
 			content, err := os.ReadFile(filename)
 			if err != nil {
 				log.Fatalf("Error opening documentation: %v", err)
 			}
 
 			s := string(content)
-			s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "Profile Parcels"`)
+			s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "`+category+`"`)
 
 			os.WriteFile(filename, []byte(s), 0644)
 		}

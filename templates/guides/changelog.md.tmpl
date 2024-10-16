@@ -7,50 +7,90 @@ description: |-
 
 # Changelog
 
-## 0.3.14 (unreleased)
+## 0.4.2 (unreleased)
+
+- Add `sdwan_policy_object_application_list` resource and data source
+- Add `sdwan_policy_object_sla_class_list` resource and data source
+- Add `sdwan_policy_object_app_probe_class` resource and data source
+- Add `sdwan_policy_object_as_path_list` resource and data source
+- Add `sdwan_policy_object_vpn_group` resource and data source
+- Add `sdwan_policy_object_security_data_ipv4_prefix_list` resource and data source
+- Add `sdwan_policy_object_security_fqdn_list` resource and data source
+- Add `sdwan_policy_object_security_geolocation_list` resource and data source
+- Add `sdwan_policy_object_security_ips_signature` resource and data source
+- Add `sdwan_policy_object_security_local_domain_list` resource and data source
+- Add `sdwan_policy_object_security_port_list` resource and data source
+- Add `sdwan_policy_object_security_scalable_group_tag_list` resource and data source
+- Add `sdwan_policy_object_security_url_allow_list` resource and data source
+- Add `sdwan_policy_object_security_url_block_list` resource and data source
+- Add `sdwan_policy_object_preferred_color_group` resource and data source
+- Add `sdwan_policy_object_security_identity_list` resource and data source
+- Add `sdwan_policy_object_security_local_application_list` resource and data source
+- Add `sdwan_policy_object_standard_community_list` resource and data source
+- Add `sdwan_dns_security_feature_profile` resource and data source
+- Add `sdwan_sig_security_feature_profile` resource and data source
+- Add `sdwan_embedded_security_feature_profile` resource and data source
+- Enhance `sdwan_configuration_group` resource and data source to support device associations, variables and deployment
+- Add `sdwan_service_multicast_feature` resource and data source
+- Add `sdwan_service_routing_eigrp_feature` resource and data source
+- Add `sdwan_service_wireless_lan_feature` resource and data source
+- Add `sdwan_transport_t1_e1_controller_feature` resource and data source
+- Add import to `sdwan_attach_feature_device_template` and `sdwan_attach_feature_device_template` resources
+- Add `sdwan_transport_ipv4_acl_feature` resource and data source
+- Add `sdwan_service_ipv4_acl_feature` resource and data source
+- Add `sdwan_transport_ipv6_acl_feature` resource and data source
+- Add `sdwan_service_ipv6_acl_feature` resource and data source
+
+## 0.4.1
+
+- Update documentation categories
+
+## 0.4.0
 
 - Fix issue when reading deleted `sdwan_cli_config_profile_parcel` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/291)
-- Add `sdwan_transport_tracker_group_profile_parcel` resource and data source
-- Add `sdwan_transport_tracker_profile_parcel` resource and data source
-- Add `sdwan_service_tracker_group_profile_parcel` resource and data source
-- Add `sdwan_transport_ipv6_tracker_group_profile_parcel` resource and data source
-- Add `sdwan_service_object_tracker_profile_parcel` resource and data source
-- Add `sdwan_service_object_tracker_group_profile_parcel` resource and data source
-- BREAKING CHANGE: Rename `enable_crl_check` attribute of `sdwan_system_remote_access_profile_parcel,` resource to `enable_certificate_list_check`
+- Add `sdwan_transport_tracker_group_feature` resource and data source
+- Add `sdwan_transport_tracker_feature` resource and data source
+- Add `sdwan_service_tracker_group_feature` resource and data source
+- Add `sdwan_transport_ipv6_tracker_group_feature` resource and data source
+- Add `sdwan_service_object_tracker_feature` resource and data source
+- Add `sdwan_service_object_tracker_group_feature` resource and data source
+- BREAKING CHANGE: Rename `enable_crl_check` attribute of `sdwan_system_remote_access_profile_parcel` resource to `enable_certificate_list_check`
 - BREAKING CHANGE: Rename `psk_selection` attribute of `sdwan_system_remote_access_profile_parcel` resource to `psk_authentication_type`
 - BREAKING CHANGE: Rename `aaa_derive_name_identity` attribute of `sdwan_system_remote_access_profile_parcel` resource to `aaa_derive_name_from_peer_identity`
 - BREAKING CHANGE: Rename `aaa_derive_name_domain` attribute of `sdwan_system_remote_access_profile_parcel` resource to `aaa_derive_name_from_peer_domain`
 - BREAKING CHANGE: Removes `any_connect_eap_profile_download_status` and `any_connect_eap_profile_file_name` attributes of `sdwan_system_remote_access_profile_parcel`
 - Add `sdwan_policy_object_feature_profile` resource and data source
-- Add `sdwan_policy_object_class_map_profile_parcel` resource and data source
-- Add `sdwan_policy_object_color_list_profile_parcel` resource and data source
-- Add `sdwan_policy_object_data_ipv6_prefix_list_profile_parcel` resource and data source
-- Add `sdwan_policy_object_data_ipv4_prefix_list_profile_parcel` resource and data source
-- Add `sdwan_policy_object_tloc_list_profile_parcel` resource and data source
-- Add `sdwan_policy_object_expanded_community_list_profile_parcel` resource and data source
-- Add `sdwan_policy_object_extended_community_list_profile_parcel` resource and data source
-- Add `sdwan_policy_object_mirror_profile_parcel` resource and data source
-- Add `sdwan_policy_object_policer_profile_parcel` resource and data source
-- Add `sdwan_policy_object_ipv4_prefix_list_profile_parcel` resource and data source
-- Add `sdwan_policy_object_ipv6_prefix_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_class_map` resource and data source
+- Add `sdwan_policy_object_color_list` resource and data source
+- Add `sdwan_policy_object_data_ipv6_prefix_list` resource and data source
+- Add `sdwan_policy_object_data_ipv4_prefix_list` resource and data source
+- Add `sdwan_policy_object_tloc_list` resource and data source
+- Add `sdwan_policy_object_expanded_community_list` resource and data source
+- Add `sdwan_policy_object_extended_community_list` resource and data source
+- Add `sdwan_policy_object_mirror` resource and data source
+- Add `sdwan_policy_object_policer` resource and data source
+- Add `sdwan_policy_object_ipv4_prefix_list` resource and data source
+- Add `sdwan_policy_object_ipv6_prefix_list` resource and data source
 - Add `sdwan_other_feature_profile` resource and data source
-- Add `sdwan_other_ucse_profile_parcel` resource and data source
-- Add `sdwan_other_thousandeyes_profile_parcel` resource and data source
-- Add `sdwan_transport_gps_profile_parcel` resource and data source
-- Add `sdwan_transport_routing_ospf_profile_parcel` resource and data source
-- Add `sdwan_transport_routing_ospfv3_ipv4_profile_parcel` resource and data source
-- Add `sdwan_transport_routing_ospfv3_ipv6_profile_parcel` resource and data source
-- Add `sdwan_service_routing_ospf_profile_parcel` resource and data source
-- Add `sdwan_service_routing_ospfv3_ipv4_profile_parcel` resource and data source
-- Add `sdwan_service_routing_ospfv3_ipv6_profile_parcel` resource and data source
-- Add `sdwan_service_routing_bgp_profile_parcel` resource and data source
-- Add `sdwan_service_switchport_profile_parcel` resource and data source
-- Add `sdwan_transport_route_policy_profile_parcel` resource and data source
-- Add `sdwan_service_route_policy_profile_parcel` resource and data source
-- Add `sdwan_transport_ipv4_acl_profile_parcel` resource and data source
-- Add `sdwan_service_ipv4_acl_profile_parcel` resource and data source
-- Add `sdwan_transport_ipv6_acl_profile_parcel` resource and data source
-- Add `sdwan_service_ipv6_acl_profile_parcel` resource and data source
+- Add `sdwan_other_ucse_feature` resource and data source
+- Add `sdwan_other_thousandeyes_feature` resource and data source
+- Add `sdwan_transport_gps_feature` resource and data source
+- Add `sdwan_transport_routing_ospf_feature` resource and data source
+- Add `sdwan_transport_routing_ospfv3_ipv4_feature` resource and data source
+- Add `sdwan_transport_routing_ospfv3_ipv6_feature` resource and data source
+- Add `sdwan_service_routing_ospf_feature` resource and data source
+- Add `sdwan_service_routing_ospfv3_ipv4_feature` resource and data source
+- Add `sdwan_service_routing_ospfv3_ipv6_feature` resource and data source
+- Add `sdwan_service_routing_bgp_feature` resource and data source
+- Add `sdwan_service_switchport_feature` resource and data source
+- Add `sdwan_transport_route_policy_feature` resource and data source
+- Add `sdwan_service_route_policy_feature` resource and data source
+- BREAKING CHANGE: Rename all profile parcel resources and data sources being used in configuration groups to "Features" with a `_feature` suffix
+- BREAKING CHANGE: Rename `sdwan_application_priority_qos_policy_profile_parcel` resource and data source to `sdwan_application_priority_qos_policy`
+- Fix issue when reading deleted `sdwan_configuration_group` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/297)
+- BREAKING CHANGE: Rename `service_lan_vpn_profile_parcel_id` attribute of `sdwan_service_lan_vpn_interface_ethernet_feature`, `sdwan_service_lan_vpn_interface_gre_feature`, `sdwan_service_lan_vpn_interface_ipsec_feature` and `sdwan_service_lan_vpn_interface_svi_feature` resource to `service_lan_vpn_feature_id`
+- BREAKING CHANGE: Rename `transport_management_vpn_profile_parcel_id` attribute of `sdwan_transport_management_vpn_interface_ethernet_feature` resource to `transport_management_vpn_feature_id`
+- BREAKING CHANGE: Rename `transport_wan_vpn_profile_parcel_id` attribute of `sdwan_transport_wan_vpn_interface_cellular_feature`, `sdwan_transport_wan_vpn_interface_ethernet_feature`, `sdwan_transport_wan_vpn_interface_gre_feature`, `sdwan_transport_wan_vpn_interface_ipsec_feature` and `sdwan_transport_wan_vpn_interface_t1_e1_serial_feature` resource to `transport_wan_vpn_feature_id`
 
 ## 0.3.13
 

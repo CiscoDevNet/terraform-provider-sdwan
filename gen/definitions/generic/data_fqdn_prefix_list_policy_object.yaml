@@ -3,7 +3,7 @@ name: Data FQDN Prefix List Policy Object
 rest_endpoint: /template/policy/list/fqdn/
 has_version: true
 id_attribute: listId
-doc_category: Policy Objects
+doc_category: (Classic) Policy Objects
 attributes:
   - model_name: type
     type: String

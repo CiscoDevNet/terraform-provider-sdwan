@@ -28,15 +28,19 @@ import (
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
+	"github.com/tidwall/gjson"
+	"github.com/tidwall/sjson"
 )
 
 // End of section. //template:end imports
@@ -145,6 +149,45 @@ func (r *ConfigurationGroupResource) Schema(ctx context.Context, req resource.Sc
 					int64validator.Between(1, 20),
 				},
 			},
+			"devices": schema.ListNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("List of devices").String,
+				Optional:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"id": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Device ID").String,
+							Optional:            true,
+						},
+						"deploy": schema.BoolAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Deploy to device if enabled.").AddDefaultValueDescription("false").String,
+							Optional:            true,
+							Computed:            true,
+							Default:             booldefault.StaticBool(false),
+						},
+						"variables": schema.SetNestedAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("List of variables").String,
+							Optional:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"name": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
+									},
+									"value": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable value").String,
+										Required:            true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"feature_versions": schema.ListAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("List of all associated feature versions").String,
+				ElementType:         types.StringType,
+				Optional:            true,
+			},
 		},
 	}
 }
@@ -160,7 +203,6 @@ func (r *ConfigurationGroupResource) Configure(_ context.Context, req resource.C
 
 // End of section. //template:end model
 
-// Section below is generated&owned by "gen/generator.go". //template:begin create
 func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan ConfigurationGroup
 
@@ -173,15 +215,44 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
-	// Create object
-	body := plan.toBody(ctx)
+	// Create config group
+	body := plan.toBodyConfigGroup(ctx)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group (POST), got error: %s, %s", err, res.String()))
 		return
 	}
 	plan.Id = types.StringValue(res.Get("id").String())
+
+	// Create config group devices
+	if len(plan.Devices) > 0 {
+		body = plan.toBodyConfigGroupDevices(ctx)
+
+		path := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString())
+		res, err = r.client.Post(path, body)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (POST), got error: %s, %s", err, res.String()))
+			return
+		}
+	}
+
+	// Create config group device variables
+	if len(plan.Devices) > 0 {
+		body = plan.toBodyConfigGroupDeviceVariables(ctx)
+
+		path := fmt.Sprintf("/v1/config-group/%v/device/variables/", plan.Id.ValueString())
+		res, err = r.client.Put(path, body)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group device variables (PUT), got error: %s, %s", err, res.String()))
+			return
+		}
+	}
+
+	// Deploy to config group devices
+	if len(plan.Devices) > 0 {
+		r.Deploy(ctx, plan, &resp.Diagnostics)
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 
@@ -189,9 +260,49 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 	resp.Diagnostics.Append(diags...)
 }
 
-// End of section. //template:end create
+func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan ConfigurationGroup, diag *diag.Diagnostics) {
+	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString())
+	res, err := r.client.Get(path)
+	if err != nil {
+		diag.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+		return
+	}
 
-// Section below is generated&owned by "gen/generator.go". //template:begin read
+	// Build deploy body
+	body, _ := sjson.Set("", "devices", []interface{}{})
+	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
+		value.ForEach(func(k, v gjson.Result) bool {
+			if v.Get("configGroupUpToDate").String() != "False" {
+				return true
+			}
+			id := v.Get("id").String()
+			for _, item := range plan.Devices {
+				if item.Id.ValueString() == id && item.Deploy.ValueBool() {
+					itemBody, _ := sjson.Set("", "id", id)
+					body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
+				}
+			}
+			return true
+		})
+	}
+	if len(gjson.Get(body, "devices").Array()) > 0 {
+		path := fmt.Sprintf("/v1/config-group/%v/device/deploy/", plan.Id.ValueString())
+		res, err = r.client.Post(path, body)
+		if err != nil {
+			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to config group devices (POST), got error: %s, %s", err, res.String()))
+			return
+		}
+
+		// Wait for deploy action to complete
+		actionId := res.Get("parentTaskId").String()
+		err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
+		if err != nil {
+			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to config group devices, got error: %s", err))
+			return
+		}
+	}
+}
+
 func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var state ConfigurationGroup
 
@@ -204,8 +315,11 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
+	oldState := state
+
+	// Read config group
 	res, err := r.client.Get(state.getPath() + url.QueryEscape(state.Id.ValueString()))
-	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") || strings.Contains(res.Get("error.message").String(), "Invalid Profile Id") || strings.Contains(res.Get("error.message").String(), "Invalid feature Id") {
+	if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
 		resp.State.RemoveResource(ctx)
 		return
 	} else if err != nil {
@@ -213,7 +327,35 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 		return
 	}
 
-	state.fromBody(ctx, res)
+	state.fromBodyConfigGroup(ctx, res)
+
+	// Read config group devices
+	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", state.Id.ValueString())
+	res, err = r.client.Get(path)
+	if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
+		resp.State.RemoveResource(ctx)
+		return
+	} else if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+		return
+	}
+
+	state.fromBodyConfigGroupDevices(ctx, res)
+
+	// Read config group devices
+	path = fmt.Sprintf("/v1/config-group/%v/device/variables/", state.Id.ValueString())
+	res, err = r.client.Get(path)
+	if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
+		resp.State.RemoveResource(ctx)
+		return
+	} else if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+		return
+	}
+
+	state.fromBodyConfigGroupDeviceVariables(ctx, res)
+
+	state.updateTfAttributes(ctx, &oldState)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 
@@ -221,9 +363,6 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 	resp.Diagnostics.Append(diags...)
 }
 
-// End of section. //template:end read
-
-// Section below is generated&owned by "gen/generator.go". //template:begin update
 func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var plan, state ConfigurationGroup
 
@@ -242,23 +381,38 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	if plan.hasChanges(ctx, &state) {
-		body := plan.toBody(ctx)
-		r.updateMutex.Lock()
-		res, err := r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), body)
-		r.updateMutex.Unlock()
-		if err != nil {
-			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
-				resp.Diagnostics.AddWarning("Client Warning", "Failed to modify policy due to policy being locked by another change. Policy changes will not be applied. Re-run 'terraform apply' to try again.")
-			} else if strings.Contains(res.Get("error.message").String(), "Template locked in edit mode") {
-				resp.Diagnostics.AddWarning("Client Warning", "Failed to modify template due to template being locked by another change. Template changes will not be applied. Re-run 'terraform apply' to try again.")
-			} else {
-				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
-				return
-			}
-		}
-	} else {
-		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Name.ValueString()))
+	// Update config group
+	body := plan.toBodyConfigGroup(ctx)
+
+	res, err := r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), body)
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group (PUT), got error: %s, %s", err, res.String()))
+		return
+	}
+
+	// Update config group devices
+	body = plan.toBodyConfigGroupDevices(ctx)
+
+	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString())
+	res, err = r.client.Put(path, body)
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (PUT), got error: %s, %s", err, res.String()))
+		return
+	}
+
+	// Update config group device variables
+	body = plan.toBodyConfigGroupDeviceVariables(ctx)
+
+	path = fmt.Sprintf("/v1/config-group/%v/device/variables/", plan.Id.ValueString())
+	res, err = r.client.Put(path, body)
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group device variables (PUT), got error: %s, %s", err, res.String()))
+		return
+	}
+
+	// Deploy to config group devices
+	if len(plan.Devices) > 0 {
+		r.Deploy(ctx, plan, &resp.Diagnostics)
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
@@ -267,9 +421,6 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 	resp.Diagnostics.Append(diags...)
 }
 
-// End of section. //template:end update
-
-// Section below is generated&owned by "gen/generator.go". //template:begin delete
 func (r *ConfigurationGroupResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 	var state ConfigurationGroup
 
@@ -282,9 +433,17 @@ func (r *ConfigurationGroupResource) Delete(ctx context.Context, req resource.De
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
-	res, err := r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
+	body := state.toBodyConfigGroupDevices(ctx)
+	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", state.Id.ValueString())
+	res, err := r.client.DeleteBody(path, body)
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group devices (DELETE), got error: %s, %s", err, res.String()))
+		return
+	}
+
+	res, err = r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group (DELETE), got error: %s, %s", err, res.String()))
 		return
 	}
 
@@ -292,8 +451,6 @@ func (r *ConfigurationGroupResource) Delete(ctx context.Context, req resource.De
 
 	resp.State.RemoveResource(ctx)
 }
-
-// End of section. //template:end delete
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *ConfigurationGroupResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {

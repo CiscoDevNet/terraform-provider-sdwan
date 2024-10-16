@@ -1,0 +1,3093 @@
+{
+  "request": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/application-priority/traffic-policy/post/request_schema.json",
+    "title": "traffic policy Parcel Schema",
+    "description": "traffic policy profile parcel schema for POST request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Set the parcel name",
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "description": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "dataDefaultAction": {
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "default": "accept",
+                    "enum": ["drop", "accept"],
+                    "type": "string"
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "simpleFlow": {
+            "type": "object",
+            "properties": {
+              "optionType": {
+                "type": "string",
+                "enum": ["global"]
+              },
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          "hasCorViaSig": {
+            "type": "object",
+            "properties": {
+              "optionType": {
+                "type": "string",
+                "enum": ["global"]
+              },
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          "target": {
+            "description": "Target vpn and direction",
+            "type": "object",
+            "properties": {
+              "vpn": {
+                "description": "",
+                "type": "object",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "optionType": {
+                        "type": "string",
+                        "enum": ["global"]
+                      },
+                      "value": {
+                        "type": "array",
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": ["optionType", "value"],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "direction": {
+                "description": "",
+                "type": "object",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "optionType": {
+                        "type": "string",
+                        "enum": ["global"]
+                      },
+                      "value": {
+                        "default": "all",
+                        "enum": ["service", "tunnel", "all"],
+                        "type": "string"
+                      }
+                    },
+                    "required": ["optionType", "value"],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "sequences": {
+            "description": "Traffic policy sequence list",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "sequenceId": {
+                  "description": "Sequence Id",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "minimum": 1,
+                          "maximum": 65536,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "sequenceName": {
+                  "description": "Sequence Name",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "baseAction": {
+                  "description": "Base Action",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "default": "accept",
+                          "enum": ["drop", "accept"],
+                          "type": "string"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "sequenceIpType": {
+                  "description": "Sequence IP Type",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "default": "ipv4",
+                          "enum": ["ipv4", "ipv6", "all"],
+                          "type": "string"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "match": {
+                  "type": "object",
+                  "properties": {
+                    "entries": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "items": {
+                        "type": "object",
+                        "minProperties": 1,
+                        "maxProperties": 1,
+                        "properties": {
+                          "appList": {
+                            "description": "App list Reference",
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "saasAppList": {
+                            "description": "Saas App list Reference",
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "serviceArea": {
+                            "description": "M365 Service Area",
+                            "type": "object",
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "array",
+                                "minItems": 1,
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "string",
+                                  "enum": [
+                                    "common",
+                                    "exchange",
+                                    "sharepoint",
+                                    "skype"
+                                  ]
+                                }
+                              }
+                            },
+                            "required": ["optionType", "value"],
+                            "additionalProperties": false
+                          },
+                          "trafficCategory": {
+                            "description": "M365 Traffic Category",
+                            "type": "object",
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "string",
+                                "enum": ["optimize-allow", "optimize", "all"]
+                              }
+                            },
+                            "required": ["optionType", "value"],
+                            "additionalProperties": false
+                          },
+                          "dnsAppList": {
+                            "description": "dns App list Reference",
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "trafficClass": {
+                            "description": "Traffic Class",
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "enum": [
+                                      "gold-voip-telephony",
+                                      "gold-broadcast-video",
+                                      "gold-real-time-interactive",
+                                      "gold-multimedia-conferencing",
+                                      "gold-multimedia-streaming",
+                                      "gold-network-control",
+                                      "gold-signaling",
+                                      "gold-ops-admin-mgmt",
+                                      "gold-transactional-data",
+                                      "gold-bulk-data",
+                                      "silver",
+                                      "bronze"
+                                    ],
+                                    "type": "string"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "dscp": {
+                            "description": "DSCP number",
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "minimum": 0,
+                                    "maximum": 63,
+                                    "type": "integer"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "packetLength": {
+                            "description": "Packet Length",
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "oneOf": [
+                                      {
+                                        "type": "string",
+                                        "pattern": "^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                                      },
+                                      {
+                                        "type": "string",
+                                        "pattern": "^([0-9]|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])\\-([1-9]|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "protocol": {
+                            "description": "protocol (0-255) range or individual number separated by space",
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "uniqueItems": true,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "^(0|[1-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
+                                    }
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "icmpMessage": {
+                            "description": "ICMP Message",
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "uniqueItems": true,
+                                    "items": {
+                                      "enum": [
+                                        "administratively-prohibited",
+                                        "dod-host-prohibited",
+                                        "dod-net-prohibited",
+                                        "echo",
+                                        "echo-reply",
+                                        "echo-reply-no-error",
+                                        "extended-echo",
+                                        "extended-echo-reply",
+                                        "general-parameter-problem",
+                                        "host-isolated",
+                                        "host-precedence-unreachable",
+                                        "host-redirect",
+                                        "host-tos-redirect",
+                                        "host-tos-unreachable",
+                                        "host-unknown",
+                                        "host-unreachable",
+                                        "interface-error",
+                                        "malformed-query",
+                                        "multiple-interface-match",
+                                        "net-redirect",
+                                        "net-tos-redirect",
+                                        "net-tos-unreachable",
+                                        "net-unreachable",
+                                        "network-unknown",
+                                        "no-room-for-option",
+                                        "option-missing",
+                                        "packet-too-big",
+                                        "parameter-problem",
+                                        "photuris",
+                                        "port-unreachable",
+                                        "precedence-unreachable",
+                                        "protocol-unreachable",
+                                        "reassembly-timeout",
+                                        "redirect",
+                                        "router-advertisement",
+                                        "router-solicitation",
+                                        "source-route-failed",
+                                        "table-entry-error",
+                                        "time-exceeded",
+                                        "timestamp-reply",
+                                        "timestamp-request",
+                                        "ttl-exceeded",
+                                        "unreachable"
+                                      ],
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "icmp6Message": {
+                            "description": "ICMP6 Message",
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "uniqueItems": true,
+                                    "items": {
+                                      "enum": [
+                                        "beyond-scope",
+                                        "cp-advertisement",
+                                        "cp-solicitation",
+                                        "destination-unreachable",
+                                        "dhaad-reply",
+                                        "dhaad-request",
+                                        "echo-reply",
+                                        "echo-request",
+                                        "header",
+                                        "hop-limit",
+                                        "ind-advertisement",
+                                        "ind-solicitation",
+                                        "mld-query",
+                                        "mld-reduction",
+                                        "mld-report",
+                                        "mldv2-report",
+                                        "mpd-advertisement",
+                                        "mpd-solicitation",
+                                        "mr-advertisement",
+                                        "mr-solicitation",
+                                        "mr-termination",
+                                        "nd-na",
+                                        "nd-ns",
+                                        "next-header-type",
+                                        "ni-query",
+                                        "ni-query-name",
+                                        "ni-query-v4-address",
+                                        "ni-query-v6-address",
+                                        "ni-response",
+                                        "ni-response-qtype-unknown",
+                                        "ni-response-refuse",
+                                        "ni-response-success",
+                                        "no-admin",
+                                        "no-route",
+                                        "packet-too-big",
+                                        "parameter-option",
+                                        "parameter-problem",
+                                        "port-unreachable",
+                                        "reassembly-timeout",
+                                        "redirect",
+                                        "reject-route",
+                                        "renum-command",
+                                        "renum-result",
+                                        "renum-seq-number",
+                                        "router-advertisement",
+                                        "router-renumbering",
+                                        "router-solicitation",
+                                        "rpl-control",
+                                        "source-policy",
+                                        "source-route-header",
+                                        "time-exceeded",
+                                        "unreachable"
+                                      ],
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "sourceDataPrefixList": {
+                            "description": "Source Data Prefix Parcel UUID",
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "sourceDataIpv6PrefixList": {
+                            "description": "Source Data Prefix Parcel UUID",
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "sourceIp": {
+                            "description": "Source Data IP Prefix",
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "format": "ipv4"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "sourceIpv6": {
+                            "description": "Source Data IP Prefix",
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "format": "ipv6"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "sourcePort": {
+                            "description": "Source Port (0-65535) range or individual number separated by space",
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "object",
+                                      "oneOf": [
+                                        {
+                                          "type": "string",
+                                          "pattern": "^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                                        },
+                                        {
+                                          "type": "string",
+                                          "pattern": "^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])\\-(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "destinationDataPrefixList": {
+                            "description": "Destination Data Prefix Parcel UUID",
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "destinationDataIpv6PrefixList": {
+                            "description": "Destination Data Prefix Parcel UUID",
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "destinationIp": {
+                            "description": "Destination Data IP Prefix",
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "format": "ipv4"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "destinationIpv6": {
+                            "description": "Destination Data IP Prefix",
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "format": "ipv6"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "destinationPort": {
+                            "description": "Destination Port (0-65535) range or individual number separated by space",
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "oneOf": [
+                                        {
+                                          "type": "string",
+                                          "pattern": "^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                                        },
+                                        {
+                                          "type": "string",
+                                          "pattern": "^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])\\-(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "tcp": {
+                            "description": "TCP States",
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "enum": ["syn"],
+                                    "type": "string"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "destinationRegion": {
+                            "description": "Destination Region",
+                            "type": "object",
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "string",
+                                "enum": [
+                                  "primary-region",
+                                  "secondary-region",
+                                  "other-region"
+                                ]
+                              }
+                            },
+                            "required": ["optionType", "value"],
+                            "additionalProperties": false
+                          },
+                          "trafficTo": {
+                            "description": "Traffic to",
+                            "type": "object",
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "string",
+                                "enum": ["core", "service", "access"]
+                              }
+                            },
+                            "required": ["optionType", "value"],
+                            "additionalProperties": false
+                          },
+                          "dns": {
+                            "description": "Dns",
+                            "type": "object",
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "string",
+                                "enum": ["request", "response"]
+                              }
+                            },
+                            "required": ["optionType", "value"],
+                            "additionalProperties": false
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "allOf": [
+                        {
+                          "if": {
+                            "contains": {
+                              "required": ["trafficClass"]
+                            }
+                          },
+                          "then": {
+                            "not": {
+                              "contains": {
+                                "required": ["appList"]
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "if": {
+                            "contains": {
+                              "required": ["sourceIp"]
+                            }
+                          },
+                          "then": {
+                            "not": {
+                              "contains": {
+                                "anyOf": [
+                                  {
+                                    "required": ["sourceDataIpv6PrefixList"]
+                                  },
+                                  {
+                                    "required": ["sourceDataPrefixList"]
+                                  },
+                                  {
+                                    "required": ["sourceDataIpv6"]
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "if": {
+                            "contains": {
+                              "required": ["sourceIpv6"]
+                            }
+                          },
+                          "then": {
+                            "not": {
+                              "contains": {
+                                "anyOf": [
+                                  {
+                                    "required": ["sourceDataIpv6PrefixList"]
+                                  },
+                                  {
+                                    "required": ["sourceDataPrefixList"]
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "if": {
+                            "contains": {
+                              "required": ["sourceDataIpv6PrefixList"]
+                            }
+                          },
+                          "then": {
+                            "not": {
+                              "contains": {
+                                "anyOf": [
+                                  {
+                                    "required": ["sourceDataPrefixList"]
+                                  },
+                                  {
+                                    "required": ["dnsAppList"]
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "if": {
+                            "contains": {
+                              "required": ["destinationIp"]
+                            }
+                          },
+                          "then": {
+                            "not": {
+                              "contains": {
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "destinationDataIpv6PrefixList"
+                                    ]
+                                  },
+                                  {
+                                    "required": ["destinationDataPrefixList"]
+                                  },
+                                  {
+                                    "required": ["destinationDataIpv6"]
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "if": {
+                            "contains": {
+                              "required": ["destinationIpv6"]
+                            }
+                          },
+                          "then": {
+                            "not": {
+                              "contains": {
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "destinationDataIpv6PrefixList"
+                                    ]
+                                  },
+                                  {
+                                    "required": ["destinationDataPrefixList"]
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "if": {
+                            "contains": {
+                              "required": ["destinationDataIpv6PrefixList"]
+                            }
+                          },
+                          "then": {
+                            "not": {
+                              "contains": {
+                                "anyOf": [
+                                  {
+                                    "required": ["destinationDataPrefixList"]
+                                  },
+                                  {
+                                    "required": ["dnsAppList"]
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "required": ["entries"],
+                  "additionalProperties": false
+                },
+                "actions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "maxProperties": 1,
+                    "properties": {
+                      "slaClass": {
+                        "type": "array",
+                        "description": "slaClass",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "slaName": {
+                              "properties": {
+                                "refId": {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "preferredColor": {
+                              "not": {
+                                "required": ["preferredColorGroup"]
+                              },
+                              "properties": {
+                                "optionType": {
+                                  "type": "string",
+                                  "enum": ["global"]
+                                },
+                                "value": {
+                                  "type": "array",
+                                  "minItems": 1,
+                                  "uniqueItems": true,
+                                  "items": {
+                                    "enum": [
+                                      "3g",
+                                      "biz-internet",
+                                      "blue",
+                                      "bronze",
+                                      "custom1",
+                                      "custom2",
+                                      "custom3",
+                                      "default",
+                                      "gold",
+                                      "green",
+                                      "lte",
+                                      "metro-ethernet",
+                                      "mpls",
+                                      "private1",
+                                      "private2",
+                                      "private3",
+                                      "private4",
+                                      "private5",
+                                      "private6",
+                                      "public-internet",
+                                      "red",
+                                      "silver"
+                                    ],
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "required": ["optionType", "value"],
+                              "additionalProperties": false
+                            },
+                            "preferredColorGroup": {
+                              "properties": {
+                                "refId": {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "strict": {
+                              "properties": {
+                                "optionType": {
+                                  "type": "string",
+                                  "enum": ["global"]
+                                },
+                                "value": {
+                                  "type": "boolean"
+                                }
+                              }
+                            },
+                            "fallbackToBestPath": {
+                              "properties": {
+                                "optionType": {
+                                  "type": "string",
+                                  "enum": ["global"]
+                                },
+                                "value": {
+                                  "type": "boolean"
+                                }
+                              }
+                            },
+                            "preferredRemoteColor": {
+                              "properties": {
+                                "optionType": {
+                                  "type": "string",
+                                  "enum": ["global"]
+                                },
+                                "value": {
+                                  "type": "array",
+                                  "minItems": 1,
+                                  "uniqueItems": true,
+                                  "items": {
+                                    "enum": [
+                                      "3g",
+                                      "biz-internet",
+                                      "blue",
+                                      "bronze",
+                                      "custom1",
+                                      "custom2",
+                                      "custom3",
+                                      "default",
+                                      "gold",
+                                      "green",
+                                      "lte",
+                                      "metro-ethernet",
+                                      "mpls",
+                                      "private1",
+                                      "private2",
+                                      "private3",
+                                      "private4",
+                                      "private5",
+                                      "private6",
+                                      "public-internet",
+                                      "red",
+                                      "silver"
+                                    ],
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "required": ["optionType", "value"],
+                              "additionalProperties": false
+                            },
+                            "remoteColorRestrict": {
+                              "properties": {
+                                "optionType": {
+                                  "type": "string",
+                                  "enum": ["global"]
+                                },
+                                "value": {
+                                  "type": "boolean"
+                                }
+                              }
+                            }
+                          },
+                          "additionalProperties": false
+                        },
+                        "allOf": [
+                          {
+                            "if": {
+                              "contains": {
+                                "required": ["preferredColorGroup"]
+                              }
+                            },
+                            "then": {
+                              "not": {
+                                "contains": {
+                                  "required": ["preferredColor"]
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "if": {
+                              "contains": {
+                                "required": ["fallbackToBestPath"]
+                              }
+                            },
+                            "then": {
+                              "not": {
+                                "contains": {
+                                  "required": ["strict"]
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "backupSlaPreferredColor": {
+                        "type": "object",
+                        "description": "Backup SLA perferred color",
+                        "properties": {
+                          "optionType": {
+                            "type": "string",
+                            "enum": ["global"]
+                          },
+                          "value": {
+                            "type": "array",
+                            "minItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                              "enum": [
+                                "3g",
+                                "biz-internet",
+                                "blue",
+                                "bronze",
+                                "custom1",
+                                "custom2",
+                                "custom3",
+                                "default",
+                                "gold",
+                                "green",
+                                "lte",
+                                "metro-ethernet",
+                                "mpls",
+                                "private1",
+                                "private2",
+                                "private3",
+                                "private4",
+                                "private5",
+                                "private6",
+                                "public-internet",
+                                "red",
+                                "silver"
+                              ],
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": ["optionType", "value"],
+                        "additionalProperties": false
+                      },
+                      "set": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "dscp": {
+                              "oneOf": [
+                                {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "minimum": 0,
+                                      "maximum": 63,
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                }
+                              ]
+                            },
+                            "policer": {
+                              "properties": {
+                                "refId": {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "preferredColorGroup": {
+                              "properties": {
+                                "refId": {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "forwardingClass": {
+                              "properties": {
+                                "refId": {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "localTlocList": {
+                              "properties": {
+                                "color": {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "array",
+                                      "minItems": 1,
+                                      "uniqueItems": true,
+                                      "items": {
+                                        "enum": [
+                                          "3g",
+                                          "biz-internet",
+                                          "blue",
+                                          "bronze",
+                                          "custom1",
+                                          "custom2",
+                                          "custom3",
+                                          "default",
+                                          "gold",
+                                          "green",
+                                          "lte",
+                                          "metro-ethernet",
+                                          "mpls",
+                                          "private1",
+                                          "private2",
+                                          "private3",
+                                          "private4",
+                                          "private5",
+                                          "private6",
+                                          "public-internet",
+                                          "red",
+                                          "silver"
+                                        ],
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                },
+                                "restrict": {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                },
+                                "encap": {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "enum": ["ipsec", "gre"]
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "required": ["color"],
+                              "additionalProperties": false
+                            },
+                            "preferredRemoteColor": {
+                              "properties": {
+                                "color": {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "array",
+                                      "minItems": 1,
+                                      "uniqueItems": true,
+                                      "items": {
+                                        "enum": [
+                                          "3g",
+                                          "biz-internet",
+                                          "blue",
+                                          "bronze",
+                                          "custom1",
+                                          "custom2",
+                                          "custom3",
+                                          "default",
+                                          "gold",
+                                          "green",
+                                          "lte",
+                                          "metro-ethernet",
+                                          "mpls",
+                                          "private1",
+                                          "private2",
+                                          "private3",
+                                          "private4",
+                                          "private5",
+                                          "private6",
+                                          "public-internet",
+                                          "red",
+                                          "silver"
+                                        ],
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                },
+                                "remoteColorRestrict": {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "required": ["color"],
+                              "additionalProperties": false
+                            },
+                            "tloc": {
+                              "properties": {
+                                "color": {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "array",
+                                      "minItems": 1,
+                                      "uniqueItems": true,
+                                      "items": {
+                                        "enum": [
+                                          "3g",
+                                          "biz-internet",
+                                          "blue",
+                                          "bronze",
+                                          "custom1",
+                                          "custom2",
+                                          "custom3",
+                                          "default",
+                                          "gold",
+                                          "green",
+                                          "lte",
+                                          "metro-ethernet",
+                                          "mpls",
+                                          "private1",
+                                          "private2",
+                                          "private3",
+                                          "private4",
+                                          "private5",
+                                          "private6",
+                                          "public-internet",
+                                          "red",
+                                          "silver"
+                                        ],
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                },
+                                "encap": {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "enum": ["ipsec", "gre"]
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                },
+                                "ip": {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "format": "ipv4"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "required": ["color", "encap", "ip"],
+                              "additionalProperties": false
+                            },
+                            "tlocList": {
+                              "properties": {
+                                "refId": {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "service": {
+                              "oneOf": [
+                                {
+                                  "properties": {
+                                    "tloc": {
+                                      "properties": {
+                                        "color": {
+                                          "properties": {
+                                            "optionType": {
+                                              "type": "string",
+                                              "enum": ["global"]
+                                            },
+                                            "value": {
+                                              "type": "array",
+                                              "minItems": 1,
+                                              "uniqueItems": true,
+                                              "items": {
+                                                "enum": [
+                                                  "3g",
+                                                  "biz-internet",
+                                                  "blue",
+                                                  "bronze",
+                                                  "custom1",
+                                                  "custom2",
+                                                  "custom3",
+                                                  "default",
+                                                  "gold",
+                                                  "green",
+                                                  "lte",
+                                                  "metro-ethernet",
+                                                  "mpls",
+                                                  "private1",
+                                                  "private2",
+                                                  "private3",
+                                                  "private4",
+                                                  "private5",
+                                                  "private6",
+                                                  "public-internet",
+                                                  "red",
+                                                  "silver"
+                                                ],
+                                                "type": "string"
+                                              }
+                                            }
+                                          },
+                                          "required": ["optionType", "value"],
+                                          "additionalProperties": false
+                                        },
+                                        "encap": {
+                                          "properties": {
+                                            "optionType": {
+                                              "type": "string",
+                                              "enum": ["global"]
+                                            },
+                                            "value": {
+                                              "type": "string",
+                                              "enum": ["ipsec", "gre"]
+                                            }
+                                          },
+                                          "required": ["optionType", "value"],
+                                          "additionalProperties": false
+                                        },
+                                        "ip": {
+                                          "properties": {
+                                            "optionType": {
+                                              "type": "string",
+                                              "enum": ["global"]
+                                            },
+                                            "value": {
+                                              "type": "string",
+                                              "format": "ipv4"
+                                            }
+                                          },
+                                          "required": ["optionType", "value"],
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "required": ["color", "encap", "ip"],
+                                      "additionalProperties": false
+                                    },
+                                    "vpn": {
+                                      "properties": {
+                                        "optionType": {
+                                          "type": "string",
+                                          "enum": ["global"]
+                                        },
+                                        "value": {
+                                          "type": "string",
+                                          "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                          "minLength": 1,
+                                          "maxLength": 64
+                                        }
+                                      },
+                                      "required": ["optionType", "value"],
+                                      "additionalProperties": false
+                                    },
+                                    "type": {
+                                      "properties": {
+                                        "optionType": {
+                                          "type": "string",
+                                          "enum": ["global"]
+                                        },
+                                        "value": {
+                                          "enum": [
+                                            "FW",
+                                            "IDS",
+                                            "IDP",
+                                            "netsvc1",
+                                            "netsvc2",
+                                            "netsvc3",
+                                            "netsvc4",
+                                            "appqoe"
+                                          ],
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": ["optionType", "value"],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "required": ["vpn", "tloc", "type"],
+                                  "additionalProperties": false
+                                },
+                                {
+                                  "properties": {
+                                    "tlocList": {
+                                      "properties": {
+                                        "refId": {
+                                          "properties": {
+                                            "optionType": {
+                                              "type": "string",
+                                              "enum": ["global"]
+                                            },
+                                            "value": {
+                                              "type": "string",
+                                              "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                            }
+                                          },
+                                          "required": ["optionType", "value"],
+                                          "additionalProperties": false
+                                        }
+                                      }
+                                    },
+                                    "vpn": {
+                                      "properties": {
+                                        "optionType": {
+                                          "type": "string",
+                                          "enum": ["global"]
+                                        },
+                                        "value": {
+                                          "type": "string",
+                                          "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                          "minLength": 1,
+                                          "maxLength": 64
+                                        }
+                                      },
+                                      "required": ["optionType", "value"],
+                                      "additionalProperties": false
+                                    },
+                                    "type": {
+                                      "properties": {
+                                        "optionType": {
+                                          "type": "string",
+                                          "enum": ["global"]
+                                        },
+                                        "value": {
+                                          "enum": [
+                                            "FW",
+                                            "IDS",
+                                            "IDP",
+                                            "netsvc1",
+                                            "netsvc2",
+                                            "netsvc3",
+                                            "netsvc4",
+                                            "appqoe"
+                                          ],
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": ["optionType", "value"],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "required": ["vpn", "tlocList", "type"],
+                                  "additionalProperties": false
+                                }
+                              ]
+                            },
+                            "serviceChain": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "enum": [
+                                        "SC1",
+                                        "SC2",
+                                        "SC4",
+                                        "SC5",
+                                        "SC6",
+                                        "SC7",
+                                        "SC8",
+                                        "SC9",
+                                        "SC10",
+                                        "SC11",
+                                        "SC12",
+                                        "SC13",
+                                        "SC14",
+                                        "SC15",
+                                        "SC16"
+                                      ],
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                },
+                                "vpn": {
+                                  "type": "object",
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 65530,
+                                      "not": {
+                                        "enum": [0, 512]
+                                      }
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                },
+                                "local": {
+                                  "default": false,
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "boolean"
+                                    }
+                                  }
+                                },
+                                "restrict": {
+                                  "default": true,
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "boolean"
+                                    }
+                                  }
+                                },
+                                "tloc": {
+                                  "properties": {
+                                    "color": {
+                                      "properties": {
+                                        "optionType": {
+                                          "type": "string",
+                                          "enum": ["global"]
+                                        },
+                                        "value": {
+                                          "type": "array",
+                                          "minItems": 1,
+                                          "uniqueItems": true,
+                                          "items": {
+                                            "enum": [
+                                              "3g",
+                                              "biz-internet",
+                                              "blue",
+                                              "bronze",
+                                              "custom1",
+                                              "custom2",
+                                              "custom3",
+                                              "default",
+                                              "gold",
+                                              "green",
+                                              "lte",
+                                              "metro-ethernet",
+                                              "mpls",
+                                              "private1",
+                                              "private2",
+                                              "private3",
+                                              "private4",
+                                              "private5",
+                                              "private6",
+                                              "public-internet",
+                                              "red",
+                                              "silver"
+                                            ],
+                                            "type": "string"
+                                          }
+                                        }
+                                      },
+                                      "required": ["optionType", "value"],
+                                      "additionalProperties": false
+                                    },
+                                    "encap": {
+                                      "properties": {
+                                        "optionType": {
+                                          "type": "string",
+                                          "enum": ["global"]
+                                        },
+                                        "value": {
+                                          "type": "string",
+                                          "enum": ["ipsec", "gre"]
+                                        }
+                                      },
+                                      "required": ["optionType", "value"],
+                                      "additionalProperties": false
+                                    },
+                                    "ip": {
+                                      "properties": {
+                                        "optionType": {
+                                          "type": "string",
+                                          "enum": ["global"]
+                                        },
+                                        "value": {
+                                          "type": "string",
+                                          "format": "ipv4"
+                                        }
+                                      },
+                                      "required": ["optionType", "value"],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "required": ["color", "encap", "ip"],
+                                  "additionalProperties": false
+                                },
+                                "tlocList": {
+                                  "properties": {
+                                    "refId": {
+                                      "properties": {
+                                        "optionType": {
+                                          "type": "string",
+                                          "enum": ["global"]
+                                        },
+                                        "value": {
+                                          "type": "string",
+                                          "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                        }
+                                      },
+                                      "required": ["optionType", "value"],
+                                      "additionalProperties": false
+                                    }
+                                  }
+                                }
+                              },
+                              "required": ["type", "local", "restrict"],
+                              "allOf": [
+                                {
+                                  "if": {
+                                    "properties": {
+                                      "local": {
+                                        "properties": {
+                                          "value": {
+                                            "const": false
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "then": {
+                                    "anyOf": [
+                                      {
+                                        "required": ["tloc"]
+                                      },
+                                      {
+                                        "required": ["tlocList"]
+                                      },
+                                      {
+                                        "not": {
+                                          "required": ["tloc", "tlocList"]
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "else": {
+                                    "not": {
+                                      "anyOf": [
+                                        {
+                                          "required": ["tloc"]
+                                        },
+                                        {
+                                          "required": ["tlocList"]
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                {
+                                  "if": {
+                                    "properties": {
+                                      "local": {
+                                        "properties": {
+                                          "value": {
+                                            "const": true
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "then": {
+                                    "anyOf": [
+                                      {
+                                        "not": {
+                                          "required": ["vpn"]
+                                        }
+                                      },
+                                      {
+                                        "required": ["vpn"]
+                                      }
+                                    ]
+                                  },
+                                  "else": {
+                                    "required": ["vpn"]
+                                  }
+                                }
+                              ],
+                              "additionalProperties": false
+                            },
+                            "nextHop": {
+                              "properties": {
+                                "optionType": {
+                                  "type": "string",
+                                  "enum": ["global"]
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "format": "ipv4"
+                                }
+                              },
+                              "required": ["optionType", "value"],
+                              "additionalProperties": false
+                            },
+                            "nextHopIpv6": {
+                              "properties": {
+                                "optionType": {
+                                  "type": "string",
+                                  "enum": ["global"]
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "format": "ipv6"
+                                }
+                              },
+                              "required": ["optionType", "value"],
+                              "additionalProperties": false
+                            },
+                            "nextHopLoose": {
+                              "properties": {
+                                "optionType": {
+                                  "type": "string",
+                                  "enum": ["global"]
+                                },
+                                "value": {
+                                  "type": "boolean"
+                                }
+                              }
+                            },
+                            "vpn": {
+                              "properties": {
+                                "optionType": {
+                                  "type": "string",
+                                  "enum": ["global"]
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                  "minLength": 1,
+                                  "maxLength": 64
+                                }
+                              },
+                              "required": ["optionType", "value"],
+                              "additionalProperties": false
+                            }
+                          },
+                          "additionalProperties": false
+                        },
+                        "allOf": [
+                          {
+                            "if": {
+                              "contains": {
+                                "required": ["preferredColorGroup"]
+                              }
+                            },
+                            "then": {
+                              "not": {
+                                "contains": {
+                                  "required": ["localTlocList"]
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "if": {
+                              "contains": {
+                                "required": ["nextHopLoose"]
+                              }
+                            },
+                            "then": {
+                              "contains": {
+                                "oneOf": [
+                                  {
+                                    "required": ["nextHop"]
+                                  },
+                                  {
+                                    "required": ["nextHopIpv6"]
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "if": {
+                              "contains": {
+                                "required": ["service"]
+                              }
+                            },
+                            "then": {
+                              "not": {
+                                "contains": {
+                                  "anyOf": [
+                                    {
+                                      "required": ["vpn"]
+                                    },
+                                    {
+                                      "required": ["tlocList"]
+                                    },
+                                    {
+                                      "required": ["tloc"]
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "if": {
+                              "contains": {
+                                "required": ["serviceChain"]
+                              }
+                            },
+                            "then": {
+                              "not": {
+                                "contains": {
+                                  "anyOf": [
+                                    {
+                                      "required": ["service"]
+                                    },
+                                    {
+                                      "required": ["nextHop"]
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "redirectDns": {
+                        "properties": {
+                          "field": {
+                            "type": "object",
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "string",
+                                "enum": ["ipAddress", "redirectDns"]
+                              }
+                            },
+                            "required": ["optionType", "value"],
+                            "additionalProperties": false
+                          },
+                          "value": {
+                            "type": "object",
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "oneOf": [
+                                  {
+                                    "type": "string",
+                                    "enum": ["umbrella", "host"]
+                                  },
+                                  {
+                                    "type": "string",
+                                    "format": "ipv4"
+                                  }
+                                ]
+                              }
+                            },
+                            "required": ["optionType", "value"],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "appqoeOptimization": {
+                        "type": "object",
+                        "properties": {
+                          "tcpOptimization": {
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "boolean"
+                              }
+                            }
+                          },
+                          "dreOptimization": {
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "boolean"
+                              }
+                            }
+                          },
+                          "serviceNodeGroup": {
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 12,
+                                "pattern": "(SNG-APPQOE|(SNG-APPQOE([1-9]|[1-2][0-9]|3[0-1])))"
+                              }
+                            },
+                            "required": ["optionType", "value"],
+                            "additionalProperties": false
+                          }
+                        },
+                        "minProperties": 1,
+                        "additionalProperties": false
+                      },
+                      "lossCorrection": {
+                        "type": "object",
+                        "properties": {
+                          "lossCorrectionType": {
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "enum": [
+                                  "fecAdaptive",
+                                  "fecAlways",
+                                  "packetDuplication"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": ["optionType", "value"],
+                            "additionalProperties": false
+                          },
+                          "lossCorrectFec": {
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 5
+                              }
+                            },
+                            "required": ["optionType", "value"],
+                            "additionalProperties": false
+                          }
+                        },
+                        "required": ["lossCorrectionType"],
+                        "anyOf": [
+                          {
+                            "if": {
+                              "properties": {
+                                "lossCorrectionType": {
+                                  "properties": {
+                                    "value": {
+                                      "const": "fecAdaptive"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "then": {
+                              "anyOf": [
+                                {
+                                  "required": ["lossCorrectFec"]
+                                },
+                                {
+                                  "not": {
+                                    "required": ["lossCorrectFec"]
+                                  }
+                                }
+                              ]
+                            },
+                            "else": {
+                              "not": {
+                                "required": ["lossCorrectFec"]
+                              }
+                            }
+                          }
+                        ],
+                        "additionalProperties": false
+                      },
+                      "count": {
+                        "type": "object",
+                        "properties": {
+                          "optionType": {
+                            "type": "string",
+                            "enum": ["global"]
+                          },
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 20
+                          }
+                        },
+                        "required": ["optionType", "value"],
+                        "additionalProperties": false
+                      },
+                      "log": {
+                        "type": "object",
+                        "properties": {
+                          "optionType": {
+                            "type": "string",
+                            "enum": ["global"]
+                          },
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      },
+                      "cloudSaas": {
+                        "type": "object",
+                        "properties": {
+                          "optionType": {
+                            "type": "string",
+                            "enum": ["global"]
+                          },
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      },
+                      "cloudProbe": {
+                        "type": "object",
+                        "properties": {
+                          "optionType": {
+                            "type": "string",
+                            "enum": ["global"]
+                          },
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      },
+                      "cflowd": {
+                        "type": "object",
+                        "properties": {
+                          "optionType": {
+                            "type": "string",
+                            "enum": ["global"]
+                          },
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      },
+                      "natPool": {
+                        "type": "object",
+                        "properties": {
+                          "optionType": {
+                            "type": "string",
+                            "enum": ["global"]
+                          },
+                          "value": {
+                            "minimum": 1,
+                            "maximum": 31,
+                            "type": "integer"
+                          }
+                        },
+                        "required": ["optionType", "value"],
+                        "additionalProperties": false
+                      },
+                      "nat": {
+                        "type": "object",
+                        "properties": {
+                          "useVpn": {
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "boolean"
+                              }
+                            }
+                          },
+                          "fallback": {
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "boolean"
+                              }
+                            }
+                          },
+                          "bypass": {
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "boolean"
+                              }
+                            }
+                          },
+                          "diaPool": {
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "maxItems": 4,
+                                    "uniqueItems": true,
+                                    "items": {
+                                      "minimum": 1,
+                                      "maximum": 4095,
+                                      "type": "integer"
+                                    }
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "diaInterface": {
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "maxItems": 4,
+                                    "uniqueItems": true,
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
+                              }
+                            ]
+                          }
+                        },
+                        "required": ["useVpn"],
+                        "anyOf": [
+                          {
+                            "if": {
+                              "properties": {
+                                "bypass": {
+                                  "properties": {
+                                    "value": {
+                                      "const": false
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "then": {
+                              "anyOf": [
+                                {
+                                  "required": ["diaPool"]
+                                },
+                                {
+                                  "required": ["diaInterface"]
+                                },
+                                {
+                                  "not": {
+                                    "required": ["diaPool", "diaInterface"]
+                                  }
+                                }
+                              ]
+                            },
+                            "else": {
+                              "not": {
+                                "anyOf": [
+                                  {
+                                    "required": ["diaPool"]
+                                  },
+                                  {
+                                    "required": ["diaInterface"]
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ],
+                        "additionalProperties": false
+                      },
+                      "sig": {
+                        "type": "object",
+                        "properties": {
+                          "optionType": {
+                            "type": "string",
+                            "enum": ["global"]
+                          },
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      },
+                      "fallbackToRouting": {
+                        "type": "object",
+                        "properties": {
+                          "optionType": {
+                            "type": "string",
+                            "enum": ["global"]
+                          },
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      },
+                      "sse": {
+                        "type": "object",
+                        "properties": {
+                          "secureServiceEdge": {
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                  "type": "string"
+                              }
+                            }
+                          },
+                          "secureServiceEdgeInstance": {
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "enum": ["Cisco-Secure-Access", "zScaler"],
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "secureServiceEdge",
+                          "secureServiceEdgeInstance"
+                        ],
+                        "additionalProperties": false,
+                        "allOf": [
+                          {
+                            "if": {
+                              "properties": {
+                                "secureServiceEdge": {
+                                  "properties": {
+                                    "value": {
+                                      "enum": [true]
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "then": {
+                              "required": ["secureServiceEdgeInstance"]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "allOf": [
+                    {
+                      "if": {
+                        "contains": {
+                          "required": ["cloudSaas"]
+                        }
+                      },
+                      "then": {
+                        "contains": {
+                          "anyOf": [
+                            {
+                              "required": ["cloudProbe"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "if": {
+                        "contains": {
+                          "required": ["cloudSaas"]
+                        }
+                      },
+                      "then": {
+                        "contains": {
+                          "anyOf": [
+                            {
+                              "required": ["count"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "if": {
+                        "contains": {
+                          "anyOf": [
+                            {
+                              "required": ["cloudProbe"]
+                            },
+                            {
+                              "required": ["cloudSaas"]
+                            }
+                          ]
+                        }
+                      },
+                      "then": {
+                        "not": {
+                          "contains": {
+                            "anyOf": [
+                              {
+                                "required": ["slaClass"]
+                              },
+                              {
+                                "required": ["backupSlaPreferredColor"]
+                              },
+                              {
+                                "required": ["set"]
+                              },
+                              {
+                                "required": ["redirectDns"]
+                              },
+                              {
+                                "required": ["appqoeOptimization"]
+                              },
+                              {
+                                "required": ["lossCorrection"]
+                              },
+                              {
+                                "required": ["cflowd"]
+                              },
+                              {
+                                "required": ["natPool"]
+                              },
+                              {
+                                "required": ["nat"]
+                              },
+                              {
+                                "required": ["sig"]
+                              },
+                              {
+                                "required": ["sse"]
+                              },
+                              {
+                                "required": ["fallbackToRouting"]
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "if": {
+                        "contains": {
+                          "required": ["fallbackToRouting"]
+                        }
+                      },
+                      "then": {
+                        "contains": {
+                          "anyOf": [
+                            {
+                              "required": ["sig"]
+                            },
+                            {
+                              "required": ["sse"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "if": {
+                        "contains": {
+                          "required": ["sig"]
+                        }
+                      },
+                      "then": {
+                        "not": {
+                          "contains": {
+                            "anyOf": [
+                              {
+                                "required": ["natPool"]
+                              },
+                              {
+                                "required": ["usevpn"]
+                              },
+                              {
+                                "required": ["sse"]
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "if": {
+                        "contains": {
+                          "required": ["natPool"]
+                        }
+                      },
+                      "then": {
+                        "not": {
+                          "contains": {
+                            "required": ["nat"]
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "baseAction": {
+                        "properties": {
+                          "value": {
+                            "const": "drop"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "actions": {
+                        "not": {
+                          "contains": {
+                            "anyOf": [
+                              {
+                                "required": ["backupSlaPreferredColor"]
+                              },
+                              {
+                                "required": ["cflowd"]
+                              },
+                              {
+                                "required": ["natPool"]
+                              },
+                              {
+                                "required": ["redirectDns"]
+                              },
+                              {
+                                "required": ["appqoeOptimization"]
+                              },
+                              {
+                                "required": ["lossCorrection"]
+                              },
+                              {
+                                "required": ["sig"]
+                              },
+                              {
+                                "required": ["fallbackToRouting"]
+                              },
+                              {
+                                "required": ["set"]
+                              },
+                              {
+                                "required": ["dscp"]
+                              },
+                              {
+                                "required": ["forwardingClass"]
+                              },
+                              {
+                                "required": ["localTlocList"]
+                              },
+                              {
+                                "required": ["perferredColorGroup"]
+                              },
+                              {
+                                "required": ["preferredRemoteColor"]
+                              },
+                              {
+                                "required": ["nextHop"]
+                              },
+                              {
+                                "required": ["nextHopIpv6"]
+                              },
+                              {
+                                "required": ["nextHopLoose"]
+                              },
+                              {
+                                "required": ["policer"]
+                              },
+                              {
+                                "required": ["service"]
+                              },
+                              {
+                                "required": ["serviceChain"]
+                              },
+                              {
+                                "required": ["tlocList"]
+                              },
+                              {
+                                "required": ["tloc"]
+                              },
+                              {
+                                "required": ["vpn"]
+                              },
+                              {
+                                "required": ["slaClass"]
+                              },
+                              {
+                                "required": ["cloudSaas"]
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "anyOf": [
+                    {
+                      "not": {
+                        "required": ["actions"]
+                      }
+                    },
+                    {
+                      "if": {
+                        "properties": {
+                          "actions": {
+                            "contains": {
+                              "required": ["redirectDns"]
+                            }
+                          }
+                        }
+                      },
+                      "then": {
+                        "properties": {
+                          "match": {
+                            "properties": {
+                              "entries": {
+                                "contains": {
+                                  "oneOf": [
+                                    {
+                                      "required": ["dnsAppList"]
+                                    },
+                                    {
+                                      "required": ["dns"]
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "if": {
+                        "properties": {
+                          "actions": {
+                            "contains": {
+                              "oneOf": [
+                                {
+                                  "required": ["cloudProbe"]
+                                },
+                                {
+                                  "required": ["cloudSaas"]
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      },
+                      "then": {
+                        "properties": {
+                          "match": {
+                            "properties": {
+                              "entries": {
+                                "contains": {
+                                  "oneOf": [
+                                    {
+                                      "required": ["appList"]
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "sequenceIpType": {
+                        "properties": {
+                          "value": {
+                            "const": "all"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "match": {
+                        "properties": {
+                          "entries": {
+                            "not": {
+                              "contains": {
+                                "anyOf": [
+                                  {
+                                    "required": ["sourceDataPrefixList"]
+                                  },
+                                  {
+                                    "required": ["sourceDataIpv6PrefixList"]
+                                  },
+                                  {
+                                    "required": ["destinationDataPrefixList"]
+                                  },
+                                  {
+                                    "required": [
+                                      "destinationDataIpv6PrefixList"
+                                    ]
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "required": [],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "documentation": {
+        "description": "This is the documentation for POST request schema for Traffic Policy profile parcel",
+        "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+        "details-2": "variable name should not be present if optionType value is NOT variable",
+        "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+        "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+        "examples": [
+          {
+            "name": "traffic-policy-1",
+            "description": "test",
+            "data": {
+              "target": {
+                "vpn": {
+                  "optionType": "global",
+                  "value": ["Guest"]
+                },
+                "direction": {
+                  "optionType": "global",
+                  "value": "service"
+                }
+              },
+              "sequences": [
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 1
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "traffic"
+                  },
+                  "sequenceIpType": {
+                    "optionType": "global",
+                    "value": "ipv4"
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "accept"
+                  },
+                  "match": {
+                    "entries": [
+                      {
+                        "appList": {
+                          "refId": {
+                            "optionType": "global",
+                            "value": "31cc53c4-b2e4-41dd-a2c4-c609e8cf432c"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "slaClass": [
+                        {
+                          "slaName": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "31cc53c4-b2e4-41dd-a2c4-c609e8cf432c"
+                            }
+                          }
+                        },
+                        {
+                          "preferredColor": {
+                            "optionType": "global",
+                            "value": ["gold"]
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "backupSlaPreferredColor": {
+                        "optionType": "global",
+                        "value": ["blue"]
+                      }
+                    },
+                    {
+                      "set": [
+                        {
+                          "dscp": {
+                            "optionType": "global",
+                            "value": 18
+                          }
+                        },
+                        {
+                          "forwardingClass": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "31cc53c4-b2e4-41dd-a2c4-c609e8cf432c"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "minVManageVersion": "20.15.1"
+      }
+    },
+    "required": ["data"],
+    "not": {
+      "required": ["metadata"]
+    }
+  }
+}

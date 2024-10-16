@@ -2,7 +2,7 @@ name: Advanced Inspection Profile Policy Definition
 rest_endpoint: /template/policy/definition/advancedinspectionprofile/
 has_version: true
 id_attribute: definitionId
-doc_category: Security Policies
+doc_category: (Classic) Security Policies
 attributes:
   - model_name: type
     type: String
@@ -49,7 +49,7 @@ attributes:
     tf_only: true
     type: Version
     description: URL filtering version
-    exclude_test: true 
+    exclude_test: true
   - model_name: ref
     data_path: [definition, advancedMalwareProtection]
     tf_name: advanced_malware_protection_id
@@ -61,7 +61,7 @@ attributes:
     tf_only: true
     type: Version
     description: Advanced malware protection version
-    exclude_test: true 
+    exclude_test: true
   - model_name: ref
     data_path: [definition, sslDecryption]
     tf_name: tls_ssl_decryption_id
@@ -73,7 +73,7 @@ attributes:
     tf_only: true
     type: Version
     description: TLS/SSL decryption version
-    exclude_test: true 
+    exclude_test: true
 
 test_prerequisites: |
   resource "sdwan_url_filtering_policy_definition" "test" {

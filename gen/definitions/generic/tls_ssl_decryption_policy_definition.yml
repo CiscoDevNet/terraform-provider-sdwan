@@ -2,7 +2,7 @@ name: TLS SSL Decryption Policy Definition
 rest_endpoint: /template/policy/definition/ssldecryption/
 has_version: true
 id_attribute: definitionId
-doc_category: Security Policies
+doc_category: (Classic) Security Policies
 attributes:
   - model_name: type
     type: String
@@ -33,7 +33,7 @@ attributes:
     description: Default action (applies when `mode` set to `security`)
     example: noIntent
   - model_name: sequences
-    data_path: [definition] 
+    data_path: [definition]
     type: List
     tf_name: network_rules
     description: List of network rules (applies when `mode` set to `security`)
@@ -69,7 +69,14 @@ attributes:
             type: String
             tf_name: option
             description: source / destination option
-            enum_values: [sourceIp, sourcePort, destinationVpn, destinationIp, destinationPort]
+            enum_values:
+              [
+                sourceIp,
+                sourcePort,
+                destinationVpn,
+                destinationIp,
+                destinationPort,
+              ]
             example: destinationIp
           - model_name: value
             type: String
@@ -77,7 +84,7 @@ attributes:
             description: source / destination option target
             example: 10.0.0.0/12
   - model_name: profiles
-    data_path: [definition] 
+    data_path: [definition]
     tf_name: url_rules
     type: List
     description: List of url rules (applies when `mode` set to `security`)

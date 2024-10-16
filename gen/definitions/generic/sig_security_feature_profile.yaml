@@ -1,0 +1,19 @@
+---
+name: SIG Security Feature Profile
+rest_endpoint: /v1/feature-profile/sdwan/sig-security/
+minimum_version: 20.12.0
+id_attribute: id
+doc_category: Feature Profiles
+test_tags: [SDWAN_2012]
+attributes:
+  - model_name: name
+    response_model_name: profileName
+    type: String
+    mandatory: true
+    description: The name of the sig security feature profile
+    example: SIG_SECURITY_FP_1
+  - model_name: description
+    type: String
+    mandatory: true
+    description: Description
+    example: My sig security feature profile 1

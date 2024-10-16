@@ -1,0 +1,182 @@
+---
+name: Service Multicast
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/routing/multicast
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+parcel_type: feature
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_feature_profile.test.id
+  - model_name: sptOnly
+    data_path: [basic]
+    example: false
+  - model_name: local
+    tf_name: local_replicator
+    data_path: [basic, localConfig]
+    example: false
+  - model_name: threshold
+    tf_name: local_replicator_threshold
+    data_path: [basic, localConfig]
+    example: 10
+  - model_name: interface
+    tf_name: igmp_interfaces
+    id: true
+    data_path: [igmp]
+    attributes:
+    - model_name: interfaceName
+      example: GigabitEthernet1
+      id: true
+    - model_name: version
+      example: 2
+    - model_name: joinGroup
+      tf_name: join_groups
+      attributes:
+      - model_name: groupAddress
+        example: 224.0.0.0
+      - model_name: sourceAddress
+        example: 1.2.3.4
+  - model_name: enableSSMFlag
+    tf_name: pim_source_specific_multicast_enable
+    data_path: [pim, ssm, ssmRangeConfig]
+    mandatory: true
+    example: true
+  - model_name: range
+    tf_name: pim_source_specific_multicast_access_list
+    data_path: [pim, ssm, ssmRangeConfig]
+    example: 1
+  - model_name: sptThreshold  
+    tf_name: pim_spt_threshold
+    data_path: [pim, ssm]
+    example: 0
+  - model_name: interface
+    tf_name: pim_interfaces
+    data_path: [pim]
+    attributes:
+    - model_name: interfaceName
+      id: true
+      example: GigabitEthernet1
+    - model_name: queryInterval
+      example: 30
+    - model_name: joinPruneInterval
+      example: 60
+  - model_name: rpAddr
+    tf_name: static_rp_addresses
+    data_path: [pim]
+    attributes:
+    - model_name: address
+      tf_name: ip_address
+      id: true
+      example: 1.2.3.4
+    - model_name: accessList
+      example: 1
+    - model_name: override
+      example: false
+  - model_name: enableAutoRPFlag
+    tf_name: enable_auto_rp
+    data_path: [pim, autoRp]
+    example: false
+  - model_name: sendRpAnnounceList
+    tf_name: auto_rp_announces
+    data_path: [pim, autoRp]
+    exclude_test: true
+    attributes:
+    - model_name: interfaceName
+      id: true
+      example: GigabitEthernet1
+    - model_name: scope
+      example: 1
+  - model_name: sendRpDiscovery
+    tf_name: auto_rp_discoveries
+    data_path: [pim, autoRp]
+    exclude_test: true
+    attributes:
+    - model_name: interfaceName
+      id: true
+      example: GigabitEthernet1
+    - model_name: scope
+      example: 1
+  - model_name: rpCandidate
+    tf_name: pim_bsr_rp_candidates
+    data_path: [pim, pimBsr]
+    attributes:
+    - model_name: interfaceName
+      id: true
+      example: GigabitEthernet1
+    - model_name: groupList
+      tf_name: access_list_id
+      example: 2
+    - model_name: interval
+      example: 30
+    - model_name: priority
+      example: 1
+  - model_name: bsrCandidate
+    tf_name: pim_bsr_candidates
+    data_path: [pim, pimBsr]
+    attributes:
+    - model_name: interfaceName
+      id: true
+      example: GigabitEthernet1
+    - model_name: mask
+      tf_name: hash_mask_length
+      example: 30
+    - model_name: priority
+      example: 120
+    - model_name: acceptRpCandidate
+      tf_name: accept_candidate_access_list
+      example: test
+  - model_name: msdpList
+    tf_name: msdp_groups
+    data_path: [msdp]
+    attributes:
+    - model_name: meshGroup
+      tf_name: mesh_group_name
+      id: true
+      example: Example
+    - model_name: peer
+      tf_name: peers
+      attributes:
+      - model_name: peerIp
+        mandatory: true
+        id: true
+        example: 1.2.3.4
+      - model_name: connectSourceIntf
+        tf_name: connection_source_interface
+        example: GigabitEthernet1
+      - model_name: remoteAs
+        example: 1 
+      - model_name: password
+        tf_name: peer_authentication_password
+        write_only: true
+        example: Password123!
+      - model_name: keepaliveInterval
+        example: 15
+      - model_name: keepaliveHoldTime
+        example: 30
+      - model_name: saLimit
+        example: 1
+      - model_name: defaultPeer
+        data_path: [default]
+        example: false
+      - model_name: refId
+        tf_name: prefix_list_id
+        data_path: [default, prefixList]
+        exclude_test: true
+        example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+  - model_name: originatorId
+    tf_name: msdp_originator_id
+    data_path: [msdp]
+    example: GigabitEthernet1
+  - model_name: refreshTimer
+    tf_name: msdp_connection_retry_interval
+    data_path: [msdp]
+    example: 30
+
+test_prerequisites: |
+  resource "sdwan_service_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
