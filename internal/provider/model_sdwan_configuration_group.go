@@ -152,7 +152,7 @@ func (data ConfigurationGroup) toBodyConfigGroupDeviceVariables(ctx context.Cont
 		body, _ = sjson.Set(body, "solution", data.Solution.ValueString())
 	}
 	if true {
-		//body, _ = sjson.Set(body, "devices", []interface{}{})
+		body, _ = sjson.Set(body, "devices", []interface{}{})
 		for _, item := range data.Devices {
 			itemBody := ""
 			if !item.Id.IsNull() {

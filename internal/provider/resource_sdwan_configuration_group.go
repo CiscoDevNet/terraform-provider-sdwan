@@ -438,14 +438,17 @@ func (r *ConfigurationGroupResource) Delete(ctx context.Context, req resource.De
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
 	body := state.toBodyConfigGroupDevices(ctx)
-	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", state.Id.ValueString())
-	res, err := r.client.DeleteBody(path, body)
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group devices (DELETE), got error: %s, %s", err, res.String()))
-		return
+
+	if len(gjson.Get(body, "devices").Array()) > 0 {
+		path := fmt.Sprintf("/v1/config-group/%v/device/associate/", state.Id.ValueString())
+		res, err := r.client.DeleteBody(path, body)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group devices (DELETE), got error: %s, %s", err, res.String()))
+			return
+		}
 	}
 
-	res, err = r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
+	res, err := r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group (DELETE), got error: %s, %s", err, res.String()))
 		return
