@@ -48,3 +48,11 @@ Required:
 
 - `id` (String) Device ID
 - `variables` (Map of String) Device variables
+
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+terraform import sdwan_attach_feature_device_template.example "f6b2c44c-693c-4763-b010-895aa3d236bd"
+```
