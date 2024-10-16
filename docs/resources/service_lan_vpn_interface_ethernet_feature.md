@@ -87,6 +87,13 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
       ]
       tloc_prefix_change     = true
       tloc_pref_change_value = 100
+      tracking_objects = [
+        {
+          tracker_id      = "1b270f6d-479b-47e3-ab0b-51bc6811a303"
+          tracker_action  = "Decrement"
+          decrement_value = 100
+        }
+      ]
     }
   ]
   arps = [
@@ -299,6 +306,7 @@ Optional:
   - Default value: `false`
 - `track_omp` (Boolean) Track OMP status
   - Default value: `false`
+- `tracking_objects` (Attributes List) Tracking object for VRRP configuration (see [below for nested schema](#nestedatt--ipv4_vrrps--tracking_objects))
 
 <a id="nestedatt--ipv4_vrrps--secondary_addresses"></a>
 ### Nested Schema for `ipv4_vrrps.secondary_addresses`
@@ -310,6 +318,20 @@ Optional:
 - `subnet_mask` (String) Subnet Mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `subnet_mask_variable` (String) Variable name
+
+
+<a id="nestedatt--ipv4_vrrps--tracking_objects"></a>
+### Nested Schema for `ipv4_vrrps.tracking_objects`
+
+Optional:
+
+- `decrement_value` (Number) Decrement Value for VRRP priority
+  - Range: `1`-`255`
+- `decrement_value_variable` (String) Variable name
+- `tracker_action` (String) Track Action
+  - Choices: `Decrement`, `Shutdown`
+- `tracker_action_variable` (String) Variable name
+- `tracker_id` (String)
 
 
 

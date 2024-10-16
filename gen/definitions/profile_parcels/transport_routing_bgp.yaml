@@ -118,20 +118,16 @@ attributes:
       - model_name: restartInterval
         data_path: [maxPrefixConfig]
         example: 30
-      # === UX2.0 Route Policy Not Supported by Provider ===
       - model_name: refId
         tf_name: in_route_policy_id
         data_path: [inRoutePolicy]
         exclude_test: true
         example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
-        # test_value:
-      # === UX2.0 Route Policy Not Supported by Provider ===
       - model_name: refId
         tf_name: out_route_policy_id
         data_path: [outRoutePolicy]
         exclude_test: true
         example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
-        # test_value:
   - model_name: ipv6Neighbor
     tf_name: ipv6_neighbors
     attributes:
@@ -194,20 +190,16 @@ attributes:
       - model_name: restartInterval
         data_path: [maxPrefixConfig]
         example: 30
-        # === UX2.0 Route Policy Not Supported by Provider ===
       - model_name: refId
         tf_name: in_route_policy_id
         data_path: [inRoutePolicy]
         exclude_test: true
         example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
-        # test_value:
-        # === UX2.0 Route Policy Not Supported by Provider ===
       - model_name: refId
         tf_name: out_route_policy_id
         data_path: [outRoutePolicy]
         exclude_test: true
         example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
-        # test_value:
   - model_name: aggregateAddress
     tf_name: ipv4_aggregate_addresses
     data_path: [addressFamily]
@@ -247,14 +239,12 @@ attributes:
     tf_name: ipv4_originate
     data_path: [addressFamily]
     example: false
-  #   # === UX2.0 Route Policy Not Supported by Provider ===
   - model_name: refId
     tf_name: ipv4_table_map_route_policy_id
     data_path: [addressFamily, name]
     always_include_parent: true
     exclude_test: true
     example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
-  #   # test_value:
   - model_name: filter
     tf_name: ipv4_table_map_filter
     data_path: [addressFamily]
@@ -266,12 +256,10 @@ attributes:
     attributes:
     - model_name: protocol
       example: static
-      # === UX2.0 Route Policy Not Supported by Provider ===
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
       example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
-      # test_value:
   - model_name: ipv6AggregateAddress
     tf_name: ipv6_aggregate_addresses
     data_path: [ipv6AddressFamily]
@@ -301,14 +289,12 @@ attributes:
     tf_name: ipv6_originate
     data_path: [ipv6AddressFamily]
     example: true
-    # === UX2.0 Route Policy Not Supported by Provider ===
   - model_name: refId
     tf_name: ipv6_table_map_route_policy_id
     data_path: [ipv6AddressFamily, name]
     always_include_parent: true
     exclude_test: true
     example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
-    # test_value:
   - model_name: filter
     tf_name: ipv6_table_map_filter
     data_path: [ipv6AddressFamily]
@@ -320,12 +306,10 @@ attributes:
     attributes:
     - model_name: protocol
       example: static
-      # === UX2.0 Route Policy Not Supported by Provider ===
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
       example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
-      # test_value:
   - model_name: mplsInterface
     tf_name: mpls_interfaces
     attributes:
