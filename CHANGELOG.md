@@ -27,6 +27,7 @@
 - Add `sdwan_service_wireless_lan_feature` resource and data source
 - Add `sdwan_transport_t1_e1_controller_feature` resource and data source
 - Add import to `sdwan_attach_feature_device_template` and `sdwan_attach_feature_device_template` resources
+- Add `sdwan_application_priority_traffic_policy_policy` resource and data source
 - Add `sdwan_transport_ipv4_acl_feature` resource and data source
 - Add `sdwan_service_ipv4_acl_feature` resource and data source
 - Add `sdwan_transport_ipv6_acl_feature` resource and data source
