@@ -24,7 +24,7 @@ resource "sdwan_transport_ipv6_acl_feature" "example" {
         {
           accept_counter_name  = "COUNTER_1"
           accept_log           = false
-          accept_next_hop      = "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+          accept_set_next_hop  = "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
           accept_traffic_class = 10
         }
       ]

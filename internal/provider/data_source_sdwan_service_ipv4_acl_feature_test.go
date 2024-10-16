@@ -39,10 +39,10 @@ func TestAccDataSourceSdwanServiceIPv4ACLProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.conditions.0.packet_length", "1500"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.conditions.0.source_ports.0.port", "8000"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.conditions.0.tcp_state", "syn"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.actions.0.accept_dscp", "60"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.actions.0.accept_set_dscp", "60"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.actions.0.accept_counter_name", "COUNTER_1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.actions.0.accept_log", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.actions.0.accept_next_hop", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.actions.0.accept_set_next_hop", "1.2.3.4"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -88,10 +88,10 @@ func testAccDataSourceSdwanServiceIPv4ACLProfileParcelConfig() string {
 	config += `		tcp_state = "syn"` + "\n"
 	config += `	}]` + "\n"
 	config += `	  actions = [{` + "\n"
-	config += `		accept_dscp = 60` + "\n"
+	config += `		accept_set_dscp = 60` + "\n"
 	config += `		accept_counter_name = "COUNTER_1"` + "\n"
 	config += `		accept_log = false` + "\n"
-	config += `		accept_next_hop = "1.2.3.4"` + "\n"
+	config += `		accept_set_next_hop = "1.2.3.4"` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"

@@ -182,7 +182,7 @@ func (d *TransportIPv6ACLProfileParcelDataSource) Schema(ctx context.Context, re
 										MarkdownDescription: "Enable Log",
 										Computed:            true,
 									},
-									"accept_next_hop": schema.StringAttribute{
+									"accept_set_next_hop": schema.StringAttribute{
 										MarkdownDescription: "Set Next Hop (IPV6 address)",
 										Computed:            true,
 									},

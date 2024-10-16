@@ -67,10 +67,10 @@ type TransportIPv4ACLSequencesConditions struct {
 	TcpState                      types.String                                          `tfsdk:"tcp_state"`
 }
 type TransportIPv4ACLSequencesActions struct {
-	AcceptDscp         types.Int64  `tfsdk:"accept_dscp"`
+	AcceptSetDscp      types.Int64  `tfsdk:"accept_set_dscp"`
 	AcceptCounterName  types.String `tfsdk:"accept_counter_name"`
 	AcceptLog          types.Bool   `tfsdk:"accept_log"`
-	AcceptNextHop      types.String `tfsdk:"accept_next_hop"`
+	AcceptSetNextHop   types.String `tfsdk:"accept_set_next_hop"`
 	AcceptMirrorListId types.String `tfsdk:"accept_mirror_list_id"`
 	AcceptPolicerId    types.String `tfsdk:"accept_policer_id"`
 	DropCounterName    types.String `tfsdk:"drop_counter_name"`
@@ -248,10 +248,10 @@ func (data TransportIPv4ACL) toBody(ctx context.Context) string {
 
 				for _, childItem := range item.Actions {
 					itemChildBody := ""
-					if !childItem.AcceptDscp.IsNull() {
+					if !childItem.AcceptSetDscp.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setDscp.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setDscp.value", childItem.AcceptDscp.ValueInt64())
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setDscp.value", childItem.AcceptSetDscp.ValueInt64())
 						}
 					}
 					if !childItem.AcceptCounterName.IsNull() {
@@ -266,10 +266,10 @@ func (data TransportIPv4ACL) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "accept.log.value", childItem.AcceptLog.ValueBool())
 						}
 					}
-					if !childItem.AcceptNextHop.IsNull() {
+					if !childItem.AcceptSetNextHop.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setNextHop.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setNextHop.value", childItem.AcceptNextHop.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setNextHop.value", childItem.AcceptSetNextHop.ValueString())
 						}
 					}
 					if !childItem.AcceptMirrorListId.IsNull() {
@@ -472,12 +472,12 @@ func (data *TransportIPv4ACL) fromBody(ctx context.Context, res gjson.Result) {
 				item.Actions = make([]TransportIPv4ACLSequencesActions, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TransportIPv4ACLSequencesActions{}
-					cItem.AcceptDscp = types.Int64Null()
+					cItem.AcceptSetDscp = types.Int64Null()
 
 					if t := cv.Get("accept.setDscp.optionType"); t.Exists() {
 						va := cv.Get("accept.setDscp.value")
 						if t.String() == "global" {
-							cItem.AcceptDscp = types.Int64Value(va.Int())
+							cItem.AcceptSetDscp = types.Int64Value(va.Int())
 						}
 					}
 					cItem.AcceptCounterName = types.StringNull()
@@ -496,12 +496,12 @@ func (data *TransportIPv4ACL) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.AcceptLog = types.BoolValue(va.Bool())
 						}
 					}
-					cItem.AcceptNextHop = types.StringNull()
+					cItem.AcceptSetNextHop = types.StringNull()
 
 					if t := cv.Get("accept.setNextHop.optionType"); t.Exists() {
 						va := cv.Get("accept.setNextHop.value")
 						if t.String() == "global" {
-							cItem.AcceptNextHop = types.StringValue(va.String())
+							cItem.AcceptSetNextHop = types.StringValue(va.String())
 						}
 					}
 					cItem.AcceptMirrorListId = types.StringNull()
@@ -802,7 +802,7 @@ func (data *TransportIPv4ACL) updateFromBody(ctx context.Context, res gjson.Resu
 		}
 		for ci := range data.Sequences[i].Actions {
 			keys := [...]string{"accept.setDscp", "accept.counterName", "accept.log", "accept.setNextHop", "accept.mirror.refId", "accept.policer.refId", "drop.counterName", "drop.log"}
-			keyValues := [...]string{strconv.FormatInt(data.Sequences[i].Actions[ci].AcceptDscp.ValueInt64(), 10), data.Sequences[i].Actions[ci].AcceptCounterName.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].AcceptLog.ValueBool()), data.Sequences[i].Actions[ci].AcceptNextHop.ValueString(), data.Sequences[i].Actions[ci].AcceptMirrorListId.ValueString(), data.Sequences[i].Actions[ci].AcceptPolicerId.ValueString(), data.Sequences[i].Actions[ci].DropCounterName.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].DropLog.ValueBool())}
+			keyValues := [...]string{strconv.FormatInt(data.Sequences[i].Actions[ci].AcceptSetDscp.ValueInt64(), 10), data.Sequences[i].Actions[ci].AcceptCounterName.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].AcceptLog.ValueBool()), data.Sequences[i].Actions[ci].AcceptSetNextHop.ValueString(), data.Sequences[i].Actions[ci].AcceptMirrorListId.ValueString(), data.Sequences[i].Actions[ci].AcceptPolicerId.ValueString(), data.Sequences[i].Actions[ci].DropCounterName.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].DropLog.ValueBool())}
 			keyValuesVariables := [...]string{"", "", "", "", "", "", "", ""}
 
 			var cr gjson.Result
@@ -829,12 +829,12 @@ func (data *TransportIPv4ACL) updateFromBody(ctx context.Context, res gjson.Resu
 					return true
 				},
 			)
-			data.Sequences[i].Actions[ci].AcceptDscp = types.Int64Null()
+			data.Sequences[i].Actions[ci].AcceptSetDscp = types.Int64Null()
 
 			if t := cr.Get("accept.setDscp.optionType"); t.Exists() {
 				va := cr.Get("accept.setDscp.value")
 				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AcceptDscp = types.Int64Value(va.Int())
+					data.Sequences[i].Actions[ci].AcceptSetDscp = types.Int64Value(va.Int())
 				}
 			}
 			data.Sequences[i].Actions[ci].AcceptCounterName = types.StringNull()
@@ -853,12 +853,12 @@ func (data *TransportIPv4ACL) updateFromBody(ctx context.Context, res gjson.Resu
 					data.Sequences[i].Actions[ci].AcceptLog = types.BoolValue(va.Bool())
 				}
 			}
-			data.Sequences[i].Actions[ci].AcceptNextHop = types.StringNull()
+			data.Sequences[i].Actions[ci].AcceptSetNextHop = types.StringNull()
 
 			if t := cr.Get("accept.setNextHop.optionType"); t.Exists() {
 				va := cr.Get("accept.setNextHop.value")
 				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AcceptNextHop = types.StringValue(va.String())
+					data.Sequences[i].Actions[ci].AcceptSetNextHop = types.StringValue(va.String())
 				}
 			}
 			data.Sequences[i].Actions[ci].AcceptMirrorListId = types.StringNull()

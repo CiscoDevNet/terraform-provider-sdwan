@@ -52,11 +52,11 @@ Read-Only:
 Read-Only:
 
 - `accept_counter_name` (String) Counter Name
-- `accept_dscp` (Number) DSCP number
 - `accept_log` (Boolean) Enable Log
 - `accept_mirror_list_id` (String)
-- `accept_next_hop` (String) Set Next Hop (IPV4 address)
 - `accept_policer_id` (String)
+- `accept_set_dscp` (Number) DSCP number
+- `accept_set_next_hop` (String) Set Next Hop (IPV4 address)
 - `drop_counter_name` (String) Counter Name
 - `drop_log` (Boolean) Enable Log
 

@@ -42,7 +42,7 @@ func TestAccDataSourceSdwanServiceIPv6ACLProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv6_acl_feature.test", "sequences.0.conditions.0.tcp_state", "syn"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv6_acl_feature.test", "sequences.0.actions.0.accept_counter_name", "COUNTER_1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv6_acl_feature.test", "sequences.0.actions.0.accept_log", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv6_acl_feature.test", "sequences.0.actions.0.accept_next_hop", "2001:0db8:85a3:0000:0000:8a2e:0370:7334"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv6_acl_feature.test", "sequences.0.actions.0.accept_set_next_hop", "2001:0db8:85a3:0000:0000:8a2e:0370:7334"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv6_acl_feature.test", "sequences.0.actions.0.accept_traffic_class", "10"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
@@ -91,7 +91,7 @@ func testAccDataSourceSdwanServiceIPv6ACLProfileParcelConfig() string {
 	config += `	  actions = [{` + "\n"
 	config += `		accept_counter_name = "COUNTER_1"` + "\n"
 	config += `		accept_log = false` + "\n"
-	config += `		accept_next_hop = "2001:0db8:85a3:0000:0000:8a2e:0370:7334"` + "\n"
+	config += `		accept_set_next_hop = "2001:0db8:85a3:0000:0000:8a2e:0370:7334"` + "\n"
 	config += `		accept_traffic_class = 10` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"

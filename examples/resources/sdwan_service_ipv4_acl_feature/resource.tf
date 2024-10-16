@@ -22,10 +22,10 @@ resource "sdwan_service_ipv4_acl_feature" "example" {
       ]
       actions = [
         {
-          accept_dscp         = 60
+          accept_set_dscp     = 60
           accept_counter_name = "COUNTER_1"
           accept_log          = false
-          accept_next_hop     = "1.2.3.4"
+          accept_set_next_hop = "1.2.3.4"
         }
       ]
     }

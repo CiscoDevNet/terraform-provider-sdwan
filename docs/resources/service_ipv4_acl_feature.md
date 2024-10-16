@@ -39,10 +39,10 @@ resource "sdwan_service_ipv4_acl_feature" "example" {
       ]
       actions = [
         {
-          accept_dscp         = 60
+          accept_set_dscp     = 60
           accept_counter_name = "COUNTER_1"
           accept_log          = false
-          accept_next_hop     = "1.2.3.4"
+          accept_set_next_hop = "1.2.3.4"
         }
       ]
     }
@@ -91,13 +91,13 @@ Optional:
 Optional:
 
 - `accept_counter_name` (String) Counter Name
-- `accept_dscp` (Number) DSCP number
-  - Range: `0`-`63`
 - `accept_log` (Boolean) Enable Log
   - Default value: `false`
 - `accept_mirror_list_id` (String)
-- `accept_next_hop` (String) Set Next Hop (IPV4 address)
 - `accept_policer_id` (String)
+- `accept_set_dscp` (Number) DSCP number
+  - Range: `0`-`63`
+- `accept_set_next_hop` (String) Set Next Hop (IPV4 address)
 - `drop_counter_name` (String) Counter Name
 - `drop_log` (Boolean) Enable Log
   - Default value: `false`

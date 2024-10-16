@@ -67,7 +67,7 @@ type ServiceIPv6ACLSequencesConditions struct {
 type ServiceIPv6ACLSequencesActions struct {
 	AcceptCounterName  types.String `tfsdk:"accept_counter_name"`
 	AcceptLog          types.Bool   `tfsdk:"accept_log"`
-	AcceptNextHop      types.String `tfsdk:"accept_next_hop"`
+	AcceptSetNextHop   types.String `tfsdk:"accept_set_next_hop"`
 	AcceptTrafficClass types.Int64  `tfsdk:"accept_traffic_class"`
 	AcceptMirrorListId types.String `tfsdk:"accept_mirror_list_id"`
 	AcceptPolicerId    types.String `tfsdk:"accept_policer_id"`
@@ -244,10 +244,10 @@ func (data ServiceIPv6ACL) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "accept.log.value", childItem.AcceptLog.ValueBool())
 						}
 					}
-					if !childItem.AcceptNextHop.IsNull() {
+					if !childItem.AcceptSetNextHop.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setNextHop.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setNextHop.value", childItem.AcceptNextHop.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setNextHop.value", childItem.AcceptSetNextHop.ValueString())
 						}
 					}
 					if !childItem.AcceptTrafficClass.IsNull() {
@@ -468,12 +468,12 @@ func (data *ServiceIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.AcceptLog = types.BoolValue(va.Bool())
 						}
 					}
-					cItem.AcceptNextHop = types.StringNull()
+					cItem.AcceptSetNextHop = types.StringNull()
 
 					if t := cv.Get("accept.setNextHop.optionType"); t.Exists() {
 						va := cv.Get("accept.setNextHop.value")
 						if t.String() == "global" {
-							cItem.AcceptNextHop = types.StringValue(va.String())
+							cItem.AcceptSetNextHop = types.StringValue(va.String())
 						}
 					}
 					cItem.AcceptTrafficClass = types.Int64Null()
@@ -778,7 +778,7 @@ func (data *ServiceIPv6ACL) updateFromBody(ctx context.Context, res gjson.Result
 		}
 		for ci := range data.Sequences[i].Actions {
 			keys := [...]string{"accept.counterName", "accept.log", "accept.setNextHop", "accept.setTrafficClass", "accept.mirror.refId", "accept.policer.refId", "drop.counterName", "drop.log"}
-			keyValues := [...]string{data.Sequences[i].Actions[ci].AcceptCounterName.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].AcceptLog.ValueBool()), data.Sequences[i].Actions[ci].AcceptNextHop.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].AcceptTrafficClass.ValueInt64(), 10), data.Sequences[i].Actions[ci].AcceptMirrorListId.ValueString(), data.Sequences[i].Actions[ci].AcceptPolicerId.ValueString(), data.Sequences[i].Actions[ci].DropCounterName.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].DropLog.ValueBool())}
+			keyValues := [...]string{data.Sequences[i].Actions[ci].AcceptCounterName.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].AcceptLog.ValueBool()), data.Sequences[i].Actions[ci].AcceptSetNextHop.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].AcceptTrafficClass.ValueInt64(), 10), data.Sequences[i].Actions[ci].AcceptMirrorListId.ValueString(), data.Sequences[i].Actions[ci].AcceptPolicerId.ValueString(), data.Sequences[i].Actions[ci].DropCounterName.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].DropLog.ValueBool())}
 			keyValuesVariables := [...]string{"", "", "", "", "", "", "", ""}
 
 			var cr gjson.Result
@@ -821,12 +821,12 @@ func (data *ServiceIPv6ACL) updateFromBody(ctx context.Context, res gjson.Result
 					data.Sequences[i].Actions[ci].AcceptLog = types.BoolValue(va.Bool())
 				}
 			}
-			data.Sequences[i].Actions[ci].AcceptNextHop = types.StringNull()
+			data.Sequences[i].Actions[ci].AcceptSetNextHop = types.StringNull()
 
 			if t := cr.Get("accept.setNextHop.optionType"); t.Exists() {
 				va := cr.Get("accept.setNextHop.value")
 				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AcceptNextHop = types.StringValue(va.String())
+					data.Sequences[i].Actions[ci].AcceptSetNextHop = types.StringValue(va.String())
 				}
 			}
 			data.Sequences[i].Actions[ci].AcceptTrafficClass = types.Int64Null()

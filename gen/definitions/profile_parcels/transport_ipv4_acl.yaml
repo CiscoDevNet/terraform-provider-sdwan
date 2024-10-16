@@ -80,7 +80,7 @@ attributes:
     - model_name: actions
       attributes: 
       - model_name: setDscp
-        tf_name: accept_dscp
+        tf_name: accept_set_dscp
         data_path: [accept]
         example: 60
       - model_name: counterName
@@ -93,7 +93,7 @@ attributes:
         example: false
         exclude_null: true
       - model_name: setNextHop
-        tf_name: accept_next_hop
+        tf_name: accept_set_next_hop
         data_path: [accept]
         example: 1.2.3.4
       - model_name: refId

@@ -184,7 +184,7 @@ func (d *TransportIPv4ACLProfileParcelDataSource) Schema(ctx context.Context, re
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
-									"accept_dscp": schema.Int64Attribute{
+									"accept_set_dscp": schema.Int64Attribute{
 										MarkdownDescription: "DSCP number",
 										Computed:            true,
 									},
@@ -196,7 +196,7 @@ func (d *TransportIPv4ACLProfileParcelDataSource) Schema(ctx context.Context, re
 										MarkdownDescription: "Enable Log",
 										Computed:            true,
 									},
-									"accept_next_hop": schema.StringAttribute{
+									"accept_set_next_hop": schema.StringAttribute{
 										MarkdownDescription: "Set Next Hop (IPV4 address)",
 										Computed:            true,
 									},

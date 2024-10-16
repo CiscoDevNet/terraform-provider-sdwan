@@ -221,7 +221,7 @@ func (r *TransportIPv4ACLProfileParcelResource) Schema(ctx context.Context, req 
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
-									"accept_dscp": schema.Int64Attribute{
+									"accept_set_dscp": schema.Int64Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("DSCP number").AddIntegerRangeDescription(0, 63).String,
 										Optional:            true,
 										Validators: []validator.Int64{
@@ -239,7 +239,7 @@ func (r *TransportIPv4ACLProfileParcelResource) Schema(ctx context.Context, req 
 										MarkdownDescription: helpers.NewAttributeDescription("Enable Log").AddDefaultValueDescription("false").String,
 										Optional:            true,
 									},
-									"accept_next_hop": schema.StringAttribute{
+									"accept_set_next_hop": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set Next Hop (IPV4 address)").String,
 										Optional:            true,
 									},

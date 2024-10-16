@@ -226,7 +226,7 @@ func (r *ServiceIPv6ACLProfileParcelResource) Schema(ctx context.Context, req re
 										MarkdownDescription: helpers.NewAttributeDescription("Enable Log").AddDefaultValueDescription("false").String,
 										Optional:            true,
 									},
-									"accept_next_hop": schema.StringAttribute{
+									"accept_set_next_hop": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set Next Hop (IPV6 address)").String,
 										Optional:            true,
 									},
