@@ -26,7 +26,7 @@ attributes:
       exclude_null: true
       example: drop
     - model_name: matchEntries
-      tf_name: conditions
+      tf_name: match_entries
       attributes: 
       - model_name: dscp
         tf_name: dscps

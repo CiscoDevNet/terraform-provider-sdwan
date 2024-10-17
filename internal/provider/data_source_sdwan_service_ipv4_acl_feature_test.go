@@ -36,9 +36,9 @@ func TestAccDataSourceSdwanServiceIPv4ACLProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "default_action", "drop"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.sequence_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.sequence_name", "AccessControlList1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.conditions.0.packet_length", "1500"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.conditions.0.source_ports.0.port", "8000"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.conditions.0.tcp_state", "syn"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.match_entries.0.packet_length", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.match_entries.0.source_ports.0.port", "8000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.match_entries.0.tcp_state", "syn"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.actions.0.accept_set_dscp", "60"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.actions.0.accept_counter_name", "COUNTER_1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "sequences.0.actions.0.accept_log", "false"))
@@ -78,7 +78,7 @@ func testAccDataSourceSdwanServiceIPv4ACLProfileParcelConfig() string {
 	config += `	sequences = [{` + "\n"
 	config += `	  sequence_id = 1` + "\n"
 	config += `	  sequence_name = "AccessControlList1"` + "\n"
-	config += `	  conditions = [{` + "\n"
+	config += `	  match_entries = [{` + "\n"
 	config += `		dscps = [16]` + "\n"
 	config += `		packet_length = 1500` + "\n"
 	config += `		protocols = [1]` + "\n"

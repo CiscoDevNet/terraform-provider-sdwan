@@ -100,7 +100,7 @@ func (d *ServiceIPv4ACLProfileParcelDataSource) Schema(ctx context.Context, req 
 							MarkdownDescription: "Base Action",
 							Computed:            true,
 						},
-						"conditions": schema.ListNestedAttribute{
+						"match_entries": schema.ListNestedAttribute{
 							MarkdownDescription: "Define match conditions",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{

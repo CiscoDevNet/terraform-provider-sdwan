@@ -7,7 +7,7 @@ resource "sdwan_service_ipv4_acl_feature" "example" {
     {
       sequence_id   = 1
       sequence_name = "AccessControlList1"
-      conditions = [
+      match_entries = [
         {
           dscps         = [16]
           packet_length = 1500

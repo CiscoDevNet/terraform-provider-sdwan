@@ -7,7 +7,7 @@ resource "sdwan_transport_ipv6_acl_feature" "example" {
     {
       sequence_id   = 1
       sequence_name = "AccessControlList1"
-      conditions = [
+      match_entries = [
         {
           next_header   = 10
           packet_length = 1500

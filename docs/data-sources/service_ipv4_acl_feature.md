@@ -42,7 +42,7 @@ Read-Only:
 
 - `actions` (Attributes List) Define list of actions (see [below for nested schema](#nestedatt--sequences--actions))
 - `base_action` (String) Base Action
-- `conditions` (Attributes List) Define match conditions (see [below for nested schema](#nestedatt--sequences--conditions))
+- `match_entries` (Attributes List) Define match conditions (see [below for nested schema](#nestedatt--sequences--match_entries))
 - `sequence_id` (Number) Sequence Id
 - `sequence_name` (String) Sequence Name
 
@@ -61,15 +61,15 @@ Read-Only:
 - `drop_log` (Boolean) Enable Log
 
 
-<a id="nestedatt--sequences--conditions"></a>
-### Nested Schema for `sequences.conditions`
+<a id="nestedatt--sequences--match_entries"></a>
+### Nested Schema for `sequences.match_entries`
 
 Read-Only:
 
 - `destination_data_prefix` (String) Destination Data IP Prefix
 - `destination_data_prefix_list_id` (String)
 - `destination_data_prefix_variable` (String) Variable name
-- `destination_ports` (Attributes List) Destination Port List (see [below for nested schema](#nestedatt--sequences--conditions--destination_ports))
+- `destination_ports` (Attributes List) Destination Port List (see [below for nested schema](#nestedatt--sequences--match_entries--destination_ports))
 - `dscps` (Set of Number) DSCP number
 - `icmp_messages` (Set of String) ICMP Message
 - `packet_length` (Number) Packet Length
@@ -77,19 +77,19 @@ Read-Only:
 - `source_data_prefix` (String) Source Data IP Prefix
 - `source_data_prefix_list_id` (String)
 - `source_data_prefix_variable` (String) Variable name
-- `source_ports` (Attributes List) Source Port List (see [below for nested schema](#nestedatt--sequences--conditions--source_ports))
+- `source_ports` (Attributes List) Source Port List (see [below for nested schema](#nestedatt--sequences--match_entries--source_ports))
 - `tcp_state` (String) TCP States
 
-<a id="nestedatt--sequences--conditions--destination_ports"></a>
-### Nested Schema for `sequences.conditions.destination_ports`
+<a id="nestedatt--sequences--match_entries--destination_ports"></a>
+### Nested Schema for `sequences.match_entries.destination_ports`
 
 Read-Only:
 
 - `port` (Number) destination port range or individual port number
 
 
-<a id="nestedatt--sequences--conditions--source_ports"></a>
-### Nested Schema for `sequences.conditions.source_ports`
+<a id="nestedatt--sequences--match_entries--source_ports"></a>
+### Nested Schema for `sequences.match_entries.source_ports`
 
 Read-Only:
 

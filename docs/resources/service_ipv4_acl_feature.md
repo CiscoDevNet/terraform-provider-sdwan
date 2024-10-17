@@ -24,7 +24,7 @@ resource "sdwan_service_ipv4_acl_feature" "example" {
     {
       sequence_id   = 1
       sequence_name = "AccessControlList1"
-      conditions = [
+      match_entries = [
         {
           dscps         = [16]
           packet_length = 1500
@@ -80,7 +80,7 @@ Optional:
 - `base_action` (String) Base Action
   - Choices: `drop`, `accept`
   - Default value: `accept`
-- `conditions` (Attributes List) Define match conditions (see [below for nested schema](#nestedatt--sequences--conditions))
+- `match_entries` (Attributes List) Define match conditions (see [below for nested schema](#nestedatt--sequences--match_entries))
 - `sequence_id` (Number) Sequence Id
   - Range: `1`-`65536`
 - `sequence_name` (String) Sequence Name
@@ -103,15 +103,15 @@ Optional:
   - Default value: `false`
 
 
-<a id="nestedatt--sequences--conditions"></a>
-### Nested Schema for `sequences.conditions`
+<a id="nestedatt--sequences--match_entries"></a>
+### Nested Schema for `sequences.match_entries`
 
 Optional:
 
 - `destination_data_prefix` (String) Destination Data IP Prefix
 - `destination_data_prefix_list_id` (String)
 - `destination_data_prefix_variable` (String) Variable name
-- `destination_ports` (Attributes List) Destination Port List (see [below for nested schema](#nestedatt--sequences--conditions--destination_ports))
+- `destination_ports` (Attributes List) Destination Port List (see [below for nested schema](#nestedatt--sequences--match_entries--destination_ports))
 - `dscps` (Set of Number) DSCP number
 - `icmp_messages` (Set of String) ICMP Message
 - `packet_length` (Number) Packet Length
@@ -119,20 +119,20 @@ Optional:
 - `source_data_prefix` (String) Source Data IP Prefix
 - `source_data_prefix_list_id` (String)
 - `source_data_prefix_variable` (String) Variable name
-- `source_ports` (Attributes List) Source Port List (see [below for nested schema](#nestedatt--sequences--conditions--source_ports))
+- `source_ports` (Attributes List) Source Port List (see [below for nested schema](#nestedatt--sequences--match_entries--source_ports))
 - `tcp_state` (String) TCP States
   - Choices: `syn`
 
-<a id="nestedatt--sequences--conditions--destination_ports"></a>
-### Nested Schema for `sequences.conditions.destination_ports`
+<a id="nestedatt--sequences--match_entries--destination_ports"></a>
+### Nested Schema for `sequences.match_entries.destination_ports`
 
 Optional:
 
 - `port` (Number) destination port range or individual port number
 
 
-<a id="nestedatt--sequences--conditions--source_ports"></a>
-### Nested Schema for `sequences.conditions.source_ports`
+<a id="nestedatt--sequences--match_entries--source_ports"></a>
+### Nested Schema for `sequences.match_entries.source_ports`
 
 Optional:
 

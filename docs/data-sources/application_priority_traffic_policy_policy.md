@@ -44,7 +44,7 @@ Read-Only:
 
 - `actions` (Attributes List) (see [below for nested schema](#nestedatt--sequences--actions))
 - `base_action` (String) Base Action
-- `matches` (Attributes List) (see [below for nested schema](#nestedatt--sequences--matches))
+- `match_entries` (Attributes List) (see [below for nested schema](#nestedatt--sequences--match_entries))
 - `protocol` (String) Sequence IP Type
 - `sequence_id` (Number) Sequence Id
 - `sequence_name` (String) Sequence Name
@@ -127,8 +127,8 @@ Read-Only:
 
 
 
-<a id="nestedatt--sequences--matches"></a>
-### Nested Schema for `sequences.matches`
+<a id="nestedatt--sequences--match_entries"></a>
+### Nested Schema for `sequences.match_entries`
 
 Read-Only:
 

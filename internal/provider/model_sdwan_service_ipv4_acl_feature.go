@@ -44,27 +44,27 @@ type ServiceIPv4ACL struct {
 }
 
 type ServiceIPv4ACLSequences struct {
-	SequenceId   types.Int64                         `tfsdk:"sequence_id"`
-	SequenceName types.String                        `tfsdk:"sequence_name"`
-	BaseAction   types.String                        `tfsdk:"base_action"`
-	Conditions   []ServiceIPv4ACLSequencesConditions `tfsdk:"conditions"`
-	Actions      []ServiceIPv4ACLSequencesActions    `tfsdk:"actions"`
+	SequenceId   types.Int64                           `tfsdk:"sequence_id"`
+	SequenceName types.String                          `tfsdk:"sequence_name"`
+	BaseAction   types.String                          `tfsdk:"base_action"`
+	MatchEntries []ServiceIPv4ACLSequencesMatchEntries `tfsdk:"match_entries"`
+	Actions      []ServiceIPv4ACLSequencesActions      `tfsdk:"actions"`
 }
 
-type ServiceIPv4ACLSequencesConditions struct {
-	Dscps                         types.Set                                           `tfsdk:"dscps"`
-	PacketLength                  types.Int64                                         `tfsdk:"packet_length"`
-	Protocols                     types.Set                                           `tfsdk:"protocols"`
-	IcmpMessages                  types.Set                                           `tfsdk:"icmp_messages"`
-	SourceDataPrefixListId        types.String                                        `tfsdk:"source_data_prefix_list_id"`
-	SourceDataPrefix              types.String                                        `tfsdk:"source_data_prefix"`
-	SourceDataPrefixVariable      types.String                                        `tfsdk:"source_data_prefix_variable"`
-	SourcePorts                   []ServiceIPv4ACLSequencesConditionsSourcePorts      `tfsdk:"source_ports"`
-	DestinationDataPrefixListId   types.String                                        `tfsdk:"destination_data_prefix_list_id"`
-	DestinationDataPrefix         types.String                                        `tfsdk:"destination_data_prefix"`
-	DestinationDataPrefixVariable types.String                                        `tfsdk:"destination_data_prefix_variable"`
-	DestinationPorts              []ServiceIPv4ACLSequencesConditionsDestinationPorts `tfsdk:"destination_ports"`
-	TcpState                      types.String                                        `tfsdk:"tcp_state"`
+type ServiceIPv4ACLSequencesMatchEntries struct {
+	Dscps                         types.Set                                             `tfsdk:"dscps"`
+	PacketLength                  types.Int64                                           `tfsdk:"packet_length"`
+	Protocols                     types.Set                                             `tfsdk:"protocols"`
+	IcmpMessages                  types.Set                                             `tfsdk:"icmp_messages"`
+	SourceDataPrefixListId        types.String                                          `tfsdk:"source_data_prefix_list_id"`
+	SourceDataPrefix              types.String                                          `tfsdk:"source_data_prefix"`
+	SourceDataPrefixVariable      types.String                                          `tfsdk:"source_data_prefix_variable"`
+	SourcePorts                   []ServiceIPv4ACLSequencesMatchEntriesSourcePorts      `tfsdk:"source_ports"`
+	DestinationDataPrefixListId   types.String                                          `tfsdk:"destination_data_prefix_list_id"`
+	DestinationDataPrefix         types.String                                          `tfsdk:"destination_data_prefix"`
+	DestinationDataPrefixVariable types.String                                          `tfsdk:"destination_data_prefix_variable"`
+	DestinationPorts              []ServiceIPv4ACLSequencesMatchEntriesDestinationPorts `tfsdk:"destination_ports"`
+	TcpState                      types.String                                          `tfsdk:"tcp_state"`
 }
 type ServiceIPv4ACLSequencesActions struct {
 	AcceptSetDscp      types.Int64  `tfsdk:"accept_set_dscp"`
@@ -77,10 +77,10 @@ type ServiceIPv4ACLSequencesActions struct {
 	DropLog            types.Bool   `tfsdk:"drop_log"`
 }
 
-type ServiceIPv4ACLSequencesConditionsSourcePorts struct {
+type ServiceIPv4ACLSequencesMatchEntriesSourcePorts struct {
 	Port types.Int64 `tfsdk:"port"`
 }
-type ServiceIPv4ACLSequencesConditionsDestinationPorts struct {
+type ServiceIPv4ACLSequencesMatchEntriesDestinationPorts struct {
 	Port types.Int64 `tfsdk:"port"`
 }
 
@@ -141,7 +141,7 @@ func (data ServiceIPv4ACL) toBody(ctx context.Context) string {
 			}
 			if true {
 
-				for _, childItem := range item.Conditions {
+				for _, childItem := range item.MatchEntries {
 					itemChildBody := ""
 					if !childItem.Dscps.IsNull() {
 						if true {
@@ -353,9 +353,9 @@ func (data *ServiceIPv4ACL) fromBody(ctx context.Context, res gjson.Result) {
 				}
 			}
 			if cValue := v.Get("matchEntries"); cValue.Exists() {
-				item.Conditions = make([]ServiceIPv4ACLSequencesConditions, 0)
+				item.MatchEntries = make([]ServiceIPv4ACLSequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := ServiceIPv4ACLSequencesConditions{}
+					cItem := ServiceIPv4ACLSequencesMatchEntries{}
 					cItem.Dscps = types.SetNull(types.Int64Type)
 
 					if t := cv.Get("dscp.optionType"); t.Exists() {
@@ -407,9 +407,9 @@ func (data *ServiceIPv4ACL) fromBody(ctx context.Context, res gjson.Result) {
 						}
 					}
 					if ccValue := cv.Get("sourcePorts"); ccValue.Exists() {
-						cItem.SourcePorts = make([]ServiceIPv4ACLSequencesConditionsSourcePorts, 0)
+						cItem.SourcePorts = make([]ServiceIPv4ACLSequencesMatchEntriesSourcePorts, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
-							ccItem := ServiceIPv4ACLSequencesConditionsSourcePorts{}
+							ccItem := ServiceIPv4ACLSequencesMatchEntriesSourcePorts{}
 							ccItem.Port = types.Int64Null()
 
 							if t := ccv.Get("sourcePort.optionType"); t.Exists() {
@@ -441,9 +441,9 @@ func (data *ServiceIPv4ACL) fromBody(ctx context.Context, res gjson.Result) {
 						}
 					}
 					if ccValue := cv.Get("destinationPorts"); ccValue.Exists() {
-						cItem.DestinationPorts = make([]ServiceIPv4ACLSequencesConditionsDestinationPorts, 0)
+						cItem.DestinationPorts = make([]ServiceIPv4ACLSequencesMatchEntriesDestinationPorts, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
-							ccItem := ServiceIPv4ACLSequencesConditionsDestinationPorts{}
+							ccItem := ServiceIPv4ACLSequencesMatchEntriesDestinationPorts{}
 							ccItem.Port = types.Int64Null()
 
 							if t := ccv.Get("destinationPort.optionType"); t.Exists() {
@@ -464,7 +464,7 @@ func (data *ServiceIPv4ACL) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.TcpState = types.StringValue(va.String())
 						}
 					}
-					item.Conditions = append(item.Conditions, cItem)
+					item.MatchEntries = append(item.MatchEntries, cItem)
 					return true
 				})
 			}
@@ -618,10 +618,10 @@ func (data *ServiceIPv4ACL) updateFromBody(ctx context.Context, res gjson.Result
 				data.Sequences[i].BaseAction = types.StringValue(va.String())
 			}
 		}
-		for ci := range data.Sequences[i].Conditions {
+		for ci := range data.Sequences[i].MatchEntries {
 			keys := [...]string{"packetLength", "sourceDataPrefix.sourceDataPrefixList.refId", "sourceDataPrefix.sourceIpPrefix", "destinationDataPrefix.destinationDataPrefixList.refId", "destinationDataPrefix.destinationIpPrefix", "tcp"}
-			keyValues := [...]string{strconv.FormatInt(data.Sequences[i].Conditions[ci].PacketLength.ValueInt64(), 10), data.Sequences[i].Conditions[ci].SourceDataPrefixListId.ValueString(), data.Sequences[i].Conditions[ci].SourceDataPrefix.ValueString(), data.Sequences[i].Conditions[ci].DestinationDataPrefixListId.ValueString(), data.Sequences[i].Conditions[ci].DestinationDataPrefix.ValueString(), data.Sequences[i].Conditions[ci].TcpState.ValueString()}
-			keyValuesVariables := [...]string{"", "", "", "", "", data.Sequences[i].Conditions[ci].SourceDataPrefixVariable.ValueString(), "", "", data.Sequences[i].Conditions[ci].DestinationDataPrefixVariable.ValueString(), "", ""}
+			keyValues := [...]string{strconv.FormatInt(data.Sequences[i].MatchEntries[ci].PacketLength.ValueInt64(), 10), data.Sequences[i].MatchEntries[ci].SourceDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].TcpState.ValueString()}
+			keyValuesVariables := [...]string{"", "", "", "", "", data.Sequences[i].MatchEntries[ci].SourceDataPrefixVariable.ValueString(), "", "", data.Sequences[i].MatchEntries[ci].DestinationDataPrefixVariable.ValueString(), "", ""}
 
 			var cr gjson.Result
 			r.Get("matchEntries").ForEach(
@@ -647,59 +647,59 @@ func (data *ServiceIPv4ACL) updateFromBody(ctx context.Context, res gjson.Result
 					return true
 				},
 			)
-			data.Sequences[i].Conditions[ci].Dscps = types.SetNull(types.Int64Type)
+			data.Sequences[i].MatchEntries[ci].Dscps = types.SetNull(types.Int64Type)
 
 			if t := cr.Get("dscp.optionType"); t.Exists() {
 				va := cr.Get("dscp.value")
 				if t.String() == "global" {
-					data.Sequences[i].Conditions[ci].Dscps = helpers.GetInt64Set(va.Array())
+					data.Sequences[i].MatchEntries[ci].Dscps = helpers.GetInt64Set(va.Array())
 				}
 			}
-			data.Sequences[i].Conditions[ci].PacketLength = types.Int64Null()
+			data.Sequences[i].MatchEntries[ci].PacketLength = types.Int64Null()
 
 			if t := cr.Get("packetLength.optionType"); t.Exists() {
 				va := cr.Get("packetLength.value")
 				if t.String() == "global" {
-					data.Sequences[i].Conditions[ci].PacketLength = types.Int64Value(va.Int())
+					data.Sequences[i].MatchEntries[ci].PacketLength = types.Int64Value(va.Int())
 				}
 			}
-			data.Sequences[i].Conditions[ci].Protocols = types.SetNull(types.Int64Type)
+			data.Sequences[i].MatchEntries[ci].Protocols = types.SetNull(types.Int64Type)
 
 			if t := cr.Get("protocol.optionType"); t.Exists() {
 				va := cr.Get("protocol.value")
 				if t.String() == "global" {
-					data.Sequences[i].Conditions[ci].Protocols = helpers.GetInt64Set(va.Array())
+					data.Sequences[i].MatchEntries[ci].Protocols = helpers.GetInt64Set(va.Array())
 				}
 			}
-			data.Sequences[i].Conditions[ci].IcmpMessages = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].IcmpMessages = types.SetNull(types.StringType)
 
 			if t := cr.Get("icmpMsg.optionType"); t.Exists() {
 				va := cr.Get("icmpMsg.value")
 				if t.String() == "global" {
-					data.Sequences[i].Conditions[ci].IcmpMessages = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].IcmpMessages = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Sequences[i].Conditions[ci].SourceDataPrefixListId = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].SourceDataPrefixListId = types.StringNull()
 
 			if t := cr.Get("sourceDataPrefix.sourceDataPrefixList.refId.optionType"); t.Exists() {
 				va := cr.Get("sourceDataPrefix.sourceDataPrefixList.refId.value")
 				if t.String() == "global" {
-					data.Sequences[i].Conditions[ci].SourceDataPrefixListId = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].SourceDataPrefixListId = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Conditions[ci].SourceDataPrefix = types.StringNull()
-			data.Sequences[i].Conditions[ci].SourceDataPrefixVariable = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].SourceDataPrefix = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].SourceDataPrefixVariable = types.StringNull()
 			if t := cr.Get("sourceDataPrefix.sourceIpPrefix.optionType"); t.Exists() {
 				va := cr.Get("sourceDataPrefix.sourceIpPrefix.value")
 				if t.String() == "variable" {
-					data.Sequences[i].Conditions[ci].SourceDataPrefixVariable = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].SourceDataPrefixVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Sequences[i].Conditions[ci].SourceDataPrefix = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].SourceDataPrefix = types.StringValue(va.String())
 				}
 			}
-			for cci := range data.Sequences[i].Conditions[ci].SourcePorts {
+			for cci := range data.Sequences[i].MatchEntries[ci].SourcePorts {
 				keys := [...]string{"sourcePort"}
-				keyValues := [...]string{strconv.FormatInt(data.Sequences[i].Conditions[ci].SourcePorts[cci].Port.ValueInt64(), 10)}
+				keyValues := [...]string{strconv.FormatInt(data.Sequences[i].MatchEntries[ci].SourcePorts[cci].Port.ValueInt64(), 10)}
 				keyValuesVariables := [...]string{""}
 
 				var ccr gjson.Result
@@ -726,36 +726,36 @@ func (data *ServiceIPv4ACL) updateFromBody(ctx context.Context, res gjson.Result
 						return true
 					},
 				)
-				data.Sequences[i].Conditions[ci].SourcePorts[cci].Port = types.Int64Null()
+				data.Sequences[i].MatchEntries[ci].SourcePorts[cci].Port = types.Int64Null()
 
 				if t := ccr.Get("sourcePort.optionType"); t.Exists() {
 					va := ccr.Get("sourcePort.value")
 					if t.String() == "global" {
-						data.Sequences[i].Conditions[ci].SourcePorts[cci].Port = types.Int64Value(va.Int())
+						data.Sequences[i].MatchEntries[ci].SourcePorts[cci].Port = types.Int64Value(va.Int())
 					}
 				}
 			}
-			data.Sequences[i].Conditions[ci].DestinationDataPrefixListId = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListId = types.StringNull()
 
 			if t := cr.Get("destinationDataPrefix.destinationDataPrefixList.refId.optionType"); t.Exists() {
 				va := cr.Get("destinationDataPrefix.destinationDataPrefixList.refId.value")
 				if t.String() == "global" {
-					data.Sequences[i].Conditions[ci].DestinationDataPrefixListId = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListId = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Conditions[ci].DestinationDataPrefix = types.StringNull()
-			data.Sequences[i].Conditions[ci].DestinationDataPrefixVariable = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].DestinationDataPrefix = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].DestinationDataPrefixVariable = types.StringNull()
 			if t := cr.Get("destinationDataPrefix.destinationIpPrefix.optionType"); t.Exists() {
 				va := cr.Get("destinationDataPrefix.destinationIpPrefix.value")
 				if t.String() == "variable" {
-					data.Sequences[i].Conditions[ci].DestinationDataPrefixVariable = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].DestinationDataPrefixVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Sequences[i].Conditions[ci].DestinationDataPrefix = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].DestinationDataPrefix = types.StringValue(va.String())
 				}
 			}
-			for cci := range data.Sequences[i].Conditions[ci].DestinationPorts {
+			for cci := range data.Sequences[i].MatchEntries[ci].DestinationPorts {
 				keys := [...]string{"destinationPort"}
-				keyValues := [...]string{strconv.FormatInt(data.Sequences[i].Conditions[ci].DestinationPorts[cci].Port.ValueInt64(), 10)}
+				keyValues := [...]string{strconv.FormatInt(data.Sequences[i].MatchEntries[ci].DestinationPorts[cci].Port.ValueInt64(), 10)}
 				keyValuesVariables := [...]string{""}
 
 				var ccr gjson.Result
@@ -782,21 +782,21 @@ func (data *ServiceIPv4ACL) updateFromBody(ctx context.Context, res gjson.Result
 						return true
 					},
 				)
-				data.Sequences[i].Conditions[ci].DestinationPorts[cci].Port = types.Int64Null()
+				data.Sequences[i].MatchEntries[ci].DestinationPorts[cci].Port = types.Int64Null()
 
 				if t := ccr.Get("destinationPort.optionType"); t.Exists() {
 					va := ccr.Get("destinationPort.value")
 					if t.String() == "global" {
-						data.Sequences[i].Conditions[ci].DestinationPorts[cci].Port = types.Int64Value(va.Int())
+						data.Sequences[i].MatchEntries[ci].DestinationPorts[cci].Port = types.Int64Value(va.Int())
 					}
 				}
 			}
-			data.Sequences[i].Conditions[ci].TcpState = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].TcpState = types.StringNull()
 
 			if t := cr.Get("tcp.optionType"); t.Exists() {
 				va := cr.Get("tcp.value")
 				if t.String() == "global" {
-					data.Sequences[i].Conditions[ci].TcpState = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].TcpState = types.StringValue(va.String())
 				}
 			}
 		}

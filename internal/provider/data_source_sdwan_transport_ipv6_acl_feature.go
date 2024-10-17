@@ -99,7 +99,7 @@ func (d *TransportIPv6ACLProfileParcelDataSource) Schema(ctx context.Context, re
 							MarkdownDescription: "Base Action",
 							Computed:            true,
 						},
-						"conditions": schema.ListNestedAttribute{
+						"match_entries": schema.ListNestedAttribute{
 							MarkdownDescription: "Define match conditions",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{

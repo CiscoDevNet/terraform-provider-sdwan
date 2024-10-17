@@ -122,7 +122,7 @@ func (r *ServiceIPv4ACLProfileParcelResource) Schema(ctx context.Context, req re
 								stringvalidator.OneOf("drop", "accept"),
 							},
 						},
-						"conditions": schema.ListNestedAttribute{
+						"match_entries": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Define match conditions").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
