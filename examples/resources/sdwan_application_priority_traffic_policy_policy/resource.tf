@@ -11,7 +11,7 @@ resource "sdwan_application_priority_traffic_policy_policy" "example" {
       sequence_name = "traffic"
       base_action   = "accept"
       protocol      = "ipv4"
-      matches = [
+      match_entries = [
         {
           dscp = 1
         }

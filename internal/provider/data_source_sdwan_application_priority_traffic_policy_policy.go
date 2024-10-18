@@ -112,7 +112,7 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 							MarkdownDescription: "Sequence IP Type",
 							Computed:            true,
 						},
-						"matches": schema.ListNestedAttribute{
+						"match_entries": schema.ListNestedAttribute{
 							MarkdownDescription: "",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
