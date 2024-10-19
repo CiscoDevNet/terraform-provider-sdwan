@@ -36,12 +36,14 @@ func TestAccDataSourceSdwanTransportManagementVPNInterfaceEthernetProfileParcel(
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_interface_ethernet_feature.test", "shutdown", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_interface_ethernet_feature.test", "interface_name", "GigabitEthernet1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_interface_ethernet_feature.test", "interface_description", "Transport Management VPN Interface Ethernet"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_interface_ethernet_feature.test", "ipv4_configuration_type", "static"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_interface_ethernet_feature.test", "ipv4_address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_interface_ethernet_feature.test", "ipv4_subnet_mask", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_interface_ethernet_feature.test", "ipv4_secondary_addresses.0.address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_interface_ethernet_feature.test", "ipv4_secondary_addresses.0.subnet_mask", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_interface_ethernet_feature.test", "ipv4_iperf_server", "example"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_interface_ethernet_feature.test", "ipv4_auto_detect_bandwidth", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_interface_ethernet_feature.test", "ipv6_configuration_type", "static"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_interface_ethernet_feature.test", "ipv6_address", "2001:0:0:1::/64"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_interface_ethernet_feature.test", "arp_entries.0.ip_address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_interface_ethernet_feature.test", "arp_entries.0.mac_address", "00-B0-D0-63-C2-26"))
@@ -96,6 +98,7 @@ func testAccDataSourceSdwanTransportManagementVPNInterfaceEthernetProfileParcelC
 	config += `	shutdown = true` + "\n"
 	config += `	interface_name = "GigabitEthernet1"` + "\n"
 	config += `	interface_description = "Transport Management VPN Interface Ethernet"` + "\n"
+	config += `	ipv4_configuration_type = "static"` + "\n"
 	config += `	ipv4_address = "1.2.3.4"` + "\n"
 	config += `	ipv4_subnet_mask = "0.0.0.0"` + "\n"
 	config += `	ipv4_secondary_addresses = [{` + "\n"
@@ -105,6 +108,7 @@ func testAccDataSourceSdwanTransportManagementVPNInterfaceEthernetProfileParcelC
 	config += `	ipv4_dhcp_helper = ["1.2.3.4"]` + "\n"
 	config += `	ipv4_iperf_server = "example"` + "\n"
 	config += `	ipv4_auto_detect_bandwidth = false` + "\n"
+	config += `	ipv6_configuration_type = "static"` + "\n"
 	config += `	ipv6_address = "2001:0:0:1::/64"` + "\n"
 	config += `	arp_entries = [{` + "\n"
 	config += `	  ip_address = "1.2.3.4"` + "\n"
