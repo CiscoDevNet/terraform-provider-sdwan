@@ -23,6 +23,7 @@ import (
 	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -243,5 +244,29 @@ func (r *AttachFeatureDeviceTemplateResource) Delete(ctx context.Context, req re
 }
 
 func (r *AttachFeatureDeviceTemplateResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	var _ AttachFeatureDeviceTemplateDevice
+
+	idParts := strings.Split(req.ID, ",")
+	if len(idParts) < 2 || idParts[0] == "" || idParts[1] == "" {
+		resp.Diagnostics.AddError(
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with format: template_id, device_id. Got: %q", req.ID),
+		)
+		return
+	}
+
+	variables, error := types.MapValue(types.StringType, map[string]attr.Value{})
+	if error != nil {
+		resp.Diagnostics.AddError("Unexpected Import Error", "An error occurred while created a variables map")
+		return
+	}
+
+	device := AttachFeatureDeviceTemplateDevice{
+		Id:        types.StringValue(idParts[1]),
+		Variables: variables,
+	}
+
+	devices := []AttachFeatureDeviceTemplateDevice{device}
+
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), idParts[0])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("devices"), devices)...)
 }
