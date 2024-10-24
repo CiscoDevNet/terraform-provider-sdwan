@@ -168,9 +168,9 @@ func (data *PolicyObjectTLOCList) updateFromBody(ctx context.Context, res gjson.
 	}
 	path := "payload.data."
 	for i := range data.Entries {
-		keys := [...]string{"tloc"}
-		keyValues := [...]string{data.Entries[i].TlocIp.ValueString()}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"tloc", "color", "encap", "preference"}
+		keyValues := [...]string{data.Entries[i].TlocIp.ValueString(), data.Entries[i].Color.ValueString(), data.Entries[i].Encapsulation.ValueString(), data.Entries[i].Preference.ValueString()}
+		keyValuesVariables := [...]string{"", "", "", ""}
 
 		var r gjson.Result
 		res.Get(path + "entries").ForEach(

@@ -3,6 +3,7 @@ name: URL Filtering Policy Definition
 rest_endpoint: /template/policy/definition/urlfiltering/
 has_version: true
 id_attribute: definitionId
+get_before_delete: true
 doc_category: (Classic) Security Policies
 attributes:
   - model_name: type

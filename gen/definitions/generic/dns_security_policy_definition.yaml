@@ -3,6 +3,7 @@ name: DNS Security Policy Definition
 rest_endpoint: /template/policy/definition/dnssecurity/
 has_version: true
 id_attribute: definitionId
+get_before_delete: true
 doc_category: (Classic) Security Policies
 test_tags: [SDWAN_209]
 attributes:
