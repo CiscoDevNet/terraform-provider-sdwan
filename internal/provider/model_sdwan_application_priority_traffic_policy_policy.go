@@ -46,15 +46,15 @@ type ApplicationPriorityTrafficPolicy struct {
 }
 
 type ApplicationPriorityTrafficPolicySequences struct {
-	SequenceId   types.Int64                                        `tfsdk:"sequence_id"`
-	SequenceName types.String                                       `tfsdk:"sequence_name"`
-	BaseAction   types.String                                       `tfsdk:"base_action"`
-	Protocol     types.String                                       `tfsdk:"protocol"`
-	Matches      []ApplicationPriorityTrafficPolicySequencesMatches `tfsdk:"matches"`
-	Actions      []ApplicationPriorityTrafficPolicySequencesActions `tfsdk:"actions"`
+	SequenceId   types.Int64                                             `tfsdk:"sequence_id"`
+	SequenceName types.String                                            `tfsdk:"sequence_name"`
+	BaseAction   types.String                                            `tfsdk:"base_action"`
+	Protocol     types.String                                            `tfsdk:"protocol"`
+	MatchEntries []ApplicationPriorityTrafficPolicySequencesMatchEntries `tfsdk:"match_entries"`
+	Actions      []ApplicationPriorityTrafficPolicySequencesActions      `tfsdk:"actions"`
 }
 
-type ApplicationPriorityTrafficPolicySequencesMatches struct {
+type ApplicationPriorityTrafficPolicySequencesMatchEntries struct {
 	ApplicationListId               types.String `tfsdk:"application_list_id"`
 	SaasApplicationListId           types.String `tfsdk:"saas_application_list_id"`
 	ServiceArea                     types.Set    `tfsdk:"service_area"`
@@ -218,7 +218,7 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 			}
 			if true {
 				itemBody, _ = sjson.Set(itemBody, "match.entries", []interface{}{})
-				for _, childItem := range item.Matches {
+				for _, childItem := range item.MatchEntries {
 					itemChildBody := ""
 					if !childItem.ApplicationListId.IsNull() {
 						if true {
@@ -834,9 +834,9 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 				}
 			}
 			if cValue := v.Get("match.entries"); cValue.Exists() {
-				item.Matches = make([]ApplicationPriorityTrafficPolicySequencesMatches, 0)
+				item.MatchEntries = make([]ApplicationPriorityTrafficPolicySequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := ApplicationPriorityTrafficPolicySequencesMatches{}
+					cItem := ApplicationPriorityTrafficPolicySequencesMatchEntries{}
 					cItem.ApplicationListId = types.StringNull()
 
 					if t := cv.Get("appList.refId.optionType"); t.Exists() {
@@ -1037,7 +1037,7 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 							cItem.Dns = types.StringValue(va.String())
 						}
 					}
-					item.Matches = append(item.Matches, cItem)
+					item.MatchEntries = append(item.MatchEntries, cItem)
 					return true
 				})
 			}
@@ -1607,9 +1607,9 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 				data.Sequences[i].Protocol = types.StringValue(va.String())
 			}
 		}
-		for ci := range data.Sequences[i].Matches {
+		for ci := range data.Sequences[i].MatchEntries {
 			keys := [...]string{"appList.refId", "saasAppList.refId", "trafficCategory", "dnsAppList.refId", "trafficClass", "dscp", "packetLength", "sourceDataPrefixList.refId", "sourceDataIpv6PrefixList.refId", "sourceIp", "sourceIpv6", "destinationDataPrefixList.refId", "destinationDataIpv6PrefixList.refId", "destinationIp", "destinationIpv6", "tcp", "destinationRegion", "trafficTo", "dns"}
-			keyValues := [...]string{data.Sequences[i].Matches[ci].ApplicationListId.ValueString(), data.Sequences[i].Matches[ci].SaasApplicationListId.ValueString(), data.Sequences[i].Matches[ci].TrafficCategory.ValueString(), data.Sequences[i].Matches[ci].DnsApplicationListId.ValueString(), data.Sequences[i].Matches[ci].TrafficClass.ValueString(), strconv.FormatInt(data.Sequences[i].Matches[ci].Dscp.ValueInt64(), 10), data.Sequences[i].Matches[ci].PacketLength.ValueString(), data.Sequences[i].Matches[ci].SourceDataIpv4PrefxListId.ValueString(), data.Sequences[i].Matches[ci].SourceDataIpv6PrefxListId.ValueString(), data.Sequences[i].Matches[ci].SourceIpv4Prefix.ValueString(), data.Sequences[i].Matches[ci].SourceIpv6Prefix.ValueString(), data.Sequences[i].Matches[ci].DestinationDataIpv4PrefixListId.ValueString(), data.Sequences[i].Matches[ci].DestinationDataIpv6PrefixListId.ValueString(), data.Sequences[i].Matches[ci].DestinationIpv4Prefix.ValueString(), data.Sequences[i].Matches[ci].DestinationIpv6Prefix.ValueString(), data.Sequences[i].Matches[ci].Tcp.ValueString(), data.Sequences[i].Matches[ci].DestinationRegion.ValueString(), data.Sequences[i].Matches[ci].TrafficTo.ValueString(), data.Sequences[i].Matches[ci].Dns.ValueString()}
+			keyValues := [...]string{data.Sequences[i].MatchEntries[ci].ApplicationListId.ValueString(), data.Sequences[i].MatchEntries[ci].SaasApplicationListId.ValueString(), data.Sequences[i].MatchEntries[ci].TrafficCategory.ValueString(), data.Sequences[i].MatchEntries[ci].DnsApplicationListId.ValueString(), data.Sequences[i].MatchEntries[ci].TrafficClass.ValueString(), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].Dscp.ValueInt64(), 10), data.Sequences[i].MatchEntries[ci].PacketLength.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataIpv4PrefxListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataIpv6PrefxListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceIpv4Prefix.ValueString(), data.Sequences[i].MatchEntries[ci].SourceIpv6Prefix.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataIpv4PrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataIpv6PrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationIpv4Prefix.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationIpv6Prefix.ValueString(), data.Sequences[i].MatchEntries[ci].Tcp.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationRegion.ValueString(), data.Sequences[i].MatchEntries[ci].TrafficTo.ValueString(), data.Sequences[i].MatchEntries[ci].Dns.ValueString()}
 			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""}
 
 			var cr gjson.Result
@@ -1636,204 +1636,204 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 					return true
 				},
 			)
-			data.Sequences[i].Matches[ci].ApplicationListId = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].ApplicationListId = types.StringNull()
 
 			if t := cr.Get("appList.refId.optionType"); t.Exists() {
 				va := cr.Get("appList.refId.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].ApplicationListId = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].ApplicationListId = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Matches[ci].SaasApplicationListId = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].SaasApplicationListId = types.StringNull()
 
 			if t := cr.Get("saasAppList.refId.optionType"); t.Exists() {
 				va := cr.Get("saasAppList.refId.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].SaasApplicationListId = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].SaasApplicationListId = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Matches[ci].ServiceArea = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].ServiceArea = types.SetNull(types.StringType)
 
 			if t := cr.Get("serviceArea.optionType"); t.Exists() {
 				va := cr.Get("serviceArea.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].ServiceArea = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].ServiceArea = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Sequences[i].Matches[ci].TrafficCategory = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].TrafficCategory = types.StringNull()
 
 			if t := cr.Get("trafficCategory.optionType"); t.Exists() {
 				va := cr.Get("trafficCategory.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].TrafficCategory = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].TrafficCategory = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Matches[ci].DnsApplicationListId = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].DnsApplicationListId = types.StringNull()
 
 			if t := cr.Get("dnsAppList.refId.optionType"); t.Exists() {
 				va := cr.Get("dnsAppList.refId.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].DnsApplicationListId = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].DnsApplicationListId = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Matches[ci].TrafficClass = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].TrafficClass = types.StringNull()
 
 			if t := cr.Get("trafficClass.optionType"); t.Exists() {
 				va := cr.Get("trafficClass.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].TrafficClass = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].TrafficClass = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Matches[ci].Dscp = types.Int64Null()
+			data.Sequences[i].MatchEntries[ci].Dscp = types.Int64Null()
 
 			if t := cr.Get("dscp.optionType"); t.Exists() {
 				va := cr.Get("dscp.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].Dscp = types.Int64Value(va.Int())
+					data.Sequences[i].MatchEntries[ci].Dscp = types.Int64Value(va.Int())
 				}
 			}
-			data.Sequences[i].Matches[ci].PacketLength = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].PacketLength = types.StringNull()
 
 			if t := cr.Get("packetLength.optionType"); t.Exists() {
 				va := cr.Get("packetLength.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].PacketLength = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].PacketLength = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Matches[ci].Protocols = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].Protocols = types.SetNull(types.StringType)
 
 			if t := cr.Get("protocol.optionType"); t.Exists() {
 				va := cr.Get("protocol.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].Protocols = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].Protocols = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Sequences[i].Matches[ci].IcmpMessage = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].IcmpMessage = types.SetNull(types.StringType)
 
 			if t := cr.Get("icmpMessage.optionType"); t.Exists() {
 				va := cr.Get("icmpMessage.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].IcmpMessage = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].IcmpMessage = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Sequences[i].Matches[ci].Icmp6Message = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].Icmp6Message = types.SetNull(types.StringType)
 
 			if t := cr.Get("icmp6Message.optionType"); t.Exists() {
 				va := cr.Get("icmp6Message.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].Icmp6Message = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].Icmp6Message = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Sequences[i].Matches[ci].SourceDataIpv4PrefxListId = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].SourceDataIpv4PrefxListId = types.StringNull()
 
 			if t := cr.Get("sourceDataPrefixList.refId.optionType"); t.Exists() {
 				va := cr.Get("sourceDataPrefixList.refId.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].SourceDataIpv4PrefxListId = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].SourceDataIpv4PrefxListId = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Matches[ci].SourceDataIpv6PrefxListId = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].SourceDataIpv6PrefxListId = types.StringNull()
 
 			if t := cr.Get("sourceDataIpv6PrefixList.refId.optionType"); t.Exists() {
 				va := cr.Get("sourceDataIpv6PrefixList.refId.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].SourceDataIpv6PrefxListId = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].SourceDataIpv6PrefxListId = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Matches[ci].SourceIpv4Prefix = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].SourceIpv4Prefix = types.StringNull()
 
 			if t := cr.Get("sourceIp.optionType"); t.Exists() {
 				va := cr.Get("sourceIp.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].SourceIpv4Prefix = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].SourceIpv4Prefix = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Matches[ci].SourceIpv6Prefix = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].SourceIpv6Prefix = types.StringNull()
 
 			if t := cr.Get("sourceIpv6.optionType"); t.Exists() {
 				va := cr.Get("sourceIpv6.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].SourceIpv6Prefix = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].SourceIpv6Prefix = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Matches[ci].SourcePorts = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].SourcePorts = types.SetNull(types.StringType)
 
 			if t := cr.Get("sourcePort.optionType"); t.Exists() {
 				va := cr.Get("sourcePort.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].SourcePorts = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].SourcePorts = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Sequences[i].Matches[ci].DestinationDataIpv4PrefixListId = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].DestinationDataIpv4PrefixListId = types.StringNull()
 
 			if t := cr.Get("destinationDataPrefixList.refId.optionType"); t.Exists() {
 				va := cr.Get("destinationDataPrefixList.refId.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].DestinationDataIpv4PrefixListId = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].DestinationDataIpv4PrefixListId = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Matches[ci].DestinationDataIpv6PrefixListId = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].DestinationDataIpv6PrefixListId = types.StringNull()
 
 			if t := cr.Get("destinationDataIpv6PrefixList.refId.optionType"); t.Exists() {
 				va := cr.Get("destinationDataIpv6PrefixList.refId.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].DestinationDataIpv6PrefixListId = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].DestinationDataIpv6PrefixListId = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Matches[ci].DestinationIpv4Prefix = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].DestinationIpv4Prefix = types.StringNull()
 
 			if t := cr.Get("destinationIp.optionType"); t.Exists() {
 				va := cr.Get("destinationIp.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].DestinationIpv4Prefix = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].DestinationIpv4Prefix = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Matches[ci].DestinationIpv6Prefix = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].DestinationIpv6Prefix = types.StringNull()
 
 			if t := cr.Get("destinationIpv6.optionType"); t.Exists() {
 				va := cr.Get("destinationIpv6.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].DestinationIpv6Prefix = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].DestinationIpv6Prefix = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Matches[ci].DestinationPorts = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].DestinationPorts = types.SetNull(types.StringType)
 
 			if t := cr.Get("destinationPort.optionType"); t.Exists() {
 				va := cr.Get("destinationPort.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].DestinationPorts = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].DestinationPorts = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Sequences[i].Matches[ci].Tcp = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].Tcp = types.StringNull()
 
 			if t := cr.Get("tcp.optionType"); t.Exists() {
 				va := cr.Get("tcp.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].Tcp = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].Tcp = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Matches[ci].DestinationRegion = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].DestinationRegion = types.StringNull()
 
 			if t := cr.Get("destinationRegion.optionType"); t.Exists() {
 				va := cr.Get("destinationRegion.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].DestinationRegion = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].DestinationRegion = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Matches[ci].TrafficTo = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].TrafficTo = types.StringNull()
 
 			if t := cr.Get("trafficTo.optionType"); t.Exists() {
 				va := cr.Get("trafficTo.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].TrafficTo = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].TrafficTo = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].Matches[ci].Dns = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].Dns = types.StringNull()
 
 			if t := cr.Get("dns.optionType"); t.Exists() {
 				va := cr.Get("dns.value")
 				if t.String() == "global" {
-					data.Sequences[i].Matches[ci].Dns = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].Dns = types.StringValue(va.String())
 				}
 			}
 		}

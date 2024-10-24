@@ -45,7 +45,7 @@ attributes:
       tf_name: protocol
       example: ipv4
     - model_name: entries
-      tf_name: matches
+      tf_name: match_entries
       data_path: [match]
       attributes:
       - model_name: refId

@@ -107,6 +107,10 @@ func (d *TransportManagementVPNInterfaceEthernetProfileParcelDataSource) Schema(
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"ipv4_configuration_type": schema.StringAttribute{
+				MarkdownDescription: "IPv4 Configuration Type",
+				Computed:            true,
+			},
 			"ipv4_dhcp_distance": schema.Int64Attribute{
 				MarkdownDescription: "DHCP Distance",
 				Computed:            true,
@@ -178,6 +182,10 @@ func (d *TransportManagementVPNInterfaceEthernetProfileParcelDataSource) Schema(
 			},
 			"ipv4_auto_detect_bandwidth_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ipv6_configuration_type": schema.StringAttribute{
+				MarkdownDescription: "IPv6 Configuration Type",
 				Computed:            true,
 			},
 			"enable_dhcpv6": schema.BoolAttribute{

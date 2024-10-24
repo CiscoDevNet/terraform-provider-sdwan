@@ -28,7 +28,7 @@ resource "sdwan_application_priority_traffic_policy_policy" "example" {
       sequence_name = "traffic"
       base_action   = "accept"
       protocol      = "ipv4"
-      matches = [
+      match_entries = [
         {
           dscp = 1
         }
@@ -75,7 +75,7 @@ Optional:
 - `actions` (Attributes List) (see [below for nested schema](#nestedatt--sequences--actions))
 - `base_action` (String) Base Action
   - Choices: `drop`, `accept`
-- `matches` (Attributes List) (see [below for nested schema](#nestedatt--sequences--matches))
+- `match_entries` (Attributes List) (see [below for nested schema](#nestedatt--sequences--match_entries))
 - `protocol` (String) Sequence IP Type
   - Choices: `ipv4`, `ipv6`, `all`
 - `sequence_id` (Number) Sequence Id
@@ -160,8 +160,8 @@ Optional:
 
 
 
-<a id="nestedatt--sequences--matches"></a>
-### Nested Schema for `sequences.matches`
+<a id="nestedatt--sequences--match_entries"></a>
+### Nested Schema for `sequences.match_entries`
 
 Optional:
 

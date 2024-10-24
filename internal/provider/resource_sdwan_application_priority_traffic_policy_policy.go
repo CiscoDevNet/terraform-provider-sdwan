@@ -138,7 +138,7 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 								stringvalidator.OneOf("ipv4", "ipv6", "all"),
 							},
 						},
-						"matches": schema.ListNestedAttribute{
+						"match_entries": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{

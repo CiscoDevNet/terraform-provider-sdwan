@@ -23,6 +23,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
   shutdown                            = true
   interface_name                      = "GigabitEthernet1"
   interface_description               = "Transport Management VPN Interface Ethernet"
+  ipv4_configuration_type             = "static"
   ipv4_address                        = "1.2.3.4"
   ipv4_subnet_mask                    = "0.0.0.0"
   ipv4_secondary_addresses = [
@@ -34,6 +35,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
   ipv4_dhcp_helper           = ["1.2.3.4"]
   ipv4_iperf_server          = "example"
   ipv4_auto_detect_bandwidth = false
+  ipv6_configuration_type    = "static"
   ipv6_address               = "2001:0:0:1::/64"
   arp_entries = [
     {
@@ -76,7 +78,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
 - `duplex` (String) Duplex mode
   - Choices: `full`, `half`, `auto`
 - `duplex_variable` (String) Variable name
-- `enable_dhcpv6` (Boolean) Enable DHCPv6
+- `enable_dhcpv6` (Boolean) Enable DHCPv6, Attribute conditional on `ipv6_configuration_type` being equal to `dynamic`
 - `feature_profile_id` (String) Feature Profile ID
 - `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
   - Default value: `true`
@@ -96,24 +98,29 @@ resource "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
   - Range: `576`-`9216`
   - Default value: `1500`
 - `ip_mtu_variable` (String) Variable name
-- `ipv4_address` (String) IP Address
+- `ipv4_address` (String) IP Address, Attribute conditional on `ipv4_configuration_type` being equal to `static`
 - `ipv4_address_variable` (String) Variable name
 - `ipv4_auto_detect_bandwidth` (Boolean) Interface auto detect bandwidth
   - Default value: `false`
 - `ipv4_auto_detect_bandwidth_variable` (String) Variable name
-- `ipv4_dhcp_distance` (Number) DHCP Distance
+- `ipv4_configuration_type` (String) IPv4 Configuration Type
+  - Choices: `dynamic`, `static`
+- `ipv4_dhcp_distance` (Number) DHCP Distance, Attribute conditional on `ipv4_configuration_type` being equal to `dynamic`
   - Range: `1`-`65536`
+  - Default value: `1`
 - `ipv4_dhcp_distance_variable` (String) Variable name
 - `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
 - `ipv4_dhcp_helper_variable` (String) Variable name
 - `ipv4_iperf_server` (String) Iperf server for auto bandwidth detect
 - `ipv4_iperf_server_variable` (String) Variable name
-- `ipv4_secondary_addresses` (Attributes List) Secondary IpV4 Addresses (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
-- `ipv4_subnet_mask` (String) Subnet Mask
+- `ipv4_secondary_addresses` (Attributes List) Secondary IpV4 Addresses, Attribute conditional on `ipv4_configuration_type` being equal to `static` (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
+- `ipv4_subnet_mask` (String) Subnet Mask, Attribute conditional on `ipv4_configuration_type` being equal to `static`
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `ipv4_subnet_mask_variable` (String) Variable name
-- `ipv6_address` (String) IPv6 Address Secondary
+- `ipv6_address` (String) IPv6 Address Secondary, Attribute conditional on `ipv6_configuration_type` being equal to `static`
 - `ipv6_address_variable` (String) Variable name
+- `ipv6_configuration_type` (String) IPv6 Configuration Type
+  - Choices: `dynamic`, `static`, `none`
 - `load_interval` (Number) Interval for interface load calculation
   - Range: `30`-`600`
   - Default value: `30`
