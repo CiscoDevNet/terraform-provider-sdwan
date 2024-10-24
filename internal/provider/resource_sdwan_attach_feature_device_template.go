@@ -244,55 +244,39 @@ func (r *AttachFeatureDeviceTemplateResource) Delete(ctx context.Context, req re
 }
 
 func (r *AttachFeatureDeviceTemplateResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	// === Option 1 ===
-	// idParts := strings.Split(req.ID, ",")
-	// if len(idParts) < 2 || idParts[0] == "" || idParts[1] == "" {
-	// 	resp.Diagnostics.AddError(
-	// 		"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with format: template_id, device_id. Got: %q", req.ID),
-	// 	)
-	// 	return
-	// }
-
-	// variables, error := types.MapValue(types.StringType, map[string]attr.Value{})
-	// if error != nil {
-	// 	resp.Diagnostics.AddError("Unexpected Import Error", "An error occurred while created a variables map")
-	// 	return
-	// }
-
-	// device := AttachFeatureDeviceTemplateDevice{
-	// 	Id:        types.StringValue(idParts[1]),
-	// 	Variables: variables,
-	// }
-
-	// devices := []AttachFeatureDeviceTemplateDevice{device}
-
-	// resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), idParts[0])...)
-	// resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("devices"), devices)...)
-
-	// === Option 3 ===
 	var _ AttachFeatureDeviceTemplateDevice
 
-	res, err := r.client.Get("/template/device/config/attached/" + req.ID)
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve currently attached devices, got error: %s", err))
+	parts := strings.SplitN(req.ID, ",[", 2)
+	if len(parts) != 2 || !strings.HasSuffix(parts[1], "]") {
+		resp.Diagnostics.AddError(
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: templateId,[deviceId1,deviceId2,...]. Got: %q", req.ID),
+		)
+		return
+	}
+
+	templateId := parts[0]
+	deviceIds := strings.Split(strings.TrimSuffix(parts[1], "]"), ",")
+	if len(templateId) == 0 || len(deviceIds) == 0 {
+		resp.Diagnostics.AddError(
+			"Invalid Import Data", fmt.Sprintf("Template ID and at least one device ID must be provided"),
+		)
 		return
 	}
 
 	variables, diags := types.MapValue(types.StringType, map[string]attr.Value{})
-	if diags.ErrorsCount() > 0 {
-		resp.Diagnostics.AddError("Unexpected Import Error", fmt.Sprintf("Failed to create a variables map"))
+	if diags != nil {
+		resp.Diagnostics.Append(diags...)
 		return
 	}
 
-	devices := []AttachFeatureDeviceTemplateDevice{}
-	for _, device := range res.Get("data").Array() {
-		deviceObject := AttachFeatureDeviceTemplateDevice{
-			Id:        types.StringValue(device.Get("uuid").String()),
+	var devices []AttachFeatureDeviceTemplateDevice
+	for _, deviceId := range deviceIds {
+		devices = append(devices, AttachFeatureDeviceTemplateDevice{
+			Id:        types.StringValue(deviceId),
 			Variables: variables,
-		}
-		devices = append(devices, deviceObject)
+		})
 	}
 
-	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), req.ID)...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), templateId)...)
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("devices"), devices)...)
 }
