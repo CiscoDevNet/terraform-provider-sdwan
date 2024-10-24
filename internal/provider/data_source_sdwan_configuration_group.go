@@ -149,6 +149,11 @@ func (d *ConfigurationGroupDataSource) Schema(ctx context.Context, req datasourc
 										MarkdownDescription: "Variable value",
 										Computed:            true,
 									},
+									"list_value": schema.ListAttribute{
+										MarkdownDescription: "Use this instead of `value` in case value is of type `List`.",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
 								},
 							},
 						},

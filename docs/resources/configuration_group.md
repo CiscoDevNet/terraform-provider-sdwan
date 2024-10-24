@@ -76,11 +76,12 @@ Optional:
 
 Required:
 
-- `value` (String) Variable value
+- `name` (String) Variable name
 
 Optional:
 
-- `name` (String) Variable name
+- `list_value` (List of String) Use this instead of `value` in case value is of type `List`.
+- `value` (String) Variable value
 
 
 

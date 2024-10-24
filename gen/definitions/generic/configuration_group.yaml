@@ -113,14 +113,21 @@ attributes:
         attributes:
           - model_name: name
             type: String
+            mandatory: true
             id: true
             description: Variable name
             example: host_name
           - model_name: value
             type: String
-            mandatory: true
             description: Variable value
             example: edge1
+          - model_name: list_value
+            type: List
+            element_type: String
+            tf_only: true
+            description: Use this instead of `value` in case value is of type `List`.
+            example: 1.2.3.4
+            exclude_test: true
   - tf_name: feature_versions
     tf_only: true
     type: Versions
