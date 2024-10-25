@@ -3,6 +3,7 @@ name: TLS SSL Profile Policy Definition
 rest_endpoint: /template/policy/definition/sslutdprofile/
 has_version: true
 id_attribute: definitionId
+get_before_delete: true
 doc_category: (Classic) Security Policies
 attributes:
   - model_name: type

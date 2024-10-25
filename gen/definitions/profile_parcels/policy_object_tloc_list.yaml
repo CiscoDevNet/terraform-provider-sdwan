@@ -18,7 +18,6 @@ attributes:
     attributes:
       - model_name: tloc
         tf_name: tloc_ip
-        id: true
         mandatory: true
         example: 10.0.0.0
       - model_name: color

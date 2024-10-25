@@ -32,6 +32,7 @@
 - Add `sdwan_service_ipv4_acl_feature` resource and data source
 - Add `sdwan_transport_ipv6_acl_feature` resource and data source
 - Add `sdwan_service_ipv6_acl_feature` resource and data source
+- Add workaround for issue when deleting security policy objects where the reference count is not updated
 
 ## 0.4.1
 
