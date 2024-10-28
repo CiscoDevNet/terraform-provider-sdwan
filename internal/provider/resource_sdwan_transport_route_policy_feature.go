@@ -478,7 +478,7 @@ func (r *TransportRoutePolicyProfileParcelResource) ImportState(ctx context.Cont
 	pattern := "transport_route_policy_feature_id" + ",feature_profile_id"
 	if len(parts) != (count + 1) {
 		resp.Diagnostics.AddError(
-			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q, %q", pattern, req.ID, count),
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q, %q", pattern, req.ID),
 		)
 		return
 	}

@@ -254,7 +254,7 @@ func (r *SystemFlexiblePortSpeedProfileParcelResource) ImportState(ctx context.C
 	pattern := "system_flexible_port_speed_feature_id" + ",feature_profile_id"
 	if len(parts) != (count + 1) {
 		resp.Diagnostics.AddError(
-			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q, %q", pattern, req.ID, count),
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q, %q", pattern, req.ID),
 		)
 		return
 	}

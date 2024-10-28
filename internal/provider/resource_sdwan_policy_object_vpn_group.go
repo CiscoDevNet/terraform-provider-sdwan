@@ -253,7 +253,7 @@ func (r *PolicyObjectVPNGroupProfileParcelResource) ImportState(ctx context.Cont
 	pattern := "policy_object_vpn_group_id" + ",feature_profile_id"
 	if len(parts) != (count + 1) {
 		resp.Diagnostics.AddError(
-			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q, %q", pattern, req.ID, count),
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q, %q", pattern, req.ID),
 		)
 		return
 	}

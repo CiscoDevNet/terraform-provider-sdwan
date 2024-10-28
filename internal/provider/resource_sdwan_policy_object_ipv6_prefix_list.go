@@ -276,7 +276,7 @@ func (r *PolicyObjectIPv6PrefixListProfileParcelResource) ImportState(ctx contex
 	pattern := "policy_object_ipv6_prefix_list_id" + ",feature_profile_id"
 	if len(parts) != (count + 1) {
 		resp.Diagnostics.AddError(
-			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q, %q", pattern, req.ID, count),
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q, %q", pattern, req.ID),
 		)
 		return
 	}
