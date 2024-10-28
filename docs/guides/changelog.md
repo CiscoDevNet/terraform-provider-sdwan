@@ -42,6 +42,9 @@ description: |-
 - Add `sdwan_transport_ipv6_acl_feature` resource and data source
 - Add `sdwan_service_ipv6_acl_feature` resource and data source
 - Add workaround for issue when deleting security policy objects where the reference count is not updated
+- BREAKING CHANGE: Adds `ipv4_configuration_type` and `ipv6_configuration_type` to `sdwan_transport_management_vpn_interface_ethernet_feature` resource
+- BREAKING CHANGE: Adds `ipv4_configuration_type` and `ipv6_configuration_type` to `sdwan_transport_wan_vpn_interface_ethernet_feature` resource
+- BREAKING CHANGE: Adds `gateway` to `sdwan_transport_management_vpn_feature` resource
 
 ## 0.4.1
 
