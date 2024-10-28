@@ -156,6 +156,9 @@ func (r *MirrorPolicyObjectResource) Read(ctx context.Context, req resource.Read
 	}
 
 	state.fromBody(ctx, res)
+	if state.Version == types.Int64Null() {
+		state.Version = types.Int64Value(0)
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 

@@ -476,6 +476,12 @@ func (r *{{camelCase .Name}}Resource) Read(ctx context.Context, req resource.Rea
 
 	state.fromBody(ctx, res)
 
+	{{- if .HasVersion}}
+	if state.Version == types.Int64Null() {
+		state.Version = types.Int64Value(0)
+	}
+	{{- end}}
+
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 
 	diags = resp.State.Set(ctx, &state)
