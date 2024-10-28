@@ -28,7 +28,7 @@ attributes:
   - model_name: vpn
     tf_name: vpns
     data_path: [target]
-    example: "Local_Internet_for_Guests"
+    example: "edge_basic_vpn1"
   - model_name: direction
     data_path: [target]
     example: all

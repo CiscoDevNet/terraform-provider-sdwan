@@ -89,7 +89,7 @@ func testAccDataSourceSdwanApplicationPriorityTrafficPolicyProfileParcelConfig()
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_application_priority_feature_profile.test.id` + "\n"
 	config += `	default_action = "accept"` + "\n"
-	config += `	vpns = ["Local_Internet_for_Guests"]` + "\n"
+	config += `	vpns = ["edge_basic_vpn1"]` + "\n"
 	config += `	direction = "all"` + "\n"
 	config += `	sequences = [{` + "\n"
 	config += `	  sequence_id = 1` + "\n"
