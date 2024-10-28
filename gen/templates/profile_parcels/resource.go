@@ -23,6 +23,7 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"strings"
 	"sync"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
@@ -521,6 +522,25 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Delete(ctx context.Context, r
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *{{camelCase .Name}}ProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	{{- if hasReference .Attributes}}
+	count := {{ countReferences .Attributes}}
+	parts := strings.SplitN(req.ID, ",", (count + 1))
+
+	pattern := "{{getProfileParcelName .}}_id"{{range .Attributes}}{{if .Reference}} + ",{{.TfName}}"{{end}}{{end}}
+	if len(parts) != (count + 1) {
+		resp.Diagnostics.AddError(
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q, %q", pattern, req.ID, count),
+		)
+		return
+	}
+
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
+	{{- $count := 0}}
+	{{- range .Attributes}}{{- if .Reference}}{{$count = add $count 1}}
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("{{.TfName}}"), parts[{{$count}}])...)
+	{{- end}}{{- end}}
+	{{- else}}
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	{{- end}}
 }
 // End of section. //template:end import

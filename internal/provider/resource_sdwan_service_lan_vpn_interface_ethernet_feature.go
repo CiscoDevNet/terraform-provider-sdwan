@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 	"regexp"
+	"strings"
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
@@ -982,7 +983,20 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Delete(ctx context
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	count := 2
+	parts := strings.SplitN(req.ID, ",", (count + 1))
+
+	pattern := "service_lan_vpn_interface_ethernet_feature_id" + ",feature_profile_id" + ",service_lan_vpn_feature_id"
+	if len(parts) != (count + 1) {
+		resp.Diagnostics.AddError(
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q, %q", pattern, req.ID, count),
+		)
+		return
+	}
+
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("feature_profile_id"), parts[1])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("service_lan_vpn_feature_id"), parts[2])...)
 }
 
 // End of section. //template:end import

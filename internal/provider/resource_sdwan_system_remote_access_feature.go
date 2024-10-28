@@ -22,6 +22,7 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"strings"
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
@@ -436,7 +437,19 @@ func (r *SystemRemoteAccessProfileParcelResource) Delete(ctx context.Context, re
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *SystemRemoteAccessProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	count := 1
+	parts := strings.SplitN(req.ID, ",", (count + 1))
+
+	pattern := "system_remote_access_feature_id" + ",feature_profile_id"
+	if len(parts) != (count + 1) {
+		resp.Diagnostics.AddError(
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q, %q", pattern, req.ID, count),
+		)
+		return
+	}
+
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("feature_profile_id"), parts[1])...)
 }
 
 // End of section. //template:end import
