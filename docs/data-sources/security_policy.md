@@ -50,6 +50,7 @@ Read-Only:
 
 - `id` (String) Policy definition ID
 - `type` (String) Policy definition type
+- `version` (Number) Policy definition version
 
 
 <a id="nestedatt--logging"></a>

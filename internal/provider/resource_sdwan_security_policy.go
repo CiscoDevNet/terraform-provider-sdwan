@@ -113,6 +113,10 @@ func (r *SecurityPolicyResource) Schema(ctx context.Context, req resource.Schema
 							MarkdownDescription: helpers.NewAttributeDescription("Policy definition ID").String,
 							Required:            true,
 						},
+						"version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Policy definition version").String,
+							Optional:            true,
+						},
 						"type": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Policy definition type").AddStringEnumDescription("urlFiltering", "zoneBasedFW", "intrusionPrevention", "sslDecryption", "advancedMalwareProtection", "dnsSecurity").String,
 							Required:            true,

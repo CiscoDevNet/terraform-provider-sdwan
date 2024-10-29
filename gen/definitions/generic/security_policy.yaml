@@ -63,6 +63,11 @@ attributes:
         description: Policy definition ID
         example: 7d299c34-981c-4fb3-9167-6be44ab1691f
         test_value: sdwan_url_filtering_policy_definition.test.id
+      - tf_name: version
+        tf_only: true
+        type: Version
+        description: Policy definition version
+        exclude_test: true
       - model_name: type
         tf_name: type
         type: String
