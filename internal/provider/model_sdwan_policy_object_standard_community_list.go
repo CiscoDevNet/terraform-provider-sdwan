@@ -114,54 +114,6 @@ func (data *PolicyObjectStandardCommunityList) fromBody(ctx context.Context, res
 // End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *PolicyObjectStandardCommunityList) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	for i := range data.Entries {
-		keys := [...]string{"standardCommunity"}
-		keyValues := [...]string{data.Entries[i].StandardCommunity.ValueString()}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "entries").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Entries[i].StandardCommunity = types.StringNull()
-
-		if t := r.Get("standardCommunity.optionType"); t.Exists() {
-			va := r.Get("standardCommunity.value")
-			if t.String() == "global" {
-				data.Entries[i].StandardCommunity = types.StringValue(va.String())
-			}
-		}
-	}
-}
-
 // End of section. //template:end updateFromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin isNull

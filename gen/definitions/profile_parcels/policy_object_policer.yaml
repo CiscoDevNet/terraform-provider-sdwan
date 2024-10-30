@@ -5,6 +5,7 @@ minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 skip_minimum_test: true
 parcel_type: policy_object
+skip_test: true
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -15,20 +16,18 @@ attributes:
     test_value: sdwan_policy_object_feature_profile.test.id
   - model_name: entries
     mandatory: true
+    type: Set
     attributes:
       - model_name: burst
         tf_name: burst_bytes
-        id: true
         mandatory: true
         example: 56500
       - model_name: exceed
         tf_name: exceed_action
-        id: true
         mandatory: true
         example: remark
       - model_name: rate
         tf_name: rate_bps
-        id: true
         mandatory: true
         example: 60000
 

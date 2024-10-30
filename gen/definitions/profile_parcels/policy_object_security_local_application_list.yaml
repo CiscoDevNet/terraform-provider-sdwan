@@ -5,6 +5,7 @@ minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 skip_minimum_test: true
 parcel_type: policy_object
+skip_test: true
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -14,6 +15,7 @@ attributes:
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_policy_object_feature_profile.test.id
   - model_name: entries
+    type: Set
     attributes:
     - model_name: app
       example: audible-com

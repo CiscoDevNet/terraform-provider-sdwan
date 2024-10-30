@@ -129,62 +129,6 @@ func (data *PolicyObjectDataIPv6PrefixList) fromBody(ctx context.Context, res gj
 // End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *PolicyObjectDataIPv6PrefixList) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	for i := range data.Entries {
-		keys := [...]string{"ipv6Address"}
-		keyValues := [...]string{data.Entries[i].Ipv6Address.ValueString()}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "entries").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Entries[i].Ipv6Address = types.StringNull()
-
-		if t := r.Get("ipv6Address.optionType"); t.Exists() {
-			va := r.Get("ipv6Address.value")
-			if t.String() == "global" {
-				data.Entries[i].Ipv6Address = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].Ipv6PrefixLength = types.Int64Null()
-
-		if t := r.Get("ipv6PrefixLength.optionType"); t.Exists() {
-			va := r.Get("ipv6PrefixLength.value")
-			if t.String() == "global" {
-				data.Entries[i].Ipv6PrefixLength = types.Int64Value(va.Int())
-			}
-		}
-	}
-}
-
 // End of section. //template:end updateFromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin isNull

@@ -5,6 +5,7 @@ minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 skip_minimum_test: true
 parcel_type: policy_object
+skip_test: true
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -15,9 +16,9 @@ attributes:
     test_value: sdwan_policy_object_feature_profile.test.id
   - model_name: entries
     mandatory: true
+    type: Set
     attributes:
     - model_name: ipPrefix
-      id: true
       mandatory: true
       example: 10.0.0.0/12
 

@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -145,70 +144,6 @@ func (data *PolicyObjectPolicer) fromBody(ctx context.Context, res gjson.Result)
 // End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *PolicyObjectPolicer) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	for i := range data.Entries {
-		keys := [...]string{"burst", "exceed", "rate"}
-		keyValues := [...]string{strconv.FormatInt(data.Entries[i].BurstBytes.ValueInt64(), 10), data.Entries[i].ExceedAction.ValueString(), strconv.FormatInt(data.Entries[i].RateBps.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{"", "", ""}
-
-		var r gjson.Result
-		res.Get(path + "entries").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Entries[i].BurstBytes = types.Int64Null()
-
-		if t := r.Get("burst.optionType"); t.Exists() {
-			va := r.Get("burst.value")
-			if t.String() == "global" {
-				data.Entries[i].BurstBytes = types.Int64Value(va.Int())
-			}
-		}
-		data.Entries[i].ExceedAction = types.StringNull()
-
-		if t := r.Get("exceed.optionType"); t.Exists() {
-			va := r.Get("exceed.value")
-			if t.String() == "global" {
-				data.Entries[i].ExceedAction = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].RateBps = types.Int64Null()
-
-		if t := r.Get("rate.optionType"); t.Exists() {
-			va := r.Get("rate.value")
-			if t.String() == "global" {
-				data.Entries[i].RateBps = types.Int64Value(va.Int())
-			}
-		}
-	}
-}
-
 // End of section. //template:end updateFromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin isNull

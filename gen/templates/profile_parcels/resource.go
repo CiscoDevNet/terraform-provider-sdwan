@@ -446,11 +446,15 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Read(ctx context.Context, req
 	}
 
 	// If every attribute is set to null we are dealing with an import operation and therefore reading all attributes
+	{{- if not .SkipTest}}
 	if state.isNull(ctx, res) {
 		state.fromBody(ctx, res)
 	} else {
 		state.updateFromBody(ctx, res)
 	}
+	{{- else}}
+	state.fromBody(ctx, res)
+	{{- end}}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 

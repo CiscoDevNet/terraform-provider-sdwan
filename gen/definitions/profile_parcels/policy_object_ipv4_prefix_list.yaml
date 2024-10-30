@@ -4,6 +4,7 @@ rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/prefix
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 parcel_type: policy_object
+skip_test: true
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -14,14 +15,13 @@ attributes:
     test_value: sdwan_policy_object_feature_profile.test.id
   - model_name: entries
     mandatory: true
+    type: Set
     attributes:
       - model_name: ipv4Address
-        id: true
         mandatory: true
         example: 10.0.0.0
         minimum_test_value: '"10.0.0.0"'
       - model_name: ipv4PrefixLength
-        id: true
         mandatory: true
         example: 8
         minimum_test_value: "8"

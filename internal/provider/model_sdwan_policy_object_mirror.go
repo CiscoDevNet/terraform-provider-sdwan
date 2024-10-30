@@ -129,62 +129,6 @@ func (data *PolicyObjectMirror) fromBody(ctx context.Context, res gjson.Result) 
 // End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *PolicyObjectMirror) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	for i := range data.Entries {
-		keys := [...]string{"remoteDestIp", "sourceIp"}
-		keyValues := [...]string{data.Entries[i].RemoteDestinationIp.ValueString(), data.Entries[i].SourceIp.ValueString()}
-		keyValuesVariables := [...]string{"", ""}
-
-		var r gjson.Result
-		res.Get(path + "entries").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Entries[i].RemoteDestinationIp = types.StringNull()
-
-		if t := r.Get("remoteDestIp.optionType"); t.Exists() {
-			va := r.Get("remoteDestIp.value")
-			if t.String() == "global" {
-				data.Entries[i].RemoteDestinationIp = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].SourceIp = types.StringNull()
-
-		if t := r.Get("sourceIp.optionType"); t.Exists() {
-			va := r.Get("sourceIp.value")
-			if t.String() == "global" {
-				data.Entries[i].SourceIp = types.StringValue(va.String())
-			}
-		}
-	}
-}
-
 // End of section. //template:end updateFromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin isNull
