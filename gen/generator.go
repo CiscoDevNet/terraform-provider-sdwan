@@ -213,7 +213,7 @@ type YamlConfig struct {
 	GetBeforeDelete          bool                  `yaml:"get_before_delete"`
 	DeleteMutex              bool                  `yaml:"delete_mutex"`
 	ParcelType               string                `yaml:"parcel_type"`
-	SkipTest                 bool                  `yaml:"skip_test"`
+	ImplementSimpleUpdates   bool                  `yaml:"implement_simple_updates"`
 }
 
 type YamlConfigAttribute struct {
