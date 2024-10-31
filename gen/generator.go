@@ -394,7 +394,7 @@ func CountReferences(attributes []YamlConfigAttribute) int {
 	return count
 }
 
-// Templating helper function to return references
+// Templating helper function to add two integer values
 func Add(x, y int) int {
 	return x + y
 }
