@@ -192,6 +192,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `ipv4_address_variable` (String) Variable name
 - `ipv4_configuration_type` (String) IPv4 Configuration Type
   - Choices: `dynamic`, `static`
+  - Default value: `dynamic`
 - `ipv4_dhcp_distance` (Number) DHCP Distance, Attribute conditional on `ipv4_configuration_type` being equal to `dynamic`
   - Range: `1`-`65536`
   - Default value: `1`
@@ -206,6 +207,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `ipv6_address_variable` (String) Variable name
 - `ipv6_configuration_type` (String) IPv6 Configuration Type
   - Choices: `dynamic`, `static`, `none`
+  - Default value: `none`
 - `ipv6_dhcp_secondary_address` (Attributes List) secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` being equal to `dynamic` (see [below for nested schema](#nestedatt--ipv6_dhcp_secondary_address))
 - `ipv6_secondary_addresses` (Attributes List) Static secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` being equal to `static` (see [below for nested schema](#nestedatt--ipv6_secondary_addresses))
 - `load_interval` (Number) Interval for interface load calculation
@@ -518,5 +520,6 @@ Optional:
 Import is supported using the following syntax:
 
 ```shell
-terraform import sdwan_transport_wan_vpn_interface_ethernet_feature.example "f6b2c44c-693c-4763-b010-895aa3d236bd"
+# Expected import identifier with the format: "transport_wan_vpn_interface_ethernet_feature_id,feature_profile_id,transport_wan_vpn_feature_id"
+terraform import sdwan_transport_wan_vpn_interface_ethernet_feature.example "f6b2c44c-693c-4763-b010-895aa3d236bd,f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac,140331f6-5418-4755-a059-13c77eb96037"
 ```

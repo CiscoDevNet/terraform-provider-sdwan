@@ -79,6 +79,10 @@ Required:
 - `type` (String) Policy definition type
   - Choices: `urlFiltering`, `zoneBasedFW`, `intrusionPrevention`, `sslDecryption`, `advancedMalwareProtection`, `dnsSecurity`
 
+Optional:
+
+- `version` (Number) Policy definition version
+
 
 <a id="nestedatt--logging"></a>
 ### Nested Schema for `logging`

@@ -191,6 +191,9 @@ func (data *AttachFeatureDeviceTemplate) readVariables(ctx context.Context, clie
 							varName = varName[1 : len(varName)-1]
 						}
 						mappings[varName] = v.Get("property").String()
+					} else if !v.Get("templateType").Exists() {
+						// handle CLI template variables
+						mappings[title] = title
 					} else {
 						// handle factory default feature template variables
 						property := v.Get("property").String()
@@ -216,18 +219,10 @@ func (data *AttachFeatureDeviceTemplate) readVariables(ctx context.Context, clie
 		}
 
 		// Resolve variable names and insert template variable values
-		var templateVariables map[string]string
 		newTemplateVariables := make(map[string]attr.Value)
-		data.Devices[i].Variables.ElementsAs(ctx, &templateVariables, false)
-		for k := range templateVariables {
-			_, ok := variables[k]
-			if ok {
-				newTemplateVariables[k] = types.StringValue(variables[k])
-				continue
-			}
-			templateVariableName, ok := mappings[k]
-			if ok {
-				newTemplateVariables[k] = types.StringValue(variables[templateVariableName])
+		for k := range mappings {
+			if _, ok := variables[mappings[k]]; ok {
+				newTemplateVariables[k] = types.StringValue(variables[mappings[k]])
 			}
 		}
 		data.Devices[i].Variables = types.MapValueMust(types.StringType, newTemplateVariables)

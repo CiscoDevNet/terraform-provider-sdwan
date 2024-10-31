@@ -112,6 +112,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "test" {
   transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id
   interface_name               = "GigabitEthernet1"
   shutdown                     = false
+  ipv4_configuration_type      = "dynamic"
   ipv4_dhcp_distance           = 1
   tunnel_interface             = true
   tunnel_interface_encapsulations = [
