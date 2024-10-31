@@ -194,7 +194,7 @@ func (r *PolicyObjectTLOCListProfileParcelResource) Read(ctx context.Context, re
 	} else {
 		state.updateFromBody(ctx, res)
 	}
-	if state.Version == types.Int64Null() {
+	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}
 
@@ -276,7 +276,7 @@ func (r *PolicyObjectTLOCListProfileParcelResource) ImportState(ctx context.Cont
 	pattern := "policy_object_tloc_list_id" + ",feature_profile_id"
 	if len(parts) != (count + 1) {
 		resp.Diagnostics.AddError(
-			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q, %q", pattern, req.ID),
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q", pattern, req.ID),
 		)
 		return
 	}

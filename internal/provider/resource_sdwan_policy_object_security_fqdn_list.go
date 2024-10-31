@@ -181,7 +181,7 @@ func (r *PolicyObjectSecurityFQDNListProfileParcelResource) Read(ctx context.Con
 	} else {
 		state.updateFromBody(ctx, res)
 	}
-	if state.Version == types.Int64Null() {
+	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}
 
@@ -263,7 +263,7 @@ func (r *PolicyObjectSecurityFQDNListProfileParcelResource) ImportState(ctx cont
 	pattern := "policy_object_security_fqdn_list_id" + ",feature_profile_id"
 	if len(parts) != (count + 1) {
 		resp.Diagnostics.AddError(
-			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q, %q", pattern, req.ID),
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q", pattern, req.ID),
 		)
 		return
 	}

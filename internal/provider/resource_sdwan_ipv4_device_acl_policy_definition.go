@@ -265,7 +265,7 @@ func (r *IPv4DeviceACLPolicyDefinitionResource) Read(ctx context.Context, req re
 	}
 
 	state.fromBody(ctx, res)
-	if state.Version == types.Int64Null() {
+	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}
 
