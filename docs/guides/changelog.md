@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## 0.4.2 (unreleased)
+## 0.5.0
 
 - Add `sdwan_policy_object_application_list` resource and data source
 - Add `sdwan_policy_object_sla_class_list` resource and data source
