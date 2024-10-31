@@ -105,6 +105,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
 - `ipv4_auto_detect_bandwidth_variable` (String) Variable name
 - `ipv4_configuration_type` (String) IPv4 Configuration Type
   - Choices: `dynamic`, `static`
+  - Default value: `dynamic`
 - `ipv4_dhcp_distance` (Number) DHCP Distance, Attribute conditional on `ipv4_configuration_type` being equal to `dynamic`
   - Range: `1`-`65536`
   - Default value: `1`
@@ -121,6 +122,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
 - `ipv6_address_variable` (String) Variable name
 - `ipv6_configuration_type` (String) IPv6 Configuration Type
   - Choices: `dynamic`, `static`, `none`
+  - Default value: `none`
 - `load_interval` (Number) Interval for interface load calculation
   - Range: `30`-`600`
   - Default value: `30`

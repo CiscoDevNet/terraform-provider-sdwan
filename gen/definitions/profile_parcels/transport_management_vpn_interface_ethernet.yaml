@@ -25,14 +25,15 @@ attributes:
   - model_name: description
     tf_name: interface_description
     example: Transport Management VPN Interface Ethernet
-  
   - tf_name: ipv4_configuration_type
     type: String
     tf_only: true
+    default_value: "dynamic"
+    default_value_present: true
     description: IPv4 Configuration Type
     enum_values: [dynamic, static]
     example: static
-
+    minimum_test_value: '"static"'
   - model_name: dynamicDhcpDistance
     tf_name: ipv4_dhcp_distance
     data_path: [intfIpAddress, dynamic]
@@ -81,14 +82,14 @@ attributes:
   - model_name: autoDetectBandwidth
     tf_name: ipv4_auto_detect_bandwidth
     example: false
-
   - tf_name: ipv6_configuration_type
     type: String
     tf_only: true
+    default_value: "none"
+    default_value_present: true
     description: IPv6 Configuration Type
     enum_values: [dynamic, static, none]
     example: static
-
   - model_name: dhcpClient
     tf_name: enable_dhcpv6
     data_path: [intfIpV6Address, dynamic]

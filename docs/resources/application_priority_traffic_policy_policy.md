@@ -20,7 +20,7 @@ resource "sdwan_application_priority_traffic_policy_policy" "example" {
   description        = "My Example"
   feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   default_action     = "accept"
-  vpns               = ["Local_Internet_for_Guests"]
+  vpns               = ["edge_basic_vpn1"]
   direction          = "all"
   sequences = [
     {
