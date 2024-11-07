@@ -108,13 +108,13 @@ func (data OtherUCSE) toBody(ctx context.Context) string {
 		}
 	}
 	if !data.AccessPortSharedType.IsNull() {
-		if true {
+		if true && data.AccessPortDedicated.ValueBool() == false {
 			body, _ = sjson.Set(body, path+"imc.access-port.sharedLom.lomType.optionType", "global")
 			body, _ = sjson.Set(body, path+"imc.access-port.sharedLom.lomType.value", data.AccessPortSharedType.ValueString())
 		}
 	}
 	if !data.AccessPortSharedFailoverType.IsNull() {
-		if true {
+		if true && data.AccessPortDedicated.ValueBool() == false {
 			body, _ = sjson.Set(body, path+"imc.access-port.sharedLom.failOverType.optionType", "global")
 			body, _ = sjson.Set(body, path+"imc.access-port.sharedLom.failOverType.value", data.AccessPortSharedFailoverType.ValueString())
 		}
