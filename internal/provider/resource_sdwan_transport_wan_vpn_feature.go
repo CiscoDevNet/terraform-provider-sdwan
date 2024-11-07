@@ -250,8 +250,15 @@ func (r *TransportWANVPNProfileParcelResource) Schema(ctx context.Context, req r
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
+						"gateway": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Gateway").AddStringEnumDescription("nextHop", "null0", "nat").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("nextHop", "null0", "nat"),
+							},
+						},
 						"next_hops": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `nextHop`").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
@@ -278,11 +285,11 @@ func (r *TransportWANVPNProfileParcelResource) Schema(ctx context.Context, req r
 							},
 						},
 						"null0": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `null0`").String,
 							Optional:            true,
 						},
 						"nat": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Nat").AddStringEnumDescription("NAT64", "NAT66").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Nat, Attribute conditional on `gateway` being equal to `nat`").AddStringEnumDescription("NAT64", "NAT66").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("NAT64", "NAT66"),

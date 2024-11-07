@@ -29,7 +29,7 @@ resource "sdwan_transport_management_vpn_feature" "example" {
   ipv6_static_routes = [
     {
       prefix  = "2002::/16"
-      gateway = "next_hop"
+      gateway = "nextHop"
       next_hops = [
         {
           address                 = "2001:0:0:1::1"

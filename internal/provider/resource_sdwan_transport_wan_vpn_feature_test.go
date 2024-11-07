@@ -120,6 +120,7 @@ func testAccSdwanTransportWANVPNProfileParcelConfig_all() string {
 	config += `	}]` + "\n"
 	config += `	ipv6_static_routes = [{` + "\n"
 	config += `	  prefix = "2002::/16"` + "\n"
+	config += `	  gateway = "nextHop"` + "\n"
 	config += `	  next_hops = [{` + "\n"
 	config += `		address = "2001:0:0:1::0"` + "\n"
 	config += `		administrative_distance = 1` + "\n"

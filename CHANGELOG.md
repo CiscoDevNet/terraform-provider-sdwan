@@ -1,3 +1,7 @@
+## 0.5.0 (unreleased)
+
+- BREAKING CHANGE: Adds `gateway` to `sdwan_transport_wan_vpn_feature` resource
+
 ## 0.5.0
 
 - Add `sdwan_policy_object_application_list` resource and data source

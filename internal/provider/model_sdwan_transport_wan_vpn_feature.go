@@ -77,6 +77,7 @@ type TransportWANVPNIpv4StaticRoutes struct {
 type TransportWANVPNIpv6StaticRoutes struct {
 	Prefix         types.String                              `tfsdk:"prefix"`
 	PrefixVariable types.String                              `tfsdk:"prefix_variable"`
+	Gateway        types.String                              `tfsdk:"gateway"`
 	NextHops       []TransportWANVPNIpv6StaticRoutesNextHops `tfsdk:"next_hops"`
 	Null0          types.Bool                                `tfsdk:"null0"`
 	Nat            types.String                              `tfsdk:"nat"`
@@ -354,7 +355,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "prefix.value", item.Prefix.ValueString())
 				}
 			}
-			if true {
+			if true && item.Gateway.ValueString() == "nextHop" {
 
 				for _, childItem := range item.NextHops {
 					itemChildBody := ""
@@ -386,19 +387,19 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 				}
 			}
 			if !item.Null0.IsNull() {
-				if true {
+				if true && item.Gateway.ValueString() == "null0" {
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.null0.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.null0.value", item.Null0.ValueBool())
 				}
 			}
 
 			if !item.NatVariable.IsNull() {
-				if true {
+				if true && item.Gateway.ValueString() == "nat" {
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.value", item.NatVariable.ValueString())
 				}
 			} else if !item.Nat.IsNull() {
-				if true {
+				if true && item.Gateway.ValueString() == "nat" {
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.value", item.Nat.ValueString())
 				}
