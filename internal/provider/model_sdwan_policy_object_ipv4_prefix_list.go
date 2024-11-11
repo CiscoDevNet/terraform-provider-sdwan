@@ -22,6 +22,7 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -159,6 +160,78 @@ func (data *PolicyObjectIPv4PrefixList) fromBody(ctx context.Context, res gjson.
 // End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
+func (data *PolicyObjectIPv4PrefixList) updateFromBody(ctx context.Context, res gjson.Result) {
+	data.Name = types.StringValue(res.Get("payload.name").String())
+	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
+		data.Description = types.StringValue(value.String())
+	} else {
+		data.Description = types.StringNull()
+	}
+	path := "payload.data."
+	for i := range data.Entries {
+		keys := [...]string{"ipv4Address", "ipv4PrefixLength", "leRangePrefixLength", "geRangePrefixLength"}
+		keyValues := [...]string{data.Entries[i].Ipv4Address.ValueString(), strconv.FormatInt(data.Entries[i].Ipv4PrefixLength.ValueInt64(), 10), strconv.FormatInt(data.Entries[i].Le.ValueInt64(), 10), strconv.FormatInt(data.Entries[i].Ge.ValueInt64(), 10)}
+		keyValuesVariables := [...]string{"", "", "", ""}
+
+		var r gjson.Result
+		res.Get(path + "entries").ForEach(
+			func(_, v gjson.Result) bool {
+				found := false
+				for ik := range keys {
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
+					}
+					continue
+				}
+				if found {
+					r = v
+					return false
+				}
+				return true
+			},
+		)
+		data.Entries[i].Ipv4Address = types.StringNull()
+
+		if t := r.Get("ipv4Address.optionType"); t.Exists() {
+			va := r.Get("ipv4Address.value")
+			if t.String() == "global" {
+				data.Entries[i].Ipv4Address = types.StringValue(va.String())
+			}
+		}
+		data.Entries[i].Ipv4PrefixLength = types.Int64Null()
+
+		if t := r.Get("ipv4PrefixLength.optionType"); t.Exists() {
+			va := r.Get("ipv4PrefixLength.value")
+			if t.String() == "global" {
+				data.Entries[i].Ipv4PrefixLength = types.Int64Value(va.Int())
+			}
+		}
+		data.Entries[i].Le = types.Int64Null()
+
+		if t := r.Get("leRangePrefixLength.optionType"); t.Exists() {
+			va := r.Get("leRangePrefixLength.value")
+			if t.String() == "global" {
+				data.Entries[i].Le = types.Int64Value(va.Int())
+			}
+		}
+		data.Entries[i].Ge = types.Int64Null()
+
+		if t := r.Get("geRangePrefixLength.optionType"); t.Exists() {
+			va := r.Get("geRangePrefixLength.value")
+			if t.String() == "global" {
+				data.Entries[i].Ge = types.Int64Value(va.Int())
+			}
+		}
+	}
+}
+
 // End of section. //template:end updateFromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin isNull

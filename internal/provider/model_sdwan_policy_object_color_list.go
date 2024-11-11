@@ -114,6 +114,54 @@ func (data *PolicyObjectColorList) fromBody(ctx context.Context, res gjson.Resul
 // End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
+func (data *PolicyObjectColorList) updateFromBody(ctx context.Context, res gjson.Result) {
+	data.Name = types.StringValue(res.Get("payload.name").String())
+	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
+		data.Description = types.StringValue(value.String())
+	} else {
+		data.Description = types.StringNull()
+	}
+	path := "payload.data."
+	for i := range data.Entries {
+		keys := [...]string{"color"}
+		keyValues := [...]string{data.Entries[i].Color.ValueString()}
+		keyValuesVariables := [...]string{""}
+
+		var r gjson.Result
+		res.Get(path + "entries").ForEach(
+			func(_, v gjson.Result) bool {
+				found := false
+				for ik := range keys {
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
+					}
+					continue
+				}
+				if found {
+					r = v
+					return false
+				}
+				return true
+			},
+		)
+		data.Entries[i].Color = types.StringNull()
+
+		if t := r.Get("color.optionType"); t.Exists() {
+			va := r.Get("color.value")
+			if t.String() == "global" {
+				data.Entries[i].Color = types.StringValue(va.String())
+			}
+		}
+	}
+}
+
 // End of section. //template:end updateFromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin isNull
