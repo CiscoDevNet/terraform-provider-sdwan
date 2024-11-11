@@ -176,7 +176,6 @@ func (r *PolicyObjectExtendedCommunityListProfileParcelResource) Read(ctx contex
 
 	// If every attribute is set to null we are dealing with an import operation and therefore reading all attributes
 	state.fromBody(ctx, res)
-
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

@@ -668,7 +668,6 @@ func (r *TransportWANVPNInterfaceT1E1SerialProfileParcelResource) Read(ctx conte
 	} else {
 		state.updateFromBody(ctx, res)
 	}
-
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

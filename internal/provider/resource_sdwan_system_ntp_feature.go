@@ -305,7 +305,6 @@ func (r *SystemNTPProfileParcelResource) Read(ctx context.Context, req resource.
 	} else {
 		state.updateFromBody(ctx, res)
 	}
-
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

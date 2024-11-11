@@ -345,7 +345,6 @@ func (r *TransportIPv6ACLProfileParcelResource) Read(ctx context.Context, req re
 	} else {
 		state.updateFromBody(ctx, res)
 	}
-
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

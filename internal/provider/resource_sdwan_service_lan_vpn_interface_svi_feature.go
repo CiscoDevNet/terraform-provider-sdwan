@@ -646,7 +646,6 @@ func (r *ServiceLANVPNInterfaceSVIProfileParcelResource) Read(ctx context.Contex
 	} else {
 		state.updateFromBody(ctx, res)
 	}
-
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

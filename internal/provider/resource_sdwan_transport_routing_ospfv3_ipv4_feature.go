@@ -565,7 +565,6 @@ func (r *TransportRoutingOSPFv3IPv4ProfileParcelResource) Read(ctx context.Conte
 	} else {
 		state.updateFromBody(ctx, res)
 	}
-
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

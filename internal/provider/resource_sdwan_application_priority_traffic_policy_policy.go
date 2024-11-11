@@ -699,7 +699,6 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Read(ctx context
 	} else {
 		state.updateFromBody(ctx, res)
 	}
-
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}
