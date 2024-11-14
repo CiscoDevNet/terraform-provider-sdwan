@@ -54,6 +54,8 @@ attributes:
         exclude_null: true
         attributes: 
         - model_name: sourcePort
+          type: StringInt64
+          id: true
           tf_name: port
           example: 8000
       - model_name: refId
@@ -72,6 +74,8 @@ attributes:
         attributes: 
         - model_name: destinationPort
           tf_name: port
+          type: StringInt64
+          id: true
           example: 9000
           exclude_test: true
       - model_name: tcp

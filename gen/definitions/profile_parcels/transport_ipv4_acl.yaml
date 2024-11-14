@@ -55,6 +55,8 @@ attributes:
         attributes: 
         - model_name: sourcePort
           tf_name: port
+          type: StringInt64
+          id: true
           example: 8000
       - model_name: refId
         data_path: [destinationDataPrefix, destinationDataPrefixList]
@@ -72,6 +74,8 @@ attributes:
         attributes: 
         - model_name: destinationPort
           tf_name: port
+          type: StringInt64
+          id: true
           example: 9000
           exclude_test: true
       - model_name: tcp

@@ -32,7 +32,7 @@ attribute:
   model_name: str(required=False) # Name of the attribute in the model (payload)
   response_model_name: str(required=False) # Name of the attribute in the model (response payload)
   tf_name: str(required=False) # Name of the attribute in the Terraform resource, by default derived from model_name
-  type: enum('String', 'Int64', 'Bool', 'List', 'Set', 'Version', 'Versions', required=False) # Type of the attribute
+  type: enum('String', 'Int64', 'StringInt64', 'Bool', 'List', 'Set', 'Version', 'Versions', required=False) # Type of the attribute
   element_type: enum('String', 'Int64', required=False) # only relevant if type is either 'List' or 'Set'
   object_type: enum('object', 'tree', 'list', required=False) # Feature template schema object type
   model_type_string: bool(required=False) # Set to true if element should be added as string to payload

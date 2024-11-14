@@ -127,7 +127,7 @@ Optional:
 
 Optional:
 
-- `port` (Number) destination port range or individual port number
+- `port` (String) destination port range or individual port number
 
 
 <a id="nestedatt--sequences--match_entries--source_ports"></a>
@@ -135,7 +135,7 @@ Optional:
 
 Optional:
 
-- `port` (Number) source port range or individual port number
+- `port` (String) source port range or individual port number
 
 ## Import
 
