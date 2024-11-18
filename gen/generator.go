@@ -464,7 +464,7 @@ func IsInt64ListSet(attribute YamlConfigAttribute) bool {
 	return false
 }
 
-// Templating helper function to return true if type is a set without nested elements
+// Templating helper function to return true if type is StringInt64
 func IsStringInt64(attribute YamlConfigAttribute) bool {
 	if attribute.Type == "StringInt64" {
 		return true

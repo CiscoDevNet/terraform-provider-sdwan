@@ -44,12 +44,10 @@ type {{camelCase .Name}} struct {
 {{- if not .Value}}
 {{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else}}
-	{{- if eq .Type "StringInt64"}}
+{{- else if eq .Type "StringInt64"}}
 	{{toGoName .TfName}} types.String `tfsdk:"{{.TfName}}"`
-	{{- else}}
+{{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
-	{{- end}}
 {{- if .Variable}}
 	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
 {{- end}}
@@ -67,12 +65,10 @@ type {{$name}}{{toGoName .TfName}} struct {
 {{- if not .Value}}
 {{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else}}
-	{{- if eq .Type "StringInt64"}}
+{{- else if eq .Type "StringInt64"}}
 	{{toGoName .TfName}} types.String `tfsdk:"{{.TfName}}"`
-	{{- else}}
+{{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
-	{{- end}}
 {{- if .Variable}}
 	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
 {{- end}}
@@ -97,12 +93,10 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 {{- if not .Value}}
 {{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else}}
-	{{- if eq .Type "StringInt64"}}
+{{- else if eq .Type "StringInt64"}}
 	{{toGoName .TfName}} types.String `tfsdk:"{{.TfName}}"`
-	{{- else}}
+{{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
-	{{- end}}
 {{- if .Variable}}
 	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
 {{- end}}
