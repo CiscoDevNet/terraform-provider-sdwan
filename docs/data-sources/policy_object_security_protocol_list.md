@@ -39,4 +39,4 @@ data "sdwan_policy_object_security_protocol_list" "example" {
 
 Read-Only:
 
-- `protocol_names` (String)
+- `protocol_name` (String)

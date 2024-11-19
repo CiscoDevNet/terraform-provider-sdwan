@@ -37,7 +37,6 @@ type PolicyObjectUnifiedTLSSSLDecryption struct {
 	Name                        types.String `tfsdk:"name"`
 	Description                 types.String `tfsdk:"description"`
 	FeatureProfileId            types.String `tfsdk:"feature_profile_id"`
-	EnableSsl                   types.Bool   `tfsdk:"enable_ssl"`
 	ExpiredCertificate          types.String `tfsdk:"expired_certificate"`
 	UntrustedCertificate        types.String `tfsdk:"untrusted_certificate"`
 	CertificateRevocationStatus types.String `tfsdk:"certificate_revocation_status"`
@@ -76,11 +75,9 @@ func (data PolicyObjectUnifiedTLSSSLDecryption) toBody(ctx context.Context) stri
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
-	if !data.EnableSsl.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"sslEnable.optionType", "global")
-			body, _ = sjson.Set(body, path+"sslEnable.value", data.EnableSsl.ValueBool())
-		}
+	if true {
+		body, _ = sjson.Set(body, path+"sslEnable.optionType", "global")
+		body, _ = sjson.Set(body, path+"sslEnable.value", true)
 	}
 	if !data.ExpiredCertificate.IsNull() {
 		if true {
@@ -101,7 +98,7 @@ func (data PolicyObjectUnifiedTLSSSLDecryption) toBody(ctx context.Context) stri
 		}
 	}
 	if !data.UnknownRevocationStatus.IsNull() {
-		if true {
+		if true && data.CertificateRevocationStatus.ValueString() == "ocsp" {
 			body, _ = sjson.Set(body, path+"unknownStatus.optionType", "global")
 			body, _ = sjson.Set(body, path+"unknownStatus.value", data.UnknownRevocationStatus.ValueString())
 		}
@@ -184,14 +181,6 @@ func (data *PolicyObjectUnifiedTLSSSLDecryption) fromBody(ctx context.Context, r
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	data.EnableSsl = types.BoolNull()
-
-	if t := res.Get(path + "sslEnable.optionType"); t.Exists() {
-		va := res.Get(path + "sslEnable.value")
-		if t.String() == "global" {
-			data.EnableSsl = types.BoolValue(va.Bool())
-		}
-	}
 	data.ExpiredCertificate = types.StringNull()
 
 	if t := res.Get(path + "expiredCertificate.optionType"); t.Exists() {
@@ -317,14 +306,6 @@ func (data *PolicyObjectUnifiedTLSSSLDecryption) updateFromBody(ctx context.Cont
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	data.EnableSsl = types.BoolNull()
-
-	if t := res.Get(path + "sslEnable.optionType"); t.Exists() {
-		va := res.Get(path + "sslEnable.value")
-		if t.String() == "global" {
-			data.EnableSsl = types.BoolValue(va.Bool())
-		}
-	}
 	data.ExpiredCertificate = types.StringNull()
 
 	if t := res.Get(path + "expiredCertificate.optionType"); t.Exists() {
@@ -444,9 +425,6 @@ func (data *PolicyObjectUnifiedTLSSSLDecryption) updateFromBody(ctx context.Cont
 // Section below is generated&owned by "gen/generator.go". //template:begin isNull
 func (data *PolicyObjectUnifiedTLSSSLDecryption) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.FeatureProfileId.IsNull() {
-		return false
-	}
-	if !data.EnableSsl.IsNull() {
 		return false
 	}
 	if !data.ExpiredCertificate.IsNull() {

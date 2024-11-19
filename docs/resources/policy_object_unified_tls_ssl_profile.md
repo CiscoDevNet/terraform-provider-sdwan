@@ -37,20 +37,22 @@ resource "sdwan_policy_object_unified_tls_ssl_profile" "example" {
 ### Required
 
 - `decrypt_categories` (Set of String)
-- `decrypt_threshold` (String) - Choices: `high-risk`, `low-risk`, `moderate-risk`, `suspicious`, `trustworthy`
 - `fail_decrypt` (Boolean)
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Policy_object
 - `no_decrypt_categories` (Set of String)
 - `pass_through_categories` (Set of String)
 - `reputation` (Boolean)
-- `threshold_categories` (String) - Choices: `high-risk`, `low-risk`, `moderate-risk`, `suspicious`, `trustworthy`
-- `url_allow_list_id` (String)
-- `url_block_list_id` (String)
 
 ### Optional
 
+- `decrypt_threshold` (String) , Attribute conditional on `reputation` being equal to `true`
+  - Choices: `high-risk`, `low-risk`, `moderate-risk`, `suspicious`, `trustworthy`
 - `description` (String) The description of the Policy_object
+- `threshold_categories` (String) , Attribute conditional on `reputation` being equal to `true`
+  - Choices: `high-risk`, `low-risk`, `moderate-risk`, `suspicious`, `trustworthy`
+- `url_allow_list_id` (String)
+- `url_block_list_id` (String)
 
 ### Read-Only
 

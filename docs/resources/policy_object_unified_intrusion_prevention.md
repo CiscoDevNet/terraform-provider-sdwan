@@ -16,14 +16,14 @@ This resource can manage a Policy Object Unified Intrusion Prevention Policy_obj
 
 ```terraform
 resource "sdwan_policy_object_unified_intrusion_prevention" "example" {
-  name                  = "Example"
-  description           = "My Example"
-  feature_profile_id    = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  signature_set         = "balanced"
-  inspection_mode       = "detection"
-  ips_signature_list_id = "2ad58d78-59ee-46d3-86dd-7b6b7ca09f38"
-  log_level             = "error"
-  custom_signature      = false
+  name                        = "Example"
+  description                 = "My Example"
+  feature_profile_id          = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  signature_set               = "balanced"
+  inspection_mode             = "detection"
+  ips_signature_allow_list_id = "2ad58d78-59ee-46d3-86dd-7b6b7ca09f38"
+  log_level                   = "error"
+  custom_signature            = false
 }
 ```
 
@@ -32,11 +32,9 @@ resource "sdwan_policy_object_unified_intrusion_prevention" "example" {
 
 ### Required
 
-- `custom_signature` (Boolean) Can be one of the enum value
 - `feature_profile_id` (String) Feature Profile ID
 - `inspection_mode` (String) Can be one of the enum value
   - Choices: `detection`, `protection`
-- `ips_signature_list_id` (String)
 - `log_level` (String) Can be one of the enum value
   - Choices: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `info`, `debug`
 - `name` (String) The name of the Policy_object
@@ -45,7 +43,9 @@ resource "sdwan_policy_object_unified_intrusion_prevention" "example" {
 
 ### Optional
 
+- `custom_signature` (Boolean) Can be one of the enum value
 - `description` (String) The description of the Policy_object
+- `ips_signature_allow_list_id` (String)
 
 ### Read-Only
 

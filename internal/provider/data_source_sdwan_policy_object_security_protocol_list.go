@@ -82,7 +82,7 @@ func (d *PolicyObjectSecurityProtocolListProfileParcelDataSource) Schema(ctx con
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"protocol_names": schema.StringAttribute{
+						"protocol_name": schema.StringAttribute{
 							MarkdownDescription: "",
 							Computed:            true,
 						},

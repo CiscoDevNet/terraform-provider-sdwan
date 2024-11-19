@@ -85,7 +85,7 @@ func (d *PolicyObjectUnifiedIntrusionPreventionProfileParcelDataSource) Schema(c
 				MarkdownDescription: "Can be one of the enum value",
 				Computed:            true,
 			},
-			"ips_signature_list_id": schema.StringAttribute{
+			"ips_signature_allow_list_id": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},

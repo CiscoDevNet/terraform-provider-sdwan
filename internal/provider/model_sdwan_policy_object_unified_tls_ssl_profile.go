@@ -102,13 +102,13 @@ func (data PolicyObjectUnifiedTLSSSLProfile) toBody(ctx context.Context) string 
 		}
 	}
 	if !data.DecryptThreshold.IsNull() {
-		if true {
+		if true && data.Reputation.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"decryptThreshold.optionType", "global")
 			body, _ = sjson.Set(body, path+"decryptThreshold.value", data.DecryptThreshold.ValueString())
 		}
 	}
 	if !data.ThresholdCategories.IsNull() {
-		if true {
+		if true && data.Reputation.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"skipDecryptThreshold.optionType", "global")
 			body, _ = sjson.Set(body, path+"skipDecryptThreshold.value", data.ThresholdCategories.ValueString())
 		}

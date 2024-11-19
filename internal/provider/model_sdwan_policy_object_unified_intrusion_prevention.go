@@ -32,16 +32,16 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type PolicyObjectUnifiedIntrusionPrevention struct {
-	Id                 types.String `tfsdk:"id"`
-	Version            types.Int64  `tfsdk:"version"`
-	Name               types.String `tfsdk:"name"`
-	Description        types.String `tfsdk:"description"`
-	FeatureProfileId   types.String `tfsdk:"feature_profile_id"`
-	SignatureSet       types.String `tfsdk:"signature_set"`
-	InspectionMode     types.String `tfsdk:"inspection_mode"`
-	IpsSignatureListId types.String `tfsdk:"ips_signature_list_id"`
-	LogLevel           types.String `tfsdk:"log_level"`
-	CustomSignature    types.Bool   `tfsdk:"custom_signature"`
+	Id                      types.String `tfsdk:"id"`
+	Version                 types.Int64  `tfsdk:"version"`
+	Name                    types.String `tfsdk:"name"`
+	Description             types.String `tfsdk:"description"`
+	FeatureProfileId        types.String `tfsdk:"feature_profile_id"`
+	SignatureSet            types.String `tfsdk:"signature_set"`
+	InspectionMode          types.String `tfsdk:"inspection_mode"`
+	IpsSignatureAllowListId types.String `tfsdk:"ips_signature_allow_list_id"`
+	LogLevel                types.String `tfsdk:"log_level"`
+	CustomSignature         types.Bool   `tfsdk:"custom_signature"`
 }
 
 // End of section. //template:end types
@@ -78,10 +78,10 @@ func (data PolicyObjectUnifiedIntrusionPrevention) toBody(ctx context.Context) s
 			body, _ = sjson.Set(body, path+"inspectionMode.value", data.InspectionMode.ValueString())
 		}
 	}
-	if !data.IpsSignatureListId.IsNull() {
+	if !data.IpsSignatureAllowListId.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"signatureAllowedList.refId.optionType", "global")
-			body, _ = sjson.Set(body, path+"signatureAllowedList.refId.value", data.IpsSignatureListId.ValueString())
+			body, _ = sjson.Set(body, path+"signatureAllowedList.refId.value", data.IpsSignatureAllowListId.ValueString())
 		}
 	}
 	if !data.LogLevel.IsNull() {
@@ -126,12 +126,12 @@ func (data *PolicyObjectUnifiedIntrusionPrevention) fromBody(ctx context.Context
 			data.InspectionMode = types.StringValue(va.String())
 		}
 	}
-	data.IpsSignatureListId = types.StringNull()
+	data.IpsSignatureAllowListId = types.StringNull()
 
 	if t := res.Get(path + "signatureAllowedList.refId.optionType"); t.Exists() {
 		va := res.Get(path + "signatureAllowedList.refId.value")
 		if t.String() == "global" {
-			data.IpsSignatureListId = types.StringValue(va.String())
+			data.IpsSignatureAllowListId = types.StringValue(va.String())
 		}
 	}
 	data.LogLevel = types.StringNull()
@@ -179,12 +179,12 @@ func (data *PolicyObjectUnifiedIntrusionPrevention) updateFromBody(ctx context.C
 			data.InspectionMode = types.StringValue(va.String())
 		}
 	}
-	data.IpsSignatureListId = types.StringNull()
+	data.IpsSignatureAllowListId = types.StringNull()
 
 	if t := res.Get(path + "signatureAllowedList.refId.optionType"); t.Exists() {
 		va := res.Get(path + "signatureAllowedList.refId.value")
 		if t.String() == "global" {
-			data.IpsSignatureListId = types.StringValue(va.String())
+			data.IpsSignatureAllowListId = types.StringValue(va.String())
 		}
 	}
 	data.LogLevel = types.StringNull()
@@ -218,7 +218,7 @@ func (data *PolicyObjectUnifiedIntrusionPrevention) isNull(ctx context.Context, 
 	if !data.InspectionMode.IsNull() {
 		return false
 	}
-	if !data.IpsSignatureListId.IsNull() {
+	if !data.IpsSignatureAllowListId.IsNull() {
 		return false
 	}
 	if !data.LogLevel.IsNull() {

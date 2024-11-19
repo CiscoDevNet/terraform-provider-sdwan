@@ -37,7 +37,6 @@ func TestAccDataSourceSdwanPolicyObjectUnifiedURLFilteringProfileParcel(t *testi
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_unified_url_filtering.test", "web_reputation", "suspicious"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_unified_url_filtering.test", "block_page_action", "text"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_unified_url_filtering.test", "block_page_contents", "Access to the requested page has been denied. Please contact your Network Administrator"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_unified_url_filtering.test", "redirect_url", "www.example.com"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_unified_url_filtering.test", "enable_alerts", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
@@ -98,7 +97,6 @@ func testAccDataSourceSdwanPolicyObjectUnifiedURLFilteringProfileParcelConfig() 
 	config += `	url_block_list_id = sdwan_policy_object_security_url_block_list.test.id` + "\n"
 	config += `	block_page_action = "text"` + "\n"
 	config += `	block_page_contents = "Access to the requested page has been denied. Please contact your Network Administrator"` + "\n"
-	config += `	redirect_url = "www.example.com"` + "\n"
 	config += `	enable_alerts = true` + "\n"
 	config += `	alerts = ["blacklist"]` + "\n"
 	config += `}` + "\n"

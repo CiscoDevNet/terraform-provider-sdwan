@@ -41,7 +41,7 @@ type PolicyObjectSecurityProtocolList struct {
 }
 
 type PolicyObjectSecurityProtocolListEntries struct {
-	ProtocolNames types.String `tfsdk:"protocol_names"`
+	ProtocolName types.String `tfsdk:"protocol_name"`
 }
 
 // End of section. //template:end types
@@ -70,10 +70,10 @@ func (data PolicyObjectSecurityProtocolList) toBody(ctx context.Context) string 
 
 		for _, item := range data.Entries {
 			itemBody := ""
-			if !item.ProtocolNames.IsNull() {
+			if !item.ProtocolName.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "protocolName.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "protocolName.value", item.ProtocolNames.ValueString())
+					itemBody, _ = sjson.Set(itemBody, "protocolName.value", item.ProtocolName.ValueString())
 				}
 			}
 			body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
@@ -97,12 +97,12 @@ func (data *PolicyObjectSecurityProtocolList) fromBody(ctx context.Context, res 
 		data.Entries = make([]PolicyObjectSecurityProtocolListEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := PolicyObjectSecurityProtocolListEntries{}
-			item.ProtocolNames = types.StringNull()
+			item.ProtocolName = types.StringNull()
 
 			if t := v.Get("protocolName.optionType"); t.Exists() {
 				va := v.Get("protocolName.value")
 				if t.String() == "global" {
-					item.ProtocolNames = types.StringValue(va.String())
+					item.ProtocolName = types.StringValue(va.String())
 				}
 			}
 			data.Entries = append(data.Entries, item)
@@ -124,7 +124,7 @@ func (data *PolicyObjectSecurityProtocolList) updateFromBody(ctx context.Context
 	path := "payload.data."
 	for i := range data.Entries {
 		keys := [...]string{"protocolName"}
-		keyValues := [...]string{data.Entries[i].ProtocolNames.ValueString()}
+		keyValues := [...]string{data.Entries[i].ProtocolName.ValueString()}
 		keyValuesVariables := [...]string{""}
 
 		var r gjson.Result
@@ -151,12 +151,12 @@ func (data *PolicyObjectSecurityProtocolList) updateFromBody(ctx context.Context
 				return true
 			},
 		)
-		data.Entries[i].ProtocolNames = types.StringNull()
+		data.Entries[i].ProtocolName = types.StringNull()
 
 		if t := r.Get("protocolName.optionType"); t.Exists() {
 			va := r.Get("protocolName.value")
 			if t.String() == "global" {
-				data.Entries[i].ProtocolNames = types.StringValue(va.String())
+				data.Entries[i].ProtocolName = types.StringValue(va.String())
 			}
 		}
 	}

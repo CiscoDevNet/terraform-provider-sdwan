@@ -32,17 +32,17 @@ resource "sdwan_policy_object_unified_advanced_inspection_profile" "example" {
 
 ### Required
 
-- `advanced_malware_protection_list_id` (String)
 - `feature_profile_id` (String) Feature Profile ID
-- `intrusion_prevention_list_id` (String)
 - `name` (String) The name of the Policy_object
 - `tls_decryption_action` (String) - Choices: `decrypt`, `neverDecrypt`, `skipDecrypt`
-- `tls_ssl_profile_list_id` (String)
-- `url_filtering_list_id` (String)
 
 ### Optional
 
+- `advanced_malware_protection_list_id` (String)
 - `description` (String) The description of the Policy_object
+- `intrusion_prevention_list_id` (String)
+- `tls_ssl_profile_list_id` (String)
+- `url_filtering_list_id` (String)
 
 ### Read-Only
 

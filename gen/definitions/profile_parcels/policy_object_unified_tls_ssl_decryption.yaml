@@ -15,18 +15,28 @@ attributes:
     test_value: sdwan_policy_object_feature_profile.test.id
   - model_name: sslEnable
     tf_name: enable_ssl
+    value: true
+    value_type: "global"
     example: true
+
   - model_name: expiredCertificate
     example: drop
   - model_name: untrustedCertificate
     example: drop
+
   - model_name: certificateRevocationStatus
     example: ocsp
   - model_name: unknownStatus
     tf_name: unknown_revocation_status
+    ignore_mandatory: true
+    conditional_attribute:
+      name: certificate_revocation_status
+      value: ocsp
     example: decrypt
+
+
   - model_name: unsupportedProtocolVersions
-    example: no-decrypt
+    example: drop
   - model_name: unsupportedCipherSuites
     example: drop
   - model_name: failureMode
@@ -35,25 +45,32 @@ attributes:
     tf_name: default_ca_certificate_bundle
     data_path: [caCertBundle]
     example: true
+
   - model_name: fileName
     data_path: [caCertBundle]
+    ignore_mandatory: true
     exclude_test: true
     example: dummy.pem
   - model_name: bundleString
     data_path: [caCertBundle]
+    ignore_mandatory: true
     exclude_test: true
     example: testString
+  
   - model_name: keyModulus
     tf_name: rsa_keypair_modules
     example: 2048
+  
   - model_name: eckeyType
     tf_name: ec_key_type
     example: P384
   - model_name: certificateLifetime
     example: 1
+
   - model_name: minTlsVer
     tf_name: minimal_tls_ver
     example: TLSv1.2
+
   - model_name: caTpLabel
     value: PROXY-SIGNING-CA
 

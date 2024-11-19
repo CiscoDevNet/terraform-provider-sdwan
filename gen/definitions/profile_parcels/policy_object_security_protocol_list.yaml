@@ -17,7 +17,7 @@ attributes:
     mandatory: true
     attributes:
     - model_name: protocolName
-      tf_name: protocol_names
+      tf_name: protocol_name
       id: true
       mandatory: true
       example: aol

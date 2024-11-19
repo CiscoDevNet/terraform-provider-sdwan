@@ -32,7 +32,7 @@ data "sdwan_policy_object_unified_intrusion_prevention" "example" {
 - `custom_signature` (Boolean) Can be one of the enum value
 - `description` (String) The description of the Policy_object
 - `inspection_mode` (String) Can be one of the enum value
-- `ips_signature_list_id` (String)
+- `ips_signature_allow_list_id` (String)
 - `log_level` (String) Can be one of the enum value
 - `name` (String) The name of the Policy_object
 - `signature_set` (String) Can be one of the enum value

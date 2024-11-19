@@ -87,10 +87,6 @@ func (r *PolicyObjectUnifiedTLSSSLDecryptionProfileParcelResource) Schema(ctx co
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
 				Required:            true,
 			},
-			"enable_ssl": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("If false, no other fields should be provided, if true all fields should be provided").String,
-				Required:            true,
-			},
 			"expired_certificate": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("decrypt", "drop").String,
 				Required:            true,
@@ -113,8 +109,8 @@ func (r *PolicyObjectUnifiedTLSSSLDecryptionProfileParcelResource) Schema(ctx co
 				},
 			},
 			"unknown_revocation_status": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Only required if certificateRevocationStatus is oscp, if value is none then field shouldn't be here").AddStringEnumDescription("decrypt", "drop").String,
-				Required:            true,
+				MarkdownDescription: helpers.NewAttributeDescription("Only required if certificateRevocationStatus is oscp, if value is none then field shouldn't be here, Attribute conditional on `certificate_revocation_status` being equal to `ocsp`").AddStringEnumDescription("decrypt", "drop").String,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("decrypt", "drop"),
 				},

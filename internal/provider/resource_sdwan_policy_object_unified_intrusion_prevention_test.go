@@ -87,7 +87,7 @@ func testAccSdwanPolicyObjectUnifiedIntrusionPreventionProfileParcelConfig_all()
 	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	signature_set = "balanced"` + "\n"
 	config += `	inspection_mode = "detection"` + "\n"
-	config += `	ips_signature_list_id = sdwan_policy_object_security_ips_signature.test.id` + "\n"
+	config += `	ips_signature_allow_list_id = sdwan_policy_object_security_ips_signature.test.id` + "\n"
 	config += `	log_level = "error"` + "\n"
 	config += `	custom_signature = false` + "\n"
 	config += `}` + "\n"

@@ -26,7 +26,6 @@ resource "sdwan_policy_object_unified_url_filtering" "example" {
   url_block_list_id     = "2ad58d78-59ee-46d3-86dd-7b6b7ca09f38"
   block_page_action     = "text"
   block_page_contents   = "Access to the requested page has been denied. Please contact your Network Administrator"
-  redirect_url          = "www.example.com"
   enable_alerts         = true
   alerts                = ["blacklist"]
 }
@@ -37,22 +36,22 @@ resource "sdwan_policy_object_unified_url_filtering" "example" {
 
 ### Required
 
-- `alerts` (Set of String)
 - `block_page_action` (String) - Choices: `text`, `redirect-url`
-- `block_page_contents` (String)
 - `enable_alerts` (Boolean)
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Policy_object
-- `redirect_url` (String)
-- `url_allow_list_id` (String)
-- `url_block_list_id` (String)
 - `web_categories` (Set of String)
 - `web_categories_action` (String) - Choices: `block`, `allow`
 - `web_reputation` (String) - Choices: `high-risk`, `low-risk`, `moderate-risk`, `suspicious`, `trustworthy`
 
 ### Optional
 
+- `alerts` (Set of String) , Attribute conditional on `enable_alerts` being equal to `true`
+- `block_page_contents` (String) , Attribute conditional on `block_page_action` being equal to `text`
 - `description` (String) The description of the Policy_object
+- `redirect_url` (String) , Attribute conditional on `block_page_action` being equal to `redirect-url`
+- `url_allow_list_id` (String)
+- `url_block_list_id` (String)
 
 ### Read-Only
 

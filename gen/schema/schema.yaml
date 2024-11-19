@@ -44,6 +44,7 @@ attribute:
   reference: bool(required=False) # Indicates that the attribute is being used in the url path
   variable: bool(required=False) # Indicates that this attribute can be provided as a feature template or profile parcel variable
   mandatory: bool(required=False) # Set to true if the attribute is mandatory
+  ignore_mandatory: bool(required=False) # Set to true if schema mandatory value should be ignored
   optional: bool(required=False) # Set to true if the attribute is optional
   write_only: bool(required=False) # Set to true if the attribute is write-only, meaning we cannot read the value
   tf_only: bool(required=False) # Set to true if this attribute is only used in Terraform but not added to payload
@@ -69,6 +70,7 @@ attribute:
   default_value_present: bool(required=False) # Set to true if profile parcel has default value in schema
   default_value_empty_string: bool(required=False) # Set to true if default value should be an empty string
   value: any(str(), int(), bool(), required=False) # Hardcoded value for the attribute
+  value_type: str(required=False) # Hardcoded value for the attribute
   test_value: str(required=False) # Value used for acceptance test
   secondary_test_value: str(required=False) # Value used for acceptance test
   minimum_test_value: any(str(), int(), bool(), num(), required=False) # Value used for "minimum" resource acceptance test

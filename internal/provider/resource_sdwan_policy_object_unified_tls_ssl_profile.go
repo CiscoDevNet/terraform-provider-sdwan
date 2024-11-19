@@ -108,15 +108,15 @@ func (r *PolicyObjectUnifiedTLSSSLProfileProfileParcelResource) Schema(ctx conte
 				Required:            true,
 			},
 			"decrypt_threshold": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("high-risk", "low-risk", "moderate-risk", "suspicious", "trustworthy").String,
-				Required:            true,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `reputation` being equal to `true`").AddStringEnumDescription("high-risk", "low-risk", "moderate-risk", "suspicious", "trustworthy").String,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("high-risk", "low-risk", "moderate-risk", "suspicious", "trustworthy"),
 				},
 			},
 			"threshold_categories": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("high-risk", "low-risk", "moderate-risk", "suspicious", "trustworthy").String,
-				Required:            true,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `reputation` being equal to `true`").AddStringEnumDescription("high-risk", "low-risk", "moderate-risk", "suspicious", "trustworthy").String,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("high-risk", "low-risk", "moderate-risk", "suspicious", "trustworthy"),
 				},
@@ -127,14 +127,14 @@ func (r *PolicyObjectUnifiedTLSSSLProfileProfileParcelResource) Schema(ctx conte
 			},
 			"url_allow_list_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 				},
 			},
 			"url_block_list_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 				},

@@ -111,13 +111,13 @@ func (data PolicyObjectUnifiedURLFiltering) toBody(ctx context.Context) string {
 		}
 	}
 	if !data.BlockPageContents.IsNull() {
-		if true {
+		if true && data.BlockPageAction.ValueString() == "text" {
 			body, _ = sjson.Set(body, path+"blockPageContents.optionType", "global")
 			body, _ = sjson.Set(body, path+"blockPageContents.value", data.BlockPageContents.ValueString())
 		}
 	}
 	if !data.RedirectUrl.IsNull() {
-		if true {
+		if true && data.BlockPageAction.ValueString() == "redirect-url" {
 			body, _ = sjson.Set(body, path+"redirectUrl.optionType", "global")
 			body, _ = sjson.Set(body, path+"redirectUrl.value", data.RedirectUrl.ValueString())
 		}
@@ -129,7 +129,7 @@ func (data PolicyObjectUnifiedURLFiltering) toBody(ctx context.Context) string {
 		}
 	}
 	if !data.Alerts.IsNull() {
-		if true {
+		if true && data.EnableAlerts.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"alerts.optionType", "global")
 			var values []string
 			data.Alerts.ElementsAs(ctx, &values, false)

@@ -121,7 +121,6 @@ resource "sdwan_policy_object_unified_advanced_malware_protection" "test" {
   name                          = "TF_TEST_ADVANCED_MALWARE"
   description                   = "My Example"
   feature_profile_id            = sdwan_policy_object_feature_profile.test.id
-  match_all_vpn                 = true
   amp_cloud_region              = "nam"
   amp_cloud_region_est_server   = "nam"
   alert_log_level               = "critical"

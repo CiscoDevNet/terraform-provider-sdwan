@@ -33,7 +33,7 @@ func TestAccDataSourceSdwanPolicyObjectSecurityProtocolListProfileParcel(t *test
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_security_protocol_list.test", "entries.0.protocol_names", "aol"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_security_protocol_list.test", "entries.0.protocol_name", "aol"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -65,7 +65,7 @@ func testAccDataSourceSdwanPolicyObjectSecurityProtocolListProfileParcelConfig()
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
-	config += `	  protocol_names = "aol"` + "\n"
+	config += `	  protocol_name = "aol"` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 

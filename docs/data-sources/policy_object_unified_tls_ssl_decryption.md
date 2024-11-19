@@ -35,7 +35,6 @@ data "sdwan_policy_object_unified_tls_ssl_decryption" "example" {
 - `default_ca_certificate_bundle` (Boolean)
 - `description` (String) The description of the Policy_object
 - `ec_key_type` (String)
-- `enable_ssl` (Boolean) If false, no other fields should be provided, if true all fields should be provided
 - `expired_certificate` (String)
 - `failure_mode` (String)
 - `file_name` (String)

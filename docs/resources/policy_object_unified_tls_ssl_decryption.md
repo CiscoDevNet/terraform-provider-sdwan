@@ -19,12 +19,11 @@ resource "sdwan_policy_object_unified_tls_ssl_decryption" "example" {
   name                          = "Example"
   description                   = "My Example"
   feature_profile_id            = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  enable_ssl                    = true
   expired_certificate           = "drop"
   untrusted_certificate         = "drop"
   certificate_revocation_status = "ocsp"
   unknown_revocation_status     = "decrypt"
-  unsupported_protocol_versions = "no-decrypt"
+  unsupported_protocol_versions = "drop"
   unsupported_cipher_suites     = "drop"
   failure_mode                  = "close"
   default_ca_certificate_bundle = true
@@ -44,15 +43,12 @@ resource "sdwan_policy_object_unified_tls_ssl_decryption" "example" {
 - `certificate_revocation_status` (String) If value is none unknown status not required, if value is ocsp then unknown status is required
   - Choices: `ocsp`, `none`
 - `ec_key_type` (String) - Choices: `P256`, `P384`, `P521`
-- `enable_ssl` (Boolean) If false, no other fields should be provided, if true all fields should be provided
 - `expired_certificate` (String) - Choices: `decrypt`, `drop`
 - `failure_mode` (String) - Choices: `close`, `open`
 - `feature_profile_id` (String) Feature Profile ID
 - `minimal_tls_ver` (String) - Choices: `TLSv1`, `TLSv1.1`, `TLSv1.2`
 - `name` (String) The name of the Policy_object
 - `rsa_keypair_modules` (String) - Choices: `1024`, `2048`, `4096`
-- `unknown_revocation_status` (String) Only required if certificateRevocationStatus is oscp, if value is none then field shouldn't be here
-  - Choices: `decrypt`, `drop`
 - `unsupported_cipher_suites` (String) - Choices: `no-decrypt`, `drop`
 - `unsupported_protocol_versions` (String) - Choices: `no-decrypt`, `drop`
 - `untrusted_certificate` (String) - Choices: `decrypt`, `drop`
@@ -63,6 +59,8 @@ resource "sdwan_policy_object_unified_tls_ssl_decryption" "example" {
 - `default_ca_certificate_bundle` (Boolean)
 - `description` (String) The description of the Policy_object
 - `file_name` (String)
+- `unknown_revocation_status` (String) Only required if certificateRevocationStatus is oscp, if value is none then field shouldn't be here, Attribute conditional on `certificate_revocation_status` being equal to `ocsp`
+  - Choices: `decrypt`, `drop`
 
 ### Read-Only
 

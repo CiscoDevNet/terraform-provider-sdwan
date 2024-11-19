@@ -109,14 +109,14 @@ func (r *PolicyObjectUnifiedURLFilteringProfileParcelResource) Schema(ctx contex
 			},
 			"url_allow_list_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 				},
 			},
 			"url_block_list_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 				},
@@ -129,12 +129,12 @@ func (r *PolicyObjectUnifiedURLFilteringProfileParcelResource) Schema(ctx contex
 				},
 			},
 			"block_page_contents": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Required:            true,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `block_page_action` being equal to `text`").String,
+				Optional:            true,
 			},
 			"redirect_url": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Required:            true,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `block_page_action` being equal to `redirect-url`").String,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`^(http://www\.|https://www\.|http://|https://)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(/.*)?$`), ""),
 				},
@@ -144,9 +144,9 @@ func (r *PolicyObjectUnifiedURLFilteringProfileParcelResource) Schema(ctx contex
 				Required:            true,
 			},
 			"alerts": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `enable_alerts` being equal to `true`").String,
 				ElementType:         types.StringType,
-				Required:            true,
+				Optional:            true,
 			},
 		},
 	}

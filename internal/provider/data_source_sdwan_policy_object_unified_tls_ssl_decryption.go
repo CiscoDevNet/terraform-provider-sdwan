@@ -77,10 +77,6 @@ func (d *PolicyObjectUnifiedTLSSSLDecryptionProfileParcelDataSource) Schema(ctx 
 				MarkdownDescription: "Feature Profile ID",
 				Required:            true,
 			},
-			"enable_ssl": schema.BoolAttribute{
-				MarkdownDescription: "If false, no other fields should be provided, if true all fields should be provided",
-				Computed:            true,
-			},
 			"expired_certificate": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,

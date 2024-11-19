@@ -102,9 +102,9 @@ func (r *PolicyObjectUnifiedIntrusionPreventionProfileParcelResource) Schema(ctx
 					stringvalidator.OneOf("detection", "protection"),
 				},
 			},
-			"ips_signature_list_id": schema.StringAttribute{
+			"ips_signature_allow_list_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 				},
@@ -118,7 +118,7 @@ func (r *PolicyObjectUnifiedIntrusionPreventionProfileParcelResource) Schema(ctx
 			},
 			"custom_signature": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Can be one of the enum value").String,
-				Required:            true,
+				Optional:            true,
 			},
 		},
 	}

@@ -9,7 +9,6 @@ resource "sdwan_policy_object_unified_url_filtering" "example" {
   url_block_list_id     = "2ad58d78-59ee-46d3-86dd-7b6b7ca09f38"
   block_page_action     = "text"
   block_page_contents   = "Access to the requested page has been denied. Please contact your Network Administrator"
-  redirect_url          = "www.example.com"
   enable_alerts         = true
   alerts                = ["blacklist"]
 }
