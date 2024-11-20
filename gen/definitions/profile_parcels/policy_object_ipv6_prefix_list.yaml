@@ -4,7 +4,7 @@ rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/ipv6-prefix
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 parcel_type: policy_object
-implement_simple_updates: true
+full_update: true
 attributes:
   - tf_name: feature_profile_id
     reference: true

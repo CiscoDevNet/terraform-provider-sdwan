@@ -27,7 +27,7 @@ get_before_delete: bool(required=False) # This does a GET "all" before doing a D
 delete_mutex: bool(required=False) # Set to true if DELETE operation is mutually exclusive with other DELETE operations
 skip_minimum_test: bool(required=False) # Set to true to prevent "minimum" resource acceptance testing
 parcel_type: enum('feature', 'policy', 'policy_object', required=False) # Type of profile parcel
-implement_simple_updates: bool(required=False) # Set to true to exclude updateFromBody and just use updateBody within update method
+full_update: bool(required=False) # Set to true to exclude updateFromBody and just use updateBody within update method
 ---
 attribute:
   model_name: str(required=False) # Name of the attribute in the model (payload)
