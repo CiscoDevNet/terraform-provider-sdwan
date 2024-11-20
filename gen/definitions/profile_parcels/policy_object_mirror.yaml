@@ -5,6 +5,7 @@ minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 skip_minimum_test: true
 parcel_type: policy_object
+full_update: true
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -18,12 +19,10 @@ attributes:
     attributes:
       - model_name: remoteDestIp
         tf_name: remote_destination_ip
-        id: true
         mandatory: true
         example: 10.0.0.1
       - model_name: sourceIp
         tf_name: source_ip
-        id: true
         mandatory: true
         example: 10.0.0.2
 

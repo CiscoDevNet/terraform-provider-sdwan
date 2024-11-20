@@ -447,11 +447,15 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Read(ctx context.Context, req
 	}
 
 	// If every attribute is set to null we are dealing with an import operation and therefore reading all attributes
+	{{- if not .FullUpdate}}
 	if state.isNull(ctx, res) {
 		state.fromBody(ctx, res)
 	} else {
 		state.updateFromBody(ctx, res)
 	}
+	{{- else}}
+	state.fromBody(ctx, res)
+	{{- end}}
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

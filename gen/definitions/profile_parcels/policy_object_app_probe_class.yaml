@@ -5,6 +5,7 @@ minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 skip_minimum_test: true
 parcel_type: policy_object
+full_update: true
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -20,13 +21,11 @@ attributes:
       mandatory: true
       attributes:
       - model_name: color
-        id: true
         mandatory: true
         example: 3g
       - model_name: dscp
         example: 45
     - model_name: forwardingClass
-      id: true
       mandatory: true
       example: classlist1
 
