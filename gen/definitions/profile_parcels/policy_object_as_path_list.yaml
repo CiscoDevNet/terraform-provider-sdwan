@@ -5,6 +5,7 @@ minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 skip_minimum_test: true
 parcel_type: policy_object
+full_update: true
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -22,7 +23,6 @@ attributes:
     attributes:
     - model_name: asPath
       tf_name: as_path_list
-      id: true
       mandatory: true
       example: 110
 
