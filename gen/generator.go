@@ -232,6 +232,7 @@ type YamlConfigAttribute struct {
 	Reference               bool                           `yaml:"reference"`
 	Variable                bool                           `yaml:"variable"`
 	Mandatory               bool                           `yaml:"mandatory"`
+	IgnoreMandatory         bool                           `yaml:"ignore_mandatory"`
 	Optional                bool                           `yaml:"optional"`
 	WriteOnly               bool                           `yaml:"write_only"`
 	TfOnly                  bool                           `yaml:"tf_only"`
@@ -257,6 +258,7 @@ type YamlConfigAttribute struct {
 	DefaultValuePresent     bool                           `yaml:"default_value_present"`
 	DefaultValueEmptyString bool                           `yaml:"default_value_empty_string"`
 	Value                   string                         `yaml:"value"`
+	ValueType               string                         `yaml:"value_type"`
 	TestValue               string                         `yaml:"test_value"`
 	SecondaryTestValue      string                         `yaml:"secondary_test_value"`
 	MinimumTestValue        string                         `yaml:"minimum_test_value"`
@@ -882,6 +884,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				} else {
 					if noGlobal {
 						attr.Value = value.String()
+						attr.ValueType = "default"
 					} else {
 						attr.DefaultValue = value.String()
 					}
@@ -892,6 +895,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				} else {
 					if noGlobal {
 						attr.Value = value.String()
+						attr.ValueType = "default"
 					} else {
 						attr.DefaultValue = value.String()
 					}
@@ -899,6 +903,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 			} else if value := d.Get("properties.value.minimum"); value.Exists() {
 				if noGlobal {
 					attr.Value = value.String()
+					attr.ValueType = "default"
 				} else {
 					attr.DefaultValue = value.String()
 				}
@@ -906,7 +911,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		} else if isOneOfAttribute {
 			attr.ExcludeNull = true
 		} else {
-			if !attr.Variable {
+			if !attr.Variable && !attr.IgnoreMandatory {
 				attr.Mandatory = true
 			}
 		}
