@@ -112,6 +112,7 @@ Read-Only:
 - `tloc_prefix_change_value_variable` (String) Variable name
 - `track_omp` (Boolean) Track OMP status
 - `track_omp_variable` (String) Variable name
+- `tracking_objects` (Attributes List) tracking object for VRRP configuration (see [below for nested schema](#nestedatt--ipv4_vrrps--tracking_objects))
 
 <a id="nestedatt--ipv4_vrrps--secondary_addresses"></a>
 ### Nested Schema for `ipv4_vrrps.secondary_addresses`
@@ -120,6 +121,18 @@ Read-Only:
 
 - `address` (String) VRRP Secondary IPV4 address
 - `address_variable` (String) Variable name
+
+
+<a id="nestedatt--ipv4_vrrps--tracking_objects"></a>
+### Nested Schema for `ipv4_vrrps.tracking_objects`
+
+Read-Only:
+
+- `decrement_value` (Number) Decrement Value for VRRP priority
+- `decrement_value_variable` (String) Variable name
+- `track_action` (String) Track Action
+- `track_action_variable` (String) Variable name
+- `tracker_id` (String)
 
 
 

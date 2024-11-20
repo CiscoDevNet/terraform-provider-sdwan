@@ -22,6 +22,8 @@ All resources and data sources have been tested with the following releases.
 The following guides with examples exist to demonstrate the use of the provider:
 
 - [Getting Started](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/getting_started)
+- [Updating Templates](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/updating_templates)
+- [Configuration Groups](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/configuration_groups)
 
 ## Example Usage
 
@@ -38,8 +40,8 @@ provider "sdwan" {
 
 ### Optional
 
-- `insecure` (Boolean) Allow insecure HTTPS client. This can also be set as the SDWAN_INSECURE environment variable. Defaults to `true`.
-- `password` (String, Sensitive) Password for the SD-WAN Manager account. This can also be set as the SDWAN_PASSWORD environment variable.
-- `retries` (Number) Number of retries for REST API calls. This can also be set as the SDWAN_RETRIES environment variable. Defaults to `3`.
-- `url` (String) URL of the Cisco SD-WAN Manager device. This can also be set as the SDWAN_URL environment variable.
-- `username` (String) Username for the SD-WAN Manager account. This can also be set as the SDWAN_USERNAME environment variable.
+- `insecure` (Boolean) Allow insecure HTTPS client. This can also be set as the `SDWAN_INSECURE` environment variable. Defaults to `true`.
+- `password` (String, Sensitive) Password for the SD-WAN Manager account. This can also be set as the `SDWAN_PASSWORD` environment variable.
+- `retries` (Number) Number of retries for REST API calls. This can also be set as the `SDWAN_RETRIES` environment variable. Defaults to `3`.
+- `url` (String) URL of the Cisco SD-WAN Manager device. This can also be set as the `SDWAN_URL` environment variable.
+- `username` (String) Username for the SD-WAN Manager account. This can also be set as the `SDWAN_USERNAME` environment variable.

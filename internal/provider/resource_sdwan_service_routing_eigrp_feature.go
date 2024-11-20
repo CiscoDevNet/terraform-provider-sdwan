@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 	"regexp"
+	"strings"
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
@@ -91,7 +92,7 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 			},
 			"autonomous_system_id": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set autonomous system ID <1..65535>").AddIntegerRangeDescription(1, 65535).String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -155,7 +156,7 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 			},
 			"hello_interval": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set EIGRP hello interval").AddIntegerRangeDescription(0, 65535).AddDefaultValueDescription("5").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"hello_interval_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -163,7 +164,7 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 			},
 			"hold_time": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set EIGRP hold time").AddIntegerRangeDescription(0, 65535).AddDefaultValueDescription("15").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"hold_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -171,7 +172,7 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 			},
 			"authentication_type": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set EIGRP router authentication type").AddStringEnumDescription("md5", "hmac-sha-256").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("md5", "hmac-sha-256"),
 				},
@@ -368,6 +369,9 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Read(ctx context.Context, req
 	} else {
 		state.updateFromBody(ctx, res)
 	}
+	if state.Version.IsNull() {
+		state.Version = types.Int64Value(0)
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 
@@ -441,7 +445,19 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Delete(ctx context.Context, r
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *ServiceRoutingEIGRPProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	count := 1
+	parts := strings.SplitN(req.ID, ",", (count + 1))
+
+	pattern := "service_routing_eigrp_feature_id" + ",feature_profile_id"
+	if len(parts) != (count + 1) {
+		resp.Diagnostics.AddError(
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q", pattern, req.ID),
+		)
+		return
+	}
+
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("feature_profile_id"), parts[1])...)
 }
 
 // End of section. //template:end import

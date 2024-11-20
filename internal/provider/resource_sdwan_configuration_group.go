@@ -171,11 +171,16 @@ func (r *ConfigurationGroupResource) Schema(ctx context.Context, req resource.Sc
 								Attributes: map[string]schema.Attribute{
 									"name": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-										Optional:            true,
+										Required:            true,
 									},
 									"value": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable value").String,
-										Required:            true,
+										Optional:            true,
+									},
+									"list_value": schema.ListAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Use this instead of `value` in case value is of type `List`.").String,
+										ElementType:         types.StringType,
+										Optional:            true,
 									},
 								},
 							},
@@ -329,31 +334,35 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 
 	state.fromBodyConfigGroup(ctx, res)
 
-	// Read config group devices
-	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", state.Id.ValueString())
-	res, err = r.client.Get(path)
-	if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
-		resp.State.RemoveResource(ctx)
-		return
-	} else if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
-		return
+	// Read config group device associations
+	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
+		path := fmt.Sprintf("/v1/config-group/%v/device/associate/", state.Id.ValueString())
+		res, err = r.client.Get(path)
+		if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
+			resp.State.RemoveResource(ctx)
+			return
+		} else if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+			return
+		}
+
+		state.updateFromBodyConfigGroupDevices(ctx, res)
 	}
 
-	state.fromBodyConfigGroupDevices(ctx, res)
+	// Read config group device variables
+	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
+		path := fmt.Sprintf("/v1/config-group/%v/device/variables/", state.Id.ValueString())
+		res, err = r.client.Get(path)
+		if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
+			resp.State.RemoveResource(ctx)
+			return
+		} else if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+			return
+		}
 
-	// Read config group devices
-	path = fmt.Sprintf("/v1/config-group/%v/device/variables/", state.Id.ValueString())
-	res, err = r.client.Get(path)
-	if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
-		resp.State.RemoveResource(ctx)
-		return
-	} else if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
-		return
+		state.updateFromBodyConfigGroupDeviceVariables(ctx, res)
 	}
-
-	state.fromBodyConfigGroupDeviceVariables(ctx, res)
 
 	state.updateTfAttributes(ctx, &oldState)
 
@@ -434,14 +443,16 @@ func (r *ConfigurationGroupResource) Delete(ctx context.Context, req resource.De
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
 	body := state.toBodyConfigGroupDevices(ctx)
-	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", state.Id.ValueString())
-	res, err := r.client.DeleteBody(path, body)
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group devices (DELETE), got error: %s, %s", err, res.String()))
-		return
+	if len(gjson.Get(body, "devices").Array()) > 0 {
+		path := fmt.Sprintf("/v1/config-group/%v/device/associate/", state.Id.ValueString())
+		res, err := r.client.DeleteBody(path, body)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group devices (DELETE), got error: %s, %s", err, res.String()))
+			return
+		}
 	}
 
-	res, err = r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
+	res, err := r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group (DELETE), got error: %s, %s", err, res.String()))
 		return

@@ -185,6 +185,7 @@ type ServiceLANVPNInterfaceEthernetIpv4Vrrps struct {
 	SecondaryAddresses  []ServiceLANVPNInterfaceEthernetIpv4VrrpsSecondaryAddresses `tfsdk:"secondary_addresses"`
 	TlocPrefixChange    types.Bool                                                  `tfsdk:"tloc_prefix_change"`
 	TlocPrefChangeValue types.Int64                                                 `tfsdk:"tloc_pref_change_value"`
+	TrackingObjects     []ServiceLANVPNInterfaceEthernetIpv4VrrpsTrackingObjects    `tfsdk:"tracking_objects"`
 }
 
 type ServiceLANVPNInterfaceEthernetArps struct {
@@ -206,6 +207,13 @@ type ServiceLANVPNInterfaceEthernetIpv4VrrpsSecondaryAddresses struct {
 	AddressVariable    types.String `tfsdk:"address_variable"`
 	SubnetMask         types.String `tfsdk:"subnet_mask"`
 	SubnetMaskVariable types.String `tfsdk:"subnet_mask_variable"`
+}
+type ServiceLANVPNInterfaceEthernetIpv4VrrpsTrackingObjects struct {
+	TrackerId              types.String `tfsdk:"tracker_id"`
+	TrackerAction          types.String `tfsdk:"tracker_action"`
+	TrackerActionVariable  types.String `tfsdk:"tracker_action_variable"`
+	DecrementValue         types.Int64  `tfsdk:"decrement_value"`
+	DecrementValueVariable types.String `tfsdk:"decrement_value_variable"`
 }
 
 // End of section. //template:end types
@@ -932,6 +940,43 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "tlocPrefChangeValue.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "tlocPrefChangeValue.value", item.TlocPrefChangeValue.ValueInt64())
+				}
+			}
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "trackingObject", []interface{}{})
+				for _, childItem := range item.TrackingObjects {
+					itemChildBody := ""
+					if !childItem.TrackerId.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "trackerId.refId.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "trackerId.refId.value", childItem.TrackerId.ValueString())
+						}
+					}
+
+					if !childItem.TrackerActionVariable.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "trackerAction.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "trackerAction.value", childItem.TrackerActionVariable.ValueString())
+						}
+					} else if !childItem.TrackerAction.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "trackerAction.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "trackerAction.value", childItem.TrackerAction.ValueString())
+						}
+					}
+
+					if !childItem.DecrementValueVariable.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "decrementValue.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "decrementValue.value", childItem.DecrementValueVariable.ValueString())
+						}
+					} else if !childItem.DecrementValue.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "decrementValue.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "decrementValue.value", childItem.DecrementValue.ValueInt64())
+						}
+					}
+					itemBody, _ = sjson.SetRaw(itemBody, "trackingObject.-1", itemChildBody)
 				}
 			}
 			body, _ = sjson.SetRaw(body, path+"vrrp.-1", itemBody)
@@ -1833,6 +1878,42 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 				if t.String() == "global" {
 					item.TlocPrefChangeValue = types.Int64Value(va.Int())
 				}
+			}
+			if cValue := v.Get("trackingObject"); cValue.Exists() {
+				item.TrackingObjects = make([]ServiceLANVPNInterfaceEthernetIpv4VrrpsTrackingObjects, 0)
+				cValue.ForEach(func(ck, cv gjson.Result) bool {
+					cItem := ServiceLANVPNInterfaceEthernetIpv4VrrpsTrackingObjects{}
+					cItem.TrackerId = types.StringNull()
+
+					if t := cv.Get("trackerId.refId.optionType"); t.Exists() {
+						va := cv.Get("trackerId.refId.value")
+						if t.String() == "global" {
+							cItem.TrackerId = types.StringValue(va.String())
+						}
+					}
+					cItem.TrackerAction = types.StringNull()
+					cItem.TrackerActionVariable = types.StringNull()
+					if t := cv.Get("trackerAction.optionType"); t.Exists() {
+						va := cv.Get("trackerAction.value")
+						if t.String() == "variable" {
+							cItem.TrackerActionVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
+							cItem.TrackerAction = types.StringValue(va.String())
+						}
+					}
+					cItem.DecrementValue = types.Int64Null()
+					cItem.DecrementValueVariable = types.StringNull()
+					if t := cv.Get("decrementValue.optionType"); t.Exists() {
+						va := cv.Get("decrementValue.value")
+						if t.String() == "variable" {
+							cItem.DecrementValueVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
+							cItem.DecrementValue = types.Int64Value(va.Int())
+						}
+					}
+					item.TrackingObjects = append(item.TrackingObjects, cItem)
+					return true
+				})
 			}
 			data.Ipv4Vrrps = append(data.Ipv4Vrrps, item)
 			return true
@@ -2804,6 +2885,64 @@ func (data *ServiceLANVPNInterfaceEthernet) updateFromBody(ctx context.Context, 
 			va := r.Get("tlocPrefChangeValue.value")
 			if t.String() == "global" {
 				data.Ipv4Vrrps[i].TlocPrefChangeValue = types.Int64Value(va.Int())
+			}
+		}
+		for ci := range data.Ipv4Vrrps[i].TrackingObjects {
+			keys := [...]string{"trackerId.refId"}
+			keyValues := [...]string{data.Ipv4Vrrps[i].TrackingObjects[ci].TrackerId.ValueString()}
+			keyValuesVariables := [...]string{""}
+
+			var cr gjson.Result
+			r.Get("trackingObject").ForEach(
+				func(_, v gjson.Result) bool {
+					found := false
+					for ik := range keys {
+						tt := v.Get(keys[ik] + ".optionType")
+						vv := v.Get(keys[ik] + ".value")
+						if tt.Exists() && vv.Exists() {
+							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+								found = true
+								continue
+							}
+							found = false
+							break
+						}
+						continue
+					}
+					if found {
+						cr = v
+						return false
+					}
+					return true
+				},
+			)
+			data.Ipv4Vrrps[i].TrackingObjects[ci].TrackerId = types.StringNull()
+
+			if t := cr.Get("trackerId.refId.optionType"); t.Exists() {
+				va := cr.Get("trackerId.refId.value")
+				if t.String() == "global" {
+					data.Ipv4Vrrps[i].TrackingObjects[ci].TrackerId = types.StringValue(va.String())
+				}
+			}
+			data.Ipv4Vrrps[i].TrackingObjects[ci].TrackerAction = types.StringNull()
+			data.Ipv4Vrrps[i].TrackingObjects[ci].TrackerActionVariable = types.StringNull()
+			if t := cr.Get("trackerAction.optionType"); t.Exists() {
+				va := cr.Get("trackerAction.value")
+				if t.String() == "variable" {
+					data.Ipv4Vrrps[i].TrackingObjects[ci].TrackerActionVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					data.Ipv4Vrrps[i].TrackingObjects[ci].TrackerAction = types.StringValue(va.String())
+				}
+			}
+			data.Ipv4Vrrps[i].TrackingObjects[ci].DecrementValue = types.Int64Null()
+			data.Ipv4Vrrps[i].TrackingObjects[ci].DecrementValueVariable = types.StringNull()
+			if t := cr.Get("decrementValue.optionType"); t.Exists() {
+				va := cr.Get("decrementValue.value")
+				if t.String() == "variable" {
+					data.Ipv4Vrrps[i].TrackingObjects[ci].DecrementValueVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					data.Ipv4Vrrps[i].TrackingObjects[ci].DecrementValue = types.Int64Value(va.Int())
+				}
 			}
 		}
 	}

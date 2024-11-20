@@ -76,14 +76,14 @@ attributes:
     - model_name: qosProfile
       example: silver
   - model_name: country
-    mandatory: true
     example: GB
+    minimum_test_value: '"GB"'
   - model_name: username
-    mandatory: true
     example: user1
+    minimum_test_value: '"user1"'
   - model_name: password
-    mandatory: true
     example: Test@316s13
+    minimum_test_value: '"Test@316s13"'
   - model_name: meDynamicIpEnabled
     data_path: [meIpConfig]
     mandatory: true

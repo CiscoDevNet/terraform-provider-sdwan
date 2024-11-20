@@ -129,12 +129,13 @@ resource "sdwan_configuration_group" "config_group_01" {
     sdwan_system_global_feature.system_01_global.version,
     sdwan_system_logging_feature.system_01_logging.version,
     sdwan_system_omp_feature.system_01_omp.version,
+    sdwan_transport_wan_vpn_feature.transport_01_wan_vpn.version,
     sdwan_transport_wan_vpn_interface_ethernet_feature.transport_01_wan_vpn_interface_ethernet.version,
   ]
 }
 ```
 
-Please note, at the end of the configuration group configuration, we need to provide a list of references to the `version` attribute of all used features. This is important in order to trigger a re-deployment of the configuration group in case any of the feature configurations change and is also required to ensure that the configuration group is always deployed *after* potential changes to any of the feature have been made.
+Please note, at the end of the configuration group configuration, we need to provide a list of references to the `version` attribute of all used features. This is important in order to trigger a re-deployment of the configuration group in case any of the feature configurations change and is also required to ensure that the configuration group is always deployed *after* potential changes to any of the features have been made.
 
 We can now simulate a change to a feature that is already deployed to a device, by for example modifying the password of the AAA feature resource.
 

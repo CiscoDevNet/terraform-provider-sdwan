@@ -385,6 +385,22 @@ func HasReference(attributes []YamlConfigAttribute) bool {
 	return false
 }
 
+// Templating helper function to return number of reference included in attributes
+func CountReferences(attributes []YamlConfigAttribute) int {
+	count := 0
+	for _, attr := range attributes {
+		if attr.Reference {
+			count++
+		}
+	}
+	return count
+}
+
+// Templating helper function to add two integer values
+func Add(x, y int) int {
+	return x + y
+}
+
 // Templating helper function to return GJSON type
 func GetGjsonType(t string) string {
 	if t == "String" {
@@ -520,6 +536,8 @@ var functions = template.FuncMap{
 	"hasVersionAttribute":    HasVersionAttribute,
 	"getResponseModelPath":   GetResponseModelPath,
 	"hasReference":           HasReference,
+	"countReferences":        CountReferences,
+	"add":                    Add,
 	"getGjsonType":           GetGjsonType,
 	"getId":                  GetId,
 	"isListSet":              IsListSet,
@@ -821,7 +839,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 						attr.MaxInt = value.Int()
 					}
 				}
-			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" {
+			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" || t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.oneOf.0.type").String() == "string" {
 				attr.Type = "Set"
 				attr.ElementType = "String"
 				// if value := t.Get("properties.value.items.minItems"); value.Exists() {

@@ -56,31 +56,31 @@ resource "sdwan_service_routing_eigrp_feature" "example" {
 
 ### Required
 
-- `authentication_type` (String) Set EIGRP router authentication type
-  - Choices: `md5`, `hmac-sha-256`
-- `autonomous_system_id` (Number) Set autonomous system ID <1..65535>
-  - Range: `1`-`65535`
 - `feature_profile_id` (String) Feature Profile ID
-- `hello_interval` (Number) Set EIGRP hello interval
-  - Range: `0`-`65535`
-  - Default value: `5`
-- `hold_time` (Number) Set EIGRP hold time
-  - Range: `0`-`65535`
-  - Default value: `15`
 - `name` (String) The name of the Feature
 - `networks` (Attributes List) Configure the networks for EIGRP to advertise (see [below for nested schema](#nestedatt--networks))
 
 ### Optional
 
+- `authentication_type` (String) Set EIGRP router authentication type
+  - Choices: `md5`, `hmac-sha-256`
 - `authentication_type_variable` (String) Variable name
+- `autonomous_system_id` (Number) Set autonomous system ID <1..65535>
+  - Range: `1`-`65535`
 - `autonomous_system_id_variable` (String) Variable name
 - `description` (String) The description of the Feature
 - `filter` (Boolean) Selective route download
   - Default value: `false`
 - `filter_variable` (String) Variable name
+- `hello_interval` (Number) Set EIGRP hello interval
+  - Range: `0`-`65535`
+  - Default value: `5`
 - `hello_interval_variable` (String) Variable name
 - `hmac_authentication_key` (String) Set hmac-sha-256 authentication key, Attribute conditional on `authentication_type` being equal to `hmac-sha-256`
 - `hmac_authentication_key_variable` (String) Variable name
+- `hold_time` (Number) Set EIGRP hold time
+  - Range: `0`-`65535`
+  - Default value: `15`
 - `hold_time_variable` (String) Variable name
 - `interfaces` (Attributes List) Configure IPv4 Static Routes (see [below for nested schema](#nestedatt--interfaces))
 - `md5_keys` (Attributes List) Set keychain details, Attribute conditional on `authentication_type` being equal to `md5` (see [below for nested schema](#nestedatt--md5_keys))
@@ -154,5 +154,6 @@ Optional:
 Import is supported using the following syntax:
 
 ```shell
-terraform import sdwan_service_routing_eigrp_feature.example "f6b2c44c-693c-4763-b010-895aa3d236bd"
+# Expected import identifier with the format: "service_routing_eigrp_feature_id,feature_profile_id"
+terraform import sdwan_service_routing_eigrp_feature.example "f6b2c44c-693c-4763-b010-895aa3d236bd,f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
 ```

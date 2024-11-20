@@ -87,7 +87,7 @@ func (r *ExpandedCommunityListPolicyObjectResource) Schema(ctx context.Context, 
 					Attributes: map[string]schema.Attribute{
 						"community": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Expanded community value, e.g. `100:1000`").String,
-							Required:            true,
+							Optional:            true,
 						},
 					},
 				},
@@ -165,6 +165,9 @@ func (r *ExpandedCommunityListPolicyObjectResource) Read(ctx context.Context, re
 	}
 
 	state.fromBody(ctx, res)
+	if state.Version.IsNull() {
+		state.Version = types.Int64Value(0)
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 

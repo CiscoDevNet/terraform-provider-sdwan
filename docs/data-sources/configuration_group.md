@@ -50,6 +50,7 @@ Read-Only:
 
 Read-Only:
 
+- `list_value` (List of String) Use this instead of `value` in case value is of type `List`.
 - `name` (String) Variable name
 - `value` (String) Variable value
 

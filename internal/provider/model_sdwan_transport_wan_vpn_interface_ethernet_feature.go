@@ -45,6 +45,7 @@ type TransportWANVPNInterfaceEthernet struct {
 	InterfaceNameVariable                              types.String                                                    `tfsdk:"interface_name_variable"`
 	InterfaceDescription                               types.String                                                    `tfsdk:"interface_description"`
 	InterfaceDescriptionVariable                       types.String                                                    `tfsdk:"interface_description_variable"`
+	Ipv4ConfigurationType                              types.String                                                    `tfsdk:"ipv4_configuration_type"`
 	Ipv4DhcpDistance                                   types.Int64                                                     `tfsdk:"ipv4_dhcp_distance"`
 	Ipv4DhcpDistanceVariable                           types.String                                                    `tfsdk:"ipv4_dhcp_distance_variable"`
 	Ipv4Address                                        types.String                                                    `tfsdk:"ipv4_address"`
@@ -54,6 +55,7 @@ type TransportWANVPNInterfaceEthernet struct {
 	Ipv4SecondaryAddresses                             []TransportWANVPNInterfaceEthernetIpv4SecondaryAddresses        `tfsdk:"ipv4_secondary_addresses"`
 	Ipv4DhcpHelper                                     types.Set                                                       `tfsdk:"ipv4_dhcp_helper"`
 	Ipv4DhcpHelperVariable                             types.String                                                    `tfsdk:"ipv4_dhcp_helper_variable"`
+	Ipv6ConfigurationType                              types.String                                                    `tfsdk:"ipv6_configuration_type"`
 	EnableDhcpv6                                       types.Bool                                                      `tfsdk:"enable_dhcpv6"`
 	Ipv6DhcpSecondaryAddress                           []TransportWANVPNInterfaceEthernetIpv6DhcpSecondaryAddress      `tfsdk:"ipv6_dhcp_secondary_address"`
 	Ipv6Address                                        types.String                                                    `tfsdk:"ipv6_address"`
@@ -346,41 +348,46 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 	}
 
 	if !data.Ipv4DhcpDistanceVariable.IsNull() {
-		if true {
+		if true && data.Ipv4ConfigurationType.ValueString() == "dynamic" {
 			body, _ = sjson.Set(body, path+"intfIpAddress.dynamic.dynamicDhcpDistance.optionType", "variable")
 			body, _ = sjson.Set(body, path+"intfIpAddress.dynamic.dynamicDhcpDistance.value", data.Ipv4DhcpDistanceVariable.ValueString())
 		}
-	} else if !data.Ipv4DhcpDistance.IsNull() {
-		if true {
+	} else if data.Ipv4DhcpDistance.IsNull() {
+		if true && data.Ipv4ConfigurationType.ValueString() == "dynamic" {
+			body, _ = sjson.Set(body, path+"intfIpAddress.dynamic.dynamicDhcpDistance.optionType", "default")
+			body, _ = sjson.Set(body, path+"intfIpAddress.dynamic.dynamicDhcpDistance.value", 1)
+		}
+	} else {
+		if true && data.Ipv4ConfigurationType.ValueString() == "dynamic" {
 			body, _ = sjson.Set(body, path+"intfIpAddress.dynamic.dynamicDhcpDistance.optionType", "global")
 			body, _ = sjson.Set(body, path+"intfIpAddress.dynamic.dynamicDhcpDistance.value", data.Ipv4DhcpDistance.ValueInt64())
 		}
 	}
 
 	if !data.Ipv4AddressVariable.IsNull() {
-		if true {
+		if true && data.Ipv4ConfigurationType.ValueString() == "static" {
 			body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType", "variable")
 			body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.value", data.Ipv4AddressVariable.ValueString())
 		}
 	} else if !data.Ipv4Address.IsNull() {
-		if true {
+		if true && data.Ipv4ConfigurationType.ValueString() == "static" {
 			body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType", "global")
 			body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.value", data.Ipv4Address.ValueString())
 		}
 	}
 
 	if !data.Ipv4SubnetMaskVariable.IsNull() {
-		if true {
+		if true && data.Ipv4ConfigurationType.ValueString() == "static" {
 			body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType", "variable")
 			body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value", data.Ipv4SubnetMaskVariable.ValueString())
 		}
 	} else if !data.Ipv4SubnetMask.IsNull() {
-		if true {
+		if true && data.Ipv4ConfigurationType.ValueString() == "static" {
 			body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType", "global")
 			body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value", data.Ipv4SubnetMask.ValueString())
 		}
 	}
-	if true {
+	if true && data.Ipv4ConfigurationType.ValueString() == "static" {
 
 		for _, item := range data.Ipv4SecondaryAddresses {
 			itemBody := ""
@@ -431,12 +438,12 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 		}
 	}
 	if !data.EnableDhcpv6.IsNull() {
-		if true {
+		if true && data.Ipv6ConfigurationType.ValueString() == "dynamic" {
 			body, _ = sjson.Set(body, path+"intfIpV6Address.dynamic.dhcpClient.optionType", "global")
 			body, _ = sjson.Set(body, path+"intfIpV6Address.dynamic.dhcpClient.value", data.EnableDhcpv6.ValueBool())
 		}
 	}
-	if true {
+	if true && data.Ipv6ConfigurationType.ValueString() == "dynamic" {
 
 		for _, item := range data.Ipv6DhcpSecondaryAddress {
 			itemBody := ""
@@ -457,17 +464,17 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 	}
 
 	if !data.Ipv6AddressVariable.IsNull() {
-		if true {
+		if true && data.Ipv6ConfigurationType.ValueString() == "static" {
 			body, _ = sjson.Set(body, path+"intfIpV6Address.static.primaryIpV6Address.address.optionType", "variable")
 			body, _ = sjson.Set(body, path+"intfIpV6Address.static.primaryIpV6Address.address.value", data.Ipv6AddressVariable.ValueString())
 		}
 	} else if !data.Ipv6Address.IsNull() {
-		if true {
+		if true && data.Ipv6ConfigurationType.ValueString() == "static" {
 			body, _ = sjson.Set(body, path+"intfIpV6Address.static.primaryIpV6Address.address.optionType", "global")
 			body, _ = sjson.Set(body, path+"intfIpV6Address.static.primaryIpV6Address.address.value", data.Ipv6Address.ValueString())
 		}
 	}
-	if true {
+	if true && data.Ipv6ConfigurationType.ValueString() == "static" {
 
 		for _, item := range data.Ipv6SecondaryAddresses {
 			itemBody := ""
@@ -4400,6 +4407,9 @@ func (data *TransportWANVPNInterfaceEthernet) isNull(ctx context.Context, res gj
 	if !data.InterfaceDescriptionVariable.IsNull() {
 		return false
 	}
+	if !data.Ipv4ConfigurationType.IsNull() {
+		return false
+	}
 	if !data.Ipv4DhcpDistance.IsNull() {
 		return false
 	}
@@ -4425,6 +4435,9 @@ func (data *TransportWANVPNInterfaceEthernet) isNull(ctx context.Context, res gj
 		return false
 	}
 	if !data.Ipv4DhcpHelperVariable.IsNull() {
+		return false
+	}
+	if !data.Ipv6ConfigurationType.IsNull() {
 		return false
 	}
 	if !data.EnableDhcpv6.IsNull() {

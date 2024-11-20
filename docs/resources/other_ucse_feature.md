@@ -47,9 +47,7 @@ resource "sdwan_other_ucse_feature" "example" {
 - `access_port_shared_type` (String) - Choices: `ge1`, `ge2`, `ge3`, `te2`, `te3`, `console`, `failover`
 - `bay` (Number) Bay
   - Range: `0`-`2`
-- `default_gateway` (String) Assign default gateway
 - `feature_profile_id` (String) Feature Profile ID
-- `ipv4_address` (String) Assign IPv4 address
 - `name` (String) The name of the Feature
 - `slot` (Number) Slot
   - Range: `0`-`3`
@@ -61,9 +59,11 @@ resource "sdwan_other_ucse_feature" "example" {
 - `assign_priority` (Number) Assign priority
   - Range: `0`-`7`
 - `assign_priority_variable` (String) Variable name
+- `default_gateway` (String) Assign default gateway
 - `default_gateway_variable` (String) Variable name
 - `description` (String) The description of the Feature
 - `interfaces` (Attributes List) Interface name: GigabitEthernet0/<>/<> when present (see [below for nested schema](#nestedatt--interfaces))
+- `ipv4_address` (String) Assign IPv4 address
 - `ipv4_address_variable` (String) Variable name
 - `vlan_id` (Number) Assign Vlan Id
   - Range: `2`-`4095`
@@ -92,5 +92,6 @@ Optional:
 Import is supported using the following syntax:
 
 ```shell
-terraform import sdwan_other_ucse_feature.example "f6b2c44c-693c-4763-b010-895aa3d236bd"
+# Expected import identifier with the format: "other_ucse_feature_id,feature_profile_id"
+terraform import sdwan_other_ucse_feature.example "f6b2c44c-693c-4763-b010-895aa3d236bd,f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
 ```

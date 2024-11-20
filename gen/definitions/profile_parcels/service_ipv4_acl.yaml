@@ -1,0 +1,126 @@
+---
+name: Service IPv4 ACL
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/ipv4-acl
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+skip_minimum_test: true
+parcel_type: feature
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_feature_profile.test.id
+  - model_name: defaultAction
+    example: drop
+  - model_name: sequences
+    attributes: 
+    - model_name: sequenceId
+      id: true
+      example: 1
+    - model_name: sequenceName
+      example: AccessControlList1
+    - model_name: baseAction
+      exclude_test: true
+      exclude_null: true
+      example: drop
+    - model_name: matchEntries
+      tf_name: match_entries
+      attributes: 
+      - model_name: dscp
+        tf_name: dscps
+        example: 16
+      - model_name: packetLength
+        example: 1500
+      - model_name: protocol
+        tf_name: protocols
+        example: 1
+      - model_name: icmpMsg
+        tf_name: icmp_messages
+        example: dod-host-prohibited
+        exclude_test: true
+      - model_name: refId
+        tf_name: source_data_prefix_list_id
+        data_path: [sourceDataPrefix, sourceDataPrefixList]
+        example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+        exclude_test: true
+      - model_name: sourceIpPrefix
+        tf_name: source_data_prefix
+        data_path: [sourceDataPrefix]
+        example: 1.2.3.4/32
+        exclude_test: true
+      - model_name: sourcePorts
+        exclude_null: true
+        attributes: 
+        - model_name: sourcePort
+          tf_name: port
+          example: 8000
+      - model_name: refId
+        data_path: [destinationDataPrefix, destinationDataPrefixList]
+        tf_name: destination_data_prefix_list_id
+        exclude_test: true
+        example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+      - model_name: destinationIpPrefix
+        tf_name: destination_data_prefix
+        data_path: [destinationDataPrefix]
+        example: 2.3.4.5/32
+        exclude_test: true
+      - model_name: destinationPorts
+        exclude_test: true
+        exclude_null: true
+        attributes: 
+        - model_name: destinationPort
+          tf_name: port
+          example: 9000
+          exclude_test: true
+      - model_name: tcp
+        tf_name: tcp_state
+        example: syn
+    - model_name: actions
+      attributes: 
+      - model_name: setDscp
+        tf_name: accept_set_dscp
+        data_path: [accept]
+        example: 60
+      - model_name: counterName
+        tf_name: accept_counter_name
+        data_path: [accept]
+        example: COUNTER_1
+      - model_name: log
+        tf_name: accept_log
+        data_path: [accept]
+        example: false
+        exclude_null: true
+      - model_name: setNextHop
+        tf_name: accept_set_next_hop
+        data_path: [accept]
+        example: 1.2.3.4
+      - model_name: refId
+        tf_name: accept_mirror_list_id
+        data_path: [accept, mirror]
+        example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+        exclude_test: true
+      - model_name: refId
+        tf_name: accept_policer_id
+        data_path: [accept, policer]
+        example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+        exclude_test: true
+      - model_name: counterName
+        tf_name: drop_counter_name
+        data_path: [drop]
+        example: COUNTER_1
+        exclude_null: true
+        exclude_test: true
+      - model_name: log
+        tf_name: drop_log
+        data_path: [drop]
+        example: false
+        exclude_null: true
+        exclude_test: true
+
+test_prerequisites: |
+  resource "sdwan_service_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }

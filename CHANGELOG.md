@@ -1,4 +1,14 @@
-## 0.4.2 (unreleased)
+## 0.5.1 (unreleased)
+
+- Add `sdwan_policy_object_unified_advanced_malware_protection` resource and data source
+- Add `sdwan_policy_object_unified_url_filtering` resource and data source
+- Add `sdwan_policy_object_unified_tls_ssl_profile` resource and data source
+- Add `sdwan_policy_object_unified_intrusion_prevention` resource and data source
+- Add `sdwan_policy_object_unified_advanced_inspection_profile` resource and data source
+- Add `sdwan_policy_object_unified_tls_ssl_decryption` resource and data source
+- Add `sdwan_policy_object_security_protocol_list` resource and data source
+
+## 0.5.0
 
 - Add `sdwan_policy_object_application_list` resource and data source
 - Add `sdwan_policy_object_sla_class_list` resource and data source
@@ -25,13 +35,17 @@
 - Add `sdwan_service_multicast_feature` resource and data source
 - Add `sdwan_service_routing_eigrp_feature` resource and data source
 - Add `sdwan_service_wireless_lan_feature` resource and data source
-- Add `sdwan_policy_object_unified_advanced_malware_protection` resource and data source
-- Add `sdwan_policy_object_unified_url_filtering` resource and data source
-- Add `sdwan_policy_object_unified_tls_ssl_profile` resource and data source
-- Add `sdwan_policy_object_unified_intrusion_prevention` resource and data source
-- Add `sdwan_policy_object_unified_advanced_inspection_profile` resource and data source
-- Add `sdwan_policy_object_unified_tls_ssl_decryption` resource and data source
-- Add `sdwan_policy_object_security_protocol_list` resource and data source
+- Add `sdwan_transport_t1_e1_controller_feature` resource and data source
+- Add import to `sdwan_attach_feature_device_template` and `sdwan_attach_feature_device_template` resources
+- Add `sdwan_application_priority_traffic_policy_policy` resource and data source
+- Add `sdwan_transport_ipv4_acl_feature` resource and data source
+- Add `sdwan_service_ipv4_acl_feature` resource and data source
+- Add `sdwan_transport_ipv6_acl_feature` resource and data source
+- Add `sdwan_service_ipv6_acl_feature` resource and data source
+- Add workaround for issue when deleting security policy objects where the reference count is not updated
+- BREAKING CHANGE: Adds `ipv4_configuration_type` and `ipv6_configuration_type` to `sdwan_transport_management_vpn_interface_ethernet_feature` resource
+- BREAKING CHANGE: Adds `ipv4_configuration_type` and `ipv6_configuration_type` to `sdwan_transport_wan_vpn_interface_ethernet_feature` resource
+- BREAKING CHANGE: Adds `gateway` to `sdwan_transport_management_vpn_feature` resource
 
 ## 0.4.1
 
