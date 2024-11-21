@@ -8,6 +8,7 @@
 - Adds `sdwan_service_lan_vpn_feature_associate_routing_bgp_feature` resource and data source
 - Adds `sdwan_service_lan_vpn_feature_associate_routing_eigrp_feature` resource and data source
 - Adds `sdwan_service_lan_vpn_feature_associate_multicast_feature` resource and data source
+- Adds `sdwan_service_lan_vpn_feature_associate_routing_ospf_feature` resource and data source
 
 ## 0.5.0
 
