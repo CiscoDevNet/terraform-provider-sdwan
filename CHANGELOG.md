@@ -13,6 +13,8 @@
 - Adds `sdwan_service_lan_vpn_feature_associate_routing_ospf_feature` resource and data source
 - Adds `sdwan_service_lan_vpn_feature_associate_routing_ospfv3_ipv4_feature` resource and data source
 - Adds `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_tracker_feature` resource and data source
+- Adds `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_tracker_group_feature` resource and data source
+- Adds `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_ipv6_tracker_feature` resource and data source
 
 ## 0.5.0
 
