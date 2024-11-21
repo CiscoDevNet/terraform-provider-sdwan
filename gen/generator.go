@@ -739,7 +739,6 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	if attr.ModelName == "" {
 		return
 	}
-
 	path := ""
 	prefix := "properties."
 	for i, e := range attr.DataPath {
@@ -953,9 +952,12 @@ func augmentProfileParcelConfig(config *YamlConfig) {
 	model := gjson.ParseBytes(modelBytes)
 
 	for ia := range config.Attributes {
-		parseProfileParcelAttribute(&config.Attributes[ia], model.Get("request.properties.data"), false)
+		if model.Get("request.properties.data.oneOf").Exists() {
+			parseProfileParcelAttribute(&config.Attributes[ia], model.Get("request.properties.data.oneOf.0"), false)
+		} else {
+			parseProfileParcelAttribute(&config.Attributes[ia], model.Get("request.properties.data"), false)
+		}
 	}
-
 	if config.DsDescription == "" {
 		config.DsDescription = fmt.Sprintf("This data source can read the %s %s.", config.Name, CamelCase(config.ParcelType))
 	}

@@ -1,6 +1,8 @@
 ## 0.5.1 (unreleased)
 
 - BREAKING CHANGE: Adds `gateway` attribute to `sdwan_transport_wan_vpn_feature` resource
+- Add `sdwan_transport_cellular_controller_feature` resource and data source
+- Add `sdwan_transport_cellular_profile_feature` resource and data source
 
 ## 0.5.0
 
