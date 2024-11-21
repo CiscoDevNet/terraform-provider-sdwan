@@ -345,6 +345,16 @@ func HasId(attributes []YamlConfigAttribute) bool {
 	return false
 }
 
+// Templating helper function to return true if name included in attributes
+func HasName(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.TfName == "name" {
+			return true
+		}
+	}
+	return false
+}
+
 // Templating helper function to determine if attributes list contains one or more version attributes
 func HasVersionAttribute(attributes []YamlConfigAttribute) bool {
 	for _, attr := range attributes {
@@ -541,6 +551,7 @@ var functions = template.FuncMap{
 	"toLower":                strings.ToLower,
 	"path":                   BuildPath,
 	"hasId":                  HasId,
+	"hasName":                HasName,
 	"hasVersionAttribute":    HasVersionAttribute,
 	"getResponseModelPath":   GetResponseModelPath,
 	"hasReference":           HasReference,
