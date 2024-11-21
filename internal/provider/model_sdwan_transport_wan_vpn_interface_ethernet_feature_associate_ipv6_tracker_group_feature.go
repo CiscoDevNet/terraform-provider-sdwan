@@ -31,28 +31,28 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
-type TransportWANVPNInterfaceEthernetFeatureAssociateTrackerGroupFeature struct {
+type TransportWANVPNInterfaceEthernetFeatureAssociateIPv6TrackerGroupFeature struct {
 	Id                                        types.String `tfsdk:"id"`
 	FeatureProfileId                          types.String `tfsdk:"feature_profile_id"`
 	TransportWanVpnFeatureId                  types.String `tfsdk:"transport_wan_vpn_feature_id"`
 	TransportWanVpnInterfaceEthernetFeatureId types.String `tfsdk:"transport_wan_vpn_interface_ethernet_feature_id"`
-	TransportTrackerGroupFeatureId            types.String `tfsdk:"transport_tracker_group_feature_id"`
+	TransportIpv6TrackerGroupFeatureId        types.String `tfsdk:"transport_ipv6_tracker_group_feature_id"`
 }
 
 // End of section. //template:end types
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getPath
-func (data TransportWANVPNInterfaceEthernetFeatureAssociateTrackerGroupFeature) getPath() string {
-	return fmt.Sprintf("/v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/ethernet/%s/trackergroup/", url.QueryEscape(data.FeatureProfileId.ValueString()), url.QueryEscape(data.TransportWanVpnFeatureId.ValueString()), url.QueryEscape(data.TransportWanVpnInterfaceEthernetFeatureId.ValueString()))
+func (data TransportWANVPNInterfaceEthernetFeatureAssociateIPv6TrackerGroupFeature) getPath() string {
+	return fmt.Sprintf("/v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/ethernet/%s/ipv6-trackergroup/", url.QueryEscape(data.FeatureProfileId.ValueString()), url.QueryEscape(data.TransportWanVpnFeatureId.ValueString()), url.QueryEscape(data.TransportWanVpnInterfaceEthernetFeatureId.ValueString()))
 }
 
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data TransportWANVPNInterfaceEthernetFeatureAssociateTrackerGroupFeature) toBody(ctx context.Context) string {
+func (data TransportWANVPNInterfaceEthernetFeatureAssociateIPv6TrackerGroupFeature) toBody(ctx context.Context) string {
 	body := ""
-	if !data.TransportTrackerGroupFeatureId.IsNull() {
-		body, _ = sjson.Set(body, "parcelId", data.TransportTrackerGroupFeatureId.ValueString())
+	if !data.TransportIpv6TrackerGroupFeatureId.IsNull() {
+		body, _ = sjson.Set(body, "parcelId", data.TransportIpv6TrackerGroupFeatureId.ValueString())
 	}
 	return body
 }
@@ -60,18 +60,18 @@ func (data TransportWANVPNInterfaceEthernetFeatureAssociateTrackerGroupFeature) 
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *TransportWANVPNInterfaceEthernetFeatureAssociateTrackerGroupFeature) fromBody(ctx context.Context, res gjson.Result) {
+func (data *TransportWANVPNInterfaceEthernetFeatureAssociateIPv6TrackerGroupFeature) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("parcelId"); value.Exists() {
-		data.TransportTrackerGroupFeatureId = types.StringValue(value.String())
+		data.TransportIpv6TrackerGroupFeatureId = types.StringValue(value.String())
 	} else {
-		data.TransportTrackerGroupFeatureId = types.StringNull()
+		data.TransportIpv6TrackerGroupFeatureId = types.StringNull()
 	}
 }
 
 // End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
-func (data *TransportWANVPNInterfaceEthernetFeatureAssociateTrackerGroupFeature) hasChanges(ctx context.Context, state *TransportWANVPNInterfaceEthernetFeatureAssociateTrackerGroupFeature) bool {
+func (data *TransportWANVPNInterfaceEthernetFeatureAssociateIPv6TrackerGroupFeature) hasChanges(ctx context.Context, state *TransportWANVPNInterfaceEthernetFeatureAssociateIPv6TrackerGroupFeature) bool {
 	hasChanges := false
 	if !data.FeatureProfileId.Equal(state.FeatureProfileId) {
 		hasChanges = true
@@ -82,7 +82,7 @@ func (data *TransportWANVPNInterfaceEthernetFeatureAssociateTrackerGroupFeature)
 	if !data.TransportWanVpnInterfaceEthernetFeatureId.Equal(state.TransportWanVpnInterfaceEthernetFeatureId) {
 		hasChanges = true
 	}
-	if !data.TransportTrackerGroupFeatureId.Equal(state.TransportTrackerGroupFeatureId) {
+	if !data.TransportIpv6TrackerGroupFeatureId.Equal(state.TransportIpv6TrackerGroupFeatureId) {
 		hasChanges = true
 	}
 	return hasChanges

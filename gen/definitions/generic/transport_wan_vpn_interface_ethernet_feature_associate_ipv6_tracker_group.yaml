@@ -1,6 +1,6 @@
 ---
-name: Transport WAN VPN Interface Ethernet Feature Associate Tracker Group Feature
-rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/ethernet/%s/trackergroup/
+name: Transport WAN VPN Interface Ethernet Feature Associate IPv6 Tracker Group Feature
+rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/ethernet/%s/ipv6-trackergroup/
 minimum_version: 20.12.0
 id_attribute: parcelId
 doc_category: Feature
@@ -28,12 +28,12 @@ attributes:
     example: 140331f6-5418-4755-a059-13c77eb96037
     test_value: sdwan_transport_wan_vpn_interface_ethernet_feature.test.id
   - model_name: parcelId
-    tf_name: transport_tracker_group_feature_id
+    tf_name: transport_ipv6_tracker_group_feature_id
     type: String
     mandatory: true
-    description: Transport Tracker Group Feature ID
+    description: Transport IPv6 Tracker Group Feature ID
     example: 140331f6-5418-4755-a059-13c77eb96037
-    test_value: sdwan_transport_tracker_group_feature.test.id
+    test_value: sdwan_transport_ipv6_tracker_group_feature.test.id
 
 test_prerequisites: |
   resource "sdwan_transport_feature_profile" "test" {
@@ -48,46 +48,48 @@ test_prerequisites: |
     vpn                = 0
   }
 
-  resource "sdwan_transport_tracker_feature" "test-1" {
+  resource "sdwan_transport_ipv6_tracker_feature" "test-1" {
     name                  = "TF_TEST_1"
     description           = "Terraform Test"
     feature_profile_id    = sdwan_transport_feature_profile.test.id
     tracker_name          = "TRACKER_1"
     endpoint_api_url      = "google.com"
     endpoint_dns_name     = "google.com"
-    endpoint_ip           = "1.2.3.4"
+    endpoint_ip           = "2001:0:0:1::0"
     interval              = 30
     multiplier            = 3
     threshold             = 300
-    endpoint_tracker_type = "interface"
+    endpoint_tracker_type = "ipv6-interface"
     tracker_type          = "endpoint"
   }
 
-  resource "sdwan_transport_tracker_feature" "test-2" {
+  resource "sdwan_transport_ipv6_tracker_feature" "test-2" {
     name                  = "TF_TEST_2"
     description           = "Terraform Test"
     feature_profile_id    = sdwan_transport_feature_profile.test.id
     tracker_name          = "TRACKER_1"
     endpoint_api_url      = "google.com"
     endpoint_dns_name     = "google.com"
-    endpoint_ip           = "1.2.3.4"
+    endpoint_ip           = "2001:0:0:1::0"
     interval              = 30
     multiplier            = 3
     threshold             = 300
-    endpoint_tracker_type = "interface"
+    endpoint_tracker_type = "ipv6-interface"
     tracker_type          = "endpoint"
   }
 
-  resource "sdwan_transport_tracker_group_feature" "test" {
+
+  resource "sdwan_transport_ipv6_tracker_group_feature" "test" {
     name               = "TF_TEST_TRACKER_GROUP"
     description        = "Terraform Test"
     feature_profile_id = sdwan_transport_feature_profile.test.id
+    tracker_name       = "TRACKER_GROUP_1"
     tracker_elements = [
       {
-        tracker_id = sdwan_transport_tracker_feature.test-1.id
+        tracker_id = sdwan_transport_ipv6_tracker_feature.test-1.id
       },
       {
-        tracker_id = sdwan_transport_tracker_feature.test-2.id
+        tracker_id = sdwan_transport_ipv6_tracker_feature.test-2.id
       }
     ]
     tracker_boolean = "or"
@@ -112,6 +114,7 @@ test_prerequisites: |
     ]
     ipv4_dhcp_helper                               = ["1.2.3.4"]
     ipv6_configuration_type                        = "static"
+    ipv6_address                                   = "2001:0:0:1::/64"
     iperf_server                                   = "example"
     block_non_source_ip                            = false
     service_provider                               = "example"

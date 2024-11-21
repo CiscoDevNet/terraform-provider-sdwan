@@ -61,7 +61,7 @@ resource "sdwan_transport_wan_vpn_feature" "test" {
   vpn                = 0
 }
 
-  resource "sdwan_transport_tracker_feature" "test-1" {
+resource "sdwan_transport_tracker_feature" "test-1" {
   name                  = "TF_TEST_1"
   description           = "Terraform Test"
   feature_profile_id    = sdwan_transport_feature_profile.test.id

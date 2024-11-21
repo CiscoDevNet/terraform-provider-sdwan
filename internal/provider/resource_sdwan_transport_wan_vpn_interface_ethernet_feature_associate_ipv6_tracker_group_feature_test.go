@@ -28,7 +28,7 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
-func TestAccSdwanTransportWANVPNInterfaceEthernetFeatureAssociateTrackerGroupFeature(t *testing.T) {
+func TestAccSdwanTransportWANVPNInterfaceEthernetFeatureAssociateIPv6TrackerGroupFeature(t *testing.T) {
 	if os.Getenv("SDWAN_2012") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
@@ -38,7 +38,7 @@ func TestAccSdwanTransportWANVPNInterfaceEthernetFeatureAssociateTrackerGroupFea
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanTransportWANVPNInterfaceEthernetFeatureAssociateTrackerGroupFeaturePrerequisitesConfig + testAccSdwanTransportWANVPNInterfaceEthernetFeatureAssociateTrackerGroupFeatureConfig_all(),
+				Config: testAccSdwanTransportWANVPNInterfaceEthernetFeatureAssociateIPv6TrackerGroupFeaturePrerequisitesConfig + testAccSdwanTransportWANVPNInterfaceEthernetFeatureAssociateIPv6TrackerGroupFeatureConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -48,7 +48,7 @@ func TestAccSdwanTransportWANVPNInterfaceEthernetFeatureAssociateTrackerGroupFea
 // End of section. //template:end testAcc
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-const testAccSdwanTransportWANVPNInterfaceEthernetFeatureAssociateTrackerGroupFeaturePrerequisitesConfig = `
+const testAccSdwanTransportWANVPNInterfaceEthernetFeatureAssociateIPv6TrackerGroupFeaturePrerequisitesConfig = `
 resource "sdwan_transport_feature_profile" "test" {
   name        = "TF_TEST"
   description = "Terraform test"
@@ -61,46 +61,48 @@ resource "sdwan_transport_wan_vpn_feature" "test" {
   vpn                = 0
 }
 
-resource "sdwan_transport_tracker_feature" "test-1" {
+resource "sdwan_transport_ipv6_tracker_feature" "test-1" {
   name                  = "TF_TEST_1"
   description           = "Terraform Test"
   feature_profile_id    = sdwan_transport_feature_profile.test.id
   tracker_name          = "TRACKER_1"
   endpoint_api_url      = "google.com"
   endpoint_dns_name     = "google.com"
-  endpoint_ip           = "1.2.3.4"
+  endpoint_ip           = "2001:0:0:1::0"
   interval              = 30
   multiplier            = 3
   threshold             = 300
-  endpoint_tracker_type = "interface"
+  endpoint_tracker_type = "ipv6-interface"
   tracker_type          = "endpoint"
 }
 
-resource "sdwan_transport_tracker_feature" "test-2" {
+resource "sdwan_transport_ipv6_tracker_feature" "test-2" {
   name                  = "TF_TEST_2"
   description           = "Terraform Test"
   feature_profile_id    = sdwan_transport_feature_profile.test.id
   tracker_name          = "TRACKER_1"
   endpoint_api_url      = "google.com"
   endpoint_dns_name     = "google.com"
-  endpoint_ip           = "1.2.3.4"
+  endpoint_ip           = "2001:0:0:1::0"
   interval              = 30
   multiplier            = 3
   threshold             = 300
-  endpoint_tracker_type = "interface"
+  endpoint_tracker_type = "ipv6-interface"
   tracker_type          = "endpoint"
 }
 
-resource "sdwan_transport_tracker_group_feature" "test" {
+
+resource "sdwan_transport_ipv6_tracker_group_feature" "test" {
   name               = "TF_TEST_TRACKER_GROUP"
   description        = "Terraform Test"
   feature_profile_id = sdwan_transport_feature_profile.test.id
+  tracker_name       = "TRACKER_GROUP_1"
   tracker_elements = [
     {
-      tracker_id = sdwan_transport_tracker_feature.test-1.id
+      tracker_id = sdwan_transport_ipv6_tracker_feature.test-1.id
     },
     {
-      tracker_id = sdwan_transport_tracker_feature.test-2.id
+      tracker_id = sdwan_transport_ipv6_tracker_feature.test-2.id
     }
   ]
   tracker_boolean = "or"
@@ -125,6 +127,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "test" {
   ]
   ipv4_dhcp_helper                               = ["1.2.3.4"]
   ipv6_configuration_type                        = "static"
+  ipv6_address                                   = "2001:0:0:1::/64"
   iperf_server                                   = "example"
   block_non_source_ip                            = false
   service_provider                               = "example"
@@ -227,12 +230,12 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "test" {
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
-func testAccSdwanTransportWANVPNInterfaceEthernetFeatureAssociateTrackerGroupFeatureConfig_all() string {
-	config := `resource "sdwan_transport_wan_vpn_interface_ethernet_feature_associate_tracker_group_feature" "test" {` + "\n"
+func testAccSdwanTransportWANVPNInterfaceEthernetFeatureAssociateIPv6TrackerGroupFeatureConfig_all() string {
+	config := `resource "sdwan_transport_wan_vpn_interface_ethernet_feature_associate_ipv6_tracker_group_feature" "test" {` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
 	config += `	transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id` + "\n"
 	config += `	transport_wan_vpn_interface_ethernet_feature_id = sdwan_transport_wan_vpn_interface_ethernet_feature.test.id` + "\n"
-	config += `	transport_tracker_group_feature_id = sdwan_transport_tracker_group_feature.test.id` + "\n"
+	config += `	transport_ipv6_tracker_group_feature_id = sdwan_transport_ipv6_tracker_group_feature.test.id` + "\n"
 	config += `}` + "\n"
 	return config
 }
