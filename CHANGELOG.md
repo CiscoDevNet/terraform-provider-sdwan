@@ -1,6 +1,6 @@
-## 0.5.0 (unreleased)
+## 0.5.1 (unreleased)
 
-- BREAKING CHANGE: Adds `gateway` to `sdwan_transport_wan_vpn_feature` resource
+- BREAKING CHANGE: Adds `gateway` attribute to `sdwan_transport_wan_vpn_feature` resource
 
 ## 0.5.0
 
