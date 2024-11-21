@@ -1,6 +1,10 @@
 ## 0.5.1 (unreleased)
 
 - BREAKING CHANGE: Adds `gateway` attribute to `sdwan_transport_wan_vpn_feature` resource
+- Adds `sdwan_transport_wan_vpn_feature_associate_routing_bgp_feature` resource and data source
+- Adds `sdwan_transport_wan_vpn_feature_associate_routing_ospf_feature` resource and data source
+- Adds `sdwan_transport_wan_vpn_feature_associate_routing_ospfv3_ipv4_feature` resource and data source
+- Adds `sdwan_transport_wan_vpn_feature_associate_routing_ospfv3_ipv6_feature` resource and data source
 
 ## 0.5.0
 
