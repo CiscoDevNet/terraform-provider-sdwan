@@ -70,9 +70,13 @@ resource "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
       weight        = 250
     }
   ]
-  nat_ipv4        = true
-  nat_udp_timeout = 1
-  nat_tcp_timeout = 60
+  nat_ipv4                      = true
+  nat_udp_timeout               = 1
+  nat_tcp_timeout               = 60
+  qos_adaptive                  = false
+  qos_shaping_rate              = 16
+  acl_ipv4_egress_reference_id  = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  acl_ipv6_ingress_reference_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   arps = [
     {
       ip_address  = "1.2.3.4"
@@ -98,6 +102,10 @@ resource "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
 
 ### Optional
 
+- `acl_ipv4_egress_reference_id` (String)
+- `acl_ipv4_ingress_reference_id` (String)
+- `acl_ipv6_egress_reference_id` (String)
+- `acl_ipv6_ingress_reference_id` (String)
 - `arps` (Attributes List) Configure ARP entries (see [below for nested schema](#nestedatt--arps))
 - `bandwidth_downstream` (Number) Interface downstream bandwidth capacity, in kbps
   - Range: `1`-`2147483647`
