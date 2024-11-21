@@ -232,6 +232,7 @@ type YamlConfigAttribute struct {
 	Reference               bool                           `yaml:"reference"`
 	Variable                bool                           `yaml:"variable"`
 	Mandatory               bool                           `yaml:"mandatory"`
+	IgnoreMandatory         bool                           `yaml:"ignore_mandatory"`
 	Optional                bool                           `yaml:"optional"`
 	WriteOnly               bool                           `yaml:"write_only"`
 	TfOnly                  bool                           `yaml:"tf_only"`
@@ -906,7 +907,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		} else if isOneOfAttribute {
 			attr.ExcludeNull = true
 		} else {
-			if !attr.Variable {
+			if !attr.Variable && !attr.IgnoreMandatory {
 				attr.Mandatory = true
 			}
 		}

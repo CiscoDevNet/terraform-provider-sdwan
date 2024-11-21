@@ -43,8 +43,6 @@ resource "sdwan_system_remote_access_feature" "example" {
 
 ### Required
 
-- `any_connect_eap_authentication_type` (String) , Attribute conditional on `connection_type_ssl` being equal to `false`
-  - Choices: `user`, `device`
 - `name` (String) The name of the Feature
 - `radius_group_name` (String)
 
@@ -61,6 +59,8 @@ resource "sdwan_system_remote_access_feature" "example" {
 - `aaa_specify_name_policy_name_variable` (String) Variable name
 - `aaa_specify_name_policy_password` (String)
 - `aaa_specify_name_policy_password_variable` (String) Variable name
+- `any_connect_eap_authentication_type` (String) , Attribute conditional on `connection_type_ssl` being equal to `false`
+  - Choices: `user`, `device`
 - `connection_type_ssl` (Boolean) Enabled SSL VPN
   - Default value: `false`
 - `description` (String) The description of the Feature

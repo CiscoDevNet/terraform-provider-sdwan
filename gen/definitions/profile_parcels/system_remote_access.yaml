@@ -16,11 +16,13 @@ attributes:
     example: false
   - model_name: anyConnectEapAuth
     tf_name: any_connect_eap_authentication_type
+    ignore_mandatory: true
     conditional_attribute:
       name: connection_type_ssl
       value: false
       type: Bool
     example: user
+    minimum_test_value: '"user"'
     # ==== Requires support for file upload ===
   # - model_name: anyConnectProfileDownloadStatus
   #   tf_name: any_connect_eap_profile_download_status

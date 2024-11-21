@@ -250,14 +250,14 @@ func (r *TransportManagementVPNProfileParcelResource) Schema(ctx context.Context
 							Optional:            true,
 						},
 						"gateway": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Gateway").AddStringEnumDescription("next_hop", "null0", "nat").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Gateway").AddStringEnumDescription("nextHop", "null0", "nat").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.OneOf("next_hop", "null0", "nat"),
+								stringvalidator.OneOf("nextHop", "null0", "nat"),
 							},
 						},
 						"next_hops": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `next_hop`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `nextHop`").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{

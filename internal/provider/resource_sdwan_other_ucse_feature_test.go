@@ -80,8 +80,6 @@ func testAccSdwanOtherUCSEProfileParcelConfig_minimum() string {
 	config += `	feature_profile_id = sdwan_other_feature_profile.test.id` + "\n"
 	config += `	bay = 2` + "\n"
 	config += `	slot = 0` + "\n"
-	config += `	access_port_shared_type = "ge1"` + "\n"
-	config += `	access_port_shared_failover_type = "ge2"` + "\n"
 	config += `	ipv4_address = "2.2.2.2/24"` + "\n"
 	config += `	default_gateway = "2.2.2.2"` + "\n"
 	config += `}` + "\n"
