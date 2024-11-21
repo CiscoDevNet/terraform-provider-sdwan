@@ -31,4 +31,4 @@ data "sdwan_transport_wan_vpn_feature_associate_routing_ospfv3_ipv4_feature" "ex
 
 ### Read-Only
 
-- `transport_routing_ospf_feature_id` (String) Transport Routing OSPFv4 IPv4 Feature ID
+- `transport_routing_ospfv3_ipv4_feature_id` (String) Transport Routing OSPFv4 IPv4 Feature ID

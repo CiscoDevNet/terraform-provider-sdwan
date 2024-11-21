@@ -123,7 +123,7 @@ func testAccDataSourceSdwanTransportWANVPNFeatureAssociateRoutingOSPFv3IPv6Featu
 	config += `resource "sdwan_transport_wan_vpn_feature_associate_routing_ospfv3_ipv6_feature" "test" {` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
 	config += `	transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id` + "\n"
-	config += `	transport_routing_ospf_feature_id = sdwan_transport_routing_ospfv3_ipv6_feature.test.id` + "\n"
+	config += `	transport_routing_ospfv3_ipv6_feature_id = sdwan_transport_routing_ospfv3_ipv6_feature.test.id` + "\n"
 	config += `}` + "\n"
 
 	config += `

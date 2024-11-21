@@ -69,7 +69,7 @@ func (d *TransportWANVPNFeatureAssociateRoutingOSPFv3IPv6FeatureDataSource) Sche
 				MarkdownDescription: "Transport WAN VPN Feature ID",
 				Required:            true,
 			},
-			"transport_routing_ospf_feature_id": schema.StringAttribute{
+			"transport_routing_ospfv3_ipv6_feature_id": schema.StringAttribute{
 				MarkdownDescription: "Transport Routing OSPFv4 IPv6 Feature ID",
 				Computed:            true,
 			},

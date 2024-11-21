@@ -21,7 +21,7 @@ attributes:
     example: 140331f6-5418-4755-a059-13c77eb96037
     test_value: sdwan_transport_wan_vpn_feature.test.id
   - model_name: parcelId
-    tf_name: transport_routing_ospf_feature_id
+    tf_name: transport_routing_ospfv3_ipv4_feature_id
     type: String
     mandatory: true
     description: Transport Routing OSPFv4 IPv4 Feature ID

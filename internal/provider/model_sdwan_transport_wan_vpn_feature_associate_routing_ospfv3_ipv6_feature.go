@@ -32,10 +32,10 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type TransportWANVPNFeatureAssociateRoutingOSPFv3IPv6Feature struct {
-	Id                            types.String `tfsdk:"id"`
-	FeatureProfileId              types.String `tfsdk:"feature_profile_id"`
-	TransportWanVpnFeatureId      types.String `tfsdk:"transport_wan_vpn_feature_id"`
-	TransportRoutingOspfFeatureId types.String `tfsdk:"transport_routing_ospf_feature_id"`
+	Id                                  types.String `tfsdk:"id"`
+	FeatureProfileId                    types.String `tfsdk:"feature_profile_id"`
+	TransportWanVpnFeatureId            types.String `tfsdk:"transport_wan_vpn_feature_id"`
+	TransportRoutingOspfv3Ipv6FeatureId types.String `tfsdk:"transport_routing_ospfv3_ipv6_feature_id"`
 }
 
 // End of section. //template:end types
@@ -50,8 +50,8 @@ func (data TransportWANVPNFeatureAssociateRoutingOSPFv3IPv6Feature) getPath() st
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data TransportWANVPNFeatureAssociateRoutingOSPFv3IPv6Feature) toBody(ctx context.Context) string {
 	body := ""
-	if !data.TransportRoutingOspfFeatureId.IsNull() {
-		body, _ = sjson.Set(body, "parcelId", data.TransportRoutingOspfFeatureId.ValueString())
+	if !data.TransportRoutingOspfv3Ipv6FeatureId.IsNull() {
+		body, _ = sjson.Set(body, "parcelId", data.TransportRoutingOspfv3Ipv6FeatureId.ValueString())
 	}
 	return body
 }
@@ -61,9 +61,9 @@ func (data TransportWANVPNFeatureAssociateRoutingOSPFv3IPv6Feature) toBody(ctx c
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *TransportWANVPNFeatureAssociateRoutingOSPFv3IPv6Feature) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("parcelId"); value.Exists() {
-		data.TransportRoutingOspfFeatureId = types.StringValue(value.String())
+		data.TransportRoutingOspfv3Ipv6FeatureId = types.StringValue(value.String())
 	} else {
-		data.TransportRoutingOspfFeatureId = types.StringNull()
+		data.TransportRoutingOspfv3Ipv6FeatureId = types.StringNull()
 	}
 }
 
@@ -78,7 +78,7 @@ func (data *TransportWANVPNFeatureAssociateRoutingOSPFv3IPv6Feature) hasChanges(
 	if !data.TransportWanVpnFeatureId.Equal(state.TransportWanVpnFeatureId) {
 		hasChanges = true
 	}
-	if !data.TransportRoutingOspfFeatureId.Equal(state.TransportRoutingOspfFeatureId) {
+	if !data.TransportRoutingOspfv3Ipv6FeatureId.Equal(state.TransportRoutingOspfv3Ipv6FeatureId) {
 		hasChanges = true
 	}
 	return hasChanges
