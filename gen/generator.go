@@ -466,6 +466,14 @@ func IsInt64ListSet(attribute YamlConfigAttribute) bool {
 	return false
 }
 
+// Templating helper function to return true if type is StringInt64
+func IsStringInt64(attribute YamlConfigAttribute) bool {
+	if attribute.Type == "StringInt64" {
+		return true
+	}
+	return false
+}
+
 // Templating helper function to return true if type is a list or set with nested elements
 func IsNestedListSet(attribute YamlConfigAttribute) bool {
 	if (attribute.Type == "List" || attribute.Type == "Set") && attribute.ElementType == "" {
@@ -545,6 +553,7 @@ var functions = template.FuncMap{
 	"isSet":                  IsSet,
 	"isStringListSet":        IsStringListSet,
 	"isInt64ListSet":         IsInt64ListSet,
+	"isStringInt64":          IsStringInt64,
 	"isNestedListSet":        IsNestedListSet,
 	"isNestedList":           IsNestedList,
 	"isNestedSet":            IsNestedSet,
@@ -802,8 +811,10 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		}
 
 		if t.Exists() {
-			if t.Get("properties.value.type").String() == "string" || t.Get("properties.value.anyOf.0.type").String() == "string" || t.Get("properties.value.oneOf.0.type").String() == "string" {
-				attr.Type = "String"
+			if attr.Type == "String" || attr.Type == "StringInt64" || t.Get("properties.value.type").String() == "string" || t.Get("properties.value.anyOf.0.type").String() == "string" || t.Get("properties.value.oneOf.0.type").String() == "string" {
+				if attr.Type != "StringInt64" {
+					attr.Type = "String"
+				}
 				if value := t.Get("properties.value.minLength"); value.Exists() {
 					attr.StringMinLength = value.Int()
 				}
@@ -818,9 +829,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 						attr.EnumValues = append(attr.EnumValues, v.String())
 					}
 				}
-			} else if t.Get("properties.value.type").String() == "boolean" {
+			} else if attr.Type == "Bool" || t.Get("properties.value.type").String() == "boolean" {
 				attr.Type = "Bool"
-			} else if t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" || t.Get("properties.value.oneOf.0.type").String() == "integer" || t.Get("properties.value.oneOf.0.type").String() == "number" {
+			} else if attr.Type == "Int64" || t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" || t.Get("properties.value.oneOf.0.type").String() == "integer" || t.Get("properties.value.oneOf.0.type").String() == "number" {
 
 				if value := t.Get("properties.value.multipleOf"); value.Exists() {
 					attr.Type = "Float64"

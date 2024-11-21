@@ -158,7 +158,7 @@ func (r *TransportIPv6ACLProfileParcelResource) Schema(ctx context.Context, req 
 										Optional:            true,
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
-												"port": schema.Int64Attribute{
+												"port": schema.StringAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("source port range or individual port number").String,
 													Optional:            true,
 												},
@@ -184,7 +184,7 @@ func (r *TransportIPv6ACLProfileParcelResource) Schema(ctx context.Context, req 
 										Optional:            true,
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
-												"port": schema.Int64Attribute{
+												"port": schema.StringAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("destination port range or individual port number").String,
 													Optional:            true,
 												},
