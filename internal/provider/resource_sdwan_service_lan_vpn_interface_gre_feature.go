@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 	"regexp"
+	"strings"
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
@@ -95,7 +96,7 @@ func (r *ServiceLANVPNInterfaceGREProfileParcelResource) Schema(ctx context.Cont
 			},
 			"interface_name": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Interface name (1..255)").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(4, 6),
 					stringvalidator.RegexMatches(regexp.MustCompile(`^gre([1-9]|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])$`), ""),
@@ -118,7 +119,7 @@ func (r *ServiceLANVPNInterfaceGREProfileParcelResource) Schema(ctx context.Cont
 			},
 			"ipv4_address": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -126,7 +127,7 @@ func (r *ServiceLANVPNInterfaceGREProfileParcelResource) Schema(ctx context.Cont
 			},
 			"ipv4_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0"),
 				},
@@ -186,7 +187,7 @@ func (r *ServiceLANVPNInterfaceGREProfileParcelResource) Schema(ctx context.Cont
 			},
 			"tunnel_destination_ipv4_address": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Tunnel destination IP Address").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"tunnel_destination_ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -309,6 +310,9 @@ func (r *ServiceLANVPNInterfaceGREProfileParcelResource) Read(ctx context.Contex
 	} else {
 		state.updateFromBody(ctx, res)
 	}
+	if state.Version.IsNull() {
+		state.Version = types.Int64Value(0)
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 
@@ -382,7 +386,20 @@ func (r *ServiceLANVPNInterfaceGREProfileParcelResource) Delete(ctx context.Cont
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *ServiceLANVPNInterfaceGREProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	count := 2
+	parts := strings.SplitN(req.ID, ",", (count + 1))
+
+	pattern := "service_lan_vpn_interface_gre_feature_id" + ",feature_profile_id" + ",service_lan_vpn_feature_id"
+	if len(parts) != (count + 1) {
+		resp.Diagnostics.AddError(
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q", pattern, req.ID),
+		)
+		return
+	}
+
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("feature_profile_id"), parts[1])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("service_lan_vpn_feature_id"), parts[2])...)
 }
 
 // End of section. //template:end import

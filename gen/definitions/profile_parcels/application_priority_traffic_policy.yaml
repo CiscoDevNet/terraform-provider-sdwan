@@ -1,0 +1,457 @@
+---
+name: Application Priority Traffic Policy
+rest_endpoint: /v1/feature-profile/sdwan/application-priority/%v/traffic-policy
+minimum_version: 20.12.0
+id_attribute: id
+test_tags: [SDWAN_2012, TF_VAR_policy_object_feature_template_id]
+skip_minimum_test: true
+parcel_type: policy
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_application_priority_feature_profile.test.id
+  - model_name: dataDefaultAction
+    tf_name: default_action
+    example: accept
+  # # ==== Unable to find in UI ====
+  # - model_name: simpleFlow
+  #   exclude_test: true
+  #   example:
+  # # ==== Unable to find in UI ====
+  # - model_name: hasCorViaSig
+  #   exclude_test: true
+  #   example:
+  - model_name: vpn
+    tf_name: vpns
+    data_path: [target]
+    example: "edge_basic_vpn1"
+  - model_name: direction
+    data_path: [target]
+    example: all
+  - model_name: sequences
+    attributes:
+    - model_name: sequenceId
+      id: true
+      example: 1
+    - model_name: sequenceName
+      example: traffic
+    - model_name: baseAction
+      example: accept
+    - model_name: sequenceIpType
+      tf_name: protocol
+      example: ipv4
+    - model_name: entries
+      tf_name: match_entries
+      data_path: [match]
+      attributes:
+      - model_name: refId
+        tf_name: application_list_id
+        data_path: [appList]
+        exclude_test: true
+        example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
+      - model_name: refId
+        tf_name: saas_application_list_id
+        data_path: [saasAppList]
+        exclude_test: true
+        example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
+      - model_name: serviceArea
+        exclude_test: true
+        example: common
+      - model_name: trafficCategory
+        exclude_test: true
+        example: optimize-allow
+      - model_name: refId
+        tf_name: dns_application_list_id
+        data_path: [dnsAppList]
+        exclude_test: true
+        example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
+      - model_name: trafficClass
+        exclude_test: true
+        example: silver
+      - model_name: dscp
+        # exclude_test: true
+        example: 1
+      - model_name: packetLength
+        exclude_test: true
+        example: 123
+      - model_name: protocol
+        tf_name: protocols
+        exclude_test: true
+        example: 2
+      - model_name: icmpMessage
+        exclude_test: true
+        example: echo
+      - model_name: icmp6Message
+        exclude_test: true
+        example:
+      - model_name: refId
+        tf_name: source_data_ipv4_prefx_list_id
+        data_path: [sourceDataPrefixList]
+        exclude_test: true
+        example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
+      - model_name: refId
+        tf_name: source_data_ipv6_prefx_list_id
+        data_path: [sourceDataIpv6PrefixList]
+        exclude_test: true
+        example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
+      - model_name: sourceIp
+        tf_name: source_ipv4_prefix
+        exclude_test: true
+        example: 1.2.3.4
+      - model_name: sourceIpv6
+        tf_name: source_ipv6_prefix
+        exclude_test: true
+        example: 2001:0:0:1::/64
+      - model_name: sourcePort
+        tf_name: source_ports
+        exclude_test: true
+        example: 1234
+      - model_name: refId
+        tf_name: destination_data_ipv4_prefix_list_id
+        data_path: [destinationDataPrefixList]
+        exclude_test: true
+        example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
+      - model_name: refId
+        tf_name: destination_data_ipv6_prefix_list_id
+        data_path: [destinationDataIpv6PrefixList]
+        exclude_test: true
+        example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
+      - model_name: destinationIp
+        tf_name: destination_ipv4_prefix
+        exclude_test: true
+        example: 2.3.4.5
+      - model_name: destinationIpv6
+        tf_name: destination_ipv6_prefix
+        exclude_test: true
+        example: 2001:0:0:2::/64
+      - model_name: destinationPort
+        tf_name: destination_ports
+        exclude_test: true
+        example: 2345
+      - model_name: tcp
+        exclude_test: true
+        example: syn
+      - model_name: destinationRegion
+        exclude_test: true
+        example: primary-region
+      - model_name: trafficTo
+        exclude_test: true
+        example: core
+      - model_name: dns
+        exclude_test: true
+        example: response
+    - model_name: actions
+      tf_name: actions
+      attributes:
+      - model_name: slaClass
+        tf_name: sla_classes
+        exclude_null: true
+        exclude_test: true
+        attributes:
+        - model_name: refId
+          tf_name: sla_class_list_id
+          data_path: [slaName]
+          exclude_test: true
+          example: 01249501-650f-484a-bfc0-b5837a558ce5
+        - model_name: preferredColor
+          exclude_test: true
+          example: gold
+        - model_name: refId
+          tf_name: preferred_color_group_list_id
+          data_path: [preferredColorGroup]
+          exclude_test: true
+          example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
+        - model_name: strict
+          exclude_test: true
+          example: true
+        - model_name: fallbackToBestPath
+          exclude_test: true
+          example: false
+        - model_name: preferredRemoteColor
+          exclude_test: true
+          example: 3g
+        - model_name: remoteColorRestrict
+          exclude_test: true
+          example: true
+      - model_name: backupSlaPreferredColor
+        exclude_test: true
+        example: blue
+      - model_name: set
+        tf_name: set_parameters
+        exclude_null: true
+        attributes:
+        - model_name: dscp
+          exclude_test: true
+          example: 18
+        - model_name: refId
+          tf_name: policer_id
+          data_path: [policer]
+          exclude_test: true
+          example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
+          # test_value: sdwan_policy_object_policer_profile_parcel.test.id
+        - model_name: refId
+          tf_name: preferred_color_group_id
+          data_path: [preferredColorGroup]
+          exclude_test: true
+          example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
+        - model_name: refId
+          data_path: [forwardingClass]
+          tf_name: forwarding_class_list_id
+          exclude_test: true
+          example: 159f4020-666f-4b05-8740-67816b7911df
+        - model_name: color
+          tf_name: local_tloc_list_color
+          data_path: [localTlocList]
+          exclude_test: true
+          example: default
+        - model_name: restrict
+          tf_name: local_tloc_list_restrict
+          data_path: [localTlocList]
+          exclude_test: true
+          example: false
+        - model_name: encap
+          tf_name: local_tloc_list_encapsulation
+          data_path: [localTlocList]
+          exclude_test: true
+          example: gre
+        - model_name: color
+          tf_name: preferred_remote_color_id
+          data_path: [preferredRemoteColor]
+          exclude_test: true
+          example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+        - model_name: remoteColorRestrict
+          tf_name: preferred_remote_color_restrict
+          data_path: [preferredRemoteColor]
+          exclude_test: true
+          example: false
+        - model_name: color
+          tf_name: tloc_color
+          data_path: [tloc]
+          exclude_test: true
+          example: default
+        - model_name: encap
+          tf_name: tloc_encapsulation
+          data_path: [tloc]
+          exclude_test: true
+          example: gre
+        - model_name: ip
+          tf_name: tloc_ip
+          data_path: [tloc]
+          exclude_test: true
+          example: 1.2.3.4
+        - model_name: refId
+          tf_name: tloc_list_id
+          data_path: [tlocList]
+          exclude_test: true
+          example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
+        - model_name: color
+          tf_name: service_tloc_color
+          data_path: [service, tloc]
+          exclude_test: true
+          example: default
+        - model_name: encap
+          tf_name: service_tloc_encapsulation
+          data_path: [service, tloc]
+          exclude_test: true
+          example: ipsec
+        - model_name: ip
+          tf_name: service_tloc_ip
+          data_path: [service, tloc]
+          exclude_test: true
+          example: 1.2.3.4
+        - model_name: vpn
+          tf_name: service_vpn
+          data_path: [service]
+          exclude_test: true
+          example: 1
+        - model_name: type
+          tf_name: service_type
+          data_path: [service]
+          exclude_test: true
+          example: FW
+        - model_name: refId
+          tf_name: service_tloc_list_id
+          data_path: [service, tlocList]
+          exclude_test: true
+          example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
+        - model_name: type
+          tf_name: service_chain_type
+          data_path: [serviceChain]
+          exclude_test: true
+          example: SC1
+        - model_name: vpn
+          tf_name: service_chain_vpn
+          data_path: [serviceChain]
+          exclude_test: true
+          example: 1
+        - model_name: local
+          tf_name: service_chain_local
+          data_path: [serviceChain]
+          exclude_test: true
+          example: false
+        - model_name: restrict
+          tf_name: service_chain_fallback_to_routing
+          data_path: [serviceChain]
+          exclude_test: true
+          example: false
+        - model_name: color
+          tf_name: service_chain_tloc_color
+          data_path: [serviceChain, tloc]
+          exclude_test: true
+          example: default
+        - model_name: encap
+          tf_name: service_chain_tloc_encapsulation
+          data_path: [serviceChain, tloc]
+          exclude_test: true
+          example: ipsec
+        - model_name: ip
+          tf_name: service_chain_tloc_ip
+          data_path: [serviceChain, tloc]
+          exclude_test: true
+          example: 1.2.3.4
+        - model_name: refId
+          tf_name: service_chain_tloc_list_id
+          data_path: [serviceChain, tlocList]
+          exclude_test: true
+          example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+        - model_name: nextHop
+          tf_name: next_hop_ipv4
+          exclude_test: true
+          example: 1.2.3.4
+        - model_name: nextHopIpv6
+          tf_name: next_hop_ipv6
+          exclude_test: true
+          example: 2001:0:0:1::/64
+        - model_name: nextHopLoose
+          exclude_test: true
+          example: false
+        - model_name: vpn
+          exclude_test: true
+          example: 1
+      - model_name: field
+        tf_name: redirect_dns_field
+        data_path: [redirectDns]
+        exclude_test: true
+        example: ipAddress
+      - model_name: value
+        tf_name: redirect_dns_value
+        data_path: [redirectDns]
+        exclude_test: true
+        example: umbrella
+      # # === Not Support in 20.12 (Supported in 20.15) ===
+      # - model_name: tcpOptimization
+      #   tf_name: appqoe_tcp_optimization
+      #   data_path: [appqoeOptimization]
+      #   exclude_test: true
+      #   example: true
+      # # === Not Support in 20.12 (Supported in 20.15) ===
+      # - model_name: dreOptimization
+      #   tf_name: appqoe_dre_optimization
+      #   data_path: [appqoeOptimization]
+      #   exclude_test: true
+      #   example: true
+      # # === Not Support in 20.12 (Supported in 20.15) ===
+      # - model_name: serviceNodeGroup
+      #   tf_name: appqoe_service_node_group
+      #   data_path: [appqoeOptimization]
+      #   exclude_test: true
+      #   example: SNG-APPQOE1
+      - model_name: lossCorrectionType
+        tf_name: loss_correct_type
+        data_path: [lossCorrection]
+        exclude_test: true
+        example: fecAdaptive
+      - model_name: lossCorrectFec
+        tf_name: loss_correct_fec_threshold
+        data_path: [lossCorrection]
+        exclude_test: true
+        example: 1
+      - model_name: count
+        exclude_test: true
+        example: COUNTER_1
+      - model_name: log
+        exclude_test: true
+        example: false
+      - model_name: cloudSaas
+        exclude_test: true
+        example: false
+      - model_name: cloudProbe
+        exclude_test: true
+        example: false
+      # # === Not Support in 20.12 (Supported in 20.15) ===
+      # - model_name: cflowd
+      #   exclude_test: true
+      #   example: false
+      - model_name: natPool
+        exclude_test: true
+        example: 2
+      - model_name: useVpn
+        tf_name: nat_vpn
+        data_path: [nat]
+        exclude_test: true
+        example: false
+      - model_name: fallback
+        tf_name: nat_fallback
+        data_path: [nat]
+        exclude_test: true
+        example: false
+      - model_name: bypass
+        tf_name: nat_bypass
+        data_path: [nat]
+        exclude_test: true
+        example: false
+      - model_name: diaPool
+        tf_name: nat_dia_pool
+        data_path: [nat]
+        exclude_test: true
+        example: 1
+      - model_name: diaInterface
+        tf_name: nat_dia_interface
+        data_path: [nat]
+        exclude_test: true
+        example: ethernet
+      - model_name: sig
+        tf_name: secure_internet_gateway
+        exclude_test: true
+        example: true
+      - model_name: fallbackToRouting
+        exclude_test: true
+        example: true
+      # # === Not Support in 20.12 (Supported in 20.15) ===
+      # - model_name: secureServiceEdge
+      #   data_path: [sse]
+      #   exclude_test: true
+      #   example: true
+      # # === Not Support in 20.12 (Supported in 20.15) ===
+      # - model_name: secureServiceEdgeInstance
+      #   data_path: [sse]
+      #   exclude_test: true
+      #   example: zScaler
+
+test_prerequisites: |
+  resource "sdwan_policy_object_feature_profile" "test" {
+    name = "TF_TEST_POLICY_OBJECT"
+    description = "My policy object feature profile 1"
+  }
+
+  resource "sdwan_application_priority_feature_profile" "test" {
+    name        = "TF_TEST"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_policy_object_policer" "test" {
+    name               = "TF_TEST_POLICER"
+    description        = "My Example"
+    feature_profile_id = sdwan_policy_object_feature_profile.test.id
+    entries = [
+      {
+        burst_bytes   = 56500
+        exceed_action = "remark"
+        rate_bps      = 60000
+      }
+    ]
+  }

@@ -90,6 +90,10 @@ func (d *SecurityPolicyDataSource) Schema(ctx context.Context, req datasource.Sc
 							MarkdownDescription: "Policy definition ID",
 							Computed:            true,
 						},
+						"version": schema.Int64Attribute{
+							MarkdownDescription: "Policy definition version",
+							Computed:            true,
+						},
 						"type": schema.StringAttribute{
 							MarkdownDescription: "Policy definition type",
 							Computed:            true,

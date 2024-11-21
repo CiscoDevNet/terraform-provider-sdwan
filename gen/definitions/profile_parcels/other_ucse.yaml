@@ -27,20 +27,30 @@ attributes:
   - model_name: lomType
     tf_name: access_port_shared_type
     data_path: [imc, access-port, sharedLom]
+    ignore_mandatory: true
+    conditional_attribute:
+      name: access_port_dedicated
+      value: false
+      type: Bool
     example: ge1
   - model_name: failOverType
     tf_name: access_port_shared_failover_type
     data_path: [imc, access-port, sharedLom]
+    ignore_mandatory: true
+    conditional_attribute:
+      name: access_port_dedicated
+      value: false
+      type: Bool
     example: ge2
   - model_name: address
     tf_name: ipv4_address
     data_path: [imc, ip]
-    mandatory: true
     example: 2.2.2.2/24
+    minimum_test_value: '"2.2.2.2/24"'
   - model_name: defaultGateway
     data_path: [imc, ip]
-    mandatory: true
     example: 2.2.2.2
+    minimum_test_value: '"2.2.2.2"'
   - model_name: vlanId
     data_path: [imc, vlan]
     example: 3

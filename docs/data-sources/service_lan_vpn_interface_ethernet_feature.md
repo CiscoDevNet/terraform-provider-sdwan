@@ -159,6 +159,7 @@ Read-Only:
 - `tloc_pref_change_value` (Number) Timer interval for successive advertisements, in milliseconds
 - `tloc_prefix_change` (Boolean) Timer interval for successive advertisements, in milliseconds
 - `track_omp` (Boolean) Track OMP status
+- `tracking_objects` (Attributes List) Tracking object for VRRP configuration (see [below for nested schema](#nestedatt--ipv4_vrrps--tracking_objects))
 
 <a id="nestedatt--ipv4_vrrps--secondary_addresses"></a>
 ### Nested Schema for `ipv4_vrrps.secondary_addresses`
@@ -169,6 +170,18 @@ Read-Only:
 - `address_variable` (String) Variable name
 - `subnet_mask` (String) Subnet Mask
 - `subnet_mask_variable` (String) Variable name
+
+
+<a id="nestedatt--ipv4_vrrps--tracking_objects"></a>
+### Nested Schema for `ipv4_vrrps.tracking_objects`
+
+Read-Only:
+
+- `decrement_value` (Number) Decrement Value for VRRP priority
+- `decrement_value_variable` (String) Variable name
+- `tracker_action` (String) Track Action
+- `tracker_action_variable` (String) Variable name
+- `tracker_id` (String)
 
 
 

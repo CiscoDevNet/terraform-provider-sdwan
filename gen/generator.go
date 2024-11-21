@@ -213,6 +213,7 @@ type YamlConfig struct {
 	GetBeforeDelete          bool                  `yaml:"get_before_delete"`
 	DeleteMutex              bool                  `yaml:"delete_mutex"`
 	ParcelType               string                `yaml:"parcel_type"`
+	FullUpdate               bool                  `yaml:"full_update"`
 }
 
 type YamlConfigAttribute struct {
@@ -231,6 +232,7 @@ type YamlConfigAttribute struct {
 	Reference               bool                           `yaml:"reference"`
 	Variable                bool                           `yaml:"variable"`
 	Mandatory               bool                           `yaml:"mandatory"`
+	IgnoreMandatory         bool                           `yaml:"ignore_mandatory"`
 	Optional                bool                           `yaml:"optional"`
 	WriteOnly               bool                           `yaml:"write_only"`
 	TfOnly                  bool                           `yaml:"tf_only"`
@@ -383,6 +385,22 @@ func HasReference(attributes []YamlConfigAttribute) bool {
 	return false
 }
 
+// Templating helper function to return number of reference included in attributes
+func CountReferences(attributes []YamlConfigAttribute) int {
+	count := 0
+	for _, attr := range attributes {
+		if attr.Reference {
+			count++
+		}
+	}
+	return count
+}
+
+// Templating helper function to add two integer values
+func Add(x, y int) int {
+	return x + y
+}
+
 // Templating helper function to return GJSON type
 func GetGjsonType(t string) string {
 	if t == "String" {
@@ -443,6 +461,14 @@ func IsStringListSet(attribute YamlConfigAttribute) bool {
 // Templating helper function to return true if type is a list or set of integers without nested elements
 func IsInt64ListSet(attribute YamlConfigAttribute) bool {
 	if (attribute.Type == "List" || attribute.Type == "Set") && attribute.ElementType == "Int64" {
+		return true
+	}
+	return false
+}
+
+// Templating helper function to return true if type is StringInt64
+func IsStringInt64(attribute YamlConfigAttribute) bool {
+	if attribute.Type == "StringInt64" {
 		return true
 	}
 	return false
@@ -518,6 +544,8 @@ var functions = template.FuncMap{
 	"hasVersionAttribute":    HasVersionAttribute,
 	"getResponseModelPath":   GetResponseModelPath,
 	"hasReference":           HasReference,
+	"countReferences":        CountReferences,
+	"add":                    Add,
 	"getGjsonType":           GetGjsonType,
 	"getId":                  GetId,
 	"isListSet":              IsListSet,
@@ -525,6 +553,7 @@ var functions = template.FuncMap{
 	"isSet":                  IsSet,
 	"isStringListSet":        IsStringListSet,
 	"isInt64ListSet":         IsInt64ListSet,
+	"isStringInt64":          IsStringInt64,
 	"isNestedListSet":        IsNestedListSet,
 	"isNestedList":           IsNestedList,
 	"isNestedSet":            IsNestedSet,
@@ -781,8 +810,10 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		}
 
 		if t.Exists() {
-			if t.Get("properties.value.type").String() == "string" || t.Get("properties.value.anyOf.0.type").String() == "string" || t.Get("properties.value.oneOf.0.type").String() == "string" {
-				attr.Type = "String"
+			if attr.Type == "String" || attr.Type == "StringInt64" || t.Get("properties.value.type").String() == "string" || t.Get("properties.value.anyOf.0.type").String() == "string" || t.Get("properties.value.oneOf.0.type").String() == "string" {
+				if attr.Type != "StringInt64" {
+					attr.Type = "String"
+				}
 				if value := t.Get("properties.value.minLength"); value.Exists() {
 					attr.StringMinLength = value.Int()
 				}
@@ -797,9 +828,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 						attr.EnumValues = append(attr.EnumValues, v.String())
 					}
 				}
-			} else if t.Get("properties.value.type").String() == "boolean" {
+			} else if attr.Type == "Bool" || t.Get("properties.value.type").String() == "boolean" {
 				attr.Type = "Bool"
-			} else if t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" || t.Get("properties.value.oneOf.0.type").String() == "integer" || t.Get("properties.value.oneOf.0.type").String() == "number" {
+			} else if attr.Type == "Int64" || t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" || t.Get("properties.value.oneOf.0.type").String() == "integer" || t.Get("properties.value.oneOf.0.type").String() == "number" {
 
 				if value := t.Get("properties.value.multipleOf"); value.Exists() {
 					attr.Type = "Float64"
@@ -818,7 +849,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 						attr.MaxInt = value.Int()
 					}
 				}
-			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" {
+			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" || t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.oneOf.0.type").String() == "string" {
 				attr.Type = "Set"
 				attr.ElementType = "String"
 				// if value := t.Get("properties.value.items.minItems"); value.Exists() {
@@ -886,7 +917,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		} else if isOneOfAttribute {
 			attr.ExcludeNull = true
 		} else {
-			if !attr.Variable {
+			if !attr.Variable && !attr.IgnoreMandatory {
 				attr.Mandatory = true
 			}
 		}

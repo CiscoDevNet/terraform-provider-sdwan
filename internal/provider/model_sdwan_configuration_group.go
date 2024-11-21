@@ -22,7 +22,9 @@ import (
 	"context"
 	"fmt"
 	"strconv"
+	"strings"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -65,8 +67,9 @@ type ConfigurationGroupTopologyDevicesUnsupportedFeatures struct {
 }
 
 type ConfigurationGroupDevicesVariables struct {
-	Name  types.String `tfsdk:"name"`
-	Value types.String `tfsdk:"value"`
+	Name      types.String `tfsdk:"name"`
+	Value     types.String `tfsdk:"value"`
+	ListValue types.List   `tfsdk:"list_value"`
 }
 
 // End of section. //template:end types
@@ -152,7 +155,7 @@ func (data ConfigurationGroup) toBodyConfigGroupDeviceVariables(ctx context.Cont
 		body, _ = sjson.Set(body, "solution", data.Solution.ValueString())
 	}
 	if true {
-		//body, _ = sjson.Set(body, "devices", []interface{}{})
+		body, _ = sjson.Set(body, "devices", []interface{}{})
 		for _, item := range data.Devices {
 			itemBody := ""
 			if !item.Id.IsNull() {
@@ -165,7 +168,11 @@ func (data ConfigurationGroup) toBodyConfigGroupDeviceVariables(ctx context.Cont
 					if !childItem.Name.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "name", childItem.Name.ValueString())
 					}
-					if !childItem.Value.IsNull() {
+					if !childItem.ListValue.IsNull() {
+						var values []string
+						childItem.ListValue.ElementsAs(ctx, &values, false)
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", values)
+					} else if !childItem.Value.IsNull() {
 						if val, err := strconv.Atoi(childItem.Value.ValueString()); err == nil {
 							itemChildBody, _ = sjson.Set(itemChildBody, "value", val)
 						} else if val, err := strconv.ParseFloat(childItem.Value.ValueString(), 64); err == nil {
@@ -320,6 +327,42 @@ func (data *ConfigurationGroup) fromBodyConfigGroupDevices(ctx context.Context, 
 	}
 }
 
+func (data *ConfigurationGroup) updateFromBodyConfigGroupDevices(ctx context.Context, res gjson.Result) {
+	for i := range data.Devices {
+		keys := [...]string{"id"}
+		keyValues := [...]string{data.Devices[i].Id.ValueString()}
+
+		var r gjson.Result
+		res.Get("devices").ForEach(
+			func(_, v gjson.Result) bool {
+				found := false
+				for ik := range keys {
+					if v.Get(keys[ik]).Exists() {
+						if v.Get(keys[ik]).String() == keyValues[ik] {
+							found = true
+							continue
+						}
+						found = false
+						break
+					}
+					continue
+				}
+				if found {
+					r = v
+					return false
+				}
+				return true
+			},
+		)
+
+		if cValue := r.Get("id"); cValue.Exists() {
+			data.Devices[i].Id = types.StringValue(cValue.String())
+		} else {
+			data.Devices[i].Id = types.StringNull()
+		}
+	}
+}
+
 func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.Context, res gjson.Result) {
 	if value := res.Get("family"); value.Exists() {
 		data.Solution = types.StringValue(value.String())
@@ -345,8 +388,17 @@ func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.C
 						cItem.Name = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() {
-						cItem.Value = types.StringValue(ccValue.String())
+						if ccValue.IsArray() {
+							cItem.ListValue = helpers.GetStringList(ccValue.Array())
+							cItem.Value = types.StringNull()
+						} else {
+							cItem.ListValue = types.ListNull(types.StringType)
+							if !strings.Contains(strings.ToLower(ccValue.String()), "$crypt_cluster") {
+								cItem.Value = types.StringValue(ccValue.String())
+							}
+						}
 					} else {
+						cItem.ListValue = types.ListNull(types.StringType)
 						cItem.Value = types.StringNull()
 					}
 					item.Variables = append(item.Variables, cItem)
@@ -404,6 +456,95 @@ func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.C
 	// 		data.DeviceGroups = []ConfigurationGroupDeviceGroups{}
 	// 	}
 	// }
+}
+
+func (data *ConfigurationGroup) updateFromBodyConfigGroupDeviceVariables(ctx context.Context, res gjson.Result) {
+	if value := res.Get("family"); value.Exists() {
+		data.Solution = types.StringValue(value.String())
+	} else {
+		data.Solution = types.StringNull()
+	}
+	for i := range data.Devices {
+		keys := [...]string{"device-id"}
+		keyValues := [...]string{data.Devices[i].Id.ValueString()}
+
+		var r gjson.Result
+		res.Get("devices").ForEach(
+			func(_, v gjson.Result) bool {
+				found := false
+				for ik := range keys {
+					if v.Get(keys[ik]).Exists() {
+						if v.Get(keys[ik]).String() == keyValues[ik] {
+							found = true
+							continue
+						}
+						found = false
+						break
+					}
+					continue
+				}
+				if found {
+					r = v
+					return false
+				}
+				return true
+			},
+		)
+
+		if cValue := r.Get("device-id"); cValue.Exists() {
+			data.Devices[i].Id = types.StringValue(cValue.String())
+		} else {
+			data.Devices[i].Id = types.StringNull()
+		}
+
+		for ci := range data.Devices[i].Variables {
+			keys := [...]string{"name"}
+			keyValues := [...]string{data.Devices[i].Variables[ci].Name.ValueString()}
+
+			var cr gjson.Result
+			r.Get("variables").ForEach(
+				func(_, v gjson.Result) bool {
+					found := false
+					for ik := range keys {
+						if v.Get(keys[ik]).Exists() {
+							if v.Get(keys[ik]).String() == keyValues[ik] {
+								found = true
+								continue
+							}
+							found = false
+							break
+						}
+						continue
+					}
+					if found {
+						cr = v
+						return false
+					}
+					return true
+				},
+			)
+
+			if ccValue := cr.Get("name"); ccValue.Exists() {
+				data.Devices[i].Variables[ci].Name = types.StringValue(ccValue.String())
+			} else {
+				data.Devices[i].Variables[ci].Name = types.StringNull()
+			}
+			if ccValue := cr.Get("value"); ccValue.Exists() {
+				if ccValue.IsArray() {
+					data.Devices[i].Variables[ci].ListValue = helpers.GetStringList(ccValue.Array())
+					data.Devices[i].Variables[ci].Value = types.StringNull()
+				} else {
+					data.Devices[i].Variables[ci].ListValue = types.ListNull(types.StringType)
+					if !strings.Contains(strings.ToLower(ccValue.String()), "$crypt_cluster") {
+						data.Devices[i].Variables[ci].Value = types.StringValue(ccValue.String())
+					}
+				}
+			} else {
+				data.Devices[i].Variables[ci].ListValue = types.ListNull(types.StringType)
+				data.Devices[i].Variables[ci].Value = types.StringNull()
+			}
+		}
+	}
 }
 
 func (data *ConfigurationGroup) updateTfAttributes(ctx context.Context, state *ConfigurationGroup) {

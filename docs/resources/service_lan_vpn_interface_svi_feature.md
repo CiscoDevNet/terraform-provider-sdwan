@@ -67,6 +67,13 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
       ]
       tloc_prefix_change       = true
       tloc_prefix_change_value = 100
+      tracking_objects = [
+        {
+          tracker_id      = "1b270f6d-479b-47e3-ab0b-51bc6811a303"
+          track_action    = "decrement"
+          decrement_value = 100
+        }
+      ]
     }
   ]
   ipv6_vrrps = [
@@ -103,10 +110,6 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
-- `interface_name` (String) Interface name: VLAN 1 - VLAN 4094 when present
-- `ipv4_address` (String) IP Address
-- `ipv4_subnet_mask` (String) Subnet Mask
-  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `name` (String) The name of the Feature
 
 ### Optional
@@ -129,6 +132,7 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
   - Range: `1500`-`9216`
   - Default value: `1500`
 - `interface_mtu_variable` (String) Variable name
+- `interface_name` (String) Interface name: VLAN 1 - VLAN 4094 when present
 - `interface_name_variable` (String) Variable name
 - `ip_directed_broadcast` (Boolean) IP Directed-Broadcast
   - Default value: `false`
@@ -137,10 +141,13 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
   - Range: `576`-`9216`
   - Default value: `1500`
 - `ip_mtu_variable` (String) Variable name
+- `ipv4_address` (String) IP Address
 - `ipv4_address_variable` (String) Variable name
 - `ipv4_dhcp_helpers` (Set of String) List of DHCP helper addresses
 - `ipv4_dhcp_helpers_variable` (String) Variable name
 - `ipv4_secondary_addresses` (Attributes List) Assign secondary IP addresses (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
+- `ipv4_subnet_mask` (String) Subnet Mask
+  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `ipv4_subnet_mask_variable` (String) Variable name
 - `ipv4_vrrps` (Attributes List) Enable ipv4 VRRP (see [below for nested schema](#nestedatt--ipv4_vrrps))
 - `ipv6_address` (String) Assign IPv6 address
@@ -213,6 +220,7 @@ Optional:
 - `track_omp` (Boolean) Track OMP status
   - Default value: `false`
 - `track_omp_variable` (String) Variable name
+- `tracking_objects` (Attributes List) tracking object for VRRP configuration (see [below for nested schema](#nestedatt--ipv4_vrrps--tracking_objects))
 
 <a id="nestedatt--ipv4_vrrps--secondary_addresses"></a>
 ### Nested Schema for `ipv4_vrrps.secondary_addresses`
@@ -221,6 +229,20 @@ Optional:
 
 - `address` (String) VRRP Secondary IPV4 address
 - `address_variable` (String) Variable name
+
+
+<a id="nestedatt--ipv4_vrrps--tracking_objects"></a>
+### Nested Schema for `ipv4_vrrps.tracking_objects`
+
+Optional:
+
+- `decrement_value` (Number) Decrement Value for VRRP priority
+  - Range: `1`-`255`
+- `decrement_value_variable` (String) Variable name
+- `track_action` (String) Track Action
+  - Choices: `decrement`, `shutdown`
+- `track_action_variable` (String) Variable name
+- `tracker_id` (String)
 
 
 
@@ -293,5 +315,6 @@ Optional:
 Import is supported using the following syntax:
 
 ```shell
-terraform import sdwan_service_lan_vpn_interface_svi_feature.example "f6b2c44c-693c-4763-b010-895aa3d236bd"
+# Expected import identifier with the format: "service_lan_vpn_interface_svi_feature_id,feature_profile_id,service_lan_vpn_feature_id"
+terraform import sdwan_service_lan_vpn_interface_svi_feature.example "f6b2c44c-693c-4763-b010-895aa3d236bd,f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac,140331f6-5418-4755-a059-13c77eb96037"
 ```

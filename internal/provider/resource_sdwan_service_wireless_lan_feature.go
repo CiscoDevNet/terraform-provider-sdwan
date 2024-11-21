@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 	"regexp"
+	"strings"
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
@@ -220,7 +221,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 			},
 			"country": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Select country").AddStringEnumDescription("AE", "AR", "AT", "AU", "BA", "BB", "BE", "BG", "BH", "BN", "BO", "BR", "BY", "CA", "CA2", "CH", "CL", "CM", "CN", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FJ", "FR", "GB", "GH", "GI", "GR", "HK", "HR", "HU", "ID", "IE", "IL", "IO", "IN", "IQ", "IS", "IT", "J2", "J4", "JM", "JO", "KE", "KN", "KW", "KZ", "LB", "LI", "LK", "LT", "LU", "LV", "LY", "MA", "MC", "ME", "MK", "MN", "MO", "MT", "MX", "MY", "NL", "NO", "NZ", "OM", "PA", "PE", "PH", "PH2", "PK", "PL", "PR", "PT", "PY", "QA", "RO", "RS", "RU", "SA", "SE", "SG", "SI", "SK", "TH", "TN", "TR", "TW", "UA", "US", "UY", "VE", "VN", "ZA").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("AE", "AR", "AT", "AU", "BA", "BB", "BE", "BG", "BH", "BN", "BO", "BR", "BY", "CA", "CA2", "CH", "CL", "CM", "CN", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FJ", "FR", "GB", "GH", "GI", "GR", "HK", "HR", "HU", "ID", "IE", "IL", "IO", "IN", "IQ", "IS", "IT", "J2", "J4", "JM", "JO", "KE", "KN", "KW", "KZ", "LB", "LI", "LK", "LT", "LU", "LV", "LY", "MA", "MC", "ME", "MK", "MN", "MO", "MT", "MX", "MY", "NL", "NO", "NZ", "OM", "PA", "PE", "PH", "PH2", "PK", "PL", "PR", "PT", "PY", "QA", "RO", "RS", "RU", "SA", "SE", "SG", "SI", "SK", "TH", "TN", "TR", "TW", "UA", "US", "UY", "VE", "VN", "ZA"),
 				},
@@ -231,7 +232,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 			},
 			"username": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set management username").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 32),
 					stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-zA-Z!->@^_]*`), ""),
@@ -243,7 +244,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 			},
 			"password": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9~!@#%^&()_+|<>,.?/:;'\[\]{}"]{8,64}$`), ""),
 				},
@@ -359,6 +360,9 @@ func (r *ServiceWirelessLANProfileParcelResource) Read(ctx context.Context, req 
 	} else {
 		state.updateFromBody(ctx, res)
 	}
+	if state.Version.IsNull() {
+		state.Version = types.Int64Value(0)
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 
@@ -432,7 +436,19 @@ func (r *ServiceWirelessLANProfileParcelResource) Delete(ctx context.Context, re
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *ServiceWirelessLANProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	count := 1
+	parts := strings.SplitN(req.ID, ",", (count + 1))
+
+	pattern := "service_wireless_lan_feature_id" + ",feature_profile_id"
+	if len(parts) != (count + 1) {
+		resp.Diagnostics.AddError(
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q", pattern, req.ID),
+		)
+		return
+	}
+
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("feature_profile_id"), parts[1])...)
 }
 
 // End of section. //template:end import

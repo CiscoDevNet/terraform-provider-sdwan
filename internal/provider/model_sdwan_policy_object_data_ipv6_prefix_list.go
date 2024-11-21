@@ -22,6 +22,7 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -138,9 +139,9 @@ func (data *PolicyObjectDataIPv6PrefixList) updateFromBody(ctx context.Context, 
 	}
 	path := "payload.data."
 	for i := range data.Entries {
-		keys := [...]string{"ipv6Address"}
-		keyValues := [...]string{data.Entries[i].Ipv6Address.ValueString()}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"ipv6Address", "ipv6PrefixLength"}
+		keyValues := [...]string{data.Entries[i].Ipv6Address.ValueString(), strconv.FormatInt(data.Entries[i].Ipv6PrefixLength.ValueInt64(), 10)}
+		keyValuesVariables := [...]string{"", ""}
 
 		var r gjson.Result
 		res.Get(path + "entries").ForEach(

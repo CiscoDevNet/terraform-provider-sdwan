@@ -46,7 +46,8 @@ resource "sdwan_transport_wan_vpn_feature" "example" {
   ]
   ipv6_static_routes = [
     {
-      prefix = "2002::/16"
+      prefix  = "2002::/16"
+      gateway = "nextHop"
       next_hops = [
         {
           address                 = "2001:0:0:1::0"
@@ -144,11 +145,13 @@ Optional:
 
 Optional:
 
-- `nat` (String) IPv6 Nat
+- `gateway` (String) Gateway
+  - Choices: `nextHop`, `null0`, `nat`
+- `nat` (String) IPv6 Nat, Attribute conditional on `gateway` being equal to `nat`
   - Choices: `NAT64`, `NAT66`
 - `nat_variable` (String) Variable name
-- `next_hops` (Attributes List) IPv6 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv6_static_routes--next_hops))
-- `null0` (Boolean) IPv6 Route Gateway Next Hop
+- `next_hops` (Attributes List) IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `nextHop` (see [below for nested schema](#nestedatt--ipv6_static_routes--next_hops))
+- `null0` (Boolean) IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `null0`
 - `prefix` (String) Prefix
 - `prefix_variable` (String) Variable name
 
@@ -205,5 +208,6 @@ Optional:
 Import is supported using the following syntax:
 
 ```shell
-terraform import sdwan_transport_wan_vpn_feature.example "f6b2c44c-693c-4763-b010-895aa3d236bd"
+# Expected import identifier with the format: "transport_wan_vpn_feature_id,feature_profile_id"
+terraform import sdwan_transport_wan_vpn_feature.example "f6b2c44c-693c-4763-b010-895aa3d236bd,f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
 ```

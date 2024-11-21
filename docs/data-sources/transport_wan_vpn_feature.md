@@ -80,6 +80,7 @@ Read-Only:
 
 Read-Only:
 
+- `gateway` (String) Gateway
 - `nat` (String) IPv6 Nat
 - `nat_variable` (String) Variable name
 - `next_hops` (Attributes List) IPv6 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv6_static_routes--next_hops))

@@ -169,9 +169,9 @@ func (data *PolicyObjectIPv6PrefixList) updateFromBody(ctx context.Context, res 
 	}
 	path := "payload.data."
 	for i := range data.Entries {
-		keys := [...]string{"ipv6Address", "ipv6PrefixLength"}
-		keyValues := [...]string{data.Entries[i].Ipv6Address.ValueString(), strconv.FormatInt(data.Entries[i].Ipv6PrefixLength.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{"", ""}
+		keys := [...]string{"ipv6Address", "ipv6PrefixLength", "leRangePrefixLength", "geRangePrefixLength"}
+		keyValues := [...]string{data.Entries[i].Ipv6Address.ValueString(), strconv.FormatInt(data.Entries[i].Ipv6PrefixLength.ValueInt64(), 10), strconv.FormatInt(data.Entries[i].Le.ValueInt64(), 10), strconv.FormatInt(data.Entries[i].Ge.ValueInt64(), 10)}
+		keyValuesVariables := [...]string{"", "", "", ""}
 
 		var r gjson.Result
 		res.Get(path + "entries").ForEach(

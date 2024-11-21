@@ -27,12 +27,13 @@ get_before_delete: bool(required=False) # This does a GET "all" before doing a D
 delete_mutex: bool(required=False) # Set to true if DELETE operation is mutually exclusive with other DELETE operations
 skip_minimum_test: bool(required=False) # Set to true to prevent "minimum" resource acceptance testing
 parcel_type: enum('feature', 'policy', 'policy_object', required=False) # Type of profile parcel
+full_update: bool(required=False) # Set to true to exclude updateFromBody and just use updateBody within update method
 ---
 attribute:
   model_name: str(required=False) # Name of the attribute in the model (payload)
   response_model_name: str(required=False) # Name of the attribute in the model (response payload)
   tf_name: str(required=False) # Name of the attribute in the Terraform resource, by default derived from model_name
-  type: enum('String', 'Int64', 'Bool', 'List', 'Set', 'Version', 'Versions', required=False) # Type of the attribute
+  type: enum('String', 'Int64', 'StringInt64', 'Bool', 'List', 'Set', 'Version', 'Versions', required=False) # Type of the attribute
   element_type: enum('String', 'Int64', required=False) # only relevant if type is either 'List' or 'Set'
   object_type: enum('object', 'tree', 'list', required=False) # Feature template schema object type
   model_type_string: bool(required=False) # Set to true if element should be added as string to payload
@@ -44,6 +45,7 @@ attribute:
   reference: bool(required=False) # Indicates that the attribute is being used in the url path
   variable: bool(required=False) # Indicates that this attribute can be provided as a feature template or profile parcel variable
   mandatory: bool(required=False) # Set to true if the attribute is mandatory
+  ignore_mandatory: bool(required=False) # Set to true if schema mandatory value should be ignored
   optional: bool(required=False) # Set to true if the attribute is optional
   write_only: bool(required=False) # Set to true if the attribute is write-only, meaning we cannot read the value
   tf_only: bool(required=False) # Set to true if this attribute is only used in Terraform but not added to payload

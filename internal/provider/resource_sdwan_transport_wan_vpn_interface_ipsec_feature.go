@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 	"regexp"
+	"strings"
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
@@ -479,6 +480,9 @@ func (r *TransportWANVPNInterfaceIPSECProfileParcelResource) Read(ctx context.Co
 	} else {
 		state.updateFromBody(ctx, res)
 	}
+	if state.Version.IsNull() {
+		state.Version = types.Int64Value(0)
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 
@@ -552,7 +556,20 @@ func (r *TransportWANVPNInterfaceIPSECProfileParcelResource) Delete(ctx context.
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *TransportWANVPNInterfaceIPSECProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	count := 2
+	parts := strings.SplitN(req.ID, ",", (count + 1))
+
+	pattern := "transport_wan_vpn_interface_ipsec_feature_id" + ",feature_profile_id" + ",transport_wan_vpn_feature_id"
+	if len(parts) != (count + 1) {
+		resp.Diagnostics.AddError(
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q", pattern, req.ID),
+		)
+		return
+	}
+
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("feature_profile_id"), parts[1])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("transport_wan_vpn_feature_id"), parts[2])...)
 }
 
 // End of section. //template:end import

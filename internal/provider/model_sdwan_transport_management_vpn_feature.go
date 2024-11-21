@@ -74,6 +74,7 @@ type TransportManagementVPNIpv4StaticRoutes struct {
 type TransportManagementVPNIpv6StaticRoutes struct {
 	Prefix         types.String                                     `tfsdk:"prefix"`
 	PrefixVariable types.String                                     `tfsdk:"prefix_variable"`
+	Gateway        types.String                                     `tfsdk:"gateway"`
 	NextHops       []TransportManagementVPNIpv6StaticRoutesNextHops `tfsdk:"next_hops"`
 	Null0          types.Bool                                       `tfsdk:"null0"`
 	Nat            types.String                                     `tfsdk:"nat"`
@@ -349,7 +350,7 @@ func (data TransportManagementVPN) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "prefix.value", item.Prefix.ValueString())
 				}
 			}
-			if true {
+			if true && item.Gateway.ValueString() == "nextHop" {
 
 				for _, childItem := range item.NextHops {
 					itemChildBody := ""
@@ -371,7 +372,12 @@ func (data TransportManagementVPN) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "variable")
 							itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistanceVariable.ValueString())
 						}
-					} else if !childItem.AdministrativeDistance.IsNull() {
+					} else if childItem.AdministrativeDistance.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "default")
+							itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", 1)
+						}
+					} else {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistance.ValueInt64())
@@ -381,19 +387,19 @@ func (data TransportManagementVPN) toBody(ctx context.Context) string {
 				}
 			}
 			if !item.Null0.IsNull() {
-				if true {
+				if true && item.Gateway.ValueString() == "null0" {
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.null0.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.null0.value", item.Null0.ValueBool())
 				}
 			}
 
 			if !item.NatVariable.IsNull() {
-				if true {
+				if true && item.Gateway.ValueString() == "nat" {
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.value", item.NatVariable.ValueString())
 				}
 			} else if !item.Nat.IsNull() {
-				if true {
+				if true && item.Gateway.ValueString() == "nat" {
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.value", item.Nat.ValueString())
 				}

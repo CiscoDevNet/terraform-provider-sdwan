@@ -20,6 +20,7 @@ package provider
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
+	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -49,8 +50,9 @@ type SecurityPolicy struct {
 }
 
 type SecurityPolicyDefinitions struct {
-	Id   types.String `tfsdk:"id"`
-	Type types.String `tfsdk:"type"`
+	Id      types.String `tfsdk:"id"`
+	Version types.Int64  `tfsdk:"version"`
+	Type    types.String `tfsdk:"type"`
 }
 
 type SecurityPolicyLogging struct {
@@ -142,6 +144,7 @@ func (data SecurityPolicy) toBody(ctx context.Context) string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *SecurityPolicy) fromBody(ctx context.Context, res gjson.Result) {
+	state := *data
 	if value := res.Get("policyName"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -246,6 +249,7 @@ func (data *SecurityPolicy) fromBody(ctx context.Context, res gjson.Result) {
 			data.Logging = []SecurityPolicyLogging{}
 		}
 	}
+	data.updateVersions(ctx, &state)
 }
 
 // End of section. //template:end fromBody
@@ -319,5 +323,24 @@ func (data *SecurityPolicy) hasChanges(ctx context.Context, state *SecurityPolic
 // End of section. //template:end hasChanges
 
 // Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
+
+func (data *SecurityPolicy) updateVersions(ctx context.Context, state *SecurityPolicy) {
+	for i := range data.Definitions {
+		dataKeys := [...]string{fmt.Sprintf("%v", data.Definitions[i].Id.ValueString())}
+		stateIndex := -1
+		for j := range state.Definitions {
+			stateKeys := [...]string{fmt.Sprintf("%v", state.Definitions[j].Id.ValueString())}
+			if dataKeys == stateKeys {
+				stateIndex = j
+				break
+			}
+		}
+		if stateIndex > -1 {
+			data.Definitions[i].Version = state.Definitions[stateIndex].Version
+		} else {
+			data.Definitions[i].Version = types.Int64Null()
+		}
+	}
+}
 
 // End of section. //template:end updateVersions

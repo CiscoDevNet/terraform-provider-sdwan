@@ -22,6 +22,7 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -174,7 +175,7 @@ func (data *PolicyObjectAppProbeClass) updateFromBody(ctx context.Context, res g
 	for i := range data.Entries {
 		keys := [...]string{"forwardingClass"}
 		keyValues := [...]string{data.Entries[i].ForwardingClass.ValueString()}
-		keyValuesVariables := [...]string{""}
+		keyValuesVariables := [...]string{"", ""}
 
 		var r gjson.Result
 		res.Get(path + "entries").ForEach(
@@ -201,9 +202,9 @@ func (data *PolicyObjectAppProbeClass) updateFromBody(ctx context.Context, res g
 			},
 		)
 		for ci := range data.Entries[i].Map {
-			keys := [...]string{"color"}
-			keyValues := [...]string{data.Entries[i].Map[ci].Color.ValueString()}
-			keyValuesVariables := [...]string{""}
+			keys := [...]string{"color", "dscp"}
+			keyValues := [...]string{data.Entries[i].Map[ci].Color.ValueString(), strconv.FormatInt(data.Entries[i].Map[ci].Dscp.ValueInt64(), 10)}
+			keyValuesVariables := [...]string{"", ""}
 
 			var cr gjson.Result
 			r.Get("map").ForEach(

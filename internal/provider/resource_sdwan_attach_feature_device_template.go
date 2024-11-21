@@ -23,6 +23,8 @@ import (
 	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework/attr"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -34,6 +36,7 @@ import (
 
 // Ensure provider defined types fully satisfy framework interfaces
 var _ resource.Resource = &AttachFeatureDeviceTemplateResource{}
+var _ resource.ResourceWithImportState = &AttachFeatureDeviceTemplateResource{}
 
 func NewAttachFeatureDeviceTemplateResource() resource.Resource {
 	return &AttachFeatureDeviceTemplateResource{}
@@ -238,4 +241,42 @@ func (r *AttachFeatureDeviceTemplateResource) Delete(ctx context.Context, req re
 	tflog.Debug(ctx, fmt.Sprintf("%s: Delete finished successfully", state.Id.ValueString()))
 
 	resp.State.RemoveResource(ctx)
+}
+
+func (r *AttachFeatureDeviceTemplateResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	var _ AttachFeatureDeviceTemplateDevice
+
+	parts := strings.SplitN(req.ID, ",[", 2)
+	if len(parts) != 2 || !strings.HasSuffix(parts[1], "]") {
+		resp.Diagnostics.AddError(
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: templateId,[deviceId1,deviceId2,...]. Got: %q", req.ID),
+		)
+		return
+	}
+
+	templateId := parts[0]
+	deviceIds := strings.Split(strings.TrimSuffix(parts[1], "]"), ",")
+	if len(templateId) == 0 || len(deviceIds) == 0 {
+		resp.Diagnostics.AddError(
+			"Invalid Import Data", fmt.Sprintf("Template ID and at least one device ID must be provided"),
+		)
+		return
+	}
+
+	variables, diags := types.MapValue(types.StringType, map[string]attr.Value{})
+	if diags != nil {
+		resp.Diagnostics.Append(diags...)
+		return
+	}
+
+	var devices []AttachFeatureDeviceTemplateDevice
+	for _, deviceId := range deviceIds {
+		devices = append(devices, AttachFeatureDeviceTemplateDevice{
+			Id:        types.StringValue(deviceId),
+			Variables: variables,
+		})
+	}
+
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), templateId)...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("devices"), devices)...)
 }
