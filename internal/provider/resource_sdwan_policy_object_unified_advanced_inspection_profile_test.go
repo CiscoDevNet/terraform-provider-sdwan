@@ -78,18 +78,15 @@ resource "sdwan_policy_object_security_url_block_list" "test" {
   ]
 }
 
-resource "sdwan_policy_object_unified_url_filtering" "test" {
-  name                  = "TF_TEST_URL_FILTERING"
+resource "sdwan_policy_object_unified_url_filtering" "example" {
+  name                  = "Example"
   description           = "My Example"
   feature_profile_id    = sdwan_policy_object_feature_profile.test.id
   web_categories_action = "block"
   web_categories        = ["confirmed-spam-sources"]
   web_reputation        = "suspicious"
-  url_allow_list_id     = sdwan_policy_object_security_url_allow_list.test.id
-  url_block_list_id     = sdwan_policy_object_security_url_block_list.test.id
   block_page_action     = "text"
   block_page_contents   = "Access to the requested page has been denied. Please contact your Network Administrator"
-  redirect_url          = "www.example.com"
   enable_alerts         = true
   alerts                = ["blacklist"]
 }
@@ -107,14 +104,14 @@ resource "sdwan_policy_object_security_ips_signature" "test" {
 }
 
 resource "sdwan_policy_object_unified_intrusion_prevention" "test" {
-  name                  = "TF_TEST_INTRUSION"
-  description           = "My Example"
-  feature_profile_id    = sdwan_policy_object_feature_profile.test.id
-  signature_set         = "balanced"
-  inspection_mode       = "detection"
-  ips_signature_list_id = sdwan_policy_object_security_ips_signature.test.id
-  log_level             = "error"
-  custom_signature      = false
+  name                        = "TF_TEST_INTRUSION"
+  description                 = "My Example"
+  feature_profile_id          = sdwan_policy_object_feature_profile.test.id
+  signature_set               = "balanced"
+  inspection_mode             = "detection"
+  ips_signature_allow_list_id = sdwan_policy_object_security_ips_signature.test.id
+  log_level                   = "error"
+  custom_signature            = false
 }
 
 resource "sdwan_policy_object_unified_advanced_malware_protection" "test" {

@@ -14,10 +14,8 @@ attributes:
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_policy_object_feature_profile.test.id
   - model_name: sslEnable
-    tf_name: enable_ssl
     value: true
     value_type: "global"
-    example: true
 
   - model_name: expiredCertificate
     example: drop
@@ -25,6 +23,7 @@ attributes:
     example: drop
 
   - model_name: certificateRevocationStatus
+    tf_name: certificate_revocation_status
     example: ocsp
   - model_name: unknownStatus
     tf_name: unknown_revocation_status
@@ -36,7 +35,7 @@ attributes:
 
 
   - model_name: unsupportedProtocolVersions
-    example: drop
+    example: no-decrypt
   - model_name: unsupportedCipherSuites
     example: drop
   - model_name: failureMode
@@ -72,6 +71,7 @@ attributes:
     example: TLSv1.2
 
   - model_name: caTpLabel
+    value_type: "global"
     value: PROXY-SIGNING-CA
 
 test_prerequisites: |

@@ -37,7 +37,7 @@ func TestAccSdwanPolicyObjectUnifiedTLSSSLDecryptionProfileParcel(t *testing.T) 
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "untrusted_certificate", "drop"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "certificate_revocation_status", "ocsp"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "unknown_revocation_status", "decrypt"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "unsupported_protocol_versions", "drop"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "unsupported_protocol_versions", "no-decrypt"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "unsupported_cipher_suites", "drop"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "failure_mode", "close"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "default_ca_certificate_bundle", "true"))
@@ -84,7 +84,7 @@ func testAccSdwanPolicyObjectUnifiedTLSSSLDecryptionProfileParcelConfig_all() st
 	config += `	untrusted_certificate = "drop"` + "\n"
 	config += `	certificate_revocation_status = "ocsp"` + "\n"
 	config += `	unknown_revocation_status = "decrypt"` + "\n"
-	config += `	unsupported_protocol_versions = "drop"` + "\n"
+	config += `	unsupported_protocol_versions = "no-decrypt"` + "\n"
 	config += `	unsupported_cipher_suites = "drop"` + "\n"
 	config += `	failure_mode = "close"` + "\n"
 	config += `	default_ca_certificate_bundle = true` + "\n"

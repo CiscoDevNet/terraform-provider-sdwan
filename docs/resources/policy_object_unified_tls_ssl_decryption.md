@@ -23,7 +23,7 @@ resource "sdwan_policy_object_unified_tls_ssl_decryption" "example" {
   untrusted_certificate         = "drop"
   certificate_revocation_status = "ocsp"
   unknown_revocation_status     = "decrypt"
-  unsupported_protocol_versions = "drop"
+  unsupported_protocol_versions = "no-decrypt"
   unsupported_cipher_suites     = "drop"
   failure_mode                  = "close"
   default_ca_certificate_bundle = true

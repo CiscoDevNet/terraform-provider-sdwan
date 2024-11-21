@@ -164,7 +164,7 @@ func (data PolicyObjectUnifiedTLSSSLDecryption) toBody(ctx context.Context) stri
 		}
 	}
 	if true {
-		body, _ = sjson.Set(body, path+"caTpLabel.optionType", "default")
+		body, _ = sjson.Set(body, path+"caTpLabel.optionType", "global")
 		body, _ = sjson.Set(body, path+"caTpLabel.value", "PROXY-SIGNING-CA")
 	}
 	return body
