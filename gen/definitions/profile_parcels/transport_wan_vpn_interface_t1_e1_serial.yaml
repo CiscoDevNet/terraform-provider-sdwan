@@ -221,28 +221,28 @@ attributes:
     exclude_null: true
     example: 16
   - model_name: refId
-    tf_name: acl_ipv4_egress_reference_id
+    tf_name: acl_ipv4_egress_feature_id
     data_path: [aclQos, ipv4AclEgress]
     type: String
     ignore_mandatory: true
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_transport_ipv4_acl_feature.test.id
   - model_name: refId
-    tf_name: acl_ipv4_ingress_reference_id
+    tf_name: acl_ipv4_ingress_feature_id
     data_path: [aclQos, ipv4AclIngress]
     type: String
     exclude_test: true
     ignore_mandatory: true
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
   - model_name: refId
-    tf_name: acl_ipv6_egress_reference_id
+    tf_name: acl_ipv6_egress_feature_id
     data_path: [aclQos, ipv6AclEgress]
     type: String
     exclude_test: true
     ignore_mandatory: true
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
   - model_name: refId
-    tf_name: acl_ipv6_ingress_reference_id
+    tf_name: acl_ipv6_ingress_feature_id
     data_path: [aclQos, ipv6AclIngress]
     type: String
     ignore_mandatory: true

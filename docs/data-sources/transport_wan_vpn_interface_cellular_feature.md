@@ -31,10 +31,10 @@ data "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
 
 ### Read-Only
 
-- `acl_ipv4_egress_reference_id` (String)
-- `acl_ipv4_ingress_reference_id` (String)
-- `acl_ipv6_egress_reference_id` (String)
-- `acl_ipv6_ingress_reference_id` (String)
+- `acl_ipv4_egress_feature_id` (String)
+- `acl_ipv4_ingress_feature_id` (String)
+- `acl_ipv6_egress_feature_id` (String)
+- `acl_ipv6_ingress_feature_id` (String)
 - `arps` (Attributes List) Configure ARP entries (see [below for nested schema](#nestedatt--arps))
 - `bandwidth_downstream` (Number) Interface downstream bandwidth capacity, in kbps
 - `bandwidth_downstream_variable` (String) Variable name

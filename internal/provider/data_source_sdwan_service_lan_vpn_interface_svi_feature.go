@@ -220,19 +220,19 @@ func (d *ServiceLANVPNInterfaceSVIProfileParcelDataSource) Schema(ctx context.Co
 					},
 				},
 			},
-			"acl_ipv4_egress_reference_id": schema.StringAttribute{
+			"acl_ipv4_egress_feature_id": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"acl_ipv4_ingress_reference_id": schema.StringAttribute{
+			"acl_ipv4_ingress_feature_id": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"acl_ipv6_egress_reference_id": schema.StringAttribute{
+			"acl_ipv6_egress_feature_id": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"acl_ipv6_ingress_reference_id": schema.StringAttribute{
+			"acl_ipv6_ingress_feature_id": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
