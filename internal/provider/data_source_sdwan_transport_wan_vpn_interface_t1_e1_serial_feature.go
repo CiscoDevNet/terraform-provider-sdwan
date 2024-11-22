@@ -476,6 +476,22 @@ func (d *TransportWANVPNInterfaceT1E1SerialProfileParcelDataSource) Schema(ctx c
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"acl_ipv4_egress_reference_id": schema.StringAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+			},
+			"acl_ipv4_ingress_reference_id": schema.StringAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+			},
+			"acl_ipv6_egress_reference_id": schema.StringAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+			},
+			"acl_ipv6_ingress_reference_id": schema.StringAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+			},
 			"tcp_mss": schema.Int64Attribute{
 				MarkdownDescription: "TCP MSS on SYN packets, in bytes",
 				Computed:            true,

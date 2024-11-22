@@ -31,6 +31,10 @@ data "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
 
 ### Read-Only
 
+- `acl_ipv4_egress_reference_id` (String)
+- `acl_ipv4_ingress_reference_id` (String)
+- `acl_ipv6_egress_reference_id` (String)
+- `acl_ipv6_ingress_reference_id` (String)
 - `bandwidth` (Number) Interface bandwidth capacity, in kbps
 - `bandwidth_downstream` (Number) Interface downstream bandwidth capacity, in kbps
 - `bandwidth_downstream_variable` (String) Variable name
