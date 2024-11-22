@@ -12,19 +12,20 @@ description: |-
 - BREAKING CHANGE: Adds `gateway` attribute to `sdwan_transport_wan_vpn_feature` resource
 - Add `sdwan_transport_cellular_controller_feature` resource and data source
 - Add `sdwan_transport_cellular_profile_feature` resource and data source
-- Adds `sdwan_transport_wan_vpn_feature_associate_routing_bgp_feature` resource and data source
-- Adds `sdwan_transport_wan_vpn_feature_associate_routing_ospf_feature` resource and data source
-- Adds `sdwan_transport_wan_vpn_feature_associate_routing_ospfv3_ipv4_feature` resource and data source
-- Adds `sdwan_transport_wan_vpn_feature_associate_routing_ospfv3_ipv6_feature` resource and data source
-- Adds `sdwan_service_lan_vpn_feature_associate_routing_bgp_feature` resource and data source
-- Adds `sdwan_service_lan_vpn_feature_associate_routing_eigrp_feature` resource and data source
-- Adds `sdwan_service_lan_vpn_feature_associate_multicast_feature` resource and data source
-- Adds `sdwan_service_lan_vpn_feature_associate_routing_ospf_feature` resource and data source
-- Adds `sdwan_service_lan_vpn_feature_associate_routing_ospfv3_ipv4_feature` resource and data source
-- Adds `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_tracker_feature` resource and data source
-- Adds `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_tracker_group_feature` resource and data source
-- Adds `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_ipv6_tracker_feature` resource and data source
-- Adds `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_ipv6_tracker_group_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_feature_associate_routing_bgp_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_feature_associate_routing_ospf_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_feature_associate_routing_ospfv3_ipv4_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_feature_associate_routing_ospfv3_ipv6_feature` resource and data source
+- Add `sdwan_service_lan_vpn_feature_associate_routing_bgp_feature` resource and data source
+- Add `sdwan_service_lan_vpn_feature_associate_routing_eigrp_feature` resource and data source
+- Add `sdwan_service_lan_vpn_feature_associate_multicast_feature` resource and data source
+- Add `sdwan_service_lan_vpn_feature_associate_routing_ospf_feature` resource and data source
+- Add `sdwan_service_lan_vpn_feature_associate_routing_ospfv3_ipv4_feature` resource and data source
+- Add `sdwan_service_lan_vpn_feature_associate_routing_ospfv3_ipv6_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_tracker_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_tracker_group_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_ipv6_tracker_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_ipv6_tracker_group_feature` resource and data source
 
 ## 0.5.0
 
