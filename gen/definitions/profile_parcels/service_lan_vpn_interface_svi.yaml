@@ -79,31 +79,34 @@ attributes:
       example: 2001:0:0:1::0
     - model_name: vpn
       example: 1
-  # ==== ACL IPv4 and ACL IPv6 Not Supported By Provider (Being Worked On) ====
-  # - model_name: refId
-  #   tf_name: acl_ipv4_egress_reference_id
-  #   data_path: [aclQos, ipv4AclEgress]
-  #   type: String
-  #   exclude_test: true
-  #   example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-  # - model_name: refId
-  #   tf_name: acl_ipv4_ingress_reference_id
-  #   data_path: [aclQos, ipv4AclIngress]
-  #   type: String
-  #   exclude_test: true
-  #   example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-  # - model_name: refId
-  #   tf_name: acl_ipv6_egress_reference_id
-  #   data_path: [aclQos, ipv6AclEgress]
-  #   type: String
-  #   exclude_test: true
-  #   example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-  # - model_name: refId
-  #   tf_name: acl_ipv6_ingress_reference_id
-  #   data_path: [aclQos, ipv6AclIngress]
-  #   type: String
-  #   exclude_test: true
-  #   example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+  - model_name: refId
+    tf_name: acl_ipv4_egress_reference_id
+    data_path: [aclQos, ipv4AclEgress]
+    type: String
+    ignore_mandatory: true
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_ipv4_acl_feature.test.id
+  - model_name: refId
+    tf_name: acl_ipv4_ingress_reference_id
+    data_path: [aclQos, ipv4AclIngress]
+    type: String
+    ignore_mandatory: true
+    exclude_test: true
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+  - model_name: refId
+    tf_name: acl_ipv6_egress_reference_id
+    data_path: [aclQos, ipv6AclEgress]
+    type: String
+    ignore_mandatory: true
+    exclude_test: true
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+  - model_name: refId
+    tf_name: acl_ipv6_ingress_reference_id
+    data_path: [aclQos, ipv6AclIngress]
+    type: String
+    ignore_mandatory: true
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_ipv6_acl_feature.test.id
   - model_name: arp
     tf_name: arps
     attributes:
@@ -227,3 +230,71 @@ test_prerequisites: |
     endpoint_tracker_type = "static-route"
     tracker_type          = "endpoint"
   }
+
+  resource "sdwan_service_ipv4_acl_feature" "test" {
+    name               = "TF_TEST_ACL_IPV4"
+    description        = "Terraform Test"
+    feature_profile_id = sdwan_service_feature_profile.test.id
+    default_action     = "drop"
+    sequences = [
+      {
+        sequence_id   = 1
+        sequence_name = "AccessControlList1"
+        match_entries = [
+          {
+            dscps         = [16]
+            packet_length = 1500
+            protocols     = [1]
+            source_ports = [
+              {
+                port = 8000
+              }
+            ]
+            tcp_state = "syn"
+          }
+        ]
+        actions = [
+          {
+            accept_set_dscp     = 60
+            accept_counter_name = "COUNTER_1"
+            accept_log          = false
+            accept_set_next_hop = "1.2.3.4"
+          }
+        ]
+      }
+    ]
+  }
+
+  resource "sdwan_service_ipv6_acl_feature" "test" {
+    name               = "TF_TEST_ACL_IPV6"
+    description        = "Terraform Test"
+    feature_profile_id = sdwan_service_feature_profile.test.id
+      default_action     = "drop"
+      sequences = [
+        {
+          sequence_id   = 1
+          sequence_name = "AccessControlList1"
+          match_entries = [
+            {
+              next_header   = 10
+              packet_length = 1500
+              source_ports = [
+                {
+                  port = 8000
+                }
+              ]
+              tcp_state     = "syn"
+              traffic_class = [10]
+            }
+          ]
+          actions = [
+            {
+              accept_counter_name  = "COUNTER_1"
+              accept_log           = false
+              accept_set_next_hop  = "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+              accept_traffic_class = 10
+            }
+          ]
+        }
+      ]
+    }

@@ -220,6 +220,22 @@ func (d *ServiceLANVPNInterfaceSVIProfileParcelDataSource) Schema(ctx context.Co
 					},
 				},
 			},
+			"acl_ipv4_egress_reference_id": schema.StringAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+			},
+			"acl_ipv4_ingress_reference_id": schema.StringAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+			},
+			"acl_ipv6_egress_reference_id": schema.StringAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+			},
+			"acl_ipv6_ingress_reference_id": schema.StringAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+			},
 			"arps": schema.ListNestedAttribute{
 				MarkdownDescription: "Configure static ARP entries",
 				Computed:            true,

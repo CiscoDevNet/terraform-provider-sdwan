@@ -31,6 +31,10 @@ data "sdwan_service_lan_vpn_interface_svi_feature" "example" {
 
 ### Read-Only
 
+- `acl_ipv4_egress_reference_id` (String)
+- `acl_ipv4_ingress_reference_id` (String)
+- `acl_ipv6_egress_reference_id` (String)
+- `acl_ipv6_ingress_reference_id` (String)
 - `arp_timeout` (Number) Timeout value for dynamically learned ARP entries, <0..2678400> seconds
 - `arp_timeout_variable` (String) Variable name
 - `arps` (Attributes List) Configure static ARP entries (see [below for nested schema](#nestedatt--arps))

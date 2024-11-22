@@ -309,7 +309,6 @@ attributes:
     data_path: [aclQos]
     exclude_null: true
     example: 16
-  # ==== ACL IPv4 and ACL IPv6 Not Supported By Provider (Being Worked On) ====
   - model_name: refId
     tf_name: acl_ipv4_egress_reference_id
     data_path: [aclQos, ipv4AclEgress]

@@ -112,6 +112,74 @@ resource "sdwan_service_tracker_feature" "test" {
   endpoint_tracker_type = "static-route"
   tracker_type          = "endpoint"
 }
+
+resource "sdwan_service_ipv4_acl_feature" "test" {
+  name               = "TF_TEST_ACL_IPV4"
+  description        = "Terraform Test"
+  feature_profile_id = sdwan_service_feature_profile.test.id
+  default_action     = "drop"
+  sequences = [
+    {
+      sequence_id   = 1
+      sequence_name = "AccessControlList1"
+      match_entries = [
+        {
+          dscps         = [16]
+          packet_length = 1500
+          protocols     = [1]
+          source_ports = [
+            {
+              port = 8000
+            }
+          ]
+          tcp_state = "syn"
+        }
+      ]
+      actions = [
+        {
+          accept_set_dscp     = 60
+          accept_counter_name = "COUNTER_1"
+          accept_log          = false
+          accept_set_next_hop = "1.2.3.4"
+        }
+      ]
+    }
+  ]
+}
+
+resource "sdwan_service_ipv6_acl_feature" "test" {
+  name               = "TF_TEST_ACL_IPV6"
+  description        = "Terraform Test"
+  feature_profile_id = sdwan_service_feature_profile.test.id
+    default_action     = "drop"
+    sequences = [
+      {
+        sequence_id   = 1
+        sequence_name = "AccessControlList1"
+        match_entries = [
+          {
+            next_header   = 10
+            packet_length = 1500
+            source_ports = [
+              {
+                port = 8000
+              }
+            ]
+            tcp_state     = "syn"
+            traffic_class = [10]
+          }
+        ]
+        actions = [
+          {
+            accept_counter_name  = "COUNTER_1"
+            accept_log           = false
+            accept_set_next_hop  = "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+            accept_traffic_class = 10
+          }
+        ]
+      }
+    ]
+  }
 `
 
 // End of section. //template:end testPrerequisites
@@ -143,6 +211,8 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceSVIProfileParcelConfig() string
 	config += `	  address = "2001:0:0:1::0"` + "\n"
 	config += `	  vpn = 1` + "\n"
 	config += `	}]` + "\n"
+	config += `	acl_ipv4_egress_reference_id = sdwan_service_ipv4_acl_feature.test.id` + "\n"
+	config += `	acl_ipv6_ingress_reference_id = sdwan_service_ipv6_acl_feature.test.id` + "\n"
 	config += `	arps = [{` + "\n"
 	config += `	  ip_address = "1.2.3.4"` + "\n"
 	config += `	  mac_address = "00-B0-D0-63-C2-26"` + "\n"
