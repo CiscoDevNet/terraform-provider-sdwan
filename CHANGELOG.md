@@ -1,4 +1,4 @@
-## 0.5.1 (unreleased)
+## 0.5.1
 
 - Enhance update logic of policy objects, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/pull/360)
 - Fix issue with `sdwan_other_ucse_feature` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/320)
