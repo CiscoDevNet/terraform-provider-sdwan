@@ -3,7 +3,7 @@ name: Service LAN VPN Feature Associate Multicast Feature
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/lan/vpn/%s/routing/multicast/
 minimum_version: 20.12.0
 id_attribute: parcelId
-doc_category: Feature
+doc_category: Features
 test_tags: [SDWAN_2012]
 attributes:
   - tf_name: feature_profile_id

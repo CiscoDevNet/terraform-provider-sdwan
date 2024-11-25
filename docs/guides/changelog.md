@@ -7,7 +7,11 @@ description: |-
 
 # Changelog
 
-## 0.5.1 (unreleased)
+## 0.5.2 (unreleased)
+
+- Update documentation categories
+
+## 0.5.1
 
 - BREAKING CHANGE: Adds `gateway` attribute to `sdwan_transport_wan_vpn_feature` resource
 - Add `sdwan_transport_cellular_controller_feature` resource and data source

@@ -72,7 +72,7 @@ Read-Only:
 - `destination_ports` (Attributes List) Destination Port List (see [below for nested schema](#nestedatt--sequences--match_entries--destination_ports))
 - `dscps` (Set of Number) DSCP number
 - `icmp_messages` (Set of String) ICMP Message
-- `packet_length` (Number) Packet Length
+- `packet_length` (String) Packet Length
 - `protocols` (Set of Number) protocol number list with at least one item
 - `source_data_prefix` (String) Source Data IP Prefix
 - `source_data_prefix_list_id` (String)
