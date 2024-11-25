@@ -159,6 +159,74 @@ resource "sdwan_transport_wan_vpn_feature" "test" {
     }
   ]
 }
+
+resource "sdwan_transport_ipv4_acl_feature" "test" {
+  name               = "TF_TEST_ACL_IPV4"
+  description        = "Terraform Test"
+  feature_profile_id = sdwan_transport_feature_profile.test.id
+  default_action     = "drop"
+  sequences = [
+    {
+      sequence_id   = 1
+      sequence_name = "AccessControlList1"
+      match_entries = [
+        {
+          dscps         = [16]
+          packet_length = 1500
+          protocols     = [1]
+          source_ports = [
+            {
+              port = 8000
+            }
+          ]
+          tcp_state = "syn"
+        }
+      ]
+      actions = [
+        {
+          accept_set_dscp     = 60
+          accept_counter_name = "COUNTER_1"
+          accept_log          = false
+          accept_set_next_hop = "1.2.3.4"
+        }
+      ]
+    }
+  ]
+}
+
+resource "sdwan_transport_ipv6_acl_feature" "test" {
+  name               = "TF_TEST_ACL_IPV6"
+  description        = "Terraform Test"
+  feature_profile_id = sdwan_transport_feature_profile.test.id
+  default_action     = "drop"
+  sequences = [
+    {
+      sequence_id   = 1
+      sequence_name = "AccessControlList1"
+      match_entries = [
+        {
+          next_header   = 10
+          packet_length = 1500
+          source_ports = [
+            {
+              port = 8000
+            }
+          ]
+          tcp_state     = "syn"
+          traffic_class = [10]
+        }
+      ]
+      actions = [
+        {
+          accept_counter_name  = "COUNTER_1"
+          accept_log           = false
+          accept_set_next_hop  = "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+          accept_traffic_class = 10
+        }
+      ]
+    }
+  ]
+}
 `
 
 // End of section. //template:end testPrerequisites
@@ -220,6 +288,8 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelConfig
 	config += `	  preference = 4294967` + "\n"
 	config += `	  weight = 250` + "\n"
 	config += `	}]` + "\n"
+	config += `	acl_ipv4_egress_feature_id = sdwan_transport_ipv4_acl_feature.test.id` + "\n"
+	config += `	acl_ipv6_ingress_feature_id = sdwan_transport_ipv6_acl_feature.test.id` + "\n"
 	config += `	tcp_mss = 1460` + "\n"
 	config += `	mtu = 1500` + "\n"
 	config += `	ip_mtu = 1500` + "\n"

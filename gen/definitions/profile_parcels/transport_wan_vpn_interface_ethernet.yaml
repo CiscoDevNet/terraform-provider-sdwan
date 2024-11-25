@@ -419,9 +419,8 @@ attributes:
   - model_name: adaptiveQoS
     tf_name: qos_adaptive
     data_path: [aclQos]
-    exclude_test: true
     exclude_null: true
-    example: true
+    example: false
   - model_name: adaptPeriod
     tf_name: qos_adaptive_period
     data_path: [aclQos]
@@ -506,34 +505,36 @@ attributes:
   - model_name: shapingRate
     tf_name: qos_shaping_rate
     data_path: [aclQos]
-    exclude_test: true
     exclude_null: true
     example: 16
-  # ==== ACL IPv4 and ACL IPv6 Not Supported By Provider (Being Worked On) ====
-  # - model_name: refId
-  #   tf_name: acl_ipv4_egress_reference_id
-  #   data_path: [aclQos, ipv4AclEgress]
-  #   type: String
-  #   exclude_test: true
-  #   example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-  # - model_name: refId
-  #   tf_name: acl_ipv4_ingress_reference_id
-  #   data_path: [aclQos, ipv4AclIngress]
-  #   type: String
-  #   exclude_test: true
-  #   example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-  # - model_name: refId
-  #   tf_name: acl_ipv6_egress_reference_id
-  #   data_path: [aclQos, ipv6AclEgress]
-  #   type: String
-  #   exclude_test: true
-  #   example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-  # - model_name: refId
-  #   tf_name: acl_ipv6_ingress_reference_id
-  #   data_path: [aclQos, ipv6AclIngress]
-  #   type: String
-  #   exclude_test: true
-  #   example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+  - model_name: refId
+    tf_name: acl_ipv4_egress_feature_id
+    data_path: [aclQos, ipv4AclEgress]
+    type: String
+    ignore_mandatory: true
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_ipv4_acl_feature.test.id
+  - model_name: refId
+    tf_name: acl_ipv4_ingress_feature_id
+    data_path: [aclQos, ipv4AclIngress]
+    type: String
+    exclude_test: true
+    ignore_mandatory: true
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+  - model_name: refId
+    tf_name: acl_ipv6_egress_feature_id
+    data_path: [aclQos, ipv6AclEgress]
+    type: String
+    exclude_test: true
+    ignore_mandatory: true
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+  - model_name: refId
+    tf_name: acl_ipv6_ingress_feature_id
+    data_path: [aclQos, ipv6AclIngress]
+    type: String
+    ignore_mandatory: true
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_ipv6_acl_feature.test.id
   - model_name: arp
     tf_name: arps
     attributes:
@@ -652,6 +653,74 @@ test_prerequisites: |
         nat64_v4_pool_range_start = "203.0.113.50"
         nat64_v4_pool_range_end   = "203.0.113.100"
         nat64_v4_pool_overload    = false
+      }
+    ]
+  }
+
+  resource "sdwan_transport_ipv4_acl_feature" "test" {
+    name               = "TF_TEST_ACL_IPV4"
+    description        = "Terraform Test"
+    feature_profile_id = sdwan_transport_feature_profile.test.id
+    default_action     = "drop"
+    sequences = [
+      {
+        sequence_id   = 1
+        sequence_name = "AccessControlList1"
+        match_entries = [
+          {
+            dscps         = [16]
+            packet_length = 1500
+            protocols     = [1]
+            source_ports = [
+              {
+                port = 8000
+              }
+            ]
+            tcp_state = "syn"
+          }
+        ]
+        actions = [
+          {
+            accept_set_dscp     = 60
+            accept_counter_name = "COUNTER_1"
+            accept_log          = false
+            accept_set_next_hop = "1.2.3.4"
+          }
+        ]
+      }
+    ]
+  }
+
+  resource "sdwan_transport_ipv6_acl_feature" "test" {
+    name               = "TF_TEST_ACL_IPV6"
+    description        = "Terraform Test"
+    feature_profile_id = sdwan_transport_feature_profile.test.id
+    default_action     = "drop"
+    sequences = [
+      {
+        sequence_id   = 1
+        sequence_name = "AccessControlList1"
+        match_entries = [
+          {
+            next_header   = 10
+            packet_length = 1500
+            source_ports = [
+              {
+                port = 8000
+              }
+            ]
+            tcp_state     = "syn"
+            traffic_class = [10]
+          }
+        ]
+        actions = [
+          {
+            accept_counter_name  = "COUNTER_1"
+            accept_log           = false
+            accept_set_next_hop  = "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+            accept_traffic_class = 10
+          }
+        ]
       }
     ]
   }

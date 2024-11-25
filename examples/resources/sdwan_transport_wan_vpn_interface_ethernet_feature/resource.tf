@@ -90,6 +90,10 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
       source_vpn_id            = 4
     }
   ]
+  qos_adaptive                = false
+  qos_shaping_rate            = 16
+  acl_ipv4_egress_feature_id  = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  acl_ipv6_ingress_feature_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   arps = [
     {
       ip_address  = "1.2.3.4"
