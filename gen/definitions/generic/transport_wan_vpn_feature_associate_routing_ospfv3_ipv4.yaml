@@ -1,0 +1,97 @@
+---
+name: Transport WAN VPN Feature Associate Routing OSPFv3 IPv4 Feature
+rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/routing/ospfv3/ipv4/
+minimum_version: 20.12.0
+id_attribute: parcelId
+doc_category: Feature
+test_tags: [SDWAN_2012]
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_feature_profile.test.id
+  - tf_name: transport_wan_vpn_feature_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Transport WAN VPN Feature ID
+    example: 140331f6-5418-4755-a059-13c77eb96037
+    test_value: sdwan_transport_wan_vpn_feature.test.id
+  - model_name: parcelId
+    tf_name: transport_routing_ospfv3_ipv4_feature_id
+    type: String
+    mandatory: true
+    description: Transport Routing OSPFv4 IPv4 Feature ID
+    example: 140331f6-5418-4755-a059-13c77eb96037
+    test_value: sdwan_transport_routing_ospfv3_ipv4_feature.test.id
+
+test_prerequisites: |
+  resource "sdwan_transport_feature_profile" "test" {
+    name        = "TF_TEST"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_transport_wan_vpn_feature" "test" {
+    name               = "TF_TEST_WAN_VPN"
+    description        = "Terraform test"
+    feature_profile_id = sdwan_transport_feature_profile.test.id
+    vpn                = 0
+  }
+
+  resource "sdwan_transport_routing_ospfv3_ipv4_feature" "test" {
+    name                                      = "TF_TEST_OSPFV3"
+    description                               = "Terraform test"
+    feature_profile_id                        = sdwan_transport_feature_profile.test.id
+    router_id                                 = "1.2.3.4"
+    distance                                  = 110
+    distance_external                         = 110
+    distance_inter_area                       = 110
+    distance_intra_area                       = 110
+    reference_bandwidth                       = 101
+    rfc_1583_compatible                       = true
+    default_information_originate             = false
+    default_information_originate_always      = false
+    default_information_originate_metric      = 1
+    default_information_originate_metric_type = "type1"
+    spf_calculation_delay                     = 200
+    spf_initial_hold_time                     = 1000
+    spf_maximum_hold_time                     = 10000
+    filter                                    = false
+    redistributes = [
+      {
+        protocol = "nat-route"
+        nat_dia  = true
+      }
+    ]
+    router_lsa_action          = "on-startup"
+    router_lsa_on_startup_time = 30
+    areas = [
+      {
+        area_number = 1
+        area_type   = "stub"
+        interfaces = [
+          {
+            name                    = "GigabitEthernet2"
+            hello_interval          = 10
+            dead_interval           = 40
+            lsa_retransmit_interval = 5
+            cost                    = 10
+            network_type            = "broadcast"
+            passive_interface       = false
+            authentication_type     = "no-auth"
+          }
+        ]
+        ranges = [
+          {
+            ip_address   = "10.1.1.0"
+            subnet_mask  = "255.255.255.0"
+            cost         = 1
+            no_advertise = false
+          }
+        ]
+      }
+    ]
+  }
