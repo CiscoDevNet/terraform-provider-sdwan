@@ -157,7 +157,7 @@ func (r *CLIDeviceTemplateResource) Read(ctx context.Context, req resource.ReadR
 		return
 	}
 
-	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
+	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.ValueString()))
 
 	res, err := r.client.Get("/template/device/object/" + url.QueryEscape(state.Id.ValueString()))
 	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") || strings.Contains(res.Get("error.message").String(), "Invalid Profile Id") || strings.Contains(res.Get("error.message").String(), "Invalid feature Id") || strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
