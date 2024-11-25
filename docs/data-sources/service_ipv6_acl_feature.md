@@ -71,7 +71,7 @@ Read-Only:
 - `destination_ports` (Attributes List) Destination Port List (see [below for nested schema](#nestedatt--sequences--match_entries--destination_ports))
 - `icmp_messages` (Set of String) ICMP6 Message
 - `next_header` (Number) next header number
-- `packet_length` (Number) Packet Length
+- `packet_length` (String) Packet Length
 - `source_data_prefix` (String) Source Data IP Prefix
 - `source_data_prefix_list_id` (String)
 - `source_ports` (Attributes List) Source Port List (see [below for nested schema](#nestedatt--sequences--match_entries--source_ports))

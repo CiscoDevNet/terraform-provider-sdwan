@@ -31,6 +31,7 @@ attributes:
       - model_name: nextHeader
         example: 10
       - model_name: packetLength
+        type: StringInt64
         example: 1500
       - model_name: refId
         tf_name: source_data_prefix_list_id

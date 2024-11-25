@@ -135,7 +135,7 @@ func (r *ServiceIPv6ACLProfileParcelResource) Schema(ctx context.Context, req re
 											int64validator.AtMost(255),
 										},
 									},
-									"packet_length": schema.Int64Attribute{
+									"packet_length": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Packet Length").String,
 										Optional:            true,
 									},

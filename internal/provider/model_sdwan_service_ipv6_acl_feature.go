@@ -53,7 +53,7 @@ type ServiceIPv6ACLSequences struct {
 
 type ServiceIPv6ACLSequencesMatchEntries struct {
 	NextHeader                  types.Int64                                           `tfsdk:"next_header"`
-	PacketLength                types.Int64                                           `tfsdk:"packet_length"`
+	PacketLength                types.String                                          `tfsdk:"packet_length"`
 	SourceDataPrefixListId      types.String                                          `tfsdk:"source_data_prefix_list_id"`
 	SourceDataPrefix            types.String                                          `tfsdk:"source_data_prefix"`
 	SourcePorts                 []ServiceIPv6ACLSequencesMatchEntriesSourcePorts      `tfsdk:"source_ports"`
@@ -150,7 +150,11 @@ func (data ServiceIPv6ACL) toBody(ctx context.Context) string {
 					if !childItem.PacketLength.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "packetLength.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "packetLength.value", childItem.PacketLength.ValueInt64())
+							if numValue, err := strconv.Atoi(childItem.PacketLength.ValueString()); err != nil {
+								itemChildBody, _ = sjson.Set(itemChildBody, "packetLength.value", childItem.PacketLength.ValueString())
+							} else {
+								itemChildBody, _ = sjson.Set(itemChildBody, "packetLength.value", numValue)
+							}
 						}
 					}
 					if !childItem.SourceDataPrefixListId.IsNull() {
@@ -356,12 +360,12 @@ func (data *ServiceIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.NextHeader = types.Int64Value(va.Int())
 						}
 					}
-					cItem.PacketLength = types.Int64Null()
+					cItem.PacketLength = types.StringNull()
 
 					if t := cv.Get("packetLength.optionType"); t.Exists() {
 						va := cv.Get("packetLength.value")
 						if t.String() == "global" {
-							cItem.PacketLength = types.Int64Value(va.Int())
+							cItem.PacketLength = types.StringValue(va.String())
 						}
 					}
 					cItem.SourceDataPrefixListId = types.StringNull()
@@ -608,7 +612,7 @@ func (data *ServiceIPv6ACL) updateFromBody(ctx context.Context, res gjson.Result
 		}
 		for ci := range data.Sequences[i].MatchEntries {
 			keys := [...]string{"nextHeader", "packetLength", "sourceDataPrefix.sourceDataPrefixList.refId", "sourceDataPrefix.sourceIpPrefix", "destinationDataPrefix.destinationDataPrefixList.refId", "destinationDataPrefix.destinationIpPrefix", "tcp"}
-			keyValues := [...]string{strconv.FormatInt(data.Sequences[i].MatchEntries[ci].NextHeader.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].PacketLength.ValueInt64(), 10), data.Sequences[i].MatchEntries[ci].SourceDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].TcpState.ValueString()}
+			keyValues := [...]string{strconv.FormatInt(data.Sequences[i].MatchEntries[ci].NextHeader.ValueInt64(), 10), data.Sequences[i].MatchEntries[ci].PacketLength.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].TcpState.ValueString()}
 			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", ""}
 
 			var cr gjson.Result
@@ -643,12 +647,12 @@ func (data *ServiceIPv6ACL) updateFromBody(ctx context.Context, res gjson.Result
 					data.Sequences[i].MatchEntries[ci].NextHeader = types.Int64Value(va.Int())
 				}
 			}
-			data.Sequences[i].MatchEntries[ci].PacketLength = types.Int64Null()
+			data.Sequences[i].MatchEntries[ci].PacketLength = types.StringNull()
 
 			if t := cr.Get("packetLength.optionType"); t.Exists() {
 				va := cr.Get("packetLength.value")
 				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].PacketLength = types.Int64Value(va.Int())
+					data.Sequences[i].MatchEntries[ci].PacketLength = types.StringValue(va.String())
 				}
 			}
 			data.Sequences[i].MatchEntries[ci].SourceDataPrefixListId = types.StringNull()
