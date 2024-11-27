@@ -29,6 +29,8 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
       vpn     = 1
     }
   ]
+  acl_ipv4_egress_feature_id  = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  acl_ipv6_ingress_feature_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   arps = [
     {
       ip_address  = "1.2.3.4"

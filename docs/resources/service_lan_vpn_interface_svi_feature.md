@@ -46,6 +46,8 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
       vpn     = 1
     }
   ]
+  acl_ipv4_egress_feature_id  = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  acl_ipv6_ingress_feature_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   arps = [
     {
       ip_address  = "1.2.3.4"
@@ -114,6 +116,10 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
 
 ### Optional
 
+- `acl_ipv4_egress_feature_id` (String)
+- `acl_ipv4_ingress_feature_id` (String)
+- `acl_ipv6_egress_feature_id` (String)
+- `acl_ipv6_ingress_feature_id` (String)
 - `arp_timeout` (Number) Timeout value for dynamically learned ARP entries, <0..2678400> seconds
   - Range: `0`-`2678400`
   - Default value: `1200`

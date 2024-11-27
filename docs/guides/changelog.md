@@ -15,7 +15,10 @@ description: |-
 
 ## 0.5.1
 
+- Enhance update logic of policy objects, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/pull/360)
+- Fix issue with `sdwan_other_ucse_feature` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/320)
 - BREAKING CHANGE: Adds `gateway` attribute to `sdwan_transport_wan_vpn_feature` resource
+- Allow port ranges in ACL feature resources, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/364)
 - Add `sdwan_transport_cellular_controller_feature` resource and data source
 - Add `sdwan_transport_cellular_profile_feature` resource and data source
 - Add `sdwan_transport_wan_vpn_feature_associate_routing_bgp_feature` resource and data source

@@ -72,10 +72,12 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
       weight        = 250
     }
   ]
-  tcp_mss        = 1460
-  mtu            = 1500
-  ip_mtu         = 1500
-  tloc_extension = "tloc"
+  acl_ipv4_egress_feature_id  = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  acl_ipv6_ingress_feature_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  tcp_mss                     = 1460
+  mtu                         = 1500
+  ip_mtu                      = 1500
+  tloc_extension              = "tloc"
 }
 ```
 
@@ -89,6 +91,10 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
 
 ### Optional
 
+- `acl_ipv4_egress_feature_id` (String)
+- `acl_ipv4_ingress_feature_id` (String)
+- `acl_ipv6_egress_feature_id` (String)
+- `acl_ipv6_ingress_feature_id` (String)
 - `bandwidth` (Number) Interface bandwidth capacity, in kbps
   - Range: `1`-`200000000`
 - `bandwidth_downstream` (Number) Interface downstream bandwidth capacity, in kbps
