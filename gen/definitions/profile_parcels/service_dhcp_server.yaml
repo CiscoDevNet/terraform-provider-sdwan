@@ -1,0 +1,66 @@
+---
+name: Service DHCP Server
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/dhcp-server
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+parcel_type: feature
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_feature_profile.test.id
+  - model_name: networkAddress
+    data_path: [addressPool]
+    example: 1.2.3.4
+    test_value: '"1.2.3.4"'
+    minimum_test_value: '"1.2.3.4"'
+  - model_name: subnetMask
+    data_path: [addressPool]
+    example: 255.255.255.0
+    test_value: '"255.255.255.0"'
+    minimum_test_value: '"255.255.255.0"'
+  - model_name: exclude
+    example: 192.168.1.1
+  - model_name: leaseTime
+    example: 86400
+  - model_name: interfaceMtu
+    example: 65535
+  - model_name: domainName
+    example: example.com
+  - model_name: defaultGateway
+    example: 1.2.3.4
+  - model_name: dnsServers
+    example: 8.8.8.8
+  - model_name: tftpServers
+    example: 1.1.1.1
+  - model_name: staticLease
+    tf_name: static_leases
+    attributes: 
+    - model_name: macAddress
+      example: 01:02:03:04:05:06
+    - model_name: ip
+      tf_name: ip_address
+      example: 1.2.3.4
+  - model_name: optionCode
+    tf_name: option_codes
+    attributes:
+    - model_name: code
+      example: 250
+    - model_name: ascii
+      example: example
+      test_value: '"example"'
+    - model_name: hex
+      exclude_test: true
+      example: FE
+    - model_name: ip
+      exclude_test: true
+      example: 192.168.1.4
+
+test_prerequisites: |
+  resource "sdwan_service_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }

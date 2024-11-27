@@ -10,6 +10,7 @@ description: |-
 ## 0.5.2 (unreleased)
 
 - Update documentation categories
+- Add `sdwan_service_dhcp_server_feature` resource and data source
 
 ## 0.5.1
 
