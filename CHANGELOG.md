@@ -2,6 +2,7 @@
 
 - Update documentation categories
 - Add `sdwan_service_dhcp_server_feature` resource and data source
+- Add `sdwan_service_lan_vpn_interface_ethernet_feature_associate_dhcp_server_feature` resource and data source
 
 ## 0.5.1
 
