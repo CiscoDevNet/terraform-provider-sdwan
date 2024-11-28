@@ -3,7 +3,7 @@ name: Transport WAN VPN Feature Associate Routing BGP Feature
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/routing/bgp/
 minimum_version: 20.12.0
 id_attribute: parcelId
-doc_category: Features
+doc_category: Transport Features
 test_tags: [SDWAN_2012]
 attributes:
   - tf_name: feature_profile_id

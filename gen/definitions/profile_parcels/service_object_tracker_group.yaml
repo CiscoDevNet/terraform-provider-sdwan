@@ -4,6 +4,7 @@ minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 skip_minimum_test: true
 parcel_type: feature
+doc_category: Service Features
 attributes:
   - tf_name: feature_profile_id
     reference: true
