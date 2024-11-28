@@ -59,6 +59,7 @@ attributes:
   - model_name: mode
     tf_name: tunnel_qos_mode
     exclude_ignore: true
+    enum_values: ["hub"]
     example: spoke
   - model_name: value
     tf_name: tunnel_interface_color
