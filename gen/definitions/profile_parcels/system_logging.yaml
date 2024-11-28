@@ -4,7 +4,7 @@ rest_endpoint: /v1/feature-profile/sdwan/system/%v/logging
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 parcel_type: feature
-doc_category: System Features
+doc_category: Features - System
 attributes:
   - tf_name: feature_profile_id
     reference: true

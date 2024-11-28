@@ -4,7 +4,7 @@ rest_endpoint: /v1/feature-profile/sdwan/service/%v/lan/vpn/%s/interface/ipsec
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 parcel_type: feature
-doc_category: Service Features
+doc_category: Features - Service
 attributes:
   - tf_name: feature_profile_id
     reference: true

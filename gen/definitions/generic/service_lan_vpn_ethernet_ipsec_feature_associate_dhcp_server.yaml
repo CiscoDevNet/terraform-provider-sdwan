@@ -3,7 +3,7 @@ name: Service LAN VPN Interface IPSec Feature Associate DHCP Server Feature
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/lan/vpn/%s/interface/ipsec/%s/dhcp-server/
 minimum_version: 20.12.0
 id_attribute: parcelId
-doc_category: Service Features
+doc_category: Features - Service
 test_tags: [SDWAN_2012]
 attributes:
   - tf_name: feature_profile_id
