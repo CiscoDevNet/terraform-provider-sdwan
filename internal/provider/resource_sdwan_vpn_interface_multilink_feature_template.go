@@ -331,10 +331,10 @@ func (r *VPNInterfaceMultilinkFeatureTemplateResource) Schema(ctx context.Contex
 				Optional:            true,
 			},
 			"tunnel_qos_mode": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set tunnel QoS mode").AddStringEnumDescription("spoke").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set tunnel QoS mode").AddStringEnumDescription("hub", "spoke").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("spoke"),
+					stringvalidator.OneOf("hub", "spoke"),
 				},
 			},
 			"tunnel_qos_mode_variable": schema.StringAttribute{
