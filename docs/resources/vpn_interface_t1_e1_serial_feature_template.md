@@ -278,7 +278,7 @@ resource "sdwan_vpn_interface_t1_e1_serial_feature_template" "example" {
   - Default value: `5`
 - `tunnel_interface_vmanage_connection_preference_variable` (String) Variable name
 - `tunnel_qos_mode` (String) Set tunnel QoS mode
-  - Choices: `hub`, `spoke`
+  - Choices: `spoke`
 - `tunnel_qos_mode_variable` (String) Variable name
 - `write_rule` (String) Name of rewrite rule
 - `write_rule_variable` (String) Variable name

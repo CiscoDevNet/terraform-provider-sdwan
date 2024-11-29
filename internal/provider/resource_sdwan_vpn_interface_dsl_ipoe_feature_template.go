@@ -396,10 +396,10 @@ func (r *VPNInterfaceDSLIPoEFeatureTemplateResource) Schema(ctx context.Context,
 				Optional:            true,
 			},
 			"tunnel_qos_mode": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set tunnel QoS mode").AddStringEnumDescription("hub", "spoke").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set tunnel QoS mode").AddStringEnumDescription("spoke").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("hub", "spoke"),
+					stringvalidator.OneOf("spoke"),
 				},
 			},
 			"tunnel_qos_mode_variable": schema.StringAttribute{
