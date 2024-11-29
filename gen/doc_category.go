@@ -117,9 +117,10 @@ func main() {
 		for _, path := range docPaths {
 			extension := ""
 			category := ""
+
 			if profileParcelConfigs[i].ParcelType == "feature" {
 				extension = "_feature.md"
-				category = "Features"
+				category = profileParcelConfigs[i].DocCategory
 			} else if profileParcelConfigs[i].ParcelType == "policy" {
 				extension = "_policy.md"
 				category = "Policies"

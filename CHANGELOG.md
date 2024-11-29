@@ -1,3 +1,11 @@
+## 0.5.2 (unreleased)
+
+- Update documentation categories
+- Add `sdwan_service_dhcp_server_feature` resource and data source
+- Add `sdwan_service_lan_vpn_interface_ethernet_feature_associate_dhcp_server_feature` resource and data source
+- Add `sdwan_service_lan_vpn_interface_ipsec_feature_associate_dhcp_server_feature` resource and data source
+- Add `sdwan_service_lan_vpn_interface_svi_feature_associate_dhcp_server_feature` resource and data source
+
 ## 0.5.1
 
 - Enhance update logic of policy objects, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/pull/360)

@@ -110,7 +110,7 @@ func (d *ServiceIPv4ACLProfileParcelDataSource) Schema(ctx context.Context, req 
 										ElementType:         types.Int64Type,
 										Computed:            true,
 									},
-									"packet_length": schema.Int64Attribute{
+									"packet_length": schema.StringAttribute{
 										MarkdownDescription: "Packet Length",
 										Computed:            true,
 									},

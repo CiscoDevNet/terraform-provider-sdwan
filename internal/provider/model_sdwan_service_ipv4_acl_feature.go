@@ -53,7 +53,7 @@ type ServiceIPv4ACLSequences struct {
 
 type ServiceIPv4ACLSequencesMatchEntries struct {
 	Dscps                         types.Set                                             `tfsdk:"dscps"`
-	PacketLength                  types.Int64                                           `tfsdk:"packet_length"`
+	PacketLength                  types.String                                          `tfsdk:"packet_length"`
 	Protocols                     types.Set                                             `tfsdk:"protocols"`
 	IcmpMessages                  types.Set                                             `tfsdk:"icmp_messages"`
 	SourceDataPrefixListId        types.String                                          `tfsdk:"source_data_prefix_list_id"`
@@ -154,7 +154,11 @@ func (data ServiceIPv4ACL) toBody(ctx context.Context) string {
 					if !childItem.PacketLength.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "packetLength.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "packetLength.value", childItem.PacketLength.ValueInt64())
+							if numValue, err := strconv.Atoi(childItem.PacketLength.ValueString()); err != nil {
+								itemChildBody, _ = sjson.Set(itemChildBody, "packetLength.value", childItem.PacketLength.ValueString())
+							} else {
+								itemChildBody, _ = sjson.Set(itemChildBody, "packetLength.value", numValue)
+							}
 						}
 					}
 					if !childItem.Protocols.IsNull() {
@@ -372,12 +376,12 @@ func (data *ServiceIPv4ACL) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.Dscps = helpers.GetInt64Set(va.Array())
 						}
 					}
-					cItem.PacketLength = types.Int64Null()
+					cItem.PacketLength = types.StringNull()
 
 					if t := cv.Get("packetLength.optionType"); t.Exists() {
 						va := cv.Get("packetLength.value")
 						if t.String() == "global" {
-							cItem.PacketLength = types.Int64Value(va.Int())
+							cItem.PacketLength = types.StringValue(va.String())
 						}
 					}
 					cItem.Protocols = types.SetNull(types.Int64Type)
@@ -628,7 +632,7 @@ func (data *ServiceIPv4ACL) updateFromBody(ctx context.Context, res gjson.Result
 		}
 		for ci := range data.Sequences[i].MatchEntries {
 			keys := [...]string{"packetLength", "sourceDataPrefix.sourceDataPrefixList.refId", "sourceDataPrefix.sourceIpPrefix", "destinationDataPrefix.destinationDataPrefixList.refId", "destinationDataPrefix.destinationIpPrefix", "tcp"}
-			keyValues := [...]string{strconv.FormatInt(data.Sequences[i].MatchEntries[ci].PacketLength.ValueInt64(), 10), data.Sequences[i].MatchEntries[ci].SourceDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].TcpState.ValueString()}
+			keyValues := [...]string{data.Sequences[i].MatchEntries[ci].PacketLength.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].TcpState.ValueString()}
 			keyValuesVariables := [...]string{"", "", "", "", "", data.Sequences[i].MatchEntries[ci].SourceDataPrefixVariable.ValueString(), "", "", data.Sequences[i].MatchEntries[ci].DestinationDataPrefixVariable.ValueString(), "", ""}
 
 			var cr gjson.Result
@@ -663,12 +667,12 @@ func (data *ServiceIPv4ACL) updateFromBody(ctx context.Context, res gjson.Result
 					data.Sequences[i].MatchEntries[ci].Dscps = helpers.GetInt64Set(va.Array())
 				}
 			}
-			data.Sequences[i].MatchEntries[ci].PacketLength = types.Int64Null()
+			data.Sequences[i].MatchEntries[ci].PacketLength = types.StringNull()
 
 			if t := cr.Get("packetLength.optionType"); t.Exists() {
 				va := cr.Get("packetLength.value")
 				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].PacketLength = types.Int64Value(va.Int())
+					data.Sequences[i].MatchEntries[ci].PacketLength = types.StringValue(va.String())
 				}
 			}
 			data.Sequences[i].MatchEntries[ci].Protocols = types.SetNull(types.Int64Type)

@@ -5,6 +5,7 @@ minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 skip_minimum_test: true
 parcel_type: feature
+doc_category: Features - Transport
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -31,6 +32,7 @@ attributes:
       - model_name: nextHeader
         example: 10
       - model_name: packetLength
+        type: StringInt64
         example: 1500
       - model_name: refId
         tf_name: source_data_prefix_list_id

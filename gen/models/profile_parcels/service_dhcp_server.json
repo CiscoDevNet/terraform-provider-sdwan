@@ -1,0 +1,876 @@
+{
+  "request": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/service/dhcp-server/post/request_schema.json",
+    "title": "LAN VPN DHCP Server Parcel Schema",
+    "description": "LAN VPN DHCP Server profile parcel schema for POST request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "description": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "addressPool": {
+            "description": "Configure IPv4 prefix range of the DHCP address pool",
+            "type": "object",
+            "properties": {
+              "networkAddress": {
+                "description": "Network Address",
+                "type": "object",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "optionType": {
+                        "type": "string",
+                        "enum": ["variable"]
+                      },
+                      "value": {
+                        "type": "string",
+                        "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                        "minLength": 1,
+                        "maxLength": 64
+                      }
+                    },
+                    "required": ["optionType", "value"],
+                    "additionalProperties": false
+                  },
+                  {
+                    "properties": {
+                      "optionType": {
+                        "type": "string",
+                        "enum": ["global"]
+                      },
+                      "value": {
+                        "type": "string",
+                        "format": "ipv4"
+                      }
+                    },
+                    "required": ["optionType", "value"],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "subnetMask": {
+                "description": "Subnet Mask",
+                "type": "object",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "optionType": {
+                        "type": "string",
+                        "enum": ["variable"]
+                      },
+                      "value": {
+                        "type": "string",
+                        "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                        "minLength": 1,
+                        "maxLength": 64
+                      }
+                    },
+                    "required": ["optionType", "value"],
+                    "additionalProperties": false
+                  },
+                  {
+                    "properties": {
+                      "optionType": {
+                        "type": "string",
+                        "enum": ["global"]
+                      },
+                      "value": {
+                        "type": "string",
+                        "enum": [
+                          "255.255.255.255",
+                          "255.255.255.254",
+                          "255.255.255.252",
+                          "255.255.255.248",
+                          "255.255.255.240",
+                          "255.255.255.224",
+                          "255.255.255.192",
+                          "255.255.255.128",
+                          "255.255.255.0",
+                          "255.255.254.0",
+                          "255.255.252.0",
+                          "255.255.248.0",
+                          "255.255.240.0",
+                          "255.255.224.0",
+                          "255.255.192.0",
+                          "255.255.128.0",
+                          "255.255.0.0",
+                          "255.254.0.0",
+                          "255.252.0.0",
+                          "255.240.0.0",
+                          "255.224.0.0",
+                          "255.192.0.0",
+                          "255.128.0.0",
+                          "255.0.0.0",
+                          "254.0.0.0",
+                          "252.0.0.0",
+                          "248.0.0.0",
+                          "240.0.0.0",
+                          "224.0.0.0",
+                          "192.0.0.0",
+                          "128.0.0.0",
+                          "0.0.0.0"
+                        ]
+                      }
+                    },
+                    "required": ["optionType", "value"],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            },
+            "required": ["networkAddress", "subnetMask"],
+            "additionalProperties": false
+          },
+          "exclude": {
+            "description": "Configure IPv4 address to exclude from DHCP address pool",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "type": "array",
+                    "items": {
+                      "uniqueItems": true,
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "format": "ipv4"
+                        },
+                        {
+                          "pattern": "^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])-(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$"
+                        }
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["variable"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 64
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["default"]
+                  }
+                },
+                "required": ["optionType"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "leaseTime": {
+            "description": "Configure how long a DHCP-assigned IP address is valid",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "default": 86400,
+                    "minimum": 60,
+                    "maximum": 31536000,
+                    "type": "integer"
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["variable"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 64
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["default"]
+                  },
+                  "value": {
+                    "type": "integer",
+                    "minimum": 86400,
+                    "maximum": 86400
+                  },
+                  "required": ["optionType", "value"]
+                },
+                "additionalProperties": false
+              }
+            ]
+          },
+          "interfaceMtu": {
+            "description": "Set MTU on interface to DHCP client",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "minimum": 68,
+                    "maximum": 65535,
+                    "type": "integer"
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["variable"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 64
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["default"]
+                  }
+                },
+                "required": ["optionType"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "domainName": {
+            "description": "Set domain name client uses to resolve hostnames",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 32
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["variable"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 64
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["default"]
+                  }
+                },
+                "required": ["optionType"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "defaultGateway": {
+            "description": "Set IP address of default gateway",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "format": "ipv4"
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["variable"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 64
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["default"]
+                  }
+                },
+                "required": ["optionType"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "dnsServers": {
+            "description": "Configure one or more DNS server IP addresses",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "type": "array",
+                    "items": {
+                      "uniqueItems": true,
+                      "type": "string",
+                      "format": "ipv4",
+                      "additionalProperties": false,
+                      "maxItems": 8
+                    }
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["variable"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 64
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["default"]
+                  }
+                },
+                "required": ["optionType"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "tftpServers": {
+            "description": "Configure TFTP server IP addresses",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "type": "array",
+                    "items": {
+                      "uniqueItems": true,
+                      "type": "string",
+                      "format": "ipv4",
+                      "additionalProperties": false,
+                      "maxItems": 2
+                    }
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["variable"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 64
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["default"]
+                  }
+                },
+                "required": ["optionType"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "staticLease": {
+            "description": "Configure static IP addresses",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "macAddress": {
+                  "description": "Set MAC address of client",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "oneOf": [
+                            {
+                              "pattern": "^([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}$"
+                            },
+                            {
+                              "pattern": "^[0-9a-fA-F]{4}\\.[0-9a-fA-F]{4}\\.[0-9a-fA-F]{4}$"
+                            }
+                          ]
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 64
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "ip": {
+                  "description": "Set client’s static IP address",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "format": "ipv4"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 64
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "required": ["macAddress", "ip"],
+              "additionalProperties": false
+            }
+          },
+          "optionCode": {
+            "description": "Configure Options Code",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "description": "Set Option Code",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "minimum": 1,
+                          "maximum": 254,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 64
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "ascii": {
+                  "description": "Set ASCII value",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 255
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 64
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "hex": {
+                  "description": "Set HEX value",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "minLength": 2,
+                          "type": "string",
+                          "maxLength": 254,
+                          "pattern": "^([0-9A-Fa-f]{2})+$"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 64
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "ip": {
+                  "description": "Set ip address",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "type": "array",
+                          "items": {
+                            "uniqueItems": true,
+                            "type": "string",
+                            "format": "ipv4",
+                            "additionalProperties": false,
+                            "maxItems": 8
+                          }
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 64
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "required": ["code"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["addressPool"],
+        "additionalProperties": false
+      },
+      "metadata": {
+        "supportedDeviceTypes": [
+          "asr",
+          "c1100",
+          "c8000be",
+          "csr1000v",
+          "ir8100",
+          "ir8340",
+          "isr",
+          "ISRv",
+          "ir1101"
+        ]
+      },
+      "documentation": {
+        "description": "This is the documentation for POST request schema for LAN VPN DHCP Server profile parcel",
+        "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+        "details-2": "variable name should not be present if optionType value is NOT variable",
+        "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+        "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+        "examples": [
+          {
+            "data": {
+              "addressPool": {
+                "networkAddress": {
+                  "optionType": "global",
+                  "value": "10.0.0.0"
+                },
+                "subnetMask": {
+                  "optionType": "global",
+                  "value": "255.255.255.0"
+                }
+              },
+              "exclude": {
+                "optionType": "global",
+                "value": ["192.168.1.1-192.168.1.6", "192.168.1.1"]
+              },
+              "leaseTime": {
+                "optionType": "default",
+                "value": 86400
+              },
+              "interfaceMtu": {
+                "optionType": "global",
+                "value": 65535
+              },
+              "domainName": {
+                "optionType": "global",
+                "value": "domainName"
+              },
+              "defaultGateway": {
+                "optionType": "global",
+                "value": "192.168.1.1"
+              },
+              "dnsServers": {
+                "optionType": "global",
+                "value": ["192.168.1.2", "192.168.1.3"]
+              },
+              "tftpServers": {
+                "optionType": "global",
+                "value": ["192.168.1.4", "192.168.1.5"]
+              },
+              "staticLease": [
+                {
+                  "macAddress": {
+                    "optionType": "global",
+                    "value": "01:02:03:04:05:06"
+                  },
+                  "ip": {
+                    "optionType": "global",
+                    "value": "1.1.1.1"
+                  }
+                },
+                {
+                  "macAddress": {
+                    "optionType": "global",
+                    "value": "01-02-03-04-05:0F"
+                  },
+                  "ip": {
+                    "optionType": "global",
+                    "value": "1.1.1.2"
+                  }
+                }
+              ],
+              "optionCode": [
+                {
+                  "code": {
+                    "optionType": "global",
+                    "value": 1
+                  },
+                  "ascii": {
+                    "optionType": "global",
+                    "value": "example"
+                  }
+                },
+                {
+                  "code": {
+                    "optionType": "global",
+                    "value": 254
+                  },
+                  "hex": {
+                    "optionType": "global",
+                    "value": "FE"
+                  }
+                },
+                {
+                  "code": {
+                    "optionType": "global",
+                    "value": 250
+                  },
+                  "ip": {
+                    "optionType": "global",
+                    "value": ["192.168.1.4", "192.168.1.5"]
+                  }
+                }
+              ]
+            },
+            "name": "Default_DHCP_Server_Parcel"
+          }
+        ]
+      }
+    },
+    "required": ["data"],
+    "not": {
+      "required": ["metadata", "documentation"]
+    },
+    "additionalProperties": false
+  }
+}

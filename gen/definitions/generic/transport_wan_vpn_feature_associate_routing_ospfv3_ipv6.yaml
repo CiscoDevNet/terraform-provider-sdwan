@@ -3,7 +3,7 @@ name: Transport WAN VPN Feature Associate Routing OSPFv3 IPv6 Feature
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/routing/ospfv3/ipv6/
 minimum_version: 20.12.0
 id_attribute: parcelId
-doc_category: Feature
+doc_category: Features - Transport
 test_tags: [SDWAN_2012]
 attributes:
   - tf_name: feature_profile_id

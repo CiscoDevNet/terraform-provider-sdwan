@@ -932,7 +932,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				attr.Mandatory = true
 			}
 		}
-	} else if r.Get("type").String() == "array" && r.Get("items.type").String() == "object" && len(attr.Attributes) > 0 {
+	} else if r.Get("type").String() == "array" && r.Get("items.type").String() == "object" || r.Get("items.oneOf.0.type").String() == "object" && len(attr.Attributes) > 0 {
 		attr.Type = "List"
 		if r.Get("minItems").Exists() {
 			attr.MinList = r.Get("minItems").Int()
