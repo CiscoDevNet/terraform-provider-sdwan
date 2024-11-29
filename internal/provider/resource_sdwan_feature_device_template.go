@@ -125,7 +125,7 @@ func (r *FeatureDeviceTemplateResource) Schema(ctx context.Context, req resource
 							Optional:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Feature template type").AddStringEnumDescription("cisco_system", "cisco_logging", "cedge_aaa", "cisco_bfd", "cisco_omp", "cisco_security", "cisco_banner", "cisco_snmp", "cedge_global", "cli-template", "cisco_sig_credentials", "switchport", "cisco_thousandeyes", "cisco_vpn", "virtual-application-utd").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Feature template type").AddStringEnumDescription("cisco_system", "cisco_logging", "cedge_aaa", "cisco_bfd", "cisco_omp", "cisco_security", "cisco_banner", "cisco_snmp", "cedge_global", "cli-template", "cisco_sig_credentials", "switchport", "cisco_thousandeyes", "cisco_vpn", "virtual-application-utd", "cellular-cedge-controller").String,
 							Required:            true,
 						},
 						"sub_templates": schema.SetNestedAttribute{
@@ -142,7 +142,7 @@ func (r *FeatureDeviceTemplateResource) Schema(ctx context.Context, req resource
 										Optional:            true,
 									},
 									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Feature template type").AddStringEnumDescription("cisco_logging", "cisco_ntp", "cisco_ospf", "cisco_bgp", "cisco_vpn_interface", "cisco_vpn_interface_ipsec", "vpn-interface-svi", "cisco_secure_internet_gateway").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Feature template type").AddStringEnumDescription("cisco_logging", "cisco_ntp", "cisco_ospf", "cisco_bgp", "cisco_vpn_interface", "cisco_vpn_interface_gre", "cisco_vpn_interface_ipsec", "vpn-interface-svi", "vpn-cedge-interface-cellular", "cisco_secure_internet_gateway").String,
 										Required:            true,
 									},
 									"sub_templates": schema.SetNestedAttribute{
@@ -159,7 +159,7 @@ func (r *FeatureDeviceTemplateResource) Schema(ctx context.Context, req resource
 													Optional:            true,
 												},
 												"type": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Feature template type").AddStringEnumDescription("cisco_dhcp_server").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Feature template type").AddStringEnumDescription("cisco_dhcp_server", "cellular-cedge-profile").String,
 													Required:            true,
 												},
 											},

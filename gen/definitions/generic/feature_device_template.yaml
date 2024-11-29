@@ -104,6 +104,7 @@ attributes:
             cisco_thousandeyes,
             cisco_vpn,
             virtual-application-utd,
+            cellular-cedge-controller,
           ]
         ignore_enum: true
         description: Feature template type
@@ -137,8 +138,10 @@ attributes:
                 cisco_ospf,
                 cisco_bgp,
                 cisco_vpn_interface,
+                cisco_vpn_interface_gre,
                 cisco_vpn_interface_ipsec,
                 vpn-interface-svi,
+                vpn-cedge-interface-cellular,
                 cisco_secure_internet_gateway,
               ]
             ignore_enum: true
@@ -166,7 +169,7 @@ attributes:
                 tf_name: type
                 type: String
                 mandatory: true
-                enum_values: [cisco_dhcp_server]
+                enum_values: [cisco_dhcp_server, cellular-cedge-profile]
                 ignore_enum: true
                 description: Feature template type
                 example: cisco_vpn_interface
