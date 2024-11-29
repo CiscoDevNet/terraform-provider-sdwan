@@ -1,4 +1,4 @@
-## 0.5.2 (unreleased)
+## 0.5.2
 
 - Update documentation categories
 - Add `sdwan_service_dhcp_server_feature` resource and data source
