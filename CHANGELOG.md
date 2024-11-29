@@ -5,6 +5,8 @@
 - Add `sdwan_service_lan_vpn_interface_ethernet_feature_associate_dhcp_server_feature` resource and data source
 - Add `sdwan_service_lan_vpn_interface_ipsec_feature_associate_dhcp_server_feature` resource and data source
 - Add `sdwan_service_lan_vpn_interface_svi_feature_associate_dhcp_server_feature` resource and data source
+- Add `hub` option to `tunnel_qos_mode` attribute of `sdwan_cisco_vpn_interface_cellular_feature` resource
+- Add `cellular` template types to `sdwan_feature_device_template` resource
 
 ## 0.5.1
 
