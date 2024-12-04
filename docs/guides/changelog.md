@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.5.3 (unreleased)
+
+- Fix template rendering issue with `sdwan_cisco_vpn_interface_cellular_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/378)
+
 ## 0.5.2
 
 - Update documentation categories
