@@ -779,7 +779,7 @@ func (data *ServiceRoutingEIGRP) updateFromBody(ctx context.Context, res gjson.R
 	for i := range data.Interfaces {
 		keys := [...]string{"name", "shutdown"}
 		keyValues := [...]string{data.Interfaces[i].Name.ValueString(), strconv.FormatBool(data.Interfaces[i].Shutdown.ValueBool())}
-		keyValuesVariables := [...]string{data.Interfaces[i].NameVariable.ValueString(), data.Interfaces[i].ShutdownVariable.ValueString(), ""}
+		keyValuesVariables := [...]string{data.Interfaces[i].NameVariable.ValueString(), data.Interfaces[i].ShutdownVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "afInterface").ForEach(

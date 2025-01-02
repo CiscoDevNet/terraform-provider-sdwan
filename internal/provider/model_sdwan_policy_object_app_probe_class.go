@@ -175,7 +175,7 @@ func (data *PolicyObjectAppProbeClass) updateFromBody(ctx context.Context, res g
 	for i := range data.Entries {
 		keys := [...]string{"forwardingClass"}
 		keyValues := [...]string{data.Entries[i].ForwardingClass.ValueString()}
-		keyValuesVariables := [...]string{"", ""}
+		keyValuesVariables := [...]string{""}
 
 		var r gjson.Result
 		res.Get(path + "entries").ForEach(
