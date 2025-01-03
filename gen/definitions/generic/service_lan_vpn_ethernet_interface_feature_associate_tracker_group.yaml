@@ -1,6 +1,6 @@
 ---
-name: Service LAN VPN Interface Ethernet Feature Associate Tracker Feature
-rest_endpoint: /v1/feature-profile/sdwan/service/%v/lan/vpn/%s/interface/ethernet/%s/tracker/
+name: Service LAN VPN Interface Ethernet Feature Associate Tracker Group Feature
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/lan/vpn/%s/interface/ethernet/%s/trackergroup/
 minimum_version: 20.12.0
 id_attribute: parcelId
 doc_category: Features - Service
@@ -28,12 +28,12 @@ attributes:
     example: 140331f6-5418-4755-a059-13c77eb96037
     test_value: sdwan_service_lan_vpn_interface_ethernet_feature.test.id
   - model_name: parcelId
-    tf_name: service_tracker_feature_id
+    tf_name: service_tracker_group_feature_id
     type: String
     mandatory: true
-    description: Service Tracker Feature ID
+    description: Service Tracker Group Feature ID
     example: 140331f6-5418-4755-a059-13c77eb96037
-    test_value: sdwan_service_tracker_feature.test.id
+    test_value: sdwan_service_tracker_group_feature.test.id
 
 test_prerequisites: |
   resource "sdwan_service_feature_profile" "test" {
@@ -272,11 +272,11 @@ test_prerequisites: |
     ip_directed_broadcast                = false
   }
 
-  resource "sdwan_service_tracker_feature" "test" {
-    name                  = "Example"
-    description           = "My Example"
+  resource "sdwan_service_tracker_feature" "test-1" {
+    name                  = "TF_TEST_1"
+    description           = "Terraform test"
     feature_profile_id    = sdwan_service_feature_profile.test.id
-    tracker_name          = "TRACKER_1"
+    tracker_name          = "TRACKER_2"
     endpoint_api_url      = "google.com"
     endpoint_dns_name     = "google.com"
     endpoint_ip           = "1.2.3.4"
@@ -287,4 +287,36 @@ test_prerequisites: |
     threshold             = 300
     endpoint_tracker_type = "static-route"
     tracker_type          = "endpoint"
+  }
+
+  resource "sdwan_service_tracker_feature" "test-2" {
+    name                  = "TF_TEST_2"
+    description           = "Terraform test"
+    feature_profile_id    = sdwan_service_feature_profile.test.id
+    tracker_name          = "TRACKER_2"
+    endpoint_api_url      = "google.com"
+    endpoint_dns_name     = "google.com"
+    endpoint_ip           = "1.2.3.4"
+    protocol              = "tcp"
+    port                  = 123
+    interval              = 30
+    multiplier            = 3
+    threshold             = 300
+    endpoint_tracker_type = "static-route"
+    tracker_type          = "endpoint"
+  }
+
+  resource "sdwan_service_tracker_group_feature" "test" {
+    name               = "TF_TEST_TRACKER_GROUP"
+    description        = "Terraform test"
+    feature_profile_id = sdwan_service_feature_profile.test.id
+    tracker_elements = [
+      {
+        tracker_id = sdwan_service_tracker_feature.test-1.id
+      },
+      {
+        tracker_id = sdwan_service_tracker_feature.test-2.id
+      }
+    ]
+    tracker_boolean = "or"
   }
