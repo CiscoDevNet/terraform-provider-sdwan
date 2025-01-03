@@ -31,25 +31,25 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
-type TransportWANVPNInterfaceGREFeatureAssociateTrackerFeature struct {
-	Id                                   types.String `tfsdk:"id"`
-	FeatureProfileId                     types.String `tfsdk:"feature_profile_id"`
-	TransportWanVpnFeatureId             types.String `tfsdk:"transport_wan_vpn_feature_id"`
-	TransportWanVpnInterfaceGreFeatureId types.String `tfsdk:"transport_wan_vpn_interface_gre_feature_id"`
-	TransportTrackerFeatureId            types.String `tfsdk:"transport_tracker_feature_id"`
+type TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeature struct {
+	Id                                     types.String `tfsdk:"id"`
+	FeatureProfileId                       types.String `tfsdk:"feature_profile_id"`
+	TransportWanVpnFeatureId               types.String `tfsdk:"transport_wan_vpn_feature_id"`
+	TransportWanVpnInterfaceIpsecFeatureId types.String `tfsdk:"transport_wan_vpn_interface_ipsec_feature_id"`
+	TransportTrackerFeatureId              types.String `tfsdk:"transport_tracker_feature_id"`
 }
 
 // End of section. //template:end types
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getPath
-func (data TransportWANVPNInterfaceGREFeatureAssociateTrackerFeature) getPath() string {
-	return fmt.Sprintf("/v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/gre/%s/tracker/", url.QueryEscape(data.FeatureProfileId.ValueString()), url.QueryEscape(data.TransportWanVpnFeatureId.ValueString()), url.QueryEscape(data.TransportWanVpnInterfaceGreFeatureId.ValueString()))
+func (data TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeature) getPath() string {
+	return fmt.Sprintf("/v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/ipsec/%s/tracker/", url.QueryEscape(data.FeatureProfileId.ValueString()), url.QueryEscape(data.TransportWanVpnFeatureId.ValueString()), url.QueryEscape(data.TransportWanVpnInterfaceIpsecFeatureId.ValueString()))
 }
 
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data TransportWANVPNInterfaceGREFeatureAssociateTrackerFeature) toBody(ctx context.Context) string {
+func (data TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeature) toBody(ctx context.Context) string {
 	body := ""
 	if !data.TransportTrackerFeatureId.IsNull() {
 		body, _ = sjson.Set(body, "parcelId", data.TransportTrackerFeatureId.ValueString())
@@ -60,7 +60,7 @@ func (data TransportWANVPNInterfaceGREFeatureAssociateTrackerFeature) toBody(ctx
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeature) fromBody(ctx context.Context, res gjson.Result) {
+func (data *TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeature) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("parcelId"); value.Exists() {
 		data.TransportTrackerFeatureId = types.StringValue(value.String())
 	} else {
@@ -71,7 +71,7 @@ func (data *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeature) fromBody(
 // End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
-func (data *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeature) hasChanges(ctx context.Context, state *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeature) bool {
+func (data *TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeature) hasChanges(ctx context.Context, state *TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeature) bool {
 	hasChanges := false
 	if !data.FeatureProfileId.Equal(state.FeatureProfileId) {
 		hasChanges = true
@@ -79,7 +79,7 @@ func (data *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeature) hasChange
 	if !data.TransportWanVpnFeatureId.Equal(state.TransportWanVpnFeatureId) {
 		hasChanges = true
 	}
-	if !data.TransportWanVpnInterfaceGreFeatureId.Equal(state.TransportWanVpnInterfaceGreFeatureId) {
+	if !data.TransportWanVpnInterfaceIpsecFeatureId.Equal(state.TransportWanVpnInterfaceIpsecFeatureId) {
 		hasChanges = true
 	}
 	if !data.TransportTrackerFeatureId.Equal(state.TransportTrackerFeatureId) {

@@ -31,7 +31,7 @@ resource "sdwan_transport_wan_vpn_interface_gre_feature_associate_tracker_featur
 - `feature_profile_id` (String) Feature Profile ID
 - `transport_tracker_feature_id` (String) Transport Tracker Feature ID
 - `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
-- `transport_wan_vpn_interface_gre_feature_id` (String) Transport WAN VPN Interface Cellular Feature ID
+- `transport_wan_vpn_interface_gre_feature_id` (String) Transport WAN VPN Interface GRE Feature ID
 
 ### Read-Only
 

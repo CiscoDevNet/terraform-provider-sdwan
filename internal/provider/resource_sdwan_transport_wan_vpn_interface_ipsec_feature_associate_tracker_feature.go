@@ -41,26 +41,26 @@ import (
 // Section below is generated&owned by "gen/generator.go". //template:begin model
 
 // Ensure provider defined types fully satisfy framework interfaces
-var _ resource.Resource = &TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource{}
-var _ resource.ResourceWithImportState = &TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource{}
+var _ resource.Resource = &TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureResource{}
+var _ resource.ResourceWithImportState = &TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureResource{}
 
-func NewTransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource() resource.Resource {
-	return &TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource{}
+func NewTransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureResource() resource.Resource {
+	return &TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureResource{}
 }
 
-type TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource struct {
+type TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
 }
 
-func (r *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_transport_wan_vpn_interface_gre_feature_associate_tracker_feature"
+func (r *TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_transport_wan_vpn_interface_ipsec_feature_associate_tracker_feature"
 }
 
-func (r *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Transport WAN VPN Interface GRE Feature Associate Tracker Feature .").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Transport WAN VPN Interface IPSEC Feature Associate Tracker Feature .").AddMinimumVersionDescription("20.12.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -78,8 +78,8 @@ func (r *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource) Sche
 				MarkdownDescription: helpers.NewAttributeDescription("Transport WAN VPN Feature ID").String,
 				Required:            true,
 			},
-			"transport_wan_vpn_interface_gre_feature_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Transport WAN VPN Interface GRE Feature ID").String,
+			"transport_wan_vpn_interface_ipsec_feature_id": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Transport WAN VPN Interface IPSEC Feature ID").String,
 				Required:            true,
 			},
 			"transport_tracker_feature_id": schema.StringAttribute{
@@ -90,7 +90,7 @@ func (r *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource) Sche
 	}
 }
 
-func (r *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+func (r *TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -102,8 +102,8 @@ func (r *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource) Conf
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
-func (r *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan TransportWANVPNInterfaceGREFeatureAssociateTrackerFeature
+func (r *TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var plan TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeature
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -131,8 +131,8 @@ func (r *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource) Crea
 // End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (r *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state TransportWANVPNInterfaceGREFeatureAssociateTrackerFeature
+func (r *TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var state TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeature
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -163,8 +163,8 @@ func (r *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource) Read
 // End of section. //template:end read
 
 // Section below is generated&owned by "gen/generator.go". //template:begin update
-func (r *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state TransportWANVPNInterfaceGREFeatureAssociateTrackerFeature
+func (r *TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, state TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeature
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -209,8 +209,8 @@ func (r *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource) Upda
 // End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
-func (r *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state TransportWANVPNInterfaceGREFeatureAssociateTrackerFeature
+func (r *TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeature
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -235,7 +235,7 @@ func (r *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource) Dele
 // End of section. //template:end delete
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
-func (r *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 

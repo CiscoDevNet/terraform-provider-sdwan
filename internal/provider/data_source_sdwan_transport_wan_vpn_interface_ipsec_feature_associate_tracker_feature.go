@@ -35,26 +35,26 @@ import (
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
-	_ datasource.DataSource              = &TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureDataSource{}
-	_ datasource.DataSourceWithConfigure = &TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureDataSource{}
+	_ datasource.DataSource              = &TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureDataSource{}
+	_ datasource.DataSourceWithConfigure = &TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureDataSource{}
 )
 
-func NewTransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureDataSource() datasource.DataSource {
-	return &TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureDataSource{}
+func NewTransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureDataSource() datasource.DataSource {
+	return &TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureDataSource{}
 }
 
-type TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureDataSource struct {
+type TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureDataSource struct {
 	client *sdwan.Client
 }
 
-func (d *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_transport_wan_vpn_interface_gre_feature_associate_tracker_feature"
+func (d *TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_transport_wan_vpn_interface_ipsec_feature_associate_tracker_feature"
 }
 
-func (d *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (d *TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Transport WAN VPN Interface GRE Feature Associate Tracker Feature .",
+		MarkdownDescription: "This data source can read the Transport WAN VPN Interface IPSEC Feature Associate Tracker Feature .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -69,8 +69,8 @@ func (d *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureDataSource) Sc
 				MarkdownDescription: "Transport WAN VPN Feature ID",
 				Required:            true,
 			},
-			"transport_wan_vpn_interface_gre_feature_id": schema.StringAttribute{
-				MarkdownDescription: "Transport WAN VPN Interface GRE Feature ID",
+			"transport_wan_vpn_interface_ipsec_feature_id": schema.StringAttribute{
+				MarkdownDescription: "Transport WAN VPN Interface IPSEC Feature ID",
 				Required:            true,
 			},
 			"transport_tracker_feature_id": schema.StringAttribute{
@@ -81,7 +81,7 @@ func (d *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureDataSource) Sc
 	}
 }
 
-func (d *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
+func (d *TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -92,8 +92,8 @@ func (d *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureDataSource) Co
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (d *TransportWANVPNInterfaceGREFeatureAssociateTrackerFeatureDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config TransportWANVPNInterfaceGREFeatureAssociateTrackerFeature
+func (d *TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeatureDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	var config TransportWANVPNInterfaceIPSECFeatureAssociateTrackerFeature
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)

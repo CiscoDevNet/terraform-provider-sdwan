@@ -1,6 +1,6 @@
 ---
 name: Transport WAN VPN Interface GRE Feature Associate Tracker Feature
-rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/cellular/%s/tracker/
+rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/gre/%s/tracker/
 minimum_version: 20.12.0
 id_attribute: parcelId
 doc_category: Features - Transport
@@ -24,7 +24,7 @@ attributes:
     reference: true
     type: String
     mandatory: true
-    description: Transport WAN VPN Interface Cellular Feature ID
+    description: Transport WAN VPN Interface GRE Feature ID
     example: 140331f6-5418-4755-a059-13c77eb96037
     test_value: sdwan_transport_wan_vpn_interface_gre_feature.test.id
   - model_name: parcelId
