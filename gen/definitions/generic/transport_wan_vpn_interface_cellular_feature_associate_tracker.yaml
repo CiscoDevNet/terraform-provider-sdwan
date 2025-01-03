@@ -20,7 +20,6 @@ attributes:
     description: Transport WAN VPN Feature ID
     example: 140331f6-5418-4755-a059-13c77eb96037
     test_value: sdwan_transport_wan_vpn_feature.test.id
-
   - tf_name: transport_wan_vpn_interface_cellular_feature_id
     reference: true
     type: String
@@ -28,7 +27,6 @@ attributes:
     description: Transport WAN VPN Interface Cellular Feature ID
     example: 140331f6-5418-4755-a059-13c77eb96037
     test_value: sdwan_transport_wan_vpn_interface_cellular_feature.test.id
-
   - model_name: parcelId
     tf_name: transport_tracker_feature_id
     type: String
