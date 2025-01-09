@@ -173,7 +173,7 @@ func (data *PolicyObjectAppProbeClass) updateFromBody(ctx context.Context, res g
 	}
 	path := "payload.data."
 	for i := range data.Entries {
-		keys := [...]string{"forwardingClass"}
+		keys := [...]string{"map", "forwardingClass"}
 		keyValues := [...]string{data.Entries[i].ForwardingClass.ValueString()}
 		keyValuesVariables := [...]string{"", ""}
 

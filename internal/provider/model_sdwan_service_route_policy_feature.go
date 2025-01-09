@@ -722,7 +722,7 @@ func (data *ServiceRoutePolicy) updateFromBody(ctx context.Context, res gjson.Re
 			}
 		}
 		for ci := range data.Sequences[i].MatchEntries {
-			keys := [...]string{"asPathList.refId", "communityList.criteria", "communityList.expandedCommunityList.refId", "extCommunityList.refId", "bgpLocalPreference", "metric", "ompTag", "ospfTag", "ipv4Address.refId", "ipv4NextHop.refId", "ipv6Address.refId", "ipv6NextHop.refId"}
+			keys := [...]string{"asPathList.refId", "communityList.criteria", "communityList.standardCommunityList", "communityList.expandedCommunityList.refId", "extCommunityList.refId", "bgpLocalPreference", "metric", "ompTag", "ospfTag", "ipv4Address.refId", "ipv4NextHop.refId", "ipv6Address.refId", "ipv6NextHop.refId"}
 			keyValues := [...]string{data.Sequences[i].MatchEntries[ci].AsPathListId.ValueString(), data.Sequences[i].MatchEntries[ci].StandardCommunityListCriteria.ValueString(), data.Sequences[i].MatchEntries[ci].ExpandedCommunityListId.ValueString(), data.Sequences[i].MatchEntries[ci].ExtendedCommunityListId.ValueString(), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].BgpLocalPreference.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].Metric.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].OmpTag.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].OspfTag.ValueInt64(), 10), data.Sequences[i].MatchEntries[ci].Ipv4AddressPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].Ipv4NextHopPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].Ipv6AddressPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].Ipv6NextHopPrefixListId.ValueString()}
 			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", ""}
 

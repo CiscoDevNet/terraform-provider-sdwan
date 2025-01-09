@@ -611,7 +611,7 @@ func (data *TransportIPv6ACL) updateFromBody(ctx context.Context, res gjson.Resu
 			}
 		}
 		for ci := range data.Sequences[i].MatchEntries {
-			keys := [...]string{"nextHeader", "packetLength", "sourceDataPrefix.sourceDataPrefixList.refId", "sourceDataPrefix.sourceIpPrefix", "destinationDataPrefix.destinationDataPrefixList.refId", "destinationDataPrefix.destinationIpPrefix", "tcp"}
+			keys := [...]string{"nextHeader", "packetLength", "sourceDataPrefix.sourceDataPrefixList.refId", "sourceDataPrefix.sourceIpPrefix", "sourcePorts", "destinationDataPrefix.destinationDataPrefixList.refId", "destinationDataPrefix.destinationIpPrefix", "destinationPorts", "tcp"}
 			keyValues := [...]string{strconv.FormatInt(data.Sequences[i].MatchEntries[ci].NextHeader.ValueInt64(), 10), data.Sequences[i].MatchEntries[ci].PacketLength.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].TcpState.ValueString()}
 			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", ""}
 

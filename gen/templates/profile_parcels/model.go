@@ -528,9 +528,34 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 	{{- else if isNestedListSet .}}
 	{{- $list := (toGoName .TfName)}}
 	for i := range data.{{toGoName .TfName}} {
-		keys := [...]string{ {{$noId := not (hasId .Attributes)}}{{range .Attributes}}{{if or .Id $noId}}{{if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{end}}{{end}}{{end}} }
-		keyValues := [...]string{ {{$noId := not (hasId .Attributes)}}{{range .Attributes}}{{if or .Id $noId}}{{if eq .Type "Int64"}}strconv.FormatInt(data.{{$list}}[i].{{toGoName .TfName}}.ValueInt64(), 10), {{else if eq .Type "Bool"}}strconv.FormatBool(data.{{$list}}[i].{{toGoName .TfName}}.ValueBool()), {{else if or (eq .Type "String") (eq .Type "StringInt64")}}data.{{$list}}[i].{{toGoName .TfName}}.ValueString(), {{end}}{{end}}{{end}} }
-		keyValuesVariables := [...]string{ {{$noId := not (hasId .Attributes)}}{{range .Attributes}}{{if or .Id $noId}}{{if .Variable}}data.{{$list}}[i].{{toGoName .TfName}}Variable.ValueString(), {{else}}"", {{end}}{{end}}{{end}} }
+		keys := [...]string{
+			{{- $noId := not (hasId .Attributes)}}
+			{{- range .Attributes}}
+				{{- if or .Id $noId}}
+					{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64") (eq .Type "List")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",{{- end}}
+				{{- end}}
+			{{- end}}
+		}
+		keyValues := [...]string{
+			{{- $noId := not (hasId .Attributes)}}
+			{{- range .Attributes}}
+				{{- if or .Id $noId}}
+					{{- if eq .Type "Int64"}}strconv.FormatInt(data.{{$list}}[i].{{toGoName .TfName}}.ValueInt64(), 10),
+					{{- else if eq .Type "Bool"}}strconv.FormatBool(data.{{$list}}[i].{{toGoName .TfName}}.ValueBool()),
+					{{- else if or (eq .Type "String") (eq .Type "StringInt64")}}data.{{$list}}[i].{{toGoName .TfName}}.ValueString(),
+					{{- else if and (eq .Type "List") (eq .ElementType "String")}}strings.Join(data.{{$list}}[i].{{toGoName .TfName}}, ","),{{- end}}
+				{{- end}}
+			{{- end}}
+		}
+		keyValuesVariables := [...]string{
+			{{- $noId := not (hasId .Attributes)}}
+			{{- range .Attributes}}
+				{{- if or .Id $noId}}
+					{{- if .Variable}}data.{{$list}}[i].{{toGoName .TfName}}Variable.ValueString(),
+					{{- else}}"",{{- end}}
+				{{- end}}
+			{{- end}}
+		}
 
 		var r gjson.Result
 		res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}").ForEach(
@@ -580,9 +605,34 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 		{{- else if isNestedListSet .}}
 		{{- $clist := (toGoName .TfName)}}
 		for ci := range data.{{$list}}[i].{{toGoName .TfName}} {
-			keys := [...]string{ {{$noId := not (hasId .Attributes)}}{{range .Attributes}}{{if or .Id $noId}}{{if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{end}}{{end}}{{end}} }
-			keyValues := [...]string{ {{$noId := not (hasId .Attributes)}}{{range .Attributes}}{{if or .Id $noId}}{{if eq .Type "Int64"}}strconv.FormatInt(data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}.ValueInt64(), 10), {{else if eq .Type "Bool"}}strconv.FormatBool(data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}.ValueBool()), {{else if or (eq .Type "String") (eq .Type "StringInt64")}}data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}.ValueString(), {{end}}{{end}}{{end}} }
-			keyValuesVariables := [...]string{ {{$noId := not (hasId .Attributes)}}{{range .Attributes}}{{if or .Id $noId}}{{if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}Variable.ValueString(), {{else}}"", {{end}}{{end}}{{end}} }
+			keys := [...]string{ 
+				{{- $noId := not (hasId .Attributes)}}
+				{{- range .Attributes}}
+					{{- if or .Id $noId}}
+						{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64") (eq .Type "List")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",{{- end}}
+					{{- end}}
+				{{- end}}
+			}
+			keyValues := [...]string{
+				{{- $noId := not (hasId .Attributes)}}
+				{{- range .Attributes}}
+					{{- if or .Id $noId}}
+						{{- if eq .Type "Int64"}}strconv.FormatInt(data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}.ValueInt64(), 10),
+						{{- else if eq .Type "Bool"}}strconv.FormatBool(data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}.ValueBool()),
+						{{- else if or (eq .Type "String") (eq .Type "StringInt64")}}data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}.ValueString(),
+						{{- else if and (eq .Type "List") (eq .ElementType "String")}}strings.Join(data.{{$list}}[i].{{toGoName .TfName}}, ","),{{- end}}
+					{{- end}}
+				{{- end}}
+			}
+			keyValuesVariables := [...]string{
+				{{- $noId := not (hasId .Attributes)}}
+				{{- range .Attributes}}
+					{{- if or .Id $noId}}
+						{{- if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}Variable.ValueString(),
+						{{- else}}"",{{- end}}
+					{{- end}}
+				{{- end}}
+			}
 
 			var cr gjson.Result
 			r.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}").ForEach(
@@ -632,9 +682,34 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 			{{- else if isNestedListSet .}}
 			{{- $cclist := (toGoName .TfName)}}
 			for cci := range data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} {
-				keys := [...]string{ {{$noId := not (hasId .Attributes)}}{{range .Attributes}}{{if or .Id $noId}}{{if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{end}}{{end}}{{end}} }
-				keyValues := [...]string{ {{$noId := not (hasId .Attributes)}}{{range .Attributes}}{{if or .Id $noId}}{{if eq .Type "Int64"}}strconv.FormatInt(data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}.ValueInt64(), 10), {{else if eq .Type "Bool"}}strconv.FormatBool(data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}.ValueBool()), {{else if or (eq .Type "String") (eq .Type "StringInt64")}}data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}.ValueString(), {{end}}{{end}}{{end}} }
-				keyValuesVariables := [...]string{ {{$noId := not (hasId .Attributes)}}{{range .Attributes}}{{if or .Id $noId}}{{if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}Variable.ValueString(), {{else}}"", {{end}}{{end}}{{end}} }
+				keys := [...]string{
+					{{- $noId := not (hasId .Attributes)}}
+					{{- range .Attributes}}
+						{{- if or .Id $noId}}
+							{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64") (eq .Type "List")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",{{- end}}
+						{{- end}}
+					{{- end}} 
+				}
+				keyValues := [...]string{
+					{{- $noId := not (hasId .Attributes)}}
+					{{- range .Attributes}}
+						{{- if or .Id $noId}}
+							{{- if eq .Type "Int64"}}strconv.FormatInt(data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}.ValueInt64(), 10),
+							{{- else if eq .Type "Bool"}}strconv.FormatBool(data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}.ValueBool()),
+							{{- else if or (eq .Type "String") (eq .Type "StringInt64")}}data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}.ValueString(),
+							{{- else if and (eq .Type "List") (eq .ElementType "String")}}strings.Join(data.{{$list}}[i].{{toGoName .TfName}}, ","),{{- end}}
+						{{- end}}
+					{{- end}}
+				}
+				keyValuesVariables := [...]string{
+					{{- $noId := not (hasId .Attributes)}}
+					{{- range .Attributes}}
+						{{- if or .Id $noId}}
+							{{- if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}Variable.ValueString(),
+							{{- else}}"",{{- end}}
+						{{- end}}
+					{{- end}}
+				}
 
 				var ccr gjson.Result
 				cr.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}").ForEach(
