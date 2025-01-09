@@ -633,7 +633,7 @@ func (data *TransportIPv4ACL) updateFromBody(ctx context.Context, res gjson.Resu
 		for ci := range data.Sequences[i].MatchEntries {
 			keys := [...]string{"packetLength", "sourceDataPrefix.sourceDataPrefixList.refId", "sourceDataPrefix.sourceIpPrefix", "destinationDataPrefix.destinationDataPrefixList.refId", "destinationDataPrefix.destinationIpPrefix", "tcp"}
 			keyValues := [...]string{data.Sequences[i].MatchEntries[ci].PacketLength.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].TcpState.ValueString()}
-			keyValuesVariables := [...]string{"", "", "", "", "", data.Sequences[i].MatchEntries[ci].SourceDataPrefixVariable.ValueString(), "", "", data.Sequences[i].MatchEntries[ci].DestinationDataPrefixVariable.ValueString(), "", ""}
+			keyValuesVariables := [...]string{"", "", data.Sequences[i].MatchEntries[ci].SourceDataPrefixVariable.ValueString(), "", data.Sequences[i].MatchEntries[ci].DestinationDataPrefixVariable.ValueString(), ""}
 
 			var cr gjson.Result
 			r.Get("matchEntries").ForEach(
