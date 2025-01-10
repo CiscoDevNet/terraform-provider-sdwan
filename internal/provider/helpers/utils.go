@@ -26,6 +26,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 	"github.com/tidwall/gjson"
@@ -40,6 +41,22 @@ func Contains(s []string, str string) bool {
 		}
 	}
 	return false
+}
+
+func GetStringFromList(list basetypes.ListValue) types.String {
+	v := make([]string, len(list.Elements()))
+	for r := range list.Elements() {
+		v[r] = list.Elements()[r].String()
+	}
+	return types.StringValue("[" + strings.Join(v, ",") + "]")
+}
+
+func GetStringFromSet(set basetypes.SetValue) types.String {
+	v := make([]string, len(set.Elements()))
+	for r := range set.Elements() {
+		v[r] = set.Elements()[r].String()
+	}
+	return types.StringValue("[" + strings.Join(v, ",") + "]")
 }
 
 func GetStringList(result []gjson.Result) types.List {

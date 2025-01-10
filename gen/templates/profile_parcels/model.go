@@ -532,7 +532,10 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 			{{- $noId := not (hasId .Attributes)}}
 			{{- range .Attributes}}
 				{{- if or .Id $noId}}
-					{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64") (eq .Type "List")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",{{- end}}
+					{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",
+					{{- else if or (eq .Type "Set") (eq .Type "List")}}
+						{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",{{- end}}
+					{{- end}}
 				{{- end}}
 			{{- end}}
 		}
@@ -543,7 +546,11 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 					{{- if eq .Type "Int64"}}strconv.FormatInt(data.{{$list}}[i].{{toGoName .TfName}}.ValueInt64(), 10),
 					{{- else if eq .Type "Bool"}}strconv.FormatBool(data.{{$list}}[i].{{toGoName .TfName}}.ValueBool()),
 					{{- else if or (eq .Type "String") (eq .Type "StringInt64")}}data.{{$list}}[i].{{toGoName .TfName}}.ValueString(),
-					{{- else if and (eq .Type "List") (eq .ElementType "String")}}strings.Join(data.{{$list}}[i].{{toGoName .TfName}}, ","),{{- end}}
+					{{- else if (eq .Type "Set")}}
+						{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}helpers.GetStringFromSet(data.{{$list}}[i].{{toGoName .TfName}}).ValueString(),{{- end}}
+					{{- else if (eq .Type "List")}}
+						{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}helpers.GetStringFromList(data.{{$list}}[i].{{toGoName .TfName}}).ValueString(),{{- end}}
+					{{- end}}
 				{{- end}}
 			{{- end}}
 		}
@@ -609,7 +616,10 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 				{{- $noId := not (hasId .Attributes)}}
 				{{- range .Attributes}}
 					{{- if or .Id $noId}}
-						{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64") (eq .Type "List")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",{{- end}}
+						{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",
+						{{- else if or (eq .Type "Set") (eq .Type "List")}}
+							{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",{{- end}}
+						{{- end}}
 					{{- end}}
 				{{- end}}
 			}
@@ -620,7 +630,11 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 						{{- if eq .Type "Int64"}}strconv.FormatInt(data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}.ValueInt64(), 10),
 						{{- else if eq .Type "Bool"}}strconv.FormatBool(data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}.ValueBool()),
 						{{- else if or (eq .Type "String") (eq .Type "StringInt64")}}data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}.ValueString(),
-						{{- else if and (eq .Type "List") (eq .ElementType "String")}}strings.Join(data.{{$list}}[i].{{toGoName .TfName}}, ","),{{- end}}
+						{{- else if (eq .Type "Set")}}
+							{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}helpers.GetStringFromSet(data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}).ValueString(),{{- end}}
+						{{- else if (eq .Type "List")}}
+							{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}helpers.GetStringFromList(data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}).ValueString(),{{- end}}
+						{{- end}}
 					{{- end}}
 				{{- end}}
 			}
@@ -686,7 +700,10 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 					{{- $noId := not (hasId .Attributes)}}
 					{{- range .Attributes}}
 						{{- if or .Id $noId}}
-							{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64") (eq .Type "List")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",{{- end}}
+							{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",
+							{{- else if or (eq .Type "Set") (eq .Type "List")}}
+								{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",{{- end}}
+							{{- end}}
 						{{- end}}
 					{{- end}} 
 				}
@@ -697,7 +714,11 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 							{{- if eq .Type "Int64"}}strconv.FormatInt(data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}.ValueInt64(), 10),
 							{{- else if eq .Type "Bool"}}strconv.FormatBool(data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}.ValueBool()),
 							{{- else if or (eq .Type "String") (eq .Type "StringInt64")}}data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}.ValueString(),
-							{{- else if and (eq .Type "List") (eq .ElementType "String")}}strings.Join(data.{{$list}}[i].{{toGoName .TfName}}, ","),{{- end}}
+							{{- else if (eq .Type "Set")}}
+								{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}helpers.GetStringFromSet(data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}).ValueString(),{{- end}}
+							{{- else if (eq .Type "List")}}
+								{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}helpers.GetStringFromList(data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}).ValueString(),{{- end}}
+							{{- end}}
 						{{- end}}
 					{{- end}}
 				}

@@ -631,8 +631,8 @@ func (data *ServiceIPv4ACL) updateFromBody(ctx context.Context, res gjson.Result
 			}
 		}
 		for ci := range data.Sequences[i].MatchEntries {
-			keys := [...]string{"packetLength", "sourceDataPrefix.sourceDataPrefixList.refId", "sourceDataPrefix.sourceIpPrefix", "sourcePorts", "destinationDataPrefix.destinationDataPrefixList.refId", "destinationDataPrefix.destinationIpPrefix", "destinationPorts", "tcp"}
-			keyValues := [...]string{data.Sequences[i].MatchEntries[ci].PacketLength.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].TcpState.ValueString()}
+			keys := [...]string{"dscp", "packetLength", "protocol", "icmpMsg", "sourceDataPrefix.sourceDataPrefixList.refId", "sourceDataPrefix.sourceIpPrefix", "destinationDataPrefix.destinationDataPrefixList.refId", "destinationDataPrefix.destinationIpPrefix", "tcp"}
+			keyValues := [...]string{helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Dscps).ValueString(), data.Sequences[i].MatchEntries[ci].PacketLength.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Protocols).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].IcmpMessages).ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].TcpState.ValueString()}
 			keyValuesVariables := [...]string{"", "", "", "", "", data.Sequences[i].MatchEntries[ci].SourceDataPrefixVariable.ValueString(), "", "", data.Sequences[i].MatchEntries[ci].DestinationDataPrefixVariable.ValueString(), "", ""}
 
 			var cr gjson.Result
