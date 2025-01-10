@@ -558,7 +558,9 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 			{{- $noId := not (hasId .Attributes)}}
 			{{- range .Attributes}}
 				{{- if or .Id $noId}}
-					{{- if .Variable}}data.{{$list}}[i].{{toGoName .TfName}}Variable.ValueString(),
+					{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}
+						{{- if .Variable}}data.{{$list}}[i].{{toGoName .TfName}}Variable.ValueString(),
+						{{- else}}"",{{- end}}
 					{{- else}}"",{{- end}}
 				{{- end}}
 			{{- end}}
@@ -642,7 +644,9 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 				{{- $noId := not (hasId .Attributes)}}
 				{{- range .Attributes}}
 					{{- if or .Id $noId}}
-						{{- if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}Variable.ValueString(),
+						{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}
+							{{- if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}Variable.ValueString(),
+							{{- else}}"",{{- end}}
 						{{- else}}"",{{- end}}
 					{{- end}}
 				{{- end}}
@@ -726,7 +730,9 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 					{{- $noId := not (hasId .Attributes)}}
 					{{- range .Attributes}}
 						{{- if or .Id $noId}}
-							{{- if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}Variable.ValueString(),
+							{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}
+								{{- if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}Variable.ValueString(),
+								{{- else}}"",{{- end}}
 							{{- else}}"",{{- end}}
 						{{- end}}
 					{{- end}}
