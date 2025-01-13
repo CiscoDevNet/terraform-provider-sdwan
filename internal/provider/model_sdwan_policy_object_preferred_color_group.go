@@ -205,9 +205,9 @@ func (data *PolicyObjectPreferredColorGroup) updateFromBody(ctx context.Context,
 	}
 	path := "payload.data."
 	for i := range data.Entries {
-		keys := [...]string{"primaryPreference.pathPreference", "secondaryPreference.pathPreference", "tertiaryPreference.pathPreference"}
-		keyValues := [...]string{data.Entries[i].PrimaryPathPreference.ValueString(), data.Entries[i].SecondaryPathPreference.ValueString(), data.Entries[i].TertiaryPathPreference.ValueString()}
-		keyValuesVariables := [...]string{"", "", ""}
+		keys := [...]string{"primaryPreference.colorPreference", "primaryPreference.pathPreference", "secondaryPreference.colorPreference", "secondaryPreference.pathPreference", "tertiaryPreference.colorPreference", "tertiaryPreference.pathPreference"}
+		keyValues := [...]string{helpers.GetStringFromSet(data.Entries[i].PrimaryColorPreference).ValueString(), data.Entries[i].PrimaryPathPreference.ValueString(), helpers.GetStringFromSet(data.Entries[i].SecondaryColorPreference).ValueString(), data.Entries[i].SecondaryPathPreference.ValueString(), helpers.GetStringFromSet(data.Entries[i].TertiaryColorPreference).ValueString(), data.Entries[i].TertiaryPathPreference.ValueString()}
+		keyValuesVariables := [...]string{"", "", "", "", "", ""}
 
 		var r gjson.Result
 		res.Get(path + "entries").ForEach(
