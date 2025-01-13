@@ -66,14 +66,6 @@ resource "sdwan_transport_tracker_feature" "test" {
   description           = "My Example"
   feature_profile_id    = sdwan_transport_feature_profile.test.id
   tracker_name          = "TRACKER_1"
-  endpoint_api_url      = "google.com"
-  endpoint_dns_name     = "google.com"
-  endpoint_ip           = "1.2.3.4"
-  interval              = 30
-  multiplier            = 3
-  threshold             = 300
-  endpoint_tracker_type = "interface"
-  tracker_type          = "endpoint"
 }
 
 resource "sdwan_transport_wan_vpn_interface_cellular_feature" "test" {

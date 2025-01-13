@@ -58,130 +58,6 @@ resource "sdwan_service_lan_vpn_feature" "test" {
   name                       = "TF_TEST_SERVICE_LAN"
   description                = "Terraform test"
   feature_profile_id         = sdwan_service_feature_profile.test.id
-  vpn                        = 1
-  config_description         = "VPN1"
-  omp_admin_distance_ipv4    = 1
-  omp_admin_distance_ipv6    = 1
-  enable_sdwan_remote_access = false
-  primary_dns_address_ipv4   = "1.2.3.4"
-  secondary_dns_address_ipv4 = "2.3.4.5"
-  primary_dns_address_ipv6   = "2001:0:0:1::0"
-  secondary_dns_address_ipv6 = "2001:0:0:2::0"
-  host_mappings = [
-    {
-      host_name   = "HOSTMAPPING1"
-      list_of_ips = ["1.2.3.4"]
-    }
-  ]
-  ipv4_static_routes = [
-    {
-      network_address = "1.2.3.4"
-      subnet_mask     = "0.0.0.0"
-      next_hops = [
-        {
-          address                 = "1.2.3.4"
-          administrative_distance = 1
-        }
-      ]
-    }
-  ]
-  ipv6_static_routes = [
-    {
-      prefix = "2001:0:0:1::0/12"
-      next_hops = [
-        {
-          address                 = "2001:0:0:1::0"
-          administrative_distance = 1
-        }
-      ]
-    }
-  ]
-  services = [
-    {
-      service_type   = "FW"
-      ipv4_addresses = ["1.2.3.4"]
-      tracking       = true
-    }
-  ]
-  service_routes = [
-    {
-      network_address = "1.2.3.4"
-      subnet_mask     = "0.0.0.0"
-      service         = "SIG"
-      vpn             = 0
-    }
-  ]
-  gre_routes = [
-    {
-      network_address = "1.2.3.4"
-      subnet_mask     = "0.0.0.0"
-      interface       = ["gre01"]
-      vpn             = 0
-    }
-  ]
-  ipsec_routes = [
-    {
-      network_address = "1.2.3.4"
-      subnet_mask     = "0.0.0.0"
-      interface       = ["ipsec01"]
-    }
-  ]
-  nat_pools = [
-    {
-      nat_pool_name = 1
-      prefix_length = 3
-      range_start   = "1.2.3.4"
-      range_end     = "2.3.4.5"
-      overload      = true
-      direction     = "inside"
-    }
-  ]
-  nat_port_forwards = [
-    {
-      nat_pool_name        = 2
-      source_port          = 122
-      translate_port       = 330
-      source_ip            = "1.2.3.4"
-      translated_source_ip = "2.3.4.5"
-      protocol             = "TCP"
-    }
-  ]
-  static_nats = [
-    {
-      nat_pool_name        = 3
-      source_ip            = "1.2.3.4"
-      translated_source_ip = "2.3.4.5"
-      static_nat_direction = "inside"
-    }
-  ]
-  nat_64_v4_pools = [
-    {
-      name        = "NATPOOL1"
-      range_start = "1.2.3.4"
-      range_end   = "2.3.4.5"
-      overload    = false
-    }
-  ]
-  ipv4_import_route_targets = [
-    {
-      route_target = "1.1.1.3:200"
-    }
-  ]
-  ipv4_export_route_targets = [
-    {
-      route_target = "1.1.1.3:200"
-    }
-  ]
-  ipv6_import_route_targets = [
-    {
-      route_target = "1.1.1.3:200"
-    }
-  ]
-  ipv6_export_route_targets = [
-    {
-      route_target = "1.1.1.3:200"
-    }
-  ]
 }
 
 resource "sdwan_service_lan_vpn_interface_svi_feature" "test" {
@@ -189,80 +65,9 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "test" {
   description                = "Terraform test"
   feature_profile_id         = sdwan_service_feature_profile.test.id
   service_lan_vpn_feature_id = sdwan_service_lan_vpn_feature.test.id
-  shutdown                   = false
   interface_name             = "Vlan1"
-  interface_description      = "SVI"
-  interface_mtu              = 1500
-  ip_mtu                     = 1500
   ipv4_address               = "1.2.3.4"
   ipv4_subnet_mask           = "0.0.0.0"
-  ipv4_secondary_addresses = [
-    {
-      address          = "2.3.4.5"
-      ipv4_subnet_mask = "0.0.0.0"
-    }
-  ]
-  ipv4_dhcp_helpers = ["4.5.6.7"]
-  ipv6_address      = "2001:0:0:1::0/32"
-  ipv6_secondary_addresses = [
-    {
-      address = "::2/32"
-    }
-  ]
-  ipv6_dhcp_helpers = [
-    {
-      address = "2001:0:0:1::0"
-      vpn     = 1
-    }
-  ]
-  arps = [
-    {
-      ip_address  = "1.2.3.4"
-      mac_address = "00-B0-D0-63-C2-26"
-    }
-  ]
-  ipv4_vrrps = [
-    {
-      group_id    = 1
-      priority    = 100
-      timer       = 1000
-      track_omp   = false
-      prefix_list = "prefix"
-      address     = "1.2.3.4"
-      secondary_addresses = [
-        {
-          address = "2.3.4.5"
-        }
-      ]
-      tloc_prefix_change       = true
-      tloc_prefix_change_value = 100
-    }
-  ]
-  ipv6_vrrps = [
-    {
-      group_id          = 1
-      priority          = 100
-      timer             = 1000
-      track_omp         = false
-      track_prefix_list = "1"
-      addresses = [
-        {
-          link_local_address = "1::1"
-          global_address     = "1::1/24"
-        }
-      ]
-      secondary_addresses = [
-        {
-          prefix = "::20/32"
-        }
-      ]
-    }
-  ]
-  enable_dhcpv6         = false
-  tcp_mss               = 1024
-  arp_timeout           = 1200
-  ip_directed_broadcast = false
-  icmp_redirect_disable = true
 }
 
 resource "sdwan_service_dhcp_server_feature" "test" {
@@ -271,25 +76,6 @@ resource "sdwan_service_dhcp_server_feature" "test" {
   feature_profile_id = sdwan_service_feature_profile.test.id
   network_address    = "1.2.3.4"
   subnet_mask        = "255.255.255.0"
-  exclude            = ["192.168.1.1"]
-  lease_time         = 86400
-  interface_mtu      = 65535
-  domain_name        = "example.com"
-  default_gateway    = "1.2.3.4"
-  dns_servers        = ["8.8.8.8"]
-  tftp_servers       = ["1.1.1.1"]
-  static_leases = [
-    {
-      mac_address = "01:02:03:04:05:06"
-      ip_address  = "1.2.3.4"
-    }
-  ]
-  option_codes = [
-    {
-      code  = 250
-      ascii = "example"
-    }
-  ]
 }
 `
 
