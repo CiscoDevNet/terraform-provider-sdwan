@@ -724,7 +724,7 @@ func (data *ServiceRoutePolicy) updateFromBody(ctx context.Context, res gjson.Re
 		for ci := range data.Sequences[i].MatchEntries {
 			keys := [...]string{"asPathList.refId", "communityList.criteria", "communityList.expandedCommunityList.refId", "extCommunityList.refId", "bgpLocalPreference", "metric", "ompTag", "ospfTag", "ipv4Address.refId", "ipv4NextHop.refId", "ipv6Address.refId", "ipv6NextHop.refId"}
 			keyValues := [...]string{data.Sequences[i].MatchEntries[ci].AsPathListId.ValueString(), data.Sequences[i].MatchEntries[ci].StandardCommunityListCriteria.ValueString(), data.Sequences[i].MatchEntries[ci].ExpandedCommunityListId.ValueString(), data.Sequences[i].MatchEntries[ci].ExtendedCommunityListId.ValueString(), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].BgpLocalPreference.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].Metric.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].OmpTag.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].OspfTag.ValueInt64(), 10), data.Sequences[i].MatchEntries[ci].Ipv4AddressPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].Ipv4NextHopPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].Ipv6AddressPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].Ipv6NextHopPrefixListId.ValueString()}
-			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", ""}
+			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", ""}
 
 			var cr gjson.Result
 			r.Get("matchEntries").ForEach(
@@ -888,7 +888,7 @@ func (data *ServiceRoutePolicy) updateFromBody(ctx context.Context, res gjson.Re
 		for ci := range data.Sequences[i].Actions {
 			keys := [...]string{"accept.setAsPath.prepend", "accept.setCommunity.additive", "accept.setCommunity.community", "accept.setLocalPreference", "accept.setMetric", "accept.setMetricType", "accept.setOmpTag", "accept.setOrigin", "accept.setOspfTag", "accept.setWeight", "accept.setIpv4NextHop", "accept.setIpv6NextHop"}
 			keyValues := [...]string{helpers.GetStringFromSet(data.Sequences[i].Actions[ci].AsPathPrepend).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].CommunityAdditive.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].Community).ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].LocalPreference.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].Actions[ci].Metric.ValueInt64(), 10), data.Sequences[i].Actions[ci].MetricType.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].OmpTag.ValueInt64(), 10), data.Sequences[i].Actions[ci].Origin.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].OspfTag.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].Actions[ci].Weight.ValueInt64(), 10), data.Sequences[i].Actions[ci].Ipv4NextHop.ValueString(), data.Sequences[i].Actions[ci].Ipv6NextHop.ValueString()}
-			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", ""}
+			keyValuesVariables := [...]string{"", "", data.Sequences[i].Actions[ci].CommunityVariable.ValueString(), "", "", "", "", "", "", "", "", ""}
 
 			var cr gjson.Result
 			r.Get("actions").ForEach(

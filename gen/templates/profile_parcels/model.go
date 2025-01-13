@@ -558,10 +558,15 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 			{{- $noId := not (hasId .Attributes)}}
 			{{- range .Attributes}}
 				{{- if or .Id $noId}}
-					{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}
+					{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64") (eq .Type "Set")}}
 						{{- if .Variable}}data.{{$list}}[i].{{toGoName .TfName}}Variable.ValueString(),
 						{{- else}}"",{{- end}}
-					{{- else}}"",{{- end}}
+					{{- else if or (eq .Type "Set") (eq .Type "List")}}
+						{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}
+							{{- if .Variable}}data.{{$list}}[i].{{toGoName .TfName}}Variable.ValueString(),
+							{{- else}}"",{{- end}}
+						{{- end}}
+					{{- end}}
 				{{- end}}
 			{{- end}}
 		}
@@ -647,7 +652,12 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 						{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}
 							{{- if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}Variable.ValueString(),
 							{{- else}}"",{{- end}}
-						{{- else}}"",{{- end}}
+						{{- else if or (eq .Type "Set") (eq .Type "List")}}
+							{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}
+								{{- if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}Variable.ValueString(),
+								{{- else}}"",{{- end}}
+							{{- end}}
+						{{- end}}
 					{{- end}}
 				{{- end}}
 			}
@@ -733,7 +743,12 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 							{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}
 								{{- if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}Variable.ValueString(),
 								{{- else}}"",{{- end}}
-							{{- else}}"",{{- end}}
+							{{- else if or (eq .Type "Set") (eq .Type "List")}}
+								{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}
+									{{- if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}Variable.ValueString(),
+									{{- else}}"",{{- end}}
+								{{- end}}
+							{{- end}}
 						{{- end}}
 					{{- end}}
 				}

@@ -674,7 +674,7 @@ func (data *ServiceDHCPServer) updateFromBody(ctx context.Context, res gjson.Res
 	for i := range data.OptionCodes {
 		keys := [...]string{"code", "ascii", "hex", "ip"}
 		keyValues := [...]string{strconv.FormatInt(data.OptionCodes[i].Code.ValueInt64(), 10), data.OptionCodes[i].Ascii.ValueString(), data.OptionCodes[i].Hex.ValueString(), helpers.GetStringFromSet(data.OptionCodes[i].Ip).ValueString()}
-		keyValuesVariables := [...]string{data.OptionCodes[i].CodeVariable.ValueString(), data.OptionCodes[i].AsciiVariable.ValueString(), data.OptionCodes[i].HexVariable.ValueString(), ""}
+		keyValuesVariables := [...]string{data.OptionCodes[i].CodeVariable.ValueString(), data.OptionCodes[i].AsciiVariable.ValueString(), data.OptionCodes[i].HexVariable.ValueString(), data.OptionCodes[i].IpVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "optionCode").ForEach(
