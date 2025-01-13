@@ -10,6 +10,7 @@ description: |-
 ## 0.5.3 (unreleased)
 
 - Fix template rendering issue with `sdwan_cisco_vpn_interface_cellular_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/378)
+- Fix reading of lists in various features, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/380), [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/381)
 - Add `sdwan_transport_wan_vpn_interface_cellular_feature_associate_tracker_feature` resource and data source
 - Add `sdwan_transport_wan_vpn_interface_cellular_feature_associate_tracker_group_feature` resource and data source
 - Add `sdwan_transport_wan_vpn_interface_gre_feature_associate_tracker_feature` resource and data source
