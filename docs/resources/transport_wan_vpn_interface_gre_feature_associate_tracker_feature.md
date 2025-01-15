@@ -36,6 +36,7 @@ resource "sdwan_transport_wan_vpn_interface_gre_feature_associate_tracker_featur
 ### Read-Only
 
 - `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 ## Import
 

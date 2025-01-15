@@ -34,6 +34,7 @@ resource "sdwan_service_lan_vpn_feature_associate_routing_ospfv3_ipv4_feature" "
 ### Read-Only
 
 - `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 ## Import
 

@@ -34,6 +34,7 @@ resource "sdwan_service_lan_vpn_feature_associate_routing_eigrp_feature" "exampl
 ### Read-Only
 
 - `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 ## Import
 

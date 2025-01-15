@@ -36,6 +36,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature_associate_dhcp_server
 ### Read-Only
 
 - `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 ## Import
 

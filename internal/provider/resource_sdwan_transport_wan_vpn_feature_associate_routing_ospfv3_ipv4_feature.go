@@ -70,6 +70,10 @@ func (r *TransportWANVPNFeatureAssociateRoutingOSPFv3IPv4FeatureResource) Schema
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
+			"version": schema.Int64Attribute{
+				MarkdownDescription: "The version of the object",
+				Computed:            true,
+			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
 				Required:            true,
@@ -117,6 +121,7 @@ func (r *TransportWANVPNFeatureAssociateRoutingOSPFv3IPv4FeatureResource) Create
 		return
 	}
 	plan.Id = types.StringValue(res.Get("parcelId").String())
+	plan.Version = types.Int64Value(0)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Id.ValueString()))
 
@@ -149,6 +154,9 @@ func (r *TransportWANVPNFeatureAssociateRoutingOSPFv3IPv4FeatureResource) Read(c
 	}
 
 	state.fromBody(ctx, res)
+	if state.Version.IsNull() {
+		state.Version = types.Int64Value(0)
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Id.ValueString()))
 
@@ -195,6 +203,7 @@ func (r *TransportWANVPNFeatureAssociateRoutingOSPFv3IPv4FeatureResource) Update
 	} else {
 		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Id.ValueString()))
 	}
+	plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Id.ValueString()))
 

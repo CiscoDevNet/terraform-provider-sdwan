@@ -34,3 +34,4 @@ data "sdwan_transport_wan_vpn_interface_ethernet_feature_associate_tracker_featu
 ### Read-Only
 
 - `transport_tracker_feature_id` (String) Transport Tracker Feature ID
+- `version` (Number) The version of the object

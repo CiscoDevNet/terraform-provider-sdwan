@@ -32,3 +32,4 @@ data "sdwan_transport_wan_vpn_feature_associate_routing_bgp_feature" "example" {
 ### Read-Only
 
 - `transport_routing_bgp_feature_id` (String) Transport Routing BGP Feature ID
+- `version` (Number) The version of the object

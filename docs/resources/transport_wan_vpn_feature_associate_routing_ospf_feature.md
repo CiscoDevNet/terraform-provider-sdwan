@@ -34,6 +34,7 @@ resource "sdwan_transport_wan_vpn_feature_associate_routing_ospf_feature" "examp
 ### Read-Only
 
 - `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 ## Import
 

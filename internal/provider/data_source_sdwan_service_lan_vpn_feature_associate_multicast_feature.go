@@ -61,6 +61,10 @@ func (d *ServiceLANVPNFeatureAssociateMulticastFeatureDataSource) Schema(ctx con
 				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
+			"version": schema.Int64Attribute{
+				MarkdownDescription: "The version of the object",
+				Computed:            true,
+			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: "Feature Profile ID",
 				Required:            true,
