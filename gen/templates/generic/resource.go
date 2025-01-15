@@ -579,7 +579,26 @@ func (r *{{camelCase .Name}}Resource) Delete(ctx context.Context, req resource.D
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 {{- if not .NoImport}}
 func (r *{{camelCase .Name}}Resource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	{{- if hasReference .Attributes}}
+	count := {{ countReferences .Attributes}}
+	parts := strings.SplitN(req.ID, ",", (count + 1))
+
+	pattern := "{{snakeCase .Name}}_id"{{range .Attributes}}{{if .Reference}} + ",{{.TfName}}"{{end}}{{end}}
+	if len(parts) != (count + 1) {
+		resp.Diagnostics.AddError(
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q", pattern, req.ID),
+		)
+		return
+	}
+
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
+	{{- $count := 0}}
+	{{- range .Attributes}}{{- if .Reference}}{{$count = add $count 1}}
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("{{.TfName}}"), parts[{{$count}}])...)
+	{{- end}}{{- end}}
+	{{- else}}
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	{{- end}}
 }
 {{- end}}
 // End of section. //template:end import

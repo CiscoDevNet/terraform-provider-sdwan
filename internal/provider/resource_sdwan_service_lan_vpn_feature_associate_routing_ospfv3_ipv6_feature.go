@@ -241,7 +241,20 @@ func (r *ServiceLANVPNFeatureAssociateRoutingOSPFv3IPv6FeatureResource) Delete(c
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *ServiceLANVPNFeatureAssociateRoutingOSPFv3IPv6FeatureResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	count := 2
+	parts := strings.SplitN(req.ID, ",", (count + 1))
+
+	pattern := "service_lan_vpn_feature_associate_routing_ospfv3_ipv6_feature_id" + ",feature_profile_id" + ",service_lan_vpn_feature_id"
+	if len(parts) != (count + 1) {
+		resp.Diagnostics.AddError(
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q", pattern, req.ID),
+		)
+		return
+	}
+
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("feature_profile_id"), parts[1])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("service_lan_vpn_feature_id"), parts[2])...)
 }
 
 // End of section. //template:end import
