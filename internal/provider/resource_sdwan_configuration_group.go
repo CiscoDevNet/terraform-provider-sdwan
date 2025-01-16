@@ -230,6 +230,15 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 	}
 	plan.Id = types.StringValue(res.Get("id").String())
 
+	// Update State with configuration group
+	tempPlan := plan
+	tempPlan.Devices = nil
+	diags = resp.State.Set(ctx, &tempPlan)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	// Create config group devices
 	if len(plan.Devices) > 0 {
 		body = plan.toBodyConfigGroupDevices(ctx)
@@ -240,6 +249,18 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (POST), got error: %s, %s", err, res.String()))
 			return
 		}
+	}
+
+	// Update State with devices
+	tempPlan = plan
+	for i, device := range plan.Devices {
+		device.Variables = nil
+		tempPlan.Devices[i] = device
+	}
+	diags = resp.State.Set(ctx, &tempPlan)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
 	}
 
 	// Create config group device variables
@@ -399,6 +420,15 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 		return
 	}
 
+	// Update State with configuration group
+	tempPlan := plan
+	tempPlan.Devices = nil
+	diags = resp.State.Set(ctx, &tempPlan)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	// Update config group devices
 	body = plan.toBodyConfigGroupDevices(ctx)
 
@@ -406,6 +436,18 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 	res, err = r.client.Put(path, body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (PUT), got error: %s, %s", err, res.String()))
+		return
+	}
+
+	// Update State with devices
+	tempPlan = plan
+	for i, device := range plan.Devices {
+		device.Variables = nil
+		tempPlan.Devices[i] = device
+	}
+	diags = resp.State.Set(ctx, &tempPlan)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
 		return
 	}
 
