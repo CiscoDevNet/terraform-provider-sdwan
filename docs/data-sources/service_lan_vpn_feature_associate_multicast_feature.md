@@ -32,3 +32,4 @@ data "sdwan_service_lan_vpn_feature_associate_multicast_feature" "example" {
 ### Read-Only
 
 - `service_multicast_feature_id` (String) Service Multicast Feature ID
+- `version` (Number) The version of the object

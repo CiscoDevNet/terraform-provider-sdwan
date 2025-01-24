@@ -34,3 +34,4 @@ data "sdwan_service_lan_vpn_interface_svi_feature_associate_dhcp_server_feature"
 ### Read-Only
 
 - `service_dhcp_server_feature_id` (String) Service DHCP Server Feature ID
+- `version` (Number) The version of the object

@@ -33,6 +33,7 @@ import (
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type TransportWANVPNFeatureAssociateRoutingOSPFv3IPv6Feature struct {
 	Id                                  types.String `tfsdk:"id"`
+	Version                             types.Int64  `tfsdk:"version"`
 	FeatureProfileId                    types.String `tfsdk:"feature_profile_id"`
 	TransportWanVpnFeatureId            types.String `tfsdk:"transport_wan_vpn_feature_id"`
 	TransportRoutingOspfv3Ipv6FeatureId types.String `tfsdk:"transport_routing_ospfv3_ipv6_feature_id"`
