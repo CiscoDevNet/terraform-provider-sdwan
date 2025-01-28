@@ -1,16 +1,21 @@
 ---
 name: Tag
 rest_endpoint: /v1/tags
+minimum_version: 20.12.0
 id_attribute: id
 doc_category: Tags
 attributes:
   - model_name: name
     tf_name: name
+    mandatory: true
     type: String
+    requires_replace: true
     description: Tag name
     example: TAG_1
   - model_name: description
     tf_name: description
+    mandatory: true
     type: String
+    requires_replace: true
     description: Tag description
     example: My tag
