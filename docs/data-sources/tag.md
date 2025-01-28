@@ -27,5 +27,5 @@ data "sdwan_tag" "example" {
 
 ### Read-Only
 
-- `description` (String) Description
-- `name` (String) The name of the tag
+- `description` (String) Tag description
+- `name` (String) Tag name

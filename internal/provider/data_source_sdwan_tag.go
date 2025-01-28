@@ -61,11 +61,11 @@ func (d *TagDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 				Required:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the tag",
+				MarkdownDescription: "Tag name",
 				Computed:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: "Description",
+				MarkdownDescription: "Tag description",
 				Computed:            true,
 			},
 		},
@@ -82,7 +82,6 @@ func (d *TagDataSource) Configure(_ context.Context, req datasource.ConfigureReq
 
 // End of section. //template:end model
 
-// Section below is generated&owned by "gen/generator.go". //template:begin read
 func (d *TagDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	var config Tag
 
@@ -108,5 +107,3 @@ func (d *TagDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 	diags = resp.State.Set(ctx, &config)
 	resp.Diagnostics.Append(diags...)
 }
-
-// End of section. //template:end read

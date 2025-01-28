@@ -44,7 +44,6 @@ func (data Tag) getPath() string {
 
 // End of section. //template:end getPath
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data Tag) toBody(ctx context.Context) string {
 	body := ""
 
@@ -65,8 +64,6 @@ func (data Tag) toBody(ctx context.Context) string {
 
 	return body
 }
-
-// End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *Tag) fromBody(ctx context.Context, res gjson.Result) {

@@ -19,7 +19,6 @@ package provider
 
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
-	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
@@ -29,12 +28,9 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanTag(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012")
-	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tag.test", "name", "SYSTEM_FP_1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tag.test", "description", "My system tag"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tag.test", "name", "TAG_1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tag.test", "description", "My tag"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -56,8 +52,8 @@ func TestAccDataSourceSdwanTag(t *testing.T) {
 func testAccDataSourceSdwanTagConfig() string {
 	config := ""
 	config += `resource "sdwan_tag" "test" {` + "\n"
-	config += `	name = "SYSTEM_FP_1"` + "\n"
-	config += `	description = "My system tag"` + "\n"
+	config += `	name = "TAG_1"` + "\n"
+	config += `	description = "My tag"` + "\n"
 	config += `}` + "\n"
 
 	config += `

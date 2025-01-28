@@ -1,0 +1,16 @@
+---
+name: Tag
+rest_endpoint: /v1/tags
+id_attribute: id
+doc_category: Tags
+attributes:
+  - model_name: name
+    tf_name: name
+    type: String
+    description: Tag name
+    example: TAG_1
+  - model_name: description
+    tf_name: description
+    type: String
+    description: Tag description
+    example: My tag

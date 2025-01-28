@@ -60,7 +60,7 @@ func (r *TagResource) Metadata(ctx context.Context, req resource.MetadataRequest
 func (r *TagResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Tag .").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Tag .").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -68,22 +68,15 @@ func (r *TagResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
-					stringplanmodifier.RequiresReplace(),
 				},
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("The name of the tag").String,
-				Required:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
+				MarkdownDescription: helpers.NewAttributeDescription("Tag name").String,
+				Optional:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Description").String,
-				Required:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
+				MarkdownDescription: helpers.NewAttributeDescription("Tag description").String,
+				Optional:            true,
 			},
 		},
 	}
@@ -100,7 +93,6 @@ func (r *TagResource) Configure(_ context.Context, req resource.ConfigureRequest
 
 // End of section. //template:end model
 
-// Section below is generated&owned by "gen/generator.go". //template:begin create
 func (r *TagResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan Tag
 
@@ -134,9 +126,6 @@ func (r *TagResource) Create(ctx context.Context, req resource.CreateRequest, re
 	resp.Diagnostics.Append(diags...)
 }
 
-// End of section. //template:end create
-
-// Section below is generated&owned by "gen/generator.go". //template:begin read
 func (r *TagResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var state Tag
 
@@ -166,16 +155,10 @@ func (r *TagResource) Read(ctx context.Context, req resource.ReadRequest, resp *
 	resp.Diagnostics.Append(diags...)
 }
 
-// End of section. //template:end read
-
-// Section below is generated&owned by "gen/generator.go". //template:begin update
 func (r *TagResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	// NO Update method in the UI, All attributes force replacement
 }
 
-// End of section. //template:end update
-
-// Section below is generated&owned by "gen/generator.go". //template:begin delete
 func (r *TagResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 	var state Tag
 
@@ -198,8 +181,6 @@ func (r *TagResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 
 	resp.State.RemoveResource(ctx)
 }
-
-// End of section. //template:end delete
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *TagResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
