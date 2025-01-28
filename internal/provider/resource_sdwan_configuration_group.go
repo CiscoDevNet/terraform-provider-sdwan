@@ -234,10 +234,10 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 	tempPlan := plan
 	tempPlan.Devices = nil
 	diags = resp.State.Set(ctx, &tempPlan)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	// resp.Diagnostics.Append(diags...)
+	// if resp.Diagnostics.HasError() {
+	// 	return
+	// }
 
 	// Create config group devices
 	if len(plan.Devices) > 0 {
@@ -258,10 +258,10 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 		tempPlan.Devices[i] = device
 	}
 	diags = resp.State.Set(ctx, &tempPlan)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	// resp.Diagnostics.Append(diags...)
+	// if resp.Diagnostics.HasError() {
+	// 	return
+	// }
 
 	// Create config group device variables
 	if len(plan.Devices) > 0 {
@@ -283,7 +283,7 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 
 	diags = resp.State.Set(ctx, &plan)
-	resp.Diagnostics.Append(diags...)
+	// resp.Diagnostics.Append(diags...)
 }
 
 func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan ConfigurationGroup, diag *diag.Diagnostics) {
@@ -424,10 +424,10 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 	tempPlan := plan
 	tempPlan.Devices = nil
 	diags = resp.State.Set(ctx, &tempPlan)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	// resp.Diagnostics.Append(diags...)
+	// if resp.Diagnostics.HasError() {
+	// 	return
+	// }
 
 	// Update config group devices
 	body = plan.toBodyConfigGroupDevices(ctx)
@@ -446,10 +446,10 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 		tempPlan.Devices[i] = device
 	}
 	diags = resp.State.Set(ctx, &tempPlan)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	// resp.Diagnostics.Append(diags...)
+	// if resp.Diagnostics.HasError() {
+	// 	return
+	// }
 
 	// Update config group device variables
 	body = plan.toBodyConfigGroupDeviceVariables(ctx)
@@ -469,7 +469,7 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
 
 	diags = resp.State.Set(ctx, &plan)
-	resp.Diagnostics.Append(diags...)
+	// resp.Diagnostics.Append(diags...)
 }
 
 func (r *ConfigurationGroupResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
