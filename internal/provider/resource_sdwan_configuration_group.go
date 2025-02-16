@@ -238,6 +238,10 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 		res, err = r.client.Post(path, body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (POST), got error: %s, %s", err, res.String()))
+			res, err = r.client.Delete(plan.getPath() + url.QueryEscape(plan.Id.ValueString()))
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group (DELETE), got error: %s, %s", err, res.String()))
+			}
 			return
 		}
 	}
@@ -250,6 +254,10 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 		res, err = r.client.Put(path, body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group device variables (PUT), got error: %s, %s", err, res.String()))
+			res, err = r.client.Delete(plan.getPath() + url.QueryEscape(plan.Id.ValueString()))
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group (DELETE), got error: %s, %s", err, res.String()))
+			}
 			return
 		}
 	}
