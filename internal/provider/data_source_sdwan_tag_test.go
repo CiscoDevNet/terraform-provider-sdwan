@@ -26,7 +26,6 @@ import (
 
 // End of section. //template:end imports
 
-// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanTag(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tag.test", "name", "TAG_1"))
@@ -43,8 +42,6 @@ func TestAccDataSourceSdwanTag(t *testing.T) {
 		},
 	})
 }
-
-// End of section. //template:end testAccDataSource
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 // End of section. //template:end testPrerequisites
