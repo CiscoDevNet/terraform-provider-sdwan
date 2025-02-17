@@ -68,6 +68,18 @@ func (d *TagDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 				MarkdownDescription: "Tag description",
 				Computed:            true,
 			},
+			"devices": schema.ListNestedAttribute{
+				MarkdownDescription: "Associated devices",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"id": schema.StringAttribute{
+							MarkdownDescription: "Device ID",
+							Computed:            true,
+						},
+					},
+				},
+			},
 		},
 	}
 }

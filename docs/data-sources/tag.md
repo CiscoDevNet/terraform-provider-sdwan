@@ -28,4 +28,12 @@ data "sdwan_tag" "example" {
 ### Read-Only
 
 - `description` (String) Tag description
+- `devices` (Attributes List) Associated devices (see [below for nested schema](#nestedatt--devices))
 - `name` (String) Tag name
+
+<a id="nestedatt--devices"></a>
+### Nested Schema for `devices`
+
+Read-Only:
+
+- `id` (String) Device ID

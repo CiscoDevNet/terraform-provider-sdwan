@@ -31,6 +31,7 @@ func TestAccDataSourceSdwanTag(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tag.test", "name", "TAG_1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tag.test", "description", "My tag"))
+	// checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tag.test", "devices.0.id", "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -54,6 +55,9 @@ func testAccDataSourceSdwanTagConfig() string {
 	config += `resource "sdwan_tag" "test" {` + "\n"
 	config += `	name = "TAG_1"` + "\n"
 	config += `	description = "My tag"` + "\n"
+	config += `	devices = [{` + "\n"
+	config += `	  id = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"` + "\n"
+	config += `	}]` + "\n"
 	config += `}` + "\n"
 
 	config += `

@@ -18,6 +18,11 @@ This resource can manage a Tag .
 resource "sdwan_tag" "example" {
   name        = "TAG_1"
   description = "My tag"
+  devices = [
+    {
+      id = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"
+    }
+  ]
 }
 ```
 
@@ -29,9 +34,20 @@ resource "sdwan_tag" "example" {
 - `description` (String) Tag description
 - `name` (String) Tag name
 
+### Optional
+
+- `devices` (Attributes List) Associated devices (see [below for nested schema](#nestedatt--devices))
+
 ### Read-Only
 
 - `id` (String) The id of the object
+
+<a id="nestedatt--devices"></a>
+### Nested Schema for `devices`
+
+Required:
+
+- `id` (String) Device ID
 
 ## Import
 
