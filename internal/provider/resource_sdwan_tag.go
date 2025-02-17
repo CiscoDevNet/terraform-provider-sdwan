@@ -144,7 +144,12 @@ func (r *TagResource) Create(ctx context.Context, req resource.CreateRequest, re
 		body = plan.toBodyDeviceAssociation(ctx)
 		res, err = r.client.Post("/v1/tags/associate", body)
 		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (POST), got error: %s, %s", err, res.String()))
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to associate devices to tag (POST), got error: %s, %s", err, res.String()))
+			res, err = r.client.Delete(plan.getPath() + "?tagId=" + url.QueryEscape(plan.Id.ValueString()))
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object after associating devices failed (DELETE), got error: %s, %s", err, res.String()))
+				return
+			}
 			return
 		}
 	}
@@ -226,7 +231,7 @@ func (r *TagResource) Update(ctx context.Context, req resource.UpdateRequest, re
 		}
 		res, err := r.client.Post("/v1/tags/associate?operationType=DELETE", body)
 		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (POST), got error: %s, %s", err, res.String()))
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to associate devices to tag (POST), got error: %s, %s", err, res.String()))
 			return
 		}
 	}
@@ -237,7 +242,7 @@ func (r *TagResource) Update(ctx context.Context, req resource.UpdateRequest, re
 		body := plan.toBodyDeviceAssociation(ctx)
 		res, err := r.client.Post("/v1/tags/associate", body)
 		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (POST), got error: %s, %s", err, res.String()))
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to associate devices to tag (POST), got error: %s, %s", err, res.String()))
 			return
 		}
 	}
@@ -264,7 +269,7 @@ func (r *TagResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 		body := state.toBodyDeviceAssociation(ctx)
 		res, err := r.client.Post("/v1/tags/associate?operationType=DELETE", body)
 		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (POST), got error: %s, %s", err, res.String()))
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to associate devices to tag (POST), got error: %s, %s", err, res.String()))
 			return
 		}
 	}
