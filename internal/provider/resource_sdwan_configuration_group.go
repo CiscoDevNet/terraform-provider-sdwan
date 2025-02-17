@@ -238,6 +238,10 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 		res, err = r.client.Post(path, body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (POST), got error: %s, %s", err, res.String()))
+			res, err = r.client.Delete(plan.getPath() + url.QueryEscape(plan.Id.ValueString()))
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group (DELETE), got error: %s, %s", err, res.String()))
+			}
 			return
 		}
 	}
@@ -250,6 +254,10 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 		res, err = r.client.Put(path, body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group device variables (PUT), got error: %s, %s", err, res.String()))
+			res, err = r.client.Delete(plan.getPath() + url.QueryEscape(plan.Id.ValueString()))
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group (DELETE), got error: %s, %s", err, res.String()))
+			}
 			return
 		}
 	}
@@ -442,17 +450,28 @@ func (r *ConfigurationGroupResource) Delete(ctx context.Context, req resource.De
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
-	body := state.toBodyConfigGroupDevices(ctx)
-	if len(gjson.Get(body, "devices").Array()) > 0 {
-		path := fmt.Sprintf("/v1/config-group/%v/device/associate/", state.Id.ValueString())
-		res, err := r.client.DeleteBody(path, body)
-		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group devices (DELETE), got error: %s, %s", err, res.String()))
-			return
+	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", state.Id.ValueString())
+	res, err := r.client.Get(path)
+	if err == nil {
+		body, _ := sjson.Set("", "devices", []interface{}{})
+		if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
+			value.ForEach(func(k, v gjson.Result) bool {
+				id := v.Get("id").String()
+				itemBody, _ := sjson.Set("", "id", id)
+				body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
+				return true
+			})
+		}
+		if len(gjson.Get(body, "devices").Array()) > 0 {
+			res, err := r.client.DeleteBody(path, body)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group devices (DELETE), got error: %s, %s", err, res.String()))
+				return
+			}
 		}
 	}
 
-	res, err := r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
+	res, err = r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group (DELETE), got error: %s, %s", err, res.String()))
 		return

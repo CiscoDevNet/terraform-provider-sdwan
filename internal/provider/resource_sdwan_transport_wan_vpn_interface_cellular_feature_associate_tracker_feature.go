@@ -70,6 +70,10 @@ func (r *TransportWANVPNInterfaceCellularFeatureAssociateTrackerFeatureResource)
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
+			"version": schema.Int64Attribute{
+				MarkdownDescription: "The version of the object",
+				Computed:            true,
+			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
 				Required:            true,
@@ -121,6 +125,7 @@ func (r *TransportWANVPNInterfaceCellularFeatureAssociateTrackerFeatureResource)
 		return
 	}
 	plan.Id = types.StringValue(res.Get("parcelId").String())
+	plan.Version = types.Int64Value(0)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Id.ValueString()))
 
@@ -153,6 +158,9 @@ func (r *TransportWANVPNInterfaceCellularFeatureAssociateTrackerFeatureResource)
 	}
 
 	state.fromBody(ctx, res)
+	if state.Version.IsNull() {
+		state.Version = types.Int64Value(0)
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Id.ValueString()))
 
@@ -199,6 +207,7 @@ func (r *TransportWANVPNInterfaceCellularFeatureAssociateTrackerFeatureResource)
 	} else {
 		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Id.ValueString()))
 	}
+	plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Id.ValueString()))
 
@@ -236,7 +245,21 @@ func (r *TransportWANVPNInterfaceCellularFeatureAssociateTrackerFeatureResource)
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *TransportWANVPNInterfaceCellularFeatureAssociateTrackerFeatureResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	count := 3
+	parts := strings.SplitN(req.ID, ",", (count + 1))
+
+	pattern := "transport_wan_vpn_interface_cellular_feature_associate_tracker_feature_id" + ",feature_profile_id" + ",transport_wan_vpn_feature_id" + ",transport_wan_vpn_interface_cellular_feature_id"
+	if len(parts) != (count + 1) {
+		resp.Diagnostics.AddError(
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q", pattern, req.ID),
+		)
+		return
+	}
+
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("feature_profile_id"), parts[1])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("transport_wan_vpn_feature_id"), parts[2])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("transport_wan_vpn_interface_cellular_feature_id"), parts[3])...)
 }
 
 // End of section. //template:end import

@@ -34,3 +34,4 @@ data "sdwan_service_lan_vpn_interface_ethernet_feature_associate_tracker_feature
 ### Read-Only
 
 - `service_tracker_feature_id` (String) Service Tracker Feature ID
+- `version` (Number) The version of the object

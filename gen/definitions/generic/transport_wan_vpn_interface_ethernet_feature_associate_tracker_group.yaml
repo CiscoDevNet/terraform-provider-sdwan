@@ -2,6 +2,7 @@
 name: Transport WAN VPN Interface Ethernet Feature Associate Tracker Group Feature
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/ethernet/%s/trackergroup/
 minimum_version: 20.12.0
+has_version: true
 id_attribute: parcelId
 doc_category: Features - Transport
 test_tags: [SDWAN_2012]

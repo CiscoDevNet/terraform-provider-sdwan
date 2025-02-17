@@ -32,3 +32,4 @@ data "sdwan_service_lan_vpn_feature_associate_routing_bgp_feature" "example" {
 ### Read-Only
 
 - `service_routing_bgp_feature_id` (String) Service Routing BGP Feature ID
+- `version` (Number) The version of the object

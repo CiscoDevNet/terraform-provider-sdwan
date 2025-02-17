@@ -32,3 +32,4 @@ data "sdwan_service_lan_vpn_feature_associate_routing_ospfv3_ipv6_feature" "exam
 ### Read-Only
 
 - `service_routing_ospfv3_ipv6_feature_id` (String) Service Routing OSPFv3 IPv6 Feature ID
+- `version` (Number) The version of the object
