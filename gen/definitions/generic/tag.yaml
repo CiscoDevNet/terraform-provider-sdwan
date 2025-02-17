@@ -3,7 +3,7 @@ name: Tag
 rest_endpoint: /v1/tags
 minimum_version: 20.12.0
 id_attribute: id
-doc_category: Tags
+doc_category: Inventory
 attributes:
   - model_name: name
     tf_name: name
