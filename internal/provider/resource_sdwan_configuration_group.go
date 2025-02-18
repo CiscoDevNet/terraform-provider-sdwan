@@ -402,23 +402,27 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 	}
 
 	// Update config group devices
-	body = plan.toBodyConfigGroupDevices(ctx)
+	if len(plan.Devices) > 0 {
+		body = plan.toBodyConfigGroupDevices(ctx)
 
-	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString())
-	res, err = r.client.Put(path, body)
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (PUT), got error: %s, %s", err, res.String()))
-		return
+		path := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString())
+		res, err = r.client.Put(path, body)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (PUT), got error: %s, %s", err, res.String()))
+			return
+		}
 	}
 
 	// Update config group device variables
-	body = plan.toBodyConfigGroupDeviceVariables(ctx)
+	if len(plan.Devices) > 0 && plan.hasConfigGroupDeviceVariables(ctx) {
+		body = plan.toBodyConfigGroupDeviceVariables(ctx)
 
-	path = fmt.Sprintf("/v1/config-group/%v/device/variables/", plan.Id.ValueString())
-	res, err = r.client.Put(path, body)
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group device variables (PUT), got error: %s, %s", err, res.String()))
-		return
+		path := fmt.Sprintf("/v1/config-group/%v/device/variables/", plan.Id.ValueString())
+		res, err = r.client.Put(path, body)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group device variables (PUT), got error: %s, %s", err, res.String()))
+			return
+		}
 	}
 
 	// Deploy to config group devices
