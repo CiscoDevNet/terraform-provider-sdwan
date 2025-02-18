@@ -244,7 +244,7 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 	}
 
 	// Create config group device variables
-	if len(plan.Devices) > 0 {
+	if len(plan.Devices) > 0 && plan.hasConfigGroupDeviceVariables(ctx) {
 		body = plan.toBodyConfigGroupDeviceVariables(ctx)
 
 		path := fmt.Sprintf("/v1/config-group/%v/device/variables/", plan.Id.ValueString())

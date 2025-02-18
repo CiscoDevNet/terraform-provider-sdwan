@@ -566,3 +566,12 @@ func (data *ConfigurationGroup) updateTfAttributes(ctx context.Context, state *C
 		}
 	}
 }
+
+func (data ConfigurationGroup) hasConfigGroupDeviceVariables(ctx context.Context) bool {
+	for _, device := range data.Devices {
+		if len(device.Variables) > 0 {
+			return true
+		}
+	}
+	return false
+}
