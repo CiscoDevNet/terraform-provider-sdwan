@@ -238,10 +238,7 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 		res, err = r.client.Post(path, body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (POST), got error: %s, %s", err, res.String()))
-			res, err = r.client.Delete(plan.getPath() + url.QueryEscape(plan.Id.ValueString()))
-			if err != nil {
-				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group (DELETE), got error: %s, %s", err, res.String()))
-			}
+			r.DeleteConfigGroup(ctx, plan, &resp.Diagnostics)
 			return
 		}
 	}
@@ -254,10 +251,7 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 		res, err = r.client.Put(path, body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group device variables (PUT), got error: %s, %s", err, res.String()))
-			res, err = r.client.Delete(plan.getPath() + url.QueryEscape(plan.Id.ValueString()))
-			if err != nil {
-				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group (DELETE), got error: %s, %s", err, res.String()))
-			}
+			r.DeleteConfigGroup(ctx, plan, &resp.Diagnostics)
 			return
 		}
 	}
@@ -438,18 +432,7 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *ConfigurationGroupResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state ConfigurationGroup
-
-	// Read state
-	diags := req.State.Get(ctx, &state)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
-
+func (r *ConfigurationGroupResource) DeleteConfigGroup(ctx context.Context, state ConfigurationGroup, diag *diag.Diagnostics) {
 	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", state.Id.ValueString())
 	res, err := r.client.Get(path)
 	if err == nil {
@@ -465,7 +448,7 @@ func (r *ConfigurationGroupResource) Delete(ctx context.Context, req resource.De
 		if len(gjson.Get(body, "devices").Array()) > 0 {
 			res, err := r.client.DeleteBody(path, body)
 			if err != nil {
-				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group devices (DELETE), got error: %s, %s", err, res.String()))
+				diag.AddError("Client Error", fmt.Sprintf("Failed to delete config group devices (DELETE), got error: %s, %s", err, res.String()))
 				return
 			}
 		}
@@ -473,9 +456,24 @@ func (r *ConfigurationGroupResource) Delete(ctx context.Context, req resource.De
 
 	res, err = r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group (DELETE), got error: %s, %s", err, res.String()))
+		diag.AddError("Client Error", fmt.Sprintf("Failed to delete config group (DELETE), got error: %s, %s", err, res.String()))
 		return
 	}
+}
+
+func (r *ConfigurationGroupResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state ConfigurationGroup
+
+	// Read state
+	diags := req.State.Get(ctx, &state)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
+
+	r.DeleteConfigGroup(ctx, state, &resp.Diagnostics)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Delete finished successfully", state.Name.ValueString()))
 
