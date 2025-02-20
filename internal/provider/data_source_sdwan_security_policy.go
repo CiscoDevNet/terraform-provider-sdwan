@@ -98,6 +98,14 @@ func (d *SecurityPolicyDataSource) Schema(ctx context.Context, req datasource.Sc
 							MarkdownDescription: "Policy definition type",
 							Computed:            true,
 						},
+						"source_zone": schema.StringAttribute{
+							MarkdownDescription: "Source Zone",
+							Computed:            true,
+						},
+						"destination_zone": schema.StringAttribute{
+							MarkdownDescription: "Destination Zone",
+							Computed:            true,
+						},
 					},
 				},
 			},
@@ -133,6 +141,34 @@ func (d *SecurityPolicyDataSource) Schema(ctx context.Context, req datasource.Sc
 				MarkdownDescription: "High Speed Logging Port",
 				Computed:            true,
 			},
+			"high_speed_logging_server_source_interface": schema.StringAttribute{
+				MarkdownDescription: "High Speed Logging Source Interface",
+				Computed:            true,
+			},
+			"max_incomplete_icmp_limit": schema.Int64Attribute{
+				MarkdownDescription: "Max Incomplete ICMP Limit",
+				Computed:            true,
+			},
+			"max_incomplete_tcp_limit": schema.Int64Attribute{
+				MarkdownDescription: "Max Incomplete TCP Limit",
+				Computed:            true,
+			},
+			"max_incomplete_udp_limit": schema.Int64Attribute{
+				MarkdownDescription: "Max Incomplete UDP Limit",
+				Computed:            true,
+			},
+			"session_reclassify_allow": schema.BoolAttribute{
+				MarkdownDescription: "Session Reclassify Allow",
+				Computed:            true,
+			},
+			"imcp_unreachable_allow": schema.BoolAttribute{
+				MarkdownDescription: "ICMP Unreachable Allow",
+				Computed:            true,
+			},
+			"unified_logging": schema.BoolAttribute{
+				MarkdownDescription: "Unified Logging",
+				Computed:            true,
+			},
 			"logging": schema.ListNestedAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
@@ -144,6 +180,10 @@ func (d *SecurityPolicyDataSource) Schema(ctx context.Context, req datasource.Sc
 						},
 						"external_syslog_server_vpn": schema.StringAttribute{
 							MarkdownDescription: "External Syslog Server VPN",
+							Computed:            true,
+						},
+						"external_syslog_server_source_interface": schema.StringAttribute{
+							MarkdownDescription: "External Syslog Server Source Interface",
 							Computed:            true,
 						},
 					},

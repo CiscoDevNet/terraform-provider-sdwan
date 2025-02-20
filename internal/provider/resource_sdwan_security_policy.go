@@ -124,6 +124,14 @@ func (r *SecurityPolicyResource) Schema(ctx context.Context, req resource.Schema
 								stringvalidator.OneOf("urlFiltering", "zoneBasedFW", "intrusionPrevention", "sslDecryption", "advancedMalwareProtection", "dnsSecurity"),
 							},
 						},
+						"source_zone": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Source Zone").String,
+							Optional:            true,
+						},
+						"destination_zone": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Destination Zone").String,
+							Optional:            true,
+						},
 					},
 				},
 				Validators: []validator.List{
@@ -174,6 +182,34 @@ func (r *SecurityPolicyResource) Schema(ctx context.Context, req resource.Schema
 				MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging Port").String,
 				Optional:            true,
 			},
+			"high_speed_logging_server_source_interface": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging Source Interface").String,
+				Optional:            true,
+			},
+			"max_incomplete_icmp_limit": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Max Incomplete ICMP Limit").String,
+				Optional:            true,
+			},
+			"max_incomplete_tcp_limit": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Max Incomplete TCP Limit").String,
+				Optional:            true,
+			},
+			"max_incomplete_udp_limit": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Max Incomplete UDP Limit").String,
+				Optional:            true,
+			},
+			"session_reclassify_allow": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Session Reclassify Allow").String,
+				Optional:            true,
+			},
+			"imcp_unreachable_allow": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("ICMP Unreachable Allow").String,
+				Optional:            true,
+			},
+			"unified_logging": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Unified Logging").String,
+				Optional:            true,
+			},
 			"logging": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Optional:            true,
@@ -185,6 +221,10 @@ func (r *SecurityPolicyResource) Schema(ctx context.Context, req resource.Schema
 						},
 						"external_syslog_server_vpn": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("External Syslog Server VPN").String,
+							Optional:            true,
+						},
+						"external_syslog_server_source_interface": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("External Syslog Server Source Interface").String,
 							Optional:            true,
 						},
 					},
