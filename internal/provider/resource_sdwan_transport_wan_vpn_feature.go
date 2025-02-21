@@ -431,10 +431,7 @@ func (r *TransportWANVPNProfileParcelResource) Read(ctx context.Context, req res
 	}
 
 	// If every attribute is set to null we are dealing with an import operation and therefore reading all attributes
-	stateCopy := state
-	stateCopy.FeatureProfileId = types.StringNull()
-
-	if stateCopy.isNull(ctx, res) {
+	if state.isNull(ctx, res) {
 		state.fromBody(ctx, res)
 	} else {
 		state.updateFromBody(ctx, res)
