@@ -78,11 +78,11 @@ Required:
 
 Optional:
 
-- `backup_sla_preferred_color` (String) Backup SLA preferred color (Single value or multiple values separated by spaces)
-- `cloud_sla` (Boolean) Cloud SLA
-- `counter` (String) Counter name
-- `log` (Boolean) Enable logging
-- `sla_class_parameters` (Attributes List) List of SLA class parameters (see [below for nested schema](#nestedatt--sequences--action_entries--sla_class_parameters))
+- `backup_sla_preferred_color` (String) Backup SLA preferred color (Single value or multiple values separated by spaces), Attribute conditional on `type` being equal to `backupSlaPreferredColor`
+- `cloud_sla` (Boolean) Cloud SLA, Attribute conditional on `type` being equal to `cloudSaas`
+- `counter` (String) Counter name, Attribute conditional on `type` being equal to `count`
+- `log` (Boolean) Enable logging, Attribute conditional on `type` being equal to `log`
+- `sla_class_parameters` (Attributes List) List of SLA class parameters, Attribute conditional on `type` being equal to `slaClass` (see [below for nested schema](#nestedatt--sequences--action_entries--sla_class_parameters))
 
 <a id="nestedatt--sequences--action_entries--sla_class_parameters"></a>
 ### Nested Schema for `sequences.action_entries.sla_class_parameters`
@@ -94,10 +94,10 @@ Required:
 
 Optional:
 
-- `preferred_color` (String) preferred color (Single value or multiple values separated by spaces)
-- `preferred_color_group_list` (String) Preferred color group list ID
+- `preferred_color` (String) preferred color (Single value or multiple values separated by spaces), Attribute conditional on `type` being equal to `preferredColor`
+- `preferred_color_group_list` (String) Preferred color group list ID, Attribute conditional on `type` being equal to `preferredColorGroup`
 - `preferred_color_group_list_version` (Number) Preferred color group list version
-- `sla_class_list` (String) SLA class list ID
+- `sla_class_list` (String) SLA class list ID, Attribute conditional on `type` being equal to `name`
 - `sla_class_list_version` (Number) SLA class list version
 
 
@@ -112,29 +112,29 @@ Required:
 
 Optional:
 
-- `application_list_id` (String) Application list ID
+- `application_list_id` (String) Application list ID, Attribute conditional on `type` being equal to `appList`
 - `application_list_version` (Number) Application list version
-- `destination_data_prefix_list_id` (String) Destination Data Prefix list ID
+- `destination_data_prefix_list_id` (String) Destination Data Prefix list ID, Attribute conditional on `type` being equal to `destinationDataPrefixList`
 - `destination_data_prefix_list_version` (Number) Destination Data Prefix list version
-- `destination_ip` (String) Destination IP
-- `destination_port` (String) Destination port, 0-65535 (Single value, range or multiple values separated by spaces)
-- `destination_region` (String) Destination region
+- `destination_ip` (String) Destination IP, Attribute conditional on `type` being equal to `destinationIp`
+- `destination_port` (String) Destination port, 0-65535 (Single value, range or multiple values separated by spaces), Attribute conditional on `type` being equal to `destinationPort`
+- `destination_region` (String) Destination region, Attribute conditional on `type` being equal to `destinationRegion`
   - Choices: `primary-region`, `secondary-region`, `other-region`
-- `dns` (String) DNS request or response
+- `dns` (String) DNS request or response, Attribute conditional on `type` being equal to `dns`
   - Choices: `request`, `response`
-- `dns_application_list_id` (String) DNS Application list ID
+- `dns_application_list_id` (String) DNS Application list ID, Attribute conditional on `type` being equal to `dnsAppList`
 - `dns_application_list_version` (Number) DNS Application list version
-- `dscp` (Number) DSCP value
+- `dscp` (Number) DSCP value, Attribute conditional on `type` being equal to `dscp`
   - Range: `0`-`63`
-- `icmp_message` (String) ICMP Message
-- `plp` (String) PLP
+- `icmp_message` (String) ICMP Message, Attribute conditional on `type` being equal to `icmpMessage`
+- `plp` (String) PLP, Attribute conditional on `type` being equal to `plp`
   - Choices: `low`, `high`
-- `protocol` (String) IP Protocol, 0-255 (Single value or multiple values separated by spaces)
-- `source_data_prefix_list_id` (String) Source Data Prefix list ID
+- `protocol` (String) IP Protocol, 0-255 (Single value or multiple values separated by spaces), Attribute conditional on `type` being equal to `protocol`
+- `source_data_prefix_list_id` (String) Source Data Prefix list ID, Attribute conditional on `type` being equal to `sourceDataPrefixList`
 - `source_data_prefix_list_version` (Number) Source Data Prefix list version
-- `source_ip` (String) Source IP
-- `source_port` (String) Source port, 0-65535 (Single value, range or multiple values separated by spaces)
-- `traffic_to` (String) Traffic to
+- `source_ip` (String) Source IP, Attribute conditional on `type` being equal to `sourceIp`
+- `source_port` (String) Source port, 0-65535 (Single value, range or multiple values separated by spaces), Attribute conditional on `type` being equal to `sourcePort`
+- `traffic_to` (String) Traffic to, Attribute conditional on `type` being equal to `trafficTo`
   - Choices: `access`, `core`, `service`
 
 ## Import

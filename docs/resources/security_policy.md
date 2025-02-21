@@ -88,8 +88,8 @@ Required:
 
 Optional:
 
-- `destination_zone` (String) Destination Zone
-- `source_zone` (String) Source Zone
+- `destination_zone` (String) Destination Zone, Attribute conditional on `type` being equal to `zoneBasedFW`
+- `source_zone` (String) Source Zone, Attribute conditional on `type` being equal to `zoneBasedFW`
 - `version` (Number) Policy definition version
 
 

@@ -125,11 +125,11 @@ func (r *SecurityPolicyResource) Schema(ctx context.Context, req resource.Schema
 							},
 						},
 						"source_zone": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Source Zone").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Source Zone, Attribute conditional on `type` being equal to `zoneBasedFW`").String,
 							Optional:            true,
 						},
 						"destination_zone": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Destination Zone").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Destination Zone, Attribute conditional on `type` being equal to `zoneBasedFW`").String,
 							Optional:            true,
 						},
 					},
