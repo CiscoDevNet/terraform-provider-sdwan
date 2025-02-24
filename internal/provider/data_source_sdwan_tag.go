@@ -24,6 +24,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
@@ -68,17 +69,10 @@ func (d *TagDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 				MarkdownDescription: "Tag description",
 				Computed:            true,
 			},
-			"devices": schema.ListNestedAttribute{
-				MarkdownDescription: "Associated devices",
+			"devices": schema.SetAttribute{
+				MarkdownDescription: "List of associated devices",
+				ElementType:         types.StringType,
 				Computed:            true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"id": schema.StringAttribute{
-							MarkdownDescription: "Device ID",
-							Computed:            true,
-						},
-					},
-				},
 			},
 		},
 	}

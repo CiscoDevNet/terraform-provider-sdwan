@@ -21,13 +21,8 @@ attributes:
     example: My tag
   - model_name: tagAssociation
     tf_name: devices
-    type: List
-    description: Associated devices
-    attributes:
-      - model_name: id
-        tf_name: id
-        type: String
-        description: Device ID
-        id: true
-        mandatory: true
-        example: C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B
+    type: Set
+    element_type: String
+    description: List of associated devices
+    example:  C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B
+    test_value:  C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B

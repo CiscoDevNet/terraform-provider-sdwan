@@ -86,17 +86,10 @@ func (r *TagResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 					stringplanmodifier.RequiresReplace(),
 				},
 			},
-			"devices": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Associated devices").String,
+			"devices": schema.SetAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("List of associated devices").String,
+				ElementType:         types.StringType,
 				Optional:            true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"id": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Device ID").String,
-							Required:            true,
-						},
-					},
-				},
 			},
 		},
 	}
@@ -140,7 +133,7 @@ func (r *TagResource) Create(ctx context.Context, req resource.CreateRequest, re
 	}
 	plan.Id = types.StringValue(res.Get("#(name==\"" + plan.Name.ValueString() + "\").id").String())
 
-	if len(plan.Devices) > 0 {
+	if len(plan.Devices.Elements()) > 0 {
 		body = plan.toBodyDeviceAssociation(ctx)
 		res, err = r.client.Post("/v1/tags/associate", body)
 		if err != nil {
@@ -238,7 +231,7 @@ func (r *TagResource) Update(ctx context.Context, req resource.UpdateRequest, re
 	time.Sleep(time.Second)
 
 	// Add all devices in state
-	if len(plan.Devices) > 0 {
+	if len(plan.Devices.Elements()) > 0 {
 		body := plan.toBodyDeviceAssociation(ctx)
 		res, err := r.client.Post("/v1/tags/associate", body)
 		if err != nil {
@@ -265,7 +258,7 @@ func (r *TagResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
-	if len(state.Devices) > 0 {
+	if len(state.Devices.Elements()) > 0 {
 		body := state.toBodyDeviceAssociation(ctx)
 		res, err := r.client.Post("/v1/tags/associate?operationType=DELETE", body)
 		if err != nil {

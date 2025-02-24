@@ -20,7 +20,9 @@ package provider
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
+	"strings"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -33,11 +35,7 @@ type Tag struct {
 	Id          types.String `tfsdk:"id"`
 	Name        types.String `tfsdk:"name"`
 	Description types.String `tfsdk:"description"`
-	Devices     []TagDevices `tfsdk:"devices"`
-}
-
-type TagDevices struct {
-	Id types.String `tfsdk:"id"`
+	Devices     types.Set    `tfsdk:"devices"`
 }
 
 // End of section. //template:end types
@@ -75,10 +73,10 @@ func (data Tag) toBodyDeviceAssociation(ctx context.Context) string {
 
 		if true {
 			itemBody, _ = sjson.Set(itemBody, "objects", []interface{}{})
-			for _, item := range data.Devices {
+			for _, item := range data.Devices.Elements() {
 				itemChildBody := ""
-				if !item.Id.IsNull() {
-					itemChildBody, _ = sjson.Set(itemChildBody, "id", item.Id.ValueString())
+				if !item.IsNull() {
+					itemChildBody, _ = sjson.Set(itemChildBody, "id", strings.Trim(item.String(), "\""))
 					itemChildBody, _ = sjson.Set(itemChildBody, "objectType", "DEVICE")
 				}
 				itemBody, _ = sjson.SetRaw(itemBody, "objects.-1", itemChildBody)
@@ -101,22 +99,10 @@ func (data *Tag) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("tagAssociation"); value.Exists() && len(value.Array()) > 0 {
-		data.Devices = make([]TagDevices, 0)
-		value.ForEach(func(k, v gjson.Result) bool {
-			item := TagDevices{}
-			if cValue := v.Get("id"); cValue.Exists() {
-				item.Id = types.StringValue(cValue.String())
-			} else {
-				item.Id = types.StringNull()
-			}
-			data.Devices = append(data.Devices, item)
-			return true
-		})
+	if value := res.Get("tagAssociation"); value.Exists() {
+		data.Devices = helpers.GetStringSet(value.Array())
 	} else {
-		if len(data.Devices) > 0 {
-			data.Devices = []TagDevices{}
-		}
+		data.Devices = types.SetNull(types.StringType)
 	}
 }
 
@@ -131,14 +117,8 @@ func (data *Tag) hasChanges(ctx context.Context, state *Tag) bool {
 	if !data.Description.Equal(state.Description) {
 		hasChanges = true
 	}
-	if len(data.Devices) != len(state.Devices) {
+	if !data.Devices.Equal(state.Devices) {
 		hasChanges = true
-	} else {
-		for i := range data.Devices {
-			if !data.Devices[i].Id.Equal(state.Devices[i].Id) {
-				hasChanges = true
-			}
-		}
 	}
 	return hasChanges
 }
