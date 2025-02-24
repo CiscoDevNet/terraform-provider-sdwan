@@ -93,8 +93,8 @@ func (r *ZoneBasedFirewallPolicyDefinitionResource) Schema(ctx context.Context, 
 				},
 			},
 			"apply_zone_pairs": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Required:            true,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `mode` being equal to `security`").String,
+				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"source_zone": schema.StringAttribute{
@@ -106,9 +106,6 @@ func (r *ZoneBasedFirewallPolicyDefinitionResource) Schema(ctx context.Context, 
 							Optional:            true,
 						},
 					},
-				},
-				Validators: []validator.List{
-					listvalidator.SizeAtLeast(1),
 				},
 			},
 			"default_action": schema.StringAttribute{
@@ -178,10 +175,10 @@ func (r *ZoneBasedFirewallPolicyDefinitionResource) Schema(ctx context.Context, 
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Type of action entry").AddStringEnumDescription("log", "connectionEvents").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Type of action entry").AddStringEnumDescription("log", "connectionEvents", "advancedInspectionProfile").String,
 										Optional:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("log", "connectionEvents"),
+											stringvalidator.OneOf("log", "connectionEvents", "advancedInspectionProfile"),
 										},
 									},
 								},
