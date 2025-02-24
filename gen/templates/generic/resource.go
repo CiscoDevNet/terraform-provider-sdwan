@@ -153,6 +153,11 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 				{{- else if and (len .DefaultValue) (eq .Type "String")}}
 				Default:             stringdefault.StaticString("{{.DefaultValue}}"),
 				{{- end}}
+				{{- if .RequiresReplace}}
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				{{- end}}
 				{{- if isNestedListSet .}}
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -214,6 +219,11 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 							Default:             booldefault.StaticBool({{.DefaultValue}}),
 							{{- else if and (len .DefaultValue) (eq .Type "String")}}
 							Default:             stringdefault.StaticString("{{.DefaultValue}}"),
+							{{- end}}
+							{{- if .RequiresReplace}}
+							PlanModifiers: []planmodifier.String{
+								stringplanmodifier.RequiresReplace(),
+							},
 							{{- end}}
 							{{- if isNestedListSet .}}
 							NestedObject: schema.NestedAttributeObject{
@@ -277,6 +287,11 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 										{{- else if and (len .DefaultValue) (eq .Type "String")}}
 										Default:             stringdefault.StaticString("{{.DefaultValue}}"),
 										{{- end}}
+										{{- if .RequiresReplace}}
+										PlanModifiers: []planmodifier.String{
+											stringplanmodifier.RequiresReplace(),
+										},
+										{{- end}}
 										{{- if isNestedListSet .}}
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
@@ -338,6 +353,11 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 													Default:             booldefault.StaticBool({{.DefaultValue}}),
 													{{- else if and (len .DefaultValue) (eq .Type "String")}}
 													Default:             stringdefault.StaticString("{{.DefaultValue}}"),
+													{{- end}}
+													{{- if .RequiresReplace}}
+													PlanModifiers: []planmodifier.String{
+														stringplanmodifier.RequiresReplace(),
+													},
 													{{- end}}
 												},
 												{{- end}}
