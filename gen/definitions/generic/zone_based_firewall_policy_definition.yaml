@@ -32,8 +32,9 @@ attributes:
     tf_name: apply_zone_pairs
     data_path: [definition]
     type: List
-    min_list: 1
-    mandatory: true
+    conditional_attribute:
+      name: mode
+      value: security
     attributes:
       - model_name: sourceZone
         type: String
@@ -156,7 +157,7 @@ attributes:
             type: String
             id: true
             description: Type of action entry
-            enum_values: [log, connectionEvents]
+            enum_values: [log, connectionEvents, advancedInspectionProfile]
             example: log
 
 test_prerequisites: |

@@ -135,26 +135,26 @@ func (r *IPv6DeviceACLPolicyDefinitionResource) Schema(ctx context.Context, req 
 										},
 									},
 									"source_ip": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix, Attribute conditional on `type` being equal to `sourceIpv6`").String,
 										Optional:            true,
 									},
 									"destination_ip": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix, Attribute conditional on `type` being equal to `destinationIpv6`").String,
 										Optional:            true,
 									},
 									"source_ports": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source ports. Single value (0-65535) or ranges separated by spaces.").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Source ports. Single value (0-65535) or ranges separated by spaces., Attribute conditional on `type` being equal to `sourcePort`").String,
 										Optional:            true,
 									},
 									"destination_port": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination port, only `22` and `161` supported").AddIntegerRangeDescription(0, 65535).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination port, only `22` and `161` supported, Attribute conditional on `type` being equal to `destinationPort`").AddIntegerRangeDescription(0, 65535).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 65535),
 										},
 									},
 									"source_data_ipv6_prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source data IPv6 prefix list ID").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Source data IPv6 prefix list ID, Attribute conditional on `type` being equal to `sourceDataIpv6PrefixList`").String,
 										Optional:            true,
 									},
 									"source_data_ipv6_prefix_list_version": schema.Int64Attribute{
@@ -162,7 +162,7 @@ func (r *IPv6DeviceACLPolicyDefinitionResource) Schema(ctx context.Context, req 
 										Optional:            true,
 									},
 									"destination_data_ipv6_prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination data IPv6 prefix list ID").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination data IPv6 prefix list ID, Attribute conditional on `type` being equal to `destinationDataIpv6PrefixList`").String,
 										Optional:            true,
 									},
 									"destination_data_ipv6_prefix_list_version": schema.Int64Attribute{
@@ -185,7 +185,7 @@ func (r *IPv6DeviceACLPolicyDefinitionResource) Schema(ctx context.Context, req 
 										},
 									},
 									"counter_name": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Counter name").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Counter name, Attribute conditional on `type` being equal to `count`").String,
 										Optional:            true,
 									},
 								},

@@ -88,7 +88,7 @@ func (data ZoneBasedFirewallPolicyDefinition) toBody(ctx context.Context) string
 	if !data.Mode.IsNull() {
 		body, _ = sjson.Set(body, "mode", data.Mode.ValueString())
 	}
-	if true {
+	if true && data.Mode.ValueString() == "security" {
 		body, _ = sjson.Set(body, "definition.entries", []interface{}{})
 		for _, item := range data.ApplyZonePairs {
 			itemBody := ""
@@ -177,7 +177,7 @@ func (data *ZoneBasedFirewallPolicyDefinition) fromBody(ctx context.Context, res
 	} else {
 		data.Mode = types.StringNull()
 	}
-	if value := res.Get("definition.entries"); value.Exists() && len(value.Array()) > 0 {
+	if value := res.Get("definition.entries"); value.Exists() && len(value.Array()) > 0 && data.Mode.ValueString() == "security" {
 		data.ApplyZonePairs = make([]ZoneBasedFirewallPolicyDefinitionApplyZonePairs, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ZoneBasedFirewallPolicyDefinitionApplyZonePairs{}

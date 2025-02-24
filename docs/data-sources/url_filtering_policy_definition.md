@@ -35,6 +35,7 @@ data "sdwan_url_filtering_policy_definition" "example" {
 - `block_url_list_id` (String) Block URL list ID
 - `block_url_list_version` (Number) Block URL list version
 - `description` (String) The description of the policy definition.
+- `logging` (Attributes List) (see [below for nested schema](#nestedatt--logging))
 - `mode` (String) The policy mode
 - `name` (String) The name of the policy definition.
 - `target_vpns` (Set of String) List of VPN IDs
@@ -42,3 +43,11 @@ data "sdwan_url_filtering_policy_definition" "example" {
 - `web_categories` (Set of String) List of categories to block or allow
 - `web_categories_action` (String) whether the selected web categories should be blocked or allowed.
 - `web_reputation` (String) The web reputation of the policy definition
+
+<a id="nestedatt--logging"></a>
+### Nested Schema for `logging`
+
+Read-Only:
+
+- `external_syslog_server_ip` (String) External Syslog Server IP
+- `external_syslog_server_vpn` (String) External Syslog Server VPN

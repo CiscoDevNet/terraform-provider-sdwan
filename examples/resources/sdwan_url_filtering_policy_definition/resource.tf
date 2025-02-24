@@ -9,4 +9,10 @@ resource "sdwan_url_filtering_policy_definition" "example" {
   target_vpns           = ["1"]
   block_page_action     = "text"
   block_page_contents   = "Access to the requested page has been denied. Please contact your Network Administrator"
+  logging = [
+    {
+      external_syslog_server_ip  = "10.0.0.1"
+      external_syslog_server_vpn = "123"
+    }
+  ]
 }

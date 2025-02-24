@@ -24,6 +24,12 @@ resource "sdwan_url_filtering_policy_definition" "example" {
   target_vpns           = ["1"]
   block_page_action     = "text"
   block_page_contents   = "Access to the requested page has been denied. Please contact your Network Administrator"
+  logging = [
+    {
+      external_syslog_server_ip  = "10.0.0.1"
+      external_syslog_server_vpn = "123"
+    }
+  ]
 }
 ```
 
@@ -45,6 +51,7 @@ resource "sdwan_url_filtering_policy_definition" "example" {
 - `block_page_contents` (String) The message displayed or URL redirected to when a blocked page is accessed.
 - `block_url_list_id` (String) Block URL list ID
 - `block_url_list_version` (Number) Block URL list version
+- `logging` (Attributes List) (see [below for nested schema](#nestedatt--logging))
 - `mode` (String) The policy mode
   - Choices: `security`, `unified`
 - `target_vpns` (Set of String) List of VPN IDs
@@ -58,6 +65,14 @@ resource "sdwan_url_filtering_policy_definition" "example" {
 
 - `id` (String) The id of the object
 - `version` (Number) The version of the object
+
+<a id="nestedatt--logging"></a>
+### Nested Schema for `logging`
+
+Optional:
+
+- `external_syslog_server_ip` (String) External Syslog Server IP
+- `external_syslog_server_vpn` (String) External Syslog Server VPN
 
 ## Import
 

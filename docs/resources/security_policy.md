@@ -53,14 +53,21 @@ resource "sdwan_security_policy" "example" {
   - Choices: `open`, `close`
 - `high_speed_logging_server_ip` (String) High Speed Logging Server IP
 - `high_speed_logging_server_port` (String) High Speed Logging Port
+- `high_speed_logging_server_source_interface` (String) High Speed Logging Source Interface
 - `high_speed_logging_vpn` (String) High Speed Logging VPN
+- `imcp_unreachable_allow` (Boolean) ICMP Unreachable Allow
 - `logging` (Attributes List) (see [below for nested schema](#nestedatt--logging))
 - `match_statistics_per_filter` (String) Match Statistics per-filter
   - Choices: `on`, `off`
+- `max_incomplete_icmp_limit` (Number) Max Incomplete ICMP Limit
+- `max_incomplete_tcp_limit` (Number) Max Incomplete TCP Limit
+- `max_incomplete_udp_limit` (Number) Max Incomplete UDP Limit
 - `mode` (String) The policy mode
   - Choices: `security`, `unified`
   - Default value: `security`
+- `session_reclassify_allow` (Boolean) Session Reclassify Allow
 - `tcp_syn_flood_limit` (String) TCP SYN Flood Limit, value from 1 to 4294967295
+- `unified_logging` (Boolean) Unified Logging
 - `use_case` (String) The use case of the security policy
   - Choices: `custom`, `compliance`, `guestAccess`, `directCloudAccess`, `directInternetAccess`, `directCloudAccess`
   - Default value: `custom`
@@ -81,6 +88,8 @@ Required:
 
 Optional:
 
+- `destination_zone` (String) Destination Zone, Attribute conditional on `type` being equal to `zoneBasedFW`
+- `source_zone` (String) Source Zone, Attribute conditional on `type` being equal to `zoneBasedFW`
 - `version` (Number) Policy definition version
 
 
@@ -90,6 +99,7 @@ Optional:
 Optional:
 
 - `external_syslog_server_ip` (String) External Syslog Server IP
+- `external_syslog_server_source_interface` (String) External Syslog Server Source Interface
 - `external_syslog_server_vpn` (String) External Syslog Server VPN
 
 ## Import

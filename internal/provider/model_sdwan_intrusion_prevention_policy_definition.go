@@ -31,17 +31,24 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type IntrusionPreventionPolicyDefinition struct {
-	Id                      types.String `tfsdk:"id"`
-	Version                 types.Int64  `tfsdk:"version"`
-	Name                    types.String `tfsdk:"name"`
-	Description             types.String `tfsdk:"description"`
-	Mode                    types.String `tfsdk:"mode"`
-	InspectionMode          types.String `tfsdk:"inspection_mode"`
-	LogLevel                types.String `tfsdk:"log_level"`
-	SignatureSet            types.String `tfsdk:"signature_set"`
-	IpsSignatureListId      types.String `tfsdk:"ips_signature_list_id"`
-	IpsSignatureListVersion types.Int64  `tfsdk:"ips_signature_list_version"`
-	TargetVpns              types.Set    `tfsdk:"target_vpns"`
+	Id                      types.String                                 `tfsdk:"id"`
+	Version                 types.Int64                                  `tfsdk:"version"`
+	Name                    types.String                                 `tfsdk:"name"`
+	Description             types.String                                 `tfsdk:"description"`
+	Mode                    types.String                                 `tfsdk:"mode"`
+	InspectionMode          types.String                                 `tfsdk:"inspection_mode"`
+	LogLevel                types.String                                 `tfsdk:"log_level"`
+	CustomSignature         types.Bool                                   `tfsdk:"custom_signature"`
+	SignatureSet            types.String                                 `tfsdk:"signature_set"`
+	IpsSignatureListId      types.String                                 `tfsdk:"ips_signature_list_id"`
+	IpsSignatureListVersion types.Int64                                  `tfsdk:"ips_signature_list_version"`
+	TargetVpns              types.Set                                    `tfsdk:"target_vpns"`
+	Logging                 []IntrusionPreventionPolicyDefinitionLogging `tfsdk:"logging"`
+}
+
+type IntrusionPreventionPolicyDefinitionLogging struct {
+	ExternalSyslogServerIp  types.String `tfsdk:"external_syslog_server_ip"`
+	ExternalSyslogServerVpn types.String `tfsdk:"external_syslog_server_vpn"`
 }
 
 // End of section. //template:end types
@@ -74,6 +81,13 @@ func (data IntrusionPreventionPolicyDefinition) toBody(ctx context.Context) stri
 	if !data.LogLevel.IsNull() {
 		body, _ = sjson.Set(body, "definition.logLevel", data.LogLevel.ValueString())
 	}
+	if !data.CustomSignature.IsNull() {
+		if false && data.CustomSignature.ValueBool() {
+			body, _ = sjson.Set(body, "definition.customSignature", "")
+		} else {
+			body, _ = sjson.Set(body, "definition.customSignature", data.CustomSignature.ValueBool())
+		}
+	}
 	if !data.SignatureSet.IsNull() {
 		body, _ = sjson.Set(body, "definition.signatureSet", data.SignatureSet.ValueString())
 	}
@@ -84,6 +98,19 @@ func (data IntrusionPreventionPolicyDefinition) toBody(ctx context.Context) stri
 		var values []string
 		data.TargetVpns.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, "definition.targetVpns", values)
+	}
+	if true {
+		body, _ = sjson.Set(body, "definition.logging", []interface{}{})
+		for _, item := range data.Logging {
+			itemBody := ""
+			if !item.ExternalSyslogServerIp.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "serverIP", item.ExternalSyslogServerIp.ValueString())
+			}
+			if !item.ExternalSyslogServerVpn.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "vpn", item.ExternalSyslogServerVpn.ValueString())
+			}
+			body, _ = sjson.SetRaw(body, "definition.logging.-1", itemBody)
+		}
 	}
 	return body
 }
@@ -118,6 +145,15 @@ func (data *IntrusionPreventionPolicyDefinition) fromBody(ctx context.Context, r
 	} else {
 		data.LogLevel = types.StringNull()
 	}
+	if value := res.Get("definition.customSignature"); value.Exists() {
+		if false && value.String() == "" {
+			data.CustomSignature = types.BoolValue(true)
+		} else {
+			data.CustomSignature = types.BoolValue(value.Bool())
+		}
+	} else {
+		data.CustomSignature = types.BoolNull()
+	}
 	if value := res.Get("definition.signatureSet"); value.Exists() {
 		data.SignatureSet = types.StringValue(value.String())
 	} else {
@@ -132,6 +168,28 @@ func (data *IntrusionPreventionPolicyDefinition) fromBody(ctx context.Context, r
 		data.TargetVpns = helpers.GetStringSet(value.Array())
 	} else {
 		data.TargetVpns = types.SetNull(types.StringType)
+	}
+	if value := res.Get("definition.logging"); value.Exists() && len(value.Array()) > 0 {
+		data.Logging = make([]IntrusionPreventionPolicyDefinitionLogging, 0)
+		value.ForEach(func(k, v gjson.Result) bool {
+			item := IntrusionPreventionPolicyDefinitionLogging{}
+			if cValue := v.Get("serverIP"); cValue.Exists() {
+				item.ExternalSyslogServerIp = types.StringValue(cValue.String())
+			} else {
+				item.ExternalSyslogServerIp = types.StringNull()
+			}
+			if cValue := v.Get("vpn"); cValue.Exists() {
+				item.ExternalSyslogServerVpn = types.StringValue(cValue.String())
+			} else {
+				item.ExternalSyslogServerVpn = types.StringNull()
+			}
+			data.Logging = append(data.Logging, item)
+			return true
+		})
+	} else {
+		if len(data.Logging) > 0 {
+			data.Logging = []IntrusionPreventionPolicyDefinitionLogging{}
+		}
 	}
 	data.updateVersions(ctx, &state)
 }
@@ -156,6 +214,9 @@ func (data *IntrusionPreventionPolicyDefinition) hasChanges(ctx context.Context,
 	if !data.LogLevel.Equal(state.LogLevel) {
 		hasChanges = true
 	}
+	if !data.CustomSignature.Equal(state.CustomSignature) {
+		hasChanges = true
+	}
 	if !data.SignatureSet.Equal(state.SignatureSet) {
 		hasChanges = true
 	}
@@ -164,6 +225,18 @@ func (data *IntrusionPreventionPolicyDefinition) hasChanges(ctx context.Context,
 	}
 	if !data.TargetVpns.Equal(state.TargetVpns) {
 		hasChanges = true
+	}
+	if len(data.Logging) != len(state.Logging) {
+		hasChanges = true
+	} else {
+		for i := range data.Logging {
+			if !data.Logging[i].ExternalSyslogServerIp.Equal(state.Logging[i].ExternalSyslogServerIp) {
+				hasChanges = true
+			}
+			if !data.Logging[i].ExternalSyslogServerVpn.Equal(state.Logging[i].ExternalSyslogServerVpn) {
+				hasChanges = true
+			}
+		}
 	}
 	return hasChanges
 }

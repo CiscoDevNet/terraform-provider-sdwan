@@ -80,7 +80,7 @@ func (data TLSSSLProfilePolicyDefinition) toBody(ctx context.Context) string {
 	if !data.NeverDecryptCategories.IsNull() {
 		var values []string
 		data.NeverDecryptCategories.ElementsAs(ctx, &values, false)
-		body, _ = sjson.Set(body, "definition.never_decrypt_categories", values)
+		body, _ = sjson.Set(body, "definition.neverDecryptCategories", values)
 	}
 	if !data.SkipDecryptCategories.IsNull() {
 		var values []string
@@ -98,10 +98,10 @@ func (data TLSSSLProfilePolicyDefinition) toBody(ctx context.Context) string {
 		}
 	}
 	if !data.AllowUrlListId.IsNull() {
-		body, _ = sjson.Set(body, "definition.filteredUrlWhiteList.ref", data.AllowUrlListId.ValueString())
+		body, _ = sjson.Set(body, "definition.urlWhiteList.ref", data.AllowUrlListId.ValueString())
 	}
 	if !data.BlockUrlListId.IsNull() {
-		body, _ = sjson.Set(body, "definition.filteredUrlBlackList.ref", data.BlockUrlListId.ValueString())
+		body, _ = sjson.Set(body, "definition.urlBlackList.ref", data.BlockUrlListId.ValueString())
 	}
 	if !data.FailDecrypt.IsNull() {
 		if false && data.FailDecrypt.ValueBool() {
@@ -138,7 +138,7 @@ func (data *TLSSSLProfilePolicyDefinition) fromBody(ctx context.Context, res gjs
 	} else {
 		data.DecryptCategories = types.SetNull(types.StringType)
 	}
-	if value := res.Get("definition.never_decrypt_categories"); value.Exists() {
+	if value := res.Get("definition.neverDecryptCategories"); value.Exists() {
 		data.NeverDecryptCategories = helpers.GetStringSet(value.Array())
 	} else {
 		data.NeverDecryptCategories = types.SetNull(types.StringType)
@@ -162,12 +162,12 @@ func (data *TLSSSLProfilePolicyDefinition) fromBody(ctx context.Context, res gjs
 	} else {
 		data.Reputation = types.BoolNull()
 	}
-	if value := res.Get("definition.filteredUrlWhiteList.ref"); value.Exists() {
+	if value := res.Get("definition.urlWhiteList.ref"); value.Exists() {
 		data.AllowUrlListId = types.StringValue(value.String())
 	} else {
 		data.AllowUrlListId = types.StringNull()
 	}
-	if value := res.Get("definition.filteredUrlBlackList.ref"); value.Exists() {
+	if value := res.Get("definition.urlBlackList.ref"); value.Exists() {
 		data.BlockUrlListId = types.StringValue(value.String())
 	} else {
 		data.BlockUrlListId = types.StringNull()

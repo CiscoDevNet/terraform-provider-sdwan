@@ -42,6 +42,12 @@ attributes:
       [emergency, alert, critical, error, warning, notice, info, debug]
     description: Log level
     example: alert
+  - model_name: customSignature
+    data_path: [definition]
+    tf_name: custom_signature
+    type: Bool
+    description: Custom signature
+    example: false
   - model_name: signatureSet
     data_path: [definition]
     tf_name: signature_set
@@ -68,3 +74,18 @@ attributes:
     element_type: String
     description: List of VPN IDs
     example: 1
+  - model_name: logging
+    data_path: [definition]
+    tf_name: logging
+    type: List
+    attributes:
+      - model_name: serverIP
+        tf_name: external_syslog_server_ip
+        type: String
+        description: External Syslog Server IP
+        example: 10.0.0.1
+      - model_name: vpn
+        tf_name: external_syslog_server_vpn
+        type: String
+        description: External Syslog Server VPN
+        example: 123

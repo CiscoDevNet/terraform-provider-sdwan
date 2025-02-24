@@ -105,6 +105,10 @@ func (r *IntrusionPreventionPolicyDefinitionResource) Schema(ctx context.Context
 					stringvalidator.OneOf("emergency", "alert", "critical", "error", "warning", "notice", "info", "debug"),
 				},
 			},
+			"custom_signature": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Custom signature").String,
+				Optional:            true,
+			},
 			"signature_set": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Signature set").AddStringEnumDescription("balanced", "connectivity", "security").String,
 				Optional:            true,
@@ -124,6 +128,22 @@ func (r *IntrusionPreventionPolicyDefinitionResource) Schema(ctx context.Context
 				MarkdownDescription: helpers.NewAttributeDescription("List of VPN IDs").String,
 				ElementType:         types.StringType,
 				Optional:            true,
+			},
+			"logging": schema.ListNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				Optional:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"external_syslog_server_ip": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("External Syslog Server IP").String,
+							Optional:            true,
+						},
+						"external_syslog_server_vpn": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("External Syslog Server VPN").String,
+							Optional:            true,
+						},
+					},
+				},
 			},
 		},
 	}

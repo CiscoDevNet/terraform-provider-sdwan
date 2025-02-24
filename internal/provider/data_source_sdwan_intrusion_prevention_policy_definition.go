@@ -86,6 +86,10 @@ func (d *IntrusionPreventionPolicyDefinitionDataSource) Schema(ctx context.Conte
 				MarkdownDescription: "Log level",
 				Computed:            true,
 			},
+			"custom_signature": schema.BoolAttribute{
+				MarkdownDescription: "Custom signature",
+				Computed:            true,
+			},
 			"signature_set": schema.StringAttribute{
 				MarkdownDescription: "Signature set",
 				Computed:            true,
@@ -102,6 +106,22 @@ func (d *IntrusionPreventionPolicyDefinitionDataSource) Schema(ctx context.Conte
 				MarkdownDescription: "List of VPN IDs",
 				ElementType:         types.StringType,
 				Computed:            true,
+			},
+			"logging": schema.ListNestedAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"external_syslog_server_ip": schema.StringAttribute{
+							MarkdownDescription: "External Syslog Server IP",
+							Computed:            true,
+						},
+						"external_syslog_server_vpn": schema.StringAttribute{
+							MarkdownDescription: "External Syslog Server VPN",
+							Computed:            true,
+						},
+					},
+				},
 			},
 		},
 	}

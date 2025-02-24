@@ -31,33 +31,43 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type SecurityPolicy struct {
-	Id                         types.String                `tfsdk:"id"`
-	Version                    types.Int64                 `tfsdk:"version"`
-	Name                       types.String                `tfsdk:"name"`
-	Description                types.String                `tfsdk:"description"`
-	Mode                       types.String                `tfsdk:"mode"`
-	UseCase                    types.String                `tfsdk:"use_case"`
-	Definitions                []SecurityPolicyDefinitions `tfsdk:"definitions"`
-	DirectInternetApplications types.String                `tfsdk:"direct_internet_applications"`
-	TcpSynFloodLimit           types.String                `tfsdk:"tcp_syn_flood_limit"`
-	AuditTrail                 types.String                `tfsdk:"audit_trail"`
-	MatchStatisticsPerFilter   types.String                `tfsdk:"match_statistics_per_filter"`
-	FailureMode                types.String                `tfsdk:"failure_mode"`
-	HighSpeedLoggingServerIp   types.String                `tfsdk:"high_speed_logging_server_ip"`
-	HighSpeedLoggingVpn        types.String                `tfsdk:"high_speed_logging_vpn"`
-	HighSpeedLoggingServerPort types.String                `tfsdk:"high_speed_logging_server_port"`
-	Logging                    []SecurityPolicyLogging     `tfsdk:"logging"`
+	Id                                    types.String                `tfsdk:"id"`
+	Version                               types.Int64                 `tfsdk:"version"`
+	Name                                  types.String                `tfsdk:"name"`
+	Description                           types.String                `tfsdk:"description"`
+	Mode                                  types.String                `tfsdk:"mode"`
+	UseCase                               types.String                `tfsdk:"use_case"`
+	Definitions                           []SecurityPolicyDefinitions `tfsdk:"definitions"`
+	DirectInternetApplications            types.String                `tfsdk:"direct_internet_applications"`
+	TcpSynFloodLimit                      types.String                `tfsdk:"tcp_syn_flood_limit"`
+	AuditTrail                            types.String                `tfsdk:"audit_trail"`
+	MatchStatisticsPerFilter              types.String                `tfsdk:"match_statistics_per_filter"`
+	FailureMode                           types.String                `tfsdk:"failure_mode"`
+	HighSpeedLoggingServerIp              types.String                `tfsdk:"high_speed_logging_server_ip"`
+	HighSpeedLoggingVpn                   types.String                `tfsdk:"high_speed_logging_vpn"`
+	HighSpeedLoggingServerPort            types.String                `tfsdk:"high_speed_logging_server_port"`
+	HighSpeedLoggingServerSourceInterface types.String                `tfsdk:"high_speed_logging_server_source_interface"`
+	MaxIncompleteIcmpLimit                types.Int64                 `tfsdk:"max_incomplete_icmp_limit"`
+	MaxIncompleteTcpLimit                 types.Int64                 `tfsdk:"max_incomplete_tcp_limit"`
+	MaxIncompleteUdpLimit                 types.Int64                 `tfsdk:"max_incomplete_udp_limit"`
+	SessionReclassifyAllow                types.Bool                  `tfsdk:"session_reclassify_allow"`
+	ImcpUnreachableAllow                  types.Bool                  `tfsdk:"imcp_unreachable_allow"`
+	UnifiedLogging                        types.Bool                  `tfsdk:"unified_logging"`
+	Logging                               []SecurityPolicyLogging     `tfsdk:"logging"`
 }
 
 type SecurityPolicyDefinitions struct {
-	Id      types.String `tfsdk:"id"`
-	Version types.Int64  `tfsdk:"version"`
-	Type    types.String `tfsdk:"type"`
+	Id              types.String `tfsdk:"id"`
+	Version         types.Int64  `tfsdk:"version"`
+	Type            types.String `tfsdk:"type"`
+	SourceZone      types.String `tfsdk:"source_zone"`
+	DestinationZone types.String `tfsdk:"destination_zone"`
 }
 
 type SecurityPolicyLogging struct {
-	ExternalSyslogServerIp  types.String `tfsdk:"external_syslog_server_ip"`
-	ExternalSyslogServerVpn types.String `tfsdk:"external_syslog_server_vpn"`
+	ExternalSyslogServerIp              types.String `tfsdk:"external_syslog_server_ip"`
+	ExternalSyslogServerVpn             types.String `tfsdk:"external_syslog_server_vpn"`
+	ExternalSyslogServerSourceInterface types.String `tfsdk:"external_syslog_server_source_interface"`
 }
 
 // End of section. //template:end types
@@ -97,6 +107,12 @@ func (data SecurityPolicy) toBody(ctx context.Context) string {
 			if !item.Type.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "type", item.Type.ValueString())
 			}
+			if !item.SourceZone.IsNull() && item.Type.ValueString() == "zoneBasedFW" {
+				itemBody, _ = sjson.Set(itemBody, "entries.srcZoneListId", item.SourceZone.ValueString())
+			}
+			if !item.DestinationZone.IsNull() && item.Type.ValueString() == "zoneBasedFW" {
+				itemBody, _ = sjson.Set(itemBody, "entries.dstZoneListId", item.DestinationZone.ValueString())
+			}
 			body, _ = sjson.SetRaw(body, "policyDefinition.assembly.-1", itemBody)
 		}
 	}
@@ -124,6 +140,39 @@ func (data SecurityPolicy) toBody(ctx context.Context) string {
 	if !data.HighSpeedLoggingServerPort.IsNull() {
 		body, _ = sjson.Set(body, "policyDefinition.settings.highSpeedLogging.port", data.HighSpeedLoggingServerPort.ValueString())
 	}
+	if !data.HighSpeedLoggingServerSourceInterface.IsNull() {
+		body, _ = sjson.Set(body, "policyDefinition.settings.highSpeedLogging.sourceInterface", data.HighSpeedLoggingServerSourceInterface.ValueString())
+	}
+	if !data.MaxIncompleteIcmpLimit.IsNull() {
+		body, _ = sjson.Set(body, "policyDefinition.settings.maxIncompleteIcmpLimit", data.MaxIncompleteIcmpLimit.ValueInt64())
+	}
+	if !data.MaxIncompleteTcpLimit.IsNull() {
+		body, _ = sjson.Set(body, "policyDefinition.settings.maxIncompleteTcpLimit", data.MaxIncompleteTcpLimit.ValueInt64())
+	}
+	if !data.MaxIncompleteUdpLimit.IsNull() {
+		body, _ = sjson.Set(body, "policyDefinition.settings.maxIncompleteUdpLimit", data.MaxIncompleteUdpLimit.ValueInt64())
+	}
+	if !data.SessionReclassifyAllow.IsNull() {
+		if false && data.SessionReclassifyAllow.ValueBool() {
+			body, _ = sjson.Set(body, "policyDefinition.settings.sessionReclassifyAllow", "")
+		} else {
+			body, _ = sjson.Set(body, "policyDefinition.settings.sessionReclassifyAllow", data.SessionReclassifyAllow.ValueBool())
+		}
+	}
+	if !data.ImcpUnreachableAllow.IsNull() {
+		if false && data.ImcpUnreachableAllow.ValueBool() {
+			body, _ = sjson.Set(body, "policyDefinition.settings.icmpUnreachableAllow", "")
+		} else {
+			body, _ = sjson.Set(body, "policyDefinition.settings.icmpUnreachableAllow", data.ImcpUnreachableAllow.ValueBool())
+		}
+	}
+	if !data.UnifiedLogging.IsNull() {
+		if false && data.UnifiedLogging.ValueBool() {
+			body, _ = sjson.Set(body, "policyDefinition.settings.unifiedLogging", "")
+		} else {
+			body, _ = sjson.Set(body, "policyDefinition.settings.unifiedLogging", data.UnifiedLogging.ValueBool())
+		}
+	}
 	if true {
 		body, _ = sjson.Set(body, "policyDefinition.settings.logging", []interface{}{})
 		for _, item := range data.Logging {
@@ -133,6 +182,9 @@ func (data SecurityPolicy) toBody(ctx context.Context) string {
 			}
 			if !item.ExternalSyslogServerVpn.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "vpn", item.ExternalSyslogServerVpn.ValueString())
+			}
+			if !item.ExternalSyslogServerSourceInterface.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "sourceInterface", item.ExternalSyslogServerSourceInterface.ValueString())
 			}
 			body, _ = sjson.SetRaw(body, "policyDefinition.settings.logging.-1", itemBody)
 		}
@@ -178,6 +230,16 @@ func (data *SecurityPolicy) fromBody(ctx context.Context, res gjson.Result) {
 				item.Type = types.StringValue(cValue.String())
 			} else {
 				item.Type = types.StringNull()
+			}
+			if cValue := v.Get("entries.srcZoneListId"); cValue.Exists() && item.Type.ValueString() == "zoneBasedFW" {
+				item.SourceZone = types.StringValue(cValue.String())
+			} else {
+				item.SourceZone = types.StringNull()
+			}
+			if cValue := v.Get("entries.dstZoneListId"); cValue.Exists() && item.Type.ValueString() == "zoneBasedFW" {
+				item.DestinationZone = types.StringValue(cValue.String())
+			} else {
+				item.DestinationZone = types.StringNull()
 			}
 			data.Definitions = append(data.Definitions, item)
 			return true
@@ -227,6 +289,53 @@ func (data *SecurityPolicy) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.HighSpeedLoggingServerPort = types.StringNull()
 	}
+	if value := res.Get("policyDefinition.settings.highSpeedLogging.sourceInterface"); value.Exists() {
+		data.HighSpeedLoggingServerSourceInterface = types.StringValue(value.String())
+	} else {
+		data.HighSpeedLoggingServerSourceInterface = types.StringNull()
+	}
+	if value := res.Get("policyDefinition.settings.maxIncompleteIcmpLimit"); value.Exists() {
+		data.MaxIncompleteIcmpLimit = types.Int64Value(value.Int())
+	} else {
+		data.MaxIncompleteIcmpLimit = types.Int64Null()
+	}
+	if value := res.Get("policyDefinition.settings.maxIncompleteTcpLimit"); value.Exists() {
+		data.MaxIncompleteTcpLimit = types.Int64Value(value.Int())
+	} else {
+		data.MaxIncompleteTcpLimit = types.Int64Null()
+	}
+	if value := res.Get("policyDefinition.settings.maxIncompleteUdpLimit"); value.Exists() {
+		data.MaxIncompleteUdpLimit = types.Int64Value(value.Int())
+	} else {
+		data.MaxIncompleteUdpLimit = types.Int64Null()
+	}
+	if value := res.Get("policyDefinition.settings.sessionReclassifyAllow"); value.Exists() {
+		if false && value.String() == "" {
+			data.SessionReclassifyAllow = types.BoolValue(true)
+		} else {
+			data.SessionReclassifyAllow = types.BoolValue(value.Bool())
+		}
+	} else {
+		data.SessionReclassifyAllow = types.BoolNull()
+	}
+	if value := res.Get("policyDefinition.settings.icmpUnreachableAllow"); value.Exists() {
+		if false && value.String() == "" {
+			data.ImcpUnreachableAllow = types.BoolValue(true)
+		} else {
+			data.ImcpUnreachableAllow = types.BoolValue(value.Bool())
+		}
+	} else {
+		data.ImcpUnreachableAllow = types.BoolNull()
+	}
+	if value := res.Get("policyDefinition.settings.unifiedLogging"); value.Exists() {
+		if false && value.String() == "" {
+			data.UnifiedLogging = types.BoolValue(true)
+		} else {
+			data.UnifiedLogging = types.BoolValue(value.Bool())
+		}
+	} else {
+		data.UnifiedLogging = types.BoolNull()
+	}
 	if value := res.Get("policyDefinition.settings.logging"); value.Exists() && len(value.Array()) > 0 {
 		data.Logging = make([]SecurityPolicyLogging, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -240,6 +349,11 @@ func (data *SecurityPolicy) fromBody(ctx context.Context, res gjson.Result) {
 				item.ExternalSyslogServerVpn = types.StringValue(cValue.String())
 			} else {
 				item.ExternalSyslogServerVpn = types.StringNull()
+			}
+			if cValue := v.Get("sourceInterface"); cValue.Exists() {
+				item.ExternalSyslogServerSourceInterface = types.StringValue(cValue.String())
+			} else {
+				item.ExternalSyslogServerSourceInterface = types.StringNull()
 			}
 			data.Logging = append(data.Logging, item)
 			return true
@@ -279,6 +393,12 @@ func (data *SecurityPolicy) hasChanges(ctx context.Context, state *SecurityPolic
 			if !data.Definitions[i].Type.Equal(state.Definitions[i].Type) {
 				hasChanges = true
 			}
+			if !data.Definitions[i].SourceZone.Equal(state.Definitions[i].SourceZone) {
+				hasChanges = true
+			}
+			if !data.Definitions[i].DestinationZone.Equal(state.Definitions[i].DestinationZone) {
+				hasChanges = true
+			}
 		}
 	}
 	if !data.DirectInternetApplications.Equal(state.DirectInternetApplications) {
@@ -305,6 +425,27 @@ func (data *SecurityPolicy) hasChanges(ctx context.Context, state *SecurityPolic
 	if !data.HighSpeedLoggingServerPort.Equal(state.HighSpeedLoggingServerPort) {
 		hasChanges = true
 	}
+	if !data.HighSpeedLoggingServerSourceInterface.Equal(state.HighSpeedLoggingServerSourceInterface) {
+		hasChanges = true
+	}
+	if !data.MaxIncompleteIcmpLimit.Equal(state.MaxIncompleteIcmpLimit) {
+		hasChanges = true
+	}
+	if !data.MaxIncompleteTcpLimit.Equal(state.MaxIncompleteTcpLimit) {
+		hasChanges = true
+	}
+	if !data.MaxIncompleteUdpLimit.Equal(state.MaxIncompleteUdpLimit) {
+		hasChanges = true
+	}
+	if !data.SessionReclassifyAllow.Equal(state.SessionReclassifyAllow) {
+		hasChanges = true
+	}
+	if !data.ImcpUnreachableAllow.Equal(state.ImcpUnreachableAllow) {
+		hasChanges = true
+	}
+	if !data.UnifiedLogging.Equal(state.UnifiedLogging) {
+		hasChanges = true
+	}
 	if len(data.Logging) != len(state.Logging) {
 		hasChanges = true
 	} else {
@@ -313,6 +454,9 @@ func (data *SecurityPolicy) hasChanges(ctx context.Context, state *SecurityPolic
 				hasChanges = true
 			}
 			if !data.Logging[i].ExternalSyslogServerVpn.Equal(state.Logging[i].ExternalSyslogServerVpn) {
+				hasChanges = true
+			}
+			if !data.Logging[i].ExternalSyslogServerSourceInterface.Equal(state.Logging[i].ExternalSyslogServerSourceInterface) {
 				hasChanges = true
 			}
 		}

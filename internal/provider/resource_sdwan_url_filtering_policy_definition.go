@@ -147,6 +147,22 @@ func (r *URLFilteringPolicyDefinitionResource) Schema(ctx context.Context, req r
 				MarkdownDescription: helpers.NewAttributeDescription("The message displayed or URL redirected to when a blocked page is accessed.").String,
 				Optional:            true,
 			},
+			"logging": schema.ListNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				Optional:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"external_syslog_server_ip": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("External Syslog Server IP").String,
+							Optional:            true,
+						},
+						"external_syslog_server_vpn": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("External Syslog Server VPN").String,
+							Optional:            true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
