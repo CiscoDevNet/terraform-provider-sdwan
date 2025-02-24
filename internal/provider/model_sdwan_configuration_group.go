@@ -25,6 +25,7 @@ import (
 	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -38,15 +39,11 @@ type ConfigurationGroup struct {
 	Name                types.String                        `tfsdk:"name"`
 	Description         types.String                        `tfsdk:"description"`
 	Solution            types.String                        `tfsdk:"solution"`
-	FeatureProfiles     []ConfigurationGroupFeatureProfiles `tfsdk:"feature_profiles"`
+	FeatureProfiles     types.Set                           `tfsdk:"feature_profiles"`
 	TopologyDevices     []ConfigurationGroupTopologyDevices `tfsdk:"topology_devices"`
 	TopologySiteDevices types.Int64                         `tfsdk:"topology_site_devices"`
 	Devices             []ConfigurationGroupDevices         `tfsdk:"devices"`
 	FeatureVersions     types.List                          `tfsdk:"feature_versions"`
-}
-
-type ConfigurationGroupFeatureProfiles struct {
-	Id types.String `tfsdk:"id"`
 }
 
 type ConfigurationGroupTopologyDevices struct {
@@ -94,10 +91,10 @@ func (data ConfigurationGroup) toBodyConfigGroup(ctx context.Context) string {
 	}
 	if true {
 		body, _ = sjson.Set(body, "profiles", []interface{}{})
-		for _, item := range data.FeatureProfiles {
+		for _, item := range data.FeatureProfiles.Elements() {
 			itemBody := ""
-			if !item.Id.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "id", item.Id.ValueString())
+			if !item.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "id", strings.Trim(item.String(), "\""))
 			}
 			body, _ = sjson.SetRaw(body, "profiles.-1", itemBody)
 		}
@@ -240,21 +237,20 @@ func (data *ConfigurationGroup) fromBodyConfigGroup(ctx context.Context, res gjs
 		data.Solution = types.StringNull()
 	}
 	if value := res.Get("profiles"); value.Exists() && len(value.Array()) > 0 {
-		data.FeatureProfiles = make([]ConfigurationGroupFeatureProfiles, 0)
+		a := make([]attr.Value, len(value.Array()))
+		c := 0
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ConfigurationGroupFeatureProfiles{}
 			if cValue := v.Get("id"); cValue.Exists() {
-				item.Id = types.StringValue(cValue.String())
+				a[c] = types.StringValue(cValue.String())
 			} else {
-				item.Id = types.StringNull()
+				a[c] = types.StringNull()
 			}
-			data.FeatureProfiles = append(data.FeatureProfiles, item)
+			c += 1
 			return true
 		})
+		data.FeatureProfiles = types.SetValueMust(types.StringType, a)
 	} else {
-		if len(data.FeatureProfiles) > 0 {
-			data.FeatureProfiles = []ConfigurationGroupFeatureProfiles{}
-		}
+		data.FeatureProfiles = types.SetNull(types.StringType)
 	}
 	if value := res.Get("topology.devices"); value.Exists() && len(value.Array()) > 0 {
 		data.TopologyDevices = make([]ConfigurationGroupTopologyDevices, 0)

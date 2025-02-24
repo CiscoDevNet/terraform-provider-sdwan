@@ -92,17 +92,10 @@ func (r *ConfigurationGroupResource) Schema(ctx context.Context, req resource.Sc
 					stringvalidator.OneOf("mobility", "sdwan", "nfvirtual"),
 				},
 			},
-			"feature_profiles": schema.SetNestedAttribute{
+			"feature_profiles": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of feature profiles").String,
+				ElementType:         types.StringType,
 				Optional:            true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"id": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Feature profile ID").String,
-							Optional:            true,
-						},
-					},
-				},
 			},
 			"topology_devices": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of topology device types").String,

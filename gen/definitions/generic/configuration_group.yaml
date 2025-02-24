@@ -25,14 +25,10 @@ attributes:
   - model_name: profiles
     tf_name: feature_profiles
     type: Set
+    element_type: String
     description: List of feature profiles
-    attributes:
-      - model_name: id
-        type: String
-        id: true
-        description: Feature profile ID
-        example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-        test_value: sdwan_system_feature_profile.test.id
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_system_feature_profile.test.id
   - model_name: devices
     data_path: [topology]
     tf_name: topology_devices
@@ -159,6 +155,7 @@ attributes:
   #           mandatory: true
   #           description: Variable value
   #           example: value1
+
 test_prerequisites: |
   resource "sdwan_system_feature_profile" "test" {
     name = "SYSTEM_TF"
