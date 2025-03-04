@@ -260,6 +260,9 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 	if len(plan.Devices) > 0 {
 		r.CreateDeploy(ctx, plan, &resp.Diagnostics)
 	}
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 
@@ -430,6 +433,9 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 	// Deploy to config group devices
 	if len(plan.Devices) > 0 {
 		r.UpdateDeploy(ctx, plan, &resp.Diagnostics)
+	}
+	if resp.Diagnostics.HasError() {
+		return
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
