@@ -1,5 +1,7 @@
-## 0.5.1 (unreleased)
+## 0.5.4 (unreleased)
 
+- Delete configuration group when an error is encountered during creation, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/390)
+- Refresh devices of a configuration group before deletion, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/391)
 - Add `sdwan_policy_object_unified_advanced_malware_protection` resource and data source
 - Add `sdwan_policy_object_unified_url_filtering` resource and data source
 - Add `sdwan_policy_object_unified_tls_ssl_profile` resource and data source
@@ -7,6 +9,50 @@
 - Add `sdwan_policy_object_unified_advanced_inspection_profile` resource and data source
 - Add `sdwan_policy_object_unified_tls_ssl_decryption` resource and data source
 - Add `sdwan_policy_object_security_protocol_list` resource and data source
+
+## 0.5.3
+
+- Fix template rendering issue with `sdwan_cisco_vpn_interface_cellular_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/378)
+- Fix reading of lists in various features, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/380), [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/381)
+- Add `sdwan_transport_wan_vpn_interface_cellular_feature_associate_tracker_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_cellular_feature_associate_tracker_group_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_gre_feature_associate_tracker_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_ipsec_feature_associate_tracker_feature` resource and data source
+- Add `sdwan_service_lan_vpn_interface_ethernet_feature_associate_tracker_feature` resource and data source
+- Add `sdwan_service_lan_vpn_interface_ethernet_feature_associate_tracker_group_feature` resource and data source
+
+## 0.5.2
+
+- Update documentation categories
+- Add `sdwan_service_dhcp_server_feature` resource and data source
+- Add `sdwan_service_lan_vpn_interface_ethernet_feature_associate_dhcp_server_feature` resource and data source
+- Add `sdwan_service_lan_vpn_interface_ipsec_feature_associate_dhcp_server_feature` resource and data source
+- Add `sdwan_service_lan_vpn_interface_svi_feature_associate_dhcp_server_feature` resource and data source
+- Add `hub` option to `tunnel_qos_mode` attribute of `sdwan_cisco_vpn_interface_cellular_feature` resource
+- Add `cellular` template types to `sdwan_feature_device_template` resource
+
+## 0.5.1
+
+- Enhance update logic of policy objects, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/pull/360)
+- Fix issue with `sdwan_other_ucse_feature` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/320)
+- BREAKING CHANGE: Adds `gateway` attribute to `sdwan_transport_wan_vpn_feature` resource
+- Allow port ranges in ACL feature resources, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/364)
+- Add `sdwan_transport_cellular_controller_feature` resource and data source
+- Add `sdwan_transport_cellular_profile_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_feature_associate_routing_bgp_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_feature_associate_routing_ospf_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_feature_associate_routing_ospfv3_ipv4_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_feature_associate_routing_ospfv3_ipv6_feature` resource and data source
+- Add `sdwan_service_lan_vpn_feature_associate_routing_bgp_feature` resource and data source
+- Add `sdwan_service_lan_vpn_feature_associate_routing_eigrp_feature` resource and data source
+- Add `sdwan_service_lan_vpn_feature_associate_multicast_feature` resource and data source
+- Add `sdwan_service_lan_vpn_feature_associate_routing_ospf_feature` resource and data source
+- Add `sdwan_service_lan_vpn_feature_associate_routing_ospfv3_ipv4_feature` resource and data source
+- Add `sdwan_service_lan_vpn_feature_associate_routing_ospfv3_ipv6_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_tracker_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_tracker_group_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_ipv6_tracker_feature` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_ipv6_tracker_group_feature` resource and data source
 
 ## 0.5.0
 

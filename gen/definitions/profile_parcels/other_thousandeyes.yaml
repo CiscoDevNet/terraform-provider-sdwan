@@ -6,6 +6,7 @@ id_attribute: parcelId
 test_tags: [SDWAN_2012]
 skip_minimum_test: true
 parcel_type: feature
+doc_category: Features - Other
 attributes:
   - tf_name: feature_profile_id
     reference: true

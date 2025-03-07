@@ -80,7 +80,7 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 			},
 			{{- range  .Attributes}}
 			{{- if not .Value}}
-			"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else}}{{.Type}}{{end}}Attribute{
+			"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if isStringInt64 .}}String{{else}}{{.Type}}{{end}}Attribute{
 				MarkdownDescription: "{{.Description}}",
 				{{- if isListSet .}}
 				ElementType:         types.{{.ElementType}}Type,
@@ -95,7 +95,7 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 					Attributes: map[string]schema.Attribute{
 						{{- range  .Attributes}}
 						{{- if not .Value}}
-						"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else}}{{.Type}}{{end}}Attribute{
+						"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if isStringInt64 .}}String{{else}}{{.Type}}{{end}}Attribute{
 							MarkdownDescription: "{{.Description}}",
 							{{- if isListSet .}}
 							ElementType:         types.{{.ElementType}}Type,
@@ -106,7 +106,7 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 								Attributes: map[string]schema.Attribute{
 									{{- range  .Attributes}}
 									{{- if not .Value}}
-									"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else}}{{.Type}}{{end}}Attribute{
+									"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if isStringInt64 .}}String{{else}}{{.Type}}{{end}}Attribute{
 										MarkdownDescription: "{{.Description}}",
 										{{- if isListSet .}}
 										ElementType:         types.{{.ElementType}}Type,
@@ -117,7 +117,7 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 											Attributes: map[string]schema.Attribute{
 												{{- range  .Attributes}}
 												{{- if not .Value}}
-												"{{.TfName}}": schema.{{if isList .}}List{{else if isSet .}}Set{{else}}{{.Type}}{{end}}Attribute{
+												"{{.TfName}}": schema.{{if isList .}}List{{else if isSet .}}Set{{else if isStringInt64 .}}String{{else}}{{.Type}}{{end}}Attribute{
 													MarkdownDescription: "{{.Description}}",
 													{{- if isListSet .}}
 													ElementType:         types.{{.ElementType}}Type,

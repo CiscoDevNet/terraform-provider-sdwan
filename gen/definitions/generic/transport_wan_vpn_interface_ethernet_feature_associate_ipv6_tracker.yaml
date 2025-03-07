@@ -1,0 +1,70 @@
+---
+name: Transport WAN VPN Interface Ethernet Feature Associate IPv6 Tracker Feature
+rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/ethernet/%s/ipv6-tracker/
+minimum_version: 20.12.0
+has_version: true
+id_attribute: parcelId
+doc_category: Features - Transport
+test_tags: [SDWAN_2012]
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_feature_profile.test.id
+  - tf_name: transport_wan_vpn_feature_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Transport WAN VPN Feature ID
+    example: 140331f6-5418-4755-a059-13c77eb96037
+    test_value: sdwan_transport_wan_vpn_feature.test.id
+  - tf_name: transport_wan_vpn_interface_ethernet_feature_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Transport WAN VPN Interface Ethernet Feature ID
+    example: 140331f6-5418-4755-a059-13c77eb96037
+    test_value: sdwan_transport_wan_vpn_interface_ethernet_feature.test.id
+  - model_name: parcelId
+    tf_name: transport_ipv6_tracker_feature_id
+    type: String
+    mandatory: true
+    description: Transport IPv6 Tracker Feature ID
+    example: 140331f6-5418-4755-a059-13c77eb96037
+    test_value: sdwan_transport_ipv6_tracker_feature.test.id
+
+test_prerequisites: |
+  resource "sdwan_transport_feature_profile" "test" {
+    name        = "TF_TEST"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_transport_wan_vpn_feature" "test" {
+    name               = "TF_TEST_WAN_VPN"
+    description        = "Terraform test"
+    feature_profile_id = sdwan_transport_feature_profile.test.id
+    vpn                = 0
+  }
+
+  resource "sdwan_transport_ipv6_tracker_feature" "test" {
+    name                  = "TF_TEST_TRACER"
+    description           = "My Example"
+    feature_profile_id    = sdwan_transport_feature_profile.test.id
+    tracker_name          = "TRACKER_1"
+  }
+
+  resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "test" {
+    name                         = "TF_TEST_INTERFACE_ETHERNET"
+    description                  = "My Example"
+    feature_profile_id           = sdwan_transport_feature_profile.test.id
+    transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id
+    interface_name               = "GigabitEthernet1"
+    ipv4_configuration_type      = "static"
+    ipv4_address                 = "1.2.3.4"
+    ipv4_subnet_mask             = "0.0.0.0"
+    ipv6_configuration_type      = "static"
+    ipv6_address                 = "2001:0:0:1::/64"
+  }

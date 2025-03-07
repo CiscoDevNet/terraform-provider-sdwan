@@ -53,7 +53,7 @@ type TransportIPv4ACLSequences struct {
 
 type TransportIPv4ACLSequencesMatchEntries struct {
 	Dscps                         types.Set                                               `tfsdk:"dscps"`
-	PacketLength                  types.Int64                                             `tfsdk:"packet_length"`
+	PacketLength                  types.String                                            `tfsdk:"packet_length"`
 	Protocols                     types.Set                                               `tfsdk:"protocols"`
 	IcmpMessages                  types.Set                                               `tfsdk:"icmp_messages"`
 	SourceDataPrefixListId        types.String                                            `tfsdk:"source_data_prefix_list_id"`
@@ -78,10 +78,10 @@ type TransportIPv4ACLSequencesActions struct {
 }
 
 type TransportIPv4ACLSequencesMatchEntriesSourcePorts struct {
-	Port types.Int64 `tfsdk:"port"`
+	Port types.String `tfsdk:"port"`
 }
 type TransportIPv4ACLSequencesMatchEntriesDestinationPorts struct {
-	Port types.Int64 `tfsdk:"port"`
+	Port types.String `tfsdk:"port"`
 }
 
 // End of section. //template:end types
@@ -154,7 +154,11 @@ func (data TransportIPv4ACL) toBody(ctx context.Context) string {
 					if !childItem.PacketLength.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "packetLength.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "packetLength.value", childItem.PacketLength.ValueInt64())
+							if numValue, err := strconv.Atoi(childItem.PacketLength.ValueString()); err != nil {
+								itemChildBody, _ = sjson.Set(itemChildBody, "packetLength.value", childItem.PacketLength.ValueString())
+							} else {
+								itemChildBody, _ = sjson.Set(itemChildBody, "packetLength.value", numValue)
+							}
 						}
 					}
 					if !childItem.Protocols.IsNull() {
@@ -198,7 +202,11 @@ func (data TransportIPv4ACL) toBody(ctx context.Context) string {
 							if !childChildItem.Port.IsNull() {
 								if true {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "sourcePort.optionType", "global")
-									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "sourcePort.value", childChildItem.Port.ValueInt64())
+									if numValue, err := strconv.Atoi(childChildItem.Port.ValueString()); err != nil {
+										itemChildChildBody, _ = sjson.Set(itemChildChildBody, "sourcePort.value", childChildItem.Port.ValueString())
+									} else {
+										itemChildChildBody, _ = sjson.Set(itemChildChildBody, "sourcePort.value", numValue)
+									}
 								}
 							}
 							itemChildBody, _ = sjson.SetRaw(itemChildBody, "sourcePorts.-1", itemChildChildBody)
@@ -229,7 +237,11 @@ func (data TransportIPv4ACL) toBody(ctx context.Context) string {
 							if !childChildItem.Port.IsNull() {
 								if true {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "destinationPort.optionType", "global")
-									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "destinationPort.value", childChildItem.Port.ValueInt64())
+									if numValue, err := strconv.Atoi(childChildItem.Port.ValueString()); err != nil {
+										itemChildChildBody, _ = sjson.Set(itemChildChildBody, "destinationPort.value", childChildItem.Port.ValueString())
+									} else {
+										itemChildChildBody, _ = sjson.Set(itemChildChildBody, "destinationPort.value", numValue)
+									}
 								}
 							}
 							itemChildBody, _ = sjson.SetRaw(itemChildBody, "destinationPorts.-1", itemChildChildBody)
@@ -364,12 +376,12 @@ func (data *TransportIPv4ACL) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.Dscps = helpers.GetInt64Set(va.Array())
 						}
 					}
-					cItem.PacketLength = types.Int64Null()
+					cItem.PacketLength = types.StringNull()
 
 					if t := cv.Get("packetLength.optionType"); t.Exists() {
 						va := cv.Get("packetLength.value")
 						if t.String() == "global" {
-							cItem.PacketLength = types.Int64Value(va.Int())
+							cItem.PacketLength = types.StringValue(va.String())
 						}
 					}
 					cItem.Protocols = types.SetNull(types.Int64Type)
@@ -410,12 +422,12 @@ func (data *TransportIPv4ACL) fromBody(ctx context.Context, res gjson.Result) {
 						cItem.SourcePorts = make([]TransportIPv4ACLSequencesMatchEntriesSourcePorts, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := TransportIPv4ACLSequencesMatchEntriesSourcePorts{}
-							ccItem.Port = types.Int64Null()
+							ccItem.Port = types.StringNull()
 
 							if t := ccv.Get("sourcePort.optionType"); t.Exists() {
 								va := ccv.Get("sourcePort.value")
 								if t.String() == "global" {
-									ccItem.Port = types.Int64Value(va.Int())
+									ccItem.Port = types.StringValue(va.String())
 								}
 							}
 							cItem.SourcePorts = append(cItem.SourcePorts, ccItem)
@@ -444,12 +456,12 @@ func (data *TransportIPv4ACL) fromBody(ctx context.Context, res gjson.Result) {
 						cItem.DestinationPorts = make([]TransportIPv4ACLSequencesMatchEntriesDestinationPorts, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := TransportIPv4ACLSequencesMatchEntriesDestinationPorts{}
-							ccItem.Port = types.Int64Null()
+							ccItem.Port = types.StringNull()
 
 							if t := ccv.Get("destinationPort.optionType"); t.Exists() {
 								va := ccv.Get("destinationPort.value")
 								if t.String() == "global" {
-									ccItem.Port = types.Int64Value(va.Int())
+									ccItem.Port = types.StringValue(va.String())
 								}
 							}
 							cItem.DestinationPorts = append(cItem.DestinationPorts, ccItem)
@@ -619,9 +631,9 @@ func (data *TransportIPv4ACL) updateFromBody(ctx context.Context, res gjson.Resu
 			}
 		}
 		for ci := range data.Sequences[i].MatchEntries {
-			keys := [...]string{"packetLength", "sourceDataPrefix.sourceDataPrefixList.refId", "sourceDataPrefix.sourceIpPrefix", "destinationDataPrefix.destinationDataPrefixList.refId", "destinationDataPrefix.destinationIpPrefix", "tcp"}
-			keyValues := [...]string{strconv.FormatInt(data.Sequences[i].MatchEntries[ci].PacketLength.ValueInt64(), 10), data.Sequences[i].MatchEntries[ci].SourceDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].TcpState.ValueString()}
-			keyValuesVariables := [...]string{"", "", "", "", "", data.Sequences[i].MatchEntries[ci].SourceDataPrefixVariable.ValueString(), "", "", data.Sequences[i].MatchEntries[ci].DestinationDataPrefixVariable.ValueString(), "", ""}
+			keys := [...]string{"dscp", "packetLength", "protocol", "icmpMsg", "sourceDataPrefix.sourceDataPrefixList.refId", "sourceDataPrefix.sourceIpPrefix", "destinationDataPrefix.destinationDataPrefixList.refId", "destinationDataPrefix.destinationIpPrefix", "tcp"}
+			keyValues := [...]string{helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Dscps).ValueString(), data.Sequences[i].MatchEntries[ci].PacketLength.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Protocols).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].IcmpMessages).ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].TcpState.ValueString()}
+			keyValuesVariables := [...]string{"", "", "", "", "", data.Sequences[i].MatchEntries[ci].SourceDataPrefixVariable.ValueString(), "", data.Sequences[i].MatchEntries[ci].DestinationDataPrefixVariable.ValueString(), ""}
 
 			var cr gjson.Result
 			r.Get("matchEntries").ForEach(
@@ -655,12 +667,12 @@ func (data *TransportIPv4ACL) updateFromBody(ctx context.Context, res gjson.Resu
 					data.Sequences[i].MatchEntries[ci].Dscps = helpers.GetInt64Set(va.Array())
 				}
 			}
-			data.Sequences[i].MatchEntries[ci].PacketLength = types.Int64Null()
+			data.Sequences[i].MatchEntries[ci].PacketLength = types.StringNull()
 
 			if t := cr.Get("packetLength.optionType"); t.Exists() {
 				va := cr.Get("packetLength.value")
 				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].PacketLength = types.Int64Value(va.Int())
+					data.Sequences[i].MatchEntries[ci].PacketLength = types.StringValue(va.String())
 				}
 			}
 			data.Sequences[i].MatchEntries[ci].Protocols = types.SetNull(types.Int64Type)
@@ -699,7 +711,7 @@ func (data *TransportIPv4ACL) updateFromBody(ctx context.Context, res gjson.Resu
 			}
 			for cci := range data.Sequences[i].MatchEntries[ci].SourcePorts {
 				keys := [...]string{"sourcePort"}
-				keyValues := [...]string{strconv.FormatInt(data.Sequences[i].MatchEntries[ci].SourcePorts[cci].Port.ValueInt64(), 10)}
+				keyValues := [...]string{data.Sequences[i].MatchEntries[ci].SourcePorts[cci].Port.ValueString()}
 				keyValuesVariables := [...]string{""}
 
 				var ccr gjson.Result
@@ -726,12 +738,12 @@ func (data *TransportIPv4ACL) updateFromBody(ctx context.Context, res gjson.Resu
 						return true
 					},
 				)
-				data.Sequences[i].MatchEntries[ci].SourcePorts[cci].Port = types.Int64Null()
+				data.Sequences[i].MatchEntries[ci].SourcePorts[cci].Port = types.StringNull()
 
 				if t := ccr.Get("sourcePort.optionType"); t.Exists() {
 					va := ccr.Get("sourcePort.value")
 					if t.String() == "global" {
-						data.Sequences[i].MatchEntries[ci].SourcePorts[cci].Port = types.Int64Value(va.Int())
+						data.Sequences[i].MatchEntries[ci].SourcePorts[cci].Port = types.StringValue(va.String())
 					}
 				}
 			}
@@ -755,7 +767,7 @@ func (data *TransportIPv4ACL) updateFromBody(ctx context.Context, res gjson.Resu
 			}
 			for cci := range data.Sequences[i].MatchEntries[ci].DestinationPorts {
 				keys := [...]string{"destinationPort"}
-				keyValues := [...]string{strconv.FormatInt(data.Sequences[i].MatchEntries[ci].DestinationPorts[cci].Port.ValueInt64(), 10)}
+				keyValues := [...]string{data.Sequences[i].MatchEntries[ci].DestinationPorts[cci].Port.ValueString()}
 				keyValuesVariables := [...]string{""}
 
 				var ccr gjson.Result
@@ -782,12 +794,12 @@ func (data *TransportIPv4ACL) updateFromBody(ctx context.Context, res gjson.Resu
 						return true
 					},
 				)
-				data.Sequences[i].MatchEntries[ci].DestinationPorts[cci].Port = types.Int64Null()
+				data.Sequences[i].MatchEntries[ci].DestinationPorts[cci].Port = types.StringNull()
 
 				if t := ccr.Get("destinationPort.optionType"); t.Exists() {
 					va := ccr.Get("destinationPort.value")
 					if t.String() == "global" {
-						data.Sequences[i].MatchEntries[ci].DestinationPorts[cci].Port = types.Int64Value(va.Int())
+						data.Sequences[i].MatchEntries[ci].DestinationPorts[cci].Port = types.StringValue(va.String())
 					}
 				}
 			}

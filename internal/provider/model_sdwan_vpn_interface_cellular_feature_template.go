@@ -242,7 +242,6 @@ func (data VPNInterfaceCellular) getModel() string {
 
 // End of section. //template:end getModel
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data VPNInterfaceCellular) toBody(ctx context.Context) string {
 	body := ""
 
@@ -258,6 +257,7 @@ func (data VPNInterfaceCellular) toBody(ctx context.Context) string {
 
 	path := "templateDefinition."
 
+	body, _ = sjson.Set(body, path+"ip.address", map[string]interface{}{})
 	if !data.CellularInterfaceNameVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"if-name."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"if-name."+"vipType", "variableName")
@@ -1342,8 +1342,6 @@ func (data VPNInterfaceCellular) toBody(ctx context.Context) string {
 	}
 	return body
 }
-
-// End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *VPNInterfaceCellular) fromBody(ctx context.Context, res gjson.Result) {

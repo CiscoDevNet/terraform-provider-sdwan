@@ -1,0 +1,67 @@
+---
+name: Service LAN VPN Interface SVI Feature Associate DHCP Server Feature
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/lan/vpn/%s/interface/svi/%s/dhcp-server/
+minimum_version: 20.12.0
+has_version: true
+id_attribute: parcelId
+doc_category: Features - Service
+test_tags: [SDWAN_2012]
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_feature_profile.test.id
+  - tf_name: service_lan_vpn_feature_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Service LAN VPN Feature ID
+    example: 140331f6-5418-4755-a059-13c77eb96037
+    test_value: sdwan_service_lan_vpn_feature.test.id
+  - tf_name: service_lan_vpn_interface_svi_feature_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Service LAN VPN Interface SVI Feature ID
+    example: 140331f6-5418-4755-a059-13c77eb96037
+    test_value: sdwan_service_lan_vpn_interface_svi_feature.test.id
+  - model_name: parcelId
+    tf_name: service_dhcp_server_feature_id
+    type: String
+    mandatory: true
+    description: Service DHCP Server Feature ID
+    example: 140331f6-5418-4755-a059-13c77eb96037
+    test_value: sdwan_service_dhcp_server_feature.test.id
+
+test_prerequisites: |
+  resource "sdwan_service_feature_profile" "test" {
+    name        = "TF_TEST"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_service_lan_vpn_feature" "test" {
+    name                       = "TF_TEST_SERVICE_LAN"
+    description                = "Terraform test"
+    feature_profile_id         = sdwan_service_feature_profile.test.id
+  }
+
+  resource "sdwan_service_lan_vpn_interface_svi_feature" "test" {
+    name                       = "TF_TEST_SERVICE_LAN_INTERFACE_SVI"
+    description                = "Terraform test"
+    feature_profile_id         = sdwan_service_feature_profile.test.id
+    service_lan_vpn_feature_id = sdwan_service_lan_vpn_feature.test.id
+    interface_name             = "Vlan1"
+    ipv4_address               = "1.2.3.4"
+    ipv4_subnet_mask           = "0.0.0.0"
+  }
+
+  resource "sdwan_service_dhcp_server_feature" "test" {
+    name               = "TF_TEST_DHCP_SERVER"
+    description        = "Terraform Test"
+    feature_profile_id = sdwan_service_feature_profile.test.id
+    network_address    = "1.2.3.4"
+    subnet_mask        = "255.255.255.0"
+  }

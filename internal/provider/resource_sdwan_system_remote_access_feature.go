@@ -95,7 +95,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 			},
 			"any_connect_eap_authentication_type": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `connection_type_ssl` being equal to `false`").AddStringEnumDescription("user", "device").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("user", "device"),
 				},

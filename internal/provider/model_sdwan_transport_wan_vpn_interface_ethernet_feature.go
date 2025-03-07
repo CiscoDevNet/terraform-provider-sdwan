@@ -192,6 +192,10 @@ type TransportWANVPNInterfaceEthernet struct {
 	QosAdaptiveDefaultDownstreamVariable               types.String                                                    `tfsdk:"qos_adaptive_default_downstream_variable"`
 	QosShapingRate                                     types.Int64                                                     `tfsdk:"qos_shaping_rate"`
 	QosShapingRateVariable                             types.String                                                    `tfsdk:"qos_shaping_rate_variable"`
+	AclIpv4EgressFeatureId                             types.String                                                    `tfsdk:"acl_ipv4_egress_feature_id"`
+	AclIpv4IngressFeatureId                            types.String                                                    `tfsdk:"acl_ipv4_ingress_feature_id"`
+	AclIpv6EgressFeatureId                             types.String                                                    `tfsdk:"acl_ipv6_egress_feature_id"`
+	AclIpv6IngressFeatureId                            types.String                                                    `tfsdk:"acl_ipv6_ingress_feature_id"`
 	Arps                                               []TransportWANVPNInterfaceEthernetArps                          `tfsdk:"arps"`
 	IcmpRedirectDisable                                types.Bool                                                      `tfsdk:"icmp_redirect_disable"`
 	IcmpRedirectDisableVariable                        types.String                                                    `tfsdk:"icmp_redirect_disable_variable"`
@@ -1647,6 +1651,30 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 			body, _ = sjson.Set(body, path+"aclQos.shapingRate.value", data.QosShapingRate.ValueInt64())
 		}
 	}
+	if !data.AclIpv4EgressFeatureId.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"aclQos.ipv4AclEgress.refId.optionType", "global")
+			body, _ = sjson.Set(body, path+"aclQos.ipv4AclEgress.refId.value", data.AclIpv4EgressFeatureId.ValueString())
+		}
+	}
+	if !data.AclIpv4IngressFeatureId.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"aclQos.ipv4AclIngress.refId.optionType", "global")
+			body, _ = sjson.Set(body, path+"aclQos.ipv4AclIngress.refId.value", data.AclIpv4IngressFeatureId.ValueString())
+		}
+	}
+	if !data.AclIpv6EgressFeatureId.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"aclQos.ipv6AclEgress.refId.optionType", "global")
+			body, _ = sjson.Set(body, path+"aclQos.ipv6AclEgress.refId.value", data.AclIpv6EgressFeatureId.ValueString())
+		}
+	}
+	if !data.AclIpv6IngressFeatureId.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"aclQos.ipv6AclIngress.refId.optionType", "global")
+			body, _ = sjson.Set(body, path+"aclQos.ipv6AclIngress.refId.value", data.AclIpv6IngressFeatureId.ValueString())
+		}
+	}
 	if true {
 		body, _ = sjson.Set(body, path+"arp", []interface{}{})
 		for _, item := range data.Arps {
@@ -2902,6 +2930,38 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.QosShapingRateVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.QosShapingRate = types.Int64Value(va.Int())
+		}
+	}
+	data.AclIpv4EgressFeatureId = types.StringNull()
+
+	if t := res.Get(path + "aclQos.ipv4AclEgress.refId.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.ipv4AclEgress.refId.value")
+		if t.String() == "global" {
+			data.AclIpv4EgressFeatureId = types.StringValue(va.String())
+		}
+	}
+	data.AclIpv4IngressFeatureId = types.StringNull()
+
+	if t := res.Get(path + "aclQos.ipv4AclIngress.refId.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.ipv4AclIngress.refId.value")
+		if t.String() == "global" {
+			data.AclIpv4IngressFeatureId = types.StringValue(va.String())
+		}
+	}
+	data.AclIpv6EgressFeatureId = types.StringNull()
+
+	if t := res.Get(path + "aclQos.ipv6AclEgress.refId.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.ipv6AclEgress.refId.value")
+		if t.String() == "global" {
+			data.AclIpv6EgressFeatureId = types.StringValue(va.String())
+		}
+	}
+	data.AclIpv6IngressFeatureId = types.StringNull()
+
+	if t := res.Get(path + "aclQos.ipv6AclIngress.refId.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.ipv6AclIngress.refId.value")
+		if t.String() == "global" {
+			data.AclIpv6IngressFeatureId = types.StringValue(va.String())
 		}
 	}
 	if value := res.Get(path + "arp"); value.Exists() {
@@ -4167,6 +4227,38 @@ func (data *TransportWANVPNInterfaceEthernet) updateFromBody(ctx context.Context
 			data.QosShapingRate = types.Int64Value(va.Int())
 		}
 	}
+	data.AclIpv4EgressFeatureId = types.StringNull()
+
+	if t := res.Get(path + "aclQos.ipv4AclEgress.refId.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.ipv4AclEgress.refId.value")
+		if t.String() == "global" {
+			data.AclIpv4EgressFeatureId = types.StringValue(va.String())
+		}
+	}
+	data.AclIpv4IngressFeatureId = types.StringNull()
+
+	if t := res.Get(path + "aclQos.ipv4AclIngress.refId.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.ipv4AclIngress.refId.value")
+		if t.String() == "global" {
+			data.AclIpv4IngressFeatureId = types.StringValue(va.String())
+		}
+	}
+	data.AclIpv6EgressFeatureId = types.StringNull()
+
+	if t := res.Get(path + "aclQos.ipv6AclEgress.refId.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.ipv6AclEgress.refId.value")
+		if t.String() == "global" {
+			data.AclIpv6EgressFeatureId = types.StringValue(va.String())
+		}
+	}
+	data.AclIpv6IngressFeatureId = types.StringNull()
+
+	if t := res.Get(path + "aclQos.ipv6AclIngress.refId.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.ipv6AclIngress.refId.value")
+		if t.String() == "global" {
+			data.AclIpv6IngressFeatureId = types.StringValue(va.String())
+		}
+	}
 	for i := range data.Arps {
 		keys := [...]string{"ipAddress", "macAddress"}
 		keyValues := [...]string{data.Arps[i].IpAddress.ValueString(), data.Arps[i].MacAddress.ValueString()}
@@ -4846,6 +4938,18 @@ func (data *TransportWANVPNInterfaceEthernet) isNull(ctx context.Context, res gj
 		return false
 	}
 	if !data.QosShapingRateVariable.IsNull() {
+		return false
+	}
+	if !data.AclIpv4EgressFeatureId.IsNull() {
+		return false
+	}
+	if !data.AclIpv4IngressFeatureId.IsNull() {
+		return false
+	}
+	if !data.AclIpv6EgressFeatureId.IsNull() {
+		return false
+	}
+	if !data.AclIpv6IngressFeatureId.IsNull() {
 		return false
 	}
 	if len(data.Arps) > 0 {

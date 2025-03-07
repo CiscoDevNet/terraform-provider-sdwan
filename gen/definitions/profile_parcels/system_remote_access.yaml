@@ -4,6 +4,7 @@ rest_endpoint: /v1/feature-profile/sdwan/system/%v/remote-access
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 parcel_type: feature
+doc_category: Features - System
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -16,11 +17,13 @@ attributes:
     example: false
   - model_name: anyConnectEapAuth
     tf_name: any_connect_eap_authentication_type
+    ignore_mandatory: true
     conditional_attribute:
       name: connection_type_ssl
       value: false
       type: Bool
     example: user
+    minimum_test_value: '"user"'
     # ==== Requires support for file upload ===
   # - model_name: anyConnectProfileDownloadStatus
   #   tf_name: any_connect_eap_profile_download_status

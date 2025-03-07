@@ -5,6 +5,7 @@ minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 skip_minimum_test: true
 parcel_type: feature
+doc_category: Features - Service
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -32,6 +33,7 @@ attributes:
         tf_name: dscps
         example: 16
       - model_name: packetLength
+        type: StringInt64
         example: 1500
       - model_name: protocol
         tf_name: protocols
@@ -54,6 +56,8 @@ attributes:
         exclude_null: true
         attributes: 
         - model_name: sourcePort
+          type: StringInt64
+          id: true
           tf_name: port
           example: 8000
       - model_name: refId
@@ -72,6 +76,8 @@ attributes:
         attributes: 
         - model_name: destinationPort
           tf_name: port
+          type: StringInt64
+          id: true
           example: 9000
           exclude_test: true
       - model_name: tcp

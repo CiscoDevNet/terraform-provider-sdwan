@@ -415,7 +415,9 @@ func (r *{{camelCase .Name}}Resource) Create(ctx context.Context, req resource.C
 		return
 	}
 
+	{{if hasName .Attributes}}
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
+	{{end}}
 
 	// Create object
 	body := plan.toBody(ctx)
@@ -445,7 +447,7 @@ func (r *{{camelCase .Name}}Resource) Create(ctx context.Context, req resource.C
 	plan.Type = types.StringValue("{{.TypeValue}}")
 	{{- end}}
 	
-	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
+	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", {{if hasName .Attributes}}plan.Name.ValueString(){{else}}plan.Id.ValueString(){{end}}))
 	
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
@@ -463,7 +465,7 @@ func (r *{{camelCase .Name}}Resource) Read(ctx context.Context, req resource.Rea
 		return
 	}
 
-	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
+	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", {{if hasName .Attributes}}state.Name.ValueString(){{else}}state.Id.ValueString(){{end}}))
 
 	res, err := r.client.Get({{if .GetRestEndpoint}}"{{.GetRestEndpoint}}"{{else}}state.getPath(){{end}}{{if not .RemoveId}} + url.QueryEscape(state.Id.ValueString()){{end}})
 	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") || strings.Contains(res.Get("error.message").String(), "Invalid Profile Id") || strings.Contains(res.Get("error.message").String(), "Invalid feature Id") || strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
@@ -481,7 +483,7 @@ func (r *{{camelCase .Name}}Resource) Read(ctx context.Context, req resource.Rea
 	}
 	{{- end}}
 
-	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
+	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", {{if hasName .Attributes}}state.Name.ValueString(){{else}}state.Id.ValueString(){{end}}))
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
@@ -505,7 +507,7 @@ func (r *{{camelCase .Name}}Resource) Update(ctx context.Context, req resource.U
 		return
 	}
 
-	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
+	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", {{if hasName .Attributes}}plan.Name.ValueString(){{else}}plan.Id.ValueString(){{end}}))
 
 	if plan.hasChanges(ctx, &state) {
 		body := plan.toBody(ctx)
@@ -523,14 +525,14 @@ func (r *{{camelCase .Name}}Resource) Update(ctx context.Context, req resource.U
 			}
 		}
 	} else {
-		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Name.ValueString()))
+		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", {{if hasName .Attributes}}plan.Name.ValueString(){{else}}plan.Id.ValueString(){{end}}))
 	}
 
 	{{- if .HasVersion}}
 	plan.Version = types.Int64Value(state.Version.ValueInt64()+1)
 	{{- end}}
 
-	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
+	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", {{if hasName .Attributes}}plan.Name.ValueString(){{else}}plan.Id.ValueString(){{end}}))
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
@@ -548,7 +550,7 @@ func (r *{{camelCase .Name}}Resource) Delete(ctx context.Context, req resource.D
 		return
 	}
 
-	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
+	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", {{if hasName .Attributes}}state.Name.ValueString(){{else}}state.Id.ValueString(){{end}}))
 	{{if .GetBeforeDelete}}
 	_, _ = r.client.Get(state.getPath())
 	{{- end}}
@@ -558,7 +560,7 @@ func (r *{{camelCase .Name}}Resource) Delete(ctx context.Context, req resource.D
 	{{- if not .RemoveId}}
 	res, err := r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
 	{{- else}}
-	res, err := r.client.Delete(plan.getPath())
+	res, err := r.client.Delete(state.getPath())
 	{{- end}}
 	{{- if .DeleteMutex}}
 	r.updateMutex.Unlock()
@@ -568,7 +570,7 @@ func (r *{{camelCase .Name}}Resource) Delete(ctx context.Context, req resource.D
 		return
 	}
 
-	tflog.Debug(ctx, fmt.Sprintf("%s: Delete finished successfully", state.Name.ValueString()))
+	tflog.Debug(ctx, fmt.Sprintf("%s: Delete finished successfully", {{if hasName .Attributes}}state.Name.ValueString(){{else}}state.Id.ValueString(){{end}}))
 
 	resp.State.RemoveResource(ctx)
 }
@@ -577,7 +579,26 @@ func (r *{{camelCase .Name}}Resource) Delete(ctx context.Context, req resource.D
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 {{- if not .NoImport}}
 func (r *{{camelCase .Name}}Resource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	{{- if hasReference .Attributes}}
+	count := {{ countReferences .Attributes}}
+	parts := strings.SplitN(req.ID, ",", (count + 1))
+
+	pattern := "{{snakeCase .Name}}_id"{{range .Attributes}}{{if .Reference}} + ",{{.TfName}}"{{end}}{{end}}
+	if len(parts) != (count + 1) {
+		resp.Diagnostics.AddError(
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q", pattern, req.ID),
+		)
+		return
+	}
+
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
+	{{- $count := 0}}
+	{{- range .Attributes}}{{- if .Reference}}{{$count = add $count 1}}
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("{{.TfName}}"), parts[{{$count}}])...)
+	{{- end}}{{- end}}
+	{{- else}}
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	{{- end}}
 }
 {{- end}}
 // End of section. //template:end import

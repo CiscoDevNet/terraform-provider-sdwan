@@ -133,7 +133,7 @@ func (r *TransportIPv4ACLProfileParcelResource) Schema(ctx context.Context, req 
 										ElementType:         types.Int64Type,
 										Optional:            true,
 									},
-									"packet_length": schema.Int64Attribute{
+									"packet_length": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Packet Length").String,
 										Optional:            true,
 									},
@@ -170,7 +170,7 @@ func (r *TransportIPv4ACLProfileParcelResource) Schema(ctx context.Context, req 
 										Optional:            true,
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
-												"port": schema.Int64Attribute{
+												"port": schema.StringAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("source port range or individual port number").String,
 													Optional:            true,
 												},
@@ -200,7 +200,7 @@ func (r *TransportIPv4ACLProfileParcelResource) Schema(ctx context.Context, req 
 										Optional:            true,
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
-												"port": schema.Int64Attribute{
+												"port": schema.StringAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("destination port range or individual port number").String,
 													Optional:            true,
 												},

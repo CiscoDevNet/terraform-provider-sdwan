@@ -4,6 +4,7 @@ rest_endpoint: /v1/feature-profile/sdwan/transport/%v/management/vpn
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 parcel_type: feature
+doc_category: Features - Transport
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -87,15 +88,15 @@ attributes:
         type: String
         tf_only: true
         description: Gateway
-        enum_values: [next_hop, null0, nat]
-        example: next_hop
+        enum_values: [nextHop, null0, nat]
+        example: nextHop
       - model_name: nextHop
         tf_name: next_hops
         data_path: [oneOfIpRoute, nextHopContainer]
         mandatory: true
         conditional_attribute:
           name: gateway
-          value: next_hop
+          value: nextHop
         attributes:
           - model_name: address
             id: true

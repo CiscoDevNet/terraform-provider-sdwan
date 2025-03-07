@@ -103,15 +103,15 @@ func (r *OtherUCSEProfileParcelResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"access_port_shared_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("ge1", "ge2", "ge3", "te2", "te3", "console", "failover").String,
-				Required:            true,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `access_port_dedicated` being equal to `false`").AddStringEnumDescription("ge1", "ge2", "ge3", "te2", "te3", "console", "failover").String,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ge1", "ge2", "ge3", "te2", "te3", "console", "failover"),
 				},
 			},
 			"access_port_shared_failover_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("ge2", "te2").String,
-				Required:            true,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `access_port_dedicated` being equal to `false`").AddStringEnumDescription("ge2", "te2").String,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ge2", "te2"),
 				},
