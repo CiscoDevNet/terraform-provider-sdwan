@@ -207,24 +207,20 @@ func (r *TagResource) Update(ctx context.Context, req resource.UpdateRequest, re
 	// Remove all associate devices
 	if value := res.Get("#(id==\"" + plan.Id.ValueString() + "\")"); value.Exists() {
 		body, _ := sjson.Set("", "data", []interface{}{})
-		if true {
-			itemBody, _ := sjson.Set("", "tagId", plan.Id.ValueString())
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "objects", []interface{}{})
-				for _, item := range value.Get("tagAssociation").Array() {
-					itemChildBody := ""
-					if id := item.Get("id"); id.Exists() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "id", id.String())
-						itemChildBody, _ = sjson.Set(itemChildBody, "objectType", "DEVICE")
-					}
-					itemBody, _ = sjson.SetRaw(itemBody, "objects.-1", itemChildBody)
-				}
+		itemBody, _ := sjson.Set("", "tagId", plan.Id.ValueString())
+		itemBody, _ = sjson.Set(itemBody, "objects", []interface{}{})
+		for _, item := range value.Get("tagAssociation").Array() {
+			itemChildBody := ""
+			if id := item.Get("id"); id.Exists() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "id", id.String())
+				itemChildBody, _ = sjson.Set(itemChildBody, "objectType", "DEVICE")
 			}
-			body, _ = sjson.SetRaw(body, "data.-1", itemBody)
+			itemBody, _ = sjson.SetRaw(itemBody, "objects.-1", itemChildBody)
 		}
+		body, _ = sjson.SetRaw(body, "data.-1", itemBody)
 		res, err := r.client.Post("/v1/tags/associate?operationType=DELETE", body)
 		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to associate devices to tag (POST), got error: %s, %s", err, res.String()))
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to disassociate devices from tag (POST), got error: %s, %s", err, res.String()))
 			return
 		}
 	}
@@ -262,7 +258,7 @@ func (r *TagResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 		body := state.toBodyDeviceAssociation(ctx)
 		res, err := r.client.Post("/v1/tags/associate?operationType=DELETE", body)
 		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to associate devices to tag (POST), got error: %s, %s", err, res.String()))
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to disassociate devices from tag (POST), got error: %s, %s", err, res.String()))
 			return
 		}
 	}
