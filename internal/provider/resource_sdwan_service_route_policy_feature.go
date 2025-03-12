@@ -244,7 +244,7 @@ func (r *ServiceRoutePolicyProfileParcelResource) Schema(ctx context.Context, re
 								Attributes: map[string]schema.Attribute{
 									"as_path_prepend": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
-										ElementType:         types.StringType,
+										ElementType:         types.Int64Type,
 										Optional:            true,
 									},
 									"community_additive": schema.BoolAttribute{

@@ -261,7 +261,7 @@ func (data ServiceRoutePolicy) toBody(ctx context.Context) string {
 					if !childItem.AsPathPrepend.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setAsPath.prepend.optionType", "global")
-							var values []string
+							var values []int64
 							childItem.AsPathPrepend.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setAsPath.prepend.value", values)
 						}
@@ -533,12 +533,12 @@ func (data *ServiceRoutePolicy) fromBody(ctx context.Context, res gjson.Result) 
 				item.Actions = make([]ServiceRoutePolicySequencesActions, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceRoutePolicySequencesActions{}
-					cItem.AsPathPrepend = types.SetNull(types.StringType)
+					cItem.AsPathPrepend = types.SetNull(types.Int64Type)
 
 					if t := cv.Get("accept.setAsPath.prepend.optionType"); t.Exists() {
 						va := cv.Get("accept.setAsPath.prepend.value")
 						if t.String() == "global" {
-							cItem.AsPathPrepend = helpers.GetStringSet(va.Array())
+							cItem.AsPathPrepend = helpers.GetInt64Set(va.Array())
 						}
 					}
 					cItem.CommunityAdditive = types.BoolNull()
@@ -914,12 +914,12 @@ func (data *ServiceRoutePolicy) updateFromBody(ctx context.Context, res gjson.Re
 					return true
 				},
 			)
-			data.Sequences[i].Actions[ci].AsPathPrepend = types.SetNull(types.StringType)
+			data.Sequences[i].Actions[ci].AsPathPrepend = types.SetNull(types.Int64Type)
 
 			if t := cr.Get("accept.setAsPath.prepend.optionType"); t.Exists() {
 				va := cr.Get("accept.setAsPath.prepend.value")
 				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AsPathPrepend = helpers.GetStringSet(va.Array())
+					data.Sequences[i].Actions[ci].AsPathPrepend = helpers.GetInt64Set(va.Array())
 				}
 			}
 			data.Sequences[i].Actions[ci].CommunityAdditive = types.BoolNull()

@@ -83,7 +83,7 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 			"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if isStringInt64 .}}String{{else}}{{.Type}}{{end}}Attribute{
 				MarkdownDescription: "{{.Description}}",
 				{{- if isListSet .}}
-				ElementType:         types.{{if isStringInt64ListSet .}}String{{else}}{{.ElementType}}{{end}}Type,
+				ElementType:         types.{{.ElementType}}Type,
 				{{- end}}
 				{{- if .Reference}}
 				Required:            true,
@@ -98,7 +98,7 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 						"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if isStringInt64 .}}String{{else}}{{.Type}}{{end}}Attribute{
 							MarkdownDescription: "{{.Description}}",
 							{{- if isListSet .}}
-							ElementType:         types.{{if isStringInt64ListSet .}}String{{else}}{{.ElementType}}{{end}}Type,
+							ElementType:         types.{{.ElementType}}Type,
 							{{- end}}
 							Computed:            true,
 							{{- if isNestedListSet .}}
@@ -109,7 +109,7 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 									"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if isStringInt64 .}}String{{else}}{{.Type}}{{end}}Attribute{
 										MarkdownDescription: "{{.Description}}",
 										{{- if isListSet .}}
-										ElementType:         types.{{if isStringInt64ListSet .}}String{{else}}{{.ElementType}}{{end}}Type,
+										ElementType:         types.{{.ElementType}}Type,
 										{{- end}}
 										Computed:            true,
 										{{- if isNestedListSet .}}
@@ -120,7 +120,7 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 												"{{.TfName}}": schema.{{if isList .}}List{{else if isSet .}}Set{{else if isStringInt64 .}}String{{else}}{{.Type}}{{end}}Attribute{
 													MarkdownDescription: "{{.Description}}",
 													{{- if isListSet .}}
-													ElementType:         types.{{if isStringInt64ListSet .}}String{{else}}{{.ElementType}}{{end}}Type,
+													ElementType:         types.{{.ElementType}}Type,
 													{{- end}}
 													Computed:            true,
 												},

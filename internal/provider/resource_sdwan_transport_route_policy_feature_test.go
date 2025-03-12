@@ -99,7 +99,7 @@ func testAccSdwanTransportRoutePolicyProfileParcelConfig_all() string {
 	config += `	  base_action = "reject"` + "\n"
 	config += `	  protocol = "IPV4"` + "\n"
 	config += `	  actions = [{` + "\n"
-	config += `		as_path_prepend = ["65521"]` + "\n"
+	config += `		as_path_prepend = [65521]` + "\n"
 	config += `		community_additive = false` + "\n"
 	config += `		community = ["internet"]` + "\n"
 	config += `		local_preference = 100` + "\n"

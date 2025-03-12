@@ -28,7 +28,7 @@ resource "sdwan_transport_route_policy_feature" "example" {
       protocol    = "IPV4"
       actions = [
         {
-          as_path_prepend    = ["65521"]
+          as_path_prepend    = [65521]
           community_additive = false
           community          = ["internet"]
           local_preference   = 100
@@ -89,7 +89,7 @@ Optional:
 
 Optional:
 
-- `as_path_prepend` (Set of String)
+- `as_path_prepend` (Set of Number)
 - `community` (Set of String)
 - `community_additive` (Boolean) - Default value: `false`
 - `community_variable` (String) Variable name
