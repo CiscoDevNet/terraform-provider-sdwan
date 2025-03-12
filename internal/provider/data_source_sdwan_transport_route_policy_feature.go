@@ -179,7 +179,7 @@ func (d *TransportRoutePolicyProfileParcelDataSource) Schema(ctx context.Context
 								Attributes: map[string]schema.Attribute{
 									"as_path_prepend": schema.SetAttribute{
 										MarkdownDescription: "",
-										ElementType:         types.Int64Type,
+										ElementType:         types.StringType,
 										Computed:            true,
 									},
 									"community_additive": schema.BoolAttribute{

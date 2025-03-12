@@ -484,6 +484,14 @@ func IsStringInt64(attribute YamlConfigAttribute) bool {
 	return false
 }
 
+// Templating helper function to return true if type is StringInt64
+func IsStringInt64ListSet(attribute YamlConfigAttribute) bool {
+	if (attribute.Type == "List" || attribute.Type == "Set") && attribute.ElementType == "StringInt64" {
+		return true
+	}
+	return false
+}
+
 // Templating helper function to return true if type is a list or set with nested elements
 func IsNestedListSet(attribute YamlConfigAttribute) bool {
 	if (attribute.Type == "List" || attribute.Type == "Set") && attribute.ElementType == "" {
@@ -565,6 +573,7 @@ var functions = template.FuncMap{
 	"isStringListSet":        IsStringListSet,
 	"isInt64ListSet":         IsInt64ListSet,
 	"isStringInt64":          IsStringInt64,
+	"isStringInt64ListSet":   IsStringInt64ListSet,
 	"isNestedListSet":        IsNestedListSet,
 	"isNestedList":           IsNestedList,
 	"isNestedSet":            IsNestedSet,
@@ -860,7 +869,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 						attr.MaxInt = value.Int()
 					}
 				}
-			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" || t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.oneOf.0.type").String() == "string" {
+			} else if attr.Type == "Set" && attr.ElementType == "StringInt64" || t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" || t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.oneOf.0.type").String() == "string" {
 				attr.Type = "Set"
 				attr.ElementType = "String"
 				// if value := t.Get("properties.value.items.minItems"); value.Exists() {
@@ -869,7 +878,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				// if value := t.Get("properties.value.items.maxItems"); value.Exists() {
 				//  attr.MaxList = value.Int()
 				// }
-			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "integer" {
+			} else if attr.Type == "Set" || t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "integer" {
 				attr.Type = "Set"
 				attr.ElementType = "Int64"
 				// if value := t.Get("properties.value.items.minimum"); value.Exists() {

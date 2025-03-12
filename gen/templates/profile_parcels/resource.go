@@ -102,7 +102,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 					{{- end -}}
 					.String,
 				{{- if isListSet .}}
-				ElementType:         types.{{.ElementType}}Type,
+				ElementType:         types.{{if isStringInt64ListSet .}}String{{else}}{{.ElementType}}{{end}}Type,
 				{{- end}}
 				{{- if and .Mandatory (not .Optional)}}
 				Required:            true,
@@ -168,7 +168,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 								{{- end -}}
 								.String,
 							{{- if isListSet .}}
-							ElementType:         types.{{.ElementType}}Type,
+							ElementType:         types.{{if isStringInt64ListSet .}}String{{else}}{{.ElementType}}{{end}}Type,
 							{{- end}}
 							Optional:            true,
 							{{- if and (len .EnumValues) (not .IgnoreEnum)}}
@@ -230,7 +230,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 											{{- end -}}
 											.String,
 										{{- if isListSet .}}
-										ElementType:         types.{{.ElementType}}Type,
+										ElementType:         types.{{if isStringInt64ListSet .}}String{{else}}{{.ElementType}}{{end}}Type,
 										{{- end}}
 										Optional:            true,
 										{{- if and (len .EnumValues) (not .IgnoreEnum)}}
@@ -292,7 +292,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 														{{- end -}}
 														.String,
 													{{- if isListSet .}}
-													ElementType:         types.{{.ElementType}}Type,
+													ElementType:         types.{{if isStringInt64ListSet .}}String{{else}}{{.ElementType}}{{end}}Type,
 													{{- end}}
 													Optional:            true,
 													{{- if and (len .EnumValues) (not .IgnoreEnum)}}

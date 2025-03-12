@@ -52,7 +52,7 @@ Read-Only:
 
 Read-Only:
 
-- `as_path_prepend` (Set of Number)
+- `as_path_prepend` (Set of String)
 - `community` (Set of String)
 - `community_additive` (Boolean)
 - `community_variable` (String) Variable name
