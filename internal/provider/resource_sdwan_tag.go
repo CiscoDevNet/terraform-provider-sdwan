@@ -194,6 +194,16 @@ func (r *TagResource) Update(ctx context.Context, req resource.UpdateRequest, re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
+	// Add all devices in state
+	if len(plan.Devices.Elements()) > 0 {
+		body := plan.toBodyDeviceAssociation(ctx)
+		res, err := r.client.Post("/v1/tags/associate", body)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to associate devices to tag (POST), got error: %s, %s", err, res.String()))
+			return
+		}
+	}
+
 	// Get all associate devices
 	res, err := r.client.Get(plan.getPath())
 	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") || strings.Contains(res.Get("error.message").String(), "Invalid Profile Id") || strings.Contains(res.Get("error.message").String(), "Invalid feature Id") || strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
@@ -204,7 +214,7 @@ func (r *TagResource) Update(ctx context.Context, req resource.UpdateRequest, re
 		return
 	}
 
-	// Remove all associate devices
+	// Remove all associate devices that are not if plan
 	if value := res.Get("#(id==\"" + plan.Id.ValueString() + "\")"); value.Exists() {
 		body, _ := sjson.Set("", "data", []interface{}{})
 		itemBody, _ := sjson.Set("", "tagId", plan.Id.ValueString())
@@ -212,26 +222,24 @@ func (r *TagResource) Update(ctx context.Context, req resource.UpdateRequest, re
 		for _, item := range value.Get("tagAssociation").Array() {
 			itemChildBody := ""
 			if id := item.Get("id"); id.Exists() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "id", id.String())
-				itemChildBody, _ = sjson.Set(itemChildBody, "objectType", "DEVICE")
+				existsInPlan := false
+				for _, planId := range plan.Devices.Elements() {
+					if id.String() == planId.String() {
+						existsInPlan = true
+					}
+				}
+				if !existsInPlan {
+					itemChildBody, _ = sjson.Set(itemChildBody, "id", id.String())
+					itemChildBody, _ = sjson.Set(itemChildBody, "objectType", "DEVICE")
+				}
 			}
 			itemBody, _ = sjson.SetRaw(itemBody, "objects.-1", itemChildBody)
 		}
+
 		body, _ = sjson.SetRaw(body, "data.-1", itemBody)
 		res, err := r.client.Post("/v1/tags/associate?operationType=DELETE", body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to disassociate devices from tag (POST), got error: %s, %s", err, res.String()))
-			return
-		}
-	}
-	time.Sleep(time.Second)
-
-	// Add all devices in state
-	if len(plan.Devices.Elements()) > 0 {
-		body := plan.toBodyDeviceAssociation(ctx)
-		res, err := r.client.Post("/v1/tags/associate", body)
-		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to associate devices to tag (POST), got error: %s, %s", err, res.String()))
 			return
 		}
 	}

@@ -22,7 +22,7 @@ import (
 	"context"
 	"strings"
 
-	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -99,8 +99,19 @@ func (data *Tag) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("tagAssociation"); value.Exists() {
-		data.Devices = helpers.GetStringSet(value.Array())
+	if value := res.Get("tagAssociation"); value.Exists() && len(value.Array()) > 0 {
+		a := make([]attr.Value, len(value.Array()))
+		c := 0
+		value.ForEach(func(k, v gjson.Result) bool {
+			if cValue := v.Get("id"); cValue.Exists() {
+				a[c] = types.StringValue(cValue.String())
+			} else {
+				a[c] = types.StringNull()
+			}
+			c += 1
+			return true
+		})
+		data.Devices = types.SetValueMust(types.StringType, a)
 	} else {
 		data.Devices = types.SetNull(types.StringType)
 	}
