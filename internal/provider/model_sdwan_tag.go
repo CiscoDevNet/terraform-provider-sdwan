@@ -87,7 +87,6 @@ func (data Tag) toBodyDeviceAssociation(ctx context.Context) string {
 	return body
 }
 
-// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *Tag) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
@@ -116,8 +115,6 @@ func (data *Tag) fromBody(ctx context.Context, res gjson.Result) {
 		data.Devices = types.SetNull(types.StringType)
 	}
 }
-
-// End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *Tag) hasChanges(ctx context.Context, state *Tag) bool {
