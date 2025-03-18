@@ -1,4 +1,5 @@
 ---
+# MANUALLY CONFIGURED - Model's toBody to support required default values
 name: Transport Route Policy
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/route-policy
 minimum_version: 20.12.0

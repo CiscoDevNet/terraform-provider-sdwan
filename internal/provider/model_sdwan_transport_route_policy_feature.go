@@ -103,7 +103,6 @@ func (data TransportRoutePolicy) getPath() string {
 
 // End of section. //template:end getPath
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data TransportRoutePolicy) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
@@ -250,7 +249,7 @@ func (data TransportRoutePolicy) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.SetRaw(itemBody, "matchEntries.-1", itemChildBody)
 				}
 			}
-			if true {
+			if true && len(item.Actions) > 0 {
 
 				for _, childItem := range item.Actions {
 					itemChildBody := ""
@@ -347,14 +346,28 @@ func (data TransportRoutePolicy) toBody(ctx context.Context) string {
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "actions.-1", itemChildBody)
 				}
+			} else {
+				itemChildBody := ""
+				if true {
+					itemChildBody, _ = sjson.Set(itemChildBody, "accept.enableAcceptAction.optionType", "default")
+					itemChildBody, _ = sjson.Set(itemChildBody, "accept.enableAcceptAction.value", true)
+				}
+				if true {
+					itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.additive.optionType", "global")
+					itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.additive.value", false)
+				}
+				if true {
+					itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.community.optionType", "global")
+					values := make([]string, 0)
+					itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.community.value", values)
+				}
+				itemBody, _ = sjson.SetRaw(itemBody, "actions.-1", itemChildBody)
 			}
 			body, _ = sjson.SetRaw(body, path+"sequences.-1", itemBody)
 		}
 	}
 	return body
 }
-
-// End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *TransportRoutePolicy) fromBody(ctx context.Context, res gjson.Result) {
@@ -661,9 +674,9 @@ func (data *TransportRoutePolicy) updateFromBody(ctx context.Context, res gjson.
 		}
 	}
 	for i := range data.Sequences {
-		keys := [...]string{"sequenceId", "sequenceName", "baseAction", "protocol"}
-		keyValues := [...]string{strconv.FormatInt(data.Sequences[i].Id.ValueInt64(), 10), data.Sequences[i].Name.ValueString(), data.Sequences[i].BaseAction.ValueString(), data.Sequences[i].Protocol.ValueString()}
-		keyValuesVariables := [...]string{"", "", "", ""}
+		keys := [...]string{"sequenceId"}
+		keyValues := [...]string{strconv.FormatInt(data.Sequences[i].Id.ValueInt64(), 10)}
+		keyValuesVariables := [...]string{""}
 
 		var r gjson.Result
 		res.Get(path + "sequences").ForEach(
