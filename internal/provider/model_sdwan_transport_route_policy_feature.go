@@ -661,9 +661,9 @@ func (data *TransportRoutePolicy) updateFromBody(ctx context.Context, res gjson.
 		}
 	}
 	for i := range data.Sequences {
-		keys := [...]string{"sequenceId"}
-		keyValues := [...]string{strconv.FormatInt(data.Sequences[i].Id.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"sequenceId", "sequenceName", "baseAction", "protocol"}
+		keyValues := [...]string{strconv.FormatInt(data.Sequences[i].Id.ValueInt64(), 10), data.Sequences[i].Name.ValueString(), data.Sequences[i].BaseAction.ValueString(), data.Sequences[i].Protocol.ValueString()}
+		keyValuesVariables := [...]string{"", "", "", ""}
 
 		var r gjson.Result
 		res.Get(path + "sequences").ForEach(
@@ -675,6 +675,8 @@ func (data *TransportRoutePolicy) updateFromBody(ctx context.Context, res gjson.
 					if tt.Exists() && vv.Exists() {
 						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
 							found = true
+							continue
+						} else if tt.String() == "default" {
 							continue
 						}
 						found = false
@@ -737,6 +739,8 @@ func (data *TransportRoutePolicy) updateFromBody(ctx context.Context, res gjson.
 							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
 								found = true
 								continue
+							} else if tt.String() == "default" {
+								continue
 							}
 							found = false
 							break
@@ -781,6 +785,8 @@ func (data *TransportRoutePolicy) updateFromBody(ctx context.Context, res gjson.
 							if tt.Exists() && vv.Exists() {
 								if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
 									found = true
+									continue
+								} else if tt.String() == "default" {
 									continue
 								}
 								found = false
@@ -900,6 +906,8 @@ func (data *TransportRoutePolicy) updateFromBody(ctx context.Context, res gjson.
 						if tt.Exists() && vv.Exists() {
 							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
 								found = true
+								continue
+							} else if tt.String() == "default" {
 								continue
 							}
 							found = false

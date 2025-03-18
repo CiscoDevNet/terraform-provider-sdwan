@@ -31,38 +31,37 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
-type PolicyObjectApplicationList struct {
-	Id               types.String                         `tfsdk:"id"`
-	Version          types.Int64                          `tfsdk:"version"`
-	Name             types.String                         `tfsdk:"name"`
-	Description      types.String                         `tfsdk:"description"`
-	FeatureProfileId types.String                         `tfsdk:"feature_profile_id"`
-	Entries          []PolicyObjectApplicationListEntries `tfsdk:"entries"`
+type PolicyObjectSecurityProtocolList struct {
+	Id               types.String                              `tfsdk:"id"`
+	Version          types.Int64                               `tfsdk:"version"`
+	Name             types.String                              `tfsdk:"name"`
+	Description      types.String                              `tfsdk:"description"`
+	FeatureProfileId types.String                              `tfsdk:"feature_profile_id"`
+	Entries          []PolicyObjectSecurityProtocolListEntries `tfsdk:"entries"`
 }
 
-type PolicyObjectApplicationListEntries struct {
-	Application       types.String `tfsdk:"application"`
-	ApplicationFamily types.String `tfsdk:"application_family"`
+type PolicyObjectSecurityProtocolListEntries struct {
+	ProtocolName types.String `tfsdk:"protocol_name"`
 }
 
 // End of section. //template:end types
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getModel
-func (data PolicyObjectApplicationList) getModel() string {
-	return "policy_object_application_list"
+func (data PolicyObjectSecurityProtocolList) getModel() string {
+	return "policy_object_security_protocol_list"
 }
 
 // End of section. //template:end getModel
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getPath
-func (data PolicyObjectApplicationList) getPath() string {
-	return fmt.Sprintf("/v1/feature-profile/sdwan/policy-object/%v/app-list", url.QueryEscape(data.FeatureProfileId.ValueString()))
+func (data PolicyObjectSecurityProtocolList) getPath() string {
+	return fmt.Sprintf("/v1/feature-profile/sdwan/policy-object/%v/security-protocolname", url.QueryEscape(data.FeatureProfileId.ValueString()))
 }
 
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data PolicyObjectApplicationList) toBody(ctx context.Context) string {
+func (data PolicyObjectSecurityProtocolList) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -71,16 +70,10 @@ func (data PolicyObjectApplicationList) toBody(ctx context.Context) string {
 
 		for _, item := range data.Entries {
 			itemBody := ""
-			if !item.Application.IsNull() {
+			if !item.ProtocolName.IsNull() {
 				if true {
-					itemBody, _ = sjson.Set(itemBody, "app.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "app.value", item.Application.ValueString())
-				}
-			}
-			if !item.ApplicationFamily.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "appFamily.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "appFamily.value", item.ApplicationFamily.ValueString())
+					itemBody, _ = sjson.Set(itemBody, "protocolName.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "protocolName.value", item.ProtocolName.ValueString())
 				}
 			}
 			body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
@@ -92,7 +85,7 @@ func (data PolicyObjectApplicationList) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *PolicyObjectApplicationList) fromBody(ctx context.Context, res gjson.Result) {
+func (data *PolicyObjectSecurityProtocolList) fromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -101,23 +94,15 @@ func (data *PolicyObjectApplicationList) fromBody(ctx context.Context, res gjson
 	}
 	path := "payload.data."
 	if value := res.Get(path + "entries"); value.Exists() {
-		data.Entries = make([]PolicyObjectApplicationListEntries, 0)
+		data.Entries = make([]PolicyObjectSecurityProtocolListEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := PolicyObjectApplicationListEntries{}
-			item.Application = types.StringNull()
+			item := PolicyObjectSecurityProtocolListEntries{}
+			item.ProtocolName = types.StringNull()
 
-			if t := v.Get("app.optionType"); t.Exists() {
-				va := v.Get("app.value")
+			if t := v.Get("protocolName.optionType"); t.Exists() {
+				va := v.Get("protocolName.value")
 				if t.String() == "global" {
-					item.Application = types.StringValue(va.String())
-				}
-			}
-			item.ApplicationFamily = types.StringNull()
-
-			if t := v.Get("appFamily.optionType"); t.Exists() {
-				va := v.Get("appFamily.value")
-				if t.String() == "global" {
-					item.ApplicationFamily = types.StringValue(va.String())
+					item.ProtocolName = types.StringValue(va.String())
 				}
 			}
 			data.Entries = append(data.Entries, item)
@@ -129,7 +114,7 @@ func (data *PolicyObjectApplicationList) fromBody(ctx context.Context, res gjson
 // End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *PolicyObjectApplicationList) updateFromBody(ctx context.Context, res gjson.Result) {
+func (data *PolicyObjectSecurityProtocolList) updateFromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -138,9 +123,9 @@ func (data *PolicyObjectApplicationList) updateFromBody(ctx context.Context, res
 	}
 	path := "payload.data."
 	for i := range data.Entries {
-		keys := [...]string{"app", "appFamily"}
-		keyValues := [...]string{data.Entries[i].Application.ValueString(), data.Entries[i].ApplicationFamily.ValueString()}
-		keyValuesVariables := [...]string{"", ""}
+		keys := [...]string{"protocolName"}
+		keyValues := [...]string{data.Entries[i].ProtocolName.ValueString()}
+		keyValuesVariables := [...]string{""}
 
 		var r gjson.Result
 		res.Get(path + "entries").ForEach(
@@ -168,20 +153,12 @@ func (data *PolicyObjectApplicationList) updateFromBody(ctx context.Context, res
 				return true
 			},
 		)
-		data.Entries[i].Application = types.StringNull()
+		data.Entries[i].ProtocolName = types.StringNull()
 
-		if t := r.Get("app.optionType"); t.Exists() {
-			va := r.Get("app.value")
+		if t := r.Get("protocolName.optionType"); t.Exists() {
+			va := r.Get("protocolName.value")
 			if t.String() == "global" {
-				data.Entries[i].Application = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].ApplicationFamily = types.StringNull()
-
-		if t := r.Get("appFamily.optionType"); t.Exists() {
-			va := r.Get("appFamily.value")
-			if t.String() == "global" {
-				data.Entries[i].ApplicationFamily = types.StringValue(va.String())
+				data.Entries[i].ProtocolName = types.StringValue(va.String())
 			}
 		}
 	}
@@ -190,7 +167,7 @@ func (data *PolicyObjectApplicationList) updateFromBody(ctx context.Context, res
 // End of section. //template:end updateFromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *PolicyObjectApplicationList) isNull(ctx context.Context, res gjson.Result) bool {
+func (data *PolicyObjectSecurityProtocolList) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.FeatureProfileId.IsNull() {
 		return false
 	}

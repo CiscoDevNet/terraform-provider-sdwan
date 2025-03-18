@@ -139,6 +139,8 @@ func (data *PolicyObjectVPNGroup) updateFromBody(ctx context.Context, res gjson.
 						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
 							found = true
 							continue
+						} else if tt.String() == "default" {
+							continue
 						}
 						found = false
 						break
