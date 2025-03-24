@@ -1,0 +1,75 @@
+---
+name: DNS Security DNS Security
+rest_endpoint: /v1/feature-profile/sdwan/dns-security/%v/dns
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+parcel_type: policy
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_dns_security_feature_profile.test.id
+  - model_name: refId
+    tf_name: local_domain_bypass_list_id
+    data_path: [localDomainBypassList]
+    example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+    test_value: sdwan_policy_object_security_local_domain_list.test.id
+  - model_name: matchAllVpn
+    example: true
+  - model_name: umbrellaDefault
+    example: false
+  - model_name: dnsServerIP
+    conditional_attribute:
+      name: match_all_vpn
+      value: true
+      type: Bool
+    minimum_test_value: '"1.2.3.4"'
+    example: 1.2.3.4
+  - model_name: localDomainBypassEnabled
+    example: true
+  - model_name: dnsCrypt
+    example: false
+  - model_name: childOrgId
+    example: 12334
+  - model_name: targetVpns
+    conditional_attribute:
+      name: match_all_vpn
+      value: false
+      type: Bool
+    exclude_test: true
+    attributes: 
+    - model_name: vpns
+      example: edge_basic_vpn1
+    - model_name: umbrellaDefault
+      example: false
+    - model_name: dnsServerIP
+      example: 1.2.3.4
+    - model_name: localDomainBypassEnabled
+      example: false
+    - model_name: uid
+      example: 1667346674059
+
+test_prerequisites: |
+  resource "sdwan_dns_security_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_policy_object_feature_profile" "test" {
+    name = "TF_TEST_POLICY_OBJECT"
+    description = "My policy object feature profile 1"
+  }
+
+  resource "sdwan_policy_object_security_local_domain_list" "test" {
+    name               = "TF_TEST_LOCAL_DOMAIN"
+    description        = "My Example"
+    feature_profile_id = sdwan_policy_object_feature_profile.test.id
+    entries = [
+      {
+        local_domain = "hello.com"
+      }
+    ]
+  }
