@@ -142,7 +142,7 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 										},
 									},
 									"prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Prefix list ID").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Prefix list ID, Attribute conditional on `type` being equal to `address`").String,
 										Optional:            true,
 									},
 									"prefix_list_version": schema.Int64Attribute{
@@ -150,7 +150,7 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 										Optional:            true,
 									},
 									"as_path_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("AS path list ID").String,
+										MarkdownDescription: helpers.NewAttributeDescription("AS path list ID, Attribute conditional on `type` being equal to `asPath`").String,
 										Optional:            true,
 									},
 									"as_path_list_version": schema.Int64Attribute{
@@ -158,7 +158,7 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 										Optional:            true,
 									},
 									"community_list_ids": schema.SetAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Community list IDs").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Community list IDs, Attribute conditional on `type` being equal to `advancedCommunity`").String,
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
@@ -168,14 +168,14 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 										Optional:            true,
 									},
 									"community_list_match_flag": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Community list match flag").AddStringEnumDescription("and", "or", "exact").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Community list match flag, Attribute conditional on `type` being equal to `advancedCommunity`").AddStringEnumDescription("and", "or", "exact").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("and", "or", "exact"),
 										},
 									},
 									"expanded_community_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Expanded community list ID").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Expanded community list ID, Attribute conditional on `type` being equal to `expandedCommunity`").String,
 										Optional:            true,
 									},
 									"expanded_community_list_version": schema.Int64Attribute{
@@ -183,7 +183,7 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 										Optional:            true,
 									},
 									"extended_community_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Extended community list ID").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Extended community list ID, Attribute conditional on `type` being equal to `extCommunity`").String,
 										Optional:            true,
 									},
 									"extended_community_list_version": schema.Int64Attribute{
@@ -191,21 +191,21 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 										Optional:            true,
 									},
 									"local_preference": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Local preference").AddIntegerRangeDescription(0, 4294967295).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Local preference, Attribute conditional on `type` being equal to `localPreference`").AddIntegerRangeDescription(0, 4294967295).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 4294967295),
 										},
 									},
 									"metric": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Metric").AddIntegerRangeDescription(0, 4294967295).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Metric, Attribute conditional on `type` being equal to `metric`").AddIntegerRangeDescription(0, 4294967295).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 4294967295),
 										},
 									},
 									"next_hop_prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Next hop prefix list ID").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Next hop prefix list ID, Attribute conditional on `type` being equal to `nextHop`").String,
 										Optional:            true,
 									},
 									"next_hop_prefix_list_version": schema.Int64Attribute{
@@ -213,25 +213,25 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 										Optional:            true,
 									},
 									"origin": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Origin").AddStringEnumDescription("igp", "egp", "incomplete").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Origin, Attribute conditional on `type` being equal to `origin`").AddStringEnumDescription("igp", "egp", "incomplete").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("igp", "egp", "incomplete"),
 										},
 									},
 									"peer": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Peer IP").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Peer IP, Attribute conditional on `type` being equal to `peer`").String,
 										Optional:            true,
 									},
 									"omp_tag": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("OMP tag").AddIntegerRangeDescription(0, 4294967295).String,
+										MarkdownDescription: helpers.NewAttributeDescription("OMP tag, Attribute conditional on `type` being equal to `ompTag`").AddIntegerRangeDescription(0, 4294967295).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 4294967295),
 										},
 									},
 									"ospf_tag": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("OSPF tag").AddIntegerRangeDescription(0, 4294967295).String,
+										MarkdownDescription: helpers.NewAttributeDescription("OSPF tag, Attribute conditional on `type` being equal to `ospfTag`").AddIntegerRangeDescription(0, 4294967295).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 4294967295),
@@ -253,91 +253,91 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 										},
 									},
 									"aggregator": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Aggregator").AddIntegerRangeDescription(0, 4294967295).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Aggregator, Attribute conditional on `type` being equal to `aggregator`").AddIntegerRangeDescription(0, 4294967295).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 4294967295),
 										},
 									},
 									"aggregator_ip_address": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("IP address").String,
+										MarkdownDescription: helpers.NewAttributeDescription("IP address, Attribute conditional on `type` being equal to `aggregator`").String,
 										Optional:            true,
 									},
 									"as_path_prepend": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Space separated list of ASN to prepend").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Space separated list of ASN to prepend, Attribute conditional on `type` being equal to `asPath`").String,
 										Optional:            true,
 									},
 									"as_path_exclude": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Space separated list of ASN to exclude").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Space separated list of ASN to exclude, Attribute conditional on `type` being equal to `asPath`").String,
 										Optional:            true,
 									},
 									"atomic_aggregate": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Atomic aggregate").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Atomic aggregate, Attribute conditional on `type` being equal to `atomicAggregate`").String,
 										Optional:            true,
 									},
 									"community": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Community value, e.g. `1000:10000` or `internet` or `local-AS`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Community value, e.g. `1000:10000` or `internet` or `local-AS`, Attribute conditional on `type` being equal to `community`").String,
 										Optional:            true,
 									},
 									"community_additive": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Community additive").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Community additive, Attribute conditional on `type` being equal to `communityAdditive`").String,
 										Optional:            true,
 									},
 									"local_preference": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Local preference").AddIntegerRangeDescription(0, 4294967295).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Local preference, Attribute conditional on `type` being equal to `localPreference`").AddIntegerRangeDescription(0, 4294967295).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 4294967295),
 										},
 									},
 									"metric": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Metric").AddIntegerRangeDescription(0, 4294967295).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Metric, Attribute conditional on `type` being equal to `metric`").AddIntegerRangeDescription(0, 4294967295).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 4294967295),
 										},
 									},
 									"weight": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Weight").AddIntegerRangeDescription(0, 4294967295).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Weight, Attribute conditional on `type` being equal to `weight`").AddIntegerRangeDescription(0, 4294967295).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 4294967295),
 										},
 									},
 									"metric_type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Metric type").AddStringEnumDescription("type1", "type2").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Metric type, Attribute conditional on `type` being equal to `metricType`").AddStringEnumDescription("type1", "type2").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("type1", "type2"),
 										},
 									},
 									"next_hop": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Next hop IP").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Next hop IP, Attribute conditional on `type` being equal to `nextHop`").String,
 										Optional:            true,
 									},
 									"omp_tag": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("OMP tag").AddIntegerRangeDescription(0, 4294967295).String,
+										MarkdownDescription: helpers.NewAttributeDescription("OMP tag, Attribute conditional on `type` being equal to `ompTag`").AddIntegerRangeDescription(0, 4294967295).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 4294967295),
 										},
 									},
 									"ospf_tag": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("OSPF tag").AddIntegerRangeDescription(0, 4294967295).String,
+										MarkdownDescription: helpers.NewAttributeDescription("OSPF tag, Attribute conditional on `type` being equal to `ospfTag`").AddIntegerRangeDescription(0, 4294967295).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 4294967295),
 										},
 									},
 									"origin": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Origin").AddStringEnumDescription("igp", "egp", "incomplete").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Origin, Attribute conditional on `type` being equal to `origin`").AddStringEnumDescription("igp", "egp", "incomplete").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("igp", "egp", "incomplete"),
 										},
 									},
 									"originator": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Originator IP").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Originator IP, Attribute conditional on `type` being equal to `originator`").String,
 										Optional:            true,
 									},
 								},
