@@ -33,8 +33,6 @@ func TestAccDataSourceSdwanTransportCellularProfileProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_cellular_profile_feature.test", "profile_id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_cellular_profile_feature.test", "access_point_name", "apn1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_cellular_profile_feature.test", "authentication_type", "pap"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_cellular_profile_feature.test", "profile_username", "example"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_cellular_profile_feature.test", "packet_data_network_type", "ipv4"))

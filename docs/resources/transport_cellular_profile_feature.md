@@ -34,14 +34,12 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
 
 ### Required
 
-- `access_point_name` (String) Set access point name
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
-- `profile_id` (Number) Set Profile ID
-  - Range: `1`-`16`
 
 ### Optional
 
+- `access_point_name` (String) Set access point name
 - `access_point_name_variable` (String) Variable name
 - `authentication_type` (String) Set authentication type
   - Choices: `pap`, `chap`, `pap_chap`
@@ -54,6 +52,8 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
   - Choices: `ipv4`, `ipv4v6`, `ipv6`
   - Default value: `ipv4`
 - `packet_data_network_type_variable` (String) Variable name
+- `profile_id` (Number) Set Profile ID
+  - Range: `1`-`16`
 - `profile_id_variable` (String) Variable name
 - `profile_password` (String) Set the profile password
 - `profile_password_variable` (String) Variable name
