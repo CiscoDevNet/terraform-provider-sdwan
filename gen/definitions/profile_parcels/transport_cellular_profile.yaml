@@ -21,12 +21,10 @@ attributes:
     tf_name: profile_id
     data_path: [profileConfig]
     example: 1
-    test_value: '1'
   - model_name: apn
     tf_name: access_point_name
     data_path: [profileConfig, profileInfo]
     example: apn1
-    test_value: '"apn1"'
   - model_name: noAuthentication
     data_path: [profileConfig, profileInfo, authentication]
     type: String
