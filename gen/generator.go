@@ -270,6 +270,7 @@ type YamlConfigAttribute struct {
 	NoAugmentConfig         bool                           `yaml:"no_augment_config"`
 	TestTags                []string                       `yaml:"test_tags"`
 	RequiresConstAndVar     bool                           `yaml:"requires_const_and_var"`
+	RequiresReplace         bool                           `yaml:"requires_replace"`
 }
 
 type YamlConfigConditionalAttribute struct {
