@@ -251,7 +251,10 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 
 	// Deploy to config group devices
 	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, &resp.Diagnostics)
+		r.Deploy(ctx, plan, &resp.Diagnostics, true)
+	}
+	if resp.Diagnostics.HasError() {
+		return
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
@@ -260,7 +263,7 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan ConfigurationGroup, diag *diag.Diagnostics) {
+func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan ConfigurationGroup, diag *diag.Diagnostics, deleteOnError bool) {
 	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString())
 	res, err := r.client.Get(path)
 	if err != nil {
@@ -290,6 +293,9 @@ func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan Configurat
 		res, err = r.client.Post(path, body)
 		if err != nil {
 			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to config group devices (POST), got error: %s, %s", err, res.String()))
+			if deleteOnError {
+				r.DeleteConfigGroup(ctx, plan, diag)
+			}
 			return
 		}
 
@@ -298,6 +304,9 @@ func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan Configurat
 		err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
 		if err != nil {
 			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to config group devices, got error: %s", err))
+			if deleteOnError {
+				r.DeleteConfigGroup(ctx, plan, diag)
+			}
 			return
 		}
 	}
@@ -420,7 +429,10 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 
 	// Deploy to config group devices
 	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, &resp.Diagnostics)
+		r.Deploy(ctx, plan, &resp.Diagnostics, false)
+	}
+	if resp.Diagnostics.HasError() {
+		return
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
