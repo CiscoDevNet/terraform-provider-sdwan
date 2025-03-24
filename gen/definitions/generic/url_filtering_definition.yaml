@@ -100,3 +100,18 @@ attributes:
     type: String
     description: The message displayed or URL redirected to when a blocked page is accessed.
     example: Access to the requested page has been denied. Please contact your Network Administrator
+  - model_name: logging
+    data_path: [definition]
+    tf_name: logging
+    type: List
+    attributes:
+      - model_name: serverIP
+        tf_name: external_syslog_server_ip
+        type: String
+        description: External Syslog Server IP
+        example: 10.0.0.1
+      - model_name: vpn
+        tf_name: external_syslog_server_vpn
+        type: String
+        description: External Syslog Server VPN
+        example: 123

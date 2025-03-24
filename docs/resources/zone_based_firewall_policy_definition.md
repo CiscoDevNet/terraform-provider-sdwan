@@ -50,7 +50,6 @@ resource "sdwan_zone_based_firewall_policy_definition" "example" {
 
 ### Required
 
-- `apply_zone_pairs` (Attributes List) (see [below for nested schema](#nestedatt--apply_zone_pairs))
 - `default_action` (String) Default Action
   - Choices: `pass`, `drop`
 - `description` (String) The description of the policy definition
@@ -59,19 +58,14 @@ resource "sdwan_zone_based_firewall_policy_definition" "example" {
 - `name` (String) The name of the policy definition
 - `rules` (Attributes List) (see [below for nested schema](#nestedatt--rules))
 
+### Optional
+
+- `apply_zone_pairs` (Attributes List) , Attribute conditional on `mode` being equal to `security` (see [below for nested schema](#nestedatt--apply_zone_pairs))
+
 ### Read-Only
 
 - `id` (String) The id of the object
 - `version` (Number) The version of the object
-
-<a id="nestedatt--apply_zone_pairs"></a>
-### Nested Schema for `apply_zone_pairs`
-
-Optional:
-
-- `destination_zone` (String) Destination Zone
-- `source_zone` (String) Source Zone
-
 
 <a id="nestedatt--rules"></a>
 ### Nested Schema for `rules`
@@ -94,7 +88,7 @@ Optional:
 Optional:
 
 - `type` (String) Type of action entry
-  - Choices: `log`, `connectionEvents`
+  - Choices: `log`, `connectionEvents`, `advancedInspectionProfile`
 
 
 <a id="nestedatt--rules--match_entries"></a>
@@ -111,6 +105,16 @@ Optional:
 - `protocol_type` (String) Should be included with additionally entries for `destinationPort` and `protocol` whenever the type `protocolName` is used.
 - `value` (String) value for selected match entry
 - `value_variable` (String) variable value for selected match entry if it has variable option (sourceIp & destinationIp)
+
+
+
+<a id="nestedatt--apply_zone_pairs"></a>
+### Nested Schema for `apply_zone_pairs`
+
+Optional:
+
+- `destination_zone` (String) Destination Zone
+- `source_zone` (String) Source Zone
 
 ## Import
 

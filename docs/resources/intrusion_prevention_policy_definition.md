@@ -14,13 +14,20 @@ This resource can manage a Intrusion Prevention Policy Definition .
 
 ```terraform
 resource "sdwan_intrusion_prevention_policy_definition" "example" {
-  name            = "Example"
-  description     = "My description"
-  mode            = "security"
-  inspection_mode = "protection"
-  log_level       = "alert"
-  signature_set   = "connectivity"
-  target_vpns     = ["1"]
+  name             = "Example"
+  description      = "My description"
+  mode             = "security"
+  inspection_mode  = "protection"
+  log_level        = "alert"
+  custom_signature = false
+  signature_set    = "connectivity"
+  target_vpns      = ["1"]
+  logging = [
+    {
+      external_syslog_server_ip  = "10.0.0.1"
+      external_syslog_server_vpn = "123"
+    }
+  ]
 }
 ```
 
@@ -34,12 +41,14 @@ resource "sdwan_intrusion_prevention_policy_definition" "example" {
 
 ### Optional
 
+- `custom_signature` (Boolean) Custom signature
 - `inspection_mode` (String) The inspection mode
   - Choices: `protection`, `detection`
 - `ips_signature_list_id` (String) IPS signature list ID
 - `ips_signature_list_version` (Number) IPS signature list version
 - `log_level` (String) Log level
   - Choices: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `info`, `debug`
+- `logging` (Attributes List) (see [below for nested schema](#nestedatt--logging))
 - `mode` (String) The policy mode
   - Choices: `security`, `unified`
 - `signature_set` (String) Signature set
@@ -50,6 +59,14 @@ resource "sdwan_intrusion_prevention_policy_definition" "example" {
 
 - `id` (String) The id of the object
 - `version` (Number) The version of the object
+
+<a id="nestedatt--logging"></a>
+### Nested Schema for `logging`
+
+Optional:
+
+- `external_syslog_server_ip` (String) External Syslog Server IP
+- `external_syslog_server_vpn` (String) External Syslog Server VPN
 
 ## Import
 

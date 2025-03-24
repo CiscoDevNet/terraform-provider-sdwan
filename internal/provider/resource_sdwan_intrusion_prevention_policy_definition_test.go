@@ -34,7 +34,10 @@ func TestAccSdwanIntrusionPreventionPolicyDefinition(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_intrusion_prevention_policy_definition.test", "mode", "security"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_intrusion_prevention_policy_definition.test", "inspection_mode", "protection"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_intrusion_prevention_policy_definition.test", "log_level", "alert"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_intrusion_prevention_policy_definition.test", "custom_signature", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_intrusion_prevention_policy_definition.test", "signature_set", "connectivity"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_intrusion_prevention_policy_definition.test", "logging.0.external_syslog_server_ip", "10.0.0.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_intrusion_prevention_policy_definition.test", "logging.0.external_syslog_server_vpn", "123"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -60,8 +63,13 @@ func testAccSdwanIntrusionPreventionPolicyDefinitionConfig_all() string {
 	config += `	mode = "security"` + "\n"
 	config += `	inspection_mode = "protection"` + "\n"
 	config += `	log_level = "alert"` + "\n"
+	config += `	custom_signature = false` + "\n"
 	config += `	signature_set = "connectivity"` + "\n"
 	config += `	target_vpns = ["1"]` + "\n"
+	config += `	logging = [{` + "\n"
+	config += `	  external_syslog_server_ip = "10.0.0.1"` + "\n"
+	config += `	  external_syslog_server_vpn = "123"` + "\n"
+	config += `	}]` + "\n"
 	config += `}` + "\n"
 	return config
 }
