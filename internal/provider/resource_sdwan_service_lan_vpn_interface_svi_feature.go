@@ -669,7 +669,11 @@ func (r *ServiceLANVPNInterfaceSVIProfileParcelResource) Read(ctx context.Contex
 	}
 
 	// If every attribute is set to null we are dealing with an import operation and therefore reading all attributes
-	if state.isNull(ctx, res) {
+	stateCopy := state
+	stateCopy.FeatureProfileId = types.StringNull()
+	stateCopy.ServiceLanVpnFeatureId = types.StringNull()
+
+	if stateCopy.isNull(ctx, res) {
 		state.fromBody(ctx, res)
 	} else {
 		state.updateFromBody(ctx, res)

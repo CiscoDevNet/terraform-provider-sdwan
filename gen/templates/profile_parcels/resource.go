@@ -448,7 +448,12 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Read(ctx context.Context, req
 
 	// If every attribute is set to null we are dealing with an import operation and therefore reading all attributes
 	{{- if not .FullUpdate}}
-	if state.isNull(ctx, res) {
+	stateCopy := state
+	{{- range .Attributes}}{{- if .Reference}}
+	stateCopy.{{toGoName .TfName}} = types.StringNull()
+	{{- end}}{{- end}}
+
+	if stateCopy.isNull(ctx, res) {
 		state.fromBody(ctx, res)
 	} else {
 		state.updateFromBody(ctx, res)
