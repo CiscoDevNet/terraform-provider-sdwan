@@ -91,7 +91,7 @@ func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Conte
 			},
 			"profile_id": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set Profile ID").AddIntegerRangeDescription(1, 16).String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 16),
 				},
@@ -102,7 +102,7 @@ func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Conte
 			},
 			"access_point_name": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set access point name").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"access_point_name_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

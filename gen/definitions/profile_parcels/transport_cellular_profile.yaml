@@ -20,12 +20,10 @@ attributes:
   - model_name: id
     tf_name: profile_id
     data_path: [profileConfig]
-    mandatory: true
     example: 1
   - model_name: apn
     tf_name: access_point_name
     data_path: [profileConfig, profileInfo]
-    mandatory: true
     example: apn1
   - model_name: noAuthentication
     data_path: [profileConfig, profileInfo, authentication]
