@@ -44,26 +44,26 @@ import (
 // Section below is generated&owned by "gen/generator.go". //template:begin model
 
 // Ensure provider defined types fully satisfy framework interfaces
-var _ resource.Resource = &DNSSecurityDNSSecurityProfileParcelResource{}
-var _ resource.ResourceWithImportState = &DNSSecurityDNSSecurityProfileParcelResource{}
+var _ resource.Resource = &DNSSecurityProfileParcelResource{}
+var _ resource.ResourceWithImportState = &DNSSecurityProfileParcelResource{}
 
-func NewDNSSecurityDNSSecurityProfileParcelResource() resource.Resource {
-	return &DNSSecurityDNSSecurityProfileParcelResource{}
+func NewDNSSecurityProfileParcelResource() resource.Resource {
+	return &DNSSecurityProfileParcelResource{}
 }
 
-type DNSSecurityDNSSecurityProfileParcelResource struct {
+type DNSSecurityProfileParcelResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
 }
 
-func (r *DNSSecurityDNSSecurityProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_dns_security_dns_security_policy"
+func (r *DNSSecurityProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_dns_security_policy"
 }
 
-func (r *DNSSecurityDNSSecurityProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *DNSSecurityProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a DNS Security DNS Security Policy.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a DNS Security Policy.").AddMinimumVersionDescription("20.12.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -104,7 +104,7 @@ func (r *DNSSecurityDNSSecurityProfileParcelResource) Schema(ctx context.Context
 				MarkdownDescription: helpers.NewAttributeDescription("Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry").String,
 				Required:            true,
 			},
-			"dns_server_i_p": schema.StringAttribute{
+			"dns_server_ip": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry, Attribute conditional on `match_all_vpn` being equal to `true`").String,
 				Required:            true,
 			},
@@ -137,7 +137,7 @@ func (r *DNSSecurityDNSSecurityProfileParcelResource) Schema(ctx context.Context
 							MarkdownDescription: helpers.NewAttributeDescription("Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry").String,
 							Optional:            true,
 						},
-						"dns_server_i_p": schema.StringAttribute{
+						"dns_server_ip": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry").String,
 							Optional:            true,
 						},
@@ -159,7 +159,7 @@ func (r *DNSSecurityDNSSecurityProfileParcelResource) Schema(ctx context.Context
 	}
 }
 
-func (r *DNSSecurityDNSSecurityProfileParcelResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+func (r *DNSSecurityProfileParcelResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -171,8 +171,8 @@ func (r *DNSSecurityDNSSecurityProfileParcelResource) Configure(_ context.Contex
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
-func (r *DNSSecurityDNSSecurityProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan DNSSecurityDNSSecurity
+func (r *DNSSecurityProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var plan DNSSecurity
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -204,8 +204,8 @@ func (r *DNSSecurityDNSSecurityProfileParcelResource) Create(ctx context.Context
 // End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (r *DNSSecurityDNSSecurityProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state DNSSecurityDNSSecurity
+func (r *DNSSecurityProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var state DNSSecurity
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -247,8 +247,8 @@ func (r *DNSSecurityDNSSecurityProfileParcelResource) Read(ctx context.Context, 
 // End of section. //template:end read
 
 // Section below is generated&owned by "gen/generator.go". //template:begin update
-func (r *DNSSecurityDNSSecurityProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state DNSSecurityDNSSecurity
+func (r *DNSSecurityProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, state DNSSecurity
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -283,8 +283,8 @@ func (r *DNSSecurityDNSSecurityProfileParcelResource) Update(ctx context.Context
 // End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
-func (r *DNSSecurityDNSSecurityProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state DNSSecurityDNSSecurity
+func (r *DNSSecurityProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state DNSSecurity
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -309,11 +309,11 @@ func (r *DNSSecurityDNSSecurityProfileParcelResource) Delete(ctx context.Context
 // End of section. //template:end delete
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
-func (r *DNSSecurityDNSSecurityProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *DNSSecurityProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	count := 1
 	parts := strings.SplitN(req.ID, ",", (count + 1))
 
-	pattern := "dns_security_dns_security_policy_id" + ",feature_profile_id"
+	pattern := "dns_security_policy_id" + ",feature_profile_id"
 	if len(parts) != (count + 1) {
 		resp.Diagnostics.AddError(
 			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q", pattern, req.ID),

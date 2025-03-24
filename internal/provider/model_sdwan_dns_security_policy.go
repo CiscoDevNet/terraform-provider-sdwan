@@ -33,26 +33,26 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
-type DNSSecurityDNSSecurity struct {
-	Id                       types.String                       `tfsdk:"id"`
-	Version                  types.Int64                        `tfsdk:"version"`
-	Name                     types.String                       `tfsdk:"name"`
-	Description              types.String                       `tfsdk:"description"`
-	FeatureProfileId         types.String                       `tfsdk:"feature_profile_id"`
-	LocalDomainBypassListId  types.String                       `tfsdk:"local_domain_bypass_list_id"`
-	MatchAllVpn              types.Bool                         `tfsdk:"match_all_vpn"`
-	UmbrellaDefault          types.Bool                         `tfsdk:"umbrella_default"`
-	DnsServerIP              types.String                       `tfsdk:"dns_server_i_p"`
-	LocalDomainBypassEnabled types.Bool                         `tfsdk:"local_domain_bypass_enabled"`
-	DnsCrypt                 types.Bool                         `tfsdk:"dns_crypt"`
-	ChildOrgId               types.String                       `tfsdk:"child_org_id"`
-	TargetVpns               []DNSSecurityDNSSecurityTargetVpns `tfsdk:"target_vpns"`
+type DNSSecurity struct {
+	Id                       types.String            `tfsdk:"id"`
+	Version                  types.Int64             `tfsdk:"version"`
+	Name                     types.String            `tfsdk:"name"`
+	Description              types.String            `tfsdk:"description"`
+	FeatureProfileId         types.String            `tfsdk:"feature_profile_id"`
+	LocalDomainBypassListId  types.String            `tfsdk:"local_domain_bypass_list_id"`
+	MatchAllVpn              types.Bool              `tfsdk:"match_all_vpn"`
+	UmbrellaDefault          types.Bool              `tfsdk:"umbrella_default"`
+	DnsServerIp              types.String            `tfsdk:"dns_server_ip"`
+	LocalDomainBypassEnabled types.Bool              `tfsdk:"local_domain_bypass_enabled"`
+	DnsCrypt                 types.Bool              `tfsdk:"dns_crypt"`
+	ChildOrgId               types.String            `tfsdk:"child_org_id"`
+	TargetVpns               []DNSSecurityTargetVpns `tfsdk:"target_vpns"`
 }
 
-type DNSSecurityDNSSecurityTargetVpns struct {
+type DNSSecurityTargetVpns struct {
 	Vpns                     types.Set    `tfsdk:"vpns"`
 	UmbrellaDefault          types.Bool   `tfsdk:"umbrella_default"`
-	DnsServerIP              types.String `tfsdk:"dns_server_i_p"`
+	DnsServerIp              types.String `tfsdk:"dns_server_ip"`
 	LocalDomainBypassEnabled types.Bool   `tfsdk:"local_domain_bypass_enabled"`
 	Uid                      types.String `tfsdk:"uid"`
 }
@@ -60,21 +60,21 @@ type DNSSecurityDNSSecurityTargetVpns struct {
 // End of section. //template:end types
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getModel
-func (data DNSSecurityDNSSecurity) getModel() string {
-	return "dns_security_dns_security"
+func (data DNSSecurity) getModel() string {
+	return "dns_security"
 }
 
 // End of section. //template:end getModel
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getPath
-func (data DNSSecurityDNSSecurity) getPath() string {
+func (data DNSSecurity) getPath() string {
 	return fmt.Sprintf("/v1/feature-profile/sdwan/dns-security/%v/dns", url.QueryEscape(data.FeatureProfileId.ValueString()))
 }
 
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data DNSSecurityDNSSecurity) toBody(ctx context.Context) string {
+func (data DNSSecurity) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -97,10 +97,10 @@ func (data DNSSecurityDNSSecurity) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"umbrellaDefault.value", data.UmbrellaDefault.ValueBool())
 		}
 	}
-	if !data.DnsServerIP.IsNull() {
+	if !data.DnsServerIp.IsNull() {
 		if true && data.MatchAllVpn.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"dnsServerIP.optionType", "global")
-			body, _ = sjson.Set(body, path+"dnsServerIP.value", data.DnsServerIP.ValueString())
+			body, _ = sjson.Set(body, path+"dnsServerIP.value", data.DnsServerIp.ValueString())
 		}
 	}
 	if !data.LocalDomainBypassEnabled.IsNull() {
@@ -139,10 +139,10 @@ func (data DNSSecurityDNSSecurity) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "umbrellaDefault.value", item.UmbrellaDefault.ValueBool())
 				}
 			}
-			if !item.DnsServerIP.IsNull() {
+			if !item.DnsServerIp.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "dnsServerIP.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "dnsServerIP.value", item.DnsServerIP.ValueString())
+					itemBody, _ = sjson.Set(itemBody, "dnsServerIP.value", item.DnsServerIp.ValueString())
 				}
 			}
 			if !item.LocalDomainBypassEnabled.IsNull() {
@@ -166,7 +166,7 @@ func (data DNSSecurityDNSSecurity) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *DNSSecurityDNSSecurity) fromBody(ctx context.Context, res gjson.Result) {
+func (data *DNSSecurity) fromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -198,12 +198,12 @@ func (data *DNSSecurityDNSSecurity) fromBody(ctx context.Context, res gjson.Resu
 			data.UmbrellaDefault = types.BoolValue(va.Bool())
 		}
 	}
-	data.DnsServerIP = types.StringNull()
+	data.DnsServerIp = types.StringNull()
 
 	if t := res.Get(path + "dnsServerIP.optionType"); t.Exists() {
 		va := res.Get(path + "dnsServerIP.value")
 		if t.String() == "global" {
-			data.DnsServerIP = types.StringValue(va.String())
+			data.DnsServerIp = types.StringValue(va.String())
 		}
 	}
 	data.LocalDomainBypassEnabled = types.BoolNull()
@@ -231,9 +231,9 @@ func (data *DNSSecurityDNSSecurity) fromBody(ctx context.Context, res gjson.Resu
 		}
 	}
 	if value := res.Get(path + "targetVpns"); value.Exists() {
-		data.TargetVpns = make([]DNSSecurityDNSSecurityTargetVpns, 0)
+		data.TargetVpns = make([]DNSSecurityTargetVpns, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := DNSSecurityDNSSecurityTargetVpns{}
+			item := DNSSecurityTargetVpns{}
 			item.Vpns = types.SetNull(types.StringType)
 
 			if t := v.Get("vpns.optionType"); t.Exists() {
@@ -250,12 +250,12 @@ func (data *DNSSecurityDNSSecurity) fromBody(ctx context.Context, res gjson.Resu
 					item.UmbrellaDefault = types.BoolValue(va.Bool())
 				}
 			}
-			item.DnsServerIP = types.StringNull()
+			item.DnsServerIp = types.StringNull()
 
 			if t := v.Get("dnsServerIP.optionType"); t.Exists() {
 				va := v.Get("dnsServerIP.value")
 				if t.String() == "global" {
-					item.DnsServerIP = types.StringValue(va.String())
+					item.DnsServerIp = types.StringValue(va.String())
 				}
 			}
 			item.LocalDomainBypassEnabled = types.BoolNull()
@@ -283,7 +283,7 @@ func (data *DNSSecurityDNSSecurity) fromBody(ctx context.Context, res gjson.Resu
 // End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *DNSSecurityDNSSecurity) updateFromBody(ctx context.Context, res gjson.Result) {
+func (data *DNSSecurity) updateFromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -315,12 +315,12 @@ func (data *DNSSecurityDNSSecurity) updateFromBody(ctx context.Context, res gjso
 			data.UmbrellaDefault = types.BoolValue(va.Bool())
 		}
 	}
-	data.DnsServerIP = types.StringNull()
+	data.DnsServerIp = types.StringNull()
 
 	if t := res.Get(path + "dnsServerIP.optionType"); t.Exists() {
 		va := res.Get(path + "dnsServerIP.value")
 		if t.String() == "global" {
-			data.DnsServerIP = types.StringValue(va.String())
+			data.DnsServerIp = types.StringValue(va.String())
 		}
 	}
 	data.LocalDomainBypassEnabled = types.BoolNull()
@@ -349,7 +349,7 @@ func (data *DNSSecurityDNSSecurity) updateFromBody(ctx context.Context, res gjso
 	}
 	for i := range data.TargetVpns {
 		keys := [...]string{"vpns", "umbrellaDefault", "dnsServerIP", "localDomainBypassEnabled", "uid"}
-		keyValues := [...]string{helpers.GetStringFromSet(data.TargetVpns[i].Vpns).ValueString(), strconv.FormatBool(data.TargetVpns[i].UmbrellaDefault.ValueBool()), data.TargetVpns[i].DnsServerIP.ValueString(), strconv.FormatBool(data.TargetVpns[i].LocalDomainBypassEnabled.ValueBool()), data.TargetVpns[i].Uid.ValueString()}
+		keyValues := [...]string{helpers.GetStringFromSet(data.TargetVpns[i].Vpns).ValueString(), strconv.FormatBool(data.TargetVpns[i].UmbrellaDefault.ValueBool()), data.TargetVpns[i].DnsServerIp.ValueString(), strconv.FormatBool(data.TargetVpns[i].LocalDomainBypassEnabled.ValueBool()), data.TargetVpns[i].Uid.ValueString()}
 		keyValuesVariables := [...]string{"", "", "", "", ""}
 
 		var r gjson.Result
@@ -392,12 +392,12 @@ func (data *DNSSecurityDNSSecurity) updateFromBody(ctx context.Context, res gjso
 				data.TargetVpns[i].UmbrellaDefault = types.BoolValue(va.Bool())
 			}
 		}
-		data.TargetVpns[i].DnsServerIP = types.StringNull()
+		data.TargetVpns[i].DnsServerIp = types.StringNull()
 
 		if t := r.Get("dnsServerIP.optionType"); t.Exists() {
 			va := r.Get("dnsServerIP.value")
 			if t.String() == "global" {
-				data.TargetVpns[i].DnsServerIP = types.StringValue(va.String())
+				data.TargetVpns[i].DnsServerIp = types.StringValue(va.String())
 			}
 		}
 		data.TargetVpns[i].LocalDomainBypassEnabled = types.BoolNull()
@@ -422,7 +422,7 @@ func (data *DNSSecurityDNSSecurity) updateFromBody(ctx context.Context, res gjso
 // End of section. //template:end updateFromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *DNSSecurityDNSSecurity) isNull(ctx context.Context, res gjson.Result) bool {
+func (data *DNSSecurity) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.FeatureProfileId.IsNull() {
 		return false
 	}
@@ -435,7 +435,7 @@ func (data *DNSSecurityDNSSecurity) isNull(ctx context.Context, res gjson.Result
 	if !data.UmbrellaDefault.IsNull() {
 		return false
 	}
-	if !data.DnsServerIP.IsNull() {
+	if !data.DnsServerIp.IsNull() {
 		return false
 	}
 	if !data.LocalDomainBypassEnabled.IsNull() {

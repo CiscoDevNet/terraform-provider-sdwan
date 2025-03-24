@@ -27,34 +27,37 @@ import (
 
 // End of section. //template:end imports
 
-// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
-func TestAccDataSourceSdwanDNSSecurityDNSSecurityProfileParcel(t *testing.T) {
+// Section below is generated&owned by "gen/generator.go". //template:begin testAcc
+func TestAccSdwanDNSSecurityProfileParcel(t *testing.T) {
 	if os.Getenv("SDWAN_2012") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_dns_security_dns_security_policy.test", "match_all_vpn", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_dns_security_dns_security_policy.test", "umbrella_default", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_dns_security_dns_security_policy.test", "dns_server_i_p", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_dns_security_dns_security_policy.test", "local_domain_bypass_enabled", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_dns_security_dns_security_policy.test", "dns_crypt", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_dns_security_dns_security_policy.test", "child_org_id", "12334"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy.test", "match_all_vpn", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy.test", "umbrella_default", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy.test", "dns_server_ip", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy.test", "local_domain_bypass_enabled", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy.test", "dns_crypt", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy.test", "child_org_id", "12334"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanDNSSecurityDNSSecurityPrerequisitesProfileParcelConfig + testAccDataSourceSdwanDNSSecurityDNSSecurityProfileParcelConfig(),
+				Config: testAccSdwanDNSSecurityPrerequisitesProfileParcelConfig + testAccSdwanDNSSecurityProfileParcelConfig_minimum(),
+			},
+			{
+				Config: testAccSdwanDNSSecurityPrerequisitesProfileParcelConfig + testAccSdwanDNSSecurityProfileParcelConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-// End of section. //template:end testAccDataSource
+// End of section. //template:end testAcc
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-const testAccDataSourceSdwanDNSSecurityDNSSecurityPrerequisitesProfileParcelConfig = `
+const testAccSdwanDNSSecurityPrerequisitesProfileParcelConfig = `
 resource "sdwan_dns_security_feature_profile" "test" {
   name = "TF_TEST"
   description = "Terraform test"
@@ -75,32 +78,45 @@ resource "sdwan_policy_object_security_local_domain_list" "test" {
     }
   ]
 }
+
 `
 
 // End of section. //template:end testPrerequisites
 
-// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
-func testAccDataSourceSdwanDNSSecurityDNSSecurityProfileParcelConfig() string {
-	config := `resource "sdwan_dns_security_dns_security_policy" "test" {` + "\n"
-	config += ` name = "TF_TEST"` + "\n"
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
+func testAccSdwanDNSSecurityProfileParcelConfig_minimum() string {
+	config := `resource "sdwan_dns_security_policy" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_dns_security_feature_profile.test.id` + "\n"
 	config += `	local_domain_bypass_list_id = sdwan_policy_object_security_local_domain_list.test.id` + "\n"
 	config += `	match_all_vpn = true` + "\n"
 	config += `	umbrella_default = false` + "\n"
-	config += `	dns_server_i_p = "1.2.3.4"` + "\n"
+	config += `	dns_server_ip = "1.2.3.4"` + "\n"
 	config += `	local_domain_bypass_enabled = true` + "\n"
 	config += `	dns_crypt = false` + "\n"
 	config += `	child_org_id = "12334"` + "\n"
 	config += `}` + "\n"
-
-	config += `
-		data "sdwan_dns_security_dns_security_policy" "test" {
-			id = sdwan_dns_security_dns_security_policy.test.id
-			feature_profile_id = sdwan_dns_security_feature_profile.test.id
-		}
-	`
 	return config
 }
 
-// End of section. //template:end testAccDataSourceConfig
+// End of section. //template:end testAccConfigMinimum
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
+func testAccSdwanDNSSecurityProfileParcelConfig_all() string {
+	config := `resource "sdwan_dns_security_policy" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_dns_security_feature_profile.test.id` + "\n"
+	config += `	local_domain_bypass_list_id = sdwan_policy_object_security_local_domain_list.test.id` + "\n"
+	config += `	match_all_vpn = true` + "\n"
+	config += `	umbrella_default = false` + "\n"
+	config += `	dns_server_ip = "1.2.3.4"` + "\n"
+	config += `	local_domain_bypass_enabled = true` + "\n"
+	config += `	dns_crypt = false` + "\n"
+	config += `	child_org_id = "12334"` + "\n"
+	config += `}` + "\n"
+	return config
+}
+
+// End of section. //template:end testAccConfigAll

@@ -1,5 +1,5 @@
 ---
-name: DNS Security DNS Security
+name: DNS Security
 rest_endpoint: /v1/feature-profile/sdwan/dns-security/%v/dns
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
@@ -22,6 +22,7 @@ attributes:
   - model_name: umbrellaDefault
     example: false
   - model_name: dnsServerIP
+    tf_name: dns_server_ip
     conditional_attribute:
       name: match_all_vpn
       value: true
@@ -40,17 +41,18 @@ attributes:
       value: false
       type: Bool
     exclude_test: true
-    attributes: 
-    - model_name: vpns
-      example: edge_basic_vpn1
-    - model_name: umbrellaDefault
-      example: false
-    - model_name: dnsServerIP
-      example: 1.2.3.4
-    - model_name: localDomainBypassEnabled
-      example: false
-    - model_name: uid
-      example: 1667346674059
+    attributes:
+      - model_name: vpns
+        example: edge_basic_vpn1
+      - model_name: umbrellaDefault
+        example: false
+      - model_name: dnsServerIP
+        tf_name: dns_server_ip
+        example: 1.2.3.4
+      - model_name: localDomainBypassEnabled
+        example: false
+      - model_name: uid
+        example: 1667346674059
 
 test_prerequisites: |
   resource "sdwan_dns_security_feature_profile" "test" {

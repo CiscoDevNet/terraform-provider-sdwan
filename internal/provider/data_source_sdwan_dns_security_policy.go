@@ -36,26 +36,26 @@ import (
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
-	_ datasource.DataSource              = &DNSSecurityDNSSecurityProfileParcelDataSource{}
-	_ datasource.DataSourceWithConfigure = &DNSSecurityDNSSecurityProfileParcelDataSource{}
+	_ datasource.DataSource              = &DNSSecurityProfileParcelDataSource{}
+	_ datasource.DataSourceWithConfigure = &DNSSecurityProfileParcelDataSource{}
 )
 
-func NewDNSSecurityDNSSecurityProfileParcelDataSource() datasource.DataSource {
-	return &DNSSecurityDNSSecurityProfileParcelDataSource{}
+func NewDNSSecurityProfileParcelDataSource() datasource.DataSource {
+	return &DNSSecurityProfileParcelDataSource{}
 }
 
-type DNSSecurityDNSSecurityProfileParcelDataSource struct {
+type DNSSecurityProfileParcelDataSource struct {
 	client *sdwan.Client
 }
 
-func (d *DNSSecurityDNSSecurityProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_dns_security_dns_security_policy"
+func (d *DNSSecurityProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_dns_security_policy"
 }
 
-func (d *DNSSecurityDNSSecurityProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (d *DNSSecurityProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the DNS Security DNS Security Policy.",
+		MarkdownDescription: "This data source can read the DNS Security Policy.",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -90,7 +90,7 @@ func (d *DNSSecurityDNSSecurityProfileParcelDataSource) Schema(ctx context.Conte
 				MarkdownDescription: "Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry",
 				Computed:            true,
 			},
-			"dns_server_i_p": schema.StringAttribute{
+			"dns_server_ip": schema.StringAttribute{
 				MarkdownDescription: "Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry",
 				Computed:            true,
 			},
@@ -120,7 +120,7 @@ func (d *DNSSecurityDNSSecurityProfileParcelDataSource) Schema(ctx context.Conte
 							MarkdownDescription: "Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry",
 							Computed:            true,
 						},
-						"dns_server_i_p": schema.StringAttribute{
+						"dns_server_ip": schema.StringAttribute{
 							MarkdownDescription: "Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry",
 							Computed:            true,
 						},
@@ -139,7 +139,7 @@ func (d *DNSSecurityDNSSecurityProfileParcelDataSource) Schema(ctx context.Conte
 	}
 }
 
-func (d *DNSSecurityDNSSecurityProfileParcelDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
+func (d *DNSSecurityProfileParcelDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -150,8 +150,8 @@ func (d *DNSSecurityDNSSecurityProfileParcelDataSource) Configure(_ context.Cont
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (d *DNSSecurityDNSSecurityProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config DNSSecurityDNSSecurity
+func (d *DNSSecurityProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	var config DNSSecurity
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)
