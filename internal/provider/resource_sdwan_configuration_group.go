@@ -258,7 +258,7 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 
 	// Deploy to config group devices
 	if len(plan.Devices) > 0 {
-		r.CreateDeploy(ctx, plan, &resp.Diagnostics)
+		r.Deploy(ctx, plan, &resp.Diagnostics, true)
 	}
 	if resp.Diagnostics.HasError() {
 		return
@@ -270,7 +270,7 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *ConfigurationGroupResource) CreateDeploy(ctx context.Context, plan ConfigurationGroup, diag *diag.Diagnostics) {
+func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan ConfigurationGroup, diag *diag.Diagnostics, deleteOnError bool) {
 	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString())
 	res, err := r.client.Get(path)
 	if err != nil {
@@ -300,7 +300,9 @@ func (r *ConfigurationGroupResource) CreateDeploy(ctx context.Context, plan Conf
 		res, err = r.client.Post(path, body)
 		if err != nil {
 			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to config group devices (POST), got error: %s, %s", err, res.String()))
-			r.DeleteConfigGroup(ctx, plan, diag)
+			if deleteOnError {
+				r.DeleteConfigGroup(ctx, plan, diag)
+			}
 			return
 		}
 
@@ -309,7 +311,9 @@ func (r *ConfigurationGroupResource) CreateDeploy(ctx context.Context, plan Conf
 		err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
 		if err != nil {
 			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to config group devices, got error: %s", err))
-			r.DeleteConfigGroup(ctx, plan, diag)
+			if deleteOnError {
+				r.DeleteConfigGroup(ctx, plan, diag)
+			}
 			return
 		}
 	}
@@ -432,7 +436,7 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 
 	// Deploy to config group devices
 	if len(plan.Devices) > 0 {
-		r.UpdateDeploy(ctx, plan, &resp.Diagnostics)
+		r.Deploy(ctx, plan, &resp.Diagnostics, false)
 	}
 	if resp.Diagnostics.HasError() {
 		return
@@ -442,49 +446,6 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
-}
-
-func (r *ConfigurationGroupResource) UpdateDeploy(ctx context.Context, plan ConfigurationGroup, diag *diag.Diagnostics) {
-	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString())
-	res, err := r.client.Get(path)
-	if err != nil {
-		diag.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
-		return
-	}
-
-	// Build deploy body
-	body, _ := sjson.Set("", "devices", []interface{}{})
-	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
-		value.ForEach(func(k, v gjson.Result) bool {
-			if v.Get("configGroupUpToDate").String() != "False" {
-				return true
-			}
-			id := v.Get("id").String()
-			for _, item := range plan.Devices {
-				if item.Id.ValueString() == id && item.Deploy.ValueBool() {
-					itemBody, _ := sjson.Set("", "id", id)
-					body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
-				}
-			}
-			return true
-		})
-	}
-	if len(gjson.Get(body, "devices").Array()) > 0 {
-		path := fmt.Sprintf("/v1/config-group/%v/device/deploy/", plan.Id.ValueString())
-		res, err = r.client.Post(path, body)
-		if err != nil {
-			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to config group devices (POST), got error: %s, %s", err, res.String()))
-			return
-		}
-
-		// Wait for deploy action to complete
-		actionId := res.Get("parentTaskId").String()
-		err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
-		if err != nil {
-			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to config group devices, got error: %s", err))
-			return
-		}
-	}
 }
 
 func (r *ConfigurationGroupResource) DeleteConfigGroup(ctx context.Context, state ConfigurationGroup, diag *diag.Diagnostics) {
