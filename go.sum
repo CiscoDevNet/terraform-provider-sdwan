@@ -167,6 +167,8 @@ github.com/mitchellh/reflectwalk v1.0.2 h1:G2LzWKi524PWgd3mLHV8Y5k7s6XUvT0Gef6zx
 github.com/mitchellh/reflectwalk v1.0.2/go.mod h1:mSTlrgnPZtwu0c4WaC2kGObEpuNDbx0jmZXqmk4esnw=
 github.com/netascode/go-sdwan v0.1.7 h1:WNg637UEqyVbahOtFEC9XmOsq74LcIryKorku7IwIFg=
 github.com/netascode/go-sdwan v0.1.7/go.mod h1:ihR5jCw0uyPhA+o9pr5RQJMPdJhUPusDyJ/uXFtWGqo=
+github.com/netascode/go-sdwan v0.1.8 h1:ZdYHCqcX42u7JqJOeucH3p5Us+ySD2Q+Auxh8qo3jZc=
+github.com/netascode/go-sdwan v0.1.8/go.mod h1:ihR5jCw0uyPhA+o9pr5RQJMPdJhUPusDyJ/uXFtWGqo=
 github.com/oklog/run v1.1.0 h1:GEenZ1cK0+q0+wsJew9qUg/DyD8k3JzYsZAi5gYi2mA=
 github.com/oklog/run v1.1.0/go.mod h1:sVPdnTZT1zYwAJeCMu2Th4T21pA3FPOQRfWjQlk7DVU=
 github.com/pjbgf/sha1cd v0.3.0 h1:4D5XXmUUBUl/xQ6IjCkEAbqXskkq/4O7LmGn0AqMDs4=
