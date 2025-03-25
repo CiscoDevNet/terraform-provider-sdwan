@@ -420,37 +420,3 @@ func (data *DNSSecurity) updateFromBody(ctx context.Context, res gjson.Result) {
 }
 
 // End of section. //template:end updateFromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *DNSSecurity) isNull(ctx context.Context, res gjson.Result) bool {
-	if !data.FeatureProfileId.IsNull() {
-		return false
-	}
-	if !data.LocalDomainBypassListId.IsNull() {
-		return false
-	}
-	if !data.MatchAllVpn.IsNull() {
-		return false
-	}
-	if !data.UmbrellaDefault.IsNull() {
-		return false
-	}
-	if !data.DnsServerIp.IsNull() {
-		return false
-	}
-	if !data.LocalDomainBypassEnabled.IsNull() {
-		return false
-	}
-	if !data.DnsCrypt.IsNull() {
-		return false
-	}
-	if !data.ChildOrgId.IsNull() {
-		return false
-	}
-	if len(data.TargetVpns) > 0 {
-		return false
-	}
-	return true
-}
-
-// End of section. //template:end isNull

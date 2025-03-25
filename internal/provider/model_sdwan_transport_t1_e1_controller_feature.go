@@ -694,25 +694,3 @@ func (data *TransportT1E1Controller) updateFromBody(ctx context.Context, res gjs
 }
 
 // End of section. //template:end updateFromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *TransportT1E1Controller) isNull(ctx context.Context, res gjson.Result) bool {
-	if !data.FeatureProfileId.IsNull() {
-		return false
-	}
-	if !data.Type.IsNull() {
-		return false
-	}
-	if !data.Slot.IsNull() {
-		return false
-	}
-	if !data.SlotVariable.IsNull() {
-		return false
-	}
-	if len(data.Entries) > 0 {
-		return false
-	}
-	return true
-}
-
-// End of section. //template:end isNull

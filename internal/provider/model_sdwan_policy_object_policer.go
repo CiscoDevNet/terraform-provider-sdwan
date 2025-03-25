@@ -210,16 +210,3 @@ func (data *PolicyObjectPolicer) updateFromBody(ctx context.Context, res gjson.R
 }
 
 // End of section. //template:end updateFromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *PolicyObjectPolicer) isNull(ctx context.Context, res gjson.Result) bool {
-	if !data.FeatureProfileId.IsNull() {
-		return false
-	}
-	if len(data.Entries) > 0 {
-		return false
-	}
-	return true
-}
-
-// End of section. //template:end isNull

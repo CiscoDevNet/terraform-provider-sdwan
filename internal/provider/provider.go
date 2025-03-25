@@ -20,6 +20,7 @@ package provider
 // Section below is generated&owned by "gen/generator.go". //template:begin provider
 import (
 	"context"
+	"log/slog"
 	"os"
 	"strconv"
 	"sync"
@@ -236,6 +237,8 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 	data := SdwanProviderData{Client: &c, UpdateMutex: &sync.Mutex{}}
 	resp.DataSourceData = &data
 	resp.ResourceData = &data
+
+	slog.SetLogLoggerLevel(slog.LevelDebug)
 }
 
 func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resource {

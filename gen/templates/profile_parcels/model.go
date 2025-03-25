@@ -811,28 +811,3 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 	{{- end}}
 }
 // End of section. //template:end updateFromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *{{camelCase .Name}}) isNull(ctx context.Context, res gjson.Result) bool {
-	{{- range .Attributes}}
-	{{- if not .Value}}
-	{{- if isNestedListSet .}}
-	if len(data.{{toGoName .TfName}}) > 0 {
-		return false
-	}
-	{{- else}}
-	if !data.{{toGoName .TfName}}.IsNull() {
-		return false
-	}
-	{{- if .Variable}}
-	if !data.{{toGoName .TfName}}Variable.IsNull() {
-		return false
-	}
-	{{- end}}
-	{{- end}}
-	{{- end}}
-	{{- end}}
-	return true
-}
-// End of section. //template:end isNull
-

@@ -642,6 +642,8 @@ func (r *ServiceLANVPNInterfaceSVIProfileParcelResource) Create(ctx context.Cont
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end create
@@ -669,11 +671,12 @@ func (r *ServiceLANVPNInterfaceSVIProfileParcelResource) Read(ctx context.Contex
 	}
 
 	// If every attribute is set to null we are dealing with an import operation and therefore reading all attributes
-	stateCopy := state
-	stateCopy.FeatureProfileId = types.StringNull()
-	stateCopy.ServiceLanVpnFeatureId = types.StringNull()
+	imp, diags := helpers.IsFlagImporting(ctx, req)
+	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
+		return
+	}
 
-	if stateCopy.isNull(ctx, res) {
+	if imp {
 		state.fromBody(ctx, res)
 	} else {
 		state.updateFromBody(ctx, res)
@@ -686,6 +689,8 @@ func (r *ServiceLANVPNInterfaceSVIProfileParcelResource) Read(ctx context.Contex
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end read
@@ -768,6 +773,8 @@ func (r *ServiceLANVPNInterfaceSVIProfileParcelResource) ImportState(ctx context
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("feature_profile_id"), parts[1])...)
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("service_lan_vpn_feature_id"), parts[2])...)
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end import

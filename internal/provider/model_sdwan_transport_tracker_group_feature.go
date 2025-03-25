@@ -202,22 +202,3 @@ func (data *TransportTrackerGroup) updateFromBody(ctx context.Context, res gjson
 }
 
 // End of section. //template:end updateFromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *TransportTrackerGroup) isNull(ctx context.Context, res gjson.Result) bool {
-	if !data.FeatureProfileId.IsNull() {
-		return false
-	}
-	if len(data.TrackerElements) > 0 {
-		return false
-	}
-	if !data.TrackerBoolean.IsNull() {
-		return false
-	}
-	if !data.TrackerBooleanVariable.IsNull() {
-		return false
-	}
-	return true
-}
-
-// End of section. //template:end isNull

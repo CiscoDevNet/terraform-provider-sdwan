@@ -2371,25 +2371,3 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 }
 
 // End of section. //template:end updateFromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *ApplicationPriorityTrafficPolicy) isNull(ctx context.Context, res gjson.Result) bool {
-	if !data.FeatureProfileId.IsNull() {
-		return false
-	}
-	if !data.DefaultAction.IsNull() {
-		return false
-	}
-	if !data.Vpns.IsNull() {
-		return false
-	}
-	if !data.Direction.IsNull() {
-		return false
-	}
-	if len(data.Sequences) > 0 {
-		return false
-	}
-	return true
-}
-
-// End of section. //template:end isNull

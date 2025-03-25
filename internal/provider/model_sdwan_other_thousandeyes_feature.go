@@ -518,16 +518,3 @@ func (data *OtherThousandEyes) updateFromBody(ctx context.Context, res gjson.Res
 }
 
 // End of section. //template:end updateFromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *OtherThousandEyes) isNull(ctx context.Context, res gjson.Result) bool {
-	if !data.FeatureProfileId.IsNull() {
-		return false
-	}
-	if len(data.VirtualApplication) > 0 {
-		return false
-	}
-	return true
-}
-
-// End of section. //template:end isNull

@@ -933,6 +933,8 @@ func (r *ServiceRoutingBGPProfileParcelResource) Create(ctx context.Context, req
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end create
@@ -960,10 +962,12 @@ func (r *ServiceRoutingBGPProfileParcelResource) Read(ctx context.Context, req r
 	}
 
 	// If every attribute is set to null we are dealing with an import operation and therefore reading all attributes
-	stateCopy := state
-	stateCopy.FeatureProfileId = types.StringNull()
+	imp, diags := helpers.IsFlagImporting(ctx, req)
+	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
+		return
+	}
 
-	if stateCopy.isNull(ctx, res) {
+	if imp {
 		state.fromBody(ctx, res)
 	} else {
 		state.updateFromBody(ctx, res)
@@ -976,6 +980,8 @@ func (r *ServiceRoutingBGPProfileParcelResource) Read(ctx context.Context, req r
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end read
@@ -1057,6 +1063,8 @@ func (r *ServiceRoutingBGPProfileParcelResource) ImportState(ctx context.Context
 
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("feature_profile_id"), parts[1])...)
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end import

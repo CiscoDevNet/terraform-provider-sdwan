@@ -130,19 +130,3 @@ func (data *SystemFlexiblePortSpeed) updateFromBody(ctx context.Context, res gjs
 }
 
 // End of section. //template:end updateFromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *SystemFlexiblePortSpeed) isNull(ctx context.Context, res gjson.Result) bool {
-	if !data.FeatureProfileId.IsNull() {
-		return false
-	}
-	if !data.PortType.IsNull() {
-		return false
-	}
-	if !data.PortTypeVariable.IsNull() {
-		return false
-	}
-	return true
-}
-
-// End of section. //template:end isNull

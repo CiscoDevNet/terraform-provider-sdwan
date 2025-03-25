@@ -128,19 +128,3 @@ func (data *PolicyObjectExpandedCommunityList) updateFromBody(ctx context.Contex
 }
 
 // End of section. //template:end updateFromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *PolicyObjectExpandedCommunityList) isNull(ctx context.Context, res gjson.Result) bool {
-	if !data.FeatureProfileId.IsNull() {
-		return false
-	}
-	if !data.ExpandedCommunityLists.IsNull() {
-		return false
-	}
-	if !data.ExpandedCommunityListsVariable.IsNull() {
-		return false
-	}
-	return true
-}
-
-// End of section. //template:end isNull
