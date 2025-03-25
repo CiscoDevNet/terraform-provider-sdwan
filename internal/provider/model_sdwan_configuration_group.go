@@ -21,6 +21,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -570,4 +571,51 @@ func (data ConfigurationGroup) hasConfigGroupDeviceVariables(ctx context.Context
 		}
 	}
 	return false
+}
+
+func (data ConfigurationGroup) getUpdatedDevices(ctx context.Context, state *ConfigurationGroup) []string {
+	updatedDevices := make([]string, 0)
+	for _, device := range data.Devices {
+		for _, stateDevice := range state.Devices {
+			if device.Id.ValueString() == stateDevice.Id.ValueString() {
+				for _, variable := range device.Variables {
+					found := false
+					for _, stateVariable := range stateDevice.Variables {
+						if variable.Name.ValueString() == stateVariable.Name.ValueString() {
+							found = true
+							if variable.Value.ValueString() != stateVariable.Value.ValueString() {
+								if !slices.Contains(updatedDevices, device.Id.ValueString()) {
+									updatedDevices = append(updatedDevices, device.Id.ValueString())
+								}
+							}
+							if variable.ListValue.String() != stateVariable.ListValue.String() {
+								if !slices.Contains(updatedDevices, device.Id.ValueString()) {
+									updatedDevices = append(updatedDevices, device.Id.ValueString())
+								}
+							}
+						}
+					}
+					if !found {
+						if !slices.Contains(updatedDevices, device.Id.ValueString()) {
+							updatedDevices = append(updatedDevices, device.Id.ValueString())
+						}
+					}
+				}
+				for _, stateVariable := range stateDevice.Variables {
+					found := false
+					for _, variable := range device.Variables {
+						if variable.Name.ValueString() == stateVariable.Name.ValueString() {
+							found = true
+						}
+					}
+					if !found {
+						if !slices.Contains(updatedDevices, device.Id.ValueString()) {
+							updatedDevices = append(updatedDevices, device.Id.ValueString())
+						}
+					}
+				}
+			}
+		}
+	}
+	return updatedDevices
 }

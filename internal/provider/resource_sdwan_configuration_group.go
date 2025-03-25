@@ -251,7 +251,7 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 
 	// Deploy to config group devices
 	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, &resp.Diagnostics, true)
+		r.Deploy(ctx, plan, nil, &resp.Diagnostics, true)
 	}
 	if resp.Diagnostics.HasError() {
 		return
@@ -263,7 +263,11 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan ConfigurationGroup, diag *diag.Diagnostics, deleteOnError bool) {
+func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan ConfigurationGroup, state *ConfigurationGroup, diag *diag.Diagnostics, deleteOnError bool) {
+	var updatedDevices []string
+	if state != nil {
+		updatedDevices = plan.getUpdatedDevices(ctx, state)
+	}
 	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString())
 	res, err := r.client.Get(path)
 	if err != nil {
@@ -275,12 +279,9 @@ func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan Configurat
 	body, _ := sjson.Set("", "devices", []interface{}{})
 	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
 		value.ForEach(func(k, v gjson.Result) bool {
-			if v.Get("configGroupUpToDate").String() != "False" {
-				return true
-			}
 			id := v.Get("id").String()
 			for _, item := range plan.Devices {
-				if item.Id.ValueString() == id && item.Deploy.ValueBool() {
+				if item.Id.ValueString() == id && item.Deploy.ValueBool() && (!v.Get("configGroupUpToDate").Bool() || updatedDevices == nil || helpers.Contains(updatedDevices, id)) {
 					itemBody, _ := sjson.Set("", "id", id)
 					body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
 				}
@@ -350,7 +351,7 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 			return
 		}
 
-		state.updateFromBodyConfigGroupDevices(ctx, res)
+		state.fromBodyConfigGroupDevices(ctx, res)
 	}
 
 	// Read config group device variables
@@ -365,7 +366,7 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 			return
 		}
 
-		state.updateFromBodyConfigGroupDeviceVariables(ctx, res)
+		state.fromBodyConfigGroupDeviceVariables(ctx, res)
 	}
 
 	state.updateTfAttributes(ctx, &oldState)
@@ -403,14 +404,62 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 		return
 	}
 
-	// Update config group devices
-	if len(plan.Devices) > 0 {
-		body = plan.toBodyConfigGroupDevices(ctx)
+	res, err = r.client.Get(fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString()))
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+		return
+	}
 
-		path := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString())
-		res, err = r.client.Put(path, body)
+	var currentDeviceIds []string
+	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
+		value.ForEach(func(k, v gjson.Result) bool {
+			currentDeviceIds = append(currentDeviceIds, v.Get("id").String())
+			return true
+		})
+	}
+
+	associateBody, _ := sjson.Set("", "devices", []interface{}{})
+	for _, d := range plan.Devices {
+		found := false
+		for _, cdid := range currentDeviceIds {
+			if d.Id.ValueString() == cdid {
+				found = true
+				break
+			}
+		}
+		if !found {
+			associateBody, _ = sjson.SetRaw(associateBody, "devices.-1", helpers.Must(sjson.Set("", "id", d.Id.ValueString())))
+		}
+	}
+
+	disassociateBody, _ := sjson.Set("", "devices", []interface{}{})
+	for _, cdid := range currentDeviceIds {
+		found := false
+		for _, d := range plan.Devices {
+			if d.Id.ValueString() == cdid {
+				found = true
+				break
+			}
+		}
+		if !found {
+			disassociateBody, _ = sjson.SetRaw(disassociateBody, "devices.-1", helpers.Must(sjson.Set("", "id", cdid)))
+		}
+	}
+
+	// associate missing devices
+	if len(gjson.Get(associateBody, "devices").Array()) > 0 {
+		res, err = r.client.Put(fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString()), associateBody)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (PUT), got error: %s, %s", err, res.String()))
+			return
+		}
+	}
+
+	// disassociate extra devices
+	if len(gjson.Get(disassociateBody, "devices").Array()) > 0 {
+		res, err = r.client.DeleteBody(fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString()), disassociateBody)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group devices (DELETE), got error: %s, %s", err, res.String()))
 			return
 		}
 	}
@@ -429,7 +478,7 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 
 	// Deploy to config group devices
 	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, &resp.Diagnostics, false)
+		r.Deploy(ctx, plan, &state, &resp.Diagnostics, false)
 	}
 	if resp.Diagnostics.HasError() {
 		return
