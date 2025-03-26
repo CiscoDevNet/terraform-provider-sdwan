@@ -305,6 +305,7 @@ func (data *ConfigurationGroup) fromBodyConfigGroup(ctx context.Context, res gjs
 }
 
 func (data *ConfigurationGroup) fromBodyConfigGroupDevices(ctx context.Context, res gjson.Result) {
+	original := *data
 	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
 		data.Devices = make([]ConfigurationGroupDevices, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -320,6 +321,32 @@ func (data *ConfigurationGroup) fromBodyConfigGroupDevices(ctx context.Context, 
 	} else {
 		if len(data.Devices) > 0 {
 			data.Devices = []ConfigurationGroupDevices{}
+		}
+	}
+	// reorder
+	slices.Reverse(original.Devices)
+	for i := range original.Devices {
+		keyValues := [...]string{original.Devices[i].Id.ValueString()}
+
+		for y := range data.Devices {
+			found := false
+			for _, keyValue := range keyValues {
+				if !data.Devices[y].Id.IsNull() {
+					if data.Devices[y].Id.ValueString() == keyValue {
+						found = true
+						continue
+					}
+					found = false
+					break
+				}
+				continue
+			}
+			if found {
+				//insert at the beginning
+				device := data.Devices[y]
+				data.Devices = append(data.Devices[:y], data.Devices[y+1:]...)
+				data.Devices = append([]ConfigurationGroupDevices{device}, data.Devices...)
+			}
 		}
 	}
 }
@@ -361,6 +388,7 @@ func (data *ConfigurationGroup) updateFromBodyConfigGroupDevices(ctx context.Con
 }
 
 func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.Context, res gjson.Result) {
+	original := *data
 	if value := res.Get("family"); value.Exists() {
 		data.Solution = types.StringValue(value.String())
 	} else {
@@ -378,6 +406,10 @@ func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.C
 			if cValue := v.Get("variables"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Variables = make([]ConfigurationGroupDevicesVariables, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
+					// skip optional variables
+					if !cv.Get("value").Exists() {
+						return true
+					}
 					cItem := ConfigurationGroupDevicesVariables{}
 					if ccValue := cv.Get("name"); ccValue.Exists() {
 						cItem.Name = types.StringValue(ccValue.String())
@@ -453,6 +485,33 @@ func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.C
 	// 		data.DeviceGroups = []ConfigurationGroupDeviceGroups{}
 	// 	}
 	// }
+
+	// reorder
+	slices.Reverse(original.Devices)
+	for i := range original.Devices {
+		keyValues := [...]string{original.Devices[i].Id.ValueString()}
+
+		for y := range data.Devices {
+			found := false
+			for _, keyValue := range keyValues {
+				if !data.Devices[y].Id.IsNull() {
+					if data.Devices[y].Id.ValueString() == keyValue {
+						found = true
+						continue
+					}
+					found = false
+					break
+				}
+				continue
+			}
+			if found {
+				//insert at the beginning
+				device := data.Devices[y]
+				data.Devices = append(data.Devices[:y], data.Devices[y+1:]...)
+				data.Devices = append([]ConfigurationGroupDevices{device}, data.Devices...)
+			}
+		}
+	}
 }
 
 func (data *ConfigurationGroup) updateFromBodyConfigGroupDeviceVariables(ctx context.Context, res gjson.Result) {
