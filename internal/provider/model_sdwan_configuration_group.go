@@ -351,42 +351,6 @@ func (data *ConfigurationGroup) fromBodyConfigGroupDevices(ctx context.Context, 
 	}
 }
 
-func (data *ConfigurationGroup) updateFromBodyConfigGroupDevices(ctx context.Context, res gjson.Result) {
-	for i := range data.Devices {
-		keys := [...]string{"id"}
-		keyValues := [...]string{data.Devices[i].Id.ValueString()}
-
-		var r gjson.Result
-		res.Get("devices").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					if v.Get(keys[ik]).Exists() {
-						if v.Get(keys[ik]).String() == keyValues[ik] {
-							found = true
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-
-		if cValue := r.Get("id"); cValue.Exists() {
-			data.Devices[i].Id = types.StringValue(cValue.String())
-		} else {
-			data.Devices[i].Id = types.StringNull()
-		}
-	}
-}
-
 func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.Context, res gjson.Result) {
 	original := *data
 	if value := res.Get("family"); value.Exists() {
@@ -514,95 +478,6 @@ func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.C
 	}
 }
 
-func (data *ConfigurationGroup) updateFromBodyConfigGroupDeviceVariables(ctx context.Context, res gjson.Result) {
-	if value := res.Get("family"); value.Exists() {
-		data.Solution = types.StringValue(value.String())
-	} else {
-		data.Solution = types.StringNull()
-	}
-	for i := range data.Devices {
-		keys := [...]string{"device-id"}
-		keyValues := [...]string{data.Devices[i].Id.ValueString()}
-
-		var r gjson.Result
-		res.Get("devices").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					if v.Get(keys[ik]).Exists() {
-						if v.Get(keys[ik]).String() == keyValues[ik] {
-							found = true
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-
-		if cValue := r.Get("device-id"); cValue.Exists() {
-			data.Devices[i].Id = types.StringValue(cValue.String())
-		} else {
-			data.Devices[i].Id = types.StringNull()
-		}
-
-		for ci := range data.Devices[i].Variables {
-			keys := [...]string{"name"}
-			keyValues := [...]string{data.Devices[i].Variables[ci].Name.ValueString()}
-
-			var cr gjson.Result
-			r.Get("variables").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						if v.Get(keys[ik]).Exists() {
-							if v.Get(keys[ik]).String() == keyValues[ik] {
-								found = true
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-
-			if ccValue := cr.Get("name"); ccValue.Exists() {
-				data.Devices[i].Variables[ci].Name = types.StringValue(ccValue.String())
-			} else {
-				data.Devices[i].Variables[ci].Name = types.StringNull()
-			}
-			if ccValue := cr.Get("value"); ccValue.Exists() {
-				if ccValue.IsArray() {
-					data.Devices[i].Variables[ci].ListValue = helpers.GetStringList(ccValue.Array())
-					data.Devices[i].Variables[ci].Value = types.StringNull()
-				} else {
-					data.Devices[i].Variables[ci].ListValue = types.ListNull(types.StringType)
-					if !strings.Contains(strings.ToLower(ccValue.String()), "$crypt_cluster") {
-						data.Devices[i].Variables[ci].Value = types.StringValue(ccValue.String())
-					}
-				}
-			} else {
-				data.Devices[i].Variables[ci].ListValue = types.ListNull(types.StringType)
-				data.Devices[i].Variables[ci].Value = types.StringNull()
-			}
-		}
-	}
-}
-
 func (data *ConfigurationGroup) updateTfAttributes(ctx context.Context, state *ConfigurationGroup) {
 	data.FeatureVersions = state.FeatureVersions
 	for i := range data.Devices {
@@ -677,4 +552,19 @@ func (data ConfigurationGroup) getUpdatedDevices(ctx context.Context, state *Con
 		}
 	}
 	return updatedDevices
+}
+
+func (data ConfigurationGroup) hasFeatureVersionChanges(ctx context.Context, state *ConfigurationGroup) bool {
+	var planValues, stateValues []string
+	data.FeatureVersions.ElementsAs(ctx, &planValues, false)
+	state.FeatureVersions.ElementsAs(ctx, &stateValues, false)
+	if len(planValues) != len(stateValues) {
+		return true
+	}
+	for i := range planValues {
+		if i >= len(stateValues) || planValues[i] != stateValues[i] {
+			return true
+		}
+	}
+	return false
 }

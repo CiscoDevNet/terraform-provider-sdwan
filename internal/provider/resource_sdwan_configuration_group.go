@@ -26,6 +26,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
@@ -44,6 +45,8 @@ import (
 )
 
 // End of section. //template:end imports
+
+var MinConfigGroupUpdateVersion = version.Must(version.NewVersion("20.15.0"))
 
 // Section below is generated&owned by "gen/generator.go". //template:begin model
 
@@ -268,6 +271,13 @@ func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan Configurat
 	if state != nil {
 		updatedDevices = plan.getUpdatedDevices(ctx, state)
 	}
+
+	hasFeatureVersionChanges := false
+	currentVersion := version.Must(version.NewVersion(r.client.ManagerVersion))
+	if state != nil && currentVersion.LessThan(MinConfigGroupUpdateVersion) {
+		hasFeatureVersionChanges = plan.hasFeatureVersionChanges(ctx, state)
+	}
+
 	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString())
 	res, err := r.client.Get(path)
 	if err != nil {
@@ -281,9 +291,10 @@ func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan Configurat
 		value.ForEach(func(k, v gjson.Result) bool {
 			id := v.Get("id").String()
 			for _, item := range plan.Devices {
-				if item.Id.ValueString() == id && item.Deploy.ValueBool() && (!v.Get("configGroupUpToDate").Bool() || updatedDevices == nil || helpers.Contains(updatedDevices, id)) {
+				if item.Id.ValueString() == id && item.Deploy.ValueBool() && (!v.Get("configGroupUpToDate").Bool() || updatedDevices == nil || helpers.Contains(updatedDevices, id) || hasFeatureVersionChanges) {
 					itemBody, _ := sjson.Set("", "id", id)
 					body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
+					tflog.Debug(ctx, fmt.Sprintf("%s: Deploying to device %s", plan.Name.ValueString(), id))
 				}
 			}
 			return true
