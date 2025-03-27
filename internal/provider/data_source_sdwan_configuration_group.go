@@ -76,7 +76,7 @@ func (d *ConfigurationGroupDataSource) Schema(ctx context.Context, req datasourc
 				Computed:            true,
 			},
 			"feature_profile_ids": schema.SetAttribute{
-				MarkdownDescription: "List of feature profiles",
+				MarkdownDescription: "List of feature profile IDs",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},

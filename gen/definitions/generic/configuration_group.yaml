@@ -26,7 +26,7 @@ attributes:
     tf_name: feature_profile_ids
     type: Set
     element_type: String
-    description: List of feature profiles
+    description: List of feature profile IDs
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: "[sdwan_system_feature_profile.test.id]"
   - model_name: devices

@@ -96,7 +96,7 @@ func (r *ConfigurationGroupResource) Schema(ctx context.Context, req resource.Sc
 				},
 			},
 			"feature_profile_ids": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of feature profiles").String,
+				MarkdownDescription: helpers.NewAttributeDescription("List of feature profile IDs").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
