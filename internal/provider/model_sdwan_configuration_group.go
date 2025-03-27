@@ -40,7 +40,7 @@ type ConfigurationGroup struct {
 	Name                types.String                        `tfsdk:"name"`
 	Description         types.String                        `tfsdk:"description"`
 	Solution            types.String                        `tfsdk:"solution"`
-	FeatureProfiles     types.Set                           `tfsdk:"feature_profiles"`
+	FeatureProfileIds   types.Set                           `tfsdk:"feature_profile_ids"`
 	TopologyDevices     []ConfigurationGroupTopologyDevices `tfsdk:"topology_devices"`
 	TopologySiteDevices types.Int64                         `tfsdk:"topology_site_devices"`
 	Devices             []ConfigurationGroupDevices         `tfsdk:"devices"`
@@ -92,7 +92,7 @@ func (data ConfigurationGroup) toBodyConfigGroup(ctx context.Context) string {
 	}
 	if true {
 		body, _ = sjson.Set(body, "profiles", []interface{}{})
-		for _, item := range data.FeatureProfiles.Elements() {
+		for _, item := range data.FeatureProfileIds.Elements() {
 			itemBody := ""
 			if !item.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "id", strings.Trim(item.String(), "\""))
@@ -249,9 +249,9 @@ func (data *ConfigurationGroup) fromBodyConfigGroup(ctx context.Context, res gjs
 			c += 1
 			return true
 		})
-		data.FeatureProfiles = types.SetValueMust(types.StringType, a)
+		data.FeatureProfileIds = types.SetValueMust(types.StringType, a)
 	} else {
-		data.FeatureProfiles = types.SetNull(types.StringType)
+		data.FeatureProfileIds = types.SetNull(types.StringType)
 	}
 	if value := res.Get("topology.devices"); value.Exists() && len(value.Array()) > 0 {
 		data.TopologyDevices = make([]ConfigurationGroupTopologyDevices, 0)

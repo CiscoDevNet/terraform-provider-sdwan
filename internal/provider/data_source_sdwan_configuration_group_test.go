@@ -132,7 +132,7 @@ func testAccDataSourceSdwanConfigurationGroupConfig() string {
 	config += `	name = "CG_1"` + "\n"
 	config += `	description = "My config group 1"` + "\n"
 	config += `	solution = "sdwan"` + "\n"
-	config += `	feature_profiles = [` + "\n"
+	config += `	feature_profile_ids = [` + "\n"
 	config += `	  sdwan_system_feature_profile.test.id,` + "\n"
 	config += `	  sdwan_transport_feature_profile.test.id,` + "\n"
 	config += `	]` + "\n"

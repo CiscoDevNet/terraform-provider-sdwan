@@ -16,10 +16,10 @@ This resource can manage a Configuration Group .
 
 ```terraform
 resource "sdwan_configuration_group" "example" {
-  name             = "CG_1"
-  description      = "My config group 1"
-  solution         = "sdwan"
-  feature_profiles = ["f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"]
+  name                = "CG_1"
+  description         = "My config group 1"
+  solution            = "sdwan"
+  feature_profile_ids = ["f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"]
   devices = [
     {
       id = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"
@@ -47,7 +47,7 @@ resource "sdwan_configuration_group" "example" {
 ### Optional
 
 - `devices` (Attributes List) List of devices (see [below for nested schema](#nestedatt--devices))
-- `feature_profiles` (Set of String) List of feature profiles
+- `feature_profile_ids` (Set of String) List of feature profiles
 - `feature_versions` (List of String) List of all associated feature versions
 - `topology_devices` (Attributes List) List of topology device types (see [below for nested schema](#nestedatt--topology_devices))
 - `topology_site_devices` (Number) Number of devices per site

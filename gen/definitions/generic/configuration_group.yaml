@@ -23,7 +23,7 @@ attributes:
     description: Type of solution
     example: sdwan
   - model_name: profiles
-    tf_name: feature_profiles
+    tf_name: feature_profile_ids
     type: Set
     element_type: String
     description: List of feature profiles

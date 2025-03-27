@@ -95,7 +95,7 @@ func (r *ConfigurationGroupResource) Schema(ctx context.Context, req resource.Sc
 					stringvalidator.OneOf("mobility", "sdwan", "nfvirtual"),
 				},
 			},
-			"feature_profiles": schema.SetAttribute{
+			"feature_profile_ids": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of feature profiles").String,
 				ElementType:         types.StringType,
 				Optional:            true,

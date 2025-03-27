@@ -29,7 +29,7 @@ data "sdwan_configuration_group" "example" {
 
 - `description` (String) Description
 - `devices` (Attributes List) List of devices (see [below for nested schema](#nestedatt--devices))
-- `feature_profiles` (Set of String) List of feature profiles
+- `feature_profile_ids` (Set of String) List of feature profiles
 - `feature_versions` (List of String) List of all associated feature versions
 - `name` (String) The name of the configuration group
 - `solution` (String) Type of solution
