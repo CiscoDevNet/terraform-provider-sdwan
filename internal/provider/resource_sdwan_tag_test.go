@@ -19,6 +19,7 @@ package provider
 
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
@@ -27,6 +28,9 @@ import (
 // End of section. //template:end imports
 
 func TestAccSdwanTag(t *testing.T) {
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
+	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_tag.test", "name", "TAG_1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_tag.test", "description", "My tag"))
