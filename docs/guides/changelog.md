@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## 0.5.4 (unreleased)
+## 0.6.0
 
 - Delete configuration group when an error is encountered during creation, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/390)
 - Refresh devices of a configuration group before deletion, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/391)
