@@ -449,34 +449,3 @@ func (data *SystemBFD) updateFromBody(ctx context.Context, res gjson.Result) {
 }
 
 // End of section. //template:end updateFromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *SystemBFD) isNull(ctx context.Context, res gjson.Result) bool {
-	if !data.FeatureProfileId.IsNull() {
-		return false
-	}
-	if !data.Multiplier.IsNull() {
-		return false
-	}
-	if !data.MultiplierVariable.IsNull() {
-		return false
-	}
-	if !data.PollInterval.IsNull() {
-		return false
-	}
-	if !data.PollIntervalVariable.IsNull() {
-		return false
-	}
-	if !data.DefaultDscp.IsNull() {
-		return false
-	}
-	if !data.DefaultDscpVariable.IsNull() {
-		return false
-	}
-	if len(data.Colors) > 0 {
-		return false
-	}
-	return true
-}
-
-// End of section. //template:end isNull

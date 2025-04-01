@@ -253,34 +253,3 @@ func (data *SystemMRF) updateFromBody(ctx context.Context, res gjson.Result) {
 }
 
 // End of section. //template:end updateFromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *SystemMRF) isNull(ctx context.Context, res gjson.Result) bool {
-	if !data.FeatureProfileId.IsNull() {
-		return false
-	}
-	if !data.RegionId.IsNull() {
-		return false
-	}
-	if !data.SecondaryRegionId.IsNull() {
-		return false
-	}
-	if !data.SecondaryRegionIdVariable.IsNull() {
-		return false
-	}
-	if !data.Role.IsNull() {
-		return false
-	}
-	if !data.RoleVariable.IsNull() {
-		return false
-	}
-	if !data.EnableMigrationToMrf.IsNull() {
-		return false
-	}
-	if !data.MigrationBgpCommunity.IsNull() {
-		return false
-	}
-	return true
-}
-
-// End of section. //template:end isNull

@@ -151,6 +151,8 @@ func (r *PolicyObjectDataIPv6PrefixListProfileParcelResource) Create(ctx context
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end create
@@ -187,6 +189,8 @@ func (r *PolicyObjectDataIPv6PrefixListProfileParcelResource) Read(ctx context.C
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end read
@@ -268,6 +272,8 @@ func (r *PolicyObjectDataIPv6PrefixListProfileParcelResource) ImportState(ctx co
 
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("feature_profile_id"), parts[1])...)
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end import

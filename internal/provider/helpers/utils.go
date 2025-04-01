@@ -123,3 +123,10 @@ func WaitForActionToComplete(ctx context.Context, client *sdwan.Client, id strin
 	}
 	return nil
 }
+
+func Must[T any](v T, err error) T {
+	if err != nil {
+		panic(err)
+	}
+	return v
+}

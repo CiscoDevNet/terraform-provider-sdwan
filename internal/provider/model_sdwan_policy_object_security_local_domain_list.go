@@ -165,16 +165,3 @@ func (data *PolicyObjectSecurityLocalDomainList) updateFromBody(ctx context.Cont
 }
 
 // End of section. //template:end updateFromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *PolicyObjectSecurityLocalDomainList) isNull(ctx context.Context, res gjson.Result) bool {
-	if !data.FeatureProfileId.IsNull() {
-		return false
-	}
-	if len(data.Entries) > 0 {
-		return false
-	}
-	return true
-}
-
-// End of section. //template:end isNull

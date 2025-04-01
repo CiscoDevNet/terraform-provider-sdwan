@@ -21,10 +21,12 @@ package provider
 import (
 	"context"
 	"fmt"
+	"slices"
 	"strconv"
 	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -38,15 +40,11 @@ type ConfigurationGroup struct {
 	Name                types.String                        `tfsdk:"name"`
 	Description         types.String                        `tfsdk:"description"`
 	Solution            types.String                        `tfsdk:"solution"`
-	FeatureProfiles     []ConfigurationGroupFeatureProfiles `tfsdk:"feature_profiles"`
+	FeatureProfileIds   types.Set                           `tfsdk:"feature_profile_ids"`
 	TopologyDevices     []ConfigurationGroupTopologyDevices `tfsdk:"topology_devices"`
 	TopologySiteDevices types.Int64                         `tfsdk:"topology_site_devices"`
 	Devices             []ConfigurationGroupDevices         `tfsdk:"devices"`
 	FeatureVersions     types.List                          `tfsdk:"feature_versions"`
-}
-
-type ConfigurationGroupFeatureProfiles struct {
-	Id types.String `tfsdk:"id"`
 }
 
 type ConfigurationGroupTopologyDevices struct {
@@ -94,10 +92,10 @@ func (data ConfigurationGroup) toBodyConfigGroup(ctx context.Context) string {
 	}
 	if true {
 		body, _ = sjson.Set(body, "profiles", []interface{}{})
-		for _, item := range data.FeatureProfiles {
+		for _, item := range data.FeatureProfileIds.Elements() {
 			itemBody := ""
-			if !item.Id.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "id", item.Id.ValueString())
+			if !item.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "id", strings.Trim(item.String(), "\""))
 			}
 			body, _ = sjson.SetRaw(body, "profiles.-1", itemBody)
 		}
@@ -240,21 +238,20 @@ func (data *ConfigurationGroup) fromBodyConfigGroup(ctx context.Context, res gjs
 		data.Solution = types.StringNull()
 	}
 	if value := res.Get("profiles"); value.Exists() && len(value.Array()) > 0 {
-		data.FeatureProfiles = make([]ConfigurationGroupFeatureProfiles, 0)
+		a := make([]attr.Value, len(value.Array()))
+		c := 0
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ConfigurationGroupFeatureProfiles{}
 			if cValue := v.Get("id"); cValue.Exists() {
-				item.Id = types.StringValue(cValue.String())
+				a[c] = types.StringValue(cValue.String())
 			} else {
-				item.Id = types.StringNull()
+				a[c] = types.StringNull()
 			}
-			data.FeatureProfiles = append(data.FeatureProfiles, item)
+			c += 1
 			return true
 		})
+		data.FeatureProfileIds = types.SetValueMust(types.StringType, a)
 	} else {
-		if len(data.FeatureProfiles) > 0 {
-			data.FeatureProfiles = []ConfigurationGroupFeatureProfiles{}
-		}
+		data.FeatureProfileIds = types.SetNull(types.StringType)
 	}
 	if value := res.Get("topology.devices"); value.Exists() && len(value.Array()) > 0 {
 		data.TopologyDevices = make([]ConfigurationGroupTopologyDevices, 0)
@@ -308,6 +305,7 @@ func (data *ConfigurationGroup) fromBodyConfigGroup(ctx context.Context, res gjs
 }
 
 func (data *ConfigurationGroup) fromBodyConfigGroupDevices(ctx context.Context, res gjson.Result) {
+	original := *data
 	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
 		data.Devices = make([]ConfigurationGroupDevices, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -325,45 +323,36 @@ func (data *ConfigurationGroup) fromBodyConfigGroupDevices(ctx context.Context, 
 			data.Devices = []ConfigurationGroupDevices{}
 		}
 	}
-}
+	// reorder
+	slices.Reverse(original.Devices)
+	for i := range original.Devices {
+		keyValues := [...]string{original.Devices[i].Id.ValueString()}
 
-func (data *ConfigurationGroup) updateFromBodyConfigGroupDevices(ctx context.Context, res gjson.Result) {
-	for i := range data.Devices {
-		keys := [...]string{"id"}
-		keyValues := [...]string{data.Devices[i].Id.ValueString()}
-
-		var r gjson.Result
-		res.Get("devices").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					if v.Get(keys[ik]).Exists() {
-						if v.Get(keys[ik]).String() == keyValues[ik] {
-							found = true
-							continue
-						}
-						found = false
-						break
+		for y := range data.Devices {
+			found := false
+			for _, keyValue := range keyValues {
+				if !data.Devices[y].Id.IsNull() {
+					if data.Devices[y].Id.ValueString() == keyValue {
+						found = true
+						continue
 					}
-					continue
+					found = false
+					break
 				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-
-		if cValue := r.Get("id"); cValue.Exists() {
-			data.Devices[i].Id = types.StringValue(cValue.String())
-		} else {
-			data.Devices[i].Id = types.StringNull()
+				continue
+			}
+			if found {
+				//insert at the beginning
+				device := data.Devices[y]
+				data.Devices = append(data.Devices[:y], data.Devices[y+1:]...)
+				data.Devices = append([]ConfigurationGroupDevices{device}, data.Devices...)
+			}
 		}
 	}
 }
 
 func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.Context, res gjson.Result) {
+	original := *data
 	if value := res.Get("family"); value.Exists() {
 		data.Solution = types.StringValue(value.String())
 	} else {
@@ -381,6 +370,10 @@ func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.C
 			if cValue := v.Get("variables"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Variables = make([]ConfigurationGroupDevicesVariables, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
+					// skip optional variables
+					if !cv.Get("value").Exists() {
+						return true
+					}
 					cItem := ConfigurationGroupDevicesVariables{}
 					if ccValue := cv.Get("name"); ccValue.Exists() {
 						cItem.Name = types.StringValue(ccValue.String())
@@ -456,92 +449,30 @@ func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.C
 	// 		data.DeviceGroups = []ConfigurationGroupDeviceGroups{}
 	// 	}
 	// }
-}
 
-func (data *ConfigurationGroup) updateFromBodyConfigGroupDeviceVariables(ctx context.Context, res gjson.Result) {
-	if value := res.Get("family"); value.Exists() {
-		data.Solution = types.StringValue(value.String())
-	} else {
-		data.Solution = types.StringNull()
-	}
-	for i := range data.Devices {
-		keys := [...]string{"device-id"}
-		keyValues := [...]string{data.Devices[i].Id.ValueString()}
+	// reorder
+	slices.Reverse(original.Devices)
+	for i := range original.Devices {
+		keyValues := [...]string{original.Devices[i].Id.ValueString()}
 
-		var r gjson.Result
-		res.Get("devices").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					if v.Get(keys[ik]).Exists() {
-						if v.Get(keys[ik]).String() == keyValues[ik] {
-							found = true
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-
-		if cValue := r.Get("device-id"); cValue.Exists() {
-			data.Devices[i].Id = types.StringValue(cValue.String())
-		} else {
-			data.Devices[i].Id = types.StringNull()
-		}
-
-		for ci := range data.Devices[i].Variables {
-			keys := [...]string{"name"}
-			keyValues := [...]string{data.Devices[i].Variables[ci].Name.ValueString()}
-
-			var cr gjson.Result
-			r.Get("variables").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						if v.Get(keys[ik]).Exists() {
-							if v.Get(keys[ik]).String() == keyValues[ik] {
-								found = true
-								continue
-							}
-							found = false
-							break
-						}
+		for y := range data.Devices {
+			found := false
+			for _, keyValue := range keyValues {
+				if !data.Devices[y].Id.IsNull() {
+					if data.Devices[y].Id.ValueString() == keyValue {
+						found = true
 						continue
 					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-
-			if ccValue := cr.Get("name"); ccValue.Exists() {
-				data.Devices[i].Variables[ci].Name = types.StringValue(ccValue.String())
-			} else {
-				data.Devices[i].Variables[ci].Name = types.StringNull()
-			}
-			if ccValue := cr.Get("value"); ccValue.Exists() {
-				if ccValue.IsArray() {
-					data.Devices[i].Variables[ci].ListValue = helpers.GetStringList(ccValue.Array())
-					data.Devices[i].Variables[ci].Value = types.StringNull()
-				} else {
-					data.Devices[i].Variables[ci].ListValue = types.ListNull(types.StringType)
-					if !strings.Contains(strings.ToLower(ccValue.String()), "$crypt_cluster") {
-						data.Devices[i].Variables[ci].Value = types.StringValue(ccValue.String())
-					}
+					found = false
+					break
 				}
-			} else {
-				data.Devices[i].Variables[ci].ListValue = types.ListNull(types.StringType)
-				data.Devices[i].Variables[ci].Value = types.StringNull()
+				continue
+			}
+			if found {
+				//insert at the beginning
+				device := data.Devices[y]
+				data.Devices = append(data.Devices[:y], data.Devices[y+1:]...)
+				data.Devices = append([]ConfigurationGroupDevices{device}, data.Devices...)
 			}
 		}
 	}
@@ -570,6 +501,68 @@ func (data *ConfigurationGroup) updateTfAttributes(ctx context.Context, state *C
 func (data ConfigurationGroup) hasConfigGroupDeviceVariables(ctx context.Context) bool {
 	for _, device := range data.Devices {
 		if len(device.Variables) > 0 {
+			return true
+		}
+	}
+	return false
+}
+
+func (data ConfigurationGroup) getUpdatedDevices(ctx context.Context, state *ConfigurationGroup) []string {
+	updatedDevices := make([]string, 0)
+	for _, device := range data.Devices {
+		for _, stateDevice := range state.Devices {
+			if device.Id.ValueString() == stateDevice.Id.ValueString() {
+				for _, variable := range device.Variables {
+					found := false
+					for _, stateVariable := range stateDevice.Variables {
+						if variable.Name.ValueString() == stateVariable.Name.ValueString() {
+							found = true
+							if variable.Value.ValueString() != stateVariable.Value.ValueString() {
+								if !slices.Contains(updatedDevices, device.Id.ValueString()) {
+									updatedDevices = append(updatedDevices, device.Id.ValueString())
+								}
+							}
+							if variable.ListValue.String() != stateVariable.ListValue.String() {
+								if !slices.Contains(updatedDevices, device.Id.ValueString()) {
+									updatedDevices = append(updatedDevices, device.Id.ValueString())
+								}
+							}
+						}
+					}
+					if !found {
+						if !slices.Contains(updatedDevices, device.Id.ValueString()) {
+							updatedDevices = append(updatedDevices, device.Id.ValueString())
+						}
+					}
+				}
+				for _, stateVariable := range stateDevice.Variables {
+					found := false
+					for _, variable := range device.Variables {
+						if variable.Name.ValueString() == stateVariable.Name.ValueString() {
+							found = true
+						}
+					}
+					if !found {
+						if !slices.Contains(updatedDevices, device.Id.ValueString()) {
+							updatedDevices = append(updatedDevices, device.Id.ValueString())
+						}
+					}
+				}
+			}
+		}
+	}
+	return updatedDevices
+}
+
+func (data ConfigurationGroup) hasFeatureVersionChanges(ctx context.Context, state *ConfigurationGroup) bool {
+	var planValues, stateValues []string
+	data.FeatureVersions.ElementsAs(ctx, &planValues, false)
+	state.FeatureVersions.ElementsAs(ctx, &stateValues, false)
+	if len(planValues) != len(stateValues) {
+		return true
+	}
+	for i := range planValues {
+		if i >= len(stateValues) || planValues[i] != stateValues[i] {
 			return true
 		}
 	}

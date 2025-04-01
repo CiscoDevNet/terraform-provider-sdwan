@@ -31,22 +31,28 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type URLFilteringPolicyDefinition struct {
-	Id                  types.String `tfsdk:"id"`
-	Version             types.Int64  `tfsdk:"version"`
-	Name                types.String `tfsdk:"name"`
-	Description         types.String `tfsdk:"description"`
-	Mode                types.String `tfsdk:"mode"`
-	Alerts              types.Set    `tfsdk:"alerts"`
-	WebCategories       types.Set    `tfsdk:"web_categories"`
-	WebCategoriesAction types.String `tfsdk:"web_categories_action"`
-	WebReputation       types.String `tfsdk:"web_reputation"`
-	TargetVpns          types.Set    `tfsdk:"target_vpns"`
-	AllowUrlListId      types.String `tfsdk:"allow_url_list_id"`
-	AllowUrlListVersion types.Int64  `tfsdk:"allow_url_list_version"`
-	BlockUrlListId      types.String `tfsdk:"block_url_list_id"`
-	BlockUrlListVersion types.Int64  `tfsdk:"block_url_list_version"`
-	BlockPageAction     types.String `tfsdk:"block_page_action"`
-	BlockPageContents   types.String `tfsdk:"block_page_contents"`
+	Id                  types.String                          `tfsdk:"id"`
+	Version             types.Int64                           `tfsdk:"version"`
+	Name                types.String                          `tfsdk:"name"`
+	Description         types.String                          `tfsdk:"description"`
+	Mode                types.String                          `tfsdk:"mode"`
+	Alerts              types.Set                             `tfsdk:"alerts"`
+	WebCategories       types.Set                             `tfsdk:"web_categories"`
+	WebCategoriesAction types.String                          `tfsdk:"web_categories_action"`
+	WebReputation       types.String                          `tfsdk:"web_reputation"`
+	TargetVpns          types.Set                             `tfsdk:"target_vpns"`
+	AllowUrlListId      types.String                          `tfsdk:"allow_url_list_id"`
+	AllowUrlListVersion types.Int64                           `tfsdk:"allow_url_list_version"`
+	BlockUrlListId      types.String                          `tfsdk:"block_url_list_id"`
+	BlockUrlListVersion types.Int64                           `tfsdk:"block_url_list_version"`
+	BlockPageAction     types.String                          `tfsdk:"block_page_action"`
+	BlockPageContents   types.String                          `tfsdk:"block_page_contents"`
+	Logging             []URLFilteringPolicyDefinitionLogging `tfsdk:"logging"`
+}
+
+type URLFilteringPolicyDefinitionLogging struct {
+	ExternalSyslogServerIp  types.String `tfsdk:"external_syslog_server_ip"`
+	ExternalSyslogServerVpn types.String `tfsdk:"external_syslog_server_vpn"`
 }
 
 // End of section. //template:end types
@@ -105,6 +111,19 @@ func (data URLFilteringPolicyDefinition) toBody(ctx context.Context) string {
 	}
 	if !data.BlockPageContents.IsNull() {
 		body, _ = sjson.Set(body, "definition.blockPageContents", data.BlockPageContents.ValueString())
+	}
+	if true {
+		body, _ = sjson.Set(body, "definition.logging", []interface{}{})
+		for _, item := range data.Logging {
+			itemBody := ""
+			if !item.ExternalSyslogServerIp.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "serverIP", item.ExternalSyslogServerIp.ValueString())
+			}
+			if !item.ExternalSyslogServerVpn.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "vpn", item.ExternalSyslogServerVpn.ValueString())
+			}
+			body, _ = sjson.SetRaw(body, "definition.logging.-1", itemBody)
+		}
 	}
 	return body
 }
@@ -174,6 +193,28 @@ func (data *URLFilteringPolicyDefinition) fromBody(ctx context.Context, res gjso
 	} else {
 		data.BlockPageContents = types.StringNull()
 	}
+	if value := res.Get("definition.logging"); value.Exists() && len(value.Array()) > 0 {
+		data.Logging = make([]URLFilteringPolicyDefinitionLogging, 0)
+		value.ForEach(func(k, v gjson.Result) bool {
+			item := URLFilteringPolicyDefinitionLogging{}
+			if cValue := v.Get("serverIP"); cValue.Exists() {
+				item.ExternalSyslogServerIp = types.StringValue(cValue.String())
+			} else {
+				item.ExternalSyslogServerIp = types.StringNull()
+			}
+			if cValue := v.Get("vpn"); cValue.Exists() {
+				item.ExternalSyslogServerVpn = types.StringValue(cValue.String())
+			} else {
+				item.ExternalSyslogServerVpn = types.StringNull()
+			}
+			data.Logging = append(data.Logging, item)
+			return true
+		})
+	} else {
+		if len(data.Logging) > 0 {
+			data.Logging = []URLFilteringPolicyDefinitionLogging{}
+		}
+	}
 	data.updateVersions(ctx, &state)
 }
 
@@ -217,6 +258,18 @@ func (data *URLFilteringPolicyDefinition) hasChanges(ctx context.Context, state 
 	}
 	if !data.BlockPageContents.Equal(state.BlockPageContents) {
 		hasChanges = true
+	}
+	if len(data.Logging) != len(state.Logging) {
+		hasChanges = true
+	} else {
+		for i := range data.Logging {
+			if !data.Logging[i].ExternalSyslogServerIp.Equal(state.Logging[i].ExternalSyslogServerIp) {
+				hasChanges = true
+			}
+			if !data.Logging[i].ExternalSyslogServerVpn.Equal(state.Logging[i].ExternalSyslogServerVpn) {
+				hasChanges = true
+			}
+		}
 	}
 	return hasChanges
 }

@@ -249,31 +249,3 @@ func (data *SystemPerformanceMonitoring) updateFromBody(ctx context.Context, res
 }
 
 // End of section. //template:end updateFromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *SystemPerformanceMonitoring) isNull(ctx context.Context, res gjson.Result) bool {
-	if !data.FeatureProfileId.IsNull() {
-		return false
-	}
-	if !data.AppPerfMonitorEnabled.IsNull() {
-		return false
-	}
-	if !data.AppPerfMonitorAppGroup.IsNull() {
-		return false
-	}
-	if !data.MonitoringConfigEnabled.IsNull() {
-		return false
-	}
-	if !data.MonitoringConfigInterval.IsNull() {
-		return false
-	}
-	if !data.EventDrivenConfigEnabled.IsNull() {
-		return false
-	}
-	if !data.EventDrivenEvents.IsNull() {
-		return false
-	}
-	return true
-}
-
-// End of section. //template:end isNull

@@ -294,22 +294,3 @@ func (data *ApplicationPriorityQoS) updateFromBody(ctx context.Context, res gjso
 }
 
 // End of section. //template:end updateFromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *ApplicationPriorityQoS) isNull(ctx context.Context, res gjson.Result) bool {
-	if !data.FeatureProfileId.IsNull() {
-		return false
-	}
-	if !data.TargetInterface.IsNull() {
-		return false
-	}
-	if !data.TargetInterfaceVariable.IsNull() {
-		return false
-	}
-	if len(data.QosSchedulers) > 0 {
-		return false
-	}
-	return true
-}
-
-// End of section. //template:end isNull

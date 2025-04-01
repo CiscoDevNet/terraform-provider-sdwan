@@ -26,6 +26,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
@@ -44,6 +45,8 @@ import (
 )
 
 // End of section. //template:end imports
+
+var MinConfigGroupUpdateVersion = version.Must(version.NewVersion("20.15.0"))
 
 // Section below is generated&owned by "gen/generator.go". //template:begin model
 
@@ -92,17 +95,10 @@ func (r *ConfigurationGroupResource) Schema(ctx context.Context, req resource.Sc
 					stringvalidator.OneOf("mobility", "sdwan", "nfvirtual"),
 				},
 			},
-			"feature_profiles": schema.SetNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of feature profiles").String,
+			"feature_profile_ids": schema.SetAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("List of feature profile IDs").String,
+				ElementType:         types.StringType,
 				Optional:            true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"id": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Feature profile ID").String,
-							Optional:            true,
-						},
-					},
-				},
 			},
 			"topology_devices": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of topology device types").String,
@@ -258,7 +254,10 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 
 	// Deploy to config group devices
 	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, &resp.Diagnostics)
+		r.Deploy(ctx, plan, nil, &resp.Diagnostics, true)
+	}
+	if resp.Diagnostics.HasError() {
+		return
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
@@ -267,7 +266,18 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan ConfigurationGroup, diag *diag.Diagnostics) {
+func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan ConfigurationGroup, state *ConfigurationGroup, diag *diag.Diagnostics, deleteOnError bool) {
+	var updatedDevices []string
+	if state != nil {
+		updatedDevices = plan.getUpdatedDevices(ctx, state)
+	}
+
+	hasFeatureVersionChanges := false
+	currentVersion := version.Must(version.NewVersion(r.client.ManagerVersion))
+	if state != nil && currentVersion.LessThan(MinConfigGroupUpdateVersion) {
+		hasFeatureVersionChanges = plan.hasFeatureVersionChanges(ctx, state)
+	}
+
 	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString())
 	res, err := r.client.Get(path)
 	if err != nil {
@@ -279,14 +289,12 @@ func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan Configurat
 	body, _ := sjson.Set("", "devices", []interface{}{})
 	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
 		value.ForEach(func(k, v gjson.Result) bool {
-			if v.Get("configGroupUpToDate").String() != "False" {
-				return true
-			}
 			id := v.Get("id").String()
 			for _, item := range plan.Devices {
-				if item.Id.ValueString() == id && item.Deploy.ValueBool() {
+				if item.Id.ValueString() == id && item.Deploy.ValueBool() && (!v.Get("configGroupUpToDate").Bool() || updatedDevices == nil || helpers.Contains(updatedDevices, id) || hasFeatureVersionChanges) {
 					itemBody, _ := sjson.Set("", "id", id)
 					body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
+					tflog.Debug(ctx, fmt.Sprintf("%s: Deploying to device %s", plan.Name.ValueString(), id))
 				}
 			}
 			return true
@@ -297,6 +305,9 @@ func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan Configurat
 		res, err = r.client.Post(path, body)
 		if err != nil {
 			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to config group devices (POST), got error: %s, %s", err, res.String()))
+			if deleteOnError {
+				r.DeleteConfigGroup(ctx, plan, diag)
+			}
 			return
 		}
 
@@ -305,6 +316,9 @@ func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan Configurat
 		err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
 		if err != nil {
 			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to config group devices, got error: %s", err))
+			if deleteOnError {
+				r.DeleteConfigGroup(ctx, plan, diag)
+			}
 			return
 		}
 	}
@@ -348,7 +362,7 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 			return
 		}
 
-		state.updateFromBodyConfigGroupDevices(ctx, res)
+		state.fromBodyConfigGroupDevices(ctx, res)
 	}
 
 	// Read config group device variables
@@ -363,7 +377,7 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 			return
 		}
 
-		state.updateFromBodyConfigGroupDeviceVariables(ctx, res)
+		state.fromBodyConfigGroupDeviceVariables(ctx, res)
 	}
 
 	state.updateTfAttributes(ctx, &oldState)
@@ -401,14 +415,62 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 		return
 	}
 
-	// Update config group devices
-	if len(plan.Devices) > 0 {
-		body = plan.toBodyConfigGroupDevices(ctx)
+	res, err = r.client.Get(fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString()))
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+		return
+	}
 
-		path := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString())
-		res, err = r.client.Put(path, body)
+	var currentDeviceIds []string
+	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
+		value.ForEach(func(k, v gjson.Result) bool {
+			currentDeviceIds = append(currentDeviceIds, v.Get("id").String())
+			return true
+		})
+	}
+
+	associateBody, _ := sjson.Set("", "devices", []interface{}{})
+	for _, d := range plan.Devices {
+		found := false
+		for _, cdid := range currentDeviceIds {
+			if d.Id.ValueString() == cdid {
+				found = true
+				break
+			}
+		}
+		if !found {
+			associateBody, _ = sjson.SetRaw(associateBody, "devices.-1", helpers.Must(sjson.Set("", "id", d.Id.ValueString())))
+		}
+	}
+
+	disassociateBody, _ := sjson.Set("", "devices", []interface{}{})
+	for _, cdid := range currentDeviceIds {
+		found := false
+		for _, d := range plan.Devices {
+			if d.Id.ValueString() == cdid {
+				found = true
+				break
+			}
+		}
+		if !found {
+			disassociateBody, _ = sjson.SetRaw(disassociateBody, "devices.-1", helpers.Must(sjson.Set("", "id", cdid)))
+		}
+	}
+
+	// associate missing devices
+	if len(gjson.Get(associateBody, "devices").Array()) > 0 {
+		res, err = r.client.Put(fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString()), associateBody)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (PUT), got error: %s, %s", err, res.String()))
+			return
+		}
+	}
+
+	// disassociate extra devices
+	if len(gjson.Get(disassociateBody, "devices").Array()) > 0 {
+		res, err = r.client.DeleteBody(fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.Id.ValueString()), disassociateBody)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete config group devices (DELETE), got error: %s, %s", err, res.String()))
 			return
 		}
 	}
@@ -427,7 +489,10 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 
 	// Deploy to config group devices
 	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, &resp.Diagnostics)
+		r.Deploy(ctx, plan, &state, &resp.Diagnostics, false)
+	}
+	if resp.Diagnostics.HasError() {
+		return
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))

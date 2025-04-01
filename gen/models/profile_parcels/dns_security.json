@@ -1,0 +1,683 @@
+{
+  "request": {
+      "$schema": "http://json-schema.org/draft/2019-09/schema",
+      "$id": "https://cisco.com/schema/profileparcel/sdwan/dns-security/dns/post/request_schema.json",
+      "title": "dns Parcel Schema",
+      "description": "dns profile parcel schema for POST request",
+      "type": "object",
+      "properties": {
+          "name": {
+              "minLength": 1,
+              "maxLength": 128,
+              "type": "string",
+              "pattern": "^[^&<>! \"]+$"
+          },
+          "description": {
+              "type": "string"
+          },
+          "data": {
+              "type": "object",
+              "properties": {
+                  "localDomainBypassList": {
+                      "description": "If matchAllVpn is true and localDomainBypassEnabled is also true, this field is required",
+                      "details-1": "If matchAllVpn is false, this field is required when at least one targetVpn Entry has localDomainBypassEnabled as true",
+                      "details-2": "Contains refId object with a string in uuid format",
+                      "type": "object",
+                      "properties": {
+                          "refId": {
+                              "type": "object",
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      },
+                      "required": [
+                          "refId"
+                      ],
+                      "additionalProperties": false
+                  },
+                  "matchAllVpn": {
+                      "description": "If this is true, there shouldn't be a targetVpns field, if false then targetVpns field should be there",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "boolean"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  },
+                  "umbrellaDefault": {
+                      "description": "Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry",
+                      "details-1": "always this must be false if using dnsServerIP",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "boolean"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  },
+                  "dnsServerIP": {
+                      "description": "Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry",
+                      "details-1": "Umbrella Default must be false to have this field",
+                      "details-2": "value is string that is a ipv4 address",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "format": "ipv4"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  },
+                  "localDomainBypassEnabled": {
+                      "description": "Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry",
+                      "details-1": "If matchAllVpn is true, if there is a localDomainBypassList this field should be true, if there isn't a localDomainBypassList this should be false",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "boolean"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  },
+                  "dnsCrypt": {
+                      "description": "If matchAllVpn is false, this field is only true if at least one of the targetVpns entires contains an umbrellaDefault true",
+                      "details-1": "If matchAllVpn is true, dnsCrypt can only be true if umbrellaDefault is also true",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "boolean"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  },
+                  "childOrgId": {
+                      "description": "String that is a number that corresponds to Umbrella Multi Org, can be empty if not using Umbrella Multi Org",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "description": "can be empty string",
+                                      "type": "string",
+                                      "pattern": "^[0-9]*$"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  },
+                  "targetVpns": {
+                      "description": "Will be under data field only if matchAllVpn is false, if matchAllVpn is true field should not be in payload",
+                      "details-1": "Contains vpns field that specifies target vpns",
+                      "details-2": "UmbrellaDefault, localDomainBypassEnabled, and uid are required fields",
+                      "details-3": "dnsServerIP is optional, only required is Umbrella default is false",
+                      "type": "array",
+                      "minItems": 1,
+                      "uniqueItems": true,
+                      "items": {
+                          "type": "object",
+                          "properties": {
+                              "vpns": {
+                                  "oneOf": [
+                                      {
+                                          "properties": {
+                                              "optionType": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                      "global"
+                                                  ]
+                                              },
+                                              "value": {
+                                                  "type": "array",
+                                                  "minItems": 1,
+                                                  "uniqueItems": true,
+                                                  "items": {
+                                                      "minLength": 0,
+                                                      "maxLength": 244,
+                                                      "type": "string"
+                                                  }
+                                              }
+                                          },
+                                          "required": [
+                                              "optionType",
+                                              "value"
+                                          ],
+                                          "additionalProperties": false
+                                      }
+                                  ]
+                              },
+                              "umbrellaDefault": {
+                                  "description": "Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry",
+                                  "details-1": "always this must be false if using dnsServerIP",
+                                  "oneOf": [
+                                      {
+                                          "properties": {
+                                              "optionType": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                      "global"
+                                                  ]
+                                              },
+                                              "value": {
+                                                  "type": "boolean"
+                                              }
+                                          },
+                                          "required": [
+                                              "optionType",
+                                              "value"
+                                          ],
+                                          "additionalProperties": false
+                                      }
+                                  ]
+                              },
+                              "dnsServerIP": {
+                                  "description": "Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry",
+                                  "details-1": "Umbrella Default must be false to have this field",
+                                  "details-2": "value is string that is an ipv4 address",
+                                  "oneOf": [
+                                      {
+                                          "properties": {
+                                              "optionType": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                      "global"
+                                                  ]
+                                              },
+                                              "value": {
+                                                  "type": "string",
+                                                  "format": "ipv4"
+                                              }
+                                          },
+                                          "required": [
+                                              "optionType",
+                                              "value"
+                                          ],
+                                          "additionalProperties": false
+                                      }
+                                  ]
+                              },
+                              "localDomainBypassEnabled": {
+                                  "description": "Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry",
+                                  "oneOf": [
+                                      {
+                                          "properties": {
+                                              "optionType": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                      "global"
+                                                  ]
+                                              },
+                                              "value": {
+                                                  "type": "boolean"
+                                              }
+                                          },
+                                          "required": [
+                                              "optionType",
+                                              "value"
+                                          ],
+                                          "additionalProperties": false
+                                      }
+                                  ]
+                              },
+                              "uid": {
+                                  "description": "non empty interger string",
+                                  "oneOf": [
+                                      {
+                                          "properties": {
+                                              "optionType": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                      "global"
+                                                  ]
+                                              },
+                                              "value": {
+                                                  "description": "An Integer and cannot be empty string",
+                                                  "type": "string",
+                                                  "pattern": "^[0-9]+$"
+                                              }
+                                          },
+                                          "required": [
+                                              "optionType",
+                                              "value"
+                                          ],
+                                          "additionalProperties": false
+                                      }
+                                  ]
+                              }
+                          },
+                          "required": [
+                              "vpns",
+                              "umbrellaDefault",
+                              "localDomainBypassEnabled",
+                              "uid"
+                          ],
+                          "additionalProperties": false,
+                          "allOf": [
+                              {
+                                  "if": {
+                                      "properties": {
+                                          "umbrellaDefault": {
+                                              "properties": {
+                                                  "value": {
+                                                      "const": false
+                                                  }
+                                              }
+                                          }
+                                      }
+                                  },
+                                  "then": {
+                                      "required": [
+                                          "dnsServerIP"
+                                      ]
+                                  },
+                                  "else": {
+                                      "not": {
+                                          "required": [
+                                              "dnsServerIP"
+                                          ]
+                                      }
+                                  }
+                              }
+                          ]
+                      }
+                  }
+              },
+              "required": [
+                  "matchAllVpn",
+                  "dnsCrypt"
+              ],
+              "additionalProperties": false
+          },
+          "documentation": {
+              "description": "This is the documentation for POST request schema for dns profile parcel",
+              "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+              "details-2": "variable name should not be present if optionType value is NOT variable",
+              "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+              "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+              "examples": [
+                  {
+                      "name": "targetVpnsDnsSecurity",
+                      "description": "Testing",
+                      "data": {
+                          "localDomainBypassList": {
+                              "refId": {
+                                  "optionType": "global",
+                                  "value": "0c4e096d-b06d-4052-93ed-70fe34fda6dc"
+                              }
+                          },
+                          "matchAllVpn": {
+                              "optionType": "global",
+                              "value": false
+                          },
+                          "targetVpns": [
+                              {
+                                  "vpns": {
+                                      "optionType": "global",
+                                      "value": [
+                                          "1",
+                                          "2"
+                                      ]
+                                  },
+                                  "umbrellaDefault": {
+                                      "optionType": "global",
+                                      "value": false
+                                  },
+                                  "dnsServerIP": {
+                                      "optionType": "global",
+                                      "value": "8.8.8.8"
+                                  },
+                                  "uid": {
+                                      "optionType": "global",
+                                      "value": "1667346674059"
+                                  },
+                                  "localDomainBypassEnabled": {
+                                      "optionType": "global",
+                                      "value": false
+                                  }
+                              }
+                          ],
+                          "dnsCrypt": {
+                              "optionType": "global",
+                              "value": false
+                          },
+                          "childOrgId": {
+                              "optionType": "global",
+                              "value": "12334"
+                          }
+                      }
+                  },
+                  {
+                      "name": "matchAllVpnsDnsSecurity",
+                      "description": "Testing",
+                      "data": {
+                          "localDomainBypassList": {
+                              "refId": {
+                                  "optionType": "global",
+                                  "value": "0c4e096d-b06d-4052-93ed-70fe34fda6dc"
+                              }
+                          },
+                          "matchAllVpn": {
+                              "optionType": "global",
+                              "value": true
+                          },
+                          "umbrellaDefault": {
+                              "optionType": "global",
+                              "value": false
+                          },
+                          "dnsServerIP": {
+                              "optionType": "global",
+                              "value": "8.8.8.8"
+                          },
+                          "localDomainBypassEnabled": {
+                              "optionType": "global",
+                              "value": true
+                          },
+                          "dnsCrypt": {
+                              "optionType": "global",
+                              "value": false
+                          },
+                          "childOrgId": {
+                              "optionType": "global",
+                              "value": "12334"
+                          }
+                      }
+                  }
+              ]
+          }
+      },
+      "required": [
+          "data",
+          "name",
+          "description"
+      ],
+      "not": {
+          "required": [
+              "documentation"
+          ]
+      },
+      "allOf": [
+          {
+              "if": {
+                  "properties": {
+                      "data": {
+                          "properties": {
+                              "matchAllVpn": {
+                                  "properties": {
+                                      "value": {
+                                          "const": false
+                                      }
+                                  }
+                              }
+                          },
+                          "required": [
+                              "matchAllVpn"
+                          ]
+                      }
+                  }
+              },
+              "then": {
+                  "properties": {
+                      "data": {
+                          "required": [
+                              "targetVpns"
+                          ],
+                          "not": {
+                              "anyOf": [
+                                  {
+                                      "required": [
+                                          "umbrellaDefault"
+                                      ]
+                                  },
+                                  {
+                                      "required": [
+                                          "localDomainBypassEnabled"
+                                      ]
+                                  }
+                              ]
+                          }
+                      }
+                  }
+              },
+              "else": {
+                  "properties": {
+                      "data": {
+                          "not": {
+                              "required": [
+                                  "targetVpns"
+                              ]
+                          },
+                          "required": [
+                              "umbrellaDefault",
+                              "localDomainBypassEnabled"
+                          ]
+                      }
+                  }
+              }
+          },
+          {
+              "if": {
+                  "properties": {
+                      "data": {
+                          "properties": {
+                              "matchAllVpn": {
+                                  "properties": {
+                                      "value": {
+                                          "const": true
+                                      }
+                                  }
+                              },
+                              "umbrellaDefault": {
+                                  "properties": {
+                                      "value": {
+                                          "const": false
+                                      }
+                                  }
+                              }
+                          },
+                          "required": [
+                              "matchAllVpn",
+                              "umbrellaDefault"
+                          ]
+                      }
+                  }
+              },
+              "then": {
+                  "properties": {
+                      "data": {
+                          "required": [
+                              "dnsServerIP"
+                          ]
+                      }
+                  }
+              },
+              "else": {
+                  "properties": {
+                      "data": {
+                          "not": {
+                              "required": [
+                                  "dnsServerIP"
+                              ]
+                          }
+                      }
+                  }
+              }
+          },
+          {
+              "if": {
+                  "properties": {
+                      "data": {
+                          "properties": {
+                              "matchAllVpn": {
+                                  "properties": {
+                                      "value": {
+                                          "const": true
+                                      }
+                                  }
+                              },
+                              "dnsCrypt": {
+                                  "properties": {
+                                      "value": {
+                                          "const": true
+                                      }
+                                  }
+                              }
+                          },
+                          "required": [
+                              "matchAllVpn",
+                              "dnsCrypt"
+                          ]
+                      }
+                  }
+              },
+              "then": {
+                  "properties": {
+                      "data": {
+                          "properties": {
+                              "umbrellaDefault": {
+                                  "properties": {
+                                      "value": {
+                                          "const": true
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          {
+              "if": {
+                  "properties": {
+                      "data": {
+                          "properties": {
+                              "dnsCrypt": {
+                                  "properties": {
+                                      "value": {
+                                          "const": true
+                                      }
+                                  }
+                              }
+                          },
+                          "required": [
+                              "dnsCrypt",
+                              "targetVpns"
+                          ]
+                      }
+                  }
+              },
+              "then": {
+                  "properties": {
+                      "data": {
+                          "properties": {
+                              "targetVpns": {
+                                  "contains": {
+                                      "properties": {
+                                          "umbrellaDefault": {
+                                              "properties": {
+                                                  "value": {
+                                                      "const": true
+                                                  }
+                                              }
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      ],
+      "additionalProperties": false
+  }
+}

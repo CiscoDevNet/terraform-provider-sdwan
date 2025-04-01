@@ -156,6 +156,8 @@ func (r *PolicyObjectASPathListProfileParcelResource) Create(ctx context.Context
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end create
@@ -192,6 +194,8 @@ func (r *PolicyObjectASPathListProfileParcelResource) Read(ctx context.Context, 
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end read
@@ -273,6 +277,8 @@ func (r *PolicyObjectASPathListProfileParcelResource) ImportState(ctx context.Co
 
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("feature_profile_id"), parts[1])...)
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end import

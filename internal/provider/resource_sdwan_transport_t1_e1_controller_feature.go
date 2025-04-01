@@ -305,6 +305,8 @@ func (r *TransportT1E1ControllerProfileParcelResource) Create(ctx context.Contex
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end create
@@ -332,7 +334,12 @@ func (r *TransportT1E1ControllerProfileParcelResource) Read(ctx context.Context,
 	}
 
 	// If every attribute is set to null we are dealing with an import operation and therefore reading all attributes
-	if state.isNull(ctx, res) {
+	imp, diags := helpers.IsFlagImporting(ctx, req)
+	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
+		return
+	}
+
+	if imp {
 		state.fromBody(ctx, res)
 	} else {
 		state.updateFromBody(ctx, res)
@@ -345,6 +352,8 @@ func (r *TransportT1E1ControllerProfileParcelResource) Read(ctx context.Context,
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end read
@@ -426,6 +435,8 @@ func (r *TransportT1E1ControllerProfileParcelResource) ImportState(ctx context.C
 
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("feature_profile_id"), parts[1])...)
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end import

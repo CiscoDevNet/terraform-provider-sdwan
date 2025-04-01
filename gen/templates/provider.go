@@ -97,6 +97,9 @@ func (p *SdwanProvider) Schema(ctx context.Context, req provider.SchemaRequest, 
 }
 
 func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
+	// Set the default log level to debug
+	slog.SetLogLoggerLevel(slog.LevelDebug)
+
 	// Retrieve provider data from configuration
 	var config SdwanProviderModel
 	diags := req.Config.Get(ctx, &config)

@@ -36,6 +36,8 @@ func TestAccSdwanURLFilteringPolicyDefinition(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_url_filtering_policy_definition.test", "web_reputation", "moderate-risk"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_url_filtering_policy_definition.test", "block_page_action", "text"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_url_filtering_policy_definition.test", "block_page_contents", "Access to the requested page has been denied. Please contact your Network Administrator"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_url_filtering_policy_definition.test", "logging.0.external_syslog_server_ip", "10.0.0.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_url_filtering_policy_definition.test", "logging.0.external_syslog_server_vpn", "123"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -66,6 +68,10 @@ func testAccSdwanURLFilteringPolicyDefinitionConfig_all() string {
 	config += `	target_vpns = ["1"]` + "\n"
 	config += `	block_page_action = "text"` + "\n"
 	config += `	block_page_contents = "Access to the requested page has been denied. Please contact your Network Administrator"` + "\n"
+	config += `	logging = [{` + "\n"
+	config += `	  external_syslog_server_ip = "10.0.0.1"` + "\n"
+	config += `	  external_syslog_server_vpn = "123"` + "\n"
+	config += `	}]` + "\n"
 	config += `}` + "\n"
 	return config
 }

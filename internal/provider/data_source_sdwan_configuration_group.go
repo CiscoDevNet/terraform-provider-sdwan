@@ -75,17 +75,10 @@ func (d *ConfigurationGroupDataSource) Schema(ctx context.Context, req datasourc
 				MarkdownDescription: "Type of solution",
 				Computed:            true,
 			},
-			"feature_profiles": schema.SetNestedAttribute{
-				MarkdownDescription: "List of feature profiles",
+			"feature_profile_ids": schema.SetAttribute{
+				MarkdownDescription: "List of feature profile IDs",
+				ElementType:         types.StringType,
 				Computed:            true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"id": schema.StringAttribute{
-							MarkdownDescription: "Feature profile ID",
-							Computed:            true,
-						},
-					},
-				},
 			},
 			"topology_devices": schema.ListNestedAttribute{
 				MarkdownDescription: "List of topology device types",

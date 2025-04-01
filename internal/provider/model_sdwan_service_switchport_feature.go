@@ -1133,25 +1133,3 @@ func (data *ServiceSwitchport) updateFromBody(ctx context.Context, res gjson.Res
 }
 
 // End of section. //template:end updateFromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *ServiceSwitchport) isNull(ctx context.Context, res gjson.Result) bool {
-	if !data.FeatureProfileId.IsNull() {
-		return false
-	}
-	if len(data.Interfaces) > 0 {
-		return false
-	}
-	if !data.AgeOutTime.IsNull() {
-		return false
-	}
-	if !data.AgeOutTimeVariable.IsNull() {
-		return false
-	}
-	if len(data.StaticMacAddresses) > 0 {
-		return false
-	}
-	return true
-}
-
-// End of section. //template:end isNull

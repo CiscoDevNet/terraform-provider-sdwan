@@ -1,7 +1,10 @@
-## 0.5.4 (unreleased)
+## 0.6.0
 
 - Delete configuration group when an error is encountered during creation, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/390)
 - Refresh devices of a configuration group before deletion, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/391)
+- BREAKING CHANGE: Convert `feature_profiles` attribute of `sdwan_configuration_group` to set of strings and rename to `feature_profile_ids`
+- Add `sdwan_tag` resource and data source
+- Adds `sdwan_dns_security_policy` resource and data source
 
 ## 0.5.3
 

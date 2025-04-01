@@ -95,9 +95,9 @@ Required:
 
 Optional:
 
-- `export_to_vpn_list_id` (String) Export to VPN list ID
+- `export_to_vpn_list_id` (String) Export to VPN list ID, Attribute conditional on `type` being equal to `exportTo`
 - `export_to_vpn_list_version` (Number) Export to VPN list version
-- `set_parameters` (Attributes List) List of set parameters (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
+- `set_parameters` (Attributes List) List of set parameters, Attribute conditional on `type` being equal to `set` (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
 
 <a id="nestedatt--sequences--action_entries--set_parameters"></a>
 ### Nested Schema for `sequences.action_entries.set_parameters`
@@ -109,29 +109,29 @@ Required:
 
 Optional:
 
-- `community` (String) Community value, e.g. `1000:10000` or `internet` or `local-AS`
-- `community_additive` (Boolean) Community additive
-- `omp_tag` (Number) OMP tag
+- `community` (String) Community value, e.g. `1000:10000` or `internet` or `local-AS`, Attribute conditional on `type` being equal to `community`
+- `community_additive` (Boolean) Community additive, Attribute conditional on `type` being equal to `communityAdditive`
+- `omp_tag` (Number) OMP tag, Attribute conditional on `type` being equal to `ompTag`
   - Range: `0`-`4294967295`
-- `preference` (Number) Preference
+- `preference` (Number) Preference, Attribute conditional on `type` being equal to `preference`
   - Range: `0`-`4294967295`
-- `service_tloc_color` (String) Service TLOC color
-- `service_tloc_encapsulation` (String) Service TLOC encapsulation
+- `service_tloc_color` (String) Service TLOC color, Attribute conditional on `type` being equal to `service`
+- `service_tloc_encapsulation` (String) Service TLOC encapsulation, Attribute conditional on `type` being equal to `service`
   - Choices: `ipsec`, `gre`
-- `service_tloc_ip` (String) Service TLOC IP address
-- `service_tloc_list_id` (String) Service TLOC list ID
+- `service_tloc_ip` (String) Service TLOC IP address, Attribute conditional on `type` being equal to `service`
+- `service_tloc_list_id` (String) Service TLOC list ID, Attribute conditional on `type` being equal to `service`
 - `service_tloc_list_version` (Number) Service TLOC list version
-- `service_type` (String) Service type
+- `service_type` (String) Service type, Attribute conditional on `type` being equal to `service`
   - Choices: `FW`, `IDP`, `IDS`, `netsvc1`, `netsvc2`, `netsvc3`, `netsvc4`, `netsvc5`
-- `service_vpn_id` (Number) Service VPN ID
+- `service_vpn_id` (Number) Service VPN ID, Attribute conditional on `type` being equal to `service`
   - Range: `0`-`65536`
-- `tloc_action` (String) TLOC action
+- `tloc_action` (String) TLOC action, Attribute conditional on `type` being equal to `tlocAction`
   - Choices: `strict`, `primary`, `backup`, `ecmp`
-- `tloc_color` (String) TLOC color
-- `tloc_encapsulation` (String) TLOC encapsulation
+- `tloc_color` (String) TLOC color, Attribute conditional on `type` being equal to `tloc`
+- `tloc_encapsulation` (String) TLOC encapsulation, Attribute conditional on `type` being equal to `tloc`
   - Choices: `ipsec`, `gre`
-- `tloc_ip` (String) TLOC IP address
-- `tloc_list_id` (String) TLOC list ID
+- `tloc_ip` (String) TLOC IP address, Attribute conditional on `type` being equal to `tloc`
+- `tloc_list_id` (String) TLOC list ID, Attribute conditional on `type` being equal to `tlocList`
 - `tloc_list_version` (Number) TLOC list version
 
 
@@ -146,42 +146,42 @@ Required:
 
 Optional:
 
-- `carrier` (String) Carrier
+- `carrier` (String) Carrier, Attribute conditional on `type` being equal to `carrier`
   - Choices: `default`, `carrier1`, `carrier2`, `carrier3`, `carrier4`, `carrier5`, `carrier6`, `carrier7`, `carrier8`
-- `color_list_id` (String) Color list ID
+- `color_list_id` (String) Color list ID, Attribute conditional on `type` being equal to `colorList`
 - `color_list_version` (Number) Color list version
-- `community_list_id` (String) Community list ID
+- `community_list_id` (String) Community list ID, Attribute conditional on `type` being equal to `community`
 - `community_list_version` (Number) Community list version
-- `domain_id` (Number) Domain ID
+- `domain_id` (Number) Domain ID, Attribute conditional on `type` being equal to `domainId`
   - Range: `0`-`4294967295`
-- `expanded_community_list_id` (String) Expanded community list ID
+- `expanded_community_list_id` (String) Expanded community list ID, Attribute conditional on `type` being equal to `expandedCommunity`
 - `expanded_community_list_version` (Number) Expanded community list version
-- `group_id` (Number) Group ID
+- `group_id` (Number) Group ID, Attribute conditional on `type` being equal to `groupId`
   - Range: `0`-`4294967295`
-- `omp_tag` (Number) OMP tag
+- `omp_tag` (Number) OMP tag, Attribute conditional on `type` being equal to `ompTag`
   - Range: `0`-`4294967295`
-- `origin` (String) Origin
+- `origin` (String) Origin, Attribute conditional on `type` being equal to `origin`
   - Choices: `igp`, `egp`, `incomplete`, `aggregrate`, `bgp`, `bgp-external`, `bgp-internal`, `connected`, `eigrp`, `ospf`, `ospf-inter-area`, `ospf-intra-area`, `ospf-external1`, `ospf-external2`, `rip`, `static`, `eigrp-summary`, `eigrp-internal`, `eigrp-external`, `lisp`, `nat-dia`, `natpool`, `isis`, `isis-level1`, `isis-level2`
-- `originator` (String) Originator IP
-- `path_type` (String) Path type
+- `originator` (String) Originator IP, Attribute conditional on `type` being equal to `originator`
+- `path_type` (String) Path type, Attribute conditional on `type` being equal to `pathType`
   - Choices: `hierarchical-path`, `direct-path`, `transport-gateway-path`
-- `preference` (Number) Preference
+- `preference` (Number) Preference, Attribute conditional on `type` being equal to `preference`
   - Range: `0`-`4294967295`
-- `prefix_list_id` (String) Prefix list ID
+- `prefix_list_id` (String) Prefix list ID, Attribute conditional on `type` being equal to `prefixList`
 - `prefix_list_version` (Number) Prefix list version
-- `site_id` (Number) Site ID
+- `site_id` (Number) Site ID, Attribute conditional on `type` being equal to `siteId`
   - Range: `0`-`4294967295`
-- `site_list_id` (String) Site list ID
+- `site_list_id` (String) Site list ID, Attribute conditional on `type` being equal to `siteList`
 - `site_list_version` (Number) Site list version
-- `tloc_color` (String) TLOC color
-- `tloc_encapsulation` (String) TLOC encapsulation
+- `tloc_color` (String) TLOC color, Attribute conditional on `type` being equal to `tloc`
+- `tloc_encapsulation` (String) TLOC encapsulation, Attribute conditional on `type` being equal to `tloc`
   - Choices: `ipsec`, `gre`
-- `tloc_ip` (String) TLOC IP address
-- `tloc_list_id` (String) TLOC list ID
+- `tloc_ip` (String) TLOC IP address, Attribute conditional on `type` being equal to `tloc`
+- `tloc_list_id` (String) TLOC list ID, Attribute conditional on `type` being equal to `tlocList`
 - `tloc_list_version` (Number) TLOC list version
-- `vpn_id` (Number) VPN ID
+- `vpn_id` (Number) VPN ID, Attribute conditional on `type` being equal to `vpn`
   - Range: `0`-`65536`
-- `vpn_list_id` (String) VPN list ID
+- `vpn_list_id` (String) VPN list ID, Attribute conditional on `type` being equal to `vpnList`
 - `vpn_list_version` (Number) VPN list version
 
 ## Import

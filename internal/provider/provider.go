@@ -20,6 +20,7 @@ package provider
 // Section below is generated&owned by "gen/generator.go". //template:begin provider
 import (
 	"context"
+	"log/slog"
 	"os"
 	"strconv"
 	"sync"
@@ -95,6 +96,9 @@ func (p *SdwanProvider) Schema(ctx context.Context, req provider.SchemaRequest, 
 }
 
 func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
+	// Set the default log level to debug
+	slog.SetLogLoggerLevel(slog.LevelDebug)
+
 	// Retrieve provider data from configuration
 	var config SdwanProviderModel
 	diags := req.Config.Get(ctx, &config)
@@ -284,6 +288,7 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewVPNInterfaceT1E1SerialFeatureTemplateResource,
 		NewApplicationPriorityQoSProfileParcelResource,
 		NewApplicationPriorityTrafficPolicyProfileParcelResource,
+		NewDNSSecurityProfileParcelResource,
 		NewOtherThousandEyesProfileParcelResource,
 		NewOtherUCSEProfileParcelResource,
 		NewPolicyObjectAppProbeClassProfileParcelResource,
@@ -447,6 +452,7 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewSLAClassPolicyObjectResource,
 		NewStandardCommunityListPolicyObjectResource,
 		NewSystemFeatureProfileResource,
+		NewTagResource,
 		NewTLOCListPolicyObjectResource,
 		NewTLSSSLDecryptionPolicyDefinitionResource,
 		NewTLSSSLProfilePolicyDefinitionResource,
@@ -520,6 +526,7 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewVPNInterfaceT1E1SerialFeatureTemplateDataSource,
 		NewApplicationPriorityQoSProfileParcelDataSource,
 		NewApplicationPriorityTrafficPolicyProfileParcelDataSource,
+		NewDNSSecurityProfileParcelDataSource,
 		NewOtherThousandEyesProfileParcelDataSource,
 		NewOtherUCSEProfileParcelDataSource,
 		NewPolicyObjectAppProbeClassProfileParcelDataSource,
@@ -684,6 +691,7 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewSLAClassPolicyObjectDataSource,
 		NewStandardCommunityListPolicyObjectDataSource,
 		NewSystemFeatureProfileDataSource,
+		NewTagDataSource,
 		NewTLOCListPolicyObjectDataSource,
 		NewTLSSSLDecryptionPolicyDefinitionDataSource,
 		NewTLSSSLProfilePolicyDefinitionDataSource,

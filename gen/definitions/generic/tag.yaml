@@ -1,0 +1,28 @@
+---
+name: Tag
+rest_endpoint: /v1/tags
+minimum_version: 20.12.0
+id_attribute: id
+doc_category: Inventory
+test_tags: [SDWAN_2012]
+attributes:
+  - model_name: name
+    mandatory: true
+    type: String
+    requires_replace: true
+    description: Tag name
+    example: TAG_1
+  - model_name: description
+    tf_name: description
+    mandatory: true
+    type: String
+    requires_replace: true
+    description: Tag description
+    example: My tag
+  - model_name: tagAssociation
+    tf_name: devices
+    type: Set
+    element_type: String
+    description: List of associated devices
+    example: C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B
+    test_value: '["C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"]'

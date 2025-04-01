@@ -238,28 +238,3 @@ func (data *ServiceObjectTrackerGroup) updateFromBody(ctx context.Context, res g
 }
 
 // End of section. //template:end updateFromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *ServiceObjectTrackerGroup) isNull(ctx context.Context, res gjson.Result) bool {
-	if !data.FeatureProfileId.IsNull() {
-		return false
-	}
-	if !data.ObjectTrackerId.IsNull() {
-		return false
-	}
-	if !data.ObjectTrackerIdVariable.IsNull() {
-		return false
-	}
-	if len(data.TrackerElements) > 0 {
-		return false
-	}
-	if !data.Reachable.IsNull() {
-		return false
-	}
-	if !data.ReachableVariable.IsNull() {
-		return false
-	}
-	return true
-}
-
-// End of section. //template:end isNull

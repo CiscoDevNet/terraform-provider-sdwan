@@ -88,14 +88,7 @@ resource "sdwan_configuration_group" "config_group_01" {
   name        = "config_group_01"
   description = "My config group"
   solution     = "sdwan"
-  feature_profiles = [
-    {
-      id = sdwan_system_feature_profile.system_01.id
-    },
-    {
-      id = sdwan_transport_feature_profile.transport_01.id
-    }
-  ]
+  feature_profile_ids = [sdwan_system_feature_profile.system_01.id, sdwan_transport_feature_profile.transport_01.id]
   devices = [{
     id     = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"
     deploy = true
