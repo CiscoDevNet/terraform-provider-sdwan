@@ -1,5 +1,5 @@
 ---
-# MANUALLY CONFIGURED - Model's toBody to support required default values
+# Manual resource - Modals toBody is manually configured to support required defaults in the case actions is empty .
 name: Transport Route Policy
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/route-policy
 minimum_version: 20.12.0
