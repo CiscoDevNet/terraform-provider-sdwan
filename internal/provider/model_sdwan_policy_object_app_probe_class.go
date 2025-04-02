@@ -188,6 +188,8 @@ func (data *PolicyObjectAppProbeClass) updateFromBody(ctx context.Context, res g
 						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
 							found = true
 							continue
+						} else if tt.String() == "default" {
+							continue
 						}
 						found = false
 						break
@@ -216,6 +218,8 @@ func (data *PolicyObjectAppProbeClass) updateFromBody(ctx context.Context, res g
 						if tt.Exists() && vv.Exists() {
 							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
 								found = true
+								continue
+							} else if tt.String() == "default" {
 								continue
 							}
 							found = false

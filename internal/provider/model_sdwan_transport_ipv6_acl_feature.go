@@ -573,6 +573,8 @@ func (data *TransportIPv6ACL) updateFromBody(ctx context.Context, res gjson.Resu
 						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
 							found = true
 							continue
+						} else if tt.String() == "default" {
+							continue
 						}
 						found = false
 						break
@@ -625,6 +627,8 @@ func (data *TransportIPv6ACL) updateFromBody(ctx context.Context, res gjson.Resu
 						if tt.Exists() && vv.Exists() {
 							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
 								found = true
+								continue
+							} else if tt.String() == "default" {
 								continue
 							}
 							found = false
@@ -687,6 +691,8 @@ func (data *TransportIPv6ACL) updateFromBody(ctx context.Context, res gjson.Resu
 								if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
 									found = true
 									continue
+								} else if tt.String() == "default" {
+									continue
 								}
 								found = false
 								break
@@ -740,6 +746,8 @@ func (data *TransportIPv6ACL) updateFromBody(ctx context.Context, res gjson.Resu
 							if tt.Exists() && vv.Exists() {
 								if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
 									found = true
+									continue
+								} else if tt.String() == "default" {
 									continue
 								}
 								found = false
@@ -803,6 +811,8 @@ func (data *TransportIPv6ACL) updateFromBody(ctx context.Context, res gjson.Resu
 						if tt.Exists() && vv.Exists() {
 							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
 								found = true
+								continue
+							} else if tt.String() == "default" {
 								continue
 							}
 							found = false
