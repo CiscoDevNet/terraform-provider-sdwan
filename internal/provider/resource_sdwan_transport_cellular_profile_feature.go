@@ -108,12 +108,12 @@ func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"no_authentication": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("No Authentication").String,
+			"requires_authentication": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Require authentication type").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"authentication_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set authentication type").AddStringEnumDescription("pap", "chap", "pap_chap").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set authentication type, Attribute conditional on `requires_authentication` being equal to `true`").AddStringEnumDescription("pap", "chap", "pap_chap").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("pap", "chap", "pap_chap"),
@@ -124,7 +124,7 @@ func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Conte
 				Optional:            true,
 			},
 			"profile_username": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set the profile username").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set the profile username, Attribute conditional on `requires_authentication` being equal to `true`").String,
 				Optional:            true,
 			},
 			"profile_username_variable": schema.StringAttribute{
@@ -132,7 +132,7 @@ func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Conte
 				Optional:            true,
 			},
 			"profile_password": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set the profile password").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set the profile password, Attribute conditional on `requires_authentication` being equal to `true`").String,
 				Optional:            true,
 			},
 			"profile_password_variable": schema.StringAttribute{

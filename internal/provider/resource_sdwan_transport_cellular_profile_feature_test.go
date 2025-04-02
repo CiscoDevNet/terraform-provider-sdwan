@@ -76,6 +76,7 @@ func testAccSdwanTransportCellularProfileProfileParcelConfig_all() string {
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
 	config += `	profile_id = 1` + "\n"
 	config += `	access_point_name = "apn1"` + "\n"
+	config += `	requires_authentication = true` + "\n"
 	config += `	authentication_type = "pap"` + "\n"
 	config += `	profile_username = "example"` + "\n"
 	config += `	profile_password = "example123!"` + "\n"
