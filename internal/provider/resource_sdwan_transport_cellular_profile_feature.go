@@ -120,7 +120,7 @@ func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Conte
 				},
 			},
 			"authentication_type_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `requires_authentication` being equal to `true`").String,
 				Optional:            true,
 			},
 			"profile_username": schema.StringAttribute{
@@ -128,7 +128,7 @@ func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Conte
 				Optional:            true,
 			},
 			"profile_username_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `requires_authentication` being equal to `true`").String,
 				Optional:            true,
 			},
 			"profile_password": schema.StringAttribute{
@@ -136,7 +136,7 @@ func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Conte
 				Optional:            true,
 			},
 			"profile_password_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `requires_authentication` being equal to `true`").String,
 				Optional:            true,
 			},
 			"packet_data_network_type": schema.StringAttribute{

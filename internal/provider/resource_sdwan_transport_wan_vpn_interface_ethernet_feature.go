@@ -140,7 +140,7 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				},
 			},
 			"ipv4_dhcp_distance_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv4_configuration_type` being equal to `dynamic`").String,
 				Optional:            true,
 			},
 			"ipv4_address": schema.StringAttribute{
@@ -148,7 +148,7 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"ipv4_address_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv4_configuration_type` being equal to `static`").String,
 				Optional:            true,
 			},
 			"ipv4_subnet_mask": schema.StringAttribute{
@@ -159,7 +159,7 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				},
 			},
 			"ipv4_subnet_mask_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv4_configuration_type` being equal to `static`").String,
 				Optional:            true,
 			},
 			"ipv4_secondary_addresses": schema.ListNestedAttribute{
@@ -236,7 +236,7 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				},
 			},
 			"ipv6_address_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv6_configuration_type` being equal to `static`").String,
 				Optional:            true,
 			},
 			"ipv6_secondary_addresses": schema.ListNestedAttribute{

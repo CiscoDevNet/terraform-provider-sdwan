@@ -44,7 +44,7 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
 - `access_point_name_variable` (String) Variable name
 - `authentication_type` (String) Set authentication type, Attribute conditional on `requires_authentication` being equal to `true`
   - Choices: `pap`, `chap`, `pap_chap`
-- `authentication_type_variable` (String) Variable name
+- `authentication_type_variable` (String) Variable name, Attribute conditional on `requires_authentication` being equal to `true`
 - `description` (String) The description of the Feature
 - `no_overwrite` (Boolean) No Overwrite
 - `no_overwrite_variable` (String) Variable name
@@ -56,9 +56,9 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
   - Range: `1`-`16`
 - `profile_id_variable` (String) Variable name
 - `profile_password` (String) Set the profile password, Attribute conditional on `requires_authentication` being equal to `true`
-- `profile_password_variable` (String) Variable name
+- `profile_password_variable` (String) Variable name, Attribute conditional on `requires_authentication` being equal to `true`
 - `profile_username` (String) Set the profile username, Attribute conditional on `requires_authentication` being equal to `true`
-- `profile_username_variable` (String) Variable name
+- `profile_username_variable` (String) Variable name, Attribute conditional on `requires_authentication` being equal to `true`
 - `requires_authentication` (Boolean) Require authentication type
   - Default value: `false`
 

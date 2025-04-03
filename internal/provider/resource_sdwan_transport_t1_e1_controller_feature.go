@@ -185,7 +185,7 @@ func (r *TransportT1E1ControllerProfileParcelResource) Schema(ctx context.Contex
 							},
 						},
 						"length_short_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `cable_length` being equal to `short`").String,
 							Optional:            true,
 						},
 						"length_long": schema.StringAttribute{
@@ -196,7 +196,7 @@ func (r *TransportT1E1ControllerProfileParcelResource) Schema(ctx context.Contex
 							},
 						},
 						"length_long_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `cable_length` being equal to `long`").String,
 							Optional:            true,
 						},
 						"clock_source": schema.StringAttribute{
