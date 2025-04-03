@@ -41,7 +41,7 @@ type TransportCellularProfile struct {
 	ProfileIdVariable             types.String `tfsdk:"profile_id_variable"`
 	AccessPointName               types.String `tfsdk:"access_point_name"`
 	AccessPointNameVariable       types.String `tfsdk:"access_point_name_variable"`
-	NoAuthentication              types.String `tfsdk:"no_authentication"`
+	RequiresAuthentication        types.Bool   `tfsdk:"requires_authentication"`
 	AuthenticationType            types.String `tfsdk:"authentication_type"`
 	AuthenticationTypeVariable    types.String `tfsdk:"authentication_type_variable"`
 	ProfileUsername               types.String `tfsdk:"profile_username"`
@@ -104,44 +104,42 @@ func (data TransportCellularProfile) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.apn.value", data.AccessPointName.ValueString())
 		}
 	}
-	if !data.NoAuthentication.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.noAuthentication.optionType", "global")
-			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.noAuthentication.value", data.NoAuthentication.ValueString())
-		}
+	if true && data.RequiresAuthentication.ValueBool() == false {
+		body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.noAuthentication.optionType", "default")
+		body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.noAuthentication.value", "none")
 	}
 
 	if !data.AuthenticationTypeVariable.IsNull() {
-		if true {
+		if true && data.RequiresAuthentication.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.type.optionType", "variable")
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.type.value", data.AuthenticationTypeVariable.ValueString())
 		}
 	} else if !data.AuthenticationType.IsNull() {
-		if true {
+		if true && data.RequiresAuthentication.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.type.optionType", "global")
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.type.value", data.AuthenticationType.ValueString())
 		}
 	}
 
 	if !data.ProfileUsernameVariable.IsNull() {
-		if true {
+		if true && data.RequiresAuthentication.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.username.optionType", "variable")
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.username.value", data.ProfileUsernameVariable.ValueString())
 		}
 	} else if !data.ProfileUsername.IsNull() {
-		if true {
+		if true && data.RequiresAuthentication.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.username.optionType", "global")
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.username.value", data.ProfileUsername.ValueString())
 		}
 	}
 
 	if !data.ProfilePasswordVariable.IsNull() {
-		if true {
+		if true && data.RequiresAuthentication.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.password.optionType", "variable")
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.password.value", data.ProfilePasswordVariable.ValueString())
 		}
 	} else if !data.ProfilePassword.IsNull() {
-		if true {
+		if true && data.RequiresAuthentication.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.password.optionType", "global")
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.password.value", data.ProfilePassword.ValueString())
 		}
@@ -212,14 +210,6 @@ func (data *TransportCellularProfile) fromBody(ctx context.Context, res gjson.Re
 			data.AccessPointNameVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.AccessPointName = types.StringValue(va.String())
-		}
-	}
-	data.NoAuthentication = types.StringNull()
-
-	if t := res.Get(path + "profileConfig.profileInfo.authentication.noAuthentication.optionType"); t.Exists() {
-		va := res.Get(path + "profileConfig.profileInfo.authentication.noAuthentication.value")
-		if t.String() == "global" {
-			data.NoAuthentication = types.StringValue(va.String())
 		}
 	}
 	data.AuthenticationType = types.StringNull()
@@ -293,14 +283,6 @@ func (data *TransportCellularProfile) updateFromBody(ctx context.Context, res gj
 			data.AccessPointNameVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.AccessPointName = types.StringValue(va.String())
-		}
-	}
-	data.NoAuthentication = types.StringNull()
-
-	if t := res.Get(path + "profileConfig.profileInfo.authentication.noAuthentication.optionType"); t.Exists() {
-		va := res.Get(path + "profileConfig.profileInfo.authentication.noAuthentication.value")
-		if t.String() == "global" {
-			data.NoAuthentication = types.StringValue(va.String())
 		}
 	}
 	data.AuthenticationType = types.StringNull()

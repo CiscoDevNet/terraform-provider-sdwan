@@ -169,7 +169,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 							Optional:            true,
 						},
 						"radius_server_ip_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `security_type` being equal to `enterprise`").String,
 							Optional:            true,
 						},
 						"radius_server_port": schema.Int64Attribute{
@@ -180,7 +180,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 							},
 						},
 						"radius_server_port_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `security_type` being equal to `enterprise`").String,
 							Optional:            true,
 						},
 						"radius_server_secret": schema.StringAttribute{
@@ -191,7 +191,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 							},
 						},
 						"radius_server_secret_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `security_type` being equal to `enterprise`").String,
 							Optional:            true,
 						},
 						"passphrase": schema.StringAttribute{
@@ -202,7 +202,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 							},
 						},
 						"passphrase_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `security_type` being equal to `personal`").String,
 							Optional:            true,
 						},
 						"qos_profile": schema.StringAttribute{

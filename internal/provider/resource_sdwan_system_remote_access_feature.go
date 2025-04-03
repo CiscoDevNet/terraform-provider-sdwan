@@ -132,7 +132,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				},
 			},
 			"psk_authentication_type_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
 				Optional:            true,
 			},
 			"psk_authentication_pre_shared_key": schema.StringAttribute{
@@ -143,7 +143,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				},
 			},
 			"psk_authentication_pre_shared_key_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `psk_authentication_type` being equal to `group`").String,
 				Optional:            true,
 			},
 			"radius_group_name": schema.StringAttribute{
@@ -187,7 +187,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				},
 			},
 			"aaa_derive_name_from_peer_identity_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
 				Optional:            true,
 			},
 			"aaa_derive_name_from_peer_domain": schema.StringAttribute{
@@ -198,7 +198,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				},
 			},
 			"aaa_derive_name_from_peer_domain_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
 				Optional:            true,
 			},
 			"aaa_enable_accounting": schema.BoolAttribute{
@@ -217,7 +217,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				},
 			},
 			"ikev2_local_ike_identity_type_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
 				Optional:            true,
 			},
 			"ikev2_local_ike_identity_value": schema.StringAttribute{
@@ -228,7 +228,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				},
 			},
 			"ikev2_local_ike_identity_value_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
 				Optional:            true,
 			},
 			"ikev2_security_association_lifetime": schema.Int64Attribute{
@@ -239,7 +239,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				},
 			},
 			"ikev2_security_association_lifetime_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
 				Optional:            true,
 			},
 			"ikev2_anti_dos_threshold": schema.Int64Attribute{
@@ -250,7 +250,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				},
 			},
 			"ikev2_anti_dos_threshold_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
 				Optional:            true,
 			},
 			"ipsec_enable_anti_replay": schema.BoolAttribute{
@@ -258,7 +258,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 			},
 			"ipsec_enable_anti_replay_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
 				Optional:            true,
 			},
 			"ipsec_anti_replay_window_size": schema.Int64Attribute{
@@ -266,7 +266,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 			},
 			"ipsec_anti_replay_window_size_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipsec_enable_anti_replay` being equal to `true`").String,
 				Optional:            true,
 			},
 			"ipsec_security_association_lifetime": schema.Int64Attribute{
@@ -277,7 +277,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				},
 			},
 			"ipsec_security_association_lifetime_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
 				Optional:            true,
 			},
 			"ipsec_enable_perfect_foward_secrecy": schema.BoolAttribute{
@@ -285,7 +285,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 			},
 			"ipsec_enable_perfect_foward_secrecy_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
 				Optional:            true,
 			},
 		},

@@ -94,8 +94,8 @@ func (d *TransportCellularProfileProfileParcelDataSource) Schema(ctx context.Con
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"no_authentication": schema.StringAttribute{
-				MarkdownDescription: "No Authentication",
+			"requires_authentication": schema.BoolAttribute{
+				MarkdownDescription: "Require authentication type",
 				Computed:            true,
 			},
 			"authentication_type": schema.StringAttribute{

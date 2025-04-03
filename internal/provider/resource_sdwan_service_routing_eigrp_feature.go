@@ -190,7 +190,7 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 				},
 			},
 			"hmac_authentication_key_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `authentication_type` being equal to `hmac-sha-256`").String,
 				Optional:            true,
 			},
 			"md5_keys": schema.ListNestedAttribute{

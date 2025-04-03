@@ -77,7 +77,7 @@ resource "sdwan_service_routing_eigrp_feature" "example" {
   - Default value: `5`
 - `hello_interval_variable` (String) Variable name
 - `hmac_authentication_key` (String) Set hmac-sha-256 authentication key, Attribute conditional on `authentication_type` being equal to `hmac-sha-256`
-- `hmac_authentication_key_variable` (String) Variable name
+- `hmac_authentication_key_variable` (String) Variable name, Attribute conditional on `authentication_type` being equal to `hmac-sha-256`
 - `hold_time` (Number) Set EIGRP hold time
   - Range: `0`-`65535`
   - Default value: `15`

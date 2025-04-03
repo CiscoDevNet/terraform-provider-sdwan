@@ -91,7 +91,7 @@ Optional:
   - Default value: `true`
 - `broadcast_ssid_variable` (String) Variable name
 - `passphrase` (String) Set passphrase, Attribute conditional on `security_type` being equal to `personal`
-- `passphrase_variable` (String) Variable name
+- `passphrase_variable` (String) Variable name, Attribute conditional on `security_type` being equal to `personal`
 - `qos_profile` (String) Select QoS profile
   - Choices: `platinum`, `gold`, `silver`, `bronze`
   - Default value: `silver`
@@ -101,13 +101,13 @@ Optional:
   - Default value: `all`
 - `radio_type_variable` (String) Variable name
 - `radius_server_ip` (String) Set RADIUS server IP, Attribute conditional on `security_type` being equal to `enterprise`
-- `radius_server_ip_variable` (String) Variable name
+- `radius_server_ip_variable` (String) Variable name, Attribute conditional on `security_type` being equal to `enterprise`
 - `radius_server_port` (Number) Set RADIUS server authentication port, Attribute conditional on `security_type` being equal to `enterprise`
   - Range: `1`-`65535`
   - Default value: `1812`
-- `radius_server_port_variable` (String) Variable name
+- `radius_server_port_variable` (String) Variable name, Attribute conditional on `security_type` being equal to `enterprise`
 - `radius_server_secret` (String) Set RADIUS server shared secret, Attribute conditional on `security_type` being equal to `enterprise`
-- `radius_server_secret_variable` (String) Variable name
+- `radius_server_secret_variable` (String) Variable name, Attribute conditional on `security_type` being equal to `enterprise`
 - `security_type` (String) Select security type
   - Choices: `enterprise`, `personal`, `open`
 - `ssid_name` (String) Configure wlan SSID

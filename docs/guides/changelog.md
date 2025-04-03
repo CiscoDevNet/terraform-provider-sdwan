@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.6.1 (unreleased)
+
+- BREAKING CHANGE: Replaces `no_authentication` attribute of `sdwan_transport_cellular_profile_feature` with `requires_authentication`
+
 ## 0.6.0
 
 - Delete configuration group when an error is encountered during creation, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/390)

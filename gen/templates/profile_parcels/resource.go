@@ -336,7 +336,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 												},
 												{{- if .Variable}}
 												"{{.TfName}}_variable": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Variable name{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}").String,
 													Optional:            true,
 												},
 												{{- end}}
@@ -348,7 +348,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 									},
 									{{- if .Variable}}
 									"{{.TfName}}_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}").String,
 										Optional:            true,
 									},
 									{{- end}}
@@ -360,7 +360,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 						},
 						{{- if .Variable}}
 						"{{.TfName}}_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}").String,
 							Optional:            true,
 						},
 						{{- end}}
@@ -372,7 +372,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 			},
 			{{- if .Variable}}
 			"{{.TfName}}_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}").String,
 				Optional:            true,
 			},
 			{{- end}}

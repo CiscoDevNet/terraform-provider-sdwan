@@ -227,7 +227,7 @@ func (r *TransportManagementVPNProfileParcelResource) Schema(ctx context.Context
 							},
 						},
 						"administrative_distance_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `gateway` being equal to `null0`").String,
 							Optional:            true,
 						},
 					},
@@ -295,7 +295,7 @@ func (r *TransportManagementVPNProfileParcelResource) Schema(ctx context.Context
 							},
 						},
 						"nat_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `gateway` being equal to `nat`").String,
 							Optional:            true,
 						},
 					},
