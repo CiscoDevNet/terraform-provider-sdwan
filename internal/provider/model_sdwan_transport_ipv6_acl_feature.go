@@ -104,7 +104,7 @@ func (data TransportIPv6ACL) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
-	if data.DefaultAction.IsNull() {
+	if data.DefaultAction.IsNull() || data.DefaultAction.ValueString() == "drop" {
 		if true {
 			body, _ = sjson.Set(body, path+"defaultAction.optionType", "default")
 			body, _ = sjson.Set(body, path+"defaultAction.value", "drop")
@@ -316,7 +316,7 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 
 	if t := res.Get(path + "defaultAction.optionType"); t.Exists() {
 		va := res.Get(path + "defaultAction.value")
-		if t.String() == "global" {
+		if t.String() == "global" || t.String() == "default" {
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
@@ -553,7 +553,7 @@ func (data *TransportIPv6ACL) updateFromBody(ctx context.Context, res gjson.Resu
 
 	if t := res.Get(path + "defaultAction.optionType"); t.Exists() {
 		va := res.Get(path + "defaultAction.value")
-		if t.String() == "global" {
+		if t.String() == "global" || t.String() == "default" {
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
