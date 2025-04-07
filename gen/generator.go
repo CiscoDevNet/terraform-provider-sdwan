@@ -271,6 +271,7 @@ type YamlConfigAttribute struct {
 	TestTags                []string                       `yaml:"test_tags"`
 	RequiresConstAndVar     bool                           `yaml:"requires_const_and_var"`
 	RequiresReplace         bool                           `yaml:"requires_replace"`
+	DynamicDefault          bool                           `yaml:"dynamic_default"`
 }
 
 type YamlConfigConditionalAttribute struct {
