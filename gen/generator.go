@@ -861,7 +861,11 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 						attr.MaxInt = value.Int()
 					}
 				}
-			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" || t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.oneOf.0.type").String() == "string" {
+			} else if attr.Type == "List" && attr.ElementType == "String" {
+				// Remove unsupported type error
+				attr.Type = "List"
+				attr.ElementType = "String"
+			} else if attr.Type == "Set" && attr.ElementType == "String" || t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" || t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.oneOf.0.type").String() == "string" {
 				attr.Type = "Set"
 				attr.ElementType = "String"
 				// if value := t.Get("properties.value.items.minItems"); value.Exists() {
@@ -870,7 +874,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				// if value := t.Get("properties.value.items.maxItems"); value.Exists() {
 				//  attr.MaxList = value.Int()
 				// }
-			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "integer" {
+			} else if attr.Type == "Set" && attr.ElementType == "Int64" || t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "integer" {
 				attr.Type = "Set"
 				attr.ElementType = "Int64"
 				// if value := t.Get("properties.value.items.minimum"); value.Exists() {

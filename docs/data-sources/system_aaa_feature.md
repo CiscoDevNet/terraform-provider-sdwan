@@ -42,7 +42,7 @@ data "sdwan_system_aaa_feature" "example" {
 - `description` (String) The description of the Feature
 - `name` (String) The name of the Feature
 - `radius_groups` (Attributes List) Configure the Radius serverGroup (see [below for nested schema](#nestedatt--radius_groups))
-- `server_auth_order` (Set of String) ServerGroups priority order
+- `server_auth_order` (List of String) ServerGroups priority order
 - `tacacs_groups` (Attributes List) Configure the TACACS serverGroup (see [below for nested schema](#nestedatt--tacacs_groups))
 - `users` (Attributes List) Create local login account (see [below for nested schema](#nestedatt--users))
 - `version` (Number) The version of the Feature

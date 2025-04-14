@@ -18,6 +18,8 @@ attributes:
   - model_name: accountingGroup
     example: true
   - model_name: serverAuthOrder
+    type: List
+    element_type: String
     example: local
   - model_name: user
     tf_name: users

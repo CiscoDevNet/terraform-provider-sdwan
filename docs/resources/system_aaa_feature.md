@@ -102,7 +102,7 @@ resource "sdwan_system_aaa_feature" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
-- `server_auth_order` (Set of String) ServerGroups priority order
+- `server_auth_order` (List of String) ServerGroups priority order
 
 ### Optional
 
