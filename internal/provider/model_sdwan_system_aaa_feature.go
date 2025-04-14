@@ -42,7 +42,7 @@ type SystemAAA struct {
 	AuthenticationGroupVariable         types.String                  `tfsdk:"authentication_group_variable"`
 	AccountingGroup                     types.Bool                    `tfsdk:"accounting_group"`
 	AccountingGroupVariable             types.String                  `tfsdk:"accounting_group_variable"`
-	ServerAuthOrder                     types.Set                     `tfsdk:"server_auth_order"`
+	ServerAuthOrder                     types.List                    `tfsdk:"server_auth_order"`
 	Users                               []SystemAAAUsers              `tfsdk:"users"`
 	RadiusGroups                        []SystemAAARadiusGroups       `tfsdk:"radius_groups"`
 	TacacsGroups                        []SystemAAATacacsGroups       `tfsdk:"tacacs_groups"`
@@ -732,12 +732,12 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 			data.AccountingGroup = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServerAuthOrder = types.SetNull(types.StringType)
+	data.ServerAuthOrder = types.ListNull(types.StringType)
 
 	if t := res.Get(path + "serverAuthOrder.optionType"); t.Exists() {
 		va := res.Get(path + "serverAuthOrder.value")
 		if t.String() == "global" {
-			data.ServerAuthOrder = helpers.GetStringSet(va.Array())
+			data.ServerAuthOrder = helpers.GetStringList(va.Array())
 		}
 	}
 	if value := res.Get(path + "user"); value.Exists() {
@@ -1151,12 +1151,12 @@ func (data *SystemAAA) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.AccountingGroup = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServerAuthOrder = types.SetNull(types.StringType)
+	data.ServerAuthOrder = types.ListNull(types.StringType)
 
 	if t := res.Get(path + "serverAuthOrder.optionType"); t.Exists() {
 		va := res.Get(path + "serverAuthOrder.value")
 		if t.String() == "global" {
-			data.ServerAuthOrder = helpers.GetStringSet(va.Array())
+			data.ServerAuthOrder = helpers.GetStringList(va.Array())
 		}
 	}
 	for i := range data.Users {
