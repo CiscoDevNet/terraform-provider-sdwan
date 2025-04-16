@@ -214,7 +214,7 @@ func (r *AttachFeatureDeviceTemplateResource) Update(ctx context.Context, req re
 }
 
 func (r *AttachFeatureDeviceTemplateResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state AttachFeatureDeviceTemplate
+	var plan, state AttachFeatureDeviceTemplate
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -225,7 +225,7 @@ func (r *AttachFeatureDeviceTemplateResource) Delete(ctx context.Context, req re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Id.ValueString()))
 
-	res, err := state.detachDevices(ctx, r.client)
+	res, err := state.detachDevices(ctx, r.client, &plan)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve currently attached devices, got error: %s", err))
 		return

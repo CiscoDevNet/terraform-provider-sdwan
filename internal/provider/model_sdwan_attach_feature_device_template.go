@@ -117,12 +117,11 @@ func (data AttachFeatureDeviceTemplate) getAttachedDevices(ctx context.Context, 
 	devices := make(map[string]string)
 	for _, device := range res.Get("data").Array() {
 		devices[device.Get("uuid").String()] = device.Get("deviceIP").String()
-
 	}
 	return devices, nil
 }
 
-func (data AttachFeatureDeviceTemplate) detachDevices(ctx context.Context, client *sdwan.Client) (gjson.Result, error) {
+func (data AttachFeatureDeviceTemplate) detachDevices(ctx context.Context, client *sdwan.Client, plan *AttachFeatureDeviceTemplate) (gjson.Result, error) {
 	devices, err := data.getAttachedDevices(ctx, client)
 	if err != nil {
 		return gjson.Result{}, err
@@ -130,12 +129,31 @@ func (data AttachFeatureDeviceTemplate) detachDevices(ctx context.Context, clien
 		return gjson.Result{}, nil
 	}
 
+	// Filter devices to only device attached with this resource
+	attached_devices := make(map[string]string)
+	for attached_id, attached_ip := range devices {
+		for _, state_device := range data.Devices {
+			if state_device.Id.ValueString() == attached_id {
+				attached_devices[attached_id] = attached_ip
+			}
+		}
+	}
+
 	body, _ := sjson.Set("", "deviceType", "vedge")
 	index := 0
-	for k, v := range devices {
-		body, _ = sjson.Set(body, "devices."+strconv.Itoa(index)+".deviceId", k)
-		body, _ = sjson.Set(body, "devices."+strconv.Itoa(index)+".deviceIP", v)
-		index++
+	for k, v := range attached_devices {
+		found := false
+		for _, d := range plan.Devices {
+			if d.Id.ValueString() == k {
+				found = true
+				break
+			}
+		}
+		if !found {
+			body, _ = sjson.Set(body, "devices."+strconv.Itoa(index)+".deviceId", k)
+			body, _ = sjson.Set(body, "devices."+strconv.Itoa(index)+".deviceIP", v)
+			index++
+		}
 	}
 
 	res, err := client.Post("/template/config/device/mode/cli", body)
