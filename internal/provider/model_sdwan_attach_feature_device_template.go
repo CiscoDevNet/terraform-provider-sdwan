@@ -20,9 +20,11 @@ package provider
 import (
 	"context"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/netascode/go-sdwan"
@@ -41,69 +43,99 @@ type AttachFeatureDeviceTemplateDevice struct {
 	Variables types.Map    `tfsdk:"variables"`
 }
 
-func (data AttachFeatureDeviceTemplate) getVariables(ctx context.Context, client *sdwan.Client, edited bool) (map[string]map[string]string, error) {
+func (data AttachFeatureDeviceTemplate) getVariables(ctx context.Context, client *sdwan.Client, edited bool, state *AttachFeatureDeviceTemplate) (map[string]map[string]string, error) {
 	deviceVariables := make(map[string]map[string]string)
-	for _, item := range data.Devices {
-		// Retrieve device variables
-		body, _ := sjson.Set("", "templateId", data.Id.ValueString())
-		body, _ = sjson.Set(body, "deviceIds", []string{item.Id.ValueString()})
-		body, _ = sjson.Set(body, "isEdited", edited)
-		body, _ = sjson.Set(body, "isMasterEdited", false)
-		res, err := client.Post("/template/device/config/input", body)
-		if err != nil {
-			return nil, err
+	var updatedDevices []string
+	var attachedDevices []string
+
+	// Get Updated Devices
+	if state != nil {
+		updatedDevices = data.getUpdatedDevices(ctx, state)
+	} else {
+		for _, item := range data.Devices {
+			updatedDevices = append(updatedDevices, item.Id.ValueString())
 		}
-		// Get variable mappings
-		mappings := make(map[string]string)
-		if value := res.Get("header.columns"); value.Exists() {
-			value.ForEach(func(k, v gjson.Result) bool {
-				if v.Get("editable").Bool() {
-					title := v.Get("title").String()
-					if strings.Contains(title, "(") {
-						matches := regexp.MustCompile(`\((.*?)\)`).FindAllString(title, -1)
-						varName := matches[len(matches)-1]
-						if len(varName) > 0 {
-							varName = varName[1 : len(varName)-1]
-						}
-						mappings[v.Get("property").String()] = varName
-					} else {
-						// handle factory default feature template variables
-						property := v.Get("property").String()
-						if property == "//system/host-name" {
-							mappings[property] = "system_host_name"
-						} else if property == "//system/system-ip" {
-							mappings[property] = "system_system_ip"
-						} else if property == "//system/site-id" {
-							mappings[property] = "system_site_id"
+	}
+
+	// Get Attached Devices
+	if state != nil {
+		for _, device := range data.Devices {
+			found := false
+			for _, stateDevice := range state.Devices {
+				if device.Id.ValueString() == stateDevice.Id.ValueString() {
+					found = true
+					break
+				}
+			}
+			if !found {
+				attachedDevices = append(attachedDevices, device.Id.ValueString())
+			}
+		}
+	}
+
+	for _, item := range data.Devices {
+		if helpers.Contains(updatedDevices, item.Id.ValueString()) || helpers.Contains(attachedDevices, item.Id.ValueString()) {
+			// Retrieve device variables
+			body, _ := sjson.Set("", "templateId", data.Id.ValueString())
+			body, _ = sjson.Set(body, "deviceIds", []string{item.Id.ValueString()})
+			body, _ = sjson.Set(body, "isEdited", edited)
+			body, _ = sjson.Set(body, "isMasterEdited", false)
+			res, err := client.Post("/template/device/config/input", body)
+			if err != nil {
+				return nil, err
+			}
+			// Get variable mappings
+			mappings := make(map[string]string)
+			if value := res.Get("header.columns"); value.Exists() {
+				value.ForEach(func(k, v gjson.Result) bool {
+					if v.Get("editable").Bool() {
+						title := v.Get("title").String()
+						if strings.Contains(title, "(") {
+							matches := regexp.MustCompile(`\((.*?)\)`).FindAllString(title, -1)
+							varName := matches[len(matches)-1]
+							if len(varName) > 0 {
+								varName = varName[1 : len(varName)-1]
+							}
+							mappings[v.Get("property").String()] = varName
+						} else {
+							// handle factory default feature template variables
+							property := v.Get("property").String()
+							if property == "//system/host-name" {
+								mappings[property] = "system_host_name"
+							} else if property == "//system/system-ip" {
+								mappings[property] = "system_system_ip"
+							} else if property == "//system/site-id" {
+								mappings[property] = "system_site_id"
+							}
 						}
 					}
-				}
-				return true
-			})
-		}
-		// Get current device variables
-		variables := make(map[string]string)
-		if value := res.Get("data.0"); value.Exists() {
-			value.ForEach(func(k, v gjson.Result) bool {
-				variables[k.String()] = v.String()
-				return true
-			})
-		}
-		// Resolve variable names and insert template variable values
-		var templateVariables map[string]string
-		item.Variables.ElementsAs(ctx, &templateVariables, false)
-		for k := range variables {
-			if _, ok := templateVariables[k]; ok {
-				variables[k] = templateVariables[k]
-				continue
+					return true
+				})
 			}
-			if templateVariableName, ok := mappings[k]; ok {
-				if _, ok := templateVariables[templateVariableName]; ok {
-					variables[k] = templateVariables[templateVariableName]
+			// Get current device variables
+			variables := make(map[string]string)
+			if value := res.Get("data.0"); value.Exists() {
+				value.ForEach(func(k, v gjson.Result) bool {
+					variables[k.String()] = v.String()
+					return true
+				})
+			}
+			// Resolve variable names and insert template variable values
+			var templateVariables map[string]string
+			item.Variables.ElementsAs(ctx, &templateVariables, false)
+			for k := range variables {
+				if _, ok := templateVariables[k]; ok {
+					variables[k] = templateVariables[k]
+					continue
+				}
+				if templateVariableName, ok := mappings[k]; ok {
+					if _, ok := templateVariables[templateVariableName]; ok {
+						variables[k] = templateVariables[templateVariableName]
+					}
 				}
 			}
+			deviceVariables[item.Id.ValueString()] = variables
 		}
-		deviceVariables[item.Id.ValueString()] = variables
 	}
 
 	return deviceVariables, nil
@@ -121,7 +153,7 @@ func (data AttachFeatureDeviceTemplate) getAttachedDevices(ctx context.Context, 
 	return devices, nil
 }
 
-func (data AttachFeatureDeviceTemplate) detachDevices(ctx context.Context, client *sdwan.Client, plan *AttachFeatureDeviceTemplate) (gjson.Result, error) {
+func (data AttachFeatureDeviceTemplate) detachDevices(ctx context.Context, client *sdwan.Client, plan *AttachFeatureDeviceTemplate, detachList []string) (gjson.Result, error) {
 	devices, err := data.getAttachedDevices(ctx, client)
 	if err != nil {
 		return gjson.Result{}, err
@@ -149,6 +181,9 @@ func (data AttachFeatureDeviceTemplate) detachDevices(ctx context.Context, clien
 				break
 			}
 		}
+		if len(detachList) != 0 && !slices.Contains(detachList, k) {
+			found = true
+		}
 		if !found {
 			body, _ = sjson.Set(body, "devices."+strconv.Itoa(index)+".deviceId", k)
 			body, _ = sjson.Set(body, "devices."+strconv.Itoa(index)+".deviceIP", v)
@@ -163,9 +198,9 @@ func (data AttachFeatureDeviceTemplate) detachDevices(ctx context.Context, clien
 	return res, nil
 }
 
-func (data AttachFeatureDeviceTemplate) toBody(ctx context.Context, client *sdwan.Client, edited bool) (string, error) {
-	deviceVariables, err := data.getVariables(ctx, client, edited)
-	if err != nil {
+func (data AttachFeatureDeviceTemplate) toBody(ctx context.Context, client *sdwan.Client, edited bool, state *AttachFeatureDeviceTemplate) (string, error) {
+	deviceVariables, err := data.getVariables(ctx, client, edited, state)
+	if err != nil || len(deviceVariables) == 0 {
 		return "", err
 	}
 	body, _ := sjson.Set("", "deviceTemplateList.0.templateId", data.Id.ValueString())
@@ -247,4 +282,47 @@ func (data *AttachFeatureDeviceTemplate) readVariables(ctx context.Context, clie
 	}
 
 	return nil
+}
+
+func (data *AttachFeatureDeviceTemplate) getUpdatedDevices(ctx context.Context, state *AttachFeatureDeviceTemplate) []string {
+	updatedDevices := make([]string, 0)
+	for _, device := range data.Devices {
+		for _, stateDevice := range state.Devices {
+			if device.Id.ValueString() == stateDevice.Id.ValueString() {
+				for plan_k, plan_v := range device.Variables.Elements() {
+					found := false
+					for state_k, state_v := range stateDevice.Variables.Elements() {
+						if plan_k == state_k {
+							found = true
+							if plan_v != state_v {
+								if !slices.Contains(updatedDevices, device.Id.ValueString()) {
+									updatedDevices = append(updatedDevices, device.Id.ValueString())
+								}
+							}
+						}
+					}
+					if !found {
+						if !slices.Contains(updatedDevices, device.Id.ValueString()) {
+							updatedDevices = append(updatedDevices, device.Id.ValueString())
+						}
+					}
+				}
+
+				for state_k, _ := range stateDevice.Variables.Elements() {
+					found := false
+					for plan_k, _ := range device.Variables.Elements() {
+						if plan_k == state_k {
+							found = true
+						}
+					}
+					if !found {
+						if !slices.Contains(updatedDevices, device.Id.ValueString()) {
+							updatedDevices = append(updatedDevices, device.Id.ValueString())
+						}
+					}
+				}
+			}
+		}
+	}
+	return updatedDevices
 }

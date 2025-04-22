@@ -109,7 +109,7 @@ func (r *AttachFeatureDeviceTemplateResource) Create(ctx context.Context, req re
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Id.ValueString()))
 
 	// Create object
-	body, err := plan.toBody(ctx, r.client, false)
+	body, err := plan.toBody(ctx, r.client, false, nil)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to render body, got error: %s", err))
 		return
@@ -186,24 +186,60 @@ func (r *AttachFeatureDeviceTemplateResource) Update(ctx context.Context, req re
 		edited = true
 	}
 
-	body, err := plan.toBody(ctx, r.client, edited)
+	body, err := plan.toBody(ctx, r.client, edited, &state)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to render body, got error: %s", err))
 		return
 	}
-	res, err := r.client.Post("/template/device/config/attachfeature", body)
-	if strings.Contains(res.Get("error.message").String(), "Template edit request has expired") {
-		resp.Diagnostics.AddWarning("Client Warning", fmt.Sprintf("No changes detected to trigger an attachment."))
-	} else if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
-		return
-	}
-	if resp.Diagnostics.WarningsCount() == 0 {
-		actionId := res.Get("id").String()
-		err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
-		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to attach device template, got error: %s", err))
+
+	if body != "" {
+		res, err := r.client.Post("/template/device/config/attachfeature", body)
+		if strings.Contains(res.Get("error.message").String(), "Template edit request has expired") {
+			resp.Diagnostics.AddWarning("Client Warning", fmt.Sprintf("No changes detected to trigger an attachment."))
+		} else if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 			return
+		}
+
+		if resp.Diagnostics.WarningsCount() == 0 {
+			actionId := res.Get("id").String()
+			err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to attach device template, got error: %s", err))
+				return
+			}
+		}
+	}
+
+	// Removes Detached Devices
+	var detachedDevices []string
+	for _, stateDevice := range state.Devices {
+		found := false
+		for _, device := range plan.Devices {
+			if stateDevice.Id.ValueString() == device.Id.ValueString() {
+				found = true
+				break
+			}
+		}
+		if !found {
+			detachedDevices = append(detachedDevices, stateDevice.Id.ValueString())
+		}
+	}
+
+	tflog.Debug(ctx, fmt.Sprintf("%s: DETACHED DEVICES", detachedDevices))
+
+	if len(detachedDevices) > 0 {
+		res, err := state.detachDevices(ctx, r.client, &plan, []string{})
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve currently attached devices, got error: %s", err))
+			return
+		}
+		if res.Get("id").Exists() {
+			err = helpers.WaitForActionToComplete(ctx, r.client, res.Get("id").String())
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to detach device template, got error: %s", err))
+				return
+			}
 		}
 	}
 
@@ -225,7 +261,7 @@ func (r *AttachFeatureDeviceTemplateResource) Delete(ctx context.Context, req re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Id.ValueString()))
 
-	res, err := state.detachDevices(ctx, r.client, &plan)
+	res, err := state.detachDevices(ctx, r.client, &plan, []string{})
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve currently attached devices, got error: %s", err))
 		return
