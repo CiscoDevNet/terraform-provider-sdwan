@@ -24,6 +24,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -129,4 +130,14 @@ func Must[T any](v T, err error) T {
 		panic(err)
 	}
 	return v
+}
+
+func GetVersion(client *sdwan.Client) (*version.Version, error) {
+	if client.ManagerVersion == "" {
+		err := client.Authenticate()
+		if err != nil {
+			return nil, fmt.Errorf("Failed to retrieve SDWAN Manager version: %s", err.Error())
+		}
+	}
+	return version.Must(version.NewVersion(client.ManagerVersion)), nil
 }

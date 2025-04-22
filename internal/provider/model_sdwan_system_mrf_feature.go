@@ -23,12 +23,15 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 // End of section. //template:end imports
+
+var MinSystemMRFUpdateVersion = version.Must(version.NewVersion("20.15.0"))
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type SystemMRF struct {
@@ -62,21 +65,23 @@ func (data SystemMRF) getPath() string {
 
 // End of section. //template:end getPath
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data SystemMRF) toBody(ctx context.Context) string {
+func (data SystemMRF) toBody(ctx context.Context, version *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
-	if data.RegionId.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"regionId.optionType", "default")
 
-		}
-	} else {
-		if true {
-			body, _ = sjson.Set(body, path+"regionId.optionType", "global")
-			body, _ = sjson.Set(body, path+"regionId.value", data.RegionId.ValueInt64())
+	if version.LessThan(MinSystemMRFUpdateVersion) {
+		if data.RegionId.IsNull() {
+			if true {
+				body, _ = sjson.Set(body, path+"regionId.optionType", "default")
+
+			}
+		} else {
+			if true {
+				body, _ = sjson.Set(body, path+"regionId.optionType", "global")
+				body, _ = sjson.Set(body, path+"regionId.value", data.RegionId.ValueInt64())
+			}
 		}
 	}
 
@@ -137,8 +142,6 @@ func (data SystemMRF) toBody(ctx context.Context) string {
 	}
 	return body
 }
-
-// End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *SystemMRF) fromBody(ctx context.Context, res gjson.Result) {
