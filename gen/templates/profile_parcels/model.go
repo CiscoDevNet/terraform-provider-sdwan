@@ -415,7 +415,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 				va := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 				{{if .Variable}}if t.String() == "variable" {
 					item.{{toGoName .TfName}}Variable = types.StringValue(va.String())
-				} else{{end}} if t.String() == "global" {
+				} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| t.String() == "default"{{end}} {
 					{{- if eq .Type "StringInt64" }}
 					item.{{toGoName .TfName}} = types.StringValue(va.String())
 					{{- else}}
@@ -440,7 +440,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 						va := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 						{{if .Variable}}if t.String() == "variable" {
 							cItem.{{toGoName .TfName}}Variable = types.StringValue(va.String())
-						} else{{end}} if t.String() == "global" {
+						} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| t.String() == "default"{{end}} {
 							{{- if eq .Type "StringInt64" }}
 							cItem.{{toGoName .TfName}} = types.StringValue(va.String())
 							{{- else}}
@@ -465,7 +465,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 								va := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 								{{if .Variable}}if t.String() == "variable" {
 									ccItem.{{toGoName .TfName}}Variable = types.StringValue(va.String())
-								} else{{end}} if t.String() == "global" {
+								} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| t.String() == "default"{{end}} {
 									{{- if eq .Type "StringInt64" }}
 									ccItem.{{toGoName .TfName}} = types.StringValue(va.String())
 									{{- else}}
@@ -517,7 +517,7 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 		va := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 		{{if .Variable}}if t.String() == "variable" {
 			data.{{toGoName .TfName}}Variable = types.StringValue(va.String())
-		} else{{end}} if t.String() == "global"{{if .DynamicDefault}}|| t.String() == "default"{{end}} {
+		} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| t.String() == "default"{{end}} {
 			{{- if eq .Type "StringInt64" }}
 			data.{{toGoName .TfName}} = types.StringValue(va.String())
 			{{- else}}
@@ -608,7 +608,7 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 			va := r.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 			{{if .Variable}}if t.String() == "variable" {
 				data.{{$list}}[i].{{toGoName .TfName}}Variable = types.StringValue(va.String())
-			} else{{end}} if t.String() == "global" {
+			} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| t.String() == "default"{{end}} {
 				{{- if eq .Type "StringInt64" }}
 				data.{{$list}}[i].{{toGoName .TfName}} = types.StringValue(va.String())
 				{{- else}}
@@ -699,7 +699,7 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 				va := cr.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 				{{if .Variable}}if t.String() == "variable" {
 					data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}Variable = types.StringValue(va.String())
-				} else{{end}} if t.String() == "global" {
+				} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| t.String() == "default"{{end}} {
 					{{- if eq .Type "StringInt64" }}
 					data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} = types.StringValue(va.String())
 					{{- else}}
@@ -790,7 +790,7 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 					va := ccr.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 					{{if .Variable}}if t.String() == "variable" {
 						data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}Variable = types.StringValue(va.String())
-					} else{{end}} if t.String() == "global" {
+					} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| t.String() == "default"{{end}} {
 						{{- if eq .Type "StringInt64" }}
 						data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}} = types.StringValue(va.String())
 						{{- else}}
