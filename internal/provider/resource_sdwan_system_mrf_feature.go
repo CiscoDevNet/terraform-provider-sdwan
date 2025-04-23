@@ -26,6 +26,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -159,11 +160,7 @@ func (r *SystemMRFProfileParcelResource) Create(ctx context.Context, req resourc
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
-	version, err := helpers.GetVersion(r.client)
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s", err))
-		return
-	}
+	version := version.Must(version.NewVersion(r.client.ManagerVersion))
 	// Create object
 	body := plan.toBody(ctx, version)
 
@@ -249,11 +246,7 @@ func (r *SystemMRFProfileParcelResource) Update(ctx context.Context, req resourc
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	version, err := helpers.GetVersion(r.client)
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s", err))
-		return
-	}
+	version := version.Must(version.NewVersion(r.client.ManagerVersion))
 	// Create object
 	body := plan.toBody(ctx, version)
 

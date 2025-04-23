@@ -227,12 +227,21 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 		retries = config.Retries.ValueInt64()
 	}
 
-	// Create a new NX-OS client and set it to the provider client
+	// Create a new SDWAN client and set it to the provider client
 	c, err := sdwan.NewClient(url, username, password, insecure, sdwan.MaxRetries(int(retries)))
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to create client",
 			"Unable to create sdwan client:\n\n"+err.Error(),
+		)
+		return
+	}
+
+	err = c.Authenticate()
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Unable to create client",
+			"Failed to Authenticate with SDWAN Manager:"+err.Error(),
 		)
 		return
 	}
