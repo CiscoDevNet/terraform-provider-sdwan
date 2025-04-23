@@ -49,9 +49,9 @@ resource "sdwan_system_remote_access_feature" "example" {
 ### Optional
 
 - `aaa_derive_name_from_peer_domain` (String) , Attribute conditional on `connection_type_ssl` being equal to `false`
-- `aaa_derive_name_from_peer_domain_variable` (String) Variable name
+- `aaa_derive_name_from_peer_domain_variable` (String) Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`
 - `aaa_derive_name_from_peer_identity` (String) , Attribute conditional on `connection_type_ssl` being equal to `false`
-- `aaa_derive_name_from_peer_identity_variable` (String) Variable name
+- `aaa_derive_name_from_peer_identity_variable` (String) Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`
 - `aaa_enable_accounting` (Boolean) Enable Accounting
   - Default value: `true`
 - `aaa_enable_accounting_variable` (String) Variable name
@@ -70,29 +70,29 @@ resource "sdwan_system_remote_access_feature" "example" {
 - `ikev2_anti_dos_threshold` (Number) Anti-DOS Threshold, Attribute conditional on `connection_type_ssl` being equal to `false`
   - Range: `10`-`1000`
   - Default value: `100`
-- `ikev2_anti_dos_threshold_variable` (String) Variable name
+- `ikev2_anti_dos_threshold_variable` (String) Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`
 - `ikev2_local_ike_identity_type` (String) , Attribute conditional on `connection_type_ssl` being equal to `false`
   - Choices: `EMAIL`, `FQDN`, `KEYID`, `IPv4 ADDRESS`, `IPv6 ADDRESS`
-- `ikev2_local_ike_identity_type_variable` (String) Variable name
+- `ikev2_local_ike_identity_type_variable` (String) Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`
 - `ikev2_local_ike_identity_value` (String) , Attribute conditional on `connection_type_ssl` being equal to `false`
-- `ikev2_local_ike_identity_value_variable` (String) Variable name
+- `ikev2_local_ike_identity_value_variable` (String) Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`
 - `ikev2_security_association_lifetime` (Number) Security Association Lifetime in Seconds, Attribute conditional on `connection_type_ssl` being equal to `false`
   - Range: `3600`-`86400`
   - Default value: `86400`
-- `ikev2_security_association_lifetime_variable` (String) Variable name
+- `ikev2_security_association_lifetime_variable` (String) Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`
 - `ipsec_anti_replay_window_size` (Number) security Association Lifetime, Attribute conditional on `ipsec_enable_anti_replay` being equal to `true`
   - Default value: `64`
-- `ipsec_anti_replay_window_size_variable` (String) Variable name
+- `ipsec_anti_replay_window_size_variable` (String) Variable name, Attribute conditional on `ipsec_enable_anti_replay` being equal to `true`
 - `ipsec_enable_anti_replay` (Boolean) Enable Anti-Replay, Attribute conditional on `connection_type_ssl` being equal to `false`
   - Default value: `true`
-- `ipsec_enable_anti_replay_variable` (String) Variable name
+- `ipsec_enable_anti_replay_variable` (String) Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`
 - `ipsec_enable_perfect_foward_secrecy` (Boolean) security Association Lifetime, Attribute conditional on `connection_type_ssl` being equal to `false`
   - Default value: `false`
-- `ipsec_enable_perfect_foward_secrecy_variable` (String) Variable name
+- `ipsec_enable_perfect_foward_secrecy_variable` (String) Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`
 - `ipsec_security_association_lifetime` (Number) Security Association Lifetime in Seconds, Attribute conditional on `connection_type_ssl` being equal to `false`
   - Range: `3600`-`86400`
   - Default value: `3600`
-- `ipsec_security_association_lifetime_variable` (String) Variable name
+- `ipsec_security_association_lifetime_variable` (String) Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`
 - `ipv4_pool_size` (Number) IPv4 Pool Size
   - Default value: `1000`
 - `ipv4_pool_size_variable` (String) Variable name
@@ -100,10 +100,10 @@ resource "sdwan_system_remote_access_feature" "example" {
   - Default value: `1024`
 - `ipv6_pool_size_variable` (String) Variable name
 - `psk_authentication_pre_shared_key` (String) PSK Pre Shared Key, Attribute conditional on `psk_authentication_type` being equal to `group`
-- `psk_authentication_pre_shared_key_variable` (String) Variable name
+- `psk_authentication_pre_shared_key_variable` (String) Variable name, Attribute conditional on `psk_authentication_type` being equal to `group`
 - `psk_authentication_type` (String) PSK Selection, Attribute conditional on `connection_type_ssl` being equal to `false`
   - Choices: `aaa`, `group`
-- `psk_authentication_type_variable` (String) Variable name
+- `psk_authentication_type_variable` (String) Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`
 - `radius_group_name_variable` (String) Variable name
 
 ### Read-Only

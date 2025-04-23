@@ -21,6 +21,7 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
   feature_profile_id       = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   profile_id               = 1
   access_point_name        = "apn1"
+  requires_authentication  = true
   authentication_type      = "pap"
   profile_username         = "example"
   profile_password         = "example123!"
@@ -41,11 +42,10 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
 
 - `access_point_name` (String) Set access point name
 - `access_point_name_variable` (String) Variable name
-- `authentication_type` (String) Set authentication type
+- `authentication_type` (String) Set authentication type, Attribute conditional on `requires_authentication` being equal to `true`
   - Choices: `pap`, `chap`, `pap_chap`
-- `authentication_type_variable` (String) Variable name
+- `authentication_type_variable` (String) Variable name, Attribute conditional on `requires_authentication` being equal to `true`
 - `description` (String) The description of the Feature
-- `no_authentication` (String) No Authentication
 - `no_overwrite` (Boolean) No Overwrite
 - `no_overwrite_variable` (String) Variable name
 - `packet_data_network_type` (String) Set packet data network type
@@ -55,10 +55,12 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
 - `profile_id` (Number) Set Profile ID
   - Range: `1`-`16`
 - `profile_id_variable` (String) Variable name
-- `profile_password` (String) Set the profile password
-- `profile_password_variable` (String) Variable name
-- `profile_username` (String) Set the profile username
-- `profile_username_variable` (String) Variable name
+- `profile_password` (String) Set the profile password, Attribute conditional on `requires_authentication` being equal to `true`
+- `profile_password_variable` (String) Variable name, Attribute conditional on `requires_authentication` being equal to `true`
+- `profile_username` (String) Set the profile username, Attribute conditional on `requires_authentication` being equal to `true`
+- `profile_username_variable` (String) Variable name, Attribute conditional on `requires_authentication` being equal to `true`
+- `requires_authentication` (Boolean) Require authentication type
+  - Default value: `false`
 
 ### Read-Only
 

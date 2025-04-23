@@ -96,7 +96,7 @@ Optional:
 - `administrative_distance` (Number) Administrative distance, Attribute conditional on `gateway` being equal to `null0`
   - Range: `1`-`255`
   - Default value: `1`
-- `administrative_distance_variable` (String) Variable name
+- `administrative_distance_variable` (String) Variable name, Attribute conditional on `gateway` being equal to `null0`
 - `gateway` (String) Gateway
   - Choices: `nextHop`, `dhcp`, `null0`
   - Default value: `nextHop`
@@ -130,7 +130,7 @@ Optional:
   - Choices: `nextHop`, `null0`, `nat`
 - `nat` (String) IPv6 Nat, Attribute conditional on `gateway` being equal to `nat`
   - Choices: `NAT64`, `NAT66`
-- `nat_variable` (String) Variable name
+- `nat_variable` (String) Variable name, Attribute conditional on `gateway` being equal to `nat`
 - `next_hops` (Attributes List) IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `nextHop` (see [below for nested schema](#nestedatt--ipv6_static_routes--next_hops))
 - `null0` (Boolean) IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `null0`
 - `prefix` (String) Prefix

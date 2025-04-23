@@ -99,7 +99,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
   - Default value: `1500`
 - `ip_mtu_variable` (String) Variable name
 - `ipv4_address` (String) IP Address, Attribute conditional on `ipv4_configuration_type` being equal to `static`
-- `ipv4_address_variable` (String) Variable name
+- `ipv4_address_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` being equal to `static`
 - `ipv4_auto_detect_bandwidth` (Boolean) Interface auto detect bandwidth
   - Default value: `false`
 - `ipv4_auto_detect_bandwidth_variable` (String) Variable name
@@ -109,7 +109,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
 - `ipv4_dhcp_distance` (Number) DHCP Distance, Attribute conditional on `ipv4_configuration_type` being equal to `dynamic`
   - Range: `1`-`65536`
   - Default value: `1`
-- `ipv4_dhcp_distance_variable` (String) Variable name
+- `ipv4_dhcp_distance_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` being equal to `dynamic`
 - `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
 - `ipv4_dhcp_helper_variable` (String) Variable name
 - `ipv4_iperf_server` (String) Iperf server for auto bandwidth detect
@@ -117,9 +117,9 @@ resource "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
 - `ipv4_secondary_addresses` (Attributes List) Secondary IpV4 Addresses, Attribute conditional on `ipv4_configuration_type` being equal to `static` (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
 - `ipv4_subnet_mask` (String) Subnet Mask, Attribute conditional on `ipv4_configuration_type` being equal to `static`
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
-- `ipv4_subnet_mask_variable` (String) Variable name
+- `ipv4_subnet_mask_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` being equal to `static`
 - `ipv6_address` (String) IPv6 Address Secondary, Attribute conditional on `ipv6_configuration_type` being equal to `static`
-- `ipv6_address_variable` (String) Variable name
+- `ipv6_address_variable` (String) Variable name, Attribute conditional on `ipv6_configuration_type` being equal to `static`
 - `ipv6_configuration_type` (String) IPv6 Configuration Type
   - Choices: `dynamic`, `static`, `none`
   - Default value: `none`
