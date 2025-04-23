@@ -226,8 +226,6 @@ func (r *AttachFeatureDeviceTemplateResource) Update(ctx context.Context, req re
 		}
 	}
 
-	tflog.Debug(ctx, fmt.Sprintf("%s: DETACHED DEVICES", detachedDevices))
-
 	if len(detachedDevices) > 0 {
 		res, err := state.detachDevices(ctx, r.client, &plan, []string{})
 		if err != nil {
