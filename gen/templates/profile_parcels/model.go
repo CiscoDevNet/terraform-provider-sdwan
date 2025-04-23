@@ -230,7 +230,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", item.{{toGoName .TfName}}Variable.ValueString())
 				}
-			} else {{end}}{{if and .DefaultValuePresent (not .ExcludeNull)}}if item.{{toGoName .TfName}}.IsNull() {
+			} else {{end}}{{if and .DefaultValuePresent (not .ExcludeNull)}}if item.{{toGoName .TfName}}.IsNull() {{if and .DynamicDefault .DefaultValuePresent}}|| data.{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"{{end}} {
 				if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 				{{if or .DefaultValue .DefaultValueEmptyString}}itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
@@ -275,7 +275,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", childItem.{{toGoName .TfName}}Variable.ValueString())
 						}
-					} else {{end}}{{if and .DefaultValuePresent (not .ExcludeNull)}}if childItem.{{toGoName .TfName}}.IsNull() {
+					} else {{end}}{{if and .DefaultValuePresent (not .ExcludeNull)}}if childItem.{{toGoName .TfName}}.IsNull() {{if and .DynamicDefault .DefaultValuePresent}}|| data.{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"{{end}} {
 						if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 						{{if or .DefaultValue .DefaultValueEmptyString}}itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
@@ -320,7 +320,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", childChildItem.{{toGoName .TfName}}Variable.ValueString())
 								}
-							} else {{end}}{{if and .DefaultValuePresent (not .ExcludeNull)}}if childChildItem.{{toGoName .TfName}}.IsNull() {
+							} else {{end}}{{if and .DefaultValuePresent (not .ExcludeNull)}}if childChildItem.{{toGoName .TfName}}.IsNull() {{if and .DynamicDefault .DefaultValuePresent}}|| data.{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"{{end}} {
 								if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 								{{if or .DefaultValue .DefaultValueEmptyString}}itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
