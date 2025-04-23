@@ -84,6 +84,7 @@ attribute:
   test_tags: list(str(), required=False) # List of test tags, attribute is only included in acceptance tests if an environment variable with one of these tags is configured
   requires_const_and_var: bool(required=False) # If true will include both constant and variable values in payload
   requires_replace: bool(required=False) # If true resource will be recreated when attribute is changed
+  dynamic_default: bool(required=False) # If true when the provided value matches the default value `optionType` will be set to `default` rather than `global`
 
 conditional_attribute:
   name: str() # Reference to other attribute
