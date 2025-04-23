@@ -95,7 +95,7 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"server_auth_order": schema.SetAttribute{
+			"server_auth_order": schema.ListAttribute{
 				MarkdownDescription: "ServerGroups priority order",
 				ElementType:         types.StringType,
 				Computed:            true,

@@ -105,7 +105,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"server_auth_order": schema.SetAttribute{
+			"server_auth_order": schema.ListAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("ServerGroups priority order").String,
 				ElementType:         types.StringType,
 				Required:            true,
