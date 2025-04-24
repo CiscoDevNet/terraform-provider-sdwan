@@ -1,6 +1,11 @@
 ## 0.6.1 (unreleased)
 
 - BREAKING CHANGE: Replaces `no_authentication` attribute of `sdwan_transport_cellular_profile_feature` with `requires_authentication`
+- Correctly apply default values with `sdwan_transport_route_policy_feature` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/410)
+- Change `server_auth_order` attribute of `sdwan_system_aaa_feature` resource to a set, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/430)
+- Support changes in `sdwan_system_mrf_feature` resource in version 20.13+, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/427)
+- Applying default action with `ipv4_device_access_policy` or other resources can cause idempotency issues, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/412)
+- Optimize and fix attachment of device template to multiple devices, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/417)
 
 ## 0.6.0
 
