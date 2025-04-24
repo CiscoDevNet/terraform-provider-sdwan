@@ -1,4 +1,4 @@
-## 0.6.1 (unreleased)
+## 0.6.1
 
 - BREAKING CHANGE: Replaces `no_authentication` attribute of `sdwan_transport_cellular_profile_feature` with `requires_authentication`
 - Correctly apply default values with `sdwan_transport_route_policy_feature` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/410)
