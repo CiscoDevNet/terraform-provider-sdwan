@@ -378,11 +378,12 @@ func (data *TransportRoutePolicy) fromBody(ctx context.Context, res gjson.Result
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
+	tempDefaultAction := data.DefaultAction
 	data.DefaultAction = types.StringNull()
 
 	if t := res.Get(path + "defaultAction.optionType"); t.Exists() {
 		va := res.Get(path + "defaultAction.value")
-		if t.String() == "global" || t.String() == "default" {
+		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.String() == "reject") {
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
@@ -665,11 +666,12 @@ func (data *TransportRoutePolicy) updateFromBody(ctx context.Context, res gjson.
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
+	tempDefaultAction := data.DefaultAction
 	data.DefaultAction = types.StringNull()
 
 	if t := res.Get(path + "defaultAction.optionType"); t.Exists() {
 		va := res.Get(path + "defaultAction.value")
-		if t.String() == "global" || t.String() == "default" {
+		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.String() == "reject") {
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
