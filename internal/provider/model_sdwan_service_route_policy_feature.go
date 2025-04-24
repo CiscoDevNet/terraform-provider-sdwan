@@ -109,7 +109,7 @@ func (data ServiceRoutePolicy) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
-	if data.DefaultAction.IsNull() || data.DefaultAction.ValueString() == "reject" {
+	if data.DefaultAction.IsNull() || data.DefaultAction.String() == "reject" {
 		if true {
 			body, _ = sjson.Set(body, path+"defaultAction.optionType", "default")
 			body, _ = sjson.Set(body, path+"defaultAction.value", "reject")
@@ -365,11 +365,12 @@ func (data *ServiceRoutePolicy) fromBody(ctx context.Context, res gjson.Result) 
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
+	tempDefaultAction := data.DefaultAction
 	data.DefaultAction = types.StringNull()
 
 	if t := res.Get(path + "defaultAction.optionType"); t.Exists() {
 		va := res.Get(path + "defaultAction.value")
-		if t.String() == "global" || t.String() == "default" {
+		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.String() == "reject") {
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
@@ -652,11 +653,12 @@ func (data *ServiceRoutePolicy) updateFromBody(ctx context.Context, res gjson.Re
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
+	tempDefaultAction := data.DefaultAction
 	data.DefaultAction = types.StringNull()
 
 	if t := res.Get(path + "defaultAction.optionType"); t.Exists() {
 		va := res.Get(path + "defaultAction.value")
-		if t.String() == "global" || t.String() == "default" {
+		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.String() == "reject") {
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
