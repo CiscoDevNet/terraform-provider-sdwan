@@ -64,9 +64,9 @@ func TestAccSdwanTransportRoutingBGPProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_feature.test", "ipv4_neighbors.0.as_override", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_feature.test", "ipv4_neighbors.0.allowas_in_number", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_feature.test", "ipv4_neighbors.0.address_families.0.family_type", "ipv4-unicast"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_feature.test", "ipv4_neighbors.0.address_families.0.max_number_of_prefixes", "2000"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_feature.test", "ipv4_neighbors.0.address_families.0.threshold", "75"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_feature.test", "ipv4_neighbors.0.address_families.0.policy_type", "restart"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_feature.test", "ipv4_neighbors.0.address_families.0.restart_max_number_of_prefixes", "2000"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_feature.test", "ipv4_neighbors.0.address_families.0.restart_threshold", "75"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_feature.test", "ipv4_neighbors.0.address_families.0.restart_interval", "30"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_feature.test", "ipv6_neighbors.0.address", "2001::1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_feature.test", "ipv6_neighbors.0.description", "neighbor2"))
@@ -184,9 +184,9 @@ func testAccSdwanTransportRoutingBGPProfileParcelConfig_all() string {
 	config += `	  allowas_in_number = 1` + "\n"
 	config += `	  address_families = [{` + "\n"
 	config += `		family_type = "ipv4-unicast"` + "\n"
-	config += `		max_number_of_prefixes = 2000` + "\n"
-	config += `		threshold = 75` + "\n"
 	config += `		policy_type = "restart"` + "\n"
+	config += `		restart_max_number_of_prefixes = 2000` + "\n"
+	config += `		restart_threshold = 75` + "\n"
 	config += `		restart_interval = 30` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
