@@ -106,7 +106,7 @@ attributes:
       - model_name: policyType
         data_path: [maxPrefixConfig]
         type: String
-        enum_values: [restart, off, warning-only, disable-peer]
+        enum_values: ['restart', 'off', 'warning-only', 'disable-peer']
         example: restart
       - model_name: prefixNum
         tf_name: restart_max_number_of_prefixes
