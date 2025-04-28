@@ -225,8 +225,8 @@ type TransportRoutingBGPIpv4NeighborsAddressFamilies struct {
 	WarningMessageThresholdVariable           types.String `tfsdk:"warning_message_threshold_variable"`
 	DisablePeerMaxNumberOfPrefixes            types.Int64  `tfsdk:"disable_peer_max_number_of_prefixes"`
 	DisablePeerMaxNumberOfPrefixesVariable    types.String `tfsdk:"disable_peer_max_number_of_prefixes_variable"`
-	DisablePeerMessageThreshold               types.Int64  `tfsdk:"disable_peer_message_threshold"`
-	DisablePeerMessageThresholdVariable       types.String `tfsdk:"disable_peer_message_threshold_variable"`
+	DisablePeerThreshold                      types.Int64  `tfsdk:"disable_peer_threshold"`
+	DisablePeerThresholdVariable              types.String `tfsdk:"disable_peer_threshold_variable"`
 	InRoutePolicyId                           types.String `tfsdk:"in_route_policy_id"`
 	OutRoutePolicyId                          types.String `tfsdk:"out_route_policy_id"`
 }
@@ -875,12 +875,12 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 						}
 					}
 
-					if !childItem.DisablePeerMessageThresholdVariable.IsNull() {
+					if !childItem.DisablePeerThresholdVariable.IsNull() {
 						if true && childItem.PolicyType.ValueString() == "disable-peer" {
 							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "variable")
-							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.DisablePeerMessageThresholdVariable.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.DisablePeerThresholdVariable.ValueString())
 						}
-					} else if childItem.DisablePeerMessageThreshold.IsNull() {
+					} else if childItem.DisablePeerThreshold.IsNull() {
 						if true && childItem.PolicyType.ValueString() == "disable-peer" {
 							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "default")
 							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", 75)
@@ -888,7 +888,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 					} else {
 						if true && childItem.PolicyType.ValueString() == "disable-peer" {
 							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.DisablePeerMessageThreshold.ValueInt64())
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.DisablePeerThreshold.ValueInt64())
 						}
 					}
 					if !childItem.InRoutePolicyId.IsNull() {
@@ -1984,14 +1984,14 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 							cItem.DisablePeerMaxNumberOfPrefixes = types.Int64Value(va.Int())
 						}
 					}
-					cItem.DisablePeerMessageThreshold = types.Int64Null()
-					cItem.DisablePeerMessageThresholdVariable = types.StringNull()
+					cItem.DisablePeerThreshold = types.Int64Null()
+					cItem.DisablePeerThresholdVariable = types.StringNull()
 					if t := cv.Get("maxPrefixConfig.threshold.optionType"); t.Exists() {
 						va := cv.Get("maxPrefixConfig.threshold.value")
 						if t.String() == "variable" {
-							cItem.DisablePeerMessageThresholdVariable = types.StringValue(va.String())
+							cItem.DisablePeerThresholdVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.DisablePeerMessageThreshold = types.Int64Value(va.Int())
+							cItem.DisablePeerThreshold = types.Int64Value(va.Int())
 						}
 					}
 					cItem.InRoutePolicyId = types.StringNull()
@@ -2963,14 +2963,14 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 					data.Ipv4Neighbors[i].AddressFamilies[ci].DisablePeerMaxNumberOfPrefixes = types.Int64Value(va.Int())
 				}
 			}
-			data.Ipv4Neighbors[i].AddressFamilies[ci].DisablePeerMessageThreshold = types.Int64Null()
-			data.Ipv4Neighbors[i].AddressFamilies[ci].DisablePeerMessageThresholdVariable = types.StringNull()
+			data.Ipv4Neighbors[i].AddressFamilies[ci].DisablePeerThreshold = types.Int64Null()
+			data.Ipv4Neighbors[i].AddressFamilies[ci].DisablePeerThresholdVariable = types.StringNull()
 			if t := cr.Get("maxPrefixConfig.threshold.optionType"); t.Exists() {
 				va := cr.Get("maxPrefixConfig.threshold.value")
 				if t.String() == "variable" {
-					data.Ipv4Neighbors[i].AddressFamilies[ci].DisablePeerMessageThresholdVariable = types.StringValue(va.String())
+					data.Ipv4Neighbors[i].AddressFamilies[ci].DisablePeerThresholdVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Ipv4Neighbors[i].AddressFamilies[ci].DisablePeerMessageThreshold = types.Int64Value(va.Int())
+					data.Ipv4Neighbors[i].AddressFamilies[ci].DisablePeerThreshold = types.Int64Value(va.Int())
 				}
 			}
 			data.Ipv4Neighbors[i].AddressFamilies[ci].InRoutePolicyId = types.StringNull()

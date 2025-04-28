@@ -455,14 +455,14 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `policy_type` being equal to `disable-peer`").String,
 										Optional:            true,
 									},
-									"disable_peer_message_threshold": schema.Int64Attribute{
+									"disable_peer_threshold": schema.Int64Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` being equal to `disable-peer`").AddIntegerRangeDescription(1, 100).AddDefaultValueDescription("75").String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 100),
 										},
 									},
-									"disable_peer_message_threshold_variable": schema.StringAttribute{
+									"disable_peer_threshold_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `policy_type` being equal to `disable-peer`").String,
 										Optional:            true,
 									},

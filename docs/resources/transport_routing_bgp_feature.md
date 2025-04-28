@@ -301,10 +301,10 @@ Optional:
 - `disable_peer_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` being equal to `disable-peer`
   - Range: `1`-`4294967295`
 - `disable_peer_max_number_of_prefixes_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `disable-peer`
-- `disable_peer_message_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` being equal to `disable-peer`
+- `disable_peer_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` being equal to `disable-peer`
   - Range: `1`-`100`
   - Default value: `75`
-- `disable_peer_message_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `disable-peer`
+- `disable_peer_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `disable-peer`
 - `family_type` (String) Set IPv4 unicast address family
   - Choices: `ipv4-unicast`, `vpnv4-unicast`, `vpnv6-unicast`
 - `in_route_policy_id` (String)

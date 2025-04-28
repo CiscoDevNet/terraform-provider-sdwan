@@ -157,7 +157,7 @@ attributes:
           name: policyType
           value: disable-peer
       - model_name: threshold
-        tf_name: disable_peer_message_threshold
+        tf_name: disable_peer_threshold
         data_path: [maxPrefixConfig]
         default_value: 75
         default_value_present: true

@@ -388,11 +388,11 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
-									"disable_peer_message_threshold": schema.Int64Attribute{
+									"disable_peer_threshold": schema.Int64Attribute{
 										MarkdownDescription: "Set threshold(1 to 100) at which to generate a warning message",
 										Computed:            true,
 									},
-									"disable_peer_message_threshold_variable": schema.StringAttribute{
+									"disable_peer_threshold_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},

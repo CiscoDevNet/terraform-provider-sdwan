@@ -146,8 +146,8 @@ Read-Only:
 
 - `disable_peer_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer
 - `disable_peer_max_number_of_prefixes_variable` (String) Variable name
-- `disable_peer_message_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message
-- `disable_peer_message_threshold_variable` (String) Variable name
+- `disable_peer_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message
+- `disable_peer_threshold_variable` (String) Variable name
 - `family_type` (String) Set IPv4 unicast address family
 - `in_route_policy_id` (String)
 - `out_route_policy_id` (String)
