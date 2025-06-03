@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.6.2
+
+- Fix issue causing changes to applied feature templates to fail, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/417)
+
 ## 0.6.1
 
 - BREAKING CHANGE: Replaces `no_authentication` attribute of `sdwan_transport_cellular_profile_feature` with `requires_authentication`
