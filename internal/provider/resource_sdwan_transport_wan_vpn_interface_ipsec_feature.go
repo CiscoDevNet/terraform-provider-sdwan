@@ -92,7 +92,7 @@ func (r *TransportWANVPNInterfaceIPSECProfileParcelResource) Schema(ctx context.
 			},
 			"transport_wan_vpn_feature_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Transport WAN VPN Feature ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"interface_name": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Interface name: IPsec when present").String,

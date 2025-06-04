@@ -88,7 +88,7 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"servers": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure NTP servers").String,

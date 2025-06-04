@@ -92,7 +92,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 			},
 			"service_lan_vpn_feature_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Service LAN VPN Feature ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"shutdown": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddDefaultValueDescription("true").String,
