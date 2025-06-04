@@ -2845,9 +2845,9 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 		}
 	}
 	for i := range data.AdvertiseOmpIpv4s {
-		keys := [...]string{"routePolicy.refId"}
-		keyValues := [...]string{data.AdvertiseOmpIpv4s[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"ompProtocol"}
+		keyValues := [...]string{data.AdvertiseOmpIpv4s[i].Protocol.ValueString()}
+		keyValuesVariables := [...]string{data.AdvertiseOmpIpv4s[i].ProtocolVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "ompAdvertiseIp4").ForEach(
@@ -2965,9 +2965,9 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 		}
 	}
 	for i := range data.AdvertiseOmpIpv6s {
-		keys := [...]string{"routePolicy.refId"}
-		keyValues := [...]string{data.AdvertiseOmpIpv6s[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"ompProtocol"}
+		keyValues := [...]string{data.AdvertiseOmpIpv6s[i].Protocol.ValueString()}
+		keyValuesVariables := [...]string{data.AdvertiseOmpIpv6s[i].ProtocolVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "ompAdvertiseIpv6").ForEach(
@@ -3983,9 +3983,9 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 		}
 	}
 	for i := range data.RouteLeakFromGlobalVpns {
-		keys := [...]string{"routePolicy.refId"}
-		keyValues := [...]string{data.RouteLeakFromGlobalVpns[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"routeProtocol"}
+		keyValues := [...]string{data.RouteLeakFromGlobalVpns[i].RouteProtocol.ValueString()}
+		keyValuesVariables := [...]string{data.RouteLeakFromGlobalVpns[i].RouteProtocolVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "routeLeakFromGlobal").ForEach(
@@ -4032,9 +4032,9 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			}
 		}
 		for ci := range data.RouteLeakFromGlobalVpns[i].Redistributions {
-			keys := [...]string{"policy.refId"}
-			keyValues := [...]string{data.RouteLeakFromGlobalVpns[i].Redistributions[ci].RedistributionPolicyId.ValueString()}
-			keyValuesVariables := [...]string{""}
+			keys := [...]string{"protocol"}
+			keyValues := [...]string{data.RouteLeakFromGlobalVpns[i].Redistributions[ci].Protocol.ValueString()}
+			keyValuesVariables := [...]string{data.RouteLeakFromGlobalVpns[i].Redistributions[ci].ProtocolVariable.ValueString()}
 
 			var cr gjson.Result
 			r.Get("redistributeToProtocol").ForEach(
@@ -4083,9 +4083,9 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 		}
 	}
 	for i := range data.RouteLeakToGlobalVpns {
-		keys := [...]string{"routePolicy.refId"}
-		keyValues := [...]string{data.RouteLeakToGlobalVpns[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"routeProtocol"}
+		keyValues := [...]string{data.RouteLeakToGlobalVpns[i].RouteProtocol.ValueString()}
+		keyValuesVariables := [...]string{data.RouteLeakToGlobalVpns[i].RouteProtocolVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "routeLeakFromService").ForEach(
@@ -4132,9 +4132,9 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			}
 		}
 		for ci := range data.RouteLeakToGlobalVpns[i].Redistributions {
-			keys := [...]string{"policy.refId"}
-			keyValues := [...]string{data.RouteLeakToGlobalVpns[i].Redistributions[ci].RedistributionPolicyId.ValueString()}
-			keyValuesVariables := [...]string{""}
+			keys := [...]string{"protocol"}
+			keyValues := [...]string{data.RouteLeakToGlobalVpns[i].Redistributions[ci].Protocol.ValueString()}
+			keyValuesVariables := [...]string{data.RouteLeakToGlobalVpns[i].Redistributions[ci].ProtocolVariable.ValueString()}
 
 			var cr gjson.Result
 			r.Get("redistributeToProtocol").ForEach(
@@ -4183,9 +4183,9 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 		}
 	}
 	for i := range data.RouteLeakFromOtherServices {
-		keys := [...]string{"routePolicy.refId"}
-		keyValues := [...]string{data.RouteLeakFromOtherServices[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"routeProtocol"}
+		keyValues := [...]string{data.RouteLeakFromOtherServices[i].RouteProtocol.ValueString()}
+		keyValuesVariables := [...]string{data.RouteLeakFromOtherServices[i].RouteProtocolVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "routeLeakBetweenServices").ForEach(
