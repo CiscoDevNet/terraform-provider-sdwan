@@ -86,7 +86,7 @@ func (r *SystemPerformanceMonitoringProfileParcelResource) Schema(ctx context.Co
 			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"app_perf_monitor_enabled": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Application performance monitoring enable or disable").AddDefaultValueDescription("false").String,

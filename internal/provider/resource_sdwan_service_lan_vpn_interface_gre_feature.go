@@ -92,7 +92,7 @@ func (r *ServiceLANVPNInterfaceGREProfileParcelResource) Schema(ctx context.Cont
 			},
 			"service_lan_vpn_feature_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Service LAN VPN Feature ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"interface_name": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Interface name (1..255)").String,

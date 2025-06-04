@@ -88,11 +88,11 @@ func (r *TransportManagementVPNInterfaceEthernetProfileParcelResource) Schema(ct
 			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"transport_management_vpn_feature_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Transport Management VPN Feature ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"shutdown": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddDefaultValueDescription("true").String,

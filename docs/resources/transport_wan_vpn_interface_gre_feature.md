@@ -41,6 +41,7 @@ resource "sdwan_transport_wan_vpn_interface_gre_feature" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
+- `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
 
 ### Optional
 
@@ -69,7 +70,6 @@ resource "sdwan_transport_wan_vpn_interface_gre_feature" "example" {
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
   - Range: `500`-`1460`
 - `tcp_mss_variable` (String) Variable name
-- `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
 - `tunnel_destination_ipv4_address` (String) Tunnel destination IP Address
 - `tunnel_destination_ipv4_address_variable` (String) Variable name
 - `tunnel_route_via_loopback` (String) <1..32 characters> Interface name, can't be Loopback interface

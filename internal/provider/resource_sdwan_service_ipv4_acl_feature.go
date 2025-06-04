@@ -88,7 +88,7 @@ func (r *ServiceIPv4ACLProfileParcelResource) Schema(ctx context.Context, req re
 			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"default_action": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Default Action").AddStringEnumDescription("drop", "accept").AddDefaultValueDescription("drop").String,

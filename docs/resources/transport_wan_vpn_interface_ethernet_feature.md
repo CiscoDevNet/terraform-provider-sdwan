@@ -143,6 +143,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
+- `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
 
 ### Optional
 
@@ -311,7 +312,6 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `tloc_extension_variable` (String) Variable name
 - `tracker` (String) Enable tracker for this interface
 - `tracker_variable` (String) Variable name
-- `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
 - `tunnel_bandwidth_percent` (Number) Tunnels Bandwidth Percent
   - Range: `1`-`100`
   - Default value: `50`

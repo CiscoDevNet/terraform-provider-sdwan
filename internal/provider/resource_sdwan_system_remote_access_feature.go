@@ -87,7 +87,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"connection_type_ssl": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enabled SSL VPN").AddDefaultValueDescription("false").String,

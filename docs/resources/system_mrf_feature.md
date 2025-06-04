@@ -32,6 +32,7 @@ resource "sdwan_system_mrf_feature" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 
 ### Optional
@@ -39,7 +40,6 @@ resource "sdwan_system_mrf_feature" "example" {
 - `description` (String) The description of the Feature
 - `enable_migration_to_mrf` (String) Enable migration mode to Multi-Region Fabric
   - Choices: `enabled`, `enabled-from-bgp-core`
-- `feature_profile_id` (String) Feature Profile ID
 - `migration_bgp_community` (Number) Set BGP community during migration from BGP-core based network
   - Range: `1`-`4294967295`
 - `region_id` (Number) Set region ID

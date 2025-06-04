@@ -136,6 +136,7 @@ resource "sdwan_transport_routing_bgp_feature" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 
 ### Optional
@@ -156,7 +157,6 @@ resource "sdwan_transport_routing_bgp_feature" "example" {
   - Range: `1`-`255`
   - Default value: `20`
 - `external_routes_distance_variable` (String) Variable name
-- `feature_profile_id` (String) Feature Profile ID
 - `hold_time` (Number) Interval (seconds) not receiving a keepalive message declares a BGP peer down
   - Range: `0`-`65535`
   - Default value: `180`

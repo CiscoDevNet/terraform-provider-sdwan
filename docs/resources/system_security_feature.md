@@ -56,6 +56,7 @@ resource "sdwan_system_security_feature" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 
 ### Optional
@@ -69,7 +70,6 @@ resource "sdwan_system_security_feature" "example" {
   - Range: `10`-`2048`
   - Default value: `256`
 - `extended_anti_replay_window_variable` (String) Variable name
-- `feature_profile_id` (String) Feature Profile ID
 - `integrity_type` (Set of String) Set the authentication type for DTLS connections
 - `integrity_type_variable` (String) Variable name
 - `ipsec_pairwise_keying` (Boolean) Enable or disable IPsec pairwise-keying

@@ -55,6 +55,7 @@ resource "sdwan_service_ipv4_acl_feature" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 
 ### Optional
@@ -63,7 +64,6 @@ resource "sdwan_service_ipv4_acl_feature" "example" {
   - Choices: `drop`, `accept`
   - Default value: `drop`
 - `description` (String) The description of the Feature
-- `feature_profile_id` (String) Feature Profile ID
 - `sequences` (Attributes List) Access Control List (see [below for nested schema](#nestedatt--sequences))
 
 ### Read-Only

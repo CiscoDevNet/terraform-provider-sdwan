@@ -87,7 +87,7 @@ func (r *SystemSecurityProfileParcelResource) Schema(ctx context.Context, req re
 			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"rekey": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set how often to change the AES key for DTLS connections").AddIntegerRangeDescription(10, 1209600).AddDefaultValueDescription("86400").String,

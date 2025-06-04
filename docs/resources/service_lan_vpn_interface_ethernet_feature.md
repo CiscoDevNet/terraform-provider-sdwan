@@ -131,6 +131,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
+- `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
 
 ### Optional
 
@@ -227,7 +228,6 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `media_type_variable` (String) Variable name
 - `nat64` (Boolean) NAT64 on this interface
   - Default value: `false`
-- `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
 - `shutdown` (Boolean) - Default value: `true`
 - `shutdown_variable` (String) Variable name
 - `speed` (String) Set interface speed

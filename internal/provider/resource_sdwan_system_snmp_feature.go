@@ -88,7 +88,7 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"shutdown": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable or disable SNMP").AddDefaultValueDescription("false").String,
