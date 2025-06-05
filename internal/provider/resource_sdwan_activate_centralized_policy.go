@@ -20,6 +20,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -160,7 +161,8 @@ func (r *ActivateCentralizedPolicyResource) Update(ctx context.Context, req reso
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Id.ValueString()))
 
 	if !plan.Id.Equal(state.Id) {
-		tflog.Debug(ctx, "Policy ID is changing, running activate")
+		tflog.Debug(ctx, fmt.Sprintf("%s: Policy ID changed, activating policy", plan.Id.ValueString()))
+
 		res, err := r.client.Post("/template/policy/vsmart/activate/"+plan.Id.ValueString(), "{}")
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
@@ -173,19 +175,21 @@ func (r *ActivateCentralizedPolicyResource) Update(ctx context.Context, req reso
 			return
 		}
 	} else {
-		tflog.Debug(ctx, "Policy ID is not changing, running repush")
+		tflog.Debug(ctx, fmt.Sprintf("%s: Policy ID unchanged, repushing policy", plan.Id.ValueString()))
 
-		attachPayload, attachPayloadErr := GetPushBody(r.client)
-		if attachPayloadErr != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to build attach payload for vsmart templates, got error: %s", attachPayloadErr))
+		body, err := plan.getPushBody(ctx, r.client)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to build attach payload for vsmart templates, got error: %s", err))
 			return
 		}
-		res, err := r.client.Post("/template/device/config/attachfeature", attachPayload)
-		if err != nil {
+
+		res, err := r.client.Post("/template/device/config/attachfeature", body)
+		if strings.Contains(res.Get("error.message").String(), "Template edit request has expired") {
+			resp.Diagnostics.AddWarning("Client Warning", fmt.Sprintf("No changes detected to trigger an attachment."))
+		} else if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to POST device config attachfeature (POST), got error: %s", err))
 			return
 		}
-		tflog.Debug(ctx, fmt.Sprintf("AttachFeature response for vsmart templates: %s", res.String()))
 		if resp.Diagnostics.WarningsCount() == 0 {
 			actionId := res.Get("id").String()
 			err = helpers.WaitForActionToComplete(ctx, r.client, actionId)

@@ -18,6 +18,8 @@
 package provider
 
 import (
+	"context"
+
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/netascode/go-sdwan"
 	"github.com/tidwall/sjson"
@@ -28,7 +30,7 @@ type ActivateCentralizedPolicy struct {
 	Version types.Int64  `tfsdk:"version"`
 }
 
-func GetPushBody(client *sdwan.Client) (string, error) {
+func (data ActivateCentralizedPolicy) getPushBody(ctx context.Context, client *sdwan.Client) (string, error) {
 	// Get all device templates
 	res, err := client.Get("/template/device?feature=all")
 	if err != nil {
@@ -56,8 +58,8 @@ func GetPushBody(client *sdwan.Client) (string, error) {
 		}
 		var deviceIds []string
 		if res.Get("data").Exists() {
-			for _, dev := range res.Get("data").Array() {
-				uuid := dev.Get("uuid").String()
+			for _, device := range res.Get("data").Array() {
+				uuid := device.Get("uuid").String()
 				if uuid != "" {
 					deviceIds = append(deviceIds, uuid)
 				}
@@ -72,15 +74,15 @@ func GetPushBody(client *sdwan.Client) (string, error) {
 		if err != nil {
 			return "", err
 		}
-		// Use the contents of res["data"] for the device list directly
+		// Get device list from response
 		deviceList := []interface{}{}
 		if res.Get("data").Exists() {
-			for _, dev := range res.Get("data").Array() {
-				device := map[string]interface{}{}
-				for key, value := range dev.Map() {
-					device[key] = value.Value()
+			for _, data := range res.Get("data").Array() {
+				devices := map[string]interface{}{}
+				for key, value := range data.Map() {
+					devices[key] = value.Value()
 				}
-				deviceList = append(deviceList, device)
+				deviceList = append(deviceList, devices)
 			}
 		}
 		templateAttachPayload := map[string]interface{}{
