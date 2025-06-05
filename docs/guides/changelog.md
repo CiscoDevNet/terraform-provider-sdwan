@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.6.2
+
+- Adds `enhanced_app_aware_routing` support to the `sdwan_cisco_system_feature_template` resource and data source
+
 ## 0.6.1
 
 - BREAKING CHANGE: Replaces `no_authentication` attribute of `sdwan_transport_cellular_profile_feature` with `requires_authentication`
