@@ -19,9 +19,78 @@ package provider
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/netascode/go-sdwan"
+	"github.com/tidwall/sjson"
 )
 
 type ActivateCentralizedPolicy struct {
 	Id      types.String `tfsdk:"id"`
 	Version types.Int64  `tfsdk:"version"`
+}
+
+func GetPushBody(client *sdwan.Client) (string, error) {
+	// Get all device templates
+	res, err := client.Get("/template/device?feature=all")
+	if err != nil {
+		return "", err
+	}
+	// Filter for vSmart templates with devices attached
+	var vsmartTemplateIds []string
+	if res.Get("data").Exists() {
+		for _, item := range res.Get("data").Array() {
+			if item.Get("deviceType").String() == "vsmart" && item.Get("devicesAttached").Int() > 0 {
+				templateId := item.Get("templateId").String()
+				if templateId != "" {
+					vsmartTemplateIds = append(vsmartTemplateIds, templateId)
+				}
+			}
+		}
+	}
+
+	// For each vSmart template with devices attached, generate the attach payload
+	var deviceTemplateList []interface{}
+	for _, templateId := range vsmartTemplateIds {
+		res, err := client.Get("/template/device/config/attached/" + templateId)
+		if err != nil {
+			return "", err
+		}
+		var deviceIds []string
+		if res.Get("data").Exists() {
+			for _, dev := range res.Get("data").Array() {
+				uuid := dev.Get("uuid").String()
+				if uuid != "" {
+					deviceIds = append(deviceIds, uuid)
+				}
+			}
+		}
+		inputPayload, _ := sjson.Set("", "templateId", templateId)
+		inputPayload, _ = sjson.Set(inputPayload, "deviceIds", deviceIds)
+		inputPayload, _ = sjson.Set(inputPayload, "isEdited", true)
+		inputPayload, _ = sjson.Set(inputPayload, "isMasterEdited", false)
+
+		res, err = client.Post("/template/device/config/input/", inputPayload)
+		if err != nil {
+			return "", err
+		}
+		// Use the contents of res["data"] for the device list directly
+		deviceList := []interface{}{}
+		if res.Get("data").Exists() {
+			for _, dev := range res.Get("data").Array() {
+				device := map[string]interface{}{}
+				for key, value := range dev.Map() {
+					device[key] = value.Value()
+				}
+				deviceList = append(deviceList, device)
+			}
+		}
+		templateAttachPayload := map[string]interface{}{
+			"templateId":     templateId,
+			"device":         deviceList,
+			"isEdited":       true,
+			"isMasterEdited": false,
+		}
+		deviceTemplateList = append(deviceTemplateList, templateAttachPayload)
+	}
+	attachPayload, _ := sjson.Set("", "deviceTemplateList", deviceTemplateList)
+	return attachPayload, nil
 }
