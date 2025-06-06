@@ -20,6 +20,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -142,7 +143,7 @@ func (r *ActivateCentralizedPolicyResource) Read(ctx context.Context, req resour
 }
 
 func (r *ActivateCentralizedPolicyResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan ActivateCentralizedPolicy
+	var plan, state ActivateCentralizedPolicy
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -150,22 +151,54 @@ func (r *ActivateCentralizedPolicyResource) Update(ctx context.Context, req reso
 	if resp.Diagnostics.HasError() {
 		return
 	}
+	// Read state
+	diags = req.State.Get(ctx, &state)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Id.ValueString()))
 
-	// Activate policy
-	res, err := r.client.Post("/template/policy/vsmart/activate/"+plan.Id.ValueString(), "{}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
-		return
-	}
-	actionId := res.Get("id").String()
-	err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to activate centralized policy, got error: %s", err))
-		return
-	}
+	if !plan.Id.Equal(state.Id) {
+		tflog.Debug(ctx, fmt.Sprintf("%s: Policy ID changed, activating policy", plan.Id.ValueString()))
 
+		res, err := r.client.Post("/template/policy/vsmart/activate/"+plan.Id.ValueString(), "{}")
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
+			return
+		}
+		actionId := res.Get("id").String()
+		err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to activate centralized policy, got error: %s", err))
+			return
+		}
+	} else {
+		tflog.Debug(ctx, fmt.Sprintf("%s: Policy ID unchanged, repushing policy", plan.Id.ValueString()))
+
+		body, err := plan.getPushBody(ctx, r.client)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to build attach payload for vsmart templates, got error: %s", err))
+			return
+		}
+
+		res, err := r.client.Post("/template/device/config/attachfeature", body)
+		if strings.Contains(res.Get("error.message").String(), "Template edit request has expired") {
+			resp.Diagnostics.AddWarning("Client Warning", fmt.Sprintf("No changes detected to trigger an attachment."))
+		} else if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to POST device config attachfeature (POST), got error: %s", err))
+			return
+		}
+		if resp.Diagnostics.WarningsCount() == 0 {
+			actionId := res.Get("id").String()
+			err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update activated policy, got error: %s", err))
+				return
+			}
+		}
+	}
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Id.ValueString()))
 
 	diags = resp.State.Set(ctx, &plan)

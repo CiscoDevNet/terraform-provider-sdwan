@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.6.2
+
+- Prevent updates to `sdwan_activate_centralized_policy` resources being reverted, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/452)
+
 ## 0.6.1
 
 - BREAKING CHANGE: Replaces `no_authentication` attribute of `sdwan_transport_cellular_profile_feature` with `requires_authentication`
