@@ -4242,9 +4242,9 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			}
 		}
 		for ci := range data.RouteLeakFromOtherServices[i].Redistributions {
-			keys := [...]string{"policy.refId"}
-			keyValues := [...]string{data.RouteLeakFromOtherServices[i].Redistributions[ci].RedistributionPolicyId.ValueString()}
-			keyValuesVariables := [...]string{""}
+			keys := [...]string{"protocol"}
+			keyValues := [...]string{data.RouteLeakFromOtherServices[i].Redistributions[ci].Protocol.ValueString()}
+			keyValuesVariables := [...]string{data.RouteLeakFromOtherServices[i].Redistributions[ci].ProtocolVariable.ValueString()}
 
 			var cr gjson.Result
 			r.Get("redistributeToProtocol").ForEach(

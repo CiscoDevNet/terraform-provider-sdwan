@@ -361,11 +361,11 @@ attributes:
       exclude_test: true
       attributes:
       - model_name: protocol
+        id: true
         example: bgp
       - model_name: refId
         tf_name: redistribution_policy_id
         data_path: [policy]
-        id: true
         example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
   - model_name: importRtList
     tf_name: ipv4_import_route_targets
