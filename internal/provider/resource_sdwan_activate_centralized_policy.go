@@ -90,7 +90,7 @@ func (r *ActivateCentralizedPolicyResource) Create(ctx context.Context, req reso
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Id.ValueString()))
 
-	err := plan.activatePolicy(ctx, r.client)
+	err := plan.activatePolicy(ctx, r.client, false)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to activate centralized policy, got error: %s", err))
 		return
@@ -156,7 +156,7 @@ func (r *ActivateCentralizedPolicyResource) Update(ctx context.Context, req reso
 	if !plan.Id.Equal(state.Id) {
 		tflog.Debug(ctx, fmt.Sprintf("%s: Policy ID changed, activating policy", plan.Id.ValueString()))
 
-		err := plan.activatePolicy(ctx, r.client)
+		err := plan.activatePolicy(ctx, r.client, false)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to activate centralized policy, got error: %s", err))
 			return
@@ -174,7 +174,7 @@ func (r *ActivateCentralizedPolicyResource) Update(ctx context.Context, req reso
 		if strings.Contains(res.Get("error.message").String(), "Template edit request has expired") {
 			tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected to repush the policy. Reactivating the policy.", plan.Id.ValueString()))
 
-			err := plan.activatePolicy(ctx, r.client)
+			err := plan.activatePolicy(ctx, r.client, true)
 			if err != nil {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to activate centralized policy, got error: %s", err))
 				return

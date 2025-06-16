@@ -31,8 +31,14 @@ type ActivateCentralizedPolicy struct {
 	Version types.Int64  `tfsdk:"version"`
 }
 
-func (data ActivateCentralizedPolicy) activatePolicy(ctx context.Context, client *sdwan.Client) error {
-	res, err := client.Post("/template/policy/vsmart/activate/"+data.Id.ValueString(), "{}")
+func (data ActivateCentralizedPolicy) activatePolicy(ctx context.Context, client *sdwan.Client, isEdited bool) error {
+	var body string
+	if isEdited {
+		body = `{"isEdited":true}`
+	} else {
+		body = `{}`
+	}
+	res, err := client.Post("/template/policy/vsmart/activate/"+data.Id.ValueString()+"?confirm=true", body)
 	if err != nil {
 		return err
 	}
