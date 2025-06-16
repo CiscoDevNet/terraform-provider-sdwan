@@ -20,6 +20,7 @@ package provider
 import (
 	"context"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/netascode/go-sdwan"
 	"github.com/tidwall/sjson"
@@ -28,6 +29,19 @@ import (
 type ActivateCentralizedPolicy struct {
 	Id      types.String `tfsdk:"id"`
 	Version types.Int64  `tfsdk:"version"`
+}
+
+func (data ActivateCentralizedPolicy) activatePolicy(ctx context.Context, client *sdwan.Client) error {
+	res, err := client.Post("/template/policy/vsmart/activate/"+data.Id.ValueString(), "{}")
+	if err != nil {
+		return err
+	}
+	actionId := res.Get("id").String()
+	err = helpers.WaitForActionToComplete(ctx, client, actionId)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (data ActivateCentralizedPolicy) getPushBody(ctx context.Context, client *sdwan.Client) (string, error) {
