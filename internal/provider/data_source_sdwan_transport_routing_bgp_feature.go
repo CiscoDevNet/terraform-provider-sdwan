@@ -336,24 +336,24 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 										MarkdownDescription: "Set IPv4 unicast address family",
 										Computed:            true,
 									},
-									"max_number_of_prefixes": schema.Int64Attribute{
+									"policy_type": schema.StringAttribute{
+										MarkdownDescription: "Neighbor received maximum prefix policy is disabled.",
+										Computed:            true,
+									},
+									"restart_max_number_of_prefixes": schema.Int64Attribute{
 										MarkdownDescription: "Set maximum number of prefixes accepted from BGP peer",
 										Computed:            true,
 									},
-									"max_number_of_prefixes_variable": schema.StringAttribute{
+									"restart_max_number_of_prefixes_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
-									"threshold": schema.Int64Attribute{
+									"restart_threshold": schema.Int64Attribute{
 										MarkdownDescription: "Set threshold(1 to 100) at which to generate a warning message",
 										Computed:            true,
 									},
-									"threshold_variable": schema.StringAttribute{
+									"restart_threshold_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-										Computed:            true,
-									},
-									"policy_type": schema.StringAttribute{
-										MarkdownDescription: "Neighbor received maximum prefix policy is disabled.",
 										Computed:            true,
 									},
 									"restart_interval": schema.Int64Attribute{
@@ -361,6 +361,38 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 										Computed:            true,
 									},
 									"restart_interval_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"warning_message_max_number_of_prefixes": schema.Int64Attribute{
+										MarkdownDescription: "Set maximum number of prefixes accepted from BGP peer",
+										Computed:            true,
+									},
+									"warning_message_max_number_of_prefixes_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"warning_message_threshold": schema.Int64Attribute{
+										MarkdownDescription: "Set threshold(1 to 100) at which to generate a warning message",
+										Computed:            true,
+									},
+									"warning_message_threshold_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"disable_peer_max_number_of_prefixes": schema.Int64Attribute{
+										MarkdownDescription: "Set maximum number of prefixes accepted from BGP peer",
+										Computed:            true,
+									},
+									"disable_peer_max_number_of_prefixes_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"disable_peer_threshold": schema.Int64Attribute{
+										MarkdownDescription: "Set threshold(1 to 100) at which to generate a warning message",
+										Computed:            true,
+									},
+									"disable_peer_threshold_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},

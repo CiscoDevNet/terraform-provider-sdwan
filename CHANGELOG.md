@@ -1,5 +1,6 @@
-## 0.6.2
+## 0.6.2 (unreleased)
 
+- Fix issue causing changes to applied feature templates to fail, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/417)
 - Fix issue with service lan vpn feature when route-policy is not defined, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/450)
 
 ## 0.6.1
