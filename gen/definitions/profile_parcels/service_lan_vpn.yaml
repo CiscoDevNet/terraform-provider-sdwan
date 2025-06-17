@@ -57,11 +57,11 @@ attributes:
     attributes:
     - model_name: ompProtocol
       tf_name: protocol
+      id: true
       example: bgp
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
-      id: true
       example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
     - model_name: prefixList
       tf_name: prefixes
@@ -86,11 +86,11 @@ attributes:
     attributes:
     - model_name: ompProtocol
       tf_name: protocol
+      id: true
       example: OSPF
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
-      id: true
       example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
     - model_name: protocolSubType
       example: External
@@ -304,43 +304,43 @@ attributes:
     exclude_test: true
     attributes:
     - model_name: routeProtocol
+      id: true
       example: static
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
-      id: true
       example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
     - model_name: redistributeToProtocol
       tf_name: redistributions
       exclude_test: true
       attributes:
       - model_name: protocol
+        id: true
         example: bgp
       - model_name: refId
         data_path: [policy]
         tf_name: redistribution_policy_id
-        id: true
         example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
   - model_name: routeLeakFromService
     tf_name: route_leak_to_global_vpns
     exclude_test: true
     attributes:
     - model_name: routeProtocol
+      id: true
       example: static
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
-      id: true
       example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
     - model_name: redistributeToProtocol
       tf_name: redistributions
       attributes:
       - model_name: protocol
+        id: true
         example: bgp
       - model_name: refId
         tf_name: redistribution_policy_id
         data_path: [policy]
-        id: true
         exclude_test: true
         example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
   - model_name: routeLeakBetweenServices
@@ -350,22 +350,22 @@ attributes:
     - model_name: sourceVpn
       example: 1
     - model_name: routeProtocol
+      id: true
       example: static
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
-      id: true
       example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
     - model_name: redistributeToProtocol
       tf_name: redistributions
       exclude_test: true
       attributes:
       - model_name: protocol
+        id: true
         example: bgp
       - model_name: refId
         tf_name: redistribution_policy_id
         data_path: [policy]
-        id: true
         example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
   - model_name: importRtList
     tf_name: ipv4_import_route_targets
