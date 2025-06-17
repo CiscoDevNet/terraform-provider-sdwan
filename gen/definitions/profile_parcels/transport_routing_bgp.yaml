@@ -9,6 +9,7 @@ attributes:
   - tf_name: feature_profile_id
     reference: true
     type: String
+    mandatory: true
     description: Feature Profile ID
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_transport_feature_profile.test.id
@@ -103,22 +104,69 @@ attributes:
       - model_name: familyType
         id: true
         example: ipv4-unicast
+      - model_name: policyType
+        data_path: [maxPrefixConfig]
+        type: String
+        enum_values: ['restart', 'off', 'warning-only', 'disable-peer']
+        example: restart
       - model_name: prefixNum
-        tf_name: max_number_of_prefixes
+        tf_name: restart_max_number_of_prefixes
         data_path: [maxPrefixConfig]
         example: 2000
+        conditional_attribute:
+          name: policyType
+          value: restart
       - model_name: threshold
+        tf_name: restart_threshold
         data_path: [maxPrefixConfig]
         default_value: 75
         default_value_present: true
         example: 75
-      - model_name: policyType
-        data_path: [maxPrefixConfig]
-        type: String
-        example: restart
+        conditional_attribute:
+          name: policyType
+          value: restart
       - model_name: restartInterval
         data_path: [maxPrefixConfig]
         example: 30
+        conditional_attribute:
+          name: policyType
+          value: restart
+      - model_name: prefixNum
+        tf_name: warning_message_max_number_of_prefixes
+        data_path: [maxPrefixConfig]
+        example: 2000
+        exclude_test: true
+        conditional_attribute:
+          name: policyType
+          value: warning-only
+      - model_name: threshold
+        tf_name: warning_message_threshold
+        data_path: [maxPrefixConfig]
+        default_value: 75
+        default_value_present: true
+        example: 75
+        exclude_test: true
+        conditional_attribute:
+          name: policyType
+          value: warning-only
+      - model_name: prefixNum
+        tf_name: disable_peer_max_number_of_prefixes
+        data_path: [maxPrefixConfig]
+        example: 2000
+        exclude_test: true
+        conditional_attribute:
+          name: policyType
+          value: disable-peer
+      - model_name: threshold
+        tf_name: disable_peer_threshold
+        data_path: [maxPrefixConfig]
+        default_value: 75
+        default_value_present: true
+        example: 75
+        exclude_test: true
+        conditional_attribute:
+          name: policyType
+          value: disable-peer
       - model_name: refId
         tf_name: in_route_policy_id
         data_path: [inRoutePolicy]

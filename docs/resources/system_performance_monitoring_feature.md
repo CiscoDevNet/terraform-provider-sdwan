@@ -33,6 +33,7 @@ resource "sdwan_system_performance_monitoring_feature" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 
 ### Optional
@@ -44,7 +45,6 @@ resource "sdwan_system_performance_monitoring_feature" "example" {
 - `event_driven_config_enabled` (Boolean) UMTS event driven monitoring enable or disable
   - Default value: `false`
 - `event_driven_events` (Set of String) UMTS events
-- `feature_profile_id` (String) Feature Profile ID
 - `monitoring_config_enabled` (Boolean) UMTS monitoring enable or disable
   - Default value: `false`
 - `monitoring_config_interval` (String) UMTS monitoring interval(Minutes)

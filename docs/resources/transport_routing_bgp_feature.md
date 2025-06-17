@@ -54,11 +54,11 @@ resource "sdwan_transport_routing_bgp_feature" "example" {
       allowas_in_number       = 1
       address_families = [
         {
-          family_type            = "ipv4-unicast"
-          max_number_of_prefixes = 2000
-          threshold              = 75
-          policy_type            = "restart"
-          restart_interval       = 30
+          family_type                    = "ipv4-unicast"
+          policy_type                    = "restart"
+          restart_max_number_of_prefixes = 2000
+          restart_threshold              = 75
+          restart_interval               = 30
         }
       ]
     }
@@ -136,6 +136,7 @@ resource "sdwan_transport_routing_bgp_feature" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 
 ### Optional
@@ -156,7 +157,6 @@ resource "sdwan_transport_routing_bgp_feature" "example" {
   - Range: `1`-`255`
   - Default value: `20`
 - `external_routes_distance_variable` (String) Variable name
-- `feature_profile_id` (String) Feature Profile ID
 - `hold_time` (Number) Interval (seconds) not receiving a keepalive message declares a BGP peer down
   - Range: `0`-`65535`
   - Default value: `180`
@@ -298,21 +298,36 @@ Optional:
 
 Optional:
 
+- `disable_peer_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` being equal to `disable-peer`
+  - Range: `1`-`4294967295`
+- `disable_peer_max_number_of_prefixes_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `disable-peer`
+- `disable_peer_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` being equal to `disable-peer`
+  - Range: `1`-`100`
+  - Default value: `75`
+- `disable_peer_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `disable-peer`
 - `family_type` (String) Set IPv4 unicast address family
   - Choices: `ipv4-unicast`, `vpnv4-unicast`, `vpnv6-unicast`
 - `in_route_policy_id` (String)
-- `max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer
-  - Range: `1`-`4294967295`
-- `max_number_of_prefixes_variable` (String) Variable name
 - `out_route_policy_id` (String)
 - `policy_type` (String) Neighbor received maximum prefix policy is disabled.
-- `restart_interval` (Number) Set the restart interval(minutes) when to restart BGP connection if threshold is exceeded
+  - Choices: `restart`, `off`, `warning-only`, `disable-peer`
+- `restart_interval` (Number) Set the restart interval(minutes) when to restart BGP connection if threshold is exceeded, Attribute conditional on `policy_type` being equal to `restart`
   - Range: `1`-`65535`
-- `restart_interval_variable` (String) Variable name
-- `threshold` (Number) Set threshold(1 to 100) at which to generate a warning message
+- `restart_interval_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `restart`
+- `restart_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` being equal to `restart`
+  - Range: `1`-`4294967295`
+- `restart_max_number_of_prefixes_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `restart`
+- `restart_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` being equal to `restart`
   - Range: `1`-`100`
   - Default value: `75`
-- `threshold_variable` (String) Variable name
+- `restart_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `restart`
+- `warning_message_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` being equal to `warning-only`
+  - Range: `1`-`4294967295`
+- `warning_message_max_number_of_prefixes_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `warning-only`
+- `warning_message_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` being equal to `warning-only`
+  - Range: `1`-`100`
+  - Default value: `75`
+- `warning_message_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `warning-only`
 
 
 

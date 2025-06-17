@@ -88,7 +88,7 @@ func (r *SystemMRFProfileParcelResource) Schema(ctx context.Context, req resourc
 			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"region_id": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set region ID").AddIntegerRangeDescription(1, 63).String,

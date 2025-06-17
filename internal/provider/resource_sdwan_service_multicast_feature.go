@@ -88,7 +88,7 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"spt_only": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Shortest Path Tree (SPT) Only Mode").AddDefaultValueDescription("false").String,

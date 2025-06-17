@@ -59,6 +59,7 @@ resource "sdwan_transport_wan_vpn_interface_ipsec_feature" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
+- `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
 
 ### Optional
 
@@ -138,7 +139,6 @@ resource "sdwan_transport_wan_vpn_interface_ipsec_feature" "example" {
 - `tcp_mss_variable` (String) Variable name
 - `tracker_id` (String) Enable tracker for this interface
 - `tracker_id_variable` (String) Variable name
-- `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
 - `tunnel_destination_ipv4_address` (String)
 - `tunnel_destination_ipv4_address_variable` (String) Variable name
 - `tunnel_destination_ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`

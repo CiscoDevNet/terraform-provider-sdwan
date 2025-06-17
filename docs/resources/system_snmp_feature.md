@@ -76,6 +76,7 @@ resource "sdwan_system_snmp_feature" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 
 ### Optional
@@ -84,7 +85,6 @@ resource "sdwan_system_snmp_feature" "example" {
 - `contact_person` (String) Set the contact for this managed node
 - `contact_person_variable` (String) Variable name
 - `description` (String) The description of the Feature
-- `feature_profile_id` (String) Feature Profile ID
 - `groups` (Attributes List) Configure an SNMP group (see [below for nested schema](#nestedatt--groups))
 - `location_of_device` (String) Set the physical location of this managed node
 - `location_of_device_variable` (String) Variable name
