@@ -41,6 +41,7 @@ resource "sdwan_service_lan_vpn_interface_gre_feature" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
+- `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
 
 ### Optional
 
@@ -63,7 +64,6 @@ resource "sdwan_service_lan_vpn_interface_gre_feature" "example" {
 - `ipv4_address_variable` (String) Variable name
 - `ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `ipv4_subnet_mask_variable` (String) Variable name
-- `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
 - `shutdown` (Boolean) Administrative state
   - Default value: `false`
 - `shutdown_variable` (String) Variable name

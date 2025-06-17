@@ -92,7 +92,7 @@ func (r *TransportWANVPNInterfaceT1E1SerialProfileParcelResource) Schema(ctx con
 			},
 			"transport_wan_vpn_feature_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Transport WAN VPN Feature ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"shutdown": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Administrative state").AddDefaultValueDescription("true").String,

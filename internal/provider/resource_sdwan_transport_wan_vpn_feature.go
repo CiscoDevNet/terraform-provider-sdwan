@@ -88,7 +88,7 @@ func (r *TransportWANVPNProfileParcelResource) Schema(ctx context.Context, req r
 			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"vpn": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("VPN").AddDefaultValueDescription("0").String,
