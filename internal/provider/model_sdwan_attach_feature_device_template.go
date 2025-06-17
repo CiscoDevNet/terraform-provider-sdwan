@@ -74,7 +74,7 @@ func (data AttachFeatureDeviceTemplate) getVariables(ctx context.Context, client
 	}
 
 	for _, item := range data.Devices {
-		if helpers.Contains(updatedDevices, item.Id.ValueString()) || helpers.Contains(attachedDevices, item.Id.ValueString()) {
+		if helpers.Contains(updatedDevices, item.Id.ValueString()) || helpers.Contains(attachedDevices, item.Id.ValueString()) || edited {
 			// Retrieve device variables
 			body, _ := sjson.Set("", "templateId", data.Id.ValueString())
 			body, _ = sjson.Set(body, "deviceIds", []string{item.Id.ValueString()})
