@@ -33,7 +33,6 @@ func TestAccDataSourceSdwanSystemIPv4DeviceAccessProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_ipv4_device_access_feature.test", "default_action", "drop"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_ipv4_device_access_feature.test", "sequences.0.id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_ipv4_device_access_feature.test", "sequences.0.name", "SEQ_1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_ipv4_device_access_feature.test", "sequences.0.base_action", "accept"))
@@ -69,7 +68,6 @@ func testAccDataSourceSdwanSystemIPv4DeviceAccessProfileParcelConfig() string {
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
-	config += `	default_action = "drop"` + "\n"
 	config += `	sequences = [{` + "\n"
 	config += `	  id = 1` + "\n"
 	config += `	  name = "SEQ_1"` + "\n"
