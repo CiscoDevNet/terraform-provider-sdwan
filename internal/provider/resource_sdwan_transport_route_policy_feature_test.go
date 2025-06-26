@@ -33,7 +33,6 @@ func TestAccSdwanTransportRoutePolicyProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "default_action", "accept"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "sequences.0.id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "sequences.0.name", "SEQ_1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "sequences.0.base_action", "reject"))
@@ -92,7 +91,6 @@ func testAccSdwanTransportRoutePolicyProfileParcelConfig_all() string {
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
-	config += `	default_action = "accept"` + "\n"
 	config += `	sequences = [{` + "\n"
 	config += `	  id = 1` + "\n"
 	config += `	  name = "SEQ_1"` + "\n"
