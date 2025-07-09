@@ -488,12 +488,7 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.optionType", "variable")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.value", data.Ipv4NatRangeStartVariable.ValueString())
 		}
-	} else if data.Ipv4NatRangeStart.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.optionType", "default")
-
-		}
-	} else {
+	} else if !data.Ipv4NatRangeStart.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.value", data.Ipv4NatRangeStart.ValueString())
@@ -505,12 +500,7 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.optionType", "variable")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.value", data.Ipv4NatRangeEndVariable.ValueString())
 		}
-	} else if data.Ipv4NatRangeEnd.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.optionType", "default")
-
-		}
-	} else {
+	} else if !data.Ipv4NatRangeEnd.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.value", data.Ipv4NatRangeEnd.ValueString())
@@ -522,12 +512,7 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.optionType", "variable")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.value", data.Ipv4NatPrefixLengthVariable.ValueString())
 		}
-	} else if data.Ipv4NatPrefixLength.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.optionType", "default")
-
-		}
-	} else {
+	} else if !data.Ipv4NatPrefixLength.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.value", data.Ipv4NatPrefixLength.ValueInt64())
@@ -539,12 +524,7 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.optionType", "variable")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.value", data.Ipv4NatOverloadVariable.ValueString())
 		}
-	} else if data.Ipv4NatOverload.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.optionType", "default")
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.value", true)
-		}
-	} else {
+	} else if !data.Ipv4NatOverload.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.value", data.Ipv4NatOverload.ValueBool())
@@ -560,15 +540,10 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 			body, _ = sjson.Set(body, path+"natAttributesIpv4."+natLookBackRef+".optionType", "variable")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4."+natLookBackRef+".value", data.Ipv4NatLoopbackVariable.ValueString())
 		}
-	} else if data.Ipv4NatLoopback.IsNull() {
+	} else if !data.Ipv4NatLoopback.IsNull() {
 		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.optionType", "default")
-
-		}
-	} else {
-		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.optionType", "global")
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.value", data.Ipv4NatLoopback.ValueString())
+			body, _ = sjson.Set(body, path+"natAttributesIpv4."+natLookBackRef+".optionType", "global")
+			body, _ = sjson.Set(body, path+"natAttributesIpv4."+natLookBackRef+".value", data.Ipv4NatLoopback.ValueString())
 		}
 	}
 
