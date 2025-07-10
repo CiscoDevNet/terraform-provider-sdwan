@@ -140,7 +140,7 @@ func (d *TrafficDataPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 										MarkdownDescription: "DNS request or response",
 										Computed:            true,
 									},
-									"dscp": schema.Int64Attribute{
+									"dscp": schema.StringAttribute{
 										MarkdownDescription: "DSCP value",
 										Computed:            true,
 									},

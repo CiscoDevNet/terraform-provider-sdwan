@@ -26,7 +26,6 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
-	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -151,12 +150,9 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 											stringvalidator.OneOf("request", "response"),
 										},
 									},
-									"dscp": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` being equal to `dscp`").AddIntegerRangeDescription(0, 63).String,
+									"dscp": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` being equal to `dscp`").String,
 										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(0, 63),
-										},
 									},
 									"plp": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("PLP, Attribute conditional on `type` being equal to `plp`").AddStringEnumDescription("low", "high").String,

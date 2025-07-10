@@ -172,12 +172,9 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 											stringvalidator.OneOf("request", "response"),
 										},
 									},
-									"dscp": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` being equal to `dscp`").AddIntegerRangeDescription(0, 63).String,
+									"dscp": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` being equal to `dscp`").String,
 										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(0, 63),
-										},
 									},
 									"packet_length": schema.Int64Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Packet length, Attribute conditional on `type` being equal to `packetLength`").AddIntegerRangeDescription(0, 65535).String,

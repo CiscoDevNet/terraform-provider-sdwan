@@ -58,7 +58,7 @@ type TrafficDataPolicyDefinitionSequencesMatchEntries struct {
 	DnsApplicationListVersion        types.Int64  `tfsdk:"dns_application_list_version"`
 	IcmpMessage                      types.String `tfsdk:"icmp_message"`
 	Dns                              types.String `tfsdk:"dns"`
-	Dscp                             types.Int64  `tfsdk:"dscp"`
+	Dscp                             types.String `tfsdk:"dscp"`
 	PacketLength                     types.Int64  `tfsdk:"packet_length"`
 	Plp                              types.String `tfsdk:"plp"`
 	Protocol                         types.String `tfsdk:"protocol"`
@@ -195,7 +195,7 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Dns.ValueString())
 					}
 					if !childItem.Dscp.IsNull() && childItem.Type.ValueString() == "dscp" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Dscp.ValueInt64()))
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Dscp.ValueString()))
 					}
 					if !childItem.PacketLength.IsNull() && childItem.Type.ValueString() == "packetLength" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.PacketLength.ValueInt64()))
@@ -500,9 +500,9 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 						cItem.Dns = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "dscp" {
-						cItem.Dscp = types.Int64Value(ccValue.Int())
+						cItem.Dscp = types.StringValue(ccValue.String())
 					} else {
-						cItem.Dscp = types.Int64Null()
+						cItem.Dscp = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "packetLength" {
 						cItem.PacketLength = types.Int64Value(ccValue.Int())

@@ -128,7 +128,7 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Schema(ctx context.C
 										MarkdownDescription: "DNS request or response",
 										Computed:            true,
 									},
-									"dscp": schema.Int64Attribute{
+									"dscp": schema.StringAttribute{
 										MarkdownDescription: "DSCP value",
 										Computed:            true,
 									},

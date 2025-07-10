@@ -85,7 +85,7 @@ Read-Only:
 - `dns` (String) DNS request or response
 - `dns_application_list_id` (String) DNS Application list ID
 - `dns_application_list_version` (Number) DNS Application list version
-- `dscp` (Number) DSCP value
+- `dscp` (String) DSCP value
 - `icmp_message` (String) ICMP Message
 - `plp` (String) PLP
 - `protocol` (String) IP Protocol, 0-255 (Single value or multiple values separated by spaces)
