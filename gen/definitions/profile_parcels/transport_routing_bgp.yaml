@@ -1,3 +1,4 @@
+# Manual resource - Modals updateBody and updateFromBody are manually configured to support 'restart', 'warning-only', and 'disable-peer' conditional attributes.
 ---
 name: Transport Routing BGP
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/routing/bgp
