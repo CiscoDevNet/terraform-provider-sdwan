@@ -53,6 +53,8 @@ Required:
 
 Import is supported using the following syntax:
 
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
+
 ```shell
 # One feature device template ID and a comma separated list containing at least one device ID must be included: 
 terraform import sdwan_attach_feature_device_template.example "f6b2c44c-693c-4763-b010-895aa3d236bd,[C8K-83E4B5EE-52AC-075F-B5E4-0050110680F3,C8K-C38D156C-34E4-909A-15BB-96D0E9D0E808]"
