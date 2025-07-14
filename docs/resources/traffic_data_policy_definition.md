@@ -199,8 +199,7 @@ Optional:
   - Choices: `request`, `response`
 - `dns_application_list_id` (String) DNS Application list ID, Attribute conditional on `type` being equal to `dnsAppList`
 - `dns_application_list_version` (Number) DNS Application list version
-- `dscp` (Number) DSCP value, Attribute conditional on `type` being equal to `dscp`
-  - Range: `0`-`63`
+- `dscp` (String) DSCP value, Attribute conditional on `type` being equal to `dscp`
 - `icmp_message` (String) ICMP Message, Attribute conditional on `type` being equal to `icmpMessage`
 - `packet_length` (Number) Packet length, Attribute conditional on `type` being equal to `packetLength`
   - Range: `0`-`65535`
