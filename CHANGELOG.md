@@ -1,3 +1,7 @@
+## 0.6.3 (Unreleased)
+
+- Add `gateway` attribute for `ipv4_static_routes` and `ipv6_static_routes` in `sdwan_service_lan_vpn_feature` resource
+
 ## 0.6.2
 
 - Fix issue causing changes to applied feature templates to fail, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/417)
