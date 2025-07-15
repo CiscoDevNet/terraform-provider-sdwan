@@ -25,12 +25,15 @@ import (
 	"strconv"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 // End of section. //template:end imports
+
+var MinServiceLANVPNInterfaceEthernetUpdateVersion = version.Must(version.NewVersion("20.14.0"))
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type ServiceLANVPNInterfaceEthernet struct {
@@ -232,8 +235,7 @@ func (data ServiceLANVPNInterfaceEthernet) getPath() string {
 
 // End of section. //template:end getPath
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context) string {
+func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVersion *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -486,12 +488,7 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.optionType", "variable")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.value", data.Ipv4NatRangeStartVariable.ValueString())
 		}
-	} else if data.Ipv4NatRangeStart.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.optionType", "default")
-
-		}
-	} else {
+	} else if !data.Ipv4NatRangeStart.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.value", data.Ipv4NatRangeStart.ValueString())
@@ -503,12 +500,7 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.optionType", "variable")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.value", data.Ipv4NatRangeEndVariable.ValueString())
 		}
-	} else if data.Ipv4NatRangeEnd.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.optionType", "default")
-
-		}
-	} else {
+	} else if !data.Ipv4NatRangeEnd.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.value", data.Ipv4NatRangeEnd.ValueString())
@@ -520,12 +512,7 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.optionType", "variable")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.value", data.Ipv4NatPrefixLengthVariable.ValueString())
 		}
-	} else if data.Ipv4NatPrefixLength.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.optionType", "default")
-
-		}
-	} else {
+	} else if !data.Ipv4NatPrefixLength.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.value", data.Ipv4NatPrefixLength.ValueInt64())
@@ -537,32 +524,26 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.optionType", "variable")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.value", data.Ipv4NatOverloadVariable.ValueString())
 		}
-	} else if data.Ipv4NatOverload.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.optionType", "default")
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.value", true)
-		}
-	} else {
+	} else if !data.Ipv4NatOverload.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.value", data.Ipv4NatOverload.ValueBool())
 		}
 	}
 
+	natLookBackRef := "natLookback"
+	if !currentVersion.LessThan(MinServiceLANVPNInterfaceEthernetUpdateVersion) {
+		natLookBackRef = "natLoopback"
+	}
 	if !data.Ipv4NatLoopbackVariable.IsNull() {
 		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.optionType", "variable")
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.value", data.Ipv4NatLoopbackVariable.ValueString())
+			body, _ = sjson.Set(body, path+"natAttributesIpv4."+natLookBackRef+".optionType", "variable")
+			body, _ = sjson.Set(body, path+"natAttributesIpv4."+natLookBackRef+".value", data.Ipv4NatLoopbackVariable.ValueString())
 		}
-	} else if data.Ipv4NatLoopback.IsNull() {
+	} else if !data.Ipv4NatLoopback.IsNull() {
 		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.optionType", "default")
-
-		}
-	} else {
-		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.optionType", "global")
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.value", data.Ipv4NatLoopback.ValueString())
+			body, _ = sjson.Set(body, path+"natAttributesIpv4."+natLookBackRef+".optionType", "global")
+			body, _ = sjson.Set(body, path+"natAttributesIpv4."+natLookBackRef+".value", data.Ipv4NatLoopback.ValueString())
 		}
 	}
 
@@ -1326,10 +1307,7 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context) string {
 	return body
 }
 
-// End of section. //template:end toBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gjson.Result, currentVersion *version.Version) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -1577,8 +1555,12 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 	}
 	data.Ipv4NatLoopback = types.StringNull()
 	data.Ipv4NatLoopbackVariable = types.StringNull()
-	if t := res.Get(path + "natAttributesIpv4.natLookback.optionType"); t.Exists() {
-		va := res.Get(path + "natAttributesIpv4.natLookback.value")
+	natLookBackRef := "natLookback"
+	if !currentVersion.LessThan(MinServiceLANVPNInterfaceEthernetUpdateVersion) {
+		natLookBackRef = "natLoopback"
+	}
+	if t := res.Get(path + "natAttributesIpv4." + natLookBackRef + ".optionType"); t.Exists() {
+		va := res.Get(path + "natAttributesIpv4." + natLookBackRef + ".value")
 		if t.String() == "variable" {
 			data.Ipv4NatLoopbackVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
@@ -2133,10 +2115,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 	}
 }
 
-// End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *ServiceLANVPNInterfaceEthernet) updateFromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceLANVPNInterfaceEthernet) updateFromBody(ctx context.Context, res gjson.Result, currentVersion *version.Version) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -2480,8 +2459,12 @@ func (data *ServiceLANVPNInterfaceEthernet) updateFromBody(ctx context.Context, 
 	}
 	data.Ipv4NatLoopback = types.StringNull()
 	data.Ipv4NatLoopbackVariable = types.StringNull()
-	if t := res.Get(path + "natAttributesIpv4.natLookback.optionType"); t.Exists() {
-		va := res.Get(path + "natAttributesIpv4.natLookback.value")
+	natLookBackRef := "natLookback"
+	if !currentVersion.LessThan(MinServiceLANVPNInterfaceEthernetUpdateVersion) {
+		natLookBackRef = "natLoopback"
+	}
+	if t := res.Get(path + "natAttributesIpv4." + natLookBackRef + ".optionType"); t.Exists() {
+		va := res.Get(path + "natAttributesIpv4." + natLookBackRef + ".value")
 		if t.String() == "variable" {
 			data.Ipv4NatLoopbackVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
