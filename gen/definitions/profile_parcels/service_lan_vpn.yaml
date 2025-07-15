@@ -120,7 +120,7 @@ attributes:
       description: Gateway type
       enum_values: [nextHop, null0, vpn, dhcp]
       example: nextHop
-      
+
     - model_name: nextHop
       tf_name: next_hops
       data_path: [oneOfIpRoute, nextHopContainer]
@@ -388,7 +388,7 @@ attributes:
         exclude_test: true
         example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
   - model_name: routeLeakBetweenServices
-    tf_name: route_leak_from_other_services 
+    tf_name: route_leak_from_other_services
     exclude_test: true
     attributes:
     - model_name: sourceVpn
@@ -418,7 +418,7 @@ attributes:
     - model_name: rt
       tf_name: route_target
       id: true
-      example:  1.1.1.3:200
+      example: 1.1.1.3:200
   - model_name: exportRtList
     tf_name: ipv4_export_route_targets
     data_path: [mplsVpnIpv4RouteTarget]
