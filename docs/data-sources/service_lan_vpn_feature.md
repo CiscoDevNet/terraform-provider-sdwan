@@ -179,6 +179,7 @@ Read-Only:
 
 Read-Only:
 
+- `gateway` (String) Gateway type
 - `gateway_dhcp` (Boolean) IPv4 Route Gateway DHCP
 - `network_address` (String) IP Address
 - `network_address_variable` (String) Variable name
@@ -236,6 +237,7 @@ Read-Only:
 
 Read-Only:
 
+- `gateway` (String) Gateway type
 - `nat` (String) IPv6 Nat
 - `nat_variable` (String) Variable name
 - `next_hops` (Attributes List) IPv6 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv6_static_routes--next_hops))
