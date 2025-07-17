@@ -1205,13 +1205,13 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 
 			if !item.TranslatedSourceIpVariable.IsNull() {
 				if true {
-					itemBody, _ = sjson.Set(itemBody, "TranslatedSourceIp.optionType", "variable")
-					itemBody, _ = sjson.Set(itemBody, "TranslatedSourceIp.value", item.TranslatedSourceIpVariable.ValueString())
+					itemBody, _ = sjson.Set(itemBody, "translatedSourceIp.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "translatedSourceIp.value", item.TranslatedSourceIpVariable.ValueString())
 				}
 			} else if !item.TranslatedSourceIp.IsNull() {
 				if true {
-					itemBody, _ = sjson.Set(itemBody, "TranslatedSourceIp.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "TranslatedSourceIp.value", item.TranslatedSourceIp.ValueString())
+					itemBody, _ = sjson.Set(itemBody, "translatedSourceIp.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "translatedSourceIp.value", item.TranslatedSourceIp.ValueString())
 				}
 			}
 
@@ -1265,13 +1265,13 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 
 			if !item.TranslatedSourceIpVariable.IsNull() {
 				if true {
-					itemBody, _ = sjson.Set(itemBody, "TranslatedSourceIp.optionType", "variable")
-					itemBody, _ = sjson.Set(itemBody, "TranslatedSourceIp.value", item.TranslatedSourceIpVariable.ValueString())
+					itemBody, _ = sjson.Set(itemBody, "translatedSourceIp.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "translatedSourceIp.value", item.TranslatedSourceIpVariable.ValueString())
 				}
 			} else if !item.TranslatedSourceIp.IsNull() {
 				if true {
-					itemBody, _ = sjson.Set(itemBody, "TranslatedSourceIp.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "TranslatedSourceIp.value", item.TranslatedSourceIp.ValueString())
+					itemBody, _ = sjson.Set(itemBody, "translatedSourceIp.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "translatedSourceIp.value", item.TranslatedSourceIp.ValueString())
 				}
 			}
 
@@ -2327,8 +2327,8 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			item.TranslatedSourceIp = types.StringNull()
 			item.TranslatedSourceIpVariable = types.StringNull()
-			if t := v.Get("TranslatedSourceIp.optionType"); t.Exists() {
-				va := v.Get("TranslatedSourceIp.value")
+			if t := v.Get("translatedSourceIp.optionType"); t.Exists() {
+				va := v.Get("translatedSourceIp.value")
 				if t.String() == "variable" {
 					item.TranslatedSourceIpVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
@@ -2375,8 +2375,8 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			item.TranslatedSourceIp = types.StringNull()
 			item.TranslatedSourceIpVariable = types.StringNull()
-			if t := v.Get("TranslatedSourceIp.optionType"); t.Exists() {
-				va := v.Get("TranslatedSourceIp.value")
+			if t := v.Get("translatedSourceIp.optionType"); t.Exists() {
+				va := v.Get("translatedSourceIp.value")
 				if t.String() == "variable" {
 					item.TranslatedSourceIpVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
@@ -3811,8 +3811,8 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 		}
 		data.NatPortForwards[i].TranslatedSourceIp = types.StringNull()
 		data.NatPortForwards[i].TranslatedSourceIpVariable = types.StringNull()
-		if t := r.Get("TranslatedSourceIp.optionType"); t.Exists() {
-			va := r.Get("TranslatedSourceIp.value")
+		if t := r.Get("translatedSourceIp.optionType"); t.Exists() {
+			va := r.Get("translatedSourceIp.value")
 			if t.String() == "variable" {
 				data.NatPortForwards[i].TranslatedSourceIpVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
@@ -3883,8 +3883,8 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 		}
 		data.StaticNats[i].TranslatedSourceIp = types.StringNull()
 		data.StaticNats[i].TranslatedSourceIpVariable = types.StringNull()
-		if t := r.Get("TranslatedSourceIp.optionType"); t.Exists() {
-			va := r.Get("TranslatedSourceIp.value")
+		if t := r.Get("translatedSourceIp.optionType"); t.Exists() {
+			va := r.Get("translatedSourceIp.value")
 			if t.String() == "variable" {
 				data.StaticNats[i].TranslatedSourceIpVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
