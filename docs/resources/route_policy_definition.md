@@ -97,6 +97,7 @@ Optional:
 - `atomic_aggregate` (Boolean) Atomic aggregate, Attribute conditional on `type` being equal to `atomicAggregate`
 - `community` (String) Community value, e.g. `1000:10000` or `internet` or `local-AS`, Attribute conditional on `type` being equal to `community`
 - `community_additive` (Boolean) Community additive, Attribute conditional on `type` being equal to `communityAdditive`
+- `community_variable` (String) Community variable, Attribute conditional on `type` being equal to `community`
 - `local_preference` (Number) Local preference, Attribute conditional on `type` being equal to `localPreference`
   - Range: `0`-`4294967295`
 - `metric` (Number) Metric, Attribute conditional on `type` being equal to `metric`
@@ -132,6 +133,7 @@ Optional:
   - Choices: `and`, `or`, `exact`
 - `community_list_versions` (List of String) Community list versions
 - `expanded_community_list_id` (String) Expanded community list ID, Attribute conditional on `type` being equal to `expandedCommunity`
+- `expanded_community_list_variable` (String) Expanded community list variable, Attribute conditional on `type` being equal to `expandedCommunity`
 - `expanded_community_list_version` (Number) Expanded community list version
 - `extended_community_list_id` (String) Extended community list ID, Attribute conditional on `type` being equal to `extCommunity`
 - `extended_community_list_version` (Number) Extended community list version

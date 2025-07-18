@@ -178,6 +178,10 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 										MarkdownDescription: helpers.NewAttributeDescription("Expanded community list ID, Attribute conditional on `type` being equal to `expandedCommunity`").String,
 										Optional:            true,
 									},
+									"expanded_community_list_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Expanded community list variable, Attribute conditional on `type` being equal to `expandedCommunity`").String,
+										Optional:            true,
+									},
 									"expanded_community_list_version": schema.Int64Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Expanded community list version").String,
 										Optional:            true,
@@ -277,6 +281,10 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 									},
 									"community": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Community value, e.g. `1000:10000` or `internet` or `local-AS`, Attribute conditional on `type` being equal to `community`").String,
+										Optional:            true,
+									},
+									"community_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Community variable, Attribute conditional on `type` being equal to `community`").String,
 										Optional:            true,
 									},
 									"community_additive": schema.BoolAttribute{

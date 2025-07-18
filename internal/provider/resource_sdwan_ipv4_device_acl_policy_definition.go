@@ -138,8 +138,16 @@ func (r *IPv4DeviceACLPolicyDefinitionResource) Schema(ctx context.Context, req 
 										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix, Attribute conditional on `type` being equal to `sourceIp`").String,
 										Optional:            true,
 									},
+									"source_ip_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix variable, Attribute conditional on `type` being equal to `sourceIp`").String,
+										Optional:            true,
+									},
 									"destination_ip": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix, Attribute conditional on `type` being equal to `destinationIp`").String,
+										Optional:            true,
+									},
+									"destination_ip_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix variable, Attribute conditional on `type` being equal to `destinationIp`").String,
 										Optional:            true,
 									},
 									"source_ports": schema.StringAttribute{

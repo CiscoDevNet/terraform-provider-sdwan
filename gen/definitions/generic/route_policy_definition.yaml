@@ -154,6 +154,15 @@ attributes:
             description: Expanded community list ID
             example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
             exclude_test: true
+          - model_name: vipVariableName
+            tf_name: expanded_community_list_variable
+            conditional_attribute:
+              name: type
+              value: expandedCommunity
+            type: String
+            description: Expanded community list variable
+            exclude_test: true
+            example: expanded_community_list_variable
           - tf_name: expanded_community_list_version
             tf_only: true
             type: Version
@@ -349,6 +358,15 @@ attributes:
             description: Community value, e.g. `1000:10000` or `internet` or `local-AS`
             example: 1000:10000
             exclude_test: true
+          - model_name: vipVariableName
+            tf_name: community_variable
+            conditional_attribute:
+              name: type
+              value: community
+            type: String
+            description: Community variable
+            exclude_test: true
+            example: community_variable
           - model_name: value
             tf_name: community_additive
             conditional_attribute:

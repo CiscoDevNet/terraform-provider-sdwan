@@ -145,12 +145,20 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix, Attribute conditional on `type` being equal to `sourceIp`").String,
 										Optional:            true,
 									},
+									"source_ip_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix variable, Attribute conditional on `type` being equal to `sourceIp`").String,
+										Optional:            true,
+									},
 									"icmp_message": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("ICMP Message, Attribute conditional on `type` being equal to `icmpMessage`").String,
 										Optional:            true,
 									},
 									"destination_ip": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix, Attribute conditional on `type` being equal to `destinationIp`").String,
+										Optional:            true,
+									},
+									"destination_ip_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix variable, Attribute conditional on `type` being equal to `destinationIp`").String,
 										Optional:            true,
 									},
 									"class_map_id": schema.StringAttribute{
