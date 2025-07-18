@@ -116,12 +116,20 @@ func (d *IPv4ACLPolicyDefinitionDataSource) Schema(ctx context.Context, req data
 										MarkdownDescription: "Source IP prefix",
 										Computed:            true,
 									},
+									"source_ip_variable": schema.StringAttribute{
+										MarkdownDescription: "Source IP prefix variable",
+										Computed:            true,
+									},
 									"icmp_message": schema.StringAttribute{
 										MarkdownDescription: "ICMP Message",
 										Computed:            true,
 									},
 									"destination_ip": schema.StringAttribute{
 										MarkdownDescription: "Destination IP prefix",
+										Computed:            true,
+									},
+									"destination_ip_variable": schema.StringAttribute{
+										MarkdownDescription: "Destination IP prefix variable",
 										Computed:            true,
 									},
 									"class_map_id": schema.StringAttribute{
