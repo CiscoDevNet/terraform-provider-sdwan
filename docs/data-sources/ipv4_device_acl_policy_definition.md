@@ -62,9 +62,11 @@ Read-Only:
 - `destination_data_ipv4_prefix_list_id` (String) Destination data IPv4 prefix list ID
 - `destination_data_ipv4_prefix_list_version` (Number) Destination data IPv4 prefix list version
 - `destination_ip` (String) Destination IP prefix
+- `destination_ip_variable` (String) Destination IP prefix variable
 - `destination_port` (Number) Destination port, only `22` and `161` supported
 - `source_data_ipv4_prefix_list_id` (String) Source data IPv4 prefix list ID
 - `source_data_ipv4_prefix_list_version` (Number) Source data IPv4 prefix list version
 - `source_ip` (String) Source IP prefix
+- `source_ip_variable` (String) Source IP prefix variable
 - `source_ports` (String) Source ports. Single value (0-65535) or ranges separated by spaces.
 - `type` (String) Type of match entry

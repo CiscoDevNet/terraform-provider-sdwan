@@ -51,7 +51,9 @@ type IPv4DeviceACLPolicyDefinitionSequences struct {
 type IPv4DeviceACLPolicyDefinitionSequencesMatchEntries struct {
 	Type                                 types.String `tfsdk:"type"`
 	SourceIp                             types.String `tfsdk:"source_ip"`
+	SourceIpVariable                     types.String `tfsdk:"source_ip_variable"`
 	DestinationIp                        types.String `tfsdk:"destination_ip"`
+	DestinationIpVariable                types.String `tfsdk:"destination_ip_variable"`
 	SourcePorts                          types.String `tfsdk:"source_ports"`
 	DestinationPort                      types.Int64  `tfsdk:"destination_port"`
 	SourceDataIpv4PrefixListId           types.String `tfsdk:"source_data_ipv4_prefix_list_id"`
@@ -114,8 +116,14 @@ func (data IPv4DeviceACLPolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.SourceIp.IsNull() && childItem.Type.ValueString() == "sourceIp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.SourceIp.ValueString())
 					}
+					if !childItem.SourceIpVariable.IsNull() && childItem.Type.ValueString() == "sourceIp" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "vipVariableName", childItem.SourceIpVariable.ValueString())
+					}
 					if !childItem.DestinationIp.IsNull() && childItem.Type.ValueString() == "destinationIp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.DestinationIp.ValueString())
+					}
+					if !childItem.DestinationIpVariable.IsNull() && childItem.Type.ValueString() == "destinationIp" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "vipVariableName", childItem.DestinationIpVariable.ValueString())
 					}
 					if !childItem.SourcePorts.IsNull() && childItem.Type.ValueString() == "sourcePort" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.SourcePorts.ValueString())
@@ -204,10 +212,20 @@ func (data *IPv4DeviceACLPolicyDefinition) fromBody(ctx context.Context, res gjs
 					} else {
 						cItem.SourceIp = types.StringNull()
 					}
+					if ccValue := cv.Get("vipVariableName"); ccValue.Exists() && cItem.Type.ValueString() == "sourceIp" {
+						cItem.SourceIpVariable = types.StringValue(ccValue.String())
+					} else {
+						cItem.SourceIpVariable = types.StringNull()
+					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "destinationIp" {
 						cItem.DestinationIp = types.StringValue(ccValue.String())
 					} else {
 						cItem.DestinationIp = types.StringNull()
+					}
+					if ccValue := cv.Get("vipVariableName"); ccValue.Exists() && cItem.Type.ValueString() == "destinationIp" {
+						cItem.DestinationIpVariable = types.StringValue(ccValue.String())
+					} else {
+						cItem.DestinationIpVariable = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "sourcePort" {
 						cItem.SourcePorts = types.StringValue(ccValue.String())
@@ -307,7 +325,13 @@ func (data *IPv4DeviceACLPolicyDefinition) hasChanges(ctx context.Context, state
 					if !data.Sequences[i].MatchEntries[ii].SourceIp.Equal(state.Sequences[i].MatchEntries[ii].SourceIp) {
 						hasChanges = true
 					}
+					if !data.Sequences[i].MatchEntries[ii].SourceIpVariable.Equal(state.Sequences[i].MatchEntries[ii].SourceIpVariable) {
+						hasChanges = true
+					}
 					if !data.Sequences[i].MatchEntries[ii].DestinationIp.Equal(state.Sequences[i].MatchEntries[ii].DestinationIp) {
+						hasChanges = true
+					}
+					if !data.Sequences[i].MatchEntries[ii].DestinationIpVariable.Equal(state.Sequences[i].MatchEntries[ii].DestinationIpVariable) {
 						hasChanges = true
 					}
 					if !data.Sequences[i].MatchEntries[ii].SourcePorts.Equal(state.Sequences[i].MatchEntries[ii].SourcePorts) {

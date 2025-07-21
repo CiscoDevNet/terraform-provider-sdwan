@@ -134,15 +134,16 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 											stringvalidator.OneOf("dscp", "sourceIp", "destinationIp", "class", "packetLength", "plp", "sourcePort", "destinationPort", "sourceDataPrefixList", "destinationDataPrefixList", "protocol", "tcp", "icmpMessage"),
 										},
 									},
-									"dscp": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` being equal to `dscp`").AddIntegerRangeDescription(0, 63).String,
+									"dscp": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` being equal to `dscp`").String,
 										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(0, 63),
-										},
 									},
 									"source_ip": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix, Attribute conditional on `type` being equal to `sourceIp`").String,
+										Optional:            true,
+									},
+									"source_ip_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix variable, Attribute conditional on `type` being equal to `sourceIp`").String,
 										Optional:            true,
 									},
 									"icmp_message": schema.StringAttribute{
@@ -151,6 +152,10 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 									},
 									"destination_ip": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix, Attribute conditional on `type` being equal to `destinationIp`").String,
+										Optional:            true,
+									},
+									"destination_ip_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix variable, Attribute conditional on `type` being equal to `destinationIp`").String,
 										Optional:            true,
 									},
 									"class_map_id": schema.StringAttribute{

@@ -51,26 +51,27 @@ type RoutePolicyDefinitionSequences struct {
 }
 
 type RoutePolicyDefinitionSequencesMatchEntries struct {
-	Type                         types.String `tfsdk:"type"`
-	PrefixListId                 types.String `tfsdk:"prefix_list_id"`
-	PrefixListVersion            types.Int64  `tfsdk:"prefix_list_version"`
-	AsPathListId                 types.String `tfsdk:"as_path_list_id"`
-	AsPathListVersion            types.Int64  `tfsdk:"as_path_list_version"`
-	CommunityListIds             types.Set    `tfsdk:"community_list_ids"`
-	CommunityListVersions        types.List   `tfsdk:"community_list_versions"`
-	CommunityListMatchFlag       types.String `tfsdk:"community_list_match_flag"`
-	ExpandedCommunityListId      types.String `tfsdk:"expanded_community_list_id"`
-	ExpandedCommunityListVersion types.Int64  `tfsdk:"expanded_community_list_version"`
-	ExtendedCommunityListId      types.String `tfsdk:"extended_community_list_id"`
-	ExtendedCommunityListVersion types.Int64  `tfsdk:"extended_community_list_version"`
-	LocalPreference              types.Int64  `tfsdk:"local_preference"`
-	Metric                       types.Int64  `tfsdk:"metric"`
-	NextHopPrefixListId          types.String `tfsdk:"next_hop_prefix_list_id"`
-	NextHopPrefixListVersion     types.Int64  `tfsdk:"next_hop_prefix_list_version"`
-	Origin                       types.String `tfsdk:"origin"`
-	Peer                         types.String `tfsdk:"peer"`
-	OmpTag                       types.Int64  `tfsdk:"omp_tag"`
-	OspfTag                      types.Int64  `tfsdk:"ospf_tag"`
+	Type                          types.String `tfsdk:"type"`
+	PrefixListId                  types.String `tfsdk:"prefix_list_id"`
+	PrefixListVersion             types.Int64  `tfsdk:"prefix_list_version"`
+	AsPathListId                  types.String `tfsdk:"as_path_list_id"`
+	AsPathListVersion             types.Int64  `tfsdk:"as_path_list_version"`
+	CommunityListIds              types.Set    `tfsdk:"community_list_ids"`
+	CommunityListVersions         types.List   `tfsdk:"community_list_versions"`
+	CommunityListMatchFlag        types.String `tfsdk:"community_list_match_flag"`
+	ExpandedCommunityListId       types.String `tfsdk:"expanded_community_list_id"`
+	ExpandedCommunityListVariable types.String `tfsdk:"expanded_community_list_variable"`
+	ExpandedCommunityListVersion  types.Int64  `tfsdk:"expanded_community_list_version"`
+	ExtendedCommunityListId       types.String `tfsdk:"extended_community_list_id"`
+	ExtendedCommunityListVersion  types.Int64  `tfsdk:"extended_community_list_version"`
+	LocalPreference               types.Int64  `tfsdk:"local_preference"`
+	Metric                        types.Int64  `tfsdk:"metric"`
+	NextHopPrefixListId           types.String `tfsdk:"next_hop_prefix_list_id"`
+	NextHopPrefixListVersion      types.Int64  `tfsdk:"next_hop_prefix_list_version"`
+	Origin                        types.String `tfsdk:"origin"`
+	Peer                          types.String `tfsdk:"peer"`
+	OmpTag                        types.Int64  `tfsdk:"omp_tag"`
+	OspfTag                       types.Int64  `tfsdk:"ospf_tag"`
 }
 type RoutePolicyDefinitionSequencesActionEntries struct {
 	Type                types.String `tfsdk:"type"`
@@ -80,6 +81,7 @@ type RoutePolicyDefinitionSequencesActionEntries struct {
 	AsPathExclude       types.String `tfsdk:"as_path_exclude"`
 	AtomicAggregate     types.Bool   `tfsdk:"atomic_aggregate"`
 	Community           types.String `tfsdk:"community"`
+	CommunityVariable   types.String `tfsdk:"community_variable"`
 	CommunityAdditive   types.Bool   `tfsdk:"community_additive"`
 	LocalPreference     types.Int64  `tfsdk:"local_preference"`
 	Metric              types.Int64  `tfsdk:"metric"`
@@ -159,6 +161,9 @@ func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.ExpandedCommunityListId.IsNull() && childItem.Type.ValueString() == "expandedCommunity" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.ExpandedCommunityListId.ValueString())
 					}
+					if !childItem.ExpandedCommunityListVariable.IsNull() && childItem.Type.ValueString() == "expandedCommunityInline" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "vipVariableName", childItem.ExpandedCommunityListVariable.ValueString())
+					}
 					if !childItem.ExtendedCommunityListId.IsNull() && childItem.Type.ValueString() == "extCommunity" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.ExtendedCommunityListId.ValueString())
 					}
@@ -217,6 +222,9 @@ func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 					}
 					if !childItem.Community.IsNull() && childItem.Type.ValueString() == "community" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Community.ValueString())
+					}
+					if !childItem.CommunityVariable.IsNull() && childItem.Type.ValueString() == "community" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "vipVariableName", childItem.CommunityVariable.ValueString())
 					}
 					if !childItem.CommunityAdditive.IsNull() && childItem.Type.ValueString() == "communityAdditive" {
 						if false && childItem.CommunityAdditive.ValueBool() {
@@ -339,6 +347,11 @@ func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Resul
 					} else {
 						cItem.ExpandedCommunityListId = types.StringNull()
 					}
+					if ccValue := cv.Get("vipVariableName"); ccValue.Exists() && cItem.Type.ValueString() == "expandedCommunityInline" {
+						cItem.ExpandedCommunityListVariable = types.StringValue(ccValue.String())
+					} else {
+						cItem.ExpandedCommunityListVariable = types.StringNull()
+					}
 					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "extCommunity" {
 						cItem.ExtendedCommunityListId = types.StringValue(ccValue.String())
 					} else {
@@ -429,6 +442,11 @@ func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Resul
 						cItem.Community = types.StringValue(ccValue.String())
 					} else {
 						cItem.Community = types.StringNull()
+					}
+					if ccValue := cv.Get("vipVariableName"); ccValue.Exists() && cItem.Type.ValueString() == "community" {
+						cItem.CommunityVariable = types.StringValue(ccValue.String())
+					} else {
+						cItem.CommunityVariable = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "communityAdditive" {
 						if false && ccValue.String() == "" {
@@ -555,6 +573,9 @@ func (data *RoutePolicyDefinition) hasChanges(ctx context.Context, state *RouteP
 					if !data.Sequences[i].MatchEntries[ii].ExpandedCommunityListId.Equal(state.Sequences[i].MatchEntries[ii].ExpandedCommunityListId) {
 						hasChanges = true
 					}
+					if !data.Sequences[i].MatchEntries[ii].ExpandedCommunityListVariable.Equal(state.Sequences[i].MatchEntries[ii].ExpandedCommunityListVariable) {
+						hasChanges = true
+					}
 					if !data.Sequences[i].MatchEntries[ii].ExtendedCommunityListId.Equal(state.Sequences[i].MatchEntries[ii].ExtendedCommunityListId) {
 						hasChanges = true
 					}
@@ -604,6 +625,9 @@ func (data *RoutePolicyDefinition) hasChanges(ctx context.Context, state *RouteP
 						hasChanges = true
 					}
 					if !data.Sequences[i].ActionEntries[ii].Community.Equal(state.Sequences[i].ActionEntries[ii].Community) {
+						hasChanges = true
+					}
+					if !data.Sequences[i].ActionEntries[ii].CommunityVariable.Equal(state.Sequences[i].ActionEntries[ii].CommunityVariable) {
 						hasChanges = true
 					}
 					if !data.Sequences[i].ActionEntries[ii].CommunityAdditive.Equal(state.Sequences[i].ActionEntries[ii].CommunityAdditive) {

@@ -90,6 +90,15 @@ attributes:
             description: Source IP prefix
             exclude_test: true
             example: 10.0.0.0/8
+          - model_name: vipVariableName
+            tf_name: source_ip_variable
+            conditional_attribute:
+              name: type
+              value: sourceIp
+            type: String
+            description: Source IP prefix variable
+            exclude_test: true
+            example: source_ip_variable
           - model_name: value
             tf_name: destination_ip
             conditional_attribute:
@@ -99,6 +108,15 @@ attributes:
             description: Destination IP prefix
             exclude_test: true
             example: 192.168.0.0/16
+          - model_name: vipVariableName
+            tf_name: destination_ip_variable
+            conditional_attribute:
+              name: type
+              value: destinationIp
+            type: String
+            description: Destination IP prefix variable
+            exclude_test: true
+            example: destination_ip_variable
           - model_name: value
             tf_name: source_ports
             conditional_attribute:

@@ -146,6 +146,10 @@ func (d *RoutePolicyDefinitionDataSource) Schema(ctx context.Context, req dataso
 										MarkdownDescription: "Expanded community list ID",
 										Computed:            true,
 									},
+									"expanded_community_list_variable": schema.StringAttribute{
+										MarkdownDescription: "Expanded community list variable",
+										Computed:            true,
+									},
 									"expanded_community_list_version": schema.Int64Attribute{
 										MarkdownDescription: "Expanded community list version",
 										Computed:            true,
@@ -224,6 +228,10 @@ func (d *RoutePolicyDefinitionDataSource) Schema(ctx context.Context, req dataso
 									},
 									"community": schema.StringAttribute{
 										MarkdownDescription: "Community value, e.g. `1000:10000` or `internet` or `local-AS`",
+										Computed:            true,
+									},
+									"community_variable": schema.StringAttribute{
+										MarkdownDescription: "Community variable",
 										Computed:            true,
 									},
 									"community_additive": schema.BoolAttribute{

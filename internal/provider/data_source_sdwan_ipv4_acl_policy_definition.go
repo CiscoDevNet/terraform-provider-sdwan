@@ -108,12 +108,16 @@ func (d *IPv4ACLPolicyDefinitionDataSource) Schema(ctx context.Context, req data
 										MarkdownDescription: "Type of match entry",
 										Computed:            true,
 									},
-									"dscp": schema.Int64Attribute{
+									"dscp": schema.StringAttribute{
 										MarkdownDescription: "DSCP value",
 										Computed:            true,
 									},
 									"source_ip": schema.StringAttribute{
 										MarkdownDescription: "Source IP prefix",
+										Computed:            true,
+									},
+									"source_ip_variable": schema.StringAttribute{
+										MarkdownDescription: "Source IP prefix variable",
 										Computed:            true,
 									},
 									"icmp_message": schema.StringAttribute{
@@ -122,6 +126,10 @@ func (d *IPv4ACLPolicyDefinitionDataSource) Schema(ctx context.Context, req data
 									},
 									"destination_ip": schema.StringAttribute{
 										MarkdownDescription: "Destination IP prefix",
+										Computed:            true,
+									},
+									"destination_ip_variable": schema.StringAttribute{
+										MarkdownDescription: "Destination IP prefix variable",
 										Computed:            true,
 									},
 									"class_map_id": schema.StringAttribute{

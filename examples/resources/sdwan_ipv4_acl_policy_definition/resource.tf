@@ -10,7 +10,7 @@ resource "sdwan_ipv4_acl_policy_definition" "example" {
       match_entries = [
         {
           type = "dscp"
-          dscp = 16
+          dscp = "16"
         }
       ]
       action_entries = [
