@@ -122,7 +122,7 @@ Optional:
 Required:
 
 - `type` (String) Type of match entry
-  - Choices: `address`, `asPath`, `advancedCommunity`, `expandedCommunity`, `extCommunity`, `localPreference`, `metric`, `nextHop`, `origin`, `peer`, `ompTag`, `ospfTag`
+  - Choices: `address`, `asPath`, `advancedCommunity`, `expandedCommunity`, `expandedCommunityInline`, `extCommunity`, `localPreference`, `metric`, `nextHop`, `origin`, `peer`, `ompTag`, `ospfTag`
 
 Optional:
 
@@ -133,7 +133,7 @@ Optional:
   - Choices: `and`, `or`, `exact`
 - `community_list_versions` (List of String) Community list versions
 - `expanded_community_list_id` (String) Expanded community list ID, Attribute conditional on `type` being equal to `expandedCommunity`
-- `expanded_community_list_variable` (String) Expanded community list variable, Attribute conditional on `type` being equal to `expandedCommunity`
+- `expanded_community_list_variable` (String) Expanded community list variable, Attribute conditional on `type` being equal to `expandedCommunityInline`
 - `expanded_community_list_version` (Number) Expanded community list version
 - `extended_community_list_id` (String) Extended community list ID, Attribute conditional on `type` being equal to `extCommunity`
 - `extended_community_list_version` (Number) Extended community list version

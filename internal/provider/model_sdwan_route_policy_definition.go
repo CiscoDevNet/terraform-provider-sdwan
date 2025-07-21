@@ -161,7 +161,7 @@ func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.ExpandedCommunityListId.IsNull() && childItem.Type.ValueString() == "expandedCommunity" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.ExpandedCommunityListId.ValueString())
 					}
-					if !childItem.ExpandedCommunityListVariable.IsNull() && childItem.Type.ValueString() == "expandedCommunity" {
+					if !childItem.ExpandedCommunityListVariable.IsNull() && childItem.Type.ValueString() == "expandedCommunityInline" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "vipVariableName", childItem.ExpandedCommunityListVariable.ValueString())
 					}
 					if !childItem.ExtendedCommunityListId.IsNull() && childItem.Type.ValueString() == "extCommunity" {
@@ -347,7 +347,7 @@ func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Resul
 					} else {
 						cItem.ExpandedCommunityListId = types.StringNull()
 					}
-					if ccValue := cv.Get("vipVariableName"); ccValue.Exists() && cItem.Type.ValueString() == "expandedCommunity" {
+					if ccValue := cv.Get("vipVariableName"); ccValue.Exists() && cItem.Type.ValueString() == "expandedCommunityInline" {
 						cItem.ExpandedCommunityListVariable = types.StringValue(ccValue.String())
 					} else {
 						cItem.ExpandedCommunityListVariable = types.StringNull()

@@ -135,10 +135,10 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("address", "asPath", "advancedCommunity", "expandedCommunity", "extCommunity", "localPreference", "metric", "nextHop", "origin", "peer", "ompTag", "ospfTag").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("address", "asPath", "advancedCommunity", "expandedCommunity", "expandedCommunityInline", "extCommunity", "localPreference", "metric", "nextHop", "origin", "peer", "ompTag", "ospfTag").String,
 										Required:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("address", "asPath", "advancedCommunity", "expandedCommunity", "extCommunity", "localPreference", "metric", "nextHop", "origin", "peer", "ompTag", "ospfTag"),
+											stringvalidator.OneOf("address", "asPath", "advancedCommunity", "expandedCommunity", "expandedCommunityInline", "extCommunity", "localPreference", "metric", "nextHop", "origin", "peer", "ompTag", "ospfTag"),
 										},
 									},
 									"prefix_list_id": schema.StringAttribute{
@@ -179,7 +179,7 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 										Optional:            true,
 									},
 									"expanded_community_list_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Expanded community list variable, Attribute conditional on `type` being equal to `expandedCommunity`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Expanded community list variable, Attribute conditional on `type` being equal to `expandedCommunityInline`").String,
 										Optional:            true,
 									},
 									"expanded_community_list_version": schema.Int64Attribute{
