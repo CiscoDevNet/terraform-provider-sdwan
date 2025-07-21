@@ -108,7 +108,7 @@ func (d *IPv4ACLPolicyDefinitionDataSource) Schema(ctx context.Context, req data
 										MarkdownDescription: "Type of match entry",
 										Computed:            true,
 									},
-									"dscp": schema.Int64Attribute{
+									"dscp": schema.StringAttribute{
 										MarkdownDescription: "DSCP value",
 										Computed:            true,
 									},

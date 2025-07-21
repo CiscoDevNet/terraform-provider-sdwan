@@ -25,7 +25,7 @@ resource "sdwan_ipv4_acl_policy_definition" "example" {
       match_entries = [
         {
           type = "dscp"
-          dscp = 16
+          dscp = "16"
         }
       ]
       action_entries = [
@@ -133,8 +133,7 @@ Optional:
 - `destination_ip` (String) Destination IP prefix, Attribute conditional on `type` being equal to `destinationIp`
 - `destination_ip_variable` (String) Destination IP prefix variable, Attribute conditional on `type` being equal to `destinationIp`
 - `destination_ports` (String) Destination ports. Single value (0-65535) or ranges separated by spaces., Attribute conditional on `type` being equal to `destinationPort`
-- `dscp` (Number) DSCP value, Attribute conditional on `type` being equal to `dscp`
-  - Range: `0`-`63`
+- `dscp` (String) DSCP value, Attribute conditional on `type` being equal to `dscp`
 - `icmp_message` (String) ICMP Message, Attribute conditional on `type` being equal to `icmpMessage`
 - `packet_length` (Number) Packet length, Attribute conditional on `type` being equal to `packetLength`
   - Range: `0`-`65535`

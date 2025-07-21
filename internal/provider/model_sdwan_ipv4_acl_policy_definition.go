@@ -50,7 +50,7 @@ type IPv4ACLPolicyDefinitionSequences struct {
 
 type IPv4ACLPolicyDefinitionSequencesMatchEntries struct {
 	Type                                 types.String `tfsdk:"type"`
-	Dscp                                 types.Int64  `tfsdk:"dscp"`
+	Dscp                                 types.String `tfsdk:"dscp"`
 	SourceIp                             types.String `tfsdk:"source_ip"`
 	SourceIpVariable                     types.String `tfsdk:"source_ip_variable"`
 	IcmpMessage                          types.String `tfsdk:"icmp_message"`
@@ -136,7 +136,7 @@ func (data IPv4ACLPolicyDefinition) toBody(ctx context.Context) string {
 						itemChildBody, _ = sjson.Set(itemChildBody, "field", childItem.Type.ValueString())
 					}
 					if !childItem.Dscp.IsNull() && childItem.Type.ValueString() == "dscp" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Dscp.ValueInt64()))
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Dscp.ValueString()))
 					}
 					if !childItem.SourceIp.IsNull() && childItem.Type.ValueString() == "sourceIp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.SourceIp.ValueString())
@@ -281,9 +281,9 @@ func (data *IPv4ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Res
 						cItem.Type = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "dscp" {
-						cItem.Dscp = types.Int64Value(ccValue.Int())
+						cItem.Dscp = types.StringValue(ccValue.String())
 					} else {
-						cItem.Dscp = types.Int64Null()
+						cItem.Dscp = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "sourceIp" {
 						cItem.SourceIp = types.StringValue(ccValue.String())

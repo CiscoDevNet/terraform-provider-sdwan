@@ -84,7 +84,7 @@ Read-Only:
 - `destination_ip` (String) Destination IP prefix
 - `destination_ip_variable` (String) Destination IP prefix variable
 - `destination_ports` (String) Destination ports. Single value (0-65535) or ranges separated by spaces.
-- `dscp` (Number) DSCP value
+- `dscp` (String) DSCP value
 - `icmp_message` (String) ICMP Message
 - `packet_length` (Number) Packet length
 - `priority` (String) PLP - priority

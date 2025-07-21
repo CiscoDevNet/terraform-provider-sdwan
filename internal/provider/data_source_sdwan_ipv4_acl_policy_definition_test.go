@@ -70,7 +70,7 @@ func testAccDataSourceSdwanIPv4ACLPolicyDefinitionConfig() string {
 	config += `	  base_action = "accept"` + "\n"
 	config += `	  match_entries = [{` + "\n"
 	config += `		type = "dscp"` + "\n"
-	config += `		dscp = 16` + "\n"
+	config += `		dscp = "16"` + "\n"
 	config += `	}]` + "\n"
 	config += `	  action_entries = [{` + "\n"
 	config += `		type = "set"` + "\n"
