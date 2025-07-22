@@ -2,6 +2,7 @@
 
 - Fix issue causing changes to applied feature templates to fail, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/417)
 - Fix issue with service lan vpn feature when route-policy is not defined, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/450)
+- Prevent updates to `sdwan_activate_centralized_policy` resources being reverted, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/452)
 - Fix issue causing `sdwan_transport_routing_bgp_feature` to fail to apply when `policy_type` is set to `off`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/475)
 
 ## 0.6.1
