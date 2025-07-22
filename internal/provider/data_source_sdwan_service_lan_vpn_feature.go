@@ -297,6 +297,10 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
+						"gateway": schema.StringAttribute{
+							MarkdownDescription: "Gateway type",
+							Computed:            true,
+						},
 						"next_hops": schema.ListNestedAttribute{
 							MarkdownDescription: "IPv4 Route Gateway Next Hop",
 							Computed:            true,
@@ -353,7 +357,7 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 							MarkdownDescription: "IPv4 Route Gateway Next Hop",
 							Computed:            true,
 						},
-						"gateway_dhcp": schema.BoolAttribute{
+						"dhcp": schema.BoolAttribute{
 							MarkdownDescription: "IPv4 Route Gateway DHCP",
 							Computed:            true,
 						},
@@ -375,6 +379,10 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 						},
 						"prefix_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"gateway": schema.StringAttribute{
+							MarkdownDescription: "Gateway type",
 							Computed:            true,
 						},
 						"next_hops": schema.ListNestedAttribute{

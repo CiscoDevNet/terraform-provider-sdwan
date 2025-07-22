@@ -106,16 +106,18 @@ type ServiceLANVPNIpv4StaticRoutes struct {
 	NetworkAddressVariable types.String                                       `tfsdk:"network_address_variable"`
 	SubnetMask             types.String                                       `tfsdk:"subnet_mask"`
 	SubnetMaskVariable     types.String                                       `tfsdk:"subnet_mask_variable"`
+	Gateway                types.String                                       `tfsdk:"gateway"`
 	NextHops               []ServiceLANVPNIpv4StaticRoutesNextHops            `tfsdk:"next_hops"`
 	NextHopWithTrackers    []ServiceLANVPNIpv4StaticRoutesNextHopWithTrackers `tfsdk:"next_hop_with_trackers"`
 	Null0                  types.Bool                                         `tfsdk:"null0"`
-	GatewayDhcp            types.Bool                                         `tfsdk:"gateway_dhcp"`
+	Dhcp                   types.Bool                                         `tfsdk:"dhcp"`
 	Vpn                    types.Bool                                         `tfsdk:"vpn"`
 }
 
 type ServiceLANVPNIpv6StaticRoutes struct {
 	Prefix         types.String                            `tfsdk:"prefix"`
 	PrefixVariable types.String                            `tfsdk:"prefix_variable"`
+	Gateway        types.String                            `tfsdk:"gateway"`
 	NextHops       []ServiceLANVPNIpv6StaticRoutesNextHops `tfsdk:"next_hops"`
 	Null0          types.Bool                              `tfsdk:"null0"`
 	Nat            types.String                            `tfsdk:"nat"`
@@ -688,7 +690,7 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.value", item.SubnetMask.ValueString())
 				}
 			}
-			if true {
+			if true && item.Gateway.ValueString() == "nextHop" {
 
 				for _, childItem := range item.NextHops {
 					itemChildBody := ""
@@ -719,7 +721,7 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.SetRaw(itemBody, "oneOfIpRoute.nextHopContainer.nextHop.-1", itemChildBody)
 				}
 			}
-			if true {
+			if true && item.Gateway.ValueString() == "nextHop" {
 
 				for _, childItem := range item.NextHopWithTrackers {
 					itemChildBody := ""
@@ -757,19 +759,19 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 				}
 			}
 			if !item.Null0.IsNull() {
-				if true {
+				if true && item.Gateway.ValueString() == "null0" {
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.null0.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.null0.value", item.Null0.ValueBool())
 				}
 			}
-			if !item.GatewayDhcp.IsNull() {
-				if true {
+			if !item.Dhcp.IsNull() {
+				if true && item.Gateway.ValueString() == "dhcp" {
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.dhcp.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.dhcp.value", item.GatewayDhcp.ValueBool())
+					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.dhcp.value", item.Dhcp.ValueBool())
 				}
 			}
 			if !item.Vpn.IsNull() {
-				if true {
+				if true && item.Gateway.ValueString() == "vpn" {
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.vpn.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.vpn.value", item.Vpn.ValueBool())
 				}
@@ -793,7 +795,7 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "prefix.value", item.Prefix.ValueString())
 				}
 			}
-			if true {
+			if true && item.Gateway.ValueString() == "nextHop" {
 
 				for _, childItem := range item.NextHops {
 					itemChildBody := ""
@@ -825,19 +827,19 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 				}
 			}
 			if !item.Null0.IsNull() {
-				if true {
+				if true && item.Gateway.ValueString() == "null0" {
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.null0.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.null0.value", item.Null0.ValueBool())
 				}
 			}
 
 			if !item.NatVariable.IsNull() {
-				if true {
+				if true && item.Gateway.ValueString() == "nat" {
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.value", item.NatVariable.ValueString())
 				}
 			} else if !item.Nat.IsNull() {
-				if true {
+				if true && item.Gateway.ValueString() == "nat" {
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.value", item.Nat.ValueString())
 				}
@@ -1953,12 +1955,12 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.Null0 = types.BoolValue(va.Bool())
 				}
 			}
-			item.GatewayDhcp = types.BoolNull()
+			item.Dhcp = types.BoolNull()
 
 			if t := v.Get("oneOfIpRoute.dhcp.optionType"); t.Exists() {
 				va := v.Get("oneOfIpRoute.dhcp.value")
 				if t.String() == "global" {
-					item.GatewayDhcp = types.BoolValue(va.Bool())
+					item.Dhcp = types.BoolValue(va.Bool())
 				}
 			}
 			item.Vpn = types.BoolNull()
@@ -3245,12 +3247,12 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 				data.Ipv4StaticRoutes[i].Null0 = types.BoolValue(va.Bool())
 			}
 		}
-		data.Ipv4StaticRoutes[i].GatewayDhcp = types.BoolNull()
+		data.Ipv4StaticRoutes[i].Dhcp = types.BoolNull()
 
 		if t := r.Get("oneOfIpRoute.dhcp.optionType"); t.Exists() {
 			va := r.Get("oneOfIpRoute.dhcp.value")
 			if t.String() == "global" {
-				data.Ipv4StaticRoutes[i].GatewayDhcp = types.BoolValue(va.Bool())
+				data.Ipv4StaticRoutes[i].Dhcp = types.BoolValue(va.Bool())
 			}
 		}
 		data.Ipv4StaticRoutes[i].Vpn = types.BoolNull()
