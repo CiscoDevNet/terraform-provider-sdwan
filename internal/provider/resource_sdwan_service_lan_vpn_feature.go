@@ -422,7 +422,7 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `null0`").String,
 							Optional:            true,
 						},
-						"gateway_dhcp": schema.BoolAttribute{
+						"dhcp": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway DHCP, Attribute conditional on `gateway` being equal to `dhcp`").String,
 							Optional:            true,
 						},

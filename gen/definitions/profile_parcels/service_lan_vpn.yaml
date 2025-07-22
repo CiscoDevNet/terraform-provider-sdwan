@@ -162,7 +162,6 @@ attributes:
         value: null0
 
     - model_name: dhcp
-      tf_name: gateway_dhcp
       data_path: [oneOfIpRoute]
       exclude_test: true
       example: false

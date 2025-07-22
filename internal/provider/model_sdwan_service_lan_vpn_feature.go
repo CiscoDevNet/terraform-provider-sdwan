@@ -110,7 +110,7 @@ type ServiceLANVPNIpv4StaticRoutes struct {
 	NextHops               []ServiceLANVPNIpv4StaticRoutesNextHops            `tfsdk:"next_hops"`
 	NextHopWithTrackers    []ServiceLANVPNIpv4StaticRoutesNextHopWithTrackers `tfsdk:"next_hop_with_trackers"`
 	Null0                  types.Bool                                         `tfsdk:"null0"`
-	GatewayDhcp            types.Bool                                         `tfsdk:"gateway_dhcp"`
+	Dhcp                   types.Bool                                         `tfsdk:"dhcp"`
 	Vpn                    types.Bool                                         `tfsdk:"vpn"`
 }
 
@@ -764,10 +764,10 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.null0.value", item.Null0.ValueBool())
 				}
 			}
-			if !item.GatewayDhcp.IsNull() {
+			if !item.Dhcp.IsNull() {
 				if true && item.Gateway.ValueString() == "dhcp" {
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.dhcp.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.dhcp.value", item.GatewayDhcp.ValueBool())
+					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.dhcp.value", item.Dhcp.ValueBool())
 				}
 			}
 			if !item.Vpn.IsNull() {
@@ -1955,12 +1955,12 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.Null0 = types.BoolValue(va.Bool())
 				}
 			}
-			item.GatewayDhcp = types.BoolNull()
+			item.Dhcp = types.BoolNull()
 
 			if t := v.Get("oneOfIpRoute.dhcp.optionType"); t.Exists() {
 				va := v.Get("oneOfIpRoute.dhcp.value")
 				if t.String() == "global" {
-					item.GatewayDhcp = types.BoolValue(va.Bool())
+					item.Dhcp = types.BoolValue(va.Bool())
 				}
 			}
 			item.Vpn = types.BoolNull()
@@ -3247,12 +3247,12 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 				data.Ipv4StaticRoutes[i].Null0 = types.BoolValue(va.Bool())
 			}
 		}
-		data.Ipv4StaticRoutes[i].GatewayDhcp = types.BoolNull()
+		data.Ipv4StaticRoutes[i].Dhcp = types.BoolNull()
 
 		if t := r.Get("oneOfIpRoute.dhcp.optionType"); t.Exists() {
 			va := r.Get("oneOfIpRoute.dhcp.value")
 			if t.String() == "global" {
-				data.Ipv4StaticRoutes[i].GatewayDhcp = types.BoolValue(va.Bool())
+				data.Ipv4StaticRoutes[i].Dhcp = types.BoolValue(va.Bool())
 			}
 		}
 		data.Ipv4StaticRoutes[i].Vpn = types.BoolNull()

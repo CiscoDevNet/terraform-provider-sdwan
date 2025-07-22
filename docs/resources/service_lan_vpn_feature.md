@@ -325,9 +325,9 @@ Optional:
 
 Optional:
 
+- `dhcp` (Boolean) IPv4 Route Gateway DHCP, Attribute conditional on `gateway` being equal to `dhcp`
 - `gateway` (String) Gateway type
   - Choices: `nextHop`, `null0`, `vpn`, `dhcp`
-- `gateway_dhcp` (Boolean) IPv4 Route Gateway DHCP, Attribute conditional on `gateway` being equal to `dhcp`
 - `network_address` (String) IP Address
 - `network_address_variable` (String) Variable name
 - `next_hop_with_trackers` (Attributes List) IPv4 Route Gateway Next Hop with Tracker, Attribute conditional on `gateway` being equal to `nextHop` (see [below for nested schema](#nestedatt--ipv4_static_routes--next_hop_with_trackers))
