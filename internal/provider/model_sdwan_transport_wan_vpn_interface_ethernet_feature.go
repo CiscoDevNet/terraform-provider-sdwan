@@ -1785,22 +1785,20 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 		}
 	}
 
-	if !data.InterfaceName.IsNull() && !strings.Contains(data.InterfaceName.ValueString(), ".") {
-		if !data.InterfaceMtuVariable.IsNull() {
-			if true {
-				body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "variable")
-				body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.InterfaceMtuVariable.ValueString())
-			}
-		} else if data.InterfaceMtu.IsNull() {
-			if true {
-				body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "default")
-				body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", 1500)
-			}
-		} else {
-			if true {
-				body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "global")
-				body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.InterfaceMtu.ValueInt64())
-			}
+	if !data.InterfaceMtuVariable.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.InterfaceMtuVariable.ValueString())
+		}
+	} else if data.InterfaceMtu.IsNull() {
+		if !strings.Contains(data.InterfaceName.ValueString(), ".") {
+			body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "default")
+			body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", 1500)
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "global")
+			body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.InterfaceMtu.ValueInt64())
 		}
 	}
 
