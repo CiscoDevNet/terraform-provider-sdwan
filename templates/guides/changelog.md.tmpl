@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.6.3 (unreleased)
+
+- Add missing options under `unsupported_features` attribute of `sdwan_configuration_group`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/478)
+
 ## 0.6.2
 
 - Fix issue causing changes to applied feature templates to fail, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/417)
