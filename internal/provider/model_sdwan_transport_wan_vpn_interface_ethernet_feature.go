@@ -22,6 +22,7 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -298,7 +299,6 @@ func (data TransportWANVPNInterfaceEthernet) getPath() string {
 
 // End of section. //template:end getPath
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
@@ -1791,7 +1791,7 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.InterfaceMtuVariable.ValueString())
 		}
 	} else if data.InterfaceMtu.IsNull() {
-		if true {
+		if !strings.Contains(data.InterfaceName.ValueString(), ".") {
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "default")
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", 1500)
 		}
@@ -1990,8 +1990,6 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 	}
 	return body
 }
-
-// End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res gjson.Result) {
