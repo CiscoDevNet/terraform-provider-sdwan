@@ -1,0 +1,42 @@
+---
+name: Policy Group
+rest_endpoint: /v1/policy-group/
+id_attribute: id
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+doc_category: Policy Groups
+attributes:
+  - model_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy group
+    example: PG_1
+  - model_name: description
+    type: String
+    mandatory: true
+    description: Description
+    example: My policy group 1
+  - model_name: solution
+    type: String
+    mandatory: true
+    enum_values: [sdwan]
+    description: Type of solution
+    example: sdwan
+  - model_name: profiles
+    tf_name: feature_profile_ids
+    type: Set
+    element_type: String
+    description: List of feature profile IDs
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: "[sdwan_application_priority_feature_profile.test.id]"
+  - tf_name: policy_versions
+    tf_only: true
+    type: Versions
+    description: List of all associated policy versions
+    exclude_test: true
+
+test_prerequisites: |
+  resource "sdwan_application_priority_feature_profile" "test" {
+    name        = "APPLICATION_PRIORITY_TF"
+    description = "Terraform test"
+  }

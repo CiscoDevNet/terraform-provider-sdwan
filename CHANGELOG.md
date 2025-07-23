@@ -1,3 +1,7 @@
+## 0.6.3 (unreleased)
+
+- Add `sdwan_policy_group` resource and data source
+
 ## 0.6.2
 
 - Fix issue causing changes to applied feature templates to fail, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/417)
