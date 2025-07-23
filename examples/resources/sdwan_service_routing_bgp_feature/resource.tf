@@ -36,11 +36,11 @@ resource "sdwan_service_routing_bgp_feature" "example" {
       allowas_in_number       = 1
       address_families = [
         {
-          family_type            = "ipv4-unicast"
-          max_number_of_prefixes = 2000
-          threshold              = 75
-          policy_type            = "restart"
-          restart_interval       = 30
+          family_type                    = "ipv4-unicast"
+          policy_type                    = "restart"
+          restart_max_number_of_prefixes = 2000
+          restart_threshold              = 75
+          restart_interval               = 30
         }
       ]
     }
