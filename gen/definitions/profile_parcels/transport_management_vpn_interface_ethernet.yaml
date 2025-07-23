@@ -1,5 +1,4 @@
 ---
-# Manual resource - Modals toBody is manually configured to support sub interfaces.
 name: Transport Management VPN Interface Ethernet
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/management/vpn/%s/interface/ethernet
 minimum_version: 20.12.0
