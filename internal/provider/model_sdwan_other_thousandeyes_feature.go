@@ -248,7 +248,7 @@ func (data *OtherThousandEyes) fromBody(ctx context.Context, res gjson.Result) {
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	if value := res.Get(path + "virtualApplication"); value.Exists() {
+	if value := res.Get(path + "virtualApplication"); value.Exists() && len(value.Array()) > 0 {
 		data.VirtualApplication = make([]OtherThousandEyesVirtualApplication, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := OtherThousandEyesVirtualApplication{}

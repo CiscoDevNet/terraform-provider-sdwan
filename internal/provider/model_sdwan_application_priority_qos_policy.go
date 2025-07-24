@@ -148,7 +148,7 @@ func (data *ApplicationPriorityQoS) fromBody(ctx context.Context, res gjson.Resu
 			data.TargetInterface = helpers.GetStringSet(va.Array())
 		}
 	}
-	if value := res.Get(path + "qosMap.qosSchedulers"); value.Exists() {
+	if value := res.Get(path + "qosMap.qosSchedulers"); value.Exists() && len(value.Array()) > 0 {
 		data.QosSchedulers = make([]ApplicationPriorityQoSQosSchedulers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ApplicationPriorityQoSQosSchedulers{}

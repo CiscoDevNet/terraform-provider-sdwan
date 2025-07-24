@@ -886,7 +886,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			data.LocalReplicatorThreshold = types.Int64Value(va.Int())
 		}
 	}
-	if value := res.Get(path + "igmp.interface"); value.Exists() {
+	if value := res.Get(path + "igmp.interface"); value.Exists() && len(value.Array()) > 0 {
 		data.IgmpInterfaces = make([]ServiceMulticastIgmpInterfaces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceMulticastIgmpInterfaces{}
@@ -908,7 +908,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 					item.Version = types.Int64Value(va.Int())
 				}
 			}
-			if cValue := v.Get("joinGroup"); cValue.Exists() {
+			if cValue := v.Get("joinGroup"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.JoinGroups = make([]ServiceMulticastIgmpInterfacesJoinGroups, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceMulticastIgmpInterfacesJoinGroups{}
@@ -968,7 +968,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			data.PimSptThreshold = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "pim.interface"); value.Exists() {
+	if value := res.Get(path + "pim.interface"); value.Exists() && len(value.Array()) > 0 {
 		data.PimInterfaces = make([]ServiceMulticastPimInterfaces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceMulticastPimInterfaces{}
@@ -1006,7 +1006,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "pim.rpAddr"); value.Exists() {
+	if value := res.Get(path + "pim.rpAddr"); value.Exists() && len(value.Array()) > 0 {
 		data.StaticRpAddresses = make([]ServiceMulticastStaticRpAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceMulticastStaticRpAddresses{}
@@ -1054,7 +1054,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			data.EnableAutoRp = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "pim.autoRp.sendRpAnnounceList"); value.Exists() {
+	if value := res.Get(path + "pim.autoRp.sendRpAnnounceList"); value.Exists() && len(value.Array()) > 0 {
 		data.AutoRpAnnounces = make([]ServiceMulticastAutoRpAnnounces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceMulticastAutoRpAnnounces{}
@@ -1082,7 +1082,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "pim.autoRp.sendRpDiscovery"); value.Exists() {
+	if value := res.Get(path + "pim.autoRp.sendRpDiscovery"); value.Exists() && len(value.Array()) > 0 {
 		data.AutoRpDiscoveries = make([]ServiceMulticastAutoRpDiscoveries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceMulticastAutoRpDiscoveries{}
@@ -1110,7 +1110,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "pim.pimBsr.rpCandidate"); value.Exists() {
+	if value := res.Get(path + "pim.pimBsr.rpCandidate"); value.Exists() && len(value.Array()) > 0 {
 		data.PimBsrRpCandidates = make([]ServiceMulticastPimBsrRpCandidates, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceMulticastPimBsrRpCandidates{}
@@ -1158,7 +1158,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "pim.pimBsr.bsrCandidate"); value.Exists() {
+	if value := res.Get(path + "pim.pimBsr.bsrCandidate"); value.Exists() && len(value.Array()) > 0 {
 		data.PimBsrCandidates = make([]ServiceMulticastPimBsrCandidates, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceMulticastPimBsrCandidates{}
@@ -1206,7 +1206,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "msdp.msdpList"); value.Exists() {
+	if value := res.Get(path + "msdp.msdpList"); value.Exists() && len(value.Array()) > 0 {
 		data.MsdpGroups = make([]ServiceMulticastMsdpGroups, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceMulticastMsdpGroups{}
@@ -1220,7 +1220,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 					item.MeshGroupName = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("peer"); cValue.Exists() {
+			if cValue := v.Get("peer"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Peers = make([]ServiceMulticastMsdpGroupsPeers, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceMulticastMsdpGroupsPeers{}

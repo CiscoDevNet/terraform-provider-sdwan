@@ -387,7 +387,7 @@ func (data *TransportRoutePolicy) fromBody(ctx context.Context, res gjson.Result
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "sequences"); value.Exists() {
+	if value := res.Get(path + "sequences"); value.Exists() && len(value.Array()) > 0 {
 		data.Sequences = make([]TransportRoutePolicySequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportRoutePolicySequences{}
@@ -423,7 +423,7 @@ func (data *TransportRoutePolicy) fromBody(ctx context.Context, res gjson.Result
 					item.Protocol = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("matchEntries"); cValue.Exists() {
+			if cValue := v.Get("matchEntries"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.MatchEntries = make([]TransportRoutePolicySequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TransportRoutePolicySequencesMatchEntries{}
@@ -443,7 +443,7 @@ func (data *TransportRoutePolicy) fromBody(ctx context.Context, res gjson.Result
 							cItem.StandardCommunityListCriteria = types.StringValue(va.String())
 						}
 					}
-					if ccValue := cv.Get("communityList.standardCommunityList"); ccValue.Exists() {
+					if ccValue := cv.Get("communityList.standardCommunityList"); ccValue.Exists() && len(ccValue.Array()) > 0 {
 						cItem.StandardCommunityLists = make([]TransportRoutePolicySequencesMatchEntriesStandardCommunityLists, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := TransportRoutePolicySequencesMatchEntriesStandardCommunityLists{}
@@ -543,7 +543,7 @@ func (data *TransportRoutePolicy) fromBody(ctx context.Context, res gjson.Result
 					return true
 				})
 			}
-			if cValue := v.Get("actions"); cValue.Exists() {
+			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Actions = make([]TransportRoutePolicySequencesActions, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TransportRoutePolicySequencesActions{}

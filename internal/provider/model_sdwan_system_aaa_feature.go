@@ -740,7 +740,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 			data.ServerAuthOrder = helpers.GetStringList(va.Array())
 		}
 	}
-	if value := res.Get(path + "user"); value.Exists() {
+	if value := res.Get(path + "user"); value.Exists() && len(value.Array()) > 0 {
 		data.Users = make([]SystemAAAUsers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemAAAUsers{}
@@ -764,7 +764,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 					item.Privilege = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("pubkeyChain"); cValue.Exists() {
+			if cValue := v.Get("pubkeyChain"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.PublicKeys = make([]SystemAAAUsersPublicKeys, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := SystemAAAUsersPublicKeys{}
@@ -794,7 +794,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "radius"); value.Exists() {
+	if value := res.Get(path + "radius"); value.Exists() && len(value.Array()) > 0 {
 		data.RadiusGroups = make([]SystemAAARadiusGroups, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemAAARadiusGroups{}
@@ -824,7 +824,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 					item.SourceInterface = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("server"); cValue.Exists() {
+			if cValue := v.Get("server"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Servers = make([]SystemAAARadiusGroupsServers, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := SystemAAARadiusGroupsServers{}
@@ -912,7 +912,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "tacacs"); value.Exists() {
+	if value := res.Get(path + "tacacs"); value.Exists() && len(value.Array()) > 0 {
 		data.TacacsGroups = make([]SystemAAATacacsGroups, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemAAATacacsGroups{}
@@ -942,7 +942,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 					item.SourceInterface = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("server"); cValue.Exists() {
+			if cValue := v.Get("server"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Servers = make([]SystemAAATacacsGroupsServers, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := SystemAAATacacsGroupsServers{}
@@ -1000,7 +1000,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "accountingRule"); value.Exists() {
+	if value := res.Get(path + "accountingRule"); value.Exists() && len(value.Array()) > 0 {
 		data.AccountingRules = make([]SystemAAAAccountingRules, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemAAAAccountingRules{}
@@ -1070,7 +1070,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 			data.AuthorizationConfigCommands = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "authorizationRule"); value.Exists() {
+	if value := res.Get(path + "authorizationRule"); value.Exists() && len(value.Array()) > 0 {
 		data.AuthorizationRules = make([]SystemAAAAuthorizationRules, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemAAAAuthorizationRules{}

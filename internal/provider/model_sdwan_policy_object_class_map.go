@@ -93,7 +93,7 @@ func (data *PolicyObjectClassMap) fromBody(ctx context.Context, res gjson.Result
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	if value := res.Get(path + "entries"); value.Exists() {
+	if value := res.Get(path + "entries"); value.Exists() && len(value.Array()) > 0 {
 		data.Entries = make([]PolicyObjectClassMapEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := PolicyObjectClassMapEntries{}

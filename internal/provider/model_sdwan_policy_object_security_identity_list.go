@@ -100,7 +100,7 @@ func (data *PolicyObjectSecurityIdentityList) fromBody(ctx context.Context, res 
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	if value := res.Get(path + "entries"); value.Exists() {
+	if value := res.Get(path + "entries"); value.Exists() && len(value.Array()) > 0 {
 		data.Entries = make([]PolicyObjectSecurityIdentityListEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := PolicyObjectSecurityIdentityListEntries{}

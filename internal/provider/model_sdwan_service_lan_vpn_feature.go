@@ -1695,7 +1695,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			data.SecondaryDnsAddressIpv6 = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "newHostMapping"); value.Exists() {
+	if value := res.Get(path + "newHostMapping"); value.Exists() && len(value.Array()) > 0 {
 		data.HostMappings = make([]ServiceLANVPNHostMappings, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNHostMappings{}
@@ -1723,7 +1723,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "ompAdvertiseIp4"); value.Exists() {
+	if value := res.Get(path + "ompAdvertiseIp4"); value.Exists() && len(value.Array()) > 0 {
 		data.AdvertiseOmpIpv4s = make([]ServiceLANVPNAdvertiseOmpIpv4s, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNAdvertiseOmpIpv4s{}
@@ -1745,7 +1745,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.RoutePolicyId = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("prefixList"); cValue.Exists() {
+			if cValue := v.Get("prefixList"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Prefixes = make([]ServiceLANVPNAdvertiseOmpIpv4sPrefixes, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceLANVPNAdvertiseOmpIpv4sPrefixes{}
@@ -1795,7 +1795,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "ompAdvertiseIpv6"); value.Exists() {
+	if value := res.Get(path + "ompAdvertiseIpv6"); value.Exists() && len(value.Array()) > 0 {
 		data.AdvertiseOmpIpv6s = make([]ServiceLANVPNAdvertiseOmpIpv6s, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNAdvertiseOmpIpv6s{}
@@ -1827,7 +1827,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.ProtocolSubType = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("prefixList"); cValue.Exists() {
+			if cValue := v.Get("prefixList"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Prefixes = make([]ServiceLANVPNAdvertiseOmpIpv6sPrefixes, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceLANVPNAdvertiseOmpIpv6sPrefixes{}
@@ -1857,7 +1857,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "ipv4Route"); value.Exists() {
+	if value := res.Get(path + "ipv4Route"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4StaticRoutes = make([]ServiceLANVPNIpv4StaticRoutes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNIpv4StaticRoutes{}
@@ -1881,7 +1881,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.SubnetMask = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("oneOfIpRoute.nextHopContainer.nextHop"); cValue.Exists() {
+			if cValue := v.Get("oneOfIpRoute.nextHopContainer.nextHop"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.NextHops = make([]ServiceLANVPNIpv4StaticRoutesNextHops, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceLANVPNIpv4StaticRoutesNextHops{}
@@ -1909,7 +1909,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 					return true
 				})
 			}
-			if cValue := v.Get("oneOfIpRoute.nextHopContainer.nextHopWithTracker"); cValue.Exists() {
+			if cValue := v.Get("oneOfIpRoute.nextHopContainer.nextHopWithTracker"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.NextHopWithTrackers = make([]ServiceLANVPNIpv4StaticRoutesNextHopWithTrackers, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceLANVPNIpv4StaticRoutesNextHopWithTrackers{}
@@ -1973,7 +1973,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "ipv6Route"); value.Exists() {
+	if value := res.Get(path + "ipv6Route"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6StaticRoutes = make([]ServiceLANVPNIpv6StaticRoutes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNIpv6StaticRoutes{}
@@ -1987,7 +1987,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.Prefix = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("oneOfIpRoute.nextHopContainer.nextHop"); cValue.Exists() {
+			if cValue := v.Get("oneOfIpRoute.nextHopContainer.nextHop"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.NextHops = make([]ServiceLANVPNIpv6StaticRoutesNextHops, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceLANVPNIpv6StaticRoutesNextHops{}
@@ -2037,7 +2037,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "service"); value.Exists() {
+	if value := res.Get(path + "service"); value.Exists() && len(value.Array()) > 0 {
 		data.Services = make([]ServiceLANVPNServices, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNServices{}
@@ -2075,7 +2075,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "serviceRoute"); value.Exists() {
+	if value := res.Get(path + "serviceRoute"); value.Exists() && len(value.Array()) > 0 {
 		data.ServiceRoutes = make([]ServiceLANVPNServiceRoutes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNServiceRoutes{}
@@ -2121,7 +2121,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "greRoute"); value.Exists() {
+	if value := res.Get(path + "greRoute"); value.Exists() && len(value.Array()) > 0 {
 		data.GreRoutes = make([]ServiceLANVPNGreRoutes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNGreRoutes{}
@@ -2167,7 +2167,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "ipsecRoute"); value.Exists() {
+	if value := res.Get(path + "ipsecRoute"); value.Exists() && len(value.Array()) > 0 {
 		data.IpsecRoutes = make([]ServiceLANVPNIpsecRoutes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNIpsecRoutes{}
@@ -2205,7 +2205,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "natPool"); value.Exists() {
+	if value := res.Get(path + "natPool"); value.Exists() && len(value.Array()) > 0 {
 		data.NatPools = make([]ServiceLANVPNNatPools, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNNatPools{}
@@ -2281,7 +2281,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "natPortForward"); value.Exists() {
+	if value := res.Get(path + "natPortForward"); value.Exists() && len(value.Array()) > 0 {
 		data.NatPortForwards = make([]ServiceLANVPNNatPortForwards, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNNatPortForwards{}
@@ -2349,7 +2349,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "staticNat"); value.Exists() {
+	if value := res.Get(path + "staticNat"); value.Exists() && len(value.Array()) > 0 {
 		data.StaticNats = make([]ServiceLANVPNStaticNats, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNStaticNats{}
@@ -2405,7 +2405,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "nat64V4Pool"); value.Exists() {
+	if value := res.Get(path + "nat64V4Pool"); value.Exists() && len(value.Array()) > 0 {
 		data.Nat64V4Pools = make([]ServiceLANVPNNat64V4Pools, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNNat64V4Pools{}
@@ -2453,7 +2453,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "routeLeakFromGlobal"); value.Exists() {
+	if value := res.Get(path + "routeLeakFromGlobal"); value.Exists() && len(value.Array()) > 0 {
 		data.RouteLeakFromGlobalVpns = make([]ServiceLANVPNRouteLeakFromGlobalVpns, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNRouteLeakFromGlobalVpns{}
@@ -2475,7 +2475,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.RoutePolicyId = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("redistributeToProtocol"); cValue.Exists() {
+			if cValue := v.Get("redistributeToProtocol"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Redistributions = make([]ServiceLANVPNRouteLeakFromGlobalVpnsRedistributions, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceLANVPNRouteLeakFromGlobalVpnsRedistributions{}
@@ -2505,7 +2505,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "routeLeakFromService"); value.Exists() {
+	if value := res.Get(path + "routeLeakFromService"); value.Exists() && len(value.Array()) > 0 {
 		data.RouteLeakToGlobalVpns = make([]ServiceLANVPNRouteLeakToGlobalVpns, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNRouteLeakToGlobalVpns{}
@@ -2527,7 +2527,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.RoutePolicyId = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("redistributeToProtocol"); cValue.Exists() {
+			if cValue := v.Get("redistributeToProtocol"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Redistributions = make([]ServiceLANVPNRouteLeakToGlobalVpnsRedistributions, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceLANVPNRouteLeakToGlobalVpnsRedistributions{}
@@ -2557,7 +2557,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "routeLeakBetweenServices"); value.Exists() {
+	if value := res.Get(path + "routeLeakBetweenServices"); value.Exists() && len(value.Array()) > 0 {
 		data.RouteLeakFromOtherServices = make([]ServiceLANVPNRouteLeakFromOtherServices, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNRouteLeakFromOtherServices{}
@@ -2589,7 +2589,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.RoutePolicyId = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("redistributeToProtocol"); cValue.Exists() {
+			if cValue := v.Get("redistributeToProtocol"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Redistributions = make([]ServiceLANVPNRouteLeakFromOtherServicesRedistributions, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceLANVPNRouteLeakFromOtherServicesRedistributions{}
@@ -2619,7 +2619,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "mplsVpnIpv4RouteTarget.importRtList"); value.Exists() {
+	if value := res.Get(path + "mplsVpnIpv4RouteTarget.importRtList"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4ImportRouteTargets = make([]ServiceLANVPNIpv4ImportRouteTargets, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNIpv4ImportRouteTargets{}
@@ -2637,7 +2637,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "mplsVpnIpv4RouteTarget.exportRtList"); value.Exists() {
+	if value := res.Get(path + "mplsVpnIpv4RouteTarget.exportRtList"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4ExportRouteTargets = make([]ServiceLANVPNIpv4ExportRouteTargets, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNIpv4ExportRouteTargets{}
@@ -2655,7 +2655,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "mplsVpnIpv6RouteTarget.importRtList"); value.Exists() {
+	if value := res.Get(path + "mplsVpnIpv6RouteTarget.importRtList"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6ImportRouteTargets = make([]ServiceLANVPNIpv6ImportRouteTargets, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNIpv6ImportRouteTargets{}
@@ -2673,7 +2673,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "mplsVpnIpv6RouteTarget.exportRtList"); value.Exists() {
+	if value := res.Get(path + "mplsVpnIpv6RouteTarget.exportRtList"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6ExportRouteTargets = make([]ServiceLANVPNIpv6ExportRouteTargets, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNIpv6ExportRouteTargets{}

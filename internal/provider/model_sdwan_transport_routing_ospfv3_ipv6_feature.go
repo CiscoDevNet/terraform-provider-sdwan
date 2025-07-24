@@ -846,7 +846,7 @@ func (data *TransportRoutingOSPFv3IPv6) fromBody(ctx context.Context, res gjson.
 			data.Filter = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "redistribute"); value.Exists() {
+	if value := res.Get(path + "redistribute"); value.Exists() && len(value.Array()) > 0 {
 		data.Redistributes = make([]TransportRoutingOSPFv3IPv6Redistributes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportRoutingOSPFv3IPv6Redistributes{}
@@ -890,7 +890,7 @@ func (data *TransportRoutingOSPFv3IPv6) fromBody(ctx context.Context, res gjson.
 			data.RouterLsaOnStartupTime = types.Int64Value(va.Int())
 		}
 	}
-	if value := res.Get(path + "area"); value.Exists() {
+	if value := res.Get(path + "area"); value.Exists() && len(value.Array()) > 0 {
 		data.Areas = make([]TransportRoutingOSPFv3IPv6Areas, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportRoutingOSPFv3IPv6Areas{}
@@ -932,7 +932,7 @@ func (data *TransportRoutingOSPFv3IPv6) fromBody(ctx context.Context, res gjson.
 					item.AlwaysTranslate = types.BoolValue(va.Bool())
 				}
 			}
-			if cValue := v.Get("interfaces"); cValue.Exists() {
+			if cValue := v.Get("interfaces"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Interfaces = make([]TransportRoutingOSPFv3IPv6AreasInterfaces, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TransportRoutingOSPFv3IPv6AreasInterfaces{}
@@ -1038,7 +1038,7 @@ func (data *TransportRoutingOSPFv3IPv6) fromBody(ctx context.Context, res gjson.
 					return true
 				})
 			}
-			if cValue := v.Get("ranges"); cValue.Exists() {
+			if cValue := v.Get("ranges"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Ranges = make([]TransportRoutingOSPFv3IPv6AreasRanges, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TransportRoutingOSPFv3IPv6AreasRanges{}

@@ -478,7 +478,7 @@ func (data *SystemSecurity) fromBody(ctx context.Context, res gjson.Result) {
 			data.IntegrityType = helpers.GetStringSet(va.Array())
 		}
 	}
-	if value := res.Get(path + "keychain"); value.Exists() {
+	if value := res.Get(path + "keychain"); value.Exists() && len(value.Array()) > 0 {
 		data.Keychains = make([]SystemSecurityKeychains, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemSecurityKeychains{}
@@ -502,7 +502,7 @@ func (data *SystemSecurity) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "key"); value.Exists() {
+	if value := res.Get(path + "key"); value.Exists() && len(value.Array()) > 0 {
 		data.Keys = make([]SystemSecurityKeys, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemSecurityKeys{}

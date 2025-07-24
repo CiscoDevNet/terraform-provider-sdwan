@@ -513,7 +513,7 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result) {
 			data.LocationOfDevice = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "view"); value.Exists() {
+	if value := res.Get(path + "view"); value.Exists() && len(value.Array()) > 0 {
 		data.Views = make([]SystemSNMPViews, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemSNMPViews{}
@@ -525,7 +525,7 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result) {
 					item.Name = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("oid"); cValue.Exists() {
+			if cValue := v.Get("oid"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Oids = make([]SystemSNMPViewsOids, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := SystemSNMPViewsOids{}
@@ -557,7 +557,7 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "community"); value.Exists() {
+	if value := res.Get(path + "community"); value.Exists() && len(value.Array()) > 0 {
 		data.Communities = make([]SystemSNMPCommunities, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemSNMPCommunities{}
@@ -593,7 +593,7 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "group"); value.Exists() {
+	if value := res.Get(path + "group"); value.Exists() && len(value.Array()) > 0 {
 		data.Groups = make([]SystemSNMPGroups, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemSNMPGroups{}
@@ -627,7 +627,7 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "user"); value.Exists() {
+	if value := res.Get(path + "user"); value.Exists() && len(value.Array()) > 0 {
 		data.Users = make([]SystemSNMPUsers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemSNMPUsers{}
@@ -693,7 +693,7 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "target"); value.Exists() {
+	if value := res.Get(path + "target"); value.Exists() && len(value.Array()) > 0 {
 		data.TrapTargetServers = make([]SystemSNMPTrapTargetServers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemSNMPTrapTargetServers{}

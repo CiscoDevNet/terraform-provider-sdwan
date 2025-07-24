@@ -143,7 +143,7 @@ func (data *PolicyObjectSLAClassList) fromBody(ctx context.Context, res gjson.Re
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	if value := res.Get(path + "entries"); value.Exists() {
+	if value := res.Get(path + "entries"); value.Exists() && len(value.Array()) > 0 {
 		data.Entries = make([]PolicyObjectSLAClassListEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := PolicyObjectSLAClassListEntries{}

@@ -2062,7 +2062,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "intfIpAddress.static.staticIpV4AddressSecondary"); value.Exists() {
+	if value := res.Get(path + "intfIpAddress.static.staticIpV4AddressSecondary"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4SecondaryAddresses = make([]TransportWANVPNInterfaceEthernetIpv4SecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetIpv4SecondaryAddresses{}
@@ -2108,7 +2108,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.EnableDhcpv6 = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "intfIpV6Address.dynamic.secondaryIpV6Address"); value.Exists() {
+	if value := res.Get(path + "intfIpV6Address.dynamic.secondaryIpV6Address"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6DhcpSecondaryAddress = make([]TransportWANVPNInterfaceEthernetIpv6DhcpSecondaryAddress, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetIpv6DhcpSecondaryAddress{}
@@ -2136,7 +2136,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.Ipv6Address = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "intfIpV6Address.static.secondaryIpV6Address"); value.Exists() {
+	if value := res.Get(path + "intfIpV6Address.static.secondaryIpV6Address"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6SecondaryAddresses = make([]TransportWANVPNInterfaceEthernetIpv6SecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetIpv6SecondaryAddresses{}
@@ -2592,7 +2592,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.TunnelInterfaceAllowBfd = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "encapsulation"); value.Exists() {
+	if value := res.Get(path + "encapsulation"); value.Exists() && len(value.Array()) > 0 {
 		data.TunnelInterfaceEncapsulations = make([]TransportWANVPNInterfaceEthernetTunnelInterfaceEncapsulations, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetTunnelInterfaceEncapsulations{}
@@ -2718,7 +2718,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.NatTcpTimeout = types.Int64Value(va.Int())
 		}
 	}
-	if value := res.Get(path + "natAttributesIpv4.newStaticNat"); value.Exists() {
+	if value := res.Get(path + "natAttributesIpv4.newStaticNat"); value.Exists() && len(value.Array()) > 0 {
 		data.NewStaticNats = make([]TransportWANVPNInterfaceEthernetNewStaticNats, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetNewStaticNats{}
@@ -2790,7 +2790,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.Nat66 = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "natAttributesIpv6.staticNat66"); value.Exists() {
+	if value := res.Get(path + "natAttributesIpv6.staticNat66"); value.Exists() && len(value.Array()) > 0 {
 		data.StaticNat66 = make([]TransportWANVPNInterfaceEthernetStaticNat66, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetStaticNat66{}
@@ -2964,7 +2964,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.AclIpv6IngressFeatureId = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "arp"); value.Exists() {
+	if value := res.Get(path + "arp"); value.Exists() && len(value.Array()) > 0 {
 		data.Arps = make([]TransportWANVPNInterfaceEthernetArps, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetArps{}

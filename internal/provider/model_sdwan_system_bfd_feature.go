@@ -263,7 +263,7 @@ func (data *SystemBFD) fromBody(ctx context.Context, res gjson.Result) {
 			data.DefaultDscp = types.Int64Value(va.Int())
 		}
 	}
-	if value := res.Get(path + "colors"); value.Exists() {
+	if value := res.Get(path + "colors"); value.Exists() && len(value.Array()) > 0 {
 		data.Colors = make([]SystemBFDColors, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemBFDColors{}

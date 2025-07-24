@@ -112,7 +112,7 @@ func (data *ServiceTrackerGroup) fromBody(ctx context.Context, res gjson.Result)
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	if value := res.Get(path + "trackerRefs"); value.Exists() {
+	if value := res.Get(path + "trackerRefs"); value.Exists() && len(value.Array()) > 0 {
 		data.TrackerElements = make([]ServiceTrackerGroupTrackerElements, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceTrackerGroupTrackerElements{}

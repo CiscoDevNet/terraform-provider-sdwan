@@ -230,7 +230,7 @@ func (data *DNSSecurity) fromBody(ctx context.Context, res gjson.Result) {
 			data.ChildOrgId = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "targetVpns"); value.Exists() {
+	if value := res.Get(path + "targetVpns"); value.Exists() && len(value.Array()) > 0 {
 		data.TargetVpns = make([]DNSSecurityTargetVpns, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := DNSSecurityTargetVpns{}

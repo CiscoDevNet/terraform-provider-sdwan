@@ -320,7 +320,7 @@ func (data *ServiceIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "sequences"); value.Exists() {
+	if value := res.Get(path + "sequences"); value.Exists() && len(value.Array()) > 0 {
 		data.Sequences = make([]ServiceIPv6ACLSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceIPv6ACLSequences{}
@@ -348,7 +348,7 @@ func (data *ServiceIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 					item.BaseAction = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("matchEntries"); cValue.Exists() {
+			if cValue := v.Get("matchEntries"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.MatchEntries = make([]ServiceIPv6ACLSequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceIPv6ACLSequencesMatchEntries{}
@@ -384,7 +384,7 @@ func (data *ServiceIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.SourceDataPrefix = types.StringValue(va.String())
 						}
 					}
-					if ccValue := cv.Get("sourcePorts"); ccValue.Exists() {
+					if ccValue := cv.Get("sourcePorts"); ccValue.Exists() && len(ccValue.Array()) > 0 {
 						cItem.SourcePorts = make([]ServiceIPv6ACLSequencesMatchEntriesSourcePorts, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := ServiceIPv6ACLSequencesMatchEntriesSourcePorts{}
@@ -416,7 +416,7 @@ func (data *ServiceIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.DestinationDataPrefix = types.StringValue(va.String())
 						}
 					}
-					if ccValue := cv.Get("destinationPorts"); ccValue.Exists() {
+					if ccValue := cv.Get("destinationPorts"); ccValue.Exists() && len(ccValue.Array()) > 0 {
 						cItem.DestinationPorts = make([]ServiceIPv6ACLSequencesMatchEntriesDestinationPorts, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := ServiceIPv6ACLSequencesMatchEntriesDestinationPorts{}
@@ -460,7 +460,7 @@ func (data *ServiceIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 					return true
 				})
 			}
-			if cValue := v.Get("actions"); cValue.Exists() {
+			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Actions = make([]ServiceIPv6ACLSequencesActions, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceIPv6ACLSequencesActions{}

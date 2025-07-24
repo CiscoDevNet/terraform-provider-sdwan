@@ -136,7 +136,7 @@ func (data *ServiceObjectTrackerGroup) fromBody(ctx context.Context, res gjson.R
 			data.ObjectTrackerId = types.Int64Value(va.Int())
 		}
 	}
-	if value := res.Get(path + "trackerRefs"); value.Exists() {
+	if value := res.Get(path + "trackerRefs"); value.Exists() && len(value.Array()) > 0 {
 		data.TrackerElements = make([]ServiceObjectTrackerGroupTrackerElements, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceObjectTrackerGroupTrackerElements{}

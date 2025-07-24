@@ -320,7 +320,7 @@ func (data *TransportT1E1Controller) fromBody(ctx context.Context, res gjson.Res
 			data.Slot = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "controllerTxExList"); value.Exists() {
+	if value := res.Get(path + "controllerTxExList"); value.Exists() && len(value.Array()) > 0 {
 		data.Entries = make([]TransportT1E1ControllerEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportT1E1ControllerEntries{}
@@ -436,7 +436,7 @@ func (data *TransportT1E1Controller) fromBody(ctx context.Context, res gjson.Res
 					item.Description = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("channelGroup"); cValue.Exists() {
+			if cValue := v.Get("channelGroup"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ChannelGroups = make([]TransportT1E1ControllerEntriesChannelGroups, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TransportT1E1ControllerEntriesChannelGroups{}

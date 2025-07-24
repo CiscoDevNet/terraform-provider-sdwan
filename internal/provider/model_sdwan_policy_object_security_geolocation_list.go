@@ -100,7 +100,7 @@ func (data *PolicyObjectSecurityGeolocationList) fromBody(ctx context.Context, r
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	if value := res.Get(path + "entries"); value.Exists() {
+	if value := res.Get(path + "entries"); value.Exists() && len(value.Array()) > 0 {
 		data.Entries = make([]PolicyObjectSecurityGeolocationListEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := PolicyObjectSecurityGeolocationListEntries{}

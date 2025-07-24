@@ -624,7 +624,7 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "intfIpAddress.static.staticIpV4AddressSecondary"); value.Exists() {
+	if value := res.Get(path + "intfIpAddress.static.staticIpV4AddressSecondary"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4SecondaryAddresses = make([]TransportManagementVPNInterfaceEthernetIpv4SecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportManagementVPNInterfaceEthernetIpv4SecondaryAddresses{}
@@ -700,7 +700,7 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 			data.Ipv6Address = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "arp"); value.Exists() {
+	if value := res.Get(path + "arp"); value.Exists() && len(value.Array()) > 0 {
 		data.ArpEntries = make([]TransportManagementVPNInterfaceEthernetArpEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportManagementVPNInterfaceEthernetArpEntries{}

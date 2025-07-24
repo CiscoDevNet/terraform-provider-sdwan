@@ -881,7 +881,7 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result) 
 			data.SpfMaximumHoldTime = types.Int64Value(va.Int())
 		}
 	}
-	if value := res.Get(path + "redistribute"); value.Exists() {
+	if value := res.Get(path + "redistribute"); value.Exists() && len(value.Array()) > 0 {
 		data.Redistributes = make([]ServiceRoutingOSPFRedistributes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutingOSPFRedistributes{}
@@ -917,7 +917,7 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result) 
 			return true
 		})
 	}
-	if value := res.Get(path + "routerLsa"); value.Exists() {
+	if value := res.Get(path + "routerLsa"); value.Exists() && len(value.Array()) > 0 {
 		data.RouterLsas = make([]ServiceRoutingOSPFRouterLsas, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutingOSPFRouterLsas{}
@@ -951,7 +951,7 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result) 
 			data.RoutePolicyId = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "area"); value.Exists() {
+	if value := res.Get(path + "area"); value.Exists() && len(value.Array()) > 0 {
 		data.Areas = make([]ServiceRoutingOSPFAreas, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutingOSPFAreas{}
@@ -983,7 +983,7 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result) 
 					item.NoSummary = types.BoolValue(va.Bool())
 				}
 			}
-			if cValue := v.Get("interface"); cValue.Exists() {
+			if cValue := v.Get("interface"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Interfaces = make([]ServiceRoutingOSPFAreasInterfaces, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceRoutingOSPFAreasInterfaces{}
@@ -1091,7 +1091,7 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result) 
 					return true
 				})
 			}
-			if cValue := v.Get("range"); cValue.Exists() {
+			if cValue := v.Get("range"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Ranges = make([]ServiceRoutingOSPFAreasRanges, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceRoutingOSPFAreasRanges{}
