@@ -471,7 +471,7 @@ func (data *TransportManagementVPN) fromBody(ctx context.Context, res gjson.Resu
 			data.SecondaryDnsAddressIpv6 = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "newHostMapping"); value.Exists() {
+	if value := res.Get(path + "newHostMapping"); value.Exists() && len(value.Array()) > 0 {
 		data.NewHostMappings = make([]TransportManagementVPNNewHostMappings, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportManagementVPNNewHostMappings{}
@@ -499,7 +499,7 @@ func (data *TransportManagementVPN) fromBody(ctx context.Context, res gjson.Resu
 			return true
 		})
 	}
-	if value := res.Get(path + "ipv4Route"); value.Exists() {
+	if value := res.Get(path + "ipv4Route"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4StaticRoutes = make([]TransportManagementVPNIpv4StaticRoutes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportManagementVPNIpv4StaticRoutes{}
@@ -531,7 +531,7 @@ func (data *TransportManagementVPN) fromBody(ctx context.Context, res gjson.Resu
 					item.Gateway = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("nextHop"); cValue.Exists() {
+			if cValue := v.Get("nextHop"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.NextHops = make([]TransportManagementVPNIpv4StaticRoutesNextHops, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TransportManagementVPNIpv4StaticRoutesNextHops{}
@@ -573,7 +573,7 @@ func (data *TransportManagementVPN) fromBody(ctx context.Context, res gjson.Resu
 			return true
 		})
 	}
-	if value := res.Get(path + "ipv6Route"); value.Exists() {
+	if value := res.Get(path + "ipv6Route"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6StaticRoutes = make([]TransportManagementVPNIpv6StaticRoutes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportManagementVPNIpv6StaticRoutes{}
@@ -587,7 +587,7 @@ func (data *TransportManagementVPN) fromBody(ctx context.Context, res gjson.Resu
 					item.Prefix = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("oneOfIpRoute.nextHopContainer.nextHop"); cValue.Exists() {
+			if cValue := v.Get("oneOfIpRoute.nextHopContainer.nextHop"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.NextHops = make([]TransportManagementVPNIpv6StaticRoutesNextHops, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TransportManagementVPNIpv6StaticRoutesNextHops{}

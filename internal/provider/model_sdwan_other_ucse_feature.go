@@ -333,7 +333,7 @@ func (data *OtherUCSE) fromBody(ctx context.Context, res gjson.Result) {
 			data.AssignPriority = types.Int64Value(va.Int())
 		}
 	}
-	if value := res.Get(path + "interface"); value.Exists() {
+	if value := res.Get(path + "interface"); value.Exists() && len(value.Array()) > 0 {
 		data.Interfaces = make([]OtherUCSEInterfaces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := OtherUCSEInterfaces{}
