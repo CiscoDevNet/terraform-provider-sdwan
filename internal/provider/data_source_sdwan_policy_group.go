@@ -98,7 +98,6 @@ func (d *PolicyGroupDataSource) Configure(_ context.Context, req datasource.Conf
 
 // End of section. //template:end model
 
-// Section below is generated&owned by "gen/generator.go". //template:begin read
 func (d *PolicyGroupDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	var config PolicyGroup
 
@@ -111,18 +110,20 @@ func (d *PolicyGroupDataSource) Read(ctx context.Context, req datasource.ReadReq
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
 
+	// Read policy group
 	res, err := d.client.Get(config.getPath() + url.QueryEscape(config.Id.ValueString()))
-	if err != nil {
+	if res.Raw == "" && err != nil {
+		resp.State.RemoveResource(ctx)
+		return
+	} else if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return
 	}
 
-	config.fromBody(ctx, res)
+	config.fromBodyPolicyGroup(ctx, res)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 
 	diags = resp.State.Set(ctx, &config)
 	resp.Diagnostics.Append(diags...)
 }
-
-// End of section. //template:end read
