@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.6.3 (Unreleased)
+
+- Fix issue, where NAT is always configured on `sdwan_transport_wan_vpn_interface_ethernet_feature`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/485)
+
 ## 0.6.2
 
 - Fix issue causing changes to applied feature templates to fail, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/417)

@@ -1292,116 +1292,116 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 	}
 
 	if !data.NatTypeVariable.IsNull() {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natType.optionType", "variable")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natType.value", data.NatTypeVariable.ValueString())
 		}
 	} else if data.NatType.IsNull() {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natType.optionType", "default")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natType.value", "interface")
 		}
 	} else {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natType.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natType.value", data.NatType.ValueString())
 		}
 	}
 
 	if !data.NatRangeStartVariable.IsNull() {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.optionType", "variable")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.value", data.NatRangeStartVariable.ValueString())
 		}
 	} else if !data.NatRangeStart.IsNull() {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.value", data.NatRangeStart.ValueString())
 		}
 	}
 
 	if !data.NatRangeEndVariable.IsNull() {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.optionType", "variable")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.value", data.NatRangeEndVariable.ValueString())
 		}
 	} else if !data.NatRangeEnd.IsNull() {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.value", data.NatRangeEnd.ValueString())
 		}
 	}
 
 	if !data.NatPrefixLengthVariable.IsNull() {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.optionType", "variable")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.value", data.NatPrefixLengthVariable.ValueString())
 		}
 	} else if !data.NatPrefixLength.IsNull() {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.value", data.NatPrefixLength.ValueInt64())
 		}
 	}
 
 	if !data.NatOverloadVariable.IsNull() {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.optionType", "variable")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.value", data.NatOverloadVariable.ValueString())
 		}
 	} else if !data.NatOverload.IsNull() {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.value", data.NatOverload.ValueBool())
 		}
 	}
 
 	if !data.NatLoopbackVariable.IsNull() {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.optionType", "variable")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.value", data.NatLoopbackVariable.ValueString())
 		}
 	} else if !data.NatLoopback.IsNull() {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.value", data.NatLoopback.ValueString())
 		}
 	}
 
 	if !data.NatUdpTimeoutVariable.IsNull() {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.udpTimeout.optionType", "variable")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.udpTimeout.value", data.NatUdpTimeoutVariable.ValueString())
 		}
 	} else if data.NatUdpTimeout.IsNull() {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.udpTimeout.optionType", "default")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.udpTimeout.value", 1)
 		}
 	} else {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.udpTimeout.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.udpTimeout.value", data.NatUdpTimeout.ValueInt64())
 		}
 	}
 
 	if !data.NatTcpTimeoutVariable.IsNull() {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.tcpTimeout.optionType", "variable")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.tcpTimeout.value", data.NatTcpTimeoutVariable.ValueString())
 		}
 	} else if data.NatTcpTimeout.IsNull() {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.tcpTimeout.optionType", "default")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.tcpTimeout.value", 60)
 		}
 	} else {
-		if true {
+		if true && data.NatIpv4.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.tcpTimeout.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv4.tcpTimeout.value", data.NatTcpTimeout.ValueInt64())
 		}
 	}
-	if true {
+	if true && data.NatIpv4.ValueBool() == true {
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.newStaticNat", []interface{}{})
 		for _, item := range data.NewStaticNats {
 			itemBody := ""
