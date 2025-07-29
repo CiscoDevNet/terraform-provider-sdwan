@@ -154,9 +154,6 @@ func (r *ServiceLANVPNFeatureAssociateRoutingOSPFFeatureResource) Read(ctx conte
 	}
 
 	state.fromBody(ctx, res)
-	if state.Version.IsNull() {
-		state.Version = types.Int64Value(0)
-	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Id.ValueString()))
 

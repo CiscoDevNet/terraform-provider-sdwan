@@ -33,6 +33,7 @@ import (
 type PolicerPolicyObject struct {
 	Id           types.String `tfsdk:"id"`
 	Version      types.Int64  `tfsdk:"version"`
+	Type         types.String `tfsdk:"type"`
 	Name         types.String `tfsdk:"name"`
 	Burst        types.Int64  `tfsdk:"burst"`
 	ExceedAction types.String `tfsdk:"exceed_action"`
@@ -120,3 +121,11 @@ func (data *PolicerPolicyObject) hasChanges(ctx context.Context, state *PolicerP
 // Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *PolicerPolicyObject) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("policer")
+}
+
+// End of section. //template:end processImport

@@ -621,3 +621,35 @@ func (data *IPv4ACLPolicyDefinition) updateVersions(ctx context.Context, state *
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *IPv4ACLPolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("acl")
+	for i := range data.Sequences {
+		for ii := range data.Sequences[i].MatchEntries {
+			if data.Sequences[i].MatchEntries[ii].ClassMapId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].ClassMapVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].SourceDataIpv4PrefixListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].SourceDataIpv4PrefixListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].DestinationDataIpv4PrefixListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].DestinationDataIpv4PrefixListVersion = types.Int64Value(0)
+			}
+		}
+		for ii := range data.Sequences[i].ActionEntries {
+			if data.Sequences[i].ActionEntries[ii].ClassMapId != types.StringNull() {
+				data.Sequences[i].ActionEntries[ii].ClassMapVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].ActionEntries[ii].MirrorId != types.StringNull() {
+				data.Sequences[i].ActionEntries[ii].MirrorVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].ActionEntries[ii].PolicerId != types.StringNull() {
+				data.Sequences[i].ActionEntries[ii].PolicerVersion = types.Int64Value(0)
+			}
+		}
+	}
+}
+
+// End of section. //template:end processImport

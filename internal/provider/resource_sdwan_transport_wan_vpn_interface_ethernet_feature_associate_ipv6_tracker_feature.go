@@ -158,9 +158,6 @@ func (r *TransportWANVPNInterfaceEthernetFeatureAssociateIPv6TrackerFeatureResou
 	}
 
 	state.fromBody(ctx, res)
-	if state.Version.IsNull() {
-		state.Version = types.Int64Value(0)
-	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Id.ValueString()))
 

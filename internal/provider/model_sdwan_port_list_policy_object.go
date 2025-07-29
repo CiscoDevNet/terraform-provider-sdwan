@@ -33,6 +33,7 @@ import (
 type PortListPolicyObject struct {
 	Id      types.String                  `tfsdk:"id"`
 	Version types.Int64                   `tfsdk:"version"`
+	Type    types.String                  `tfsdk:"type"`
 	Name    types.String                  `tfsdk:"name"`
 	Entries []PortListPolicyObjectEntries `tfsdk:"entries"`
 }
@@ -125,3 +126,11 @@ func (data *PortListPolicyObject) hasChanges(ctx context.Context, state *PortLis
 // Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *PortListPolicyObject) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("port")
+}
+
+// End of section. //template:end processImport

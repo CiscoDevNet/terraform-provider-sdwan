@@ -383,3 +383,21 @@ func (data *IPv4DeviceACLPolicyDefinition) updateVersions(ctx context.Context, s
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *IPv4DeviceACLPolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("deviceAccessPolicy")
+	for i := range data.Sequences {
+		for ii := range data.Sequences[i].MatchEntries {
+			if data.Sequences[i].MatchEntries[ii].SourceDataIpv4PrefixListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].SourceDataIpv4PrefixListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].DestinationDataIpv4PrefixListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].DestinationDataIpv4PrefixListVersion = types.Int64Value(0)
+			}
+		}
+	}
+}
+
+// End of section. //template:end processImport

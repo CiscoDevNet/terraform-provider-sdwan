@@ -32,6 +32,7 @@ import (
 type ObjectGroupPolicyDefinition struct {
 	Id                        types.String `tfsdk:"id"`
 	Version                   types.Int64  `tfsdk:"version"`
+	Type                      types.String `tfsdk:"type"`
 	Name                      types.String `tfsdk:"name"`
 	Description               types.String `tfsdk:"description"`
 	DataIpv4PrefixListId      types.String `tfsdk:"data_ipv4_prefix_list_id"`
@@ -216,3 +217,23 @@ func (data *ObjectGroupPolicyDefinition) updateVersions(ctx context.Context, sta
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *ObjectGroupPolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("securityGroup")
+	if data.DataIpv4PrefixListId != types.StringNull() {
+		data.DataIpv4PrefixListVersion = types.Int64Value(0)
+	}
+	if data.DataFqdnPrefixListId != types.StringNull() {
+		data.DataFqdnPrefixListVersion = types.Int64Value(0)
+	}
+	if data.PortListId != types.StringNull() {
+		data.PortListVersion = types.Int64Value(0)
+	}
+	if data.GeoLocationListId != types.StringNull() {
+		data.GeoLocationListVersion = types.Int64Value(0)
+	}
+}
+
+// End of section. //template:end processImport

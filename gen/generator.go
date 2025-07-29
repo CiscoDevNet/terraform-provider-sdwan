@@ -293,6 +293,13 @@ func ToGoName(s string) string {
 	return s
 }
 
+func ToVersionName(s string) string {
+	s = ToGoName(s)
+	m := strings.ReplaceAll(s, "Versions", "Ids")
+	m = strings.ReplaceAll(m, "Version", "Id")
+	return m
+}
+
 // Templating helper function to convert string to camel case
 func CamelCase(s string) string {
 	var g []string
@@ -391,6 +398,27 @@ func GetResponseModelPath(attribute YamlConfigAttribute) string {
 func HasReference(attributes []YamlConfigAttribute) bool {
 	for _, attr := range attributes {
 		if attr.Reference {
+			return true
+		}
+	}
+	return false
+}
+
+// Templating helper function to return true if reference included in attributes
+func HasVersion(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.Type == "Version" {
+			// if attr.Type == "Version" || attr.Type == "Versions" {
+			return true
+		}
+	}
+	return false
+}
+
+// Templating helper function to return true if reference included in attributes
+func HasStaticValue(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.Value != "" {
 			return true
 		}
 	}
@@ -547,6 +575,7 @@ func contains(s []string, str string) bool {
 // Map of templating functions
 var functions = template.FuncMap{
 	"toGoName":               ToGoName,
+	"toVersionName":          ToVersionName,
 	"camelCase":              CamelCase,
 	"snakeCase":              SnakeCase,
 	"sprintf":                fmt.Sprintf,
@@ -557,6 +586,8 @@ var functions = template.FuncMap{
 	"hasVersionAttribute":    HasVersionAttribute,
 	"getResponseModelPath":   GetResponseModelPath,
 	"hasReference":           HasReference,
+	"hasVersion":             HasVersion,
+	"hasStaticValue":         HasStaticValue,
 	"countReferences":        CountReferences,
 	"add":                    Add,
 	"getGjsonType":           GetGjsonType,

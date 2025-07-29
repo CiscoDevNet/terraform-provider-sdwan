@@ -33,6 +33,7 @@ import (
 type TLSSSLProfilePolicyDefinition struct {
 	Id                     types.String `tfsdk:"id"`
 	Version                types.Int64  `tfsdk:"version"`
+	Type                   types.String `tfsdk:"type"`
 	Name                   types.String `tfsdk:"name"`
 	Description            types.String `tfsdk:"description"`
 	Mode                   types.String `tfsdk:"mode"`
@@ -235,3 +236,17 @@ func (data *TLSSSLProfilePolicyDefinition) updateVersions(ctx context.Context, s
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *TLSSSLProfilePolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("sslUtdDecryptProfile")
+	if data.AllowUrlListId != types.StringNull() {
+		data.AllowUrlListVersion = types.Int64Value(0)
+	}
+	if data.BlockUrlListId != types.StringNull() {
+		data.BlockUrlListVersion = types.Int64Value(0)
+	}
+}
+
+// End of section. //template:end processImport

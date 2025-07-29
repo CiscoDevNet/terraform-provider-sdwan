@@ -33,6 +33,7 @@ import (
 type IPv6PrefixListPolicyObject struct {
 	Id      types.String                        `tfsdk:"id"`
 	Version types.Int64                         `tfsdk:"version"`
+	Type    types.String                        `tfsdk:"type"`
 	Name    types.String                        `tfsdk:"name"`
 	Entries []IPv6PrefixListPolicyObjectEntries `tfsdk:"entries"`
 }
@@ -149,3 +150,11 @@ func (data *IPv6PrefixListPolicyObject) hasChanges(ctx context.Context, state *I
 // Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *IPv6PrefixListPolicyObject) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("ipv6prefix")
+}
+
+// End of section. //template:end processImport

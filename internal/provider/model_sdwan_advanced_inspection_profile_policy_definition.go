@@ -32,6 +32,7 @@ import (
 type AdvancedInspectionProfilePolicyDefinition struct {
 	Id                               types.String `tfsdk:"id"`
 	Version                          types.Int64  `tfsdk:"version"`
+	Type                             types.String `tfsdk:"type"`
 	Name                             types.String `tfsdk:"name"`
 	Description                      types.String `tfsdk:"description"`
 	TlsAction                        types.String `tfsdk:"tls_action"`
@@ -168,3 +169,23 @@ func (data *AdvancedInspectionProfilePolicyDefinition) updateVersions(ctx contex
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *AdvancedInspectionProfilePolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("advancedInspectionProfile")
+	if data.IntrusionPreventionId != types.StringNull() {
+		data.IntrusionPreventionVersion = types.Int64Value(0)
+	}
+	if data.UrlFilteringId != types.StringNull() {
+		data.UrlFilteringVersion = types.Int64Value(0)
+	}
+	if data.AdvancedMalwareProtectionId != types.StringNull() {
+		data.AdvancedMalwareProtectionVersion = types.Int64Value(0)
+	}
+	if data.TlsSslDecryptionId != types.StringNull() {
+		data.TlsSslDecryptionVersion = types.Int64Value(0)
+	}
+}
+
+// End of section. //template:end processImport

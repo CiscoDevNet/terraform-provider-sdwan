@@ -32,6 +32,7 @@ import (
 type DomainListPolicyObject struct {
 	Id      types.String                    `tfsdk:"id"`
 	Version types.Int64                     `tfsdk:"version"`
+	Type    types.String                    `tfsdk:"type"`
 	Name    types.String                    `tfsdk:"name"`
 	Entries []DomainListPolicyObjectEntries `tfsdk:"entries"`
 }
@@ -124,3 +125,11 @@ func (data *DomainListPolicyObject) hasChanges(ctx context.Context, state *Domai
 // Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *DomainListPolicyObject) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("localdomain")
+}
+
+// End of section. //template:end processImport

@@ -34,6 +34,7 @@ import (
 type CentralizedPolicy struct {
 	Id          types.String                   `tfsdk:"id"`
 	Version     types.Int64                    `tfsdk:"version"`
+	PolicyType  types.String                   `tfsdk:"policy_type"`
 	Name        types.String                   `tfsdk:"name"`
 	Description types.String                   `tfsdk:"description"`
 	Definitions []CentralizedPolicyDefinitions `tfsdk:"definitions"`
@@ -300,3 +301,27 @@ func (data *CentralizedPolicy) updateVersions(ctx context.Context, state *Centra
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *CentralizedPolicy) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.PolicyType = types.StringValue("feature")
+	for i := range data.Definitions {
+		if data.Definitions[i].Id != types.StringNull() {
+			data.Definitions[i].Version = types.Int64Value(0)
+		}
+		for ii := range data.Definitions[i].Entries {
+			if !data.Definitions[i].Entries[ii].SiteListIds.IsNull() {
+				data.Definitions[i].Entries[ii].SiteListVersions = types.ListNull(types.StringType)
+			}
+			if !data.Definitions[i].Entries[ii].VpnListIds.IsNull() {
+				data.Definitions[i].Entries[ii].VpnListVersions = types.ListNull(types.StringType)
+			}
+			if !data.Definitions[i].Entries[ii].RegionListIds.IsNull() {
+				data.Definitions[i].Entries[ii].RegionListVersions = types.ListNull(types.StringType)
+			}
+		}
+	}
+}
+
+// End of section. //template:end processImport

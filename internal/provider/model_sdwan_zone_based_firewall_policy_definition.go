@@ -32,6 +32,7 @@ import (
 type ZoneBasedFirewallPolicyDefinition struct {
 	Id             types.String                                      `tfsdk:"id"`
 	Version        types.Int64                                       `tfsdk:"version"`
+	Type           types.String                                      `tfsdk:"type"`
 	Name           types.String                                      `tfsdk:"name"`
 	Description    types.String                                      `tfsdk:"description"`
 	Mode           types.String                                      `tfsdk:"mode"`
@@ -369,3 +370,11 @@ func (data *ZoneBasedFirewallPolicyDefinition) hasChanges(ctx context.Context, s
 // Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *ZoneBasedFirewallPolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("zoneBasedFW")
+}
+
+// End of section. //template:end processImport

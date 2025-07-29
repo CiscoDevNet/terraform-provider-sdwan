@@ -33,6 +33,7 @@ import (
 type TLSSSLDecryptionPolicyDefinition struct {
 	Id                          types.String                                   `tfsdk:"id"`
 	Version                     types.Int64                                    `tfsdk:"version"`
+	Type                        types.String                                   `tfsdk:"type"`
 	Name                        types.String                                   `tfsdk:"name"`
 	Description                 types.String                                   `tfsdk:"description"`
 	Mode                        types.String                                   `tfsdk:"mode"`
@@ -63,10 +64,10 @@ type TLSSSLDecryptionPolicyDefinitionNetworkRules struct {
 }
 
 type TLSSSLDecryptionPolicyDefinitionUrlRules struct {
-	RuleName              types.String `tfsdk:"rule_name"`
-	TargetVpns            types.Set    `tfsdk:"target_vpns"`
-	TlsSslProfilePolicyId types.String `tfsdk:"tls_ssl_profile_policy_id"`
-	TlsSslProfileVersion  types.Int64  `tfsdk:"tls_ssl_profile_version"`
+	RuleName                   types.String `tfsdk:"rule_name"`
+	TargetVpns                 types.Set    `tfsdk:"target_vpns"`
+	TlsSslProfilePolicyId      types.String `tfsdk:"tls_ssl_profile_policy_id"`
+	TlsSslProfilePolicyVersion types.Int64  `tfsdk:"tls_ssl_profile_policy_version"`
 }
 
 type TLSSSLDecryptionPolicyDefinitionNetworkRulesSourceAndDestinationConfiguration struct {
@@ -495,11 +496,24 @@ func (data *TLSSSLDecryptionPolicyDefinition) updateVersions(ctx context.Context
 			}
 		}
 		if stateIndex > -1 {
-			data.UrlRules[i].TlsSslProfileVersion = state.UrlRules[stateIndex].TlsSslProfileVersion
+			data.UrlRules[i].TlsSslProfilePolicyVersion = state.UrlRules[stateIndex].TlsSslProfilePolicyVersion
 		} else {
-			data.UrlRules[i].TlsSslProfileVersion = types.Int64Null()
+			data.UrlRules[i].TlsSslProfilePolicyVersion = types.Int64Null()
 		}
 	}
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *TLSSSLDecryptionPolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("sslDecryption")
+	for i := range data.UrlRules {
+		if data.UrlRules[i].TlsSslProfilePolicyId != types.StringNull() {
+			data.UrlRules[i].TlsSslProfilePolicyVersion = types.Int64Value(0)
+		}
+	}
+}
+
+// End of section. //template:end processImport

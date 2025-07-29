@@ -41,20 +41,19 @@ type {{camelCase .Name}} struct {
 {{- if .HasVersion}}
 	Version types.Int64 `tfsdk:"version"`
 {{- end}}
-{{- if .TypeValue}}
-Type types.String `tfsdk:"type"`
-{{- end}}
 {{- range .Attributes}}
-{{- if not .Value}}
 {{- if isNestedListSet .}}
+{{- if not .Value}}
 	{{toGoName .TfName}} []{{$name}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
+{{- else}}
+	{{toGoName .TfName}} []interface{} `tfsdk:"{{.TfName}}"`
+{{- end}}
 {{- else if eq .Type "Versions"}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
 	{{toGoName .TfName}} types.Int64 `tfsdk:"{{.TfName}}"`
 {{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
-{{- end}}
 {{- end}}
 {{- end}}
 }
@@ -92,7 +91,6 @@ type {{$name}}{{toGoName .TfName}} struct {
 {{- if isNestedListSet .}}
 type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
-{{- if not .Value}}
 {{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Versions"}}
@@ -101,7 +99,6 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 	{{toGoName .TfName}} types.Int64 `tfsdk:"{{.TfName}}"`
 {{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
-{{- end}}
 {{- end}}
 {{- end}}
 }
@@ -125,14 +122,12 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 {{- if isNestedListSet .}}
 type {{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
-{{- if not .Value}}
 {{- if eq .Type "Versions"}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
 	{{toGoName .TfName}} types.Int64 `tfsdk:"{{.TfName}}"`
 {{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
-{{- end}}
 {{- end}}
 {{- end}}
 }
@@ -676,3 +671,73 @@ func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{ca
 }
 {{end}}
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *{{camelCase .Name}}) processImport(ctx context.Context) {
+	{{- if .HasVersion}}
+	data.Version = types.Int64Value(0)
+	{{- end}}
+  {{- range .Attributes}}
+  {{- $name := toGoName .TfName}}
+  {{- if .Value}}
+  data.{{toGoName .TfName}} = {{if eq .Type "String"}}types.StringValue("{{ .Value }}"){{else if eq .Type "Bool"}}types.BoolValue({{ .Value }}){{else if eq .Type "List"}}{{ .Value }}{{else}}types.ListNull({{ .Value }}){{end}}
+  {{- end}}
+  {{- if eq .Type "Version"}}
+  if data.{{toVersionName .TfName}} != types.StringNull() {
+    data.{{toGoName .TfName}} = types.Int64Value(0)
+  }
+  {{- else if eq .Type "Versions"}}
+  if !data.{{toVersionName .TfName}}.IsNull() {
+    data.{{toGoName .TfName}} = types.ListNull(types.StringType)
+  }
+  {{- else if and (isNestedListSet .) (hasVersionAttribute .Attributes)}}
+  for i := range data.{{toGoName .TfName}} {
+
+    {{- range .Attributes}}
+    {{- $cname := toGoName .TfName}}
+    {{- if eq .Type "Version"}}
+    if data.{{$name}}[i].{{toVersionName .TfName}} != types.StringNull() {
+      data.{{$name}}[i].{{toGoName .TfName}} = types.Int64Value(0)
+    }
+    {{- else if eq .Type "Versions"}}
+    if !data.{{$name}}[i].{{toVersionName .TfName}}.IsNull() {
+      data.{{$name}}[i].{{toGoName .TfName}} = types.ListNull(types.StringType)
+    }
+    {{- else if and (isNestedListSet .) (hasVersionAttribute .Attributes)}}
+    for ii := range data.{{$name}}[i].{{toGoName .TfName}} {
+
+      {{- range .Attributes}}
+      {{- $ccname := toGoName .TfName}}
+      {{- if eq .Type "Version"}}
+      if data.{{$name}}[i].{{$cname}}[ii].{{toVersionName .TfName}} != types.StringNull() {
+        data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} = types.Int64Value(0)
+      }
+      {{- else if eq .Type "Versions"}}
+      if !data.{{$name}}[i].{{$cname}}[ii].{{toVersionName .TfName}}.IsNull() {
+        data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} = types.ListNull(types.StringType)
+      }
+      {{- else if and (isNestedListSet .) (hasVersionAttribute .Attributes)}}
+      for iii := range data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} {
+
+        {{- range .Attributes}}
+        {{- if eq .Type "Version"}}
+        if data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toVersionName .TfName}} != types.StringNull() {
+          data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}} = types.Int64Value(0)
+        }
+        {{- else if eq .Type "Versions"}}
+        if !data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toVersionName .TfName}}.IsNull() {
+          data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}} = types.ListNull(types.StringType)
+        }
+        {{- end}}
+        {{- end}}
+      }
+      {{- end}}
+      {{- end}}
+    }
+    {{- end}}
+    {{- end}}
+  }
+  {{- end}}
+  {{- end}}
+}
+// End of section. //template:end processImport

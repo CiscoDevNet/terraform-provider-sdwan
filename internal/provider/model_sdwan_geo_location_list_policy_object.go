@@ -32,6 +32,7 @@ import (
 type GeoLocationListPolicyObject struct {
 	Id      types.String                         `tfsdk:"id"`
 	Version types.Int64                          `tfsdk:"version"`
+	Type    types.String                         `tfsdk:"type"`
 	Name    types.String                         `tfsdk:"name"`
 	Entries []GeoLocationListPolicyObjectEntries `tfsdk:"entries"`
 }
@@ -136,3 +137,11 @@ func (data *GeoLocationListPolicyObject) hasChanges(ctx context.Context, state *
 // Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *GeoLocationListPolicyObject) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("geolocation")
+}
+
+// End of section. //template:end processImport

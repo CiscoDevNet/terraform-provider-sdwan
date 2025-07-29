@@ -705,3 +705,33 @@ func (data *RoutePolicyDefinition) updateVersions(ctx context.Context, state *Ro
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *RoutePolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("vedgeRoute")
+	for i := range data.Sequences {
+		for ii := range data.Sequences[i].MatchEntries {
+			if data.Sequences[i].MatchEntries[ii].PrefixListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].PrefixListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].AsPathListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].AsPathListVersion = types.Int64Value(0)
+			}
+			if !data.Sequences[i].MatchEntries[ii].CommunityListIds.IsNull() {
+				data.Sequences[i].MatchEntries[ii].CommunityListVersions = types.ListNull(types.StringType)
+			}
+			if data.Sequences[i].MatchEntries[ii].ExpandedCommunityListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].ExpandedCommunityListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].ExtendedCommunityListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].ExtendedCommunityListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].NextHopPrefixListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].NextHopPrefixListVersion = types.Int64Value(0)
+			}
+		}
+	}
+}
+
+// End of section. //template:end processImport
