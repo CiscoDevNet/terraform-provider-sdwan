@@ -189,6 +189,19 @@ func (r *PolicyGroupResource) Create(ctx context.Context, req resource.CreateReq
 		}
 	}
 
+	// Create policy group device variables
+	if len(plan.Devices) > 0 && plan.hasPolicyGroupDeviceVariables(ctx) {
+		body = plan.toBodyPolicyGroupDeviceVariables(ctx)
+
+		path := fmt.Sprintf("/v1/policy-group/%v/device/variables/", plan.Id.ValueString())
+		res, err = r.client.Put(path, body)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure policy group device variables (PUT), got error: %s, %s", err, res.String()))
+			r.DeletePolicyGroup(ctx, plan, &resp.Diagnostics)
+			return
+		}
+	}
+
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 
 	diags = resp.State.Set(ctx, &plan)
@@ -233,6 +246,21 @@ func (r *PolicyGroupResource) Read(ctx context.Context, req resource.ReadRequest
 	}
 
 	state.fromBodyPolicyGroupDevices(ctx, res)
+
+	// Read policy group device variables
+	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
+		path = fmt.Sprintf("/v1/policy-group/%v/device/variables/", state.Id.ValueString())
+		res, err = r.client.Get(path)
+		if strings.Contains(res.Get("error.message").String(), "Invalid policy group passed") {
+			resp.State.RemoveResource(ctx)
+			return
+		} else if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+			return
+		}
+
+		state.fromBodyPolicyGroupDeviceVariables(ctx, res)
+	}
 
 	state.updateTfAttributes(ctx, &oldState)
 
@@ -323,6 +351,18 @@ func (r *PolicyGroupResource) Update(ctx context.Context, req resource.UpdateReq
 		res, err = r.client.DeleteBody(fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.Id.ValueString()), disassociateBody)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete policy group devices (DELETE), got error: %s, %s", err, res.String()))
+			return
+		}
+	}
+
+	// Update policy group device variables
+	if len(plan.Devices) > 0 && plan.hasPolicyGroupDeviceVariables(ctx) {
+		body = plan.toBodyPolicyGroupDeviceVariables(ctx)
+
+		path := fmt.Sprintf("/v1/policy-group/%v/device/variables/", plan.Id.ValueString())
+		res, err = r.client.Put(path, body)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure policy group device variables (PUT), got error: %s, %s", err, res.String()))
 			return
 		}
 	}

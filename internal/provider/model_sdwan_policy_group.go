@@ -22,8 +22,10 @@ import (
 	"context"
 	"fmt"
 	"slices"
+	"strconv"
 	"strings"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -96,6 +98,49 @@ func (data PolicyGroup) toBodyPolicyGroupDevices(ctx context.Context) string {
 			itemBody := ""
 			if !item.Id.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "id", item.Id.ValueString())
+			}
+			body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
+		}
+	}
+	return body
+}
+
+func (data PolicyGroup) toBodyPolicyGroupDeviceVariables(ctx context.Context) string {
+	body := ""
+	if !data.Solution.IsNull() {
+		body, _ = sjson.Set(body, "solution", data.Solution.ValueString())
+	}
+	if true {
+		body, _ = sjson.Set(body, "devices", []interface{}{})
+		for _, item := range data.Devices {
+			itemBody := ""
+			if !item.Id.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "device-id", item.Id.ValueString())
+			}
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "variables", []interface{}{})
+				for _, childItem := range item.Variables {
+					itemChildBody := ""
+					if !childItem.Name.IsNull() {
+						itemChildBody, _ = sjson.Set(itemChildBody, "name", childItem.Name.ValueString())
+					}
+					if !childItem.ListValue.IsNull() {
+						var values []string
+						childItem.ListValue.ElementsAs(ctx, &values, false)
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", values)
+					} else if !childItem.Value.IsNull() {
+						if val, err := strconv.Atoi(childItem.Value.ValueString()); err == nil {
+							itemChildBody, _ = sjson.Set(itemChildBody, "value", val)
+						} else if val, err := strconv.ParseFloat(childItem.Value.ValueString(), 64); err == nil {
+							itemChildBody, _ = sjson.Set(itemChildBody, "value", val)
+						} else if val, err := strconv.ParseBool(childItem.Value.ValueString()); err == nil {
+							itemChildBody, _ = sjson.Set(itemChildBody, "value", val)
+						} else {
+							itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Value.ValueString())
+						}
+					}
+					itemBody, _ = sjson.SetRaw(itemBody, "variables.-1", itemChildBody)
+				}
 			}
 			body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
 		}
@@ -184,6 +229,94 @@ func (data *PolicyGroup) fromBodyPolicyGroupDevices(ctx context.Context, res gjs
 	}
 }
 
+func (data *PolicyGroup) fromBodyPolicyGroupDeviceVariables(ctx context.Context, res gjson.Result) {
+	original := *data
+	if value := res.Get("family"); value.Exists() {
+		data.Solution = types.StringValue(value.String())
+	} else {
+		data.Solution = types.StringNull()
+	}
+	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
+		data.Devices = make([]PolicyGroupDevices, 0)
+		value.ForEach(func(k, v gjson.Result) bool {
+			item := PolicyGroupDevices{}
+			if cValue := v.Get("device-id"); cValue.Exists() {
+				item.Id = types.StringValue(cValue.String())
+			} else {
+				item.Id = types.StringNull()
+			}
+			if cValue := v.Get("variables"); cValue.Exists() && len(cValue.Array()) > 0 {
+				item.Variables = make([]PolicyGroupDevicesVariables, 0)
+				cValue.ForEach(func(ck, cv gjson.Result) bool {
+					// skip optional variables
+					if !cv.Get("value").Exists() {
+						return true
+					}
+					cItem := PolicyGroupDevicesVariables{}
+					if ccValue := cv.Get("name"); ccValue.Exists() {
+						cItem.Name = types.StringValue(ccValue.String())
+					} else {
+						cItem.Name = types.StringNull()
+					}
+					if ccValue := cv.Get("value"); ccValue.Exists() {
+						if ccValue.IsArray() {
+							cItem.ListValue = helpers.GetStringList(ccValue.Array())
+							cItem.Value = types.StringNull()
+						} else {
+							cItem.ListValue = types.ListNull(types.StringType)
+							if !strings.Contains(strings.ToLower(ccValue.String()), "$crypt_cluster") {
+								cItem.Value = types.StringValue(ccValue.String())
+							}
+						}
+					} else {
+						cItem.ListValue = types.ListNull(types.StringType)
+						cItem.Value = types.StringNull()
+					}
+					item.Variables = append(item.Variables, cItem)
+					return true
+				})
+			} else {
+				if len(item.Variables) > 0 {
+					item.Variables = []PolicyGroupDevicesVariables{}
+				}
+			}
+			data.Devices = append(data.Devices, item)
+			return true
+		})
+	} else {
+		if len(data.Devices) > 0 {
+			data.Devices = []PolicyGroupDevices{}
+		}
+	}
+
+	// reorder
+	slices.Reverse(original.Devices)
+	for i := range original.Devices {
+		keyValues := [...]string{original.Devices[i].Id.ValueString()}
+
+		for y := range data.Devices {
+			found := false
+			for _, keyValue := range keyValues {
+				if !data.Devices[y].Id.IsNull() {
+					if data.Devices[y].Id.ValueString() == keyValue {
+						found = true
+						continue
+					}
+					found = false
+					break
+				}
+				continue
+			}
+			if found {
+				//insert at the beginning
+				device := data.Devices[y]
+				data.Devices = append(data.Devices[:y], data.Devices[y+1:]...)
+				data.Devices = append([]PolicyGroupDevices{device}, data.Devices...)
+			}
+		}
+	}
+}
+
 func (data *PolicyGroup) updateTfAttributes(ctx context.Context, state *PolicyGroup) {
 	//data.FeatureVersions = state.FeatureVersions
 	for i := range data.Devices {
@@ -202,4 +335,13 @@ func (data *PolicyGroup) updateTfAttributes(ctx context.Context, state *PolicyGr
 			data.Devices[i].Deploy = types.BoolNull()
 		}
 	}
+}
+
+func (data PolicyGroup) hasPolicyGroupDeviceVariables(ctx context.Context) bool {
+	for _, device := range data.Devices {
+		if len(device.Variables) > 0 {
+			return true
+		}
+	}
+	return false
 }
