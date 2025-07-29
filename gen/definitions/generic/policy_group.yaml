@@ -29,6 +29,42 @@ attributes:
     description: List of feature profile IDs
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: "[sdwan_application_priority_feature_profile.test.id]"
+  - model_name: devices
+    type: List
+    description: List of devices
+    attributes:
+      - model_name: id
+        type: String
+        id: true
+        description: Device ID
+        example: C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B
+      - tf_name: deploy
+        tf_only: true
+        type: Bool
+        description: Deploy to device if enabled.
+        default_value: false
+        example: true
+      - model_name: variables
+        type: Set
+        description: List of variables
+        attributes:
+          - model_name: name
+            type: String
+            mandatory: true
+            id: true
+            description: Variable name
+            example: host_name
+          - model_name: value
+            type: String
+            description: Variable value
+            example: edge1
+          - model_name: list_value
+            type: List
+            element_type: String
+            tf_only: true
+            description: Use this instead of `value` in case value is of type `List`.
+            example: 1.2.3.4
+            exclude_test: true
   - tf_name: policy_versions
     tf_only: true
     type: Versions

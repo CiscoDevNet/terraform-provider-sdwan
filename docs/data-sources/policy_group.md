@@ -28,7 +28,26 @@ data "sdwan_policy_group" "example" {
 ### Read-Only
 
 - `description` (String) Description
+- `devices` (Attributes List) List of devices (see [below for nested schema](#nestedatt--devices))
 - `feature_profile_ids` (Set of String) List of feature profile IDs
 - `name` (String) The name of the policy group
 - `policy_versions` (List of String) List of all associated policy versions
 - `solution` (String) Type of solution
+
+<a id="nestedatt--devices"></a>
+### Nested Schema for `devices`
+
+Read-Only:
+
+- `deploy` (Boolean) Deploy to device if enabled.
+- `id` (String) Device ID
+- `variables` (Attributes Set) List of variables (see [below for nested schema](#nestedatt--devices--variables))
+
+<a id="nestedatt--devices--variables"></a>
+### Nested Schema for `devices.variables`
+
+Read-Only:
+
+- `list_value` (List of String) Use this instead of `value` in case value is of type `List`.
+- `name` (String) Variable name
+- `value` (String) Variable value

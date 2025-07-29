@@ -36,6 +36,9 @@ func TestAccDataSourceSdwanPolicyGroup(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_group.test", "name", "PG_1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_group.test", "description", "My policy group 1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_group.test", "solution", "sdwan"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_group.test", "devices.0.id", "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_group.test", "devices.0.variables.0.name", "host_name"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_group.test", "devices.0.variables.0.value", "edge1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -69,6 +72,13 @@ func testAccDataSourceSdwanPolicyGroupConfig() string {
 	config += `	description = "My policy group 1"` + "\n"
 	config += `	solution = "sdwan"` + "\n"
 	config += `	feature_profile_ids = [sdwan_application_priority_feature_profile.test.id]` + "\n"
+	config += `	devices = [{` + "\n"
+	config += `	  id = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"` + "\n"
+	config += `	  variables = [{` + "\n"
+	config += `		name = "host_name"` + "\n"
+	config += `		value = "edge1"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
 	config += `}` + "\n"
 
 	config += `

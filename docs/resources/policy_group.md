@@ -20,6 +20,17 @@ resource "sdwan_policy_group" "example" {
   description         = "My policy group 1"
   solution            = "sdwan"
   feature_profile_ids = ["f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"]
+  devices = [
+    {
+      id = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"
+      variables = [
+        {
+          name  = "host_name"
+          value = "edge1"
+        }
+      ]
+    }
+  ]
 }
 ```
 
@@ -35,12 +46,35 @@ resource "sdwan_policy_group" "example" {
 
 ### Optional
 
+- `devices` (Attributes List) List of devices (see [below for nested schema](#nestedatt--devices))
 - `feature_profile_ids` (Set of String) List of feature profile IDs
 - `policy_versions` (List of String) List of all associated policy versions
 
 ### Read-Only
 
 - `id` (String) The id of the object
+
+<a id="nestedatt--devices"></a>
+### Nested Schema for `devices`
+
+Optional:
+
+- `deploy` (Boolean) Deploy to device if enabled.
+  - Default value: `false`
+- `id` (String) Device ID
+- `variables` (Attributes Set) List of variables (see [below for nested schema](#nestedatt--devices--variables))
+
+<a id="nestedatt--devices--variables"></a>
+### Nested Schema for `devices.variables`
+
+Required:
+
+- `name` (String) Variable name
+
+Optional:
+
+- `list_value` (List of String) Use this instead of `value` in case value is of type `List`.
+- `value` (String) Variable value
 
 ## Import
 

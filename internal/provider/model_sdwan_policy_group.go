@@ -20,6 +20,8 @@ package provider
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
+	"fmt"
+	"slices"
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
@@ -32,12 +34,25 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type PolicyGroup struct {
-	Id                types.String `tfsdk:"id"`
-	Name              types.String `tfsdk:"name"`
-	Description       types.String `tfsdk:"description"`
-	Solution          types.String `tfsdk:"solution"`
-	FeatureProfileIds types.Set    `tfsdk:"feature_profile_ids"`
-	PolicyVersions    types.List   `tfsdk:"policy_versions"`
+	Id                types.String         `tfsdk:"id"`
+	Name              types.String         `tfsdk:"name"`
+	Description       types.String         `tfsdk:"description"`
+	Solution          types.String         `tfsdk:"solution"`
+	FeatureProfileIds types.Set            `tfsdk:"feature_profile_ids"`
+	Devices           []PolicyGroupDevices `tfsdk:"devices"`
+	PolicyVersions    types.List           `tfsdk:"policy_versions"`
+}
+
+type PolicyGroupDevices struct {
+	Id        types.String                  `tfsdk:"id"`
+	Deploy    types.Bool                    `tfsdk:"deploy"`
+	Variables []PolicyGroupDevicesVariables `tfsdk:"variables"`
+}
+
+type PolicyGroupDevicesVariables struct {
+	Name      types.String `tfsdk:"name"`
+	Value     types.String `tfsdk:"value"`
+	ListValue types.List   `tfsdk:"list_value"`
 }
 
 // End of section. //template:end types
@@ -68,6 +83,21 @@ func (data PolicyGroup) toBodyPolicyGroup(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "id", strings.Trim(item.String(), "\""))
 			}
 			body, _ = sjson.SetRaw(body, "profiles.-1", itemBody)
+		}
+	}
+	return body
+}
+
+func (data PolicyGroup) toBodyPolicyGroupDevices(ctx context.Context) string {
+	body := ""
+	if true {
+		body, _ = sjson.Set(body, "devices", []interface{}{})
+		for _, item := range data.Devices {
+			itemBody := ""
+			if !item.Id.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "id", item.Id.ValueString())
+			}
+			body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
 		}
 	}
 	return body
@@ -104,5 +134,72 @@ func (data *PolicyGroup) fromBodyPolicyGroup(ctx context.Context, res gjson.Resu
 		data.FeatureProfileIds = types.SetValueMust(types.StringType, a)
 	} else {
 		data.FeatureProfileIds = types.SetNull(types.StringType)
+	}
+}
+
+func (data *PolicyGroup) fromBodyPolicyGroupDevices(ctx context.Context, res gjson.Result) {
+	original := *data
+	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
+		data.Devices = make([]PolicyGroupDevices, 0)
+		value.ForEach(func(k, v gjson.Result) bool {
+			item := PolicyGroupDevices{}
+			if cValue := v.Get("id"); cValue.Exists() {
+				item.Id = types.StringValue(cValue.String())
+			} else {
+				item.Id = types.StringNull()
+			}
+			data.Devices = append(data.Devices, item)
+			return true
+		})
+	} else {
+		if len(data.Devices) > 0 {
+			data.Devices = []PolicyGroupDevices{}
+		}
+	}
+	// reorder
+	slices.Reverse(original.Devices)
+	for i := range original.Devices {
+		keyValues := [...]string{original.Devices[i].Id.ValueString()}
+
+		for y := range data.Devices {
+			found := false
+			for _, keyValue := range keyValues {
+				if !data.Devices[y].Id.IsNull() {
+					if data.Devices[y].Id.ValueString() == keyValue {
+						found = true
+						continue
+					}
+					found = false
+					break
+				}
+				continue
+			}
+			if found {
+				//insert at the beginning
+				device := data.Devices[y]
+				data.Devices = append(data.Devices[:y], data.Devices[y+1:]...)
+				data.Devices = append([]PolicyGroupDevices{device}, data.Devices...)
+			}
+		}
+	}
+}
+
+func (data *PolicyGroup) updateTfAttributes(ctx context.Context, state *PolicyGroup) {
+	//data.FeatureVersions = state.FeatureVersions
+	for i := range data.Devices {
+		dataKeys := [...]string{fmt.Sprintf("%v", data.Devices[i].Id.ValueString())}
+		stateIndex := -1
+		for j := range state.Devices {
+			stateKeys := [...]string{fmt.Sprintf("%v", state.Devices[j].Id.ValueString())}
+			if dataKeys == stateKeys {
+				stateIndex = j
+				break
+			}
+		}
+		if stateIndex > -1 {
+			data.Devices[i].Deploy = state.Devices[stateIndex].Deploy
+		} else {
+			data.Devices[i].Deploy = types.BoolNull()
+		}
 	}
 }
