@@ -405,17 +405,6 @@ func HasReference(attributes []YamlConfigAttribute) bool {
 }
 
 // Templating helper function to return true if reference included in attributes
-func HasVersion(attributes []YamlConfigAttribute) bool {
-	for _, attr := range attributes {
-		if attr.Type == "Version" {
-			// if attr.Type == "Version" || attr.Type == "Versions" {
-			return true
-		}
-	}
-	return false
-}
-
-// Templating helper function to return true if reference included in attributes
 func HasStaticValue(attributes []YamlConfigAttribute) bool {
 	for _, attr := range attributes {
 		if attr.Value != "" {
@@ -586,7 +575,6 @@ var functions = template.FuncMap{
 	"hasVersionAttribute":    HasVersionAttribute,
 	"getResponseModelPath":   GetResponseModelPath,
 	"hasReference":           HasReference,
-	"hasVersion":             HasVersion,
 	"hasStaticValue":         HasStaticValue,
 	"countReferences":        CountReferences,
 	"add":                    Add,
