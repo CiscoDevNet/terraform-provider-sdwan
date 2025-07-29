@@ -134,6 +134,7 @@ attributes:
         tf_name: vpn_id
         example: 2
       - model_name: interface
+        type: List
         example: e1
   - model_name: ipsec-route
     tf_name: ipv4_static_ipsec_routes
@@ -144,6 +145,7 @@ attributes:
         tf_name: vpn_id
         example: 2
       - model_name: interface
+        type: List
         example: e1
   - model_name: advertise
     tf_name: omp_advertise_ipv4_routes

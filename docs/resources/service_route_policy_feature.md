@@ -89,7 +89,7 @@ Optional:
 
 Optional:
 
-- `as_path_prepend` (Set of Number)
+- `as_path_prepend` (List of Number)
 - `community` (Set of String)
 - `community_additive` (Boolean) - Default value: `false`
 - `community_variable` (String) Variable name

@@ -146,7 +146,7 @@ type CiscoVPNIpv4StaticGreRoutes struct {
 	Prefix            types.String `tfsdk:"prefix"`
 	PrefixVariable    types.String `tfsdk:"prefix_variable"`
 	VpnId             types.Int64  `tfsdk:"vpn_id"`
-	Interface         types.Set    `tfsdk:"interface"`
+	Interface         types.List   `tfsdk:"interface"`
 	InterfaceVariable types.String `tfsdk:"interface_variable"`
 }
 
@@ -155,7 +155,7 @@ type CiscoVPNIpv4StaticIpsecRoutes struct {
 	Prefix            types.String `tfsdk:"prefix"`
 	PrefixVariable    types.String `tfsdk:"prefix_variable"`
 	VpnId             types.Int64  `tfsdk:"vpn_id"`
-	Interface         types.Set    `tfsdk:"interface"`
+	Interface         types.List   `tfsdk:"interface"`
 	InterfaceVariable types.String `tfsdk:"interface_variable"`
 }
 
@@ -2989,21 +2989,21 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("interface.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.Interface = types.SetNull(types.StringType)
+					item.Interface = types.ListNull(types.StringType)
 
 					cv := v.Get("interface.vipVariableName")
 					item.InterfaceVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.Interface = types.SetNull(types.StringType)
+					item.Interface = types.ListNull(types.StringType)
 					item.InterfaceVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("interface.vipValue")
-					item.Interface = helpers.GetStringSet(cv.Array())
+					item.Interface = helpers.GetStringList(cv.Array())
 					item.InterfaceVariable = types.StringNull()
 				}
 			} else {
-				item.Interface = types.SetNull(types.StringType)
+				item.Interface = types.ListNull(types.StringType)
 				item.InterfaceVariable = types.StringNull()
 			}
 			data.Ipv4StaticGreRoutes = append(data.Ipv4StaticGreRoutes, item)
@@ -3060,21 +3060,21 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("interface.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.Interface = types.SetNull(types.StringType)
+					item.Interface = types.ListNull(types.StringType)
 
 					cv := v.Get("interface.vipVariableName")
 					item.InterfaceVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.Interface = types.SetNull(types.StringType)
+					item.Interface = types.ListNull(types.StringType)
 					item.InterfaceVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("interface.vipValue")
-					item.Interface = helpers.GetStringSet(cv.Array())
+					item.Interface = helpers.GetStringList(cv.Array())
 					item.InterfaceVariable = types.StringNull()
 				}
 			} else {
-				item.Interface = types.SetNull(types.StringType)
+				item.Interface = types.ListNull(types.StringType)
 				item.InterfaceVariable = types.StringNull()
 			}
 			data.Ipv4StaticIpsecRoutes = append(data.Ipv4StaticIpsecRoutes, item)

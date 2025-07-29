@@ -7,6 +7,11 @@ description: |-
 
 # Changelog
 
+## 0.6.3 (Unreleased)
+
+- Fix type of `interface` attribute of `sdwan_cisco_vpn_feature_template` under `ipv4_static_ipsec_routes` & `ipv4_static_gre_routes`
+- Fix type of `as_path_prepend` attribute of `sdwan_service_route_policy_feature` and `sdwan_transport_route_policy_feature`
+
 ## 0.6.2
 
 - Fix issue causing changes to applied feature templates to fail, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/417)

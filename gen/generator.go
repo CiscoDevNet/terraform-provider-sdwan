@@ -862,10 +862,8 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 						attr.MaxInt = value.Int()
 					}
 				}
-			} else if attr.Type == "List" && attr.ElementType == "String" {
-				// Remove unsupported type error
-				attr.Type = "List"
-				attr.ElementType = "String"
+			} else if attr.Type == "List" && attr.ElementType != "" {
+				// Remove unsupported type error and enable model overrides
 			} else if attr.Type == "Set" && attr.ElementType == "String" || t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" || t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.oneOf.0.type").String() == "string" {
 				attr.Type = "Set"
 				attr.ElementType = "String"

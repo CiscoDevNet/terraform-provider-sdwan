@@ -488,7 +488,7 @@ func (d *CiscoVPNFeatureTemplateDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: "Destination VPN to resolve the prefix",
 							Computed:            true,
 						},
-						"interface": schema.SetAttribute{
+						"interface": schema.ListAttribute{
 							MarkdownDescription: "List of GRE Interfaces",
 							ElementType:         types.StringType,
 							Computed:            true,
@@ -521,7 +521,7 @@ func (d *CiscoVPNFeatureTemplateDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: "Destination VPN to resolve the prefix",
 							Computed:            true,
 						},
-						"interface": schema.SetAttribute{
+						"interface": schema.ListAttribute{
 							MarkdownDescription: "List of IPSEC Interfaces (Separated by commas)",
 							ElementType:         types.StringType,
 							Computed:            true,

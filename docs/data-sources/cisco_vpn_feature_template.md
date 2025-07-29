@@ -103,7 +103,7 @@ Read-Only:
 
 Read-Only:
 
-- `interface` (Set of String) List of GRE Interfaces
+- `interface` (List of String) List of GRE Interfaces
 - `interface_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `prefix` (String) Prefix
@@ -116,7 +116,7 @@ Read-Only:
 
 Read-Only:
 
-- `interface` (Set of String) List of IPSEC Interfaces (Separated by commas)
+- `interface` (List of String) List of IPSEC Interfaces (Separated by commas)
 - `interface_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `prefix` (String) Prefix
