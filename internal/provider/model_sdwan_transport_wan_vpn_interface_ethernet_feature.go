@@ -2041,6 +2041,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.Ipv4DhcpDistance = types.Int64Value(va.Int())
 		}
+		data.Ipv4ConfigurationType = types.StringValue("dynamic")
 	}
 	data.Ipv4Address = types.StringNull()
 	data.Ipv4AddressVariable = types.StringNull()
@@ -2051,6 +2052,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.Ipv4Address = types.StringValue(va.String())
 		}
+		data.Ipv4ConfigurationType = types.StringValue("static")
 	}
 	data.Ipv4SubnetMask = types.StringNull()
 	data.Ipv4SubnetMaskVariable = types.StringNull()
@@ -2061,6 +2063,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
+		data.Ipv4ConfigurationType = types.StringValue("static")
 	}
 	if value := res.Get(path + "intfIpAddress.static.staticIpV4AddressSecondary"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4SecondaryAddresses = make([]TransportWANVPNInterfaceEthernetIpv4SecondaryAddresses, 0)
@@ -2107,6 +2110,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		if t.String() == "global" {
 			data.EnableDhcpv6 = types.BoolValue(va.Bool())
 		}
+		data.Ipv6ConfigurationType = types.StringValue("dynamic")
 	}
 	if value := res.Get(path + "intfIpV6Address.dynamic.secondaryIpV6Address"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6DhcpSecondaryAddress = make([]TransportWANVPNInterfaceEthernetIpv6DhcpSecondaryAddress, 0)
@@ -2135,6 +2139,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.Ipv6Address = types.StringValue(va.String())
 		}
+		data.Ipv6ConfigurationType = types.StringValue("static")
 	}
 	if value := res.Get(path + "intfIpV6Address.static.secondaryIpV6Address"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6SecondaryAddresses = make([]TransportWANVPNInterfaceEthernetIpv6SecondaryAddresses, 0)

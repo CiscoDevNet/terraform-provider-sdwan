@@ -399,6 +399,9 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			data.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 			{{- end}}
 		}
+		{{- if ne .ConditionalAttribute.Name ""}}
+		data.{{toGoName .ConditionalAttribute.Name}} = {{if eq .ConditionalAttribute.Type "Bool"}}types.BoolValue({{.ConditionalAttribute.Value}}){{else}}types.StringValue("{{.ConditionalAttribute.Value}}"){{end}}
+		{{- end}}
 	}
 	{{- else if isNestedListSet .}}
 	if value := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); value.Exists() && len(value.Array()) > 0 {
@@ -428,6 +431,9 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 					item.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 					{{- end}}
 				}
+				{{- if ne .ConditionalAttribute.Name ""}}
+				item.{{toGoName .ConditionalAttribute.Name}} = {{if eq .ConditionalAttribute.Type "Bool"}}types.BoolValue({{.ConditionalAttribute.Value}}){{else}}types.StringValue("{{.ConditionalAttribute.Value}}"){{end}}
+				{{- end}}
 			}
 			{{- else if isNestedListSet .}}
 			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cValue.Exists() && len(cValue.Array()) > 0 {
@@ -456,6 +462,9 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 							cItem.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 							{{- end}}
 						}
+						{{- if ne .ConditionalAttribute.Name ""}}
+						cItem.{{toGoName .ConditionalAttribute.Name}} = {{if eq .ConditionalAttribute.Type "Bool"}}types.BoolValue({{.ConditionalAttribute.Value}}){{else}}types.StringValue("{{.ConditionalAttribute.Value}}"){{end}}
+						{{- end}}
 					}
 					{{- else if isNestedListSet .}}
 					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); ccValue.Exists() && len(ccValue.Array()) > 0{
@@ -484,18 +493,27 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 									ccItem.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 									{{- end}}
 								}
+								{{- if ne .ConditionalAttribute.Name ""}}
+								ccItem.{{toGoName .ConditionalAttribute.Name}} = {{if eq .ConditionalAttribute.Type "Bool"}}types.BoolValue({{.ConditionalAttribute.Value}}){{else}}types.StringValue("{{.ConditionalAttribute.Value}}"){{end}}
+								{{- end}}
 							}
 							{{- end}}
 							{{- end}}
 							cItem.{{toGoName .TfName}} = append(cItem.{{toGoName .TfName}}, ccItem)
 							return true
 						})
+						{{- if ne .ConditionalAttribute.Name ""}}
+						cItem.{{toGoName .ConditionalAttribute.Name}} = {{if eq .ConditionalAttribute.Type "Bool"}}types.BoolValue({{.ConditionalAttribute.Value}}){{else}}types.StringValue("{{.ConditionalAttribute.Value}}"){{end}}
+						{{- end}}
 					}
 					{{- end}}
 					{{- end}}
 					item.{{toGoName .TfName}} = append(item.{{toGoName .TfName}}, cItem)
 					return true
 				})
+				{{- if ne .ConditionalAttribute.Name ""}}
+				item.{{toGoName .ConditionalAttribute.Name}} = {{if eq .ConditionalAttribute.Type "Bool"}}types.BoolValue({{.ConditionalAttribute.Value}}){{else}}types.StringValue("{{.ConditionalAttribute.Value}}"){{end}}
+				{{- end}}
 			}
 			{{- end}}
 			{{- end}}

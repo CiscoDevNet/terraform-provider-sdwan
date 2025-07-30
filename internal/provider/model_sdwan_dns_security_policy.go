@@ -205,6 +205,7 @@ func (data *DNSSecurity) fromBody(ctx context.Context, res gjson.Result) {
 		if t.String() == "global" {
 			data.DnsServerIp = types.StringValue(va.String())
 		}
+		data.MatchAllVpn = types.BoolValue(true)
 	}
 	data.LocalDomainBypassEnabled = types.BoolNull()
 
