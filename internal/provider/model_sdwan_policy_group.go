@@ -345,3 +345,65 @@ func (data PolicyGroup) hasPolicyGroupDeviceVariables(ctx context.Context) bool 
 	}
 	return false
 }
+
+func (data PolicyGroup) getUpdatedDevices(ctx context.Context, state *PolicyGroup) []string {
+	updatedDevices := make([]string, 0)
+	for _, device := range data.Devices {
+		for _, stateDevice := range state.Devices {
+			if device.Id.ValueString() == stateDevice.Id.ValueString() {
+				for _, variable := range device.Variables {
+					found := false
+					for _, stateVariable := range stateDevice.Variables {
+						if variable.Name.ValueString() == stateVariable.Name.ValueString() {
+							found = true
+							if variable.Value.ValueString() != stateVariable.Value.ValueString() {
+								if !slices.Contains(updatedDevices, device.Id.ValueString()) {
+									updatedDevices = append(updatedDevices, device.Id.ValueString())
+								}
+							}
+							if variable.ListValue.String() != stateVariable.ListValue.String() {
+								if !slices.Contains(updatedDevices, device.Id.ValueString()) {
+									updatedDevices = append(updatedDevices, device.Id.ValueString())
+								}
+							}
+						}
+					}
+					if !found {
+						if !slices.Contains(updatedDevices, device.Id.ValueString()) {
+							updatedDevices = append(updatedDevices, device.Id.ValueString())
+						}
+					}
+				}
+				for _, stateVariable := range stateDevice.Variables {
+					found := false
+					for _, variable := range device.Variables {
+						if variable.Name.ValueString() == stateVariable.Name.ValueString() {
+							found = true
+						}
+					}
+					if !found {
+						if !slices.Contains(updatedDevices, device.Id.ValueString()) {
+							updatedDevices = append(updatedDevices, device.Id.ValueString())
+						}
+					}
+				}
+			}
+		}
+	}
+	return updatedDevices
+}
+
+func (data PolicyGroup) hasPolicyVersionChanges(ctx context.Context, state *PolicyGroup) bool {
+	var planValues, stateValues []string
+	data.PolicyVersions.ElementsAs(ctx, &planValues, false)
+	state.PolicyVersions.ElementsAs(ctx, &stateValues, false)
+	if len(planValues) != len(stateValues) {
+		return true
+	}
+	for i := range planValues {
+		if i >= len(stateValues) || planValues[i] != stateValues[i] {
+			return true
+		}
+	}
+	return false
+}

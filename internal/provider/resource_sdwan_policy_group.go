@@ -26,6 +26,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -43,6 +44,8 @@ import (
 )
 
 // End of section. //template:end imports
+
+var MinPolicyGroupUpdateVersion = version.Must(version.NewVersion("20.15.0"))
 
 // Section below is generated&owned by "gen/generator.go". //template:begin model
 
@@ -202,10 +205,76 @@ func (r *PolicyGroupResource) Create(ctx context.Context, req resource.CreateReq
 		}
 	}
 
+	// Deploy policy group to devices
+	if len(plan.Devices) > 0 {
+		r.Deploy(ctx, plan, nil, &resp.Diagnostics, true)
+	}
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+}
+
+func (r *PolicyGroupResource) Deploy(ctx context.Context, plan PolicyGroup, state *PolicyGroup, diag *diag.Diagnostics, deleteOnError bool) {
+	var updatedDevices []string
+	if state != nil {
+		updatedDevices = plan.getUpdatedDevices(ctx, state)
+	}
+
+	hasPolicyVersionChanges := false
+	currentVersion := version.Must(version.NewVersion(r.client.ManagerVersion))
+	if state != nil && currentVersion.LessThan(MinPolicyGroupUpdateVersion) {
+		hasPolicyVersionChanges = plan.hasPolicyVersionChanges(ctx, state)
+	}
+
+	path := fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.Id.ValueString())
+	res, err := r.client.Get(path)
+	if err != nil {
+		diag.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+		return
+	}
+
+	// Build deploy body
+	body, _ := sjson.Set("", "devices", []interface{}{})
+	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
+		value.ForEach(func(k, v gjson.Result) bool {
+			id := v.Get("id").String()
+			for _, item := range plan.Devices {
+				if item.Id.ValueString() == id && item.Deploy.ValueBool() && (!v.Get("policyGroupUpToDate").Bool() || updatedDevices == nil || helpers.Contains(updatedDevices, id) || hasPolicyVersionChanges) {
+					itemBody, _ := sjson.Set("", "id", id)
+					body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
+					tflog.Debug(ctx, fmt.Sprintf("%s: Deploying to device %s", plan.Name.ValueString(), id))
+				}
+			}
+			return true
+		})
+	}
+	if len(gjson.Get(body, "devices").Array()) > 0 {
+		path := fmt.Sprintf("/v1/policy-group/%v/device/deploy/", plan.Id.ValueString())
+		res, err = r.client.Post(path, body)
+		if err != nil {
+			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to policy group devices (POST), got error: %s, %s", err, res.String()))
+			if deleteOnError {
+				r.DeletePolicyGroup(ctx, plan, diag)
+			}
+			return
+		}
+
+		// Wait for deploy action to complete
+		actionId := res.Get("parentTaskId").String()
+		err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
+		if err != nil {
+			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to config group devices, got error: %s", err))
+			if deleteOnError {
+				r.DeletePolicyGroup(ctx, plan, diag)
+			}
+			return
+		}
+	}
 }
 
 func (r *PolicyGroupResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
@@ -365,6 +434,14 @@ func (r *PolicyGroupResource) Update(ctx context.Context, req resource.UpdateReq
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure policy group device variables (PUT), got error: %s, %s", err, res.String()))
 			return
 		}
+	}
+
+	// Deploy policy group to devices
+	if len(plan.Devices) > 0 {
+		r.Deploy(ctx, plan, &state, &resp.Diagnostics, false)
+	}
+	if resp.Diagnostics.HasError() {
+		return
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
