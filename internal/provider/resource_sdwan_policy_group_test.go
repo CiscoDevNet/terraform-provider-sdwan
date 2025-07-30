@@ -37,8 +37,6 @@ func TestAccSdwanPolicyGroup(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_group.test", "description", "My policy group 1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_group.test", "solution", "sdwan"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_group.test", "devices.0.id", "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_group.test", "devices.0.variables.0.name", "host_name"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_group.test", "devices.0.variables.0.value", "edge1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -55,16 +53,134 @@ func TestAccSdwanPolicyGroup(t *testing.T) {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccSdwanPolicyGroupPrerequisitesConfig = `
+resource "sdwan_system_feature_profile" "test" {
+  name = "SYSTEM_TF"
+  description = "Terraform test"
+}
+
+resource "sdwan_system_basic_feature" "test" {
+  name = "BASIC_TF"
+  feature_profile_id = sdwan_system_feature_profile.test.id
+}
+
+resource "sdwan_system_aaa_feature" "test" {
+  name               = "AAA_TF"
+  feature_profile_id = sdwan_system_feature_profile.test.id
+  server_auth_order  = ["local"]
+  users = [{
+    name     = "admin"
+    password = "admin"
+  }]
+}
+
+resource "sdwan_system_bfd_feature" "test" {
+  name               = "BFD_TF"
+  feature_profile_id = sdwan_system_feature_profile.test.id
+}
+
+resource "sdwan_system_global_feature" "test" {
+  name               = "GLOBAL_TF"
+  feature_profile_id = sdwan_system_feature_profile.test.id
+}
+
+resource "sdwan_system_logging_feature" "test" {
+  name               = "LOGGING_TF"
+  feature_profile_id = sdwan_system_feature_profile.test.id
+}
+
+resource "sdwan_system_omp_feature" "test" {
+  name               = "OMP_TF"
+  feature_profile_id = sdwan_system_feature_profile.test.id
+} 
+
+resource "sdwan_transport_feature_profile" "test" {
+  name        = "TRANSPORT_TF"
+  description = "My transport feature profile 1"
+}
+
+resource "sdwan_transport_wan_vpn_feature" "test" {
+  name               = "WAN_VPN_TF"
+  feature_profile_id = sdwan_transport_feature_profile.test.id
+  vpn                = 0
+}
+
+resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "test" {
+  name                         = "WAN_VPN_INT_TF"
+  feature_profile_id           = sdwan_transport_feature_profile.test.id
+  transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id
+  interface_name               = "GigabitEthernet1"
+  shutdown                     = false
+  ipv4_configuration_type      = "dynamic"
+  ipv4_dhcp_distance           = 1
+  tunnel_interface             = true
+  tunnel_interface_encapsulations = [
+    {
+      encapsulation = "ipsec"
+    }
+  ]
+}
+
+resource "sdwan_configuration_group" "test" {
+  name = "CG_1"
+  description = "My config group 1"
+  solution = "sdwan"
+  feature_profile_ids = [
+    sdwan_system_feature_profile.test.id,
+    sdwan_transport_feature_profile.test.id,
+  ]
+  devices = [{
+    id = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"
+    deploy = true
+    variables = [
+      {
+        name = "host_name"
+        value = "edge1"
+      },
+      {
+        name = "pseudo_commit_timer"
+        value = 0
+      },
+      {
+        name = "site_id"
+        value = 1
+      },
+      {
+        name = "system_ip"
+        value = "10.1.1.1"
+      },
+      {
+        name = "ipv6_strict_control"
+        value = "false"
+      }
+    ]
+  }]
+  feature_versions = [
+    sdwan_system_basic_feature.test.version,
+    sdwan_system_aaa_feature.test.version,
+    sdwan_system_bfd_feature.test.version,
+    sdwan_system_global_feature.test.version,
+    sdwan_system_logging_feature.test.version,
+    sdwan_system_omp_feature.test.version,
+    sdwan_transport_wan_vpn_interface_ethernet_feature.test.version,
+  ]
+}
+
 resource "sdwan_application_priority_feature_profile" "test" {
   name        = "APPLICATION_PRIORITY_TF"
   description = "Terraform test"
+}
+
+resource "sdwan_application_priority_qos_policy" "test" {
+  name                      = "qos"
+  description               = "QoS policy for application priority"
+  feature_profile_id        = sdwan_application_priority_feature_profile.test.id
+  target_interface_variable = "{{qos_interfaces}}"
 }
 
 `
 
 // End of section. //template:end testPrerequisites
 
-// Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanPolicyGroupConfig_all() string {
 	config := `resource "sdwan_policy_group" "test" {` + "\n"
 	config += `	name = "PG_1"` + "\n"
@@ -73,13 +189,21 @@ func testAccSdwanPolicyGroupConfig_all() string {
 	config += `	feature_profile_ids = [sdwan_application_priority_feature_profile.test.id]` + "\n"
 	config += `	devices = [{` + "\n"
 	config += `	  id = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"` + "\n"
-	config += `	  variables = [{` + "\n"
-	config += `		name = "host_name"` + "\n"
-	config += `		value = "edge1"` + "\n"
+	config += `	  deploy = true` + "\n"
+	config += `	  variables = [` + "\n"
+	config += `	    {` + "\n"
+	config += `	      name = "qos_interfaces"` + "\n"
+	config += `	      list_value = [` + "\n"
+	config += `	        "GigabitEthernet1",` + "\n"
+	config += `	        "GigabitEthernet2"` + "\n"
+	config += `	      ]` + "\n"
+	config += `	    },` + "\n"
+	config += `	  ]` + "\n"
 	config += `	}]` + "\n"
-	config += `	}]` + "\n"
+	config += `	policy_versions = [` + "\n"
+	config += `	  sdwan_application_priority_qos_policy.test.version,` + "\n"
+	config += `	]` + "\n"
+	config += ` depends_on = [ sdwan_configuration_group.test ]` + "\n"
 	config += `}` + "\n"
 	return config
 }
-
-// End of section. //template:end testAccConfigAll
