@@ -275,6 +275,9 @@ func (data *PolicyGroup) fromBodyPolicyGroupDeviceVariables(ctx context.Context,
 					item.Variables = append(item.Variables, cItem)
 					return true
 				})
+				if len(item.Variables) == 0 {
+					item.Variables = nil
+				}
 			} else {
 				if len(item.Variables) > 0 {
 					item.Variables = []PolicyGroupDevicesVariables{}
