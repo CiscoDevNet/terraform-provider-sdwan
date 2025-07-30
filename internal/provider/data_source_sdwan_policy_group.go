@@ -171,6 +171,8 @@ func (d *PolicyGroupDataSource) Read(ctx context.Context, req datasource.ReadReq
 		return
 	}
 
+	config.fromBodyPolicyGroupDevices(ctx, res)
+
 	// Read policy group devices variables
 	path = fmt.Sprintf("/v1/policy-group/%v/device/variables/", config.Id.ValueString())
 	res, err = d.client.Get(path)
@@ -181,6 +183,8 @@ func (d *PolicyGroupDataSource) Read(ctx context.Context, req datasource.ReadReq
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
 		return
 	}
+
+	config.fromBodyPolicyGroupDeviceVariables(ctx, res)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 
