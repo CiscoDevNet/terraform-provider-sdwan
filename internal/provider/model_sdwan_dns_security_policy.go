@@ -278,6 +278,7 @@ func (data *DNSSecurity) fromBody(ctx context.Context, res gjson.Result) {
 			data.TargetVpns = append(data.TargetVpns, item)
 			return true
 		})
+		data.MatchAllVpn = types.BoolValue(false)
 	}
 }
 

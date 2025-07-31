@@ -510,6 +510,7 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result)
 			data.Md5Keys = append(data.Md5Keys, item)
 			return true
 		})
+		data.AuthenticationType = types.StringValue("md5")
 	}
 	if value := res.Get(path + "afInterface"); value.Exists() && len(value.Array()) > 0 {
 		data.Interfaces = make([]ServiceRoutingEIGRPInterfaces, 0)

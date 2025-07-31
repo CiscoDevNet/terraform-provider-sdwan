@@ -654,6 +654,7 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 			data.Ipv4SecondaryAddresses = append(data.Ipv4SecondaryAddresses, item)
 			return true
 		})
+		data.Ipv4ConfigurationType = types.StringValue("static")
 	}
 	data.Ipv4DhcpHelper = types.SetNull(types.StringType)
 	data.Ipv4DhcpHelperVariable = types.StringNull()

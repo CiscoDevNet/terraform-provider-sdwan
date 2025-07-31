@@ -520,6 +520,9 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			data.{{toGoName .TfName}} = append(data.{{toGoName .TfName}}, item)
 			return true
 		})
+		{{- if ne .ConditionalAttribute.Name ""}}
+		data.{{toGoName .ConditionalAttribute.Name}} = {{if eq .ConditionalAttribute.Type "Bool"}}types.BoolValue({{.ConditionalAttribute.Value}}){{else}}types.StringValue("{{.ConditionalAttribute.Value}}"){{end}}
+		{{- end}}
 	}
 	{{- end}}
 	{{- end}}
