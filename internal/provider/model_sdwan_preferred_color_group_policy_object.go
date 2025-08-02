@@ -32,7 +32,6 @@ import (
 type PreferredColorGroupPolicyObject struct {
 	Id                       types.String `tfsdk:"id"`
 	Version                  types.Int64  `tfsdk:"version"`
-	Type                     types.String `tfsdk:"type"`
 	Name                     types.String `tfsdk:"name"`
 	PrimaryColorPreference   types.String `tfsdk:"primary_color_preference"`
 	PrimaryPathPreference    types.String `tfsdk:"primary_path_preference"`
@@ -160,7 +159,6 @@ func (data *PreferredColorGroupPolicyObject) hasChanges(ctx context.Context, sta
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *PreferredColorGroupPolicyObject) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.Type = types.StringValue("preferredColorGroup")
 }
 
 // End of section. //template:end processImport

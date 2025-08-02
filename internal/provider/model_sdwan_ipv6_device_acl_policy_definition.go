@@ -390,7 +390,6 @@ func (data *IPv6DeviceACLPolicyDefinition) updateVersions(ctx context.Context, s
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *IPv6DeviceACLPolicyDefinition) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.Type = types.StringValue("deviceaccesspolicyv6")
 	for i := range data.Sequences {
 		for ii := range data.Sequences[i].MatchEntries {
 			if data.Sequences[i].MatchEntries[ii].SourceDataIpv6PrefixListId != types.StringNull() {

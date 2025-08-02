@@ -33,7 +33,6 @@ import (
 type SLAClassPolicyObject struct {
 	Id                         types.String `tfsdk:"id"`
 	Version                    types.Int64  `tfsdk:"version"`
-	Type                       types.String `tfsdk:"type"`
 	Name                       types.String `tfsdk:"name"`
 	AppProbeClassId            types.String `tfsdk:"app_probe_class_id"`
 	AppProbeClassVersion       types.Int64  `tfsdk:"app_probe_class_version"`
@@ -192,7 +191,6 @@ func (data *SLAClassPolicyObject) updateVersions(ctx context.Context, state *SLA
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *SLAClassPolicyObject) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.Type = types.StringValue("sla")
 	if data.AppProbeClassId != types.StringNull() {
 		data.AppProbeClassVersion = types.Int64Value(0)
 	}

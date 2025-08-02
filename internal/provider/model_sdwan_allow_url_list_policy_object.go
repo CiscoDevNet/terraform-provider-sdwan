@@ -32,7 +32,6 @@ import (
 type AllowURLListPolicyObject struct {
 	Id      types.String                      `tfsdk:"id"`
 	Version types.Int64                       `tfsdk:"version"`
-	Type    types.String                      `tfsdk:"type"`
 	Name    types.String                      `tfsdk:"name"`
 	Entries []AllowURLListPolicyObjectEntries `tfsdk:"entries"`
 }
@@ -129,7 +128,6 @@ func (data *AllowURLListPolicyObject) hasChanges(ctx context.Context, state *All
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *AllowURLListPolicyObject) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.Type = types.StringValue("urlwhitelist")
 }
 
 // End of section. //template:end processImport

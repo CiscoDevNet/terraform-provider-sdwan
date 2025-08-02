@@ -185,7 +185,6 @@ func (data *VPNMembershipPolicyDefinition) updateVersions(ctx context.Context, s
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *VPNMembershipPolicyDefinition) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.Type = types.StringValue("vpnMembershipGroup")
 	for i := range data.Sites {
 		if data.Sites[i].SiteListId != types.StringNull() {
 			data.Sites[i].SiteListVersion = types.Int64Value(0)

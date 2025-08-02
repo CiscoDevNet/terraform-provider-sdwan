@@ -33,7 +33,6 @@ import (
 type RuleSetPolicyDefinition struct {
 	Id          types.String                   `tfsdk:"id"`
 	Version     types.Int64                    `tfsdk:"version"`
-	Type        types.String                   `tfsdk:"type"`
 	Name        types.String                   `tfsdk:"name"`
 	Description types.String                   `tfsdk:"description"`
 	Rules       []RuleSetPolicyDefinitionRules `tfsdk:"rules"`
@@ -515,7 +514,6 @@ func (data *RuleSetPolicyDefinition) updateVersions(ctx context.Context, state *
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *RuleSetPolicyDefinition) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.Type = types.StringValue("ruleSet")
 	for i := range data.Rules {
 		if data.Rules[i].SourceObjectGroupId != types.StringNull() {
 			data.Rules[i].SourceObjectGroupVersion = types.Int64Value(0)

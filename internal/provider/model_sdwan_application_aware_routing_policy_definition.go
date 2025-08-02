@@ -654,7 +654,6 @@ func (data *ApplicationAwareRoutingPolicyDefinition) updateVersions(ctx context.
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *ApplicationAwareRoutingPolicyDefinition) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.Type = types.StringValue("appRoute")
 	for i := range data.Sequences {
 		for ii := range data.Sequences[i].MatchEntries {
 			if data.Sequences[i].MatchEntries[ii].ApplicationListId != types.StringNull() {

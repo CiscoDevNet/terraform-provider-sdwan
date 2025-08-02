@@ -32,7 +32,6 @@ import (
 type AppProbeClassPolicyObject struct {
 	Id              types.String                        `tfsdk:"id"`
 	Version         types.Int64                         `tfsdk:"version"`
-	Type            types.String                        `tfsdk:"type"`
 	Name            types.String                        `tfsdk:"name"`
 	ForwardingClass types.String                        `tfsdk:"forwarding_class"`
 	Mappings        []AppProbeClassPolicyObjectMappings `tfsdk:"mappings"`
@@ -153,7 +152,6 @@ func (data *AppProbeClassPolicyObject) hasChanges(ctx context.Context, state *Ap
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *AppProbeClassPolicyObject) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.Type = types.StringValue("appProbe")
 }
 
 // End of section. //template:end processImport

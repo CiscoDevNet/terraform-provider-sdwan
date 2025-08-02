@@ -32,7 +32,6 @@ import (
 type ApplicationListPolicyObject struct {
 	Id      types.String                         `tfsdk:"id"`
 	Version types.Int64                          `tfsdk:"version"`
-	Type    types.String                         `tfsdk:"type"`
 	Name    types.String                         `tfsdk:"name"`
 	Entries []ApplicationListPolicyObjectEntries `tfsdk:"entries"`
 }
@@ -141,7 +140,6 @@ func (data *ApplicationListPolicyObject) hasChanges(ctx context.Context, state *
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *ApplicationListPolicyObject) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.Type = types.StringValue("app")
 }
 
 // End of section. //template:end processImport

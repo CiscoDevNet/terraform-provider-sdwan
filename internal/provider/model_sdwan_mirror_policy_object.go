@@ -32,7 +32,6 @@ import (
 type MirrorPolicyObject struct {
 	Id                  types.String `tfsdk:"id"`
 	Version             types.Int64  `tfsdk:"version"`
-	Type                types.String `tfsdk:"type"`
 	Name                types.String `tfsdk:"name"`
 	RemoteDestinationIp types.String `tfsdk:"remote_destination_ip"`
 	SourceIp            types.String `tfsdk:"source_ip"`
@@ -112,7 +111,6 @@ func (data *MirrorPolicyObject) hasChanges(ctx context.Context, state *MirrorPol
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *MirrorPolicyObject) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.Type = types.StringValue("mirror")
 }
 
 // End of section. //template:end processImport

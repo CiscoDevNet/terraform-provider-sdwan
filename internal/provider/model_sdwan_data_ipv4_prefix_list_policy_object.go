@@ -32,7 +32,6 @@ import (
 type DataIPv4PrefixListPolicyObject struct {
 	Id      types.String                            `tfsdk:"id"`
 	Version types.Int64                             `tfsdk:"version"`
-	Type    types.String                            `tfsdk:"type"`
 	Name    types.String                            `tfsdk:"name"`
 	Entries []DataIPv4PrefixListPolicyObjectEntries `tfsdk:"entries"`
 }
@@ -129,7 +128,6 @@ func (data *DataIPv4PrefixListPolicyObject) hasChanges(ctx context.Context, stat
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *DataIPv4PrefixListPolicyObject) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.Type = types.StringValue("dataPrefix")
 }
 
 // End of section. //template:end processImport

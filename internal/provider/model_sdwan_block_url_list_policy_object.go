@@ -32,7 +32,6 @@ import (
 type BlockURLListPolicyObject struct {
 	Id      types.String                      `tfsdk:"id"`
 	Version types.Int64                       `tfsdk:"version"`
-	Type    types.String                      `tfsdk:"type"`
 	Name    types.String                      `tfsdk:"name"`
 	Entries []BlockURLListPolicyObjectEntries `tfsdk:"entries"`
 }
@@ -129,7 +128,6 @@ func (data *BlockURLListPolicyObject) hasChanges(ctx context.Context, state *Blo
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *BlockURLListPolicyObject) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.Type = types.StringValue("urlblacklist")
 }
 
 // End of section. //template:end processImport

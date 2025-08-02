@@ -385,7 +385,6 @@ func (data *HubAndSpokeTopologyPolicyDefinition) updateVersions(ctx context.Cont
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *HubAndSpokeTopologyPolicyDefinition) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.Type = types.StringValue("hubAndSpoke")
 	if data.VpnListId != types.StringNull() {
 		data.VpnListVersion = types.Int64Value(0)
 	}

@@ -32,8 +32,6 @@ import (
 type CLIDeviceTemplate struct {
 	Id               types.String `tfsdk:"id"`
 	Version          types.Int64  `tfsdk:"version"`
-	ConfigType       types.String `tfsdk:"config_type"`
-	FactoryDefault   types.Bool   `tfsdk:"factory_default"`
 	Name             types.String `tfsdk:"name"`
 	Description      types.String `tfsdk:"description"`
 	DeviceType       types.String `tfsdk:"device_type"`
@@ -140,8 +138,6 @@ func (data *CLIDeviceTemplate) hasChanges(ctx context.Context, state *CLIDeviceT
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *CLIDeviceTemplate) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.ConfigType = types.StringValue("file")
-	data.FactoryDefault = types.BoolValue(false)
 }
 
 // End of section. //template:end processImport

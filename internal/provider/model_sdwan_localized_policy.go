@@ -33,7 +33,6 @@ import (
 type LocalizedPolicy struct {
 	Id                         types.String                 `tfsdk:"id"`
 	Version                    types.Int64                  `tfsdk:"version"`
-	PolicyType                 types.String                 `tfsdk:"policy_type"`
 	Name                       types.String                 `tfsdk:"name"`
 	Description                types.String                 `tfsdk:"description"`
 	FlowVisibilityIpv4         types.Bool                   `tfsdk:"flow_visibility_ipv4"`
@@ -352,7 +351,6 @@ func (data *LocalizedPolicy) updateVersions(ctx context.Context, state *Localize
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *LocalizedPolicy) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.PolicyType = types.StringValue("feature")
 	for i := range data.Definitions {
 		if data.Definitions[i].Id != types.StringNull() {
 			data.Definitions[i].Version = types.Int64Value(0)

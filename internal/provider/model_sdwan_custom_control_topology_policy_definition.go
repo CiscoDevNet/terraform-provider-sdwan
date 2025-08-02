@@ -83,7 +83,6 @@ type CustomControlTopologyPolicyDefinitionSequencesMatchEntries struct {
 type CustomControlTopologyPolicyDefinitionSequencesActionEntries struct {
 	Type                   types.String                                                               `tfsdk:"type"`
 	SetParameters          []CustomControlTopologyPolicyDefinitionSequencesActionEntriesSetParameters `tfsdk:"set_parameters"`
-	Field                  types.String                                                               `tfsdk:"field"`
 	ExportToVpnListId      types.String                                                               `tfsdk:"export_to_vpn_list_id"`
 	ExportToVpnListVersion types.Int64                                                                `tfsdk:"export_to_vpn_list_version"`
 }
@@ -883,7 +882,6 @@ func (data *CustomControlTopologyPolicyDefinition) updateVersions(ctx context.Co
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *CustomControlTopologyPolicyDefinition) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.Type = types.StringValue("control")
 	for i := range data.Sequences {
 		for ii := range data.Sequences[i].MatchEntries {
 			if data.Sequences[i].MatchEntries[ii].ColorListId != types.StringNull() {

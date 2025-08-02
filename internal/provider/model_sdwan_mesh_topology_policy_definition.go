@@ -193,7 +193,6 @@ func (data *MeshTopologyPolicyDefinition) updateVersions(ctx context.Context, st
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *MeshTopologyPolicyDefinition) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.Type = types.StringValue("mesh")
 	if data.VpnListId != types.StringNull() {
 		data.VpnListVersion = types.Int64Value(0)
 	}

@@ -34,7 +34,6 @@ import (
 type CentralizedPolicy struct {
 	Id          types.String                   `tfsdk:"id"`
 	Version     types.Int64                    `tfsdk:"version"`
-	PolicyType  types.String                   `tfsdk:"policy_type"`
 	Name        types.String                   `tfsdk:"name"`
 	Description types.String                   `tfsdk:"description"`
 	Definitions []CentralizedPolicyDefinitions `tfsdk:"definitions"`
@@ -305,7 +304,6 @@ func (data *CentralizedPolicy) updateVersions(ctx context.Context, state *Centra
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *CentralizedPolicy) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.PolicyType = types.StringValue("feature")
 	for i := range data.Definitions {
 		if data.Definitions[i].Id != types.StringNull() {
 			data.Definitions[i].Version = types.Int64Value(0)

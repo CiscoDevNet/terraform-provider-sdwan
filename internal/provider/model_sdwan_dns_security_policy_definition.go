@@ -33,7 +33,6 @@ import (
 type DNSSecurityPolicyDefinition struct {
 	Id                                        types.String                            `tfsdk:"id"`
 	Version                                   types.Int64                             `tfsdk:"version"`
-	Type                                      types.String                            `tfsdk:"type"`
 	Name                                      types.String                            `tfsdk:"name"`
 	Description                               types.String                            `tfsdk:"description"`
 	DomainListId                              types.String                            `tfsdk:"domain_list_id"`
@@ -321,7 +320,6 @@ func (data *DNSSecurityPolicyDefinition) updateVersions(ctx context.Context, sta
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *DNSSecurityPolicyDefinition) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.Type = types.StringValue("DNSSecurity")
 	if data.DomainListId != types.StringNull() {
 		data.DomainListVersion = types.Int64Value(0)
 	}

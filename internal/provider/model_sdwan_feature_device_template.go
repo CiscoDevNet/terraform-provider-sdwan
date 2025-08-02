@@ -31,20 +31,17 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type FeatureDeviceTemplate struct {
-	Id                      types.String                            `tfsdk:"id"`
-	Version                 types.Int64                             `tfsdk:"version"`
-	ConfigType              types.String                            `tfsdk:"config_type"`
-	FactoryDefault          types.Bool                              `tfsdk:"factory_default"`
-	FeatureTemplateUidRange []interface{}                           `tfsdk:"feature_template_uid_range"`
-	Name                    types.String                            `tfsdk:"name"`
-	Description             types.String                            `tfsdk:"description"`
-	DeviceType              types.String                            `tfsdk:"device_type"`
-	DeviceRole              types.String                            `tfsdk:"device_role"`
-	PolicyId                types.String                            `tfsdk:"policy_id"`
-	PolicyVersion           types.Int64                             `tfsdk:"policy_version"`
-	SecurityPolicyId        types.String                            `tfsdk:"security_policy_id"`
-	SecurityPolicyVersion   types.Int64                             `tfsdk:"security_policy_version"`
-	GeneralTemplates        []FeatureDeviceTemplateGeneralTemplates `tfsdk:"general_templates"`
+	Id                    types.String                            `tfsdk:"id"`
+	Version               types.Int64                             `tfsdk:"version"`
+	Name                  types.String                            `tfsdk:"name"`
+	Description           types.String                            `tfsdk:"description"`
+	DeviceType            types.String                            `tfsdk:"device_type"`
+	DeviceRole            types.String                            `tfsdk:"device_role"`
+	PolicyId              types.String                            `tfsdk:"policy_id"`
+	PolicyVersion         types.Int64                             `tfsdk:"policy_version"`
+	SecurityPolicyId      types.String                            `tfsdk:"security_policy_id"`
+	SecurityPolicyVersion types.Int64                             `tfsdk:"security_policy_version"`
+	GeneralTemplates      []FeatureDeviceTemplateGeneralTemplates `tfsdk:"general_templates"`
 }
 
 type FeatureDeviceTemplateGeneralTemplates struct {
@@ -380,9 +377,6 @@ func (data *FeatureDeviceTemplate) updateVersions(ctx context.Context, state *Fe
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *FeatureDeviceTemplate) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.ConfigType = types.StringValue("template")
-	data.FactoryDefault = types.BoolValue(false)
-	data.FeatureTemplateUidRange = []interface{}{}
 	if data.PolicyId != types.StringNull() {
 		data.PolicyVersion = types.Int64Value(0)
 	}

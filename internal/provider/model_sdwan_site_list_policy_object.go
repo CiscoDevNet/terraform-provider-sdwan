@@ -32,7 +32,6 @@ import (
 type SiteListPolicyObject struct {
 	Id      types.String                  `tfsdk:"id"`
 	Version types.Int64                   `tfsdk:"version"`
-	Type    types.String                  `tfsdk:"type"`
 	Name    types.String                  `tfsdk:"name"`
 	Entries []SiteListPolicyObjectEntries `tfsdk:"entries"`
 }
@@ -129,7 +128,6 @@ func (data *SiteListPolicyObject) hasChanges(ctx context.Context, state *SiteLis
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *SiteListPolicyObject) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
-	data.Type = types.StringValue("site")
 }
 
 // End of section. //template:end processImport
