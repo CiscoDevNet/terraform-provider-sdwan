@@ -120,7 +120,6 @@ attributes:
       description: Gateway type
       enum_values: [nextHop, null0, vpn, dhcp]
       example: nextHop
-
     - model_name: nextHop
       tf_name: next_hops
       data_path: [oneOfIpRoute, nextHopContainer]
@@ -134,7 +133,6 @@ attributes:
       - model_name: distance
         tf_name: administrative_distance
         example: 1
-
     - model_name: nextHopWithTracker
       tf_name: next_hop_with_trackers
       data_path: [oneOfIpRoute, nextHopContainer]
@@ -152,7 +150,6 @@ attributes:
         tf_name: tracker_id
         data_path: [tracker]
         example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
-
     - model_name: null0
       data_path: [oneOfIpRoute]
       exclude_test: true
@@ -160,7 +157,6 @@ attributes:
       conditional_attribute:
         name: gateway
         value: null0
-
     - model_name: dhcp
       data_path: [oneOfIpRoute]
       exclude_test: true
@@ -168,7 +164,6 @@ attributes:
       conditional_attribute:
         name: gateway
         value: dhcp
-
     - model_name: vpn
       data_path: [oneOfIpRoute]
       exclude_test: true
@@ -188,7 +183,6 @@ attributes:
       description: Gateway type
       enum_values: [nextHop, null0, nat]
       example: nextHop
-
     - model_name: nextHop
       tf_name: next_hops
       data_path: [oneOfIpRoute, nextHopContainer]
@@ -202,14 +196,12 @@ attributes:
       - model_name: distance
         tf_name: administrative_distance
         example: 1
-
     - model_name: null0
       data_path: [oneOfIpRoute]
       exclude_test: true
       conditional_attribute:
         name: gateway
         value: null0
-
     - model_name: nat
       data_path: [oneOfIpRoute]
       exclude_test: true
@@ -217,7 +209,6 @@ attributes:
       conditional_attribute:
         name: gateway
         value: nat
-
   - model_name: service
     tf_name: services
     attributes:
