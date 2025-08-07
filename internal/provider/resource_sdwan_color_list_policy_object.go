@@ -262,6 +262,8 @@ func (r *ColorListPolicyObjectResource) Delete(ctx context.Context, req resource
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *ColorListPolicyObjectResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end import

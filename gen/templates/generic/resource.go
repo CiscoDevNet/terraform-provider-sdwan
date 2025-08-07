@@ -625,6 +625,8 @@ func (r *{{camelCase .Name}}Resource) ImportState(ctx context.Context, req resou
 	{{- else}}
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 	{{- end}}
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
 {{- end}}
 // End of section. //template:end import
