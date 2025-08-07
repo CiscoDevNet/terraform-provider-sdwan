@@ -709,6 +709,7 @@ func (data *RoutePolicyDefinition) updateVersions(ctx context.Context, state *Ro
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *RoutePolicyDefinition) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("vedgeRoute")
 	for i := range data.Sequences {
 		for ii := range data.Sequences[i].MatchEntries {
 			if data.Sequences[i].MatchEntries[ii].PrefixListId != types.StringNull() {

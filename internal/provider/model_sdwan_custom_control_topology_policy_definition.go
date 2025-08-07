@@ -882,6 +882,7 @@ func (data *CustomControlTopologyPolicyDefinition) updateVersions(ctx context.Co
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *CustomControlTopologyPolicyDefinition) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("control")
 	for i := range data.Sequences {
 		for ii := range data.Sequences[i].MatchEntries {
 			if data.Sequences[i].MatchEntries[ii].ColorListId != types.StringNull() {

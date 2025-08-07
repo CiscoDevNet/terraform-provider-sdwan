@@ -1215,6 +1215,7 @@ func (data *TrafficDataPolicyDefinition) updateVersions(ctx context.Context, sta
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *TrafficDataPolicyDefinition) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("data")
 	for i := range data.Sequences {
 		for ii := range data.Sequences[i].MatchEntries {
 			if data.Sequences[i].MatchEntries[ii].ApplicationListId != types.StringNull() {

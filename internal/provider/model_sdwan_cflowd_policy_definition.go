@@ -334,6 +334,7 @@ func (data *CflowdPolicyDefinition) hasChanges(ctx context.Context, state *Cflow
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *CflowdPolicyDefinition) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("cflowd")
 }
 
 // End of section. //template:end processImport

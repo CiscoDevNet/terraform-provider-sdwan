@@ -683,6 +683,9 @@ func (data *{{camelCase .Name}}) processImport(ctx context.Context) {
 	{{- if .HasVersion}}
 	data.Version = types.Int64Value(0)
 	{{- end}}
+	{{- if .TypeValue}}
+	data.Type = types.StringValue("{{ .TypeValue }}")
+	{{- end}}
   {{- range .Attributes}}
   {{- $name := toGoName .TfName}}
   {{- if not .Value}}
