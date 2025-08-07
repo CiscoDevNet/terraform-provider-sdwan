@@ -498,7 +498,7 @@ func (r *{{camelCase .Name}}Resource) Read(ctx context.Context, req resource.Rea
 
 	state.fromBody(ctx, res)
 	
-	{{- if and (not .NoImport) (or (hasVersionAttribute .Attributes) (hasStaticValue .Attributes))}}
+	{{- if and (not .NoImport) (not (isUx20Feature .)) (or (.HasVersion) (.TypeValue) (hasVersionAttribute .Attributes))}}
 	imp, diags := helpers.IsFlagImporting(ctx, req)
 	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
 		return

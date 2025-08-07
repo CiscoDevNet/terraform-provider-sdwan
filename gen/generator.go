@@ -404,14 +404,9 @@ func HasReference(attributes []YamlConfigAttribute) bool {
 	return false
 }
 
-// Templating helper function to return true if reference included in attributes
-func HasStaticValue(attributes []YamlConfigAttribute) bool {
-	for _, attr := range attributes {
-		if attr.Value != "" {
-			return true
-		}
-	}
-	return false
+// Templating helper function to return true if UX 2.0 related feature
+func IsUx20Feature(config YamlConfig) bool {
+	return !strings.HasPrefix(config.DocCategory, "(Classic)")
 }
 
 // Templating helper function to return number of reference included in attributes
@@ -575,11 +570,11 @@ var functions = template.FuncMap{
 	"hasVersionAttribute":    HasVersionAttribute,
 	"getResponseModelPath":   GetResponseModelPath,
 	"hasReference":           HasReference,
-	"hasStaticValue":         HasStaticValue,
 	"countReferences":        CountReferences,
 	"add":                    Add,
 	"getGjsonType":           GetGjsonType,
 	"getId":                  GetId,
+	"isUx20Feature":          IsUx20Feature,
 	"isListSet":              IsListSet,
 	"isList":                 IsList,
 	"isSet":                  IsSet,
