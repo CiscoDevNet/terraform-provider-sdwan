@@ -400,7 +400,7 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result) 
 			data.Enable5g = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "ssid"); value.Exists() {
+	if value := res.Get(path + "ssid"); value.Exists() && len(value.Array()) > 0 {
 		data.Ssids = make([]ServiceWirelessLANSsids, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceWirelessLANSsids{}
@@ -469,6 +469,7 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result) 
 				} else if t.String() == "global" {
 					item.RadiusServerIp = types.StringValue(va.String())
 				}
+				item.SecurityType = types.StringValue("enterprise")
 			}
 			item.RadiusServerPort = types.Int64Null()
 			item.RadiusServerPortVariable = types.StringNull()
@@ -479,6 +480,7 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result) 
 				} else if t.String() == "global" {
 					item.RadiusServerPort = types.Int64Value(va.Int())
 				}
+				item.SecurityType = types.StringValue("enterprise")
 			}
 			item.RadiusServerSecret = types.StringNull()
 			item.RadiusServerSecretVariable = types.StringNull()
@@ -489,6 +491,7 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result) 
 				} else if t.String() == "global" {
 					item.RadiusServerSecret = types.StringValue(va.String())
 				}
+				item.SecurityType = types.StringValue("enterprise")
 			}
 			item.Passphrase = types.StringNull()
 			item.PassphraseVariable = types.StringNull()
@@ -499,6 +502,7 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result) 
 				} else if t.String() == "global" {
 					item.Passphrase = types.StringValue(va.String())
 				}
+				item.SecurityType = types.StringValue("personal")
 			}
 			item.QosProfile = types.StringNull()
 			item.QosProfileVariable = types.StringNull()

@@ -95,9 +95,9 @@ Required:
 Optional:
 
 - `preferred_color` (String) preferred color (Single value or multiple values separated by spaces), Attribute conditional on `type` being equal to `preferredColor`
-- `preferred_color_group_list` (String) Preferred color group list ID, Attribute conditional on `type` being equal to `preferredColorGroup`
+- `preferred_color_group_list_id` (String) Preferred color group list ID, Attribute conditional on `type` being equal to `preferredColorGroup`
 - `preferred_color_group_list_version` (Number) Preferred color group list version
-- `sla_class_list` (String) SLA class list ID, Attribute conditional on `type` being equal to `name`
+- `sla_class_list_id` (String) SLA class list ID, Attribute conditional on `type` being equal to `name`
 - `sla_class_list_version` (Number) SLA class list version
 
 

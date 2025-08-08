@@ -1,9 +1,17 @@
 ## 0.6.3 (unreleased)
 
+- BREAKING CHANGE: Rename `tls_ssl_profile_version` attribute of `sdwan_tls_ssl_decryption_policy_definition` resource to `tls_ssl_profile_policy_version`
+- BREAKING CHANGE: Rename `sla_class_list` attribute of `sdwan_application_aware_routing_policy_definition` resource to `sla_class_list_id`
+- BREAKING CHANGE: Rename `preferred_color_group_list` attribute of `sdwan_application_aware_routing_policy_definition` resource to `preferred_color_group_list_id`
+- BREAKING CHANGE: Rename `preferred_color_group_list` attribute of `sdwan_traffic_data_policy_definition` resource to `preferred_color_group_list_id`
+- Add missing options under `unsupported_features` attribute of `sdwan_configuration_group`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/478)
+- Add `sdwan_policy_group` resource and data source
+- Adds `enhanced_app_aware_routing` support to the `sdwan_cisco_system_feature_template` resource and data source
+- Add `gateway` attribute for `ipv4_static_routes` and `ipv6_static_routes` in `sdwan_service_lan_vpn_feature` resource
+- Fix issue causing `sdwan_transport_routing_bgp_feature` to fail to apply when `policy_type` is set to `off`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/475)
 - BREAKING CHANGE: `sdwan_cisco_vpn_feature_template`: rename `interface` attribute to `interfaces`
 - Fix type of `interfaces` attribute of `sdwan_cisco_vpn_feature_template` under `ipv4_static_ipsec_routes` & `ipv4_static_gre_routes`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/474)
 - Fix type of `as_path_prepend` attribute of `sdwan_service_route_policy_feature` and `sdwan_transport_route_policy_feature`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/474)
-- Add missing options under `unsupported_features` attribute of `sdwan_configuration_group`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/478)
 
 ## 0.6.2
 

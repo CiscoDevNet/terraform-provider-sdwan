@@ -23,12 +23,15 @@ import (
 	"strconv"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 // End of section. //template:end imports
+
+var MinCiscoSytemUpdateVersion = version.Must(version.NewVersion("20.12.0"))
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type CiscoSystem struct {
@@ -105,6 +108,7 @@ type CiscoSystem struct {
 	AffinityGroupPreferenceVariable   types.String                           `tfsdk:"affinity_group_preference_variable"`
 	TransportGateway                  types.Bool                             `tfsdk:"transport_gateway"`
 	TransportGatewayVariable          types.String                           `tfsdk:"transport_gateway_variable"`
+	EnhancedAppAwareRouting           types.String                           `tfsdk:"enhanced_app_aware_routing"`
 	EnableMrfMigration                types.String                           `tfsdk:"enable_mrf_migration"`
 	MigrationBgpCommunity             types.Int64                            `tfsdk:"migration_bgp_community"`
 }
@@ -171,9 +175,7 @@ func (data CiscoSystem) getModel() string {
 }
 
 // End of section. //template:end getModel
-
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data CiscoSystem) toBody(ctx context.Context) string {
+func (data CiscoSystem) toBody(ctx context.Context, version *version.Version) string {
 	body := ""
 
 	var device_types []string
@@ -912,6 +914,17 @@ func (data CiscoSystem) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"transport-gateway."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"transport-gateway."+"vipValue", strconv.FormatBool(data.TransportGateway.ValueBool()))
 	}
+	if version.LessThan(MinCiscoSytemUpdateVersion) {
+	} else {
+		if data.EnhancedAppAwareRouting.IsNull() {
+			body, _ = sjson.Set(body, path+"epfr."+"vipObjectType", "object")
+			body, _ = sjson.Set(body, path+"epfr."+"vipType", "ignore")
+		} else {
+			body, _ = sjson.Set(body, path+"epfr."+"vipObjectType", "object")
+			body, _ = sjson.Set(body, path+"epfr."+"vipType", "constant")
+			body, _ = sjson.Set(body, path+"epfr."+"vipValue", data.EnhancedAppAwareRouting.ValueString())
+		}
+	}
 	if data.EnableMrfMigration.IsNull() {
 		body, _ = sjson.Set(body, path+"enable-mrf-migration."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"enable-mrf-migration."+"vipType", "ignore")
@@ -930,8 +943,6 @@ func (data CiscoSystem) toBody(ctx context.Context) string {
 	}
 	return body
 }
-
-// End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *CiscoSystem) fromBody(ctx context.Context, res gjson.Result) {
@@ -2004,6 +2015,22 @@ func (data *CiscoSystem) fromBody(ctx context.Context, res gjson.Result) {
 		data.TransportGateway = types.BoolNull()
 		data.TransportGatewayVariable = types.StringNull()
 	}
+	if value := res.Get(path + "epfr.vipType"); value.Exists() {
+		if value.String() == "variableName" {
+			data.EnhancedAppAwareRouting = types.StringNull()
+
+		} else if value.String() == "ignore" {
+			data.EnhancedAppAwareRouting = types.StringNull()
+
+		} else if value.String() == "constant" {
+			v := res.Get(path + "epfr.vipValue")
+			data.EnhancedAppAwareRouting = types.StringValue(v.String())
+
+		}
+	} else {
+		data.EnhancedAppAwareRouting = types.StringNull()
+
+	}
 	if value := res.Get(path + "enable-mrf-migration.vipType"); value.Exists() {
 		if value.String() == "variableName" {
 			data.EnableMrfMigration = types.StringNull()
@@ -2221,6 +2248,9 @@ func (data *CiscoSystem) hasChanges(ctx context.Context, state *CiscoSystem) boo
 		hasChanges = true
 	}
 	if !data.TransportGateway.Equal(state.TransportGateway) {
+		hasChanges = true
+	}
+	if !data.EnhancedAppAwareRouting.Equal(state.EnhancedAppAwareRouting) {
 		hasChanges = true
 	}
 	if !data.EnableMrfMigration.Equal(state.EnableMrfMigration) {

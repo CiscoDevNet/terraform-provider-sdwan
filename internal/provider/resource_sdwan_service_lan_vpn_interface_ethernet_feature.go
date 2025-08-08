@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -849,7 +850,6 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Configure(_ contex
 
 // End of section. //template:end model
 
-// Section below is generated&owned by "gen/generator.go". //template:begin create
 func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan ServiceLANVPNInterfaceEthernet
 
@@ -862,8 +862,11 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Create(ctx context
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
+	// Get Manager Version
+	currentVersion := version.Must(version.NewVersion(r.client.ManagerVersion))
+
 	// Create object
-	body := plan.toBody(ctx)
+	body := plan.toBody(ctx, currentVersion)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -882,9 +885,6 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Create(ctx context
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
-// End of section. //template:end create
-
-// Section below is generated&owned by "gen/generator.go". //template:begin read
 func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var state ServiceLANVPNInterfaceEthernet
 
@@ -896,6 +896,9 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Read(ctx context.C
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
+
+	// Get Manager Version
+	currentVersion := version.Must(version.NewVersion(r.client.ManagerVersion))
 
 	res, err := r.client.Get(state.getPath() + "/" + url.QueryEscape(state.Id.ValueString()))
 	if res.Get("error.message").String() == "Invalid feature Id" {
@@ -913,9 +916,9 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Read(ctx context.C
 	}
 
 	if imp {
-		state.fromBody(ctx, res)
+		state.fromBody(ctx, res, currentVersion)
 	} else {
-		state.updateFromBody(ctx, res)
+		state.updateFromBody(ctx, res, currentVersion)
 	}
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
@@ -929,9 +932,6 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Read(ctx context.C
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
-// End of section. //template:end read
-
-// Section below is generated&owned by "gen/generator.go". //template:begin update
 func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var plan, state ServiceLANVPNInterfaceEthernet
 
@@ -950,7 +950,10 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Update(ctx context
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	// Get Manager Version
+	currentVersion := version.Must(version.NewVersion(r.client.ManagerVersion))
+
+	body := plan.toBody(ctx, currentVersion)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
@@ -964,8 +967,6 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Update(ctx context
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 }
-
-// End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
 func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {

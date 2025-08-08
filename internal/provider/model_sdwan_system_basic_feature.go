@@ -791,7 +791,7 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 			data.GpsSmsEnable = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "gpsLocation.geoFencing.sms.mobileNumber"); value.Exists() {
+	if value := res.Get(path + "gpsLocation.geoFencing.sms.mobileNumber"); value.Exists() && len(value.Array()) > 0 {
 		data.GpsSmsMobileNumbers = make([]SystemBasicGpsSmsMobileNumbers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemBasicGpsSmsMobileNumbers{}
@@ -1029,7 +1029,7 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 			data.AffinityPreferenceAuto = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "affinityPerVrf"); value.Exists() {
+	if value := res.Get(path + "affinityPerVrf"); value.Exists() && len(value.Array()) > 0 {
 		data.AffinityPerVrfs = make([]SystemBasicAffinityPerVrfs, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemBasicAffinityPerVrfs{}

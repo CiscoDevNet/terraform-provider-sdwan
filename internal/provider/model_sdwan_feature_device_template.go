@@ -373,3 +373,31 @@ func (data *FeatureDeviceTemplate) updateVersions(ctx context.Context, state *Fe
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *FeatureDeviceTemplate) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	if data.PolicyId != types.StringNull() {
+		data.PolicyVersion = types.Int64Value(0)
+	}
+	if data.SecurityPolicyId != types.StringNull() {
+		data.SecurityPolicyVersion = types.Int64Value(0)
+	}
+	for i := range data.GeneralTemplates {
+		if data.GeneralTemplates[i].Id != types.StringNull() {
+			data.GeneralTemplates[i].Version = types.Int64Value(0)
+		}
+		for ii := range data.GeneralTemplates[i].SubTemplates {
+			if data.GeneralTemplates[i].SubTemplates[ii].Id != types.StringNull() {
+				data.GeneralTemplates[i].SubTemplates[ii].Version = types.Int64Value(0)
+			}
+			for iii := range data.GeneralTemplates[i].SubTemplates[ii].SubTemplates {
+				if data.GeneralTemplates[i].SubTemplates[ii].SubTemplates[iii].Id != types.StringNull() {
+					data.GeneralTemplates[i].SubTemplates[ii].SubTemplates[iii].Version = types.Int64Value(0)
+				}
+			}
+		}
+	}
+}
+
+// End of section. //template:end processImport

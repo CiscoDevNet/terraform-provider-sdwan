@@ -409,7 +409,7 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result)
 			data.AutonomousSystemId = types.Int64Value(va.Int())
 		}
 	}
-	if value := res.Get(path + "addressFamily.redistribute"); value.Exists() {
+	if value := res.Get(path + "addressFamily.redistribute"); value.Exists() && len(value.Array()) > 0 {
 		data.Redistributes = make([]ServiceRoutingEIGRPRedistributes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutingEIGRPRedistributes{}
@@ -435,7 +435,7 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result)
 			return true
 		})
 	}
-	if value := res.Get(path + "addressFamily.network"); value.Exists() {
+	if value := res.Get(path + "addressFamily.network"); value.Exists() && len(value.Array()) > 0 {
 		data.Networks = make([]ServiceRoutingEIGRPNetworks, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutingEIGRPNetworks{}
@@ -493,7 +493,7 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result)
 			data.AuthenticationType = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "authentication.key"); value.Exists() {
+	if value := res.Get(path + "authentication.key"); value.Exists() && len(value.Array()) > 0 {
 		data.Md5Keys = make([]ServiceRoutingEIGRPMd5Keys, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutingEIGRPMd5Keys{}
@@ -510,8 +510,9 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result)
 			data.Md5Keys = append(data.Md5Keys, item)
 			return true
 		})
+		data.AuthenticationType = types.StringValue("md5")
 	}
-	if value := res.Get(path + "afInterface"); value.Exists() {
+	if value := res.Get(path + "afInterface"); value.Exists() && len(value.Array()) > 0 {
 		data.Interfaces = make([]ServiceRoutingEIGRPInterfaces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutingEIGRPInterfaces{}
@@ -535,7 +536,7 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result)
 					item.Shutdown = types.BoolValue(va.Bool())
 				}
 			}
-			if cValue := v.Get("summaryAddress"); cValue.Exists() {
+			if cValue := v.Get("summaryAddress"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.SummaryAddresses = make([]ServiceRoutingEIGRPInterfacesSummaryAddresses, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceRoutingEIGRPInterfacesSummaryAddresses{}

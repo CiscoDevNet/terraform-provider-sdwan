@@ -221,6 +221,7 @@ func (data *TransportCellularProfile) fromBody(ctx context.Context, res gjson.Re
 		} else if t.String() == "global" {
 			data.AuthenticationType = types.StringValue(va.String())
 		}
+		data.RequiresAuthentication = types.BoolValue(true)
 	}
 	data.ProfileUsername = types.StringNull()
 	data.ProfileUsernameVariable = types.StringNull()
@@ -231,6 +232,7 @@ func (data *TransportCellularProfile) fromBody(ctx context.Context, res gjson.Re
 		} else if t.String() == "global" {
 			data.ProfileUsername = types.StringValue(va.String())
 		}
+		data.RequiresAuthentication = types.BoolValue(true)
 	}
 	data.PacketDataNetworkType = types.StringNull()
 	data.PacketDataNetworkTypeVariable = types.StringNull()

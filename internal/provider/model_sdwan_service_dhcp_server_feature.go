@@ -442,7 +442,7 @@ func (data *ServiceDHCPServer) fromBody(ctx context.Context, res gjson.Result) {
 			data.TftpServers = helpers.GetStringSet(va.Array())
 		}
 	}
-	if value := res.Get(path + "staticLease"); value.Exists() {
+	if value := res.Get(path + "staticLease"); value.Exists() && len(value.Array()) > 0 {
 		data.StaticLeases = make([]ServiceDHCPServerStaticLeases, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceDHCPServerStaticLeases{}
@@ -470,7 +470,7 @@ func (data *ServiceDHCPServer) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "optionCode"); value.Exists() {
+	if value := res.Get(path + "optionCode"); value.Exists() && len(value.Array()) > 0 {
 		data.OptionCodes = make([]ServiceDHCPServerOptionCodes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceDHCPServerOptionCodes{}
