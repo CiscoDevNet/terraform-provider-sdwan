@@ -359,8 +359,13 @@ func (r *IPv6ACLPolicyDefinitionResource) Read(ctx context.Context, req resource
 	}
 
 	state.fromBody(ctx, res)
-	if state.Version.IsNull() {
-		state.Version = types.Int64Value(0)
+	imp, diags := helpers.IsFlagImporting(ctx, req)
+	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
+		return
+	}
+
+	if imp {
+		state.processImport(ctx)
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
@@ -448,6 +453,8 @@ func (r *IPv6ACLPolicyDefinitionResource) Delete(ctx context.Context, req resour
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *IPv6ACLPolicyDefinitionResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end import

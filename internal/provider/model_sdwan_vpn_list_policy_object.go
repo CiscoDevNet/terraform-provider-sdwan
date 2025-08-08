@@ -124,3 +124,10 @@ func (data *VPNListPolicyObject) hasChanges(ctx context.Context, state *VPNListP
 // Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *VPNListPolicyObject) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+}
+
+// End of section. //template:end processImport

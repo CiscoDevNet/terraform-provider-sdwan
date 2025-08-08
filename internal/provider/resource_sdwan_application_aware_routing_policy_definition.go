@@ -26,7 +26,6 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
-	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -151,12 +150,9 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 											stringvalidator.OneOf("request", "response"),
 										},
 									},
-									"dscp": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` being equal to `dscp`").AddIntegerRangeDescription(0, 63).String,
+									"dscp": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` being equal to `dscp`").String,
 										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(0, 63),
-										},
 									},
 									"plp": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("PLP, Attribute conditional on `type` being equal to `plp`").AddStringEnumDescription("low", "high").String,
@@ -258,7 +254,7 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 														stringvalidator.OneOf("name", "preferredColor", "preferredColorGroup", "strict", "fallbackToBestPath"),
 													},
 												},
-												"sla_class_list": schema.StringAttribute{
+												"sla_class_list_id": schema.StringAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("SLA class list ID, Attribute conditional on `type` being equal to `name`").String,
 													Optional:            true,
 												},
@@ -266,7 +262,7 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 													MarkdownDescription: helpers.NewAttributeDescription("SLA class list version").String,
 													Optional:            true,
 												},
-												"preferred_color_group_list": schema.StringAttribute{
+												"preferred_color_group_list_id": schema.StringAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("Preferred color group list ID, Attribute conditional on `type` being equal to `preferredColorGroup`").String,
 													Optional:            true,
 												},
@@ -358,8 +354,13 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Read(ctx context.Conte
 	}
 
 	state.fromBody(ctx, res)
-	if state.Version.IsNull() {
-		state.Version = types.Int64Value(0)
+	imp, diags := helpers.IsFlagImporting(ctx, req)
+	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
+		return
+	}
+
+	if imp {
+		state.processImport(ctx)
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
@@ -446,6 +447,8 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Delete(ctx context.Con
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *ApplicationAwareRoutingPolicyDefinitionResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end import

@@ -63,7 +63,9 @@ resource "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
+- `transport_management_vpn_feature_id` (String) Transport Management VPN Feature ID
 
 ### Optional
 
@@ -79,7 +81,6 @@ resource "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
   - Choices: `full`, `half`, `auto`
 - `duplex_variable` (String) Variable name
 - `enable_dhcpv6` (Boolean) Enable DHCPv6, Attribute conditional on `ipv6_configuration_type` being equal to `dynamic`
-- `feature_profile_id` (String) Feature Profile ID
 - `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
   - Default value: `true`
 - `icmp_redirect_disable_variable` (String) Variable name
@@ -140,7 +141,6 @@ resource "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
   - Range: `500`-`1460`
 - `tcp_mss_variable` (String) Variable name
-- `transport_management_vpn_feature_id` (String) Transport Management VPN Feature ID
 
 ### Read-Only
 
@@ -172,6 +172,8 @@ Optional:
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 # Expected import identifier with the format: "transport_management_vpn_interface_ethernet_feature_id,feature_profile_id,transport_management_vpn_feature_id"

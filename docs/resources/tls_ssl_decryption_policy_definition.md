@@ -124,11 +124,13 @@ Optional:
 - `rule_name` (String) Country
 - `target_vpns` (Set of String) List of VPN IDs
 - `tls_ssl_profile_policy_id` (String) TLS SSL Profile Policy ID
-- `tls_ssl_profile_version` (Number) TLS SSL Profile Policy version
+- `tls_ssl_profile_policy_version` (Number) TLS SSL Profile Policy version
 
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 terraform import sdwan_tls_ssl_decryption_policy_definition.example "f6b2c44c-693c-4763-b010-895aa3d236bd"

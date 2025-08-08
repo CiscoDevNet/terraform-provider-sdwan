@@ -541,7 +541,7 @@ func (data *ServiceSwitchport) fromBody(ctx context.Context, res gjson.Result) {
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	if value := res.Get(path + "interface"); value.Exists() {
+	if value := res.Get(path + "interface"); value.Exists() && len(value.Array()) > 0 {
 		data.Interfaces = make([]ServiceSwitchportInterfaces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceSwitchportInterfaces{}
@@ -767,7 +767,7 @@ func (data *ServiceSwitchport) fromBody(ctx context.Context, res gjson.Result) {
 			data.AgeOutTime = types.Int64Value(va.Int())
 		}
 	}
-	if value := res.Get(path + "staticMacAddress"); value.Exists() {
+	if value := res.Get(path + "staticMacAddress"); value.Exists() && len(value.Array()) > 0 {
 		data.StaticMacAddresses = make([]ServiceSwitchportStaticMacAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceSwitchportStaticMacAddresses{}

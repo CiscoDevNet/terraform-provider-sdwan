@@ -488,3 +488,15 @@ func (data *SecurityPolicy) updateVersions(ctx context.Context, state *SecurityP
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *SecurityPolicy) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	for i := range data.Definitions {
+		if data.Definitions[i].Id != types.StringNull() {
+			data.Definitions[i].Version = types.Int64Value(0)
+		}
+	}
+}
+
+// End of section. //template:end processImport

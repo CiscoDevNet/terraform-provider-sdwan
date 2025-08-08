@@ -153,11 +153,9 @@ attributes:
             conditional_attribute:
               name: type
               value: dscp
-            type: Int64
+            type: String
             model_type_string: true
             description: DSCP value
-            min_int: 0
-            max_int: 63
             example: 46
             exclude_test: true
           - model_name: value
@@ -603,7 +601,7 @@ attributes:
                 description: Policer list version
                 exclude_test: true
               - model_name: ref
-                tf_name: preferred_color_group_list
+                tf_name: preferred_color_group_list_id
                 conditional_attribute:
                   name: type
                   value: preferredColorGroup

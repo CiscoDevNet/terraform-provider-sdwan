@@ -31,7 +31,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -87,46 +86,32 @@ func (r *LocalizedPolicyResource) Schema(ctx context.Context, req resource.Schem
 				Required:            true,
 			},
 			"flow_visibility_ipv4": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv4 flow visibility").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv4 flow visibility").String,
 				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(true),
 			},
 			"flow_visibility_ipv6": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv6 flow visibility").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv6 flow visibility").String,
 				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(true),
 			},
 			"application_visibility_ipv4": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv4 application visibility").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv4 application visibility").String,
 				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(true),
 			},
 			"application_visibility_ipv6": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv6 application visibility").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv6 application visibility").String,
 				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(true),
 			},
 			"cloud_qos": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Cloud QoS").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Cloud QoS").String,
 				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(true),
 			},
 			"cloud_qos_service_side": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Cloud QoS service side").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Cloud QoS service side").String,
 				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(true),
 			},
 			"implicit_acl_logging": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Implicit ACL logging").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Implicit ACL logging").String,
 				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(true),
 			},
 			"log_frequency": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Log frequency").AddIntegerRangeDescription(1, 2147483647).String,
@@ -242,8 +227,13 @@ func (r *LocalizedPolicyResource) Read(ctx context.Context, req resource.ReadReq
 	}
 
 	state.fromBody(ctx, res)
-	if state.Version.IsNull() {
-		state.Version = types.Int64Value(0)
+	imp, diags := helpers.IsFlagImporting(ctx, req)
+	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
+		return
+	}
+
+	if imp {
+		state.processImport(ctx)
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
@@ -333,6 +323,8 @@ func (r *LocalizedPolicyResource) Delete(ctx context.Context, req resource.Delet
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *LocalizedPolicyResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end import

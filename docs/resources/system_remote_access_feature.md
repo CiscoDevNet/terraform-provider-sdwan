@@ -43,6 +43,7 @@ resource "sdwan_system_remote_access_feature" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 - `radius_group_name` (String)
 
@@ -66,7 +67,6 @@ resource "sdwan_system_remote_access_feature" "example" {
 - `description` (String) The description of the Feature
 - `enable_certificate_list_check` (Boolean) - Default value: `false`
 - `enable_certificate_list_check_variable` (String) Variable name
-- `feature_profile_id` (String) Feature Profile ID
 - `ikev2_anti_dos_threshold` (Number) Anti-DOS Threshold, Attribute conditional on `connection_type_ssl` being equal to `false`
   - Range: `10`-`1000`
   - Default value: `100`
@@ -114,6 +114,8 @@ resource "sdwan_system_remote_access_feature" "example" {
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 # Expected import identifier with the format: "system_remote_access_feature_id,feature_profile_id"

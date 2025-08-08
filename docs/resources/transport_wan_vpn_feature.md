@@ -77,6 +77,7 @@ resource "sdwan_transport_wan_vpn_feature" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 
 ### Optional
@@ -85,7 +86,6 @@ resource "sdwan_transport_wan_vpn_feature" "example" {
 - `enhance_ecmp_keying` (Boolean) Enhance ECMP Keying
   - Default value: `false`
 - `enhance_ecmp_keying_variable` (String) Variable name
-- `feature_profile_id` (String) Feature Profile ID
 - `ipv4_static_routes` (Attributes List) IPv4 Static Route (see [below for nested schema](#nestedatt--ipv4_static_routes))
 - `ipv6_static_routes` (Attributes List) IPv6 Static Route (see [below for nested schema](#nestedatt--ipv6_static_routes))
 - `nat_64_v4_pools` (Attributes List) NAT64 V4 Pool (see [below for nested schema](#nestedatt--nat_64_v4_pools))
@@ -206,6 +206,8 @@ Optional:
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 # Expected import identifier with the format: "transport_wan_vpn_feature_id,feature_profile_id"

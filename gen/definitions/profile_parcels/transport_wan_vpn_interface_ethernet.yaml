@@ -1,4 +1,5 @@
 ---
+# Manual resource - Modals toBody is manually configured to support sub interfaces.
 name: Transport WAN VPN Interface Ethernet
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/ethernet
 minimum_version: 20.12.0
@@ -16,6 +17,7 @@ attributes:
   - tf_name: transport_wan_vpn_feature_id
     reference: true
     type: String
+    mandatory: true
     description: Transport WAN VPN Feature ID
     example: 140331f6-5418-4755-a059-13c77eb96037
     test_value: sdwan_transport_wan_vpn_feature.test.id
@@ -143,115 +145,208 @@ attributes:
     example: true
   - model_name: perTunnelQos
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: true
   - model_name: mode
     tf_name: tunnel_qos_mode
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: hub
   - model_name: bandwidthPercent
     tf_name: tunnel_bandwidth_percent
     data_path: [tunnel]
-    # conditional_attribute: 
-    #   name: tunnel_qos_mode
-    #   value: hub
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: 82
   - model_name: bind
     tf_name: tunnel_interface_bind_loopback_tunnel
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: example
   - model_name: carrier
     tf_name: tunnel_interface_carrier
     exclude_ignore: true
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: default
   - model_name: color
     tf_name: tunnel_interface_color
     exclude_ignore: true
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: default
   - model_name: helloInterval
     tf_name: tunnel_interface_hello_interval
     exclude_ignore: true
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: 1000
   - model_name: helloTolerance
     tf_name: tunnel_interface_hello_tolerance
     exclude_ignore: true
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: 12
   - model_name: lastResortCircuit
     tf_name: tunnel_interface_last_resort_circuit
     exclude_ignore: true
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: false
   - model_name: tlocExtensionGreTo
     tf_name: tunnel_interface_gre_tunnel_destination_ip
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: 1.2.3.4
   - model_name: restrict
     tf_name: tunnel_interface_color_restrict
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: true
   - model_name: group
     tf_name: tunnel_interface_groups
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: 42949672
   - model_name: border
     tf_name: tunnel_interface_border
     exclude_ignore: true
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: false
   - model_name: maxControlConnections
     tf_name: tunnel_interface_max_control_connections
     exclude_ignore: true
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: 62
   - model_name: natRefreshInterval
     tf_name: tunnel_interface_nat_refresh_interval
     exclude_ignore: true
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: 5
   - model_name: vBondAsStunServer
     tf_name: tunnel_interface_vbond_as_stun_server
     exclude_ignore: true
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: false
   - model_name: excludeControllerGroupList
     tf_name: tunnel_interface_exclude_controller_group_list
     exclude_ignore: true
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: 2
   - model_name: vManageConnectionPreference
     tf_name: tunnel_interface_vmanage_connection_preference
     exclude_ignore: true
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: 8
   - model_name: portHop
     tf_name: tunnel_interface_port_hop
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: true
   - model_name: lowBandwidthLink
     tf_name: tunnel_interface_low_bandwidth_link
     exclude_ignore: true
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: false
   - model_name: tunnelTcpMss
     tf_name: tunnel_interface_tunnel_tcp_mss
     exclude_ignore: true
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: 1460
   - model_name: clearDontFragment
     tf_name: tunnel_interface_clear_dont_fragment
     exclude_ignore: true
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: false
   - model_name: ctsSgtPropagation
     tf_name: tunnel_interface_cts_sgt_propagation
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: false
   - model_name: networkBroadcast
     tf_name: tunnel_interface_network_broadcast
     data_path: [tunnel]
+    conditional_attribute:
+      name: tunnelInterface
+      value: true
+      type: Bool
     example: false
   - model_name: all
     tf_name: tunnel_interface_allow_all

@@ -44,20 +44,9 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
   ipv4_nat_range_end     = "4.5.6.7"
   ipv4_nat_prefix_length = 1
   ipv4_nat_overload      = true
-  ipv4_nat_loopback      = "123"
-  ipv4_nat_udp_timeout   = 123
-  ipv4_nat_tcp_timeout   = 123
-  static_nats = [
-    {
-      source_ip    = "1.2.3.4"
-      translate_ip = "2.3.4.5"
-      direction    = "inside"
-      source_vpn   = 0
-    }
-  ]
-  ipv6_nat         = true
-  nat64            = false
-  acl_shaping_rate = 12
+  ipv6_nat               = true
+  nat64                  = false
+  acl_shaping_rate       = 12
   ipv6_vrrps = [
     {
       group_id  = 1
@@ -131,6 +120,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
+- `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
 
 ### Optional
 
@@ -227,7 +217,6 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `media_type_variable` (String) Variable name
 - `nat64` (Boolean) NAT64 on this interface
   - Default value: `false`
-- `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
 - `shutdown` (Boolean) - Default value: `true`
 - `shutdown_variable` (String) Variable name
 - `speed` (String) Set interface speed
@@ -417,6 +406,8 @@ Optional:
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 # Expected import identifier with the format: "service_lan_vpn_interface_ethernet_feature_id,feature_profile_id,service_lan_vpn_feature_id"

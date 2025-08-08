@@ -113,6 +113,7 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
+- `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
 
 ### Optional
 
@@ -161,7 +162,6 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
 - `ipv6_dhcp_helpers` (Attributes List) DHCPv6 Helper (see [below for nested schema](#nestedatt--ipv6_dhcp_helpers))
 - `ipv6_secondary_addresses` (Attributes List) Assign secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_secondary_addresses))
 - `ipv6_vrrps` (Attributes List) Enable ipv6 VRRP (see [below for nested schema](#nestedatt--ipv6_vrrps))
-- `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
 - `shutdown` (Boolean) Administrative state
   - Default value: `true`
 - `shutdown_variable` (String) Variable name
@@ -319,6 +319,8 @@ Optional:
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 # Expected import identifier with the format: "service_lan_vpn_interface_svi_feature_id,feature_profile_id,service_lan_vpn_feature_id"

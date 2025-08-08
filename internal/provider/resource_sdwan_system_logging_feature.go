@@ -87,7 +87,7 @@ func (r *SystemLoggingProfileParcelResource) Schema(ctx context.Context, req res
 			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"disk_enable": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable logging to local disk").AddDefaultValueDescription("true").String,

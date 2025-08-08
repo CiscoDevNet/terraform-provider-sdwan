@@ -88,6 +88,7 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
+- `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
 
 ### Optional
 
@@ -141,7 +142,6 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
 - `tcp_mss_variable` (String) Variable name
 - `tloc_extension` (String) Extends a local TLOC to a remote node only for vpn 0
 - `tloc_extension_variable` (String) Variable name
-- `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
 - `tunnel_interface` (Boolean) Tunnel Interface
   - Default value: `false`
 - `tunnel_interface_allow_all` (Boolean) Allow all traffic. Overrides all other allow-service options if allow-service all is set
@@ -272,6 +272,8 @@ Optional:
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 # Expected import identifier with the format: "transport_wan_vpn_interface_t1_e1_serial_feature_id,feature_profile_id,transport_wan_vpn_feature_id"

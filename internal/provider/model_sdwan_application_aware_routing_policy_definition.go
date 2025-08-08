@@ -55,7 +55,7 @@ type ApplicationAwareRoutingPolicyDefinitionSequencesMatchEntries struct {
 	DnsApplicationListVersion        types.Int64  `tfsdk:"dns_application_list_version"`
 	IcmpMessage                      types.String `tfsdk:"icmp_message"`
 	Dns                              types.String `tfsdk:"dns"`
-	Dscp                             types.Int64  `tfsdk:"dscp"`
+	Dscp                             types.String `tfsdk:"dscp"`
 	Plp                              types.String `tfsdk:"plp"`
 	Protocol                         types.String `tfsdk:"protocol"`
 	SourceDataPrefixListId           types.String `tfsdk:"source_data_prefix_list_id"`
@@ -80,9 +80,9 @@ type ApplicationAwareRoutingPolicyDefinitionSequencesActionEntries struct {
 
 type ApplicationAwareRoutingPolicyDefinitionSequencesActionEntriesSlaClassParameters struct {
 	Type                           types.String `tfsdk:"type"`
-	SlaClassList                   types.String `tfsdk:"sla_class_list"`
+	SlaClassListId                 types.String `tfsdk:"sla_class_list_id"`
 	SlaClassListVersion            types.Int64  `tfsdk:"sla_class_list_version"`
-	PreferredColorGroupList        types.String `tfsdk:"preferred_color_group_list"`
+	PreferredColorGroupListId      types.String `tfsdk:"preferred_color_group_list_id"`
 	PreferredColorGroupListVersion types.Int64  `tfsdk:"preferred_color_group_list_version"`
 	PreferredColor                 types.String `tfsdk:"preferred_color"`
 }
@@ -144,7 +144,7 @@ func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) 
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Dns.ValueString())
 					}
 					if !childItem.Dscp.IsNull() && childItem.Type.ValueString() == "dscp" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Dscp.ValueInt64()))
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Dscp.ValueString()))
 					}
 					if !childItem.Plp.IsNull() && childItem.Type.ValueString() == "plp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Plp.ValueString())
@@ -209,11 +209,11 @@ func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) 
 							if !childChildItem.Type.IsNull() {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "field", childChildItem.Type.ValueString())
 							}
-							if !childChildItem.SlaClassList.IsNull() && childChildItem.Type.ValueString() == "name" {
-								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "ref", childChildItem.SlaClassList.ValueString())
+							if !childChildItem.SlaClassListId.IsNull() && childChildItem.Type.ValueString() == "name" {
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "ref", childChildItem.SlaClassListId.ValueString())
 							}
-							if !childChildItem.PreferredColorGroupList.IsNull() && childChildItem.Type.ValueString() == "preferredColorGroup" {
-								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "ref", childChildItem.PreferredColorGroupList.ValueString())
+							if !childChildItem.PreferredColorGroupListId.IsNull() && childChildItem.Type.ValueString() == "preferredColorGroup" {
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "ref", childChildItem.PreferredColorGroupListId.ValueString())
 							}
 							if !childChildItem.PreferredColor.IsNull() && childChildItem.Type.ValueString() == "preferredColor" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value", childChildItem.PreferredColor.ValueString())
@@ -294,9 +294,9 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 						cItem.Dns = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "dscp" {
-						cItem.Dscp = types.Int64Value(ccValue.Int())
+						cItem.Dscp = types.StringValue(ccValue.String())
 					} else {
-						cItem.Dscp = types.Int64Null()
+						cItem.Dscp = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "plp" {
 						cItem.Plp = types.StringValue(ccValue.String())
@@ -399,14 +399,14 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 								ccItem.Type = types.StringNull()
 							}
 							if cccValue := ccv.Get("ref"); cccValue.Exists() && ccItem.Type.ValueString() == "name" {
-								ccItem.SlaClassList = types.StringValue(cccValue.String())
+								ccItem.SlaClassListId = types.StringValue(cccValue.String())
 							} else {
-								ccItem.SlaClassList = types.StringNull()
+								ccItem.SlaClassListId = types.StringNull()
 							}
 							if cccValue := ccv.Get("ref"); cccValue.Exists() && ccItem.Type.ValueString() == "preferredColorGroup" {
-								ccItem.PreferredColorGroupList = types.StringValue(cccValue.String())
+								ccItem.PreferredColorGroupListId = types.StringValue(cccValue.String())
 							} else {
-								ccItem.PreferredColorGroupList = types.StringNull()
+								ccItem.PreferredColorGroupListId = types.StringNull()
 							}
 							if cccValue := ccv.Get("value"); cccValue.Exists() && ccItem.Type.ValueString() == "preferredColor" {
 								ccItem.PreferredColor = types.StringValue(cccValue.String())
@@ -544,10 +544,10 @@ func (data *ApplicationAwareRoutingPolicyDefinition) hasChanges(ctx context.Cont
 							if !data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].Type.Equal(state.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].Type) {
 								hasChanges = true
 							}
-							if !data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].SlaClassList.Equal(state.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].SlaClassList) {
+							if !data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].SlaClassListId.Equal(state.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].SlaClassListId) {
 								hasChanges = true
 							}
-							if !data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].PreferredColorGroupList.Equal(state.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].PreferredColorGroupList) {
+							if !data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].PreferredColorGroupListId.Equal(state.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].PreferredColorGroupListId) {
 								hasChanges = true
 							}
 							if !data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].PreferredColor.Equal(state.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].PreferredColor) {
@@ -650,3 +650,37 @@ func (data *ApplicationAwareRoutingPolicyDefinition) updateVersions(ctx context.
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *ApplicationAwareRoutingPolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("appRoute")
+	for i := range data.Sequences {
+		for ii := range data.Sequences[i].MatchEntries {
+			if data.Sequences[i].MatchEntries[ii].ApplicationListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].ApplicationListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].DnsApplicationListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].DnsApplicationListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].SourceDataPrefixListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = types.Int64Value(0)
+			}
+		}
+		for ii := range data.Sequences[i].ActionEntries {
+			for iii := range data.Sequences[i].ActionEntries[ii].SlaClassParameters {
+				if data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].SlaClassListId != types.StringNull() {
+					data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].SlaClassListVersion = types.Int64Value(0)
+				}
+				if data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].PreferredColorGroupListId != types.StringNull() {
+					data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].PreferredColorGroupListVersion = types.Int64Value(0)
+				}
+			}
+		}
+	}
+}
+
+// End of section. //template:end processImport

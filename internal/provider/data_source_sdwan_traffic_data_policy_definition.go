@@ -140,7 +140,7 @@ func (d *TrafficDataPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 										MarkdownDescription: "DNS request or response",
 										Computed:            true,
 									},
-									"dscp": schema.Int64Attribute{
+									"dscp": schema.StringAttribute{
 										MarkdownDescription: "DSCP value",
 										Computed:            true,
 									},
@@ -325,7 +325,7 @@ func (d *TrafficDataPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 													MarkdownDescription: "Policer list version",
 													Computed:            true,
 												},
-												"preferred_color_group_list": schema.StringAttribute{
+												"preferred_color_group_list_id": schema.StringAttribute{
 													MarkdownDescription: "Preferred color group list ID",
 													Computed:            true,
 												},

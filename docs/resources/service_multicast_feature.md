@@ -95,6 +95,7 @@ resource "sdwan_service_multicast_feature" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 - `pim_source_specific_multicast_enable` (Boolean) turn SSM on/off
 
@@ -106,7 +107,6 @@ resource "sdwan_service_multicast_feature" "example" {
 - `enable_auto_rp` (Boolean) Enable or disable auto-RP
   - Default value: `false`
 - `enable_auto_rp_variable` (String) Variable name
-- `feature_profile_id` (String) Feature Profile ID
 - `igmp_interfaces` (Attributes List) Set IGMP interface parameters (see [below for nested schema](#nestedatt--igmp_interfaces))
 - `local_replicator` (Boolean) Replicator is local to this device
   - Default value: `false`
@@ -291,6 +291,8 @@ Optional:
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 # Expected import identifier with the format: "service_multicast_feature_id,feature_profile_id"

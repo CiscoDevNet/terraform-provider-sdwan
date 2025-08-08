@@ -104,7 +104,7 @@ func (data TransportIPv6ACL) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
-	if data.DefaultAction.IsNull() || data.DefaultAction.String() == "drop" {
+	if data.DefaultAction.IsNull() || data.DefaultAction.ValueString() == "drop" {
 		if true {
 			body, _ = sjson.Set(body, path+"defaultAction.optionType", "default")
 			body, _ = sjson.Set(body, path+"defaultAction.value", "drop")
@@ -317,11 +317,11 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 
 	if t := res.Get(path + "defaultAction.optionType"); t.Exists() {
 		va := res.Get(path + "defaultAction.value")
-		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.String() == "drop") {
+		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.ValueString() == "drop") {
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "sequences"); value.Exists() {
+	if value := res.Get(path + "sequences"); value.Exists() && len(value.Array()) > 0 {
 		data.Sequences = make([]TransportIPv6ACLSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportIPv6ACLSequences{}
@@ -349,7 +349,7 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 					item.BaseAction = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("matchEntries"); cValue.Exists() {
+			if cValue := v.Get("matchEntries"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.MatchEntries = make([]TransportIPv6ACLSequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TransportIPv6ACLSequencesMatchEntries{}
@@ -385,7 +385,7 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.SourceDataPrefix = types.StringValue(va.String())
 						}
 					}
-					if ccValue := cv.Get("sourcePorts"); ccValue.Exists() {
+					if ccValue := cv.Get("sourcePorts"); ccValue.Exists() && len(ccValue.Array()) > 0 {
 						cItem.SourcePorts = make([]TransportIPv6ACLSequencesMatchEntriesSourcePorts, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := TransportIPv6ACLSequencesMatchEntriesSourcePorts{}
@@ -417,7 +417,7 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.DestinationDataPrefix = types.StringValue(va.String())
 						}
 					}
-					if ccValue := cv.Get("destinationPorts"); ccValue.Exists() {
+					if ccValue := cv.Get("destinationPorts"); ccValue.Exists() && len(ccValue.Array()) > 0 {
 						cItem.DestinationPorts = make([]TransportIPv6ACLSequencesMatchEntriesDestinationPorts, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := TransportIPv6ACLSequencesMatchEntriesDestinationPorts{}
@@ -461,7 +461,7 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 					return true
 				})
 			}
-			if cValue := v.Get("actions"); cValue.Exists() {
+			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Actions = make([]TransportIPv6ACLSequencesActions, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TransportIPv6ACLSequencesActions{}
@@ -555,7 +555,7 @@ func (data *TransportIPv6ACL) updateFromBody(ctx context.Context, res gjson.Resu
 
 	if t := res.Get(path + "defaultAction.optionType"); t.Exists() {
 		va := res.Get(path + "defaultAction.value")
-		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.String() == "drop") {
+		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.ValueString() == "drop") {
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}

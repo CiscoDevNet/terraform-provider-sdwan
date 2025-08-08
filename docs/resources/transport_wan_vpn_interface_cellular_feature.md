@@ -99,6 +99,7 @@ resource "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
+- `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
 
 ### Optional
 
@@ -187,7 +188,6 @@ resource "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
 - `tloc_extension_variable` (String) Variable name
 - `tracker` (String) Enable tracker for this interface
 - `tracker_variable` (String) Variable name
-- `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
 - `tunnel_bandwidth_percent` (Number) Tunnels Bandwidth Percent
   - Range: `1`-`100`
   - Default value: `50`
@@ -333,6 +333,8 @@ Optional:
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 # Expected import identifier with the format: "transport_wan_vpn_interface_cellular_feature_id,feature_profile_id,transport_wan_vpn_feature_id"

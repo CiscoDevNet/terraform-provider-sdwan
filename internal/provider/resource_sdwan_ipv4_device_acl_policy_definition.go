@@ -138,8 +138,16 @@ func (r *IPv4DeviceACLPolicyDefinitionResource) Schema(ctx context.Context, req 
 										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix, Attribute conditional on `type` being equal to `sourceIp`").String,
 										Optional:            true,
 									},
+									"source_ip_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix variable, Attribute conditional on `type` being equal to `sourceIp`").String,
+										Optional:            true,
+									},
 									"destination_ip": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix, Attribute conditional on `type` being equal to `destinationIp`").String,
+										Optional:            true,
+									},
+									"destination_ip_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix variable, Attribute conditional on `type` being equal to `destinationIp`").String,
 										Optional:            true,
 									},
 									"source_ports": schema.StringAttribute{
@@ -265,8 +273,13 @@ func (r *IPv4DeviceACLPolicyDefinitionResource) Read(ctx context.Context, req re
 	}
 
 	state.fromBody(ctx, res)
-	if state.Version.IsNull() {
-		state.Version = types.Int64Value(0)
+	imp, diags := helpers.IsFlagImporting(ctx, req)
+	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
+		return
+	}
+
+	if imp {
+		state.processImport(ctx)
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
@@ -354,6 +367,8 @@ func (r *IPv4DeviceACLPolicyDefinitionResource) Delete(ctx context.Context, req 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *IPv4DeviceACLPolicyDefinitionResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end import

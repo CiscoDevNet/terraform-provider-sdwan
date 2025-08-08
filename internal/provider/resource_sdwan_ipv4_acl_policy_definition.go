@@ -134,15 +134,16 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 											stringvalidator.OneOf("dscp", "sourceIp", "destinationIp", "class", "packetLength", "plp", "sourcePort", "destinationPort", "sourceDataPrefixList", "destinationDataPrefixList", "protocol", "tcp", "icmpMessage"),
 										},
 									},
-									"dscp": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` being equal to `dscp`").AddIntegerRangeDescription(0, 63).String,
+									"dscp": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` being equal to `dscp`").String,
 										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(0, 63),
-										},
 									},
 									"source_ip": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix, Attribute conditional on `type` being equal to `sourceIp`").String,
+										Optional:            true,
+									},
+									"source_ip_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix variable, Attribute conditional on `type` being equal to `sourceIp`").String,
 										Optional:            true,
 									},
 									"icmp_message": schema.StringAttribute{
@@ -151,6 +152,10 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 									},
 									"destination_ip": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix, Attribute conditional on `type` being equal to `destinationIp`").String,
+										Optional:            true,
+									},
+									"destination_ip_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix variable, Attribute conditional on `type` being equal to `destinationIp`").String,
 										Optional:            true,
 									},
 									"class_map_id": schema.StringAttribute{
@@ -360,8 +365,13 @@ func (r *IPv4ACLPolicyDefinitionResource) Read(ctx context.Context, req resource
 	}
 
 	state.fromBody(ctx, res)
-	if state.Version.IsNull() {
-		state.Version = types.Int64Value(0)
+	imp, diags := helpers.IsFlagImporting(ctx, req)
+	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
+		return
+	}
+
+	if imp {
+		state.processImport(ctx)
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
@@ -449,6 +459,8 @@ func (r *IPv4ACLPolicyDefinitionResource) Delete(ctx context.Context, req resour
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *IPv4ACLPolicyDefinitionResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end import

@@ -76,6 +76,7 @@ resource "sdwan_system_snmp_feature" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 
 ### Optional
@@ -84,7 +85,6 @@ resource "sdwan_system_snmp_feature" "example" {
 - `contact_person` (String) Set the contact for this managed node
 - `contact_person_variable` (String) Variable name
 - `description` (String) The description of the Feature
-- `feature_profile_id` (String) Feature Profile ID
 - `groups` (Attributes List) Configure an SNMP group (see [below for nested schema](#nestedatt--groups))
 - `location_of_device` (String) Set the physical location of this managed node
 - `location_of_device_variable` (String) Variable name
@@ -188,6 +188,8 @@ Optional:
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 # Expected import identifier with the format: "system_snmp_feature_id,feature_profile_id"

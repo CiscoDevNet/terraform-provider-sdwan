@@ -62,9 +62,9 @@ Read-Only:
 Read-Only:
 
 - `preferred_color` (String) preferred color (Single value or multiple values separated by spaces)
-- `preferred_color_group_list` (String) Preferred color group list ID
+- `preferred_color_group_list_id` (String) Preferred color group list ID
 - `preferred_color_group_list_version` (Number) Preferred color group list version
-- `sla_class_list` (String) SLA class list ID
+- `sla_class_list_id` (String) SLA class list ID
 - `sla_class_list_version` (Number) SLA class list version
 - `type` (String) Type of SLA class parameter
 
@@ -85,7 +85,7 @@ Read-Only:
 - `dns` (String) DNS request or response
 - `dns_application_list_id` (String) DNS Application list ID
 - `dns_application_list_version` (Number) DNS Application list version
-- `dscp` (Number) DSCP value
+- `dscp` (String) DSCP value
 - `icmp_message` (String) ICMP Message
 - `plp` (String) PLP
 - `protocol` (String) IP Protocol, 0-255 (Single value or multiple values separated by spaces)

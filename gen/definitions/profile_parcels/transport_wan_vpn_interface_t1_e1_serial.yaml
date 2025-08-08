@@ -16,6 +16,7 @@ attributes:
   - tf_name: transport_wan_vpn_feature_id
     reference: true
     type: String
+    mandatory: true
     description: Transport WAN VPN Feature ID
     example: 140331f6-5418-4755-a059-13c77eb96037
     test_value: sdwan_transport_wan_vpn_feature.test.id

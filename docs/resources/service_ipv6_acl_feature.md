@@ -55,6 +55,7 @@ resource "sdwan_service_ipv6_acl_feature" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 
 ### Optional
@@ -63,7 +64,6 @@ resource "sdwan_service_ipv6_acl_feature" "example" {
   - Choices: `drop`, `accept`
   - Default value: `drop`
 - `description` (String) The description of the Feature
-- `feature_profile_id` (String) Feature Profile ID
 - `sequences` (Attributes List) Access Control List (see [below for nested schema](#nestedatt--sequences))
 
 ### Read-Only
@@ -140,6 +140,8 @@ Optional:
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 # Expected import identifier with the format: "service_ipv6_acl_feature_id,feature_profile_id"

@@ -59,6 +59,7 @@ resource "sdwan_system_logging_feature" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 
 ### Optional
@@ -75,7 +76,6 @@ resource "sdwan_system_logging_feature" "example" {
   - Range: `1`-`20`
   - Default value: `10`
 - `disk_file_size_variable` (String) Variable name
-- `feature_profile_id` (String) Feature Profile ID
 - `ipv4_servers` (Attributes List) Enable logging to remote server (see [below for nested schema](#nestedatt--ipv4_servers))
 - `ipv6_servers` (Attributes List) Enable logging to remote ipv6 server (see [below for nested schema](#nestedatt--ipv6_servers))
 - `tls_profiles` (Attributes List) Configure a TLS profile (see [below for nested schema](#nestedatt--tls_profiles))
@@ -156,6 +156,8 @@ Optional:
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 # Expected import identifier with the format: "system_logging_feature_id,feature_profile_id"

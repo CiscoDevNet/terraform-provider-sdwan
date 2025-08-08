@@ -510,7 +510,7 @@ func (data *SystemLogging) fromBody(ctx context.Context, res gjson.Result) {
 			data.DiskFileRotate = types.Int64Value(va.Int())
 		}
 	}
-	if value := res.Get(path + "tlsProfile"); value.Exists() {
+	if value := res.Get(path + "tlsProfile"); value.Exists() && len(value.Array()) > 0 {
 		data.TlsProfiles = make([]SystemLoggingTlsProfiles, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemLoggingTlsProfiles{}
@@ -548,7 +548,7 @@ func (data *SystemLogging) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "server"); value.Exists() {
+	if value := res.Get(path + "server"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4Servers = make([]SystemLoggingIpv4Servers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemLoggingIpv4Servers{}
@@ -626,7 +626,7 @@ func (data *SystemLogging) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "ipv6Server"); value.Exists() {
+	if value := res.Get(path + "ipv6Server"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6Servers = make([]SystemLoggingIpv6Servers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemLoggingIpv6Servers{}

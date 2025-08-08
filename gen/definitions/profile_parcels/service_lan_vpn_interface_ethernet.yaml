@@ -1,4 +1,5 @@
 ---
+# Manual resource - Modals toBody is manually configured to support sub interfaces.
 name: Service LAN VPN Interface Ethernet
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/lan/vpn/%s/interface/ethernet
 minimum_version: 20.12.0
@@ -16,6 +17,7 @@ attributes:
   - tf_name: service_lan_vpn_feature_id
     reference: true
     type: String
+    mandatory: true
     description: Service LAN VPN Feature ID
     example: 140331f6-5418-4755-a059-13c77eb96037
     test_value: sdwan_service_lan_vpn_feature.test.id
@@ -107,34 +109,58 @@ attributes:
   - model_name: rangeStart
     tf_name: ipv4_nat_range_start
     data_path: [natAttributesIpv4, natPool]
+    exclude_null: true
+    # conditional_attribute: 
+    #   name: Ipv4NatType
+    #   value: pool
     example: 1.2.3.4
   - model_name: rangeEnd
     tf_name: ipv4_nat_range_end
     data_path: [natAttributesIpv4, natPool]
+    exclude_null: true
+    # conditional_attribute: 
+    #   name: Ipv4NatType
+    #   value: pool
     example: 4.5.6.7
   - model_name: prefixLength
     tf_name: ipv4_nat_prefix_length
     data_path: [natAttributesIpv4, natPool]
+    exclude_null: true
+    # conditional_attribute: 
+    #   name: Ipv4NatType
+    #   value: pool
     example: 1
   - model_name: overload
     tf_name: ipv4_nat_overload
     data_path: [natAttributesIpv4, natPool]
+    exclude_null: true
+    # conditional_attribute: 
+    #   name: Ipv4NatType
+    #   value: pool
     example: true
   - model_name: natLookback
     tf_name: ipv4_nat_loopback
     data_path: [natAttributesIpv4]
+    exclude_test: true
+    exclude_null: true
+    # conditional_attribute: 
+    #   name: Ipv4NatType
+    #   value: loopback
     example: 123
   - model_name: udpTimeout
     tf_name: ipv4_nat_udp_timeout
     data_path: [natAttributesIpv4]
+    exclude_test: true
     example: 123
   - model_name: tcpTimeout
     tf_name: ipv4_nat_tcp_timeout
     data_path: [natAttributesIpv4]
+    exclude_test: true
     example: 123
   - model_name: newStaticNat
     tf_name: static_nats
     data_path: [natAttributesIpv4]
+    exclude_test: true
     attributes:
     - model_name: sourceIp
       id: true

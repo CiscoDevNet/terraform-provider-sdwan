@@ -59,6 +59,7 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
+- `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
 - `tunnel_destination_ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 
 ### Optional
@@ -131,7 +132,6 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
   - Choices: `group-1`, `group-2`, `group-5`, `group-14`, `group-15`, `group-16`, `group-19`, `group-20`, `group-21`, `group-24`, `none`
   - Default value: `group-16`
 - `perfect_forward_secrecy_variable` (String) Variable name
-- `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
 - `shutdown` (Boolean) Administrative state
   - Default value: `true`
 - `shutdown_variable` (String) Variable name
@@ -160,6 +160,8 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 # Expected import identifier with the format: "service_lan_vpn_interface_ipsec_feature_id,feature_profile_id,service_lan_vpn_feature_id"

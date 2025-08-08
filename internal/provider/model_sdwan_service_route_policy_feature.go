@@ -109,7 +109,7 @@ func (data ServiceRoutePolicy) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
-	if data.DefaultAction.IsNull() || data.DefaultAction.String() == "reject" {
+	if data.DefaultAction.IsNull() || data.DefaultAction.ValueString() == "reject" {
 		if true {
 			body, _ = sjson.Set(body, path+"defaultAction.optionType", "default")
 			body, _ = sjson.Set(body, path+"defaultAction.value", "reject")
@@ -370,11 +370,11 @@ func (data *ServiceRoutePolicy) fromBody(ctx context.Context, res gjson.Result) 
 
 	if t := res.Get(path + "defaultAction.optionType"); t.Exists() {
 		va := res.Get(path + "defaultAction.value")
-		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.String() == "reject") {
+		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.ValueString() == "reject") {
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "sequences"); value.Exists() {
+	if value := res.Get(path + "sequences"); value.Exists() && len(value.Array()) > 0 {
 		data.Sequences = make([]ServiceRoutePolicySequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutePolicySequences{}
@@ -410,7 +410,7 @@ func (data *ServiceRoutePolicy) fromBody(ctx context.Context, res gjson.Result) 
 					item.Protocol = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("matchEntries"); cValue.Exists() {
+			if cValue := v.Get("matchEntries"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.MatchEntries = make([]ServiceRoutePolicySequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceRoutePolicySequencesMatchEntries{}
@@ -430,7 +430,7 @@ func (data *ServiceRoutePolicy) fromBody(ctx context.Context, res gjson.Result) 
 							cItem.StandardCommunityListCriteria = types.StringValue(va.String())
 						}
 					}
-					if ccValue := cv.Get("communityList.standardCommunityList"); ccValue.Exists() {
+					if ccValue := cv.Get("communityList.standardCommunityList"); ccValue.Exists() && len(ccValue.Array()) > 0 {
 						cItem.StandardCommunityLists = make([]ServiceRoutePolicySequencesMatchEntriesStandardCommunityLists, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := ServiceRoutePolicySequencesMatchEntriesStandardCommunityLists{}
@@ -530,7 +530,7 @@ func (data *ServiceRoutePolicy) fromBody(ctx context.Context, res gjson.Result) 
 					return true
 				})
 			}
-			if cValue := v.Get("actions"); cValue.Exists() {
+			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Actions = make([]ServiceRoutePolicySequencesActions, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceRoutePolicySequencesActions{}
@@ -658,7 +658,7 @@ func (data *ServiceRoutePolicy) updateFromBody(ctx context.Context, res gjson.Re
 
 	if t := res.Get(path + "defaultAction.optionType"); t.Exists() {
 		va := res.Get(path + "defaultAction.value")
-		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.String() == "reject") {
+		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.ValueString() == "reject") {
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}

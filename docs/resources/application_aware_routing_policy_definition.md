@@ -95,9 +95,9 @@ Required:
 Optional:
 
 - `preferred_color` (String) preferred color (Single value or multiple values separated by spaces), Attribute conditional on `type` being equal to `preferredColor`
-- `preferred_color_group_list` (String) Preferred color group list ID, Attribute conditional on `type` being equal to `preferredColorGroup`
+- `preferred_color_group_list_id` (String) Preferred color group list ID, Attribute conditional on `type` being equal to `preferredColorGroup`
 - `preferred_color_group_list_version` (Number) Preferred color group list version
-- `sla_class_list` (String) SLA class list ID, Attribute conditional on `type` being equal to `name`
+- `sla_class_list_id` (String) SLA class list ID, Attribute conditional on `type` being equal to `name`
 - `sla_class_list_version` (Number) SLA class list version
 
 
@@ -124,8 +124,7 @@ Optional:
   - Choices: `request`, `response`
 - `dns_application_list_id` (String) DNS Application list ID, Attribute conditional on `type` being equal to `dnsAppList`
 - `dns_application_list_version` (Number) DNS Application list version
-- `dscp` (Number) DSCP value, Attribute conditional on `type` being equal to `dscp`
-  - Range: `0`-`63`
+- `dscp` (String) DSCP value, Attribute conditional on `type` being equal to `dscp`
 - `icmp_message` (String) ICMP Message, Attribute conditional on `type` being equal to `icmpMessage`
 - `plp` (String) PLP, Attribute conditional on `type` being equal to `plp`
   - Choices: `low`, `high`
@@ -140,6 +139,8 @@ Optional:
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 terraform import sdwan_application_aware_routing_policy_definition.example "f6b2c44c-693c-4763-b010-895aa3d236bd"

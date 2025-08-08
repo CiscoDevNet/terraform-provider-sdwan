@@ -381,3 +381,26 @@ func (data *HubAndSpokeTopologyPolicyDefinition) updateVersions(ctx context.Cont
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *HubAndSpokeTopologyPolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("hubAndSpoke")
+	if data.VpnListId != types.StringNull() {
+		data.VpnListVersion = types.Int64Value(0)
+	}
+	for i := range data.Topologies {
+		for ii := range data.Topologies[i].Spokes {
+			if data.Topologies[i].Spokes[ii].SiteListId != types.StringNull() {
+				data.Topologies[i].Spokes[ii].SiteListVersion = types.Int64Value(0)
+			}
+			for iii := range data.Topologies[i].Spokes[ii].Hubs {
+				if data.Topologies[i].Spokes[ii].Hubs[iii].SiteListId != types.StringNull() {
+					data.Topologies[i].Spokes[ii].Hubs[iii].SiteListVersion = types.Int64Value(0)
+				}
+			}
+		}
+	}
+}
+
+// End of section. //template:end processImport

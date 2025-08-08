@@ -233,6 +233,8 @@ Optional:
 
 Import is supported using the following syntax:
 
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
+
 ```shell
 # Expected import identifier with the format: "transport_routing_ospfv3_ipv4_feature_id,feature_profile_id"
 terraform import sdwan_transport_routing_ospfv3_ipv4_feature.example "f6b2c44c-693c-4763-b010-895aa3d236bd,f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"

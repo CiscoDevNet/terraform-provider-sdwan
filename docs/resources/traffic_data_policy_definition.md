@@ -152,7 +152,7 @@ Optional:
 - `next_hop_loose` (Boolean) Use routing table entry to forward the packet in case Next-hop is not available, Attribute conditional on `type` being equal to `nextHopLoose`
 - `policer_list_id` (String) Policer list ID, Attribute conditional on `type` being equal to `policer`
 - `policer_list_version` (Number) Policer list version
-- `preferred_color_group_list` (String) Preferred color group list ID, Attribute conditional on `type` being equal to `preferredColorGroup`
+- `preferred_color_group_list_id` (String) Preferred color group list ID, Attribute conditional on `type` being equal to `preferredColorGroup`
 - `preferred_color_group_list_version` (Number) Preferred color group list version
 - `service_tloc_color` (String) Service TLOC color, Attribute conditional on `type` being equal to `service`
 - `service_tloc_encapsulation` (String) Service TLOC encapsulation, Attribute conditional on `type` being equal to `service`
@@ -199,8 +199,7 @@ Optional:
   - Choices: `request`, `response`
 - `dns_application_list_id` (String) DNS Application list ID, Attribute conditional on `type` being equal to `dnsAppList`
 - `dns_application_list_version` (Number) DNS Application list version
-- `dscp` (Number) DSCP value, Attribute conditional on `type` being equal to `dscp`
-  - Range: `0`-`63`
+- `dscp` (String) DSCP value, Attribute conditional on `type` being equal to `dscp`
 - `icmp_message` (String) ICMP Message, Attribute conditional on `type` being equal to `icmpMessage`
 - `packet_length` (Number) Packet length, Attribute conditional on `type` being equal to `packetLength`
   - Range: `0`-`65535`
@@ -219,6 +218,8 @@ Optional:
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 terraform import sdwan_traffic_data_policy_definition.example "f6b2c44c-693c-4763-b010-895aa3d236bd"

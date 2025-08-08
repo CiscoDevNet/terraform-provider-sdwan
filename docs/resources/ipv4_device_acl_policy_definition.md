@@ -101,16 +101,20 @@ Optional:
 - `destination_data_ipv4_prefix_list_id` (String) Destination data IPv4 prefix list ID, Attribute conditional on `type` being equal to `destinationDataPrefixList`
 - `destination_data_ipv4_prefix_list_version` (Number) Destination data IPv4 prefix list version
 - `destination_ip` (String) Destination IP prefix, Attribute conditional on `type` being equal to `destinationIp`
+- `destination_ip_variable` (String) Destination IP prefix variable, Attribute conditional on `type` being equal to `destinationIp`
 - `destination_port` (Number) Destination port, only `22` and `161` supported, Attribute conditional on `type` being equal to `destinationPort`
   - Range: `0`-`65535`
 - `source_data_ipv4_prefix_list_id` (String) Source data IPv4 prefix list ID, Attribute conditional on `type` being equal to `sourceDataPrefixList`
 - `source_data_ipv4_prefix_list_version` (Number) Source data IPv4 prefix list version
 - `source_ip` (String) Source IP prefix, Attribute conditional on `type` being equal to `sourceIp`
+- `source_ip_variable` (String) Source IP prefix variable, Attribute conditional on `type` being equal to `sourceIp`
 - `source_ports` (String) Source ports. Single value (0-65535) or ranges separated by spaces., Attribute conditional on `type` being equal to `sourcePort`
 
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 terraform import sdwan_ipv4_device_acl_policy_definition.example "f6b2c44c-693c-4763-b010-895aa3d236bd"

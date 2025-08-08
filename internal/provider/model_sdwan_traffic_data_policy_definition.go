@@ -58,7 +58,7 @@ type TrafficDataPolicyDefinitionSequencesMatchEntries struct {
 	DnsApplicationListVersion        types.Int64  `tfsdk:"dns_application_list_version"`
 	IcmpMessage                      types.String `tfsdk:"icmp_message"`
 	Dns                              types.String `tfsdk:"dns"`
-	Dscp                             types.Int64  `tfsdk:"dscp"`
+	Dscp                             types.String `tfsdk:"dscp"`
 	PacketLength                     types.Int64  `tfsdk:"packet_length"`
 	Plp                              types.String `tfsdk:"plp"`
 	Protocol                         types.String `tfsdk:"protocol"`
@@ -108,7 +108,7 @@ type TrafficDataPolicyDefinitionSequencesActionEntriesSetParameters struct {
 	NextHopLoose                   types.Bool   `tfsdk:"next_hop_loose"`
 	PolicerListId                  types.String `tfsdk:"policer_list_id"`
 	PolicerListVersion             types.Int64  `tfsdk:"policer_list_version"`
-	PreferredColorGroupList        types.String `tfsdk:"preferred_color_group_list"`
+	PreferredColorGroupListId      types.String `tfsdk:"preferred_color_group_list_id"`
 	PreferredColorGroupListVersion types.Int64  `tfsdk:"preferred_color_group_list_version"`
 	TlocListId                     types.String `tfsdk:"tloc_list_id"`
 	TlocListVersion                types.Int64  `tfsdk:"tloc_list_version"`
@@ -195,7 +195,7 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Dns.ValueString())
 					}
 					if !childItem.Dscp.IsNull() && childItem.Type.ValueString() == "dscp" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Dscp.ValueInt64()))
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Dscp.ValueString()))
 					}
 					if !childItem.PacketLength.IsNull() && childItem.Type.ValueString() == "packetLength" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.PacketLength.ValueInt64()))
@@ -343,8 +343,8 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 							if !childChildItem.PolicerListId.IsNull() && childChildItem.Type.ValueString() == "policer" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "ref", childChildItem.PolicerListId.ValueString())
 							}
-							if !childChildItem.PreferredColorGroupList.IsNull() && childChildItem.Type.ValueString() == "preferredColorGroup" {
-								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "ref", childChildItem.PreferredColorGroupList.ValueString())
+							if !childChildItem.PreferredColorGroupListId.IsNull() && childChildItem.Type.ValueString() == "preferredColorGroup" {
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "ref", childChildItem.PreferredColorGroupListId.ValueString())
 							}
 							if !childChildItem.TlocListId.IsNull() && childChildItem.Type.ValueString() == "tlocList" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "ref", childChildItem.TlocListId.ValueString())
@@ -500,9 +500,9 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 						cItem.Dns = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "dscp" {
-						cItem.Dscp = types.Int64Value(ccValue.Int())
+						cItem.Dscp = types.StringValue(ccValue.String())
 					} else {
-						cItem.Dscp = types.Int64Null()
+						cItem.Dscp = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "packetLength" {
 						cItem.PacketLength = types.Int64Value(ccValue.Int())
@@ -734,9 +734,9 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 								ccItem.PolicerListId = types.StringNull()
 							}
 							if cccValue := ccv.Get("ref"); cccValue.Exists() && ccItem.Type.ValueString() == "preferredColorGroup" {
-								ccItem.PreferredColorGroupList = types.StringValue(cccValue.String())
+								ccItem.PreferredColorGroupListId = types.StringValue(cccValue.String())
 							} else {
-								ccItem.PreferredColorGroupList = types.StringNull()
+								ccItem.PreferredColorGroupListId = types.StringNull()
 							}
 							if cccValue := ccv.Get("ref"); cccValue.Exists() && ccItem.Type.ValueString() == "tlocList" {
 								ccItem.TlocListId = types.StringValue(cccValue.String())
@@ -1047,7 +1047,7 @@ func (data *TrafficDataPolicyDefinition) hasChanges(ctx context.Context, state *
 							if !data.Sequences[i].ActionEntries[ii].SetParameters[iii].PolicerListId.Equal(state.Sequences[i].ActionEntries[ii].SetParameters[iii].PolicerListId) {
 								hasChanges = true
 							}
-							if !data.Sequences[i].ActionEntries[ii].SetParameters[iii].PreferredColorGroupList.Equal(state.Sequences[i].ActionEntries[ii].SetParameters[iii].PreferredColorGroupList) {
+							if !data.Sequences[i].ActionEntries[ii].SetParameters[iii].PreferredColorGroupListId.Equal(state.Sequences[i].ActionEntries[ii].SetParameters[iii].PreferredColorGroupListId) {
 								hasChanges = true
 							}
 							if !data.Sequences[i].ActionEntries[ii].SetParameters[iii].TlocListId.Equal(state.Sequences[i].ActionEntries[ii].SetParameters[iii].TlocListId) {
@@ -1211,3 +1211,43 @@ func (data *TrafficDataPolicyDefinition) updateVersions(ctx context.Context, sta
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *TrafficDataPolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("data")
+	for i := range data.Sequences {
+		for ii := range data.Sequences[i].MatchEntries {
+			if data.Sequences[i].MatchEntries[ii].ApplicationListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].ApplicationListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].DnsApplicationListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].DnsApplicationListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].SourceDataPrefixListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = types.Int64Value(0)
+			}
+		}
+		for ii := range data.Sequences[i].ActionEntries {
+			for iii := range data.Sequences[i].ActionEntries[ii].SetParameters {
+				if data.Sequences[i].ActionEntries[ii].SetParameters[iii].PolicerListId != types.StringNull() {
+					data.Sequences[i].ActionEntries[ii].SetParameters[iii].PolicerListVersion = types.Int64Value(0)
+				}
+				if data.Sequences[i].ActionEntries[ii].SetParameters[iii].PreferredColorGroupListId != types.StringNull() {
+					data.Sequences[i].ActionEntries[ii].SetParameters[iii].PreferredColorGroupListVersion = types.Int64Value(0)
+				}
+				if data.Sequences[i].ActionEntries[ii].SetParameters[iii].TlocListId != types.StringNull() {
+					data.Sequences[i].ActionEntries[ii].SetParameters[iii].TlocListVersion = types.Int64Value(0)
+				}
+				if data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocListId != types.StringNull() {
+					data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocListVersion = types.Int64Value(0)
+				}
+			}
+		}
+	}
+}
+
+// End of section. //template:end processImport

@@ -68,6 +68,7 @@ resource "sdwan_system_basic_feature" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 
 ### Optional
@@ -103,7 +104,6 @@ resource "sdwan_system_basic_feature" "example" {
   - Choices: `disabled`, `aggressive`, `moderate`, `conservative`
   - Default value: `disabled`
 - `enhanced_app_aware_routing_variable` (String) Variable name
-- `feature_profile_id` (String) Feature Profile ID
 - `gps_geo_fencing_enable` (Boolean) Enable Geo fencing
   - Default value: `false`
 - `gps_geo_fencing_range` (Number) Set the device’s geo fencing range
@@ -195,6 +195,8 @@ Optional:
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 # Expected import identifier with the format: "system_basic_feature_id,feature_profile_id"

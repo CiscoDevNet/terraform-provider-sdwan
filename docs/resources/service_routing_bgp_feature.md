@@ -130,6 +130,7 @@ resource "sdwan_service_routing_bgp_feature" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 
 ### Optional
@@ -150,7 +151,6 @@ resource "sdwan_service_routing_bgp_feature" "example" {
   - Range: `1`-`255`
   - Default value: `20`
 - `external_routes_distance_variable` (String) Variable name
-- `feature_profile_id` (String) Feature Profile ID
 - `hold_time` (Number) Interval (seconds) not receiving a keepalive message declares a BGP peer down
   - Range: `0`-`65535`
   - Default value: `180`
@@ -436,6 +436,8 @@ Optional:
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 # Expected import identifier with the format: "service_routing_bgp_feature_id,feature_profile_id"

@@ -135,10 +135,10 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("address", "asPath", "advancedCommunity", "expandedCommunity", "extCommunity", "localPreference", "metric", "nextHop", "origin", "peer", "ompTag", "ospfTag").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("address", "asPath", "advancedCommunity", "expandedCommunity", "expandedCommunityInline", "extCommunity", "localPreference", "metric", "nextHop", "origin", "peer", "ompTag", "ospfTag").String,
 										Required:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("address", "asPath", "advancedCommunity", "expandedCommunity", "extCommunity", "localPreference", "metric", "nextHop", "origin", "peer", "ompTag", "ospfTag"),
+											stringvalidator.OneOf("address", "asPath", "advancedCommunity", "expandedCommunity", "expandedCommunityInline", "extCommunity", "localPreference", "metric", "nextHop", "origin", "peer", "ompTag", "ospfTag"),
 										},
 									},
 									"prefix_list_id": schema.StringAttribute{
@@ -176,6 +176,10 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 									},
 									"expanded_community_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Expanded community list ID, Attribute conditional on `type` being equal to `expandedCommunity`").String,
+										Optional:            true,
+									},
+									"expanded_community_list_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Expanded community list variable, Attribute conditional on `type` being equal to `expandedCommunityInline`").String,
 										Optional:            true,
 									},
 									"expanded_community_list_version": schema.Int64Attribute{
@@ -277,6 +281,10 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 									},
 									"community": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Community value, e.g. `1000:10000` or `internet` or `local-AS`, Attribute conditional on `type` being equal to `community`").String,
+										Optional:            true,
+									},
+									"community_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Community variable, Attribute conditional on `type` being equal to `community`").String,
 										Optional:            true,
 									},
 									"community_additive": schema.BoolAttribute{
@@ -417,8 +425,13 @@ func (r *RoutePolicyDefinitionResource) Read(ctx context.Context, req resource.R
 	}
 
 	state.fromBody(ctx, res)
-	if state.Version.IsNull() {
-		state.Version = types.Int64Value(0)
+	imp, diags := helpers.IsFlagImporting(ctx, req)
+	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
+		return
+	}
+
+	if imp {
+		state.processImport(ctx)
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
@@ -506,6 +519,8 @@ func (r *RoutePolicyDefinitionResource) Delete(ctx context.Context, req resource
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *RoutePolicyDefinitionResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end import

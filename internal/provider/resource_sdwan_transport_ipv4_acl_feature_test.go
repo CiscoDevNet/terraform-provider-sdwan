@@ -33,7 +33,6 @@ func TestAccSdwanTransportIPv4ACLProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv4_acl_feature.test", "default_action", "drop"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv4_acl_feature.test", "sequences.0.sequence_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv4_acl_feature.test", "sequences.0.sequence_name", "AccessControlList1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv4_acl_feature.test", "sequences.0.match_entries.0.packet_length", "1500"))
@@ -79,7 +78,6 @@ func testAccSdwanTransportIPv4ACLProfileParcelConfig_all() string {
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
-	config += `	default_action = "drop"` + "\n"
 	config += `	sequences = [{` + "\n"
 	config += `	  sequence_id = 1` + "\n"
 	config += `	  sequence_name = "AccessControlList1"` + "\n"

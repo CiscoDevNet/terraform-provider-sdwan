@@ -33,6 +33,7 @@ resource "sdwan_system_performance_monitoring_feature" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 
 ### Optional
@@ -44,7 +45,6 @@ resource "sdwan_system_performance_monitoring_feature" "example" {
 - `event_driven_config_enabled` (Boolean) UMTS event driven monitoring enable or disable
   - Default value: `false`
 - `event_driven_events` (Set of String) UMTS events
-- `feature_profile_id` (String) Feature Profile ID
 - `monitoring_config_enabled` (Boolean) UMTS monitoring enable or disable
   - Default value: `false`
 - `monitoring_config_interval` (String) UMTS monitoring interval(Minutes)
@@ -58,6 +58,8 @@ resource "sdwan_system_performance_monitoring_feature" "example" {
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 # Expected import identifier with the format: "system_performance_monitoring_feature_id,feature_profile_id"
