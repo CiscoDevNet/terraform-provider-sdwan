@@ -6,6 +6,7 @@
 - BREAKING CHANGE: Rename `preferred_color_group_list` attribute of `sdwan_traffic_data_policy_definition` resource to `preferred_color_group_list_id`
 - Add missing options under `unsupported_features` attribute of `sdwan_configuration_group`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/478)
 - Add `sdwan_policy_group` resource and data source
+- Adds `enhanced_app_aware_routing` support to the `sdwan_cisco_system_feature_template` resource and data source
 
 ## 0.6.2
 
