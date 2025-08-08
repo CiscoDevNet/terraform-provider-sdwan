@@ -1,0 +1,197 @@
+---
+name: Policy Group
+rest_endpoint: /v1/policy-group/
+id_attribute: id
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+doc_category: Policy Groups
+attributes:
+  - model_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy group
+    example: PG_1
+  - model_name: description
+    type: String
+    mandatory: true
+    description: Description
+    example: My policy group 1
+  - model_name: solution
+    type: String
+    mandatory: true
+    enum_values: [sdwan]
+    description: Type of solution
+    example: sdwan
+  - model_name: profiles
+    tf_name: feature_profile_ids
+    type: Set
+    element_type: String
+    description: List of feature profile IDs
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: "[sdwan_application_priority_feature_profile.test.id]"
+  - model_name: devices
+    type: List
+    description: List of devices
+    attributes:
+      - model_name: id
+        type: String
+        id: true
+        description: Device ID
+        example: C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B
+      - tf_name: deploy
+        tf_only: true
+        type: Bool
+        description: Deploy to device if enabled.
+        default_value: false
+        example: true
+      - model_name: variables
+        type: Set
+        description: List of variables
+        exclude_test: true
+        attributes:
+          - model_name: name
+            type: String
+            mandatory: true
+            id: true
+            description: Variable name
+            example: qos_interfaces
+          - model_name: value
+            type: String
+            description: Variable value
+            example: GigabitEthernet1
+          - model_name: list_value
+            type: List
+            element_type: String
+            tf_only: true
+            description: Use this instead of `value` in case value is of type `List`.
+            example: GigabitEthernet1
+  - tf_name: policy_versions
+    tf_only: true
+    type: Versions
+    description: List of all associated policy versions
+    exclude_test: true
+
+test_prerequisites: |
+  resource "sdwan_system_feature_profile" "test" {
+    name = "SYSTEM_TF"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_system_basic_feature" "test" {
+    name = "BASIC_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+  }
+
+  resource "sdwan_system_aaa_feature" "test" {
+    name               = "AAA_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+    server_auth_order  = ["local"]
+    users = [{
+      name     = "admin"
+      password = "admin"
+    }]
+  }
+
+  resource "sdwan_system_bfd_feature" "test" {
+    name               = "BFD_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+  }
+
+  resource "sdwan_system_global_feature" "test" {
+    name               = "GLOBAL_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+  }
+
+  resource "sdwan_system_logging_feature" "test" {
+    name               = "LOGGING_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+  }
+
+  resource "sdwan_system_omp_feature" "test" {
+    name               = "OMP_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+  } 
+
+  resource "sdwan_transport_feature_profile" "test" {
+    name        = "TRANSPORT_TF"
+    description = "My transport feature profile 1"
+  }
+
+  resource "sdwan_transport_wan_vpn_feature" "test" {
+    name               = "WAN_VPN_TF"
+    feature_profile_id = sdwan_transport_feature_profile.test.id
+    vpn                = 0
+  }
+
+  resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "test" {
+    name                         = "WAN_VPN_INT_TF"
+    feature_profile_id           = sdwan_transport_feature_profile.test.id
+    transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id
+    interface_name               = "GigabitEthernet1"
+    shutdown                     = false
+    ipv4_configuration_type      = "dynamic"
+    ipv4_dhcp_distance           = 1
+    tunnel_interface             = true
+    tunnel_interface_encapsulations = [
+      {
+        encapsulation = "ipsec"
+      }
+    ]
+  }
+
+  resource "sdwan_configuration_group" "test" {
+    name = "CG_1"
+    description = "My config group 1"
+    solution = "sdwan"
+    feature_profile_ids = [
+      sdwan_system_feature_profile.test.id,
+      sdwan_transport_feature_profile.test.id,
+    ]
+    devices = [{
+      id = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"
+      deploy = true
+      variables = [
+        {
+          name = "host_name"
+          value = "edge1"
+        },
+        {
+          name = "pseudo_commit_timer"
+          value = 0
+        },
+        {
+          name = "site_id"
+          value = 1
+        },
+        {
+          name = "system_ip"
+          value = "10.1.1.1"
+        },
+        {
+          name = "ipv6_strict_control"
+          value = "false"
+        }
+      ]
+    }]
+    feature_versions = [
+      sdwan_system_basic_feature.test.version,
+      sdwan_system_aaa_feature.test.version,
+      sdwan_system_bfd_feature.test.version,
+      sdwan_system_global_feature.test.version,
+      sdwan_system_logging_feature.test.version,
+      sdwan_system_omp_feature.test.version,
+      sdwan_transport_wan_vpn_interface_ethernet_feature.test.version,
+    ]
+  }
+
+  resource "sdwan_application_priority_feature_profile" "test" {
+    name        = "APPLICATION_PRIORITY_TF"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_application_priority_qos_policy" "test" {
+    name                      = "qos"
+    description               = "QoS policy for application priority"
+    feature_profile_id        = sdwan_application_priority_feature_profile.test.id
+    target_interface_variable = "{{qos_interfaces}}"
+  }
