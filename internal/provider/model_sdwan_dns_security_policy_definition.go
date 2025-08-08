@@ -316,3 +316,16 @@ func (data *DNSSecurityPolicyDefinition) updateVersions(ctx context.Context, sta
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *DNSSecurityPolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	if data.DomainListId != types.StringNull() {
+		data.DomainListVersion = types.Int64Value(0)
+	}
+	if data.CiscoSigCredentialsFeatureTemplateId != types.StringNull() {
+		data.CiscoSigCredentialsFeatureTemplateVersion = types.Int64Value(0)
+	}
+}
+
+// End of section. //template:end processImport

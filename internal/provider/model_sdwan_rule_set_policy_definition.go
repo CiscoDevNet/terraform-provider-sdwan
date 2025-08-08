@@ -510,3 +510,45 @@ func (data *RuleSetPolicyDefinition) updateVersions(ctx context.Context, state *
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *RuleSetPolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	for i := range data.Rules {
+		if data.Rules[i].SourceObjectGroupId != types.StringNull() {
+			data.Rules[i].SourceObjectGroupVersion = types.Int64Value(0)
+		}
+		if data.Rules[i].SourceDataIpv4PrefixListId != types.StringNull() {
+			data.Rules[i].SourceDataIpv4PrefixListVersion = types.Int64Value(0)
+		}
+		if data.Rules[i].SourceDataFqdnPrefixListId != types.StringNull() {
+			data.Rules[i].SourceDataFqdnPrefixListVersion = types.Int64Value(0)
+		}
+		if data.Rules[i].SourcePortListId != types.StringNull() {
+			data.Rules[i].SourcePortListVersion = types.Int64Value(0)
+		}
+		if data.Rules[i].SourceGeoLocationListId != types.StringNull() {
+			data.Rules[i].SourceGeoLocationListVersion = types.Int64Value(0)
+		}
+		if data.Rules[i].DestinationObjectGroupId != types.StringNull() {
+			data.Rules[i].DestinationObjectGroupVersion = types.Int64Value(0)
+		}
+		if data.Rules[i].DestinationDataIpv4PrefixListId != types.StringNull() {
+			data.Rules[i].DestinationDataIpv4PrefixListVersion = types.Int64Value(0)
+		}
+		if data.Rules[i].DestinationDataFqdnPrefixListId != types.StringNull() {
+			data.Rules[i].DestinationDataFqdnPrefixListVersion = types.Int64Value(0)
+		}
+		if data.Rules[i].DestinationPortListId != types.StringNull() {
+			data.Rules[i].DestinationPortListVersion = types.Int64Value(0)
+		}
+		if data.Rules[i].DestinationGeoLocationListId != types.StringNull() {
+			data.Rules[i].DestinationGeoLocationListVersion = types.Int64Value(0)
+		}
+		if data.Rules[i].ProtocolListId != types.StringNull() {
+			data.Rules[i].ProtocolListVersion = types.Int64Value(0)
+		}
+	}
+}
+
+// End of section. //template:end processImport

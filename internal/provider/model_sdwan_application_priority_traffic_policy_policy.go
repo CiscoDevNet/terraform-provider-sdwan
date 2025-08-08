@@ -797,7 +797,7 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 			data.Direction = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "sequences"); value.Exists() {
+	if value := res.Get(path + "sequences"); value.Exists() && len(value.Array()) > 0 {
 		data.Sequences = make([]ApplicationPriorityTrafficPolicySequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ApplicationPriorityTrafficPolicySequences{}
@@ -833,7 +833,7 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 					item.Protocol = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("match.entries"); cValue.Exists() {
+			if cValue := v.Get("match.entries"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.MatchEntries = make([]ApplicationPriorityTrafficPolicySequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ApplicationPriorityTrafficPolicySequencesMatchEntries{}
@@ -1041,11 +1041,11 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 					return true
 				})
 			}
-			if cValue := v.Get("actions"); cValue.Exists() {
+			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Actions = make([]ApplicationPriorityTrafficPolicySequencesActions, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ApplicationPriorityTrafficPolicySequencesActions{}
-					if ccValue := cv.Get("slaClass"); ccValue.Exists() {
+					if ccValue := cv.Get("slaClass"); ccValue.Exists() && len(ccValue.Array()) > 0 {
 						cItem.SlaClasses = make([]ApplicationPriorityTrafficPolicySequencesActionsSlaClasses, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := ApplicationPriorityTrafficPolicySequencesActionsSlaClasses{}
@@ -1117,7 +1117,7 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 							cItem.BackupSlaPreferredColor = helpers.GetStringSet(va.Array())
 						}
 					}
-					if ccValue := cv.Get("set"); ccValue.Exists() {
+					if ccValue := cv.Get("set"); ccValue.Exists() && len(ccValue.Array()) > 0 {
 						cItem.SetParameters = make([]ApplicationPriorityTrafficPolicySequencesActionsSetParameters, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := ApplicationPriorityTrafficPolicySequencesActionsSetParameters{}

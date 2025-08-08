@@ -232,3 +232,16 @@ func (data *QoSMapPolicyDefinition) updateVersions(ctx context.Context, state *Q
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *QoSMapPolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("qosMap")
+	for i := range data.QosSchedulers {
+		if data.QosSchedulers[i].ClassMapId != types.StringNull() {
+			data.QosSchedulers[i].ClassMapVersion = types.Int64Value(0)
+		}
+	}
+}
+
+// End of section. //template:end processImport

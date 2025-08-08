@@ -217,7 +217,7 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Schema(ctx context.C
 													MarkdownDescription: "Type of SLA class parameter",
 													Computed:            true,
 												},
-												"sla_class_list": schema.StringAttribute{
+												"sla_class_list_id": schema.StringAttribute{
 													MarkdownDescription: "SLA class list ID",
 													Computed:            true,
 												},
@@ -225,7 +225,7 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Schema(ctx context.C
 													MarkdownDescription: "SLA class list version",
 													Computed:            true,
 												},
-												"preferred_color_group_list": schema.StringAttribute{
+												"preferred_color_group_list_id": schema.StringAttribute{
 													MarkdownDescription: "Preferred color group list ID",
 													Computed:            true,
 												},

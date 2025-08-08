@@ -108,7 +108,7 @@ func (data *PolicyObjectASPathList) fromBody(ctx context.Context, res gjson.Resu
 			data.AsPathListId = types.Int64Value(va.Int())
 		}
 	}
-	if value := res.Get(path + "entries"); value.Exists() {
+	if value := res.Get(path + "entries"); value.Exists() && len(value.Array()) > 0 {
 		data.Entries = make([]PolicyObjectASPathListEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := PolicyObjectASPathListEntries{}

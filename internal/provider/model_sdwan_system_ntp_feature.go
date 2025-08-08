@@ -314,7 +314,7 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result) {
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	if value := res.Get(path + "server"); value.Exists() {
+	if value := res.Get(path + "server"); value.Exists() && len(value.Array()) > 0 {
 		data.Servers = make([]SystemNTPServers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemNTPServers{}
@@ -382,7 +382,7 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "authentication.authenticationKeys"); value.Exists() {
+	if value := res.Get(path + "authentication.authenticationKeys"); value.Exists() && len(value.Array()) > 0 {
 		data.AuthenticationKeys = make([]SystemNTPAuthenticationKeys, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemNTPAuthenticationKeys{}

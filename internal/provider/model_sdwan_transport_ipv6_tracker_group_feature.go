@@ -136,7 +136,7 @@ func (data *TransportIPv6TrackerGroup) fromBody(ctx context.Context, res gjson.R
 			data.TrackerName = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "trackerRefs"); value.Exists() {
+	if value := res.Get(path + "trackerRefs"); value.Exists() && len(value.Array()) > 0 {
 		data.TrackerElements = make([]TransportIPv6TrackerGroupTrackerElements, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportIPv6TrackerGroupTrackerElements{}

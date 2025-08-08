@@ -2039,6 +2039,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.Ipv4DhcpDistance = types.Int64Value(va.Int())
 		}
+		data.Ipv4ConfigurationType = types.StringValue("dynamic")
 	}
 	data.Ipv4Address = types.StringNull()
 	data.Ipv4AddressVariable = types.StringNull()
@@ -2049,6 +2050,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.Ipv4Address = types.StringValue(va.String())
 		}
+		data.Ipv4ConfigurationType = types.StringValue("static")
 	}
 	data.Ipv4SubnetMask = types.StringNull()
 	data.Ipv4SubnetMaskVariable = types.StringNull()
@@ -2059,8 +2061,9 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
+		data.Ipv4ConfigurationType = types.StringValue("static")
 	}
-	if value := res.Get(path + "intfIpAddress.static.staticIpV4AddressSecondary"); value.Exists() {
+	if value := res.Get(path + "intfIpAddress.static.staticIpV4AddressSecondary"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4SecondaryAddresses = make([]TransportWANVPNInterfaceEthernetIpv4SecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetIpv4SecondaryAddresses{}
@@ -2087,6 +2090,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.Ipv4SecondaryAddresses = append(data.Ipv4SecondaryAddresses, item)
 			return true
 		})
+		data.Ipv4ConfigurationType = types.StringValue("static")
 	}
 	data.Ipv4DhcpHelper = types.SetNull(types.StringType)
 	data.Ipv4DhcpHelperVariable = types.StringNull()
@@ -2105,8 +2109,9 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		if t.String() == "global" {
 			data.EnableDhcpv6 = types.BoolValue(va.Bool())
 		}
+		data.Ipv6ConfigurationType = types.StringValue("dynamic")
 	}
-	if value := res.Get(path + "intfIpV6Address.dynamic.secondaryIpV6Address"); value.Exists() {
+	if value := res.Get(path + "intfIpV6Address.dynamic.secondaryIpV6Address"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6DhcpSecondaryAddress = make([]TransportWANVPNInterfaceEthernetIpv6DhcpSecondaryAddress, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetIpv6DhcpSecondaryAddress{}
@@ -2123,6 +2128,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.Ipv6DhcpSecondaryAddress = append(data.Ipv6DhcpSecondaryAddress, item)
 			return true
 		})
+		data.Ipv6ConfigurationType = types.StringValue("dynamic")
 	}
 	data.Ipv6Address = types.StringNull()
 	data.Ipv6AddressVariable = types.StringNull()
@@ -2133,8 +2139,9 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.Ipv6Address = types.StringValue(va.String())
 		}
+		data.Ipv6ConfigurationType = types.StringValue("static")
 	}
-	if value := res.Get(path + "intfIpV6Address.static.secondaryIpV6Address"); value.Exists() {
+	if value := res.Get(path + "intfIpV6Address.static.secondaryIpV6Address"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6SecondaryAddresses = make([]TransportWANVPNInterfaceEthernetIpv6SecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetIpv6SecondaryAddresses{}
@@ -2151,6 +2158,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.Ipv6SecondaryAddresses = append(data.Ipv6SecondaryAddresses, item)
 			return true
 		})
+		data.Ipv6ConfigurationType = types.StringValue("static")
 	}
 	data.IperfServer = types.StringNull()
 	data.IperfServerVariable = types.StringNull()
@@ -2229,6 +2237,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.PerTunnelQos = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelQosMode = types.StringNull()
 	data.TunnelQosModeVariable = types.StringNull()
@@ -2239,6 +2248,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelQosMode = types.StringValue(va.String())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelBandwidthPercent = types.Int64Null()
 	data.TunnelBandwidthPercentVariable = types.StringNull()
@@ -2249,6 +2259,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelBandwidthPercent = types.Int64Value(va.Int())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceBindLoopbackTunnel = types.StringNull()
 	data.TunnelInterfaceBindLoopbackTunnelVariable = types.StringNull()
@@ -2259,6 +2270,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceBindLoopbackTunnel = types.StringValue(va.String())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceCarrier = types.StringNull()
 	data.TunnelInterfaceCarrierVariable = types.StringNull()
@@ -2269,6 +2281,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceCarrier = types.StringValue(va.String())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceColor = types.StringNull()
 	data.TunnelInterfaceColorVariable = types.StringNull()
@@ -2279,6 +2292,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceColor = types.StringValue(va.String())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceHelloInterval = types.Int64Null()
 	data.TunnelInterfaceHelloIntervalVariable = types.StringNull()
@@ -2289,6 +2303,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceHelloInterval = types.Int64Value(va.Int())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceHelloTolerance = types.Int64Null()
 	data.TunnelInterfaceHelloToleranceVariable = types.StringNull()
@@ -2299,6 +2314,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceHelloTolerance = types.Int64Value(va.Int())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceLastResortCircuit = types.BoolNull()
 	data.TunnelInterfaceLastResortCircuitVariable = types.StringNull()
@@ -2309,6 +2325,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceLastResortCircuit = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceGreTunnelDestinationIp = types.StringNull()
 	data.TunnelInterfaceGreTunnelDestinationIpVariable = types.StringNull()
@@ -2319,6 +2336,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceGreTunnelDestinationIp = types.StringValue(va.String())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceColorRestrict = types.BoolNull()
 	data.TunnelInterfaceColorRestrictVariable = types.StringNull()
@@ -2329,6 +2347,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceColorRestrict = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceGroups = types.Int64Null()
 	data.TunnelInterfaceGroupsVariable = types.StringNull()
@@ -2339,6 +2358,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceGroups = types.Int64Value(va.Int())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceBorder = types.BoolNull()
 	data.TunnelInterfaceBorderVariable = types.StringNull()
@@ -2349,6 +2369,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceBorder = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceMaxControlConnections = types.Int64Null()
 	data.TunnelInterfaceMaxControlConnectionsVariable = types.StringNull()
@@ -2359,6 +2380,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceMaxControlConnections = types.Int64Value(va.Int())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceNatRefreshInterval = types.Int64Null()
 	data.TunnelInterfaceNatRefreshIntervalVariable = types.StringNull()
@@ -2369,6 +2391,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceNatRefreshInterval = types.Int64Value(va.Int())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceVbondAsStunServer = types.BoolNull()
 	data.TunnelInterfaceVbondAsStunServerVariable = types.StringNull()
@@ -2379,6 +2402,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceVbondAsStunServer = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceExcludeControllerGroupList = types.SetNull(types.Int64Type)
 	data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringNull()
@@ -2389,6 +2413,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceExcludeControllerGroupList = helpers.GetInt64Set(va.Array())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceVmanageConnectionPreference = types.Int64Null()
 	data.TunnelInterfaceVmanageConnectionPreferenceVariable = types.StringNull()
@@ -2399,6 +2424,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceVmanageConnectionPreference = types.Int64Value(va.Int())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfacePortHop = types.BoolNull()
 	data.TunnelInterfacePortHopVariable = types.StringNull()
@@ -2409,6 +2435,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfacePortHop = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceLowBandwidthLink = types.BoolNull()
 	data.TunnelInterfaceLowBandwidthLinkVariable = types.StringNull()
@@ -2419,6 +2446,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceLowBandwidthLink = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceTunnelTcpMss = types.Int64Null()
 	data.TunnelInterfaceTunnelTcpMssVariable = types.StringNull()
@@ -2429,6 +2457,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceTunnelTcpMss = types.Int64Value(va.Int())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceClearDontFragment = types.BoolNull()
 	data.TunnelInterfaceClearDontFragmentVariable = types.StringNull()
@@ -2439,6 +2468,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceClearDontFragment = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceCtsSgtPropagation = types.BoolNull()
 	data.TunnelInterfaceCtsSgtPropagationVariable = types.StringNull()
@@ -2449,6 +2479,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceCtsSgtPropagation = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceNetworkBroadcast = types.BoolNull()
 	data.TunnelInterfaceNetworkBroadcastVariable = types.StringNull()
@@ -2459,6 +2490,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceNetworkBroadcast = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceAllowAll = types.BoolNull()
 	data.TunnelInterfaceAllowAllVariable = types.StringNull()
@@ -2590,7 +2622,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.TunnelInterfaceAllowBfd = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "encapsulation"); value.Exists() {
+	if value := res.Get(path + "encapsulation"); value.Exists() && len(value.Array()) > 0 {
 		data.TunnelInterfaceEncapsulations = make([]TransportWANVPNInterfaceEthernetTunnelInterfaceEncapsulations, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetTunnelInterfaceEncapsulations{}
@@ -2716,7 +2748,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.NatTcpTimeout = types.Int64Value(va.Int())
 		}
 	}
-	if value := res.Get(path + "natAttributesIpv4.newStaticNat"); value.Exists() {
+	if value := res.Get(path + "natAttributesIpv4.newStaticNat"); value.Exists() && len(value.Array()) > 0 {
 		data.NewStaticNats = make([]TransportWANVPNInterfaceEthernetNewStaticNats, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetNewStaticNats{}
@@ -2788,7 +2820,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.Nat66 = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "natAttributesIpv6.staticNat66"); value.Exists() {
+	if value := res.Get(path + "natAttributesIpv6.staticNat66"); value.Exists() && len(value.Array()) > 0 {
 		data.StaticNat66 = make([]TransportWANVPNInterfaceEthernetStaticNat66, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetStaticNat66{}
@@ -2962,7 +2994,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.AclIpv6IngressFeatureId = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "arp"); value.Exists() {
+	if value := res.Get(path + "arp"); value.Exists() && len(value.Array()) > 0 {
 		data.Arps = make([]TransportWANVPNInterfaceEthernetArps, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetArps{}

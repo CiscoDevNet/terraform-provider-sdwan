@@ -1395,7 +1395,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "intfIpAddress.static.staticIpV4AddressSecondary"); value.Exists() {
+	if value := res.Get(path + "intfIpAddress.static.staticIpV4AddressSecondary"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4SecondaryAddresses = make([]ServiceLANVPNInterfaceEthernetIpv4SecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNInterfaceEthernetIpv4SecondaryAddresses{}
@@ -1441,7 +1441,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.EnableDhcpv6 = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "intfIpV6Address.dynamic.secondaryIpV6Address"); value.Exists() {
+	if value := res.Get(path + "intfIpV6Address.dynamic.secondaryIpV6Address"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6DhcpSecondaryAddresses = make([]ServiceLANVPNInterfaceEthernetIpv6DhcpSecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNInterfaceEthernetIpv6DhcpSecondaryAddresses{}
@@ -1469,7 +1469,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.Ipv6Address = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "intfIpV6Address.static.secondaryIpV6Address"); value.Exists() {
+	if value := res.Get(path + "intfIpV6Address.static.secondaryIpV6Address"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6SecondaryAddresses = make([]ServiceLANVPNInterfaceEthernetIpv6SecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNInterfaceEthernetIpv6SecondaryAddresses{}
@@ -1487,7 +1487,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			return true
 		})
 	}
-	if value := res.Get(path + "intfIpV6Address.static.dhcpHelperV6"); value.Exists() {
+	if value := res.Get(path + "intfIpV6Address.static.dhcpHelperV6"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6DhcpHelpers = make([]ServiceLANVPNInterfaceEthernetIpv6DhcpHelpers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNInterfaceEthernetIpv6DhcpHelpers{}
@@ -1603,7 +1603,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.Ipv4NatTcpTimeout = types.Int64Value(va.Int())
 		}
 	}
-	if value := res.Get(path + "natAttributesIpv4.newStaticNat"); value.Exists() {
+	if value := res.Get(path + "natAttributesIpv4.newStaticNat"); value.Exists() && len(value.Array()) > 0 {
 		data.StaticNats = make([]ServiceLANVPNInterfaceEthernetStaticNats, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNInterfaceEthernetStaticNats{}
@@ -1707,7 +1707,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.AclIpv6IngressPolicyId = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "vrrpIpv6"); value.Exists() {
+	if value := res.Get(path + "vrrpIpv6"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6Vrrps = make([]ServiceLANVPNInterfaceEthernetIpv6Vrrps, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNInterfaceEthernetIpv6Vrrps{}
@@ -1749,7 +1749,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 					item.TrackOmp = types.BoolValue(va.Bool())
 				}
 			}
-			if cValue := v.Get("ipv6"); cValue.Exists() {
+			if cValue := v.Get("ipv6"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Ipv6Addresses = make([]ServiceLANVPNInterfaceEthernetIpv6VrrpsIpv6Addresses, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceLANVPNInterfaceEthernetIpv6VrrpsIpv6Addresses{}
@@ -1781,7 +1781,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			return true
 		})
 	}
-	if value := res.Get(path + "vrrp"); value.Exists() {
+	if value := res.Get(path + "vrrp"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4Vrrps = make([]ServiceLANVPNInterfaceEthernetIpv4Vrrps, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNInterfaceEthernetIpv4Vrrps{}
@@ -1833,7 +1833,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 					item.Address = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("ipAddressSecondary"); cValue.Exists() {
+			if cValue := v.Get("ipAddressSecondary"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.SecondaryAddresses = make([]ServiceLANVPNInterfaceEthernetIpv4VrrpsSecondaryAddresses, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceLANVPNInterfaceEthernetIpv4VrrpsSecondaryAddresses{}
@@ -1877,7 +1877,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 					item.TlocPrefChangeValue = types.Int64Value(va.Int())
 				}
 			}
-			if cValue := v.Get("trackingObject"); cValue.Exists() {
+			if cValue := v.Get("trackingObject"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.TrackingObjects = make([]ServiceLANVPNInterfaceEthernetIpv4VrrpsTrackingObjects, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceLANVPNInterfaceEthernetIpv4VrrpsTrackingObjects{}
@@ -1917,7 +1917,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			return true
 		})
 	}
-	if value := res.Get(path + "arp"); value.Exists() {
+	if value := res.Get(path + "arp"); value.Exists() && len(value.Array()) > 0 {
 		data.Arps = make([]ServiceLANVPNInterfaceEthernetArps, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNInterfaceEthernetArps{}
