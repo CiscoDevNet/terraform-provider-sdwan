@@ -10,6 +10,7 @@ description: |-
 ## 0.6.3 (unreleased)
 
 - Fix issue causing `sdwan_transport_routing_bgp_feature` to fail to apply when `policy_type` is set to `off`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/475)
+- Add missing options under `unsupported_features` attribute of `sdwan_configuration_group`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/478)
 
 ## 0.6.2
 

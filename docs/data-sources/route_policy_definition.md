@@ -58,6 +58,7 @@ Read-Only:
 - `atomic_aggregate` (Boolean) Atomic aggregate
 - `community` (String) Community value, e.g. `1000:10000` or `internet` or `local-AS`
 - `community_additive` (Boolean) Community additive
+- `community_variable` (String) Community variable
 - `local_preference` (Number) Local preference
 - `metric` (Number) Metric
 - `metric_type` (String) Metric type
@@ -81,6 +82,7 @@ Read-Only:
 - `community_list_match_flag` (String) Community list match flag
 - `community_list_versions` (List of String) Community list versions
 - `expanded_community_list_id` (String) Expanded community list ID
+- `expanded_community_list_variable` (String) Expanded community list variable
 - `expanded_community_list_version` (Number) Expanded community list version
 - `extended_community_list_id` (String) Extended community list ID
 - `extended_community_list_version` (Number) Extended community list version
