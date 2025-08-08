@@ -552,7 +552,7 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			data.SecondaryDnsAddressIpv6 = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "newHostMapping"); value.Exists() {
+	if value := res.Get(path + "newHostMapping"); value.Exists() && len(value.Array()) > 0 {
 		data.NewHostMappings = make([]TransportWANVPNNewHostMappings, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNNewHostMappings{}
@@ -580,7 +580,7 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "ipv4Route"); value.Exists() {
+	if value := res.Get(path + "ipv4Route"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4StaticRoutes = make([]TransportWANVPNIpv4StaticRoutes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNIpv4StaticRoutes{}
@@ -612,7 +612,7 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.Gateway = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("nextHop"); cValue.Exists() {
+			if cValue := v.Get("nextHop"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.NextHops = make([]TransportWANVPNIpv4StaticRoutesNextHops, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TransportWANVPNIpv4StaticRoutesNextHops{}
@@ -639,6 +639,7 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.NextHops = append(item.NextHops, cItem)
 					return true
 				})
+				item.Gateway = types.StringValue("nextHop")
 			}
 			item.AdministrativeDistance = types.Int64Null()
 			item.AdministrativeDistanceVariable = types.StringNull()
@@ -649,12 +650,13 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result) {
 				} else if t.String() == "global" {
 					item.AdministrativeDistance = types.Int64Value(va.Int())
 				}
+				item.Gateway = types.StringValue("null0")
 			}
 			data.Ipv4StaticRoutes = append(data.Ipv4StaticRoutes, item)
 			return true
 		})
 	}
-	if value := res.Get(path + "ipv6Route"); value.Exists() {
+	if value := res.Get(path + "ipv6Route"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6StaticRoutes = make([]TransportWANVPNIpv6StaticRoutes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNIpv6StaticRoutes{}
@@ -668,7 +670,7 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.Prefix = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("oneOfIpRoute.nextHopContainer.nextHop"); cValue.Exists() {
+			if cValue := v.Get("oneOfIpRoute.nextHopContainer.nextHop"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.NextHops = make([]TransportWANVPNIpv6StaticRoutesNextHops, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TransportWANVPNIpv6StaticRoutesNextHops{}
@@ -695,6 +697,7 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.NextHops = append(item.NextHops, cItem)
 					return true
 				})
+				item.Gateway = types.StringValue("nextHop")
 			}
 			item.Null0 = types.BoolNull()
 
@@ -703,6 +706,7 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result) {
 				if t.String() == "global" {
 					item.Null0 = types.BoolValue(va.Bool())
 				}
+				item.Gateway = types.StringValue("null0")
 			}
 			item.Nat = types.StringNull()
 			item.NatVariable = types.StringNull()
@@ -713,12 +717,13 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result) {
 				} else if t.String() == "global" {
 					item.Nat = types.StringValue(va.String())
 				}
+				item.Gateway = types.StringValue("nat")
 			}
 			data.Ipv6StaticRoutes = append(data.Ipv6StaticRoutes, item)
 			return true
 		})
 	}
-	if value := res.Get(path + "service"); value.Exists() {
+	if value := res.Get(path + "service"); value.Exists() && len(value.Array()) > 0 {
 		data.Services = make([]TransportWANVPNServices, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNServices{}
@@ -734,7 +739,7 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "nat64V4Pool"); value.Exists() {
+	if value := res.Get(path + "nat64V4Pool"); value.Exists() && len(value.Array()) > 0 {
 		data.Nat64V4Pools = make([]TransportWANVPNNat64V4Pools, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNNat64V4Pools{}
