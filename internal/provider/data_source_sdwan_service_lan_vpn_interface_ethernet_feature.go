@@ -724,7 +724,6 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Read(ctx context
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
 
 	// Get Manager Version
-	d.client.Authenticate()
 	currentVersion := version.Must(version.NewVersion(d.client.ManagerVersion))
 
 	res, err := d.client.Get(config.getPath() + "/" + url.QueryEscape(config.Id.ValueString()))
