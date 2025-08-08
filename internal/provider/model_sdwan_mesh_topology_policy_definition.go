@@ -189,3 +189,19 @@ func (data *MeshTopologyPolicyDefinition) updateVersions(ctx context.Context, st
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *MeshTopologyPolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("mesh")
+	if data.VpnListId != types.StringNull() {
+		data.VpnListVersion = types.Int64Value(0)
+	}
+	for i := range data.Regions {
+		if !data.Regions[i].SiteListIds.IsNull() {
+			data.Regions[i].SiteListVersions = types.ListNull(types.StringType)
+		}
+	}
+}
+
+// End of section. //template:end processImport

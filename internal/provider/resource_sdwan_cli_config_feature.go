@@ -165,9 +165,6 @@ func (r *CLIConfigFeatureResource) Read(ctx context.Context, req resource.ReadRe
 	}
 
 	state.fromBody(ctx, res)
-	if state.Version.IsNull() {
-		state.Version = types.Int64Value(0)
-	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 
@@ -265,6 +262,8 @@ func (r *CLIConfigFeatureResource) ImportState(ctx context.Context, req resource
 
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("feature_profile_id"), parts[1])...)
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end import

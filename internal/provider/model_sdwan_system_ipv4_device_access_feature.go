@@ -192,7 +192,7 @@ func (data *SystemIPv4DeviceAccess) fromBody(ctx context.Context, res gjson.Resu
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "sequences"); value.Exists() {
+	if value := res.Get(path + "sequences"); value.Exists() && len(value.Array()) > 0 {
 		data.Sequences = make([]SystemIPv4DeviceAccessSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemIPv4DeviceAccessSequences{}

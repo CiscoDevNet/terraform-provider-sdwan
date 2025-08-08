@@ -140,7 +140,7 @@ func (d *TLSSSLDecryptionPolicyDefinitionDataSource) Schema(ctx context.Context,
 							MarkdownDescription: "TLS SSL Profile Policy ID",
 							Computed:            true,
 						},
-						"tls_ssl_profile_version": schema.Int64Attribute{
+						"tls_ssl_profile_policy_version": schema.Int64Attribute{
 							MarkdownDescription: "TLS SSL Profile Policy version",
 							Computed:            true,
 						},

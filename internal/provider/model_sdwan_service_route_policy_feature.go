@@ -374,7 +374,7 @@ func (data *ServiceRoutePolicy) fromBody(ctx context.Context, res gjson.Result) 
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "sequences"); value.Exists() {
+	if value := res.Get(path + "sequences"); value.Exists() && len(value.Array()) > 0 {
 		data.Sequences = make([]ServiceRoutePolicySequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutePolicySequences{}
@@ -410,7 +410,7 @@ func (data *ServiceRoutePolicy) fromBody(ctx context.Context, res gjson.Result) 
 					item.Protocol = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("matchEntries"); cValue.Exists() {
+			if cValue := v.Get("matchEntries"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.MatchEntries = make([]ServiceRoutePolicySequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceRoutePolicySequencesMatchEntries{}
@@ -430,7 +430,7 @@ func (data *ServiceRoutePolicy) fromBody(ctx context.Context, res gjson.Result) 
 							cItem.StandardCommunityListCriteria = types.StringValue(va.String())
 						}
 					}
-					if ccValue := cv.Get("communityList.standardCommunityList"); ccValue.Exists() {
+					if ccValue := cv.Get("communityList.standardCommunityList"); ccValue.Exists() && len(ccValue.Array()) > 0 {
 						cItem.StandardCommunityLists = make([]ServiceRoutePolicySequencesMatchEntriesStandardCommunityLists, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := ServiceRoutePolicySequencesMatchEntriesStandardCommunityLists{}
@@ -530,7 +530,7 @@ func (data *ServiceRoutePolicy) fromBody(ctx context.Context, res gjson.Result) 
 					return true
 				})
 			}
-			if cValue := v.Get("actions"); cValue.Exists() {
+			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Actions = make([]ServiceRoutePolicySequencesActions, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceRoutePolicySequencesActions{}

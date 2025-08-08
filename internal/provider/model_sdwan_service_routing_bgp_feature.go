@@ -1705,7 +1705,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 			data.MultipathRelax = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "neighbor"); value.Exists() {
+	if value := res.Get(path + "neighbor"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4Neighbors = make([]ServiceRoutingBGPIpv4Neighbors, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutingBGPIpv4Neighbors{}
@@ -1859,7 +1859,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 					item.AllowasInNumber = types.Int64Value(va.Int())
 				}
 			}
-			if cValue := v.Get("addressFamily"); cValue.Exists() {
+			if cValue := v.Get("addressFamily"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.AddressFamilies = make([]ServiceRoutingBGPIpv4NeighborsAddressFamilies, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceRoutingBGPIpv4NeighborsAddressFamilies{}
@@ -1973,7 +1973,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "ipv6Neighbor"); value.Exists() {
+	if value := res.Get(path + "ipv6Neighbor"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6Neighbors = make([]ServiceRoutingBGPIpv6Neighbors, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutingBGPIpv6Neighbors{}
@@ -2117,7 +2117,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 					item.AllowasInNumber = types.Int64Value(va.Int())
 				}
 			}
-			if cValue := v.Get("addressFamily"); cValue.Exists() {
+			if cValue := v.Get("addressFamily"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.AddressFamilies = make([]ServiceRoutingBGPIpv6NeighborsAddressFamilies, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceRoutingBGPIpv6NeighborsAddressFamilies{}
@@ -2191,7 +2191,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "addressFamily.aggregateAddress"); value.Exists() {
+	if value := res.Get(path + "addressFamily.aggregateAddress"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4AggregateAddresses = make([]ServiceRoutingBGPIpv4AggregateAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutingBGPIpv4AggregateAddresses{}
@@ -2239,7 +2239,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "addressFamily.network"); value.Exists() {
+	if value := res.Get(path + "addressFamily.network"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4Networks = make([]ServiceRoutingBGPIpv4Networks, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutingBGPIpv4Networks{}
@@ -2305,7 +2305,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv4TableMapFilter = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "addressFamily.redistribute"); value.Exists() {
+	if value := res.Get(path + "addressFamily.redistribute"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4Redistributes = make([]ServiceRoutingBGPIpv4Redistributes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutingBGPIpv4Redistributes{}
@@ -2331,7 +2331,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "ipv6AddressFamily.ipv6AggregateAddress"); value.Exists() {
+	if value := res.Get(path + "ipv6AddressFamily.ipv6AggregateAddress"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6AggregateAddresses = make([]ServiceRoutingBGPIpv6AggregateAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutingBGPIpv6AggregateAddresses{}
@@ -2369,7 +2369,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	if value := res.Get(path + "ipv6AddressFamily.ipv6Network"); value.Exists() {
+	if value := res.Get(path + "ipv6AddressFamily.ipv6Network"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6Networks = make([]ServiceRoutingBGPIpv6Networks, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutingBGPIpv6Networks{}
@@ -2425,7 +2425,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv6TableMapFilter = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "ipv6AddressFamily.redistribute"); value.Exists() {
+	if value := res.Get(path + "ipv6AddressFamily.redistribute"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6Redistributes = make([]ServiceRoutingBGPIpv6Redistributes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutingBGPIpv6Redistributes{}

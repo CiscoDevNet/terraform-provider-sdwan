@@ -293,6 +293,13 @@ func ToGoName(s string) string {
 	return s
 }
 
+func ToVersionName(s string) string {
+	s = ToGoName(s)
+	m := strings.ReplaceAll(s, "Versions", "Ids")
+	m = strings.ReplaceAll(m, "Version", "Id")
+	return m
+}
+
 // Templating helper function to convert string to camel case
 func CamelCase(s string) string {
 	var g []string
@@ -395,6 +402,11 @@ func HasReference(attributes []YamlConfigAttribute) bool {
 		}
 	}
 	return false
+}
+
+// Templating helper function to return true if UX 2.0 related feature
+func IsUx20Feature(config YamlConfig) bool {
+	return !strings.HasPrefix(config.DocCategory, "(Classic)")
 }
 
 // Templating helper function to return number of reference included in attributes
@@ -547,6 +559,7 @@ func contains(s []string, str string) bool {
 // Map of templating functions
 var functions = template.FuncMap{
 	"toGoName":               ToGoName,
+	"toVersionName":          ToVersionName,
 	"camelCase":              CamelCase,
 	"snakeCase":              SnakeCase,
 	"sprintf":                fmt.Sprintf,
@@ -561,6 +574,7 @@ var functions = template.FuncMap{
 	"add":                    Add,
 	"getGjsonType":           GetGjsonType,
 	"getId":                  GetId,
+	"isUx20Feature":          IsUx20Feature,
 	"isListSet":              IsListSet,
 	"isList":                 IsList,
 	"isSet":                  IsSet,

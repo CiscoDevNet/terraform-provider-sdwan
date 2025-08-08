@@ -136,3 +136,10 @@ func (data *GeoLocationListPolicyObject) hasChanges(ctx context.Context, state *
 // Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *GeoLocationListPolicyObject) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+}
+
+// End of section. //template:end processImport

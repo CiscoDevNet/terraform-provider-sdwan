@@ -325,7 +325,7 @@ func (d *TrafficDataPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 													MarkdownDescription: "Policer list version",
 													Computed:            true,
 												},
-												"preferred_color_group_list": schema.StringAttribute{
+												"preferred_color_group_list_id": schema.StringAttribute{
 													MarkdownDescription: "Preferred color group list ID",
 													Computed:            true,
 												},

@@ -196,3 +196,16 @@ func (data *RewriteRulePolicyDefinition) updateVersions(ctx context.Context, sta
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *RewriteRulePolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("rewriteRule")
+	for i := range data.Rules {
+		if data.Rules[i].ClassMapId != types.StringNull() {
+			data.Rules[i].ClassMapVersion = types.Int64Value(0)
+		}
+	}
+}
+
+// End of section. //template:end processImport

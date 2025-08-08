@@ -154,9 +154,6 @@ func (r *TransportWANVPNFeatureAssociateRoutingOSPFFeatureResource) Read(ctx con
 	}
 
 	state.fromBody(ctx, res)
-	if state.Version.IsNull() {
-		state.Version = types.Int64Value(0)
-	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Id.ValueString()))
 
@@ -255,6 +252,8 @@ func (r *TransportWANVPNFeatureAssociateRoutingOSPFFeatureResource) ImportState(
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("feature_profile_id"), parts[1])...)
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("transport_wan_vpn_feature_id"), parts[2])...)
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end import

@@ -603,6 +603,7 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 		} else if t.String() == "global" {
 			data.Ipv4DhcpDistance = types.Int64Value(va.Int())
 		}
+		data.Ipv4ConfigurationType = types.StringValue("dynamic")
 	}
 	data.Ipv4Address = types.StringNull()
 	data.Ipv4AddressVariable = types.StringNull()
@@ -613,6 +614,7 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 		} else if t.String() == "global" {
 			data.Ipv4Address = types.StringValue(va.String())
 		}
+		data.Ipv4ConfigurationType = types.StringValue("static")
 	}
 	data.Ipv4SubnetMask = types.StringNull()
 	data.Ipv4SubnetMaskVariable = types.StringNull()
@@ -623,8 +625,9 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 		} else if t.String() == "global" {
 			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
+		data.Ipv4ConfigurationType = types.StringValue("static")
 	}
-	if value := res.Get(path + "intfIpAddress.static.staticIpV4AddressSecondary"); value.Exists() {
+	if value := res.Get(path + "intfIpAddress.static.staticIpV4AddressSecondary"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4SecondaryAddresses = make([]TransportManagementVPNInterfaceEthernetIpv4SecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportManagementVPNInterfaceEthernetIpv4SecondaryAddresses{}
@@ -651,6 +654,7 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 			data.Ipv4SecondaryAddresses = append(data.Ipv4SecondaryAddresses, item)
 			return true
 		})
+		data.Ipv4ConfigurationType = types.StringValue("static")
 	}
 	data.Ipv4DhcpHelper = types.SetNull(types.StringType)
 	data.Ipv4DhcpHelperVariable = types.StringNull()
@@ -689,6 +693,7 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 		if t.String() == "global" {
 			data.EnableDhcpv6 = types.BoolValue(va.Bool())
 		}
+		data.Ipv6ConfigurationType = types.StringValue("dynamic")
 	}
 	data.Ipv6Address = types.StringNull()
 	data.Ipv6AddressVariable = types.StringNull()
@@ -699,8 +704,9 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 		} else if t.String() == "global" {
 			data.Ipv6Address = types.StringValue(va.String())
 		}
+		data.Ipv6ConfigurationType = types.StringValue("static")
 	}
-	if value := res.Get(path + "arp"); value.Exists() {
+	if value := res.Get(path + "arp"); value.Exists() && len(value.Array()) > 0 {
 		data.ArpEntries = make([]TransportManagementVPNInterfaceEthernetArpEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportManagementVPNInterfaceEthernetArpEntries{}
