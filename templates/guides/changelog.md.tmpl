@@ -9,6 +9,10 @@ description: |-
 
 ## 0.6.3 (unreleased)
 
+- BREAKING CHANGE: Rename `tls_ssl_profile_version` attribute of `sdwan_tls_ssl_decryption_policy_definition` resource to `tls_ssl_profile_policy_version`
+- BREAKING CHANGE: Rename `sla_class_list` attribute of `sdwan_application_aware_routing_policy_definition` resource to `sla_class_list_id`
+- BREAKING CHANGE: Rename `preferred_color_group_list` attribute of `sdwan_application_aware_routing_policy_definition` resource to `preferred_color_group_list_id`
+- BREAKING CHANGE: Rename `preferred_color_group_list` attribute of `sdwan_traffic_data_policy_definition` resource to `preferred_color_group_list_id`
 - Add missing options under `unsupported_features` attribute of `sdwan_configuration_group`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/478)
 
 ## 0.6.2

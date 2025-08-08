@@ -97,7 +97,7 @@ Read-Only:
 - `next_hop_loose` (Boolean) Use routing table entry to forward the packet in case Next-hop is not available
 - `policer_list_id` (String) Policer list ID
 - `policer_list_version` (Number) Policer list version
-- `preferred_color_group_list` (String) Preferred color group list ID
+- `preferred_color_group_list_id` (String) Preferred color group list ID
 - `preferred_color_group_list_version` (Number) Preferred color group list version
 - `service_tloc_color` (String) Service TLOC color
 - `service_tloc_encapsulation` (String) Service TLOC encapsulation

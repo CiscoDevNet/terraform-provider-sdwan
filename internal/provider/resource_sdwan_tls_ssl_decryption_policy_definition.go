@@ -162,7 +162,7 @@ func (r *TLSSSLDecryptionPolicyDefinitionResource) Schema(ctx context.Context, r
 							MarkdownDescription: helpers.NewAttributeDescription("TLS SSL Profile Policy ID").String,
 							Optional:            true,
 						},
-						"tls_ssl_profile_version": schema.Int64Attribute{
+						"tls_ssl_profile_policy_version": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("TLS SSL Profile Policy version").String,
 							Optional:            true,
 						},
@@ -321,8 +321,13 @@ func (r *TLSSSLDecryptionPolicyDefinitionResource) Read(ctx context.Context, req
 	}
 
 	state.fromBody(ctx, res)
-	if state.Version.IsNull() {
-		state.Version = types.Int64Value(0)
+	imp, diags := helpers.IsFlagImporting(ctx, req)
+	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
+		return
+	}
+
+	if imp {
+		state.processImport(ctx)
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
@@ -410,6 +415,8 @@ func (r *TLSSSLDecryptionPolicyDefinitionResource) Delete(ctx context.Context, r
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *TLSSSLDecryptionPolicyDefinitionResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end import

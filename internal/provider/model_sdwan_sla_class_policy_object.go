@@ -187,3 +187,13 @@ func (data *SLAClassPolicyObject) updateVersions(ctx context.Context, state *SLA
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *SLAClassPolicyObject) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	if data.AppProbeClassId != types.StringNull() {
+		data.AppProbeClassVersion = types.Int64Value(0)
+	}
+}
+
+// End of section. //template:end processImport

@@ -601,7 +601,7 @@ attributes:
                 description: Policer list version
                 exclude_test: true
               - model_name: ref
-                tf_name: preferred_color_group_list
+                tf_name: preferred_color_group_list_id
                 conditional_attribute:
                   name: type
                   value: preferredColorGroup

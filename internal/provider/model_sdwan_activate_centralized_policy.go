@@ -116,3 +116,7 @@ func (data ActivateCentralizedPolicy) getPushBody(ctx context.Context, client *s
 	attachPayload, _ := sjson.Set("", "deviceTemplateList", deviceTemplateList)
 	return attachPayload, nil
 }
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+
+// End of section. //template:end processImport

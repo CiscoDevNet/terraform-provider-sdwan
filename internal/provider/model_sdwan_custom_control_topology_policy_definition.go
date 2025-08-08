@@ -878,3 +878,49 @@ func (data *CustomControlTopologyPolicyDefinition) updateVersions(ctx context.Co
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *CustomControlTopologyPolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("control")
+	for i := range data.Sequences {
+		for ii := range data.Sequences[i].MatchEntries {
+			if data.Sequences[i].MatchEntries[ii].ColorListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].ColorListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].CommunityListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].CommunityListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].ExpandedCommunityListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].ExpandedCommunityListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].SiteListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].SiteListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].TlocListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].TlocListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].VpnListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].VpnListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].PrefixListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].PrefixListVersion = types.Int64Value(0)
+			}
+		}
+		for ii := range data.Sequences[i].ActionEntries {
+			for iii := range data.Sequences[i].ActionEntries[ii].SetParameters {
+				if data.Sequences[i].ActionEntries[ii].SetParameters[iii].TlocListId != types.StringNull() {
+					data.Sequences[i].ActionEntries[ii].SetParameters[iii].TlocListVersion = types.Int64Value(0)
+				}
+				if data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocListId != types.StringNull() {
+					data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocListVersion = types.Int64Value(0)
+				}
+			}
+			if data.Sequences[i].ActionEntries[ii].ExportToVpnListId != types.StringNull() {
+				data.Sequences[i].ActionEntries[ii].ExportToVpnListVersion = types.Int64Value(0)
+			}
+		}
+	}
+}
+
+// End of section. //template:end processImport

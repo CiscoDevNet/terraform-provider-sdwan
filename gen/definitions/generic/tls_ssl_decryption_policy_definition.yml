@@ -107,7 +107,7 @@ attributes:
         type: String
         description: TLS SSL Profile Policy ID
         example: 2d8cbc1b-f969-4999-a0bd-f77a070ba5f7
-      - tf_name: tls_ssl_profile_version
+      - tf_name: tls_ssl_profile_policy_version
         tf_only: true
         type: Version
         description: TLS SSL Profile Policy version
