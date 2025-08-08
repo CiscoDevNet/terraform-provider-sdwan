@@ -1196,7 +1196,6 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Create(ctx conte
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
 	// Get Manager Version
-	r.client.Authenticate()
 	currentVersion := version.Must(version.NewVersion(r.client.ManagerVersion))
 
 	// Create object
@@ -1232,7 +1231,6 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Read(ctx context
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
 	// Get Manager Version
-	r.client.Authenticate()
 	currentVersion := version.Must(version.NewVersion(r.client.ManagerVersion))
 
 	res, err := r.client.Get(state.getPath() + "/" + url.QueryEscape(state.Id.ValueString()))
@@ -1286,7 +1284,6 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Update(ctx conte
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
 	// Get Manager Version
-	r.client.Authenticate()
 	currentVersion := version.Must(version.NewVersion(r.client.ManagerVersion))
 
 	body := plan.toBody(ctx, currentVersion)
