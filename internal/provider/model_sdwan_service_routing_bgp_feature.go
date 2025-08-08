@@ -1888,6 +1888,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 						} else if t.String() == "global" {
 							cItem.RestartMaxNumberOfPrefixes = types.Int64Value(va.Int())
 						}
+						cItem.PolicyType = types.StringValue("restart")
 					}
 					cItem.RestartThreshold = types.Int64Null()
 					cItem.RestartThresholdVariable = types.StringNull()
@@ -1898,6 +1899,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 						} else if t.String() == "global" {
 							cItem.RestartThreshold = types.Int64Value(va.Int())
 						}
+						cItem.PolicyType = types.StringValue("restart")
 					}
 					cItem.RestartInterval = types.Int64Null()
 					cItem.RestartIntervalVariable = types.StringNull()
@@ -1908,6 +1910,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 						} else if t.String() == "global" {
 							cItem.RestartInterval = types.Int64Value(va.Int())
 						}
+						cItem.PolicyType = types.StringValue("restart")
 					}
 					cItem.WarningMessageMaxNumberOfPrefixes = types.Int64Null()
 					cItem.WarningMessageMaxNumberOfPrefixesVariable = types.StringNull()
@@ -1918,6 +1921,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 						} else if t.String() == "global" {
 							cItem.WarningMessageMaxNumberOfPrefixes = types.Int64Value(va.Int())
 						}
+						cItem.PolicyType = types.StringValue("warning-only")
 					}
 					cItem.WarningMessageThreshold = types.Int64Null()
 					cItem.WarningMessageThresholdVariable = types.StringNull()
@@ -1928,6 +1932,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 						} else if t.String() == "global" {
 							cItem.WarningMessageThreshold = types.Int64Value(va.Int())
 						}
+						cItem.PolicyType = types.StringValue("warning-only")
 					}
 					cItem.DisablePeerMaxNumberOfPrefixes = types.Int64Null()
 					cItem.DisablePeerMaxNumberOfPrefixesVariable = types.StringNull()
@@ -1938,6 +1943,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 						} else if t.String() == "global" {
 							cItem.DisablePeerMaxNumberOfPrefixes = types.Int64Value(va.Int())
 						}
+						cItem.PolicyType = types.StringValue("disable-peer")
 					}
 					cItem.DisablePeerThreshold = types.Int64Null()
 					cItem.DisablePeerThresholdVariable = types.StringNull()
@@ -1948,6 +1954,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 						} else if t.String() == "global" {
 							cItem.DisablePeerThreshold = types.Int64Value(va.Int())
 						}
+						cItem.PolicyType = types.StringValue("disable-peer")
 					}
 					cItem.InRoutePolicyId = types.StringNull()
 
