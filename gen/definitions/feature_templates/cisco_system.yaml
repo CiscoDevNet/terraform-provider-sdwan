@@ -1,4 +1,5 @@
 ---
+# Manual resource - Modals toBody and resources Create and Update methods are manually configured to support enhanced_app_aware_routing added in 20.12.
 name: Cisco System
 minimum_version: 15.0.0
 attributes:
@@ -177,6 +178,16 @@ attributes:
     example: 1
   - model_name: transport-gateway
     example: true
+  - model_name: epfr
+    tf_name: enhanced_app_aware_routing
+    description: Enhanced App Aware Routing
+    no_augment_config: true
+    type: String
+    default_value_present: true
+    default_value: "disabled"
+    exclude_test: true
+    enum_values: ["disabled", "aggressive", "moderate", "conservative"]
+    example: aggressive
   - model_name: enable-mrf-migration
     example: enabled
   - model_name: migration-bgp-community

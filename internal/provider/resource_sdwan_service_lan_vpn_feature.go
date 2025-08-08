@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -350,8 +351,15 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
+						"gateway": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Gateway type").AddStringEnumDescription("nextHop", "null0", "vpn", "dhcp").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("nextHop", "null0", "vpn", "dhcp"),
+							},
+						},
 						"next_hops": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `nextHop`").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
@@ -378,7 +386,7 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							},
 						},
 						"next_hop_with_trackers": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop with Tracker").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop with Tracker, Attribute conditional on `gateway` being equal to `nextHop`").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
@@ -412,15 +420,15 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							},
 						},
 						"null0": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `null0`").String,
 							Optional:            true,
 						},
-						"gateway_dhcp": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway DHCP").String,
+						"dhcp": schema.BoolAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway DHCP, Attribute conditional on `gateway` being equal to `dhcp`").String,
 							Optional:            true,
 						},
 						"vpn": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway VPN").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway VPN, Attribute conditional on `gateway` being equal to `vpn`").String,
 							Optional:            true,
 						},
 					},
@@ -442,8 +450,15 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
+						"gateway": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Gateway type").AddStringEnumDescription("nextHop", "null0", "nat").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("nextHop", "null0", "nat"),
+							},
+						},
 						"next_hops": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `nextHop`").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
@@ -470,18 +485,18 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							},
 						},
 						"null0": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `null0`").String,
 							Optional:            true,
 						},
 						"nat": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Nat").AddStringEnumDescription("NAT64", "NAT66").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Nat, Attribute conditional on `gateway` being equal to `nat`").AddStringEnumDescription("NAT64", "NAT66").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("NAT64", "NAT66"),
 							},
 						},
 						"nat_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `gateway` being equal to `nat`").String,
 							Optional:            true,
 						},
 					},
@@ -1129,7 +1144,6 @@ func (r *ServiceLANVPNProfileParcelResource) Configure(_ context.Context, req re
 
 // End of section. //template:end model
 
-// Section below is generated&owned by "gen/generator.go". //template:begin create
 func (r *ServiceLANVPNProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan ServiceLANVPN
 
@@ -1142,8 +1156,11 @@ func (r *ServiceLANVPNProfileParcelResource) Create(ctx context.Context, req res
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
+	// Get Manager Version
+	currentVersion := version.Must(version.NewVersion(r.client.ManagerVersion))
+
 	// Create object
-	body := plan.toBody(ctx)
+	body := plan.toBody(ctx, currentVersion)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -1162,9 +1179,6 @@ func (r *ServiceLANVPNProfileParcelResource) Create(ctx context.Context, req res
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
-// End of section. //template:end create
-
-// Section below is generated&owned by "gen/generator.go". //template:begin read
 func (r *ServiceLANVPNProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var state ServiceLANVPN
 
@@ -1176,6 +1190,9 @@ func (r *ServiceLANVPNProfileParcelResource) Read(ctx context.Context, req resou
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
+
+	// Get Manager Version
+	currentVersion := version.Must(version.NewVersion(r.client.ManagerVersion))
 
 	res, err := r.client.Get(state.getPath() + "/" + url.QueryEscape(state.Id.ValueString()))
 	if res.Get("error.message").String() == "Invalid feature Id" {
@@ -1193,9 +1210,9 @@ func (r *ServiceLANVPNProfileParcelResource) Read(ctx context.Context, req resou
 	}
 
 	if imp {
-		state.fromBody(ctx, res)
+		state.fromBody(ctx, res, currentVersion)
 	} else {
-		state.updateFromBody(ctx, res)
+		state.updateFromBody(ctx, res, currentVersion)
 	}
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
@@ -1209,9 +1226,6 @@ func (r *ServiceLANVPNProfileParcelResource) Read(ctx context.Context, req resou
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
-// End of section. //template:end read
-
-// Section below is generated&owned by "gen/generator.go". //template:begin update
 func (r *ServiceLANVPNProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var plan, state ServiceLANVPN
 
@@ -1230,7 +1244,10 @@ func (r *ServiceLANVPNProfileParcelResource) Update(ctx context.Context, req res
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	// Get Manager Version
+	currentVersion := version.Must(version.NewVersion(r.client.ManagerVersion))
+
+	body := plan.toBody(ctx, currentVersion)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
@@ -1244,8 +1261,6 @@ func (r *ServiceLANVPNProfileParcelResource) Update(ctx context.Context, req res
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 }
-
-// End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
 func (r *ServiceLANVPNProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {

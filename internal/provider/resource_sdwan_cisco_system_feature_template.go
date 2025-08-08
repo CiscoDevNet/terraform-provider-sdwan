@@ -25,6 +25,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/float64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -655,6 +656,13 @@ func (r *CiscoSystemFeatureTemplateResource) Schema(ctx context.Context, req res
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
+			"enhanced_app_aware_routing": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enhanced App Aware Routing").AddStringEnumDescription("disabled", "aggressive", "moderate", "conservative").AddDefaultValueDescription("disabled").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("disabled", "aggressive", "moderate", "conservative"),
+				},
+			},
 			"enable_mrf_migration": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable migration mode to Multi-Region Fabric").AddStringEnumDescription("enabled", "enabled-from-bgp-core").String,
 				Optional:            true,
@@ -684,7 +692,6 @@ func (r *CiscoSystemFeatureTemplateResource) Configure(_ context.Context, req re
 
 // End of section. //template:end model
 
-// Section below is generated&owned by "gen/generator.go". //template:begin create
 func (r *CiscoSystemFeatureTemplateResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan CiscoSystem
 
@@ -697,8 +704,9 @@ func (r *CiscoSystemFeatureTemplateResource) Create(ctx context.Context, req res
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
+	version := version.Must(version.NewVersion(r.client.ManagerVersion))
 	// Create object
-	body := plan.toBody(ctx)
+	body := plan.toBody(ctx, version)
 
 	res, err := r.client.Post("/template/feature", body)
 	if err != nil {
@@ -715,8 +723,6 @@ func (r *CiscoSystemFeatureTemplateResource) Create(ctx context.Context, req res
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 }
-
-// End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
 func (r *CiscoSystemFeatureTemplateResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
@@ -753,7 +759,6 @@ func (r *CiscoSystemFeatureTemplateResource) Read(ctx context.Context, req resou
 
 // End of section. //template:end read
 
-// Section below is generated&owned by "gen/generator.go". //template:begin update
 func (r *CiscoSystemFeatureTemplateResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var plan, state CiscoSystem
 
@@ -772,7 +777,9 @@ func (r *CiscoSystemFeatureTemplateResource) Update(ctx context.Context, req res
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	version := version.Must(version.NewVersion(r.client.ManagerVersion))
+	// Create object
+	body := plan.toBody(ctx, version)
 	r.updateMutex.Lock()
 	res, err := r.client.Put("/template/feature/"+url.QueryEscape(plan.Id.ValueString()), body)
 	r.updateMutex.Unlock()
@@ -796,8 +803,6 @@ func (r *CiscoSystemFeatureTemplateResource) Update(ctx context.Context, req res
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 }
-
-// End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
 func (r *CiscoSystemFeatureTemplateResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {

@@ -109,6 +109,9 @@ resource "sdwan_cisco_system_feature_template" "example" {
 - `device_groups_variable` (String) Variable name
 - `enable_mrf_migration` (String) Enable migration mode to Multi-Region Fabric
   - Choices: `enabled`, `enabled-from-bgp-core`
+- `enhanced_app_aware_routing` (String) Enhanced App Aware Routing
+  - Choices: `disabled`, `aggressive`, `moderate`, `conservative`
+  - Default value: `disabled`
 - `geo_fencing` (Boolean) Enable Geo fencing
   - Default value: `false`
 - `geo_fencing_range` (Number) Set the device’s geo fencing range
