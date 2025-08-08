@@ -4,6 +4,7 @@
 - BREAKING CHANGE: Rename `sla_class_list` attribute of `sdwan_application_aware_routing_policy_definition` resource to `sla_class_list_id`
 - BREAKING CHANGE: Rename `preferred_color_group_list` attribute of `sdwan_application_aware_routing_policy_definition` resource to `preferred_color_group_list_id`
 - BREAKING CHANGE: Rename `preferred_color_group_list` attribute of `sdwan_traffic_data_policy_definition` resource to `preferred_color_group_list_id`
+- Fix issue, where NAT IPv4 and IPv6 is always configured on `sdwan_transport_wan_vpn_interface_ethernet_feature`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/485)
 - Add missing options under `unsupported_features` attribute of `sdwan_configuration_group`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/478)
 - Add `sdwan_policy_group` resource and data source
 - Adds `enhanced_app_aware_routing` support to the `sdwan_cisco_system_feature_template` resource and data source

@@ -690,86 +690,86 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"nat_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Type").AddStringEnumDescription("interface", "pool", "loopback").AddDefaultValueDescription("interface").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT Type, Attribute conditional on `nat_ipv4` being equal to `true`").AddStringEnumDescription("interface", "pool", "loopback").AddDefaultValueDescription("interface").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("interface", "pool", "loopback"),
 				},
 			},
 			"nat_type_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` being equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_range_start": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Range Start").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Range Start, Attribute conditional on `nat_ipv4` being equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_range_start_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` being equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_range_end": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Range End").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Range End, Attribute conditional on `nat_ipv4` being equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_range_end_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` being equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_prefix_length": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Prefix Length").AddIntegerRangeDescription(1, 32).String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Prefix Length, Attribute conditional on `nat_ipv4` being equal to `true`").AddIntegerRangeDescription(1, 32).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 32),
 				},
 			},
 			"nat_prefix_length_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` being equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_overload": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Overload").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT Overload, Attribute conditional on `nat_ipv4` being equal to `true`").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
 			"nat_overload_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` being equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_loopback": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Inside Source Loopback Interface").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT Inside Source Loopback Interface, Attribute conditional on `nat_ipv4` being equal to `true`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 32),
 				},
 			},
 			"nat_loopback_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` being equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_udp_timeout": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set NAT UDP session timeout, in minutes").AddIntegerRangeDescription(1, 8947).AddDefaultValueDescription("1").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set NAT UDP session timeout, in minutes, Attribute conditional on `nat_ipv4` being equal to `true`").AddIntegerRangeDescription(1, 8947).AddDefaultValueDescription("1").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 8947),
 				},
 			},
 			"nat_udp_timeout_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` being equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_tcp_timeout": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set NAT TCP session timeout, in minutes").AddIntegerRangeDescription(1, 8947).AddDefaultValueDescription("60").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set NAT TCP session timeout, in minutes, Attribute conditional on `nat_ipv4` being equal to `true`").AddIntegerRangeDescription(1, 8947).AddDefaultValueDescription("60").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 8947),
 				},
 			},
 			"nat_tcp_timeout_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` being equal to `true`").String,
 				Optional:            true,
 			},
 			"new_static_nats": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("static NAT").String,
+				MarkdownDescription: helpers.NewAttributeDescription("static NAT, Attribute conditional on `nat_ipv4` being equal to `true`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -819,15 +819,15 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"nat64": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT64 on this interface").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT64 on this interface, Attribute conditional on `nat_ipv6` being equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"nat66": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT66 on this interface").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT66 on this interface, Attribute conditional on `nat_ipv6` being equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"static_nat66": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("static NAT66").String,
+				MarkdownDescription: helpers.NewAttributeDescription("static NAT66, Attribute conditional on `nat_ipv6` being equal to `true`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{

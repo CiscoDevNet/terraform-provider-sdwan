@@ -419,12 +419,20 @@ attributes:
   - model_name: natType
     tf_name: nat_type
     data_path: [natAttributesIpv4]
-    example: interface 
+    example: interface
+    conditional_attribute:
+      name: nat_ipv4
+      value: true
+      type: Bool
   - model_name: rangeStart
     tf_name: nat_range_start
     data_path: [natAttributesIpv4, natPool]
     exclude_test: true
     exclude_null: true
+    conditional_attribute:
+      name: nat_ipv4
+      value: true
+      type: Bool
     # conditional_attribute: 
     #   name: natType
     #   value: pool
@@ -434,6 +442,10 @@ attributes:
     data_path: [natAttributesIpv4, natPool]
     exclude_test: true
     exclude_null: true
+    conditional_attribute:
+      name: nat_ipv4
+      value: true
+      type: Bool
     # conditional_attribute: 
     #   name: natType
     #   value: pool
@@ -443,6 +455,10 @@ attributes:
     data_path: [natAttributesIpv4, natPool]
     exclude_test: true
     exclude_null: true
+    conditional_attribute:
+      name: nat_ipv4
+      value: true
+      type: Bool
     # conditional_attribute: 
     #     name: natType
     #     value: pool
@@ -452,6 +468,10 @@ attributes:
     data_path: [natAttributesIpv4, natPool]
     exclude_test: true
     exclude_null: true
+    conditional_attribute:
+      name: nat_ipv4
+      value: true
+      type: Bool
     # conditional_attribute: 
     #     name: natType
     #     value: pool
@@ -461,6 +481,10 @@ attributes:
     data_path: [natAttributesIpv4]
     exclude_test: true
     exclude_null: true
+    conditional_attribute:
+      name: nat_ipv4
+      value: true
+      type: Bool
     # conditional_attribute: 
     #     name: natType
     #     value: loopback
@@ -469,13 +493,25 @@ attributes:
     tf_name: nat_udp_timeout
     data_path: [natAttributesIpv4]
     example: 1
+    conditional_attribute:
+      name: nat_ipv4
+      value: true
+      type: Bool
   - model_name: tcpTimeout
     tf_name: nat_tcp_timeout
     data_path: [natAttributesIpv4]
     example: 60
+    conditional_attribute:
+      name: nat_ipv4
+      value: true
+      type: Bool
   - model_name: newStaticNat
     tf_name: new_static_nats
     data_path: [natAttributesIpv4]
+    conditional_attribute:
+      name: nat_ipv4
+      value: true
+      type: Bool
     attributes:
       - model_name: sourceIp
         id: true
@@ -496,13 +532,25 @@ attributes:
     data_path: [natAttributesIpv6]
     exclude_null: true
     example: false
+    conditional_attribute:
+      name: nat_ipv6
+      value: true
+      type: Bool
   - model_name: nat66
     data_path: [natAttributesIpv6]
     exclude_null: true
     example: true
+    conditional_attribute:
+      name: nat_ipv6
+      value: true
+      type: Bool
   - model_name: staticNat66
     data_path: [natAttributesIpv6]
     exclude_null: true
+    conditional_attribute:
+      name: nat_ipv6
+      value: true
+      type: Bool
     attributes:
     - model_name: sourcePrefix
       id: true
