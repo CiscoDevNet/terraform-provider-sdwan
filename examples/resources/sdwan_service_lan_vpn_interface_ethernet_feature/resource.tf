@@ -27,20 +27,9 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
   ipv4_nat_range_end     = "4.5.6.7"
   ipv4_nat_prefix_length = 1
   ipv4_nat_overload      = true
-  ipv4_nat_loopback      = "123"
-  ipv4_nat_udp_timeout   = 123
-  ipv4_nat_tcp_timeout   = 123
-  static_nats = [
-    {
-      source_ip    = "1.2.3.4"
-      translate_ip = "2.3.4.5"
-      direction    = "inside"
-      source_vpn   = 0
-    }
-  ]
-  ipv6_nat         = true
-  nat64            = false
-  acl_shaping_rate = 12
+  ipv6_nat               = true
+  nat64                  = false
+  acl_shaping_rate       = 12
   ipv6_vrrps = [
     {
       group_id  = 1

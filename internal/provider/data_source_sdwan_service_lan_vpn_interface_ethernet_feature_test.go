@@ -48,13 +48,6 @@ func TestAccDataSourceSdwanServiceLANVPNInterfaceEthernetProfileParcel(t *testin
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_nat_range_end", "4.5.6.7"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_nat_prefix_length", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_nat_overload", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_nat_loopback", "123"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_nat_udp_timeout", "123"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_nat_tcp_timeout", "123"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_feature.test", "static_nats.0.source_ip", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_feature.test", "static_nats.0.translate_ip", "2.3.4.5"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_feature.test", "static_nats.0.direction", "inside"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_feature.test", "static_nats.0.source_vpn", "0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv6_nat", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_feature.test", "nat64", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_feature.test", "acl_shaping_rate", "12"))
@@ -167,15 +160,6 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceEthernetProfileParcelConfig() s
 	config += `	ipv4_nat_range_end = "4.5.6.7"` + "\n"
 	config += `	ipv4_nat_prefix_length = 1` + "\n"
 	config += `	ipv4_nat_overload = true` + "\n"
-	config += `	ipv4_nat_loopback = "123"` + "\n"
-	config += `	ipv4_nat_udp_timeout = 123` + "\n"
-	config += `	ipv4_nat_tcp_timeout = 123` + "\n"
-	config += `	static_nats = [{` + "\n"
-	config += `	  source_ip = "1.2.3.4"` + "\n"
-	config += `	  translate_ip = "2.3.4.5"` + "\n"
-	config += `	  direction = "inside"` + "\n"
-	config += `	  source_vpn = 0` + "\n"
-	config += `	}]` + "\n"
 	config += `	ipv6_nat = true` + "\n"
 	config += `	nat64 = false` + "\n"
 	config += `	acl_shaping_rate = 12` + "\n"

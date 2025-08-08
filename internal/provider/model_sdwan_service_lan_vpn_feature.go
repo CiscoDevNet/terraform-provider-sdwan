@@ -25,12 +25,15 @@ import (
 	"strconv"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 // End of section. //template:end imports
+
+var MinServiceLANVPNUpdateVersion = version.Must(version.NewVersion("20.14.0"))
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type ServiceLANVPN struct {
@@ -328,8 +331,7 @@ func (data ServiceLANVPN) getPath() string {
 
 // End of section. //template:end getPath
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data ServiceLANVPN) toBody(ctx context.Context) string {
+func (data ServiceLANVPN) toBody(ctx context.Context, currentVersion *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -1203,15 +1205,19 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 				}
 			}
 
+			translatedSourceIpRef := "TranslatedSourceIp"
+			if !currentVersion.LessThan(MinServiceLANVPNUpdateVersion) {
+				translatedSourceIpRef = "translatedSourceIp"
+			}
 			if !item.TranslatedSourceIpVariable.IsNull() {
 				if true {
-					itemBody, _ = sjson.Set(itemBody, "TranslatedSourceIp.optionType", "variable")
-					itemBody, _ = sjson.Set(itemBody, "TranslatedSourceIp.value", item.TranslatedSourceIpVariable.ValueString())
+					itemBody, _ = sjson.Set(itemBody, translatedSourceIpRef+".optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, translatedSourceIpRef+".value", item.TranslatedSourceIpVariable.ValueString())
 				}
 			} else if !item.TranslatedSourceIp.IsNull() {
 				if true {
-					itemBody, _ = sjson.Set(itemBody, "TranslatedSourceIp.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "TranslatedSourceIp.value", item.TranslatedSourceIp.ValueString())
+					itemBody, _ = sjson.Set(itemBody, translatedSourceIpRef+".optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, translatedSourceIpRef+".value", item.TranslatedSourceIp.ValueString())
 				}
 			}
 
@@ -1263,15 +1269,19 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 				}
 			}
 
+			translatedSourceIpSubnetRef := "TranslatedSourceIp"
+			if !currentVersion.LessThan(MinServiceLANVPNUpdateVersion) {
+				translatedSourceIpSubnetRef = "translatedSourceIp"
+			}
 			if !item.TranslatedSourceIpVariable.IsNull() {
 				if true {
-					itemBody, _ = sjson.Set(itemBody, "TranslatedSourceIp.optionType", "variable")
-					itemBody, _ = sjson.Set(itemBody, "TranslatedSourceIp.value", item.TranslatedSourceIpVariable.ValueString())
+					itemBody, _ = sjson.Set(itemBody, translatedSourceIpSubnetRef+".optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, translatedSourceIpSubnetRef+".value", item.TranslatedSourceIpVariable.ValueString())
 				}
 			} else if !item.TranslatedSourceIp.IsNull() {
 				if true {
-					itemBody, _ = sjson.Set(itemBody, "TranslatedSourceIp.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "TranslatedSourceIp.value", item.TranslatedSourceIp.ValueString())
+					itemBody, _ = sjson.Set(itemBody, translatedSourceIpSubnetRef+".optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, translatedSourceIpSubnetRef+".value", item.TranslatedSourceIp.ValueString())
 				}
 			}
 
@@ -1596,10 +1606,7 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 	return body
 }
 
-// End of section. //template:end toBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result, currentVersion *version.Version) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -2327,8 +2334,12 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			item.TranslatedSourceIp = types.StringNull()
 			item.TranslatedSourceIpVariable = types.StringNull()
-			if t := v.Get("TranslatedSourceIp.optionType"); t.Exists() {
-				va := v.Get("TranslatedSourceIp.value")
+			translatedSourceIpRef := "TranslatedSourceIp"
+			if !currentVersion.LessThan(MinServiceLANVPNUpdateVersion) {
+				translatedSourceIpRef = "translatedSourceIp"
+			}
+			if t := v.Get(translatedSourceIpRef + ".optionType"); t.Exists() {
+				va := v.Get(translatedSourceIpRef + ".value")
 				if t.String() == "variable" {
 					item.TranslatedSourceIpVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
@@ -2375,8 +2386,12 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			item.TranslatedSourceIp = types.StringNull()
 			item.TranslatedSourceIpVariable = types.StringNull()
-			if t := v.Get("TranslatedSourceIp.optionType"); t.Exists() {
-				va := v.Get("TranslatedSourceIp.value")
+			translatedSourceIpRef := "TranslatedSourceIp"
+			if !currentVersion.LessThan(MinServiceLANVPNUpdateVersion) {
+				translatedSourceIpRef = "translatedSourceIp"
+			}
+			if t := v.Get(translatedSourceIpRef + ".optionType"); t.Exists() {
+				va := v.Get(translatedSourceIpRef + ".value")
 				if t.String() == "variable" {
 					item.TranslatedSourceIpVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
@@ -2693,10 +2708,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 	}
 }
 
-// End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result, currentVersion *version.Version) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -3811,8 +3823,12 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 		}
 		data.NatPortForwards[i].TranslatedSourceIp = types.StringNull()
 		data.NatPortForwards[i].TranslatedSourceIpVariable = types.StringNull()
-		if t := r.Get("TranslatedSourceIp.optionType"); t.Exists() {
-			va := r.Get("TranslatedSourceIp.value")
+		translatedSourceIpRef := "TranslatedSourceIp"
+		if !currentVersion.LessThan(MinServiceLANVPNUpdateVersion) {
+			translatedSourceIpRef = "translatedSourceIp"
+		}
+		if t := r.Get(translatedSourceIpRef + ".optionType"); t.Exists() {
+			va := r.Get(translatedSourceIpRef + ".value")
 			if t.String() == "variable" {
 				data.NatPortForwards[i].TranslatedSourceIpVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
@@ -3883,8 +3899,12 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 		}
 		data.StaticNats[i].TranslatedSourceIp = types.StringNull()
 		data.StaticNats[i].TranslatedSourceIpVariable = types.StringNull()
-		if t := r.Get("TranslatedSourceIp.optionType"); t.Exists() {
-			va := r.Get("TranslatedSourceIp.value")
+		translatedSourceIpRef := "TranslatedSourceIp"
+		if !currentVersion.LessThan(MinServiceLANVPNUpdateVersion) {
+			translatedSourceIpRef = "translatedSourceIp"
+		}
+		if t := r.Get(translatedSourceIpRef + ".optionType"); t.Exists() {
+			va := r.Get(translatedSourceIpRef + ".value")
 			if t.String() == "variable" {
 				data.StaticNats[i].TranslatedSourceIpVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
@@ -4461,5 +4481,3 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 		}
 	}
 }
-
-// End of section. //template:end updateFromBody
