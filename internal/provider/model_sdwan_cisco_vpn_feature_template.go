@@ -142,21 +142,21 @@ type CiscoVPNIpv6StaticRoutes struct {
 }
 
 type CiscoVPNIpv4StaticGreRoutes struct {
-	Optional          types.Bool   `tfsdk:"optional"`
-	Prefix            types.String `tfsdk:"prefix"`
-	PrefixVariable    types.String `tfsdk:"prefix_variable"`
-	VpnId             types.Int64  `tfsdk:"vpn_id"`
-	Interface         types.Set    `tfsdk:"interface"`
-	InterfaceVariable types.String `tfsdk:"interface_variable"`
+	Optional           types.Bool   `tfsdk:"optional"`
+	Prefix             types.String `tfsdk:"prefix"`
+	PrefixVariable     types.String `tfsdk:"prefix_variable"`
+	VpnId              types.Int64  `tfsdk:"vpn_id"`
+	Interfaces         types.List   `tfsdk:"interfaces"`
+	InterfacesVariable types.String `tfsdk:"interfaces_variable"`
 }
 
 type CiscoVPNIpv4StaticIpsecRoutes struct {
-	Optional          types.Bool   `tfsdk:"optional"`
-	Prefix            types.String `tfsdk:"prefix"`
-	PrefixVariable    types.String `tfsdk:"prefix_variable"`
-	VpnId             types.Int64  `tfsdk:"vpn_id"`
-	Interface         types.Set    `tfsdk:"interface"`
-	InterfaceVariable types.String `tfsdk:"interface_variable"`
+	Optional           types.Bool   `tfsdk:"optional"`
+	Prefix             types.String `tfsdk:"prefix"`
+	PrefixVariable     types.String `tfsdk:"prefix_variable"`
+	VpnId              types.Int64  `tfsdk:"vpn_id"`
+	Interfaces         types.List   `tfsdk:"interfaces"`
+	InterfacesVariable types.String `tfsdk:"interfaces_variable"`
 }
 
 type CiscoVPNOmpAdvertiseIpv4Routes struct {
@@ -1017,18 +1017,18 @@ func (data CiscoVPN) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "interface")
 
-		if !item.InterfaceVariable.IsNull() {
+		if !item.InterfacesVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "interface."+"vipObjectType", "list")
 			itemBody, _ = sjson.Set(itemBody, "interface."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "interface."+"vipVariableName", item.InterfaceVariable.ValueString())
-		} else if item.Interface.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "interface."+"vipVariableName", item.InterfacesVariable.ValueString())
+		} else if item.Interfaces.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "interface."+"vipObjectType", "list")
 			itemBody, _ = sjson.Set(itemBody, "interface."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "interface."+"vipObjectType", "list")
 			itemBody, _ = sjson.Set(itemBody, "interface."+"vipType", "constant")
 			var values []string
-			item.Interface.ElementsAs(ctx, &values, false)
+			item.Interfaces.ElementsAs(ctx, &values, false)
 			itemBody, _ = sjson.Set(itemBody, "interface."+"vipValue", values)
 		}
 		if !item.Optional.IsNull() {
@@ -1072,18 +1072,18 @@ func (data CiscoVPN) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "interface")
 
-		if !item.InterfaceVariable.IsNull() {
+		if !item.InterfacesVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "interface."+"vipObjectType", "list")
 			itemBody, _ = sjson.Set(itemBody, "interface."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "interface."+"vipVariableName", item.InterfaceVariable.ValueString())
-		} else if item.Interface.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "interface."+"vipVariableName", item.InterfacesVariable.ValueString())
+		} else if item.Interfaces.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "interface."+"vipObjectType", "list")
 			itemBody, _ = sjson.Set(itemBody, "interface."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "interface."+"vipObjectType", "list")
 			itemBody, _ = sjson.Set(itemBody, "interface."+"vipType", "constant")
 			var values []string
-			item.Interface.ElementsAs(ctx, &values, false)
+			item.Interfaces.ElementsAs(ctx, &values, false)
 			itemBody, _ = sjson.Set(itemBody, "interface."+"vipValue", values)
 		}
 		if !item.Optional.IsNull() {
@@ -2989,22 +2989,22 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("interface.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.Interface = types.SetNull(types.StringType)
+					item.Interfaces = types.ListNull(types.StringType)
 
 					cv := v.Get("interface.vipVariableName")
-					item.InterfaceVariable = types.StringValue(cv.String())
+					item.InterfacesVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.Interface = types.SetNull(types.StringType)
-					item.InterfaceVariable = types.StringNull()
+					item.Interfaces = types.ListNull(types.StringType)
+					item.InterfacesVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("interface.vipValue")
-					item.Interface = helpers.GetStringSet(cv.Array())
-					item.InterfaceVariable = types.StringNull()
+					item.Interfaces = helpers.GetStringList(cv.Array())
+					item.InterfacesVariable = types.StringNull()
 				}
 			} else {
-				item.Interface = types.SetNull(types.StringType)
-				item.InterfaceVariable = types.StringNull()
+				item.Interfaces = types.ListNull(types.StringType)
+				item.InterfacesVariable = types.StringNull()
 			}
 			data.Ipv4StaticGreRoutes = append(data.Ipv4StaticGreRoutes, item)
 			return true
@@ -3060,22 +3060,22 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("interface.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.Interface = types.SetNull(types.StringType)
+					item.Interfaces = types.ListNull(types.StringType)
 
 					cv := v.Get("interface.vipVariableName")
-					item.InterfaceVariable = types.StringValue(cv.String())
+					item.InterfacesVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.Interface = types.SetNull(types.StringType)
-					item.InterfaceVariable = types.StringNull()
+					item.Interfaces = types.ListNull(types.StringType)
+					item.InterfacesVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("interface.vipValue")
-					item.Interface = helpers.GetStringSet(cv.Array())
-					item.InterfaceVariable = types.StringNull()
+					item.Interfaces = helpers.GetStringList(cv.Array())
+					item.InterfacesVariable = types.StringNull()
 				}
 			} else {
-				item.Interface = types.SetNull(types.StringType)
-				item.InterfaceVariable = types.StringNull()
+				item.Interfaces = types.ListNull(types.StringType)
+				item.InterfacesVariable = types.StringNull()
 			}
 			data.Ipv4StaticIpsecRoutes = append(data.Ipv4StaticIpsecRoutes, item)
 			return true
@@ -4565,7 +4565,7 @@ func (data *CiscoVPN) hasChanges(ctx context.Context, state *CiscoVPN) bool {
 			if !data.Ipv4StaticGreRoutes[i].VpnId.Equal(state.Ipv4StaticGreRoutes[i].VpnId) {
 				hasChanges = true
 			}
-			if !data.Ipv4StaticGreRoutes[i].Interface.Equal(state.Ipv4StaticGreRoutes[i].Interface) {
+			if !data.Ipv4StaticGreRoutes[i].Interfaces.Equal(state.Ipv4StaticGreRoutes[i].Interfaces) {
 				hasChanges = true
 			}
 		}
@@ -4580,7 +4580,7 @@ func (data *CiscoVPN) hasChanges(ctx context.Context, state *CiscoVPN) bool {
 			if !data.Ipv4StaticIpsecRoutes[i].VpnId.Equal(state.Ipv4StaticIpsecRoutes[i].VpnId) {
 				hasChanges = true
 			}
-			if !data.Ipv4StaticIpsecRoutes[i].Interface.Equal(state.Ipv4StaticIpsecRoutes[i].Interface) {
+			if !data.Ipv4StaticIpsecRoutes[i].Interfaces.Equal(state.Ipv4StaticIpsecRoutes[i].Interfaces) {
 				hasChanges = true
 			}
 		}

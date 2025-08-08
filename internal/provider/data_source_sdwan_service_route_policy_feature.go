@@ -177,7 +177,7 @@ func (d *ServiceRoutePolicyProfileParcelDataSource) Schema(ctx context.Context, 
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
-									"as_path_prepend": schema.SetAttribute{
+									"as_path_prepend": schema.ListAttribute{
 										MarkdownDescription: "",
 										ElementType:         types.Int64Type,
 										Computed:            true,

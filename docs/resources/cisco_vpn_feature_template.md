@@ -97,16 +97,16 @@ resource "sdwan_cisco_vpn_feature_template" "example" {
   ]
   ipv4_static_gre_routes = [
     {
-      prefix    = "3.3.3.0/24"
-      vpn_id    = 2
-      interface = ["e1"]
+      prefix     = "3.3.3.0/24"
+      vpn_id     = 2
+      interfaces = ["e1"]
     }
   ]
   ipv4_static_ipsec_routes = [
     {
-      prefix    = "4.4.4.0/24"
-      vpn_id    = 2
-      interface = ["e1"]
+      prefix     = "4.4.4.0/24"
+      vpn_id     = 2
+      interfaces = ["e1"]
     }
   ]
   omp_advertise_ipv4_routes = [
@@ -328,8 +328,8 @@ Optional:
 
 Optional:
 
-- `interface` (Set of String) List of GRE Interfaces
-- `interface_variable` (String) Variable name
+- `interfaces` (List of String) List of GRE Interfaces
+- `interfaces_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `prefix` (String) Prefix
 - `prefix_variable` (String) Variable name
@@ -342,8 +342,8 @@ Optional:
 
 Optional:
 
-- `interface` (Set of String) List of IPSEC Interfaces (Separated by commas)
-- `interface_variable` (String) Variable name
+- `interfaces` (List of String) List of IPSEC Interfaces (Separated by commas)
+- `interfaces_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `prefix` (String) Prefix
 - `prefix_variable` (String) Variable name

@@ -99,6 +99,8 @@ attributes:
       - model_name: prepend
         tf_name: as_path_prepend
         data_path: [accept, setAsPath]
+        type: List
+        element_type: Int64
         example: 65521
       - model_name: additive
         tf_name: community_additive

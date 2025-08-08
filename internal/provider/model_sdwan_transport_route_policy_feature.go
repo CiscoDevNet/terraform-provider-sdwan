@@ -68,7 +68,7 @@ type TransportRoutePolicySequencesMatchEntries struct {
 	Ipv6NextHopPrefixListId       types.String                                                      `tfsdk:"ipv6_next_hop_prefix_list_id"`
 }
 type TransportRoutePolicySequencesActions struct {
-	AsPathPrepend     types.Set    `tfsdk:"as_path_prepend"`
+	AsPathPrepend     types.List   `tfsdk:"as_path_prepend"`
 	CommunityAdditive types.Bool   `tfsdk:"community_additive"`
 	Community         types.Set    `tfsdk:"community"`
 	CommunityVariable types.String `tfsdk:"community_variable"`
@@ -547,12 +547,12 @@ func (data *TransportRoutePolicy) fromBody(ctx context.Context, res gjson.Result
 				item.Actions = make([]TransportRoutePolicySequencesActions, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TransportRoutePolicySequencesActions{}
-					cItem.AsPathPrepend = types.SetNull(types.Int64Type)
+					cItem.AsPathPrepend = types.ListNull(types.Int64Type)
 
 					if t := cv.Get("accept.setAsPath.prepend.optionType"); t.Exists() {
 						va := cv.Get("accept.setAsPath.prepend.value")
 						if t.String() == "global" {
-							cItem.AsPathPrepend = helpers.GetInt64Set(va.Array())
+							cItem.AsPathPrepend = helpers.GetInt64List(va.Array())
 						}
 					}
 					cItem.CommunityAdditive = types.BoolNull()
@@ -908,7 +908,7 @@ func (data *TransportRoutePolicy) updateFromBody(ctx context.Context, res gjson.
 		}
 		for ci := range data.Sequences[i].Actions {
 			keys := [...]string{"accept.setAsPath.prepend", "accept.setCommunity.additive", "accept.setCommunity.community", "accept.setLocalPreference", "accept.setMetric", "accept.setMetricType", "accept.setOmpTag", "accept.setOrigin", "accept.setOspfTag", "accept.setWeight", "accept.setIpv4NextHop", "accept.setIpv6NextHop"}
-			keyValues := [...]string{helpers.GetStringFromSet(data.Sequences[i].Actions[ci].AsPathPrepend).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].CommunityAdditive.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].Community).ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].LocalPreference.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].Actions[ci].Metric.ValueInt64(), 10), data.Sequences[i].Actions[ci].MetricType.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].OmpTag.ValueInt64(), 10), data.Sequences[i].Actions[ci].Origin.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].OspfTag.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].Actions[ci].Weight.ValueInt64(), 10), data.Sequences[i].Actions[ci].Ipv4NextHop.ValueString(), data.Sequences[i].Actions[ci].Ipv6NextHop.ValueString()}
+			keyValues := [...]string{helpers.GetStringFromList(data.Sequences[i].Actions[ci].AsPathPrepend).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].CommunityAdditive.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].Community).ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].LocalPreference.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].Actions[ci].Metric.ValueInt64(), 10), data.Sequences[i].Actions[ci].MetricType.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].OmpTag.ValueInt64(), 10), data.Sequences[i].Actions[ci].Origin.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].OspfTag.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].Actions[ci].Weight.ValueInt64(), 10), data.Sequences[i].Actions[ci].Ipv4NextHop.ValueString(), data.Sequences[i].Actions[ci].Ipv6NextHop.ValueString()}
 			keyValuesVariables := [...]string{"", "", data.Sequences[i].Actions[ci].CommunityVariable.ValueString(), "", "", "", "", "", "", "", "", ""}
 
 			var cr gjson.Result
@@ -937,12 +937,12 @@ func (data *TransportRoutePolicy) updateFromBody(ctx context.Context, res gjson.
 					return true
 				},
 			)
-			data.Sequences[i].Actions[ci].AsPathPrepend = types.SetNull(types.Int64Type)
+			data.Sequences[i].Actions[ci].AsPathPrepend = types.ListNull(types.Int64Type)
 
 			if t := cr.Get("accept.setAsPath.prepend.optionType"); t.Exists() {
 				va := cr.Get("accept.setAsPath.prepend.value")
 				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AsPathPrepend = helpers.GetInt64Set(va.Array())
+					data.Sequences[i].Actions[ci].AsPathPrepend = helpers.GetInt64List(va.Array())
 				}
 			}
 			data.Sequences[i].Actions[ci].CommunityAdditive = types.BoolNull()
