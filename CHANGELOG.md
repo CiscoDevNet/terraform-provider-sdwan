@@ -1,6 +1,7 @@
-## 0.6.3 (Unreleased)
+## 0.6.3 (unreleased)
 
 - Fix issue, where NAT is always configured on `sdwan_transport_wan_vpn_interface_ethernet_feature`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/485)
+- Add missing options under `unsupported_features` attribute of `sdwan_configuration_group`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/478)
 
 ## 0.6.2
 
