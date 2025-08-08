@@ -1,5 +1,6 @@
 ## 0.6.3 (unreleased)
 
+- Add missing options under `unsupported_features` attribute of `sdwan_configuration_group`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/478)
 - Add `sdwan_policy_group` resource and data source
 
 ## 0.6.2
