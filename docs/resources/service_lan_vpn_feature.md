@@ -38,6 +38,7 @@ resource "sdwan_service_lan_vpn_feature" "example" {
     {
       network_address = "1.2.3.4"
       subnet_mask     = "0.0.0.0"
+      gateway         = "nextHop"
       next_hops = [
         {
           address                 = "1.2.3.4"
@@ -48,7 +49,8 @@ resource "sdwan_service_lan_vpn_feature" "example" {
   ]
   ipv6_static_routes = [
     {
-      prefix = "2001:0:0:1::0/12"
+      prefix  = "2001:0:0:1::0/12"
+      gateway = "nextHop"
       next_hops = [
         {
           address                 = "2001:0:0:1::0"
@@ -323,16 +325,18 @@ Optional:
 
 Optional:
 
-- `gateway_dhcp` (Boolean) IPv4 Route Gateway DHCP
+- `dhcp` (Boolean) IPv4 Route Gateway DHCP, Attribute conditional on `gateway` being equal to `dhcp`
+- `gateway` (String) Gateway type
+  - Choices: `nextHop`, `null0`, `vpn`, `dhcp`
 - `network_address` (String) IP Address
 - `network_address_variable` (String) Variable name
-- `next_hop_with_trackers` (Attributes List) IPv4 Route Gateway Next Hop with Tracker (see [below for nested schema](#nestedatt--ipv4_static_routes--next_hop_with_trackers))
-- `next_hops` (Attributes List) IPv4 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv4_static_routes--next_hops))
-- `null0` (Boolean) IPv4 Route Gateway Next Hop
+- `next_hop_with_trackers` (Attributes List) IPv4 Route Gateway Next Hop with Tracker, Attribute conditional on `gateway` being equal to `nextHop` (see [below for nested schema](#nestedatt--ipv4_static_routes--next_hop_with_trackers))
+- `next_hops` (Attributes List) IPv4 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `nextHop` (see [below for nested schema](#nestedatt--ipv4_static_routes--next_hops))
+- `null0` (Boolean) IPv4 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `null0`
 - `subnet_mask` (String) Subnet Mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `subnet_mask_variable` (String) Variable name
-- `vpn` (Boolean) IPv4 Route Gateway VPN
+- `vpn` (Boolean) IPv4 Route Gateway VPN, Attribute conditional on `gateway` being equal to `vpn`
 
 <a id="nestedatt--ipv4_static_routes--next_hop_with_trackers"></a>
 ### Nested Schema for `ipv4_static_routes.next_hop_with_trackers`
@@ -383,11 +387,13 @@ Optional:
 
 Optional:
 
-- `nat` (String) IPv6 Nat
+- `gateway` (String) Gateway type
+  - Choices: `nextHop`, `null0`, `nat`
+- `nat` (String) IPv6 Nat, Attribute conditional on `gateway` being equal to `nat`
   - Choices: `NAT64`, `NAT66`
-- `nat_variable` (String) Variable name
-- `next_hops` (Attributes List) IPv6 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv6_static_routes--next_hops))
-- `null0` (Boolean) IPv6 Route Gateway Next Hop
+- `nat_variable` (String) Variable name, Attribute conditional on `gateway` being equal to `nat`
+- `next_hops` (Attributes List) IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `nextHop` (see [below for nested schema](#nestedatt--ipv6_static_routes--next_hops))
+- `null0` (Boolean) IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `null0`
 - `prefix` (String) Prefix
 - `prefix_variable` (String) Variable name
 

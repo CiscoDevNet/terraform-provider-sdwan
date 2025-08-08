@@ -21,6 +21,7 @@ resource "sdwan_service_lan_vpn_feature" "example" {
     {
       network_address = "1.2.3.4"
       subnet_mask     = "0.0.0.0"
+      gateway         = "nextHop"
       next_hops = [
         {
           address                 = "1.2.3.4"
@@ -31,7 +32,8 @@ resource "sdwan_service_lan_vpn_feature" "example" {
   ]
   ipv6_static_routes = [
     {
-      prefix = "2001:0:0:1::0/12"
+      prefix  = "2001:0:0:1::0/12"
+      gateway = "nextHop"
       next_hops = [
         {
           address                 = "2001:0:0:1::0"
