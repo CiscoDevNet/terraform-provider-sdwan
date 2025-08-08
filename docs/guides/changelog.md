@@ -17,6 +17,7 @@ description: |-
 - Add `sdwan_policy_group` resource and data source
 - Adds `enhanced_app_aware_routing` support to the `sdwan_cisco_system_feature_template` resource and data source
 - Add `gateway` attribute for `ipv4_static_routes` and `ipv6_static_routes` in `sdwan_service_lan_vpn_feature` resource
+- Fix issue causing `sdwan_transport_routing_bgp_feature` to fail to apply when `policy_type` is set to `off`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/475)
 
 ## 0.6.2
 
