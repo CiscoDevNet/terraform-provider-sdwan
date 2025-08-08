@@ -532,13 +532,25 @@ attributes:
     data_path: [natAttributesIpv6]
     exclude_null: true
     example: false
+    conditional_attribute:
+      name: nat_ipv6
+      value: true
+      type: Bool
   - model_name: nat66
     data_path: [natAttributesIpv6]
     exclude_null: true
     example: true
+    conditional_attribute:
+      name: nat_ipv6
+      value: true
+      type: Bool
   - model_name: staticNat66
     data_path: [natAttributesIpv6]
     exclude_null: true
+    conditional_attribute:
+      name: nat_ipv6
+      value: true
+      type: Bool
     attributes:
     - model_name: sourcePrefix
       id: true

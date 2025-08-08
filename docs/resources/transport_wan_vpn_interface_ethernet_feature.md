@@ -228,9 +228,9 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `media_type` (String) Media type
   - Choices: `auto-select`, `rj45`, `sfp`
 - `media_type_variable` (String) Variable name
-- `nat64` (Boolean) NAT64 on this interface
+- `nat64` (Boolean) NAT64 on this interface, Attribute conditional on `nat_ipv6` being equal to `true`
   - Default value: `false`
-- `nat66` (Boolean) NAT66 on this interface
+- `nat66` (Boolean) NAT66 on this interface, Attribute conditional on `nat_ipv6` being equal to `true`
   - Default value: `false`
 - `nat_ipv4` (Boolean) enable Network Address Translation on this interface
   - Default value: `false`
@@ -261,8 +261,8 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `nat_udp_timeout` (Number) Set NAT UDP session timeout, in minutes, Attribute conditional on `nat_ipv4` being equal to `true`
   - Range: `1`-`8947`
   - Default value: `1`
-- `nat_udp_timeout_variable` (String) Variable name
-- `new_static_nats` (Attributes List) static NAT (see [below for nested schema](#nestedatt--new_static_nats))
+- `nat_udp_timeout_variable` (String) Variable name, Attribute conditional on `nat_ipv4` being equal to `true`
+- `new_static_nats` (Attributes List) static NAT, Attribute conditional on `nat_ipv4` being equal to `true` (see [below for nested schema](#nestedatt--new_static_nats))
 - `per_tunnel_qos` (Boolean) Per-tunnel Qos, Attribute conditional on `tunnel_interface` being equal to `true`
   - Default value: `false`
 - `per_tunnel_qos_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
@@ -304,7 +304,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `speed` (String) Set interface speed
   - Choices: `10`, `100`, `1000`, `2500`, `10000`
 - `speed_variable` (String) Variable name
-- `static_nat66` (Attributes List) static NAT66 (see [below for nested schema](#nestedatt--static_nat66))
+- `static_nat66` (Attributes List) static NAT66, Attribute conditional on `nat_ipv6` being equal to `true` (see [below for nested schema](#nestedatt--static_nat66))
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
   - Range: `500`-`1460`
 - `tcp_mss_variable` (String) Variable name

@@ -818,15 +818,15 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"nat64": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT64 on this interface").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT64 on this interface, Attribute conditional on `nat_ipv6` being equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"nat66": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT66 on this interface").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT66 on this interface, Attribute conditional on `nat_ipv6` being equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"static_nat66": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("static NAT66").String,
+				MarkdownDescription: helpers.NewAttributeDescription("static NAT66, Attribute conditional on `nat_ipv6` being equal to `true`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{

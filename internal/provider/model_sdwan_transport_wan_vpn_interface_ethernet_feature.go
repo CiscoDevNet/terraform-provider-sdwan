@@ -1478,18 +1478,18 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 		}
 	}
 	if !data.Nat64.IsNull() {
-		if true {
+		if true && data.NatIpv6.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv6.nat64.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv6.nat64.value", data.Nat64.ValueBool())
 		}
 	}
 	if !data.Nat66.IsNull() {
-		if true {
+		if true && data.NatIpv6.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"natAttributesIpv6.nat66.optionType", "global")
 			body, _ = sjson.Set(body, path+"natAttributesIpv6.nat66.value", data.Nat66.ValueBool())
 		}
 	}
-	if true {
+	if true && data.NatIpv6.ValueBool() == true {
 
 		for _, item := range data.StaticNat66 {
 			itemBody := ""
