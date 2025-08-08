@@ -2677,6 +2677,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.NatType = types.StringValue(va.String())
 		}
+		data.NatIpv4 = types.BoolValue(true)
 	}
 	data.NatRangeStart = types.StringNull()
 	data.NatRangeStartVariable = types.StringNull()
@@ -2687,6 +2688,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.NatRangeStart = types.StringValue(va.String())
 		}
+		data.NatIpv4 = types.BoolValue(true)
 	}
 	data.NatRangeEnd = types.StringNull()
 	data.NatRangeEndVariable = types.StringNull()
@@ -2697,6 +2699,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.NatRangeEnd = types.StringValue(va.String())
 		}
+		data.NatIpv4 = types.BoolValue(true)
 	}
 	data.NatPrefixLength = types.Int64Null()
 	data.NatPrefixLengthVariable = types.StringNull()
@@ -2707,6 +2710,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.NatPrefixLength = types.Int64Value(va.Int())
 		}
+		data.NatIpv4 = types.BoolValue(true)
 	}
 	data.NatOverload = types.BoolNull()
 	data.NatOverloadVariable = types.StringNull()
@@ -2717,6 +2721,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.NatOverload = types.BoolValue(va.Bool())
 		}
+		data.NatIpv4 = types.BoolValue(true)
 	}
 	data.NatLoopback = types.StringNull()
 	data.NatLoopbackVariable = types.StringNull()
@@ -2727,6 +2732,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.NatLoopback = types.StringValue(va.String())
 		}
+		data.NatIpv4 = types.BoolValue(true)
 	}
 	data.NatUdpTimeout = types.Int64Null()
 	data.NatUdpTimeoutVariable = types.StringNull()
@@ -2737,6 +2743,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.NatUdpTimeout = types.Int64Value(va.Int())
 		}
+		data.NatIpv4 = types.BoolValue(true)
 	}
 	data.NatTcpTimeout = types.Int64Null()
 	data.NatTcpTimeoutVariable = types.StringNull()
@@ -2747,6 +2754,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.NatTcpTimeout = types.Int64Value(va.Int())
 		}
+		data.NatIpv4 = types.BoolValue(true)
 	}
 	if value := res.Get(path + "natAttributesIpv4.newStaticNat"); value.Exists() && len(value.Array()) > 0 {
 		data.NewStaticNats = make([]TransportWANVPNInterfaceEthernetNewStaticNats, 0)
@@ -2793,6 +2801,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.NewStaticNats = append(data.NewStaticNats, item)
 			return true
 		})
+		data.NatIpv4 = types.BoolValue(true)
 	}
 	data.NatIpv6 = types.BoolNull()
 	data.NatIpv6Variable = types.StringNull()
@@ -2811,6 +2820,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		if t.String() == "global" {
 			data.Nat64 = types.BoolValue(va.Bool())
 		}
+		data.NatIpv6 = types.BoolValue(true)
 	}
 	data.Nat66 = types.BoolNull()
 
@@ -2819,6 +2829,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		if t.String() == "global" {
 			data.Nat66 = types.BoolValue(va.Bool())
 		}
+		data.NatIpv6 = types.BoolValue(true)
 	}
 	if value := res.Get(path + "natAttributesIpv6.staticNat66"); value.Exists() && len(value.Array()) > 0 {
 		data.StaticNat66 = make([]TransportWANVPNInterfaceEthernetStaticNat66, 0)
@@ -2857,6 +2868,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.StaticNat66 = append(data.StaticNat66, item)
 			return true
 		})
+		data.NatIpv6 = types.BoolValue(true)
 	}
 	data.QosAdaptive = types.BoolNull()
 

@@ -9,11 +9,11 @@ description: |-
 
 ## 0.6.3 (unreleased)
 
-- Fix issue, where NAT IPv4 and IPv6 is always configured on `sdwan_transport_wan_vpn_interface_ethernet_feature`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/485)
 - BREAKING CHANGE: Rename `tls_ssl_profile_version` attribute of `sdwan_tls_ssl_decryption_policy_definition` resource to `tls_ssl_profile_policy_version`
 - BREAKING CHANGE: Rename `sla_class_list` attribute of `sdwan_application_aware_routing_policy_definition` resource to `sla_class_list_id`
 - BREAKING CHANGE: Rename `preferred_color_group_list` attribute of `sdwan_application_aware_routing_policy_definition` resource to `preferred_color_group_list_id`
 - BREAKING CHANGE: Rename `preferred_color_group_list` attribute of `sdwan_traffic_data_policy_definition` resource to `preferred_color_group_list_id`
+- Fix issue, where NAT IPv4 and IPv6 is always configured on `sdwan_transport_wan_vpn_interface_ethernet_feature`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/485)
 - Add missing options under `unsupported_features` attribute of `sdwan_configuration_group`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/478)
 - Add `sdwan_policy_group` resource and data source
 
