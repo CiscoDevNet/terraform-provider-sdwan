@@ -91,3 +91,9 @@ func (data *ApplicationPriorityFeatureProfile) hasChanges(ctx context.Context, s
 // Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *ApplicationPriorityFeatureProfile) processImport(ctx context.Context) {
+}
+
+// End of section. //template:end processImport

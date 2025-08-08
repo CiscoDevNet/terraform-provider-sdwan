@@ -1736,7 +1736,7 @@ func (data *TransportWANVPNInterfaceCellular) fromBody(ctx context.Context, res 
 			data.TunnelInterfaceAllowBfd = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "encapsulation"); value.Exists() {
+	if value := res.Get(path + "encapsulation"); value.Exists() && len(value.Array()) > 0 {
 		data.TunnelInterfaceEncapsulations = make([]TransportWANVPNInterfaceCellularTunnelInterfaceEncapsulations, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceCellularTunnelInterfaceEncapsulations{}
@@ -1938,7 +1938,7 @@ func (data *TransportWANVPNInterfaceCellular) fromBody(ctx context.Context, res 
 			data.AclIpv6IngressFeatureId = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "arp"); value.Exists() {
+	if value := res.Get(path + "arp"); value.Exists() && len(value.Array()) > 0 {
 		data.Arps = make([]TransportWANVPNInterfaceCellularArps, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceCellularArps{}

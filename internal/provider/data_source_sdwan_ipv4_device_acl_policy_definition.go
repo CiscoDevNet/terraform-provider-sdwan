@@ -112,8 +112,16 @@ func (d *IPv4DeviceACLPolicyDefinitionDataSource) Schema(ctx context.Context, re
 										MarkdownDescription: "Source IP prefix",
 										Computed:            true,
 									},
+									"source_ip_variable": schema.StringAttribute{
+										MarkdownDescription: "Source IP prefix variable",
+										Computed:            true,
+									},
 									"destination_ip": schema.StringAttribute{
 										MarkdownDescription: "Destination IP prefix",
+										Computed:            true,
+									},
+									"destination_ip_variable": schema.StringAttribute{
+										MarkdownDescription: "Destination IP prefix variable",
 										Computed:            true,
 									},
 									"source_ports": schema.StringAttribute{

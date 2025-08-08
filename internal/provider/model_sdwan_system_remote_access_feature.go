@@ -440,6 +440,7 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result) 
 		if t.String() == "global" {
 			data.AnyConnectEapAuthenticationType = types.StringValue(va.String())
 		}
+		data.ConnectionTypeSsl = types.BoolValue(false)
 	}
 	data.Ipv4PoolSize = types.Int64Null()
 	data.Ipv4PoolSizeVariable = types.StringNull()
@@ -480,6 +481,7 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result) 
 		} else if t.String() == "global" {
 			data.PskAuthenticationType = types.StringValue(va.String())
 		}
+		data.ConnectionTypeSsl = types.BoolValue(false)
 	}
 	data.PskAuthenticationPreSharedKey = types.StringNull()
 	data.PskAuthenticationPreSharedKeyVariable = types.StringNull()
@@ -490,6 +492,7 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result) 
 		} else if t.String() == "global" {
 			data.PskAuthenticationPreSharedKey = types.StringValue(va.String())
 		}
+		data.PskAuthenticationType = types.StringValue("group")
 	}
 	data.RadiusGroupName = types.StringNull()
 	data.RadiusGroupNameVariable = types.StringNull()
@@ -530,6 +533,7 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result) 
 		} else if t.String() == "global" {
 			data.AaaDeriveNameFromPeerIdentity = types.StringValue(va.String())
 		}
+		data.ConnectionTypeSsl = types.BoolValue(false)
 	}
 	data.AaaDeriveNameFromPeerDomain = types.StringNull()
 	data.AaaDeriveNameFromPeerDomainVariable = types.StringNull()
@@ -540,6 +544,7 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result) 
 		} else if t.String() == "global" {
 			data.AaaDeriveNameFromPeerDomain = types.StringValue(va.String())
 		}
+		data.ConnectionTypeSsl = types.BoolValue(false)
 	}
 	data.AaaEnableAccounting = types.BoolNull()
 	data.AaaEnableAccountingVariable = types.StringNull()
@@ -560,6 +565,7 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result) 
 		} else if t.String() == "global" {
 			data.Ikev2LocalIkeIdentityType = types.StringValue(va.String())
 		}
+		data.ConnectionTypeSsl = types.BoolValue(false)
 	}
 	data.Ikev2LocalIkeIdentityValue = types.StringNull()
 	data.Ikev2LocalIkeIdentityValueVariable = types.StringNull()
@@ -570,6 +576,7 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result) 
 		} else if t.String() == "global" {
 			data.Ikev2LocalIkeIdentityValue = types.StringValue(va.String())
 		}
+		data.ConnectionTypeSsl = types.BoolValue(false)
 	}
 	data.Ikev2SecurityAssociationLifetime = types.Int64Null()
 	data.Ikev2SecurityAssociationLifetimeVariable = types.StringNull()
@@ -580,6 +587,7 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result) 
 		} else if t.String() == "global" {
 			data.Ikev2SecurityAssociationLifetime = types.Int64Value(va.Int())
 		}
+		data.ConnectionTypeSsl = types.BoolValue(false)
 	}
 	data.Ikev2AntiDosThreshold = types.Int64Null()
 	data.Ikev2AntiDosThresholdVariable = types.StringNull()
@@ -590,6 +598,7 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result) 
 		} else if t.String() == "global" {
 			data.Ikev2AntiDosThreshold = types.Int64Value(va.Int())
 		}
+		data.ConnectionTypeSsl = types.BoolValue(false)
 	}
 	data.IpsecEnableAntiReplay = types.BoolNull()
 	data.IpsecEnableAntiReplayVariable = types.StringNull()
@@ -600,6 +609,7 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result) 
 		} else if t.String() == "global" {
 			data.IpsecEnableAntiReplay = types.BoolValue(va.Bool())
 		}
+		data.ConnectionTypeSsl = types.BoolValue(false)
 	}
 	data.IpsecAntiReplayWindowSize = types.Int64Null()
 	data.IpsecAntiReplayWindowSizeVariable = types.StringNull()
@@ -610,6 +620,7 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result) 
 		} else if t.String() == "global" {
 			data.IpsecAntiReplayWindowSize = types.Int64Value(va.Int())
 		}
+		data.IpsecEnableAntiReplay = types.BoolValue(true)
 	}
 	data.IpsecSecurityAssociationLifetime = types.Int64Null()
 	data.IpsecSecurityAssociationLifetimeVariable = types.StringNull()
@@ -620,6 +631,7 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result) 
 		} else if t.String() == "global" {
 			data.IpsecSecurityAssociationLifetime = types.Int64Value(va.Int())
 		}
+		data.ConnectionTypeSsl = types.BoolValue(false)
 	}
 	data.IpsecEnablePerfectFowardSecrecy = types.BoolNull()
 	data.IpsecEnablePerfectFowardSecrecyVariable = types.StringNull()
@@ -630,6 +642,7 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result) 
 		} else if t.String() == "global" {
 			data.IpsecEnablePerfectFowardSecrecy = types.BoolValue(va.Bool())
 		}
+		data.ConnectionTypeSsl = types.BoolValue(false)
 	}
 }
 

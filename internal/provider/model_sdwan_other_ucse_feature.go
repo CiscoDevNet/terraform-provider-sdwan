@@ -284,6 +284,7 @@ func (data *OtherUCSE) fromBody(ctx context.Context, res gjson.Result) {
 		if t.String() == "global" {
 			data.AccessPortSharedType = types.StringValue(va.String())
 		}
+		data.AccessPortDedicated = types.BoolValue(false)
 	}
 	data.AccessPortSharedFailoverType = types.StringNull()
 
@@ -292,6 +293,7 @@ func (data *OtherUCSE) fromBody(ctx context.Context, res gjson.Result) {
 		if t.String() == "global" {
 			data.AccessPortSharedFailoverType = types.StringValue(va.String())
 		}
+		data.AccessPortDedicated = types.BoolValue(false)
 	}
 	data.Ipv4Address = types.StringNull()
 	data.Ipv4AddressVariable = types.StringNull()
@@ -333,7 +335,7 @@ func (data *OtherUCSE) fromBody(ctx context.Context, res gjson.Result) {
 			data.AssignPriority = types.Int64Value(va.Int())
 		}
 	}
-	if value := res.Get(path + "interface"); value.Exists() {
+	if value := res.Get(path + "interface"); value.Exists() && len(value.Array()) > 0 {
 		data.Interfaces = make([]OtherUCSEInterfaces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := OtherUCSEInterfaces{}

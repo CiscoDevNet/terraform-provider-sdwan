@@ -22,14 +22,18 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 // End of section. //template:end imports
+
+var MinTransportWANVPNInterfaceEthernetUpdateVersion = version.Must(version.NewVersion("20.14.0"))
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type TransportWANVPNInterfaceEthernet struct {
@@ -298,8 +302,7 @@ func (data TransportWANVPNInterfaceEthernet) getPath() string {
 
 // End of section. //template:end getPath
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string {
+func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, currentVersion *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -612,284 +615,284 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 	}
 
 	if !data.PerTunnelQosVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.perTunnelQos.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.perTunnelQos.value", data.PerTunnelQosVariable.ValueString())
 		}
 	} else if data.PerTunnelQos.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.perTunnelQos.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.perTunnelQos.value", false)
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.perTunnelQos.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.perTunnelQos.value", data.PerTunnelQos.ValueBool())
 		}
 	}
 
 	if !data.TunnelQosModeVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.mode.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.mode.value", data.TunnelQosModeVariable.ValueString())
 		}
 	} else if !data.TunnelQosMode.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.mode.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.mode.value", data.TunnelQosMode.ValueString())
 		}
 	}
 
 	if !data.TunnelBandwidthPercentVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.value", data.TunnelBandwidthPercentVariable.ValueString())
 		}
 	} else if data.TunnelBandwidthPercent.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.value", 50)
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.value", data.TunnelBandwidthPercent.ValueInt64())
 		}
 	}
 
 	if !data.TunnelInterfaceBindLoopbackTunnelVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.bind.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.bind.value", data.TunnelInterfaceBindLoopbackTunnelVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceBindLoopbackTunnel.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.bind.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.bind.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.bind.value", data.TunnelInterfaceBindLoopbackTunnel.ValueString())
 		}
 	}
 
 	if !data.TunnelInterfaceCarrierVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.carrier.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.carrier.value", data.TunnelInterfaceCarrierVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceCarrier.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.carrier.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.carrier.value", "default")
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.carrier.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.carrier.value", data.TunnelInterfaceCarrier.ValueString())
 		}
 	}
 
 	if !data.TunnelInterfaceColorVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.color.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.color.value", data.TunnelInterfaceColorVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceColor.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.color.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.color.value", "mpls")
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.color.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.color.value", data.TunnelInterfaceColor.ValueString())
 		}
 	}
 
 	if !data.TunnelInterfaceHelloIntervalVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.helloInterval.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.helloInterval.value", data.TunnelInterfaceHelloIntervalVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceHelloInterval.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.helloInterval.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.helloInterval.value", 1000)
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.helloInterval.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.helloInterval.value", data.TunnelInterfaceHelloInterval.ValueInt64())
 		}
 	}
 
 	if !data.TunnelInterfaceHelloToleranceVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.helloTolerance.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.helloTolerance.value", data.TunnelInterfaceHelloToleranceVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceHelloTolerance.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.helloTolerance.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.helloTolerance.value", 12)
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.helloTolerance.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.helloTolerance.value", data.TunnelInterfaceHelloTolerance.ValueInt64())
 		}
 	}
 
 	if !data.TunnelInterfaceLastResortCircuitVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.lastResortCircuit.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.lastResortCircuit.value", data.TunnelInterfaceLastResortCircuitVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceLastResortCircuit.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.lastResortCircuit.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.lastResortCircuit.value", false)
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.lastResortCircuit.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.lastResortCircuit.value", data.TunnelInterfaceLastResortCircuit.ValueBool())
 		}
 	}
 
 	if !data.TunnelInterfaceGreTunnelDestinationIpVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.tlocExtensionGreTo.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.tlocExtensionGreTo.value", data.TunnelInterfaceGreTunnelDestinationIpVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceGreTunnelDestinationIp.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.tlocExtensionGreTo.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.tlocExtensionGreTo.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.tlocExtensionGreTo.value", data.TunnelInterfaceGreTunnelDestinationIp.ValueString())
 		}
 	}
 
 	if !data.TunnelInterfaceColorRestrictVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.restrict.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.restrict.value", data.TunnelInterfaceColorRestrictVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceColorRestrict.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.restrict.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.restrict.value", false)
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.restrict.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.restrict.value", data.TunnelInterfaceColorRestrict.ValueBool())
 		}
 	}
 
 	if !data.TunnelInterfaceGroupsVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.group.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.group.value", data.TunnelInterfaceGroupsVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceGroups.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.group.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.group.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.group.value", data.TunnelInterfaceGroups.ValueInt64())
 		}
 	}
 
 	if !data.TunnelInterfaceBorderVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.border.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.border.value", data.TunnelInterfaceBorderVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceBorder.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.border.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.border.value", false)
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.border.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.border.value", data.TunnelInterfaceBorder.ValueBool())
 		}
 	}
 
 	if !data.TunnelInterfaceMaxControlConnectionsVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.maxControlConnections.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.maxControlConnections.value", data.TunnelInterfaceMaxControlConnectionsVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceMaxControlConnections.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.maxControlConnections.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.maxControlConnections.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.maxControlConnections.value", data.TunnelInterfaceMaxControlConnections.ValueInt64())
 		}
 	}
 
 	if !data.TunnelInterfaceNatRefreshIntervalVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.natRefreshInterval.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.natRefreshInterval.value", data.TunnelInterfaceNatRefreshIntervalVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceNatRefreshInterval.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.natRefreshInterval.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.natRefreshInterval.value", 5)
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.natRefreshInterval.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.natRefreshInterval.value", data.TunnelInterfaceNatRefreshInterval.ValueInt64())
 		}
 	}
 
 	if !data.TunnelInterfaceVbondAsStunServerVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.vBondAsStunServer.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.vBondAsStunServer.value", data.TunnelInterfaceVbondAsStunServerVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceVbondAsStunServer.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.vBondAsStunServer.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.vBondAsStunServer.value", false)
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.vBondAsStunServer.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.vBondAsStunServer.value", data.TunnelInterfaceVbondAsStunServer.ValueBool())
 		}
 	}
 
 	if !data.TunnelInterfaceExcludeControllerGroupListVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.excludeControllerGroupList.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.excludeControllerGroupList.value", data.TunnelInterfaceExcludeControllerGroupListVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceExcludeControllerGroupList.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.excludeControllerGroupList.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.excludeControllerGroupList.optionType", "global")
 			var values []int64
 			data.TunnelInterfaceExcludeControllerGroupList.ElementsAs(ctx, &values, false)
@@ -898,119 +901,119 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 	}
 
 	if !data.TunnelInterfaceVmanageConnectionPreferenceVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.vManageConnectionPreference.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.vManageConnectionPreference.value", data.TunnelInterfaceVmanageConnectionPreferenceVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceVmanageConnectionPreference.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.vManageConnectionPreference.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.vManageConnectionPreference.value", 5)
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.vManageConnectionPreference.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.vManageConnectionPreference.value", data.TunnelInterfaceVmanageConnectionPreference.ValueInt64())
 		}
 	}
 
 	if !data.TunnelInterfacePortHopVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.portHop.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.portHop.value", data.TunnelInterfacePortHopVariable.ValueString())
 		}
 	} else if data.TunnelInterfacePortHop.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.portHop.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.portHop.value", true)
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.portHop.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.portHop.value", data.TunnelInterfacePortHop.ValueBool())
 		}
 	}
 
 	if !data.TunnelInterfaceLowBandwidthLinkVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.lowBandwidthLink.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.lowBandwidthLink.value", data.TunnelInterfaceLowBandwidthLinkVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceLowBandwidthLink.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.lowBandwidthLink.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.lowBandwidthLink.value", false)
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.lowBandwidthLink.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.lowBandwidthLink.value", data.TunnelInterfaceLowBandwidthLink.ValueBool())
 		}
 	}
 
 	if !data.TunnelInterfaceTunnelTcpMssVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.tunnelTcpMss.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.tunnelTcpMss.value", data.TunnelInterfaceTunnelTcpMssVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceTunnelTcpMss.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.tunnelTcpMss.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.tunnelTcpMss.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.tunnelTcpMss.value", data.TunnelInterfaceTunnelTcpMss.ValueInt64())
 		}
 	}
 
 	if !data.TunnelInterfaceClearDontFragmentVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.clearDontFragment.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.clearDontFragment.value", data.TunnelInterfaceClearDontFragmentVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceClearDontFragment.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.clearDontFragment.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.clearDontFragment.value", false)
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.clearDontFragment.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.clearDontFragment.value", data.TunnelInterfaceClearDontFragment.ValueBool())
 		}
 	}
 
 	if !data.TunnelInterfaceCtsSgtPropagationVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.ctsSgtPropagation.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.ctsSgtPropagation.value", data.TunnelInterfaceCtsSgtPropagationVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceCtsSgtPropagation.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.ctsSgtPropagation.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.ctsSgtPropagation.value", false)
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.ctsSgtPropagation.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.ctsSgtPropagation.value", data.TunnelInterfaceCtsSgtPropagation.ValueBool())
 		}
 	}
 
 	if !data.TunnelInterfaceNetworkBroadcastVariable.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.networkBroadcast.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.networkBroadcast.value", data.TunnelInterfaceNetworkBroadcastVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceNetworkBroadcast.IsNull() {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.networkBroadcast.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.networkBroadcast.value", false)
 		}
 	} else {
-		if true {
+		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.networkBroadcast.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.networkBroadcast.value", data.TunnelInterfaceNetworkBroadcast.ValueBool())
 		}
@@ -1356,15 +1359,19 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 		}
 	}
 
+	natLookBackRef := "natLookback"
+	if !currentVersion.LessThan(MinTransportWANVPNInterfaceEthernetUpdateVersion) {
+		natLookBackRef = "natLoopback"
+	}
 	if !data.NatLoopbackVariable.IsNull() {
 		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.optionType", "variable")
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.value", data.NatLoopbackVariable.ValueString())
+			body, _ = sjson.Set(body, path+"natAttributesIpv4."+natLookBackRef+".optionType", "variable")
+			body, _ = sjson.Set(body, path+"natAttributesIpv4."+natLookBackRef+".value", data.NatLoopbackVariable.ValueString())
 		}
 	} else if !data.NatLoopback.IsNull() {
 		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.optionType", "global")
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.value", data.NatLoopback.ValueString())
+			body, _ = sjson.Set(body, path+"natAttributesIpv4."+natLookBackRef+".optionType", "global")
+			body, _ = sjson.Set(body, path+"natAttributesIpv4."+natLookBackRef+".value", data.NatLoopback.ValueString())
 		}
 	}
 
@@ -1791,7 +1798,7 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.InterfaceMtuVariable.ValueString())
 		}
 	} else if data.InterfaceMtu.IsNull() {
-		if true {
+		if !strings.Contains(data.InterfaceName.ValueString(), ".") {
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "default")
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", 1500)
 		}
@@ -1991,10 +1998,7 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 	return body
 }
 
-// End of section. //template:end toBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res gjson.Result) {
+func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res gjson.Result, currentVersion *version.Version) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -2041,6 +2045,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.Ipv4DhcpDistance = types.Int64Value(va.Int())
 		}
+		data.Ipv4ConfigurationType = types.StringValue("dynamic")
 	}
 	data.Ipv4Address = types.StringNull()
 	data.Ipv4AddressVariable = types.StringNull()
@@ -2051,6 +2056,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.Ipv4Address = types.StringValue(va.String())
 		}
+		data.Ipv4ConfigurationType = types.StringValue("static")
 	}
 	data.Ipv4SubnetMask = types.StringNull()
 	data.Ipv4SubnetMaskVariable = types.StringNull()
@@ -2061,8 +2067,9 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
+		data.Ipv4ConfigurationType = types.StringValue("static")
 	}
-	if value := res.Get(path + "intfIpAddress.static.staticIpV4AddressSecondary"); value.Exists() {
+	if value := res.Get(path + "intfIpAddress.static.staticIpV4AddressSecondary"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4SecondaryAddresses = make([]TransportWANVPNInterfaceEthernetIpv4SecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetIpv4SecondaryAddresses{}
@@ -2089,6 +2096,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.Ipv4SecondaryAddresses = append(data.Ipv4SecondaryAddresses, item)
 			return true
 		})
+		data.Ipv4ConfigurationType = types.StringValue("static")
 	}
 	data.Ipv4DhcpHelper = types.SetNull(types.StringType)
 	data.Ipv4DhcpHelperVariable = types.StringNull()
@@ -2107,8 +2115,9 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		if t.String() == "global" {
 			data.EnableDhcpv6 = types.BoolValue(va.Bool())
 		}
+		data.Ipv6ConfigurationType = types.StringValue("dynamic")
 	}
-	if value := res.Get(path + "intfIpV6Address.dynamic.secondaryIpV6Address"); value.Exists() {
+	if value := res.Get(path + "intfIpV6Address.dynamic.secondaryIpV6Address"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6DhcpSecondaryAddress = make([]TransportWANVPNInterfaceEthernetIpv6DhcpSecondaryAddress, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetIpv6DhcpSecondaryAddress{}
@@ -2125,6 +2134,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.Ipv6DhcpSecondaryAddress = append(data.Ipv6DhcpSecondaryAddress, item)
 			return true
 		})
+		data.Ipv6ConfigurationType = types.StringValue("dynamic")
 	}
 	data.Ipv6Address = types.StringNull()
 	data.Ipv6AddressVariable = types.StringNull()
@@ -2135,8 +2145,9 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.Ipv6Address = types.StringValue(va.String())
 		}
+		data.Ipv6ConfigurationType = types.StringValue("static")
 	}
-	if value := res.Get(path + "intfIpV6Address.static.secondaryIpV6Address"); value.Exists() {
+	if value := res.Get(path + "intfIpV6Address.static.secondaryIpV6Address"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6SecondaryAddresses = make([]TransportWANVPNInterfaceEthernetIpv6SecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetIpv6SecondaryAddresses{}
@@ -2153,6 +2164,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.Ipv6SecondaryAddresses = append(data.Ipv6SecondaryAddresses, item)
 			return true
 		})
+		data.Ipv6ConfigurationType = types.StringValue("static")
 	}
 	data.IperfServer = types.StringNull()
 	data.IperfServerVariable = types.StringNull()
@@ -2231,6 +2243,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.PerTunnelQos = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelQosMode = types.StringNull()
 	data.TunnelQosModeVariable = types.StringNull()
@@ -2241,6 +2254,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelQosMode = types.StringValue(va.String())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelBandwidthPercent = types.Int64Null()
 	data.TunnelBandwidthPercentVariable = types.StringNull()
@@ -2251,6 +2265,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelBandwidthPercent = types.Int64Value(va.Int())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceBindLoopbackTunnel = types.StringNull()
 	data.TunnelInterfaceBindLoopbackTunnelVariable = types.StringNull()
@@ -2261,6 +2276,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceBindLoopbackTunnel = types.StringValue(va.String())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceCarrier = types.StringNull()
 	data.TunnelInterfaceCarrierVariable = types.StringNull()
@@ -2271,6 +2287,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceCarrier = types.StringValue(va.String())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceColor = types.StringNull()
 	data.TunnelInterfaceColorVariable = types.StringNull()
@@ -2281,6 +2298,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceColor = types.StringValue(va.String())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceHelloInterval = types.Int64Null()
 	data.TunnelInterfaceHelloIntervalVariable = types.StringNull()
@@ -2291,6 +2309,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceHelloInterval = types.Int64Value(va.Int())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceHelloTolerance = types.Int64Null()
 	data.TunnelInterfaceHelloToleranceVariable = types.StringNull()
@@ -2301,6 +2320,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceHelloTolerance = types.Int64Value(va.Int())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceLastResortCircuit = types.BoolNull()
 	data.TunnelInterfaceLastResortCircuitVariable = types.StringNull()
@@ -2311,6 +2331,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceLastResortCircuit = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceGreTunnelDestinationIp = types.StringNull()
 	data.TunnelInterfaceGreTunnelDestinationIpVariable = types.StringNull()
@@ -2321,6 +2342,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceGreTunnelDestinationIp = types.StringValue(va.String())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceColorRestrict = types.BoolNull()
 	data.TunnelInterfaceColorRestrictVariable = types.StringNull()
@@ -2331,6 +2353,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceColorRestrict = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceGroups = types.Int64Null()
 	data.TunnelInterfaceGroupsVariable = types.StringNull()
@@ -2341,6 +2364,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceGroups = types.Int64Value(va.Int())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceBorder = types.BoolNull()
 	data.TunnelInterfaceBorderVariable = types.StringNull()
@@ -2351,6 +2375,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceBorder = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceMaxControlConnections = types.Int64Null()
 	data.TunnelInterfaceMaxControlConnectionsVariable = types.StringNull()
@@ -2361,6 +2386,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceMaxControlConnections = types.Int64Value(va.Int())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceNatRefreshInterval = types.Int64Null()
 	data.TunnelInterfaceNatRefreshIntervalVariable = types.StringNull()
@@ -2371,6 +2397,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceNatRefreshInterval = types.Int64Value(va.Int())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceVbondAsStunServer = types.BoolNull()
 	data.TunnelInterfaceVbondAsStunServerVariable = types.StringNull()
@@ -2381,6 +2408,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceVbondAsStunServer = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceExcludeControllerGroupList = types.SetNull(types.Int64Type)
 	data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringNull()
@@ -2391,6 +2419,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceExcludeControllerGroupList = helpers.GetInt64Set(va.Array())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceVmanageConnectionPreference = types.Int64Null()
 	data.TunnelInterfaceVmanageConnectionPreferenceVariable = types.StringNull()
@@ -2401,6 +2430,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceVmanageConnectionPreference = types.Int64Value(va.Int())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfacePortHop = types.BoolNull()
 	data.TunnelInterfacePortHopVariable = types.StringNull()
@@ -2411,6 +2441,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfacePortHop = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceLowBandwidthLink = types.BoolNull()
 	data.TunnelInterfaceLowBandwidthLinkVariable = types.StringNull()
@@ -2421,6 +2452,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceLowBandwidthLink = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceTunnelTcpMss = types.Int64Null()
 	data.TunnelInterfaceTunnelTcpMssVariable = types.StringNull()
@@ -2431,6 +2463,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceTunnelTcpMss = types.Int64Value(va.Int())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceClearDontFragment = types.BoolNull()
 	data.TunnelInterfaceClearDontFragmentVariable = types.StringNull()
@@ -2441,6 +2474,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceClearDontFragment = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceCtsSgtPropagation = types.BoolNull()
 	data.TunnelInterfaceCtsSgtPropagationVariable = types.StringNull()
@@ -2451,6 +2485,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceCtsSgtPropagation = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceNetworkBroadcast = types.BoolNull()
 	data.TunnelInterfaceNetworkBroadcastVariable = types.StringNull()
@@ -2461,6 +2496,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceNetworkBroadcast = types.BoolValue(va.Bool())
 		}
+		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceAllowAll = types.BoolNull()
 	data.TunnelInterfaceAllowAllVariable = types.StringNull()
@@ -2592,7 +2628,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.TunnelInterfaceAllowBfd = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "encapsulation"); value.Exists() {
+	if value := res.Get(path + "encapsulation"); value.Exists() && len(value.Array()) > 0 {
 		data.TunnelInterfaceEncapsulations = make([]TransportWANVPNInterfaceEthernetTunnelInterfaceEncapsulations, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetTunnelInterfaceEncapsulations{}
@@ -2690,8 +2726,12 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 	}
 	data.NatLoopback = types.StringNull()
 	data.NatLoopbackVariable = types.StringNull()
-	if t := res.Get(path + "natAttributesIpv4.natLookback.optionType"); t.Exists() {
-		va := res.Get(path + "natAttributesIpv4.natLookback.value")
+	natLookBackRef := "natLookback"
+	if !currentVersion.LessThan(MinTransportWANVPNInterfaceEthernetUpdateVersion) {
+		natLookBackRef = "natLoopback"
+	}
+	if t := res.Get(path + "natAttributesIpv4." + natLookBackRef + ".optionType"); t.Exists() {
+		va := res.Get(path + "natAttributesIpv4." + natLookBackRef + ".value")
 		if t.String() == "variable" {
 			data.NatLoopbackVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
@@ -2718,7 +2758,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.NatTcpTimeout = types.Int64Value(va.Int())
 		}
 	}
-	if value := res.Get(path + "natAttributesIpv4.newStaticNat"); value.Exists() {
+	if value := res.Get(path + "natAttributesIpv4.newStaticNat"); value.Exists() && len(value.Array()) > 0 {
 		data.NewStaticNats = make([]TransportWANVPNInterfaceEthernetNewStaticNats, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetNewStaticNats{}
@@ -2790,7 +2830,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.Nat66 = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "natAttributesIpv6.staticNat66"); value.Exists() {
+	if value := res.Get(path + "natAttributesIpv6.staticNat66"); value.Exists() && len(value.Array()) > 0 {
 		data.StaticNat66 = make([]TransportWANVPNInterfaceEthernetStaticNat66, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetStaticNat66{}
@@ -2964,7 +3004,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.AclIpv6IngressFeatureId = types.StringValue(va.String())
 		}
 	}
-	if value := res.Get(path + "arp"); value.Exists() {
+	if value := res.Get(path + "arp"); value.Exists() && len(value.Array()) > 0 {
 		data.Arps = make([]TransportWANVPNInterfaceEthernetArps, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceEthernetArps{}
@@ -3154,10 +3194,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 	}
 }
 
-// End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *TransportWANVPNInterfaceEthernet) updateFromBody(ctx context.Context, res gjson.Result) {
+func (data *TransportWANVPNInterfaceEthernet) updateFromBody(ctx context.Context, res gjson.Result, currentVersion *version.Version) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -3949,8 +3986,12 @@ func (data *TransportWANVPNInterfaceEthernet) updateFromBody(ctx context.Context
 	}
 	data.NatLoopback = types.StringNull()
 	data.NatLoopbackVariable = types.StringNull()
-	if t := res.Get(path + "natAttributesIpv4.natLookback.optionType"); t.Exists() {
-		va := res.Get(path + "natAttributesIpv4.natLookback.value")
+	natLookBackRef := "natLookback"
+	if !currentVersion.LessThan(MinTransportWANVPNInterfaceEthernetUpdateVersion) {
+		natLookBackRef = "natLoopback"
+	}
+	if t := res.Get(path + "natAttributesIpv4." + natLookBackRef + ".optionType"); t.Exists() {
+		va := res.Get(path + "natAttributesIpv4." + natLookBackRef + ".value")
 		if t.String() == "variable" {
 			data.NatLoopbackVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
@@ -4484,5 +4525,3 @@ func (data *TransportWANVPNInterfaceEthernet) updateFromBody(ctx context.Context
 		}
 	}
 }
-
-// End of section. //template:end updateFromBody

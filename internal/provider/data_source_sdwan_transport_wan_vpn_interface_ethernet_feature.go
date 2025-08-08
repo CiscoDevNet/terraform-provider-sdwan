@@ -24,6 +24,7 @@ import (
 	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -1007,7 +1008,6 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Configure(_ co
 
 // End of section. //template:end model
 
-// Section below is generated&owned by "gen/generator.go". //template:begin read
 func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	var config TransportWANVPNInterfaceEthernet
 
@@ -1020,18 +1020,19 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Read(ctx conte
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
 
+	// Get Manager Version
+	currentVersion := version.Must(version.NewVersion(d.client.ManagerVersion))
+
 	res, err := d.client.Get(config.getPath() + "/" + url.QueryEscape(config.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return
 	}
 
-	config.fromBody(ctx, res)
+	config.fromBody(ctx, res, currentVersion)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Name.ValueString()))
 
 	diags = resp.State.Set(ctx, &config)
 	resp.Diagnostics.Append(diags...)
 }
-
-// End of section. //template:end read

@@ -50,10 +50,12 @@ type IPv4ACLPolicyDefinitionSequences struct {
 
 type IPv4ACLPolicyDefinitionSequencesMatchEntries struct {
 	Type                                 types.String `tfsdk:"type"`
-	Dscp                                 types.Int64  `tfsdk:"dscp"`
+	Dscp                                 types.String `tfsdk:"dscp"`
 	SourceIp                             types.String `tfsdk:"source_ip"`
+	SourceIpVariable                     types.String `tfsdk:"source_ip_variable"`
 	IcmpMessage                          types.String `tfsdk:"icmp_message"`
 	DestinationIp                        types.String `tfsdk:"destination_ip"`
+	DestinationIpVariable                types.String `tfsdk:"destination_ip_variable"`
 	ClassMapId                           types.String `tfsdk:"class_map_id"`
 	ClassMapVersion                      types.Int64  `tfsdk:"class_map_version"`
 	PacketLength                         types.Int64  `tfsdk:"packet_length"`
@@ -134,16 +136,22 @@ func (data IPv4ACLPolicyDefinition) toBody(ctx context.Context) string {
 						itemChildBody, _ = sjson.Set(itemChildBody, "field", childItem.Type.ValueString())
 					}
 					if !childItem.Dscp.IsNull() && childItem.Type.ValueString() == "dscp" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Dscp.ValueInt64()))
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Dscp.ValueString()))
 					}
 					if !childItem.SourceIp.IsNull() && childItem.Type.ValueString() == "sourceIp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.SourceIp.ValueString())
+					}
+					if !childItem.SourceIpVariable.IsNull() && childItem.Type.ValueString() == "sourceIp" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "vipVariableName", childItem.SourceIpVariable.ValueString())
 					}
 					if !childItem.IcmpMessage.IsNull() && childItem.Type.ValueString() == "icmpMessage" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.IcmpMessage.ValueString())
 					}
 					if !childItem.DestinationIp.IsNull() && childItem.Type.ValueString() == "destinationIp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.DestinationIp.ValueString())
+					}
+					if !childItem.DestinationIpVariable.IsNull() && childItem.Type.ValueString() == "destinationIp" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "vipVariableName", childItem.DestinationIpVariable.ValueString())
 					}
 					if !childItem.ClassMapId.IsNull() && childItem.Type.ValueString() == "class" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.ClassMapId.ValueString())
@@ -273,14 +281,19 @@ func (data *IPv4ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Res
 						cItem.Type = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "dscp" {
-						cItem.Dscp = types.Int64Value(ccValue.Int())
+						cItem.Dscp = types.StringValue(ccValue.String())
 					} else {
-						cItem.Dscp = types.Int64Null()
+						cItem.Dscp = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "sourceIp" {
 						cItem.SourceIp = types.StringValue(ccValue.String())
 					} else {
 						cItem.SourceIp = types.StringNull()
+					}
+					if ccValue := cv.Get("vipVariableName"); ccValue.Exists() && cItem.Type.ValueString() == "sourceIp" {
+						cItem.SourceIpVariable = types.StringValue(ccValue.String())
+					} else {
+						cItem.SourceIpVariable = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "icmpMessage" {
 						cItem.IcmpMessage = types.StringValue(ccValue.String())
@@ -291,6 +304,11 @@ func (data *IPv4ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Res
 						cItem.DestinationIp = types.StringValue(ccValue.String())
 					} else {
 						cItem.DestinationIp = types.StringNull()
+					}
+					if ccValue := cv.Get("vipVariableName"); ccValue.Exists() && cItem.Type.ValueString() == "destinationIp" {
+						cItem.DestinationIpVariable = types.StringValue(ccValue.String())
+					} else {
+						cItem.DestinationIpVariable = types.StringNull()
 					}
 					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "class" {
 						cItem.ClassMapId = types.StringValue(ccValue.String())
@@ -467,10 +485,16 @@ func (data *IPv4ACLPolicyDefinition) hasChanges(ctx context.Context, state *IPv4
 					if !data.Sequences[i].MatchEntries[ii].SourceIp.Equal(state.Sequences[i].MatchEntries[ii].SourceIp) {
 						hasChanges = true
 					}
+					if !data.Sequences[i].MatchEntries[ii].SourceIpVariable.Equal(state.Sequences[i].MatchEntries[ii].SourceIpVariable) {
+						hasChanges = true
+					}
 					if !data.Sequences[i].MatchEntries[ii].IcmpMessage.Equal(state.Sequences[i].MatchEntries[ii].IcmpMessage) {
 						hasChanges = true
 					}
 					if !data.Sequences[i].MatchEntries[ii].DestinationIp.Equal(state.Sequences[i].MatchEntries[ii].DestinationIp) {
+						hasChanges = true
+					}
+					if !data.Sequences[i].MatchEntries[ii].DestinationIpVariable.Equal(state.Sequences[i].MatchEntries[ii].DestinationIpVariable) {
 						hasChanges = true
 					}
 					if !data.Sequences[i].MatchEntries[ii].ClassMapId.Equal(state.Sequences[i].MatchEntries[ii].ClassMapId) {
@@ -621,3 +645,35 @@ func (data *IPv4ACLPolicyDefinition) updateVersions(ctx context.Context, state *
 }
 
 // End of section. //template:end updateVersions
+
+// Section below is generated&owned by "gen/generator.go". //template:begin processImport
+func (data *IPv4ACLPolicyDefinition) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+	data.Type = types.StringValue("acl")
+	for i := range data.Sequences {
+		for ii := range data.Sequences[i].MatchEntries {
+			if data.Sequences[i].MatchEntries[ii].ClassMapId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].ClassMapVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].SourceDataIpv4PrefixListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].SourceDataIpv4PrefixListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].DestinationDataIpv4PrefixListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].DestinationDataIpv4PrefixListVersion = types.Int64Value(0)
+			}
+		}
+		for ii := range data.Sequences[i].ActionEntries {
+			if data.Sequences[i].ActionEntries[ii].ClassMapId != types.StringNull() {
+				data.Sequences[i].ActionEntries[ii].ClassMapVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].ActionEntries[ii].MirrorId != types.StringNull() {
+				data.Sequences[i].ActionEntries[ii].MirrorVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].ActionEntries[ii].PolicerId != types.StringNull() {
+				data.Sequences[i].ActionEntries[ii].PolicerVersion = types.Int64Value(0)
+			}
+		}
+	}
+}
+
+// End of section. //template:end processImport

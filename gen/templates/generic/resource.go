@@ -497,9 +497,15 @@ func (r *{{camelCase .Name}}Resource) Read(ctx context.Context, req resource.Rea
 	}
 
 	state.fromBody(ctx, res)
-	{{- if .HasVersion}}
-	if state.Version.IsNull() {
-		state.Version = types.Int64Value(0)
+	
+	{{- if and (not .NoImport) (not (isUx20Feature .)) (or (.HasVersion) (.TypeValue) (hasVersionAttribute .Attributes))}}
+	imp, diags := helpers.IsFlagImporting(ctx, req)
+	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
+		return
+	}
+
+	if imp {
+		state.processImport(ctx)
 	}
 	{{- end}}
 
@@ -619,6 +625,8 @@ func (r *{{camelCase .Name}}Resource) ImportState(ctx context.Context, req resou
 	{{- else}}
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 	{{- end}}
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
 {{- end}}
 // End of section. //template:end import

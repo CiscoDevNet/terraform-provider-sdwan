@@ -1525,7 +1525,7 @@ func (data *TransportWANVPNInterfaceT1E1Serial) fromBody(ctx context.Context, re
 			data.TunnelInterfaceAllowBfd = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "encapsulation"); value.Exists() {
+	if value := res.Get(path + "encapsulation"); value.Exists() && len(value.Array()) > 0 {
 		data.TunnelInterfaceEncapsulations = make([]TransportWANVPNInterfaceT1E1SerialTunnelInterfaceEncapsulations, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportWANVPNInterfaceT1E1SerialTunnelInterfaceEncapsulations{}

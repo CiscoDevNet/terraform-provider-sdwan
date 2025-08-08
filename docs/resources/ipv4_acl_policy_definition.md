@@ -25,7 +25,7 @@ resource "sdwan_ipv4_acl_policy_definition" "example" {
       match_entries = [
         {
           type = "dscp"
-          dscp = 16
+          dscp = "16"
         }
       ]
       action_entries = [
@@ -131,9 +131,9 @@ Optional:
 - `destination_data_ipv4_prefix_list_id` (String) Destination data IPv4 prefix list ID, Attribute conditional on `type` being equal to `destinationDataPrefixList`
 - `destination_data_ipv4_prefix_list_version` (Number) Destination data IPv4 prefix list version
 - `destination_ip` (String) Destination IP prefix, Attribute conditional on `type` being equal to `destinationIp`
+- `destination_ip_variable` (String) Destination IP prefix variable, Attribute conditional on `type` being equal to `destinationIp`
 - `destination_ports` (String) Destination ports. Single value (0-65535) or ranges separated by spaces., Attribute conditional on `type` being equal to `destinationPort`
-- `dscp` (Number) DSCP value, Attribute conditional on `type` being equal to `dscp`
-  - Range: `0`-`63`
+- `dscp` (String) DSCP value, Attribute conditional on `type` being equal to `dscp`
 - `icmp_message` (String) ICMP Message, Attribute conditional on `type` being equal to `icmpMessage`
 - `packet_length` (Number) Packet length, Attribute conditional on `type` being equal to `packetLength`
   - Range: `0`-`65535`
@@ -143,6 +143,7 @@ Optional:
 - `source_data_ipv4_prefix_list_id` (String) Source data IPv4 prefix list ID, Attribute conditional on `type` being equal to `sourceDataPrefixList`
 - `source_data_ipv4_prefix_list_version` (Number) Source data IPv4 prefix list version
 - `source_ip` (String) Source IP prefix, Attribute conditional on `type` being equal to `sourceIp`
+- `source_ip_variable` (String) Source IP prefix variable, Attribute conditional on `type` being equal to `sourceIp`
 - `source_ports` (String) Source ports. Single value (0-65535) or ranges separated by spaces., Attribute conditional on `type` being equal to `sourcePort`
 - `tcp` (String) TCP parameters, Attribute conditional on `type` being equal to `tcp`
   - Choices: `syn`
