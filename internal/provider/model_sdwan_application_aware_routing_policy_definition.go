@@ -55,7 +55,7 @@ type ApplicationAwareRoutingPolicyDefinitionSequencesMatchEntries struct {
 	DnsApplicationListVersion        types.Int64  `tfsdk:"dns_application_list_version"`
 	IcmpMessage                      types.String `tfsdk:"icmp_message"`
 	Dns                              types.String `tfsdk:"dns"`
-	Dscp                             types.Int64  `tfsdk:"dscp"`
+	Dscp                             types.String `tfsdk:"dscp"`
 	Plp                              types.String `tfsdk:"plp"`
 	Protocol                         types.String `tfsdk:"protocol"`
 	SourceDataPrefixListId           types.String `tfsdk:"source_data_prefix_list_id"`
@@ -144,7 +144,7 @@ func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) 
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Dns.ValueString())
 					}
 					if !childItem.Dscp.IsNull() && childItem.Type.ValueString() == "dscp" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Dscp.ValueInt64()))
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Dscp.ValueString()))
 					}
 					if !childItem.Plp.IsNull() && childItem.Type.ValueString() == "plp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Plp.ValueString())
@@ -294,9 +294,9 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 						cItem.Dns = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "dscp" {
-						cItem.Dscp = types.Int64Value(ccValue.Int())
+						cItem.Dscp = types.StringValue(ccValue.String())
 					} else {
-						cItem.Dscp = types.Int64Null()
+						cItem.Dscp = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "plp" {
 						cItem.Plp = types.StringValue(ccValue.String())

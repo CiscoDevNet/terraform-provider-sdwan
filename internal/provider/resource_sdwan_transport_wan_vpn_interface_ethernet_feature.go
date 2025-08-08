@@ -318,226 +318,226 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"per_tunnel_qos": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Per-tunnel Qos").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Per-tunnel Qos, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"per_tunnel_qos_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_qos_mode": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set tunnel QoS mode").AddStringEnumDescription("hub", "spoke").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set tunnel QoS mode, Attribute conditional on `tunnel_interface` being equal to `true`").AddStringEnumDescription("hub", "spoke").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("hub", "spoke"),
 				},
 			},
 			"tunnel_qos_mode_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_bandwidth_percent": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Tunnels Bandwidth Percent").AddIntegerRangeDescription(1, 100).AddDefaultValueDescription("50").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Tunnels Bandwidth Percent, Attribute conditional on `tunnel_interface` being equal to `true`").AddIntegerRangeDescription(1, 100).AddDefaultValueDescription("50").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 100),
 				},
 			},
 			"tunnel_bandwidth_percent_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_bind_loopback_tunnel": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Bind loopback tunnel interface to a physical interface").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Bind loopback tunnel interface to a physical interface, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 32),
 				},
 			},
 			"tunnel_interface_bind_loopback_tunnel_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_carrier": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set carrier for TLOC").AddStringEnumDescription("default", "carrier1", "carrier2", "carrier3", "carrier4", "carrier5", "carrier6", "carrier7", "carrier8").AddDefaultValueDescription("default").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set carrier for TLOC, Attribute conditional on `tunnel_interface` being equal to `true`").AddStringEnumDescription("default", "carrier1", "carrier2", "carrier3", "carrier4", "carrier5", "carrier6", "carrier7", "carrier8").AddDefaultValueDescription("default").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("default", "carrier1", "carrier2", "carrier3", "carrier4", "carrier5", "carrier6", "carrier7", "carrier8"),
 				},
 			},
 			"tunnel_interface_carrier_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_color": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set color for TLOC").AddStringEnumDescription("default", "mpls", "metro-ethernet", "biz-internet", "public-internet", "lte", "3g", "red", "green", "blue", "gold", "silver", "bronze", "custom1", "custom2", "custom3", "private1", "private2", "private3", "private4", "private5", "private6").AddDefaultValueDescription("mpls").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set color for TLOC, Attribute conditional on `tunnel_interface` being equal to `true`").AddStringEnumDescription("default", "mpls", "metro-ethernet", "biz-internet", "public-internet", "lte", "3g", "red", "green", "blue", "gold", "silver", "bronze", "custom1", "custom2", "custom3", "private1", "private2", "private3", "private4", "private5", "private6").AddDefaultValueDescription("mpls").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("default", "mpls", "metro-ethernet", "biz-internet", "public-internet", "lte", "3g", "red", "green", "blue", "gold", "silver", "bronze", "custom1", "custom2", "custom3", "private1", "private2", "private3", "private4", "private5", "private6"),
 				},
 			},
 			"tunnel_interface_color_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_hello_interval": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set time period of control hello packets <100..600000> milli seconds").AddIntegerRangeDescription(100, 600000).AddDefaultValueDescription("1000").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set time period of control hello packets <100..600000> milli seconds, Attribute conditional on `tunnel_interface` being equal to `true`").AddIntegerRangeDescription(100, 600000).AddDefaultValueDescription("1000").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(100, 600000),
 				},
 			},
 			"tunnel_interface_hello_interval_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_hello_tolerance": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set tolerance of control hello packets <12..6000> seconds").AddIntegerRangeDescription(12, 6000).AddDefaultValueDescription("12").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set tolerance of control hello packets <12..6000> seconds, Attribute conditional on `tunnel_interface` being equal to `true`").AddIntegerRangeDescription(12, 6000).AddDefaultValueDescription("12").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(12, 6000),
 				},
 			},
 			"tunnel_interface_hello_tolerance_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_last_resort_circuit": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set TLOC as last resort").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set TLOC as last resort, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"tunnel_interface_last_resort_circuit_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_gre_tunnel_destination_ip": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("GRE tunnel destination IP").String,
+				MarkdownDescription: helpers.NewAttributeDescription("GRE tunnel destination IP, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_gre_tunnel_destination_ip_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_color_restrict": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Restrict this TLOC behavior").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Restrict this TLOC behavior, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"tunnel_interface_color_restrict_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_groups": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of groups").AddIntegerRangeDescription(1, 4294967295).String,
+				MarkdownDescription: helpers.NewAttributeDescription("List of groups, Attribute conditional on `tunnel_interface` being equal to `true`").AddIntegerRangeDescription(1, 4294967295).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 4294967295),
 				},
 			},
 			"tunnel_interface_groups_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_border": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set TLOC as border TLOC").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set TLOC as border TLOC, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"tunnel_interface_border_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_max_control_connections": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Maximum Control Connections").AddIntegerRangeDescription(0, 100).String,
+				MarkdownDescription: helpers.NewAttributeDescription("Maximum Control Connections, Attribute conditional on `tunnel_interface` being equal to `true`").AddIntegerRangeDescription(0, 100).String,
 				Optional:            true,
 			},
 			"tunnel_interface_max_control_connections_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_nat_refresh_interval": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set time period of nat refresh packets <1...60> seconds").AddIntegerRangeDescription(1, 60).AddDefaultValueDescription("5").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set time period of nat refresh packets <1...60> seconds, Attribute conditional on `tunnel_interface` being equal to `true`").AddIntegerRangeDescription(1, 60).AddDefaultValueDescription("5").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 60),
 				},
 			},
 			"tunnel_interface_nat_refresh_interval_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_vbond_as_stun_server": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Put this wan interface in STUN mode only").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Put this wan interface in STUN mode only, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"tunnel_interface_vbond_as_stun_server_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_exclude_controller_group_list": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Exclude the following controller groups defined in this list.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Exclude the following controller groups defined in this list., Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				ElementType:         types.Int64Type,
 				Optional:            true,
 			},
 			"tunnel_interface_exclude_controller_group_list_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_vmanage_connection_preference": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set interface preference for control connection to vManage <0..8>").AddIntegerRangeDescription(0, 8).AddDefaultValueDescription("5").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set interface preference for control connection to vManage <0..8>, Attribute conditional on `tunnel_interface` being equal to `true`").AddIntegerRangeDescription(0, 8).AddDefaultValueDescription("5").String,
 				Optional:            true,
 			},
 			"tunnel_interface_vmanage_connection_preference_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_port_hop": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Disallow port hopping on the tunnel interface").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Disallow port hopping on the tunnel interface, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
 			"tunnel_interface_port_hop_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_low_bandwidth_link": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set the interface as a low-bandwidth circuit").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set the interface as a low-bandwidth circuit, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"tunnel_interface_low_bandwidth_link_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_tunnel_tcp_mss": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Tunnel TCP MSS on SYN packets, in bytes").AddIntegerRangeDescription(500, 1460).String,
+				MarkdownDescription: helpers.NewAttributeDescription("Tunnel TCP MSS on SYN packets, in bytes, Attribute conditional on `tunnel_interface` being equal to `true`").AddIntegerRangeDescription(500, 1460).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(500, 1460),
 				},
 			},
 			"tunnel_interface_tunnel_tcp_mss_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_clear_dont_fragment": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable clear dont fragment (Currently Only SDWAN Tunnel Interface)").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable clear dont fragment (Currently Only SDWAN Tunnel Interface), Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"tunnel_interface_clear_dont_fragment_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_cts_sgt_propagation": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("CTS SGT Propagation configuration").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("CTS SGT Propagation configuration, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"tunnel_interface_cts_sgt_propagation_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_network_broadcast": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Accept and respond to network-prefix-directed broadcasts").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Accept and respond to network-prefix-directed broadcasts, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"tunnel_interface_network_broadcast_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_allow_all": schema.BoolAttribute{

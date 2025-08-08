@@ -175,6 +175,8 @@ Optional:
 
 Import is supported using the following syntax:
 
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
+
 ```shell
 terraform import sdwan_cedge_pim_feature_template.example "f6b2c44c-693c-4763-b010-895aa3d236bd"
 ```

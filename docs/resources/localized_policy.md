@@ -46,20 +46,13 @@ resource "sdwan_localized_policy" "example" {
 ### Optional
 
 - `application_visibility_ipv4` (Boolean) IPv4 application visibility
-  - Default value: `true`
 - `application_visibility_ipv6` (Boolean) IPv6 application visibility
-  - Default value: `true`
 - `cloud_qos` (Boolean) Cloud QoS
-  - Default value: `true`
 - `cloud_qos_service_side` (Boolean) Cloud QoS service side
-  - Default value: `true`
 - `definitions` (Attributes Set) List of policy definitions (see [below for nested schema](#nestedatt--definitions))
 - `flow_visibility_ipv4` (Boolean) IPv4 flow visibility
-  - Default value: `true`
 - `flow_visibility_ipv6` (Boolean) IPv6 flow visibility
-  - Default value: `true`
 - `implicit_acl_logging` (Boolean) Implicit ACL logging
-  - Default value: `true`
 - `ipv4_visibility_cache_entries` (Number) IPv4 visibility cache entries
   - Range: `16`-`2000000`
 - `ipv6_visibility_cache_entries` (Number) IPv6 visibility cache entries
@@ -88,6 +81,8 @@ Optional:
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 terraform import sdwan_localized_policy.example "f6b2c44c-693c-4763-b010-895aa3d236bd"

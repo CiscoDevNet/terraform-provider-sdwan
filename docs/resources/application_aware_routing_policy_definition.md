@@ -124,8 +124,7 @@ Optional:
   - Choices: `request`, `response`
 - `dns_application_list_id` (String) DNS Application list ID, Attribute conditional on `type` being equal to `dnsAppList`
 - `dns_application_list_version` (Number) DNS Application list version
-- `dscp` (Number) DSCP value, Attribute conditional on `type` being equal to `dscp`
-  - Range: `0`-`63`
+- `dscp` (String) DSCP value, Attribute conditional on `type` being equal to `dscp`
 - `icmp_message` (String) ICMP Message, Attribute conditional on `type` being equal to `icmpMessage`
 - `plp` (String) PLP, Attribute conditional on `type` being equal to `plp`
   - Choices: `low`, `high`
@@ -140,6 +139,8 @@ Optional:
 ## Import
 
 Import is supported using the following syntax:
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
 terraform import sdwan_application_aware_routing_policy_definition.example "f6b2c44c-693c-4763-b010-895aa3d236bd"
