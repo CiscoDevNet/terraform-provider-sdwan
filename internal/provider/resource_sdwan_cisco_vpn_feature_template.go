@@ -540,12 +540,12 @@ func (r *CiscoVPNFeatureTemplateResource) Schema(ctx context.Context, req resour
 							MarkdownDescription: helpers.NewAttributeDescription("Destination VPN to resolve the prefix").AddDefaultValueDescription("0").String,
 							Optional:            true,
 						},
-						"interface": schema.ListAttribute{
+						"interfaces": schema.ListAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of GRE Interfaces").String,
 							ElementType:         types.StringType,
 							Optional:            true,
 						},
-						"interface_variable": schema.StringAttribute{
+						"interfaces_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
@@ -573,12 +573,12 @@ func (r *CiscoVPNFeatureTemplateResource) Schema(ctx context.Context, req resour
 							MarkdownDescription: helpers.NewAttributeDescription("Destination VPN to resolve the prefix").AddDefaultValueDescription("0").String,
 							Optional:            true,
 						},
-						"interface": schema.ListAttribute{
+						"interfaces": schema.ListAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of IPSEC Interfaces (Separated by commas)").String,
 							ElementType:         types.StringType,
 							Optional:            true,
 						},
-						"interface_variable": schema.StringAttribute{
+						"interfaces_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
