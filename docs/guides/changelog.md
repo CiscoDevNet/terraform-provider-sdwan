@@ -11,6 +11,7 @@ description: |-
 
 - Fix type of `interface` attribute of `sdwan_cisco_vpn_feature_template` under `ipv4_static_ipsec_routes` & `ipv4_static_gre_routes`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/474)
 - Fix type of `as_path_prepend` attribute of `sdwan_service_route_policy_feature` and `sdwan_transport_route_policy_feature`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/474)
+- Add missing options under `unsupported_features` attribute of `sdwan_configuration_group`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/478)
 
 ## 0.6.2
 
