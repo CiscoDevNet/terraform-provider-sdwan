@@ -1741,7 +1741,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 			data.MultipathRelax = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "neighbor"); value.Exists() {
+	if value := res.Get(path + "neighbor"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4Neighbors = make([]TransportRoutingBGPIpv4Neighbors, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportRoutingBGPIpv4Neighbors{}
@@ -1903,7 +1903,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 					item.AllowasInNumber = types.Int64Value(va.Int())
 				}
 			}
-			if cValue := v.Get("addressFamily"); cValue.Exists() {
+			if cValue := v.Get("addressFamily"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.AddressFamilies = make([]TransportRoutingBGPIpv4NeighborsAddressFamilies, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TransportRoutingBGPIpv4NeighborsAddressFamilies{}
@@ -1934,6 +1934,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 								cItem.RestartMaxNumberOfPrefixes = types.Int64Value(va.Int())
 							}
 						}
+						cItem.PolicyType = types.StringValue("restart")
 					}
 					cItem.RestartThreshold = types.Int64Null()
 					cItem.RestartThresholdVariable = types.StringNull()
@@ -1946,6 +1947,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 								cItem.RestartThreshold = types.Int64Value(va.Int())
 							}
 						}
+						cItem.PolicyType = types.StringValue("restart")
 					}
 					cItem.RestartInterval = types.Int64Null()
 					cItem.RestartIntervalVariable = types.StringNull()
@@ -1958,6 +1960,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 								cItem.RestartInterval = types.Int64Value(va.Int())
 							}
 						}
+						cItem.PolicyType = types.StringValue("restart")
 					}
 					cItem.WarningMessageMaxNumberOfPrefixes = types.Int64Null()
 					cItem.WarningMessageMaxNumberOfPrefixesVariable = types.StringNull()
@@ -1970,6 +1973,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 								cItem.WarningMessageMaxNumberOfPrefixes = types.Int64Value(va.Int())
 							}
 						}
+						cItem.PolicyType = types.StringValue("warning-only")
 					}
 					cItem.WarningMessageThreshold = types.Int64Null()
 					cItem.WarningMessageThresholdVariable = types.StringNull()
@@ -1982,6 +1986,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 								cItem.WarningMessageThreshold = types.Int64Value(va.Int())
 							}
 						}
+						cItem.PolicyType = types.StringValue("warning-only")
 					}
 					cItem.DisablePeerMaxNumberOfPrefixes = types.Int64Null()
 					cItem.DisablePeerMaxNumberOfPrefixesVariable = types.StringNull()
@@ -1994,6 +1999,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 								cItem.DisablePeerMaxNumberOfPrefixes = types.Int64Value(va.Int())
 							}
 						}
+						cItem.PolicyType = types.StringValue("disable-peer")
 					}
 					cItem.DisablePeerThreshold = types.Int64Null()
 					cItem.DisablePeerThresholdVariable = types.StringNull()
@@ -2006,6 +2012,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 								cItem.DisablePeerThreshold = types.Int64Value(va.Int())
 							}
 						}
+						cItem.PolicyType = types.StringValue("disable-peer")
 					}
 					cItem.InRoutePolicyId = types.StringNull()
 
@@ -2031,7 +2038,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 			return true
 		})
 	}
-	if value := res.Get(path + "ipv6Neighbor"); value.Exists() {
+	if value := res.Get(path + "ipv6Neighbor"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6Neighbors = make([]TransportRoutingBGPIpv6Neighbors, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportRoutingBGPIpv6Neighbors{}
@@ -2175,7 +2182,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 					item.AllowasInNumber = types.Int64Value(va.Int())
 				}
 			}
-			if cValue := v.Get("addressFamily"); cValue.Exists() {
+			if cValue := v.Get("addressFamily"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.AddressFamilies = make([]TransportRoutingBGPIpv6NeighborsAddressFamilies, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TransportRoutingBGPIpv6NeighborsAddressFamilies{}
@@ -2249,7 +2256,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 			return true
 		})
 	}
-	if value := res.Get(path + "addressFamily.aggregateAddress"); value.Exists() {
+	if value := res.Get(path + "addressFamily.aggregateAddress"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4AggregateAddresses = make([]TransportRoutingBGPIpv4AggregateAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportRoutingBGPIpv4AggregateAddresses{}
@@ -2297,7 +2304,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 			return true
 		})
 	}
-	if value := res.Get(path + "addressFamily.network"); value.Exists() {
+	if value := res.Get(path + "addressFamily.network"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4Networks = make([]TransportRoutingBGPIpv4Networks, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportRoutingBGPIpv4Networks{}
@@ -2363,7 +2370,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 			data.Ipv4TableMapFilter = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "addressFamily.redistribute"); value.Exists() {
+	if value := res.Get(path + "addressFamily.redistribute"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4Redistributes = make([]TransportRoutingBGPIpv4Redistributes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportRoutingBGPIpv4Redistributes{}
@@ -2389,7 +2396,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 			return true
 		})
 	}
-	if value := res.Get(path + "ipv6AddressFamily.ipv6AggregateAddress"); value.Exists() {
+	if value := res.Get(path + "ipv6AddressFamily.ipv6AggregateAddress"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6AggregateAddresses = make([]TransportRoutingBGPIpv6AggregateAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportRoutingBGPIpv6AggregateAddresses{}
@@ -2427,7 +2434,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 			return true
 		})
 	}
-	if value := res.Get(path + "ipv6AddressFamily.ipv6Network"); value.Exists() {
+	if value := res.Get(path + "ipv6AddressFamily.ipv6Network"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6Networks = make([]TransportRoutingBGPIpv6Networks, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportRoutingBGPIpv6Networks{}
@@ -2483,7 +2490,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 			data.Ipv6TableMapFilter = types.BoolValue(va.Bool())
 		}
 	}
-	if value := res.Get(path + "ipv6AddressFamily.redistribute"); value.Exists() {
+	if value := res.Get(path + "ipv6AddressFamily.redistribute"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6Redistributes = make([]TransportRoutingBGPIpv6Redistributes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportRoutingBGPIpv6Redistributes{}
@@ -2509,7 +2516,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 			return true
 		})
 	}
-	if value := res.Get(path + "mplsInterface"); value.Exists() {
+	if value := res.Get(path + "mplsInterface"); value.Exists() && len(value.Array()) > 0 {
 		data.MplsInterfaces = make([]TransportRoutingBGPMplsInterfaces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportRoutingBGPMplsInterfaces{}
