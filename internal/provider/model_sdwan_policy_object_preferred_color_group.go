@@ -66,7 +66,6 @@ func (data PolicyObjectPreferredColorGroup) getPath() string {
 
 // End of section. //template:end getPath
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data PolicyObjectPreferredColorGroup) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
@@ -76,7 +75,9 @@ func (data PolicyObjectPreferredColorGroup) toBody(ctx context.Context) string {
 
 		for _, item := range data.Entries {
 			itemBody := ""
-			if !item.PrimaryColorPreference.IsNull() {
+			if item.PrimaryColorPreference.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "primaryPreference", map[string]interface{}{})
+			} else {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "primaryPreference.colorPreference.optionType", "global")
 					var values []string
@@ -90,7 +91,9 @@ func (data PolicyObjectPreferredColorGroup) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "primaryPreference.pathPreference.value", item.PrimaryPathPreference.ValueString())
 				}
 			}
-			if !item.SecondaryColorPreference.IsNull() {
+			if item.SecondaryColorPreference.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "secondaryPreference", map[string]interface{}{})
+			} else {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "secondaryPreference.colorPreference.optionType", "global")
 					var values []string
@@ -104,7 +107,9 @@ func (data PolicyObjectPreferredColorGroup) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "secondaryPreference.pathPreference.value", item.SecondaryPathPreference.ValueString())
 				}
 			}
-			if !item.TertiaryColorPreference.IsNull() {
+			if item.TertiaryColorPreference.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "tertiaryPreference", map[string]interface{}{})
+			} else {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "tertiaryPreference.colorPreference.optionType", "global")
 					var values []string
@@ -123,8 +128,6 @@ func (data PolicyObjectPreferredColorGroup) toBody(ctx context.Context) string {
 	}
 	return body
 }
-
-// End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *PolicyObjectPreferredColorGroup) fromBody(ctx context.Context, res gjson.Result) {
