@@ -1,4 +1,4 @@
-# Manual resource - 
+# Manual resource - Modals toBody is manually configured to empty interfaces for `secondary_color_preference` and `tertiary_color_preference`
 ---
 name: Preferred Color Group Policy Object
 rest_endpoint: /template/policy/list/preferredcolorgroup/
