@@ -9,16 +9,21 @@
 - Add `sdwan_policy_group` resource and data source
 - Adds `enhanced_app_aware_routing` support to the `sdwan_cisco_system_feature_template` resource and data source
 - Add `gateway` attribute for `ipv4_static_routes` and `ipv6_static_routes` in `sdwan_service_lan_vpn_feature` resource
-- Fix issue causing `sdwan_transport_routing_bgp_feature` to fail to apply when `policy_type` is set to `off`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/475)
-- BREAKING CHANGE: `sdwan_cisco_vpn_feature_template`: rename `interface` attribute to `interfaces`
+- BREAKING CHANGE: Rename `interface` attribute of `sdwan_cisco_vpn_feature_template` resource to `interfaces`
 - Fix type of `interfaces` attribute of `sdwan_cisco_vpn_feature_template` under `ipv4_static_ipsec_routes` & `ipv4_static_gre_routes`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/474)
 - Fix type of `as_path_prepend` attribute of `sdwan_service_route_policy_feature` and `sdwan_transport_route_policy_feature`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/474)
+- Fix issue causing the `sdwan_policy_object_preferred_color_group` resource to fail, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/495)
+- BREAKING CHANGE: Refactor `max_number_of_prefixes`, `restart_interval` and `threshold` of `sdwan_service_routing_bgp_feature` resource, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/475)
 
 ## 0.6.2
 
 - Fix issue causing changes to applied feature templates to fail, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/417)
 - Fix issue with service lan vpn feature when route-policy is not defined, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/450)
 - Prevent updates to `sdwan_activate_centralized_policy` resources being reverted, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/452)
+- BREAKING CHANGE: Fix type of `dscp` attribute of `sdwan_application_aware_routing_policy_definition` and `sdwan_traffic_data_policy_definition`, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/460)
+- Fix issue where required attributes were marked as optional in the documentation
+- Fix issue causing `sdwan_transport_route_policy_feature` to fail to apply when `default_action` is set to `reject`,  [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/439)
+- BREAKING CHANGE: Refactor `max_number_of_prefixes`, `restart_interval` and `threshold` of `sdwan_transport_routing_bgp_feature` resource, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/413)
 
 ## 0.6.1
 
