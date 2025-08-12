@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## 0.6.3 (unreleased)
+## 0.7.0
 
 - BREAKING CHANGE: Rename `tls_ssl_profile_version` attribute of `sdwan_tls_ssl_decryption_policy_definition` resource to `tls_ssl_profile_policy_version`
 - BREAKING CHANGE: Rename `sla_class_list` attribute of `sdwan_application_aware_routing_policy_definition` resource to `sla_class_list_id`
