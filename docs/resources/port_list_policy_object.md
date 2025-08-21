@@ -17,7 +17,7 @@ resource "sdwan_port_list_policy_object" "example" {
   name = "Example"
   entries = [
     {
-      port = 80
+      port = "80"
     }
   ]
 }
@@ -41,8 +41,7 @@ resource "sdwan_port_list_policy_object" "example" {
 
 Optional:
 
-- `port` (Number) Port number
-  - Range: `1`-`65535`
+- `port` (String) Port number
 
 ## Import
 

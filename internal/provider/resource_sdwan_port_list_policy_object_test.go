@@ -53,7 +53,7 @@ func testAccSdwanPortListPolicyObjectConfig_all() string {
 	config := `resource "sdwan_port_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
-	config += `	  port = 80` + "\n"
+	config += `	  port = "80"` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 	return config
