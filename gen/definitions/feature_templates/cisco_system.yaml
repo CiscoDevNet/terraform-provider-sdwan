@@ -185,6 +185,7 @@ attributes:
     type: String
     default_value_present: true
     default_value: "disabled"
+    variable: true
     exclude_test: true
     enum_values: ["disabled", "aggressive", "moderate", "conservative"]
     example: aggressive

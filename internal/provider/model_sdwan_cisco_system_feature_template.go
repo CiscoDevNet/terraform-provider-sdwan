@@ -109,6 +109,7 @@ type CiscoSystem struct {
 	TransportGateway                  types.Bool                             `tfsdk:"transport_gateway"`
 	TransportGatewayVariable          types.String                           `tfsdk:"transport_gateway_variable"`
 	EnhancedAppAwareRouting           types.String                           `tfsdk:"enhanced_app_aware_routing"`
+	EnhancedAppAwareRoutingVariable   types.String                           `tfsdk:"enhanced_app_aware_routing_variable"`
 	EnableMrfMigration                types.String                           `tfsdk:"enable_mrf_migration"`
 	MigrationBgpCommunity             types.Int64                            `tfsdk:"migration_bgp_community"`
 }
@@ -916,7 +917,11 @@ func (data CiscoSystem) toBody(ctx context.Context, version *version.Version) st
 	}
 	if version.LessThan(MinCiscoSytemUpdateVersion) {
 	} else {
-		if data.EnhancedAppAwareRouting.IsNull() {
+		if !data.EnhancedAppAwareRoutingVariable.IsNull() {
+			body, _ = sjson.Set(body, path+"epfr."+"vipObjectType", "object")
+			body, _ = sjson.Set(body, path+"epfr."+"vipType", "variableName")
+			body, _ = sjson.Set(body, path+"epfr."+"vipVariableName", data.EnhancedAppAwareRoutingVariable.ValueString())
+		} else if data.EnhancedAppAwareRouting.IsNull() {
 			body, _ = sjson.Set(body, path+"epfr."+"vipObjectType", "object")
 			body, _ = sjson.Set(body, path+"epfr."+"vipType", "ignore")
 		} else {
@@ -2019,17 +2024,20 @@ func (data *CiscoSystem) fromBody(ctx context.Context, res gjson.Result) {
 		if value.String() == "variableName" {
 			data.EnhancedAppAwareRouting = types.StringNull()
 
+			v := res.Get(path + "epfr.vipVariableName")
+			data.EnhancedAppAwareRoutingVariable = types.StringValue(v.String())
+
 		} else if value.String() == "ignore" {
 			data.EnhancedAppAwareRouting = types.StringNull()
-
+			data.EnhancedAppAwareRoutingVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "epfr.vipValue")
 			data.EnhancedAppAwareRouting = types.StringValue(v.String())
-
+			data.EnhancedAppAwareRoutingVariable = types.StringNull()
 		}
 	} else {
 		data.EnhancedAppAwareRouting = types.StringNull()
-
+		data.EnhancedAppAwareRoutingVariable = types.StringNull()
 	}
 	if value := res.Get(path + "enable-mrf-migration.vipType"); value.Exists() {
 		if value.String() == "variableName" {
