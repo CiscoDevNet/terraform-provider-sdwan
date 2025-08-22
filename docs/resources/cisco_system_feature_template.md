@@ -112,6 +112,7 @@ resource "sdwan_cisco_system_feature_template" "example" {
 - `enhanced_app_aware_routing` (String) Enhanced App Aware Routing
   - Choices: `disabled`, `aggressive`, `moderate`, `conservative`
   - Default value: `disabled`
+- `enhanced_app_aware_routing_variable` (String) Variable name
 - `geo_fencing` (Boolean) Enable Geo fencing
   - Default value: `false`
 - `geo_fencing_range` (Number) Set the device’s geo fencing range

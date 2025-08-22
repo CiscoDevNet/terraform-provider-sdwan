@@ -46,6 +46,7 @@ data "sdwan_cisco_system_feature_template" "example" {
 - `device_types` (Set of String) List of supported device types
 - `enable_mrf_migration` (String) Enable migration mode to Multi-Region Fabric
 - `enhanced_app_aware_routing` (String) Enhanced App Aware Routing
+- `enhanced_app_aware_routing_variable` (String) Variable name
 - `geo_fencing` (Boolean) Enable Geo fencing
 - `geo_fencing_range` (Number) Set the device’s geo fencing range
 - `geo_fencing_range_variable` (String) Variable name
