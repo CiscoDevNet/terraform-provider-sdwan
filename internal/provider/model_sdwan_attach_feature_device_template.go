@@ -221,64 +221,87 @@ func (data AttachFeatureDeviceTemplate) toBody(ctx context.Context, client *sdwa
 }
 
 func (data *AttachFeatureDeviceTemplate) readVariables(ctx context.Context, client *sdwan.Client) error {
-	for i := range data.Devices {
-		// Retrieve device variables
-		body, _ := sjson.Set("", "templateId", data.Id.ValueString())
-		body, _ = sjson.Set(body, "deviceIds", []string{data.Devices[i].Id.ValueString()})
-		body, _ = sjson.Set(body, "isEdited", false)
-		body, _ = sjson.Set(body, "isMasterEdited", false)
-		res, err := client.Post("/template/device/config/input", body)
-		if err != nil {
-			return err
-		}
-		// Get variable mappings
-		mappings := make(map[string]string)
-		if value := res.Get("header.columns"); value.Exists() {
-			value.ForEach(func(k, v gjson.Result) bool {
-				if v.Get("editable").Bool() {
-					title := v.Get("title").String()
-					if strings.Contains(title, "(") {
-						matches := regexp.MustCompile(`\((.*?)\)`).FindAllString(title, -1)
-						varName := matches[len(matches)-1]
-						if len(varName) > 0 {
-							varName = varName[1 : len(varName)-1]
-						}
-						mappings[varName] = v.Get("property").String()
-					} else if !v.Get("templateType").Exists() {
-						// handle CLI template variables
-						mappings[title] = title
-					} else {
-						// handle factory default feature template variables
-						property := v.Get("property").String()
-						if property == "//system/host-name" {
-							mappings["system_host_name"] = property
-						} else if property == "//system/system-ip" {
-							mappings["system_system_ip"] = property
-						} else if property == "//system/site-id" {
-							mappings["system_site_id"] = property
-						}
+	// Retrieve list of devices assigned to this device template
+	res, err := client.Get("/template/device/config/attached/" + data.Id.ValueString())
+	if err != nil {
+		return err
+	}
+	attachedDevices := make([]string, 0)
+	for _, device := range res.Get("data").Array() {
+		attachedDevices = append(attachedDevices, device.Get("uuid").String())
+	}
+	// Retrieve device variables
+	body, _ := sjson.Set("", "templateId", data.Id.ValueString())
+	body, _ = sjson.Set(body, "deviceIds", attachedDevices)
+	body, _ = sjson.Set(body, "isEdited", false)
+	body, _ = sjson.Set(body, "isMasterEdited", false)
+	res, err = client.Post("/template/device/config/input", body)
+	if err != nil {
+		return err
+	}
+	// Get variable mappings
+	mappings := make(map[string]string)
+	if value := res.Get("header.columns"); value.Exists() {
+		value.ForEach(func(k, v gjson.Result) bool {
+			if v.Get("editable").Bool() {
+				title := v.Get("title").String()
+				if strings.Contains(title, "(") {
+					matches := regexp.MustCompile(`\((.*?)\)`).FindAllString(title, -1)
+					varName := matches[len(matches)-1]
+					if len(varName) > 0 {
+						varName = varName[1 : len(varName)-1]
+					}
+					mappings[varName] = v.Get("property").String()
+				} else if !v.Get("templateType").Exists() {
+					// handle CLI template variables
+					mappings[title] = title
+				} else {
+					// handle factory default feature template variables
+					property := v.Get("property").String()
+					if property == "//system/host-name" {
+						mappings["system_host_name"] = property
+					} else if property == "//system/system-ip" {
+						mappings["system_system_ip"] = property
+					} else if property == "//system/site-id" {
+						mappings["system_site_id"] = property
 					}
 				}
-				return true
-			})
-		}
-		// Get current device variables
-		variables := make(map[string]string)
-		if value := res.Get("data.0"); value.Exists() {
-			value.ForEach(func(k, v gjson.Result) bool {
-				variables[k.String()] = v.String()
-				return true
-			})
-		}
-
-		// Resolve variable names and insert template variable values
-		newTemplateVariables := make(map[string]attr.Value)
-		for k := range mappings {
-			if _, ok := variables[mappings[k]]; ok {
-				newTemplateVariables[k] = types.StringValue(variables[mappings[k]])
 			}
+			return true
+		})
+	}
+	for i := 0; i < len(data.Devices); {
+		if helpers.Contains(attachedDevices, data.Devices[i].Id.ValueString()) {
+			// Get current device variables
+			variables := make(map[string]string)
+			// Find the correct device data by matching csv-deviceId with the device Id
+			var value gjson.Result
+			for _, deviceData := range res.Get("data").Array() {
+				if deviceData.Get("csv-deviceId").String() == data.Devices[i].Id.ValueString() {
+					value = deviceData
+					break
+				}
+			}
+			if value.Exists() {
+				value.ForEach(func(k, v gjson.Result) bool {
+					variables[k.String()] = v.String()
+					return true
+				})
+			}
+
+			// Resolve variable names and insert template variable values
+			newTemplateVariables := make(map[string]attr.Value)
+			for k := range mappings {
+				if _, ok := variables[mappings[k]]; ok {
+					newTemplateVariables[k] = types.StringValue(variables[mappings[k]])
+				}
+			}
+			data.Devices[i].Variables = types.MapValueMust(types.StringType, newTemplateVariables)
+			i++
+		} else {
+			// Remove device if not attached
+			data.Devices = append(data.Devices[:i], data.Devices[i+1:]...)
 		}
-		data.Devices[i].Variables = types.MapValueMust(types.StringType, newTemplateVariables)
 	}
 
 	return nil
