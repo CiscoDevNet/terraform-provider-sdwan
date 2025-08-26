@@ -135,3 +135,4 @@ Read-Only:
 - `protocol` (String) Set the protocol
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
+- `translate_rib_metric` (Boolean) Translate Rib Metric

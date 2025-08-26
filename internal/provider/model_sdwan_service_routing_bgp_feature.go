@@ -22,13 +22,17 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"strconv"
 
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 // End of section. //template:end imports
+
+var MinServiceRoutingBGPUpdateVersion = version.Must(version.NewVersion("20.15.0"))
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type ServiceRoutingBGP struct {
@@ -178,9 +182,10 @@ type ServiceRoutingBGPIpv4Networks struct {
 }
 
 type ServiceRoutingBGPIpv4Redistributes struct {
-	Protocol         types.String `tfsdk:"protocol"`
-	ProtocolVariable types.String `tfsdk:"protocol_variable"`
-	RoutePolicyId    types.String `tfsdk:"route_policy_id"`
+	Protocol           types.String `tfsdk:"protocol"`
+	ProtocolVariable   types.String `tfsdk:"protocol_variable"`
+	RoutePolicyId      types.String `tfsdk:"route_policy_id"`
+	TranslateRibMetric types.Bool   `tfsdk:"translate_rib_metric"`
 }
 
 type ServiceRoutingBGPIpv6AggregateAddresses struct {
@@ -198,9 +203,10 @@ type ServiceRoutingBGPIpv6Networks struct {
 }
 
 type ServiceRoutingBGPIpv6Redistributes struct {
-	Protocol         types.String `tfsdk:"protocol"`
-	ProtocolVariable types.String `tfsdk:"protocol_variable"`
-	RoutePolicyId    types.String `tfsdk:"route_policy_id"`
+	Protocol           types.String `tfsdk:"protocol"`
+	ProtocolVariable   types.String `tfsdk:"protocol_variable"`
+	RoutePolicyId      types.String `tfsdk:"route_policy_id"`
+	TranslateRibMetric types.Bool   `tfsdk:"translate_rib_metric"`
 }
 
 type ServiceRoutingBGPIpv4NeighborsAddressFamilies struct {
@@ -253,8 +259,7 @@ func (data ServiceRoutingBGP) getPath() string {
 
 // End of section. //template:end getPath
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data ServiceRoutingBGP) toBody(ctx context.Context) string {
+func (data ServiceRoutingBGP) toBody(ctx context.Context, version *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -1392,6 +1397,20 @@ func (data ServiceRoutingBGP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.value", item.RoutePolicyId.ValueString())
 				}
 			}
+			if version.LessThan(MinSystemMRFUpdateVersion) {
+			} else {
+				if item.TranslateRibMetric.IsNull() {
+					if true && item.Protocol.ValueString() == "omp" {
+						itemBody, _ = sjson.Set(itemBody, "translateRibMetric.optionType", "default")
+						itemBody, _ = sjson.Set(itemBody, "translateRibMetric.value", false)
+					}
+				} else {
+					if true && item.Protocol.ValueString() == "omp" {
+						itemBody, _ = sjson.Set(itemBody, "translateRibMetric.optionType", "global")
+						itemBody, _ = sjson.Set(itemBody, "translateRibMetric.value", item.TranslateRibMetric.ValueBool())
+					}
+				}
+			}
 			body, _ = sjson.SetRaw(body, path+"addressFamily.redistribute.-1", itemBody)
 		}
 	}
@@ -1548,13 +1567,25 @@ func (data ServiceRoutingBGP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.value", item.RoutePolicyId.ValueString())
 				}
 			}
+			if version.LessThan(MinSystemMRFUpdateVersion) {
+			} else {
+				if item.TranslateRibMetric.IsNull() {
+					if true && item.Protocol.ValueString() == "omp" {
+						itemBody, _ = sjson.Set(itemBody, "translateRibMetric.optionType", "default")
+						itemBody, _ = sjson.Set(itemBody, "translateRibMetric.value", false)
+					}
+				} else {
+					if true && item.Protocol.ValueString() == "omp" {
+						itemBody, _ = sjson.Set(itemBody, "translateRibMetric.optionType", "global")
+						itemBody, _ = sjson.Set(itemBody, "translateRibMetric.value", item.TranslateRibMetric.ValueBool())
+					}
+				}
+			}
 			body, _ = sjson.SetRaw(body, path+"ipv6AddressFamily.redistribute.-1", itemBody)
 		}
 	}
 	return body
 }
-
-// End of section. //template:end toBody
 
 func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
@@ -2347,6 +2378,15 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 					item.RoutePolicyId = types.StringValue(va.String())
 				}
 			}
+			item.TranslateRibMetric = types.BoolNull()
+
+			if t := v.Get("translateRibMetric.optionType"); t.Exists() {
+				va := v.Get("translateRibMetric.value")
+				if t.String() == "global" {
+					item.TranslateRibMetric = types.BoolValue(va.Bool())
+				}
+				item.Protocol = types.StringValue("omp")
+			}
 			data.Ipv4Redistributes = append(data.Ipv4Redistributes, item)
 			return true
 		})
@@ -2466,6 +2506,15 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 				if t.String() == "global" {
 					item.RoutePolicyId = types.StringValue(va.String())
 				}
+			}
+			item.TranslateRibMetric = types.BoolNull()
+
+			if t := v.Get("translateRibMetric.optionType"); t.Exists() {
+				va := v.Get("translateRibMetric.value")
+				if t.String() == "global" {
+					item.TranslateRibMetric = types.BoolValue(va.Bool())
+				}
+				item.Protocol = types.StringValue("omp")
 			}
 			data.Ipv6Redistributes = append(data.Ipv6Redistributes, item)
 			return true
@@ -3380,9 +3429,9 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 		}
 	}
 	for i := range data.Ipv4Redistributes {
-		keys := [...]string{"protocol", "routePolicy.refId"}
-		keyValues := [...]string{data.Ipv4Redistributes[i].Protocol.ValueString(), data.Ipv4Redistributes[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{data.Ipv4Redistributes[i].ProtocolVariable.ValueString(), ""}
+		keys := [...]string{"protocol", "routePolicy.refId", "translateRibMetric"}
+		keyValues := [...]string{data.Ipv4Redistributes[i].Protocol.ValueString(), data.Ipv4Redistributes[i].RoutePolicyId.ValueString(), strconv.FormatBool(data.Ipv4Redistributes[i].TranslateRibMetric.ValueBool())}
+		keyValuesVariables := [...]string{data.Ipv4Redistributes[i].ProtocolVariable.ValueString(), "", ""}
 
 		var r gjson.Result
 		res.Get(path + "addressFamily.redistribute").ForEach(
@@ -3426,6 +3475,14 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 			va := r.Get("routePolicy.refId.value")
 			if t.String() == "global" {
 				data.Ipv4Redistributes[i].RoutePolicyId = types.StringValue(va.String())
+			}
+		}
+		data.Ipv4Redistributes[i].TranslateRibMetric = types.BoolNull()
+
+		if t := r.Get("translateRibMetric.optionType"); t.Exists() {
+			va := r.Get("translateRibMetric.value")
+			if t.String() == "global" {
+				data.Ipv4Redistributes[i].TranslateRibMetric = types.BoolValue(va.Bool())
 			}
 		}
 	}
@@ -3572,9 +3629,9 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 		}
 	}
 	for i := range data.Ipv6Redistributes {
-		keys := [...]string{"protocol", "routePolicy.refId"}
-		keyValues := [...]string{data.Ipv6Redistributes[i].Protocol.ValueString(), data.Ipv6Redistributes[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{data.Ipv6Redistributes[i].ProtocolVariable.ValueString(), ""}
+		keys := [...]string{"protocol", "routePolicy.refId", "translateRibMetric"}
+		keyValues := [...]string{data.Ipv6Redistributes[i].Protocol.ValueString(), data.Ipv6Redistributes[i].RoutePolicyId.ValueString(), strconv.FormatBool(data.Ipv6Redistributes[i].TranslateRibMetric.ValueBool())}
+		keyValuesVariables := [...]string{data.Ipv6Redistributes[i].ProtocolVariable.ValueString(), "", ""}
 
 		var r gjson.Result
 		res.Get(path + "ipv6AddressFamily.redistribute").ForEach(
@@ -3618,6 +3675,14 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 			va := r.Get("routePolicy.refId.value")
 			if t.String() == "global" {
 				data.Ipv6Redistributes[i].RoutePolicyId = types.StringValue(va.String())
+			}
+		}
+		data.Ipv6Redistributes[i].TranslateRibMetric = types.BoolNull()
+
+		if t := r.Get("translateRibMetric.optionType"); t.Exists() {
+			va := r.Get("translateRibMetric.value")
+			if t.String() == "global" {
+				data.Ipv6Redistributes[i].TranslateRibMetric = types.BoolValue(va.Bool())
 			}
 		}
 	}

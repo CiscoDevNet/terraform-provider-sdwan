@@ -223,6 +223,10 @@ func (d *ServiceRoutingOSPFv3IPv4ProfileParcelDataSource) Schema(ctx context.Con
 							MarkdownDescription: "",
 							Computed:            true,
 						},
+						"translate_rib_metric": schema.BoolAttribute{
+							MarkdownDescription: "Translate Rib Metric",
+							Computed:            true,
+						},
 					},
 				},
 			},

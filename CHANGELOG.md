@@ -1,3 +1,10 @@
+## 0.7.1
+
+- Adds `translate_rib_metric` support to the `sdwan_service_routing_bgp_feature` resource and data source
+- Adds `translate_rib_metric` support to the `sdwan_service_routing_ospf_feature` resource and data source
+- Adds `translate_rib_metric` support to the `sdwan_service_routing_ospfv3_ipv4_feature` resource and data source
+- Adds `translate_rib_metric` support to the `sdwan_service_routing_ospfv3_ipv6_feature` resource and data source
+
 ## 0.7.0
 
 - BREAKING CHANGE: Rename `tls_ssl_profile_version` attribute of `sdwan_tls_ssl_decryption_policy_definition` resource to `tls_ssl_profile_policy_version`

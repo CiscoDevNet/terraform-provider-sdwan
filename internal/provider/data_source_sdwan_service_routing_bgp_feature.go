@@ -691,6 +691,10 @@ func (d *ServiceRoutingBGPProfileParcelDataSource) Schema(ctx context.Context, r
 							MarkdownDescription: "",
 							Computed:            true,
 						},
+						"translate_rib_metric": schema.BoolAttribute{
+							MarkdownDescription: "Translate Rib Metric",
+							Computed:            true,
+						},
 					},
 				},
 			},
@@ -785,6 +789,10 @@ func (d *ServiceRoutingBGPProfileParcelDataSource) Schema(ctx context.Context, r
 						},
 						"route_policy_id": schema.StringAttribute{
 							MarkdownDescription: "",
+							Computed:            true,
+						},
+						"translate_rib_metric": schema.BoolAttribute{
+							MarkdownDescription: "Translate Rib Metric",
 							Computed:            true,
 						},
 					},

@@ -64,6 +64,18 @@ attributes:
       data_path: [routePolicy]
       exclude_test: true
       example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
+    - model_name: translateRibMetric
+      tf_name: translate_rib_metric
+      type: Bool
+      description: Translate Rib Metric
+      example: true
+      exclude_test: true
+      no_augment_config: true
+      default_value_present: true
+      default_value: false
+      conditional_attribute:
+        name: protocol
+        value: omp
   - model_name: routerLsa
     tf_name: router_lsas
     attributes: 

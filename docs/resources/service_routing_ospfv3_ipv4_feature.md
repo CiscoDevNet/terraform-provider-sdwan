@@ -228,6 +228,8 @@ Optional:
   - Choices: `connected`, `static`, `omp`, `nat-route`, `bgp`, `eigrp`
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
+- `translate_rib_metric` (Boolean) Translate Rib Metric, Attribute conditional on `protocol` being equal to `omp`
+  - Default value: `false`
 
 ## Import
 
