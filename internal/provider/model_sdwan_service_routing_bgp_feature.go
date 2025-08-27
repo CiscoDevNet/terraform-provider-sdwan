@@ -1397,7 +1397,7 @@ func (data ServiceRoutingBGP) toBody(ctx context.Context, version *version.Versi
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.value", item.RoutePolicyId.ValueString())
 				}
 			}
-			if version.LessThan(MinSystemMRFUpdateVersion) {
+			if version.LessThan(MinServiceRoutingBGPUpdateVersion) {
 			} else {
 				if item.TranslateRibMetric.IsNull() {
 					if true && item.Protocol.ValueString() == "omp" {
@@ -1567,7 +1567,7 @@ func (data ServiceRoutingBGP) toBody(ctx context.Context, version *version.Versi
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.value", item.RoutePolicyId.ValueString())
 				}
 			}
-			if version.LessThan(MinSystemMRFUpdateVersion) {
+			if version.LessThan(MinServiceRoutingBGPUpdateVersion) {
 			} else {
 				if item.TranslateRibMetric.IsNull() {
 					if true && item.Protocol.ValueString() == "omp" {
