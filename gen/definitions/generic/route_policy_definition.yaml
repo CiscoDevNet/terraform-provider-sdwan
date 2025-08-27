@@ -67,7 +67,7 @@ attributes:
       - model_name: entries
         data_path: [match]
         tf_name: match_entries
-        type: List
+        type: Set
         description: List of match entries
         attributes:
           - model_name: field
@@ -271,7 +271,7 @@ attributes:
       - model_name: parameter
         data_path: [actions.0]
         tf_name: action_entries
-        type: List
+        type: Set
         description: List of action entries
         conditional_list_length: action_entries
         attributes:

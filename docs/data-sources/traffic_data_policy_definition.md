@@ -39,11 +39,11 @@ data "sdwan_traffic_data_policy_definition" "example" {
 
 Read-Only:
 
-- `action_entries` (Attributes List) List of action entries (see [below for nested schema](#nestedatt--sequences--action_entries))
+- `action_entries` (Attributes Set) List of action entries (see [below for nested schema](#nestedatt--sequences--action_entries))
 - `base_action` (String) Base action, either `accept` or `drop`
 - `id` (Number) Sequence ID
 - `ip_type` (String) Sequence IP type, either `ipv4`, `ipv6` or `all`
-- `match_entries` (Attributes List) List of match entries (see [below for nested schema](#nestedatt--sequences--match_entries))
+- `match_entries` (Attributes Set) List of match entries (see [below for nested schema](#nestedatt--sequences--match_entries))
 - `name` (String) Sequence name
 - `type` (String) Sequence type
 

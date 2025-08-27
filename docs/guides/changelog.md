@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.7.1
+
+- Use `set` type for `match_entries` and `actions` in `application_aware_routing_policy`, `custom_control_topology_policy`, `ipv4_acl_policy`, `ipv4_device_acl_policy`, `ipv6_acl_policy`, `ipv6_device_acl_policy`, `route_policy`, `traffic_data_policy`, `zone_based_firewall_policy`
+
 ## 0.7.0
 
 - BREAKING CHANGE: Rename `tls_ssl_profile_version` attribute of `sdwan_tls_ssl_decryption_policy_definition` resource to `tls_ssl_profile_policy_version`
@@ -31,7 +35,7 @@ description: |-
 - Prevent updates to `sdwan_activate_centralized_policy` resources being reverted, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/452)
 - BREAKING CHANGE: Fix type of `dscp` attribute of `sdwan_application_aware_routing_policy_definition` and `sdwan_traffic_data_policy_definition`, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/460)
 - Fix issue where required attributes were marked as optional in the documentation
-- Fix issue causing `sdwan_transport_route_policy_feature` to fail to apply when `default_action` is set to `reject`,  [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/439)
+- Fix issue causing `sdwan_transport_route_policy_feature` to fail to apply when `default_action` is set to `reject`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/439)
 - BREAKING CHANGE: Refactor `max_number_of_prefixes`, `restart_interval` and `threshold` of `sdwan_transport_routing_bgp_feature` resource, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/413)
 
 ## 0.6.1

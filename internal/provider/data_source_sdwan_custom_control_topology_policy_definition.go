@@ -107,7 +107,7 @@ func (d *CustomControlTopologyPolicyDefinitionDataSource) Schema(ctx context.Con
 							MarkdownDescription: "Base action, either `accept` or `reject`",
 							Computed:            true,
 						},
-						"match_entries": schema.ListNestedAttribute{
+						"match_entries": schema.SetNestedAttribute{
 							MarkdownDescription: "List of match entries",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -227,7 +227,7 @@ func (d *CustomControlTopologyPolicyDefinitionDataSource) Schema(ctx context.Con
 								},
 							},
 						},
-						"action_entries": schema.ListNestedAttribute{
+						"action_entries": schema.SetNestedAttribute{
 							MarkdownDescription: "List of action entries",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{

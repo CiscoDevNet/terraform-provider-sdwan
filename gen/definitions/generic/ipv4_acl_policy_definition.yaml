@@ -62,7 +62,7 @@ attributes:
       - model_name: entries
         data_path: [match]
         tf_name: match_entries
-        type: List
+        type: Set
         description: List of match entries
         attributes:
           - model_name: field
@@ -246,7 +246,7 @@ attributes:
             example: syn
       - model_name: actions
         tf_name: action_entries
-        type: List
+        type: Set
         description: List of action entries
         attributes:
           - model_name: type

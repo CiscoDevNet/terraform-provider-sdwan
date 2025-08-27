@@ -111,7 +111,7 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 								stringvalidator.OneOf("ipv4", "ipv6", "all"),
 							},
 						},
-						"match_entries": schema.ListNestedAttribute{
+						"match_entries": schema.SetNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of match entries").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -214,7 +214,7 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 								},
 							},
 						},
-						"action_entries": schema.ListNestedAttribute{
+						"action_entries": schema.SetNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of action entries").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{

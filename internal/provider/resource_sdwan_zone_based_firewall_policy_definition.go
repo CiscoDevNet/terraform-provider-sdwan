@@ -135,7 +135,7 @@ func (r *ZoneBasedFirewallPolicyDefinitionResource) Schema(ctx context.Context, 
 								stringvalidator.OneOf("pass", "drop", "inspect"),
 							},
 						},
-						"match_entries": schema.ListNestedAttribute{
+						"match_entries": schema.SetNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of match entries").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -165,11 +165,8 @@ func (r *ZoneBasedFirewallPolicyDefinitionResource) Schema(ctx context.Context, 
 									},
 								},
 							},
-							Validators: []validator.List{
-								listvalidator.SizeAtLeast(1),
-							},
 						},
-						"action_entries": schema.ListNestedAttribute{
+						"action_entries": schema.SetNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of actions entries").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -182,9 +179,6 @@ func (r *ZoneBasedFirewallPolicyDefinitionResource) Schema(ctx context.Context, 
 										},
 									},
 								},
-							},
-							Validators: []validator.List{
-								listvalidator.SizeAtLeast(1),
 							},
 						},
 					},

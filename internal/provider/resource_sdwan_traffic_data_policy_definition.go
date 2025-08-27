@@ -133,7 +133,7 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 								stringvalidator.OneOf("accept", "drop"),
 							},
 						},
-						"match_entries": schema.ListNestedAttribute{
+						"match_entries": schema.SetNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of match entries").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -250,7 +250,7 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 								},
 							},
 						},
-						"action_entries": schema.ListNestedAttribute{
+						"action_entries": schema.SetNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of action entries").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{

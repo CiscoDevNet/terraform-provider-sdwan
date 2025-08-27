@@ -86,8 +86,8 @@ attributes:
       - model_name: entries
         tf_name: match_entries
         data_path: [match]
-        type: List
-        min_list: 1
+        type: Set
+        # min_list: 1
         description: List of match entries
         attributes:
           - model_name: field
@@ -148,8 +148,8 @@ attributes:
             example: 2
       - model_name: actions
         tf_name: action_entries
-        type: List
-        min_list: 1
+        type: Set
+        # min_list: 1
         description: List of actions entries
         attributes:
           - model_name: type
