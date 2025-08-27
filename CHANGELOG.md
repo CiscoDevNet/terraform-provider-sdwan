@@ -1,3 +1,7 @@
+## 0.7.1
+
+- Fix issue, where concurrent update of `localized_policy` resources fails with `Failed to update variables` error
+
 ## 0.7.0
 
 - BREAKING CHANGE: Rename `tls_ssl_profile_version` attribute of `sdwan_tls_ssl_decryption_policy_definition` resource to `tls_ssl_profile_policy_version`
@@ -22,7 +26,7 @@
 - Prevent updates to `sdwan_activate_centralized_policy` resources being reverted, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/452)
 - BREAKING CHANGE: Fix type of `dscp` attribute of `sdwan_application_aware_routing_policy_definition` and `sdwan_traffic_data_policy_definition`, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/460)
 - Fix issue where required attributes were marked as optional in the documentation
-- Fix issue causing `sdwan_transport_route_policy_feature` to fail to apply when `default_action` is set to `reject`,  [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/439)
+- Fix issue causing `sdwan_transport_route_policy_feature` to fail to apply when `default_action` is set to `reject`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/439)
 - BREAKING CHANGE: Refactor `max_number_of_prefixes`, `restart_interval` and `threshold` of `sdwan_transport_routing_bgp_feature` resource, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/413)
 
 ## 0.6.1
