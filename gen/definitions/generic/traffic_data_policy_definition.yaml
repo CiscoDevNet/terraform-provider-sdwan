@@ -1,3 +1,4 @@
+# Manual resource - Modals fromBody, toBody are manually configured to properly set nat parameter block as list (for nat_vpn) or dict (for nat pool)
 ---
 name: Traffic Data Policy Definition
 rest_endpoint: /template/policy/definition/data/
