@@ -417,6 +417,7 @@ attributes:
               name: type
               value: nat
             type: Int64
+            model_type_string: true
             description: NAT pool ID
             min_int: 1
             max_int: 31

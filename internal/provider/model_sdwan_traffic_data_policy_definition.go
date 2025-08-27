@@ -282,7 +282,7 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.field", childItem.NatPool.ValueString())
 					}
 					if !childItem.NatPoolId.IsNull() && childItem.Type.ValueString() == "nat" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.value", childItem.NatPoolId.ValueInt64())
+						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.value", fmt.Sprint(childItem.NatPoolId.ValueInt64()))
 					}
 					if !childItem.RedirectDns.IsNull() && childItem.Type.ValueString() == "redirectDns" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.field", childItem.RedirectDns.ValueString())
