@@ -7,8 +7,10 @@ description: |-
 
 # Changelog
 
-## 0.7.1
+## 0.7.1 (unreleased)
 
+- Fix issue, where concurrent update of `localized_policy` resources fails with `Failed to update variables` error
+- Fix issue in `sdwan_attach_feature_device_template` where manual detachment of template in the UI is not recognized by terraform, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/340)
 - Use `set` type for `match_entries` and `actions` in `application_aware_routing_policy`, `custom_control_topology_policy`, `ipv4_acl_policy`, `ipv4_device_acl_policy`, `ipv6_acl_policy`, `ipv6_device_acl_policy`, `route_policy`, `traffic_data_policy`, `zone_based_firewall_policy`
 
 ## 0.7.0

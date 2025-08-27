@@ -28,28 +28,28 @@ attributes:
     tf_name: flow_visibility_ipv4
     type: Bool
     description: IPv4 flow visibility
-    # default_value: true
+    default_value: false
     example: true
   - model_name: flowVisibilityIPv6
     data_path: [policyDefinition, settings]
     tf_name: flow_visibility_ipv6
     type: Bool
     description: IPv6 flow visibility
-    # default_value: true
+    default_value: false
     example: true
   - model_name: appVisibility
     data_path: [policyDefinition, settings]
     tf_name: application_visibility_ipv4
     type: Bool
     description: IPv4 application visibility
-    # default_value: true
+    default_value: false
     example: true
   - model_name: appVisibilityIPv6
     data_path: [policyDefinition, settings]
     tf_name: application_visibility_ipv6
     type: Bool
     description: IPv6 application visibility
-    # default_value: true
+    default_value: false
     example: true
   - model_name: cloudQos
     data_path: [policyDefinition, settings]
@@ -70,7 +70,7 @@ attributes:
     tf_name: implicit_acl_logging
     type: Bool
     description: Implicit ACL logging
-    # default_value: true
+    default_value: false
     example: true
   - model_name: logFrequency
     data_path: [policyDefinition, settings]
