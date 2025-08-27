@@ -7,8 +7,10 @@ description: |-
 
 # Changelog
 
-## 0.7.1
+## 0.7.1 (unreleased)
 
+- Fix issue, where concurrent update of `localized_policy` resources fails with `Failed to update variables` error
+- Fix issue in `sdwan_attach_feature_device_template` where manual detachment of template in the UI is not recognized by terraform, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/340)
 - Adds `translate_rib_metric` support to the `sdwan_service_routing_bgp_feature` resource and data source
 - Adds `translate_rib_metric` support to the `sdwan_service_routing_ospf_feature` resource and data source
 - Adds `translate_rib_metric` support to the `sdwan_service_routing_ospfv3_ipv4_feature` resource and data source
@@ -38,7 +40,7 @@ description: |-
 - Prevent updates to `sdwan_activate_centralized_policy` resources being reverted, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/452)
 - BREAKING CHANGE: Fix type of `dscp` attribute of `sdwan_application_aware_routing_policy_definition` and `sdwan_traffic_data_policy_definition`, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/460)
 - Fix issue where required attributes were marked as optional in the documentation
-- Fix issue causing `sdwan_transport_route_policy_feature` to fail to apply when `default_action` is set to `reject`,  [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/439)
+- Fix issue causing `sdwan_transport_route_policy_feature` to fail to apply when `default_action` is set to `reject`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/439)
 - BREAKING CHANGE: Refactor `max_number_of_prefixes`, `restart_interval` and `threshold` of `sdwan_transport_routing_bgp_feature` resource, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/413)
 
 ## 0.6.1

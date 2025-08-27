@@ -663,6 +663,10 @@ func (r *CiscoSystemFeatureTemplateResource) Schema(ctx context.Context, req res
 					stringvalidator.OneOf("disabled", "aggressive", "moderate", "conservative"),
 				},
 			},
+			"enhanced_app_aware_routing_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
 			"enable_mrf_migration": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable migration mode to Multi-Region Fabric").AddStringEnumDescription("enabled", "enabled-from-bgp-core").String,
 				Optional:            true,
