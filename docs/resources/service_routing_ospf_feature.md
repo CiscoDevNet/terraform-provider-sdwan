@@ -232,6 +232,8 @@ Optional:
   - Choices: `static`, `connected`, `bgp`, `omp`, `nat`, `eigrp`
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
+- `translate_rib_metric` (Boolean) Translate Rib Metric, Attribute conditional on `protocol` being equal to `omp`
+  - Default value: `false`
 
 
 <a id="nestedatt--router_lsas"></a>

@@ -11,6 +11,10 @@ description: |-
 
 - Fix issue, where concurrent update of `localized_policy` resources fails with `Failed to update variables` error
 - Fix issue in `sdwan_attach_feature_device_template` where manual detachment of template in the UI is not recognized by terraform, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/340)
+- Adds `translate_rib_metric` support to the `sdwan_service_routing_bgp_feature` resource and data source
+- Adds `translate_rib_metric` support to the `sdwan_service_routing_ospf_feature` resource and data source
+- Adds `translate_rib_metric` support to the `sdwan_service_routing_ospfv3_ipv4_feature` resource and data source
+- Adds `translate_rib_metric` support to the `sdwan_service_routing_ospfv3_ipv6_feature` resource and data source
 - Use `set` type for `match_entries` and `actions` in `application_aware_routing_policy`, `custom_control_topology_policy`, `ipv4_acl_policy`, `ipv4_device_acl_policy`, `ipv6_acl_policy`, `ipv6_device_acl_policy`, `route_policy`, `traffic_data_policy`, `zone_based_firewall_policy`
 
 ## 0.7.0
