@@ -27,6 +27,7 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -165,6 +166,9 @@ func (r *ZoneBasedFirewallPolicyDefinitionResource) Schema(ctx context.Context, 
 									},
 								},
 							},
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"action_entries": schema.SetNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of actions entries").String,
@@ -179,6 +183,9 @@ func (r *ZoneBasedFirewallPolicyDefinitionResource) Schema(ctx context.Context, 
 										},
 									},
 								},
+							},
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
 							},
 						},
 					},
