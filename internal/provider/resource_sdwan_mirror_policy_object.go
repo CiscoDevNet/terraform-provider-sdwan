@@ -129,6 +129,8 @@ func (r *MirrorPolicyObjectResource) Create(ctx context.Context, req resource.Cr
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end create
@@ -169,6 +171,8 @@ func (r *MirrorPolicyObjectResource) Read(ctx context.Context, req resource.Read
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end read

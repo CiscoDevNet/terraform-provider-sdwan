@@ -138,6 +138,8 @@ func (r *BlockURLListPolicyObjectResource) Create(ctx context.Context, req resou
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end create
@@ -178,6 +180,8 @@ func (r *BlockURLListPolicyObjectResource) Read(ctx context.Context, req resourc
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end read
