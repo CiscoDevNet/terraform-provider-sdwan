@@ -163,6 +163,8 @@ func (r *PolicyObjectFeatureProfileResource) Read(ctx context.Context, req resou
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end read

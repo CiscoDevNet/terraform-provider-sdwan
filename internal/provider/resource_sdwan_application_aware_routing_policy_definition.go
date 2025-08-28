@@ -327,6 +327,8 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Create(ctx context.Con
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end create
@@ -367,6 +369,8 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Read(ctx context.Conte
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end read
