@@ -29,6 +29,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -365,6 +366,16 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 											},
 										},
 										{{- if or (ne .MinList 0) (ne .MaxList 0)}}
+										{{- if eq .Type "Set"}}
+										Validators: []validator.Set{
+											{{- if ne .MinList 0}}
+											setvalidator.SizeAtLeast({{.MinList}}),
+											{{- end}}
+											{{- if ne .MaxList 0}}
+											setvalidator.SizeAtMost({{.MaxList}}),
+											{{- end}}
+										},
+										{{- else}}
 										Validators: []validator.List{
 											{{- if ne .MinList 0}}
 											listvalidator.SizeAtLeast({{.MinList}}),
@@ -375,12 +386,23 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 										},
 										{{- end}}
 										{{- end}}
+										{{- end}}
 									},
 									{{- end}}
 									{{- end}}
 								},
 							},
 							{{- if or (ne .MinList 0) (ne .MaxList 0)}}
+							{{- if eq .Type "Set"}}
+							Validators: []validator.Set{
+								{{- if ne .MinList 0}}
+								setvalidator.SizeAtLeast({{.MinList}}),
+								{{- end}}
+								{{- if ne .MaxList 0}}
+								setvalidator.SizeAtMost({{.MaxList}}),
+								{{- end}}
+							},
+							{{- else}}
 							Validators: []validator.List{
 								{{- if ne .MinList 0}}
 								listvalidator.SizeAtLeast({{.MinList}}),
@@ -391,12 +413,23 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 							},
 							{{- end}}
 							{{- end}}
+							{{- end}}
 						},
 						{{- end}}
 						{{- end}}
 					},
 				},
 				{{- if or (ne .MinList 0) (ne .MaxList 0)}}
+				{{- if eq .Type "Set"}}
+				Validators: []validator.Set{
+					{{- if ne .MinList 0}}
+					setvalidator.SizeAtLeast({{.MinList}}),
+					{{- end}}
+					{{- if ne .MaxList 0}}
+					setvalidator.SizeAtMost({{.MaxList}}),
+					{{- end}}
+				},
+				{{- else}}
 				Validators: []validator.List{
 					{{- if ne .MinList 0}}
 					listvalidator.SizeAtLeast({{.MinList}}),
@@ -405,6 +438,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 					listvalidator.SizeAtMost({{.MaxList}}),
 					{{- end}}
 				},
+				{{- end}}
 				{{- end}}
 				{{- end}}
 			},

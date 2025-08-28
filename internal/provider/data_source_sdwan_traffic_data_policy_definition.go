@@ -107,7 +107,7 @@ func (d *TrafficDataPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 							MarkdownDescription: "Base action, either `accept` or `drop`",
 							Computed:            true,
 						},
-						"match_entries": schema.ListNestedAttribute{
+						"match_entries": schema.SetNestedAttribute{
 							MarkdownDescription: "List of match entries",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -203,7 +203,7 @@ func (d *TrafficDataPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 								},
 							},
 						},
-						"action_entries": schema.ListNestedAttribute{
+						"action_entries": schema.SetNestedAttribute{
 							MarkdownDescription: "List of action entries",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{

@@ -114,7 +114,7 @@ func (d *ZoneBasedFirewallPolicyDefinitionDataSource) Schema(ctx context.Context
 							MarkdownDescription: "Base action",
 							Computed:            true,
 						},
-						"match_entries": schema.ListNestedAttribute{
+						"match_entries": schema.SetNestedAttribute{
 							MarkdownDescription: "List of match entries",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -142,7 +142,7 @@ func (d *ZoneBasedFirewallPolicyDefinitionDataSource) Schema(ctx context.Context
 								},
 							},
 						},
-						"action_entries": schema.ListNestedAttribute{
+						"action_entries": schema.SetNestedAttribute{
 							MarkdownDescription: "List of actions entries",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
