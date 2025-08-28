@@ -1,4 +1,5 @@
 ---
+# Manual resource - Modals updateFromBody is manually configured to support match entries embedded objects - https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/381
 name: Service IPv4 ACL
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/ipv4-acl
 minimum_version: 20.12.0

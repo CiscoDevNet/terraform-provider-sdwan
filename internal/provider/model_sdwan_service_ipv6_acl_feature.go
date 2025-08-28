@@ -540,7 +540,6 @@ func (data *ServiceIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 
 // End of section. //template:end fromBody
 
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
 func (data *ServiceIPv6ACL) updateFromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
@@ -613,36 +612,11 @@ func (data *ServiceIPv6ACL) updateFromBody(ctx context.Context, res gjson.Result
 			}
 		}
 		for ci := range data.Sequences[i].MatchEntries {
-			keys := [...]string{"nextHeader", "packetLength", "sourceDataPrefix.sourceDataPrefixList.refId", "sourceDataPrefix.sourceIpPrefix", "destinationDataPrefix.destinationDataPrefixList.refId", "destinationDataPrefix.destinationIpPrefix", "tcp", "trafficClass", "icmp6Msg"}
-			keyValues := [...]string{strconv.FormatInt(data.Sequences[i].MatchEntries[ci].NextHeader.ValueInt64(), 10), data.Sequences[i].MatchEntries[ci].PacketLength.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefix.ValueString(), data.Sequences[i].MatchEntries[ci].TcpState.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].TrafficClass).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].IcmpMessages).ValueString()}
-			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", ""}
+			if len(r.Get("matchEntries").Array()) <= 0 {
+				continue
+			}
+			cr := r.Get("matchEntries").Array()[0]
 
-			var cr gjson.Result
-			r.Get("matchEntries").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
 			data.Sequences[i].MatchEntries[ci].NextHeader = types.Int64Null()
 
 			if t := cr.Get("nextHeader.optionType"); t.Exists() {
@@ -894,5 +868,3 @@ func (data *ServiceIPv6ACL) updateFromBody(ctx context.Context, res gjson.Result
 		}
 	}
 }
-
-// End of section. //template:end updateFromBody
