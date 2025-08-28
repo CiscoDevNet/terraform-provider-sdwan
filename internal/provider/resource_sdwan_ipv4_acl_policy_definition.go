@@ -122,7 +122,7 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 								stringvalidator.OneOf("accept", "drop"),
 							},
 						},
-						"match_entries": schema.ListNestedAttribute{
+						"match_entries": schema.SetNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of match entries").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -218,7 +218,7 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 								},
 							},
 						},
-						"action_entries": schema.ListNestedAttribute{
+						"action_entries": schema.SetNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of action entries").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{

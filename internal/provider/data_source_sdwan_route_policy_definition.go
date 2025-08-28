@@ -103,7 +103,7 @@ func (d *RoutePolicyDefinitionDataSource) Schema(ctx context.Context, req dataso
 							MarkdownDescription: "Base action, either `accept` or `reject`",
 							Computed:            true,
 						},
-						"match_entries": schema.ListNestedAttribute{
+						"match_entries": schema.SetNestedAttribute{
 							MarkdownDescription: "List of match entries",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -197,7 +197,7 @@ func (d *RoutePolicyDefinitionDataSource) Schema(ctx context.Context, req dataso
 								},
 							},
 						},
-						"action_entries": schema.ListNestedAttribute{
+						"action_entries": schema.SetNestedAttribute{
 							MarkdownDescription: "List of action entries",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
