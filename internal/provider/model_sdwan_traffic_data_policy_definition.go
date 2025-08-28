@@ -141,7 +141,6 @@ func (data TrafficDataPolicyDefinition) getPath() string {
 
 // End of section. //template:end getPath
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {
@@ -282,7 +281,7 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.field", childItem.NatPool.ValueString())
 					}
 					if !childItem.NatPoolId.IsNull() && childItem.Type.ValueString() == "nat" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.value", childItem.NatPoolId.ValueInt64())
+						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.value", fmt.Sprint(childItem.NatPoolId.ValueInt64()))
 					}
 					if !childItem.RedirectDns.IsNull() && childItem.Type.ValueString() == "redirectDns" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.field", childItem.RedirectDns.ValueString())
@@ -392,7 +391,7 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.SetRaw(itemChildBody, "parameter.-1", itemChildChildBody)
 						}
 					}
-					if true && childItem.Type.ValueString() == "nat" {
+					if childItem.NatParameters != nil && childItem.Type.ValueString() == "nat" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", []interface{}{})
 						for _, childChildItem := range childItem.NatParameters {
 							itemChildChildBody := ""
@@ -421,9 +420,6 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 	return body
 }
 
-// End of section. //template:end toBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	state := *data
 	if value := res.Get("name"); value.Exists() {
@@ -815,7 +811,7 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 							cItem.SetParameters = []TrafficDataPolicyDefinitionSequencesActionEntriesSetParameters{}
 						}
 					}
-					if ccValue := cv.Get("parameter"); ccValue.Exists() && len(ccValue.Array()) > 0 && cItem.Type.ValueString() == "nat" {
+					if ccValue := cv.Get("parameter"); ccValue.Exists() && ccValue.IsArray() && len(ccValue.Array()) > 0 && cItem.Type.ValueString() == "nat" {
 						cItem.NatParameters = make([]TrafficDataPolicyDefinitionSequencesActionEntriesNatParameters, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := TrafficDataPolicyDefinitionSequencesActionEntriesNatParameters{}
@@ -864,8 +860,6 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 	}
 	data.updateVersions(ctx, &state)
 }
-
-// End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *TrafficDataPolicyDefinition) hasChanges(ctx context.Context, state *TrafficDataPolicyDefinition) bool {

@@ -99,7 +99,7 @@ func (d *IPv4ACLPolicyDefinitionDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: "Base action, either `accept` or `drop`",
 							Computed:            true,
 						},
-						"match_entries": schema.ListNestedAttribute{
+						"match_entries": schema.SetNestedAttribute{
 							MarkdownDescription: "List of match entries",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -183,7 +183,7 @@ func (d *IPv4ACLPolicyDefinitionDataSource) Schema(ctx context.Context, req data
 								},
 							},
 						},
-						"action_entries": schema.ListNestedAttribute{
+						"action_entries": schema.SetNestedAttribute{
 							MarkdownDescription: "List of action entries",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{

@@ -58,8 +58,8 @@ attribute:
   example: any(str(), int(), bool(), required=False) # Example value for documentation, also used for acceptance test
   enum_values: list(str(), required=False) # List of enum values, only relevant if type is "String"
   ignore_enum: bool(required=False) # Set to true if enum is not an exhaustive list of possible values
-  min_list: int(required=False) # Minimum number of elements in a list, only relevant if type is "List"
-  max_list: int(required=False) # Maximum number of elements in a list, only relevant if type is "List"
+  min_list: int(required=False) # Minimum number of elements in a list, only relevant if type is "List" or "Set"
+  max_list: int(required=False) # Maximum number of elements in a list, only relevant if type is "List" or "Set"
   min_int: int(required=False) # Minimum value of an integer, only relevant if type is "Int64"
   max_int: int(required=False) # Maximum value of an integer, only relevant if type is "Int64"
   min_float: num(required=False) # Minimum value of a float, only relevant if type is "Float"

@@ -79,8 +79,8 @@ Required:
 
 Optional:
 
-- `action_entries` (Attributes List) List of actions entries (see [below for nested schema](#nestedatt--rules--action_entries))
-- `match_entries` (Attributes List) List of match entries (see [below for nested schema](#nestedatt--rules--match_entries))
+- `action_entries` (Attributes Set) List of actions entries (see [below for nested schema](#nestedatt--rules--action_entries))
+- `match_entries` (Attributes Set) List of match entries (see [below for nested schema](#nestedatt--rules--match_entries))
 
 <a id="nestedatt--rules--action_entries"></a>
 ### Nested Schema for `rules.action_entries`

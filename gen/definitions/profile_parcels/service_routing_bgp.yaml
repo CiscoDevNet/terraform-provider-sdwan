@@ -307,6 +307,18 @@ attributes:
       tf_name: route_policy_id
       data_path: [routePolicy]
       example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+    - model_name: translateRibMetric
+      tf_name: translate_rib_metric
+      type: Bool
+      description: Translate Rib Metric
+      example: true
+      exclude_test: true
+      no_augment_config: true
+      default_value_present: true
+      default_value: false
+      conditional_attribute:
+        name: protocol
+        value: omp
   - model_name: ipv6AggregateAddress
     tf_name: ipv6_aggregate_addresses
     data_path: [ipv6AddressFamily]
@@ -357,6 +369,18 @@ attributes:
       tf_name: route_policy_id
       data_path: [routePolicy]
       example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+    - model_name: translateRibMetric
+      tf_name: translate_rib_metric
+      type: Bool
+      description: Translate Rib Metric
+      example: true
+      exclude_test: true
+      no_augment_config: true
+      default_value_present: true
+      default_value: false
+      conditional_attribute:
+        name: protocol
+        value: omp
 
 test_prerequisites: |
   resource "sdwan_transport_feature_profile" "test" {
