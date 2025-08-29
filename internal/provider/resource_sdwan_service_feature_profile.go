@@ -120,6 +120,8 @@ func (r *ServiceFeatureProfileResource) Create(ctx context.Context, req resource
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end create
@@ -152,6 +154,8 @@ func (r *ServiceFeatureProfileResource) Read(ctx context.Context, req resource.R
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end read

@@ -130,6 +130,8 @@ func (r *ClassMapPolicyObjectResource) Create(ctx context.Context, req resource.
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end create
@@ -170,6 +172,8 @@ func (r *ClassMapPolicyObjectResource) Read(ctx context.Context, req resource.Re
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end read

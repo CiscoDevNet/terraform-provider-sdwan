@@ -24,12 +24,15 @@ import (
 	"net/url"
 	"strconv"
 
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 // End of section. //template:end imports
+
+var MinServiceRoutingOSPFv3IPv4UpdateVersion = version.Must(version.NewVersion("20.15.0"))
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type ServiceRoutingOSPFv3IPv4 struct {
@@ -76,11 +79,12 @@ type ServiceRoutingOSPFv3IPv4 struct {
 }
 
 type ServiceRoutingOSPFv3IPv4Redistributes struct {
-	Protocol         types.String `tfsdk:"protocol"`
-	ProtocolVariable types.String `tfsdk:"protocol_variable"`
-	NatDia           types.Bool   `tfsdk:"nat_dia"`
-	NatDiaVariable   types.String `tfsdk:"nat_dia_variable"`
-	RoutePolicyId    types.String `tfsdk:"route_policy_id"`
+	Protocol           types.String `tfsdk:"protocol"`
+	ProtocolVariable   types.String `tfsdk:"protocol_variable"`
+	NatDia             types.Bool   `tfsdk:"nat_dia"`
+	NatDiaVariable     types.String `tfsdk:"nat_dia_variable"`
+	RoutePolicyId      types.String `tfsdk:"route_policy_id"`
+	TranslateRibMetric types.Bool   `tfsdk:"translate_rib_metric"`
 }
 
 type ServiceRoutingOSPFv3IPv4Areas struct {
@@ -143,8 +147,7 @@ func (data ServiceRoutingOSPFv3IPv4) getPath() string {
 
 // End of section. //template:end getPath
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data ServiceRoutingOSPFv3IPv4) toBody(ctx context.Context) string {
+func (data ServiceRoutingOSPFv3IPv4) toBody(ctx context.Context, version *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -421,6 +424,20 @@ func (data ServiceRoutingOSPFv3IPv4) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.value", item.RoutePolicyId.ValueString())
+				}
+			}
+			if version.LessThan(MinServiceRoutingOSPFv3IPv4UpdateVersion) {
+			} else {
+				if item.TranslateRibMetric.IsNull() {
+					if true && item.Protocol.ValueString() == "omp" {
+						itemBody, _ = sjson.Set(itemBody, "translateRibMetric.optionType", "default")
+						itemBody, _ = sjson.Set(itemBody, "translateRibMetric.value", false)
+					}
+				} else {
+					if true && item.Protocol.ValueString() == "omp" {
+						itemBody, _ = sjson.Set(itemBody, "translateRibMetric.optionType", "global")
+						itemBody, _ = sjson.Set(itemBody, "translateRibMetric.value", item.TranslateRibMetric.ValueBool())
+					}
 				}
 			}
 			body, _ = sjson.SetRaw(body, path+"redistribute.-1", itemBody)
@@ -712,8 +729,6 @@ func (data ServiceRoutingOSPFv3IPv4) toBody(ctx context.Context) string {
 	return body
 }
 
-// End of section. //template:end toBody
-
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *ServiceRoutingOSPFv3IPv4) fromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
@@ -910,6 +925,15 @@ func (data *ServiceRoutingOSPFv3IPv4) fromBody(ctx context.Context, res gjson.Re
 				if t.String() == "global" {
 					item.RoutePolicyId = types.StringValue(va.String())
 				}
+			}
+			item.TranslateRibMetric = types.BoolNull()
+
+			if t := v.Get("translateRibMetric.optionType"); t.Exists() {
+				va := v.Get("translateRibMetric.value")
+				if t.String() == "global" {
+					item.TranslateRibMetric = types.BoolValue(va.Bool())
+				}
+				item.Protocol = types.StringValue("omp")
 			}
 			data.Redistributes = append(data.Redistributes, item)
 			return true
@@ -1359,6 +1383,14 @@ func (data *ServiceRoutingOSPFv3IPv4) updateFromBody(ctx context.Context, res gj
 			va := r.Get("routePolicy.refId.value")
 			if t.String() == "global" {
 				data.Redistributes[i].RoutePolicyId = types.StringValue(va.String())
+			}
+		}
+		data.Redistributes[i].TranslateRibMetric = types.BoolNull()
+
+		if t := r.Get("translateRibMetric.optionType"); t.Exists() {
+			va := r.Get("translateRibMetric.value")
+			if t.String() == "global" {
+				data.Redistributes[i].TranslateRibMetric = types.BoolValue(va.Bool())
 			}
 		}
 	}

@@ -763,7 +763,7 @@ func augmentFeatureTemplateConfig(config *YamlConfig) {
 }
 
 func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, isOneOfAttribute bool) {
-	if attr.ModelName == "" {
+	if attr.ModelName == "" || attr.NoAugmentConfig {
 		return
 	}
 	path := ""

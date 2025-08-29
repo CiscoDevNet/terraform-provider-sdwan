@@ -95,7 +95,7 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Schema(ctx context.C
 							MarkdownDescription: "Sequence IP type, either `ipv4`, `ipv6` or `all`",
 							Computed:            true,
 						},
-						"match_entries": schema.ListNestedAttribute{
+						"match_entries": schema.SetNestedAttribute{
 							MarkdownDescription: "List of match entries",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -183,7 +183,7 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Schema(ctx context.C
 								},
 							},
 						},
-						"action_entries": schema.ListNestedAttribute{
+						"action_entries": schema.SetNestedAttribute{
 							MarkdownDescription: "List of action entries",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{

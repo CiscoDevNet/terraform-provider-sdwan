@@ -133,7 +133,7 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 								stringvalidator.OneOf("accept", "reject"),
 							},
 						},
-						"match_entries": schema.ListNestedAttribute{
+						"match_entries": schema.SetNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of match entries").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -286,7 +286,7 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 								},
 							},
 						},
-						"action_entries": schema.ListNestedAttribute{
+						"action_entries": schema.SetNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of action entries").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -460,6 +460,8 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Create(ctx context.Conte
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end create
@@ -500,6 +502,8 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Read(ctx context.Context
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end read

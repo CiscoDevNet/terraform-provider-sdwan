@@ -177,6 +177,8 @@ func (r *ObjectGroupPolicyDefinitionResource) Create(ctx context.Context, req re
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end create
@@ -217,6 +219,8 @@ func (r *ObjectGroupPolicyDefinitionResource) Read(ctx context.Context, req reso
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end read

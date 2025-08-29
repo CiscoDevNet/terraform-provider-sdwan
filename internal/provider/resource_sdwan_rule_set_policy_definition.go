@@ -282,6 +282,8 @@ func (r *RuleSetPolicyDefinitionResource) Create(ctx context.Context, req resour
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end create
@@ -322,6 +324,8 @@ func (r *RuleSetPolicyDefinitionResource) Read(ctx context.Context, req resource
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end read

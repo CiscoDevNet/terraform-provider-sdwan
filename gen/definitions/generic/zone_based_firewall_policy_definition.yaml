@@ -86,7 +86,7 @@ attributes:
       - model_name: entries
         tf_name: match_entries
         data_path: [match]
-        type: List
+        type: Set
         min_list: 1
         description: List of match entries
         attributes:
@@ -148,7 +148,7 @@ attributes:
             example: 2
       - model_name: actions
         tf_name: action_entries
-        type: List
+        type: Set
         min_list: 1
         description: List of actions entries
         attributes:

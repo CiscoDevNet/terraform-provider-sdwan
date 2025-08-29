@@ -182,6 +182,7 @@ Read-Only:
 - `protocol` (String) Set the protocol to redistribute routes from
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
+- `translate_rib_metric` (Boolean) Translate Rib Metric
 
 
 <a id="nestedatt--ipv6_aggregate_addresses"></a>
@@ -269,3 +270,4 @@ Read-Only:
 - `protocol` (String) Set the protocol to redistribute routes from
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
+- `translate_rib_metric` (Boolean) Translate Rib Metric

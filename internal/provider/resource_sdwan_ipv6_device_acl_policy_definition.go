@@ -122,7 +122,7 @@ func (r *IPv6DeviceACLPolicyDefinitionResource) Schema(ctx context.Context, req 
 								stringvalidator.OneOf("accept", "drop"),
 							},
 						},
-						"match_entries": schema.ListNestedAttribute{
+						"match_entries": schema.SetNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of match entries").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -172,7 +172,7 @@ func (r *IPv6DeviceACLPolicyDefinitionResource) Schema(ctx context.Context, req 
 								},
 							},
 						},
-						"action_entries": schema.ListNestedAttribute{
+						"action_entries": schema.SetNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of action entries").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -238,6 +238,8 @@ func (r *IPv6DeviceACLPolicyDefinitionResource) Create(ctx context.Context, req 
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end create
@@ -278,6 +280,8 @@ func (r *IPv6DeviceACLPolicyDefinitionResource) Read(ctx context.Context, req re
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end read

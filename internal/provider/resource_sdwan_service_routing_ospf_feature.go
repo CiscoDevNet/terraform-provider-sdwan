@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -244,6 +245,10 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Schema(ctx context.Context, re
 							Validators: []validator.String{
 								stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 							},
+						},
+						"translate_rib_metric": schema.BoolAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Translate Rib Metric, Attribute conditional on `protocol` being equal to `omp`").AddDefaultValueDescription("false").String,
+							Optional:            true,
 						},
 					},
 				},
@@ -503,7 +508,6 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Configure(_ context.Context, r
 
 // End of section. //template:end model
 
-// Section below is generated&owned by "gen/generator.go". //template:begin create
 func (r *ServiceRoutingOSPFProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan ServiceRoutingOSPF
 
@@ -516,8 +520,10 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Create(ctx context.Context, re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
+	version := version.Must(version.NewVersion(r.client.ManagerVersion))
+
 	// Create object
-	body := plan.toBody(ctx)
+	body := plan.toBody(ctx, version)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -535,8 +541,6 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Create(ctx context.Context, re
 
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
-
-// End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
 func (r *ServiceRoutingOSPFProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
@@ -585,7 +589,6 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Read(ctx context.Context, req 
 
 // End of section. //template:end read
 
-// Section below is generated&owned by "gen/generator.go". //template:begin update
 func (r *ServiceRoutingOSPFProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var plan, state ServiceRoutingOSPF
 
@@ -604,7 +607,9 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Update(ctx context.Context, re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	version := version.Must(version.NewVersion(r.client.ManagerVersion))
+
+	body := plan.toBody(ctx, version)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
@@ -618,8 +623,6 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Update(ctx context.Context, re
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 }
-
-// End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
 func (r *ServiceRoutingOSPFProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {

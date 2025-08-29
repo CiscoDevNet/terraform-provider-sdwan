@@ -49,9 +49,9 @@ Read-Only:
 
 Read-Only:
 
-- `action_entries` (Attributes List) List of actions entries (see [below for nested schema](#nestedatt--rules--action_entries))
+- `action_entries` (Attributes Set) List of actions entries (see [below for nested schema](#nestedatt--rules--action_entries))
 - `base_action` (String) Base action
-- `match_entries` (Attributes List) List of match entries (see [below for nested schema](#nestedatt--rules--match_entries))
+- `match_entries` (Attributes Set) List of match entries (see [below for nested schema](#nestedatt--rules--match_entries))
 - `rule_name` (String) Rule name
 - `rule_order` (Number) Rule
 

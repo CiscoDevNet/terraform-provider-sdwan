@@ -31,6 +31,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -86,20 +87,28 @@ func (r *LocalizedPolicyResource) Schema(ctx context.Context, req resource.Schem
 				Required:            true,
 			},
 			"flow_visibility_ipv4": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv4 flow visibility").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv4 flow visibility").AddDefaultValueDescription("false").String,
 				Optional:            true,
+				Computed:            true,
+				Default:             booldefault.StaticBool(false),
 			},
 			"flow_visibility_ipv6": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv6 flow visibility").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv6 flow visibility").AddDefaultValueDescription("false").String,
 				Optional:            true,
+				Computed:            true,
+				Default:             booldefault.StaticBool(false),
 			},
 			"application_visibility_ipv4": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv4 application visibility").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv4 application visibility").AddDefaultValueDescription("false").String,
 				Optional:            true,
+				Computed:            true,
+				Default:             booldefault.StaticBool(false),
 			},
 			"application_visibility_ipv6": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv6 application visibility").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv6 application visibility").AddDefaultValueDescription("false").String,
 				Optional:            true,
+				Computed:            true,
+				Default:             booldefault.StaticBool(false),
 			},
 			"cloud_qos": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Cloud QoS").String,
@@ -110,8 +119,10 @@ func (r *LocalizedPolicyResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 			},
 			"implicit_acl_logging": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Implicit ACL logging").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Implicit ACL logging").AddDefaultValueDescription("false").String,
 				Optional:            true,
+				Computed:            true,
+				Default:             booldefault.StaticBool(false),
 			},
 			"log_frequency": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Log frequency").AddIntegerRangeDescription(1, 2147483647).String,
@@ -200,6 +211,8 @@ func (r *LocalizedPolicyResource) Create(ctx context.Context, req resource.Creat
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end create
@@ -240,11 +253,12 @@ func (r *LocalizedPolicyResource) Read(ctx context.Context, req resource.ReadReq
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // End of section. //template:end read
 
-// Section below is generated&owned by "gen/generator.go". //template:begin update
 func (r *LocalizedPolicyResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var plan, state LocalizedPolicy
 
@@ -273,6 +287,8 @@ func (r *LocalizedPolicyResource) Update(ctx context.Context, req resource.Updat
 				resp.Diagnostics.AddWarning("Client Warning", "Failed to modify policy due to policy being locked by another change. Policy changes will not be applied. Re-run 'terraform apply' to try again.")
 			} else if strings.Contains(res.Get("error.message").String(), "Template locked in edit mode") {
 				resp.Diagnostics.AddWarning("Client Warning", "Failed to modify template due to template being locked by another change. Template changes will not be applied. Re-run 'terraform apply' to try again.")
+			} else if strings.Contains(res.Get("error.message").String(), "Failed to update variables") {
+				resp.Diagnostics.AddWarning("Client Warning", "Failed to modify policy due to policy being locked by another change. Policy changes will not be applied. Re-run 'terraform apply' to try again.")
 			} else {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
 				return
@@ -288,8 +304,6 @@ func (r *LocalizedPolicyResource) Update(ctx context.Context, req resource.Updat
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 }
-
-// End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
 func (r *LocalizedPolicyResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {

@@ -549,6 +549,10 @@ func (d *CiscoSystemFeatureTemplateDataSource) Schema(ctx context.Context, req d
 				MarkdownDescription: "Enhanced App Aware Routing",
 				Computed:            true,
 			},
+			"enhanced_app_aware_routing_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 			"enable_mrf_migration": schema.StringAttribute{
 				MarkdownDescription: "Enable migration mode to Multi-Region Fabric",
 				Computed:            true,
