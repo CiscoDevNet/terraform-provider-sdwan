@@ -410,3 +410,22 @@ func (data PolicyGroup) hasPolicyVersionChanges(ctx context.Context, state *Poli
 	}
 	return false
 }
+
+func (data PolicyGroup) processImport(ctx context.Context) {
+	var elementsFeatureList []attr.Value
+	var countFeatureProfile int = 0
+
+	if !(data.FeatureProfileIds.IsNull() || data.FeatureProfileIds.IsUnknown()) {
+		countFeatureProfile = len(data.FeatureProfileIds.Elements())
+	}
+
+	if countFeatureProfile > 0 {
+		elementsFeatureList = make([]attr.Value, countFeatureProfile)
+		for i := 0; i < countFeatureProfile; i++ {
+			elementsFeatureList[i] = types.Int64Value(0)
+		}
+		data.PolicyVersions = types.ListValueMust(types.Int64Type, elementsFeatureList)
+	} else {
+		data.PolicyVersions = types.ListNull(types.StringType)
+	}
+}

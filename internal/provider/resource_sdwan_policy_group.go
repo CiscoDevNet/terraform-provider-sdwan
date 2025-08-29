@@ -217,6 +217,8 @@ func (r *PolicyGroupResource) Create(ctx context.Context, req resource.CreateReq
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 func (r *PolicyGroupResource) Deploy(ctx context.Context, plan PolicyGroup, state *PolicyGroup, diag *diag.Diagnostics, deleteOnError bool) {
@@ -303,6 +305,15 @@ func (r *PolicyGroupResource) Read(ctx context.Context, req resource.ReadRequest
 
 	state.fromBodyPolicyGroup(ctx, res)
 
+	imp, diags := helpers.IsFlagImporting(ctx, req)
+	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
+		return
+	}
+
+	if imp {
+		state.processImport(ctx)
+	}
+
 	// Read policy group device associations
 	path := fmt.Sprintf("/v1/policy-group/%v/device/associate/", state.Id.ValueString())
 	res, err = r.client.Get(path)
@@ -335,6 +346,8 @@ func (r *PolicyGroupResource) Read(ctx context.Context, req resource.ReadRequest
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 func (r *PolicyGroupResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
