@@ -74,7 +74,7 @@ func (d *PortListPolicyObjectDataSource) Schema(ctx context.Context, req datasou
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"port": schema.Int64Attribute{
+						"port": schema.StringAttribute{
 							MarkdownDescription: "Port number",
 							Computed:            true,
 						},
