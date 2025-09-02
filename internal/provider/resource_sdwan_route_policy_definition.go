@@ -165,8 +165,8 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 										MarkdownDescription: helpers.NewAttributeDescription("Community list version").String,
 										Optional:            true,
 									},
-									"community_list_match_flag_single": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Community list match flag, Attribute conditional on `type` being equal to `community`").AddStringEnumDescription("and", "or", "exact").String,
+									"community_list_match_flag": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Community list match flag").AddStringEnumDescription("and", "or", "exact").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("and", "or", "exact"),
@@ -181,13 +181,6 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 										MarkdownDescription: helpers.NewAttributeDescription("Community list versions").String,
 										ElementType:         types.StringType,
 										Optional:            true,
-									},
-									"community_list_match_flag": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Community list match flag, Attribute conditional on `type` being equal to `advancedCommunity`").AddStringEnumDescription("and", "or", "exact").String,
-										Optional:            true,
-										Validators: []validator.String{
-											stringvalidator.OneOf("and", "or", "exact"),
-										},
 									},
 									"expanded_community_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Expanded community list ID, Attribute conditional on `type` being equal to `expandedCommunity`").String,

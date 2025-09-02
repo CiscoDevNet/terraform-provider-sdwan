@@ -81,7 +81,6 @@ Read-Only:
 - `community_list_id` (String) Community list ID
 - `community_list_ids` (Set of String) Community list IDs
 - `community_list_match_flag` (String) Community list match flag
-- `community_list_match_flag_single` (String) Community list match flag
 - `community_list_version` (Number) Community list version
 - `community_list_versions` (List of String) Community list versions
 - `expanded_community_list_id` (String) Expanded community list ID

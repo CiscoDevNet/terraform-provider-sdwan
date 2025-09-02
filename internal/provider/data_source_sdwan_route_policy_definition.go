@@ -136,7 +136,7 @@ func (d *RoutePolicyDefinitionDataSource) Schema(ctx context.Context, req dataso
 										MarkdownDescription: "Community list version",
 										Computed:            true,
 									},
-									"community_list_match_flag_single": schema.StringAttribute{
+									"community_list_match_flag": schema.StringAttribute{
 										MarkdownDescription: "Community list match flag",
 										Computed:            true,
 									},
@@ -148,10 +148,6 @@ func (d *RoutePolicyDefinitionDataSource) Schema(ctx context.Context, req dataso
 									"community_list_versions": schema.ListAttribute{
 										MarkdownDescription: "Community list versions",
 										ElementType:         types.StringType,
-										Computed:            true,
-									},
-									"community_list_match_flag": schema.StringAttribute{
-										MarkdownDescription: "Community list match flag",
 										Computed:            true,
 									},
 									"expanded_community_list_id": schema.StringAttribute{

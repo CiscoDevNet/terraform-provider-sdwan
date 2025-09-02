@@ -130,9 +130,7 @@ Optional:
 - `as_path_list_version` (Number) AS path list version
 - `community_list_id` (String) Community list ID, Attribute conditional on `type` being equal to `community`
 - `community_list_ids` (Set of String) Community list IDs, Attribute conditional on `type` being equal to `advancedCommunity`
-- `community_list_match_flag` (String) Community list match flag, Attribute conditional on `type` being equal to `advancedCommunity`
-  - Choices: `and`, `or`, `exact`
-- `community_list_match_flag_single` (String) Community list match flag, Attribute conditional on `type` being equal to `community`
+- `community_list_match_flag` (String) Community list match flag
   - Choices: `and`, `or`, `exact`
 - `community_list_version` (Number) Community list version
 - `community_list_versions` (List of String) Community list versions

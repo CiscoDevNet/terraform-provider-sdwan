@@ -138,10 +138,8 @@ attributes:
             description: Community list version
             exclude_test: true
           - model_name: matchFlag
-            tf_name: community_list_match_flag_single
+            tf_name: community_list_match_flag
             conditional_attribute:
-              name: type
-              value: community
             type: String
             enum_values: [and, or, exact]
             description: Community list match flag
@@ -161,16 +159,6 @@ attributes:
             tf_only: true
             type: Versions
             description: Community list versions
-            exclude_test: true
-          - model_name: matchFlag
-            tf_name: community_list_match_flag
-            conditional_attribute:
-              name: type
-              value: advancedCommunity
-            type: String
-            enum_values: [and, or, exact]
-            description: Community list match flag
-            example: and
             exclude_test: true
           - model_name: ref
             tf_name: expanded_community_list_id
