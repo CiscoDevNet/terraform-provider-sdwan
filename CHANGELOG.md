@@ -1,3 +1,7 @@
+## 0.7.2
+
+- Add `community` support to the `sdwan_route_policy_definition` resource and data source
+
 ## 0.7.1
 
 - Fix issue, where concurrent update of `localized_policy` resources fails with `Failed to update variables` error

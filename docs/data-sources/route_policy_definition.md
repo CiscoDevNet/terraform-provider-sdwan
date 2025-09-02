@@ -76,11 +76,14 @@ Read-Only:
 
 Read-Only:
 
+- `advanced_community_list_ids` (Set of String) Community list IDs
+- `advanced_community_list_match_flag` (String) Community list match flag
+- `advanced_community_list_versions` (List of String) Community list versions
 - `as_path_list_id` (String) AS path list ID
 - `as_path_list_version` (Number) AS path list version
-- `community_list_ids` (Set of String) Community list IDs
+- `community_list_id` (String) Community list ID
 - `community_list_match_flag` (String) Community list match flag
-- `community_list_versions` (List of String) Community list versions
+- `community_list_version` (Number) Community list version
 - `expanded_community_list_id` (String) Expanded community list ID
 - `expanded_community_list_variable` (String) Expanded community list variable
 - `expanded_community_list_version` (Number) Expanded community list version

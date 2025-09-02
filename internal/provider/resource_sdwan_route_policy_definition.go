@@ -135,10 +135,10 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("address", "asPath", "advancedCommunity", "expandedCommunity", "expandedCommunityInline", "extCommunity", "localPreference", "metric", "nextHop", "origin", "peer", "ompTag", "ospfTag").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("address", "asPath", "community", "advancedCommunity", "expandedCommunity", "expandedCommunityInline", "extCommunity", "localPreference", "metric", "nextHop", "origin", "peer", "ompTag", "ospfTag").String,
 										Required:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("address", "asPath", "advancedCommunity", "expandedCommunity", "expandedCommunityInline", "extCommunity", "localPreference", "metric", "nextHop", "origin", "peer", "ompTag", "ospfTag"),
+											stringvalidator.OneOf("address", "asPath", "community", "advancedCommunity", "expandedCommunity", "expandedCommunityInline", "extCommunity", "localPreference", "metric", "nextHop", "origin", "peer", "ompTag", "ospfTag"),
 										},
 									},
 									"prefix_list_id": schema.StringAttribute{
@@ -157,17 +157,32 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 										MarkdownDescription: helpers.NewAttributeDescription("AS path list version").String,
 										Optional:            true,
 									},
-									"community_list_ids": schema.SetAttribute{
+									"community_list_id": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Community list ID, Attribute conditional on `type` being equal to `community`").String,
+										Optional:            true,
+									},
+									"community_list_version": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Community list version").String,
+										Optional:            true,
+									},
+									"community_list_match_flag": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Community list match flag, Attribute conditional on `type` being equal to `community`").AddStringEnumDescription("and", "or", "exact").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("and", "or", "exact"),
+										},
+									},
+									"advanced_community_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Community list IDs, Attribute conditional on `type` being equal to `advancedCommunity`").String,
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
-									"community_list_versions": schema.ListAttribute{
+									"advanced_community_list_versions": schema.ListAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Community list versions").String,
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
-									"community_list_match_flag": schema.StringAttribute{
+									"advanced_community_list_match_flag": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Community list match flag, Attribute conditional on `type` being equal to `advancedCommunity`").AddStringEnumDescription("and", "or", "exact").String,
 										Optional:            true,
 										Validators: []validator.String{
