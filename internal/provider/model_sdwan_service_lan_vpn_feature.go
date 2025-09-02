@@ -1917,6 +1917,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result, curre
 					item.NextHops = append(item.NextHops, cItem)
 					return true
 				})
+				item.Gateway = types.StringValue("nextHop")
 			}
 			if cValue := v.Get("oneOfIpRoute.nextHopContainer.nextHopWithTracker"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.NextHopWithTrackers = make([]ServiceLANVPNIpv4StaticRoutesNextHopWithTrackers, 0)
@@ -1953,6 +1954,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result, curre
 					item.NextHopWithTrackers = append(item.NextHopWithTrackers, cItem)
 					return true
 				})
+				item.Gateway = types.StringValue("nextHop")
 			}
 			item.Null0 = types.BoolNull()
 
@@ -1961,6 +1963,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result, curre
 				if t.String() == "global" {
 					item.Null0 = types.BoolValue(va.Bool())
 				}
+				item.Gateway = types.StringValue("null0")
 			}
 			item.Dhcp = types.BoolNull()
 
@@ -1969,6 +1972,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result, curre
 				if t.String() == "global" {
 					item.Dhcp = types.BoolValue(va.Bool())
 				}
+				item.Gateway = types.StringValue("dhcp")
 			}
 			item.Vpn = types.BoolNull()
 
@@ -1977,6 +1981,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result, curre
 				if t.String() == "global" {
 					item.Vpn = types.BoolValue(va.Bool())
 				}
+				item.Gateway = types.StringValue("vpn")
 			}
 			data.Ipv4StaticRoutes = append(data.Ipv4StaticRoutes, item)
 			return true
@@ -2023,6 +2028,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result, curre
 					item.NextHops = append(item.NextHops, cItem)
 					return true
 				})
+				item.Gateway = types.StringValue("nextHop")
 			}
 			item.Null0 = types.BoolNull()
 
@@ -2031,6 +2037,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result, curre
 				if t.String() == "global" {
 					item.Null0 = types.BoolValue(va.Bool())
 				}
+				item.Gateway = types.StringValue("null0")
 			}
 			item.Nat = types.StringNull()
 			item.NatVariable = types.StringNull()
@@ -2041,6 +2048,7 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result, curre
 				} else if t.String() == "global" {
 					item.Nat = types.StringValue(va.String())
 				}
+				item.Gateway = types.StringValue("nat")
 			}
 			data.Ipv6StaticRoutes = append(data.Ipv6StaticRoutes, item)
 			return true
