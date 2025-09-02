@@ -138,7 +138,7 @@ attributes:
             description: Community list version
             exclude_test: true
           - model_name: matchFlag
-            tf_name: community_list_match_flag
+            tf_name: community_list_match_flag_single
             conditional_attribute:
               name: type
               value: community
@@ -147,9 +147,8 @@ attributes:
             description: Community list match flag
             example: and
             exclude_test: true
-
           - model_name: refs
-            tf_name: advanced_community_list_ids
+            tf_name: community_list_ids
             conditional_attribute:
               name: type
               value: advancedCommunity
@@ -158,13 +157,13 @@ attributes:
             description: Community list IDs
             example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
             exclude_test: true
-          - tf_name: advanced_community_list_versions
+          - tf_name: community_list_versions
             tf_only: true
             type: Versions
             description: Community list versions
             exclude_test: true
           - model_name: matchFlag
-            tf_name: advanced_community_list_match_flag
+            tf_name: community_list_match_flag
             conditional_attribute:
               name: type
               value: advancedCommunity
@@ -173,7 +172,6 @@ attributes:
             description: Community list match flag
             example: and
             exclude_test: true
-
           - model_name: ref
             tf_name: expanded_community_list_id
             conditional_attribute:
