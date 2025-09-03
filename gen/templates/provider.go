@@ -51,12 +51,14 @@ type SdwanProviderModel struct {
 	URL      types.String `tfsdk:"url"`
 	Insecure types.Bool   `tfsdk:"insecure"`
 	Retries  types.Int64  `tfsdk:"retries"`
+	Timeout  types.Int64  `tfsdk:"timeout"`
 }
 
 // SdwanProviderData describes the data maintained by the provider.
 type SdwanProviderData struct {
 	Client *sdwan.Client
 	UpdateMutex *sync.Mutex
+	Timeout *int64
 }
 
 // Metadata returns the provider type name.
@@ -90,6 +92,13 @@ func (p *SdwanProvider) Schema(ctx context.Context, req provider.SchemaRequest, 
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 9),
+				},
+			},
+			"timeout": schema.Int64Attribute{
+				MarkdownDescription: "Timeout in seconds for asynchronous tasks. This can also be set as the `SDWAN_TIMEOUT` environment variable. Defaults to `600`.",
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(0, 7200),
 				},
 			},
 		},
@@ -228,6 +237,27 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 		retries = config.Retries.ValueInt64()
 	}
 
+	var timeout int64
+	if config.Timeout.IsUnknown() {
+		// Cannot connect to client with an unknown value
+		resp.Diagnostics.AddWarning(
+			"Unable to create client",
+			"Cannot use unknown value as timeout",
+		)
+		return
+	}
+
+	if config.Timeout.IsNull() {
+		timeoutStr := os.Getenv("SDWAN_TIMEOUT")
+		if timeoutStr == "" {
+			timeout = 600
+		} else {
+			timeout, _ = strconv.ParseInt(timeoutStr, 0, 64)
+		}
+	} else {
+		timeout = config.Timeout.ValueInt64()
+	}
+
 	// Create a new SDWAN client and set it to the provider client
 	c, err := sdwan.NewClient(url, username, password, insecure, sdwan.MaxRetries(int(retries)))
 	if err != nil {
@@ -247,7 +277,7 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 		return 
 	}
 
-	data := SdwanProviderData{Client: &c, UpdateMutex: &sync.Mutex{}}
+	data := SdwanProviderData{Client: &c, UpdateMutex: &sync.Mutex{}, Timeout: &timeout}
 	resp.DataSourceData = &data
 	resp.ResourceData = &data
 }

@@ -47,8 +47,6 @@ import (
 
 var MinPolicyGroupUpdateVersion = version.Must(version.NewVersion("20.15.0"))
 
-// Section below is generated&owned by "gen/generator.go". //template:begin model
-
 // Ensure provider defined types fully satisfy framework interfaces
 var _ resource.Resource = &PolicyGroupResource{}
 var _ resource.ResourceWithImportState = &PolicyGroupResource{}
@@ -60,6 +58,7 @@ func NewPolicyGroupResource() resource.Resource {
 type PolicyGroupResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
+	timeout     *int64
 }
 
 func (r *PolicyGroupResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -154,9 +153,8 @@ func (r *PolicyGroupResource) Configure(_ context.Context, req resource.Configur
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
+	r.timeout = req.ProviderData.(*SdwanProviderData).Timeout
 }
-
-// End of section. //template:end model
 
 func (r *PolicyGroupResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan PolicyGroup
@@ -266,7 +264,7 @@ func (r *PolicyGroupResource) Deploy(ctx context.Context, plan PolicyGroup, stat
 
 		// Wait for deploy action to complete
 		actionId := res.Get("parentTaskId").String()
-		err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
+		err = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.timeout)
 		if err != nil {
 			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to config group devices, got error: %s", err))
 			if deleteOnError {

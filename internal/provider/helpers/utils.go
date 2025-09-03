@@ -32,8 +32,6 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-const MaxActionAttempts int = 120 // equates to 600 seconds
-
 func Contains(s []string, str string) bool {
 	for _, v := range s {
 		if v == str {
@@ -91,7 +89,9 @@ func GetInt64Set(result []gjson.Result) types.Set {
 	return types.SetValueMust(types.Int64Type, v)
 }
 
-func WaitForActionToComplete(ctx context.Context, client *sdwan.Client, id string) error {
+func WaitForActionToComplete(ctx context.Context, client *sdwan.Client, id string, timeout *int64) error {
+	var MaxActionAttempts = *timeout / 5
+
 	for attempts := 0; ; attempts++ {
 		time.Sleep(5 * time.Second)
 		res, err := client.Get("/device/action/status/" + id)
@@ -116,7 +116,7 @@ func WaitForActionToComplete(ctx context.Context, client *sdwan.Client, id strin
 		} else {
 			tflog.Debug(ctx, fmt.Sprintf("[DEBUG] Waiting for action '%s' to complete.", id))
 		}
-		if attempts > MaxActionAttempts {
+		if attempts > int(MaxActionAttempts) {
 			tflog.Debug(ctx, fmt.Sprintf("[DEBUG] Maximum number of attempts reached for action '%s'.", id))
 			return fmt.Errorf("Maximum waiting time for action '%s' reached.", id)
 		}

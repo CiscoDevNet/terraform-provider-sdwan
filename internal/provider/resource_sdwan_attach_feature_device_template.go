@@ -43,7 +43,8 @@ func NewAttachFeatureDeviceTemplateResource() resource.Resource {
 }
 
 type AttachFeatureDeviceTemplateResource struct {
-	client *sdwan.Client
+	client  *sdwan.Client
+	timeout *int64
 }
 
 func (r *AttachFeatureDeviceTemplateResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -94,6 +95,7 @@ func (r *AttachFeatureDeviceTemplateResource) Configure(_ context.Context, req r
 	}
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
+	r.timeout = req.ProviderData.(*SdwanProviderData).Timeout
 }
 
 func (r *AttachFeatureDeviceTemplateResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
@@ -123,7 +125,7 @@ func (r *AttachFeatureDeviceTemplateResource) Create(ctx context.Context, req re
 	}
 	if resp.Diagnostics.WarningsCount() == 0 {
 		actionId := res.Get("id").String()
-		err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
+		err = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.timeout)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to attach device template, got error: %s", err))
 			return
@@ -203,7 +205,7 @@ func (r *AttachFeatureDeviceTemplateResource) Update(ctx context.Context, req re
 
 		if resp.Diagnostics.WarningsCount() == 0 {
 			actionId := res.Get("id").String()
-			err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
+			err = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.timeout)
 			if err != nil {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to attach device template, got error: %s", err))
 				return
@@ -233,7 +235,7 @@ func (r *AttachFeatureDeviceTemplateResource) Update(ctx context.Context, req re
 			return
 		}
 		if res.Get("id").Exists() {
-			err = helpers.WaitForActionToComplete(ctx, r.client, res.Get("id").String())
+			err = helpers.WaitForActionToComplete(ctx, r.client, res.Get("id").String(), r.timeout)
 			if err != nil {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to detach device template, got error: %s", err))
 				return
@@ -265,7 +267,7 @@ func (r *AttachFeatureDeviceTemplateResource) Delete(ctx context.Context, req re
 		return
 	}
 	if res.Get("id").Exists() {
-		err = helpers.WaitForActionToComplete(ctx, r.client, res.Get("id").String())
+		err = helpers.WaitForActionToComplete(ctx, r.client, res.Get("id").String(), r.timeout)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to detach device template, got error: %s", err))
 			return
