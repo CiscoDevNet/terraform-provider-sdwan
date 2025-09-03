@@ -31,7 +31,7 @@ type ActivateCentralizedPolicy struct {
 	Version types.Int64  `tfsdk:"version"`
 }
 
-func (data ActivateCentralizedPolicy) activatePolicy(ctx context.Context, client *sdwan.Client, isEdited bool, timeout *int64) error {
+func (data ActivateCentralizedPolicy) activatePolicy(ctx context.Context, client *sdwan.Client, isEdited bool, taskTimeout *int64) error {
 	var body string
 	if isEdited {
 		body = `{"isEdited":true}`
@@ -43,7 +43,7 @@ func (data ActivateCentralizedPolicy) activatePolicy(ctx context.Context, client
 		return err
 	}
 	actionId := res.Get("id").String()
-	err = helpers.WaitForActionToComplete(ctx, client, actionId, timeout)
+	err = helpers.WaitForActionToComplete(ctx, client, actionId, taskTimeout)
 	if err != nil {
 		return err
 	}

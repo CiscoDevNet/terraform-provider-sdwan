@@ -42,8 +42,8 @@ func NewActivateCentralizedPolicyResource() resource.Resource {
 }
 
 type ActivateCentralizedPolicyResource struct {
-	client  *sdwan.Client
-	timeout *int64
+	client      *sdwan.Client
+	taskTimeout *int64
 }
 
 func (r *ActivateCentralizedPolicyResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -77,7 +77,7 @@ func (r *ActivateCentralizedPolicyResource) Configure(_ context.Context, req res
 	}
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
-	r.timeout = req.ProviderData.(*SdwanProviderData).Timeout
+	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
 }
 
 func (r *ActivateCentralizedPolicyResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
@@ -92,7 +92,7 @@ func (r *ActivateCentralizedPolicyResource) Create(ctx context.Context, req reso
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Id.ValueString()))
 
-	err := plan.activatePolicy(ctx, r.client, false, r.timeout)
+	err := plan.activatePolicy(ctx, r.client, false, r.taskTimeout)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to activate centralized policy, got error: %s", err))
 		return
@@ -158,7 +158,7 @@ func (r *ActivateCentralizedPolicyResource) Update(ctx context.Context, req reso
 	if !plan.Id.Equal(state.Id) {
 		tflog.Debug(ctx, fmt.Sprintf("%s: Policy ID changed, activating policy", plan.Id.ValueString()))
 
-		err := plan.activatePolicy(ctx, r.client, false, r.timeout)
+		err := plan.activatePolicy(ctx, r.client, false, r.taskTimeout)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to activate centralized policy, got error: %s", err))
 			return
@@ -176,7 +176,7 @@ func (r *ActivateCentralizedPolicyResource) Update(ctx context.Context, req reso
 		if strings.Contains(res.Get("error.message").String(), "Template edit request has expired") {
 			tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected to repush the policy. Reactivating the policy.", plan.Id.ValueString()))
 
-			err := plan.activatePolicy(ctx, r.client, true, r.timeout)
+			err := plan.activatePolicy(ctx, r.client, true, r.taskTimeout)
 			if err != nil {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to activate centralized policy, got error: %s", err))
 				return
@@ -187,7 +187,7 @@ func (r *ActivateCentralizedPolicyResource) Update(ctx context.Context, req reso
 		} else {
 			if resp.Diagnostics.WarningsCount() == 0 {
 				actionId := res.Get("id").String()
-				err = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.timeout)
+				err = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
 				if err != nil {
 					resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update activated policy, got error: %s", err))
 					return
@@ -221,7 +221,7 @@ func (r *ActivateCentralizedPolicyResource) Delete(ctx context.Context, req reso
 			return
 		}
 		actionId := res.Get("id").String()
-		err = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.timeout)
+		err = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to deactivate centralized policy, got error: %s", err))
 			return

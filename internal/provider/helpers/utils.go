@@ -89,8 +89,8 @@ func GetInt64Set(result []gjson.Result) types.Set {
 	return types.SetValueMust(types.Int64Type, v)
 }
 
-func WaitForActionToComplete(ctx context.Context, client *sdwan.Client, id string, timeout *int64) error {
-	var MaxActionAttempts = *timeout / 5
+func WaitForActionToComplete(ctx context.Context, client *sdwan.Client, id string, taskTimeout *int64) error {
+	var MaxActionAttempts = *taskTimeout / 5
 
 	for attempts := 0; ; attempts++ {
 		time.Sleep(5 * time.Second)
