@@ -50,7 +50,7 @@ type SdwanProviderModel struct {
 	URL         types.String `tfsdk:"url"`
 	Insecure    types.Bool   `tfsdk:"insecure"`
 	Retries     types.Int64  `tfsdk:"retries"`
-	TaskTimeout types.Int64  `tfsdk:"timeout"`
+	TaskTimeout types.Int64  `tfsdk:"task_timeout"`
 }
 
 // SdwanProviderData describes the data maintained by the provider.
