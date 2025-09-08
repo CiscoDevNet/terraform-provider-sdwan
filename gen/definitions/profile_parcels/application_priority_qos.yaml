@@ -14,7 +14,7 @@ attributes:
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_application_priority_feature_profile.test.id
   - model_name: interfaces
-    tf_name: target_interface
+    tf_name: target_interfaces
     data_path: [target]
     example: '{{interface_var_1}}'
   - model_name: qosSchedulers
@@ -25,7 +25,7 @@ attributes:
         data_path: [classMapRef]
         exclude_test: true
         example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
-      - model_name: drops 
+      - model_name: drops
         example: tail-drop
       - model_name: queue
         id: true

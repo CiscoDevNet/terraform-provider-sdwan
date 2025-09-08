@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.7.2 (unreleased)
+
+- BREAKING CHANGE: Rename `target_interface` attribute of `sdwan_application_priority_qos_policy` resource to `target_interfaces`
+
 ## 0.7.1
 
 - Fix issue, where concurrent update of `localized_policy` resources fails with `Failed to update variables` error

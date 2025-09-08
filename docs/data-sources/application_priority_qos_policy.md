@@ -32,8 +32,8 @@ data "sdwan_application_priority_qos_policy" "example" {
 - `description` (String) The description of the Policy
 - `name` (String) The name of the Policy
 - `qos_schedulers` (Attributes List) qosSchedulers (see [below for nested schema](#nestedatt--qos_schedulers))
-- `target_interface` (Set of String) interfaces
-- `target_interface_variable` (String) Variable name
+- `target_interfaces` (Set of String) interfaces
+- `target_interfaces_variable` (String) Variable name
 - `version` (Number) The version of the Policy
 
 <a id="nestedatt--qos_schedulers"></a>
