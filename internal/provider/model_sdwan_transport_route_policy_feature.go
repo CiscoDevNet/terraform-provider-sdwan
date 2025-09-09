@@ -346,7 +346,7 @@ func (data TransportRoutePolicy) toBody(ctx context.Context) string {
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "actions.-1", itemChildBody)
 				}
-			} else {
+			} else if item.BaseAction.ValueString() == "accept" {
 				itemChildBody := ""
 				if true {
 					itemChildBody, _ = sjson.Set(itemChildBody, "accept.enableAcceptAction.optionType", "default")
