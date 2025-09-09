@@ -208,7 +208,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `ipv6_configuration_type` (String) IPv6 Configuration Type
   - Choices: `dynamic`, `static`, `none`
   - Default value: `none`
-- `ipv6_dhcp_helpers` (Attributes List) DHCPv6 Helper (see [below for nested schema](#nestedatt--ipv6_dhcp_helpers))
+- `ipv6_dhcp_helpers` (Attributes List) DHCPv6 Helper, Attribute conditional on `ipv6_configuration_type` being equal to `static` (see [below for nested schema](#nestedatt--ipv6_dhcp_helpers))
 - `ipv6_dhcp_secondary_addresses` (Attributes List) secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` being equal to `dynamic` (see [below for nested schema](#nestedatt--ipv6_dhcp_secondary_addresses))
 - `ipv6_nat` (Boolean) enable Network Address Translation ipv6 on this interface
   - Default value: `false`

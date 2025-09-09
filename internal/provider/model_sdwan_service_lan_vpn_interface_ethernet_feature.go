@@ -431,7 +431,7 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 			body, _ = sjson.SetRaw(body, path+"intfIpV6Address.static.secondaryIpV6Address.-1", itemBody)
 		}
 	}
-	if true {
+	if true && data.Ipv6ConfigurationType.ValueString() == "static" {
 
 		for _, item := range data.Ipv6DhcpHelpers {
 			itemBody := ""
@@ -1506,6 +1506,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.Ipv6DhcpHelpers = append(data.Ipv6DhcpHelpers, item)
 			return true
 		})
+		data.Ipv6ConfigurationType = types.StringValue("static")
 	}
 	data.Ipv4Nat = types.BoolNull()
 

@@ -260,7 +260,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				},
 			},
 			"ipv6_dhcp_helpers": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("DHCPv6 Helper").String,
+				MarkdownDescription: helpers.NewAttributeDescription("DHCPv6 Helper, Attribute conditional on `ipv6_configuration_type` being equal to `static`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
