@@ -60,6 +60,7 @@ data "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `ip_mtu_variable` (String) Variable name
 - `ipv4_address` (String) IP Address
 - `ipv4_address_variable` (String) Variable name
+- `ipv4_configuration_type` (String) IPv4 Configuration Type
 - `ipv4_dhcp_distance` (Number) DHCP Distance
 - `ipv4_dhcp_distance_variable` (String) Variable name
 - `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
@@ -87,6 +88,7 @@ data "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `ipv4_vrrps` (Attributes List) Enable VRRP (see [below for nested schema](#nestedatt--ipv4_vrrps))
 - `ipv6_address` (String) IPv6 Address Secondary
 - `ipv6_address_variable` (String) Variable name
+- `ipv6_configuration_type` (String) IPv6 Configuration Type
 - `ipv6_dhcp_helpers` (Attributes List) DHCPv6 Helper (see [below for nested schema](#nestedatt--ipv6_dhcp_helpers))
 - `ipv6_dhcp_secondary_addresses` (Attributes List) secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_dhcp_secondary_addresses))
 - `ipv6_nat` (Boolean) enable Network Address Translation ipv6 on this interface
