@@ -3,6 +3,7 @@
 - BREAKING CHANGE: Fix type of `port` attribute of `sdwan_port_list_policy_object` to support multiple values, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/460)
 - BREAKING CHANGE: Rename `target_interface` attribute of `sdwan_application_priority_qos_policy` resource to `target_interfaces`
 - BREAKING CHANGE: Adds `ipv4_configuration_type` and `ipv6_configuration_type` to `sdwan_service_lan_vpn_interface_ethernet_feature` resource
+- Add `community` support to the `sdwan_route_policy_definition` resource and data source
 
 ## 0.7.1
 

@@ -122,15 +122,17 @@ Optional:
 Required:
 
 - `type` (String) Type of match entry
-  - Choices: `address`, `asPath`, `advancedCommunity`, `expandedCommunity`, `expandedCommunityInline`, `extCommunity`, `localPreference`, `metric`, `nextHop`, `origin`, `peer`, `ompTag`, `ospfTag`
+  - Choices: `address`, `asPath`, `community`, `advancedCommunity`, `expandedCommunity`, `expandedCommunityInline`, `extCommunity`, `localPreference`, `metric`, `nextHop`, `origin`, `peer`, `ompTag`, `ospfTag`
 
 Optional:
 
 - `as_path_list_id` (String) AS path list ID, Attribute conditional on `type` being equal to `asPath`
 - `as_path_list_version` (Number) AS path list version
+- `community_list_id` (String) Community list ID, Attribute conditional on `type` being equal to `community`
 - `community_list_ids` (Set of String) Community list IDs, Attribute conditional on `type` being equal to `advancedCommunity`
-- `community_list_match_flag` (String) Community list match flag, Attribute conditional on `type` being equal to `advancedCommunity`
+- `community_list_match_flag` (String) Community list match flag
   - Choices: `and`, `or`, `exact`
+- `community_list_version` (Number) Community list version
 - `community_list_versions` (List of String) Community list versions
 - `expanded_community_list_id` (String) Expanded community list ID, Attribute conditional on `type` being equal to `expandedCommunity`
 - `expanded_community_list_variable` (String) Expanded community list variable, Attribute conditional on `type` being equal to `expandedCommunityInline`

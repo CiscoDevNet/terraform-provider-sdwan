@@ -79,6 +79,7 @@ attributes:
               [
                 address,
                 asPath,
+                community,
                 advancedCommunity,
                 expandedCommunity,
                 expandedCommunityInline,
@@ -121,6 +122,28 @@ attributes:
             type: Version
             description: AS path list version
             exclude_test: true
+          - model_name: ref
+            tf_name: community_list_id
+            conditional_attribute:
+              name: type
+              value: community
+            type: String
+            description: Community list ID
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+            exclude_test: true
+          - tf_name: community_list_version
+            tf_only: true
+            type: Version
+            description: Community list version
+            exclude_test: true
+          - model_name: matchFlag
+            tf_name: community_list_match_flag
+            conditional_attribute:
+            type: String
+            enum_values: [and, or, exact]
+            description: Community list match flag
+            example: and
+            exclude_test: true
           - model_name: refs
             tf_name: community_list_ids
             conditional_attribute:
@@ -135,16 +158,6 @@ attributes:
             tf_only: true
             type: Versions
             description: Community list versions
-            exclude_test: true
-          - model_name: matchFlag
-            tf_name: community_list_match_flag
-            conditional_attribute:
-              name: type
-              value: advancedCommunity
-            type: String
-            enum_values: [and, or, exact]
-            description: Community list match flag
-            example: and
             exclude_test: true
           - model_name: ref
             tf_name: expanded_community_list_id

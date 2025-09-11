@@ -56,9 +56,11 @@ type RoutePolicyDefinitionSequencesMatchEntries struct {
 	PrefixListVersion             types.Int64  `tfsdk:"prefix_list_version"`
 	AsPathListId                  types.String `tfsdk:"as_path_list_id"`
 	AsPathListVersion             types.Int64  `tfsdk:"as_path_list_version"`
+	CommunityListId               types.String `tfsdk:"community_list_id"`
+	CommunityListVersion          types.Int64  `tfsdk:"community_list_version"`
+	CommunityListMatchFlag        types.String `tfsdk:"community_list_match_flag"`
 	CommunityListIds              types.Set    `tfsdk:"community_list_ids"`
 	CommunityListVersions         types.List   `tfsdk:"community_list_versions"`
-	CommunityListMatchFlag        types.String `tfsdk:"community_list_match_flag"`
 	ExpandedCommunityListId       types.String `tfsdk:"expanded_community_list_id"`
 	ExpandedCommunityListVariable types.String `tfsdk:"expanded_community_list_variable"`
 	ExpandedCommunityListVersion  types.Int64  `tfsdk:"expanded_community_list_version"`
@@ -150,13 +152,16 @@ func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.AsPathListId.IsNull() && childItem.Type.ValueString() == "asPath" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.AsPathListId.ValueString())
 					}
+					if !childItem.CommunityListId.IsNull() && childItem.Type.ValueString() == "community" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.CommunityListId.ValueString())
+					}
+					if !childItem.CommunityListMatchFlag.IsNull() {
+						itemChildBody, _ = sjson.Set(itemChildBody, "matchFlag", childItem.CommunityListMatchFlag.ValueString())
+					}
 					if !childItem.CommunityListIds.IsNull() && childItem.Type.ValueString() == "advancedCommunity" {
 						var values []string
 						childItem.CommunityListIds.ElementsAs(ctx, &values, false)
 						itemChildBody, _ = sjson.Set(itemChildBody, "refs", values)
-					}
-					if !childItem.CommunityListMatchFlag.IsNull() && childItem.Type.ValueString() == "advancedCommunity" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "matchFlag", childItem.CommunityListMatchFlag.ValueString())
 					}
 					if !childItem.ExpandedCommunityListId.IsNull() && childItem.Type.ValueString() == "expandedCommunity" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.ExpandedCommunityListId.ValueString())
@@ -332,15 +337,20 @@ func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Resul
 					} else {
 						cItem.AsPathListId = types.StringNull()
 					}
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "community" {
+						cItem.CommunityListId = types.StringValue(ccValue.String())
+					} else {
+						cItem.CommunityListId = types.StringNull()
+					}
+					if ccValue := cv.Get("matchFlag"); ccValue.Exists() {
+						cItem.CommunityListMatchFlag = types.StringValue(ccValue.String())
+					} else {
+						cItem.CommunityListMatchFlag = types.StringNull()
+					}
 					if ccValue := cv.Get("refs"); ccValue.Exists() && cItem.Type.ValueString() == "advancedCommunity" {
 						cItem.CommunityListIds = helpers.GetStringSet(ccValue.Array())
 					} else {
 						cItem.CommunityListIds = types.SetNull(types.StringType)
-					}
-					if ccValue := cv.Get("matchFlag"); ccValue.Exists() && cItem.Type.ValueString() == "advancedCommunity" {
-						cItem.CommunityListMatchFlag = types.StringValue(ccValue.String())
-					} else {
-						cItem.CommunityListMatchFlag = types.StringNull()
 					}
 					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "expandedCommunity" {
 						cItem.ExpandedCommunityListId = types.StringValue(ccValue.String())
@@ -564,10 +574,13 @@ func (data *RoutePolicyDefinition) hasChanges(ctx context.Context, state *RouteP
 					if !data.Sequences[i].MatchEntries[ii].AsPathListId.Equal(state.Sequences[i].MatchEntries[ii].AsPathListId) {
 						hasChanges = true
 					}
-					if !data.Sequences[i].MatchEntries[ii].CommunityListIds.Equal(state.Sequences[i].MatchEntries[ii].CommunityListIds) {
+					if !data.Sequences[i].MatchEntries[ii].CommunityListId.Equal(state.Sequences[i].MatchEntries[ii].CommunityListId) {
 						hasChanges = true
 					}
 					if !data.Sequences[i].MatchEntries[ii].CommunityListMatchFlag.Equal(state.Sequences[i].MatchEntries[ii].CommunityListMatchFlag) {
+						hasChanges = true
+					}
+					if !data.Sequences[i].MatchEntries[ii].CommunityListIds.Equal(state.Sequences[i].MatchEntries[ii].CommunityListIds) {
 						hasChanges = true
 					}
 					if !data.Sequences[i].MatchEntries[ii].ExpandedCommunityListId.Equal(state.Sequences[i].MatchEntries[ii].ExpandedCommunityListId) {
@@ -704,6 +717,11 @@ func (data *RoutePolicyDefinition) updateVersions(ctx context.Context, state *Ro
 			} else {
 				data.Sequences[i].MatchEntries[ii].AsPathListVersion = types.Int64Null()
 			}
+			if cStateIndex > -1 {
+				data.Sequences[i].MatchEntries[ii].CommunityListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].CommunityListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].CommunityListVersion = types.Int64Null()
+			}
 			if cStateIndex > -1 && !state.Sequences[stateIndex].MatchEntries[cStateIndex].CommunityListVersions.IsNull() {
 				data.Sequences[i].MatchEntries[ii].CommunityListVersions = state.Sequences[stateIndex].MatchEntries[cStateIndex].CommunityListVersions
 			} else {
@@ -741,6 +759,9 @@ func (data *RoutePolicyDefinition) processImport(ctx context.Context) {
 			}
 			if data.Sequences[i].MatchEntries[ii].AsPathListId != types.StringNull() {
 				data.Sequences[i].MatchEntries[ii].AsPathListVersion = types.Int64Value(0)
+			}
+			if data.Sequences[i].MatchEntries[ii].CommunityListId != types.StringNull() {
+				data.Sequences[i].MatchEntries[ii].CommunityListVersion = types.Int64Value(0)
 			}
 			if !data.Sequences[i].MatchEntries[ii].CommunityListIds.IsNull() {
 				data.Sequences[i].MatchEntries[ii].CommunityListVersions = types.ListNull(types.StringType)

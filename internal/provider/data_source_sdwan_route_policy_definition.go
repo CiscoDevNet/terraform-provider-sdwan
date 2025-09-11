@@ -128,6 +128,18 @@ func (d *RoutePolicyDefinitionDataSource) Schema(ctx context.Context, req dataso
 										MarkdownDescription: "AS path list version",
 										Computed:            true,
 									},
+									"community_list_id": schema.StringAttribute{
+										MarkdownDescription: "Community list ID",
+										Computed:            true,
+									},
+									"community_list_version": schema.Int64Attribute{
+										MarkdownDescription: "Community list version",
+										Computed:            true,
+									},
+									"community_list_match_flag": schema.StringAttribute{
+										MarkdownDescription: "Community list match flag",
+										Computed:            true,
+									},
 									"community_list_ids": schema.SetAttribute{
 										MarkdownDescription: "Community list IDs",
 										ElementType:         types.StringType,
@@ -136,10 +148,6 @@ func (d *RoutePolicyDefinitionDataSource) Schema(ctx context.Context, req dataso
 									"community_list_versions": schema.ListAttribute{
 										MarkdownDescription: "Community list versions",
 										ElementType:         types.StringType,
-										Computed:            true,
-									},
-									"community_list_match_flag": schema.StringAttribute{
-										MarkdownDescription: "Community list match flag",
 										Computed:            true,
 									},
 									"expanded_community_list_id": schema.StringAttribute{
