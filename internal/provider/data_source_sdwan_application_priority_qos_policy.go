@@ -79,12 +79,12 @@ func (d *ApplicationPriorityQoSProfileParcelDataSource) Schema(ctx context.Conte
 				MarkdownDescription: "Feature Profile ID",
 				Required:            true,
 			},
-			"target_interface": schema.SetAttribute{
+			"target_interfaces": schema.SetAttribute{
 				MarkdownDescription: "interfaces",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
-			"target_interface_variable": schema.StringAttribute{
+			"target_interfaces_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

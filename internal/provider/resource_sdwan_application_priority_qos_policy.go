@@ -89,12 +89,12 @@ func (r *ApplicationPriorityQoSProfileParcelResource) Schema(ctx context.Context
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
 				Required:            true,
 			},
-			"target_interface": schema.SetAttribute{
+			"target_interfaces": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("interfaces").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
-			"target_interface_variable": schema.StringAttribute{
+			"target_interfaces_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
