@@ -67,7 +67,7 @@ func testAccDataSourceSdwanApplicationPriorityQoSProfileParcelConfig() string {
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_application_priority_feature_profile.test.id` + "\n"
-	config += `	target_interface = ["{{interface_var_1}}"]` + "\n"
+	config += `	target_interfaces = ["{{interface_var_1}}"]` + "\n"
 	config += `	qos_schedulers = [{` + "\n"
 	config += `	  drops = "tail-drop"` + "\n"
 	config += `	  queue = "0"` + "\n"

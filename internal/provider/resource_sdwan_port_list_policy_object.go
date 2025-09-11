@@ -26,7 +26,6 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
-	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -86,12 +85,9 @@ func (r *PortListPolicyObjectResource) Schema(ctx context.Context, req resource.
 				Required:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"port": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Port number").AddIntegerRangeDescription(1, 65535).String,
+						"port": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Port number").String,
 							Optional:            true,
-							Validators: []validator.Int64{
-								int64validator.Between(1, 65535),
-							},
 						},
 					},
 				},

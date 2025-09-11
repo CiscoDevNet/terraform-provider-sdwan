@@ -19,7 +19,7 @@ resource "sdwan_application_priority_qos_policy" "example" {
   name               = "Example"
   description        = "My Example"
   feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  target_interface   = ["{{interface_var_1}}"]
+  target_interfaces  = ["{{interface_var_1}}"]
   qos_schedulers = [
     {
       drops           = "tail-drop"
@@ -43,8 +43,8 @@ resource "sdwan_application_priority_qos_policy" "example" {
 
 - `description` (String) The description of the Policy
 - `qos_schedulers` (Attributes List) qosSchedulers (see [below for nested schema](#nestedatt--qos_schedulers))
-- `target_interface` (Set of String) interfaces
-- `target_interface_variable` (String) Variable name
+- `target_interfaces` (Set of String) interfaces
+- `target_interfaces_variable` (String) Variable name
 
 ### Read-Only
 
