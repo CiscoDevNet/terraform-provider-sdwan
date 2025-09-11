@@ -20,7 +20,6 @@ package provider
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
-	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -38,7 +37,7 @@ type PortListPolicyObject struct {
 }
 
 type PortListPolicyObjectEntries struct {
-	Port types.Int64 `tfsdk:"port"`
+	Port types.String `tfsdk:"port"`
 }
 
 // End of section. //template:end types
@@ -64,7 +63,7 @@ func (data PortListPolicyObject) toBody(ctx context.Context) string {
 		for _, item := range data.Entries {
 			itemBody := ""
 			if !item.Port.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "port", fmt.Sprint(item.Port.ValueInt64()))
+				itemBody, _ = sjson.Set(itemBody, "port", item.Port.ValueString())
 			}
 			body, _ = sjson.SetRaw(body, "entries.-1", itemBody)
 		}
@@ -86,9 +85,9 @@ func (data *PortListPolicyObject) fromBody(ctx context.Context, res gjson.Result
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := PortListPolicyObjectEntries{}
 			if cValue := v.Get("port"); cValue.Exists() {
-				item.Port = types.Int64Value(cValue.Int())
+				item.Port = types.StringValue(cValue.String())
 			} else {
-				item.Port = types.Int64Null()
+				item.Port = types.StringNull()
 			}
 			data.Entries = append(data.Entries, item)
 			return true

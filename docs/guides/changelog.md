@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.7.2 (unreleased)
+
+- BREAKING CHANGE: Fix type of `port` attribute of `sdwan_port_list_policy_object` to support multiple values, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/460)
+
 ## 0.7.1
 
 - Fix issue, where concurrent update of `localized_policy` resources fails with `Failed to update variables` error
