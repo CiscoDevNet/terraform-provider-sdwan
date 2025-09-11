@@ -1,5 +1,5 @@
 ---
-# Manual resource - Modals toBody is manually configured to support sub interfaces.
+# Manual resource - Modals is manually configured to support sub interfaces and 20.15 schema changes.
 name: Service LAN VPN Interface Ethernet
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/lan/vpn/%s/interface/ethernet
 minimum_version: 20.12.0
@@ -29,24 +29,45 @@ attributes:
   - model_name: description
     tf_name: interface_description
     example: LAN
+  - tf_name: ipv4_configuration_type
+    type: String
+    tf_only: true
+    default_value: "dynamic"
+    default_value_present: true
+    description: IPv4 Configuration Type
+    enum_values: [dynamic, static]
+    example: static
+    minimum_test_value: '"static"'
   - model_name: dynamicDhcpDistance
     tf_name: ipv4_dhcp_distance
     data_path: [intfIpAddress, dynamic]
+    conditional_attribute:
+      name: ipv4_configuration_type
+      value: dynamic
     exclude_test: true
     example: 1
   - model_name: ipAddress
     tf_name: ipv4_address
     data_path: [intfIpAddress, static, staticIpV4AddressPrimary]
+    conditional_attribute:
+      name: ipv4_configuration_type
+      value: static
     example: 1.2.3.4
     minimum_test_value: '"1.2.3.4"'
   - model_name: subnetMask
     tf_name: ipv4_subnet_mask
     data_path: [intfIpAddress, static, staticIpV4AddressPrimary]
+    conditional_attribute:
+      name: ipv4_configuration_type
+      value: static
     example: 0.0.0.0
     minimum_test_value: '"0.0.0.0"'
   - model_name: staticIpV4AddressSecondary
     tf_name: ipv4_secondary_addresses
     data_path: [intfIpAddress, static]
+    conditional_attribute:
+      name: ipv4_configuration_type
+      value: static
     attributes:
     - model_name: ipAddress
       tf_name: address
@@ -57,14 +78,28 @@ attributes:
   - model_name: dhcpHelper
     tf_name: ipv4_dhcp_helper
     example: 1.2.3.4
+  - tf_name: ipv6_configuration_type
+    type: String
+    tf_only: true
+    default_value: "none"
+    default_value_present: true
+    description: IPv6 Configuration Type
+    enum_values: [dynamic, static, none]
+    example: static
   - model_name: dhcpClient
     tf_name: enable_dhcpv6
     data_path: [intfIpV6Address, dynamic]
+    conditional_attribute:
+      name: ipv6_configuration_type
+      value: dynamic
     exclude_test: true
     example: false
   - model_name: secondaryIpV6Address
     tf_name: ipv6_dhcp_secondary_addresses
     data_path: [intfIpV6Address, dynamic]
+    conditional_attribute:
+      name: ipv6_configuration_type
+      value: dynamic
     exclude_null: true
     exclude_test: true
     attributes:
@@ -74,11 +109,17 @@ attributes:
   - model_name: address
     tf_name: ipv6_address
     data_path: [intfIpV6Address, static, primaryIpV6Address]
+    conditional_attribute:
+      name: ipv6_configuration_type
+      value: static
     exclude_test: true
     example: 2001:0:0:1::0
   - model_name: secondaryIpV6Address
     tf_name: ipv6_secondary_addresses
     data_path: [intfIpV6Address, static]
+    conditional_attribute:
+      name: ipv6_configuration_type
+      value: static
     exclude_null: true
     exclude_test: true
     attributes:
@@ -88,6 +129,9 @@ attributes:
   - model_name: dhcpHelperV6
     tf_name: ipv6_dhcp_helpers
     data_path: [intfIpV6Address, static]
+    conditional_attribute:
+      name: ipv6_configuration_type
+      value: static
     exclude_null: true
     attributes:
     - model_name: ipAddress

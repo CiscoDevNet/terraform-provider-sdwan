@@ -33,14 +33,14 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type ApplicationPriorityQoS struct {
-	Id                      types.String                          `tfsdk:"id"`
-	Version                 types.Int64                           `tfsdk:"version"`
-	Name                    types.String                          `tfsdk:"name"`
-	Description             types.String                          `tfsdk:"description"`
-	FeatureProfileId        types.String                          `tfsdk:"feature_profile_id"`
-	TargetInterface         types.Set                             `tfsdk:"target_interface"`
-	TargetInterfaceVariable types.String                          `tfsdk:"target_interface_variable"`
-	QosSchedulers           []ApplicationPriorityQoSQosSchedulers `tfsdk:"qos_schedulers"`
+	Id                       types.String                          `tfsdk:"id"`
+	Version                  types.Int64                           `tfsdk:"version"`
+	Name                     types.String                          `tfsdk:"name"`
+	Description              types.String                          `tfsdk:"description"`
+	FeatureProfileId         types.String                          `tfsdk:"feature_profile_id"`
+	TargetInterfaces         types.Set                             `tfsdk:"target_interfaces"`
+	TargetInterfacesVariable types.String                          `tfsdk:"target_interfaces_variable"`
+	QosSchedulers            []ApplicationPriorityQoSQosSchedulers `tfsdk:"qos_schedulers"`
 }
 
 type ApplicationPriorityQoSQosSchedulers struct {
@@ -74,16 +74,16 @@ func (data ApplicationPriorityQoS) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
 
-	if !data.TargetInterfaceVariable.IsNull() {
+	if !data.TargetInterfacesVariable.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"target.interfaces.optionType", "variable")
-			body, _ = sjson.Set(body, path+"target.interfaces.value", data.TargetInterfaceVariable.ValueString())
+			body, _ = sjson.Set(body, path+"target.interfaces.value", data.TargetInterfacesVariable.ValueString())
 		}
-	} else if !data.TargetInterface.IsNull() {
+	} else if !data.TargetInterfaces.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"target.interfaces.optionType", "global")
 			var values []string
-			data.TargetInterface.ElementsAs(ctx, &values, false)
+			data.TargetInterfaces.ElementsAs(ctx, &values, false)
 			body, _ = sjson.Set(body, path+"target.interfaces.value", values)
 		}
 	}
@@ -138,14 +138,14 @@ func (data *ApplicationPriorityQoS) fromBody(ctx context.Context, res gjson.Resu
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	data.TargetInterface = types.SetNull(types.StringType)
-	data.TargetInterfaceVariable = types.StringNull()
+	data.TargetInterfaces = types.SetNull(types.StringType)
+	data.TargetInterfacesVariable = types.StringNull()
 	if t := res.Get(path + "target.interfaces.optionType"); t.Exists() {
 		va := res.Get(path + "target.interfaces.value")
 		if t.String() == "variable" {
-			data.TargetInterfaceVariable = types.StringValue(va.String())
+			data.TargetInterfacesVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TargetInterface = helpers.GetStringSet(va.Array())
+			data.TargetInterfaces = helpers.GetStringSet(va.Array())
 		}
 	}
 	if value := res.Get(path + "qosMap.qosSchedulers"); value.Exists() && len(value.Array()) > 0 {
@@ -209,14 +209,14 @@ func (data *ApplicationPriorityQoS) updateFromBody(ctx context.Context, res gjso
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	data.TargetInterface = types.SetNull(types.StringType)
-	data.TargetInterfaceVariable = types.StringNull()
+	data.TargetInterfaces = types.SetNull(types.StringType)
+	data.TargetInterfacesVariable = types.StringNull()
 	if t := res.Get(path + "target.interfaces.optionType"); t.Exists() {
 		va := res.Get(path + "target.interfaces.value")
 		if t.String() == "variable" {
-			data.TargetInterfaceVariable = types.StringValue(va.String())
+			data.TargetInterfacesVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TargetInterface = helpers.GetStringSet(va.Array())
+			data.TargetInterfaces = helpers.GetStringSet(va.Array())
 		}
 	}
 	for i := range data.QosSchedulers {

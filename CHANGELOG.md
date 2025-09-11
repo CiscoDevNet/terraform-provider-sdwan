@@ -1,3 +1,9 @@
+## 0.7.2 (unreleased)
+
+- BREAKING CHANGE: Fix type of `port` attribute of `sdwan_port_list_policy_object` to support multiple values, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/460)
+- BREAKING CHANGE: Rename `target_interface` attribute of `sdwan_application_priority_qos_policy` resource to `target_interfaces`
+- BREAKING CHANGE: Adds `ipv4_configuration_type` and `ipv6_configuration_type` to `sdwan_service_lan_vpn_interface_ethernet_feature` resource
+
 ## 0.7.1
 
 - Fix issue, where concurrent update of `localized_policy` resources fails with `Failed to update variables` error

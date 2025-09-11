@@ -36,4 +36,4 @@ data "sdwan_port_list_policy_object" "example" {
 
 Read-Only:
 
-- `port` (Number) Port number
+- `port` (String) Port number

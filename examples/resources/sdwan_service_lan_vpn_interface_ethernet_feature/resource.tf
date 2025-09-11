@@ -6,6 +6,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
   shutdown                   = false
   interface_name             = "GigabitEthernet3"
   interface_description      = "LAN"
+  ipv4_configuration_type    = "static"
   ipv4_address               = "1.2.3.4"
   ipv4_subnet_mask           = "0.0.0.0"
   ipv4_secondary_addresses = [
@@ -14,7 +15,8 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
       subnet_mask = "0.0.0.0"
     }
   ]
-  ipv4_dhcp_helper = ["1.2.3.4"]
+  ipv4_dhcp_helper        = ["1.2.3.4"]
+  ipv6_configuration_type = "static"
   ipv6_dhcp_helpers = [
     {
       address           = "2001:0:0:1::0"
