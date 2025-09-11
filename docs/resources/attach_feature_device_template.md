@@ -34,7 +34,7 @@ resource "sdwan_attach_feature_device_template" "example" {
 
 ### Required
 
-- `devices` (Attributes List) Devices (see [below for nested schema](#nestedatt--devices))
+- `devices` (Attributes Set) Devices (see [below for nested schema](#nestedatt--devices))
 - `id` (String) The ID of the device template
 
 ### Optional

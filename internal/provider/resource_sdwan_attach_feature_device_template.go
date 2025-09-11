@@ -67,7 +67,7 @@ func (r *AttachFeatureDeviceTemplateResource) Schema(ctx context.Context, req re
 				MarkdownDescription: "The version of the device template",
 				Optional:            true,
 			},
-			"devices": schema.ListNestedAttribute{
+			"devices": schema.SetNestedAttribute{
 				MarkdownDescription: "Devices",
 				Required:            true,
 				NestedObject: schema.NestedAttributeObject{
