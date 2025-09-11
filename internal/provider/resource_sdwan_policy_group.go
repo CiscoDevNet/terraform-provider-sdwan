@@ -60,6 +60,7 @@ func NewPolicyGroupResource() resource.Resource {
 type PolicyGroupResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
+	taskTimeout *int64
 }
 
 func (r *PolicyGroupResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -154,6 +155,7 @@ func (r *PolicyGroupResource) Configure(_ context.Context, req resource.Configur
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
+	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
 }
 
 // End of section. //template:end model
@@ -266,7 +268,7 @@ func (r *PolicyGroupResource) Deploy(ctx context.Context, plan PolicyGroup, stat
 
 		// Wait for deploy action to complete
 		actionId := res.Get("parentTaskId").String()
-		err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
+		err = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
 		if err != nil {
 			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to config group devices, got error: %s", err))
 			if deleteOnError {
