@@ -53,6 +53,7 @@ func NewPreferredColorGroupPolicyObjectResource() resource.Resource {
 type PreferredColorGroupPolicyObjectResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
+	taskTimeout *int64
 }
 
 func (r *PreferredColorGroupPolicyObjectResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -124,6 +125,7 @@ func (r *PreferredColorGroupPolicyObjectResource) Configure(_ context.Context, r
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
+	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
 }
 
 // End of section. //template:end model

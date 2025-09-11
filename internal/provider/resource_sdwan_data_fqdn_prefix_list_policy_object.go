@@ -53,6 +53,7 @@ func NewDataFQDNPrefixListPolicyObjectResource() resource.Resource {
 type DataFQDNPrefixListPolicyObjectResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
+	taskTimeout *int64
 }
 
 func (r *DataFQDNPrefixListPolicyObjectResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -106,6 +107,7 @@ func (r *DataFQDNPrefixListPolicyObjectResource) Configure(_ context.Context, re
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
+	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
 }
 
 // End of section. //template:end model

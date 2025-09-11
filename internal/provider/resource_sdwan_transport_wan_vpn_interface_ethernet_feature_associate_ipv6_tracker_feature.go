@@ -51,6 +51,7 @@ func NewTransportWANVPNInterfaceEthernetFeatureAssociateIPv6TrackerFeatureResour
 type TransportWANVPNInterfaceEthernetFeatureAssociateIPv6TrackerFeatureResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
+	taskTimeout *int64
 }
 
 func (r *TransportWANVPNInterfaceEthernetFeatureAssociateIPv6TrackerFeatureResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -101,6 +102,7 @@ func (r *TransportWANVPNInterfaceEthernetFeatureAssociateIPv6TrackerFeatureResou
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
+	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
 }
 
 // End of section. //template:end model

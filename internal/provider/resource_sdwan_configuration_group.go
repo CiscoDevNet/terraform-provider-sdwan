@@ -48,6 +48,8 @@ import (
 
 var MinConfigGroupUpdateVersion = version.Must(version.NewVersion("20.15.0"))
 
+// Section below is generated&owned by "gen/generator.go". //template:begin model
+
 // Ensure provider defined types fully satisfy framework interfaces
 var _ resource.Resource = &ConfigurationGroupResource{}
 var _ resource.ResourceWithImportState = &ConfigurationGroupResource{}
@@ -201,6 +203,8 @@ func (r *ConfigurationGroupResource) Configure(_ context.Context, req resource.C
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
 }
+
+// End of section. //template:end model
 
 func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan ConfigurationGroup
