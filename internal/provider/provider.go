@@ -45,17 +45,19 @@ type SdwanProvider struct {
 
 // SdwanProviderModel describes the provider data model.
 type SdwanProviderModel struct {
-	Username types.String `tfsdk:"username"`
-	Password types.String `tfsdk:"password"`
-	URL      types.String `tfsdk:"url"`
-	Insecure types.Bool   `tfsdk:"insecure"`
-	Retries  types.Int64  `tfsdk:"retries"`
+	Username    types.String `tfsdk:"username"`
+	Password    types.String `tfsdk:"password"`
+	URL         types.String `tfsdk:"url"`
+	Insecure    types.Bool   `tfsdk:"insecure"`
+	Retries     types.Int64  `tfsdk:"retries"`
+	TaskTimeout types.Int64  `tfsdk:"task_timeout"`
 }
 
 // SdwanProviderData describes the data maintained by the provider.
 type SdwanProviderData struct {
 	Client      *sdwan.Client
 	UpdateMutex *sync.Mutex
+	TaskTimeout *int64
 }
 
 // Metadata returns the provider type name.
@@ -90,6 +92,10 @@ func (p *SdwanProvider) Schema(ctx context.Context, req provider.SchemaRequest, 
 				Validators: []validator.Int64{
 					int64validator.Between(0, 9),
 				},
+			},
+			"task_timeout": schema.Int64Attribute{
+				MarkdownDescription: "Timeout in seconds for asynchronous tasks. This can also be set as the `SDWAN_TASK_TIMEOUT` environment variable. Defaults to `1500`.",
+				Optional:            true,
 			},
 		},
 	}
@@ -227,6 +233,27 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 		retries = config.Retries.ValueInt64()
 	}
 
+	var taskTimeout int64
+	if config.TaskTimeout.IsUnknown() {
+		// Cannot connect to client with an unknown value
+		resp.Diagnostics.AddWarning(
+			"Unable to create client",
+			"Cannot use unknown value as task_timeout",
+		)
+		return
+	}
+
+	if config.TaskTimeout.IsNull() {
+		taskTimeoutStr := os.Getenv("SDWAN_TASK_TIMEOUT")
+		if taskTimeoutStr == "" {
+			taskTimeout = 1500
+		} else {
+			taskTimeout, _ = strconv.ParseInt(taskTimeoutStr, 0, 64)
+		}
+	} else {
+		taskTimeout = config.TaskTimeout.ValueInt64()
+	}
+
 	// Create a new SDWAN client and set it to the provider client
 	c, err := sdwan.NewClient(url, username, password, insecure, sdwan.MaxRetries(int(retries)))
 	if err != nil {
@@ -246,7 +273,7 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 		return
 	}
 
-	data := SdwanProviderData{Client: &c, UpdateMutex: &sync.Mutex{}}
+	data := SdwanProviderData{Client: &c, UpdateMutex: &sync.Mutex{}, TaskTimeout: &taskTimeout}
 	resp.DataSourceData = &data
 	resp.ResourceData = &data
 }

@@ -51,6 +51,7 @@ func NewServiceLANVPNFeatureAssociateRoutingOSPFv3IPv4FeatureResource() resource
 type ServiceLANVPNFeatureAssociateRoutingOSPFv3IPv4FeatureResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
+	taskTimeout *int64
 }
 
 func (r *ServiceLANVPNFeatureAssociateRoutingOSPFv3IPv4FeatureResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -97,6 +98,7 @@ func (r *ServiceLANVPNFeatureAssociateRoutingOSPFv3IPv4FeatureResource) Configur
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
+	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
 }
 
 // End of section. //template:end model

@@ -53,6 +53,7 @@ func NewAdvancedInspectionProfilePolicyDefinitionResource() resource.Resource {
 type AdvancedInspectionProfilePolicyDefinitionResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
+	taskTimeout *int64
 }
 
 func (r *AdvancedInspectionProfilePolicyDefinitionResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -134,6 +135,7 @@ func (r *AdvancedInspectionProfilePolicyDefinitionResource) Configure(_ context.
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
+	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
 }
 
 // End of section. //template:end model

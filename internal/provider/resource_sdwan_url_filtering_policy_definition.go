@@ -53,6 +53,7 @@ func NewURLFilteringPolicyDefinitionResource() resource.Resource {
 type URLFilteringPolicyDefinitionResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
+	taskTimeout *int64
 }
 
 func (r *URLFilteringPolicyDefinitionResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -174,6 +175,7 @@ func (r *URLFilteringPolicyDefinitionResource) Configure(_ context.Context, req 
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
+	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
 }
 
 // End of section. //template:end model

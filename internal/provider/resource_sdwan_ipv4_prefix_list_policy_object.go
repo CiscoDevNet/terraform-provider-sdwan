@@ -53,6 +53,7 @@ func NewIPv4PrefixListPolicyObjectResource() resource.Resource {
 type IPv4PrefixListPolicyObjectResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
+	taskTimeout *int64
 }
 
 func (r *IPv4PrefixListPolicyObjectResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -114,6 +115,7 @@ func (r *IPv4PrefixListPolicyObjectResource) Configure(_ context.Context, req re
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
+	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
 }
 
 // End of section. //template:end model
