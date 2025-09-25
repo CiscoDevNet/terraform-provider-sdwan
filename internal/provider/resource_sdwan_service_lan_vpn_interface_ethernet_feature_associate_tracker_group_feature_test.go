@@ -67,6 +67,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "test" {
   service_lan_vpn_feature_id = sdwan_service_lan_vpn_feature.test.id
   interface_name             = "GigabitEthernet3"
   interface_description      = "LAN"
+  ipv4_configuration_type    = "static"
   ipv4_address               = "1.2.3.4"
   ipv4_subnet_mask           = "0.0.0.0"
   ipv4_nat_type              = "pool"

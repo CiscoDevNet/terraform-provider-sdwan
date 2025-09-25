@@ -174,7 +174,7 @@ resource "sdwan_application_priority_qos_policy" "test" {
   name                      = "qos"
   description               = "QoS policy for application priority"
   feature_profile_id        = sdwan_application_priority_feature_profile.test.id
-  target_interface_variable = "{{qos_interfaces}}"
+  target_interfaces_variable = "{{qos_interfaces}}"
 }
 
 `
