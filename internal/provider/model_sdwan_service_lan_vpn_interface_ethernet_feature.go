@@ -1246,7 +1246,7 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 			body, _ = sjson.Set(body, path+"advanced.tracker.value", data.TrackerVariable.ValueString())
 		}
 	} else if data.Tracker.IsNull() {
-		if currentVersion.LessThan(MinServiceLANVPNUpdateVersion) {
+		if currentVersion.LessThan(MinServiceLANVPNInterfaceEthernetUpdateVersion) {
 			if true {
 				body, _ = sjson.Set(body, path+"advanced.tracker.optionType", "default")
 			}
