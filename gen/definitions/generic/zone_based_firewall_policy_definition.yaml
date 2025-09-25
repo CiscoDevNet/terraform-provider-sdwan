@@ -115,7 +115,7 @@ attributes:
                 destinationIp,
                 destinationFqdn,
                 destinationPort,
-                sourceGeoLocation
+                sourceGeoLocation,
                 destinationGeoLocation,
                 protocolName,
                 protocol,
