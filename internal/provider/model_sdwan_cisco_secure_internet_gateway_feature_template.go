@@ -224,6 +224,9 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "shutdown")
 		if item.Shutdown.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "shutdown."+"vipObjectType", "object")
+			itemBody, _ = sjson.Set(itemBody, "shutdown."+"vipType", "notIgnore")
+			itemBody, _ = sjson.Set(itemBody, "shutdown."+"vipValue", "false")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "shutdown."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "shutdown."+"vipType", "constant")
@@ -352,6 +355,9 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "mtu."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "mtu."+"vipVariableName", item.MtuVariable.ValueString())
 		} else if item.Mtu.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "mtu."+"vipObjectType", "object")
+			itemBody, _ = sjson.Set(itemBody, "mtu."+"vipType", "notIgnore")
+			itemBody, _ = sjson.Set(itemBody, "mtu."+"vipValue", 1400)
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "mtu."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "mtu."+"vipType", "constant")
