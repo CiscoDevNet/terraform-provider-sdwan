@@ -62,8 +62,8 @@ resource "sdwan_cisco_secure_internet_gateway_feature_template" "example" {
       interface_pairs = [
         {
           active_interface        = "e1"
-          active_interface_weight = 10
           backup_interface        = "e2"
+          active_interface_weight = 10
           backup_interface_weight = 20
         }
       ]
@@ -92,12 +92,12 @@ resource "sdwan_cisco_secure_internet_gateway_feature_template" "example" {
   tracker_source_ip = "2.3.4.5"
   trackers = [
     {
+      tracker_type     = "SIG"
       name             = "TRACKER1"
       endpoint_api_url = "https://1.1.1.1"
       threshold        = 500
       interval         = 60
       multiplier       = 4
-      tracker_type     = "SIG"
     }
   ]
 }

@@ -57,7 +57,6 @@ attributes:
       - model_name: pre-shared-secret
         tf_name: ike_pre_shared_key
         example: A1234567
-        exclude_ignore: true
       - model_name: ike-rekey-interval
         example: 600
         exclude_ignore: true
@@ -74,11 +73,9 @@ attributes:
       - model_name: ike-local-id
         tf_name: ike_pre_shared_key_local_id
         example: 1.2.3.4
-        exclude_ignore: true
       - model_name: ike-remote-id
         tf_name: ike_pre_shared_key_remote_id
         example: 2.3.4.5
-        exclude_ignore: true
       - model_name: ipsec-rekey-interval
         example: 7200
         exclude_ignore: true
@@ -111,11 +108,11 @@ attributes:
           - model_name: active-interface
             ignore_enum: true
             example: e1
-          - model_name: active-interface-weight
-            example: 10
           - model_name: backup-interface
             ignore_enum: true
             example: e2
+          - model_name: active-interface-weight
+            example: 10
           - model_name: backup-interface-weight
             example: 20
       - model_name: auth-required
@@ -203,6 +200,8 @@ attributes:
   - model_name: tracker
     tf_name: trackers
     attributes:
+      - model_name: tracker-type
+        example: SIG
       - model_name: name
         example: TRACKER1
       - model_name: endpoint-api-url
@@ -213,5 +212,3 @@ attributes:
         example: 60
       - model_name: multiplier
         example: 4
-      - model_name: tracker-type
-        example: SIG
