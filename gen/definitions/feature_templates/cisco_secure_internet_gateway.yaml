@@ -1,4 +1,5 @@
 ---
+# Manual resource - toBody is manually configured to support 'notIgnore' values for 'shutdown' and 'mtu' attributes.
 name: Cisco Secure Internet Gateway
 minimum_version: 15.0.0
 attributes:
