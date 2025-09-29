@@ -168,7 +168,6 @@ func (data CiscoSecureInternetGateway) getModel() string {
 
 // End of section. //template:end getModel
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 	body := ""
 
@@ -917,8 +916,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 	}
 	return body
 }
-
-// End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *CiscoSecureInternetGateway) fromBody(ctx context.Context, res gjson.Result) {
