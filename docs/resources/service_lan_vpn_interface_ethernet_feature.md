@@ -41,7 +41,6 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
     }
   ]
   ipv4_nat               = false
-  ipv4_nat_type          = "pool"
   ipv4_nat_range_start   = "1.2.3.4"
   ipv4_nat_range_end     = "4.5.6.7"
   ipv4_nat_prefix_length = 1
@@ -108,7 +107,6 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
   autonegotiate                        = false
   media_type                           = "auto-select"
   load_interval                        = 30
-  tracker                              = "TRACKER1"
   icmp_redirect_disable                = true
   xconnect                             = "1"
   ip_directed_broadcast                = false
@@ -191,9 +189,6 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
   - Range: `1`-`8947`
   - Default value: `60`
 - `ipv4_nat_tcp_timeout_variable` (String) Variable name
-- `ipv4_nat_type` (String) NAT Type
-  - Choices: `pool`, `loopback`
-- `ipv4_nat_type_variable` (String) Variable name
 - `ipv4_nat_udp_timeout` (Number) Set NAT UDP session timeout, in minutes
   - Range: `1`-`8947`
   - Default value: `1`

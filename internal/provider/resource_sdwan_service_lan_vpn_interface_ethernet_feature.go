@@ -290,17 +290,6 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				MarkdownDescription: helpers.NewAttributeDescription("enable Network Address Translation on this interface").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"ipv4_nat_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Type").AddStringEnumDescription("pool", "loopback").String,
-				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("pool", "loopback"),
-				},
-			},
-			"ipv4_nat_type_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
 			"ipv4_nat_range_start": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Range Start").String,
 				Optional:            true,

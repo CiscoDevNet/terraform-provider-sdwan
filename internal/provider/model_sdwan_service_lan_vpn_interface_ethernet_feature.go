@@ -68,8 +68,6 @@ type ServiceLANVPNInterfaceEthernet struct {
 	Ipv6SecondaryAddresses                   []ServiceLANVPNInterfaceEthernetIpv6SecondaryAddresses     `tfsdk:"ipv6_secondary_addresses"`
 	Ipv6DhcpHelpers                          []ServiceLANVPNInterfaceEthernetIpv6DhcpHelpers            `tfsdk:"ipv6_dhcp_helpers"`
 	Ipv4Nat                                  types.Bool                                                 `tfsdk:"ipv4_nat"`
-	Ipv4NatType                              types.String                                               `tfsdk:"ipv4_nat_type"`
-	Ipv4NatTypeVariable                      types.String                                               `tfsdk:"ipv4_nat_type_variable"`
 	Ipv4NatRangeStart                        types.String                                               `tfsdk:"ipv4_nat_range_start"`
 	Ipv4NatRangeStartVariable                types.String                                               `tfsdk:"ipv4_nat_range_start_variable"`
 	Ipv4NatRangeEnd                          types.String                                               `tfsdk:"ipv4_nat_range_end"`
@@ -473,17 +471,9 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 			body, _ = sjson.Set(body, path+"nat.value", data.Ipv4Nat.ValueBool())
 		}
 	}
-
-	if !data.Ipv4NatTypeVariable.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natType.optionType", "variable")
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natType.value", data.Ipv4NatTypeVariable.ValueString())
-		}
-	} else if !data.Ipv4NatType.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natType.optionType", "global")
-			body, _ = sjson.Set(body, path+"natAttributesIpv4.natType.value", data.Ipv4NatType.ValueString())
-		}
+	if true {
+		body, _ = sjson.Set(body, path+"natAttributesIpv4.natType.optionType", "global")
+		body, _ = sjson.Set(body, path+"natAttributesIpv4.natType.value", "pool")
 	}
 
 	if !data.Ipv4NatRangeStartVariable.IsNull() {
@@ -1516,16 +1506,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.Ipv4Nat = types.BoolValue(va.Bool())
 		}
 	}
-	data.Ipv4NatType = types.StringNull()
-	data.Ipv4NatTypeVariable = types.StringNull()
-	if t := res.Get(path + "natAttributesIpv4.natType.optionType"); t.Exists() {
-		va := res.Get(path + "natAttributesIpv4.natType.value")
-		if t.String() == "variable" {
-			data.Ipv4NatTypeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv4NatType = types.StringValue(va.String())
-		}
-	}
 	data.Ipv4NatRangeStart = types.StringNull()
 	data.Ipv4NatRangeStartVariable = types.StringNull()
 	if t := res.Get(path + "natAttributesIpv4.natPool.rangeStart.optionType"); t.Exists() {
@@ -2418,16 +2398,6 @@ func (data *ServiceLANVPNInterfaceEthernet) updateFromBody(ctx context.Context, 
 		va := res.Get(path + "nat.value")
 		if t.String() == "global" {
 			data.Ipv4Nat = types.BoolValue(va.Bool())
-		}
-	}
-	data.Ipv4NatType = types.StringNull()
-	data.Ipv4NatTypeVariable = types.StringNull()
-	if t := res.Get(path + "natAttributesIpv4.natType.optionType"); t.Exists() {
-		va := res.Get(path + "natAttributesIpv4.natType.value")
-		if t.String() == "variable" {
-			data.Ipv4NatTypeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv4NatType = types.StringValue(va.String())
 		}
 	}
 	data.Ipv4NatRangeStart = types.StringNull()

@@ -148,8 +148,8 @@ attributes:
   - model_name: natType
     tf_name: ipv4_nat_type
     data_path: [natAttributesIpv4]
-    example: pool
-    minimum_test_value: '"pool"'
+    value: pool
+    always_include: true
   - model_name: rangeStart
     tf_name: ipv4_nat_range_start
     data_path: [natAttributesIpv4, natPool]
@@ -382,6 +382,7 @@ attributes:
     example: 30
   - model_name: tracker
     data_path: [advanced]
+    exclude_test: true
     example: TRACKER1
   - model_name: icmpRedirectDisable
     data_path: [advanced]
