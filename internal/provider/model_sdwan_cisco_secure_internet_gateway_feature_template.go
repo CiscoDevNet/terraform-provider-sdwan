@@ -805,10 +805,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-secondary."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-secondary."+"vipValue", item.UmbrellaSecondaryDataCenter.ValueString())
 		}
-		if !item.Optional.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "vipOptional", item.Optional.ValueBool())
-			itemBody, _ = sjson.Set(itemBody, "priority-order", itemAttributes)
-		}
+		itemBody, _ = sjson.Set(itemBody, "priority-order", itemAttributes)
 		body, _ = sjson.SetRaw(body, path+"service."+"vipValue.-1", itemBody)
 	}
 
@@ -909,10 +906,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "multiplier."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "multiplier."+"vipValue", item.Multiplier.ValueInt64())
 		}
-		if !item.Optional.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "vipOptional", item.Optional.ValueBool())
-			itemBody, _ = sjson.Set(itemBody, "priority-order", itemAttributes)
-		}
+		itemBody, _ = sjson.Set(itemBody, "priority-order", itemAttributes)
 		body, _ = sjson.SetRaw(body, path+"tracker."+"vipValue.-1", itemBody)
 	}
 	return body

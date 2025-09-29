@@ -98,6 +98,7 @@ attributes:
         example: 5.5.5.5
   - model_name: service
     tf_name: services
+    priority_order_always: true
     attributes:
       - model_name: svc-type
         tf_name: service_type
@@ -199,6 +200,7 @@ attributes:
     example: 2.3.4.5
   - model_name: tracker
     tf_name: trackers
+    priority_order_always: true
     attributes:
       - model_name: tracker-type
         example: SIG
