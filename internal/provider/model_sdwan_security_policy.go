@@ -47,12 +47,12 @@ type SecurityPolicy struct {
 	HighSpeedLoggingVpn                   types.String                `tfsdk:"high_speed_logging_vpn"`
 	HighSpeedLoggingServerPort            types.String                `tfsdk:"high_speed_logging_server_port"`
 	HighSpeedLoggingServerSourceInterface types.String                `tfsdk:"high_speed_logging_server_source_interface"`
-	MaxIncompleteIcmpLimit                types.Int64                 `tfsdk:"max_incomplete_icmp_limit"`
-	MaxIncompleteTcpLimit                 types.Int64                 `tfsdk:"max_incomplete_tcp_limit"`
-	MaxIncompleteUdpLimit                 types.Int64                 `tfsdk:"max_incomplete_udp_limit"`
-	SessionReclassifyAllow                types.Bool                  `tfsdk:"session_reclassify_allow"`
-	ImcpUnreachableAllow                  types.Bool                  `tfsdk:"imcp_unreachable_allow"`
-	UnifiedLogging                        types.Bool                  `tfsdk:"unified_logging"`
+	MaxIncompleteIcmpLimit                types.String                `tfsdk:"max_incomplete_icmp_limit"`
+	MaxIncompleteTcpLimit                 types.String                `tfsdk:"max_incomplete_tcp_limit"`
+	MaxIncompleteUdpLimit                 types.String                `tfsdk:"max_incomplete_udp_limit"`
+	SessionReclassifyAllow                types.String                `tfsdk:"session_reclassify_allow"`
+	ImcpUnreachableAllow                  types.String                `tfsdk:"imcp_unreachable_allow"`
+	UnifiedLogging                        types.String                `tfsdk:"unified_logging"`
 	Logging                               []SecurityPolicyLogging     `tfsdk:"logging"`
 }
 
@@ -144,34 +144,22 @@ func (data SecurityPolicy) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, "policyDefinition.settings.highSpeedLogging.sourceInterface", data.HighSpeedLoggingServerSourceInterface.ValueString())
 	}
 	if !data.MaxIncompleteIcmpLimit.IsNull() {
-		body, _ = sjson.Set(body, "policyDefinition.settings.maxIncompleteIcmpLimit", data.MaxIncompleteIcmpLimit.ValueInt64())
+		body, _ = sjson.Set(body, "policyDefinition.settings.maxIncompleteIcmpLimit", data.MaxIncompleteIcmpLimit.ValueString())
 	}
 	if !data.MaxIncompleteTcpLimit.IsNull() {
-		body, _ = sjson.Set(body, "policyDefinition.settings.maxIncompleteTcpLimit", data.MaxIncompleteTcpLimit.ValueInt64())
+		body, _ = sjson.Set(body, "policyDefinition.settings.maxIncompleteTcpLimit", data.MaxIncompleteTcpLimit.ValueString())
 	}
 	if !data.MaxIncompleteUdpLimit.IsNull() {
-		body, _ = sjson.Set(body, "policyDefinition.settings.maxIncompleteUdpLimit", data.MaxIncompleteUdpLimit.ValueInt64())
+		body, _ = sjson.Set(body, "policyDefinition.settings.maxIncompleteUdpLimit", data.MaxIncompleteUdpLimit.ValueString())
 	}
 	if !data.SessionReclassifyAllow.IsNull() {
-		if false && data.SessionReclassifyAllow.ValueBool() {
-			body, _ = sjson.Set(body, "policyDefinition.settings.sessionReclassifyAllow", "")
-		} else {
-			body, _ = sjson.Set(body, "policyDefinition.settings.sessionReclassifyAllow", data.SessionReclassifyAllow.ValueBool())
-		}
+		body, _ = sjson.Set(body, "policyDefinition.settings.sessionReclassifyAllow", data.SessionReclassifyAllow.ValueString())
 	}
 	if !data.ImcpUnreachableAllow.IsNull() {
-		if false && data.ImcpUnreachableAllow.ValueBool() {
-			body, _ = sjson.Set(body, "policyDefinition.settings.icmpUnreachableAllow", "")
-		} else {
-			body, _ = sjson.Set(body, "policyDefinition.settings.icmpUnreachableAllow", data.ImcpUnreachableAllow.ValueBool())
-		}
+		body, _ = sjson.Set(body, "policyDefinition.settings.icmpUnreachableAllow", data.ImcpUnreachableAllow.ValueString())
 	}
 	if !data.UnifiedLogging.IsNull() {
-		if false && data.UnifiedLogging.ValueBool() {
-			body, _ = sjson.Set(body, "policyDefinition.settings.unifiedLogging", "")
-		} else {
-			body, _ = sjson.Set(body, "policyDefinition.settings.unifiedLogging", data.UnifiedLogging.ValueBool())
-		}
+		body, _ = sjson.Set(body, "policyDefinition.settings.unifiedLogging", data.UnifiedLogging.ValueString())
 	}
 	if true {
 		body, _ = sjson.Set(body, "policyDefinition.settings.logging", []interface{}{})
@@ -295,46 +283,34 @@ func (data *SecurityPolicy) fromBody(ctx context.Context, res gjson.Result) {
 		data.HighSpeedLoggingServerSourceInterface = types.StringNull()
 	}
 	if value := res.Get("policyDefinition.settings.maxIncompleteIcmpLimit"); value.Exists() {
-		data.MaxIncompleteIcmpLimit = types.Int64Value(value.Int())
+		data.MaxIncompleteIcmpLimit = types.StringValue(value.String())
 	} else {
-		data.MaxIncompleteIcmpLimit = types.Int64Null()
+		data.MaxIncompleteIcmpLimit = types.StringNull()
 	}
 	if value := res.Get("policyDefinition.settings.maxIncompleteTcpLimit"); value.Exists() {
-		data.MaxIncompleteTcpLimit = types.Int64Value(value.Int())
+		data.MaxIncompleteTcpLimit = types.StringValue(value.String())
 	} else {
-		data.MaxIncompleteTcpLimit = types.Int64Null()
+		data.MaxIncompleteTcpLimit = types.StringNull()
 	}
 	if value := res.Get("policyDefinition.settings.maxIncompleteUdpLimit"); value.Exists() {
-		data.MaxIncompleteUdpLimit = types.Int64Value(value.Int())
+		data.MaxIncompleteUdpLimit = types.StringValue(value.String())
 	} else {
-		data.MaxIncompleteUdpLimit = types.Int64Null()
+		data.MaxIncompleteUdpLimit = types.StringNull()
 	}
 	if value := res.Get("policyDefinition.settings.sessionReclassifyAllow"); value.Exists() {
-		if false && value.String() == "" {
-			data.SessionReclassifyAllow = types.BoolValue(true)
-		} else {
-			data.SessionReclassifyAllow = types.BoolValue(value.Bool())
-		}
+		data.SessionReclassifyAllow = types.StringValue(value.String())
 	} else {
-		data.SessionReclassifyAllow = types.BoolNull()
+		data.SessionReclassifyAllow = types.StringNull()
 	}
 	if value := res.Get("policyDefinition.settings.icmpUnreachableAllow"); value.Exists() {
-		if false && value.String() == "" {
-			data.ImcpUnreachableAllow = types.BoolValue(true)
-		} else {
-			data.ImcpUnreachableAllow = types.BoolValue(value.Bool())
-		}
+		data.ImcpUnreachableAllow = types.StringValue(value.String())
 	} else {
-		data.ImcpUnreachableAllow = types.BoolNull()
+		data.ImcpUnreachableAllow = types.StringNull()
 	}
 	if value := res.Get("policyDefinition.settings.unifiedLogging"); value.Exists() {
-		if false && value.String() == "" {
-			data.UnifiedLogging = types.BoolValue(true)
-		} else {
-			data.UnifiedLogging = types.BoolValue(value.Bool())
-		}
+		data.UnifiedLogging = types.StringValue(value.String())
 	} else {
-		data.UnifiedLogging = types.BoolNull()
+		data.UnifiedLogging = types.StringNull()
 	}
 	if value := res.Get("policyDefinition.settings.logging"); value.Exists() && len(value.Array()) > 0 {
 		data.Logging = make([]SecurityPolicyLogging, 0)

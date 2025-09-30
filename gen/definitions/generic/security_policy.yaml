@@ -172,44 +172,47 @@ attributes:
   - model_name: maxIncompleteIcmpLimit
     data_path: [policyDefinition, settings]
     tf_name: max_incomplete_icmp_limit
-    type: Int64
+    type: String
     description: Max Incomplete ICMP Limit
     example: 12345
     exclude_test: true
   - model_name: maxIncompleteTcpLimit
     data_path: [policyDefinition, settings]
     tf_name: max_incomplete_tcp_limit
-    type: Int64
+    type: String
     description: Max Incomplete TCP Limit
     example: 12345
     exclude_test: true
   - model_name: maxIncompleteUdpLimit
     data_path: [policyDefinition, settings]
     tf_name: max_incomplete_udp_limit
-    type: Int64
+    type: String
     description: Max Incomplete UDP Limit
     example: 12345
     exclude_test: true
   - model_name: sessionReclassifyAllow
     data_path: [policyDefinition, settings]
     tf_name: session_reclassify_allow
-    type: Bool
+    type: String
     description: Session Reclassify Allow
-    example: false
+    example: off
+    enum_values: ["on", "off"]
     exclude_test: true
   - model_name: icmpUnreachableAllow
     data_path: [policyDefinition, settings]
     tf_name: imcp_unreachable_allow
-    type: Bool
+    type: String
     description: ICMP Unreachable Allow
-    example: false
+    example: off
+    enum_values: ["on", "off"]
     exclude_test: true
   - model_name: unifiedLogging
     data_path: [policyDefinition, settings]
     tf_name: unified_logging
-    type: Bool
+    type: String
     description: Unified Logging
-    example: false
+    example: off
+    enum_values: ["on", "off"]
     exclude_test: true
   - model_name: logging
     data_path: [policyDefinition, settings]
