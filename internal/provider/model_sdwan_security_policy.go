@@ -57,17 +57,21 @@ type SecurityPolicy struct {
 }
 
 type SecurityPolicyDefinitions struct {
-	Id              types.String `tfsdk:"id"`
-	Version         types.Int64  `tfsdk:"version"`
-	Type            types.String `tfsdk:"type"`
-	SourceZone      types.String `tfsdk:"source_zone"`
-	DestinationZone types.String `tfsdk:"destination_zone"`
+	Id      types.String                       `tfsdk:"id"`
+	Version types.Int64                        `tfsdk:"version"`
+	Type    types.String                       `tfsdk:"type"`
+	Entries []SecurityPolicyDefinitionsEntries `tfsdk:"entries"`
 }
 
 type SecurityPolicyLogging struct {
 	ExternalSyslogServerIp              types.String `tfsdk:"external_syslog_server_ip"`
 	ExternalSyslogServerVpn             types.String `tfsdk:"external_syslog_server_vpn"`
 	ExternalSyslogServerSourceInterface types.String `tfsdk:"external_syslog_server_source_interface"`
+}
+
+type SecurityPolicyDefinitionsEntries struct {
+	SourceZone      types.String `tfsdk:"source_zone"`
+	DestinationZone types.String `tfsdk:"destination_zone"`
 }
 
 // End of section. //template:end types
@@ -107,11 +111,18 @@ func (data SecurityPolicy) toBody(ctx context.Context) string {
 			if !item.Type.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "type", item.Type.ValueString())
 			}
-			if !item.SourceZone.IsNull() && item.Type.ValueString() == "zoneBasedFW" {
-				itemBody, _ = sjson.Set(itemBody, "entries.srcZoneListId", item.SourceZone.ValueString())
-			}
-			if !item.DestinationZone.IsNull() && item.Type.ValueString() == "zoneBasedFW" {
-				itemBody, _ = sjson.Set(itemBody, "entries.dstZoneListId", item.DestinationZone.ValueString())
+			if true && item.Type.ValueString() == "zoneBasedFW" {
+				itemBody, _ = sjson.Set(itemBody, "entries", []interface{}{})
+				for _, childItem := range item.Entries {
+					itemChildBody := ""
+					if !childItem.SourceZone.IsNull() {
+						itemChildBody, _ = sjson.Set(itemChildBody, "srcZoneListId", childItem.SourceZone.ValueString())
+					}
+					if !childItem.DestinationZone.IsNull() {
+						itemChildBody, _ = sjson.Set(itemChildBody, "dstZoneListId", childItem.DestinationZone.ValueString())
+					}
+					itemBody, _ = sjson.SetRaw(itemBody, "entries.-1", itemChildBody)
+				}
 			}
 			body, _ = sjson.SetRaw(body, "policyDefinition.assembly.-1", itemBody)
 		}
@@ -219,15 +230,27 @@ func (data *SecurityPolicy) fromBody(ctx context.Context, res gjson.Result) {
 			} else {
 				item.Type = types.StringNull()
 			}
-			if cValue := v.Get("entries.srcZoneListId"); cValue.Exists() && item.Type.ValueString() == "zoneBasedFW" {
-				item.SourceZone = types.StringValue(cValue.String())
+			if cValue := v.Get("entries"); cValue.Exists() && len(cValue.Array()) > 0 && item.Type.ValueString() == "zoneBasedFW" {
+				item.Entries = make([]SecurityPolicyDefinitionsEntries, 0)
+				cValue.ForEach(func(ck, cv gjson.Result) bool {
+					cItem := SecurityPolicyDefinitionsEntries{}
+					if ccValue := cv.Get("srcZoneListId"); ccValue.Exists() {
+						cItem.SourceZone = types.StringValue(ccValue.String())
+					} else {
+						cItem.SourceZone = types.StringNull()
+					}
+					if ccValue := cv.Get("dstZoneListId"); ccValue.Exists() {
+						cItem.DestinationZone = types.StringValue(ccValue.String())
+					} else {
+						cItem.DestinationZone = types.StringNull()
+					}
+					item.Entries = append(item.Entries, cItem)
+					return true
+				})
 			} else {
-				item.SourceZone = types.StringNull()
-			}
-			if cValue := v.Get("entries.dstZoneListId"); cValue.Exists() && item.Type.ValueString() == "zoneBasedFW" {
-				item.DestinationZone = types.StringValue(cValue.String())
-			} else {
-				item.DestinationZone = types.StringNull()
+				if len(item.Entries) > 0 {
+					item.Entries = []SecurityPolicyDefinitionsEntries{}
+				}
 			}
 			data.Definitions = append(data.Definitions, item)
 			return true
@@ -369,11 +392,17 @@ func (data *SecurityPolicy) hasChanges(ctx context.Context, state *SecurityPolic
 			if !data.Definitions[i].Type.Equal(state.Definitions[i].Type) {
 				hasChanges = true
 			}
-			if !data.Definitions[i].SourceZone.Equal(state.Definitions[i].SourceZone) {
+			if len(data.Definitions[i].Entries) != len(state.Definitions[i].Entries) {
 				hasChanges = true
-			}
-			if !data.Definitions[i].DestinationZone.Equal(state.Definitions[i].DestinationZone) {
-				hasChanges = true
+			} else {
+				for ii := range data.Definitions[i].Entries {
+					if !data.Definitions[i].Entries[ii].SourceZone.Equal(state.Definitions[i].Entries[ii].SourceZone) {
+						hasChanges = true
+					}
+					if !data.Definitions[i].Entries[ii].DestinationZone.Equal(state.Definitions[i].Entries[ii].DestinationZone) {
+						hasChanges = true
+					}
+				}
 			}
 		}
 	}

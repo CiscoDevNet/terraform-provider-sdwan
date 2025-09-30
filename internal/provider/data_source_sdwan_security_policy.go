@@ -98,13 +98,21 @@ func (d *SecurityPolicyDataSource) Schema(ctx context.Context, req datasource.Sc
 							MarkdownDescription: "Policy definition type",
 							Computed:            true,
 						},
-						"source_zone": schema.StringAttribute{
-							MarkdownDescription: "Source Zone",
+						"entries": schema.ListNestedAttribute{
+							MarkdownDescription: "List of zone pair definitions",
 							Computed:            true,
-						},
-						"destination_zone": schema.StringAttribute{
-							MarkdownDescription: "Destination Zone",
-							Computed:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"source_zone": schema.StringAttribute{
+										MarkdownDescription: "Source Zone",
+										Computed:            true,
+									},
+									"destination_zone": schema.StringAttribute{
+										MarkdownDescription: "Destination Zone",
+										Computed:            true,
+									},
+								},
+							},
 						},
 					},
 				},

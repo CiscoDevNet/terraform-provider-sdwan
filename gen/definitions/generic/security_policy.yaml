@@ -83,26 +83,30 @@ attributes:
           ]
         description: Policy definition type
         example: urlFiltering
-      - model_name: srcZoneListId
-        tf_name: source_zone
-        data_path: [entries]
-        type: String
-        description: Source Zone
-        example: default
+
+      - model_name: entries
         exclude_test: true
+        type: List
+        description: List of zone pair definitions
         conditional_attribute:
           name: type
           value: zoneBasedFW
-      - model_name: dstZoneListId
-        tf_name: destination_zone
-        data_path: [entries]
-        type: String
-        description: Destination Zone
-        example: self
-        exclude_test: true
-        conditional_attribute:
-          name: type
-          value: zoneBasedFW
+        attributes:
+
+        - model_name: srcZoneListId
+          tf_name: source_zone
+          type: String
+          description: Source Zone
+          example: default
+          exclude_test: true
+
+        - model_name: dstZoneListId
+          tf_name: destination_zone
+          type: String
+          description: Destination Zone
+          example: self
+          exclude_test: true
+
   - model_name: zoneToNozoneInternet
     data_path: [policyDefinition, settings]
     tf_name: direct_internet_applications

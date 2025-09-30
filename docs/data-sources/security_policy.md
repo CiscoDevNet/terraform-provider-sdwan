@@ -55,11 +55,19 @@ data "sdwan_security_policy" "example" {
 
 Read-Only:
 
-- `destination_zone` (String) Destination Zone
+- `entries` (Attributes List) List of zone pair definitions (see [below for nested schema](#nestedatt--definitions--entries))
 - `id` (String) Policy definition ID
-- `source_zone` (String) Source Zone
 - `type` (String) Policy definition type
 - `version` (Number) Policy definition version
+
+<a id="nestedatt--definitions--entries"></a>
+### Nested Schema for `definitions.entries`
+
+Read-Only:
+
+- `destination_zone` (String) Destination Zone
+- `source_zone` (String) Source Zone
+
 
 
 <a id="nestedatt--logging"></a>

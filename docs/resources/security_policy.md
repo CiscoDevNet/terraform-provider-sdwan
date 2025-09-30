@@ -91,9 +91,17 @@ Required:
 
 Optional:
 
-- `destination_zone` (String) Destination Zone, Attribute conditional on `type` being equal to `zoneBasedFW`
-- `source_zone` (String) Source Zone, Attribute conditional on `type` being equal to `zoneBasedFW`
+- `entries` (Attributes List) List of zone pair definitions, Attribute conditional on `type` being equal to `zoneBasedFW` (see [below for nested schema](#nestedatt--definitions--entries))
 - `version` (Number) Policy definition version
+
+<a id="nestedatt--definitions--entries"></a>
+### Nested Schema for `definitions.entries`
+
+Optional:
+
+- `destination_zone` (String) Destination Zone
+- `source_zone` (String) Source Zone
+
 
 
 <a id="nestedatt--logging"></a>

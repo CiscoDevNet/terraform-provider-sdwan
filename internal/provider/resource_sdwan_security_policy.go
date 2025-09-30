@@ -125,13 +125,21 @@ func (r *SecurityPolicyResource) Schema(ctx context.Context, req resource.Schema
 								stringvalidator.OneOf("urlFiltering", "zoneBasedFW", "intrusionPrevention", "sslDecryption", "advancedMalwareProtection", "dnsSecurity"),
 							},
 						},
-						"source_zone": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Source Zone, Attribute conditional on `type` being equal to `zoneBasedFW`").String,
+						"entries": schema.ListNestedAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("List of zone pair definitions, Attribute conditional on `type` being equal to `zoneBasedFW`").String,
 							Optional:            true,
-						},
-						"destination_zone": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Destination Zone, Attribute conditional on `type` being equal to `zoneBasedFW`").String,
-							Optional:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"source_zone": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Source Zone").String,
+										Optional:            true,
+									},
+									"destination_zone": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Destination Zone").String,
+										Optional:            true,
+									},
+								},
+							},
 						},
 					},
 				},
