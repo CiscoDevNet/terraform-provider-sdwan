@@ -269,14 +269,6 @@ func (r *CEdgePIMFeatureTemplateResource) Schema(ctx context.Context, req resour
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"ip_address": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set Static RP IP Address").String,
-							Optional:            true,
-						},
-						"ip_address_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Optional:            true,
-						},
 						"access_list": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set Static RP Access List").String,
 							Optional:            true,
@@ -285,6 +277,14 @@ func (r *CEdgePIMFeatureTemplateResource) Schema(ctx context.Context, req resour
 							},
 						},
 						"access_list_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"ip_address": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set Static RP IP Address").String,
+							Optional:            true,
+						},
+						"ip_address_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},

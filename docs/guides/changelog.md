@@ -13,7 +13,8 @@ description: |-
 - BREAKING CHANGE: Rename `target_interface` attribute of `sdwan_application_priority_qos_policy` resource to `target_interfaces`
 - BREAKING CHANGE: Adds `ipv4_configuration_type` and `ipv6_configuration_type` to `sdwan_service_lan_vpn_interface_ethernet_feature` resource
 - Add `community` support to the `sdwan_route_policy_definition` resource and data source
-- Fix problem where `sdwan_cisco_secure_internet_gateway` resource fails to be deployed to a device during device template push
+- Fix problem where `sdwan_cisco_secure_internet_gateway` resource fails to be deployed to a device during device template push, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/202)
+- Fix problem where `sdwan_cedge_pim_feature_template` resource fails to be deployed to a device during device template push, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/534)
 
 ## 0.7.1
 
