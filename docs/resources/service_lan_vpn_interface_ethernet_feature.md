@@ -168,6 +168,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
   - Default value: `dynamic`
 - `ipv4_dhcp_distance` (Number) DHCP Distance, Attribute conditional on `ipv4_configuration_type` being equal to `dynamic`
   - Range: `1`-`65536`
+  - Default value: `1`
 - `ipv4_dhcp_distance_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` being equal to `dynamic`
 - `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
 - `ipv4_dhcp_helper_variable` (String) Variable name

@@ -15,6 +15,7 @@ description: |-
 - Add `community` support to the `sdwan_route_policy_definition` resource and data source
 - BREAKING CHANGE: Change attribute `ipv4_nat_type` as always included in payload and remove from schema in `sdwan_service_lan_vpn_interface_ethernet_feature` resource
 - Fix issue with `administrative_distance` attribute of `ipv4_static_routes` and `ipv6_static_routes` in `sdwan_service_lan_vpn_feature` resource causing errors when not provided with next_hops of static route configuration.
+- Fix issue with `ipv4_dhcp_distance` attribute of `sdwan_service_lan_vpn_interface_ethernet_feature` resource causing errors when not provided with `ipv4_configuration_type` set to `dynamic`
 
 ## 0.7.1
 

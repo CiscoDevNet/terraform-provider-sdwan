@@ -46,6 +46,8 @@ attributes:
       value: dynamic
     exclude_test: true
     example: 1
+    default_value: 1
+    default_value_present: true
   - model_name: ipAddress
     tf_name: ipv4_address
     data_path: [intfIpAddress, static, staticIpV4AddressPrimary]
