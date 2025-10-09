@@ -245,14 +245,6 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx conte
 				MarkdownDescription: "enable Network Address Translation on this interface",
 				Computed:            true,
 			},
-			"ipv4_nat_type": schema.StringAttribute{
-				MarkdownDescription: "NAT Type",
-				Computed:            true,
-			},
-			"ipv4_nat_type_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Computed:            true,
-			},
 			"ipv4_nat_range_start": schema.StringAttribute{
 				MarkdownDescription: "NAT Pool Range Start",
 				Computed:            true,

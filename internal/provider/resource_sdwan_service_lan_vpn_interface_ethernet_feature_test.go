@@ -43,7 +43,6 @@ func TestAccSdwanServiceLANVPNInterfaceEthernetProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv6_dhcp_helpers.0.address", "2001:0:0:1::0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv6_dhcp_helpers.0.dhcpv6_helper_vpn", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_nat", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_nat_type", "pool"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_nat_range_start", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_nat_range_end", "4.5.6.7"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_nat_prefix_length", "1"))
@@ -85,7 +84,6 @@ func TestAccSdwanServiceLANVPNInterfaceEthernetProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "autonegotiate", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "media_type", "auto-select"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "load_interval", "30"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "tracker", "TRACKER1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "icmp_redirect_disable", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "xconnect", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ip_directed_broadcast", "false"))
@@ -147,7 +145,6 @@ func testAccSdwanServiceLANVPNInterfaceEthernetProfileParcelConfig_minimum() str
 	config += `	ipv4_configuration_type = "static"` + "\n"
 	config += `	ipv4_address = "1.2.3.4"` + "\n"
 	config += `	ipv4_subnet_mask = "0.0.0.0"` + "\n"
-	config += `	ipv4_nat_type = "pool"` + "\n"
 	config += `}` + "\n"
 	return config
 }
@@ -178,7 +175,6 @@ func testAccSdwanServiceLANVPNInterfaceEthernetProfileParcelConfig_all() string 
 	config += `	  dhcpv6_helper_vpn = 1` + "\n"
 	config += `	}]` + "\n"
 	config += `	ipv4_nat = false` + "\n"
-	config += `	ipv4_nat_type = "pool"` + "\n"
 	config += `	ipv4_nat_range_start = "1.2.3.4"` + "\n"
 	config += `	ipv4_nat_range_end = "4.5.6.7"` + "\n"
 	config += `	ipv4_nat_prefix_length = 1` + "\n"
@@ -233,7 +229,6 @@ func testAccSdwanServiceLANVPNInterfaceEthernetProfileParcelConfig_all() string 
 	config += `	autonegotiate = false` + "\n"
 	config += `	media_type = "auto-select"` + "\n"
 	config += `	load_interval = 30` + "\n"
-	config += `	tracker = "TRACKER1"` + "\n"
 	config += `	icmp_redirect_disable = true` + "\n"
 	config += `	xconnect = "1"` + "\n"
 	config += `	ip_directed_broadcast = false` + "\n"

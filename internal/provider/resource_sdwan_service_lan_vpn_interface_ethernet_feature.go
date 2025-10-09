@@ -134,7 +134,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				},
 			},
 			"ipv4_dhcp_distance": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("DHCP Distance, Attribute conditional on `ipv4_configuration_type` being equal to `dynamic`").AddIntegerRangeDescription(1, 65536).String,
+				MarkdownDescription: helpers.NewAttributeDescription("DHCP Distance, Attribute conditional on `ipv4_configuration_type` being equal to `dynamic`").AddIntegerRangeDescription(1, 65536).AddDefaultValueDescription("1").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65536),
@@ -288,17 +288,6 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 			},
 			"ipv4_nat": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("enable Network Address Translation on this interface").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"ipv4_nat_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Type").AddStringEnumDescription("pool", "loopback").String,
-				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("pool", "loopback"),
-				},
-			},
-			"ipv4_nat_type_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
 			"ipv4_nat_range_start": schema.StringAttribute{

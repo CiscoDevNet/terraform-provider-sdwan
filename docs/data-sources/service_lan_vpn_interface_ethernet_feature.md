@@ -78,8 +78,6 @@ data "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `ipv4_nat_range_start_variable` (String) Variable name
 - `ipv4_nat_tcp_timeout` (Number) Set NAT TCP session timeout, in minutes
 - `ipv4_nat_tcp_timeout_variable` (String) Variable name
-- `ipv4_nat_type` (String) NAT Type
-- `ipv4_nat_type_variable` (String) Variable name
 - `ipv4_nat_udp_timeout` (Number) Set NAT UDP session timeout, in minutes
 - `ipv4_nat_udp_timeout_variable` (String) Variable name
 - `ipv4_secondary_addresses` (Attributes List) Secondary IpV4 Addresses (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))

@@ -24,7 +24,6 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
     }
   ]
   ipv4_nat               = false
-  ipv4_nat_type          = "pool"
   ipv4_nat_range_start   = "1.2.3.4"
   ipv4_nat_range_end     = "4.5.6.7"
   ipv4_nat_prefix_length = 1
@@ -91,7 +90,6 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
   autonegotiate                        = false
   media_type                           = "auto-select"
   load_interval                        = 30
-  tracker                              = "TRACKER1"
   icmp_redirect_disable                = true
   xconnect                             = "1"
   ip_directed_broadcast                = false

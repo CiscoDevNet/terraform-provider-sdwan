@@ -133,6 +133,8 @@ attributes:
       - model_name: distance
         tf_name: administrative_distance
         example: 1
+        default_value: 1
+        default_value_present: true        
     - model_name: nextHopWithTracker
       tf_name: next_hop_with_trackers
       data_path: [oneOfIpRoute, nextHopContainer]
@@ -146,6 +148,8 @@ attributes:
       - model_name: distance
         tf_name: administrative_distance
         example: 1
+        default_value: 1
+        default_value_present: true
       - model_name: refId
         tf_name: tracker_id
         data_path: [tracker]
@@ -196,6 +200,8 @@ attributes:
       - model_name: distance
         tf_name: administrative_distance
         example: 1
+        default_value: 1
+        default_value_present: true
     - model_name: null0
       data_path: [oneOfIpRoute]
       exclude_test: true

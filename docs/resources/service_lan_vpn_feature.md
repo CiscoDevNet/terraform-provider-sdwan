@@ -347,6 +347,7 @@ Optional:
 - `address_variable` (String) Variable name
 - `administrative_distance` (Number) Administrative distance
   - Range: `1`-`255`
+  - Default value: `1`
 - `administrative_distance_variable` (String) Variable name
 - `tracker_id` (String)
 
@@ -360,6 +361,7 @@ Optional:
 - `address_variable` (String) Variable name
 - `administrative_distance` (Number) Administrative distance
   - Range: `1`-`255`
+  - Default value: `1`
 - `administrative_distance_variable` (String) Variable name
 
 
@@ -406,6 +408,7 @@ Optional:
 - `address_variable` (String) Variable name
 - `administrative_distance` (Number) Administrative distance
   - Range: `1`-`254`
+  - Default value: `1`
 - `administrative_distance_variable` (String) Variable name
 
 
