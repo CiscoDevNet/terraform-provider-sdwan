@@ -343,12 +343,12 @@ func (d *CiscoSecureInternetGatewayFeatureTemplateDataSource) Schema(ctx context
 										MarkdownDescription: "Active Tunnel Interface for SIG",
 										Computed:            true,
 									},
-									"active_interface_weight": schema.Int64Attribute{
-										MarkdownDescription: "Active Tunnel Interface Weight",
-										Computed:            true,
-									},
 									"backup_interface": schema.StringAttribute{
 										MarkdownDescription: "Backup Tunnel Interface for SIG",
+										Computed:            true,
+									},
+									"active_interface_weight": schema.Int64Attribute{
+										MarkdownDescription: "Active Tunnel Interface Weight",
 										Computed:            true,
 									},
 									"backup_interface_weight": schema.Int64Attribute{
@@ -482,6 +482,10 @@ func (d *CiscoSecureInternetGatewayFeatureTemplateDataSource) Schema(ctx context
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
+						"tracker_type": schema.StringAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+						},
 						"name": schema.StringAttribute{
 							MarkdownDescription: "Tracker name",
 							Computed:            true,
@@ -520,10 +524,6 @@ func (d *CiscoSecureInternetGatewayFeatureTemplateDataSource) Schema(ctx context
 						},
 						"multiplier_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Computed:            true,
-						},
-						"tracker_type": schema.StringAttribute{
-							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"optional": schema.BoolAttribute{

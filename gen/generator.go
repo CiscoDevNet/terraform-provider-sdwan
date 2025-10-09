@@ -272,6 +272,7 @@ type YamlConfigAttribute struct {
 	RequiresConstAndVar     bool                           `yaml:"requires_const_and_var"`
 	RequiresReplace         bool                           `yaml:"requires_replace"`
 	DynamicDefault          bool                           `yaml:"dynamic_default"`
+	PriorityOrderAlways     bool                           `yaml:"priority_order_always"`
 }
 
 type YamlConfigConditionalAttribute struct {

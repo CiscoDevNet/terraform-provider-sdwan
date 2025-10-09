@@ -534,26 +534,38 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				}
 				{{- end}}
 				{{- end}}
+				{{- if .PriorityOrderAlways}}
+				itemChildChildBody, _ = sjson.Set(itemChildChildBody, "priority-order", itemChildChildAttributes)
+				{{- else}}
 				if !childChildItem.Optional.IsNull() {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "vipOptional", childChildItem.Optional.ValueBool())
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "priority-order", itemChildChildAttributes)
 				}
+				{{- end}}
 				itemChildBody, _ = sjson.SetRaw(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipValue.-1", itemChildChildBody)
 			}
 			{{- end}}
 			{{- end}}
+			{{- if .PriorityOrderAlways}}
+			itemChildBody, _ = sjson.Set(itemChildBody, "priority-order", itemChildAttributes)
+			{{- else}}
 			if !childItem.Optional.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "vipOptional", childItem.Optional.ValueBool())
 				itemChildBody, _ = sjson.Set(itemChildBody, "priority-order", itemChildAttributes)
 			}
+			{{- end}}
 			itemBody, _ = sjson.SetRaw(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipValue.-1", itemChildBody)
 		}
 		{{- end}}
 		{{- end}}
+		{{- if .PriorityOrderAlways}}
+		itemBody, _ = sjson.Set(itemBody, "priority-order", itemAttributes)
+		{{- else}}
 		if !item.Optional.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vipOptional", item.Optional.ValueBool())
 			itemBody, _ = sjson.Set(itemBody, "priority-order", itemAttributes)
 		}
+		{{- end}}
 		body, _ = sjson.SetRaw(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipValue.-1", itemBody)
 	}
 	{{- end}}

@@ -44,8 +44,8 @@ func TestAccSdwanCEdgePIMFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "scope", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "range", "16"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "default", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "rp_addresses.0.ip_address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "rp_addresses.0.access_list", "99"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "rp_addresses.0.ip_address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "rp_addresses.0.override", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "spt_threshold", "0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "interfaces.0.interface_name", "Ethernet1"))
@@ -109,8 +109,8 @@ func testAccSdwanCEdgePIMFeatureTemplateConfig_all() string {
 	config += `	range = "16"` + "\n"
 	config += `	default = true` + "\n"
 	config += `	rp_addresses = [{` + "\n"
-	config += `	  ip_address = "1.2.3.4"` + "\n"
 	config += `	  access_list = "99"` + "\n"
+	config += `	  ip_address = "1.2.3.4"` + "\n"
 	config += `	  override = false` + "\n"
 	config += `	}]` + "\n"
 	config += `	spt_threshold = "0"` + "\n"

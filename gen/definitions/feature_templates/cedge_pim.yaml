@@ -47,12 +47,13 @@ attributes:
     example: true
   - model_name: rp-addr
     tf_name: rp_addresses
+    priority_order_always: true
     attributes:
+    - model_name: access-list
+      example: 99
     - model_name: address
       tf_name: ip_address
       example: 1.2.3.4
-    - model_name: access-list
-      example: 99
     - model_name: override
       example: false
   - model_name: spt-threshold

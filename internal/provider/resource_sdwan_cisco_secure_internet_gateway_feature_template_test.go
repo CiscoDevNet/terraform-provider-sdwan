@@ -64,8 +64,8 @@ func TestAccSdwanCiscoSecureInternetGatewayFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.tunnel_public_ip", "5.5.5.5"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.service_type", "sig"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.interface_pairs.0.active_interface", "e1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.interface_pairs.0.active_interface_weight", "10"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.interface_pairs.0.backup_interface", "e2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.interface_pairs.0.active_interface_weight", "10"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.interface_pairs.0.backup_interface_weight", "20"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.zscaler_authentication_required", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.zscaler_xff_forward", "true"))
@@ -88,12 +88,12 @@ func TestAccSdwanCiscoSecureInternetGatewayFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.umbrella_primary_data_center", "Auto"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.umbrella_secondary_data_center", "Auto"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "tracker_source_ip", "2.3.4.5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "trackers.0.tracker_type", "SIG"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "trackers.0.name", "TRACKER1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "trackers.0.endpoint_api_url", "https://1.1.1.1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "trackers.0.threshold", "500"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "trackers.0.interval", "60"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "trackers.0.multiplier", "4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "trackers.0.tracker_type", "SIG"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -171,8 +171,8 @@ func testAccSdwanCiscoSecureInternetGatewayFeatureTemplateConfig_all() string {
 	config += `	  service_type = "sig"` + "\n"
 	config += `	  interface_pairs = [{` + "\n"
 	config += `		active_interface = "e1"` + "\n"
-	config += `		active_interface_weight = 10` + "\n"
 	config += `		backup_interface = "e2"` + "\n"
+	config += `		active_interface_weight = 10` + "\n"
 	config += `		backup_interface_weight = 20` + "\n"
 	config += `	}]` + "\n"
 	config += `	  zscaler_authentication_required = true` + "\n"
@@ -198,12 +198,12 @@ func testAccSdwanCiscoSecureInternetGatewayFeatureTemplateConfig_all() string {
 	config += `	}]` + "\n"
 	config += `	tracker_source_ip = "2.3.4.5"` + "\n"
 	config += `	trackers = [{` + "\n"
+	config += `	  tracker_type = "SIG"` + "\n"
 	config += `	  name = "TRACKER1"` + "\n"
 	config += `	  endpoint_api_url = "https://1.1.1.1"` + "\n"
 	config += `	  threshold = 500` + "\n"
 	config += `	  interval = 60` + "\n"
 	config += `	  multiplier = 4` + "\n"
-	config += `	  tracker_type = "SIG"` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 	return config
