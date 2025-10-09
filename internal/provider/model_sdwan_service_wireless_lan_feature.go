@@ -493,17 +493,6 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result) 
 				}
 				item.SecurityType = types.StringValue("enterprise")
 			}
-			item.Passphrase = types.StringNull()
-			item.PassphraseVariable = types.StringNull()
-			if t := v.Get("securityConfig.passphrase.optionType"); t.Exists() {
-				va := v.Get("securityConfig.passphrase.value")
-				if t.String() == "variable" {
-					item.PassphraseVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					item.Passphrase = types.StringValue(va.String())
-				}
-				item.SecurityType = types.StringValue("personal")
-			}
 			item.QosProfile = types.StringNull()
 			item.QosProfileVariable = types.StringNull()
 			if t := v.Get("qosProfile.optionType"); t.Exists() {
@@ -536,16 +525,6 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result) 
 			data.UsernameVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.Username = types.StringValue(va.String())
-		}
-	}
-	data.Password = types.StringNull()
-	data.PasswordVariable = types.StringNull()
-	if t := res.Get(path + "password.optionType"); t.Exists() {
-		va := res.Get(path + "password.value")
-		if t.String() == "variable" {
-			data.PasswordVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Password = types.StringValue(va.String())
 		}
 	}
 	data.MeDynamicIpEnabled = types.BoolNull()
@@ -736,16 +715,6 @@ func (data *ServiceWirelessLAN) updateFromBody(ctx context.Context, res gjson.Re
 				data.Ssids[i].RadiusServerSecret = types.StringValue(va.String())
 			}
 		}
-		data.Ssids[i].Passphrase = types.StringNull()
-		data.Ssids[i].PassphraseVariable = types.StringNull()
-		if t := r.Get("securityConfig.passphrase.optionType"); t.Exists() {
-			va := r.Get("securityConfig.passphrase.value")
-			if t.String() == "variable" {
-				data.Ssids[i].PassphraseVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ssids[i].Passphrase = types.StringValue(va.String())
-			}
-		}
 		data.Ssids[i].QosProfile = types.StringNull()
 		data.Ssids[i].QosProfileVariable = types.StringNull()
 		if t := r.Get("qosProfile.optionType"); t.Exists() {
@@ -775,16 +744,6 @@ func (data *ServiceWirelessLAN) updateFromBody(ctx context.Context, res gjson.Re
 			data.UsernameVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.Username = types.StringValue(va.String())
-		}
-	}
-	data.Password = types.StringNull()
-	data.PasswordVariable = types.StringNull()
-	if t := res.Get(path + "password.optionType"); t.Exists() {
-		va := res.Get(path + "password.value")
-		if t.String() == "variable" {
-			data.PasswordVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Password = types.StringValue(va.String())
 		}
 	}
 	data.MeDynamicIpEnabled = types.BoolNull()
