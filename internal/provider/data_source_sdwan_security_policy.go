@@ -149,9 +149,29 @@ func (d *SecurityPolicyDataSource) Schema(ctx context.Context, req datasource.Sc
 				MarkdownDescription: "High Speed Logging Port",
 				Computed:            true,
 			},
-			"high_speed_logging_server_source_interface": schema.StringAttribute{
-				MarkdownDescription: "High Speed Logging Source Interface",
+			"high_speed_logging_entries": schema.ListNestedAttribute{
+				MarkdownDescription: "High Speed Logging Entries",
 				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"server_ip": schema.StringAttribute{
+							MarkdownDescription: "High Speed Logging Server IP",
+							Computed:            true,
+						},
+						"vpn": schema.StringAttribute{
+							MarkdownDescription: "High Speed Logging VPN",
+							Computed:            true,
+						},
+						"port": schema.StringAttribute{
+							MarkdownDescription: "High Speed Logging Port",
+							Computed:            true,
+						},
+						"source_interface": schema.StringAttribute{
+							MarkdownDescription: "High Speed Logging Source Interface",
+							Computed:            true,
+						},
+					},
+				},
 			},
 			"max_incomplete_icmp_limit": schema.StringAttribute{
 				MarkdownDescription: "Max Incomplete ICMP Limit",

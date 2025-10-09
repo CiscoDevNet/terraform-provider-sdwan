@@ -32,9 +32,9 @@ data "sdwan_security_policy" "example" {
 - `description` (String) The description of the security policy
 - `direct_internet_applications` (String) Bypass firewall policy and allow all Internet traffic to/from VPN 0
 - `failure_mode` (String) Failure mode
+- `high_speed_logging_entries` (Attributes List) High Speed Logging Entries (see [below for nested schema](#nestedatt--high_speed_logging_entries))
 - `high_speed_logging_server_ip` (String) High Speed Logging Server IP
 - `high_speed_logging_server_port` (String) High Speed Logging Port
-- `high_speed_logging_server_source_interface` (String) High Speed Logging Source Interface
 - `high_speed_logging_vpn` (String) High Speed Logging VPN
 - `imcp_unreachable_allow` (String) ICMP Unreachable Allow
 - `logging` (Attributes List) (see [below for nested schema](#nestedatt--logging))
@@ -68,6 +68,17 @@ Read-Only:
 - `destination_zone` (String) Destination Zone
 - `source_zone` (String) Source Zone
 
+
+
+<a id="nestedatt--high_speed_logging_entries"></a>
+### Nested Schema for `high_speed_logging_entries`
+
+Read-Only:
+
+- `port` (String) High Speed Logging Port
+- `server_ip` (String) High Speed Logging Server IP
+- `source_interface` (String) High Speed Logging Source Interface
+- `vpn` (String) High Speed Logging VPN
 
 
 <a id="nestedatt--logging"></a>
