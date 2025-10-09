@@ -238,19 +238,19 @@ func (d *CEdgePIMFeatureTemplateDataSource) Schema(ctx context.Context, req data
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"ip_address": schema.StringAttribute{
-							MarkdownDescription: "Set Static RP IP Address",
-							Computed:            true,
-						},
-						"ip_address_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Computed:            true,
-						},
 						"access_list": schema.StringAttribute{
 							MarkdownDescription: "Set Static RP Access List",
 							Computed:            true,
 						},
 						"access_list_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"ip_address": schema.StringAttribute{
+							MarkdownDescription: "Set Static RP IP Address",
+							Computed:            true,
+						},
+						"ip_address_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},

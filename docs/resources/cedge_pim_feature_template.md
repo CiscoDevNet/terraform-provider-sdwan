@@ -44,8 +44,8 @@ resource "sdwan_cedge_pim_feature_template" "example" {
   default                  = true
   rp_addresses = [
     {
-      ip_address  = "1.2.3.4"
       access_list = "99"
+      ip_address  = "1.2.3.4"
       override    = false
     }
   ]

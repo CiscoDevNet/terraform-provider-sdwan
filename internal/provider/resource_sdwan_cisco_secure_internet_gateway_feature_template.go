@@ -419,16 +419,16 @@ func (r *CiscoSecureInternetGatewayFeatureTemplateResource) Schema(ctx context.C
 										MarkdownDescription: helpers.NewAttributeDescription("Active Tunnel Interface for SIG").String,
 										Optional:            true,
 									},
+									"backup_interface": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Backup Tunnel Interface for SIG").String,
+										Optional:            true,
+									},
 									"active_interface_weight": schema.Int64Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Active Tunnel Interface Weight").AddIntegerRangeDescription(1, 255).AddDefaultValueDescription("1").String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 255),
 										},
-									},
-									"backup_interface": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Backup Tunnel Interface for SIG").String,
-										Optional:            true,
 									},
 									"backup_interface_weight": schema.Int64Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Backup Tunnel Interface Weight").AddIntegerRangeDescription(1, 255).AddDefaultValueDescription("1").String,
@@ -570,6 +570,13 @@ func (r *CiscoSecureInternetGatewayFeatureTemplateResource) Schema(ctx context.C
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
+						"tracker_type": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("SIG").AddDefaultValueDescription(" SIG").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("SIG"),
+							},
+						},
 						"name": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Tracker name").String,
 							Optional:            true,
@@ -624,13 +631,6 @@ func (r *CiscoSecureInternetGatewayFeatureTemplateResource) Schema(ctx context.C
 						"multiplier_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
-						},
-						"tracker_type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("SIG").AddDefaultValueDescription(" SIG").String,
-							Optional:            true,
-							Validators: []validator.String{
-								stringvalidator.OneOf("SIG"),
-							},
 						},
 						"optional": schema.BoolAttribute{
 							MarkdownDescription: "Indicates if list item is considered optional.",

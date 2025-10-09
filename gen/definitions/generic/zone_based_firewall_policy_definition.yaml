@@ -107,6 +107,7 @@ attributes:
                 destinationGeoLocationList,
                 destinationPortList,
                 appList,
+                appListFlat,
                 protocolNameList,
                 sourceIp,
                 sourcePort,

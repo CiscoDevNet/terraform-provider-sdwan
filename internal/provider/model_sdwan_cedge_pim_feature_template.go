@@ -86,10 +86,10 @@ type CEdgePIMRpCandidates struct {
 
 type CEdgePIMRpAddresses struct {
 	Optional           types.Bool   `tfsdk:"optional"`
-	IpAddress          types.String `tfsdk:"ip_address"`
-	IpAddressVariable  types.String `tfsdk:"ip_address_variable"`
 	AccessList         types.String `tfsdk:"access_list"`
 	AccessListVariable types.String `tfsdk:"access_list_variable"`
+	IpAddress          types.String `tfsdk:"ip_address"`
+	IpAddressVariable  types.String `tfsdk:"ip_address_variable"`
 	Override           types.Bool   `tfsdk:"override"`
 	OverrideVariable   types.String `tfsdk:"override_variable"`
 }
@@ -379,18 +379,6 @@ func (data CEdgePIM) toBody(ctx context.Context) string {
 	for _, item := range data.RpAddresses {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
-		itemAttributes = append(itemAttributes, "address")
-
-		if !item.IpAddressVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "address."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "address."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "address."+"vipVariableName", item.IpAddressVariable.ValueString())
-		} else if item.IpAddress.IsNull() {
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "address."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "address."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "address."+"vipValue", item.IpAddress.ValueString())
-		}
 		itemAttributes = append(itemAttributes, "access-list")
 
 		if !item.AccessListVariable.IsNull() {
@@ -402,6 +390,18 @@ func (data CEdgePIM) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "access-list."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "access-list."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "access-list."+"vipValue", item.AccessList.ValueString())
+		}
+		itemAttributes = append(itemAttributes, "address")
+
+		if !item.IpAddressVariable.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "address."+"vipObjectType", "object")
+			itemBody, _ = sjson.Set(itemBody, "address."+"vipType", "variableName")
+			itemBody, _ = sjson.Set(itemBody, "address."+"vipVariableName", item.IpAddressVariable.ValueString())
+		} else if item.IpAddress.IsNull() {
+		} else {
+			itemBody, _ = sjson.Set(itemBody, "address."+"vipObjectType", "object")
+			itemBody, _ = sjson.Set(itemBody, "address."+"vipType", "constant")
+			itemBody, _ = sjson.Set(itemBody, "address."+"vipValue", item.IpAddress.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "override")
 
@@ -417,10 +417,7 @@ func (data CEdgePIM) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "override."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "override."+"vipValue", strconv.FormatBool(item.Override.ValueBool()))
 		}
-		if !item.Optional.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "vipOptional", item.Optional.ValueBool())
-			itemBody, _ = sjson.Set(itemBody, "priority-order", itemAttributes)
-		}
+		itemBody, _ = sjson.Set(itemBody, "priority-order", itemAttributes)
 		body, _ = sjson.SetRaw(body, path+"pim.rp-addr."+"vipValue.-1", itemBody)
 	}
 
@@ -854,25 +851,6 @@ func (data *CEdgePIM) fromBody(ctx context.Context, res gjson.Result) {
 			} else {
 				item.Optional = types.BoolNull()
 			}
-			if cValue := v.Get("address.vipType"); cValue.Exists() {
-				if cValue.String() == "variableName" {
-					item.IpAddress = types.StringNull()
-
-					cv := v.Get("address.vipVariableName")
-					item.IpAddressVariable = types.StringValue(cv.String())
-
-				} else if cValue.String() == "ignore" {
-					item.IpAddress = types.StringNull()
-					item.IpAddressVariable = types.StringNull()
-				} else if cValue.String() == "constant" {
-					cv := v.Get("address.vipValue")
-					item.IpAddress = types.StringValue(cv.String())
-					item.IpAddressVariable = types.StringNull()
-				}
-			} else {
-				item.IpAddress = types.StringNull()
-				item.IpAddressVariable = types.StringNull()
-			}
 			if cValue := v.Get("access-list.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
 					item.AccessList = types.StringNull()
@@ -891,6 +869,25 @@ func (data *CEdgePIM) fromBody(ctx context.Context, res gjson.Result) {
 			} else {
 				item.AccessList = types.StringNull()
 				item.AccessListVariable = types.StringNull()
+			}
+			if cValue := v.Get("address.vipType"); cValue.Exists() {
+				if cValue.String() == "variableName" {
+					item.IpAddress = types.StringNull()
+
+					cv := v.Get("address.vipVariableName")
+					item.IpAddressVariable = types.StringValue(cv.String())
+
+				} else if cValue.String() == "ignore" {
+					item.IpAddress = types.StringNull()
+					item.IpAddressVariable = types.StringNull()
+				} else if cValue.String() == "constant" {
+					cv := v.Get("address.vipValue")
+					item.IpAddress = types.StringValue(cv.String())
+					item.IpAddressVariable = types.StringNull()
+				}
+			} else {
+				item.IpAddress = types.StringNull()
+				item.IpAddressVariable = types.StringNull()
 			}
 			if cValue := v.Get("override.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
@@ -1080,10 +1077,10 @@ func (data *CEdgePIM) hasChanges(ctx context.Context, state *CEdgePIM) bool {
 		hasChanges = true
 	} else {
 		for i := range data.RpAddresses {
-			if !data.RpAddresses[i].IpAddress.Equal(state.RpAddresses[i].IpAddress) {
+			if !data.RpAddresses[i].AccessList.Equal(state.RpAddresses[i].AccessList) {
 				hasChanges = true
 			}
-			if !data.RpAddresses[i].AccessList.Equal(state.RpAddresses[i].AccessList) {
+			if !data.RpAddresses[i].IpAddress.Equal(state.RpAddresses[i].IpAddress) {
 				hasChanges = true
 			}
 			if !data.RpAddresses[i].Override.Equal(state.RpAddresses[i].Override) {
