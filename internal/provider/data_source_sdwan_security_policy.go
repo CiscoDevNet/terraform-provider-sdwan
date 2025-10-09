@@ -98,13 +98,21 @@ func (d *SecurityPolicyDataSource) Schema(ctx context.Context, req datasource.Sc
 							MarkdownDescription: "Policy definition type",
 							Computed:            true,
 						},
-						"source_zone": schema.StringAttribute{
-							MarkdownDescription: "Source Zone",
+						"entries": schema.ListNestedAttribute{
+							MarkdownDescription: "List of zone pair definitions",
 							Computed:            true,
-						},
-						"destination_zone": schema.StringAttribute{
-							MarkdownDescription: "Destination Zone",
-							Computed:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"source_zone": schema.StringAttribute{
+										MarkdownDescription: "Source Zone",
+										Computed:            true,
+									},
+									"destination_zone": schema.StringAttribute{
+										MarkdownDescription: "Destination Zone",
+										Computed:            true,
+									},
+								},
+							},
 						},
 					},
 				},
@@ -145,27 +153,27 @@ func (d *SecurityPolicyDataSource) Schema(ctx context.Context, req datasource.Sc
 				MarkdownDescription: "High Speed Logging Source Interface",
 				Computed:            true,
 			},
-			"max_incomplete_icmp_limit": schema.Int64Attribute{
+			"max_incomplete_icmp_limit": schema.StringAttribute{
 				MarkdownDescription: "Max Incomplete ICMP Limit",
 				Computed:            true,
 			},
-			"max_incomplete_tcp_limit": schema.Int64Attribute{
+			"max_incomplete_tcp_limit": schema.StringAttribute{
 				MarkdownDescription: "Max Incomplete TCP Limit",
 				Computed:            true,
 			},
-			"max_incomplete_udp_limit": schema.Int64Attribute{
+			"max_incomplete_udp_limit": schema.StringAttribute{
 				MarkdownDescription: "Max Incomplete UDP Limit",
 				Computed:            true,
 			},
-			"session_reclassify_allow": schema.BoolAttribute{
+			"session_reclassify_allow": schema.StringAttribute{
 				MarkdownDescription: "Session Reclassify Allow",
 				Computed:            true,
 			},
-			"imcp_unreachable_allow": schema.BoolAttribute{
+			"imcp_unreachable_allow": schema.StringAttribute{
 				MarkdownDescription: "ICMP Unreachable Allow",
 				Computed:            true,
 			},
-			"unified_logging": schema.BoolAttribute{
+			"unified_logging": schema.StringAttribute{
 				MarkdownDescription: "Unified Logging",
 				Computed:            true,
 			},

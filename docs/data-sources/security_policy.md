@@ -36,17 +36,17 @@ data "sdwan_security_policy" "example" {
 - `high_speed_logging_server_port` (String) High Speed Logging Port
 - `high_speed_logging_server_source_interface` (String) High Speed Logging Source Interface
 - `high_speed_logging_vpn` (String) High Speed Logging VPN
-- `imcp_unreachable_allow` (Boolean) ICMP Unreachable Allow
+- `imcp_unreachable_allow` (String) ICMP Unreachable Allow
 - `logging` (Attributes List) (see [below for nested schema](#nestedatt--logging))
 - `match_statistics_per_filter` (String) Match Statistics per-filter
-- `max_incomplete_icmp_limit` (Number) Max Incomplete ICMP Limit
-- `max_incomplete_tcp_limit` (Number) Max Incomplete TCP Limit
-- `max_incomplete_udp_limit` (Number) Max Incomplete UDP Limit
+- `max_incomplete_icmp_limit` (String) Max Incomplete ICMP Limit
+- `max_incomplete_tcp_limit` (String) Max Incomplete TCP Limit
+- `max_incomplete_udp_limit` (String) Max Incomplete UDP Limit
 - `mode` (String) The policy mode
 - `name` (String) The name of the security policy
-- `session_reclassify_allow` (Boolean) Session Reclassify Allow
+- `session_reclassify_allow` (String) Session Reclassify Allow
 - `tcp_syn_flood_limit` (String) TCP SYN Flood Limit, value from 1 to 4294967295
-- `unified_logging` (Boolean) Unified Logging
+- `unified_logging` (String) Unified Logging
 - `use_case` (String) The use case of the security policy
 - `version` (Number) The version of the object
 
@@ -55,11 +55,19 @@ data "sdwan_security_policy" "example" {
 
 Read-Only:
 
-- `destination_zone` (String) Destination Zone
+- `entries` (Attributes List) List of zone pair definitions (see [below for nested schema](#nestedatt--definitions--entries))
 - `id` (String) Policy definition ID
-- `source_zone` (String) Source Zone
 - `type` (String) Policy definition type
 - `version` (Number) Policy definition version
+
+<a id="nestedatt--definitions--entries"></a>
+### Nested Schema for `definitions.entries`
+
+Read-Only:
+
+- `destination_zone` (String) Destination Zone
+- `source_zone` (String) Source Zone
+
 
 
 <a id="nestedatt--logging"></a>

@@ -125,13 +125,21 @@ func (r *SecurityPolicyResource) Schema(ctx context.Context, req resource.Schema
 								stringvalidator.OneOf("urlFiltering", "zoneBasedFW", "intrusionPrevention", "sslDecryption", "advancedMalwareProtection", "dnsSecurity"),
 							},
 						},
-						"source_zone": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Source Zone, Attribute conditional on `type` being equal to `zoneBasedFW`").String,
+						"entries": schema.ListNestedAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("List of zone pair definitions, Attribute conditional on `type` being equal to `zoneBasedFW`").String,
 							Optional:            true,
-						},
-						"destination_zone": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Destination Zone, Attribute conditional on `type` being equal to `zoneBasedFW`").String,
-							Optional:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"source_zone": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Source Zone").String,
+										Optional:            true,
+									},
+									"destination_zone": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Destination Zone").String,
+										Optional:            true,
+									},
+								},
+							},
 						},
 					},
 				},
@@ -187,29 +195,38 @@ func (r *SecurityPolicyResource) Schema(ctx context.Context, req resource.Schema
 				MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging Source Interface").String,
 				Optional:            true,
 			},
-			"max_incomplete_icmp_limit": schema.Int64Attribute{
+			"max_incomplete_icmp_limit": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Max Incomplete ICMP Limit").String,
 				Optional:            true,
 			},
-			"max_incomplete_tcp_limit": schema.Int64Attribute{
+			"max_incomplete_tcp_limit": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Max Incomplete TCP Limit").String,
 				Optional:            true,
 			},
-			"max_incomplete_udp_limit": schema.Int64Attribute{
+			"max_incomplete_udp_limit": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Max Incomplete UDP Limit").String,
 				Optional:            true,
 			},
-			"session_reclassify_allow": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Session Reclassify Allow").String,
+			"session_reclassify_allow": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Session Reclassify Allow").AddStringEnumDescription("on", "off").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("on", "off"),
+				},
 			},
-			"imcp_unreachable_allow": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("ICMP Unreachable Allow").String,
+			"imcp_unreachable_allow": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("ICMP Unreachable Allow").AddStringEnumDescription("on", "off").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("on", "off"),
+				},
 			},
-			"unified_logging": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Unified Logging").String,
+			"unified_logging": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Unified Logging").AddStringEnumDescription("on", "off").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("on", "off"),
+				},
 			},
 			"logging": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
