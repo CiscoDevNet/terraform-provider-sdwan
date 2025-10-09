@@ -31,29 +31,29 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type SecurityPolicy struct {
-	Id                         types.String                            `tfsdk:"id"`
-	Version                    types.Int64                             `tfsdk:"version"`
-	Name                       types.String                            `tfsdk:"name"`
-	Description                types.String                            `tfsdk:"description"`
-	Mode                       types.String                            `tfsdk:"mode"`
-	UseCase                    types.String                            `tfsdk:"use_case"`
-	Definitions                []SecurityPolicyDefinitions             `tfsdk:"definitions"`
-	DirectInternetApplications types.String                            `tfsdk:"direct_internet_applications"`
-	TcpSynFloodLimit           types.String                            `tfsdk:"tcp_syn_flood_limit"`
-	AuditTrail                 types.String                            `tfsdk:"audit_trail"`
-	MatchStatisticsPerFilter   types.String                            `tfsdk:"match_statistics_per_filter"`
-	FailureMode                types.String                            `tfsdk:"failure_mode"`
-	HighSpeedLoggingServerIp   types.String                            `tfsdk:"high_speed_logging_server_ip"`
-	HighSpeedLoggingVpn        types.String                            `tfsdk:"high_speed_logging_vpn"`
-	HighSpeedLoggingServerPort types.String                            `tfsdk:"high_speed_logging_server_port"`
-	HighSpeedLoggingEntries    []SecurityPolicyHighSpeedLoggingEntries `tfsdk:"high_speed_logging_entries"`
-	MaxIncompleteIcmpLimit     types.String                            `tfsdk:"max_incomplete_icmp_limit"`
-	MaxIncompleteTcpLimit      types.String                            `tfsdk:"max_incomplete_tcp_limit"`
-	MaxIncompleteUdpLimit      types.String                            `tfsdk:"max_incomplete_udp_limit"`
-	SessionReclassifyAllow     types.String                            `tfsdk:"session_reclassify_allow"`
-	ImcpUnreachableAllow       types.String                            `tfsdk:"imcp_unreachable_allow"`
-	UnifiedLogging             types.String                            `tfsdk:"unified_logging"`
-	Logging                    []SecurityPolicyLogging                 `tfsdk:"logging"`
+	Id                                    types.String                `tfsdk:"id"`
+	Version                               types.Int64                 `tfsdk:"version"`
+	Name                                  types.String                `tfsdk:"name"`
+	Description                           types.String                `tfsdk:"description"`
+	Mode                                  types.String                `tfsdk:"mode"`
+	UseCase                               types.String                `tfsdk:"use_case"`
+	Definitions                           []SecurityPolicyDefinitions `tfsdk:"definitions"`
+	DirectInternetApplications            types.String                `tfsdk:"direct_internet_applications"`
+	TcpSynFloodLimit                      types.String                `tfsdk:"tcp_syn_flood_limit"`
+	AuditTrail                            types.String                `tfsdk:"audit_trail"`
+	MatchStatisticsPerFilter              types.String                `tfsdk:"match_statistics_per_filter"`
+	FailureMode                           types.String                `tfsdk:"failure_mode"`
+	HighSpeedLoggingServerIp              types.String                `tfsdk:"high_speed_logging_server_ip"`
+	HighSpeedLoggingVpn                   types.String                `tfsdk:"high_speed_logging_vpn"`
+	HighSpeedLoggingServerPort            types.String                `tfsdk:"high_speed_logging_server_port"`
+	HighSpeedLoggingServerSourceInterface types.String                `tfsdk:"high_speed_logging_server_source_interface"`
+	MaxIncompleteIcmpLimit                types.String                `tfsdk:"max_incomplete_icmp_limit"`
+	MaxIncompleteTcpLimit                 types.String                `tfsdk:"max_incomplete_tcp_limit"`
+	MaxIncompleteUdpLimit                 types.String                `tfsdk:"max_incomplete_udp_limit"`
+	SessionReclassifyAllow                types.String                `tfsdk:"session_reclassify_allow"`
+	ImcpUnreachableAllow                  types.String                `tfsdk:"imcp_unreachable_allow"`
+	UnifiedLogging                        types.String                `tfsdk:"unified_logging"`
+	Logging                               []SecurityPolicyLogging     `tfsdk:"logging"`
 }
 
 type SecurityPolicyDefinitions struct {
@@ -61,13 +61,6 @@ type SecurityPolicyDefinitions struct {
 	Version types.Int64                        `tfsdk:"version"`
 	Type    types.String                       `tfsdk:"type"`
 	Entries []SecurityPolicyDefinitionsEntries `tfsdk:"entries"`
-}
-
-type SecurityPolicyHighSpeedLoggingEntries struct {
-	ServerIp        types.String `tfsdk:"server_ip"`
-	Vpn             types.String `tfsdk:"vpn"`
-	Port            types.String `tfsdk:"port"`
-	SourceInterface types.String `tfsdk:"source_interface"`
 }
 
 type SecurityPolicyLogging struct {
@@ -149,33 +142,17 @@ func (data SecurityPolicy) toBody(ctx context.Context) string {
 	if !data.FailureMode.IsNull() {
 		body, _ = sjson.Set(body, "policyDefinition.settings.failureMode", data.FailureMode.ValueString())
 	}
-	if !data.HighSpeedLoggingServerIp.IsNull() && data.Mode.ValueString() == "security" {
+	if !data.HighSpeedLoggingServerIp.IsNull() {
 		body, _ = sjson.Set(body, "policyDefinition.settings.highSpeedLogging.serverIp", data.HighSpeedLoggingServerIp.ValueString())
 	}
-	if !data.HighSpeedLoggingVpn.IsNull() && data.Mode.ValueString() == "security" {
+	if !data.HighSpeedLoggingVpn.IsNull() {
 		body, _ = sjson.Set(body, "policyDefinition.settings.highSpeedLogging.vrf", data.HighSpeedLoggingVpn.ValueString())
 	}
-	if !data.HighSpeedLoggingServerPort.IsNull() && data.Mode.ValueString() == "security" {
+	if !data.HighSpeedLoggingServerPort.IsNull() {
 		body, _ = sjson.Set(body, "policyDefinition.settings.highSpeedLogging.port", data.HighSpeedLoggingServerPort.ValueString())
 	}
-	if true && data.Mode.ValueString() == "unified" {
-		body, _ = sjson.Set(body, "policyDefinition.settings.highSpeedLogging.entries", []interface{}{})
-		for _, item := range data.HighSpeedLoggingEntries {
-			itemBody := ""
-			if !item.ServerIp.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "serverIp", item.ServerIp.ValueString())
-			}
-			if !item.Vpn.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "vrf", item.Vpn.ValueString())
-			}
-			if !item.Port.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "port", item.Port.ValueString())
-			}
-			if !item.SourceInterface.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "sourceInterface", item.SourceInterface.ValueString())
-			}
-			body, _ = sjson.SetRaw(body, "policyDefinition.settings.highSpeedLogging.entries.-1", itemBody)
-		}
+	if !data.HighSpeedLoggingServerSourceInterface.IsNull() {
+		body, _ = sjson.Set(body, "policyDefinition.settings.highSpeedLogging.sourceInterface", data.HighSpeedLoggingServerSourceInterface.ValueString())
 	}
 	if !data.MaxIncompleteIcmpLimit.IsNull() {
 		body, _ = sjson.Set(body, "policyDefinition.settings.maxIncompleteIcmpLimit", data.MaxIncompleteIcmpLimit.ValueString())
@@ -308,52 +285,25 @@ func (data *SecurityPolicy) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.FailureMode = types.StringNull()
 	}
-	if value := res.Get("policyDefinition.settings.highSpeedLogging.serverIp"); value.Exists() && data.Mode.ValueString() == "security" {
+	if value := res.Get("policyDefinition.settings.highSpeedLogging.serverIp"); value.Exists() {
 		data.HighSpeedLoggingServerIp = types.StringValue(value.String())
 	} else {
 		data.HighSpeedLoggingServerIp = types.StringNull()
 	}
-	if value := res.Get("policyDefinition.settings.highSpeedLogging.vrf"); value.Exists() && data.Mode.ValueString() == "security" {
+	if value := res.Get("policyDefinition.settings.highSpeedLogging.vrf"); value.Exists() {
 		data.HighSpeedLoggingVpn = types.StringValue(value.String())
 	} else {
 		data.HighSpeedLoggingVpn = types.StringNull()
 	}
-	if value := res.Get("policyDefinition.settings.highSpeedLogging.port"); value.Exists() && data.Mode.ValueString() == "security" {
+	if value := res.Get("policyDefinition.settings.highSpeedLogging.port"); value.Exists() {
 		data.HighSpeedLoggingServerPort = types.StringValue(value.String())
 	} else {
 		data.HighSpeedLoggingServerPort = types.StringNull()
 	}
-	if value := res.Get("policyDefinition.settings.highSpeedLogging.entries"); value.Exists() && len(value.Array()) > 0 && data.Mode.ValueString() == "unified" {
-		data.HighSpeedLoggingEntries = make([]SecurityPolicyHighSpeedLoggingEntries, 0)
-		value.ForEach(func(k, v gjson.Result) bool {
-			item := SecurityPolicyHighSpeedLoggingEntries{}
-			if cValue := v.Get("serverIp"); cValue.Exists() {
-				item.ServerIp = types.StringValue(cValue.String())
-			} else {
-				item.ServerIp = types.StringNull()
-			}
-			if cValue := v.Get("vrf"); cValue.Exists() {
-				item.Vpn = types.StringValue(cValue.String())
-			} else {
-				item.Vpn = types.StringNull()
-			}
-			if cValue := v.Get("port"); cValue.Exists() {
-				item.Port = types.StringValue(cValue.String())
-			} else {
-				item.Port = types.StringNull()
-			}
-			if cValue := v.Get("sourceInterface"); cValue.Exists() {
-				item.SourceInterface = types.StringValue(cValue.String())
-			} else {
-				item.SourceInterface = types.StringNull()
-			}
-			data.HighSpeedLoggingEntries = append(data.HighSpeedLoggingEntries, item)
-			return true
-		})
+	if value := res.Get("policyDefinition.settings.highSpeedLogging.sourceInterface"); value.Exists() {
+		data.HighSpeedLoggingServerSourceInterface = types.StringValue(value.String())
 	} else {
-		if len(data.HighSpeedLoggingEntries) > 0 {
-			data.HighSpeedLoggingEntries = []SecurityPolicyHighSpeedLoggingEntries{}
-		}
+		data.HighSpeedLoggingServerSourceInterface = types.StringNull()
 	}
 	if value := res.Get("policyDefinition.settings.maxIncompleteIcmpLimit"); value.Exists() {
 		data.MaxIncompleteIcmpLimit = types.StringValue(value.String())
@@ -480,23 +430,8 @@ func (data *SecurityPolicy) hasChanges(ctx context.Context, state *SecurityPolic
 	if !data.HighSpeedLoggingServerPort.Equal(state.HighSpeedLoggingServerPort) {
 		hasChanges = true
 	}
-	if len(data.HighSpeedLoggingEntries) != len(state.HighSpeedLoggingEntries) {
+	if !data.HighSpeedLoggingServerSourceInterface.Equal(state.HighSpeedLoggingServerSourceInterface) {
 		hasChanges = true
-	} else {
-		for i := range data.HighSpeedLoggingEntries {
-			if !data.HighSpeedLoggingEntries[i].ServerIp.Equal(state.HighSpeedLoggingEntries[i].ServerIp) {
-				hasChanges = true
-			}
-			if !data.HighSpeedLoggingEntries[i].Vpn.Equal(state.HighSpeedLoggingEntries[i].Vpn) {
-				hasChanges = true
-			}
-			if !data.HighSpeedLoggingEntries[i].Port.Equal(state.HighSpeedLoggingEntries[i].Port) {
-				hasChanges = true
-			}
-			if !data.HighSpeedLoggingEntries[i].SourceInterface.Equal(state.HighSpeedLoggingEntries[i].SourceInterface) {
-				hasChanges = true
-			}
-		}
 	}
 	if !data.MaxIncompleteIcmpLimit.Equal(state.MaxIncompleteIcmpLimit) {
 		hasChanges = true

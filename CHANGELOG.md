@@ -7,7 +7,6 @@
 - BREAKING CHANGE: Fix type of `imcp_unreachable_allow`, `session_reclassify_allow`, and `unified_logging` in `sdwan_security_policy` resource and data source
 - BREAKING CHANGE: Fix type of `max_incomplete_icmp_limit`, `max_incomplete_tcp_limit`, and `max_incomplete_upd_limit` in `sdwan_security_policy` resource and data source
 - BREAKING CHANGE: Converts `source_zone` and `destination_zone` fields to `entries` list containing `source_zone`/`destination_zone` objects to support multiple entries in `sdwan_security_policy` resource and data source
-- Adds `high_speed_logging_entries` support to the `sdwan_security_policy` resource and data source
 
 ## 0.7.1
 
