@@ -13,6 +13,8 @@ description: |-
 - BREAKING CHANGE: Rename `target_interface` attribute of `sdwan_application_priority_qos_policy` resource to `target_interfaces`
 - BREAKING CHANGE: Adds `ipv4_configuration_type` and `ipv6_configuration_type` to `sdwan_service_lan_vpn_interface_ethernet_feature` resource
 - Add `community` support to the `sdwan_route_policy_definition` resource and data source
+- BREAKING CHANGE: Change attribute `ipv4_nat_type` as always included in payload and remove from schema in `sdwan_service_lan_vpn_interface_ethernet_feature` resource
+- Fix issue with `administrative_distance` attribute of `ipv4_static_routes` and `ipv6_static_routes` in `sdwan_service_lan_vpn_feature` resource causing errors when not provided with next_hops of static route configuration.
 
 ## 0.7.1
 
