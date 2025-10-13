@@ -1,4 +1,4 @@
-## 0.7.2 (unreleased)
+## 0.8.0
 
 - BREAKING CHANGE: Fix type of `port` attribute of `sdwan_port_list_policy_object` to support multiple values, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/460)
 - BREAKING CHANGE: Rename `target_interface` attribute of `sdwan_application_priority_qos_policy` resource to `target_interfaces`
