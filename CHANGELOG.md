@@ -4,6 +4,7 @@
 - Add `sdwan_policy_object_unified_advanced_malware_protection` resource and data source
 - Add `sdwan_policy_object_unified_intrusion_prevention` resource and data source
 - Add `sdwan_policy_object_unified_tls_ssl_profile` resource and data source
+- Add `sdwan_policy_object_unified_tls_ssl_decryption` resource and data source
 
 ## 0.8.0
 
