@@ -10,6 +10,7 @@ description: |-
 ## 0.8.1
 
 - Add `sdwan_policy_object_unified_url_filtering` resource and data source
+- Add `sdwan_policy_object_unified_advanced_malware_protection` resource and data source
 
 ## 0.8.0
 
