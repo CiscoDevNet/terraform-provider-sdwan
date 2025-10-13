@@ -64,7 +64,7 @@ func (data PolicyObjectUnifiedTLSSSLDecryption) getModel() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data PolicyObjectUnifiedTLSSSLDecryption) getPath() string {
-	return fmt.Sprintf("/v1/feature-profile/sdwan/policy-object/%v/unified/unified/ssl-decryption", url.QueryEscape(data.FeatureProfileId.ValueString()))
+	return fmt.Sprintf("/v1/feature-profile/sdwan/policy-object/%v/unified/ssl-decryption", url.QueryEscape(data.FeatureProfileId.ValueString()))
 }
 
 // End of section. //template:end getPath
@@ -76,7 +76,7 @@ func (data PolicyObjectUnifiedTLSSSLDecryption) toBody(ctx context.Context) stri
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
 	if true {
-		body, _ = sjson.Set(body, path+"sslEnable.optionType", "default")
+		body, _ = sjson.Set(body, path+"sslEnable.optionType", "global")
 		body, _ = sjson.Set(body, path+"sslEnable.value", true)
 	}
 	if !data.ExpiredCertificate.IsNull() {
@@ -164,7 +164,7 @@ func (data PolicyObjectUnifiedTLSSSLDecryption) toBody(ctx context.Context) stri
 		}
 	}
 	if true {
-		body, _ = sjson.Set(body, path+"caTpLabel.optionType", "default")
+		body, _ = sjson.Set(body, path+"caTpLabel.optionType", "global")
 		body, _ = sjson.Set(body, path+"caTpLabel.value", "PROXY-SIGNING-CA")
 	}
 	return body

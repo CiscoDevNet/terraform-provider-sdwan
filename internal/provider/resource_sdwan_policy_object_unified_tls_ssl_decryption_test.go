@@ -35,16 +35,15 @@ func TestAccSdwanPolicyObjectUnifiedTLSSSLDecryptionProfileParcel(t *testing.T) 
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "expired_certificate", "drop"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "untrusted_certificate", "drop"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "certificate_revocation_status", "ocsp"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "unknown_revocation_status", "decrypt"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "unsupported_protocol_versions", "no-decrypt"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "certificate_revocation_status", "none"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "unsupported_protocol_versions", "drop"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "unsupported_cipher_suites", "drop"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "failure_mode", "close"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "default_ca_certificate_bundle", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "rsa_keypair_modules", "2048"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "ec_key_type", "P384"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "ec_key_type", "P256"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "certificate_lifetime", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "minimal_tls_ver", "TLSv1.2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_tls_ssl_decryption.test", "minimal_tls_ver", "TLSv1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -82,16 +81,15 @@ func testAccSdwanPolicyObjectUnifiedTLSSSLDecryptionProfileParcelConfig_all() st
 	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	expired_certificate = "drop"` + "\n"
 	config += `	untrusted_certificate = "drop"` + "\n"
-	config += `	certificate_revocation_status = "ocsp"` + "\n"
-	config += `	unknown_revocation_status = "decrypt"` + "\n"
-	config += `	unsupported_protocol_versions = "no-decrypt"` + "\n"
+	config += `	certificate_revocation_status = "none"` + "\n"
+	config += `	unsupported_protocol_versions = "drop"` + "\n"
 	config += `	unsupported_cipher_suites = "drop"` + "\n"
 	config += `	failure_mode = "close"` + "\n"
 	config += `	default_ca_certificate_bundle = true` + "\n"
 	config += `	rsa_keypair_modules = "2048"` + "\n"
-	config += `	ec_key_type = "P384"` + "\n"
+	config += `	ec_key_type = "P256"` + "\n"
 	config += `	certificate_lifetime = "1"` + "\n"
-	config += `	minimal_tls_ver = "TLSv1.2"` + "\n"
+	config += `	minimal_tls_ver = "TLSv1"` + "\n"
 	config += `}` + "\n"
 	return config
 }

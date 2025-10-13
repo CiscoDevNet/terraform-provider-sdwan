@@ -53,7 +53,6 @@ attributes:
     example: 2ad58d78-59ee-46d3-86dd-7b6b7ca09f38
     test_value: sdwan_policy_object_security_url_block_list.test.id
 
-
 test_prerequisites: |
   resource "sdwan_policy_object_feature_profile" "test" {
     name = "POLICY_OBJECT_FP_1"
