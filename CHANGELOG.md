@@ -1,3 +1,7 @@
+## 0.8.1
+
+- Adds `sdwan_policy_object_security_protocol_list` resource and data source
+
 ## 0.8.0
 
 - BREAKING CHANGE: Fix type of `port` attribute of `sdwan_port_list_policy_object` to support multiple values, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/460)
