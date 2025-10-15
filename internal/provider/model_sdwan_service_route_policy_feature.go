@@ -370,7 +370,7 @@ func (data *ServiceRoutePolicy) fromBody(ctx context.Context, res gjson.Result) 
 
 	if t := res.Get(path + "defaultAction.optionType"); t.Exists() {
 		va := res.Get(path + "defaultAction.value")
-		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.ValueString() == "reject") {
+		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.ValueString() == "reject" || tempDefaultAction.ValueString() == "") {
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
