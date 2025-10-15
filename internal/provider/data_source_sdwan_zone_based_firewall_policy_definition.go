@@ -114,6 +114,10 @@ func (d *ZoneBasedFirewallPolicyDefinitionDataSource) Schema(ctx context.Context
 							MarkdownDescription: "Base action",
 							Computed:            true,
 						},
+						"rule_type": schema.StringAttribute{
+							MarkdownDescription: "Rule Type",
+							Computed:            true,
+						},
 						"match_entries": schema.SetNestedAttribute{
 							MarkdownDescription: "List of match entries",
 							Computed:            true,

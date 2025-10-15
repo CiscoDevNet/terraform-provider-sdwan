@@ -49,6 +49,7 @@ type ZoneBasedFirewallPolicyDefinitionRules struct {
 	RuleOrder     types.Int64                                           `tfsdk:"rule_order"`
 	RuleName      types.String                                          `tfsdk:"rule_name"`
 	BaseAction    types.String                                          `tfsdk:"base_action"`
+	RuleType      types.String                                          `tfsdk:"rule_type"`
 	MatchEntries  []ZoneBasedFirewallPolicyDefinitionRulesMatchEntries  `tfsdk:"match_entries"`
 	ActionEntries []ZoneBasedFirewallPolicyDefinitionRulesActionEntries `tfsdk:"action_entries"`
 }
@@ -119,6 +120,9 @@ func (data ZoneBasedFirewallPolicyDefinition) toBody(ctx context.Context) string
 			}
 			if true {
 				itemBody, _ = sjson.Set(itemBody, "sequenceType", "zoneBasedFW")
+			}
+			if !item.RuleType.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "sequenceIpType", item.RuleType.ValueString())
 			}
 			if true {
 				itemBody, _ = sjson.Set(itemBody, "match.entries", []interface{}{})
@@ -222,6 +226,11 @@ func (data *ZoneBasedFirewallPolicyDefinition) fromBody(ctx context.Context, res
 				item.BaseAction = types.StringValue(cValue.String())
 			} else {
 				item.BaseAction = types.StringNull()
+			}
+			if cValue := v.Get("sequenceIpType"); cValue.Exists() {
+				item.RuleType = types.StringValue(cValue.String())
+			} else {
+				item.RuleType = types.StringNull()
 			}
 			if cValue := v.Get("match.entries"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.MatchEntries = make([]ZoneBasedFirewallPolicyDefinitionRulesMatchEntries, 0)
@@ -327,6 +336,9 @@ func (data *ZoneBasedFirewallPolicyDefinition) hasChanges(ctx context.Context, s
 				hasChanges = true
 			}
 			if !data.Rules[i].BaseAction.Equal(state.Rules[i].BaseAction) {
+				hasChanges = true
+			}
+			if !data.Rules[i].RuleType.Equal(state.Rules[i].RuleType) {
 				hasChanges = true
 			}
 			if len(data.Rules[i].MatchEntries) != len(state.Rules[i].MatchEntries) {

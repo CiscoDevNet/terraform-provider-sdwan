@@ -54,6 +54,7 @@ Read-Only:
 - `match_entries` (Attributes Set) List of match entries (see [below for nested schema](#nestedatt--rules--match_entries))
 - `rule_name` (String) Rule name
 - `rule_order` (Number) Rule
+- `rule_type` (String) Rule Type
 
 <a id="nestedatt--rules--action_entries"></a>
 ### Nested Schema for `rules.action_entries`
