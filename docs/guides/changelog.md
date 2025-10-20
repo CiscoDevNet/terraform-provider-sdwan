@@ -7,6 +7,11 @@ description: |-
 
 # Changelog
 
+## 0.8.1 (unreleased)
+
+- Change `qos_schedulers` attribute from List to Set in `sdwan_qos_map_policy_definition` resource to allow order-independent configuration.
+- Add support for queue 0 without class map reference in `sdwan_qos_map_policy_definition` resource (handles empty `classMapRef` API values)
+
 ## 0.8.0
 
 - BREAKING CHANGE: Fix type of `port` attribute of `sdwan_port_list_policy_object` to support multiple values, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/460)

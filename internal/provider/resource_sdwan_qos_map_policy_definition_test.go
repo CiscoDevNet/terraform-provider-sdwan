@@ -17,6 +17,8 @@
 
 package provider
 
+// NOTE: This file contains manual modifications for queue 0 "" exception class map testing
+
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"testing"
@@ -81,3 +83,68 @@ func testAccSdwanQoSMapPolicyDefinitionConfig_all() string {
 }
 
 // End of section. //template:end testAccConfigAll
+
+// Test with queue 0 without class_map_id
+func TestAccSdwanQoSMapPolicyDefinition_Queue0(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_qos_map_policy_definition.test", "name", "Example_Queue0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_qos_map_policy_definition.test", "description", "Queue 0 without class map"))
+
+	// Check queue 0 exists in the set (order-independent)
+	checks = append(checks, resource.TestCheckTypeSetElemNestedAttrs("sdwan_qos_map_policy_definition.test", "qos_schedulers.*", map[string]string{
+		"queue":             "0",
+		"bandwidth_percent": "42",
+		"buffer_percent":    "42",
+		"burst":             "15000",
+		"drop_type":         "tail-drop",
+		"scheduling_type":   "llq",
+	}))
+
+	// Check queue 6 exists in the set (order-independent)
+	checks = append(checks, resource.TestCheckTypeSetElemNestedAttrs("sdwan_qos_map_policy_definition.test", "qos_schedulers.*", map[string]string{
+		"queue":             "6",
+		"bandwidth_percent": "10",
+		"buffer_percent":    "10",
+		"burst":             "100000",
+		"drop_type":         "red-drop",
+		"scheduling_type":   "wrr",
+	}))
+
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccSdwanQoSMapPolicyDefinitionPrerequisitesConfig + testAccSdwanQoSMapPolicyDefinitionConfig_queue0(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
+		},
+	})
+}
+
+func testAccSdwanQoSMapPolicyDefinitionConfig_queue0() string {
+	config := `resource "sdwan_qos_map_policy_definition" "test" {` + "\n"
+	config += `	name = "Example_Queue0"` + "\n"
+	config += `	description = "Queue 0 without class map"` + "\n"
+	config += `	qos_schedulers = [` + "\n"
+	config += `	  {` + "\n"
+	config += `	    queue = 0` + "\n"
+	config += `	    bandwidth_percent = 42` + "\n"
+	config += `	    buffer_percent = 42` + "\n"
+	config += `	    burst = 15000` + "\n"
+	config += `	    drop_type = "tail-drop"` + "\n"
+	config += `	    scheduling_type = "llq"` + "\n"
+	config += `	  },` + "\n"
+	config += `	  {` + "\n"
+	config += `	    queue = 6` + "\n"
+	config += `	    class_map_id = sdwan_class_map_policy_object.test.id` + "\n"
+	config += `	    bandwidth_percent = 10` + "\n"
+	config += `	    buffer_percent = 10` + "\n"
+	config += `	    burst = 100000` + "\n"
+	config += `	    drop_type = "red-drop"` + "\n"
+	config += `	    scheduling_type = "wrr"` + "\n"
+	config += `	  }` + "\n"
+	config += `	]` + "\n"
+	config += `}` + "\n"
+	return config
+}

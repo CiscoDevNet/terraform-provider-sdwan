@@ -25,7 +25,7 @@ attributes:
   - model_name: qosSchedulers
     data_path: [definition]
     tf_name: qos_schedulers
-    type: List
+    type: Set
     mandatory: true
     description: List of QoS schedulers
     attributes:
@@ -41,8 +41,7 @@ attributes:
       - model_name: classMapRef
         tf_name: class_map_id
         type: String
-        mandatory: true
-        description: Class map ID
+        description: Class map ID (can be empty for queue 0 when left as Control)
         example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
         test_value: sdwan_class_map_policy_object.test.id
       - tf_name: class_map_version

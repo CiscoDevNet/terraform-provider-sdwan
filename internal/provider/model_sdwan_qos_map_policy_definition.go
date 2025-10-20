@@ -17,6 +17,12 @@
 
 package provider
 
+// NOTE: This file contains manual modifications for queue 0 "" exception class map handling
+// The following sections are NOT generated:
+// - toBody
+// - fromBody
+// - processImport
+
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
@@ -59,7 +65,7 @@ func (data QoSMapPolicyDefinition) getPath() string {
 
 // End of section. //template:end getPath
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
+// Manual implementation: handles empty classMapRef for queue 0
 func (data QoSMapPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {
@@ -80,6 +86,8 @@ func (data QoSMapPolicyDefinition) toBody(ctx context.Context) string {
 			}
 			if !item.ClassMapId.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "classMapRef", item.ClassMapId.ValueString())
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "classMapRef", "")
 			}
 			if !item.BandwidthPercent.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "bandwidthPercent", fmt.Sprint(item.BandwidthPercent.ValueInt64()))
@@ -102,9 +110,7 @@ func (data QoSMapPolicyDefinition) toBody(ctx context.Context) string {
 	return body
 }
 
-// End of section. //template:end toBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
+// Manual implementation: converts empty classMapRef to null
 func (data *QoSMapPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	state := *data
 	if value := res.Get("name"); value.Exists() {
@@ -126,7 +132,7 @@ func (data *QoSMapPolicyDefinition) fromBody(ctx context.Context, res gjson.Resu
 			} else {
 				item.Queue = types.Int64Null()
 			}
-			if cValue := v.Get("classMapRef"); cValue.Exists() {
+			if cValue := v.Get("classMapRef"); cValue.Exists() && cValue.String() != "" {
 				item.ClassMapId = types.StringValue(cValue.String())
 			} else {
 				item.ClassMapId = types.StringNull()
@@ -166,8 +172,6 @@ func (data *QoSMapPolicyDefinition) fromBody(ctx context.Context, res gjson.Resu
 	}
 	data.updateVersions(ctx, &state)
 }
-
-// End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *QoSMapPolicyDefinition) hasChanges(ctx context.Context, state *QoSMapPolicyDefinition) bool {
@@ -233,15 +237,12 @@ func (data *QoSMapPolicyDefinition) updateVersions(ctx context.Context, state *Q
 
 // End of section. //template:end updateVersions
 
-// Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *QoSMapPolicyDefinition) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
 	data.Type = types.StringValue("qosMap")
 	for i := range data.QosSchedulers {
-		if data.QosSchedulers[i].ClassMapId != types.StringNull() {
+		if !data.QosSchedulers[i].ClassMapId.IsNull() && data.QosSchedulers[i].ClassMapId.ValueString() != "" {
 			data.QosSchedulers[i].ClassMapVersion = types.Int64Value(0)
 		}
 	}
 }
-
-// End of section. //template:end processImport
