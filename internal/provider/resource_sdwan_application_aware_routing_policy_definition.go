@@ -26,6 +26,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -282,6 +283,25 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 							},
 						},
 					},
+				},
+			},
+			"default_action": schema.ListNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Default action when no sequence matches (optional, omit for no default action)").String,
+				Optional:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"sla_class_list_id": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("SLA class list ID").String,
+							Required:            true,
+						},
+						"sla_class_list_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("SLA class list version").String,
+							Optional:            true,
+						},
+					},
+				},
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(1),
 				},
 			},
 		},

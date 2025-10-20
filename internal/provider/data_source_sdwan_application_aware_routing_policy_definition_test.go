@@ -61,6 +61,12 @@ resource "sdwan_application_list_policy_object" "test" {
     }
   ]
 }
+resource "sdwan_sla_class_policy_object" "sla_test" {
+  name                          = "sla_test"
+  jitter                        = 100
+  latency                       = 10
+  loss                          = 1
+}
 
 `
 
@@ -84,6 +90,9 @@ func testAccDataSourceSdwanApplicationAwareRoutingPolicyDefinitionConfig() strin
 	config += `		type = "backupSlaPreferredColor"` + "\n"
 	config += `		backup_sla_preferred_color = "bronze"` + "\n"
 	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	default_action = [{` + "\n"
+	config += `	  sla_class_list_id = sdwan_sla_class_policy_object.sla_test.id` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 

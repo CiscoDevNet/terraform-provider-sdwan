@@ -352,6 +352,30 @@ attributes:
                 type: String
                 description: preferred color (Single value or multiple values separated by spaces)
                 example: bronze
+  - model_name: defaultAction
+    tf_name: default_action
+    type: List
+    max_list: 1
+    description: Default action when no sequence matches (optional, omit for no default action)
+    attributes:
+      - model_name: type
+        tf_name: type
+        type: String
+        value: slaClass
+        description: Type of default action
+        example: slaClass
+      - model_name: ref
+        tf_name: sla_class_list_id
+        type: String
+        mandatory: true
+        description: SLA class list ID
+        example: ef743b4c-ca10-4cac-8f11-8ce902a47f57
+        test_value: sdwan_sla_class_policy_object.sla_test.id
+      - tf_name: sla_class_list_version
+        tf_only: true
+        type: Version 
+        description: SLA class list version
+        exclude_test: true
 
 test_prerequisites: |
   resource "sdwan_application_list_policy_object" "test" {
@@ -361,4 +385,10 @@ test_prerequisites: |
         application = "netflix"
       }
     ]
+  }
+  resource "sdwan_sla_class_policy_object" "sla_test" {
+    name                          = "sla_test"
+    jitter                        = 100
+    latency                       = 10
+    loss                          = 1
   }
