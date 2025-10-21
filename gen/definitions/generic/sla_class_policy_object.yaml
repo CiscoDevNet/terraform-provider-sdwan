@@ -1,4 +1,5 @@
 ---
+# Manual resource - toBod and fromBody are manually configured to resolve issue #315.
 name: SLA Class Policy Object
 rest_endpoint: /template/policy/list/sla/
 has_version: true
