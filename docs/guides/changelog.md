@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.8.1
+
+- Change `definitions` attribute of `resource_sdwan_security_policy` resource to a set
+
 ## 0.8.0
 
 - BREAKING CHANGE: Fix type of `port` attribute of `sdwan_port_list_policy_object` to support multiple values, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/460)
