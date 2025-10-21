@@ -27,11 +27,21 @@ data "sdwan_application_aware_routing_policy_definition" "example" {
 
 ### Read-Only
 
+- `default_action` (Attributes List) Default action when no sequence matches (optional, omit for no default action) (see [below for nested schema](#nestedatt--default_action))
 - `description` (String) The description of the policy definition
 - `name` (String) The name of the policy definition
 - `sequences` (Attributes List) List of sequences (see [below for nested schema](#nestedatt--sequences))
 - `type` (String) Type
 - `version` (Number) The version of the object
+
+<a id="nestedatt--default_action"></a>
+### Nested Schema for `default_action`
+
+Read-Only:
+
+- `sla_class_list_id` (String) SLA class list ID
+- `sla_class_list_version` (Number) SLA class list version
+
 
 <a id="nestedatt--sequences"></a>
 ### Nested Schema for `sequences`

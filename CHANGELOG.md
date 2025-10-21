@@ -1,3 +1,7 @@
+## 0.8.1 (unreleased)
+
+- Add `default_action` support to the `sdwan_application_aware_routing_policy_definition` resource and data source
+
 ## 0.8.0
 
 - BREAKING CHANGE: Fix type of `port` attribute of `sdwan_port_list_policy_object` to support multiple values, [Link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/460)

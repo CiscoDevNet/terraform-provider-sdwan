@@ -246,6 +246,22 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Schema(ctx context.C
 					},
 				},
 			},
+			"default_action": schema.ListNestedAttribute{
+				MarkdownDescription: "Default action when no sequence matches (optional, omit for no default action)",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"sla_class_list_id": schema.StringAttribute{
+							MarkdownDescription: "SLA class list ID",
+							Computed:            true,
+						},
+						"sla_class_list_version": schema.Int64Attribute{
+							MarkdownDescription: "SLA class list version",
+							Computed:            true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
