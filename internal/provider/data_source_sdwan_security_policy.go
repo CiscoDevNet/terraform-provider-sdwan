@@ -81,7 +81,7 @@ func (d *SecurityPolicyDataSource) Schema(ctx context.Context, req datasource.Sc
 				MarkdownDescription: "The use case of the security policy",
 				Computed:            true,
 			},
-			"definitions": schema.ListNestedAttribute{
+			"definitions": schema.SetNestedAttribute{
 				MarkdownDescription: "List of policy definitions",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{

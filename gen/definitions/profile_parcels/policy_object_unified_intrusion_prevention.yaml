@@ -1,0 +1,48 @@
+---
+name: Policy Object Unified Intrusion Prevention
+rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/unified/intrusion-prevention
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+skip_minimum_test: true
+parcel_type: policy_object
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_policy_object_feature_profile.test.id
+  - model_name: signatureSet
+    example: balanced
+  - model_name: inspectionMode
+    example: detection
+  - model_name: refId
+    tf_name: ips_signature_allow_list_id
+    data_path: [signatureAllowedList]
+    ignore_mandatory: true
+    example: 2ad58d78-59ee-46d3-86dd-7b6b7ca09f38
+    test_value: sdwan_policy_object_security_ips_signature.test.id
+  - model_name: logLevel
+    example: error
+  - model_name: customSignature
+    ignore_mandatory: true
+    example: false
+
+test_prerequisites: |
+  resource "sdwan_policy_object_feature_profile" "test" {
+    name = "POLICY_OBJECT_FP_1"
+    description = "My policy object feature profile 1"
+  }
+
+  resource "sdwan_policy_object_security_ips_signature" "test" {
+    name               = "Example"
+    description        = "My Example"
+    feature_profile_id = sdwan_policy_object_feature_profile.test.id
+    entries = [
+      {
+        generator_id = "1234"
+        signature_id = "5678"
+      }
+    ]
+  }
