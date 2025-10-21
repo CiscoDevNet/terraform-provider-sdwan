@@ -188,7 +188,7 @@ func (data *SystemIPv4DeviceAccess) fromBody(ctx context.Context, res gjson.Resu
 
 	if t := res.Get(path + "defaultAction.optionType"); t.Exists() {
 		va := res.Get(path + "defaultAction.value")
-		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.ValueString() == "drop") {
+		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.ValueString() == "drop" || tempDefaultAction.ValueString() == "") {
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
