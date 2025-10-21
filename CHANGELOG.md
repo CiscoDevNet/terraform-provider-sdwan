@@ -1,5 +1,6 @@
 ## 0.8.1
 
+- Adds `sdwan_policy_object_security_protocol_list` resource and data source
 - Change `definitions` attribute of `resource_sdwan_security_policy` resource to a set
 - Add `sdwan_policy_object_unified_url_filtering` resource and data source
 - Add `sdwan_policy_object_unified_advanced_malware_protection` resource and data source
