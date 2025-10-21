@@ -1,0 +1,785 @@
+{
+    "request": {
+        "$schema": "http://json-schema.org/draft/2019-09/schema",
+        "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/unified/ssl-decryption/post/request_schema.json",
+        "title": "ssl-decryption Parcel Schema",
+        "description": "ssl-decryption profile parcel schema for POST request",
+        "type": "object",
+        "properties": {
+            "name": {
+                "maxLength": 32,
+                "type": "string",
+                "pattern": "^[^&<>! \"]+$",
+                "minLength": 1
+            },
+            "description": {
+                "description": "Will be auto generated",
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "minProperties": 1,
+                "properties": {
+                    "sslEnable": {
+                        "description": "If false, no other fields should be provided, if true all fields should be provided",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "expiredCertificate": {
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "enum": [
+                                            "decrypt",
+                                            "drop"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "untrustedCertificate": {
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "enum": [
+                                            "decrypt",
+                                            "drop"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "certificateRevocationStatus": {
+                        "description": "If value is none unknown status not required, if value is ocsp then unknown status is required",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "enum": [
+                                            "ocsp",
+                                            "none"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "unknownStatus": {
+                        "description": "Only required if certificateRevocationStatus is oscp, if value is none then field shouldn't be here",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "enum": [
+                                            "decrypt",
+                                            "drop"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "unsupportedProtocolVersions": {
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "enum": [
+                                            "no-decrypt",
+                                            "drop"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "unsupportedCipherSuites": {
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "enum": [
+                                            "no-decrypt",
+                                            "drop"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "failureMode": {
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "enum": [
+                                            "close",
+                                            "open"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "caCertBundle": {
+                        "description": "If default is false have to provide file name and bundleString",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "default": {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                },
+                                "required": [
+                                    "default"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "default": {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    "fileName": {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    "bundleString": {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                },
+                                "required": [
+                                    "default",
+                                    "fileName",
+                                    "bundleString"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "keyModulus": {
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "enum": [
+                                            "1024",
+                                            "2048",
+                                            "4096"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "eckeyType": {
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "enum": [
+                                            "P256",
+                                            "P384",
+                                            "P521"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "certificateLifetime": {
+                        "description": "If you have vManage as CA or vManage as intermediate CA, this value should be 1",
+                        "details-1": "If another value is entered it will not be used",
+                        "details-2": "If you have Enterprise CA value should be greater than 0",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "minTlsVer": {
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "enum": [
+                                            "TLSv1",
+                                            "TLSv1.1",
+                                            "TLSv1.2"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "caTpLabel": {
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "enum": [
+                                            "PROXY-SIGNING-CA"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    }
+                },
+                "required": [
+                    "sslEnable"
+                ],
+                "additionalProperties": false
+            },
+            "documentation": {
+                "description": "This is the documentation for POST request schema for ssl-decryption profile parcel",
+                "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+                "details-2": "variable name should not be present if optionType value is NOT variable",
+                "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+                "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+                "examples": [
+                    {
+                        "data": {
+                            "sslEnable": {
+                                "optionType": "global",
+                                "value": true
+                            },
+                            "expiredCertificate": {
+                                "optionType": "global",
+                                "value": "drop"
+                            },
+                            "untrustedCertificate": {
+                                "optionType": "global",
+                                "value": "drop"
+                            },
+                            "certificateRevocationStatus": {
+                                "optionType": "global",
+                                "value": "ocsp"
+                            },
+                            "unknownStatus": {
+                                "optionType": "global",
+                                "value": "decrypt"
+                            },
+                            "unsupportedProtocolVersions": {
+                                "optionType": "global",
+                                "value": "no-decrypt"
+                            },
+                            "unsupportedCipherSuites": {
+                                "optionType": "global",
+                                "value": "drop"
+                            },
+                            "failureMode": {
+                                "optionType": "global",
+                                "value": "close"
+                            },
+                            "caCertBundle": {
+                                "default": {
+                                    "optionType": "global",
+                                    "value": false
+                                },
+                                "fileName": {
+                                    "optionType": "global",
+                                    "value": "dummy.pem"
+                                },
+                                "bundleString": {
+                                    "optionType": "global",
+                                    "value": "testString"
+                                }
+                            },
+                            "keyModulus": {
+                                "optionType": "global",
+                                "value": "2048"
+                            },
+                            "eckeyType": {
+                                "optionType": "global",
+                                "value": "P384"
+                            },
+                            "certificateLifetime": {
+                                "optionType": "global",
+                                "value": "1"
+                            },
+                            "minTlsVer": {
+                                "optionType": "global",
+                                "value": "TLSv1.2"
+                            },
+                            "caTpLabel": {
+                                "optionType": "global",
+                                "value": "PROXY-SIGNING-CA"
+                            }
+                        },
+                        "name": "ssl-decryptionParcel",
+                        "description": "TLS/SSL Proxy Policy Definition"
+                    }
+                ]
+            }
+        },
+        "required": [
+            "name",
+            "description",
+            "data"
+        ],
+        "not": {
+            "required": [
+                "documentation"
+            ]
+        },
+        "allOf": [
+            {
+                "if": {
+                    "properties": {
+                        "data": {
+                            "properties": {
+                                "sslEnable": {
+                                    "properties": {
+                                        "value": {
+                                            "const": true
+                                        }
+                                    }
+                                }
+                            },
+                            "required": [
+                                "sslEnable"
+                            ]
+                        }
+                    }
+                },
+                "then": {
+                    "properties": {
+                        "data": {
+                            "required": [
+                                "sslEnable",
+                                "expiredCertificate",
+                                "untrustedCertificate",
+                                "certificateRevocationStatus",
+                                "unsupportedProtocolVersions",
+                                "unsupportedCipherSuites",
+                                "failureMode",
+                                "caCertBundle",
+                                "keyModulus",
+                                "eckeyType",
+                                "certificateLifetime",
+                                "minTlsVer",
+                                "caTpLabel"
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "if": {
+                    "properties": {
+                        "data": {
+                            "properties": {
+                                "sslEnable": {
+                                    "properties": {
+                                        "value": {
+                                            "const": false
+                                        }
+                                    }
+                                }
+                            },
+                            "required": [
+                                "sslEnable"
+                            ]
+                        }
+                    }
+                },
+                "then": {
+                    "properties": {
+                        "data": {
+                            "not": {
+                                "required": [
+                                    "sslEnable",
+                                    "expiredCertificate",
+                                    "untrustedCertificate",
+                                    "certificateRevocationStatus",
+                                    "unsupportedProtocolVersions",
+                                    "unsupportedCipherSuites",
+                                    "failureMode",
+                                    "caCertBundle",
+                                    "keyModulus",
+                                    "eckeyType",
+                                    "certificateLifetime",
+                                    "minTlsVer",
+                                    "caTpLabel"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "if": {
+                    "properties": {
+                        "data": {
+                            "properties": {
+                                "certificateRevocationStatus": {
+                                    "properties": {
+                                        "value": {
+                                            "enum": [
+                                                "ocsp"
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            "required": [
+                                "certificateRevocationStatus"
+                            ]
+                        }
+                    }
+                },
+                "then": {
+                    "properties": {
+                        "data": {
+                            "required": [
+                                "unknownStatus"
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "if": {
+                    "properties": {
+                        "data": {
+                            "properties": {
+                                "certificateRevocationStatus": {
+                                    "properties": {
+                                        "value": {
+                                            "enum": [
+                                                "none"
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            "required": [
+                                "certificateRevocationStatus"
+                            ]
+                        }
+                    }
+                },
+                "then": {
+                    "properties": {
+                        "data": {
+                            "not": {
+                                "required": [
+                                    "unknownStatus"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "if": {
+                    "properties": {
+                        "data": {
+                            "properties": {
+                                "caCertBundle": {
+                                    "properties": {
+                                        "default": {
+                                            "properties": {
+                                                "value": {
+                                                    "const": true
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "required": [
+                                "certificateRevocationStatus"
+                            ]
+                        }
+                    }
+                },
+                "then": {
+                    "properties": {
+                        "data": {
+                            "properties": {
+                                "caCertBundle": {
+                                    "not": {
+                                        "required": [
+                                            "fileName",
+                                            "bundleString"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "if": {
+                    "properties": {
+                        "data": {
+                            "properties": {
+                                "caCertBundle": {
+                                    "properties": {
+                                        "default": {
+                                            "properties": {
+                                                "value": {
+                                                    "const": false
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "required": [
+                                "certificateRevocationStatus"
+                            ]
+                        }
+                    }
+                },
+                "then": {
+                    "properties": {
+                        "data": {
+                            "properties": {
+                                "caCertBundle": {
+                                    "required": [
+                                        "default",
+                                        "fileName",
+                                        "bundleString"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ],
+        "additionalProperties": false
+    }
+}

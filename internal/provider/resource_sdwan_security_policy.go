@@ -26,7 +26,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
-	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -105,7 +105,7 @@ func (r *SecurityPolicyResource) Schema(ctx context.Context, req resource.Schema
 				},
 				Default: stringdefault.StaticString("custom"),
 			},
-			"definitions": schema.ListNestedAttribute{
+			"definitions": schema.SetNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of policy definitions").String,
 				Required:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -143,8 +143,8 @@ func (r *SecurityPolicyResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 				},
-				Validators: []validator.List{
-					listvalidator.SizeAtLeast(1),
+				Validators: []validator.Set{
+					setvalidator.SizeAtLeast(1),
 				},
 			},
 			"direct_internet_applications": schema.StringAttribute{
