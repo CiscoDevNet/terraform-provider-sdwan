@@ -28,7 +28,7 @@ data "sdwan_security_policy" "example" {
 ### Read-Only
 
 - `audit_trail` (String) Audit trail
-- `definitions` (Attributes List) List of policy definitions (see [below for nested schema](#nestedatt--definitions))
+- `definitions` (Attributes Set) List of policy definitions (see [below for nested schema](#nestedatt--definitions))
 - `description` (String) The description of the security policy
 - `direct_internet_applications` (String) Bypass firewall policy and allow all Internet traffic to/from VPN 0
 - `failure_mode` (String) Failure mode
