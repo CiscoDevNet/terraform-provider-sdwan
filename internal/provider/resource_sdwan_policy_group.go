@@ -194,6 +194,12 @@ func (r *PolicyGroupResource) Create(ctx context.Context, req resource.CreateReq
 		}
 	}
 
+	if len(plan.Devices) > 0 {
+		// Need to get existing variables so SD-WAN Manager refreshes database correctly
+		path := fmt.Sprintf("/v1/policy-group/%v/device/variables/", plan.Id.ValueString())
+		r.client.Get(path)
+	}
+
 	// Create policy group device variables
 	if len(plan.Devices) > 0 && plan.hasPolicyGroupDeviceVariables(ctx) {
 		body = plan.toBodyPolicyGroupDeviceVariables(ctx)
@@ -424,6 +430,12 @@ func (r *PolicyGroupResource) Update(ctx context.Context, req resource.UpdateReq
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete policy group devices (DELETE), got error: %s, %s", err, res.String()))
 			return
 		}
+	}
+
+	if len(plan.Devices) > 0 {
+		// Need to get existing variables so SD-WAN Manager refreshes database correctly
+		path := fmt.Sprintf("/v1/policy-group/%v/device/variables/", plan.Id.ValueString())
+		r.client.Get(path)
 	}
 
 	// Update policy group device variables
