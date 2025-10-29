@@ -84,7 +84,7 @@ attributes:
         type: String
         value: zoneBasedFW
       - model_name: sequenceIpType
-        tf_name: rule_type
+        tf_name: ip_type
         type: String
         description: Rule Type
         enum_values: ["ipv4", "ipv6"]

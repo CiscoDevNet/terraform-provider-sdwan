@@ -114,7 +114,7 @@ func (d *ZoneBasedFirewallPolicyDefinitionDataSource) Schema(ctx context.Context
 							MarkdownDescription: "Base action",
 							Computed:            true,
 						},
-						"rule_type": schema.StringAttribute{
+						"ip_type": schema.StringAttribute{
 							MarkdownDescription: "Rule Type",
 							Computed:            true,
 						},

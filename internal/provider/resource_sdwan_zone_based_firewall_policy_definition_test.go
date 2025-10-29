@@ -37,7 +37,7 @@ func TestAccSdwanZoneBasedFirewallPolicyDefinition(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_firewall_policy_definition.test", "rules.0.rule_order", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_firewall_policy_definition.test", "rules.0.rule_name", "RULE_1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_firewall_policy_definition.test", "rules.0.base_action", "inspect"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_firewall_policy_definition.test", "rules.0.rule_type", "ipv4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_firewall_policy_definition.test", "rules.0.ip_type", "ipv4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_firewall_policy_definition.test", "rules.0.match_entries.0.type", "sourceGeoLocationList"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_firewall_policy_definition.test", "rules.0.action_entries.0.type", "log"))
 	resource.Test(t, resource.TestCase{
@@ -94,7 +94,7 @@ func testAccSdwanZoneBasedFirewallPolicyDefinitionConfig_all() string {
 	config += `	  rule_order = 1` + "\n"
 	config += `	  rule_name = "RULE_1"` + "\n"
 	config += `	  base_action = "inspect"` + "\n"
-	config += `	  rule_type = "ipv4"` + "\n"
+	config += `	  ip_type = "ipv4"` + "\n"
 	config += `	  match_entries = [{` + "\n"
 	config += `		type = "sourceGeoLocationList"` + "\n"
 	config += `		policy_id = sdwan_geo_location_list_policy_object.test.id` + "\n"

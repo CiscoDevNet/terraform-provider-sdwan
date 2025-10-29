@@ -14,7 +14,7 @@ resource "sdwan_zone_based_firewall_policy_definition" "example" {
       rule_order  = 1
       rule_name   = "RULE_1"
       base_action = "inspect"
-      rule_type   = "ipv4"
+      ip_type     = "ipv4"
       match_entries = [
         {
           type      = "sourceGeoLocationList"
