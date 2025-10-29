@@ -258,6 +258,7 @@ type YamlConfigAttribute struct {
 	DefaultValuePresent     bool                           `yaml:"default_value_present"`
 	DefaultValueEmptyString bool                           `yaml:"default_value_empty_string"`
 	Value                   string                         `yaml:"value"`
+	ValueType               string                         `yaml:"value_type"`
 	TestValue               string                         `yaml:"test_value"`
 	SecondaryTestValue      string                         `yaml:"secondary_test_value"`
 	MinimumTestValue        string                         `yaml:"minimum_test_value"`
@@ -829,7 +830,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		attr.ConditionalAttribute.Name = SnakeCase(attr.ConditionalAttribute.Name)
 	}
 
-	if r.Get("type").String() == "object" || !r.Get("type").Exists() {
+	if attr.Value == "" && (r.Get("type").String() == "object" || !r.Get("type").Exists()) {
 		noGlobal := false
 
 		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")

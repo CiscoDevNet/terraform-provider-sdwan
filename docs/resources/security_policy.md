@@ -39,7 +39,7 @@ resource "sdwan_security_policy" "example" {
 
 ### Required
 
-- `definitions` (Attributes List) List of policy definitions (see [below for nested schema](#nestedatt--definitions))
+- `definitions` (Attributes Set) List of policy definitions (see [below for nested schema](#nestedatt--definitions))
 - `description` (String) The description of the security policy
 - `name` (String) The name of the security policy
 

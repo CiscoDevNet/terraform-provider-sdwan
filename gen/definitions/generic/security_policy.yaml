@@ -50,7 +50,7 @@ attributes:
   - model_name: assembly
     data_path: [policyDefinition]
     tf_name: definitions
-    type: List
+    type: Set
     mandatory: true
     description: List of policy definitions
     min_list: 1
