@@ -29,6 +29,7 @@ resource "sdwan_zone_based_firewall_policy_definition" "example" {
       rule_order  = 1
       rule_name   = "RULE_1"
       base_action = "inspect"
+      ip_type     = "ipv4"
       match_entries = [
         {
           type      = "sourceGeoLocationList"
@@ -80,6 +81,8 @@ Required:
 Optional:
 
 - `action_entries` (Attributes Set) List of actions entries (see [below for nested schema](#nestedatt--rules--action_entries))
+- `ip_type` (String) Rule Type
+  - Choices: `ipv4`, `ipv6`
 - `match_entries` (Attributes Set) List of match entries (see [below for nested schema](#nestedatt--rules--match_entries))
 
 <a id="nestedatt--rules--action_entries"></a>

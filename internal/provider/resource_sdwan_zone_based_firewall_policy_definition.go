@@ -137,6 +137,13 @@ func (r *ZoneBasedFirewallPolicyDefinitionResource) Schema(ctx context.Context, 
 								stringvalidator.OneOf("pass", "drop", "inspect"),
 							},
 						},
+						"ip_type": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rule Type").AddStringEnumDescription("ipv4", "ipv6").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("ipv4", "ipv6"),
+							},
+						},
 						"match_entries": schema.SetNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of match entries").String,
 							Optional:            true,
