@@ -83,6 +83,12 @@ attributes:
       - model_name: sequenceType
         type: String
         value: zoneBasedFW
+      - model_name: sequenceIpType
+        tf_name: ip_type
+        type: String
+        description: Rule Type
+        enum_values: ["ipv4", "ipv6"]
+        example: ipv4
       - model_name: entries
         tf_name: match_entries
         data_path: [match]
