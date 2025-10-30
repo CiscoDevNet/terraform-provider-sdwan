@@ -1,4 +1,5 @@
 ---
+# Manual resource - Models fromBody is manually configured to support default_action attribute.
 name: Application Aware Routing Policy Definition
 rest_endpoint: /template/policy/definition/approute/
 has_version: true
@@ -352,30 +353,32 @@ attributes:
                 type: String
                 description: preferred color (Single value or multiple values separated by spaces)
                 example: bronze
-  - model_name: defaultAction
-    tf_name: default_action
-    type: List
-    max_list: 1
-    description: Default action when no sequence matches (optional, omit for no default action)
-    attributes:
-      - model_name: type
-        tf_name: type
-        type: String
-        value: slaClass
-        description: Type of default action
-        example: slaClass
-      - model_name: ref
-        tf_name: sla_class_list_id
-        type: String
-        mandatory: true
-        description: SLA class list ID
-        example: ef743b4c-ca10-4cac-8f11-8ce902a47f57
-        test_value: sdwan_sla_class_policy_object.sla_test.id
-      - tf_name: sla_class_list_version
-        tf_only: true
-        type: Version 
-        description: SLA class list version
-        exclude_test: true
+  - tf_name: default_action
+    type: String
+    tf_only: true
+    description: Type of default action
+    enum_values: ["none", "sla_class_list"]
+  - model_name: type
+    data_path: [defaultAction]
+    type: String
+    value: slaClass
+    conditional_attribute:
+      name: default_action
+      value: sla_class_list
+  - model_name: ref
+    tf_name: default_action_sla_class_list_id
+    data_path: [defaultAction]
+    type: String
+    description: SLA class list ID
+    exclude_example: true
+    exclude_test: true
+    conditional_attribute:
+      name: default_action
+      value: sla_class_list
+  - tf_name: default_action_sla_class_list_version
+    tf_only: true
+    type: Version 
+    description: SLA class list version
 
 test_prerequisites: |
   resource "sdwan_application_list_policy_object" "test" {

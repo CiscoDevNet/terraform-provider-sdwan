@@ -20,9 +20,4 @@ resource "sdwan_application_aware_routing_policy_definition" "example" {
       ]
     }
   ]
-  default_action = [
-    {
-      sla_class_list_id = "ef743b4c-ca10-4cac-8f11-8ce902a47f57"
-    }
-  ]
 }

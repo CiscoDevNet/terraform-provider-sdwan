@@ -90,9 +90,6 @@ func testAccSdwanApplicationAwareRoutingPolicyDefinitionConfig_all() string {
 	config += `		backup_sla_preferred_color = "bronze"` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
-	config += `	default_action = [{` + "\n"
-	config += `	  sla_class_list_id = sdwan_sla_class_policy_object.sla_test.id` + "\n"
-	config += `	}]` + "\n"
 	config += `}` + "\n"
 	return config
 }

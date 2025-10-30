@@ -35,11 +35,6 @@ resource "sdwan_application_aware_routing_policy_definition" "example" {
       ]
     }
   ]
-  default_action = [
-    {
-      sla_class_list_id = "ef743b4c-ca10-4cac-8f11-8ce902a47f57"
-    }
-  ]
 }
 ```
 
@@ -54,7 +49,10 @@ resource "sdwan_application_aware_routing_policy_definition" "example" {
 
 ### Optional
 
-- `default_action` (Attributes List) Default action when no sequence matches (optional, omit for no default action) (see [below for nested schema](#nestedatt--default_action))
+- `default_action` (String) Type of default action
+  - Choices: `none`, `sla_class_list`
+- `default_action_sla_class_list_id` (String) SLA class list ID, Attribute conditional on `default_action` being equal to `sla_class_list`
+- `default_action_sla_class_list_version` (Number) SLA class list version
 
 ### Read-Only
 
@@ -144,19 +142,6 @@ Optional:
 - `source_port` (String) Source port, 0-65535 (Single value, range or multiple values separated by spaces), Attribute conditional on `type` being equal to `sourcePort`
 - `traffic_to` (String) Traffic to, Attribute conditional on `type` being equal to `trafficTo`
   - Choices: `access`, `core`, `service`
-
-
-
-<a id="nestedatt--default_action"></a>
-### Nested Schema for `default_action`
-
-Required:
-
-- `sla_class_list_id` (String) SLA class list ID
-
-Optional:
-
-- `sla_class_list_version` (Number) SLA class list version
 
 ## Import
 

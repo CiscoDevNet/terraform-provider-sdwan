@@ -15,10 +15,6 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-// MANUAL IMPLEMENTATIONS:
-// - toBody(): Custom handling for defaultAction - serializes as single object (not array) per API requirements
-// - fromBody(): Custom handling for defaultAction - deserializes from single object to list[1] for Terraform schema
-
 package provider
 
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
@@ -35,13 +31,15 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type ApplicationAwareRoutingPolicyDefinition struct {
-	Id            types.String                                           `tfsdk:"id"`
-	Version       types.Int64                                            `tfsdk:"version"`
-	Type          types.String                                           `tfsdk:"type"`
-	Name          types.String                                           `tfsdk:"name"`
-	Description   types.String                                           `tfsdk:"description"`
-	Sequences     []ApplicationAwareRoutingPolicyDefinitionSequences     `tfsdk:"sequences"`
-	DefaultAction []ApplicationAwareRoutingPolicyDefinitionDefaultAction `tfsdk:"default_action"`
+	Id                               types.String                                       `tfsdk:"id"`
+	Version                          types.Int64                                        `tfsdk:"version"`
+	Type                             types.String                                       `tfsdk:"type"`
+	Name                             types.String                                       `tfsdk:"name"`
+	Description                      types.String                                       `tfsdk:"description"`
+	Sequences                        []ApplicationAwareRoutingPolicyDefinitionSequences `tfsdk:"sequences"`
+	DefaultAction                    types.String                                       `tfsdk:"default_action"`
+	DefaultActionSlaClassListId      types.String                                       `tfsdk:"default_action_sla_class_list_id"`
+	DefaultActionSlaClassListVersion types.Int64                                        `tfsdk:"default_action_sla_class_list_version"`
 }
 
 type ApplicationAwareRoutingPolicyDefinitionSequences struct {
@@ -50,11 +48,6 @@ type ApplicationAwareRoutingPolicyDefinitionSequences struct {
 	IpType        types.String                                                    `tfsdk:"ip_type"`
 	MatchEntries  []ApplicationAwareRoutingPolicyDefinitionSequencesMatchEntries  `tfsdk:"match_entries"`
 	ActionEntries []ApplicationAwareRoutingPolicyDefinitionSequencesActionEntries `tfsdk:"action_entries"`
-}
-
-type ApplicationAwareRoutingPolicyDefinitionDefaultAction struct {
-	SlaClassListId      types.String `tfsdk:"sla_class_list_id"`
-	SlaClassListVersion types.Int64  `tfsdk:"sla_class_list_version"`
 }
 
 type ApplicationAwareRoutingPolicyDefinitionSequencesMatchEntries struct {
@@ -106,7 +99,7 @@ func (data ApplicationAwareRoutingPolicyDefinition) getPath() string {
 
 // End of section. //template:end getPath
 
-// Manual implementation: toBody with custom defaultAction handling
+// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {
@@ -237,22 +230,17 @@ func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) 
 			body, _ = sjson.SetRaw(body, "sequences.-1", itemBody)
 		}
 	}
-	// Only include defaultAction if configured (serialize as single object, not array)
-	if len(data.DefaultAction) > 0 {
-		item := data.DefaultAction[0]
-		itemBody := ""
-		if true {
-			itemBody, _ = sjson.Set(itemBody, "type", "slaClass")
-		}
-		if !item.SlaClassListId.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ref", item.SlaClassListId.ValueString())
-		}
-		body, _ = sjson.SetRaw(body, "defaultAction", itemBody)
+	if true && data.DefaultAction.ValueString() == "sla_class_list" {
+		body, _ = sjson.Set(body, "defaultAction.type", "slaClass")
+	}
+	if !data.DefaultActionSlaClassListId.IsNull() && data.DefaultAction.ValueString() == "sla_class_list" {
+		body, _ = sjson.Set(body, "defaultAction.ref", data.DefaultActionSlaClassListId.ValueString())
 	}
 	return body
 }
 
-// Manual implementation: fromBody with custom defaultAction handling
+// End of section. //template:end toBody
+
 func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	state := *data
 	if value := res.Get("name"); value.Exists() {
@@ -457,20 +445,16 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 			data.Sequences = []ApplicationAwareRoutingPolicyDefinitionSequences{}
 		}
 	}
-	// Read defaultAction as single object (not array)
-	if value := res.Get("defaultAction"); value.Exists() && value.IsObject() {
-		data.DefaultAction = make([]ApplicationAwareRoutingPolicyDefinitionDefaultAction, 0)
-		item := ApplicationAwareRoutingPolicyDefinitionDefaultAction{}
-		if cValue := value.Get("ref"); cValue.Exists() {
-			item.SlaClassListId = types.StringValue(cValue.String())
+	if value := res.Get("defaultAction"); value.Exists() {
+		data.DefaultAction = types.StringValue("sla_class_list")
+		if refValue := value.Get("ref"); refValue.Exists() {
+			data.DefaultActionSlaClassListId = types.StringValue(refValue.String())
 		} else {
-			item.SlaClassListId = types.StringNull()
+			data.DefaultActionSlaClassListId = types.StringNull()
 		}
-		data.DefaultAction = append(data.DefaultAction, item)
 	} else {
-		if len(data.DefaultAction) > 0 {
-			data.DefaultAction = []ApplicationAwareRoutingPolicyDefinitionDefaultAction{}
-		}
+		data.DefaultAction = types.StringValue("none")
+		data.DefaultActionSlaClassListId = types.StringNull()
 	}
 	data.updateVersions(ctx, &state)
 }
@@ -592,14 +576,8 @@ func (data *ApplicationAwareRoutingPolicyDefinition) hasChanges(ctx context.Cont
 			}
 		}
 	}
-	if len(data.DefaultAction) != len(state.DefaultAction) {
+	if !data.DefaultActionSlaClassListId.Equal(state.DefaultActionSlaClassListId) {
 		hasChanges = true
-	} else {
-		for i := range data.DefaultAction {
-			if !data.DefaultAction[i].SlaClassListId.Equal(state.DefaultAction[i].SlaClassListId) {
-				hasChanges = true
-			}
-		}
 	}
 	return hasChanges
 }
@@ -689,22 +667,7 @@ func (data *ApplicationAwareRoutingPolicyDefinition) updateVersions(ctx context.
 			}
 		}
 	}
-	for i := range data.DefaultAction {
-		dataKeys := [...]string{}
-		stateIndex := -1
-		for j := range state.DefaultAction {
-			stateKeys := [...]string{}
-			if dataKeys == stateKeys {
-				stateIndex = j
-				break
-			}
-		}
-		if stateIndex > -1 {
-			data.DefaultAction[i].SlaClassListVersion = state.DefaultAction[stateIndex].SlaClassListVersion
-		} else {
-			data.DefaultAction[i].SlaClassListVersion = types.Int64Null()
-		}
-	}
+	data.DefaultActionSlaClassListVersion = state.DefaultActionSlaClassListVersion
 }
 
 // End of section. //template:end updateVersions
@@ -739,10 +702,8 @@ func (data *ApplicationAwareRoutingPolicyDefinition) processImport(ctx context.C
 			}
 		}
 	}
-	for i := range data.DefaultAction {
-		if data.DefaultAction[i].SlaClassListId != types.StringNull() {
-			data.DefaultAction[i].SlaClassListVersion = types.Int64Value(0)
-		}
+	if data.DefaultActionSlaClassListId != types.StringNull() {
+		data.DefaultActionSlaClassListVersion = types.Int64Value(0)
 	}
 }
 
