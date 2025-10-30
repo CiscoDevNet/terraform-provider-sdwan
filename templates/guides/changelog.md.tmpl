@@ -17,6 +17,8 @@ description: |-
 - Add `sdwan_policy_object_unified_tls_ssl_profile` resource and data source
 - Add `sdwan_policy_object_unified_tls_ssl_decryption` resource and data source
 - Add `sdwan_policy_object_unified_advanced_inspection_profile` resource and data source
+- Fix problem where `resource_sdwan_policy_group` deploy might fail if all variables are removed from payload
+- Add `ip_type` support to `sdwan_zone_based_firewall_policy_definition` resource and data source
 - Add `region_id`, `region_list_id`, and `role` to `sdwan_custom_control_topology_policy_definition` resource and data source
 
 ## 0.8.0
