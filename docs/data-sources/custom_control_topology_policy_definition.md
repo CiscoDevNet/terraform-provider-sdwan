@@ -104,6 +104,9 @@ Read-Only:
 - `preference` (Number) Preference
 - `prefix_list_id` (String) Prefix list ID
 - `prefix_list_version` (Number) Prefix list version
+- `region_id` (Number) Region ID
+- `region_list_id` (String) Region list ID
+- `role` (String) Role
 - `site_id` (Number) Site ID
 - `site_list_id` (String) Site list ID
 - `site_list_version` (Number) Site list version

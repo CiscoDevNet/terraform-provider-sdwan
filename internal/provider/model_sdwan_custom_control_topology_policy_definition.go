@@ -79,6 +79,9 @@ type CustomControlTopologyPolicyDefinitionSequencesMatchEntries struct {
 	Carrier                      types.String `tfsdk:"carrier"`
 	DomainId                     types.Int64  `tfsdk:"domain_id"`
 	GroupId                      types.Int64  `tfsdk:"group_id"`
+	RegionId                     types.Int64  `tfsdk:"region_id"`
+	Role                         types.String `tfsdk:"role"`
+	RegionListId                 types.String `tfsdk:"region_list_id"`
 }
 type CustomControlTopologyPolicyDefinitionSequencesActionEntries struct {
 	Type                   types.String                                                               `tfsdk:"type"`
@@ -217,6 +220,15 @@ func (data CustomControlTopologyPolicyDefinition) toBody(ctx context.Context) st
 					}
 					if !childItem.GroupId.IsNull() && childItem.Type.ValueString() == "groupId" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.GroupId.ValueInt64()))
+					}
+					if !childItem.RegionId.IsNull() && childItem.Type.ValueString() == "regionId" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.RegionId.ValueInt64()))
+					}
+					if !childItem.Role.IsNull() && childItem.Type.ValueString() == "regionId" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Role.ValueString())
+					}
+					if !childItem.RegionListId.IsNull() && childItem.Type.ValueString() == "regionList" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.RegionListId.ValueString())
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "match.entries.-1", itemChildBody)
 				}
@@ -460,6 +472,21 @@ func (data *CustomControlTopologyPolicyDefinition) fromBody(ctx context.Context,
 					} else {
 						cItem.GroupId = types.Int64Null()
 					}
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "regionId" {
+						cItem.RegionId = types.Int64Value(ccValue.Int())
+					} else {
+						cItem.RegionId = types.Int64Null()
+					}
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "regionId" {
+						cItem.Role = types.StringValue(ccValue.String())
+					} else {
+						cItem.Role = types.StringNull()
+					}
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "regionList" {
+						cItem.RegionListId = types.StringValue(ccValue.String())
+					} else {
+						cItem.RegionListId = types.StringNull()
+					}
 					item.MatchEntries = append(item.MatchEntries, cItem)
 					return true
 				})
@@ -695,6 +722,15 @@ func (data *CustomControlTopologyPolicyDefinition) hasChanges(ctx context.Contex
 						hasChanges = true
 					}
 					if !data.Sequences[i].MatchEntries[ii].GroupId.Equal(state.Sequences[i].MatchEntries[ii].GroupId) {
+						hasChanges = true
+					}
+					if !data.Sequences[i].MatchEntries[ii].RegionId.Equal(state.Sequences[i].MatchEntries[ii].RegionId) {
+						hasChanges = true
+					}
+					if !data.Sequences[i].MatchEntries[ii].Role.Equal(state.Sequences[i].MatchEntries[ii].Role) {
+						hasChanges = true
+					}
+					if !data.Sequences[i].MatchEntries[ii].RegionListId.Equal(state.Sequences[i].MatchEntries[ii].RegionListId) {
 						hasChanges = true
 					}
 				}
