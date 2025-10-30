@@ -224,6 +224,18 @@ func (d *CustomControlTopologyPolicyDefinitionDataSource) Schema(ctx context.Con
 										MarkdownDescription: "Group ID",
 										Computed:            true,
 									},
+									"region_id": schema.Int64Attribute{
+										MarkdownDescription: "Region ID",
+										Computed:            true,
+									},
+									"role": schema.StringAttribute{
+										MarkdownDescription: "Role",
+										Computed:            true,
+									},
+									"region_list_id": schema.StringAttribute{
+										MarkdownDescription: "Region list ID",
+										Computed:            true,
+									},
 								},
 							},
 						},

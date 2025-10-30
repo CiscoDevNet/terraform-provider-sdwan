@@ -142,7 +142,7 @@ Optional:
 Required:
 
 - `type` (String) Type of match entry
-  - Choices: `colorList`, `community`, `expandedCommunity`, `ompTag`, `origin`, `originator`, `preference`, `siteList`, `pathType`, `tlocList`, `vpnList`, `prefixList`, `vpn`, `tloc`, `siteId`, `carrier`, `domainId`, `groupId`
+  - Choices: `colorList`, `community`, `expandedCommunity`, `ompTag`, `origin`, `originator`, `preference`, `siteList`, `pathType`, `tlocList`, `vpnList`, `prefixList`, `vpn`, `tloc`, `siteId`, `carrier`, `domainId`, `groupId`, `regionId`, `role`, `regionList`
 
 Optional:
 
@@ -169,6 +169,11 @@ Optional:
   - Range: `0`-`4294967295`
 - `prefix_list_id` (String) Prefix list ID, Attribute conditional on `type` being equal to `prefixList`
 - `prefix_list_version` (Number) Prefix list version
+- `region_id` (Number) Region ID, Attribute conditional on `type` being equal to `regionId`
+  - Range: `0`-`63`
+- `region_list_id` (String) Region list ID, Attribute conditional on `type` being equal to `regionList`
+- `role` (String) Role, Attribute conditional on `type` being equal to `regionId`
+  - Choices: `border-router`, `edge-router`
 - `site_id` (Number) Site ID, Attribute conditional on `type` being equal to `siteId`
   - Range: `0`-`4294967295`
 - `site_list_id` (String) Site list ID, Attribute conditional on `type` being equal to `siteList`
