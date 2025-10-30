@@ -17,12 +17,6 @@
 
 package provider
 
-// NOTE: This file contains manual modifications for queue 0 "" exception class map handling
-// The following sections are NOT generated:
-// - toBody
-// - fromBody
-// - processImport
-
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"

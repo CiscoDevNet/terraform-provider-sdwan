@@ -1,4 +1,8 @@
 ---
+# NOTE: Manual resource: contains  modifications for queue 0 "" exception class map handling
+# - toBody
+# - fromBody
+# - processImport
 name: QoS Map Policy Definition
 rest_endpoint: /template/policy/definition/qosmap/
 has_version: true
