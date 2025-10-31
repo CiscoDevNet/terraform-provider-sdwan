@@ -1,0 +1,12 @@
+resource "sdwan_policy_object_unified_advanced_malware_protection" "example" {
+  name                          = "Example"
+  description                   = "My Example"
+  feature_profile_id            = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  amp_cloud_region              = "nam"
+  amp_cloud_region_est_server   = "nam"
+  alert_log_level               = "critical"
+  file_analysis                 = true
+  file_analysis_cloud_region    = "nam"
+  file_analysis_file_types      = ["pdf"]
+  file_analysis_alert_log_level = "critical"
+}

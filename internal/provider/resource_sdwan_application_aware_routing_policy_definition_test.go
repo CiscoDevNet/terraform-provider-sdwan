@@ -61,6 +61,12 @@ resource "sdwan_application_list_policy_object" "test" {
     }
   ]
 }
+resource "sdwan_sla_class_policy_object" "sla_test" {
+  name                          = "sla_test"
+  jitter                        = 100
+  latency                       = 10
+  loss                          = 1
+}
 
 `
 

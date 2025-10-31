@@ -54,7 +54,6 @@ func (data SLAClassPolicyObject) getPath() string {
 
 // End of section. //template:end getPath
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data SLAClassPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {
@@ -80,19 +79,22 @@ func (data SLAClassPolicyObject) toBody(ctx context.Context) string {
 	}
 	if !data.FallbackBestTunnelJitter.IsNull() {
 		body, _ = sjson.Set(body, "entries.0.fallbackBestTunnel.jitterVariance", fmt.Sprint(data.FallbackBestTunnelJitter.ValueInt64()))
+	} else if !data.FallbackBestTunnelCriteria.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.fallbackBestTunnel.jitterVariance", nil)
 	}
 	if !data.FallbackBestTunnelLatency.IsNull() {
 		body, _ = sjson.Set(body, "entries.0.fallbackBestTunnel.latencyVariance", fmt.Sprint(data.FallbackBestTunnelLatency.ValueInt64()))
+	} else if !data.FallbackBestTunnelCriteria.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.fallbackBestTunnel.latencyVariance", nil)
 	}
 	if !data.FallbackBestTunnelLoss.IsNull() {
 		body, _ = sjson.Set(body, "entries.0.fallbackBestTunnel.lossVariance", fmt.Sprint(data.FallbackBestTunnelLoss.ValueInt64()))
+	} else if !data.FallbackBestTunnelCriteria.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.fallbackBestTunnel.lossVariance", nil)
 	}
 	return body
 }
 
-// End of section. //template:end toBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *SLAClassPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
 	state := *data
 	if value := res.Get("name"); value.Exists() {
@@ -120,30 +122,28 @@ func (data *SLAClassPolicyObject) fromBody(ctx context.Context, res gjson.Result
 	} else {
 		data.Loss = types.Int64Null()
 	}
-	if value := res.Get("entries.0.fallbackBestTunnel.criteria"); value.Exists() {
+	if value := res.Get("entries.0.fallbackBestTunnel.criteria"); value.Exists() && value.String() != "" {
 		data.FallbackBestTunnelCriteria = types.StringValue(value.String())
 	} else {
 		data.FallbackBestTunnelCriteria = types.StringNull()
 	}
-	if value := res.Get("entries.0.fallbackBestTunnel.jitterVariance"); value.Exists() {
+	if value := res.Get("entries.0.fallbackBestTunnel.jitterVariance"); value.Exists() && value.String() != "" {
 		data.FallbackBestTunnelJitter = types.Int64Value(value.Int())
 	} else {
 		data.FallbackBestTunnelJitter = types.Int64Null()
 	}
-	if value := res.Get("entries.0.fallbackBestTunnel.latencyVariance"); value.Exists() {
+	if value := res.Get("entries.0.fallbackBestTunnel.latencyVariance"); value.Exists() && value.String() != "" {
 		data.FallbackBestTunnelLatency = types.Int64Value(value.Int())
 	} else {
 		data.FallbackBestTunnelLatency = types.Int64Null()
 	}
-	if value := res.Get("entries.0.fallbackBestTunnel.lossVariance"); value.Exists() {
+	if value := res.Get("entries.0.fallbackBestTunnel.lossVariance"); value.Exists() && value.String() != "" {
 		data.FallbackBestTunnelLoss = types.Int64Value(value.Int())
 	} else {
 		data.FallbackBestTunnelLoss = types.Int64Null()
 	}
 	data.updateVersions(ctx, &state)
 }
-
-// End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *SLAClassPolicyObject) hasChanges(ctx context.Context, state *SLAClassPolicyObject) bool {
