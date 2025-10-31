@@ -59,7 +59,6 @@ func (data QoSMapPolicyDefinition) getPath() string {
 
 // End of section. //template:end getPath
 
-// Manual implementation: handles empty classMapRef for queue 0
 func (data QoSMapPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {
@@ -104,7 +103,6 @@ func (data QoSMapPolicyDefinition) toBody(ctx context.Context) string {
 	return body
 }
 
-// Manual implementation: converts empty classMapRef to null
 func (data *QoSMapPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	state := *data
 	if value := res.Get("name"); value.Exists() {
