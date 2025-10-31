@@ -445,13 +445,9 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 			data.Sequences = []ApplicationAwareRoutingPolicyDefinitionSequences{}
 		}
 	}
-	if value := res.Get("defaultAction"); value.Exists() {
+	if value := res.Get("defaultAction.ref"); value.Exists() {
 		data.DefaultAction = types.StringValue("sla_class_list")
-		if refValue := value.Get("ref"); refValue.Exists() {
-			data.DefaultActionSlaClassListId = types.StringValue(refValue.String())
-		} else {
-			data.DefaultActionSlaClassListId = types.StringNull()
-		}
+		data.DefaultActionSlaClassListId = types.StringValue(value.String())
 	} else {
 		data.DefaultAction = types.StringValue("none")
 		data.DefaultActionSlaClassListId = types.StringNull()
