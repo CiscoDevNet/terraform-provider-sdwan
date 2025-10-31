@@ -93,7 +93,7 @@ func (r *QoSMapPolicyDefinitionResource) Schema(ctx context.Context, req resourc
 				MarkdownDescription: helpers.NewAttributeDescription("The description of the policy definition").String,
 				Required:            true,
 			},
-			"qos_schedulers": schema.ListNestedAttribute{
+			"qos_schedulers": schema.SetNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of QoS schedulers").String,
 				Required:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -106,8 +106,8 @@ func (r *QoSMapPolicyDefinitionResource) Schema(ctx context.Context, req resourc
 							},
 						},
 						"class_map_id": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Class map ID").String,
-							Required:            true,
+							MarkdownDescription: helpers.NewAttributeDescription("Class map ID (can be empty for queue 0 when left as Control)").String,
+							Optional:            true,
 						},
 						"class_map_version": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Class map version").String,

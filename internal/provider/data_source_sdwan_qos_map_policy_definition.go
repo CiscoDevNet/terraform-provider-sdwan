@@ -78,7 +78,7 @@ func (d *QoSMapPolicyDefinitionDataSource) Schema(ctx context.Context, req datas
 				MarkdownDescription: "The description of the policy definition",
 				Computed:            true,
 			},
-			"qos_schedulers": schema.ListNestedAttribute{
+			"qos_schedulers": schema.SetNestedAttribute{
 				MarkdownDescription: "List of QoS schedulers",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -88,7 +88,7 @@ func (d *QoSMapPolicyDefinitionDataSource) Schema(ctx context.Context, req datas
 							Computed:            true,
 						},
 						"class_map_id": schema.StringAttribute{
-							MarkdownDescription: "Class map ID",
+							MarkdownDescription: "Class map ID (can be empty for queue 0 when left as Control)",
 							Computed:            true,
 						},
 						"class_map_version": schema.Int64Attribute{

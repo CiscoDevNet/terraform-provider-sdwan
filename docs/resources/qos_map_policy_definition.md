@@ -37,7 +37,7 @@ resource "sdwan_qos_map_policy_definition" "example" {
 
 - `description` (String) The description of the policy definition
 - `name` (String) The name of the policy definition
-- `qos_schedulers` (Attributes List) List of QoS schedulers (see [below for nested schema](#nestedatt--qos_schedulers))
+- `qos_schedulers` (Attributes Set) List of QoS schedulers (see [below for nested schema](#nestedatt--qos_schedulers))
 
 ### Read-Only
 
@@ -54,7 +54,6 @@ Required:
   - Range: `0`-`100`
 - `buffer_percent` (Number) Buffer percent
   - Range: `0`-`100`
-- `class_map_id` (String) Class map ID
 - `drop_type` (String) Drop type
   - Choices: `tail-drop`, `red-drop`
 - `queue` (Number) Queue number
@@ -66,6 +65,7 @@ Optional:
 
 - `burst` (Number) Burst size
   - Range: `5000`-`10000000`
+- `class_map_id` (String) Class map ID (can be empty for queue 0 when left as Control)
 - `class_map_version` (Number) Class map version
 
 ## Import

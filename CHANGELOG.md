@@ -1,4 +1,4 @@
-## 0.8.1
+## 0.8.1 (unreleased)
 
 - Adds `sdwan_policy_object_security_protocol_list` resource and data source
 - Change `definitions` attribute of `resource_sdwan_security_policy` resource to a set
@@ -12,6 +12,8 @@
 - Add `ip_type` support to `sdwan_zone_based_firewall_policy_definition` resource and data source
 - Add `region_id`, `region_list_id`, and `role` to `sdwan_custom_control_topology_policy_definition` resource and data source
 - Add `default_action` support to the `sdwan_application_aware_routing_policy_definition` resource and data source
+- Use `Set` type for `qos_schedulers` in `sdwan_qos_map_policy_definition` resource and data source
+- Add support for queue 0 in `sdwan_qos_map_policy_definition` resource which contains no class map id
 
 ## 0.8.0
 
