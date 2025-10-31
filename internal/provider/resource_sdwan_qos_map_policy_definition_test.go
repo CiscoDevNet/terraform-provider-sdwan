@@ -85,7 +85,7 @@ func testAccSdwanQoSMapPolicyDefinitionConfig_all() string {
 // End of section. //template:end testAccConfigAll
 
 // Test with queue 0 without class_map_id
-func TestAccSdwanQoSMapPolicyDefinition_Queue0(t *testing.T) {
+func TestAccSdwanQoSMapPolicyDefinitionQueue0(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_qos_map_policy_definition.test", "name", "Example_Queue0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_qos_map_policy_definition.test", "description", "Queue 0 without class map"))
