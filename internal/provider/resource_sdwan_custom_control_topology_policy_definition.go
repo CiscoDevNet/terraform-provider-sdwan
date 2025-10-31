@@ -140,10 +140,10 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("colorList", "community", "expandedCommunity", "ompTag", "origin", "originator", "preference", "siteList", "pathType", "tlocList", "vpnList", "prefixList", "vpn", "tloc", "siteId", "carrier", "domainId", "groupId").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("colorList", "community", "expandedCommunity", "ompTag", "origin", "originator", "preference", "siteList", "pathType", "tlocList", "vpnList", "prefixList", "vpn", "tloc", "siteId", "carrier", "domainId", "groupId", "regionId", "role", "regionList").String,
 										Required:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("colorList", "community", "expandedCommunity", "ompTag", "origin", "originator", "preference", "siteList", "pathType", "tlocList", "vpnList", "prefixList", "vpn", "tloc", "siteId", "carrier", "domainId", "groupId"),
+											stringvalidator.OneOf("colorList", "community", "expandedCommunity", "ompTag", "origin", "originator", "preference", "siteList", "pathType", "tlocList", "vpnList", "prefixList", "vpn", "tloc", "siteId", "carrier", "domainId", "groupId", "regionId", "role", "regionList"),
 										},
 									},
 									"color_list_id": schema.StringAttribute{
@@ -283,6 +283,24 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 										Validators: []validator.Int64{
 											int64validator.Between(0, 4294967295),
 										},
+									},
+									"region_id": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Region ID, Attribute conditional on `type` being equal to `regionId`").AddIntegerRangeDescription(0, 63).String,
+										Optional:            true,
+										Validators: []validator.Int64{
+											int64validator.Between(0, 63),
+										},
+									},
+									"role": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Role, Attribute conditional on `type` being equal to `regionId`").AddStringEnumDescription("border-router", "edge-router").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("border-router", "edge-router"),
+										},
+									},
+									"region_list_id": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Region list ID, Attribute conditional on `type` being equal to `regionList`").String,
+										Optional:            true,
 									},
 								},
 							},
