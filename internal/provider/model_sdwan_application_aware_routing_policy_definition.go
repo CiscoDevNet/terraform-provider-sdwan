@@ -31,12 +31,15 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type ApplicationAwareRoutingPolicyDefinition struct {
-	Id          types.String                                       `tfsdk:"id"`
-	Version     types.Int64                                        `tfsdk:"version"`
-	Type        types.String                                       `tfsdk:"type"`
-	Name        types.String                                       `tfsdk:"name"`
-	Description types.String                                       `tfsdk:"description"`
-	Sequences   []ApplicationAwareRoutingPolicyDefinitionSequences `tfsdk:"sequences"`
+	Id                               types.String                                       `tfsdk:"id"`
+	Version                          types.Int64                                        `tfsdk:"version"`
+	Type                             types.String                                       `tfsdk:"type"`
+	Name                             types.String                                       `tfsdk:"name"`
+	Description                      types.String                                       `tfsdk:"description"`
+	Sequences                        []ApplicationAwareRoutingPolicyDefinitionSequences `tfsdk:"sequences"`
+	DefaultAction                    types.String                                       `tfsdk:"default_action"`
+	DefaultActionSlaClassListId      types.String                                       `tfsdk:"default_action_sla_class_list_id"`
+	DefaultActionSlaClassListVersion types.Int64                                        `tfsdk:"default_action_sla_class_list_version"`
 }
 
 type ApplicationAwareRoutingPolicyDefinitionSequences struct {
@@ -227,12 +230,17 @@ func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) 
 			body, _ = sjson.SetRaw(body, "sequences.-1", itemBody)
 		}
 	}
+	if true && data.DefaultAction.ValueString() == "sla_class_list" {
+		body, _ = sjson.Set(body, "defaultAction.type", "slaClass")
+	}
+	if !data.DefaultActionSlaClassListId.IsNull() && data.DefaultAction.ValueString() == "sla_class_list" {
+		body, _ = sjson.Set(body, "defaultAction.ref", data.DefaultActionSlaClassListId.ValueString())
+	}
 	return body
 }
 
 // End of section. //template:end toBody
 
-// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	state := *data
 	if value := res.Get("name"); value.Exists() {
@@ -437,10 +445,15 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 			data.Sequences = []ApplicationAwareRoutingPolicyDefinitionSequences{}
 		}
 	}
+	if value := res.Get("defaultAction.ref"); value.Exists() {
+		data.DefaultAction = types.StringValue("sla_class_list")
+		data.DefaultActionSlaClassListId = types.StringValue(value.String())
+	} else {
+		data.DefaultAction = types.StringValue("none")
+		data.DefaultActionSlaClassListId = types.StringNull()
+	}
 	data.updateVersions(ctx, &state)
 }
-
-// End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *ApplicationAwareRoutingPolicyDefinition) hasChanges(ctx context.Context, state *ApplicationAwareRoutingPolicyDefinition) bool {
@@ -559,6 +572,9 @@ func (data *ApplicationAwareRoutingPolicyDefinition) hasChanges(ctx context.Cont
 			}
 		}
 	}
+	if !data.DefaultActionSlaClassListId.Equal(state.DefaultActionSlaClassListId) {
+		hasChanges = true
+	}
 	return hasChanges
 }
 
@@ -647,6 +663,7 @@ func (data *ApplicationAwareRoutingPolicyDefinition) updateVersions(ctx context.
 			}
 		}
 	}
+	data.DefaultActionSlaClassListVersion = state.DefaultActionSlaClassListVersion
 }
 
 // End of section. //template:end updateVersions
@@ -680,6 +697,9 @@ func (data *ApplicationAwareRoutingPolicyDefinition) processImport(ctx context.C
 				}
 			}
 		}
+	}
+	if data.DefaultActionSlaClassListId != types.StringNull() {
+		data.DefaultActionSlaClassListVersion = types.Int64Value(0)
 	}
 }
 

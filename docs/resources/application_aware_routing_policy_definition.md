@@ -47,6 +47,13 @@ resource "sdwan_application_aware_routing_policy_definition" "example" {
 - `name` (String) The name of the policy definition
 - `sequences` (Attributes List) List of sequences (see [below for nested schema](#nestedatt--sequences))
 
+### Optional
+
+- `default_action` (String) Type of default action
+  - Choices: `none`, `sla_class_list`
+- `default_action_sla_class_list_id` (String) SLA class list ID, Attribute conditional on `default_action` being equal to `sla_class_list`
+- `default_action_sla_class_list_version` (Number) SLA class list version
+
 ### Read-Only
 
 - `id` (String) The id of the object

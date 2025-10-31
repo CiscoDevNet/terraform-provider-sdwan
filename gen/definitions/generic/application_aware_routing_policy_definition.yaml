@@ -1,4 +1,5 @@
 ---
+# Manual resource - Models fromBody is manually configured to support default_action attribute.
 name: Application Aware Routing Policy Definition
 rest_endpoint: /template/policy/definition/approute/
 has_version: true
@@ -352,6 +353,32 @@ attributes:
                 type: String
                 description: preferred color (Single value or multiple values separated by spaces)
                 example: bronze
+  - tf_name: default_action
+    type: String
+    tf_only: true
+    description: Type of default action
+    enum_values: ["none", "sla_class_list"]
+  - model_name: type
+    data_path: [defaultAction]
+    type: String
+    value: slaClass
+    conditional_attribute:
+      name: default_action
+      value: sla_class_list
+  - model_name: ref
+    tf_name: default_action_sla_class_list_id
+    data_path: [defaultAction]
+    type: String
+    description: SLA class list ID
+    exclude_example: true
+    exclude_test: true
+    conditional_attribute:
+      name: default_action
+      value: sla_class_list
+  - tf_name: default_action_sla_class_list_version
+    tf_only: true
+    type: Version 
+    description: SLA class list version
 
 test_prerequisites: |
   resource "sdwan_application_list_policy_object" "test" {
@@ -361,4 +388,10 @@ test_prerequisites: |
         application = "netflix"
       }
     ]
+  }
+  resource "sdwan_sla_class_policy_object" "sla_test" {
+    name                          = "sla_test"
+    jitter                        = 100
+    latency                       = 10
+    loss                          = 1
   }

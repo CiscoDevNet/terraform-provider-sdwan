@@ -284,6 +284,21 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 					},
 				},
 			},
+			"default_action": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Type of default action").AddStringEnumDescription("none", "sla_class_list").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("none", "sla_class_list"),
+				},
+			},
+			"default_action_sla_class_list_id": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("SLA class list ID, Attribute conditional on `default_action` being equal to `sla_class_list`").String,
+				Optional:            true,
+			},
+			"default_action_sla_class_list_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("SLA class list version").String,
+				Optional:            true,
+			},
 		},
 	}
 }

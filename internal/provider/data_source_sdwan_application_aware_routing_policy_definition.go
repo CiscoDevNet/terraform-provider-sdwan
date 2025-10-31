@@ -246,6 +246,18 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Schema(ctx context.C
 					},
 				},
 			},
+			"default_action": schema.StringAttribute{
+				MarkdownDescription: "Type of default action",
+				Computed:            true,
+			},
+			"default_action_sla_class_list_id": schema.StringAttribute{
+				MarkdownDescription: "SLA class list ID",
+				Computed:            true,
+			},
+			"default_action_sla_class_list_version": schema.Int64Attribute{
+				MarkdownDescription: "SLA class list version",
+				Computed:            true,
+			},
 		},
 	}
 }
