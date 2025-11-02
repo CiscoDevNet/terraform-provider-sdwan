@@ -230,10 +230,10 @@ func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) 
 			body, _ = sjson.SetRaw(body, "sequences.-1", itemBody)
 		}
 	}
-	if true && data.DefaultAction.ValueString() == "sla_class_list" {
-		body, _ = sjson.Set(body, "defaultAction.type", "slaClass")
+	if !data.DefaultAction.IsNull() {
+		body, _ = sjson.Set(body, "defaultAction.type", data.DefaultAction.ValueString())
 	}
-	if !data.DefaultActionSlaClassListId.IsNull() && data.DefaultAction.ValueString() == "sla_class_list" {
+	if !data.DefaultActionSlaClassListId.IsNull() && data.DefaultAction.ValueString() == "slaClass" {
 		body, _ = sjson.Set(body, "defaultAction.ref", data.DefaultActionSlaClassListId.ValueString())
 	}
 	return body
@@ -446,10 +446,9 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 		}
 	}
 	if value := res.Get("defaultAction.ref"); value.Exists() {
-		data.DefaultAction = types.StringValue("sla_class_list")
+		data.DefaultAction = types.StringValue("slaClass")
 		data.DefaultActionSlaClassListId = types.StringValue(value.String())
 	} else {
-		data.DefaultAction = types.StringValue("none")
 		data.DefaultActionSlaClassListId = types.StringNull()
 	}
 	data.updateVersions(ctx, &state)
@@ -571,6 +570,9 @@ func (data *ApplicationAwareRoutingPolicyDefinition) hasChanges(ctx context.Cont
 				}
 			}
 		}
+	}
+	if !data.DefaultAction.Equal(state.DefaultAction) {
+		hasChanges = true
 	}
 	if !data.DefaultActionSlaClassListId.Equal(state.DefaultActionSlaClassListId) {
 		hasChanges = true
