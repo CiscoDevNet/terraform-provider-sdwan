@@ -50,8 +50,8 @@ resource "sdwan_application_aware_routing_policy_definition" "example" {
 ### Optional
 
 - `default_action` (String) Type of default action
-  - Choices: `none`, `sla_class_list`
-- `default_action_sla_class_list_id` (String) SLA class list ID, Attribute conditional on `default_action` being equal to `sla_class_list`
+  - Choices: `slaClass`
+- `default_action_sla_class_list_id` (String) SLA class list ID, Attribute conditional on `default_action` being equal to `slaClass`
 - `default_action_sla_class_list_version` (Number) SLA class list version
 
 ### Read-Only

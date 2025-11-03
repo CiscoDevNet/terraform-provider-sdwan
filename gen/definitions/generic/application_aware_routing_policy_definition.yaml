@@ -353,18 +353,14 @@ attributes:
                 type: String
                 description: preferred color (Single value or multiple values separated by spaces)
                 example: bronze
-  - tf_name: default_action
-    type: String
-    tf_only: true
-    description: Type of default action
-    enum_values: ["none", "sla_class_list"]
   - model_name: type
+    tf_name: default_action
     data_path: [defaultAction]
     type: String
-    value: slaClass
-    conditional_attribute:
-      name: default_action
-      value: sla_class_list
+    enum_values: [slaClass]
+    description: Type of default action
+    exclude_test: true
+    example: slaClass
   - model_name: ref
     tf_name: default_action_sla_class_list_id
     data_path: [defaultAction]
@@ -374,7 +370,7 @@ attributes:
     exclude_test: true
     conditional_attribute:
       name: default_action
-      value: sla_class_list
+      value: slaClass
   - tf_name: default_action_sla_class_list_version
     tf_only: true
     type: Version 
