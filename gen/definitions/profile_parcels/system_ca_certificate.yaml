@@ -2,7 +2,7 @@
 name: System CA Certificate
 rest_endpoint: /v1/feature-profile/sdwan/system/%v/ca-cert
 minimum_version: 20.13.0
-test_tags: [SDWAN_2015, CA_CERT]
+test_tags: [CA_CERT]
 parcel_type: feature
 doc_category: Features - System
 attributes:

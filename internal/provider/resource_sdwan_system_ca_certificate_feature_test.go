@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanSystemCACertificateProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015") == "" && os.Getenv("CA_CERT") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015 or CA_CERT")
+	if os.Getenv("CA_CERT") == "" {
+		t.Skip("skipping test, set environment variable CA_CERT")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ca_certificate_feature.test", "certificates.0.trust_point_name", "example"))
