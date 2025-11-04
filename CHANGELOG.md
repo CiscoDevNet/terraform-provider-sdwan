@@ -1,3 +1,7 @@
+## 0.8.2 (Unreleased)
+
+- Add `sdwan_system_ca_certificate_feature` resource and data source
+
 ## 0.8.1
 
 - Adds `sdwan_policy_object_security_protocol_list` resource and data source

@@ -1,0 +1,121 @@
+{
+  "request": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/system/ca-cert/common/request_schema.json",
+    "title": "Thirdparty CA Certificate Feature Schema",
+    "description": "Thirdparty CA Certificate feature schema for POST/PUT request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Set the feature name",
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "description": {
+        "description": "Set the feature description",
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "certificates": {
+            "description": "Thirdparty CA Certificate List",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "trustPointName": {
+                  "description": "Trust Point Name of Certificate",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "minLength": 1,
+                          "maxLength": 32,
+                          "type": "string",
+                          "pattern": "(^([a-zA-Z])([a-zA-Z0-9_-])+)$"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "certificateUUID": {
+                  "description": "UUID of Certificate Record in Database",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "required": ["trustPointName", "certificateUUID"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["certificates"],
+        "additionalProperties": false
+      },
+      "metadata": {
+        "supportedDeviceTypes": [
+          "asr",
+          "c1100",
+          "c8000be",
+          "csr1000v",
+          "ir8100",
+          "ir8340",
+          "isr",
+          "ISRv",
+          "ir1101"
+        ],
+        "minVManageVersion": "20.15.1"
+      },
+      "documentation": {
+        "description": "This is the documentation for POST/PUT request schema for CA Certificate Feature",
+        "examples": [
+          {
+            "data": {
+              "certificates": [
+                {
+                  "trustPointName": {
+                    "optionType": "global",
+                    "value": "trustpoint_name"
+                  }
+                }
+              ]
+            },
+            "description": "Cedge System CA Certificate Feature",
+            "name": "cEdge_CG_System_CACert_Feature"
+          }
+        ]
+      }
+    },
+    "required": ["name", "data"],
+    "not": {
+      "required": ["metadata", "documentation"]
+    },
+    "additionalProperties": false
+  }
+}
