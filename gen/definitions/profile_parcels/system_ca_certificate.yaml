@@ -1,0 +1,29 @@
+---
+name: System CA Certificate
+rest_endpoint: /v1/feature-profile/sdwan/system/%v/ca-cert
+minimum_version: 20.13.0
+test_tags: [CA_CERT]
+parcel_type: feature
+doc_category: Features - System
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_system_feature_profile.test.id
+  - model_name: certificates
+    attributes:
+    - model_name: trustPointName
+      tf_name: trust_point_name
+      example: example
+    - model_name: certificateUUID
+      tf_name: ca_certificate_id
+      example: 22a2f715-fed8-4031-b693-b5d43451a05e
+
+test_prerequisites: |
+  resource "sdwan_system_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
