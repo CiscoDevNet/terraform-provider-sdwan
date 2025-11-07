@@ -396,7 +396,7 @@ attributes:
             tf_name: role
             conditional_attribute:
               name: type
-              value: regionId
+              value: role
             type: String
             description: Role
             enum_values: [border-router, edge-router]

@@ -172,7 +172,7 @@ Optional:
 - `region_id` (Number) Region ID, Attribute conditional on `type` being equal to `regionId`
   - Range: `0`-`63`
 - `region_list_id` (String) Region list ID, Attribute conditional on `type` being equal to `regionList`
-- `role` (String) Role, Attribute conditional on `type` being equal to `regionId`
+- `role` (String) Role, Attribute conditional on `type` being equal to `role`
   - Choices: `border-router`, `edge-router`
 - `site_id` (Number) Site ID, Attribute conditional on `type` being equal to `siteId`
   - Range: `0`-`4294967295`

@@ -224,7 +224,7 @@ func (data CustomControlTopologyPolicyDefinition) toBody(ctx context.Context) st
 					if !childItem.RegionId.IsNull() && childItem.Type.ValueString() == "regionId" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.RegionId.ValueInt64()))
 					}
-					if !childItem.Role.IsNull() && childItem.Type.ValueString() == "regionId" {
+					if !childItem.Role.IsNull() && childItem.Type.ValueString() == "role" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Role.ValueString())
 					}
 					if !childItem.RegionListId.IsNull() && childItem.Type.ValueString() == "regionList" {
@@ -477,7 +477,7 @@ func (data *CustomControlTopologyPolicyDefinition) fromBody(ctx context.Context,
 					} else {
 						cItem.RegionId = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "regionId" {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "role" {
 						cItem.Role = types.StringValue(ccValue.String())
 					} else {
 						cItem.Role = types.StringNull()
