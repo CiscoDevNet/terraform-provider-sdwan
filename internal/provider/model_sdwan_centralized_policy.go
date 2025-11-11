@@ -23,6 +23,7 @@ import (
 	"fmt"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -310,13 +311,52 @@ func (data *CentralizedPolicy) processImport(ctx context.Context) {
 		}
 		for ii := range data.Definitions[i].Entries {
 			if !data.Definitions[i].Entries[ii].SiteListIds.IsNull() {
-				data.Definitions[i].Entries[ii].SiteListVersions = types.ListNull(types.StringType)
+				var elementsSiteListVersions []attr.Value
+				var countSiteListVersions int = 0
+				if !(data.Definitions[i].Entries[ii].SiteListIds.IsNull() || data.Definitions[i].Entries[ii].SiteListIds.IsUnknown()) {
+					countSiteListVersions = len(data.Definitions[i].Entries[ii].SiteListIds.Elements())
+				}
+				if countSiteListVersions > 0 {
+					elementsSiteListVersions = make([]attr.Value, countSiteListVersions)
+					for i := 0; i < countSiteListVersions; i++ {
+						elementsSiteListVersions[i] = types.StringValue("0")
+					}
+					data.Definitions[i].Entries[ii].SiteListVersions = types.ListValueMust(types.StringType, elementsSiteListVersions)
+				} else {
+					data.Definitions[i].Entries[ii].SiteListVersions = types.ListNull(types.StringType)
+				}
 			}
 			if !data.Definitions[i].Entries[ii].VpnListIds.IsNull() {
-				data.Definitions[i].Entries[ii].VpnListVersions = types.ListNull(types.StringType)
+				var elementsVpnListVersions []attr.Value
+				var countVpnListVersions int = 0
+				if !(data.Definitions[i].Entries[ii].VpnListIds.IsNull() || data.Definitions[i].Entries[ii].VpnListIds.IsUnknown()) {
+					countVpnListVersions = len(data.Definitions[i].Entries[ii].VpnListIds.Elements())
+				}
+				if countVpnListVersions > 0 {
+					elementsVpnListVersions = make([]attr.Value, countVpnListVersions)
+					for i := 0; i < countVpnListVersions; i++ {
+						elementsVpnListVersions[i] = types.StringValue("0")
+					}
+					data.Definitions[i].Entries[ii].VpnListVersions = types.ListValueMust(types.StringType, elementsVpnListVersions)
+				} else {
+					data.Definitions[i].Entries[ii].VpnListVersions = types.ListNull(types.StringType)
+				}
 			}
 			if !data.Definitions[i].Entries[ii].RegionListIds.IsNull() {
-				data.Definitions[i].Entries[ii].RegionListVersions = types.ListNull(types.StringType)
+				var elementsRegionListVersions []attr.Value
+				var countRegionListVersions int = 0
+				if !(data.Definitions[i].Entries[ii].RegionListIds.IsNull() || data.Definitions[i].Entries[ii].RegionListIds.IsUnknown()) {
+					countRegionListVersions = len(data.Definitions[i].Entries[ii].RegionListIds.Elements())
+				}
+				if countRegionListVersions > 0 {
+					elementsRegionListVersions = make([]attr.Value, countRegionListVersions)
+					for i := 0; i < countRegionListVersions; i++ {
+						elementsRegionListVersions[i] = types.StringValue("0")
+					}
+					data.Definitions[i].Entries[ii].RegionListVersions = types.ListValueMust(types.StringType, elementsRegionListVersions)
+				} else {
+					data.Definitions[i].Entries[ii].RegionListVersions = types.ListNull(types.StringType)
+				}
 			}
 		}
 	}
