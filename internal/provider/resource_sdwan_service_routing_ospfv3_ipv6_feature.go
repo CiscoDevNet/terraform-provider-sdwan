@@ -303,10 +303,10 @@ func (r *ServiceRoutingOSPFv3IPv6ProfileParcelResource) Schema(ctx context.Conte
 							Optional:            true,
 						},
 						"area_type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("stub area type").AddStringEnumDescription("stub").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set OSPFv3 area type").AddStringEnumDescription("stub", "nssa", "normal").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.OneOf("stub"),
+								stringvalidator.OneOf("stub", "nssa", "normal"),
 							},
 						},
 						"no_summary": schema.BoolAttribute{
@@ -406,10 +406,10 @@ func (r *ServiceRoutingOSPFv3IPv6ProfileParcelResource) Schema(ctx context.Conte
 										Optional:            true,
 									},
 									"authentication_type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("No Authentication by default").AddStringEnumDescription("no-auth").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set OSPF interface authentication configuration").AddStringEnumDescription("no-auth", "ipsec-sha1").String,
 										Optional:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("no-auth"),
+											stringvalidator.OneOf("no-auth", "ipsec-sha1"),
 										},
 									},
 									"authentication_spi": schema.Int64Attribute{
