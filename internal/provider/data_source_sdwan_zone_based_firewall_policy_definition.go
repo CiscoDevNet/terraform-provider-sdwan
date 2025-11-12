@@ -131,6 +131,10 @@ func (d *ZoneBasedFirewallPolicyDefinitionDataSource) Schema(ctx context.Context
 										MarkdownDescription: "policy id for selected match entry",
 										Computed:            true,
 									},
+									"policy_version": schema.Int64Attribute{
+										MarkdownDescription: "Policy version",
+										Computed:            true,
+									},
 									"value": schema.StringAttribute{
 										MarkdownDescription: "value for selected match entry",
 										Computed:            true,
