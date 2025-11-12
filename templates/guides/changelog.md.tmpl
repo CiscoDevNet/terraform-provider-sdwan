@@ -10,6 +10,7 @@ description: |-
 ## 0.8.2 (Unreleased)
 
 - Add `sdwan_system_ca_certificate_feature` resource and data source
+- Update `sdwan_service_routing_ospfv3_ipv6` and `sdwan_transport_routing_ospfv3_ipv6` attribute validators
 
 ## 0.8.1
 

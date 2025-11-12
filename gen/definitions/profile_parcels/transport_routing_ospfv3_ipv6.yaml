@@ -105,6 +105,10 @@ attributes:
     - model_name: areaType
       tf_name: area_type
       data_path: [areaTypeConfig]
+      no_augment_config: true
+      type: String
+      description: Set OSPFv3 area type
+      enum_values: ["stub", "nssa", "normal"]
       example: stub
     - model_name: noSummary
       data_path: [areaTypeConfig]
@@ -137,7 +141,11 @@ attributes:
       - model_name: authType
         tf_name: authentication_type
         data_path: [authenticationConfig]
+        type: String
+        description: Set OSPF interface authentication configuration
         example: no-auth
+        no_augment_config: true
+        enum_values: ["no-auth", "ipsec-sha1"]
       - model_name: spi
         tf_name: authentication_spi
         data_path: [authenticationConfig]
