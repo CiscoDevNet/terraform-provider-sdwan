@@ -11,7 +11,7 @@
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_color_list` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_expanded_community_list` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_extended_community_list` to `20.15.0`
-
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_mirror` to `20.15.0`
 
 ## 0.8.1
 
