@@ -10,6 +10,10 @@ description: |-
 ## 0.8.2 (Unreleased)
 
 - Add `sdwan_system_ca_certificate_feature` resource and data source
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_data_ipv4_prefix_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_fqdn_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_port_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_protocol_list` to `20.15.0`
 
 ## 0.8.1
 
