@@ -137,7 +137,7 @@ attributes:
             test_value: sdwan_geo_location_list_policy_object.test.id
           - tf_name: policy_version
             tf_only: true
-            type: Version
+            type: VersionString
             description: Policy version
             exclude_test: true
           - model_name: value

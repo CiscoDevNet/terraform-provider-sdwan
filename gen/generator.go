@@ -369,9 +369,10 @@ func HasName(attributes []YamlConfigAttribute) bool {
 // Templating helper function to determine if attributes list contains one or more version attributes
 func HasVersionAttribute(attributes []YamlConfigAttribute) bool {
 	for _, attr := range attributes {
-		if attr.Type == "Version" || attr.Type == "Versions" {
+		switch attr.Type {
+		case "Version", "Versions", "VersionString":
 			return true
-		} else if attr.Type == "List" || attr.Type == "Set" {
+		case "List", "Set":
 			if HasVersionAttribute(attr.Attributes) {
 				return true
 			}

@@ -21,6 +21,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -58,7 +59,7 @@ type ZoneBasedFirewallPolicyDefinitionRules struct {
 type ZoneBasedFirewallPolicyDefinitionRulesMatchEntries struct {
 	Type          types.String `tfsdk:"type"`
 	PolicyId      types.String `tfsdk:"policy_id"`
-	PolicyVersion types.Int64  `tfsdk:"policy_version"`
+	PolicyVersion types.String `tfsdk:"policy_version"`
 	Value         types.String `tfsdk:"value"`
 	ProtocolType  types.String `tfsdk:"protocol_type"`
 	ValueVariable types.String `tfsdk:"value_variable"`
@@ -410,7 +411,7 @@ func (data *ZoneBasedFirewallPolicyDefinition) updateVersions(ctx context.Contex
 			if cStateIndex > -1 {
 				data.Rules[i].MatchEntries[ii].PolicyVersion = state.Rules[stateIndex].MatchEntries[cStateIndex].PolicyVersion
 			} else {
-				data.Rules[i].MatchEntries[ii].PolicyVersion = types.Int64Null()
+				data.Rules[i].MatchEntries[ii].PolicyVersion = types.StringNull()
 			}
 		}
 	}
@@ -424,7 +425,8 @@ func (data *ZoneBasedFirewallPolicyDefinition) processImport(ctx context.Context
 	for i := range data.Rules {
 		for ii := range data.Rules[i].MatchEntries {
 			if data.Rules[i].MatchEntries[ii].PolicyId != types.StringNull() {
-				data.Rules[i].MatchEntries[ii].PolicyVersion = types.Int64Value(0)
+				count := strings.Count(strings.TrimSpace(data.Rules[i].MatchEntries[ii].PolicyId.ValueString()), " ") + 1
+				data.Rules[i].MatchEntries[ii].PolicyVersion = types.StringValue(strings.TrimSpace(strings.Repeat("0 ", count)))
 			}
 		}
 	}

@@ -70,7 +70,7 @@ Read-Only:
 Read-Only:
 
 - `policy_id` (String) policy id for selected match entry
-- `policy_version` (Number) Policy version
+- `policy_version` (String) Policy version
 - `protocol_type` (String) Should be included with additionally entries for `destinationPort` and `protocol` whenever the type `protocolName` is used.
 - `type` (String) Type of match entry
 - `value` (String) value for selected match entry
