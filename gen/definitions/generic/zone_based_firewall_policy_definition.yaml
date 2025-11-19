@@ -135,6 +135,11 @@ attributes:
             description: policy id for selected match entry
             example: 0d26a366-4a11-4942-a5ea-82af9502889f
             test_value: sdwan_geo_location_list_policy_object.test.id
+          - tf_name: policy_version
+            tf_only: true
+            type: VersionString
+            description: Policy version
+            exclude_test: true
           - model_name: value
             tf_name: value
             type: String

@@ -20,6 +20,8 @@ package provider
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
+	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -57,6 +59,7 @@ type ZoneBasedFirewallPolicyDefinitionRules struct {
 type ZoneBasedFirewallPolicyDefinitionRulesMatchEntries struct {
 	Type          types.String `tfsdk:"type"`
 	PolicyId      types.String `tfsdk:"policy_id"`
+	PolicyVersion types.String `tfsdk:"policy_version"`
 	Value         types.String `tfsdk:"value"`
 	ProtocolType  types.String `tfsdk:"protocol_type"`
 	ValueVariable types.String `tfsdk:"value_variable"`
@@ -166,6 +169,7 @@ func (data ZoneBasedFirewallPolicyDefinition) toBody(ctx context.Context) string
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *ZoneBasedFirewallPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
+	state := *data
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -294,6 +298,7 @@ func (data *ZoneBasedFirewallPolicyDefinition) fromBody(ctx context.Context, res
 			data.Rules = []ZoneBasedFirewallPolicyDefinitionRules{}
 		}
 	}
+	data.updateVersions(ctx, &state)
 }
 
 // End of section. //template:end fromBody
@@ -380,11 +385,51 @@ func (data *ZoneBasedFirewallPolicyDefinition) hasChanges(ctx context.Context, s
 
 // Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
 
+func (data *ZoneBasedFirewallPolicyDefinition) updateVersions(ctx context.Context, state *ZoneBasedFirewallPolicyDefinition) {
+	for i := range data.Rules {
+		dataKeys := [...]string{fmt.Sprintf("%v", data.Rules[i].RuleOrder.ValueInt64())}
+		stateIndex := -1
+		for j := range state.Rules {
+			stateKeys := [...]string{fmt.Sprintf("%v", state.Rules[j].RuleOrder.ValueInt64())}
+			if dataKeys == stateKeys {
+				stateIndex = j
+				break
+			}
+		}
+		for ii := range data.Rules[i].MatchEntries {
+			cDataKeys := [...]string{fmt.Sprintf("%v", data.Rules[i].MatchEntries[ii].Type.ValueString())}
+			cStateIndex := -1
+			if stateIndex > -1 {
+				for jj := range state.Rules[stateIndex].MatchEntries {
+					cStateKeys := [...]string{fmt.Sprintf("%v", state.Rules[stateIndex].MatchEntries[jj].Type.ValueString())}
+					if cDataKeys == cStateKeys {
+						cStateIndex = jj
+						break
+					}
+				}
+			}
+			if cStateIndex > -1 {
+				data.Rules[i].MatchEntries[ii].PolicyVersion = state.Rules[stateIndex].MatchEntries[cStateIndex].PolicyVersion
+			} else {
+				data.Rules[i].MatchEntries[ii].PolicyVersion = types.StringNull()
+			}
+		}
+	}
+}
+
 // End of section. //template:end updateVersions
 
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
 func (data *ZoneBasedFirewallPolicyDefinition) processImport(ctx context.Context) {
 	data.Version = types.Int64Value(0)
+	for i := range data.Rules {
+		for ii := range data.Rules[i].MatchEntries {
+			if data.Rules[i].MatchEntries[ii].PolicyId != types.StringNull() {
+				count := strings.Count(strings.TrimSpace(data.Rules[i].MatchEntries[ii].PolicyId.ValueString()), " ") + 1
+				data.Rules[i].MatchEntries[ii].PolicyVersion = types.StringValue(strings.TrimSpace(strings.Repeat("0 ", count)))
+			}
+		}
+	}
 }
 
 // End of section. //template:end processImport
