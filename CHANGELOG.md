@@ -1,6 +1,7 @@
 ## 0.8.2 (Unreleased)
 
 - Add `sdwan_system_ca_certificate_feature` resource and data source
+- Fix problem where `sdwan_configuration_group` resource might fail to deploy configuration when CLI Add-on variable value is intiger, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/559)
 
 ## 0.8.1
 
