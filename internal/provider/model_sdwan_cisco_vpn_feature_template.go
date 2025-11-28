@@ -682,6 +682,11 @@ func (data CiscoVPN) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "service")
 		if item.Service.IsNull() {
+			if true && !item.Prefix.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "service."+"vipObjectType", "object")
+				itemBody, _ = sjson.Set(itemBody, "service."+"vipType", "notIgnore")
+				itemBody, _ = sjson.Set(itemBody, "service."+"vipValue", "sig")
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "service."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "service."+"vipType", "constant")
@@ -2534,7 +2539,7 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 				if cValue.String() == "variableName" {
 					item.Service = types.StringNull()
 
-				} else if cValue.String() == "ignore" {
+				} else if cValue.String() == "ignore" || cValue.String() == "notIgnore" {
 					item.Service = types.StringNull()
 
 				} else if cValue.String() == "constant" {

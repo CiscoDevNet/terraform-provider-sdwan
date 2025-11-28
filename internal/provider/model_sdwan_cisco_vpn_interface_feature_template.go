@@ -1186,6 +1186,11 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"tunnel-interface.tunnels-bandwidth."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"tunnel-interface.tunnels-bandwidth."+"vipVariableName", data.TunnelBandwidthVariable.ValueString())
 	} else if data.TunnelBandwidth.IsNull() {
+		if true && data.TunnelQosMode.ValueString() == "hub" {
+			body, _ = sjson.Set(body, path+"tunnel-interface.tunnels-bandwidth."+"vipObjectType", "object")
+			body, _ = sjson.Set(body, path+"tunnel-interface.tunnels-bandwidth."+"vipType", "notIgnore")
+			body, _ = sjson.Set(body, path+"tunnel-interface.tunnels-bandwidth."+"vipValue", 50)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.tunnels-bandwidth."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.tunnels-bandwidth."+"vipType", "constant")
@@ -3569,7 +3574,7 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			v := res.Get(path + "tunnel-interface.tunnels-bandwidth.vipVariableName")
 			data.TunnelBandwidthVariable = types.StringValue(v.String())
 
-		} else if value.String() == "ignore" {
+		} else if value.String() == "ignore" || value.String() == "notIgnore" {
 			data.TunnelBandwidth = types.Int64Null()
 			data.TunnelBandwidthVariable = types.StringNull()
 		} else if value.String() == "constant" {

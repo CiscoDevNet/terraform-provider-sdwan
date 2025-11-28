@@ -161,6 +161,12 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		{{- if and (not .Mandatory) (not .ExcludeIgnore)}}
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
+		{{- else if ( .IncludeDefaultOption)}}
+        if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Value ""}} && !data.{{toGoName .ConditionalAttribute.Name}}.IsNull() {{else if eq .ConditionalAttribute.Type "Bool"}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
+			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "{{.DefaultOption}}")
+			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipValue", {{if eq .Type "String"}} "{{.DefaultValue}}" {{else}} {{.DefaultValue}} {{end}})
+        }
 		{{- else if and (.DataPath) (not .ExcludeIgnore)}}
 		if !gjson.Get(body, path+"{{path .DataPath}}").Exists() {
 			body, _ = sjson.Set(body, path+"{{path .DataPath}}", map[string]interface{}{})
@@ -262,7 +268,13 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			{{- if and (not .Mandatory) (not .ExcludeIgnore)}}
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
-			{{- else if and (.DataPath) (not .ExcludeIgnore)}}
+			{{- else if ( .IncludeDefaultOption)}}
+            if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Value ""}} && !item.{{toGoName .ConditionalAttribute.Name}}.IsNull() {{else if eq .ConditionalAttribute.Type "Bool"}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
+				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "{{.DefaultOption}}")
+				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipValue", {{if eq .Type "String"}} "{{.DefaultValue}}" {{else}} {{.DefaultValue}} {{end}})
+            }
+            {{- else if and (.DataPath) (not .ExcludeIgnore)}}
 			if !gjson.Get(itemBody, "{{path .DataPath}}").Exists() {
 				itemBody, _ = sjson.Set(itemBody, "{{path .DataPath}}", map[string]interface{}{})
 			}
@@ -608,7 +620,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			v := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipVariableName")
 			data.{{toGoName .TfName}}Variable = types.StringValue(v.String())
 			{{end}}
-		} else if value.String() == "ignore" {
+		} else if value.String() == "ignore" {{if .IncludeDefaultOption}} || value.String() == "notIgnore" {{end}} {
 			data.{{toGoName .TfName}} = types.StringNull()
 			{{if .Variable}}data.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 		} else if value.String() == "constant" {
@@ -628,7 +640,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			v := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipVariableName")
 			data.{{toGoName .TfName}}Variable = types.StringValue(v.String())
 			{{end}}
-		} else if value.String() == "ignore" {
+		} else if value.String() == "ignore" {{if .IncludeDefaultOption}} || value.String() == "notIgnore" {{end}} {
 			data.{{toGoName .TfName}} = types.Int64Null()
 			{{if .Variable}}data.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 		} else if value.String() == "constant" {
@@ -648,7 +660,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			v := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipVariableName")
 			data.{{toGoName .TfName}}Variable = types.StringValue(v.String())
 			{{end}}
-		} else if value.String() == "ignore" {
+		} else if value.String() == "ignore" {{if .IncludeDefaultOption}} || value.String() == "notIgnore" {{end}} {
 			data.{{toGoName .TfName}} = types.Float64Null()
 			{{if .Variable}}data.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 		} else if value.String() == "constant" {
@@ -729,7 +741,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 					cv := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipVariableName")
 					item.{{toGoName .TfName}}Variable = types.StringValue(cv.String())
 					{{end}}
-				} else if cValue.String() == "ignore" {
+				} else if cValue.String() == "ignore" {{if .IncludeDefaultOption}} || cValue.String() == "notIgnore" {{end}} {
 					item.{{toGoName .TfName}} = types.StringNull()
 					{{if .Variable}}item.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 				} else if cValue.String() == "constant" {
@@ -749,7 +761,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 					cv := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipVariableName")
 					item.{{toGoName .TfName}}Variable = types.StringValue(cv.String())
 					{{end}}
-				} else if cValue.String() == "ignore" {
+				} else if cValue.String() == "ignore" {{if .IncludeDefaultOption}} || cValue.String() == "notIgnore" {{end}} {
 					item.{{toGoName .TfName}} = types.Int64Null()
 					{{if .Variable}}item.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 				} else if cValue.String() == "constant" {
@@ -769,7 +781,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 					cv := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipVariableName")
 					item.{{toGoName .TfName}}Variable = types.StringValue(cv.String())
 					{{end}}
-				} else if cValue.String() == "ignore" {
+				} else if cValue.String() == "ignore" {{if .IncludeDefaultOption}} || cValue.String() == "notIgnore" {{end}} {
 					item.{{toGoName .TfName}} = types.Float64Null()
 					{{if .Variable}}item.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 				} else if cValue.String() == "constant" {

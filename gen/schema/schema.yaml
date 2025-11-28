@@ -87,6 +87,7 @@ attribute:
   requires_replace: bool(required=False) # If true resource will be recreated when attribute is changed
   dynamic_default: bool(required=False) # If true when the provided value matches the default value `optionType` will be set to `default` rather than `global`
   priority_order_always: bool(required=False) # If true will always set priority-order in feature template payload
+  include_default_option: bool(required=False) # If true will always include the default option type in the payload when the attribute value is null
 
 conditional_attribute:
   name: str() # Reference to other attribute
