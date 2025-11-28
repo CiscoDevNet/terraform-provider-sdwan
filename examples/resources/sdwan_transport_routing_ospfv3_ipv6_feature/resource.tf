@@ -20,7 +20,7 @@ resource "sdwan_transport_routing_ospfv3_ipv6_feature" "example" {
   redistributes = [
     {
       protocol             = "static"
-      translate_rib_metric = example
+      translate_rib_metric = true
     }
   ]
   router_lsa_action          = "on-startup"

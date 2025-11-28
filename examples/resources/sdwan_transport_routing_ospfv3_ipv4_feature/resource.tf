@@ -21,7 +21,7 @@ resource "sdwan_transport_routing_ospfv3_ipv4_feature" "example" {
     {
       protocol             = "nat-route"
       nat_dia              = true
-      translate_rib_metric = example
+      translate_rib_metric = true
     }
   ]
   router_lsa_action          = "on-startup"

@@ -1,8 +1,8 @@
 ---
 name: Service Routing OSPFv3 IPv4
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/routing/ospfv3/ipv4
-minimum_version: 20.12.0
-test_tags: [SDWAN_2012]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 skip_minimum_test: true
 parcel_type: feature
 doc_category: Features - Service
@@ -90,14 +90,7 @@ attributes:
       exclude_test: true
       example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
     - model_name: translateRibMetric
-      tf_name: translate_rib_metric
-      type: Bool
-      description: Translate Rib Metric
       example: true
-      exclude_test: true
-      no_augment_config: true
-      default_value_present: true
-      default_value: false
       conditional_attribute:
         name: protocol
         value: omp

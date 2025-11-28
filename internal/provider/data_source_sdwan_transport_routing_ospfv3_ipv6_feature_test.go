@@ -49,7 +49,7 @@ func TestAccDataSourceSdwanTransportRoutingOSPFv3IPv6ProfileParcel(t *testing.T)
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "spf_maximum_hold_time", "10000"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "filter", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "redistributes.0.protocol", "static"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "redistributes.0.translate_rib_metric", "example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "redistributes.0.translate_rib_metric", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "router_lsa_action", "on-startup"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "router_lsa_on_startup_time", "30"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "areas.0.area_number", "1"))
@@ -112,7 +112,7 @@ func testAccDataSourceSdwanTransportRoutingOSPFv3IPv6ProfileParcelConfig() strin
 	config += `	filter = false` + "\n"
 	config += `	redistributes = [{` + "\n"
 	config += `	  protocol = "static"` + "\n"
-	config += `	  translate_rib_metric = example` + "\n"
+	config += `	  translate_rib_metric = true` + "\n"
 	config += `	}]` + "\n"
 	config += `	router_lsa_action = "on-startup"` + "\n"
 	config += `	router_lsa_on_startup_time = 30` + "\n"

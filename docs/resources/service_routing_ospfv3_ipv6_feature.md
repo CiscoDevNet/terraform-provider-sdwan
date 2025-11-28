@@ -4,13 +4,13 @@ page_title: "sdwan_service_routing_ospfv3_ipv6_feature Resource - terraform-prov
 subcategory: "Features - Service"
 description: |-
   This resource can manage a Service Routing OSPFv3 IPv6 Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_service_routing_ospfv3_ipv6_feature (Resource)
 
 This resource can manage a Service Routing OSPFv3 IPv6 Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -36,7 +36,8 @@ resource "sdwan_service_routing_ospfv3_ipv6_feature" "example" {
   filter                                    = false
   redistributes = [
     {
-      protocol = "static"
+      protocol             = "static"
+      translate_rib_metric = true
     }
   ]
   router_lsa_action          = "on-startup"
@@ -221,8 +222,9 @@ Optional:
   - Choices: `connected`, `static`, `omp`, `bgp`, `eigrp`
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
-- `translate_rib_metric` (Boolean) Translate Rib Metric, Attribute conditional on `protocol` being equal to `omp`
+- `translate_rib_metric` (Boolean) Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network., Attribute conditional on `protocol` being equal to `omp`
   - Default value: `false`
+- `translate_rib_metric_variable` (String) Variable name, Attribute conditional on `protocol` being equal to `omp`
 
 ## Import
 

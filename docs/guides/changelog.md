@@ -12,6 +12,8 @@ description: |-
 - Add `sdwan_system_ca_certificate_feature` resource and data source
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_ospfv3_ipv4_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_ospfv3_ipv6_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_ospfv3_ipv4_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_ospfv3_ipv6_feature` to `20.15.0`
 
 ## 0.8.1
 

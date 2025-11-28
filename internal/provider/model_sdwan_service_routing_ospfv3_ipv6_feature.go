@@ -79,10 +79,11 @@ type ServiceRoutingOSPFv3IPv6 struct {
 }
 
 type ServiceRoutingOSPFv3IPv6Redistributes struct {
-	Protocol           types.String `tfsdk:"protocol"`
-	ProtocolVariable   types.String `tfsdk:"protocol_variable"`
-	RoutePolicyId      types.String `tfsdk:"route_policy_id"`
-	TranslateRibMetric types.Bool   `tfsdk:"translate_rib_metric"`
+	Protocol                   types.String `tfsdk:"protocol"`
+	ProtocolVariable           types.String `tfsdk:"protocol_variable"`
+	RoutePolicyId              types.String `tfsdk:"route_policy_id"`
+	TranslateRibMetric         types.Bool   `tfsdk:"translate_rib_metric"`
+	TranslateRibMetricVariable types.String `tfsdk:"translate_rib_metric_variable"`
 }
 
 type ServiceRoutingOSPFv3IPv6Areas struct {
@@ -884,10 +885,12 @@ func (data *ServiceRoutingOSPFv3IPv6) fromBody(ctx context.Context, res gjson.Re
 				}
 			}
 			item.TranslateRibMetric = types.BoolNull()
-
+			item.TranslateRibMetricVariable = types.StringNull()
 			if t := v.Get("translateRibMetric.optionType"); t.Exists() {
 				va := v.Get("translateRibMetric.value")
-				if t.String() == "global" {
+				if t.String() == "variable" {
+					item.TranslateRibMetricVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
 					item.TranslateRibMetric = types.BoolValue(va.Bool())
 				}
 				item.Protocol = types.StringValue("omp")
@@ -1323,10 +1326,12 @@ func (data *ServiceRoutingOSPFv3IPv6) updateFromBody(ctx context.Context, res gj
 			}
 		}
 		data.Redistributes[i].TranslateRibMetric = types.BoolNull()
-
+		data.Redistributes[i].TranslateRibMetricVariable = types.StringNull()
 		if t := r.Get("translateRibMetric.optionType"); t.Exists() {
 			va := r.Get("translateRibMetric.value")
-			if t.String() == "global" {
+			if t.String() == "variable" {
+				data.Redistributes[i].TranslateRibMetricVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
 				data.Redistributes[i].TranslateRibMetric = types.BoolValue(va.Bool())
 			}
 		}

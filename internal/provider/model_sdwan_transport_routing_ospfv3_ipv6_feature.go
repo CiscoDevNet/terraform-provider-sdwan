@@ -400,17 +400,17 @@ func (data TransportRoutingOSPFv3IPv6) toBody(ctx context.Context) string {
 			}
 
 			if !item.TranslateRibMetricVariable.IsNull() {
-				if true {
+				if true && item.Protocol.ValueString() == "omp" {
 					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.value", item.TranslateRibMetricVariable.ValueString())
 				}
 			} else if item.TranslateRibMetric.IsNull() {
-				if true {
+				if true && item.Protocol.ValueString() == "omp" {
 					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.optionType", "default")
 					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.value", false)
 				}
 			} else {
-				if true {
+				if true && item.Protocol.ValueString() == "omp" {
 					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.value", item.TranslateRibMetric.ValueBool())
 				}
@@ -888,6 +888,7 @@ func (data *TransportRoutingOSPFv3IPv6) fromBody(ctx context.Context, res gjson.
 				} else if t.String() == "global" {
 					item.TranslateRibMetric = types.BoolValue(va.Bool())
 				}
+				item.Protocol = types.StringValue("omp")
 			}
 			item.RoutePolicyId = types.StringNull()
 

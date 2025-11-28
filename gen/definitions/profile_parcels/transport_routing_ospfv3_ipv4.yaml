@@ -85,8 +85,10 @@ attributes:
       tf_name: nat_dia
       example: true
     - model_name: translateRibMetric
-      tf_name: translate_rib_metric
-      example: example
+      example: true
+      conditional_attribute:
+        name: protocol
+        value: omp
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
