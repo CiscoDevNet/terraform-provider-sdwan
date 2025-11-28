@@ -85,6 +85,7 @@ attributes:
       tf_name: nat_dia
       example: true
     - model_name: translateRibMetric
+      exclude_test: true
       example: true
       conditional_attribute:
         name: protocol

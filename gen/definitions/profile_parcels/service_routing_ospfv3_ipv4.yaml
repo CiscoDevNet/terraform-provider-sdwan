@@ -90,6 +90,7 @@ attributes:
       exclude_test: true
       example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
     - model_name: translateRibMetric
+      exclude_test: true
       example: true
       conditional_attribute:
         name: protocol

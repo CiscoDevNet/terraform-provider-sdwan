@@ -82,6 +82,7 @@ attributes:
       id: true
       example: static
     - model_name: translateRibMetric
+      exclude_test: true
       example: true
       conditional_attribute:
         name: protocol
