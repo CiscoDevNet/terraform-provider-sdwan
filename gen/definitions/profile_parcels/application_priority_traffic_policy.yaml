@@ -3,7 +3,7 @@ name: Application Priority Traffic Policy
 rest_endpoint: /v1/feature-profile/sdwan/application-priority/%v/traffic-policy
 minimum_version: 20.15.0
 id_attribute: id
-test_tags: [SDWAN_2012, TF_VAR_policy_object_feature_template_id]
+test_tags: [SDWAN_2015, TF_VAR_policy_object_feature_template_id]
 skip_minimum_test: true
 parcel_type: policy
 attributes:
