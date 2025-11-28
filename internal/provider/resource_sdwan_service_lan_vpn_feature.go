@@ -65,7 +65,7 @@ func (r *ServiceLANVPNProfileParcelResource) Metadata(ctx context.Context, req r
 func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service LAN VPN Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service LAN VPN Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -180,7 +180,8 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							MarkdownDescription: helpers.NewAttributeDescription("Hostname").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.LengthBetween(1, 32),
+								stringvalidator.LengthBetween(1, 63),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])`), ""),
 							},
 						},
 						"host_name_variable": schema.StringAttribute{
@@ -230,6 +231,9 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 									"network_address": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.RegexMatches(regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])`), ""),
+										},
 									},
 									"network_address_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -310,7 +314,7 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 										MarkdownDescription: helpers.NewAttributeDescription("IPv6 Prefix").String,
 										Optional:            true,
 										Validators: []validator.String{
-											stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
+											stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(\/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
 										},
 									},
 									"prefix_variable": schema.StringAttribute{
@@ -319,6 +323,17 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 									},
 									"aggregate_only": schema.BoolAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Aggregate Only").AddDefaultValueDescription("false").String,
+										Optional:            true,
+									},
+									"region": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Applied to Region").AddStringEnumDescription("core-and-access", "core", "access").AddDefaultValueDescription("core-and-access").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("core-and-access", "core", "access"),
+										},
+									},
+									"region_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
 								},
@@ -335,6 +350,9 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 						"network_address": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IP Address").String,
 							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])`), ""),
+							},
 						},
 						"network_address_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -352,10 +370,10 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							Optional:            true,
 						},
 						"gateway": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Gateway type").AddStringEnumDescription("nextHop", "null0", "vpn", "dhcp").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Gateway type").AddStringEnumDescription("nextHop", "null0", "vpn", "dhcp", "staticRouteInterface").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.OneOf("nextHop", "null0", "vpn", "dhcp"),
+								stringvalidator.OneOf("nextHop", "null0", "vpn", "dhcp", "staticRouteInterface"),
 							},
 						},
 						"next_hops": schema.ListNestedAttribute{
@@ -423,6 +441,17 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `null0`").String,
 							Optional:            true,
 						},
+						"administrative_distance": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Gateway distance, Attribute conditional on `gateway` being equal to `null0`").AddIntegerRangeDescription(1, 255).String,
+							Optional:            true,
+							Validators: []validator.Int64{
+								int64validator.Between(1, 255),
+							},
+						},
+						"administrative_distance_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `gateway` being equal to `null0`").String,
+							Optional:            true,
+						},
 						"dhcp": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway DHCP, Attribute conditional on `gateway` being equal to `dhcp`").String,
 							Optional:            true,
@@ -430,6 +459,49 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 						"vpn": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway VPN, Attribute conditional on `gateway` being equal to `vpn`").String,
 							Optional:            true,
+						},
+						"ip_static_route_interface": schema.ListNestedAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `gateway` being equal to `staticRouteInterface`").String,
+							Optional:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"interface_name": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").String,
+										Optional:            true,
+									},
+									"interface_name_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
+									},
+									"next_hop": schema.ListNestedAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").String,
+										Optional:            true,
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												"address": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("IPv4 Address").String,
+													Optional:            true,
+												},
+												"address_variable": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+													Optional:            true,
+												},
+												"administrative_distance": schema.Int64Attribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Administrative distance").AddIntegerRangeDescription(1, 255).String,
+													Optional:            true,
+													Validators: []validator.Int64{
+														int64validator.Between(1, 255),
+													},
+												},
+												"administrative_distance_variable": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+													Optional:            true,
+												},
+											},
+										},
+									},
+								},
+							},
 						},
 					},
 				},
@@ -443,7 +515,7 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							MarkdownDescription: helpers.NewAttributeDescription("Prefix").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(\/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
 							},
 						},
 						"prefix_variable": schema.StringAttribute{
@@ -451,10 +523,10 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							Optional:            true,
 						},
 						"gateway": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Gateway type").AddStringEnumDescription("nextHop", "null0", "nat").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Gateway type").AddStringEnumDescription("nextHop", "null0", "nat", "staticRouteInterface").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.OneOf("nextHop", "null0", "nat"),
+								stringvalidator.OneOf("nextHop", "null0", "nat", "staticRouteInterface"),
 							},
 						},
 						"next_hops": schema.ListNestedAttribute{
@@ -498,6 +570,49 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 						"nat_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `gateway` being equal to `nat`").String,
 							Optional:            true,
+						},
+						"ipv6_static_route_interface": schema.ListNestedAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `gateway` being equal to `staticRouteInterface`").String,
+							Optional:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"interface_name": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").String,
+										Optional:            true,
+									},
+									"interface_name_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
+									},
+									"next_hop": schema.ListNestedAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").String,
+										Optional:            true,
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												"address": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("IPv6 Address").String,
+													Optional:            true,
+												},
+												"address_variable": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+													Optional:            true,
+												},
+												"administrative_distance": schema.Int64Attribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Administrative distance").AddIntegerRangeDescription(1, 254).String,
+													Optional:            true,
+													Validators: []validator.Int64{
+														int64validator.Between(1, 254),
+													},
+												},
+												"administrative_distance_variable": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+													Optional:            true,
+												},
+											},
+										},
+									},
+								},
+							},
 						},
 					},
 				},
@@ -546,6 +661,9 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 						"network_address": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IP Address").String,
 							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])`), ""),
+							},
 						},
 						"network_address_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -563,10 +681,10 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							Optional:            true,
 						},
 						"service": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Service").AddStringEnumDescription("SIG").AddDefaultValueDescription("SIG").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Service").AddStringEnumDescription("SIG", "SSE").AddDefaultValueDescription("SIG").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.OneOf("SIG"),
+								stringvalidator.OneOf("SIG", "SSE"),
 							},
 						},
 						"service_variable": schema.StringAttribute{
@@ -575,6 +693,17 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 						},
 						"vpn": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Service").String,
+							Optional:            true,
+						},
+						"sse_instance": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("SSE Instance name").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(1, 255),
+							},
+						},
+						"sse_instance_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
 					},
@@ -588,6 +717,9 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 						"network_address": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IP Address").String,
 							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])`), ""),
+							},
 						},
 						"network_address_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -628,6 +760,9 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 						"network_address": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IP Address").String,
 							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])`), ""),
+							},
 						},
 						"network_address_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -673,10 +808,10 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							Optional:            true,
 						},
 						"prefix_length": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Prefix Length").AddIntegerRangeDescription(1, 32).String,
+							MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Prefix Length").AddIntegerRangeDescription(1, 30).String,
 							Optional:            true,
 							Validators: []validator.Int64{
-								int64validator.Between(1, 32),
+								int64validator.Between(1, 30),
 							},
 						},
 						"prefix_length_variable": schema.StringAttribute{
@@ -745,16 +880,22 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							Optional:            true,
 						},
 						"source_port": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Source Port").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Source Port").AddIntegerRangeDescription(0, 65535).String,
 							Optional:            true,
+							Validators: []validator.Int64{
+								int64validator.AtMost(65535),
+							},
 						},
 						"source_port_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
 						"translate_port": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Translate Port").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Translate Port").AddIntegerRangeDescription(0, 65535).String,
 							Optional:            true,
+							Validators: []validator.Int64{
+								int64validator.AtMost(65535),
+							},
 						},
 						"translate_port_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -819,6 +960,59 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							Optional:            true,
 						},
 						"translated_source_ip_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"static_nat_direction": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Static NAT Direction").AddStringEnumDescription("inside", "outside").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("inside", "outside"),
+							},
+						},
+						"static_nat_direction_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"tracker_object_id": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
+							},
+						},
+					},
+				},
+			},
+			"static_nat_subnets": schema.ListNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Static NAT Subnet Rules").String,
+				Optional:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"source_ip_subnet": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Source IP Subnet").String,
+							Optional:            true,
+						},
+						"source_ip_subnet_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"translated_source_ip_subnet": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Translated Source IP Subnet").String,
+							Optional:            true,
+						},
+						"translated_source_ip_subnet_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"prefix_length": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Network Prefix Length").AddIntegerRangeDescription(1, 32).String,
+							Optional:            true,
+							Validators: []validator.Int64{
+								int64validator.Between(1, 32),
+							},
+						},
+						"prefix_length_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},

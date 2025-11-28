@@ -71,6 +71,7 @@ type ServiceLANVPN struct {
 	NatPools                        []ServiceLANVPNNatPools                   `tfsdk:"nat_pools"`
 	NatPortForwards                 []ServiceLANVPNNatPortForwards            `tfsdk:"nat_port_forwards"`
 	StaticNats                      []ServiceLANVPNStaticNats                 `tfsdk:"static_nats"`
+	StaticNatSubnets                []ServiceLANVPNStaticNatSubnets           `tfsdk:"static_nat_subnets"`
 	Nat64V4Pools                    []ServiceLANVPNNat64V4Pools               `tfsdk:"nat_64_v4_pools"`
 	RouteLeakFromGlobalVpns         []ServiceLANVPNRouteLeakFromGlobalVpns    `tfsdk:"route_leak_from_global_vpns"`
 	RouteLeakToGlobalVpns           []ServiceLANVPNRouteLeakToGlobalVpns      `tfsdk:"route_leak_to_global_vpns"`
@@ -105,26 +106,30 @@ type ServiceLANVPNAdvertiseOmpIpv6s struct {
 }
 
 type ServiceLANVPNIpv4StaticRoutes struct {
-	NetworkAddress         types.String                                       `tfsdk:"network_address"`
-	NetworkAddressVariable types.String                                       `tfsdk:"network_address_variable"`
-	SubnetMask             types.String                                       `tfsdk:"subnet_mask"`
-	SubnetMaskVariable     types.String                                       `tfsdk:"subnet_mask_variable"`
-	Gateway                types.String                                       `tfsdk:"gateway"`
-	NextHops               []ServiceLANVPNIpv4StaticRoutesNextHops            `tfsdk:"next_hops"`
-	NextHopWithTrackers    []ServiceLANVPNIpv4StaticRoutesNextHopWithTrackers `tfsdk:"next_hop_with_trackers"`
-	Null0                  types.Bool                                         `tfsdk:"null0"`
-	Dhcp                   types.Bool                                         `tfsdk:"dhcp"`
-	Vpn                    types.Bool                                         `tfsdk:"vpn"`
+	NetworkAddress                 types.String                                          `tfsdk:"network_address"`
+	NetworkAddressVariable         types.String                                          `tfsdk:"network_address_variable"`
+	SubnetMask                     types.String                                          `tfsdk:"subnet_mask"`
+	SubnetMaskVariable             types.String                                          `tfsdk:"subnet_mask_variable"`
+	Gateway                        types.String                                          `tfsdk:"gateway"`
+	NextHops                       []ServiceLANVPNIpv4StaticRoutesNextHops               `tfsdk:"next_hops"`
+	NextHopWithTrackers            []ServiceLANVPNIpv4StaticRoutesNextHopWithTrackers    `tfsdk:"next_hop_with_trackers"`
+	Null0                          types.Bool                                            `tfsdk:"null0"`
+	AdministrativeDistance         types.Int64                                           `tfsdk:"administrative_distance"`
+	AdministrativeDistanceVariable types.String                                          `tfsdk:"administrative_distance_variable"`
+	Dhcp                           types.Bool                                            `tfsdk:"dhcp"`
+	Vpn                            types.Bool                                            `tfsdk:"vpn"`
+	IpStaticRouteInterface         []ServiceLANVPNIpv4StaticRoutesIpStaticRouteInterface `tfsdk:"ip_static_route_interface"`
 }
 
 type ServiceLANVPNIpv6StaticRoutes struct {
-	Prefix         types.String                            `tfsdk:"prefix"`
-	PrefixVariable types.String                            `tfsdk:"prefix_variable"`
-	Gateway        types.String                            `tfsdk:"gateway"`
-	NextHops       []ServiceLANVPNIpv6StaticRoutesNextHops `tfsdk:"next_hops"`
-	Null0          types.Bool                              `tfsdk:"null0"`
-	Nat            types.String                            `tfsdk:"nat"`
-	NatVariable    types.String                            `tfsdk:"nat_variable"`
+	Prefix                   types.String                                            `tfsdk:"prefix"`
+	PrefixVariable           types.String                                            `tfsdk:"prefix_variable"`
+	Gateway                  types.String                                            `tfsdk:"gateway"`
+	NextHops                 []ServiceLANVPNIpv6StaticRoutesNextHops                 `tfsdk:"next_hops"`
+	Null0                    types.Bool                                              `tfsdk:"null0"`
+	Nat                      types.String                                            `tfsdk:"nat"`
+	NatVariable              types.String                                            `tfsdk:"nat_variable"`
+	Ipv6StaticRouteInterface []ServiceLANVPNIpv6StaticRoutesIpv6StaticRouteInterface `tfsdk:"ipv6_static_route_interface"`
 }
 
 type ServiceLANVPNServices struct {
@@ -144,6 +149,8 @@ type ServiceLANVPNServiceRoutes struct {
 	Service                types.String `tfsdk:"service"`
 	ServiceVariable        types.String `tfsdk:"service_variable"`
 	Vpn                    types.Int64  `tfsdk:"vpn"`
+	SseInstance            types.String `tfsdk:"sse_instance"`
+	SseInstanceVariable    types.String `tfsdk:"sse_instance_variable"`
 }
 
 type ServiceLANVPNGreRoutes struct {
@@ -206,6 +213,18 @@ type ServiceLANVPNStaticNats struct {
 	StaticNatDirection         types.String `tfsdk:"static_nat_direction"`
 	StaticNatDirectionVariable types.String `tfsdk:"static_nat_direction_variable"`
 	TrackerObjectId            types.String `tfsdk:"tracker_object_id"`
+}
+
+type ServiceLANVPNStaticNatSubnets struct {
+	SourceIpSubnet                   types.String `tfsdk:"source_ip_subnet"`
+	SourceIpSubnetVariable           types.String `tfsdk:"source_ip_subnet_variable"`
+	TranslatedSourceIpSubnet         types.String `tfsdk:"translated_source_ip_subnet"`
+	TranslatedSourceIpSubnetVariable types.String `tfsdk:"translated_source_ip_subnet_variable"`
+	PrefixLength                     types.Int64  `tfsdk:"prefix_length"`
+	PrefixLengthVariable             types.String `tfsdk:"prefix_length_variable"`
+	StaticNatDirection               types.String `tfsdk:"static_nat_direction"`
+	StaticNatDirectionVariable       types.String `tfsdk:"static_nat_direction_variable"`
+	TrackerObjectId                  types.String `tfsdk:"tracker_object_id"`
 }
 
 type ServiceLANVPNNat64V4Pools struct {
@@ -276,6 +295,8 @@ type ServiceLANVPNAdvertiseOmpIpv6sPrefixes struct {
 	Prefix         types.String `tfsdk:"prefix"`
 	PrefixVariable types.String `tfsdk:"prefix_variable"`
 	AggregateOnly  types.Bool   `tfsdk:"aggregate_only"`
+	Region         types.String `tfsdk:"region"`
+	RegionVariable types.String `tfsdk:"region_variable"`
 }
 
 type ServiceLANVPNIpv4StaticRoutesNextHops struct {
@@ -291,12 +312,22 @@ type ServiceLANVPNIpv4StaticRoutesNextHopWithTrackers struct {
 	AdministrativeDistanceVariable types.String `tfsdk:"administrative_distance_variable"`
 	TrackerId                      types.String `tfsdk:"tracker_id"`
 }
+type ServiceLANVPNIpv4StaticRoutesIpStaticRouteInterface struct {
+	InterfaceName         types.String                                                 `tfsdk:"interface_name"`
+	InterfaceNameVariable types.String                                                 `tfsdk:"interface_name_variable"`
+	NextHop               []ServiceLANVPNIpv4StaticRoutesIpStaticRouteInterfaceNextHop `tfsdk:"next_hop"`
+}
 
 type ServiceLANVPNIpv6StaticRoutesNextHops struct {
 	Address                        types.String `tfsdk:"address"`
 	AddressVariable                types.String `tfsdk:"address_variable"`
 	AdministrativeDistance         types.Int64  `tfsdk:"administrative_distance"`
 	AdministrativeDistanceVariable types.String `tfsdk:"administrative_distance_variable"`
+}
+type ServiceLANVPNIpv6StaticRoutesIpv6StaticRouteInterface struct {
+	InterfaceName         types.String                                                   `tfsdk:"interface_name"`
+	InterfaceNameVariable types.String                                                   `tfsdk:"interface_name_variable"`
+	NextHop               []ServiceLANVPNIpv6StaticRoutesIpv6StaticRouteInterfaceNextHop `tfsdk:"next_hop"`
 }
 
 type ServiceLANVPNRouteLeakFromGlobalVpnsRedistributions struct {
@@ -315,6 +346,20 @@ type ServiceLANVPNRouteLeakFromOtherServicesRedistributions struct {
 	Protocol               types.String `tfsdk:"protocol"`
 	ProtocolVariable       types.String `tfsdk:"protocol_variable"`
 	RedistributionPolicyId types.String `tfsdk:"redistribution_policy_id"`
+}
+
+type ServiceLANVPNIpv4StaticRoutesIpStaticRouteInterfaceNextHop struct {
+	Address                        types.String `tfsdk:"address"`
+	AddressVariable                types.String `tfsdk:"address_variable"`
+	AdministrativeDistance         types.Int64  `tfsdk:"administrative_distance"`
+	AdministrativeDistanceVariable types.String `tfsdk:"administrative_distance_variable"`
+}
+
+type ServiceLANVPNIpv6StaticRoutesIpv6StaticRouteInterfaceNextHop struct {
+	Address                        types.String `tfsdk:"address"`
+	AddressVariable                types.String `tfsdk:"address_variable"`
+	AdministrativeDistance         types.Int64  `tfsdk:"administrative_distance"`
+	AdministrativeDistanceVariable types.String `tfsdk:"administrative_distance_variable"`
 }
 
 // End of section. //template:end types

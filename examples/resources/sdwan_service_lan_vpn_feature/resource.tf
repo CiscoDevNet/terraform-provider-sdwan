@@ -55,6 +55,7 @@ resource "sdwan_service_lan_vpn_feature" "example" {
       subnet_mask     = "0.0.0.0"
       service         = "SIG"
       vpn             = 0
+      sse_instance    = "1"
     }
   ]
   gre_routes = [
@@ -98,6 +99,14 @@ resource "sdwan_service_lan_vpn_feature" "example" {
       source_ip            = "1.2.3.4"
       translated_source_ip = "2.3.4.5"
       static_nat_direction = "inside"
+    }
+  ]
+  static_nat_subnets = [
+    {
+      source_ip_subnet            = "1.2.3.4"
+      translated_source_ip_subnet = "2.3.4.5"
+      prefix_length               = 6
+      static_nat_direction        = "inside"
     }
   ]
   nat_64_v4_pools = [

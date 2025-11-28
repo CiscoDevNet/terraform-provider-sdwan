@@ -271,6 +271,14 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 										MarkdownDescription: "Aggregate Only",
 										Computed:            true,
 									},
+									"region": schema.StringAttribute{
+										MarkdownDescription: "Applied to Region",
+										Computed:            true,
+									},
+									"region_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
 								},
 							},
 						},
@@ -358,6 +366,14 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 							MarkdownDescription: "IPv4 Route Gateway Next Hop",
 							Computed:            true,
 						},
+						"administrative_distance": schema.Int64Attribute{
+							MarkdownDescription: "Gateway distance",
+							Computed:            true,
+						},
+						"administrative_distance_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
 						"dhcp": schema.BoolAttribute{
 							MarkdownDescription: "IPv4 Route Gateway DHCP",
 							Computed:            true,
@@ -365,6 +381,46 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 						"vpn": schema.BoolAttribute{
 							MarkdownDescription: "IPv4 Route Gateway VPN",
 							Computed:            true,
+						},
+						"ip_static_route_interface": schema.ListNestedAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"interface_name": schema.StringAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"interface_name_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"next_hop": schema.ListNestedAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												"address": schema.StringAttribute{
+													MarkdownDescription: "IPv4 Address",
+													Computed:            true,
+												},
+												"address_variable": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+													Computed:            true,
+												},
+												"administrative_distance": schema.Int64Attribute{
+													MarkdownDescription: "Administrative distance",
+													Computed:            true,
+												},
+												"administrative_distance_variable": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+													Computed:            true,
+												},
+											},
+										},
+									},
+								},
+							},
 						},
 					},
 				},
@@ -421,6 +477,46 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 						"nat_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
+						},
+						"ipv6_static_route_interface": schema.ListNestedAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"interface_name": schema.StringAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"interface_name_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"next_hop": schema.ListNestedAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												"address": schema.StringAttribute{
+													MarkdownDescription: "IPv6 Address",
+													Computed:            true,
+												},
+												"address_variable": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+													Computed:            true,
+												},
+												"administrative_distance": schema.Int64Attribute{
+													MarkdownDescription: "Administrative distance",
+													Computed:            true,
+												},
+												"administrative_distance_variable": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+													Computed:            true,
+												},
+											},
+										},
+									},
+								},
+							},
 						},
 					},
 				},
@@ -489,6 +585,14 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 						},
 						"vpn": schema.Int64Attribute{
 							MarkdownDescription: "Service",
+							Computed:            true,
+						},
+						"sse_instance": schema.StringAttribute{
+							MarkdownDescription: "SSE Instance name",
+							Computed:            true,
+						},
+						"sse_instance_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
 					},
@@ -706,6 +810,50 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 							Computed:            true,
 						},
 						"translated_source_ip_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"static_nat_direction": schema.StringAttribute{
+							MarkdownDescription: "Static NAT Direction",
+							Computed:            true,
+						},
+						"static_nat_direction_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"tracker_object_id": schema.StringAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+						},
+					},
+				},
+			},
+			"static_nat_subnets": schema.ListNestedAttribute{
+				MarkdownDescription: "Static NAT Subnet Rules",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"source_ip_subnet": schema.StringAttribute{
+							MarkdownDescription: "Source IP Subnet",
+							Computed:            true,
+						},
+						"source_ip_subnet_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"translated_source_ip_subnet": schema.StringAttribute{
+							MarkdownDescription: "Translated Source IP Subnet",
+							Computed:            true,
+						},
+						"translated_source_ip_subnet_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"prefix_length": schema.Int64Attribute{
+							MarkdownDescription: "Network Prefix Length",
+							Computed:            true,
+						},
+						"prefix_length_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
