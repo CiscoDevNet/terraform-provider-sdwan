@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanTransportRoutingOSPFv3IPv6ProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospfv3_ipv6_feature.test", "router_id", "1.2.3.4"))
@@ -49,6 +49,7 @@ func TestAccSdwanTransportRoutingOSPFv3IPv6ProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospfv3_ipv6_feature.test", "spf_maximum_hold_time", "10000"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospfv3_ipv6_feature.test", "filter", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospfv3_ipv6_feature.test", "redistributes.0.protocol", "static"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospfv3_ipv6_feature.test", "redistributes.0.translate_rib_metric", "example"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospfv3_ipv6_feature.test", "router_lsa_action", "on-startup"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospfv3_ipv6_feature.test", "router_lsa_on_startup_time", "30"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospfv3_ipv6_feature.test", "areas.0.area_number", "1"))
@@ -116,6 +117,7 @@ func testAccSdwanTransportRoutingOSPFv3IPv6ProfileParcelConfig_all() string {
 	config += `	filter = false` + "\n"
 	config += `	redistributes = [{` + "\n"
 	config += `	  protocol = "static"` + "\n"
+	config += `	  translate_rib_metric = example` + "\n"
 	config += `	}]` + "\n"
 	config += `	router_lsa_action = "on-startup"` + "\n"
 	config += `	router_lsa_on_startup_time = 30` + "\n"

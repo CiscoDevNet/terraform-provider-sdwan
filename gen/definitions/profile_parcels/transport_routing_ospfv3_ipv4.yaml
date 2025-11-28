@@ -1,8 +1,8 @@
 ---
 name: Transport Routing OSPFv3 IPv4
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/routing/ospfv3/ipv4
-minimum_version: 20.12.0
-test_tags: [SDWAN_2012]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 skip_minimum_test: true
 parcel_type: feature
 doc_category: Features - Transport
@@ -84,6 +84,9 @@ attributes:
     - model_name: natDia
       tf_name: nat_dia
       example: true
+    - model_name: translateRibMetric
+      tf_name: translate_rib_metric
+      example: example
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
@@ -108,6 +111,7 @@ attributes:
     - model_name: areaType
       tf_name: area_type
       data_path: [areaTypeConfig]
+      enum_values: [nssa, normal]
       example: stub
     - model_name: noSummary
       data_path: [areaTypeConfig]
@@ -140,6 +144,7 @@ attributes:
       - model_name: authType
         tf_name: authentication_type
         data_path: [authenticationConfig]
+        enum_values: [ipsec-sha1]
         example: no-auth
       - model_name: spi
         tf_name: authentication_spi
