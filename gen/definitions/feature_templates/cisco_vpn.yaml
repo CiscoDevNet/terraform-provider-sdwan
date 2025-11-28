@@ -67,6 +67,7 @@ attributes:
         include_default_option: true
         conditional_attribute:
           name: prefix
+          value: ''
   - model_name: route
     data_path: [ip]
     tf_name: ipv4_static_routes
