@@ -24,15 +24,12 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 // End of section. //template:end imports
-
-var MinServiceRoutingOSPFv3IPv4UpdateVersion = version.Must(version.NewVersion("20.15.0"))
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type ServiceRoutingOSPFv3IPv4 struct {
@@ -148,7 +145,8 @@ func (data ServiceRoutingOSPFv3IPv4) getPath() string {
 
 // End of section. //template:end getPath
 
-func (data ServiceRoutingOSPFv3IPv4) toBody(ctx context.Context, version *version.Version) string {
+// Section below is generated&owned by "gen/generator.go". //template:begin toBody
+func (data ServiceRoutingOSPFv3IPv4) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -427,18 +425,21 @@ func (data ServiceRoutingOSPFv3IPv4) toBody(ctx context.Context, version *versio
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.value", item.RoutePolicyId.ValueString())
 				}
 			}
-			if version.LessThan(MinServiceRoutingOSPFv3IPv4UpdateVersion) {
+
+			if !item.TranslateRibMetricVariable.IsNull() {
+				if true && item.Protocol.ValueString() == "omp" {
+					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.value", item.TranslateRibMetricVariable.ValueString())
+				}
+			} else if item.TranslateRibMetric.IsNull() {
+				if true && item.Protocol.ValueString() == "omp" {
+					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.value", false)
+				}
 			} else {
-				if item.TranslateRibMetric.IsNull() {
-					if true && item.Protocol.ValueString() == "omp" {
-						itemBody, _ = sjson.Set(itemBody, "translateRibMetric.optionType", "default")
-						itemBody, _ = sjson.Set(itemBody, "translateRibMetric.value", false)
-					}
-				} else {
-					if true && item.Protocol.ValueString() == "omp" {
-						itemBody, _ = sjson.Set(itemBody, "translateRibMetric.optionType", "global")
-						itemBody, _ = sjson.Set(itemBody, "translateRibMetric.value", item.TranslateRibMetric.ValueBool())
-					}
+				if true && item.Protocol.ValueString() == "omp" {
+					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.value", item.TranslateRibMetric.ValueBool())
 				}
 			}
 			body, _ = sjson.SetRaw(body, path+"redistribute.-1", itemBody)
@@ -729,6 +730,8 @@ func (data ServiceRoutingOSPFv3IPv4) toBody(ctx context.Context, version *versio
 	}
 	return body
 }
+
+// End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *ServiceRoutingOSPFv3IPv4) fromBody(ctx context.Context, res gjson.Result) {
