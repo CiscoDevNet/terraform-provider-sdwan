@@ -4,13 +4,13 @@ page_title: "sdwan_application_priority_traffic_policy_policy Resource - terrafo
 subcategory: "Policies"
 description: |-
   This resource can manage a Application Priority Traffic Policy Policy.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_application_priority_traffic_policy_policy (Resource)
 
 This resource can manage a Application Priority Traffic Policy Policy.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -101,7 +101,7 @@ Optional:
 - `nat_fallback` (Boolean)
 - `nat_pool` (Number) - Range: `1`-`31`
 - `nat_vpn` (Boolean)
-- `redirect_dns_field` (String) - Choices: `ipAddress`, `redirectDns`
+- `redirect_dns_field` (String) - Choices: `ipAddress`, `dnsHost`
 - `redirect_dns_value` (String)
 - `secure_internet_gateway` (Boolean)
 - `set_parameters` (Attributes List) (see [below for nested schema](#nestedatt--sequences--actions--set_parameters))
@@ -116,14 +116,14 @@ Optional:
 - `forwarding_class_list_id` (String)
 - `local_tloc_list_color` (Set of String)
 - `local_tloc_list_encapsulation` (String) - Choices: `ipsec`, `gre`
-- `local_tloc_list_restrict` (String)
+- `local_tloc_list_restrict` (Boolean)
 - `next_hop_ipv4` (String)
 - `next_hop_ipv6` (String)
 - `next_hop_loose` (Boolean)
 - `policer_id` (String)
 - `preferred_color_group_id` (String)
 - `preferred_remote_color_id` (Set of String)
-- `preferred_remote_color_restrict` (String)
+- `preferred_remote_color_restrict` (Boolean)
 - `service_chain_fallback_to_routing` (Boolean)
 - `service_chain_local` (Boolean)
 - `service_chain_tloc_color` (Set of String)
@@ -132,17 +132,19 @@ Optional:
 - `service_chain_tloc_list_id` (String)
 - `service_chain_type` (String) - Choices: `SC1`, `SC2`, `SC4`, `SC5`, `SC6`, `SC7`, `SC8`, `SC9`, `SC10`, `SC11`, `SC12`, `SC13`, `SC14`, `SC15`, `SC16`
 - `service_chain_vpn` (Number) - Range: `0`-`65530`
+- `service_local` (Boolean)
+- `service_restrict` (Boolean)
 - `service_tloc_color` (Set of String)
 - `service_tloc_encapsulation` (String) - Choices: `ipsec`, `gre`
 - `service_tloc_ip` (String)
 - `service_tloc_list_id` (String)
 - `service_type` (String) - Choices: `FW`, `IDS`, `IDP`, `netsvc1`, `netsvc2`, `netsvc3`, `netsvc4`, `appqoe`
-- `service_vpn` (String)
+- `service_vpn` (Number) - Range: `0`-`65530`
 - `tloc_color` (Set of String)
 - `tloc_encapsulation` (String) - Choices: `ipsec`, `gre`
 - `tloc_ip` (String)
 - `tloc_list_id` (String)
-- `vpn` (String)
+- `vpn` (Number) - Range: `0`-`65530`
 
 
 <a id="nestedatt--sequences--actions--sla_classes"></a>
@@ -176,8 +178,7 @@ Optional:
 - `dns` (String) Dns
   - Choices: `request`, `response`
 - `dns_application_list_id` (String)
-- `dscp` (Number) DSCP number
-  - Range: `0`-`63`
+- `dscp` (Number) DSCP number(s)
 - `icmp6_message` (Set of String) ICMP6 Message
 - `icmp_message` (Set of String) ICMP Message
 - `packet_length` (String) Packet Length

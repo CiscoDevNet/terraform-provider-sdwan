@@ -1,7 +1,7 @@
 ---
 name: Application Priority Traffic Policy
 rest_endpoint: /v1/feature-profile/sdwan/application-priority/%v/traffic-policy
-minimum_version: 20.12.0
+minimum_version: 20.15.0
 id_attribute: id
 test_tags: [SDWAN_2012, TF_VAR_policy_object_feature_template_id]
 skip_minimum_test: true
@@ -23,7 +23,7 @@ attributes:
   #   example:
   # # ==== Unable to find in UI ====
   # - model_name: hasCorViaSig
-  #   exclude_test: true
+    # exclude_test: true
   #   example:
   - model_name: vpn
     tf_name: vpns
@@ -273,6 +273,16 @@ attributes:
           data_path: [service]
           exclude_test: true
           example: FW
+        - model_name: local
+          tf_name: service_local
+          data_path: [service]
+          exclude_test: true
+          example: false
+        - model_name: restrict
+          tf_name: service_restrict
+          data_path: [service]
+          exclude_test: true
+          example: false
         - model_name: refId
           tf_name: service_tloc_list_id
           data_path: [service, tlocList]

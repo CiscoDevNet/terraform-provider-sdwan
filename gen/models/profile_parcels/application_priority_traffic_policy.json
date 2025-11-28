@@ -7,7 +7,6 @@
     "type": "object",
     "properties": {
       "name": {
-        "description": "Set the parcel name",
         "type": "string",
         "pattern": "^[^&<>! \"]+$",
         "minLength": 1,
@@ -41,27 +40,39 @@
           },
           "simpleFlow": {
             "type": "object",
-            "properties": {
-              "optionType": {
-                "type": "string",
-                "enum": ["global"]
-              },
-              "value": {
-                "type": "boolean"
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
               }
-            }
+            ]
           },
           "hasCorViaSig": {
             "type": "object",
-            "properties": {
-              "optionType": {
-                "type": "string",
-                "enum": ["global"]
-              },
-              "value": {
-                "type": "boolean"
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
               }
-            }
+            ]
           },
           "target": {
             "description": "Target vpn and direction",
@@ -233,7 +244,9 @@
                                 "required": ["optionType", "value"],
                                 "additionalProperties": false
                               }
-                            }
+                            },
+                            "required": ["refId"],
+                            "additionalProperties": false
                           },
                           "saasAppList": {
                             "description": "Saas App list Reference",
@@ -253,7 +266,9 @@
                                 "required": ["optionType", "value"],
                                 "additionalProperties": false
                               }
-                            }
+                            },
+                            "required": ["refId"],
+                            "additionalProperties": false
                           },
                           "serviceArea": {
                             "description": "M365 Service Area",
@@ -315,7 +330,9 @@
                                 "required": ["optionType", "value"],
                                 "additionalProperties": false
                               }
-                            }
+                            },
+                            "required": ["refId"],
+                            "additionalProperties": false
                           },
                           "trafficClass": {
                             "description": "Traffic Class",
@@ -351,7 +368,7 @@
                             ]
                           },
                           "dscp": {
-                            "description": "DSCP number",
+                            "description": "DSCP number(s)",
                             "type": "object",
                             "oneOf": [
                               {
@@ -361,9 +378,23 @@
                                     "enum": ["global"]
                                   },
                                   "value": {
-                                    "minimum": 0,
-                                    "maximum": 63,
-                                    "type": "integer"
+                                    "oneOf": [
+                                      {
+                                        "minimum": 0,
+                                        "maximum": 63,
+                                        "type": "integer"
+                                      },
+                                      {
+                                        "type": "array",
+                                        "minItems": 1,
+                                        "uniqueItems": true,
+                                        "items": {
+                                          "minimum": 0,
+                                          "maximum": 63,
+                                          "type": "integer"
+                                        }
+                                      }
+                                    ]
                                   }
                                 },
                                 "required": ["optionType", "value"],
@@ -589,7 +620,9 @@
                                 "required": ["optionType", "value"],
                                 "additionalProperties": false
                               }
-                            }
+                            },
+                            "required": ["refId"],
+                            "additionalProperties": false
                           },
                           "sourceDataIpv6PrefixList": {
                             "description": "Source Data Prefix Parcel UUID",
@@ -609,7 +642,9 @@
                                 "required": ["optionType", "value"],
                                 "additionalProperties": false
                               }
-                            }
+                            },
+                            "required": ["refId"],
+                            "additionalProperties": false
                           },
                           "sourceIp": {
                             "description": "Source Data IP Prefix",
@@ -623,7 +658,7 @@
                                   },
                                   "value": {
                                     "type": "string",
-                                    "format": "ipv4"
+                                    "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
                                   }
                                 },
                                 "required": ["optionType", "value"],
@@ -643,7 +678,7 @@
                                   },
                                   "value": {
                                     "type": "string",
-                                    "format": "ipv6"
+                                    "pattern": "((^\\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?\\s*(\\/)(\\b([0-9]{1,2}|1[01][0-9]|12[0-8])\\b)$))"
                                   }
                                 },
                                 "required": ["optionType", "value"],
@@ -665,7 +700,6 @@
                                     "type": "array",
                                     "minItems": 1,
                                     "items": {
-                                      "type": "object",
                                       "oneOf": [
                                         {
                                           "type": "string",
@@ -702,7 +736,9 @@
                                 "required": ["optionType", "value"],
                                 "additionalProperties": false
                               }
-                            }
+                            },
+                            "required": ["refId"],
+                            "additionalProperties": false
                           },
                           "destinationDataIpv6PrefixList": {
                             "description": "Destination Data Prefix Parcel UUID",
@@ -722,7 +758,9 @@
                                 "required": ["optionType", "value"],
                                 "additionalProperties": false
                               }
-                            }
+                            },
+                            "required": ["refId"],
+                            "additionalProperties": false
                           },
                           "destinationIp": {
                             "description": "Destination Data IP Prefix",
@@ -736,7 +774,7 @@
                                   },
                                   "value": {
                                     "type": "string",
-                                    "format": "ipv4"
+                                    "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
                                   }
                                 },
                                 "required": ["optionType", "value"],
@@ -756,7 +794,7 @@
                                   },
                                   "value": {
                                     "type": "string",
-                                    "format": "ipv6"
+                                    "pattern": "((^\\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?\\s*(\\/)(\\b([0-9]{1,2}|1[01][0-9]|12[0-8])\\b)$))"
                                   }
                                 },
                                 "required": ["optionType", "value"],
@@ -1057,7 +1095,9 @@
                                   "required": ["optionType", "value"],
                                   "additionalProperties": false
                                 }
-                              }
+                              },
+                              "required": ["refId"],
+                              "additionalProperties": false
                             },
                             "preferredColor": {
                               "not": {
@@ -1120,29 +1160,43 @@
                                   "required": ["optionType", "value"],
                                   "additionalProperties": false
                                 }
-                              }
+                              },
+                              "required": ["refId"],
+                              "additionalProperties": false
                             },
                             "strict": {
-                              "properties": {
-                                "optionType": {
-                                  "type": "string",
-                                  "enum": ["global"]
-                                },
-                                "value": {
-                                  "type": "boolean"
+                              "oneOf": [
+                                {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
                                 }
-                              }
+                              ]
                             },
                             "fallbackToBestPath": {
-                              "properties": {
-                                "optionType": {
-                                  "type": "string",
-                                  "enum": ["global"]
-                                },
-                                "value": {
-                                  "type": "boolean"
+                              "oneOf": [
+                                {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
                                 }
-                              }
+                              ]
                             },
                             "preferredRemoteColor": {
                               "properties": {
@@ -1187,15 +1241,21 @@
                               "additionalProperties": false
                             },
                             "remoteColorRestrict": {
-                              "properties": {
-                                "optionType": {
-                                  "type": "string",
-                                  "enum": ["global"]
-                                },
-                                "value": {
-                                  "type": "boolean"
+                              "oneOf": [
+                                {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
                                 }
-                              }
+                              ]
                             }
                           },
                           "additionalProperties": false
@@ -1315,7 +1375,9 @@
                                   "required": ["optionType", "value"],
                                   "additionalProperties": false
                                 }
-                              }
+                              },
+                              "required": ["refId"],
+                              "additionalProperties": false
                             },
                             "preferredColorGroup": {
                               "properties": {
@@ -1333,7 +1395,9 @@
                                   "required": ["optionType", "value"],
                                   "additionalProperties": false
                                 }
-                              }
+                              },
+                              "required": ["refId"],
+                              "additionalProperties": false
                             },
                             "forwardingClass": {
                               "properties": {
@@ -1351,7 +1415,9 @@
                                   "required": ["optionType", "value"],
                                   "additionalProperties": false
                                 }
-                              }
+                              },
+                              "required": ["refId"],
+                              "additionalProperties": false
                             },
                             "localTlocList": {
                               "properties": {
@@ -1404,7 +1470,21 @@
                                       "enum": ["global"]
                                     },
                                     "value": {
-                                      "type": "string"
+                                      "oneOf": [
+                                        {
+                                          "properties": {
+                                            "optionType": {
+                                              "type": "string",
+                                              "enum": ["global"]
+                                            },
+                                            "value": {
+                                              "type": "boolean"
+                                            }
+                                          },
+                                          "required": ["optionType", "value"],
+                                          "additionalProperties": false
+                                        }
+                                      ]
                                     }
                                   },
                                   "required": ["optionType", "value"],
@@ -1479,7 +1559,21 @@
                                       "enum": ["global"]
                                     },
                                     "value": {
-                                      "type": "string"
+                                      "oneOf": [
+                                        {
+                                          "properties": {
+                                            "optionType": {
+                                              "type": "string",
+                                              "enum": ["global"]
+                                            },
+                                            "value": {
+                                              "type": "boolean"
+                                            }
+                                          },
+                                          "required": ["optionType", "value"],
+                                          "additionalProperties": false
+                                        }
+                                      ]
                                     }
                                   },
                                   "required": ["optionType", "value"],
@@ -1500,6 +1594,7 @@
                                     "value": {
                                       "type": "array",
                                       "minItems": 1,
+                                      "maxItems": 1,
                                       "uniqueItems": true,
                                       "items": {
                                         "enum": [
@@ -1555,7 +1650,7 @@
                                     },
                                     "value": {
                                       "type": "string",
-                                      "format": "ipv4"
+                                      "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
                                     }
                                   },
                                   "required": ["optionType", "value"],
@@ -1581,10 +1676,92 @@
                                   "required": ["optionType", "value"],
                                   "additionalProperties": false
                                 }
-                              }
+                              },
+                              "required": ["refId"],
+                              "additionalProperties": false
                             },
                             "service": {
                               "oneOf": [
+                                {
+                                  "properties": {
+                                    "type": {
+                                      "properties": {
+                                        "optionType": {
+                                          "type": "string",
+                                          "enum": ["global"]
+                                        },
+                                        "value": {
+                                          "enum": [
+                                            "FW",
+                                            "IDS",
+                                            "IDP",
+                                            "netsvc1",
+                                            "netsvc2",
+                                            "netsvc3",
+                                            "netsvc4",
+                                            "appqoe"
+                                          ],
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": ["optionType", "value"],
+                                      "additionalProperties": false
+                                    },
+                                    "vpn": {
+                                      "properties": {
+                                        "optionType": {
+                                          "type": "string",
+                                          "enum": ["global"]
+                                        },
+                                        "value": {
+                                          "type": "integer",
+                                          "minimum": 0,
+                                          "maximum": 65530
+                                        }
+                                      },
+                                      "required": ["optionType", "value"],
+                                      "additionalProperties": false
+                                    },
+                                    "local": {
+                                      "default": false,
+                                      "oneOf": [
+                                        {
+                                          "properties": {
+                                            "optionType": {
+                                              "type": "string",
+                                              "enum": ["global"]
+                                            },
+                                            "value": {
+                                              "type": "boolean"
+                                            }
+                                          },
+                                          "required": ["optionType", "value"],
+                                          "additionalProperties": false
+                                        }
+                                      ]
+                                    },
+                                    "restrict": {
+                                      "default": true,
+                                      "oneOf": [
+                                        {
+                                          "properties": {
+                                            "optionType": {
+                                              "type": "string",
+                                              "enum": ["global"]
+                                            },
+                                            "value": {
+                                              "type": "boolean"
+                                            }
+                                          },
+                                          "required": ["optionType", "value"],
+                                          "additionalProperties": false
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "required": ["type", "vpn"],
+                                  "additionalProperties": false
+                                },
                                 {
                                   "properties": {
                                     "tloc": {
@@ -1598,6 +1775,7 @@
                                             "value": {
                                               "type": "array",
                                               "minItems": 1,
+                                              "maxItems": 1,
                                               "uniqueItems": true,
                                               "items": {
                                                 "enum": [
@@ -1653,7 +1831,7 @@
                                             },
                                             "value": {
                                               "type": "string",
-                                              "format": "ipv4"
+                                              "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
                                             }
                                           },
                                           "required": ["optionType", "value"],
@@ -1670,10 +1848,9 @@
                                           "enum": ["global"]
                                         },
                                         "value": {
-                                          "type": "string",
-                                          "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                                          "minLength": 1,
-                                          "maxLength": 64
+                                          "type": "integer",
+                                          "minimum": 0,
+                                          "maximum": 65530
                                         }
                                       },
                                       "required": ["optionType", "value"],
@@ -1724,7 +1901,9 @@
                                           "required": ["optionType", "value"],
                                           "additionalProperties": false
                                         }
-                                      }
+                                      },
+                                      "required": ["refId"],
+                                      "additionalProperties": false
                                     },
                                     "vpn": {
                                       "properties": {
@@ -1733,10 +1912,9 @@
                                           "enum": ["global"]
                                         },
                                         "value": {
-                                          "type": "string",
-                                          "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                                          "minLength": 1,
-                                          "maxLength": 64
+                                          "type": "integer",
+                                          "minimum": 0,
+                                          "maximum": 65530
                                         }
                                       },
                                       "required": ["optionType", "value"],
@@ -1825,27 +2003,39 @@
                                 },
                                 "local": {
                                   "default": false,
-                                  "properties": {
-                                    "optionType": {
-                                      "type": "string",
-                                      "enum": ["global"]
-                                    },
-                                    "value": {
-                                      "type": "boolean"
+                                  "oneOf": [
+                                    {
+                                      "properties": {
+                                        "optionType": {
+                                          "type": "string",
+                                          "enum": ["global"]
+                                        },
+                                        "value": {
+                                          "type": "boolean"
+                                        }
+                                      },
+                                      "required": ["optionType", "value"],
+                                      "additionalProperties": false
                                     }
-                                  }
+                                  ]
                                 },
                                 "restrict": {
                                   "default": true,
-                                  "properties": {
-                                    "optionType": {
-                                      "type": "string",
-                                      "enum": ["global"]
-                                    },
-                                    "value": {
-                                      "type": "boolean"
+                                  "oneOf": [
+                                    {
+                                      "properties": {
+                                        "optionType": {
+                                          "type": "string",
+                                          "enum": ["global"]
+                                        },
+                                        "value": {
+                                          "type": "boolean"
+                                        }
+                                      },
+                                      "required": ["optionType", "value"],
+                                      "additionalProperties": false
                                     }
-                                  }
+                                  ]
                                 },
                                 "tloc": {
                                   "properties": {
@@ -1858,6 +2048,7 @@
                                         "value": {
                                           "type": "array",
                                           "minItems": 1,
+                                          "maxItems": 1,
                                           "uniqueItems": true,
                                           "items": {
                                             "enum": [
@@ -1913,7 +2104,7 @@
                                         },
                                         "value": {
                                           "type": "string",
-                                          "format": "ipv4"
+                                          "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
                                         }
                                       },
                                       "required": ["optionType", "value"],
@@ -1939,7 +2130,9 @@
                                       "required": ["optionType", "value"],
                                       "additionalProperties": false
                                     }
-                                  }
+                                  },
+                                  "required": ["refId"],
+                                  "additionalProperties": false
                                 }
                               },
                               "required": ["type", "local", "restrict"],
@@ -2023,7 +2216,7 @@
                                 },
                                 "value": {
                                   "type": "string",
-                                  "format": "ipv4"
+                                  "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
                                 }
                               },
                               "required": ["optionType", "value"],
@@ -2044,15 +2237,21 @@
                               "additionalProperties": false
                             },
                             "nextHopLoose": {
-                              "properties": {
-                                "optionType": {
-                                  "type": "string",
-                                  "enum": ["global"]
-                                },
-                                "value": {
-                                  "type": "boolean"
+                              "oneOf": [
+                                {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
                                 }
-                              }
+                              ]
                             },
                             "vpn": {
                               "properties": {
@@ -2061,10 +2260,9 @@
                                   "enum": ["global"]
                                 },
                                 "value": {
-                                  "type": "string",
-                                  "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                                  "minLength": 1,
-                                  "maxLength": 64
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 65530
                                 }
                               },
                               "required": ["optionType", "value"],
@@ -2155,6 +2353,7 @@
                         ]
                       },
                       "redirectDns": {
+                        "type": "object",
                         "properties": {
                           "field": {
                             "type": "object",
@@ -2165,7 +2364,7 @@
                               },
                               "value": {
                                 "type": "string",
-                                "enum": ["ipAddress", "redirectDns"]
+                                "enum": ["ipAddress", "dnsHost"]
                               }
                             },
                             "required": ["optionType", "value"],
@@ -2186,7 +2385,7 @@
                                   },
                                   {
                                     "type": "string",
-                                    "format": "ipv4"
+                                    "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
                                   }
                                 ]
                               }
@@ -2200,26 +2399,38 @@
                         "type": "object",
                         "properties": {
                           "tcpOptimization": {
-                            "properties": {
-                              "optionType": {
-                                "type": "string",
-                                "enum": ["global"]
-                              },
-                              "value": {
-                                "type": "boolean"
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
                               }
-                            }
+                            ]
                           },
                           "dreOptimization": {
-                            "properties": {
-                              "optionType": {
-                                "type": "string",
-                                "enum": ["global"]
-                              },
-                              "value": {
-                                "type": "boolean"
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
                               }
-                            }
+                            ]
                           },
                           "serviceNodeGroup": {
                             "properties": {
@@ -2331,51 +2542,75 @@
                       },
                       "log": {
                         "type": "object",
-                        "properties": {
-                          "optionType": {
-                            "type": "string",
-                            "enum": ["global"]
-                          },
-                          "value": {
-                            "type": "boolean"
+                        "oneOf": [
+                          {
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": ["optionType", "value"],
+                            "additionalProperties": false
                           }
-                        }
+                        ]
                       },
                       "cloudSaas": {
                         "type": "object",
-                        "properties": {
-                          "optionType": {
-                            "type": "string",
-                            "enum": ["global"]
-                          },
-                          "value": {
-                            "type": "boolean"
+                        "oneOf": [
+                          {
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": ["optionType", "value"],
+                            "additionalProperties": false
                           }
-                        }
+                        ]
                       },
                       "cloudProbe": {
                         "type": "object",
-                        "properties": {
-                          "optionType": {
-                            "type": "string",
-                            "enum": ["global"]
-                          },
-                          "value": {
-                            "type": "boolean"
+                        "oneOf": [
+                          {
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": ["optionType", "value"],
+                            "additionalProperties": false
                           }
-                        }
+                        ]
                       },
                       "cflowd": {
                         "type": "object",
-                        "properties": {
-                          "optionType": {
-                            "type": "string",
-                            "enum": ["global"]
-                          },
-                          "value": {
-                            "type": "boolean"
+                        "oneOf": [
+                          {
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": ["optionType", "value"],
+                            "additionalProperties": false
                           }
-                        }
+                        ]
                       },
                       "natPool": {
                         "type": "object",
@@ -2397,37 +2632,55 @@
                         "type": "object",
                         "properties": {
                           "useVpn": {
-                            "properties": {
-                              "optionType": {
-                                "type": "string",
-                                "enum": ["global"]
-                              },
-                              "value": {
-                                "type": "boolean"
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
                               }
-                            }
+                            ]
                           },
                           "fallback": {
-                            "properties": {
-                              "optionType": {
-                                "type": "string",
-                                "enum": ["global"]
-                              },
-                              "value": {
-                                "type": "boolean"
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
                               }
-                            }
+                            ]
                           },
                           "bypass": {
-                            "properties": {
-                              "optionType": {
-                                "type": "string",
-                                "enum": ["global"]
-                              },
-                              "value": {
-                                "type": "boolean"
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": ["global"]
+                                  },
+                                  "value": {
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": ["optionType", "value"],
+                                "additionalProperties": false
                               }
-                            }
+                            ]
                           },
                           "diaPool": {
                             "oneOf": [
@@ -2525,30 +2778,60 @@
                       },
                       "sig": {
                         "type": "object",
-                        "properties": {
-                          "optionType": {
-                            "type": "string",
-                            "enum": ["global"]
-                          },
-                          "value": {
-                            "type": "boolean"
+                        "oneOf": [
+                          {
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": ["optionType", "value"],
+                            "additionalProperties": false
                           }
-                        }
+                        ]
                       },
                       "fallbackToRouting": {
                         "type": "object",
-                        "properties": {
-                          "optionType": {
-                            "type": "string",
-                            "enum": ["global"]
-                          },
-                          "value": {
-                            "type": "boolean"
+                        "oneOf": [
+                          {
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": ["global"]
+                              },
+                              "value": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": ["optionType", "value"],
+                            "additionalProperties": false
                           }
-                        }
+                        ]
                       },
                       "sse": {
                         "type": "object",
+                        "allOf": [
+                          {
+                            "if": {
+                              "properties": {
+                                "secureServiceEdge": {
+                                  "properties": {
+                                    "value": {
+                                      "enum": [true]
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "then": {
+                              "required": ["secureServiceEdgeInstance"]
+                            }
+                          }
+                        ],
                         "properties": {
                           "secureServiceEdge": {
                             "properties": {
@@ -2557,7 +2840,21 @@
                                 "enum": ["global"]
                               },
                               "value": {
-                                  "type": "string"
+                                "oneOf": [
+                                  {
+                                    "properties": {
+                                      "optionType": {
+                                        "type": "string",
+                                        "enum": ["global"]
+                                      },
+                                      "value": {
+                                        "type": "boolean"
+                                      }
+                                    },
+                                    "required": ["optionType", "value"],
+                                    "additionalProperties": false
+                                  }
+                                ]
                               }
                             }
                           },
@@ -2578,25 +2875,7 @@
                           "secureServiceEdge",
                           "secureServiceEdgeInstance"
                         ],
-                        "additionalProperties": false,
-                        "allOf": [
-                          {
-                            "if": {
-                              "properties": {
-                                "secureServiceEdge": {
-                                  "properties": {
-                                    "value": {
-                                      "enum": [true]
-                                    }
-                                  }
-                                }
-                              }
-                            },
-                            "then": {
-                              "required": ["secureServiceEdgeInstance"]
-                            }
-                          }
-                        ]
+                        "additionalProperties": false
                       }
                     },
                     "additionalProperties": false
@@ -2988,18 +3267,29 @@
         "details-4": "when option Type is default, value should be present with given default value as specified in schema",
         "examples": [
           {
-            "name": "traffic-policy-1",
-            "description": "test",
+            "name": "test_app_priority_policy_1_traffic",
             "data": {
               "target": {
                 "vpn": {
                   "optionType": "global",
-                  "value": ["Guest"]
+                  "value": ["test_vpn"]
                 },
                 "direction": {
                   "optionType": "global",
-                  "value": "service"
+                  "value": "tunnel"
                 }
+              },
+              "dataDefaultAction": {
+                "optionType": "global",
+                "value": "drop"
+              },
+              "simpleFlow": {
+                "optionType": "global",
+                "value": true
+              },
+              "hasCorViaSig": {
+                "optionType": "global",
+                "value": false
               },
               "sequences": [
                 {
@@ -3009,7 +3299,756 @@
                   },
                   "sequenceName": {
                     "optionType": "global",
-                    "value": "traffic"
+                    "value": "rule1"
+                  },
+                  "sequenceIpType": {
+                    "optionType": "global",
+                    "value": "all"
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "accept"
+                  },
+                  "match": {
+                    "entries": [
+                      {
+                        "trafficClass": {
+                          "optionType": "global",
+                          "value": "gold-voip-telephony"
+                        }
+                      }
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "slaClass": [
+                        {
+                          "slaName": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "97599834-0ece-42f2-a982-03731f8173bb"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "set": [
+                        {
+                          "forwardingClass": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "c2821b3a-056a-4ab2-9c8d-083de4932296"
+                            }
+                          }
+                        },
+                        {
+                          "dscp": {
+                            "optionType": "global",
+                            "value": 46
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 11
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "rule2"
+                  },
+                  "sequenceIpType": {
+                    "optionType": "global",
+                    "value": "all"
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "accept"
+                  },
+                  "match": {
+                    "entries": [
+                      {
+                        "trafficClass": {
+                          "optionType": "global",
+                          "value": "gold-broadcast-video"
+                        }
+                      }
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "slaClass": [
+                        {
+                          "slaName": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "97599834-0ece-42f2-a982-03731f8173bb"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "set": [
+                        {
+                          "forwardingClass": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "a33ac25e-9281-4753-96e6-4483faff8834"
+                            }
+                          }
+                        },
+                        {
+                          "dscp": {
+                            "optionType": "global",
+                            "value": 26
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 21
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "rule3"
+                  },
+                  "sequenceIpType": {
+                    "optionType": "global",
+                    "value": "all"
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "accept"
+                  },
+                  "match": {
+                    "entries": [
+                      {
+                        "trafficClass": {
+                          "optionType": "global",
+                          "value": "gold-real-time-interactive"
+                        }
+                      }
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "slaClass": [
+                        {
+                          "slaName": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "97599834-0ece-42f2-a982-03731f8173bb"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "set": [
+                        {
+                          "forwardingClass": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "60df0378-5ceb-4d51-9df2-7d81478974ca"
+                            }
+                          }
+                        },
+                        {
+                          "dscp": {
+                            "optionType": "global",
+                            "value": 34
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 31
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "rule4"
+                  },
+                  "sequenceIpType": {
+                    "optionType": "global",
+                    "value": "all"
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "accept"
+                  },
+                  "match": {
+                    "entries": [
+                      {
+                        "trafficClass": {
+                          "optionType": "global",
+                          "value": "gold-network-control"
+                        }
+                      }
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "slaClass": [
+                        {
+                          "slaName": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "97599834-0ece-42f2-a982-03731f8173bb"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "set": [
+                        {
+                          "forwardingClass": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "05323a9c-b673-446b-89de-064b298006f6"
+                            }
+                          }
+                        },
+                        {
+                          "dscp": {
+                            "optionType": "global",
+                            "value": 48
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 41
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "rule5"
+                  },
+                  "sequenceIpType": {
+                    "optionType": "global",
+                    "value": "all"
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "accept"
+                  },
+                  "match": {
+                    "entries": [
+                      {
+                        "trafficClass": {
+                          "optionType": "global",
+                          "value": "gold-multimedia-conferencing"
+                        }
+                      }
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "slaClass": [
+                        {
+                          "slaName": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "7e3299a6-bbc9-49e9-a35d-23c0c163e3ed"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "set": [
+                        {
+                          "forwardingClass": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "60df0378-5ceb-4d51-9df2-7d81478974ca"
+                            }
+                          }
+                        },
+                        {
+                          "dscp": {
+                            "optionType": "global",
+                            "value": 34
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 51
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "rule6"
+                  },
+                  "sequenceIpType": {
+                    "optionType": "global",
+                    "value": "all"
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "accept"
+                  },
+                  "match": {
+                    "entries": [
+                      {
+                        "trafficClass": {
+                          "optionType": "global",
+                          "value": "gold-multimedia-streaming"
+                        }
+                      }
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "slaClass": [
+                        {
+                          "slaName": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "7e3299a6-bbc9-49e9-a35d-23c0c163e3ed"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "set": [
+                        {
+                          "forwardingClass": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "a33ac25e-9281-4753-96e6-4483faff8834"
+                            }
+                          }
+                        },
+                        {
+                          "dscp": {
+                            "optionType": "global",
+                            "value": 26
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 61
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "rule7"
+                  },
+                  "sequenceIpType": {
+                    "optionType": "global",
+                    "value": "all"
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "accept"
+                  },
+                  "match": {
+                    "entries": [
+                      {
+                        "trafficClass": {
+                          "optionType": "global",
+                          "value": "gold-signaling"
+                        }
+                      }
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "slaClass": [
+                        {
+                          "slaName": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "7e3299a6-bbc9-49e9-a35d-23c0c163e3ed"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "set": [
+                        {
+                          "forwardingClass": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "b7ea8b1d-e5b1-4735-b02f-1f3d1c9b9e5a"
+                            }
+                          }
+                        },
+                        {
+                          "dscp": {
+                            "optionType": "global",
+                            "value": 24
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 71
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "rule8"
+                  },
+                  "sequenceIpType": {
+                    "optionType": "global",
+                    "value": "all"
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "accept"
+                  },
+                  "match": {
+                    "entries": [
+                      {
+                        "trafficClass": {
+                          "optionType": "global",
+                          "value": "gold-ops-admin-mgmt"
+                        }
+                      }
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "slaClass": [
+                        {
+                          "slaName": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "7e3299a6-bbc9-49e9-a35d-23c0c163e3ed"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "set": [
+                        {
+                          "forwardingClass": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "2558b8a2-bfca-445a-82af-d3dbbce061d1"
+                            }
+                          }
+                        },
+                        {
+                          "dscp": {
+                            "optionType": "global",
+                            "value": 18
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 81
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "rule9"
+                  },
+                  "sequenceIpType": {
+                    "optionType": "global",
+                    "value": "all"
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "accept"
+                  },
+                  "match": {
+                    "entries": [
+                      {
+                        "trafficClass": {
+                          "optionType": "global",
+                          "value": "gold-transactional-data"
+                        }
+                      }
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "slaClass": [
+                        {
+                          "slaName": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "7e3299a6-bbc9-49e9-a35d-23c0c163e3ed"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "set": [
+                        {
+                          "forwardingClass": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "2558b8a2-bfca-445a-82af-d3dbbce061d1"
+                            }
+                          }
+                        },
+                        {
+                          "dscp": {
+                            "optionType": "global",
+                            "value": 18
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 91
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "rule10"
+                  },
+                  "sequenceIpType": {
+                    "optionType": "global",
+                    "value": "all"
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "accept"
+                  },
+                  "match": {
+                    "entries": [
+                      {
+                        "trafficClass": {
+                          "optionType": "global",
+                          "value": "gold-bulk-data"
+                        }
+                      }
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "slaClass": [
+                        {
+                          "slaName": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "4e573831-b17a-493f-b845-dbab2e58b0b0"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "set": [
+                        {
+                          "forwardingClass": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "2558b8a2-bfca-445a-82af-d3dbbce061d1"
+                            }
+                          }
+                        },
+                        {
+                          "dscp": {
+                            "optionType": "global",
+                            "value": 18
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 101
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "rule11"
+                  },
+                  "sequenceIpType": {
+                    "optionType": "global",
+                    "value": "all"
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "accept"
+                  },
+                  "match": {
+                    "entries": [
+                      {
+                        "trafficClass": {
+                          "optionType": "global",
+                          "value": "silver"
+                        }
+                      }
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "slaClass": [
+                        {
+                          "slaName": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "31e5a63d-d771-48d8-89a9-9ac2357390fa"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "set": [
+                        {
+                          "forwardingClass": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "479bb3b9-5879-4431-805f-58874b366050"
+                            }
+                          }
+                        },
+                        {
+                          "dscp": {
+                            "optionType": "global",
+                            "value": 0
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 111
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "rule12"
+                  },
+                  "sequenceIpType": {
+                    "optionType": "global",
+                    "value": "all"
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "accept"
+                  },
+                  "match": {
+                    "entries": [
+                      {
+                        "trafficClass": {
+                          "optionType": "global",
+                          "value": "bronze"
+                        }
+                      }
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "slaClass": [
+                        {
+                          "slaName": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "31e5a63d-d771-48d8-89a9-9ac2357390fa"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "set": [
+                        {
+                          "forwardingClass": {
+                            "refId": {
+                              "optionType": "global",
+                              "value": "5005291c-9603-4f53-b26c-f0f8e5691e4c"
+                            }
+                          }
+                        },
+                        {
+                          "dscp": {
+                            "optionType": "global",
+                            "value": 8
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 121
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "rule13"
+                  },
+                  "sequenceIpType": {
+                    "optionType": "global",
+                    "value": "ipv6"
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "accept"
+                  },
+                  "match": {
+                    "entries": [
+                      {
+                        "protocol": {
+                          "optionType": "global",
+                          "value": ["58"]
+                        }
+                      }
+                    ]
+                  },
+                  "actions": []
+                },
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 131
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "rule14"
                   },
                   "sequenceIpType": {
                     "optionType": "global",
@@ -3022,59 +4061,55 @@
                   "match": {
                     "entries": [
                       {
-                        "appList": {
-                          "refId": {
-                            "optionType": "global",
-                            "value": "31cc53c4-b2e4-41dd-a2c4-c609e8cf432c"
-                          }
+                        "protocol": {
+                          "optionType": "global",
+                          "value": ["6", "17"]
+                        }
+                      },
+                      {
+                        "sourcePort": {
+                          "optionType": "global",
+                          "value": ["53"]
                         }
                       }
                     ]
                   },
-                  "actions": [
-                    {
-                      "slaClass": [
-                        {
-                          "slaName": {
-                            "refId": {
-                              "optionType": "global",
-                              "value": "31cc53c4-b2e4-41dd-a2c4-c609e8cf432c"
-                            }
-                          }
-                        },
-                        {
-                          "preferredColor": {
-                            "optionType": "global",
-                            "value": ["gold"]
-                          }
+                  "actions": []
+                },
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 141
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "rule15"
+                  },
+                  "sequenceIpType": {
+                    "optionType": "global",
+                    "value": "ipv4"
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "accept"
+                  },
+                  "match": {
+                    "entries": [
+                      {
+                        "protocol": {
+                          "optionType": "global",
+                          "value": ["6", "17"]
                         }
-                      ]
-                    },
-                    {
-                      "backupSlaPreferredColor": {
-                        "optionType": "global",
-                        "value": ["blue"]
+                      },
+                      {
+                        "destinationPort": {
+                          "optionType": "global",
+                          "value": ["53"]
+                        }
                       }
-                    },
-                    {
-                      "set": [
-                        {
-                          "dscp": {
-                            "optionType": "global",
-                            "value": 18
-                          }
-                        },
-                        {
-                          "forwardingClass": {
-                            "refId": {
-                              "optionType": "global",
-                              "value": "31cc53c4-b2e4-41dd-a2c4-c609e8cf432c"
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  ]
+                    ]
+                  },
+                  "actions": []
                 }
               ]
             }

@@ -118,10 +118,10 @@ type ApplicationPriorityTrafficPolicySequencesActionsSetParameters struct {
 	PreferredColorGroupId         types.String `tfsdk:"preferred_color_group_id"`
 	ForwardingClassListId         types.String `tfsdk:"forwarding_class_list_id"`
 	LocalTlocListColor            types.Set    `tfsdk:"local_tloc_list_color"`
-	LocalTlocListRestrict         types.String `tfsdk:"local_tloc_list_restrict"`
+	LocalTlocListRestrict         types.Bool   `tfsdk:"local_tloc_list_restrict"`
 	LocalTlocListEncapsulation    types.String `tfsdk:"local_tloc_list_encapsulation"`
 	PreferredRemoteColorId        types.Set    `tfsdk:"preferred_remote_color_id"`
-	PreferredRemoteColorRestrict  types.String `tfsdk:"preferred_remote_color_restrict"`
+	PreferredRemoteColorRestrict  types.Bool   `tfsdk:"preferred_remote_color_restrict"`
 	TlocColor                     types.Set    `tfsdk:"tloc_color"`
 	TlocEncapsulation             types.String `tfsdk:"tloc_encapsulation"`
 	TlocIp                        types.String `tfsdk:"tloc_ip"`
@@ -129,8 +129,10 @@ type ApplicationPriorityTrafficPolicySequencesActionsSetParameters struct {
 	ServiceTlocColor              types.Set    `tfsdk:"service_tloc_color"`
 	ServiceTlocEncapsulation      types.String `tfsdk:"service_tloc_encapsulation"`
 	ServiceTlocIp                 types.String `tfsdk:"service_tloc_ip"`
-	ServiceVpn                    types.String `tfsdk:"service_vpn"`
+	ServiceVpn                    types.Int64  `tfsdk:"service_vpn"`
 	ServiceType                   types.String `tfsdk:"service_type"`
+	ServiceLocal                  types.Bool   `tfsdk:"service_local"`
+	ServiceRestrict               types.Bool   `tfsdk:"service_restrict"`
 	ServiceTlocListId             types.String `tfsdk:"service_tloc_list_id"`
 	ServiceChainType              types.String `tfsdk:"service_chain_type"`
 	ServiceChainVpn               types.Int64  `tfsdk:"service_chain_vpn"`
@@ -143,7 +145,7 @@ type ApplicationPriorityTrafficPolicySequencesActionsSetParameters struct {
 	NextHopIpv4                   types.String `tfsdk:"next_hop_ipv4"`
 	NextHopIpv6                   types.String `tfsdk:"next_hop_ipv6"`
 	NextHopLoose                  types.Bool   `tfsdk:"next_hop_loose"`
-	Vpn                           types.String `tfsdk:"vpn"`
+	Vpn                           types.Int64  `tfsdk:"vpn"`
 }
 
 // End of section. //template:end types
@@ -489,7 +491,7 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 							if !childChildItem.LocalTlocListRestrict.IsNull() {
 								if true {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "localTlocList.restrict.optionType", "global")
-									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "localTlocList.restrict.value", childChildItem.LocalTlocListRestrict.ValueString())
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "localTlocList.restrict.value", childChildItem.LocalTlocListRestrict.ValueBool())
 								}
 							}
 							if !childChildItem.LocalTlocListEncapsulation.IsNull() {
@@ -509,7 +511,7 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 							if !childChildItem.PreferredRemoteColorRestrict.IsNull() {
 								if true {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredRemoteColor.remoteColorRestrict.optionType", "global")
-									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredRemoteColor.remoteColorRestrict.value", childChildItem.PreferredRemoteColorRestrict.ValueString())
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredRemoteColor.remoteColorRestrict.value", childChildItem.PreferredRemoteColorRestrict.ValueBool())
 								}
 							}
 							if !childChildItem.TlocColor.IsNull() {
@@ -561,13 +563,25 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 							if !childChildItem.ServiceVpn.IsNull() {
 								if true {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "service.vpn.optionType", "global")
-									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "service.vpn.value", childChildItem.ServiceVpn.ValueString())
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "service.vpn.value", childChildItem.ServiceVpn.ValueInt64())
 								}
 							}
 							if !childChildItem.ServiceType.IsNull() {
 								if true {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "service.type.optionType", "global")
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "service.type.value", childChildItem.ServiceType.ValueString())
+								}
+							}
+							if !childChildItem.ServiceLocal.IsNull() {
+								if true {
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "service.local.optionType", "global")
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "service.local.value", childChildItem.ServiceLocal.ValueBool())
+								}
+							}
+							if !childChildItem.ServiceRestrict.IsNull() {
+								if true {
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "service.restrict.optionType", "global")
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "service.restrict.value", childChildItem.ServiceRestrict.ValueBool())
 								}
 							}
 							if !childChildItem.ServiceTlocListId.IsNull() {
@@ -647,7 +661,7 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 							if !childChildItem.Vpn.IsNull() {
 								if true {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "vpn.optionType", "global")
-									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "vpn.value", childChildItem.Vpn.ValueString())
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "vpn.value", childChildItem.Vpn.ValueInt64())
 								}
 							}
 							itemChildBody, _ = sjson.SetRaw(itemChildBody, "set.-1", itemChildChildBody)
@@ -1161,12 +1175,12 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 									ccItem.LocalTlocListColor = helpers.GetStringSet(va.Array())
 								}
 							}
-							ccItem.LocalTlocListRestrict = types.StringNull()
+							ccItem.LocalTlocListRestrict = types.BoolNull()
 
 							if t := ccv.Get("localTlocList.restrict.optionType"); t.Exists() {
 								va := ccv.Get("localTlocList.restrict.value")
 								if t.String() == "global" {
-									ccItem.LocalTlocListRestrict = types.StringValue(va.String())
+									ccItem.LocalTlocListRestrict = types.BoolValue(va.Bool())
 								}
 							}
 							ccItem.LocalTlocListEncapsulation = types.StringNull()
@@ -1185,12 +1199,12 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 									ccItem.PreferredRemoteColorId = helpers.GetStringSet(va.Array())
 								}
 							}
-							ccItem.PreferredRemoteColorRestrict = types.StringNull()
+							ccItem.PreferredRemoteColorRestrict = types.BoolNull()
 
 							if t := ccv.Get("preferredRemoteColor.remoteColorRestrict.optionType"); t.Exists() {
 								va := ccv.Get("preferredRemoteColor.remoteColorRestrict.value")
 								if t.String() == "global" {
-									ccItem.PreferredRemoteColorRestrict = types.StringValue(va.String())
+									ccItem.PreferredRemoteColorRestrict = types.BoolValue(va.Bool())
 								}
 							}
 							ccItem.TlocColor = types.SetNull(types.StringType)
@@ -1249,12 +1263,12 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 									ccItem.ServiceTlocIp = types.StringValue(va.String())
 								}
 							}
-							ccItem.ServiceVpn = types.StringNull()
+							ccItem.ServiceVpn = types.Int64Null()
 
 							if t := ccv.Get("service.vpn.optionType"); t.Exists() {
 								va := ccv.Get("service.vpn.value")
 								if t.String() == "global" {
-									ccItem.ServiceVpn = types.StringValue(va.String())
+									ccItem.ServiceVpn = types.Int64Value(va.Int())
 								}
 							}
 							ccItem.ServiceType = types.StringNull()
@@ -1263,6 +1277,22 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 								va := ccv.Get("service.type.value")
 								if t.String() == "global" {
 									ccItem.ServiceType = types.StringValue(va.String())
+								}
+							}
+							ccItem.ServiceLocal = types.BoolNull()
+
+							if t := ccv.Get("service.local.optionType"); t.Exists() {
+								va := ccv.Get("service.local.value")
+								if t.String() == "global" {
+									ccItem.ServiceLocal = types.BoolValue(va.Bool())
+								}
+							}
+							ccItem.ServiceRestrict = types.BoolNull()
+
+							if t := ccv.Get("service.restrict.optionType"); t.Exists() {
+								va := ccv.Get("service.restrict.value")
+								if t.String() == "global" {
+									ccItem.ServiceRestrict = types.BoolValue(va.Bool())
 								}
 							}
 							ccItem.ServiceTlocListId = types.StringNull()
@@ -1361,12 +1391,12 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 									ccItem.NextHopLoose = types.BoolValue(va.Bool())
 								}
 							}
-							ccItem.Vpn = types.StringNull()
+							ccItem.Vpn = types.Int64Null()
 
 							if t := ccv.Get("vpn.optionType"); t.Exists() {
 								va := ccv.Get("vpn.value")
 								if t.String() == "global" {
-									ccItem.Vpn = types.StringValue(va.String())
+									ccItem.Vpn = types.Int64Value(va.Int())
 								}
 							}
 							cItem.SetParameters = append(cItem.SetParameters, ccItem)
@@ -1969,9 +1999,9 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 				}
 			}
 			for cci := range data.Sequences[i].Actions[ci].SetParameters {
-				keys := [...]string{"dscp", "policer.refId", "preferredColorGroup.refId", "forwardingClass.refId", "localTlocList.color", "localTlocList.restrict", "localTlocList.encap", "preferredRemoteColor.color", "preferredRemoteColor.remoteColorRestrict", "tloc.color", "tloc.encap", "tloc.ip", "tlocList.refId", "service.tloc.color", "service.tloc.encap", "service.tloc.ip", "service.vpn", "service.type", "service.tlocList.refId", "serviceChain.type", "serviceChain.vpn", "serviceChain.local", "serviceChain.restrict", "serviceChain.tloc.color", "serviceChain.tloc.encap", "serviceChain.tloc.ip", "serviceChain.tlocList.refId", "nextHop", "nextHopIpv6", "nextHopLoose", "vpn"}
-				keyValues := [...]string{strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].Dscp.ValueInt64(), 10), data.Sequences[i].Actions[ci].SetParameters[cci].PolicerId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].PreferredColorGroupId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ForwardingClassListId.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListColor).ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListRestrict.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListEncapsulation.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorId).ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorRestrict.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].TlocColor).ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].TlocEncapsulation.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].TlocIp.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].TlocListId.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocColor).ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocEncapsulation.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocIp.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceVpn.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceType.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocListId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainType.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainVpn.ValueInt64(), 10), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainLocal.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainFallbackToRouting.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocColor).ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocEncapsulation.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocIp.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocListId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].NextHopIpv4.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].NextHopIpv6.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].NextHopLoose.ValueBool()), data.Sequences[i].Actions[ci].SetParameters[cci].Vpn.ValueString()}
-				keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""}
+				keys := [...]string{"dscp", "policer.refId", "preferredColorGroup.refId", "forwardingClass.refId", "localTlocList.color", "localTlocList.restrict", "localTlocList.encap", "preferredRemoteColor.color", "preferredRemoteColor.remoteColorRestrict", "tloc.color", "tloc.encap", "tloc.ip", "tlocList.refId", "service.tloc.color", "service.tloc.encap", "service.tloc.ip", "service.vpn", "service.type", "service.local", "service.restrict", "service.tlocList.refId", "serviceChain.type", "serviceChain.vpn", "serviceChain.local", "serviceChain.restrict", "serviceChain.tloc.color", "serviceChain.tloc.encap", "serviceChain.tloc.ip", "serviceChain.tlocList.refId", "nextHop", "nextHopIpv6", "nextHopLoose", "vpn"}
+				keyValues := [...]string{strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].Dscp.ValueInt64(), 10), data.Sequences[i].Actions[ci].SetParameters[cci].PolicerId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].PreferredColorGroupId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ForwardingClassListId.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListColor).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListRestrict.ValueBool()), data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListEncapsulation.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorId).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorRestrict.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].TlocColor).ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].TlocEncapsulation.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].TlocIp.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].TlocListId.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocColor).ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocEncapsulation.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocIp.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceVpn.ValueInt64(), 10), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceType.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceLocal.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceRestrict.ValueBool()), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocListId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainType.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainVpn.ValueInt64(), 10), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainLocal.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainFallbackToRouting.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocColor).ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocEncapsulation.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocIp.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocListId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].NextHopIpv4.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].NextHopIpv6.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].NextHopLoose.ValueBool()), strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].Vpn.ValueInt64(), 10)}
+				keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""}
 
 				var ccr gjson.Result
 				cr.Get("set").ForEach(
@@ -2039,12 +2069,12 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 						data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListColor = helpers.GetStringSet(va.Array())
 					}
 				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListRestrict = types.StringNull()
+				data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListRestrict = types.BoolNull()
 
 				if t := ccr.Get("localTlocList.restrict.optionType"); t.Exists() {
 					va := ccr.Get("localTlocList.restrict.value")
 					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListRestrict = types.StringValue(va.String())
+						data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListRestrict = types.BoolValue(va.Bool())
 					}
 				}
 				data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListEncapsulation = types.StringNull()
@@ -2063,12 +2093,12 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 						data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorId = helpers.GetStringSet(va.Array())
 					}
 				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorRestrict = types.StringNull()
+				data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorRestrict = types.BoolNull()
 
 				if t := ccr.Get("preferredRemoteColor.remoteColorRestrict.optionType"); t.Exists() {
 					va := ccr.Get("preferredRemoteColor.remoteColorRestrict.value")
 					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorRestrict = types.StringValue(va.String())
+						data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorRestrict = types.BoolValue(va.Bool())
 					}
 				}
 				data.Sequences[i].Actions[ci].SetParameters[cci].TlocColor = types.SetNull(types.StringType)
@@ -2127,12 +2157,12 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocIp = types.StringValue(va.String())
 					}
 				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceVpn = types.StringNull()
+				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceVpn = types.Int64Null()
 
 				if t := ccr.Get("service.vpn.optionType"); t.Exists() {
 					va := ccr.Get("service.vpn.value")
 					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceVpn = types.StringValue(va.String())
+						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceVpn = types.Int64Value(va.Int())
 					}
 				}
 				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceType = types.StringNull()
@@ -2141,6 +2171,22 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 					va := ccr.Get("service.type.value")
 					if t.String() == "global" {
 						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceType = types.StringValue(va.String())
+					}
+				}
+				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceLocal = types.BoolNull()
+
+				if t := ccr.Get("service.local.optionType"); t.Exists() {
+					va := ccr.Get("service.local.value")
+					if t.String() == "global" {
+						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceLocal = types.BoolValue(va.Bool())
+					}
+				}
+				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceRestrict = types.BoolNull()
+
+				if t := ccr.Get("service.restrict.optionType"); t.Exists() {
+					va := ccr.Get("service.restrict.value")
+					if t.String() == "global" {
+						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceRestrict = types.BoolValue(va.Bool())
 					}
 				}
 				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocListId = types.StringNull()
@@ -2239,12 +2285,12 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 						data.Sequences[i].Actions[ci].SetParameters[cci].NextHopLoose = types.BoolValue(va.Bool())
 					}
 				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].Vpn = types.StringNull()
+				data.Sequences[i].Actions[ci].SetParameters[cci].Vpn = types.Int64Null()
 
 				if t := ccr.Get("vpn.optionType"); t.Exists() {
 					va := ccr.Get("vpn.value")
 					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].Vpn = types.StringValue(va.String())
+						data.Sequences[i].Actions[ci].SetParameters[cci].Vpn = types.Int64Value(va.Int())
 					}
 				}
 			}
