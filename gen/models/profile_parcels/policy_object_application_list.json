@@ -1,7 +1,7 @@
 {
   "request": {
     "$schema": "http://json-schema.org/draft/2019-09/schema",
-    "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/centralized-applist/post/request_schema.json",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/app-list/post/request_schema.json",
     "title": "Centralized Policy App List Parcel Schema",
     "description": "Centralized Policy App List profile parcel schema for POST request",
     "type": "object",
@@ -79,19 +79,15 @@
         },
         "required": ["entries"],
         "additionalProperties": false
-      }
-    },
-    "required": ["data", "name"],
-    "additionalProperties": false,
-    "propertyNames": {
-      "description": "This is the documentation for POST request schema for Centralized Policy App List profile parcel",
-      "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
-      "details-2": "variable name should not be present if optionType value is NOT variable",
-      "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
-      "details-4": "when option Type is default, value should be present with given default value as specified in schema",
-      "examples": {
-        "centralized-appListParcelGlobalDefault": {
-          "value": {
+      },
+      "documentation": {
+        "description": "This is the documentation for POST request schema for Centralized Policy App List profile parcel",
+        "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+        "details-2": "variable name should not be present if optionType value is NOT variable",
+        "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+        "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+        "examples": [
+          {
             "data": {
               "entries": [
                 {
@@ -108,10 +104,18 @@
                 }
               ]
             },
-            "name": "centralized-appListParcelGlobalDefault"
+            "name": "CentralizedAppList"
           }
-        }
+        ]
+      },
+      "metadata": {
+        "minVManageVersion": "20.15.1"
       }
-    }
+    },
+    "required": ["data", "name"],
+    "not": {
+      "required": ["documentation", "metadata"]
+    },
+    "additionalProperties": false
   }
 }

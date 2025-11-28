@@ -10,6 +10,19 @@ description: |-
 ## 0.8.2 (Unreleased)
 
 - Add `sdwan_system_ca_certificate_feature` resource and data source
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_data_ipv4_prefix_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_fqdn_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_port_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_protocol_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_application_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_as_path_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_class_map` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_color_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_expanded_community_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_extended_community_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_mirror` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_policer` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_tloc_list` to `20.15.0`
 
 ## 0.8.1
 

@@ -4,13 +4,13 @@ page_title: "sdwan_policy_object_policer Resource - terraform-provider-sdwan"
 subcategory: "Policy Objects"
 description: |-
   This resource can manage a Policy Object Policer Policy_object.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_policy_object_policer (Resource)
 
 This resource can manage a Policy Object Policer Policy_object.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
