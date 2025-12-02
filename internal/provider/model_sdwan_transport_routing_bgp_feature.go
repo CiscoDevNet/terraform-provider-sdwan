@@ -1286,7 +1286,6 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "inRoutePolicy.refId.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "inRoutePolicy.refId.value", childItem.InRoutePolicyId.ValueString())
 						}
-						
 					}
 					if !childItem.OutRoutePolicyId.IsNull() {
 						if true {
