@@ -1,6 +1,7 @@
 ## 0.8.2 (Unreleased)
 
 - Add `sdwan_system_ca_certificate_feature` resource and data source
+- BREAKING CHANGE: Refactor `max_number_of_prefixes`, `restart_interval` and `threshold` parameters under `ipv6_neighbors` section of `sdwan_service_routing_bgp_feature` and `sdwan_transport_routing_bgp_feature` resource
 
 ## 0.8.1
 
