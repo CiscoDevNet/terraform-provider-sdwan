@@ -241,16 +241,24 @@ Read-Only:
 
 Read-Only:
 
+- `disable_peer_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer
+- `disable_peer_max_number_of_prefixes_variable` (String) Variable name
+- `disable_peer_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message
+- `disable_peer_threshold_variable` (String) Variable name
 - `family_type` (String) Set IPv6 unicast address family
 - `in_route_policy_id` (String)
-- `max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer
-- `max_number_of_prefixes_variable` (String) Variable name
 - `out_route_policy_id` (String)
 - `policy_type` (String) Neighbor received maximum prefix policy is disabled.
 - `restart_interval` (Number) Set the restart interval(minutes) when to restart BGP connection if threshold is exceeded
 - `restart_interval_variable` (String) Variable name
-- `threshold` (Number) Set threshold(1 to 100) at which to generate a warning message
-- `threshold_variable` (String) Variable name
+- `restart_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer
+- `restart_max_number_of_prefixes_variable` (String) Variable name
+- `restart_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message
+- `restart_threshold_variable` (String) Variable name
+- `warning_message_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer
+- `warning_message_max_number_of_prefixes_variable` (String) Variable name
+- `warning_message_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message
+- `warning_message_threshold_variable` (String) Variable name
 
 
 
