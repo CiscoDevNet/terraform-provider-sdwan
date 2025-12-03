@@ -70,7 +70,6 @@ func (data CiscoSIGCredentials) getModel() string {
 
 // End of section. //template:end getModel
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data CiscoSIGCredentials) toBody(ctx context.Context) string {
 	body := ""
 
@@ -206,6 +205,7 @@ func (data CiscoSIGCredentials) toBody(ctx context.Context) string {
 	if !data.UmbrellaApiKeyVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"umbrella.api-key."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"umbrella.api-key."+"vipType", "variableName")
+		body, _ = sjson.Set(body, path+"umbrella.api-key."+"vipValue", "")
 		body, _ = sjson.Set(body, path+"umbrella.api-key."+"vipVariableName", data.UmbrellaApiKeyVariable.ValueString())
 	} else if data.UmbrellaApiKey.IsNull() {
 	} else {
@@ -217,6 +217,7 @@ func (data CiscoSIGCredentials) toBody(ctx context.Context) string {
 	if !data.UmbrellaApiSecretVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"umbrella.api-secret."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"umbrella.api-secret."+"vipType", "variableName")
+		body, _ = sjson.Set(body, path+"umbrella.api-secret."+"vipValue", "")
 		body, _ = sjson.Set(body, path+"umbrella.api-secret."+"vipVariableName", data.UmbrellaApiSecretVariable.ValueString())
 	} else if data.UmbrellaApiSecret.IsNull() {
 	} else {
@@ -237,8 +238,6 @@ func (data CiscoSIGCredentials) toBody(ctx context.Context) string {
 	}
 	return body
 }
-
-// End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *CiscoSIGCredentials) fromBody(ctx context.Context, res gjson.Result) {
