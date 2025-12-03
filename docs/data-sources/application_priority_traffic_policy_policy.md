@@ -83,14 +83,14 @@ Read-Only:
 - `forwarding_class_list_id` (String)
 - `local_tloc_list_color` (Set of String)
 - `local_tloc_list_encapsulation` (String)
-- `local_tloc_list_restrict` (String)
+- `local_tloc_list_restrict` (Boolean)
 - `next_hop_ipv4` (String)
 - `next_hop_ipv6` (String)
 - `next_hop_loose` (Boolean)
 - `policer_id` (String)
 - `preferred_color_group_id` (String)
 - `preferred_remote_color_id` (Set of String)
-- `preferred_remote_color_restrict` (String)
+- `preferred_remote_color_restrict` (Boolean)
 - `service_chain_fallback_to_routing` (Boolean)
 - `service_chain_local` (Boolean)
 - `service_chain_tloc_color` (Set of String)
@@ -99,17 +99,19 @@ Read-Only:
 - `service_chain_tloc_list_id` (String)
 - `service_chain_type` (String)
 - `service_chain_vpn` (Number)
+- `service_local` (Boolean)
+- `service_restrict` (Boolean)
 - `service_tloc_color` (Set of String)
 - `service_tloc_encapsulation` (String)
 - `service_tloc_ip` (String)
 - `service_tloc_list_id` (String)
 - `service_type` (String)
-- `service_vpn` (String)
+- `service_vpn` (Number)
 - `tloc_color` (Set of String)
 - `tloc_encapsulation` (String)
 - `tloc_ip` (String)
 - `tloc_list_id` (String)
-- `vpn` (String)
+- `vpn` (Number)
 
 
 <a id="nestedatt--sequences--actions--sla_classes"></a>
@@ -141,7 +143,7 @@ Read-Only:
 - `destination_region` (String) Destination Region
 - `dns` (String) Dns
 - `dns_application_list_id` (String)
-- `dscp` (Number) DSCP number
+- `dscp` (Number) DSCP number(s)
 - `icmp6_message` (Set of String) ICMP6 Message
 - `icmp_message` (Set of String) ICMP Message
 - `packet_length` (String) Packet Length

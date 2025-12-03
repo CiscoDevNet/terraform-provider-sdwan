@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanApplicationPriorityTrafficPolicyProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012 or TF_VAR_policy_object_feature_template_id")
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or TF_VAR_policy_object_feature_template_id")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_policy.test", "default_action", "accept"))

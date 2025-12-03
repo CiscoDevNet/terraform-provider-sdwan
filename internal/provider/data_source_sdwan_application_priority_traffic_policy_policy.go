@@ -143,7 +143,7 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										Computed:            true,
 									},
 									"dscp": schema.Int64Attribute{
-										MarkdownDescription: "DSCP number",
+										MarkdownDescription: "DSCP number(s)",
 										Computed:            true,
 									},
 									"packet_length": schema.StringAttribute{
@@ -300,7 +300,7 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 													ElementType:         types.StringType,
 													Computed:            true,
 												},
-												"local_tloc_list_restrict": schema.StringAttribute{
+												"local_tloc_list_restrict": schema.BoolAttribute{
 													MarkdownDescription: "",
 													Computed:            true,
 												},
@@ -313,7 +313,7 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 													ElementType:         types.StringType,
 													Computed:            true,
 												},
-												"preferred_remote_color_restrict": schema.StringAttribute{
+												"preferred_remote_color_restrict": schema.BoolAttribute{
 													MarkdownDescription: "",
 													Computed:            true,
 												},
@@ -347,11 +347,19 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 													MarkdownDescription: "",
 													Computed:            true,
 												},
-												"service_vpn": schema.StringAttribute{
+												"service_vpn": schema.Int64Attribute{
 													MarkdownDescription: "",
 													Computed:            true,
 												},
 												"service_type": schema.StringAttribute{
+													MarkdownDescription: "",
+													Computed:            true,
+												},
+												"service_local": schema.BoolAttribute{
+													MarkdownDescription: "",
+													Computed:            true,
+												},
+												"service_restrict": schema.BoolAttribute{
 													MarkdownDescription: "",
 													Computed:            true,
 												},
@@ -404,7 +412,7 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 													MarkdownDescription: "",
 													Computed:            true,
 												},
-												"vpn": schema.StringAttribute{
+												"vpn": schema.Int64Attribute{
 													MarkdownDescription: "",
 													Computed:            true,
 												},
