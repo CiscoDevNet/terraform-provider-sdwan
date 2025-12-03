@@ -1,8 +1,8 @@
 ---
 name: Transport WAN VPN
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn
-minimum_version: 20.12.0
-test_tags: [SDWAN_2012]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - Transport
 attributes:

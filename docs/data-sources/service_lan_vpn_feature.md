@@ -65,6 +65,7 @@ data "sdwan_service_lan_vpn_feature" "example" {
 - `secondary_dns_address_ipv6_variable` (String) Variable name
 - `service_routes` (Attributes List) Service (see [below for nested schema](#nestedatt--service_routes))
 - `services` (Attributes List) Service (see [below for nested schema](#nestedatt--services))
+- `static_nat_subnets` (Attributes List) Static NAT Subnet Rules (see [below for nested schema](#nestedatt--static_nat_subnets))
 - `static_nats` (Attributes List) Static NAT Rules (see [below for nested schema](#nestedatt--static_nats))
 - `version` (Number) The version of the Feature
 - `vpn` (Number) VPN
@@ -115,6 +116,8 @@ Read-Only:
 - `aggregate_only` (Boolean) Aggregate Only
 - `prefix` (String) IPv6 Prefix
 - `prefix_variable` (String) Variable name
+- `region` (String) Applied to Region
+- `region_variable` (String) Variable name
 
 
 
@@ -179,8 +182,11 @@ Read-Only:
 
 Read-Only:
 
+- `administrative_distance` (Number) Gateway distance
+- `administrative_distance_variable` (String) Variable name
 - `dhcp` (Boolean) IPv4 Route Gateway DHCP
 - `gateway` (String) Gateway type
+- `ip_static_route_interface` (Attributes List) (see [below for nested schema](#nestedatt--ipv4_static_routes--ip_static_route_interface))
 - `network_address` (String) IP Address
 - `network_address_variable` (String) Variable name
 - `next_hop_with_trackers` (Attributes List) IPv4 Route Gateway Next Hop with Tracker (see [below for nested schema](#nestedatt--ipv4_static_routes--next_hop_with_trackers))
@@ -189,6 +195,27 @@ Read-Only:
 - `subnet_mask` (String) Subnet Mask
 - `subnet_mask_variable` (String) Variable name
 - `vpn` (Boolean) IPv4 Route Gateway VPN
+
+<a id="nestedatt--ipv4_static_routes--ip_static_route_interface"></a>
+### Nested Schema for `ipv4_static_routes.ip_static_route_interface`
+
+Read-Only:
+
+- `interface_name` (String)
+- `interface_name_variable` (String) Variable name
+- `next_hop` (Attributes List) (see [below for nested schema](#nestedatt--ipv4_static_routes--ip_static_route_interface--next_hop))
+
+<a id="nestedatt--ipv4_static_routes--ip_static_route_interface--next_hop"></a>
+### Nested Schema for `ipv4_static_routes.ip_static_route_interface.next_hop`
+
+Read-Only:
+
+- `address` (String) IPv4 Address
+- `address_variable` (String) Variable name
+- `administrative_distance` (Number) Administrative distance
+- `administrative_distance_variable` (String) Variable name
+
+
 
 <a id="nestedatt--ipv4_static_routes--next_hop_with_trackers"></a>
 ### Nested Schema for `ipv4_static_routes.next_hop_with_trackers`
@@ -238,12 +265,34 @@ Read-Only:
 Read-Only:
 
 - `gateway` (String) Gateway type
+- `ipv6_static_route_interface` (Attributes List) (see [below for nested schema](#nestedatt--ipv6_static_routes--ipv6_static_route_interface))
 - `nat` (String) IPv6 Nat
 - `nat_variable` (String) Variable name
 - `next_hops` (Attributes List) IPv6 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv6_static_routes--next_hops))
 - `null0` (Boolean) IPv6 Route Gateway Next Hop
 - `prefix` (String) Prefix
 - `prefix_variable` (String) Variable name
+
+<a id="nestedatt--ipv6_static_routes--ipv6_static_route_interface"></a>
+### Nested Schema for `ipv6_static_routes.ipv6_static_route_interface`
+
+Read-Only:
+
+- `interface_name` (String)
+- `interface_name_variable` (String) Variable name
+- `next_hop` (Attributes List) (see [below for nested schema](#nestedatt--ipv6_static_routes--ipv6_static_route_interface--next_hop))
+
+<a id="nestedatt--ipv6_static_routes--ipv6_static_route_interface--next_hop"></a>
+### Nested Schema for `ipv6_static_routes.ipv6_static_route_interface.next_hop`
+
+Read-Only:
+
+- `address` (String) IPv6 Address
+- `address_variable` (String) Variable name
+- `administrative_distance` (Number) Administrative distance
+- `administrative_distance_variable` (String) Variable name
+
+
 
 <a id="nestedatt--ipv6_static_routes--next_hops"></a>
 ### Nested Schema for `ipv6_static_routes.next_hops`
@@ -385,6 +434,8 @@ Read-Only:
 - `network_address_variable` (String) Variable name
 - `service` (String) Service
 - `service_variable` (String) Variable name
+- `sse_instance` (String) SSE Instance name
+- `sse_instance_variable` (String) Variable name
 - `subnet_mask` (String) Subnet Mask
 - `subnet_mask_variable` (String) Variable name
 - `vpn` (Number) Service
@@ -401,6 +452,22 @@ Read-Only:
 - `service_type_variable` (String) Variable name
 - `tracking` (Boolean) Tracking
 - `tracking_variable` (String) Variable name
+
+
+<a id="nestedatt--static_nat_subnets"></a>
+### Nested Schema for `static_nat_subnets`
+
+Read-Only:
+
+- `prefix_length` (Number) Network Prefix Length
+- `prefix_length_variable` (String) Variable name
+- `source_ip_subnet` (String) Source IP Subnet
+- `source_ip_subnet_variable` (String) Variable name
+- `static_nat_direction` (String) Static NAT Direction
+- `static_nat_direction_variable` (String) Variable name
+- `tracker_object_id` (String)
+- `translated_source_ip_subnet` (String) Translated Source IP Subnet
+- `translated_source_ip_subnet_variable` (String) Variable name
 
 
 <a id="nestedatt--static_nats"></a>

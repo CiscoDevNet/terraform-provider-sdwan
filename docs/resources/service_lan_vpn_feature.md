@@ -4,13 +4,13 @@ page_title: "sdwan_service_lan_vpn_feature Resource - terraform-provider-sdwan"
 subcategory: "Features - Service"
 description: |-
   This resource can manage a Service LAN VPN Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_service_lan_vpn_feature (Resource)
 
 This resource can manage a Service LAN VPN Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -72,6 +72,7 @@ resource "sdwan_service_lan_vpn_feature" "example" {
       subnet_mask     = "0.0.0.0"
       service         = "SIG"
       vpn             = 0
+      sse_instance    = "1"
     }
   ]
   gre_routes = [
@@ -115,6 +116,14 @@ resource "sdwan_service_lan_vpn_feature" "example" {
       source_ip            = "1.2.3.4"
       translated_source_ip = "2.3.4.5"
       static_nat_direction = "inside"
+    }
+  ]
+  static_nat_subnets = [
+    {
+      source_ip_subnet            = "1.2.3.4"
+      translated_source_ip_subnet = "2.3.4.5"
+      prefix_length               = 6
+      static_nat_direction        = "inside"
     }
   ]
   nat_64_v4_pools = [
@@ -196,6 +205,7 @@ resource "sdwan_service_lan_vpn_feature" "example" {
 - `secondary_dns_address_ipv6_variable` (String) Variable name
 - `service_routes` (Attributes List) Service (see [below for nested schema](#nestedatt--service_routes))
 - `services` (Attributes List) Service (see [below for nested schema](#nestedatt--services))
+- `static_nat_subnets` (Attributes List) Static NAT Subnet Rules (see [below for nested schema](#nestedatt--static_nat_subnets))
 - `static_nats` (Attributes List) Static NAT Rules (see [below for nested schema](#nestedatt--static_nats))
 - `vpn` (Number) VPN
   - Range: `1`-`65527`
@@ -259,6 +269,10 @@ Optional:
   - Default value: `false`
 - `prefix` (String) IPv6 Prefix
 - `prefix_variable` (String) Variable name
+- `region` (String) Applied to Region
+  - Choices: `core-and-access`, `core`, `access`
+  - Default value: `core-and-access`
+- `region_variable` (String) Variable name
 
 
 
@@ -325,9 +339,13 @@ Optional:
 
 Optional:
 
+- `administrative_distance` (Number) Gateway distance, Attribute conditional on `gateway` being equal to `null0`
+  - Range: `1`-`255`
+- `administrative_distance_variable` (String) Variable name, Attribute conditional on `gateway` being equal to `null0`
 - `dhcp` (Boolean) IPv4 Route Gateway DHCP, Attribute conditional on `gateway` being equal to `dhcp`
 - `gateway` (String) Gateway type
-  - Choices: `nextHop`, `null0`, `vpn`, `dhcp`
+  - Choices: `nextHop`, `null0`, `vpn`, `dhcp`, `staticRouteInterface`
+- `ip_static_route_interface` (Attributes List) , Attribute conditional on `gateway` being equal to `staticRouteInterface` (see [below for nested schema](#nestedatt--ipv4_static_routes--ip_static_route_interface))
 - `network_address` (String) IP Address
 - `network_address_variable` (String) Variable name
 - `next_hop_with_trackers` (Attributes List) IPv4 Route Gateway Next Hop with Tracker, Attribute conditional on `gateway` being equal to `nextHop` (see [below for nested schema](#nestedatt--ipv4_static_routes--next_hop_with_trackers))
@@ -337,6 +355,28 @@ Optional:
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `subnet_mask_variable` (String) Variable name
 - `vpn` (Boolean) IPv4 Route Gateway VPN, Attribute conditional on `gateway` being equal to `vpn`
+
+<a id="nestedatt--ipv4_static_routes--ip_static_route_interface"></a>
+### Nested Schema for `ipv4_static_routes.ip_static_route_interface`
+
+Optional:
+
+- `interface_name` (String)
+- `interface_name_variable` (String) Variable name
+- `next_hop` (Attributes List) (see [below for nested schema](#nestedatt--ipv4_static_routes--ip_static_route_interface--next_hop))
+
+<a id="nestedatt--ipv4_static_routes--ip_static_route_interface--next_hop"></a>
+### Nested Schema for `ipv4_static_routes.ip_static_route_interface.next_hop`
+
+Optional:
+
+- `address` (String) IPv4 Address
+- `address_variable` (String) Variable name
+- `administrative_distance` (Number) Administrative distance
+  - Range: `1`-`255`
+- `administrative_distance_variable` (String) Variable name
+
+
 
 <a id="nestedatt--ipv4_static_routes--next_hop_with_trackers"></a>
 ### Nested Schema for `ipv4_static_routes.next_hop_with_trackers`
@@ -390,7 +430,8 @@ Optional:
 Optional:
 
 - `gateway` (String) Gateway type
-  - Choices: `nextHop`, `null0`, `nat`
+  - Choices: `nextHop`, `null0`, `nat`, `staticRouteInterface`
+- `ipv6_static_route_interface` (Attributes List) , Attribute conditional on `gateway` being equal to `staticRouteInterface` (see [below for nested schema](#nestedatt--ipv6_static_routes--ipv6_static_route_interface))
 - `nat` (String) IPv6 Nat, Attribute conditional on `gateway` being equal to `nat`
   - Choices: `NAT64`, `NAT66`
 - `nat_variable` (String) Variable name, Attribute conditional on `gateway` being equal to `nat`
@@ -398,6 +439,28 @@ Optional:
 - `null0` (Boolean) IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `null0`
 - `prefix` (String) Prefix
 - `prefix_variable` (String) Variable name
+
+<a id="nestedatt--ipv6_static_routes--ipv6_static_route_interface"></a>
+### Nested Schema for `ipv6_static_routes.ipv6_static_route_interface`
+
+Optional:
+
+- `interface_name` (String)
+- `interface_name_variable` (String) Variable name
+- `next_hop` (Attributes List) (see [below for nested schema](#nestedatt--ipv6_static_routes--ipv6_static_route_interface--next_hop))
+
+<a id="nestedatt--ipv6_static_routes--ipv6_static_route_interface--next_hop"></a>
+### Nested Schema for `ipv6_static_routes.ipv6_static_route_interface.next_hop`
+
+Optional:
+
+- `address` (String) IPv6 Address
+- `address_variable` (String) Variable name
+- `administrative_distance` (Number) Administrative distance
+  - Range: `1`-`254`
+- `administrative_distance_variable` (String) Variable name
+
+
 
 <a id="nestedatt--ipv6_static_routes--next_hops"></a>
 ### Nested Schema for `ipv6_static_routes.next_hops`
@@ -444,7 +507,7 @@ Optional:
   - Default value: `true`
 - `overload_variable` (String) Variable name
 - `prefix_length` (Number) NAT Pool Prefix Length
-  - Range: `1`-`32`
+  - Range: `1`-`30`
 - `prefix_length_variable` (String) Variable name
 - `range_end` (String) NAT Pool Range End
 - `range_end_variable` (String) Variable name
@@ -467,8 +530,10 @@ Optional:
 - `source_ip` (String) Source IP Address
 - `source_ip_variable` (String) Variable name
 - `source_port` (Number) Source Port
+  - Range: `0`-`65535`
 - `source_port_variable` (String) Variable name
 - `translate_port` (Number) Translate Port
+  - Range: `0`-`65535`
 - `translate_port_variable` (String) Variable name
 - `translated_source_ip` (String) Translated Source IP Address
 - `translated_source_ip_variable` (String) Variable name
@@ -554,9 +619,11 @@ Optional:
 - `network_address` (String) IP Address
 - `network_address_variable` (String) Variable name
 - `service` (String) Service
-  - Choices: `SIG`
+  - Choices: `SIG`, `SSE`
   - Default value: `SIG`
 - `service_variable` (String) Variable name
+- `sse_instance` (String) SSE Instance name
+- `sse_instance_variable` (String) Variable name
 - `subnet_mask` (String) Subnet Mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `subnet_mask_variable` (String) Variable name
@@ -576,6 +643,24 @@ Optional:
 - `tracking` (Boolean) Tracking
   - Default value: `true`
 - `tracking_variable` (String) Variable name
+
+
+<a id="nestedatt--static_nat_subnets"></a>
+### Nested Schema for `static_nat_subnets`
+
+Optional:
+
+- `prefix_length` (Number) Network Prefix Length
+  - Range: `1`-`32`
+- `prefix_length_variable` (String) Variable name
+- `source_ip_subnet` (String) Source IP Subnet
+- `source_ip_subnet_variable` (String) Variable name
+- `static_nat_direction` (String) Static NAT Direction
+  - Choices: `inside`, `outside`
+- `static_nat_direction_variable` (String) Variable name
+- `tracker_object_id` (String)
+- `translated_source_ip_subnet` (String) Translated Source IP Subnet
+- `translated_source_ip_subnet_variable` (String) Variable name
 
 
 <a id="nestedatt--static_nats"></a>

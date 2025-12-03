@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanServiceLANVPNProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "vpn", "1"))
@@ -56,6 +56,7 @@ func TestAccSdwanServiceLANVPNProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "service_routes.0.subnet_mask", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "service_routes.0.service", "SIG"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "service_routes.0.vpn", "0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "service_routes.0.sse_instance", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "gre_routes.0.network_address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "gre_routes.0.subnet_mask", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "gre_routes.0.vpn", "0"))
@@ -77,6 +78,10 @@ func TestAccSdwanServiceLANVPNProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "static_nats.0.source_ip", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "static_nats.0.translated_source_ip", "2.3.4.5"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "static_nats.0.static_nat_direction", "inside"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "static_nat_subnets.0.source_ip_subnet", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "static_nat_subnets.0.translated_source_ip_subnet", "2.3.4.5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "static_nat_subnets.0.prefix_length", "6"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "static_nat_subnets.0.static_nat_direction", "inside"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "nat_64_v4_pools.0.name", "NATPOOL1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "nat_64_v4_pools.0.range_start", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_feature.test", "nat_64_v4_pools.0.range_end", "2.3.4.5"))
@@ -170,6 +175,7 @@ func testAccSdwanServiceLANVPNProfileParcelConfig_all() string {
 	config += `	  subnet_mask = "0.0.0.0"` + "\n"
 	config += `	  service = "SIG"` + "\n"
 	config += `	  vpn = 0` + "\n"
+	config += `	  sse_instance = "1"` + "\n"
 	config += `	}]` + "\n"
 	config += `	gre_routes = [{` + "\n"
 	config += `	  network_address = "1.2.3.4"` + "\n"
@@ -202,6 +208,12 @@ func testAccSdwanServiceLANVPNProfileParcelConfig_all() string {
 	config += `	  nat_pool_name = 3` + "\n"
 	config += `	  source_ip = "1.2.3.4"` + "\n"
 	config += `	  translated_source_ip = "2.3.4.5"` + "\n"
+	config += `	  static_nat_direction = "inside"` + "\n"
+	config += `	}]` + "\n"
+	config += `	static_nat_subnets = [{` + "\n"
+	config += `	  source_ip_subnet = "1.2.3.4"` + "\n"
+	config += `	  translated_source_ip_subnet = "2.3.4.5"` + "\n"
+	config += `	  prefix_length = 6` + "\n"
 	config += `	  static_nat_direction = "inside"` + "\n"
 	config += `	}]` + "\n"
 	config += `	nat_64_v4_pools = [{` + "\n"
