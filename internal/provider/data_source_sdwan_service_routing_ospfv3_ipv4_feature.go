@@ -260,7 +260,7 @@ func (d *ServiceRoutingOSPFv3IPv4ProfileParcelDataSource) Schema(ctx context.Con
 							Computed:            true,
 						},
 						"area_type": schema.StringAttribute{
-							MarkdownDescription: "stub area type",
+							MarkdownDescription: "Set OSPFv3 area type",
 							Computed:            true,
 						},
 						"no_summary": schema.BoolAttribute{
@@ -341,7 +341,7 @@ func (d *ServiceRoutingOSPFv3IPv4ProfileParcelDataSource) Schema(ctx context.Con
 										Computed:            true,
 									},
 									"authentication_type": schema.StringAttribute{
-										MarkdownDescription: "No Authentication by default",
+										MarkdownDescription: "Set OSPF interface authentication configuration",
 										Computed:            true,
 									},
 									"authentication_spi": schema.Int64Attribute{

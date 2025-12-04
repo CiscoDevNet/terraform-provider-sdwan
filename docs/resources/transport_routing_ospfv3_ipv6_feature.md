@@ -152,8 +152,8 @@ Optional:
 - `area_number` (Number) Set OSPF area number
   - Range: `0`-`4294967295`
 - `area_number_variable` (String) Variable name
-- `area_type` (String) stub area type
-  - Choices: `nssa`, `normal`, `stub`
+- `area_type` (String) Set OSPFv3 area type
+  - Choices: `stub`, `nssa`, `normal`
 - `interfaces` (Attributes List) Set OSPF interface parameters (see [below for nested schema](#nestedatt--areas--interfaces))
 - `no_summary` (Boolean) Do not inject inter-area routes
 - `no_summary_variable` (String) Variable name
@@ -169,8 +169,8 @@ Optional:
 - `authentication_spi` (Number) Set OSPF interface authentication IPSec SPI, range 256..4294967295
   - Range: `256`-`4294967295`
 - `authentication_spi_variable` (String) Variable name
-- `authentication_type` (String) No Authentication by default
-  - Choices: `ipsec-sha1`, `no-auth`
+- `authentication_type` (String) Set OSPF interface authentication configuration
+  - Choices: `no-auth`, `ipsec-sha1`
 - `cost` (Number) Set cost of OSPF interface
   - Range: `1`-`65535`
 - `cost_variable` (String) Variable name
