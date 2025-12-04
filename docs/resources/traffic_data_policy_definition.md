@@ -114,7 +114,7 @@ Optional:
   - Choices: `host`, `umbrella`
 - `secure_internet_gateway` (Boolean) Enable secure internet gateway, Attribute conditional on `type` being equal to `sig`
 - `service_node_group` (String) Service node group, Attribute conditional on `type` being equal to `serviceNodeGroup`
-- `set_parameters` (Attributes List) List of set parameters, Attribute conditional on `type` being equal to `set` (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
+- `set_parameters` (Attributes Set) List of set parameters, Attribute conditional on `type` being equal to `set` (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
 - `tcp_optimization` (Boolean) Enable TCP optimization, Attribute conditional on `type` being equal to `tcpOptimization`
 
 <a id="nestedatt--sequences--action_entries--nat_parameters"></a>

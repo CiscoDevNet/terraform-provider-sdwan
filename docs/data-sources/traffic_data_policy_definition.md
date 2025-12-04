@@ -69,7 +69,7 @@ Read-Only:
 - `redirect_dns_type` (String) Redirect DNS type
 - `secure_internet_gateway` (Boolean) Enable secure internet gateway
 - `service_node_group` (String) Service node group
-- `set_parameters` (Attributes List) List of set parameters (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
+- `set_parameters` (Attributes Set) List of set parameters (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
 - `tcp_optimization` (Boolean) Enable TCP optimization
 - `type` (String) Type of action entry
 

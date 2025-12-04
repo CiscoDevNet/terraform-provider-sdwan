@@ -490,7 +490,7 @@ attributes:
             conditional_attribute:
               name: type
               value: set
-            type: List
+            type: Set
             description: List of set parameters
             exclude_test: true
             attributes:

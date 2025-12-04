@@ -280,7 +280,7 @@ func (d *TrafficDataPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 										MarkdownDescription: "Enable TCP optimization",
 										Computed:            true,
 									},
-									"set_parameters": schema.ListNestedAttribute{
+									"set_parameters": schema.SetNestedAttribute{
 										MarkdownDescription: "List of set parameters",
 										Computed:            true,
 										NestedObject: schema.NestedAttributeObject{
