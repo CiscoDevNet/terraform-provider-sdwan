@@ -292,7 +292,7 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 										},
 									},
 									"role": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Role, Attribute conditional on `type` being equal to `regionId`").AddStringEnumDescription("border-router", "edge-router").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Role, Attribute conditional on `type` being equal to `role`").AddStringEnumDescription("border-router", "edge-router").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("border-router", "edge-router"),
