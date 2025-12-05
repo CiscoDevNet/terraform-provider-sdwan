@@ -50,20 +50,22 @@ func (data ActivateCentralizedPolicy) activatePolicy(ctx context.Context, client
 	return nil
 }
 
-func (data ActivateCentralizedPolicy) getPushBody(ctx context.Context, client *sdwan.Client) (string, error) {
+func (data ActivateCentralizedPolicy) getPushBody(ctx context.Context, client *sdwan.Client) (string, string, error) {
 	// Get all device templates
 	res, err := client.Get("/template/device?feature=all")
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
-	// Filter for vSmart templates with devices attached
+	// Filter for vSmart templates with devices attached and track their configTypes
 	var vsmartTemplateIds []string
+	configTypes := make(map[string]string)
 	if res.Get("data").Exists() {
 		for _, item := range res.Get("data").Array() {
 			if item.Get("deviceType").String() == "vsmart" && item.Get("devicesAttached").Int() > 0 {
 				templateId := item.Get("templateId").String()
 				if templateId != "" {
 					vsmartTemplateIds = append(vsmartTemplateIds, templateId)
+					configTypes[templateId] = item.Get("configType").String()
 				}
 			}
 		}
@@ -74,7 +76,7 @@ func (data ActivateCentralizedPolicy) getPushBody(ctx context.Context, client *s
 	for _, templateId := range vsmartTemplateIds {
 		res, err := client.Get("/template/device/config/attached/" + templateId)
 		if err != nil {
-			return "", err
+			return "", "", err
 		}
 		var deviceIds []string
 		if res.Get("data").Exists() {
@@ -92,7 +94,7 @@ func (data ActivateCentralizedPolicy) getPushBody(ctx context.Context, client *s
 
 		res, err = client.Post("/template/device/config/input/", inputPayload)
 		if err != nil {
-			return "", err
+			return "", "", err
 		}
 		// Get device list from response
 		deviceList := []interface{}{}
@@ -114,7 +116,33 @@ func (data ActivateCentralizedPolicy) getPushBody(ctx context.Context, client *s
 		deviceTemplateList = append(deviceTemplateList, templateAttachPayload)
 	}
 	attachPayload, _ := sjson.Set("", "deviceTemplateList", deviceTemplateList)
-	return attachPayload, nil
+
+	// Determine which endpoint to use based on configTypes
+	endpoint := determineAttachEndpoint(configTypes)
+
+	return attachPayload, endpoint, nil
+}
+
+func determineAttachEndpoint(configTypes map[string]string) string {
+	hasTemplate := false
+	hasFile := false
+
+	for _, configType := range configTypes {
+		switch configType {
+		case "template":
+			hasTemplate = true
+		case "file":
+			hasFile = true
+		}
+	}
+
+	if hasTemplate && hasFile {
+		return "/template/device/config/attachment"
+	} else if hasFile {
+		return "/template/device/config/attachcli"
+	} else {
+		return "/template/device/config/attachfeature"
+	}
 }
 
 // Section below is generated&owned by "gen/generator.go". //template:begin processImport
