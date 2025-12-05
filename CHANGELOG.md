@@ -2,6 +2,7 @@
 
 - Add `sdwan_system_ca_certificate_feature` resource and data source
 - Add default value for `administrative_distance` in `sdwan_transport_wan_vpn_feature`
+- Fix problem where `sdwan_activate_centralized_policy` fails to update when Controllers (vSmarts) are using CLI device template
 
 ## 0.8.1
 
