@@ -216,7 +216,11 @@ func (d *ServiceRoutingOSPFv3IPv6ProfileParcelDataSource) Schema(ctx context.Con
 							Computed:            true,
 						},
 						"translate_rib_metric": schema.BoolAttribute{
-							MarkdownDescription: "Translate Rib Metric",
+							MarkdownDescription: "Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network.",
+							Computed:            true,
+						},
+						"translate_rib_metric_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
 					},
@@ -248,7 +252,7 @@ func (d *ServiceRoutingOSPFv3IPv6ProfileParcelDataSource) Schema(ctx context.Con
 							Computed:            true,
 						},
 						"area_type": schema.StringAttribute{
-							MarkdownDescription: "stub area type",
+							MarkdownDescription: "Set OSPFv3 area type",
 							Computed:            true,
 						},
 						"no_summary": schema.BoolAttribute{
@@ -329,7 +333,7 @@ func (d *ServiceRoutingOSPFv3IPv6ProfileParcelDataSource) Schema(ctx context.Con
 										Computed:            true,
 									},
 									"authentication_type": schema.StringAttribute{
-										MarkdownDescription: "No Authentication by default",
+										MarkdownDescription: "Set OSPF interface authentication configuration",
 										Computed:            true,
 									},
 									"authentication_spi": schema.Int64Attribute{

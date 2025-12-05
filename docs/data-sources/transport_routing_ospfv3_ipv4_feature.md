@@ -77,7 +77,7 @@ Read-Only:
 - `always_translate_variable` (String) Variable name
 - `area_number` (Number) Set OSPF area number
 - `area_number_variable` (String) Variable name
-- `area_type` (String) stub area type
+- `area_type` (String) Set OSPFv3 area type
 - `interfaces` (Attributes List) Set OSPF interface parameters (see [below for nested schema](#nestedatt--areas--interfaces))
 - `no_summary` (Boolean) Do not inject inter-area routes
 - `no_summary_variable` (String) Variable name
@@ -92,7 +92,7 @@ Read-Only:
 - `authentication_key_variable` (String) Variable name
 - `authentication_spi` (Number) Set OSPF interface authentication IPSec SPI, range 256..4294967295
 - `authentication_spi_variable` (String) Variable name
-- `authentication_type` (String) No Authentication by default
+- `authentication_type` (String) Set OSPF interface authentication configuration
 - `cost` (Number) Set cost of OSPF interface
 - `cost_variable` (String) Variable name
 - `dead_interval` (Number) Set interval after which neighbor is declared to be down
@@ -135,3 +135,5 @@ Read-Only:
 - `protocol` (String) Set the protocol
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
+- `translate_rib_metric` (Boolean) Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network.
+- `translate_rib_metric_variable` (String) Variable name

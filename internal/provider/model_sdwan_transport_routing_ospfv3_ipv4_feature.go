@@ -76,11 +76,13 @@ type TransportRoutingOSPFv3IPv4 struct {
 }
 
 type TransportRoutingOSPFv3IPv4Redistributes struct {
-	Protocol         types.String `tfsdk:"protocol"`
-	ProtocolVariable types.String `tfsdk:"protocol_variable"`
-	NatDia           types.Bool   `tfsdk:"nat_dia"`
-	NatDiaVariable   types.String `tfsdk:"nat_dia_variable"`
-	RoutePolicyId    types.String `tfsdk:"route_policy_id"`
+	Protocol                   types.String `tfsdk:"protocol"`
+	ProtocolVariable           types.String `tfsdk:"protocol_variable"`
+	NatDia                     types.Bool   `tfsdk:"nat_dia"`
+	NatDiaVariable             types.String `tfsdk:"nat_dia_variable"`
+	TranslateRibMetric         types.Bool   `tfsdk:"translate_rib_metric"`
+	TranslateRibMetricVariable types.String `tfsdk:"translate_rib_metric_variable"`
+	RoutePolicyId              types.String `tfsdk:"route_policy_id"`
 }
 
 type TransportRoutingOSPFv3IPv4Areas struct {
@@ -415,6 +417,23 @@ func (data TransportRoutingOSPFv3IPv4) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "natDia.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "natDia.value", item.NatDia.ValueBool())
+				}
+			}
+
+			if !item.TranslateRibMetricVariable.IsNull() {
+				if true && item.Protocol.ValueString() == "omp" {
+					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.value", item.TranslateRibMetricVariable.ValueString())
+				}
+			} else if item.TranslateRibMetric.IsNull() {
+				if true && item.Protocol.ValueString() == "omp" {
+					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.value", false)
+				}
+			} else {
+				if true && item.Protocol.ValueString() == "omp" {
+					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "translateRibMetric.value", item.TranslateRibMetric.ValueBool())
 				}
 			}
 			if !item.RoutePolicyId.IsNull() {
@@ -903,6 +922,17 @@ func (data *TransportRoutingOSPFv3IPv4) fromBody(ctx context.Context, res gjson.
 					item.NatDia = types.BoolValue(va.Bool())
 				}
 			}
+			item.TranslateRibMetric = types.BoolNull()
+			item.TranslateRibMetricVariable = types.StringNull()
+			if t := v.Get("translateRibMetric.optionType"); t.Exists() {
+				va := v.Get("translateRibMetric.value")
+				if t.String() == "variable" {
+					item.TranslateRibMetricVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.TranslateRibMetric = types.BoolValue(va.Bool())
+				}
+				item.Protocol = types.StringValue("omp")
+			}
 			item.RoutePolicyId = types.StringNull()
 
 			if t := v.Get("routePolicy.refId.optionType"); t.Exists() {
@@ -1351,6 +1381,16 @@ func (data *TransportRoutingOSPFv3IPv4) updateFromBody(ctx context.Context, res 
 				data.Redistributes[i].NatDiaVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
 				data.Redistributes[i].NatDia = types.BoolValue(va.Bool())
+			}
+		}
+		data.Redistributes[i].TranslateRibMetric = types.BoolNull()
+		data.Redistributes[i].TranslateRibMetricVariable = types.StringNull()
+		if t := r.Get("translateRibMetric.optionType"); t.Exists() {
+			va := r.Get("translateRibMetric.value")
+			if t.String() == "variable" {
+				data.Redistributes[i].TranslateRibMetricVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				data.Redistributes[i].TranslateRibMetric = types.BoolValue(va.Bool())
 			}
 		}
 		data.Redistributes[i].RoutePolicyId = types.StringNull()
