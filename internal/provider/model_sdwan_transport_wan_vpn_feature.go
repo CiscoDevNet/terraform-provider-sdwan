@@ -377,7 +377,12 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "variable")
 							itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistanceVariable.ValueString())
 						}
-					} else if !childItem.AdministrativeDistance.IsNull() {
+					} else if childItem.AdministrativeDistance.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "default")
+							itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", 1)
+						}
+					} else {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistance.ValueInt64())
