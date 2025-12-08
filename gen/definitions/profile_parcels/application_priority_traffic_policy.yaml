@@ -73,6 +73,11 @@ attributes:
         exclude_test: true
         example: silver
       - model_name: dscp
+        tf_name: dscps
+        no_augment_config: true
+        type: Set
+        element_type: Int64
+        description: DSCP numbers
         # exclude_test: true
         example: 1
       - model_name: packetLength

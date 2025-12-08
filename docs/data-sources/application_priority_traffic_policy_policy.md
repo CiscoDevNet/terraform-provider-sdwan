@@ -143,7 +143,7 @@ Read-Only:
 - `destination_region` (String) Destination Region
 - `dns` (String) Dns
 - `dns_application_list_id` (String)
-- `dscp` (Number) DSCP number(s)
+- `dscps` (Set of Number) DSCP numbers
 - `icmp6_message` (Set of String) ICMP6 Message
 - `icmp_message` (Set of String) ICMP Message
 - `packet_length` (String) Packet Length

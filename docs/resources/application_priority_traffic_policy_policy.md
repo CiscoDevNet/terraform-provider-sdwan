@@ -30,7 +30,7 @@ resource "sdwan_application_priority_traffic_policy_policy" "example" {
       protocol      = "ipv4"
       match_entries = [
         {
-          dscp = 1
+          dscps = [1]
         }
       ]
       actions = [
@@ -178,7 +178,7 @@ Optional:
 - `dns` (String) Dns
   - Choices: `request`, `response`
 - `dns_application_list_id` (String)
-- `dscp` (Number) DSCP number(s)
+- `dscps` (Set of Number) DSCP numbers
 - `icmp6_message` (Set of String) ICMP6 Message
 - `icmp_message` (Set of String) ICMP Message
 - `packet_length` (String) Packet Length

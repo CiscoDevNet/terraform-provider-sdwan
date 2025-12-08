@@ -142,8 +142,9 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										MarkdownDescription: "Traffic Class",
 										Computed:            true,
 									},
-									"dscp": schema.Int64Attribute{
-										MarkdownDescription: "DSCP number(s)",
+									"dscps": schema.SetAttribute{
+										MarkdownDescription: "DSCP numbers",
+										ElementType:         types.Int64Type,
 										Computed:            true,
 									},
 									"packet_length": schema.StringAttribute{

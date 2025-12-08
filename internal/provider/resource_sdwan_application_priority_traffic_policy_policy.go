@@ -184,8 +184,9 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 											stringvalidator.OneOf("gold-voip-telephony", "gold-broadcast-video", "gold-real-time-interactive", "gold-multimedia-conferencing", "gold-multimedia-streaming", "gold-network-control", "gold-signaling", "gold-ops-admin-mgmt", "gold-transactional-data", "gold-bulk-data", "silver", "bronze"),
 										},
 									},
-									"dscp": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("DSCP number(s)").String,
+									"dscps": schema.SetAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("DSCP numbers").String,
+										ElementType:         types.Int64Type,
 										Optional:            true,
 									},
 									"packet_length": schema.StringAttribute{
