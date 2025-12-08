@@ -23,6 +23,7 @@ import (
 	"fmt"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -199,7 +200,20 @@ func (data *MeshTopologyPolicyDefinition) processImport(ctx context.Context) {
 	}
 	for i := range data.Regions {
 		if !data.Regions[i].SiteListIds.IsNull() {
-			data.Regions[i].SiteListVersions = types.ListNull(types.StringType)
+			var elementsSiteListVersions []attr.Value
+			var countSiteListVersions int = 0
+			if !(data.Regions[i].SiteListIds.IsNull() || data.Regions[i].SiteListIds.IsUnknown()) {
+				countSiteListVersions = len(data.Regions[i].SiteListIds.Elements())
+			}
+			if countSiteListVersions > 0 {
+				elementsSiteListVersions = make([]attr.Value, countSiteListVersions)
+				for i := 0; i < countSiteListVersions; i++ {
+					elementsSiteListVersions[i] = types.StringValue("0")
+				}
+				data.Regions[i].SiteListVersions = types.ListValueMust(types.StringType, elementsSiteListVersions)
+			} else {
+				data.Regions[i].SiteListVersions = types.ListNull(types.StringType)
+			}
 		}
 	}
 }

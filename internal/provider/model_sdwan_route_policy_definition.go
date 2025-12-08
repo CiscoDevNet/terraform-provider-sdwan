@@ -23,6 +23,7 @@ import (
 	"fmt"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -764,7 +765,20 @@ func (data *RoutePolicyDefinition) processImport(ctx context.Context) {
 				data.Sequences[i].MatchEntries[ii].CommunityListVersion = types.Int64Value(0)
 			}
 			if !data.Sequences[i].MatchEntries[ii].CommunityListIds.IsNull() {
-				data.Sequences[i].MatchEntries[ii].CommunityListVersions = types.ListNull(types.StringType)
+				var elementsCommunityListVersions []attr.Value
+				var countCommunityListVersions int = 0
+				if !(data.Sequences[i].MatchEntries[ii].CommunityListIds.IsNull() || data.Sequences[i].MatchEntries[ii].CommunityListIds.IsUnknown()) {
+					countCommunityListVersions = len(data.Sequences[i].MatchEntries[ii].CommunityListIds.Elements())
+				}
+				if countCommunityListVersions > 0 {
+					elementsCommunityListVersions = make([]attr.Value, countCommunityListVersions)
+					for i := 0; i < countCommunityListVersions; i++ {
+						elementsCommunityListVersions[i] = types.StringValue("0")
+					}
+					data.Sequences[i].MatchEntries[ii].CommunityListVersions = types.ListValueMust(types.StringType, elementsCommunityListVersions)
+				} else {
+					data.Sequences[i].MatchEntries[ii].CommunityListVersions = types.ListNull(types.StringType)
+				}
 			}
 			if data.Sequences[i].MatchEntries[ii].ExpandedCommunityListId != types.StringNull() {
 				data.Sequences[i].MatchEntries[ii].ExpandedCommunityListVersion = types.Int64Value(0)
