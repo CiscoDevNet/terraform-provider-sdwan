@@ -2,6 +2,7 @@
 
 - Add `sdwan_system_ca_certificate_feature` resource and data source
 - Add default value for `administrative_distance` in `sdwan_transport_wan_vpn_feature`
+- Fix issue where `fallback` in `sdwan_traffic_data_policy_definition` configuration is not applied correctly, causing the GUI to display it as enabled even when disabled in Terraform
 
 ## 0.8.1
 
