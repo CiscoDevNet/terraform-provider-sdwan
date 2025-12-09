@@ -1635,7 +1635,6 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 
 // End of section. //template:end fromBody
 
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
 func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
@@ -2090,301 +2089,278 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 					data.Sequences[i].Actions[ci].BackupSlaPreferredColors = helpers.GetStringSet(va.Array())
 				}
 			}
-			for cci := range data.Sequences[i].Actions[ci].SetParameters {
-				keys := [...]string{"dscp", "policer.refId", "preferredColorGroup.refId", "forwardingClass.refId", "localTlocList.color", "localTlocList.restrict", "localTlocList.encap", "preferredRemoteColor.color", "preferredRemoteColor.remoteColorRestrict", "tloc.color", "tloc.encap", "tloc.ip", "tlocList.refId", "service.tloc.color", "service.tloc.encap", "service.tloc.ip", "service.vpn", "service.type", "service.local", "service.restrict", "service.tlocList.refId", "serviceChain.type", "serviceChain.vpn", "serviceChain.local", "serviceChain.restrict", "serviceChain.tloc.color", "serviceChain.tloc.encap", "serviceChain.tloc.ip", "serviceChain.tlocList.refId", "nextHop", "nextHopIpv6", "nextHopLoose", "vpn"}
-				keyValues := [...]string{strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].Dscp.ValueInt64(), 10), data.Sequences[i].Actions[ci].SetParameters[cci].PolicerId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].PreferredColorGroupId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ForwardingClassListId.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListColors).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListRestrict.ValueBool()), data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListEncapsulation.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColors).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorRestrict.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].TlocColor).ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].TlocEncapsulation.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].TlocIp.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].TlocListId.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocColor).ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocEncapsulation.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocIp.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceVpn.ValueInt64(), 10), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceType.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceLocal.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceRestrict.ValueBool()), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocListId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainType.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainVpn.ValueInt64(), 10), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainLocal.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainFallbackToRouting.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocColor).ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocEncapsulation.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocIp.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocListId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].NextHopIpv4.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].NextHopIpv6.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].NextHopLoose.ValueBool()), strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].Vpn.ValueInt64(), 10)}
-				keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""}
+			// Use fromBody approach for set_parameters to avoid matching issues with sparse objects
+			if ccValue := cr.Get("set"); ccValue.Exists() && len(ccValue.Array()) > 0 {
+				data.Sequences[i].Actions[ci].SetParameters = make([]ApplicationPriorityTrafficPolicySequencesActionsSetParameters, 0)
+				ccValue.ForEach(func(cck, ccr gjson.Result) bool {
+					ccItem := ApplicationPriorityTrafficPolicySequencesActionsSetParameters{}
+					ccItem.Dscp = types.Int64Null()
 
-				var ccr gjson.Result
-				cr.Get("set").ForEach(
-					func(_, v gjson.Result) bool {
-						found := false
-						for ik := range keys {
-							tt := v.Get(keys[ik] + ".optionType")
-							vv := v.Get(keys[ik] + ".value")
-							if tt.Exists() && vv.Exists() {
-								if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-									found = true
-									continue
-								} else if tt.String() == "default" {
-									continue
-								}
-								found = false
-								break
-							}
-							continue
+					if t := ccr.Get("dscp.optionType"); t.Exists() {
+						va := ccr.Get("dscp.value")
+						if t.String() == "global" {
+							ccItem.Dscp = types.Int64Value(va.Int())
 						}
-						if found {
-							ccr = v
-							return false
+					}
+					ccItem.PolicerId = types.StringNull()
+
+					if t := ccr.Get("policer.refId.optionType"); t.Exists() {
+						va := ccr.Get("policer.refId.value")
+						if t.String() == "global" {
+							ccItem.PolicerId = types.StringValue(va.String())
 						}
-						return true
-					},
-				)
-				data.Sequences[i].Actions[ci].SetParameters[cci].Dscp = types.Int64Null()
-
-				if t := ccr.Get("dscp.optionType"); t.Exists() {
-					va := ccr.Get("dscp.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].Dscp = types.Int64Value(va.Int())
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].PolicerId = types.StringNull()
+					ccItem.PreferredColorGroupId = types.StringNull()
 
-				if t := ccr.Get("policer.refId.optionType"); t.Exists() {
-					va := ccr.Get("policer.refId.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].PolicerId = types.StringValue(va.String())
+					if t := ccr.Get("preferredColorGroup.refId.optionType"); t.Exists() {
+						va := ccr.Get("preferredColorGroup.refId.value")
+						if t.String() == "global" {
+							ccItem.PreferredColorGroupId = types.StringValue(va.String())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].PreferredColorGroupId = types.StringNull()
+					ccItem.ForwardingClassListId = types.StringNull()
 
-				if t := ccr.Get("preferredColorGroup.refId.optionType"); t.Exists() {
-					va := ccr.Get("preferredColorGroup.refId.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].PreferredColorGroupId = types.StringValue(va.String())
+					if t := ccr.Get("forwardingClass.refId.optionType"); t.Exists() {
+						va := ccr.Get("forwardingClass.refId.value")
+						if t.String() == "global" {
+							ccItem.ForwardingClassListId = types.StringValue(va.String())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ForwardingClassListId = types.StringNull()
+					ccItem.LocalTlocListColors = types.SetNull(types.StringType)
 
-				if t := ccr.Get("forwardingClass.refId.optionType"); t.Exists() {
-					va := ccr.Get("forwardingClass.refId.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ForwardingClassListId = types.StringValue(va.String())
+					if t := ccr.Get("localTlocList.color.optionType"); t.Exists() {
+						va := ccr.Get("localTlocList.color.value")
+						if t.String() == "global" {
+							ccItem.LocalTlocListColors = helpers.GetStringSet(va.Array())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListColors = types.SetNull(types.StringType)
+					ccItem.LocalTlocListRestrict = types.BoolNull()
 
-				if t := ccr.Get("localTlocList.color.optionType"); t.Exists() {
-					va := ccr.Get("localTlocList.color.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListColors = helpers.GetStringSet(va.Array())
+					if t := ccr.Get("localTlocList.restrict.optionType"); t.Exists() {
+						va := ccr.Get("localTlocList.restrict.value")
+						if t.String() == "global" {
+							ccItem.LocalTlocListRestrict = types.BoolValue(va.Bool())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListRestrict = types.BoolNull()
+					ccItem.LocalTlocListEncapsulation = types.StringNull()
 
-				if t := ccr.Get("localTlocList.restrict.optionType"); t.Exists() {
-					va := ccr.Get("localTlocList.restrict.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListRestrict = types.BoolValue(va.Bool())
+					if t := ccr.Get("localTlocList.encap.optionType"); t.Exists() {
+						va := ccr.Get("localTlocList.encap.value")
+						if t.String() == "global" {
+							ccItem.LocalTlocListEncapsulation = types.StringValue(va.String())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListEncapsulation = types.StringNull()
+					ccItem.PreferredRemoteColors = types.SetNull(types.StringType)
 
-				if t := ccr.Get("localTlocList.encap.optionType"); t.Exists() {
-					va := ccr.Get("localTlocList.encap.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListEncapsulation = types.StringValue(va.String())
+					if t := ccr.Get("preferredRemoteColor.color.optionType"); t.Exists() {
+						va := ccr.Get("preferredRemoteColor.color.value")
+						if t.String() == "global" {
+							ccItem.PreferredRemoteColors = helpers.GetStringSet(va.Array())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColors = types.SetNull(types.StringType)
+					ccItem.PreferredRemoteColorRestrict = types.BoolNull()
 
-				if t := ccr.Get("preferredRemoteColor.color.optionType"); t.Exists() {
-					va := ccr.Get("preferredRemoteColor.color.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColors = helpers.GetStringSet(va.Array())
+					if t := ccr.Get("preferredRemoteColor.remoteColorRestrict.optionType"); t.Exists() {
+						va := ccr.Get("preferredRemoteColor.remoteColorRestrict.value")
+						if t.String() == "global" {
+							ccItem.PreferredRemoteColorRestrict = types.BoolValue(va.Bool())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorRestrict = types.BoolNull()
+					ccItem.TlocColor = types.SetNull(types.StringType)
 
-				if t := ccr.Get("preferredRemoteColor.remoteColorRestrict.optionType"); t.Exists() {
-					va := ccr.Get("preferredRemoteColor.remoteColorRestrict.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorRestrict = types.BoolValue(va.Bool())
+					if t := ccr.Get("tloc.color.optionType"); t.Exists() {
+						va := ccr.Get("tloc.color.value")
+						if t.String() == "global" {
+							ccItem.TlocColor = helpers.GetStringSet(va.Array())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].TlocColor = types.SetNull(types.StringType)
+					ccItem.TlocEncapsulation = types.StringNull()
 
-				if t := ccr.Get("tloc.color.optionType"); t.Exists() {
-					va := ccr.Get("tloc.color.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].TlocColor = helpers.GetStringSet(va.Array())
+					if t := ccr.Get("tloc.encap.optionType"); t.Exists() {
+						va := ccr.Get("tloc.encap.value")
+						if t.String() == "global" {
+							ccItem.TlocEncapsulation = types.StringValue(va.String())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].TlocEncapsulation = types.StringNull()
+					ccItem.TlocIp = types.StringNull()
 
-				if t := ccr.Get("tloc.encap.optionType"); t.Exists() {
-					va := ccr.Get("tloc.encap.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].TlocEncapsulation = types.StringValue(va.String())
+					if t := ccr.Get("tloc.ip.optionType"); t.Exists() {
+						va := ccr.Get("tloc.ip.value")
+						if t.String() == "global" {
+							ccItem.TlocIp = types.StringValue(va.String())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].TlocIp = types.StringNull()
+					ccItem.TlocListId = types.StringNull()
 
-				if t := ccr.Get("tloc.ip.optionType"); t.Exists() {
-					va := ccr.Get("tloc.ip.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].TlocIp = types.StringValue(va.String())
+					if t := ccr.Get("tlocList.refId.optionType"); t.Exists() {
+						va := ccr.Get("tlocList.refId.value")
+						if t.String() == "global" {
+							ccItem.TlocListId = types.StringValue(va.String())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].TlocListId = types.StringNull()
+					ccItem.ServiceTlocColor = types.SetNull(types.StringType)
 
-				if t := ccr.Get("tlocList.refId.optionType"); t.Exists() {
-					va := ccr.Get("tlocList.refId.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].TlocListId = types.StringValue(va.String())
+					if t := ccr.Get("service.tloc.color.optionType"); t.Exists() {
+						va := ccr.Get("service.tloc.color.value")
+						if t.String() == "global" {
+							ccItem.ServiceTlocColor = helpers.GetStringSet(va.Array())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocColor = types.SetNull(types.StringType)
+					ccItem.ServiceTlocEncapsulation = types.StringNull()
 
-				if t := ccr.Get("service.tloc.color.optionType"); t.Exists() {
-					va := ccr.Get("service.tloc.color.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocColor = helpers.GetStringSet(va.Array())
+					if t := ccr.Get("service.tloc.encap.optionType"); t.Exists() {
+						va := ccr.Get("service.tloc.encap.value")
+						if t.String() == "global" {
+							ccItem.ServiceTlocEncapsulation = types.StringValue(va.String())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocEncapsulation = types.StringNull()
+					ccItem.ServiceTlocIp = types.StringNull()
 
-				if t := ccr.Get("service.tloc.encap.optionType"); t.Exists() {
-					va := ccr.Get("service.tloc.encap.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocEncapsulation = types.StringValue(va.String())
+					if t := ccr.Get("service.tloc.ip.optionType"); t.Exists() {
+						va := ccr.Get("service.tloc.ip.value")
+						if t.String() == "global" {
+							ccItem.ServiceTlocIp = types.StringValue(va.String())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocIp = types.StringNull()
+					ccItem.ServiceVpn = types.Int64Null()
 
-				if t := ccr.Get("service.tloc.ip.optionType"); t.Exists() {
-					va := ccr.Get("service.tloc.ip.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocIp = types.StringValue(va.String())
+					if t := ccr.Get("service.vpn.optionType"); t.Exists() {
+						va := ccr.Get("service.vpn.value")
+						if t.String() == "global" {
+							ccItem.ServiceVpn = types.Int64Value(va.Int())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceVpn = types.Int64Null()
+					ccItem.ServiceType = types.StringNull()
 
-				if t := ccr.Get("service.vpn.optionType"); t.Exists() {
-					va := ccr.Get("service.vpn.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceVpn = types.Int64Value(va.Int())
+					if t := ccr.Get("service.type.optionType"); t.Exists() {
+						va := ccr.Get("service.type.value")
+						if t.String() == "global" {
+							ccItem.ServiceType = types.StringValue(va.String())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceType = types.StringNull()
+					ccItem.ServiceLocal = types.BoolNull()
 
-				if t := ccr.Get("service.type.optionType"); t.Exists() {
-					va := ccr.Get("service.type.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceType = types.StringValue(va.String())
+					if t := ccr.Get("service.local.optionType"); t.Exists() {
+						va := ccr.Get("service.local.value")
+						if t.String() == "global" {
+							ccItem.ServiceLocal = types.BoolValue(va.Bool())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceLocal = types.BoolNull()
+					ccItem.ServiceRestrict = types.BoolNull()
 
-				if t := ccr.Get("service.local.optionType"); t.Exists() {
-					va := ccr.Get("service.local.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceLocal = types.BoolValue(va.Bool())
+					if t := ccr.Get("service.restrict.optionType"); t.Exists() {
+						va := ccr.Get("service.restrict.value")
+						if t.String() == "global" {
+							ccItem.ServiceRestrict = types.BoolValue(va.Bool())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceRestrict = types.BoolNull()
+					ccItem.ServiceTlocListId = types.StringNull()
 
-				if t := ccr.Get("service.restrict.optionType"); t.Exists() {
-					va := ccr.Get("service.restrict.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceRestrict = types.BoolValue(va.Bool())
+					if t := ccr.Get("service.tlocList.refId.optionType"); t.Exists() {
+						va := ccr.Get("service.tlocList.refId.value")
+						if t.String() == "global" {
+							ccItem.ServiceTlocListId = types.StringValue(va.String())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocListId = types.StringNull()
+					ccItem.ServiceChainType = types.StringNull()
 
-				if t := ccr.Get("service.tlocList.refId.optionType"); t.Exists() {
-					va := ccr.Get("service.tlocList.refId.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocListId = types.StringValue(va.String())
+					if t := ccr.Get("serviceChain.type.optionType"); t.Exists() {
+						va := ccr.Get("serviceChain.type.value")
+						if t.String() == "global" {
+							ccItem.ServiceChainType = types.StringValue(va.String())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainType = types.StringNull()
+					ccItem.ServiceChainVpn = types.Int64Null()
 
-				if t := ccr.Get("serviceChain.type.optionType"); t.Exists() {
-					va := ccr.Get("serviceChain.type.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainType = types.StringValue(va.String())
+					if t := ccr.Get("serviceChain.vpn.optionType"); t.Exists() {
+						va := ccr.Get("serviceChain.vpn.value")
+						if t.String() == "global" {
+							ccItem.ServiceChainVpn = types.Int64Value(va.Int())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainVpn = types.Int64Null()
+					ccItem.ServiceChainLocal = types.BoolNull()
 
-				if t := ccr.Get("serviceChain.vpn.optionType"); t.Exists() {
-					va := ccr.Get("serviceChain.vpn.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainVpn = types.Int64Value(va.Int())
+					if t := ccr.Get("serviceChain.local.optionType"); t.Exists() {
+						va := ccr.Get("serviceChain.local.value")
+						if t.String() == "global" {
+							ccItem.ServiceChainLocal = types.BoolValue(va.Bool())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainLocal = types.BoolNull()
+					ccItem.ServiceChainFallbackToRouting = types.BoolNull()
 
-				if t := ccr.Get("serviceChain.local.optionType"); t.Exists() {
-					va := ccr.Get("serviceChain.local.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainLocal = types.BoolValue(va.Bool())
+					if t := ccr.Get("serviceChain.restrict.optionType"); t.Exists() {
+						va := ccr.Get("serviceChain.restrict.value")
+						if t.String() == "global" {
+							ccItem.ServiceChainFallbackToRouting = types.BoolValue(va.Bool())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainFallbackToRouting = types.BoolNull()
+					ccItem.ServiceChainTlocColor = types.SetNull(types.StringType)
 
-				if t := ccr.Get("serviceChain.restrict.optionType"); t.Exists() {
-					va := ccr.Get("serviceChain.restrict.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainFallbackToRouting = types.BoolValue(va.Bool())
+					if t := ccr.Get("serviceChain.tloc.color.optionType"); t.Exists() {
+						va := ccr.Get("serviceChain.tloc.color.value")
+						if t.String() == "global" {
+							ccItem.ServiceChainTlocColor = helpers.GetStringSet(va.Array())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocColor = types.SetNull(types.StringType)
+					ccItem.ServiceChainTlocEncapsulation = types.StringNull()
 
-				if t := ccr.Get("serviceChain.tloc.color.optionType"); t.Exists() {
-					va := ccr.Get("serviceChain.tloc.color.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocColor = helpers.GetStringSet(va.Array())
+					if t := ccr.Get("serviceChain.tloc.encap.optionType"); t.Exists() {
+						va := ccr.Get("serviceChain.tloc.encap.value")
+						if t.String() == "global" {
+							ccItem.ServiceChainTlocEncapsulation = types.StringValue(va.String())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocEncapsulation = types.StringNull()
+					ccItem.ServiceChainTlocIp = types.StringNull()
 
-				if t := ccr.Get("serviceChain.tloc.encap.optionType"); t.Exists() {
-					va := ccr.Get("serviceChain.tloc.encap.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocEncapsulation = types.StringValue(va.String())
+					if t := ccr.Get("serviceChain.tloc.ip.optionType"); t.Exists() {
+						va := ccr.Get("serviceChain.tloc.ip.value")
+						if t.String() == "global" {
+							ccItem.ServiceChainTlocIp = types.StringValue(va.String())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocIp = types.StringNull()
+					ccItem.ServiceChainTlocListId = types.StringNull()
 
-				if t := ccr.Get("serviceChain.tloc.ip.optionType"); t.Exists() {
-					va := ccr.Get("serviceChain.tloc.ip.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocIp = types.StringValue(va.String())
+					if t := ccr.Get("serviceChain.tlocList.refId.optionType"); t.Exists() {
+						va := ccr.Get("serviceChain.tlocList.refId.value")
+						if t.String() == "global" {
+							ccItem.ServiceChainTlocListId = types.StringValue(va.String())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocListId = types.StringNull()
+					ccItem.NextHopIpv4 = types.StringNull()
 
-				if t := ccr.Get("serviceChain.tlocList.refId.optionType"); t.Exists() {
-					va := ccr.Get("serviceChain.tlocList.refId.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocListId = types.StringValue(va.String())
+					if t := ccr.Get("nextHop.optionType"); t.Exists() {
+						va := ccr.Get("nextHop.value")
+						if t.String() == "global" {
+							ccItem.NextHopIpv4 = types.StringValue(va.String())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].NextHopIpv4 = types.StringNull()
+					ccItem.NextHopIpv6 = types.StringNull()
 
-				if t := ccr.Get("nextHop.optionType"); t.Exists() {
-					va := ccr.Get("nextHop.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].NextHopIpv4 = types.StringValue(va.String())
+					if t := ccr.Get("nextHopIpv6.optionType"); t.Exists() {
+						va := ccr.Get("nextHopIpv6.value")
+						if t.String() == "global" {
+							ccItem.NextHopIpv6 = types.StringValue(va.String())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].NextHopIpv6 = types.StringNull()
+					ccItem.NextHopLoose = types.BoolNull()
 
-				if t := ccr.Get("nextHopIpv6.optionType"); t.Exists() {
-					va := ccr.Get("nextHopIpv6.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].NextHopIpv6 = types.StringValue(va.String())
+					if t := ccr.Get("nextHopLoose.optionType"); t.Exists() {
+						va := ccr.Get("nextHopLoose.value")
+						if t.String() == "global" {
+							ccItem.NextHopLoose = types.BoolValue(va.Bool())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].NextHopLoose = types.BoolNull()
+					ccItem.Vpn = types.Int64Null()
 
-				if t := ccr.Get("nextHopLoose.optionType"); t.Exists() {
-					va := ccr.Get("nextHopLoose.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].NextHopLoose = types.BoolValue(va.Bool())
+					if t := ccr.Get("vpn.optionType"); t.Exists() {
+						va := ccr.Get("vpn.value")
+						if t.String() == "global" {
+							ccItem.Vpn = types.Int64Value(va.Int())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].Vpn = types.Int64Null()
-
-				if t := ccr.Get("vpn.optionType"); t.Exists() {
-					va := ccr.Get("vpn.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].Vpn = types.Int64Value(va.Int())
-					}
-				}
+					data.Sequences[i].Actions[ci].SetParameters = append(data.Sequences[i].Actions[ci].SetParameters, ccItem)
+					return true
+				})
 			}
 			data.Sequences[i].Actions[ci].RedirectDnsField = types.StringNull()
 
@@ -2565,5 +2541,3 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 		}
 	}
 }
-
-// End of section. //template:end updateFromBody

@@ -1,4 +1,4 @@
----
+# Manual resource - Modals updateFromBody is manually configured to avoid pernament diff for set_parameters
 name: Application Priority Traffic Policy
 rest_endpoint: /v1/feature-profile/sdwan/application-priority/%v/traffic-policy
 minimum_version: 20.15.0
