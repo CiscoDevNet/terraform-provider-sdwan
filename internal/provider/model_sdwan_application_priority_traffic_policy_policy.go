@@ -82,25 +82,31 @@ type ApplicationPriorityTrafficPolicySequencesMatchEntries struct {
 	Dns                             types.String `tfsdk:"dns"`
 }
 type ApplicationPriorityTrafficPolicySequencesActions struct {
-	SlaClasses               []ApplicationPriorityTrafficPolicySequencesActionsSlaClasses    `tfsdk:"sla_classes"`
-	BackupSlaPreferredColors types.Set                                                       `tfsdk:"backup_sla_preferred_colors"`
-	SetParameters            []ApplicationPriorityTrafficPolicySequencesActionsSetParameters `tfsdk:"set_parameters"`
-	RedirectDnsField         types.String                                                    `tfsdk:"redirect_dns_field"`
-	RedirectDnsValue         types.String                                                    `tfsdk:"redirect_dns_value"`
-	LossCorrectType          types.String                                                    `tfsdk:"loss_correct_type"`
-	LossCorrectFecThreshold  types.Int64                                                     `tfsdk:"loss_correct_fec_threshold"`
-	Count                    types.String                                                    `tfsdk:"count"`
-	Log                      types.Bool                                                      `tfsdk:"log"`
-	CloudSaas                types.Bool                                                      `tfsdk:"cloud_saas"`
-	CloudProbe               types.Bool                                                      `tfsdk:"cloud_probe"`
-	NatPool                  types.Int64                                                     `tfsdk:"nat_pool"`
-	NatVpn                   types.Bool                                                      `tfsdk:"nat_vpn"`
-	NatFallback              types.Bool                                                      `tfsdk:"nat_fallback"`
-	NatBypass                types.Bool                                                      `tfsdk:"nat_bypass"`
-	NatDiaPools              types.Set                                                       `tfsdk:"nat_dia_pools"`
-	NatDiaInterfaces         types.Set                                                       `tfsdk:"nat_dia_interfaces"`
-	SecureInternetGateway    types.Bool                                                      `tfsdk:"secure_internet_gateway"`
-	FallbackToRouting        types.Bool                                                      `tfsdk:"fallback_to_routing"`
+	SlaClasses                []ApplicationPriorityTrafficPolicySequencesActionsSlaClasses    `tfsdk:"sla_classes"`
+	BackupSlaPreferredColors  types.Set                                                       `tfsdk:"backup_sla_preferred_colors"`
+	SetParameters             []ApplicationPriorityTrafficPolicySequencesActionsSetParameters `tfsdk:"set_parameters"`
+	RedirectDnsField          types.String                                                    `tfsdk:"redirect_dns_field"`
+	RedirectDnsValue          types.String                                                    `tfsdk:"redirect_dns_value"`
+	AppqoeTcpOptimization     types.Bool                                                      `tfsdk:"appqoe_tcp_optimization"`
+	AppqoeDreOptimization     types.Bool                                                      `tfsdk:"appqoe_dre_optimization"`
+	AppqoeServiceNodeGroup    types.String                                                    `tfsdk:"appqoe_service_node_group"`
+	LossCorrectType           types.String                                                    `tfsdk:"loss_correct_type"`
+	LossCorrectFecThreshold   types.Int64                                                     `tfsdk:"loss_correct_fec_threshold"`
+	Count                     types.String                                                    `tfsdk:"count"`
+	Log                       types.Bool                                                      `tfsdk:"log"`
+	CloudSaas                 types.Bool                                                      `tfsdk:"cloud_saas"`
+	CloudProbe                types.Bool                                                      `tfsdk:"cloud_probe"`
+	Cflowd                    types.Bool                                                      `tfsdk:"cflowd"`
+	NatPool                   types.Int64                                                     `tfsdk:"nat_pool"`
+	NatVpn                    types.Bool                                                      `tfsdk:"nat_vpn"`
+	NatFallback               types.Bool                                                      `tfsdk:"nat_fallback"`
+	NatBypass                 types.Bool                                                      `tfsdk:"nat_bypass"`
+	NatDiaPools               types.Set                                                       `tfsdk:"nat_dia_pools"`
+	NatDiaInterfaces          types.Set                                                       `tfsdk:"nat_dia_interfaces"`
+	SecureInternetGateway     types.Bool                                                      `tfsdk:"secure_internet_gateway"`
+	FallbackToRouting         types.Bool                                                      `tfsdk:"fallback_to_routing"`
+	SecureServiceEdge         types.Bool                                                      `tfsdk:"secure_service_edge"`
+	SecureServiceEdgeInstance types.String                                                    `tfsdk:"secure_service_edge_instance"`
 }
 
 type ApplicationPriorityTrafficPolicySequencesActionsSlaClasses struct {
@@ -681,6 +687,24 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 							itemChildBody, _ = sjson.Set(itemChildBody, "redirectDns.value.value", childItem.RedirectDnsValue.ValueString())
 						}
 					}
+					if !childItem.AppqoeTcpOptimization.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "appqoeOptimization.tcpOptimization.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "appqoeOptimization.tcpOptimization.value", childItem.AppqoeTcpOptimization.ValueBool())
+						}
+					}
+					if !childItem.AppqoeDreOptimization.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "appqoeOptimization.dreOptimization.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "appqoeOptimization.dreOptimization.value", childItem.AppqoeDreOptimization.ValueBool())
+						}
+					}
+					if !childItem.AppqoeServiceNodeGroup.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "appqoeOptimization.serviceNodeGroup.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "appqoeOptimization.serviceNodeGroup.value", childItem.AppqoeServiceNodeGroup.ValueString())
+						}
+					}
 					if !childItem.LossCorrectType.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "lossCorrection.lossCorrectionType.optionType", "global")
@@ -715,6 +739,12 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "cloudProbe.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "cloudProbe.value", childItem.CloudProbe.ValueBool())
+						}
+					}
+					if !childItem.Cflowd.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "cflowd.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "cflowd.value", childItem.Cflowd.ValueBool())
 						}
 					}
 					if !childItem.NatPool.IsNull() {
@@ -767,6 +797,18 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "fallbackToRouting.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "fallbackToRouting.value", childItem.FallbackToRouting.ValueBool())
+						}
+					}
+					if !childItem.SecureServiceEdge.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "sse.secureServiceEdge.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "sse.secureServiceEdge.value", childItem.SecureServiceEdge.ValueBool())
+						}
+					}
+					if !childItem.SecureServiceEdgeInstance.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "sse.secureServiceEdgeInstance.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "sse.secureServiceEdgeInstance.value", childItem.SecureServiceEdgeInstance.ValueString())
 						}
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "actions.-1", itemChildBody)
@@ -1421,6 +1463,30 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 							cItem.RedirectDnsValue = types.StringValue(va.String())
 						}
 					}
+					cItem.AppqoeTcpOptimization = types.BoolNull()
+
+					if t := cv.Get("appqoeOptimization.tcpOptimization.optionType"); t.Exists() {
+						va := cv.Get("appqoeOptimization.tcpOptimization.value")
+						if t.String() == "global" {
+							cItem.AppqoeTcpOptimization = types.BoolValue(va.Bool())
+						}
+					}
+					cItem.AppqoeDreOptimization = types.BoolNull()
+
+					if t := cv.Get("appqoeOptimization.dreOptimization.optionType"); t.Exists() {
+						va := cv.Get("appqoeOptimization.dreOptimization.value")
+						if t.String() == "global" {
+							cItem.AppqoeDreOptimization = types.BoolValue(va.Bool())
+						}
+					}
+					cItem.AppqoeServiceNodeGroup = types.StringNull()
+
+					if t := cv.Get("appqoeOptimization.serviceNodeGroup.optionType"); t.Exists() {
+						va := cv.Get("appqoeOptimization.serviceNodeGroup.value")
+						if t.String() == "global" {
+							cItem.AppqoeServiceNodeGroup = types.StringValue(va.String())
+						}
+					}
 					cItem.LossCorrectType = types.StringNull()
 
 					if t := cv.Get("lossCorrection.lossCorrectionType.optionType"); t.Exists() {
@@ -1467,6 +1533,14 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 						va := cv.Get("cloudProbe.value")
 						if t.String() == "global" {
 							cItem.CloudProbe = types.BoolValue(va.Bool())
+						}
+					}
+					cItem.Cflowd = types.BoolNull()
+
+					if t := cv.Get("cflowd.optionType"); t.Exists() {
+						va := cv.Get("cflowd.value")
+						if t.String() == "global" {
+							cItem.Cflowd = types.BoolValue(va.Bool())
 						}
 					}
 					cItem.NatPool = types.Int64Null()
@@ -1531,6 +1605,22 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 						va := cv.Get("fallbackToRouting.value")
 						if t.String() == "global" {
 							cItem.FallbackToRouting = types.BoolValue(va.Bool())
+						}
+					}
+					cItem.SecureServiceEdge = types.BoolNull()
+
+					if t := cv.Get("sse.secureServiceEdge.optionType"); t.Exists() {
+						va := cv.Get("sse.secureServiceEdge.value")
+						if t.String() == "global" {
+							cItem.SecureServiceEdge = types.BoolValue(va.Bool())
+						}
+					}
+					cItem.SecureServiceEdgeInstance = types.StringNull()
+
+					if t := cv.Get("sse.secureServiceEdgeInstance.optionType"); t.Exists() {
+						va := cv.Get("sse.secureServiceEdgeInstance.value")
+						if t.String() == "global" {
+							cItem.SecureServiceEdgeInstance = types.StringValue(va.String())
 						}
 					}
 					item.Actions = append(item.Actions, cItem)
@@ -1874,9 +1964,9 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 			}
 		}
 		for ci := range data.Sequences[i].Actions {
-			keys := [...]string{"backupSlaPreferredColor", "redirectDns.field", "redirectDns.value", "lossCorrection.lossCorrectionType", "lossCorrection.lossCorrectFec", "count", "log", "cloudSaas", "cloudProbe", "natPool", "nat.useVpn", "nat.fallback", "nat.bypass", "nat.diaPool", "nat.diaInterface", "sig", "fallbackToRouting"}
-			keyValues := [...]string{helpers.GetStringFromSet(data.Sequences[i].Actions[ci].BackupSlaPreferredColors).ValueString(), data.Sequences[i].Actions[ci].RedirectDnsField.ValueString(), data.Sequences[i].Actions[ci].RedirectDnsValue.ValueString(), data.Sequences[i].Actions[ci].LossCorrectType.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].LossCorrectFecThreshold.ValueInt64(), 10), data.Sequences[i].Actions[ci].Count.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].Log.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].CloudSaas.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].CloudProbe.ValueBool()), strconv.FormatInt(data.Sequences[i].Actions[ci].NatPool.ValueInt64(), 10), strconv.FormatBool(data.Sequences[i].Actions[ci].NatVpn.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].NatFallback.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].NatBypass.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].NatDiaPools).ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].NatDiaInterfaces).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SecureInternetGateway.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].FallbackToRouting.ValueBool())}
-			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""}
+			keys := [...]string{"backupSlaPreferredColor", "redirectDns.field", "redirectDns.value", "appqoeOptimization.tcpOptimization", "appqoeOptimization.dreOptimization", "appqoeOptimization.serviceNodeGroup", "lossCorrection.lossCorrectionType", "lossCorrection.lossCorrectFec", "count", "log", "cloudSaas", "cloudProbe", "cflowd", "natPool", "nat.useVpn", "nat.fallback", "nat.bypass", "nat.diaPool", "nat.diaInterface", "sig", "fallbackToRouting", "sse.secureServiceEdge", "sse.secureServiceEdgeInstance"}
+			keyValues := [...]string{helpers.GetStringFromSet(data.Sequences[i].Actions[ci].BackupSlaPreferredColors).ValueString(), data.Sequences[i].Actions[ci].RedirectDnsField.ValueString(), data.Sequences[i].Actions[ci].RedirectDnsValue.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].AppqoeTcpOptimization.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].AppqoeDreOptimization.ValueBool()), data.Sequences[i].Actions[ci].AppqoeServiceNodeGroup.ValueString(), data.Sequences[i].Actions[ci].LossCorrectType.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].LossCorrectFecThreshold.ValueInt64(), 10), data.Sequences[i].Actions[ci].Count.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].Log.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].CloudSaas.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].CloudProbe.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].Cflowd.ValueBool()), strconv.FormatInt(data.Sequences[i].Actions[ci].NatPool.ValueInt64(), 10), strconv.FormatBool(data.Sequences[i].Actions[ci].NatVpn.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].NatFallback.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].NatBypass.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].NatDiaPools).ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].NatDiaInterfaces).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SecureInternetGateway.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].FallbackToRouting.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].SecureServiceEdge.ValueBool()), data.Sequences[i].Actions[ci].SecureServiceEdgeInstance.ValueString()}
+			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""}
 
 			var cr gjson.Result
 			r.Get("actions").ForEach(
@@ -2312,6 +2402,30 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 					data.Sequences[i].Actions[ci].RedirectDnsValue = types.StringValue(va.String())
 				}
 			}
+			data.Sequences[i].Actions[ci].AppqoeTcpOptimization = types.BoolNull()
+
+			if t := cr.Get("appqoeOptimization.tcpOptimization.optionType"); t.Exists() {
+				va := cr.Get("appqoeOptimization.tcpOptimization.value")
+				if t.String() == "global" {
+					data.Sequences[i].Actions[ci].AppqoeTcpOptimization = types.BoolValue(va.Bool())
+				}
+			}
+			data.Sequences[i].Actions[ci].AppqoeDreOptimization = types.BoolNull()
+
+			if t := cr.Get("appqoeOptimization.dreOptimization.optionType"); t.Exists() {
+				va := cr.Get("appqoeOptimization.dreOptimization.value")
+				if t.String() == "global" {
+					data.Sequences[i].Actions[ci].AppqoeDreOptimization = types.BoolValue(va.Bool())
+				}
+			}
+			data.Sequences[i].Actions[ci].AppqoeServiceNodeGroup = types.StringNull()
+
+			if t := cr.Get("appqoeOptimization.serviceNodeGroup.optionType"); t.Exists() {
+				va := cr.Get("appqoeOptimization.serviceNodeGroup.value")
+				if t.String() == "global" {
+					data.Sequences[i].Actions[ci].AppqoeServiceNodeGroup = types.StringValue(va.String())
+				}
+			}
 			data.Sequences[i].Actions[ci].LossCorrectType = types.StringNull()
 
 			if t := cr.Get("lossCorrection.lossCorrectionType.optionType"); t.Exists() {
@@ -2358,6 +2472,14 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 				va := cr.Get("cloudProbe.value")
 				if t.String() == "global" {
 					data.Sequences[i].Actions[ci].CloudProbe = types.BoolValue(va.Bool())
+				}
+			}
+			data.Sequences[i].Actions[ci].Cflowd = types.BoolNull()
+
+			if t := cr.Get("cflowd.optionType"); t.Exists() {
+				va := cr.Get("cflowd.value")
+				if t.String() == "global" {
+					data.Sequences[i].Actions[ci].Cflowd = types.BoolValue(va.Bool())
 				}
 			}
 			data.Sequences[i].Actions[ci].NatPool = types.Int64Null()
@@ -2422,6 +2544,22 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 				va := cr.Get("fallbackToRouting.value")
 				if t.String() == "global" {
 					data.Sequences[i].Actions[ci].FallbackToRouting = types.BoolValue(va.Bool())
+				}
+			}
+			data.Sequences[i].Actions[ci].SecureServiceEdge = types.BoolNull()
+
+			if t := cr.Get("sse.secureServiceEdge.optionType"); t.Exists() {
+				va := cr.Get("sse.secureServiceEdge.value")
+				if t.String() == "global" {
+					data.Sequences[i].Actions[ci].SecureServiceEdge = types.BoolValue(va.Bool())
+				}
+			}
+			data.Sequences[i].Actions[ci].SecureServiceEdgeInstance = types.StringNull()
+
+			if t := cr.Get("sse.secureServiceEdgeInstance.optionType"); t.Exists() {
+				va := cr.Get("sse.secureServiceEdgeInstance.value")
+				if t.String() == "global" {
+					data.Sequences[i].Actions[ci].SecureServiceEdgeInstance = types.StringValue(va.String())
 				}
 			}
 		}

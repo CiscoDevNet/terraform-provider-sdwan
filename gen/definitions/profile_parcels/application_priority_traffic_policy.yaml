@@ -363,24 +363,21 @@ attributes:
         data_path: [redirectDns]
         exclude_test: true
         example: umbrella
-      # # === Not Support in 20.12 (Supported in 20.15) ===
-      # - model_name: tcpOptimization
-      #   tf_name: appqoe_tcp_optimization
-      #   data_path: [appqoeOptimization]
-      #   exclude_test: true
-      #   example: true
-      # # === Not Support in 20.12 (Supported in 20.15) ===
-      # - model_name: dreOptimization
-      #   tf_name: appqoe_dre_optimization
-      #   data_path: [appqoeOptimization]
-      #   exclude_test: true
-      #   example: true
-      # # === Not Support in 20.12 (Supported in 20.15) ===
-      # - model_name: serviceNodeGroup
-      #   tf_name: appqoe_service_node_group
-      #   data_path: [appqoeOptimization]
-      #   exclude_test: true
-      #   example: SNG-APPQOE1
+      - model_name: tcpOptimization
+        tf_name: appqoe_tcp_optimization
+        data_path: [appqoeOptimization]
+        exclude_test: true
+        example: true
+      - model_name: dreOptimization
+        tf_name: appqoe_dre_optimization
+        data_path: [appqoeOptimization]
+        exclude_test: true
+        example: true
+      - model_name: serviceNodeGroup
+        tf_name: appqoe_service_node_group
+        data_path: [appqoeOptimization]
+        exclude_test: true
+        example: SNG-APPQOE1
       - model_name: lossCorrectionType
         tf_name: loss_correct_type
         data_path: [lossCorrection]
@@ -403,10 +400,9 @@ attributes:
       - model_name: cloudProbe
         exclude_test: true
         example: false
-      # # === Not Support in 20.12 (Supported in 20.15) ===
-      # - model_name: cflowd
-      #   exclude_test: true
-      #   example: false
+      - model_name: cflowd
+        exclude_test: true
+        example: false
       - model_name: natPool
         exclude_test: true
         example: 2
@@ -442,16 +438,14 @@ attributes:
       - model_name: fallbackToRouting
         exclude_test: true
         example: true
-      # # === Not Support in 20.12 (Supported in 20.15) ===
-      # - model_name: secureServiceEdge
-      #   data_path: [sse]
-      #   exclude_test: true
-      #   example: true
-      # # === Not Support in 20.12 (Supported in 20.15) ===
-      # - model_name: secureServiceEdgeInstance
-      #   data_path: [sse]
-      #   exclude_test: true
-      #   example: zScaler
+      - model_name: secureServiceEdge
+        data_path: [sse]
+        exclude_test: true
+        example: true
+      - model_name: secureServiceEdgeInstance
+        data_path: [sse]
+        exclude_test: true
+        example: zScaler
 
 test_prerequisites: |
   resource "sdwan_policy_object_feature_profile" "test" {

@@ -575,6 +575,22 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
 									},
+									"appqoe_tcp_optimization": schema.BoolAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").String,
+										Optional:            true,
+									},
+									"appqoe_dre_optimization": schema.BoolAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").String,
+										Optional:            true,
+									},
+									"appqoe_service_node_group": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.LengthBetween(1, 12),
+											stringvalidator.RegexMatches(regexp.MustCompile(`(SNG-APPQOE|(SNG-APPQOE([1-9]|[1-2][0-9]|3[0-1])))`), ""),
+										},
+									},
 									"loss_correct_type": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("fecAdaptive", "fecAlways", "packetDuplication").String,
 										Optional:            true,
@@ -605,6 +621,10 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										Optional:            true,
 									},
 									"cloud_probe": schema.BoolAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").String,
+										Optional:            true,
+									},
+									"cflowd": schema.BoolAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
 									},
@@ -644,6 +664,17 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 									"fallback_to_routing": schema.BoolAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
+									},
+									"secure_service_edge": schema.BoolAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").String,
+										Optional:            true,
+									},
+									"secure_service_edge_instance": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("Cisco-Secure-Access", "zScaler").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("Cisco-Secure-Access", "zScaler"),
+										},
 									},
 								},
 							},

@@ -54,7 +54,11 @@ Read-Only:
 
 Read-Only:
 
+- `appqoe_dre_optimization` (Boolean)
+- `appqoe_service_node_group` (String)
+- `appqoe_tcp_optimization` (Boolean)
 - `backup_sla_preferred_colors` (Set of String) Backup SLA perferred color
+- `cflowd` (Boolean)
 - `cloud_probe` (Boolean)
 - `cloud_saas` (Boolean)
 - `count` (String)
@@ -71,6 +75,8 @@ Read-Only:
 - `redirect_dns_field` (String)
 - `redirect_dns_value` (String)
 - `secure_internet_gateway` (Boolean)
+- `secure_service_edge` (Boolean)
+- `secure_service_edge_instance` (String)
 - `set_parameters` (Attributes List) (see [below for nested schema](#nestedatt--sequences--actions--set_parameters))
 - `sla_classes` (Attributes List) slaClass (see [below for nested schema](#nestedatt--sequences--actions--sla_classes))
 

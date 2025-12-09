@@ -428,6 +428,18 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										MarkdownDescription: "",
 										Computed:            true,
 									},
+									"appqoe_tcp_optimization": schema.BoolAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"appqoe_dre_optimization": schema.BoolAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"appqoe_service_node_group": schema.StringAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
 									"loss_correct_type": schema.StringAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
@@ -449,6 +461,10 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										Computed:            true,
 									},
 									"cloud_probe": schema.BoolAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"cflowd": schema.BoolAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
 									},
@@ -483,6 +499,14 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										Computed:            true,
 									},
 									"fallback_to_routing": schema.BoolAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"secure_service_edge": schema.BoolAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"secure_service_edge_instance": schema.StringAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
 									},
