@@ -158,7 +158,7 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 											stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 										},
 									},
-									"service_area": schema.SetAttribute{
+									"service_areas": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("M365 Service Area").String,
 										ElementType:         types.StringType,
 										Optional:            true,
@@ -198,12 +198,12 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
-									"icmp_message": schema.SetAttribute{
+									"icmp_messages": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("ICMP Message").String,
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
-									"icmp6_message": schema.SetAttribute{
+									"icmp6_messages": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("ICMP6 Message").String,
 										ElementType:         types.StringType,
 										Optional:            true,
@@ -322,7 +322,7 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 														stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 													},
 												},
-												"preferred_color": schema.SetAttribute{
+												"preferred_colors": schema.SetAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
 													ElementType:         types.StringType,
 													Optional:            true,
@@ -342,7 +342,7 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
 													Optional:            true,
 												},
-												"preferred_remote_color": schema.SetAttribute{
+												"preferred_remote_colors": schema.SetAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
 													ElementType:         types.StringType,
 													Optional:            true,
@@ -354,7 +354,7 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 											},
 										},
 									},
-									"backup_sla_preferred_color": schema.SetAttribute{
+									"backup_sla_preferred_colors": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Backup SLA perferred color").String,
 										ElementType:         types.StringType,
 										Optional:            true,
@@ -392,7 +392,7 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 														stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 													},
 												},
-												"local_tloc_list_color": schema.SetAttribute{
+												"local_tloc_list_colors": schema.SetAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
 													ElementType:         types.StringType,
 													Optional:            true,
@@ -408,7 +408,7 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 														stringvalidator.OneOf("ipsec", "gre"),
 													},
 												},
-												"preferred_remote_color_id": schema.SetAttribute{
+												"preferred_remote_colors": schema.SetAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
 													ElementType:         types.StringType,
 													Optional:            true,
@@ -627,12 +627,12 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
 									},
-									"nat_dia_pool": schema.SetAttribute{
+									"nat_dia_pools": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.Int64Type,
 										Optional:            true,
 									},
-									"nat_dia_interface": schema.SetAttribute{
+									"nat_dia_interfaces": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,

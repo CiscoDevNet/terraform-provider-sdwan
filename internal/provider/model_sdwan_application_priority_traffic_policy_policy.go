@@ -57,15 +57,15 @@ type ApplicationPriorityTrafficPolicySequences struct {
 type ApplicationPriorityTrafficPolicySequencesMatchEntries struct {
 	ApplicationListId               types.String `tfsdk:"application_list_id"`
 	SaasApplicationListId           types.String `tfsdk:"saas_application_list_id"`
-	ServiceArea                     types.Set    `tfsdk:"service_area"`
+	ServiceAreas                    types.Set    `tfsdk:"service_areas"`
 	TrafficCategory                 types.String `tfsdk:"traffic_category"`
 	DnsApplicationListId            types.String `tfsdk:"dns_application_list_id"`
 	TrafficClass                    types.String `tfsdk:"traffic_class"`
 	Dscps                           types.Set    `tfsdk:"dscps"`
 	PacketLength                    types.String `tfsdk:"packet_length"`
 	Protocols                       types.Set    `tfsdk:"protocols"`
-	IcmpMessage                     types.Set    `tfsdk:"icmp_message"`
-	Icmp6Message                    types.Set    `tfsdk:"icmp6_message"`
+	IcmpMessages                    types.Set    `tfsdk:"icmp_messages"`
+	Icmp6Messages                   types.Set    `tfsdk:"icmp6_messages"`
 	SourceDataIpv4PrefxListId       types.String `tfsdk:"source_data_ipv4_prefx_list_id"`
 	SourceDataIpv6PrefxListId       types.String `tfsdk:"source_data_ipv6_prefx_list_id"`
 	SourceIpv4Prefix                types.String `tfsdk:"source_ipv4_prefix"`
@@ -82,34 +82,34 @@ type ApplicationPriorityTrafficPolicySequencesMatchEntries struct {
 	Dns                             types.String `tfsdk:"dns"`
 }
 type ApplicationPriorityTrafficPolicySequencesActions struct {
-	SlaClasses              []ApplicationPriorityTrafficPolicySequencesActionsSlaClasses    `tfsdk:"sla_classes"`
-	BackupSlaPreferredColor types.Set                                                       `tfsdk:"backup_sla_preferred_color"`
-	SetParameters           []ApplicationPriorityTrafficPolicySequencesActionsSetParameters `tfsdk:"set_parameters"`
-	RedirectDnsField        types.String                                                    `tfsdk:"redirect_dns_field"`
-	RedirectDnsValue        types.String                                                    `tfsdk:"redirect_dns_value"`
-	LossCorrectType         types.String                                                    `tfsdk:"loss_correct_type"`
-	LossCorrectFecThreshold types.Int64                                                     `tfsdk:"loss_correct_fec_threshold"`
-	Count                   types.String                                                    `tfsdk:"count"`
-	Log                     types.Bool                                                      `tfsdk:"log"`
-	CloudSaas               types.Bool                                                      `tfsdk:"cloud_saas"`
-	CloudProbe              types.Bool                                                      `tfsdk:"cloud_probe"`
-	NatPool                 types.Int64                                                     `tfsdk:"nat_pool"`
-	NatVpn                  types.Bool                                                      `tfsdk:"nat_vpn"`
-	NatFallback             types.Bool                                                      `tfsdk:"nat_fallback"`
-	NatBypass               types.Bool                                                      `tfsdk:"nat_bypass"`
-	NatDiaPool              types.Set                                                       `tfsdk:"nat_dia_pool"`
-	NatDiaInterface         types.Set                                                       `tfsdk:"nat_dia_interface"`
-	SecureInternetGateway   types.Bool                                                      `tfsdk:"secure_internet_gateway"`
-	FallbackToRouting       types.Bool                                                      `tfsdk:"fallback_to_routing"`
+	SlaClasses               []ApplicationPriorityTrafficPolicySequencesActionsSlaClasses    `tfsdk:"sla_classes"`
+	BackupSlaPreferredColors types.Set                                                       `tfsdk:"backup_sla_preferred_colors"`
+	SetParameters            []ApplicationPriorityTrafficPolicySequencesActionsSetParameters `tfsdk:"set_parameters"`
+	RedirectDnsField         types.String                                                    `tfsdk:"redirect_dns_field"`
+	RedirectDnsValue         types.String                                                    `tfsdk:"redirect_dns_value"`
+	LossCorrectType          types.String                                                    `tfsdk:"loss_correct_type"`
+	LossCorrectFecThreshold  types.Int64                                                     `tfsdk:"loss_correct_fec_threshold"`
+	Count                    types.String                                                    `tfsdk:"count"`
+	Log                      types.Bool                                                      `tfsdk:"log"`
+	CloudSaas                types.Bool                                                      `tfsdk:"cloud_saas"`
+	CloudProbe               types.Bool                                                      `tfsdk:"cloud_probe"`
+	NatPool                  types.Int64                                                     `tfsdk:"nat_pool"`
+	NatVpn                   types.Bool                                                      `tfsdk:"nat_vpn"`
+	NatFallback              types.Bool                                                      `tfsdk:"nat_fallback"`
+	NatBypass                types.Bool                                                      `tfsdk:"nat_bypass"`
+	NatDiaPools              types.Set                                                       `tfsdk:"nat_dia_pools"`
+	NatDiaInterfaces         types.Set                                                       `tfsdk:"nat_dia_interfaces"`
+	SecureInternetGateway    types.Bool                                                      `tfsdk:"secure_internet_gateway"`
+	FallbackToRouting        types.Bool                                                      `tfsdk:"fallback_to_routing"`
 }
 
 type ApplicationPriorityTrafficPolicySequencesActionsSlaClasses struct {
 	SlaClassListId            types.String `tfsdk:"sla_class_list_id"`
-	PreferredColor            types.Set    `tfsdk:"preferred_color"`
+	PreferredColors           types.Set    `tfsdk:"preferred_colors"`
 	PreferredColorGroupListId types.String `tfsdk:"preferred_color_group_list_id"`
 	Strict                    types.Bool   `tfsdk:"strict"`
 	FallbackToBestPath        types.Bool   `tfsdk:"fallback_to_best_path"`
-	PreferredRemoteColor      types.Set    `tfsdk:"preferred_remote_color"`
+	PreferredRemoteColors     types.Set    `tfsdk:"preferred_remote_colors"`
 	RemoteColorRestrict       types.Bool   `tfsdk:"remote_color_restrict"`
 }
 type ApplicationPriorityTrafficPolicySequencesActionsSetParameters struct {
@@ -117,10 +117,10 @@ type ApplicationPriorityTrafficPolicySequencesActionsSetParameters struct {
 	PolicerId                     types.String `tfsdk:"policer_id"`
 	PreferredColorGroupId         types.String `tfsdk:"preferred_color_group_id"`
 	ForwardingClassListId         types.String `tfsdk:"forwarding_class_list_id"`
-	LocalTlocListColor            types.Set    `tfsdk:"local_tloc_list_color"`
+	LocalTlocListColors           types.Set    `tfsdk:"local_tloc_list_colors"`
 	LocalTlocListRestrict         types.Bool   `tfsdk:"local_tloc_list_restrict"`
 	LocalTlocListEncapsulation    types.String `tfsdk:"local_tloc_list_encapsulation"`
-	PreferredRemoteColorId        types.Set    `tfsdk:"preferred_remote_color_id"`
+	PreferredRemoteColors         types.Set    `tfsdk:"preferred_remote_colors"`
 	PreferredRemoteColorRestrict  types.Bool   `tfsdk:"preferred_remote_color_restrict"`
 	TlocColor                     types.Set    `tfsdk:"tloc_color"`
 	TlocEncapsulation             types.String `tfsdk:"tloc_encapsulation"`
@@ -234,11 +234,11 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 							itemChildBody, _ = sjson.Set(itemChildBody, "saasAppList.refId.value", childItem.SaasApplicationListId.ValueString())
 						}
 					}
-					if !childItem.ServiceArea.IsNull() {
+					if !childItem.ServiceAreas.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "serviceArea.optionType", "global")
 							var values []string
-							childItem.ServiceArea.ElementsAs(ctx, &values, false)
+							childItem.ServiceAreas.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "serviceArea.value", values)
 						}
 					}
@@ -282,19 +282,19 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 							itemChildBody, _ = sjson.Set(itemChildBody, "protocol.value", values)
 						}
 					}
-					if !childItem.IcmpMessage.IsNull() {
+					if !childItem.IcmpMessages.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "icmpMessage.optionType", "global")
 							var values []string
-							childItem.IcmpMessage.ElementsAs(ctx, &values, false)
+							childItem.IcmpMessages.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "icmpMessage.value", values)
 						}
 					}
-					if !childItem.Icmp6Message.IsNull() {
+					if !childItem.Icmp6Messages.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "icmp6Message.optionType", "global")
 							var values []string
-							childItem.Icmp6Message.ElementsAs(ctx, &values, false)
+							childItem.Icmp6Messages.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "icmp6Message.value", values)
 						}
 					}
@@ -403,11 +403,11 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "slaName.refId.value", childChildItem.SlaClassListId.ValueString())
 								}
 							}
-							if !childChildItem.PreferredColor.IsNull() {
+							if !childChildItem.PreferredColors.IsNull() {
 								if true {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredColor.optionType", "global")
 									var values []string
-									childChildItem.PreferredColor.ElementsAs(ctx, &values, false)
+									childChildItem.PreferredColors.ElementsAs(ctx, &values, false)
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredColor.value", values)
 								}
 							}
@@ -429,11 +429,11 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "fallbackToBestPath.value", childChildItem.FallbackToBestPath.ValueBool())
 								}
 							}
-							if !childChildItem.PreferredRemoteColor.IsNull() {
+							if !childChildItem.PreferredRemoteColors.IsNull() {
 								if true {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredRemoteColor.optionType", "global")
 									var values []string
-									childChildItem.PreferredRemoteColor.ElementsAs(ctx, &values, false)
+									childChildItem.PreferredRemoteColors.ElementsAs(ctx, &values, false)
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredRemoteColor.value", values)
 								}
 							}
@@ -446,11 +446,11 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 							itemChildBody, _ = sjson.SetRaw(itemChildBody, "slaClass.-1", itemChildChildBody)
 						}
 					}
-					if !childItem.BackupSlaPreferredColor.IsNull() {
+					if !childItem.BackupSlaPreferredColors.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "backupSlaPreferredColor.optionType", "global")
 							var values []string
-							childItem.BackupSlaPreferredColor.ElementsAs(ctx, &values, false)
+							childItem.BackupSlaPreferredColors.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "backupSlaPreferredColor.value", values)
 						}
 					}
@@ -482,11 +482,11 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "forwardingClass.refId.value", childChildItem.ForwardingClassListId.ValueString())
 								}
 							}
-							if !childChildItem.LocalTlocListColor.IsNull() {
+							if !childChildItem.LocalTlocListColors.IsNull() {
 								if true {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "localTlocList.color.optionType", "global")
 									var values []string
-									childChildItem.LocalTlocListColor.ElementsAs(ctx, &values, false)
+									childChildItem.LocalTlocListColors.ElementsAs(ctx, &values, false)
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "localTlocList.color.value", values)
 								}
 							}
@@ -502,11 +502,11 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "localTlocList.encap.value", childChildItem.LocalTlocListEncapsulation.ValueString())
 								}
 							}
-							if !childChildItem.PreferredRemoteColorId.IsNull() {
+							if !childChildItem.PreferredRemoteColors.IsNull() {
 								if true {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredRemoteColor.color.optionType", "global")
 									var values []string
-									childChildItem.PreferredRemoteColorId.ElementsAs(ctx, &values, false)
+									childChildItem.PreferredRemoteColors.ElementsAs(ctx, &values, false)
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredRemoteColor.color.value", values)
 								}
 							}
@@ -741,19 +741,19 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 							itemChildBody, _ = sjson.Set(itemChildBody, "nat.bypass.value", childItem.NatBypass.ValueBool())
 						}
 					}
-					if !childItem.NatDiaPool.IsNull() {
+					if !childItem.NatDiaPools.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "nat.diaPool.optionType", "global")
 							var values []int64
-							childItem.NatDiaPool.ElementsAs(ctx, &values, false)
+							childItem.NatDiaPools.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "nat.diaPool.value", values)
 						}
 					}
-					if !childItem.NatDiaInterface.IsNull() {
+					if !childItem.NatDiaInterfaces.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "nat.diaInterface.optionType", "global")
 							var values []string
-							childItem.NatDiaInterface.ElementsAs(ctx, &values, false)
+							childItem.NatDiaInterfaces.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "nat.diaInterface.value", values)
 						}
 					}
@@ -869,12 +869,12 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 							cItem.SaasApplicationListId = types.StringValue(va.String())
 						}
 					}
-					cItem.ServiceArea = types.SetNull(types.StringType)
+					cItem.ServiceAreas = types.SetNull(types.StringType)
 
 					if t := cv.Get("serviceArea.optionType"); t.Exists() {
 						va := cv.Get("serviceArea.value")
 						if t.String() == "global" {
-							cItem.ServiceArea = helpers.GetStringSet(va.Array())
+							cItem.ServiceAreas = helpers.GetStringSet(va.Array())
 						}
 					}
 					cItem.TrafficCategory = types.StringNull()
@@ -925,20 +925,20 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 							cItem.Protocols = helpers.GetStringSet(va.Array())
 						}
 					}
-					cItem.IcmpMessage = types.SetNull(types.StringType)
+					cItem.IcmpMessages = types.SetNull(types.StringType)
 
 					if t := cv.Get("icmpMessage.optionType"); t.Exists() {
 						va := cv.Get("icmpMessage.value")
 						if t.String() == "global" {
-							cItem.IcmpMessage = helpers.GetStringSet(va.Array())
+							cItem.IcmpMessages = helpers.GetStringSet(va.Array())
 						}
 					}
-					cItem.Icmp6Message = types.SetNull(types.StringType)
+					cItem.Icmp6Messages = types.SetNull(types.StringType)
 
 					if t := cv.Get("icmp6Message.optionType"); t.Exists() {
 						va := cv.Get("icmp6Message.value")
 						if t.String() == "global" {
-							cItem.Icmp6Message = helpers.GetStringSet(va.Array())
+							cItem.Icmp6Messages = helpers.GetStringSet(va.Array())
 						}
 					}
 					cItem.SourceDataIpv4PrefxListId = types.StringNull()
@@ -1073,12 +1073,12 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 									ccItem.SlaClassListId = types.StringValue(va.String())
 								}
 							}
-							ccItem.PreferredColor = types.SetNull(types.StringType)
+							ccItem.PreferredColors = types.SetNull(types.StringType)
 
 							if t := ccv.Get("preferredColor.optionType"); t.Exists() {
 								va := ccv.Get("preferredColor.value")
 								if t.String() == "global" {
-									ccItem.PreferredColor = helpers.GetStringSet(va.Array())
+									ccItem.PreferredColors = helpers.GetStringSet(va.Array())
 								}
 							}
 							ccItem.PreferredColorGroupListId = types.StringNull()
@@ -1105,12 +1105,12 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 									ccItem.FallbackToBestPath = types.BoolValue(va.Bool())
 								}
 							}
-							ccItem.PreferredRemoteColor = types.SetNull(types.StringType)
+							ccItem.PreferredRemoteColors = types.SetNull(types.StringType)
 
 							if t := ccv.Get("preferredRemoteColor.optionType"); t.Exists() {
 								va := ccv.Get("preferredRemoteColor.value")
 								if t.String() == "global" {
-									ccItem.PreferredRemoteColor = helpers.GetStringSet(va.Array())
+									ccItem.PreferredRemoteColors = helpers.GetStringSet(va.Array())
 								}
 							}
 							ccItem.RemoteColorRestrict = types.BoolNull()
@@ -1125,12 +1125,12 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 							return true
 						})
 					}
-					cItem.BackupSlaPreferredColor = types.SetNull(types.StringType)
+					cItem.BackupSlaPreferredColors = types.SetNull(types.StringType)
 
 					if t := cv.Get("backupSlaPreferredColor.optionType"); t.Exists() {
 						va := cv.Get("backupSlaPreferredColor.value")
 						if t.String() == "global" {
-							cItem.BackupSlaPreferredColor = helpers.GetStringSet(va.Array())
+							cItem.BackupSlaPreferredColors = helpers.GetStringSet(va.Array())
 						}
 					}
 					if ccValue := cv.Get("set"); ccValue.Exists() && len(ccValue.Array()) > 0 {
@@ -1169,12 +1169,12 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 									ccItem.ForwardingClassListId = types.StringValue(va.String())
 								}
 							}
-							ccItem.LocalTlocListColor = types.SetNull(types.StringType)
+							ccItem.LocalTlocListColors = types.SetNull(types.StringType)
 
 							if t := ccv.Get("localTlocList.color.optionType"); t.Exists() {
 								va := ccv.Get("localTlocList.color.value")
 								if t.String() == "global" {
-									ccItem.LocalTlocListColor = helpers.GetStringSet(va.Array())
+									ccItem.LocalTlocListColors = helpers.GetStringSet(va.Array())
 								}
 							}
 							ccItem.LocalTlocListRestrict = types.BoolNull()
@@ -1193,12 +1193,12 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 									ccItem.LocalTlocListEncapsulation = types.StringValue(va.String())
 								}
 							}
-							ccItem.PreferredRemoteColorId = types.SetNull(types.StringType)
+							ccItem.PreferredRemoteColors = types.SetNull(types.StringType)
 
 							if t := ccv.Get("preferredRemoteColor.color.optionType"); t.Exists() {
 								va := ccv.Get("preferredRemoteColor.color.value")
 								if t.String() == "global" {
-									ccItem.PreferredRemoteColorId = helpers.GetStringSet(va.Array())
+									ccItem.PreferredRemoteColors = helpers.GetStringSet(va.Array())
 								}
 							}
 							ccItem.PreferredRemoteColorRestrict = types.BoolNull()
@@ -1501,20 +1501,20 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 							cItem.NatBypass = types.BoolValue(va.Bool())
 						}
 					}
-					cItem.NatDiaPool = types.SetNull(types.Int64Type)
+					cItem.NatDiaPools = types.SetNull(types.Int64Type)
 
 					if t := cv.Get("nat.diaPool.optionType"); t.Exists() {
 						va := cv.Get("nat.diaPool.value")
 						if t.String() == "global" {
-							cItem.NatDiaPool = helpers.GetInt64Set(va.Array())
+							cItem.NatDiaPools = helpers.GetInt64Set(va.Array())
 						}
 					}
-					cItem.NatDiaInterface = types.SetNull(types.StringType)
+					cItem.NatDiaInterfaces = types.SetNull(types.StringType)
 
 					if t := cv.Get("nat.diaInterface.optionType"); t.Exists() {
 						va := cv.Get("nat.diaInterface.value")
 						if t.String() == "global" {
-							cItem.NatDiaInterface = helpers.GetStringSet(va.Array())
+							cItem.NatDiaInterfaces = helpers.GetStringSet(va.Array())
 						}
 					}
 					cItem.SecureInternetGateway = types.BoolNull()
@@ -1643,7 +1643,7 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 		}
 		for ci := range data.Sequences[i].MatchEntries {
 			keys := [...]string{"appList.refId", "saasAppList.refId", "serviceArea", "trafficCategory", "dnsAppList.refId", "trafficClass", "dscp", "packetLength", "protocol", "icmpMessage", "icmp6Message", "sourceDataPrefixList.refId", "sourceDataIpv6PrefixList.refId", "sourceIp", "sourceIpv6", "sourcePort", "destinationDataPrefixList.refId", "destinationDataIpv6PrefixList.refId", "destinationIp", "destinationIpv6", "destinationPort", "tcp", "destinationRegion", "trafficTo", "dns"}
-			keyValues := [...]string{data.Sequences[i].MatchEntries[ci].ApplicationListId.ValueString(), data.Sequences[i].MatchEntries[ci].SaasApplicationListId.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].ServiceArea).ValueString(), data.Sequences[i].MatchEntries[ci].TrafficCategory.ValueString(), data.Sequences[i].MatchEntries[ci].DnsApplicationListId.ValueString(), data.Sequences[i].MatchEntries[ci].TrafficClass.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Dscps).ValueString(), data.Sequences[i].MatchEntries[ci].PacketLength.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Protocols).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].IcmpMessage).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Icmp6Message).ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataIpv4PrefxListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataIpv6PrefxListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceIpv4Prefix.ValueString(), data.Sequences[i].MatchEntries[ci].SourceIpv6Prefix.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourcePorts).ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataIpv4PrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataIpv6PrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationIpv4Prefix.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationIpv6Prefix.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationPorts).ValueString(), data.Sequences[i].MatchEntries[ci].Tcp.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationRegion.ValueString(), data.Sequences[i].MatchEntries[ci].TrafficTo.ValueString(), data.Sequences[i].MatchEntries[ci].Dns.ValueString()}
+			keyValues := [...]string{data.Sequences[i].MatchEntries[ci].ApplicationListId.ValueString(), data.Sequences[i].MatchEntries[ci].SaasApplicationListId.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].ServiceAreas).ValueString(), data.Sequences[i].MatchEntries[ci].TrafficCategory.ValueString(), data.Sequences[i].MatchEntries[ci].DnsApplicationListId.ValueString(), data.Sequences[i].MatchEntries[ci].TrafficClass.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Dscps).ValueString(), data.Sequences[i].MatchEntries[ci].PacketLength.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Protocols).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].IcmpMessages).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Icmp6Messages).ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataIpv4PrefxListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataIpv6PrefxListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceIpv4Prefix.ValueString(), data.Sequences[i].MatchEntries[ci].SourceIpv6Prefix.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourcePorts).ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataIpv4PrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataIpv6PrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationIpv4Prefix.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationIpv6Prefix.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationPorts).ValueString(), data.Sequences[i].MatchEntries[ci].Tcp.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationRegion.ValueString(), data.Sequences[i].MatchEntries[ci].TrafficTo.ValueString(), data.Sequences[i].MatchEntries[ci].Dns.ValueString()}
 			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""}
 
 			var cr gjson.Result
@@ -1688,12 +1688,12 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 					data.Sequences[i].MatchEntries[ci].SaasApplicationListId = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].MatchEntries[ci].ServiceArea = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].ServiceAreas = types.SetNull(types.StringType)
 
 			if t := cr.Get("serviceArea.optionType"); t.Exists() {
 				va := cr.Get("serviceArea.value")
 				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].ServiceArea = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].ServiceAreas = helpers.GetStringSet(va.Array())
 				}
 			}
 			data.Sequences[i].MatchEntries[ci].TrafficCategory = types.StringNull()
@@ -1744,20 +1744,20 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 					data.Sequences[i].MatchEntries[ci].Protocols = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Sequences[i].MatchEntries[ci].IcmpMessage = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].IcmpMessages = types.SetNull(types.StringType)
 
 			if t := cr.Get("icmpMessage.optionType"); t.Exists() {
 				va := cr.Get("icmpMessage.value")
 				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].IcmpMessage = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].IcmpMessages = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Sequences[i].MatchEntries[ci].Icmp6Message = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].Icmp6Messages = types.SetNull(types.StringType)
 
 			if t := cr.Get("icmp6Message.optionType"); t.Exists() {
 				va := cr.Get("icmp6Message.value")
 				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].Icmp6Message = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].Icmp6Messages = helpers.GetStringSet(va.Array())
 				}
 			}
 			data.Sequences[i].MatchEntries[ci].SourceDataIpv4PrefxListId = types.StringNull()
@@ -1875,7 +1875,7 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 		}
 		for ci := range data.Sequences[i].Actions {
 			keys := [...]string{"backupSlaPreferredColor", "redirectDns.field", "redirectDns.value", "lossCorrection.lossCorrectionType", "lossCorrection.lossCorrectFec", "count", "log", "cloudSaas", "cloudProbe", "natPool", "nat.useVpn", "nat.fallback", "nat.bypass", "nat.diaPool", "nat.diaInterface", "sig", "fallbackToRouting"}
-			keyValues := [...]string{helpers.GetStringFromSet(data.Sequences[i].Actions[ci].BackupSlaPreferredColor).ValueString(), data.Sequences[i].Actions[ci].RedirectDnsField.ValueString(), data.Sequences[i].Actions[ci].RedirectDnsValue.ValueString(), data.Sequences[i].Actions[ci].LossCorrectType.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].LossCorrectFecThreshold.ValueInt64(), 10), data.Sequences[i].Actions[ci].Count.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].Log.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].CloudSaas.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].CloudProbe.ValueBool()), strconv.FormatInt(data.Sequences[i].Actions[ci].NatPool.ValueInt64(), 10), strconv.FormatBool(data.Sequences[i].Actions[ci].NatVpn.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].NatFallback.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].NatBypass.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].NatDiaPool).ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].NatDiaInterface).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SecureInternetGateway.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].FallbackToRouting.ValueBool())}
+			keyValues := [...]string{helpers.GetStringFromSet(data.Sequences[i].Actions[ci].BackupSlaPreferredColors).ValueString(), data.Sequences[i].Actions[ci].RedirectDnsField.ValueString(), data.Sequences[i].Actions[ci].RedirectDnsValue.ValueString(), data.Sequences[i].Actions[ci].LossCorrectType.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].LossCorrectFecThreshold.ValueInt64(), 10), data.Sequences[i].Actions[ci].Count.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].Log.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].CloudSaas.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].CloudProbe.ValueBool()), strconv.FormatInt(data.Sequences[i].Actions[ci].NatPool.ValueInt64(), 10), strconv.FormatBool(data.Sequences[i].Actions[ci].NatVpn.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].NatFallback.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].NatBypass.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].NatDiaPools).ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].NatDiaInterfaces).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SecureInternetGateway.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].FallbackToRouting.ValueBool())}
 			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""}
 
 			var cr gjson.Result
@@ -1906,7 +1906,7 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 			)
 			for cci := range data.Sequences[i].Actions[ci].SlaClasses {
 				keys := [...]string{"slaName.refId", "preferredColor", "preferredColorGroup.refId", "strict", "fallbackToBestPath", "preferredRemoteColor", "remoteColorRestrict"}
-				keyValues := [...]string{data.Sequences[i].Actions[ci].SlaClasses[cci].SlaClassListId.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColor).ValueString(), data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColorGroupListId.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SlaClasses[cci].Strict.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].SlaClasses[cci].FallbackToBestPath.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredRemoteColor).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SlaClasses[cci].RemoteColorRestrict.ValueBool())}
+				keyValues := [...]string{data.Sequences[i].Actions[ci].SlaClasses[cci].SlaClassListId.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColors).ValueString(), data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColorGroupListId.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SlaClasses[cci].Strict.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].SlaClasses[cci].FallbackToBestPath.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredRemoteColors).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SlaClasses[cci].RemoteColorRestrict.ValueBool())}
 				keyValuesVariables := [...]string{"", "", "", "", "", "", ""}
 
 				var ccr gjson.Result
@@ -1943,12 +1943,12 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 						data.Sequences[i].Actions[ci].SlaClasses[cci].SlaClassListId = types.StringValue(va.String())
 					}
 				}
-				data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColor = types.SetNull(types.StringType)
+				data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColors = types.SetNull(types.StringType)
 
 				if t := ccr.Get("preferredColor.optionType"); t.Exists() {
 					va := ccr.Get("preferredColor.value")
 					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColor = helpers.GetStringSet(va.Array())
+						data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColors = helpers.GetStringSet(va.Array())
 					}
 				}
 				data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColorGroupListId = types.StringNull()
@@ -1975,12 +1975,12 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 						data.Sequences[i].Actions[ci].SlaClasses[cci].FallbackToBestPath = types.BoolValue(va.Bool())
 					}
 				}
-				data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredRemoteColor = types.SetNull(types.StringType)
+				data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredRemoteColors = types.SetNull(types.StringType)
 
 				if t := ccr.Get("preferredRemoteColor.optionType"); t.Exists() {
 					va := ccr.Get("preferredRemoteColor.value")
 					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredRemoteColor = helpers.GetStringSet(va.Array())
+						data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredRemoteColors = helpers.GetStringSet(va.Array())
 					}
 				}
 				data.Sequences[i].Actions[ci].SlaClasses[cci].RemoteColorRestrict = types.BoolNull()
@@ -1992,17 +1992,17 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 					}
 				}
 			}
-			data.Sequences[i].Actions[ci].BackupSlaPreferredColor = types.SetNull(types.StringType)
+			data.Sequences[i].Actions[ci].BackupSlaPreferredColors = types.SetNull(types.StringType)
 
 			if t := cr.Get("backupSlaPreferredColor.optionType"); t.Exists() {
 				va := cr.Get("backupSlaPreferredColor.value")
 				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].BackupSlaPreferredColor = helpers.GetStringSet(va.Array())
+					data.Sequences[i].Actions[ci].BackupSlaPreferredColors = helpers.GetStringSet(va.Array())
 				}
 			}
 			for cci := range data.Sequences[i].Actions[ci].SetParameters {
 				keys := [...]string{"dscp", "policer.refId", "preferredColorGroup.refId", "forwardingClass.refId", "localTlocList.color", "localTlocList.restrict", "localTlocList.encap", "preferredRemoteColor.color", "preferredRemoteColor.remoteColorRestrict", "tloc.color", "tloc.encap", "tloc.ip", "tlocList.refId", "service.tloc.color", "service.tloc.encap", "service.tloc.ip", "service.vpn", "service.type", "service.local", "service.restrict", "service.tlocList.refId", "serviceChain.type", "serviceChain.vpn", "serviceChain.local", "serviceChain.restrict", "serviceChain.tloc.color", "serviceChain.tloc.encap", "serviceChain.tloc.ip", "serviceChain.tlocList.refId", "nextHop", "nextHopIpv6", "nextHopLoose", "vpn"}
-				keyValues := [...]string{strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].Dscp.ValueInt64(), 10), data.Sequences[i].Actions[ci].SetParameters[cci].PolicerId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].PreferredColorGroupId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ForwardingClassListId.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListColor).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListRestrict.ValueBool()), data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListEncapsulation.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorId).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorRestrict.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].TlocColor).ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].TlocEncapsulation.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].TlocIp.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].TlocListId.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocColor).ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocEncapsulation.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocIp.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceVpn.ValueInt64(), 10), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceType.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceLocal.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceRestrict.ValueBool()), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocListId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainType.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainVpn.ValueInt64(), 10), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainLocal.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainFallbackToRouting.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocColor).ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocEncapsulation.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocIp.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocListId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].NextHopIpv4.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].NextHopIpv6.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].NextHopLoose.ValueBool()), strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].Vpn.ValueInt64(), 10)}
+				keyValues := [...]string{strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].Dscp.ValueInt64(), 10), data.Sequences[i].Actions[ci].SetParameters[cci].PolicerId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].PreferredColorGroupId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ForwardingClassListId.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListColors).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListRestrict.ValueBool()), data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListEncapsulation.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColors).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorRestrict.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].TlocColor).ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].TlocEncapsulation.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].TlocIp.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].TlocListId.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocColor).ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocEncapsulation.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocIp.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceVpn.ValueInt64(), 10), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceType.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceLocal.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceRestrict.ValueBool()), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceTlocListId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainType.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainVpn.ValueInt64(), 10), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainLocal.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainFallbackToRouting.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocColor).ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocEncapsulation.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocIp.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].ServiceChainTlocListId.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].NextHopIpv4.ValueString(), data.Sequences[i].Actions[ci].SetParameters[cci].NextHopIpv6.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SetParameters[cci].NextHopLoose.ValueBool()), strconv.FormatInt(data.Sequences[i].Actions[ci].SetParameters[cci].Vpn.ValueInt64(), 10)}
 				keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""}
 
 				var ccr gjson.Result
@@ -2063,12 +2063,12 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 						data.Sequences[i].Actions[ci].SetParameters[cci].ForwardingClassListId = types.StringValue(va.String())
 					}
 				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListColor = types.SetNull(types.StringType)
+				data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListColors = types.SetNull(types.StringType)
 
 				if t := ccr.Get("localTlocList.color.optionType"); t.Exists() {
 					va := ccr.Get("localTlocList.color.value")
 					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListColor = helpers.GetStringSet(va.Array())
+						data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListColors = helpers.GetStringSet(va.Array())
 					}
 				}
 				data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListRestrict = types.BoolNull()
@@ -2087,12 +2087,12 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 						data.Sequences[i].Actions[ci].SetParameters[cci].LocalTlocListEncapsulation = types.StringValue(va.String())
 					}
 				}
-				data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorId = types.SetNull(types.StringType)
+				data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColors = types.SetNull(types.StringType)
 
 				if t := ccr.Get("preferredRemoteColor.color.optionType"); t.Exists() {
 					va := ccr.Get("preferredRemoteColor.color.value")
 					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorId = helpers.GetStringSet(va.Array())
+						data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColors = helpers.GetStringSet(va.Array())
 					}
 				}
 				data.Sequences[i].Actions[ci].SetParameters[cci].PreferredRemoteColorRestrict = types.BoolNull()
@@ -2392,20 +2392,20 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 					data.Sequences[i].Actions[ci].NatBypass = types.BoolValue(va.Bool())
 				}
 			}
-			data.Sequences[i].Actions[ci].NatDiaPool = types.SetNull(types.Int64Type)
+			data.Sequences[i].Actions[ci].NatDiaPools = types.SetNull(types.Int64Type)
 
 			if t := cr.Get("nat.diaPool.optionType"); t.Exists() {
 				va := cr.Get("nat.diaPool.value")
 				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].NatDiaPool = helpers.GetInt64Set(va.Array())
+					data.Sequences[i].Actions[ci].NatDiaPools = helpers.GetInt64Set(va.Array())
 				}
 			}
-			data.Sequences[i].Actions[ci].NatDiaInterface = types.SetNull(types.StringType)
+			data.Sequences[i].Actions[ci].NatDiaInterfaces = types.SetNull(types.StringType)
 
 			if t := cr.Get("nat.diaInterface.optionType"); t.Exists() {
 				va := cr.Get("nat.diaInterface.value")
 				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].NatDiaInterface = helpers.GetStringSet(va.Array())
+					data.Sequences[i].Actions[ci].NatDiaInterfaces = helpers.GetStringSet(va.Array())
 				}
 			}
 			data.Sequences[i].Actions[ci].SecureInternetGateway = types.BoolNull()

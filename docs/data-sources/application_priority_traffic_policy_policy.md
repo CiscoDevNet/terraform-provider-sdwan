@@ -54,7 +54,7 @@ Read-Only:
 
 Read-Only:
 
-- `backup_sla_preferred_color` (Set of String) Backup SLA perferred color
+- `backup_sla_preferred_colors` (Set of String) Backup SLA perferred color
 - `cloud_probe` (Boolean)
 - `cloud_saas` (Boolean)
 - `count` (String)
@@ -63,8 +63,8 @@ Read-Only:
 - `loss_correct_fec_threshold` (Number)
 - `loss_correct_type` (String)
 - `nat_bypass` (Boolean)
-- `nat_dia_interface` (Set of String)
-- `nat_dia_pool` (Set of Number)
+- `nat_dia_interfaces` (Set of String)
+- `nat_dia_pools` (Set of Number)
 - `nat_fallback` (Boolean)
 - `nat_pool` (Number)
 - `nat_vpn` (Boolean)
@@ -81,7 +81,7 @@ Read-Only:
 
 - `dscp` (Number)
 - `forwarding_class_list_id` (String)
-- `local_tloc_list_color` (Set of String)
+- `local_tloc_list_colors` (Set of String)
 - `local_tloc_list_encapsulation` (String)
 - `local_tloc_list_restrict` (Boolean)
 - `next_hop_ipv4` (String)
@@ -89,8 +89,8 @@ Read-Only:
 - `next_hop_loose` (Boolean)
 - `policer_id` (String)
 - `preferred_color_group_id` (String)
-- `preferred_remote_color_id` (Set of String)
 - `preferred_remote_color_restrict` (Boolean)
+- `preferred_remote_colors` (Set of String)
 - `service_chain_fallback_to_routing` (Boolean)
 - `service_chain_local` (Boolean)
 - `service_chain_tloc_color` (Set of String)
@@ -120,9 +120,9 @@ Read-Only:
 Read-Only:
 
 - `fallback_to_best_path` (Boolean)
-- `preferred_color` (Set of String)
 - `preferred_color_group_list_id` (String)
-- `preferred_remote_color` (Set of String)
+- `preferred_colors` (Set of String)
+- `preferred_remote_colors` (Set of String)
 - `remote_color_restrict` (Boolean)
 - `sla_class_list_id` (String)
 - `strict` (Boolean)
@@ -144,12 +144,12 @@ Read-Only:
 - `dns` (String) Dns
 - `dns_application_list_id` (String)
 - `dscps` (Set of Number) DSCP numbers
-- `icmp6_message` (Set of String) ICMP6 Message
-- `icmp_message` (Set of String) ICMP Message
+- `icmp6_messages` (Set of String) ICMP6 Message
+- `icmp_messages` (Set of String) ICMP Message
 - `packet_length` (String) Packet Length
 - `protocols` (Set of String) protocol (0-255) range or individual number separated by space
 - `saas_application_list_id` (String)
-- `service_area` (Set of String) M365 Service Area
+- `service_areas` (Set of String) M365 Service Area
 - `source_data_ipv4_prefx_list_id` (String)
 - `source_data_ipv6_prefx_list_id` (String)
 - `source_ipv4_prefix` (String) Source Data IP Prefix
