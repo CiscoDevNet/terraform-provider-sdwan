@@ -1,6 +1,7 @@
 ## 0.8.2 (Unreleased)
 
 - Add `sdwan_system_ca_certificate_feature` resource and data source
+- Add default value for `administrative_distance` in `sdwan_transport_wan_vpn_feature`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_feature` to `20.15.0`
 
