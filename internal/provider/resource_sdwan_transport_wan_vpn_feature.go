@@ -271,7 +271,7 @@ func (r *TransportWANVPNProfileParcelResource) Schema(ctx context.Context, req r
 										Optional:            true,
 									},
 									"administrative_distance": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Administrative distance").AddIntegerRangeDescription(1, 254).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Administrative distance").AddIntegerRangeDescription(1, 254).AddDefaultValueDescription("1").String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 254),

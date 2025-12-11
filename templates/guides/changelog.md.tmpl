@@ -10,6 +10,7 @@ description: |-
 ## 0.8.2 (Unreleased)
 
 - Add `sdwan_system_ca_certificate_feature` resource and data source
+- Add default value for `administrative_distance` in `sdwan_transport_wan_vpn_feature`
 - Fix setting `umbrella_api_secret_variable` and `umbrella_api_key_variable` in `sdwan_cisco_sig_credentials_feature_template`
 
 ## 0.8.1
