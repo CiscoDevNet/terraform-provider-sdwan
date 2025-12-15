@@ -65,6 +65,7 @@ Optional:
 - `deploy` (Boolean) Deploy to device if enabled.
   - Default value: `false`
 - `id` (String) Device ID
+- `topology_label` (String) Topology label for dual device configuration group
 - `variables` (Attributes Set) List of variables (see [below for nested schema](#nestedatt--devices--variables))
 
 <a id="nestedatt--devices--variables"></a>
