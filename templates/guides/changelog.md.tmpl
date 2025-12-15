@@ -11,6 +11,7 @@ description: |-
 
 - Add `sdwan_system_ca_certificate_feature` resource and data source
 - Add default value for `administrative_distance` in `sdwan_transport_wan_vpn_feature`
+- Add `topology_label` attribute to `sdwan_configuration_group`
 
 ## 0.8.1
 
