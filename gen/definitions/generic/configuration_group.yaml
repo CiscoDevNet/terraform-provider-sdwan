@@ -99,6 +99,12 @@ attributes:
         id: true
         description: Device ID
         example: C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B
+      - model_name: groupTopologyLabel
+        tf_name: topology_label
+        type: String
+        description: Topology label for dual device configuration group
+        example: EdgeDevice_1
+        exclude_test: true
       - tf_name: deploy
         tf_only: true
         type: Bool
