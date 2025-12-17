@@ -36,6 +36,7 @@ description: |-
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_mirror` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_policer` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_tloc_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_traffic_policy_policy` to `20.15.0`
 
 ## 0.8.1
 
