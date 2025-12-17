@@ -1,6 +1,16 @@
 ## 0.8.2 (Unreleased)
 
 - Add `sdwan_system_ca_certificate_feature` resource and data source
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_cli_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_dns_security_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_embedded_security_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_other_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_sig_security_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_feature_profile` to `20.15.0`
 - Add default value for `administrative_distance` in `sdwan_transport_wan_vpn_feature`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_data_ipv4_prefix_list` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_fqdn_list` to `20.15.0`
