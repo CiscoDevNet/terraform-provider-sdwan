@@ -89,14 +89,14 @@ func GetInt64Set(result []gjson.Result) types.Set {
 	return types.SetValueMust(types.Int64Type, v)
 }
 
-func WaitForActionToComplete(ctx context.Context, client *sdwan.Client, id string, taskTimeout *int64) error {
+func WaitForActionToComplete(ctx context.Context, client *sdwan.Client, id string, taskTimeout *int64) (error, string) {
 	var MaxActionAttempts = *taskTimeout / 5
-
+	var warnings []string
 	for attempts := 0; ; attempts++ {
 		time.Sleep(5 * time.Second)
 		res, err := client.Get("/device/action/status/" + id)
 		if err != nil {
-			return err
+			return err, ""
 		}
 		if res.Get("summary.status").String() == "done" {
 			var failures []string
@@ -109,8 +109,15 @@ func WaitForActionToComplete(ctx context.Context, client *sdwan.Client, id strin
 			if strings.Contains(res.Get("validation.status").String(), "failure") {
 				failures = append(failures, fmt.Sprintf("Validation for action %s failed. Validation log: %+v", id, res.Get("validation.activity").String()))
 			}
+			res.Get("validation.activity").ForEach(func(_, activityMsg gjson.Result) bool {
+				if strings.Contains(activityMsg.String(), "operation is already in progress") {
+					warnings = append(warnings, "The configuration update is skipped because another operation is already in progress for this device. Some changes may not have been applied. Run 'terraform apply' again to ensure all changes are applied.")
+					return false
+				}
+				return true
+			})
 			if len(failures) > 0 {
-				return errors.New(strings.Join(failures, "\n"))
+				return errors.New(strings.Join(failures, "\n")), ""
 			}
 			break
 		} else {
@@ -118,10 +125,10 @@ func WaitForActionToComplete(ctx context.Context, client *sdwan.Client, id strin
 		}
 		if attempts > int(MaxActionAttempts) {
 			tflog.Debug(ctx, fmt.Sprintf("[DEBUG] Maximum number of attempts reached for action '%s'.", id))
-			return fmt.Errorf("Maximum waiting time for action '%s' reached.", id)
+			return fmt.Errorf("Maximum waiting time for action '%s' reached.", id), ""
 		}
 	}
-	return nil
+	return nil, strings.Join(warnings, "\n")
 }
 
 func Must[T any](v T, err error) T {
