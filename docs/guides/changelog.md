@@ -10,11 +10,37 @@ description: |-
 ## 0.8.2 (Unreleased)
 
 - Add `sdwan_system_ca_certificate_feature` resource and data source
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_cli_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_dns_security_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_embedded_security_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_other_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_sig_security_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_feature_profile` to `20.15.0`
 - Add default value for `administrative_distance` in `sdwan_transport_wan_vpn_feature`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_ospfv3_ipv4_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_ospfv3_ipv6_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_ospfv3_ipv4_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_ospfv3_ipv6_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_data_ipv4_prefix_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_fqdn_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_port_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_protocol_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_application_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_as_path_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_class_map` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_color_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_expanded_community_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_extended_community_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_mirror` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_policer` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_tloc_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_traffic_policy_policy` to `20.15.0`
 
 ## 0.8.1
 
