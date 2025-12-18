@@ -645,41 +645,88 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 											stringvalidator.OneOf("ipv6-unicast", "vpnv6-unicast"),
 										},
 									},
-									"max_number_of_prefixes": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set maximum number of prefixes accepted from BGP peer").AddIntegerRangeDescription(1, 4294967295).String,
+									"policy_type": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Neighbor received maximum prefix policy is disabled.").AddStringEnumDescription("restart", "off", "warning-only", "disable-peer").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("restart", "off", "warning-only", "disable-peer"),
+										},
+									},
+									"restart_max_number_of_prefixes": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` being equal to `restart`").AddIntegerRangeDescription(1, 4294967295).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 4294967295),
 										},
 									},
-									"max_number_of_prefixes_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+									"restart_max_number_of_prefixes_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `policy_type` being equal to `restart`").String,
 										Optional:            true,
 									},
-									"threshold": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set threshold(1 to 100) at which to generate a warning message").AddIntegerRangeDescription(1, 100).AddDefaultValueDescription("75").String,
+									"restart_threshold": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` being equal to `restart`").AddIntegerRangeDescription(1, 100).AddDefaultValueDescription("75").String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 100),
 										},
 									},
-									"threshold_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-										Optional:            true,
-									},
-									"policy_type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Neighbor received maximum prefix policy is disabled.").String,
+									"restart_threshold_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `policy_type` being equal to `restart`").String,
 										Optional:            true,
 									},
 									"restart_interval": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set the restart interval(minutes) when to restart BGP connection if threshold is exceeded").AddIntegerRangeDescription(1, 65535).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set the restart interval(minutes) when to restart BGP connection if threshold is exceeded, Attribute conditional on `policy_type` being equal to `restart`").AddIntegerRangeDescription(1, 65535).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 65535),
 										},
 									},
 									"restart_interval_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `policy_type` being equal to `restart`").String,
+										Optional:            true,
+									},
+									"warning_message_max_number_of_prefixes": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` being equal to `warning-only`").AddIntegerRangeDescription(1, 4294967295).String,
+										Optional:            true,
+										Validators: []validator.Int64{
+											int64validator.Between(1, 4294967295),
+										},
+									},
+									"warning_message_max_number_of_prefixes_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `policy_type` being equal to `warning-only`").String,
+										Optional:            true,
+									},
+									"warning_message_threshold": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` being equal to `warning-only`").AddIntegerRangeDescription(1, 100).AddDefaultValueDescription("75").String,
+										Optional:            true,
+										Validators: []validator.Int64{
+											int64validator.Between(1, 100),
+										},
+									},
+									"warning_message_threshold_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `policy_type` being equal to `warning-only`").String,
+										Optional:            true,
+									},
+									"disable_peer_max_number_of_prefixes": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` being equal to `disable-peer`").AddIntegerRangeDescription(1, 4294967295).String,
+										Optional:            true,
+										Validators: []validator.Int64{
+											int64validator.Between(1, 4294967295),
+										},
+									},
+									"disable_peer_max_number_of_prefixes_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `policy_type` being equal to `disable-peer`").String,
+										Optional:            true,
+									},
+									"disable_peer_threshold": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` being equal to `disable-peer`").AddIntegerRangeDescription(1, 100).AddDefaultValueDescription("75").String,
+										Optional:            true,
+										Validators: []validator.Int64{
+											int64validator.Between(1, 100),
+										},
+									},
+									"disable_peer_threshold_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `policy_type` being equal to `disable-peer`").String,
 										Optional:            true,
 									},
 									"in_route_policy_id": schema.StringAttribute{

@@ -1,6 +1,7 @@
 ## 0.8.2 (Unreleased)
 
 - Add `sdwan_system_ca_certificate_feature` resource and data source
+- BREAKING CHANGE: Refactor `max_number_of_prefixes`, `restart_interval` and `threshold` parameters under `ipv6_neighbors` section of `sdwan_service_routing_bgp_feature` and `sdwan_transport_routing_bgp_feature` resource
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_feature_profile` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_cli_feature_profile` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_dns_security_feature_profile` to `20.15.0`
