@@ -1,8 +1,8 @@
 ---
 name: Policy Object Expanded Community List
 rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/expanded-community
-minimum_version: 20.12.0
-test_tags: [SDWAN_2012]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 skip_minimum_test: true
 parcel_type: policy_object
 full_update: true

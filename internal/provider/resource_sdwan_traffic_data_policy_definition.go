@@ -352,7 +352,7 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 										MarkdownDescription: helpers.NewAttributeDescription("Enable TCP optimization, Attribute conditional on `type` being equal to `tcpOptimization`").String,
 										Optional:            true,
 									},
-									"set_parameters": schema.ListNestedAttribute{
+									"set_parameters": schema.SetNestedAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("List of set parameters, Attribute conditional on `type` being equal to `set`").String,
 										Optional:            true,
 										NestedObject: schema.NestedAttributeObject{

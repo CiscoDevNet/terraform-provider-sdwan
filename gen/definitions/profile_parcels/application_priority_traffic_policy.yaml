@@ -1,9 +1,9 @@
----
+# Manual resource - Modals updateFromBody is manually configured to avoid pernament diff for set_parameters
 name: Application Priority Traffic Policy
 rest_endpoint: /v1/feature-profile/sdwan/application-priority/%v/traffic-policy
-minimum_version: 20.12.0
+minimum_version: 20.15.0
 id_attribute: id
-test_tags: [SDWAN_2012, TF_VAR_policy_object_feature_template_id]
+test_tags: [SDWAN_2015, TF_VAR_policy_object_feature_template_id]
 skip_minimum_test: true
 parcel_type: policy
 attributes:
@@ -23,7 +23,7 @@ attributes:
   #   example:
   # # ==== Unable to find in UI ====
   # - model_name: hasCorViaSig
-  #   exclude_test: true
+    # exclude_test: true
   #   example:
   - model_name: vpn
     tf_name: vpns
@@ -59,6 +59,7 @@ attributes:
         exclude_test: true
         example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
       - model_name: serviceArea
+        tf_name: service_areas
         exclude_test: true
         example: common
       - model_name: trafficCategory
@@ -73,6 +74,11 @@ attributes:
         exclude_test: true
         example: silver
       - model_name: dscp
+        tf_name: dscps
+        no_augment_config: true
+        type: Set
+        element_type: Int64
+        description: DSCP numbers
         # exclude_test: true
         example: 1
       - model_name: packetLength
@@ -83,9 +89,11 @@ attributes:
         exclude_test: true
         example: 2
       - model_name: icmpMessage
+        tf_name: icmp_messages
         exclude_test: true
         example: echo
       - model_name: icmp6Message
+        tf_name: icmp6_messages
         exclude_test: true
         example:
       - model_name: refId
@@ -158,6 +166,7 @@ attributes:
           exclude_test: true
           example: 01249501-650f-484a-bfc0-b5837a558ce5
         - model_name: preferredColor
+          tf_name: preferred_colors
           exclude_test: true
           example: gold
         - model_name: refId
@@ -172,12 +181,14 @@ attributes:
           exclude_test: true
           example: false
         - model_name: preferredRemoteColor
+          tf_name: preferred_remote_colors
           exclude_test: true
           example: 3g
         - model_name: remoteColorRestrict
           exclude_test: true
           example: true
       - model_name: backupSlaPreferredColor
+        tf_name: backup_sla_preferred_colors
         exclude_test: true
         example: blue
       - model_name: set
@@ -204,7 +215,7 @@ attributes:
           exclude_test: true
           example: 159f4020-666f-4b05-8740-67816b7911df
         - model_name: color
-          tf_name: local_tloc_list_color
+          tf_name: local_tloc_list_colors
           data_path: [localTlocList]
           exclude_test: true
           example: default
@@ -219,10 +230,10 @@ attributes:
           exclude_test: true
           example: gre
         - model_name: color
-          tf_name: preferred_remote_color_id
+          tf_name: preferred_remote_colors
           data_path: [preferredRemoteColor]
           exclude_test: true
-          example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+          example: default
         - model_name: remoteColorRestrict
           tf_name: preferred_remote_color_restrict
           data_path: [preferredRemoteColor]
@@ -273,6 +284,16 @@ attributes:
           data_path: [service]
           exclude_test: true
           example: FW
+        - model_name: local
+          tf_name: service_local
+          data_path: [service]
+          exclude_test: true
+          example: false
+        - model_name: restrict
+          tf_name: service_restrict
+          data_path: [service]
+          exclude_test: true
+          example: false
         - model_name: refId
           tf_name: service_tloc_list_id
           data_path: [service, tlocList]
@@ -342,24 +363,21 @@ attributes:
         data_path: [redirectDns]
         exclude_test: true
         example: umbrella
-      # # === Not Support in 20.12 (Supported in 20.15) ===
-      # - model_name: tcpOptimization
-      #   tf_name: appqoe_tcp_optimization
-      #   data_path: [appqoeOptimization]
-      #   exclude_test: true
-      #   example: true
-      # # === Not Support in 20.12 (Supported in 20.15) ===
-      # - model_name: dreOptimization
-      #   tf_name: appqoe_dre_optimization
-      #   data_path: [appqoeOptimization]
-      #   exclude_test: true
-      #   example: true
-      # # === Not Support in 20.12 (Supported in 20.15) ===
-      # - model_name: serviceNodeGroup
-      #   tf_name: appqoe_service_node_group
-      #   data_path: [appqoeOptimization]
-      #   exclude_test: true
-      #   example: SNG-APPQOE1
+      - model_name: tcpOptimization
+        tf_name: appqoe_tcp_optimization
+        data_path: [appqoeOptimization]
+        exclude_test: true
+        example: true
+      - model_name: dreOptimization
+        tf_name: appqoe_dre_optimization
+        data_path: [appqoeOptimization]
+        exclude_test: true
+        example: true
+      - model_name: serviceNodeGroup
+        tf_name: appqoe_service_node_group
+        data_path: [appqoeOptimization]
+        exclude_test: true
+        example: SNG-APPQOE1
       - model_name: lossCorrectionType
         tf_name: loss_correct_type
         data_path: [lossCorrection]
@@ -382,10 +400,9 @@ attributes:
       - model_name: cloudProbe
         exclude_test: true
         example: false
-      # # === Not Support in 20.12 (Supported in 20.15) ===
-      # - model_name: cflowd
-      #   exclude_test: true
-      #   example: false
+      - model_name: cflowd
+        exclude_test: true
+        example: false
       - model_name: natPool
         exclude_test: true
         example: 2
@@ -405,12 +422,12 @@ attributes:
         exclude_test: true
         example: false
       - model_name: diaPool
-        tf_name: nat_dia_pool
+        tf_name: nat_dia_pools
         data_path: [nat]
         exclude_test: true
         example: 1
       - model_name: diaInterface
-        tf_name: nat_dia_interface
+        tf_name: nat_dia_interfaces
         data_path: [nat]
         exclude_test: true
         example: ethernet
@@ -421,16 +438,14 @@ attributes:
       - model_name: fallbackToRouting
         exclude_test: true
         example: true
-      # # === Not Support in 20.12 (Supported in 20.15) ===
-      # - model_name: secureServiceEdge
-      #   data_path: [sse]
-      #   exclude_test: true
-      #   example: true
-      # # === Not Support in 20.12 (Supported in 20.15) ===
-      # - model_name: secureServiceEdgeInstance
-      #   data_path: [sse]
-      #   exclude_test: true
-      #   example: zScaler
+      - model_name: secureServiceEdge
+        data_path: [sse]
+        exclude_test: true
+        example: true
+      - model_name: secureServiceEdgeInstance
+        data_path: [sse]
+        exclude_test: true
+        example: zScaler
 
 test_prerequisites: |
   resource "sdwan_policy_object_feature_profile" "test" {

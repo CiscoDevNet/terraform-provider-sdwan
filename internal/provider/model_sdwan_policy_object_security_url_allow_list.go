@@ -65,7 +65,7 @@ func (data PolicyObjectSecurityURLAllowList) toBody(ctx context.Context) string 
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
-	body, _ = sjson.Set(body, "type", "urlallowed")
+	body, _ = sjson.Set(body, "data.type", "urlallowed")
 	path := "data."
 	if true {
 

@@ -4,13 +4,13 @@ page_title: "sdwan_transport_wan_vpn_feature Resource - terraform-provider-sdwan
 subcategory: "Features - Transport"
 description: |-
   This resource can manage a Transport WAN VPN Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_transport_wan_vpn_feature (Resource)
 
 This resource can manage a Transport WAN VPN Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -164,6 +164,7 @@ Optional:
 - `address_variable` (String) Variable name
 - `administrative_distance` (Number) Administrative distance
   - Range: `1`-`254`
+  - Default value: `1`
 - `administrative_distance_variable` (String) Variable name
 
 
