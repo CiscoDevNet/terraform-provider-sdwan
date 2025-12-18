@@ -22,6 +22,7 @@ description: |-
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_feature_profile` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_feature_profile` to `20.15.0`
 - Add default value for `administrative_distance` in `sdwan_transport_wan_vpn_feature`
+- Fix issue where `fallback` in `sdwan_traffic_data_policy_definition` configuration is not applied correctly, causing the GUI to display it as enabled even when disabled in Terraform
 - Use `Set` type for `set_parameters` in `sdwan_traffic_data_policy_definition`
 - Fix setting `umbrella_api_secret_variable` and `umbrella_api_key_variable` in `sdwan_cisco_sig_credentials_feature_template`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_ospfv3_ipv4_feature` to `20.15.0`
