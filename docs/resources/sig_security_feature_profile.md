@@ -4,13 +4,13 @@ page_title: "sdwan_sig_security_feature_profile Resource - terraform-provider-sd
 subcategory: "Feature Profiles"
 description: |-
   This resource can manage a SIG Security Feature Profile .
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_sig_security_feature_profile (Resource)
 
 This resource can manage a SIG Security Feature Profile .
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 

@@ -1,8 +1,8 @@
 ---
 name: Service LAN VPN
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/lan/vpn
-minimum_version: 20.12.0
-test_tags: [SDWAN_2012]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - Service
 attributes:
@@ -103,6 +103,8 @@ attributes:
         example: 2001:db8:a::/64
       - model_name: aggregateOnly
         example: false
+      - model_name: region
+        example: core
   - model_name: ipv4Route
     tf_name: ipv4_static_routes
     attributes:
@@ -118,7 +120,7 @@ attributes:
       type: String
       tf_only: true
       description: Gateway type
-      enum_values: [nextHop, null0, vpn, dhcp]
+      enum_values: [nextHop, null0, vpn, dhcp, staticRouteInterface]
       example: nextHop
     - model_name: nextHop
       tf_name: next_hops
@@ -161,6 +163,14 @@ attributes:
       conditional_attribute:
         name: gateway
         value: null0
+    - model_name: distance
+      tf_name: administrative_distance
+      data_path: [oneOfIpRoute]
+      exclude_test: true
+      example: 123
+      conditional_attribute:
+        name: gateway
+        value: null0
     - model_name: dhcp
       data_path: [oneOfIpRoute]
       exclude_test: true
@@ -175,6 +185,22 @@ attributes:
       conditional_attribute:
         name: gateway
         value: vpn
+    - model_name: ipStaticRouteInterface
+      data_path: [oneOfIpRoute, interfaceContainer]
+      exclude_test: true
+      conditional_attribute:
+        name: gateway
+        value: staticRouteInterface
+      attributes:
+      - model_name: interfaceName
+        example: GigabitEthernet0/1
+      - model_name: nextHop
+        attributes:
+        - model_name: address
+          example: 1.2.3.4
+        - model_name: distance
+          tf_name: administrative_distance
+          example: 1
   - model_name: ipv6Route
     tf_name: ipv6_static_routes
     attributes:
@@ -185,7 +211,7 @@ attributes:
       type: String
       tf_only: true
       description: Gateway type
-      enum_values: [nextHop, null0, nat]
+      enum_values: [nextHop, null0, nat, staticRouteInterface]
       example: nextHop
     - model_name: nextHop
       tf_name: next_hops
@@ -215,6 +241,23 @@ attributes:
       conditional_attribute:
         name: gateway
         value: nat
+    - model_name: ipv6StaticRouteInterface
+      data_path: [oneOfIpRoute, interfaceContainer]
+      exclude_test: true
+      example: NAT64
+      conditional_attribute:
+        name: gateway
+        value: staticRouteInterface
+      attributes:
+      - model_name: interfaceName
+        example: GigabitEthernet0/1
+      - model_name: nextHop
+        attributes:
+        - model_name: address
+          example: 1.2.3.4
+        - model_name: distance
+          tf_name: administrative_distance
+          example: 1
   - model_name: service
     tf_name: services
     attributes:
@@ -241,6 +284,8 @@ attributes:
       example: SIG
     - model_name: vpn
       example: 0
+    - model_name: sseInstance
+      example: 1
   - model_name: greRoute
     tf_name: gre_routes
     attributes:
@@ -302,7 +347,7 @@ attributes:
       example: 330
     - model_name: sourceIp
       example: 1.2.3.4
-    - model_name: TranslatedSourceIp
+    - model_name: translatedSourceIp
       example: 2.3.4.5
     - model_name: protocol
       example: TCP
@@ -314,8 +359,25 @@ attributes:
       example: 3
     - model_name: sourceIp
       example: 1.2.3.4
-    - model_name: TranslatedSourceIp
+    - model_name: translatedSourceIp
       example: 2.3.4.5
+    - model_name: staticNatDirection
+      example: inside
+    - model_name: refId
+      tf_name: tracker_object_id
+      data_path: [trackingObject, trackerId]
+      exclude_test: true
+      example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+  - model_name: staticNatSubnet
+    tf_name: static_nat_subnets
+    attributes:
+    - model_name: sourceIpSubnet
+      id: true
+      example: 1.2.3.4
+    - model_name: translatedSourceIpSubnet
+      example: 2.3.4.5
+    - model_name: prefixLength
+      example: 6
     - model_name: staticNatDirection
       example: inside
     - model_name: refId

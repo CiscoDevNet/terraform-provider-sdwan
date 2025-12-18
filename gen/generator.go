@@ -857,7 +857,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 						attr.EnumValues = append(attr.EnumValues, v.String())
 					}
 				}
-			} else if attr.Type == "Bool" || t.Get("properties.value.type").String() == "boolean" {
+			} else if attr.Type == "Bool" || t.Get("properties.value.type").String() == "boolean" || t.Get("properties.value.oneOf.0.properties.value.type").String() == "boolean" {
 				attr.Type = "Bool"
 			} else if attr.Type == "Int64" || t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" || t.Get("properties.value.oneOf.0.type").String() == "integer" || t.Get("properties.value.oneOf.0.type").String() == "number" {
 

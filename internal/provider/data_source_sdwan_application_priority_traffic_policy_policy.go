@@ -125,7 +125,7 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										MarkdownDescription: "",
 										Computed:            true,
 									},
-									"service_area": schema.SetAttribute{
+									"service_areas": schema.SetAttribute{
 										MarkdownDescription: "M365 Service Area",
 										ElementType:         types.StringType,
 										Computed:            true,
@@ -142,8 +142,9 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										MarkdownDescription: "Traffic Class",
 										Computed:            true,
 									},
-									"dscp": schema.Int64Attribute{
-										MarkdownDescription: "DSCP number",
+									"dscps": schema.SetAttribute{
+										MarkdownDescription: "DSCP numbers",
+										ElementType:         types.Int64Type,
 										Computed:            true,
 									},
 									"packet_length": schema.StringAttribute{
@@ -155,12 +156,12 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
-									"icmp_message": schema.SetAttribute{
+									"icmp_messages": schema.SetAttribute{
 										MarkdownDescription: "ICMP Message",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
-									"icmp6_message": schema.SetAttribute{
+									"icmp6_messages": schema.SetAttribute{
 										MarkdownDescription: "ICMP6 Message",
 										ElementType:         types.StringType,
 										Computed:            true,
@@ -240,7 +241,7 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 													MarkdownDescription: "",
 													Computed:            true,
 												},
-												"preferred_color": schema.SetAttribute{
+												"preferred_colors": schema.SetAttribute{
 													MarkdownDescription: "",
 													ElementType:         types.StringType,
 													Computed:            true,
@@ -257,7 +258,7 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 													MarkdownDescription: "",
 													Computed:            true,
 												},
-												"preferred_remote_color": schema.SetAttribute{
+												"preferred_remote_colors": schema.SetAttribute{
 													MarkdownDescription: "",
 													ElementType:         types.StringType,
 													Computed:            true,
@@ -269,7 +270,7 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 											},
 										},
 									},
-									"backup_sla_preferred_color": schema.SetAttribute{
+									"backup_sla_preferred_colors": schema.SetAttribute{
 										MarkdownDescription: "Backup SLA perferred color",
 										ElementType:         types.StringType,
 										Computed:            true,
@@ -295,12 +296,12 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 													MarkdownDescription: "",
 													Computed:            true,
 												},
-												"local_tloc_list_color": schema.SetAttribute{
+												"local_tloc_list_colors": schema.SetAttribute{
 													MarkdownDescription: "",
 													ElementType:         types.StringType,
 													Computed:            true,
 												},
-												"local_tloc_list_restrict": schema.StringAttribute{
+												"local_tloc_list_restrict": schema.BoolAttribute{
 													MarkdownDescription: "",
 													Computed:            true,
 												},
@@ -308,12 +309,12 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 													MarkdownDescription: "",
 													Computed:            true,
 												},
-												"preferred_remote_color_id": schema.SetAttribute{
+												"preferred_remote_colors": schema.SetAttribute{
 													MarkdownDescription: "",
 													ElementType:         types.StringType,
 													Computed:            true,
 												},
-												"preferred_remote_color_restrict": schema.StringAttribute{
+												"preferred_remote_color_restrict": schema.BoolAttribute{
 													MarkdownDescription: "",
 													Computed:            true,
 												},
@@ -347,11 +348,19 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 													MarkdownDescription: "",
 													Computed:            true,
 												},
-												"service_vpn": schema.StringAttribute{
+												"service_vpn": schema.Int64Attribute{
 													MarkdownDescription: "",
 													Computed:            true,
 												},
 												"service_type": schema.StringAttribute{
+													MarkdownDescription: "",
+													Computed:            true,
+												},
+												"service_local": schema.BoolAttribute{
+													MarkdownDescription: "",
+													Computed:            true,
+												},
+												"service_restrict": schema.BoolAttribute{
 													MarkdownDescription: "",
 													Computed:            true,
 												},
@@ -404,7 +413,7 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 													MarkdownDescription: "",
 													Computed:            true,
 												},
-												"vpn": schema.StringAttribute{
+												"vpn": schema.Int64Attribute{
 													MarkdownDescription: "",
 													Computed:            true,
 												},
@@ -416,6 +425,18 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										Computed:            true,
 									},
 									"redirect_dns_value": schema.StringAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"appqoe_tcp_optimization": schema.BoolAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"appqoe_dre_optimization": schema.BoolAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"appqoe_service_node_group": schema.StringAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
 									},
@@ -443,6 +464,10 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										MarkdownDescription: "",
 										Computed:            true,
 									},
+									"cflowd": schema.BoolAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
 									"nat_pool": schema.Int64Attribute{
 										MarkdownDescription: "",
 										Computed:            true,
@@ -459,12 +484,12 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										MarkdownDescription: "",
 										Computed:            true,
 									},
-									"nat_dia_pool": schema.SetAttribute{
+									"nat_dia_pools": schema.SetAttribute{
 										MarkdownDescription: "",
 										ElementType:         types.Int64Type,
 										Computed:            true,
 									},
-									"nat_dia_interface": schema.SetAttribute{
+									"nat_dia_interfaces": schema.SetAttribute{
 										MarkdownDescription: "",
 										ElementType:         types.StringType,
 										Computed:            true,
@@ -474,6 +499,14 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										Computed:            true,
 									},
 									"fallback_to_routing": schema.BoolAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"secure_service_edge": schema.BoolAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"secure_service_edge_instance": schema.StringAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
 									},
