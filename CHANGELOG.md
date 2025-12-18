@@ -2,6 +2,8 @@
 
 - Add `sdwan_system_ca_certificate_feature` resource and data source
 - Add default value for `administrative_distance` in `sdwan_transport_wan_vpn_feature`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_url_allow_list` to 20.15.0
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_url_block_list` to 20.15.0
 
 ## 0.8.1
 
