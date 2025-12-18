@@ -54,7 +54,11 @@ Read-Only:
 
 Read-Only:
 
-- `backup_sla_preferred_color` (Set of String) Backup SLA perferred color
+- `appqoe_dre_optimization` (Boolean)
+- `appqoe_service_node_group` (String)
+- `appqoe_tcp_optimization` (Boolean)
+- `backup_sla_preferred_colors` (Set of String) Backup SLA perferred color
+- `cflowd` (Boolean)
 - `cloud_probe` (Boolean)
 - `cloud_saas` (Boolean)
 - `count` (String)
@@ -63,14 +67,16 @@ Read-Only:
 - `loss_correct_fec_threshold` (Number)
 - `loss_correct_type` (String)
 - `nat_bypass` (Boolean)
-- `nat_dia_interface` (Set of String)
-- `nat_dia_pool` (Set of Number)
+- `nat_dia_interfaces` (Set of String)
+- `nat_dia_pools` (Set of Number)
 - `nat_fallback` (Boolean)
 - `nat_pool` (Number)
 - `nat_vpn` (Boolean)
 - `redirect_dns_field` (String)
 - `redirect_dns_value` (String)
 - `secure_internet_gateway` (Boolean)
+- `secure_service_edge` (Boolean)
+- `secure_service_edge_instance` (String)
 - `set_parameters` (Attributes List) (see [below for nested schema](#nestedatt--sequences--actions--set_parameters))
 - `sla_classes` (Attributes List) slaClass (see [below for nested schema](#nestedatt--sequences--actions--sla_classes))
 
@@ -81,16 +87,16 @@ Read-Only:
 
 - `dscp` (Number)
 - `forwarding_class_list_id` (String)
-- `local_tloc_list_color` (Set of String)
+- `local_tloc_list_colors` (Set of String)
 - `local_tloc_list_encapsulation` (String)
-- `local_tloc_list_restrict` (String)
+- `local_tloc_list_restrict` (Boolean)
 - `next_hop_ipv4` (String)
 - `next_hop_ipv6` (String)
 - `next_hop_loose` (Boolean)
 - `policer_id` (String)
 - `preferred_color_group_id` (String)
-- `preferred_remote_color_id` (Set of String)
-- `preferred_remote_color_restrict` (String)
+- `preferred_remote_color_restrict` (Boolean)
+- `preferred_remote_colors` (Set of String)
 - `service_chain_fallback_to_routing` (Boolean)
 - `service_chain_local` (Boolean)
 - `service_chain_tloc_color` (Set of String)
@@ -99,17 +105,19 @@ Read-Only:
 - `service_chain_tloc_list_id` (String)
 - `service_chain_type` (String)
 - `service_chain_vpn` (Number)
+- `service_local` (Boolean)
+- `service_restrict` (Boolean)
 - `service_tloc_color` (Set of String)
 - `service_tloc_encapsulation` (String)
 - `service_tloc_ip` (String)
 - `service_tloc_list_id` (String)
 - `service_type` (String)
-- `service_vpn` (String)
+- `service_vpn` (Number)
 - `tloc_color` (Set of String)
 - `tloc_encapsulation` (String)
 - `tloc_ip` (String)
 - `tloc_list_id` (String)
-- `vpn` (String)
+- `vpn` (Number)
 
 
 <a id="nestedatt--sequences--actions--sla_classes"></a>
@@ -118,9 +126,9 @@ Read-Only:
 Read-Only:
 
 - `fallback_to_best_path` (Boolean)
-- `preferred_color` (Set of String)
 - `preferred_color_group_list_id` (String)
-- `preferred_remote_color` (Set of String)
+- `preferred_colors` (Set of String)
+- `preferred_remote_colors` (Set of String)
 - `remote_color_restrict` (Boolean)
 - `sla_class_list_id` (String)
 - `strict` (Boolean)
@@ -141,13 +149,13 @@ Read-Only:
 - `destination_region` (String) Destination Region
 - `dns` (String) Dns
 - `dns_application_list_id` (String)
-- `dscp` (Number) DSCP number
-- `icmp6_message` (Set of String) ICMP6 Message
-- `icmp_message` (Set of String) ICMP Message
+- `dscps` (Set of Number) DSCP numbers
+- `icmp6_messages` (Set of String) ICMP6 Message
+- `icmp_messages` (Set of String) ICMP Message
 - `packet_length` (String) Packet Length
 - `protocols` (Set of String) protocol (0-255) range or individual number separated by space
 - `saas_application_list_id` (String)
-- `service_area` (Set of String) M365 Service Area
+- `service_areas` (Set of String) M365 Service Area
 - `source_data_ipv4_prefx_list_id` (String)
 - `source_data_ipv6_prefx_list_id` (String)
 - `source_ipv4_prefix` (String) Source Data IP Prefix
