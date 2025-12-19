@@ -383,7 +383,7 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 			return
 		}
 
-		state.fromBodyConfigGroupDeviceVariables(ctx, res)
+		state.fromBodyConfigGroupDeviceVariables(ctx, res, &oldState)
 	}
 
 	state.updateTfAttributes(ctx, &oldState)

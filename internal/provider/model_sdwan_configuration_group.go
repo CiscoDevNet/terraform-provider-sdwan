@@ -360,7 +360,7 @@ func (data *ConfigurationGroup) fromBodyConfigGroupDevices(ctx context.Context, 
 	}
 }
 
-func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.Context, res gjson.Result) {
+func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.Context, res gjson.Result, original *ConfigurationGroup) {
 	if value := res.Get("family"); value.Exists() {
 		data.Solution = types.StringValue(value.String())
 	} else {
@@ -406,10 +406,6 @@ func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.C
 							if !cv.Get("value").Exists() {
 								return true
 							}
-							// skip encrypted variables
-							if cv.Get("value").Exists() && strings.Contains(strings.ToLower(cv.Get("value").String()), "$crypt_cluster") {
-								return true
-							}
 							cItem := ConfigurationGroupDevicesVariables{}
 							if ccValue := cv.Get("name"); ccValue.Exists() {
 								cItem.Name = types.StringValue(ccValue.String())
@@ -424,6 +420,23 @@ func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.C
 									cItem.ListValue = types.ListNull(types.StringType)
 									if !strings.Contains(strings.ToLower(ccValue.String()), "$crypt_cluster") {
 										cItem.Value = types.StringValue(ccValue.String())
+									} else {
+										// Preserve original state value for encrypted variables
+										cItem.Value = types.StringNull()
+										if original != nil {
+											varName := cv.Get("name").String()
+											for _, origDevice := range original.Devices {
+												if origDevice.Id.ValueString() == deviceId {
+													for _, origVar := range origDevice.Variables {
+														if origVar.Name.ValueString() == varName && !origVar.Value.IsNull() {
+															cItem.Value = origVar.Value
+															break
+														}
+													}
+													break
+												}
+											}
+										}
 									}
 								}
 							} else {

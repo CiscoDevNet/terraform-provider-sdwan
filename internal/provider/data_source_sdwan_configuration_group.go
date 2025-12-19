@@ -224,7 +224,7 @@ func (d *ConfigurationGroupDataSource) Read(ctx context.Context, req datasource.
 		return
 	}
 
-	config.fromBodyConfigGroupDeviceVariables(ctx, res)
+	config.fromBodyConfigGroupDeviceVariables(ctx, res, nil)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 
