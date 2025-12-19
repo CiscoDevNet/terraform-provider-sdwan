@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanApplicationPriorityTrafficPolicyProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012 or TF_VAR_policy_object_feature_template_id")
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or TF_VAR_policy_object_feature_template_id")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_priority_traffic_policy_policy.test", "default_action", "accept"))
@@ -39,7 +39,6 @@ func TestAccDataSourceSdwanApplicationPriorityTrafficPolicyProfileParcel(t *test
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_priority_traffic_policy_policy.test", "sequences.0.sequence_name", "traffic"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_priority_traffic_policy_policy.test", "sequences.0.base_action", "accept"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_priority_traffic_policy_policy.test", "sequences.0.protocol", "ipv4"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_priority_traffic_policy_policy.test", "sequences.0.match_entries.0.dscp", "1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -97,7 +96,7 @@ func testAccDataSourceSdwanApplicationPriorityTrafficPolicyProfileParcelConfig()
 	config += `	  base_action = "accept"` + "\n"
 	config += `	  protocol = "ipv4"` + "\n"
 	config += `	  match_entries = [{` + "\n"
-	config += `		dscp = 1` + "\n"
+	config += `		dscps = [1]` + "\n"
 	config += `	}]` + "\n"
 	config += `	  actions = [{` + "\n"
 	config += `      set_parameters = [{` + "\n"
