@@ -406,6 +406,10 @@ func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.C
 							if !cv.Get("value").Exists() {
 								return true
 							}
+							// skip encrypted variables
+							if cv.Get("value").Exists() && strings.Contains(strings.ToLower(cv.Get("value").String()), "$crypt_cluster") {
+								return true
+							}
 							cItem := ConfigurationGroupDevicesVariables{}
 							if ccValue := cv.Get("name"); ccValue.Exists() {
 								cItem.Name = types.StringValue(ccValue.String())
