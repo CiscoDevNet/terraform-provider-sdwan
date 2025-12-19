@@ -402,7 +402,7 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value", fmt.Sprint(childChildItem.VpnId.ValueInt64()))
 							}
 							if !childChildItem.Fallback.IsNull() && childChildItem.Type.ValueString() == "fallback" {
-								if false && childChildItem.Fallback.ValueBool() {
+								if !childChildItem.Fallback.ValueBool() {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value", "")
 								} else {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value", fmt.Sprint(childChildItem.Fallback.ValueBool()))
@@ -826,8 +826,8 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 								ccItem.VpnId = types.Int64Null()
 							}
 							if cccValue := ccv.Get("value"); cccValue.Exists() && ccItem.Type.ValueString() == "fallback" {
-								if false && cccValue.String() == "" {
-									ccItem.Fallback = types.BoolValue(true)
+								if cccValue.String() == "" {
+									ccItem.Fallback = types.BoolValue(false)
 								} else {
 									ccItem.Fallback = types.BoolValue(cccValue.Bool())
 								}

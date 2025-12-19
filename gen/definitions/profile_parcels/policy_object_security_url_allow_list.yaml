@@ -1,8 +1,8 @@
 ---
 name: Policy Object Security URL Allow List
 rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/security-urllist
-minimum_version: 20.12.0
-test_tags: [SDWAN_2012]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 skip_minimum_test: true
 parcel_type: policy_object
 type_value: urlallowed

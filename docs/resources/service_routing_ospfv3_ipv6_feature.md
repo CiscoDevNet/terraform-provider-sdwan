@@ -4,13 +4,13 @@ page_title: "sdwan_service_routing_ospfv3_ipv6_feature Resource - terraform-prov
 subcategory: "Features - Service"
 description: |-
   This resource can manage a Service Routing OSPFv3 IPv6 Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_service_routing_ospfv3_ipv6_feature (Resource)
 
 This resource can manage a Service Routing OSPFv3 IPv6 Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -152,8 +152,8 @@ Optional:
 - `area_number` (Number) Set OSPF area number
   - Range: `0`-`4294967295`
 - `area_number_variable` (String) Variable name
-- `area_type` (String) stub area type
-  - Choices: `stub`
+- `area_type` (String) Set OSPFv3 area type
+  - Choices: `stub`, `nssa`, `normal`
 - `interfaces` (Attributes List) Set OSPF interface parameters (see [below for nested schema](#nestedatt--areas--interfaces))
 - `no_summary` (Boolean) Do not inject inter-area routes
 - `no_summary_variable` (String) Variable name
@@ -169,8 +169,8 @@ Optional:
 - `authentication_spi` (Number) Set OSPF interface authentication IPSec SPI, range 256..4294967295
   - Range: `256`-`4294967295`
 - `authentication_spi_variable` (String) Variable name
-- `authentication_type` (String) No Authentication by default
-  - Choices: `no-auth`
+- `authentication_type` (String) Set OSPF interface authentication configuration
+  - Choices: `no-auth`, `ipsec-sha1`
 - `cost` (Number) Set cost of OSPF interface
   - Range: `1`-`65535`
 - `cost_variable` (String) Variable name
@@ -221,8 +221,9 @@ Optional:
   - Choices: `connected`, `static`, `omp`, `bgp`, `eigrp`
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
-- `translate_rib_metric` (Boolean) Translate Rib Metric, Attribute conditional on `protocol` being equal to `omp`
+- `translate_rib_metric` (Boolean) Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network., Attribute conditional on `protocol` being equal to `omp`
   - Default value: `false`
+- `translate_rib_metric_variable` (String) Variable name, Attribute conditional on `protocol` being equal to `omp`
 
 ## Import
 
