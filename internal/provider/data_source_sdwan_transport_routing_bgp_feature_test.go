@@ -83,9 +83,9 @@ func TestAccDataSourceSdwanTransportRoutingBGPProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_feature.test", "ipv6_neighbors.0.as_override", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_feature.test", "ipv6_neighbors.0.allowas_in_number", "3"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_feature.test", "ipv6_neighbors.0.address_families.0.family_type", "ipv6-unicast"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_feature.test", "ipv6_neighbors.0.address_families.0.max_number_of_prefixes", "2000"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_feature.test", "ipv6_neighbors.0.address_families.0.threshold", "75"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_feature.test", "ipv6_neighbors.0.address_families.0.policy_type", "restart"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_feature.test", "ipv6_neighbors.0.address_families.0.restart_max_number_of_prefixes", "2000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_feature.test", "ipv6_neighbors.0.address_families.0.restart_threshold", "75"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_feature.test", "ipv6_neighbors.0.address_families.0.restart_interval", "30"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_feature.test", "ipv4_aggregate_addresses.0.network_address", "10.10.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_feature.test", "ipv4_aggregate_addresses.0.subnet_mask", "255.255.0.0"))
@@ -192,9 +192,9 @@ func testAccDataSourceSdwanTransportRoutingBGPProfileParcelConfig() string {
 	config += `	  allowas_in_number = 3` + "\n"
 	config += `	  address_families = [{` + "\n"
 	config += `		family_type = "ipv6-unicast"` + "\n"
-	config += `		max_number_of_prefixes = 2000` + "\n"
-	config += `		threshold = 75` + "\n"
 	config += `		policy_type = "restart"` + "\n"
+	config += `		restart_max_number_of_prefixes = 2000` + "\n"
+	config += `		restart_threshold = 75` + "\n"
 	config += `		restart_interval = 30` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"

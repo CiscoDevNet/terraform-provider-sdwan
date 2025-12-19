@@ -1,7 +1,43 @@
 ## 0.8.2 (Unreleased)
 
 - Add `sdwan_system_ca_certificate_feature` resource and data source
+- BREAKING CHANGE: Refactor `max_number_of_prefixes`, `restart_interval` and `threshold` parameters under `ipv6_neighbors` section of `sdwan_service_routing_bgp_feature` and `sdwan_transport_routing_bgp_feature` resource
 - Add default value for `administrative_distance` in `sdwan_transport_wan_vpn_feature`
+- Fix issue where `fallback` in `sdwan_traffic_data_policy_definition` configuration is not applied correctly, causing the GUI to display it as enabled even when disabled in Terraform
+- Use `Set` type for `set_parameters` in `sdwan_traffic_data_policy_definition`
+- Fix setting `umbrella_api_secret_variable` and `umbrella_api_key_variable` in `sdwan_cisco_sig_credentials_feature_template`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_cli_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_dns_security_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_embedded_security_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_other_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_sig_security_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_feature_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_ospfv3_ipv4_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_ospfv3_ipv6_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_ospfv3_ipv4_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_ospfv3_ipv6_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_data_ipv4_prefix_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_fqdn_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_port_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_protocol_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_application_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_as_path_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_class_map` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_color_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_expanded_community_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_extended_community_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_mirror` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_policer` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_tloc_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_traffic_policy_policy` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_url_allow_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_url_block_list` to `20.15.0`
 - Fix problem where `sdwan_configuration_group` resource might fail to deploy configuration when CLI Add-on variable value is intiger, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/559)
 
 ## 0.8.1

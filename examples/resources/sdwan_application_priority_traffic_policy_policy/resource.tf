@@ -13,7 +13,7 @@ resource "sdwan_application_priority_traffic_policy_policy" "example" {
       protocol      = "ipv4"
       match_entries = [
         {
-          dscp = 1
+          dscps = [1]
         }
       ]
       actions = [
