@@ -102,7 +102,7 @@ attributes:
       - model_name: groupTopologyLabel
         tf_name: topology_label
         type: String
-        description: Topology label for dual device configuration group
+        description: Topology label for dual device configuration group (supported from version 20.18.1 onwards)
         example: EdgeDevice_1
         exclude_test: true
       - tf_name: deploy

@@ -156,7 +156,7 @@ func (r *ConfigurationGroupResource) Schema(ctx context.Context, req resource.Sc
 							Optional:            true,
 						},
 						"topology_label": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Topology label for dual device configuration group").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Topology label for dual device configuration group (supported from version 20.18.1 onwards)").String,
 							Optional:            true,
 						},
 						"deploy": schema.BoolAttribute{
