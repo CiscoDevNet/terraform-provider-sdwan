@@ -1,114 +1,118 @@
 {
-  "request": {
-      "$schema": "http://json-schema.org/draft/2019-09/schema",
-      "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/security-urllist/post/request_schema.json",
-      "title": "URL List Parcel Schema",
-      "description": "URL List profile parcel schema for POST request",
-      "type": "object",
-      "properties": {
-          "name": {
-              "type": "string",
-              "pattern": "^[^&<>! \"]+$",
-              "minLength": 1,
-              "maxLength": 32
-          },
-          "description": {
-              "type": "string"
-          },
-          "type": {
-              "type": "string",
-              "enum": [
-                  "urlallowed",
-                  "urlblocked"
-              ]
-          },
-          "data": {
-              "type": "object",
-              "properties": {
-                  "entries": {
-                      "description": "URL List",
-                      "type": "array",
-                      "maxItems": 64,
-                      "minItems": 1,
-                      "uniqueItems": true,
-                      "items": {
-                          "type": "object",
-                          "properties": {
-                              "pattern": {
-                                  "description": "valid url pattern",
-                                  "type": "object",
-                                  "properties": {
-                                      "optionType": {
-                                          "type": "string",
-                                          "enum": [
-                                              "global"
-                                          ]
-                                      },
-                                      "value": {
-                                          "type": "string",
-                                          "minLength": 1,
-                                          "maxLength": 240,
-                                          "pattern": "^[^*+].*"
-                                      }
-                                  },
-                                  "required": [
-                                      "optionType",
-                                      "value"
-                                  ],
-                                  "additionalProperties": false
-                              }
-                          },
-                          "required": [
-                              "pattern"
-                          ],
-                          "additionalProperties": false
-                      }
-                  }
-              },
-              "required": [
-                  "entries"
-              ],
-              "additionalProperties": false
-          },
-          "documentation": {
-              "description": "This is the documentation for POST request schema for URL List profile parcel",
-              "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
-              "details-2": "variable name should not be present if optionType value is NOT variable",
-              "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
-              "details-4": "when option Type is default, value should be present with given default value as specified in schema",
-              "examples": [
-                  {
-                      "data": {
-                          "entries": [
-                              {
-                                  "pattern": {
-                                      "optionType": "global",
-                                      "value": "www.google.com"
-                                  }
-                              },
-                              {
-                                  "pattern": {
-                                      "optionType": "global",
-                                      "value": "outlook.com"
-                                  }
-                              }
-                          ]
-                      },
-                      "name": "UrlList"
-                  }
-              ]
-          }
-      },
-      "required": [
-          "name",
-          "data",
-          "type"
-      ],
-      "not": {
-          "required": [
-              "documentation"
-          ]
-      },
-      "additionalProperties": false
-  }
+    "request": {
+        "$schema": "http://json-schema.org/draft/2019-09/schema",
+        "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/security-urllist/post/request_schema.json",
+        "title": "URL List Parcel Schema",
+        "description": "URL List profile parcel schema for POST request",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "pattern": "^[^&<>! \"]+$",
+                "minLength": 1,
+                "maxLength": 32
+            },
+            "description": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "urlallowed",
+                            "urlblocked"
+                        ]
+                    },
+                    "entries": {
+                        "description": "URL List",
+                        "type": "array",
+                        "maxItems": 64,
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "pattern": {
+                                    "description": "valid url pattern",
+                                    "type": "object",
+                                    "properties": {
+                                        "optionType": {
+                                            "type": "string",
+                                            "enum": [
+                                                "global"
+                                            ]
+                                        },
+                                        "value": {
+                                            "type": "string",
+                                            "minLength": 1,
+                                            "maxLength": 240,
+                                            "pattern": "^[^*+].*"
+                                        }
+                                    },
+                                    "required": [
+                                        "optionType",
+                                        "value"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            },
+                            "required": [
+                                "pattern"
+                            ],
+                            "additionalProperties": false
+                        }
+                    }
+                },
+                "required": [
+                    "type",
+                    "entries"
+                ],
+                "additionalProperties": false
+            },
+            "documentation": {
+                "description": "This is the documentation for POST request schema for URL List profile parcel",
+                "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+                "details-2": "variable name should not be present if optionType value is NOT variable",
+                "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+                "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+                "examples": [
+                    {
+                        "data": {
+                            "entries": [
+                                {
+                                    "pattern": {
+                                        "optionType": "global",
+                                        "value": "www.google.com"
+                                    }
+                                },
+                                {
+                                    "pattern": {
+                                        "optionType": "global",
+                                        "value": "outlook.com"
+                                    }
+                                }
+                            ]
+                        },
+                        "name": "SecurityUrlList"
+                    }
+                ]
+            },
+            "metadata": {
+                "minVManageVersion": "20.15.1"
+            }
+        },
+        "required": [
+            "name",
+            "data"
+        ],
+        "not": {
+            "required": [
+                "documentation",
+                "metadata"
+            ]
+        },
+        "additionalProperties": false
+    }
 }

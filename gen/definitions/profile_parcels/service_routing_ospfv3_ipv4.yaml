@@ -1,8 +1,8 @@
 ---
 name: Service Routing OSPFv3 IPv4
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/routing/ospfv3/ipv4
-minimum_version: 20.12.0
-test_tags: [SDWAN_2012]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 skip_minimum_test: true
 parcel_type: feature
 doc_category: Features - Service
@@ -90,14 +90,8 @@ attributes:
       exclude_test: true
       example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
     - model_name: translateRibMetric
-      tf_name: translate_rib_metric
-      type: Bool
-      description: Translate Rib Metric
-      example: true
       exclude_test: true
-      no_augment_config: true
-      default_value_present: true
-      default_value: false
+      example: true
       conditional_attribute:
         name: protocol
         value: omp
@@ -120,6 +114,10 @@ attributes:
     - model_name: areaType
       tf_name: area_type
       data_path: [areaTypeConfig]
+      no_augment_config: true
+      type: String
+      description: Set OSPFv3 area type
+      enum_values: ["stub", "nssa", "normal"]
       example: stub
     - model_name: noSummary
       data_path: [areaTypeConfig]
@@ -152,6 +150,10 @@ attributes:
       - model_name: authType
         tf_name: authentication_type
         data_path: [authenticationConfig]
+        no_augment_config: true
+        type: String
+        description: Set OSPF interface authentication configuration
+        enum_values: ["no-auth", "ipsec-sha1"]
         example: no-auth
       - model_name: spi
         tf_name: authentication_spi

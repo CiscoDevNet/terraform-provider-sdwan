@@ -232,16 +232,24 @@ type TransportRoutingBGPIpv4NeighborsAddressFamilies struct {
 }
 
 type TransportRoutingBGPIpv6NeighborsAddressFamilies struct {
-	FamilyType                  types.String `tfsdk:"family_type"`
-	MaxNumberOfPrefixes         types.Int64  `tfsdk:"max_number_of_prefixes"`
-	MaxNumberOfPrefixesVariable types.String `tfsdk:"max_number_of_prefixes_variable"`
-	Threshold                   types.Int64  `tfsdk:"threshold"`
-	ThresholdVariable           types.String `tfsdk:"threshold_variable"`
-	PolicyType                  types.String `tfsdk:"policy_type"`
-	RestartInterval             types.Int64  `tfsdk:"restart_interval"`
-	RestartIntervalVariable     types.String `tfsdk:"restart_interval_variable"`
-	InRoutePolicyId             types.String `tfsdk:"in_route_policy_id"`
-	OutRoutePolicyId            types.String `tfsdk:"out_route_policy_id"`
+	FamilyType                                types.String `tfsdk:"family_type"`
+	PolicyType                                types.String `tfsdk:"policy_type"`
+	RestartMaxNumberOfPrefixes                types.Int64  `tfsdk:"restart_max_number_of_prefixes"`
+	RestartMaxNumberOfPrefixesVariable        types.String `tfsdk:"restart_max_number_of_prefixes_variable"`
+	RestartThreshold                          types.Int64  `tfsdk:"restart_threshold"`
+	RestartThresholdVariable                  types.String `tfsdk:"restart_threshold_variable"`
+	RestartInterval                           types.Int64  `tfsdk:"restart_interval"`
+	RestartIntervalVariable                   types.String `tfsdk:"restart_interval_variable"`
+	WarningMessageMaxNumberOfPrefixes         types.Int64  `tfsdk:"warning_message_max_number_of_prefixes"`
+	WarningMessageMaxNumberOfPrefixesVariable types.String `tfsdk:"warning_message_max_number_of_prefixes_variable"`
+	WarningMessageThreshold                   types.Int64  `tfsdk:"warning_message_threshold"`
+	WarningMessageThresholdVariable           types.String `tfsdk:"warning_message_threshold_variable"`
+	DisablePeerMaxNumberOfPrefixes            types.Int64  `tfsdk:"disable_peer_max_number_of_prefixes"`
+	DisablePeerMaxNumberOfPrefixesVariable    types.String `tfsdk:"disable_peer_max_number_of_prefixes_variable"`
+	DisablePeerThreshold                      types.Int64  `tfsdk:"disable_peer_threshold"`
+	DisablePeerThresholdVariable              types.String `tfsdk:"disable_peer_threshold_variable"`
+	InRoutePolicyId                           types.String `tfsdk:"in_route_policy_id"`
+	OutRoutePolicyId                          types.String `tfsdk:"out_route_policy_id"`
 }
 
 // End of section. //template:end types
@@ -1168,35 +1176,6 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "familyType.value", childItem.FamilyType.ValueString())
 						}
 					}
-
-					if !childItem.MaxNumberOfPrefixesVariable.IsNull() {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.optionType", "variable")
-							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.value", childItem.MaxNumberOfPrefixesVariable.ValueString())
-						}
-					} else if !childItem.MaxNumberOfPrefixes.IsNull() {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.value", childItem.MaxNumberOfPrefixes.ValueInt64())
-						}
-					}
-
-					if !childItem.ThresholdVariable.IsNull() {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "variable")
-							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.ThresholdVariable.ValueString())
-						}
-					} else if childItem.Threshold.IsNull() {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "default")
-							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", 75)
-						}
-					} else {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.Threshold.ValueInt64())
-						}
-					}
 					if !childItem.PolicyType.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.policyType.optionType", "global")
@@ -1204,15 +1183,102 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 						}
 					}
 
+					if !childItem.RestartMaxNumberOfPrefixesVariable.IsNull() {
+						if true && childItem.PolicyType.ValueString() == "restart" {
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.value", childItem.RestartMaxNumberOfPrefixesVariable.ValueString())
+						}
+					} else if !childItem.RestartMaxNumberOfPrefixes.IsNull() {
+						if true && childItem.PolicyType.ValueString() == "restart" {
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.value", childItem.RestartMaxNumberOfPrefixes.ValueInt64())
+						}
+					}
+
+					if !childItem.RestartThresholdVariable.IsNull() {
+						if true && childItem.PolicyType.ValueString() == "restart" {
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.RestartThresholdVariable.ValueString())
+						}
+					} else if childItem.RestartThreshold.IsNull() {
+						if true && childItem.PolicyType.ValueString() == "restart" {
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "default")
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", 75)
+						}
+					} else {
+						if true && childItem.PolicyType.ValueString() == "restart" {
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.RestartThreshold.ValueInt64())
+						}
+					}
+
 					if !childItem.RestartIntervalVariable.IsNull() {
-						if true {
+						if true && childItem.PolicyType.ValueString() == "restart" {
 							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.restartInterval.optionType", "variable")
 							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.restartInterval.value", childItem.RestartIntervalVariable.ValueString())
 						}
 					} else if !childItem.RestartInterval.IsNull() {
-						if true {
+						if true && childItem.PolicyType.ValueString() == "restart" {
 							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.restartInterval.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.restartInterval.value", childItem.RestartInterval.ValueInt64())
+						}
+					}
+
+					if !childItem.WarningMessageMaxNumberOfPrefixesVariable.IsNull() {
+						if true && childItem.PolicyType.ValueString() == "warning-only" {
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.value", childItem.WarningMessageMaxNumberOfPrefixesVariable.ValueString())
+						}
+					} else if !childItem.WarningMessageMaxNumberOfPrefixes.IsNull() {
+						if true && childItem.PolicyType.ValueString() == "warning-only" {
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.value", childItem.WarningMessageMaxNumberOfPrefixes.ValueInt64())
+						}
+					}
+
+					if !childItem.WarningMessageThresholdVariable.IsNull() {
+						if true && childItem.PolicyType.ValueString() == "warning-only" {
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.WarningMessageThresholdVariable.ValueString())
+						}
+					} else if childItem.WarningMessageThreshold.IsNull() {
+						if true && childItem.PolicyType.ValueString() == "warning-only" {
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "default")
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", 75)
+						}
+					} else {
+						if true && childItem.PolicyType.ValueString() == "warning-only" {
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.WarningMessageThreshold.ValueInt64())
+						}
+					}
+
+					if !childItem.DisablePeerMaxNumberOfPrefixesVariable.IsNull() {
+						if true && childItem.PolicyType.ValueString() == "disable-peer" {
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.value", childItem.DisablePeerMaxNumberOfPrefixesVariable.ValueString())
+						}
+					} else if !childItem.DisablePeerMaxNumberOfPrefixes.IsNull() {
+						if true && childItem.PolicyType.ValueString() == "disable-peer" {
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.value", childItem.DisablePeerMaxNumberOfPrefixes.ValueInt64())
+						}
+					}
+
+					if !childItem.DisablePeerThresholdVariable.IsNull() {
+						if true && childItem.PolicyType.ValueString() == "disable-peer" {
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.DisablePeerThresholdVariable.ValueString())
+						}
+					} else if childItem.DisablePeerThreshold.IsNull() {
+						if true && childItem.PolicyType.ValueString() == "disable-peer" {
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "default")
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", 75)
+						}
+					} else {
+						if true && childItem.PolicyType.ValueString() == "disable-peer" {
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.DisablePeerThreshold.ValueInt64())
 						}
 					}
 					if !childItem.InRoutePolicyId.IsNull() {
@@ -2194,26 +2260,6 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 							cItem.FamilyType = types.StringValue(va.String())
 						}
 					}
-					cItem.MaxNumberOfPrefixes = types.Int64Null()
-					cItem.MaxNumberOfPrefixesVariable = types.StringNull()
-					if t := cv.Get("maxPrefixConfig.prefixNum.optionType"); t.Exists() {
-						va := cv.Get("maxPrefixConfig.prefixNum.value")
-						if t.String() == "variable" {
-							cItem.MaxNumberOfPrefixesVariable = types.StringValue(va.String())
-						} else if t.String() == "global" {
-							cItem.MaxNumberOfPrefixes = types.Int64Value(va.Int())
-						}
-					}
-					cItem.Threshold = types.Int64Null()
-					cItem.ThresholdVariable = types.StringNull()
-					if t := cv.Get("maxPrefixConfig.threshold.optionType"); t.Exists() {
-						va := cv.Get("maxPrefixConfig.threshold.value")
-						if t.String() == "variable" {
-							cItem.ThresholdVariable = types.StringValue(va.String())
-						} else if t.String() == "global" {
-							cItem.Threshold = types.Int64Value(va.Int())
-						}
-					}
 					cItem.PolicyType = types.StringNull()
 
 					if t := cv.Get("maxPrefixConfig.policyType.optionType"); t.Exists() {
@@ -2222,15 +2268,96 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 							cItem.PolicyType = types.StringValue(va.String())
 						}
 					}
+					cItem.RestartMaxNumberOfPrefixes = types.Int64Null()
+					cItem.RestartMaxNumberOfPrefixesVariable = types.StringNull()
+					if true && cItem.PolicyType.ValueString() == "restart" {
+						if t := cv.Get("maxPrefixConfig.prefixNum.optionType"); t.Exists() {
+							va := cv.Get("maxPrefixConfig.prefixNum.value")
+							if t.String() == "variable" {
+								cItem.RestartMaxNumberOfPrefixesVariable = types.StringValue(va.String())
+							} else if t.String() == "global" {
+								cItem.RestartMaxNumberOfPrefixes = types.Int64Value(va.Int())
+							}
+						}
+						cItem.PolicyType = types.StringValue("restart")
+					}
+					cItem.RestartThreshold = types.Int64Null()
+					cItem.RestartThresholdVariable = types.StringNull()
+					if true && cItem.PolicyType.ValueString() == "restart" {
+						if t := cv.Get("maxPrefixConfig.threshold.optionType"); t.Exists() {
+							va := cv.Get("maxPrefixConfig.threshold.value")
+							if t.String() == "variable" {
+								cItem.RestartThresholdVariable = types.StringValue(va.String())
+							} else if t.String() == "global" {
+								cItem.RestartThreshold = types.Int64Value(va.Int())
+							}
+						}
+						cItem.PolicyType = types.StringValue("restart")
+					}
 					cItem.RestartInterval = types.Int64Null()
 					cItem.RestartIntervalVariable = types.StringNull()
-					if t := cv.Get("maxPrefixConfig.restartInterval.optionType"); t.Exists() {
-						va := cv.Get("maxPrefixConfig.restartInterval.value")
-						if t.String() == "variable" {
-							cItem.RestartIntervalVariable = types.StringValue(va.String())
-						} else if t.String() == "global" {
-							cItem.RestartInterval = types.Int64Value(va.Int())
+					if true && cItem.PolicyType.ValueString() == "restart" {
+						if t := cv.Get("maxPrefixConfig.restartInterval.optionType"); t.Exists() {
+							va := cv.Get("maxPrefixConfig.restartInterval.value")
+							if t.String() == "variable" {
+								cItem.RestartIntervalVariable = types.StringValue(va.String())
+							} else if t.String() == "global" {
+								cItem.RestartInterval = types.Int64Value(va.Int())
+							}
 						}
+						cItem.PolicyType = types.StringValue("restart")
+					}
+					cItem.WarningMessageMaxNumberOfPrefixes = types.Int64Null()
+					cItem.WarningMessageMaxNumberOfPrefixesVariable = types.StringNull()
+					if true && cItem.PolicyType.ValueString() == "warning-only" {
+						if t := cv.Get("maxPrefixConfig.prefixNum.optionType"); t.Exists() {
+							va := cv.Get("maxPrefixConfig.prefixNum.value")
+							if t.String() == "variable" {
+								cItem.WarningMessageMaxNumberOfPrefixesVariable = types.StringValue(va.String())
+							} else if t.String() == "global" {
+								cItem.WarningMessageMaxNumberOfPrefixes = types.Int64Value(va.Int())
+							}
+						}
+						cItem.PolicyType = types.StringValue("warning-only")
+					}
+					cItem.WarningMessageThreshold = types.Int64Null()
+					cItem.WarningMessageThresholdVariable = types.StringNull()
+					if true && cItem.PolicyType.ValueString() == "warning-only" {
+						if t := cv.Get("maxPrefixConfig.threshold.optionType"); t.Exists() {
+							va := cv.Get("maxPrefixConfig.threshold.value")
+							if t.String() == "variable" {
+								cItem.WarningMessageThresholdVariable = types.StringValue(va.String())
+							} else if t.String() == "global" {
+								cItem.WarningMessageThreshold = types.Int64Value(va.Int())
+							}
+						}
+						cItem.PolicyType = types.StringValue("warning-only")
+					}
+					cItem.DisablePeerMaxNumberOfPrefixes = types.Int64Null()
+					cItem.DisablePeerMaxNumberOfPrefixesVariable = types.StringNull()
+					if true && cItem.PolicyType.ValueString() == "disable-peer" {
+						if t := cv.Get("maxPrefixConfig.prefixNum.optionType"); t.Exists() {
+							va := cv.Get("maxPrefixConfig.prefixNum.value")
+							if t.String() == "variable" {
+								cItem.DisablePeerMaxNumberOfPrefixesVariable = types.StringValue(va.String())
+							} else if t.String() == "global" {
+								cItem.DisablePeerMaxNumberOfPrefixes = types.Int64Value(va.Int())
+							}
+						}
+						cItem.PolicyType = types.StringValue("disable-peer")
+					}
+					cItem.DisablePeerThreshold = types.Int64Null()
+					cItem.DisablePeerThresholdVariable = types.StringNull()
+					if true && cItem.PolicyType.ValueString() == "disable-peer" {
+						if t := cv.Get("maxPrefixConfig.threshold.optionType"); t.Exists() {
+							va := cv.Get("maxPrefixConfig.threshold.value")
+							if t.String() == "variable" {
+								cItem.DisablePeerThresholdVariable = types.StringValue(va.String())
+							} else if t.String() == "global" {
+								cItem.DisablePeerThreshold = types.Int64Value(va.Int())
+							}
+						}
+						cItem.PolicyType = types.StringValue("disable-peer")
 					}
 					cItem.InRoutePolicyId = types.StringNull()
 
@@ -3232,26 +3359,6 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 					data.Ipv6Neighbors[i].AddressFamilies[ci].FamilyType = types.StringValue(va.String())
 				}
 			}
-			data.Ipv6Neighbors[i].AddressFamilies[ci].MaxNumberOfPrefixes = types.Int64Null()
-			data.Ipv6Neighbors[i].AddressFamilies[ci].MaxNumberOfPrefixesVariable = types.StringNull()
-			if t := cr.Get("maxPrefixConfig.prefixNum.optionType"); t.Exists() {
-				va := cr.Get("maxPrefixConfig.prefixNum.value")
-				if t.String() == "variable" {
-					data.Ipv6Neighbors[i].AddressFamilies[ci].MaxNumberOfPrefixesVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Ipv6Neighbors[i].AddressFamilies[ci].MaxNumberOfPrefixes = types.Int64Value(va.Int())
-				}
-			}
-			data.Ipv6Neighbors[i].AddressFamilies[ci].Threshold = types.Int64Null()
-			data.Ipv6Neighbors[i].AddressFamilies[ci].ThresholdVariable = types.StringNull()
-			if t := cr.Get("maxPrefixConfig.threshold.optionType"); t.Exists() {
-				va := cr.Get("maxPrefixConfig.threshold.value")
-				if t.String() == "variable" {
-					data.Ipv6Neighbors[i].AddressFamilies[ci].ThresholdVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Ipv6Neighbors[i].AddressFamilies[ci].Threshold = types.Int64Value(va.Int())
-				}
-			}
 			data.Ipv6Neighbors[i].AddressFamilies[ci].PolicyType = types.StringNull()
 
 			if t := cr.Get("maxPrefixConfig.policyType.optionType"); t.Exists() {
@@ -3260,14 +3367,88 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 					data.Ipv6Neighbors[i].AddressFamilies[ci].PolicyType = types.StringValue(va.String())
 				}
 			}
+			data.Ipv6Neighbors[i].AddressFamilies[ci].RestartMaxNumberOfPrefixes = types.Int64Null()
+			data.Ipv6Neighbors[i].AddressFamilies[ci].RestartMaxNumberOfPrefixesVariable = types.StringNull()
+			if true && data.Ipv6Neighbors[i].AddressFamilies[ci].PolicyType.ValueString() == "restart" {
+				if t := cr.Get("maxPrefixConfig.prefixNum.optionType"); t.Exists() {
+					va := cr.Get("maxPrefixConfig.prefixNum.value")
+					if t.String() == "variable" {
+						data.Ipv6Neighbors[i].AddressFamilies[ci].RestartMaxNumberOfPrefixesVariable = types.StringValue(va.String())
+					} else if t.String() == "global" {
+						data.Ipv6Neighbors[i].AddressFamilies[ci].RestartMaxNumberOfPrefixes = types.Int64Value(va.Int())
+					}
+				}
+			}
+			data.Ipv6Neighbors[i].AddressFamilies[ci].RestartThreshold = types.Int64Null()
+			data.Ipv6Neighbors[i].AddressFamilies[ci].RestartThresholdVariable = types.StringNull()
+			if true && data.Ipv6Neighbors[i].AddressFamilies[ci].PolicyType.ValueString() == "restart" {
+				if t := cr.Get("maxPrefixConfig.threshold.optionType"); t.Exists() {
+					va := cr.Get("maxPrefixConfig.threshold.value")
+					if t.String() == "variable" {
+						data.Ipv6Neighbors[i].AddressFamilies[ci].RestartThresholdVariable = types.StringValue(va.String())
+					} else if t.String() == "global" {
+						data.Ipv6Neighbors[i].AddressFamilies[ci].RestartThreshold = types.Int64Value(va.Int())
+					}
+				}
+			}
 			data.Ipv6Neighbors[i].AddressFamilies[ci].RestartInterval = types.Int64Null()
 			data.Ipv6Neighbors[i].AddressFamilies[ci].RestartIntervalVariable = types.StringNull()
-			if t := cr.Get("maxPrefixConfig.restartInterval.optionType"); t.Exists() {
-				va := cr.Get("maxPrefixConfig.restartInterval.value")
-				if t.String() == "variable" {
-					data.Ipv6Neighbors[i].AddressFamilies[ci].RestartIntervalVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Ipv6Neighbors[i].AddressFamilies[ci].RestartInterval = types.Int64Value(va.Int())
+			if true && data.Ipv6Neighbors[i].AddressFamilies[ci].PolicyType.ValueString() == "restart" {
+				if t := cr.Get("maxPrefixConfig.restartInterval.optionType"); t.Exists() {
+					va := cr.Get("maxPrefixConfig.restartInterval.value")
+					if t.String() == "variable" {
+						data.Ipv6Neighbors[i].AddressFamilies[ci].RestartIntervalVariable = types.StringValue(va.String())
+					} else if t.String() == "global" {
+						data.Ipv6Neighbors[i].AddressFamilies[ci].RestartInterval = types.Int64Value(va.Int())
+					}
+				}
+			}
+			data.Ipv6Neighbors[i].AddressFamilies[ci].WarningMessageMaxNumberOfPrefixes = types.Int64Null()
+			data.Ipv6Neighbors[i].AddressFamilies[ci].WarningMessageMaxNumberOfPrefixesVariable = types.StringNull()
+			if true && data.Ipv6Neighbors[i].AddressFamilies[ci].PolicyType.ValueString() == "warning-only" {
+				if t := cr.Get("maxPrefixConfig.prefixNum.optionType"); t.Exists() {
+					va := cr.Get("maxPrefixConfig.prefixNum.value")
+					if t.String() == "variable" {
+						data.Ipv6Neighbors[i].AddressFamilies[ci].WarningMessageMaxNumberOfPrefixesVariable = types.StringValue(va.String())
+					} else if t.String() == "global" {
+						data.Ipv6Neighbors[i].AddressFamilies[ci].WarningMessageMaxNumberOfPrefixes = types.Int64Value(va.Int())
+					}
+				}
+			}
+			data.Ipv6Neighbors[i].AddressFamilies[ci].WarningMessageThreshold = types.Int64Null()
+			data.Ipv6Neighbors[i].AddressFamilies[ci].WarningMessageThresholdVariable = types.StringNull()
+			if true && data.Ipv6Neighbors[i].AddressFamilies[ci].PolicyType.ValueString() == "warning-only" {
+				if t := cr.Get("maxPrefixConfig.threshold.optionType"); t.Exists() {
+					va := cr.Get("maxPrefixConfig.threshold.value")
+					if t.String() == "variable" {
+						data.Ipv6Neighbors[i].AddressFamilies[ci].WarningMessageThresholdVariable = types.StringValue(va.String())
+					} else if t.String() == "global" {
+						data.Ipv6Neighbors[i].AddressFamilies[ci].WarningMessageThreshold = types.Int64Value(va.Int())
+					}
+				}
+			}
+			data.Ipv6Neighbors[i].AddressFamilies[ci].DisablePeerMaxNumberOfPrefixes = types.Int64Null()
+			data.Ipv6Neighbors[i].AddressFamilies[ci].DisablePeerMaxNumberOfPrefixesVariable = types.StringNull()
+			if true && data.Ipv6Neighbors[i].AddressFamilies[ci].PolicyType.ValueString() == "disable-peer" {
+				if t := cr.Get("maxPrefixConfig.prefixNum.optionType"); t.Exists() {
+					va := cr.Get("maxPrefixConfig.prefixNum.value")
+					if t.String() == "variable" {
+						data.Ipv6Neighbors[i].AddressFamilies[ci].DisablePeerMaxNumberOfPrefixesVariable = types.StringValue(va.String())
+					} else if t.String() == "global" {
+						data.Ipv6Neighbors[i].AddressFamilies[ci].DisablePeerMaxNumberOfPrefixes = types.Int64Value(va.Int())
+					}
+				}
+			}
+			data.Ipv6Neighbors[i].AddressFamilies[ci].DisablePeerThreshold = types.Int64Null()
+			data.Ipv6Neighbors[i].AddressFamilies[ci].DisablePeerThresholdVariable = types.StringNull()
+			if true && data.Ipv6Neighbors[i].AddressFamilies[ci].PolicyType.ValueString() == "disable-peer" {
+				if t := cr.Get("maxPrefixConfig.threshold.optionType"); t.Exists() {
+					va := cr.Get("maxPrefixConfig.threshold.value")
+					if t.String() == "variable" {
+						data.Ipv6Neighbors[i].AddressFamilies[ci].DisablePeerThresholdVariable = types.StringValue(va.String())
+					} else if t.String() == "global" {
+						data.Ipv6Neighbors[i].AddressFamilies[ci].DisablePeerThreshold = types.Int64Value(va.Int())
+					}
 				}
 			}
 			data.Ipv6Neighbors[i].AddressFamilies[ci].InRoutePolicyId = types.StringNull()
