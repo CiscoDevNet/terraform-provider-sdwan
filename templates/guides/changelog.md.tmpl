@@ -47,7 +47,7 @@ description: |-
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_traffic_policy_policy` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_url_allow_list` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_url_block_list` to `20.15.0`
-- Fix problem where `sdwan_configuration_group` resource might fail to deploy configuration when CLI Add-on variable value is intiger, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/559)
+- Fix problem where `sdwan_configuration_group` resource might fail to deploy configuration when CLI Add-on variable value is an integer value, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/559)
 
 ## 0.8.1
 
@@ -553,4 +553,5 @@ description: |-
 ## 0.1.0 (July 23, 2021)
 
 - Initial Release
+
 
