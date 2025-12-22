@@ -166,13 +166,13 @@ func (r *ActivateCentralizedPolicyResource) Update(ctx context.Context, req reso
 	} else {
 		tflog.Debug(ctx, fmt.Sprintf("%s: Policy ID unchanged, repushing policy", plan.Id.ValueString()))
 
-		body, err := plan.getPushBody(ctx, r.client)
+		body, endpoint, err := plan.getPushBody(ctx, r.client)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to build attach payload for vsmart templates, got error: %s", err))
 			return
 		}
 
-		res, err := r.client.Post("/template/device/config/attachfeature", body)
+		res, err := r.client.Post(endpoint, body)
 		if strings.Contains(res.Get("error.message").String(), "Template edit request has expired") {
 			tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected to repush the policy. Reactivating the policy.", plan.Id.ValueString()))
 
