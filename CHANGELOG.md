@@ -1,6 +1,8 @@
 ## 0.8.2 (Unreleased)
 
 - Add `sdwan_system_ca_certificate_feature` resource and data source
+- Add `tunnel_bandwidth` attribute, which is automatically included when `tunnel_qos_mode` is set to `hub` in the `sdwan_cisco_vpn_interface_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/429)
+- Add `service` attribute, which is now automatically included when a `prefix` is configured under `ipv4_static_service_routes` in the `sdwan_cisco_vpn_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/429)
 - BREAKING CHANGE: Refactor `max_number_of_prefixes`, `restart_interval` and `threshold` parameters under `ipv6_neighbors` section of `sdwan_service_routing_bgp_feature` and `sdwan_transport_routing_bgp_feature` resource
 - Add default value for `administrative_distance` in `sdwan_transport_wan_vpn_feature`
 - Fix issue where `fallback` in `sdwan_traffic_data_policy_definition` configuration is not applied correctly, causing the GUI to display it as enabled even when disabled in Terraform

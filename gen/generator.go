@@ -274,6 +274,8 @@ type YamlConfigAttribute struct {
 	RequiresReplace         bool                           `yaml:"requires_replace"`
 	DynamicDefault          bool                           `yaml:"dynamic_default"`
 	PriorityOrderAlways     bool                           `yaml:"priority_order_always"`
+	IncludeDefaultOption    bool                           `yaml:"include_default_option"`
+	DefaultOption           string                         `yaml:"default_option"`
 }
 
 type YamlConfigConditionalAttribute struct {
@@ -714,6 +716,9 @@ func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result
 	}
 	if r.Get("dataType.default").Exists() {
 		attr.DefaultValue = r.Get("dataType.default").String()
+	}
+	if r.Get("defaultOption").Exists() {
+		attr.DefaultOption = r.Get("defaultOption").String()
 	}
 	types := r.Get("optionType").Array()
 	ignore := false
