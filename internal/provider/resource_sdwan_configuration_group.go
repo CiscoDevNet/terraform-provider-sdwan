@@ -247,7 +247,8 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 
 	// Create config group device variables
 	if len(plan.Devices) > 0 && plan.hasConfigGroupDeviceVariables(ctx) {
-		body = plan.toBodyConfigGroupDeviceVariables(ctx)
+		varTypes := r.getDeviceVariableTypes(ctx, plan.Id.ValueString())
+		body = plan.toBodyConfigGroupDeviceVariables(ctx, varTypes)
 
 		path := fmt.Sprintf("/v1/config-group/%v/device/variables/", plan.Id.ValueString())
 		res, err = r.client.Put(path, body)
@@ -270,6 +271,60 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+}
+
+// getDeviceVariableTypes fetches the variable schema from the API and extracts type information
+func (r *ConfigurationGroupResource) getDeviceVariableTypes(ctx context.Context, configGroupId string) map[string]string {
+	varTypes := make(map[string]string)
+
+	// Fetch schema from API
+	path := fmt.Sprintf("/v1/config-group/%v/device/variables/schema", configGroupId)
+	res, err := r.client.Get(path)
+	if err != nil {
+		// If schema fetch fails, return empty map (will fallback to auto-conversion logic)
+		tflog.Debug(ctx, fmt.Sprintf("Failed to fetch variable schema: %s", err))
+		return varTypes
+	}
+
+	// Parse schema to extract variable types
+	// Schema structure: array[0].variables[0].schema.properties.{varName}.properties.value.type
+
+	// Iterate over the top-level array
+	for _, item := range res.Array() {
+		// Get the variables array for this item
+		variablesArray := item.Get("variables")
+		if !variablesArray.Exists() {
+			continue
+		}
+
+		// Iterate over each variable object
+		for _, variable := range variablesArray.Array() {
+			// Get the schema properties
+			schemaProps := variable.Get("schema.properties")
+			if !schemaProps.Exists() {
+				continue
+			}
+
+			// Iterate over each property (variable name)
+			schemaProps.ForEach(func(varName, varSchema gjson.Result) bool {
+				if valueType := varSchema.Get("properties.value.type"); valueType.Exists() {
+					typeStr := valueType.String()
+					// For arrays, get the element type from items.type
+					if typeStr == "array" {
+						if itemsType := varSchema.Get("properties.value.items.type"); itemsType.Exists() {
+							typeStr = itemsType.String()
+						}
+					}
+					varTypes[varName.String()] = typeStr
+					tflog.Debug(ctx, fmt.Sprintf("Variable type mapping: %s -> %s", varName.String(), typeStr))
+				}
+				return true
+			})
+		}
+	}
+
+	tflog.Debug(ctx, fmt.Sprintf("Total variable types found: %d", len(varTypes)))
+	return varTypes
 }
 
 func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan ConfigurationGroup, state *ConfigurationGroup, diag *diag.Diagnostics, deleteOnError bool) {
@@ -319,7 +374,7 @@ func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan Configurat
 
 		// Wait for deploy action to complete
 		actionId := res.Get("parentTaskId").String()
-		err = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
+		err, _ = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
 		if err != nil {
 			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to config group devices, got error: %s", err))
 			if deleteOnError {
@@ -506,7 +561,8 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 
 	// Update config group device variables
 	if len(plan.Devices) > 0 && plan.hasConfigGroupDeviceVariables(ctx) {
-		body = plan.toBodyConfigGroupDeviceVariables(ctx)
+		varTypes := r.getDeviceVariableTypes(ctx, plan.Id.ValueString())
+		body = plan.toBodyConfigGroupDeviceVariables(ctx, varTypes)
 
 		path := fmt.Sprintf("/v1/config-group/%v/device/variables/", plan.Id.ValueString())
 		res, err = r.client.Put(path, body)

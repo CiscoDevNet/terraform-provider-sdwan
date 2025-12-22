@@ -36,9 +36,12 @@
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_policer` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_tloc_list` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_traffic_policy_policy` to `20.15.0`
+- Add warning when `sdwan_attach_feature_device_template` operations are skipped due to concurrent API activity
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_url_allow_list` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_url_block_list` to `20.15.0`
 - Add `topology_label` attribute to `sdwan_configuration_group`
+- Fix problem where `sdwan_activate_centralized_policy` fails to update when Controllers (vSmarts) are using CLI device template
+- Fix problem where `sdwan_configuration_group` resource might fail to deploy configuration when CLI Add-on variable value is an integer value, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/559)
 
 ## 0.8.1
 
@@ -544,3 +547,4 @@
 ## 0.1.0 (July 23, 2021)
 
 - Initial Release
+
