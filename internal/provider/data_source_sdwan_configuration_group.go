@@ -125,6 +125,10 @@ func (d *ConfigurationGroupDataSource) Schema(ctx context.Context, req datasourc
 							MarkdownDescription: "Device ID",
 							Computed:            true,
 						},
+						"topology_label": schema.StringAttribute{
+							MarkdownDescription: "Topology label for dual device configuration group (supported from version 20.18.1 onwards)",
+							Computed:            true,
+						},
 						"deploy": schema.BoolAttribute{
 							MarkdownDescription: "Deploy to device if enabled.",
 							Computed:            true,
@@ -220,7 +224,7 @@ func (d *ConfigurationGroupDataSource) Read(ctx context.Context, req datasource.
 		return
 	}
 
-	config.fromBodyConfigGroupDeviceVariables(ctx, res)
+	config.fromBodyConfigGroupDeviceVariables(ctx, res, nil)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 

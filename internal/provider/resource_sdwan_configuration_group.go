@@ -155,6 +155,10 @@ func (r *ConfigurationGroupResource) Schema(ctx context.Context, req resource.Sc
 							MarkdownDescription: helpers.NewAttributeDescription("Device ID").String,
 							Optional:            true,
 						},
+						"topology_label": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Topology label for dual device configuration group (supported from version 20.18.1 onwards)").String,
+							Optional:            true,
+						},
 						"deploy": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Deploy to device if enabled.").AddDefaultValueDescription("false").String,
 							Optional:            true,
@@ -408,7 +412,7 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 	state.fromBodyConfigGroup(ctx, res)
 
 	// Read config group device associations
-	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
+	if value := res.Get("numberOfDevices"); value.Exists() && value.Int() > 0 {
 		path := fmt.Sprintf("/v1/config-group/%v/device/associate/", state.Id.ValueString())
 		res, err = r.client.Get(path)
 		if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
@@ -434,7 +438,7 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 			return
 		}
 
-		state.fromBodyConfigGroupDeviceVariables(ctx, res)
+		state.fromBodyConfigGroupDeviceVariables(ctx, res, &oldState)
 	}
 
 	state.updateTfAttributes(ctx, &oldState)
@@ -478,30 +482,53 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 		return
 	}
 
-	var currentDeviceIds []string
+	// Build map of current devices with their topology labels
+	type currentDevice struct {
+		id            string
+		topologyLabel string
+	}
+	currentDevices := make(map[string]currentDevice)
 	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
 		value.ForEach(func(k, v gjson.Result) bool {
-			currentDeviceIds = append(currentDeviceIds, v.Get("id").String())
+			id := v.Get("id").String()
+			currentDevices[id] = currentDevice{
+				id:            id,
+				topologyLabel: v.Get("groupTopologyLabel").String(),
+			}
 			return true
 		})
 	}
 
 	associateBody, _ := sjson.Set("", "devices", []interface{}{})
 	for _, d := range plan.Devices {
-		found := false
-		for _, cdid := range currentDeviceIds {
-			if d.Id.ValueString() == cdid {
-				found = true
-				break
+		currentDev, exists := currentDevices[d.Id.ValueString()]
+		needsAssociate := false
+
+		if !exists {
+			// Device is not associated yet
+			needsAssociate = true
+		} else {
+			// Device exists, check if topology_label changed
+			planLabel := ""
+			if !d.TopologyLabel.IsNull() {
+				planLabel = d.TopologyLabel.ValueString()
+			}
+			if planLabel != currentDev.topologyLabel {
+				needsAssociate = true
 			}
 		}
-		if !found {
-			associateBody, _ = sjson.SetRaw(associateBody, "devices.-1", helpers.Must(sjson.Set("", "id", d.Id.ValueString())))
+
+		if needsAssociate {
+			itemBody := helpers.Must(sjson.Set("", "id", d.Id.ValueString()))
+			if !d.TopologyLabel.IsNull() {
+				itemBody = helpers.Must(sjson.Set(itemBody, "groupTopologyLabel", d.TopologyLabel.ValueString()))
+			}
+			associateBody, _ = sjson.SetRaw(associateBody, "devices.-1", itemBody)
 		}
 	}
 
 	disassociateBody, _ := sjson.Set("", "devices", []interface{}{})
-	for _, cdid := range currentDeviceIds {
+	for cdid := range currentDevices {
 		found := false
 		for _, d := range plan.Devices {
 			if d.Id.ValueString() == cdid {
