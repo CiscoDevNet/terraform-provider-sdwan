@@ -315,7 +315,7 @@ func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan Configurat
 
 		// Wait for deploy action to complete
 		actionId := res.Get("parentTaskId").String()
-		err = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
+		err, _ = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
 		if err != nil {
 			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to config group devices, got error: %s", err))
 			if deleteOnError {

@@ -187,7 +187,7 @@ func (r *ActivateCentralizedPolicyResource) Update(ctx context.Context, req reso
 		} else {
 			if resp.Diagnostics.WarningsCount() == 0 {
 				actionId := res.Get("id").String()
-				err = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
+				err, _ = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
 				if err != nil {
 					resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update activated policy, got error: %s", err))
 					return
@@ -221,7 +221,7 @@ func (r *ActivateCentralizedPolicyResource) Delete(ctx context.Context, req reso
 			return
 		}
 		actionId := res.Get("id").String()
-		err = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
+		err, _ = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to deactivate centralized policy, got error: %s", err))
 			return

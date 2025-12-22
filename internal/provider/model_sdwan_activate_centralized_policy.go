@@ -43,7 +43,7 @@ func (data ActivateCentralizedPolicy) activatePolicy(ctx context.Context, client
 		return err
 	}
 	actionId := res.Get("id").String()
-	err = helpers.WaitForActionToComplete(ctx, client, actionId, taskTimeout)
+	err, _ = helpers.WaitForActionToComplete(ctx, client, actionId, taskTimeout)
 	if err != nil {
 		return err
 	}
