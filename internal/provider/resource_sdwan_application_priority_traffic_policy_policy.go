@@ -208,14 +208,14 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
-									"source_data_ipv4_prefx_list_id": schema.StringAttribute{
+									"source_data_ipv4_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 										},
 									},
-									"source_data_ipv6_prefx_list_id": schema.StringAttribute{
+									"source_data_ipv6_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
 										Validators: []validator.String{
