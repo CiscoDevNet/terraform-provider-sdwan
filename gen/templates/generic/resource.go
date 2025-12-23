@@ -98,7 +98,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 			{{- end}}
 			{{- range  .Attributes}}
 			{{- if not .Value}}
-			"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
+			"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else if eq .Type "VersionString"}}String{{else}}{{.Type}}{{end}}Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}")
 					{{- if len .EnumValues -}}
 					.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
@@ -165,7 +165,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 					Attributes: map[string]schema.Attribute{
 						{{- range  .Attributes}}
 						{{- if not .Value}}
-						"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
+						"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else if eq .Type "VersionString"}}String{{else}}{{.Type}}{{end}}Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}")
 								{{- if len .EnumValues -}}
 								.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
@@ -232,7 +232,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 								Attributes: map[string]schema.Attribute{
 									{{- range  .Attributes}}
 									{{- if not .Value}}
-									"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
+									"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else if eq .Type "VersionString"}}String{{else}}{{.Type}}{{end}}Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}")
 											{{- if len .EnumValues -}}
 											.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
@@ -299,7 +299,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 											Attributes: map[string]schema.Attribute{
 												{{- range  .Attributes}}
 												{{- if not .Value}}
-												"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
+												"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else if eq .Type "VersionString"}}String{{else}}{{.Type}}{{end}}Attribute{
 													MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}")
 														{{- if len .EnumValues -}}
 														.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
