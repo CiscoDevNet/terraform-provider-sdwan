@@ -10,6 +10,7 @@ description: |-
 ## 0.8.2 (Unreleased)
 
 - Add `sdwan_system_ca_certificate_feature` resource and data source
+- BREAKING CHANGE: Fix typo in `sdwan_application_priority_traffic_policy_policy` resource and data source - rename `source_data_ipv4_prefx_list_id` to `source_data_ipv4_prefix_list_id` and `source_data_ipv6_prefx_list_id` to `source_data_ipv6_prefix_list_id`
 - BREAKING CHANGE: Refactor `max_number_of_prefixes`, `restart_interval` and `threshold` parameters under `ipv6_neighbors` section of `sdwan_service_routing_bgp_feature` and `sdwan_transport_routing_bgp_feature` resource
 - Add default value for `administrative_distance` in `sdwan_transport_wan_vpn_feature`
 - Fix issue where `fallback` in `sdwan_traffic_data_policy_definition` configuration is not applied correctly, causing the GUI to display it as enabled even when disabled in Terraform
