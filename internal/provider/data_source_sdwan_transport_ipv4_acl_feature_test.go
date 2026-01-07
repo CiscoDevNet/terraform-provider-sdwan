@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanTransportIPv4ACLProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012")
+	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_ipv4_acl_feature.test", "sequences.0.sequence_id", "1"))

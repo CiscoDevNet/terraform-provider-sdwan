@@ -2,7 +2,7 @@
 name: Service Routing EIGRP
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/routing/eigrp
 minimum_version: 20.12.0
-test_tags: [SDWAN_2012]
+test_tags: [SDWAN_2015_IN_PROGRESS]
 parcel_type: feature
 doc_category: Features - Service
 attributes:

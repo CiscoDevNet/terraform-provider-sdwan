@@ -25,7 +25,7 @@ resource "sdwan_system_logging_feature" "example" {
   ]
   ipv6_servers = [
     {
-      hostname_ip                   = "1.1.1.1"
+      hostname_ip                   = "2001:0:0:1::0"
       vpn                           = 512
       source_interface              = "GigabitEthernet1"
       priority                      = "informational"

@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanPolicyObjectUnifiedAdvancedInspectionProfileProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012")
+	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_unified_advanced_inspection_profile.test", "tls_decryption_action", "decrypt"))

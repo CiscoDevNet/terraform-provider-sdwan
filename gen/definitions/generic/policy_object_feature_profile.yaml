@@ -5,7 +5,7 @@ minimum_version: 20.15.0
 id_attribute: id
 res_description: SD-WAN manager supports only a single policy object feature profile to be configured. This resource will therefore either create a new one if none exists or update the existing one.
 doc_category: Feature Profiles
-test_tags: [SDWAN_2012]
+test_tags: [SDWAN_2015]
 attributes:
   - model_name: name
     response_model_name: profileName

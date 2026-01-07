@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanSystemLoggingProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012")
+	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "disk_enable", "true"))
@@ -45,7 +45,7 @@ func TestAccDataSourceSdwanSystemLoggingProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "ipv4_servers.0.tls_enable", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "ipv4_servers.0.tls_properties_custom_profile", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "ipv4_servers.0.tls_properties_profile", "test"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "ipv6_servers.0.hostname_ip", "1.1.1.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "ipv6_servers.0.hostname_ip", "2001:0:0:1::0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "ipv6_servers.0.vpn", "512"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "ipv6_servers.0.source_interface", "GigabitEthernet1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "ipv6_servers.0.priority", "informational"))
@@ -101,7 +101,7 @@ func testAccDataSourceSdwanSystemLoggingProfileParcelConfig() string {
 	config += `	  tls_properties_profile = "test"` + "\n"
 	config += `	}]` + "\n"
 	config += `	ipv6_servers = [{` + "\n"
-	config += `	  hostname_ip = "1.1.1.1"` + "\n"
+	config += `	  hostname_ip = "2001:0:0:1::0"` + "\n"
 	config += `	  vpn = 512` + "\n"
 	config += `	  source_interface = "GigabitEthernet1"` + "\n"
 	config += `	  priority = "informational"` + "\n"

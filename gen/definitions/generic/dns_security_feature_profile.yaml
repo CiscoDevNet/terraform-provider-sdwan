@@ -4,7 +4,7 @@ rest_endpoint: /v1/feature-profile/sdwan/dns-security/
 minimum_version: 20.15.0
 id_attribute: id
 doc_category: Feature Profiles
-test_tags: [SDWAN_2012]
+test_tags: [SDWAN_2015]
 attributes:
   - model_name: name
     response_model_name: profileName
