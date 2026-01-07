@@ -156,8 +156,8 @@ Read-Only:
 - `protocols` (Set of String) protocol (0-255) range or individual number separated by space
 - `saas_application_list_id` (String)
 - `service_areas` (Set of String) M365 Service Area
-- `source_data_ipv4_prefx_list_id` (String)
-- `source_data_ipv6_prefx_list_id` (String)
+- `source_data_ipv4_prefix_list_id` (String)
+- `source_data_ipv6_prefix_list_id` (String)
 - `source_ipv4_prefix` (String) Source Data IP Prefix
 - `source_ipv6_prefix` (String) Source Data IP Prefix
 - `source_ports` (Set of String) Source Port (0-65535) range or individual number separated by space

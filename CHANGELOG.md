@@ -3,6 +3,7 @@
 - Add `sdwan_system_ca_certificate_feature` resource and data source
 - Add `tunnel_bandwidth` attribute, which is automatically included when `tunnel_qos_mode` is set to `hub` in the `sdwan_cisco_vpn_interface_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/429)
 - Add `service` attribute, which is now automatically included when a `prefix` is configured under `ipv4_static_service_routes` in the `sdwan_cisco_vpn_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/429)
+- BREAKING CHANGE: Fix typo in `sdwan_application_priority_traffic_policy_policy` resource and data source - rename `source_data_ipv4_prefx_list_id` to `source_data_ipv4_prefix_list_id` and `source_data_ipv6_prefx_list_id` to `source_data_ipv6_prefix_list_id`
 - BREAKING CHANGE: Refactor `max_number_of_prefixes`, `restart_interval` and `threshold` parameters under `ipv6_neighbors` section of `sdwan_service_routing_bgp_feature` and `sdwan_transport_routing_bgp_feature` resource
 - Add default value for `administrative_distance` in `sdwan_transport_wan_vpn_feature`
 - Fix issue where `fallback` in `sdwan_traffic_data_policy_definition` configuration is not applied correctly, causing the GUI to display it as enabled even when disabled in Terraform
@@ -38,8 +39,12 @@
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_policer` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_tloc_list` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_traffic_policy_policy` to `20.15.0`
+- Add warning when `sdwan_attach_feature_device_template` operations are skipped due to concurrent API activity
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_url_allow_list` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_url_block_list` to `20.15.0`
+- Add `topology_label` attribute to `sdwan_configuration_group`
+- Fix problem where `sdwan_activate_centralized_policy` fails to update when Controllers (vSmarts) are using CLI device template
+- Fix problem where `sdwan_configuration_group` resource might fail to deploy configuration when CLI Add-on variable value is an integer value, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/559)
 
 ## 0.8.1
 
@@ -545,3 +550,4 @@
 ## 0.1.0 (July 23, 2021)
 
 - Initial Release
+

@@ -166,11 +166,11 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
-									"source_data_ipv4_prefx_list_id": schema.StringAttribute{
+									"source_data_ipv4_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
 									},
-									"source_data_ipv6_prefx_list_id": schema.StringAttribute{
+									"source_data_ipv6_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
 									},
