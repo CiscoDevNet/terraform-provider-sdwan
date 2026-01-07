@@ -166,13 +166,13 @@ func (r *ActivateCentralizedPolicyResource) Update(ctx context.Context, req reso
 	} else {
 		tflog.Debug(ctx, fmt.Sprintf("%s: Policy ID unchanged, repushing policy", plan.Id.ValueString()))
 
-		body, err := plan.getPushBody(ctx, r.client)
+		body, endpoint, err := plan.getPushBody(ctx, r.client)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to build attach payload for vsmart templates, got error: %s", err))
 			return
 		}
 
-		res, err := r.client.Post("/template/device/config/attachfeature", body)
+		res, err := r.client.Post(endpoint, body)
 		if strings.Contains(res.Get("error.message").String(), "Template edit request has expired") {
 			tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected to repush the policy. Reactivating the policy.", plan.Id.ValueString()))
 
@@ -187,7 +187,7 @@ func (r *ActivateCentralizedPolicyResource) Update(ctx context.Context, req reso
 		} else {
 			if resp.Diagnostics.WarningsCount() == 0 {
 				actionId := res.Get("id").String()
-				err = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
+				err, _ = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
 				if err != nil {
 					resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update activated policy, got error: %s", err))
 					return
@@ -221,7 +221,7 @@ func (r *ActivateCentralizedPolicyResource) Delete(ctx context.Context, req reso
 			return
 		}
 		actionId := res.Get("id").String()
-		err = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
+		err, _ = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to deactivate centralized policy, got error: %s", err))
 			return

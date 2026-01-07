@@ -274,6 +274,8 @@ type YamlConfigAttribute struct {
 	RequiresReplace         bool                           `yaml:"requires_replace"`
 	DynamicDefault          bool                           `yaml:"dynamic_default"`
 	PriorityOrderAlways     bool                           `yaml:"priority_order_always"`
+	IncludeDefaultOption    bool                           `yaml:"include_default_option"`
+	DefaultOption           string                         `yaml:"default_option"`
 }
 
 type YamlConfigConditionalAttribute struct {
@@ -369,9 +371,10 @@ func HasName(attributes []YamlConfigAttribute) bool {
 // Templating helper function to determine if attributes list contains one or more version attributes
 func HasVersionAttribute(attributes []YamlConfigAttribute) bool {
 	for _, attr := range attributes {
-		if attr.Type == "Version" || attr.Type == "Versions" {
+		switch attr.Type {
+		case "Version", "Versions", "VersionString":
 			return true
-		} else if attr.Type == "List" || attr.Type == "Set" {
+		case "List", "Set":
 			if HasVersionAttribute(attr.Attributes) {
 				return true
 			}
@@ -714,6 +717,9 @@ func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result
 	}
 	if r.Get("dataType.default").Exists() {
 		attr.DefaultValue = r.Get("dataType.default").String()
+	}
+	if r.Get("defaultOption").Exists() {
+		attr.DefaultOption = r.Get("defaultOption").String()
 	}
 	types := r.Get("optionType").Array()
 	ignore := false

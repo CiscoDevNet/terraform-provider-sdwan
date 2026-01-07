@@ -52,6 +52,8 @@ Type types.String `tfsdk:"type"`
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
 	{{toGoName .TfName}} types.Int64 `tfsdk:"{{.TfName}}"`
+{{- else if eq .Type "VersionString"}}
+	{{toGoName .TfName}} types.String `tfsdk:"{{.TfName}}"`
 {{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- end}}
@@ -73,6 +75,8 @@ type {{$name}}{{toGoName .TfName}} struct {
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
 	{{toGoName .TfName}} types.Int64 `tfsdk:"{{.TfName}}"`
+{{- else if eq .Type "VersionString"}}
+	{{toGoName .TfName}} types.String `tfsdk:"{{.TfName}}"`
 {{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- end}}
@@ -100,6 +104,8 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
 	{{toGoName .TfName}} types.Int64 `tfsdk:"{{.TfName}}"`
+{{- else if eq .Type "VersionString"}}
+	{{toGoName .TfName}} types.String `tfsdk:"{{.TfName}}"`
 {{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- end}}
@@ -131,6 +137,8 @@ type {{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} struct {
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
 	{{toGoName .TfName}} types.Int64 `tfsdk:"{{.TfName}}"`
+{{- else if eq .Type "VersionString"}}
+	{{toGoName .TfName}} types.String `tfsdk:"{{.TfName}}"`
 {{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- end}}
@@ -583,7 +591,7 @@ func (data *{{camelCase .Name}}) hasChanges(ctx context.Context, state *{{camelC
 func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{camelCase .Name}}) {
 	{{- range .Attributes}}
 	{{- $name := toGoName .TfName}}
-	{{- if or (eq .Type "Version") (eq .Type "Versions")}}
+	{{- if or (eq .Type "Version") (eq .Type "Versions") (eq .Type "VersionString")}}
 	data.{{toGoName .TfName}} = state.{{toGoName .TfName}}
 	{{- else if and (isNestedListSet .) (hasVersionAttribute .Attributes)}}
 	for i := range data.{{toGoName .TfName}} {
@@ -598,11 +606,11 @@ func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{ca
 		}
 		{{- range .Attributes}}
 		{{- $cname := toGoName .TfName}}
-		{{- if eq .Type "Version"}}
+		{{- if or (eq .Type "Version") (eq .Type "VersionString")}}
 		if stateIndex > -1 {
 			data.{{$name}}[i].{{toGoName .TfName}} = state.{{$name}}[stateIndex].{{toGoName .TfName}}
 		} else {
-			data.{{$name}}[i].{{toGoName .TfName}} = types.Int64Null()
+			data.{{$name}}[i].{{toGoName .TfName}} = types.{{if eq .Type "Version"}}Int64{{else}}String{{end}}Null()
 		}
 		{{- else if eq .Type "Versions"}}
 		if stateIndex > -1 && !state.{{$name}}[stateIndex].{{toGoName .TfName}}.IsNull() {
@@ -625,11 +633,11 @@ func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{ca
 			}
 			{{- range .Attributes}}
 			{{- $ccname := toGoName .TfName}}
-			{{- if eq .Type "Version"}}
+			{{- if or (eq .Type "Version") (eq .Type "VersionString")}}
 			if cStateIndex > -1 {
 				data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} = state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{toGoName .TfName}}
 			} else {
-				data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} = types.Int64Null()
+				data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} = types.{{if eq .Type "Version"}}Int64{{else}}String{{end}}Null()
 			}
 			{{- else if eq .Type "Versions"}}
 			if cStateIndex > -1 && !state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{toGoName .TfName}}.IsNull() {
@@ -651,11 +659,11 @@ func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{ca
 					}
 				}
 				{{- range .Attributes}}
-				{{- if eq .Type "Version"}}
+				{{- if or (eq .Type "Version") (eq .Type "VersionString")}}
 				if ccStateIndex > -1 {
 					data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}} = state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{$ccname}}[ccStateIndex].{{toGoName .TfName}}
 				} else {
-					data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}} = types.Int64Null()
+					data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}} = types.{{if eq .Type "Version"}}Int64{{else}}String{{end}}Null()
 				}
 				{{- else if eq .Type "Versions"}}
 				if ccStateIndex > -1 && !state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{$ccname}}[ccStateIndex].{{toGoName .TfName}}.IsNull() {
@@ -696,6 +704,11 @@ func (data *{{camelCase .Name}}) processImport(ctx context.Context) {
 	if data.{{toVersionName .TfName}} != types.StringNull() {
 		data.{{toGoName .TfName}} = types.Int64Value(0)
 	}
+	{{- else if eq .Type "VersionString"}}
+	if data.{{toVersionName .TfName}} != types.StringNull() {
+		count := strings.Count(strings.TrimSpace(data.{{toVersionName .TfName}}.ValueString()), " ") + 1
+		data.{{toGoName .TfName}} = types.StringValue(strings.TrimSpace(strings.Repeat("0 ", count)))
+	}
 	{{- else if eq .Type "Versions"}}
 	if !data.{{toVersionName .TfName}}.IsNull() {
 		data.{{toGoName .TfName}} = types.ListNull(types.StringType)
@@ -709,6 +722,11 @@ func (data *{{camelCase .Name}}) processImport(ctx context.Context) {
 		{{- if eq .Type "Version"}}
 		if data.{{$name}}[i].{{toVersionName .TfName}} != types.StringNull() {
 			data.{{$name}}[i].{{toGoName .TfName}} = types.Int64Value(0)
+		}
+		{{- else if eq .Type "VersionString"}}
+		if data.{{$name}}[i].{{toVersionName .TfName}} != types.StringNull() {
+			count := strings.Count(strings.TrimSpace(data.{{$name}}[i].{{toVersionName .TfName}}.ValueString()), " ") + 1
+			data.{{$name}}[i].{{toGoName .TfName}} = types.StringValue(strings.TrimSpace(strings.Repeat("0 ", count)))
 		}
 		{{- else if eq .Type "Versions"}}
 		if !data.{{$name}}[i].{{toVersionName .TfName}}.IsNull() {
@@ -724,6 +742,11 @@ func (data *{{camelCase .Name}}) processImport(ctx context.Context) {
 			if data.{{$name}}[i].{{$cname}}[ii].{{toVersionName .TfName}} != types.StringNull() {
 				data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} = types.Int64Value(0)
 			}
+			{{- else if eq .Type "VersionString"}}
+			if data.{{$name}}[i].{{$cname}}[ii].{{toVersionName .TfName}} != types.StringNull() {
+				count := strings.Count(strings.TrimSpace(data.{{$name}}[i].{{$cname}}[ii].{{toVersionName .TfName}}.ValueString()), " ") + 1
+				data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} = types.StringValue(strings.TrimSpace(strings.Repeat("0 ", count)))
+			}
 			{{- else if eq .Type "Versions"}}
 			if !data.{{$name}}[i].{{$cname}}[ii].{{toVersionName .TfName}}.IsNull() {
 				data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} = types.ListNull(types.StringType)
@@ -735,6 +758,11 @@ func (data *{{camelCase .Name}}) processImport(ctx context.Context) {
 				{{- if eq .Type "Version"}}
 				if data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toVersionName .TfName}} != types.StringNull() {
 					data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}} = types.Int64Value(0)
+				}
+				{{- else if eq .Type "VersionString"}}
+				if data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toVersionName .TfName}} != types.StringNull() {
+					count := strings.Count(strings.TrimSpace(data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toVersionName .TfName}}.ValueString()), " ") + 1
+					data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}} = types.StringValue(strings.TrimSpace(strings.Repeat("0 ", count)))
 				}
 				{{- else if eq .Type "Versions"}}
 				if !data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toVersionName .TfName}}.IsNull() {

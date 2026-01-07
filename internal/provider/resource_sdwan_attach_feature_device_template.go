@@ -125,10 +125,12 @@ func (r *AttachFeatureDeviceTemplateResource) Create(ctx context.Context, req re
 	}
 	if resp.Diagnostics.WarningsCount() == 0 {
 		actionId := res.Get("id").String()
-		err = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
+		err, warnings := helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to attach device template, got error: %s", err))
 			return
+		} else if warnings != "" {
+			resp.Diagnostics.AddWarning("Client Warning", warnings)
 		}
 	}
 
@@ -205,10 +207,12 @@ func (r *AttachFeatureDeviceTemplateResource) Update(ctx context.Context, req re
 
 		if resp.Diagnostics.WarningsCount() == 0 {
 			actionId := res.Get("id").String()
-			err = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
+			err, warnings := helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
 			if err != nil {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to attach device template, got error: %s", err))
 				return
+			} else if warnings != "" {
+				resp.Diagnostics.AddWarning("Client Warning", warnings)
 			}
 		}
 	}
@@ -235,10 +239,12 @@ func (r *AttachFeatureDeviceTemplateResource) Update(ctx context.Context, req re
 			return
 		}
 		if res.Get("id").Exists() {
-			err = helpers.WaitForActionToComplete(ctx, r.client, res.Get("id").String(), r.taskTimeout)
+			err, warnings := helpers.WaitForActionToComplete(ctx, r.client, res.Get("id").String(), r.taskTimeout)
 			if err != nil {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to detach device template, got error: %s", err))
 				return
+			} else if warnings != "" {
+				resp.Diagnostics.AddWarning("Client Warning", warnings)
 			}
 		}
 	}
@@ -267,10 +273,12 @@ func (r *AttachFeatureDeviceTemplateResource) Delete(ctx context.Context, req re
 		return
 	}
 	if res.Get("id").Exists() {
-		err = helpers.WaitForActionToComplete(ctx, r.client, res.Get("id").String(), r.taskTimeout)
+		err, warnings := helpers.WaitForActionToComplete(ctx, r.client, res.Get("id").String(), r.taskTimeout)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to detach device template, got error: %s", err))
 			return
+		} else if warnings != "" {
+			resp.Diagnostics.AddWarning("Client Warning", warnings)
 		}
 	}
 

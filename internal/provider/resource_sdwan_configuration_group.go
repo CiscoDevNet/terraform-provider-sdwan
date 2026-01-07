@@ -155,6 +155,10 @@ func (r *ConfigurationGroupResource) Schema(ctx context.Context, req resource.Sc
 							MarkdownDescription: helpers.NewAttributeDescription("Device ID").String,
 							Optional:            true,
 						},
+						"topology_label": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Topology label for dual device configuration group (supported from version 20.18.1 onwards)").String,
+							Optional:            true,
+						},
 						"deploy": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Deploy to device if enabled.").AddDefaultValueDescription("false").String,
 							Optional:            true,
@@ -243,7 +247,8 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 
 	// Create config group device variables
 	if len(plan.Devices) > 0 && plan.hasConfigGroupDeviceVariables(ctx) {
-		body = plan.toBodyConfigGroupDeviceVariables(ctx)
+		varTypes := r.getDeviceVariableTypes(ctx, plan.Id.ValueString())
+		body = plan.toBodyConfigGroupDeviceVariables(ctx, varTypes)
 
 		path := fmt.Sprintf("/v1/config-group/%v/device/variables/", plan.Id.ValueString())
 		res, err = r.client.Put(path, body)
@@ -266,6 +271,60 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+}
+
+// getDeviceVariableTypes fetches the variable schema from the API and extracts type information
+func (r *ConfigurationGroupResource) getDeviceVariableTypes(ctx context.Context, configGroupId string) map[string]string {
+	varTypes := make(map[string]string)
+
+	// Fetch schema from API
+	path := fmt.Sprintf("/v1/config-group/%v/device/variables/schema", configGroupId)
+	res, err := r.client.Get(path)
+	if err != nil {
+		// If schema fetch fails, return empty map (will fallback to auto-conversion logic)
+		tflog.Debug(ctx, fmt.Sprintf("Failed to fetch variable schema: %s", err))
+		return varTypes
+	}
+
+	// Parse schema to extract variable types
+	// Schema structure: array[0].variables[0].schema.properties.{varName}.properties.value.type
+
+	// Iterate over the top-level array
+	for _, item := range res.Array() {
+		// Get the variables array for this item
+		variablesArray := item.Get("variables")
+		if !variablesArray.Exists() {
+			continue
+		}
+
+		// Iterate over each variable object
+		for _, variable := range variablesArray.Array() {
+			// Get the schema properties
+			schemaProps := variable.Get("schema.properties")
+			if !schemaProps.Exists() {
+				continue
+			}
+
+			// Iterate over each property (variable name)
+			schemaProps.ForEach(func(varName, varSchema gjson.Result) bool {
+				if valueType := varSchema.Get("properties.value.type"); valueType.Exists() {
+					typeStr := valueType.String()
+					// For arrays, get the element type from items.type
+					if typeStr == "array" {
+						if itemsType := varSchema.Get("properties.value.items.type"); itemsType.Exists() {
+							typeStr = itemsType.String()
+						}
+					}
+					varTypes[varName.String()] = typeStr
+					tflog.Debug(ctx, fmt.Sprintf("Variable type mapping: %s -> %s", varName.String(), typeStr))
+				}
+				return true
+			})
+		}
+	}
+
+	tflog.Debug(ctx, fmt.Sprintf("Total variable types found: %d", len(varTypes)))
+	return varTypes
 }
 
 func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan ConfigurationGroup, state *ConfigurationGroup, diag *diag.Diagnostics, deleteOnError bool) {
@@ -315,7 +374,7 @@ func (r *ConfigurationGroupResource) Deploy(ctx context.Context, plan Configurat
 
 		// Wait for deploy action to complete
 		actionId := res.Get("parentTaskId").String()
-		err = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
+		err, _ = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
 		if err != nil {
 			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to config group devices, got error: %s", err))
 			if deleteOnError {
@@ -353,7 +412,7 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 	state.fromBodyConfigGroup(ctx, res)
 
 	// Read config group device associations
-	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
+	if value := res.Get("numberOfDevices"); value.Exists() && value.Int() > 0 {
 		path := fmt.Sprintf("/v1/config-group/%v/device/associate/", state.Id.ValueString())
 		res, err = r.client.Get(path)
 		if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
@@ -379,7 +438,7 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 			return
 		}
 
-		state.fromBodyConfigGroupDeviceVariables(ctx, res)
+		state.fromBodyConfigGroupDeviceVariables(ctx, res, &oldState)
 	}
 
 	state.updateTfAttributes(ctx, &oldState)
@@ -423,30 +482,53 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 		return
 	}
 
-	var currentDeviceIds []string
+	// Build map of current devices with their topology labels
+	type currentDevice struct {
+		id            string
+		topologyLabel string
+	}
+	currentDevices := make(map[string]currentDevice)
 	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
 		value.ForEach(func(k, v gjson.Result) bool {
-			currentDeviceIds = append(currentDeviceIds, v.Get("id").String())
+			id := v.Get("id").String()
+			currentDevices[id] = currentDevice{
+				id:            id,
+				topologyLabel: v.Get("groupTopologyLabel").String(),
+			}
 			return true
 		})
 	}
 
 	associateBody, _ := sjson.Set("", "devices", []interface{}{})
 	for _, d := range plan.Devices {
-		found := false
-		for _, cdid := range currentDeviceIds {
-			if d.Id.ValueString() == cdid {
-				found = true
-				break
+		currentDev, exists := currentDevices[d.Id.ValueString()]
+		needsAssociate := false
+
+		if !exists {
+			// Device is not associated yet
+			needsAssociate = true
+		} else {
+			// Device exists, check if topology_label changed
+			planLabel := ""
+			if !d.TopologyLabel.IsNull() {
+				planLabel = d.TopologyLabel.ValueString()
+			}
+			if planLabel != currentDev.topologyLabel {
+				needsAssociate = true
 			}
 		}
-		if !found {
-			associateBody, _ = sjson.SetRaw(associateBody, "devices.-1", helpers.Must(sjson.Set("", "id", d.Id.ValueString())))
+
+		if needsAssociate {
+			itemBody := helpers.Must(sjson.Set("", "id", d.Id.ValueString()))
+			if !d.TopologyLabel.IsNull() {
+				itemBody = helpers.Must(sjson.Set(itemBody, "groupTopologyLabel", d.TopologyLabel.ValueString()))
+			}
+			associateBody, _ = sjson.SetRaw(associateBody, "devices.-1", itemBody)
 		}
 	}
 
 	disassociateBody, _ := sjson.Set("", "devices", []interface{}{})
-	for _, cdid := range currentDeviceIds {
+	for cdid := range currentDevices {
 		found := false
 		for _, d := range plan.Devices {
 			if d.Id.ValueString() == cdid {
@@ -479,7 +561,8 @@ func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.Up
 
 	// Update config group device variables
 	if len(plan.Devices) > 0 && plan.hasConfigGroupDeviceVariables(ctx) {
-		body = plan.toBodyConfigGroupDeviceVariables(ctx)
+		varTypes := r.getDeviceVariableTypes(ctx, plan.Id.ValueString())
+		body = plan.toBodyConfigGroupDeviceVariables(ctx, varTypes)
 
 		path := fmt.Sprintf("/v1/config-group/%v/device/variables/", plan.Id.ValueString())
 		res, err = r.client.Put(path, body)

@@ -84,7 +84,7 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 			{{- end}}
 			{{- range  .Attributes}}
 			{{- if not .Value}}
-			"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
+			"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else if eq .Type "VersionString"}}String{{else}}{{.Type}}{{end}}Attribute{
 				MarkdownDescription: "{{.Description}}",
 				{{- if isListSet .}}
 				ElementType:         types.{{.ElementType}}Type,
@@ -103,7 +103,7 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 					Attributes: map[string]schema.Attribute{
 						{{- range  .Attributes}}
 						{{- if not .Value}}
-						"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
+						"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else if eq .Type "VersionString"}}String{{else}}{{.Type}}{{end}}Attribute{
 							MarkdownDescription: "{{.Description}}",
 							{{- if isListSet .}}
 							ElementType:         types.{{.ElementType}}Type,
@@ -116,7 +116,7 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 								Attributes: map[string]schema.Attribute{
 									{{- range  .Attributes}}
 									{{- if not .Value}}
-									"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
+									"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else if eq .Type "VersionString"}}String{{else}}{{.Type}}{{end}}Attribute{
 										MarkdownDescription: "{{.Description}}",
 										{{- if isListSet .}}
 										ElementType:         types.{{.ElementType}}Type,
@@ -129,7 +129,7 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 											Attributes: map[string]schema.Attribute{
 												{{- range  .Attributes}}
 												{{- if not .Value}}
-												"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
+												"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else if eq .Type "VersionString"}}String{{else}}{{.Type}}{{end}}Attribute{
 													MarkdownDescription: "{{.Description}}",
 													{{- if isListSet .}}
 													ElementType:         types.{{.ElementType}}Type,
