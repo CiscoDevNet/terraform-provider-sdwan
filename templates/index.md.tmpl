@@ -15,7 +15,9 @@ All resources and data sources have been tested with the following releases.
 | Platform        | Version |
 | --------------- | ------- |
 | Catalyst SD-WAN | 20.09   |
-| Catalyst SD-WAN | 20.12   |
+| Catalyst SD-WAN | 20.15   |
+
+**Please note**: We no longer support or test UX 2.0 resources against 20.12. We are currently in the process of bumping all UX 2.0 resources to 20.15 and not all resources have been bumped yet so please check the minimum supported version and the changelog until all resources are supported.
 
 ## Getting Started
 
