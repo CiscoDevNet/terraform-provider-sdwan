@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanDNSSecurityFeatureProfile(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_dns_security_feature_profile.test", "name", "DNS_SECURITY_FP_1"))

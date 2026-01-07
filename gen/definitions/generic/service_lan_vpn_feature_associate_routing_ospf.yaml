@@ -5,7 +5,7 @@ minimum_version: 20.12.0
 has_version: true
 id_attribute: parcelId
 doc_category: Features - Service
-test_tags: [SDWAN_2012]
+test_tags: [SDWAN_2015_IN_PROGRESS]
 attributes:
   - tf_name: feature_profile_id
     reference: true

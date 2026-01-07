@@ -2,7 +2,7 @@
 name: Policy Object Standard Community List
 rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/standard-community
 minimum_version: 20.12.0
-test_tags: [SDWAN_2012]
+test_tags: [SDWAN_2015_IN_PROGRESS]
 skip_minimum_test: true
 parcel_type: policy_object
 full_update: true
