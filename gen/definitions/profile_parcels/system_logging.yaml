@@ -61,7 +61,7 @@ attributes:
       - model_name: name
         tf_name: hostname_ip
         id: true
-        example: "1.1.1.1"
+        example: "2001:0:0:1::0"
       - model_name: vpn
         example: 512
       - model_name: sourceInterface

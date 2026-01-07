@@ -45,7 +45,7 @@ func TestAccDataSourceSdwanSystemLoggingProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "ipv4_servers.0.tls_enable", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "ipv4_servers.0.tls_properties_custom_profile", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "ipv4_servers.0.tls_properties_profile", "test"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "ipv6_servers.0.hostname_ip", "1.1.1.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "ipv6_servers.0.hostname_ip", "2001:0:0:1::0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "ipv6_servers.0.vpn", "512"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "ipv6_servers.0.source_interface", "GigabitEthernet1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "ipv6_servers.0.priority", "informational"))
@@ -101,7 +101,7 @@ func testAccDataSourceSdwanSystemLoggingProfileParcelConfig() string {
 	config += `	  tls_properties_profile = "test"` + "\n"
 	config += `	}]` + "\n"
 	config += `	ipv6_servers = [{` + "\n"
-	config += `	  hostname_ip = "1.1.1.1"` + "\n"
+	config += `	  hostname_ip = "2001:0:0:1::0"` + "\n"
 	config += `	  vpn = 512` + "\n"
 	config += `	  source_interface = "GigabitEthernet1"` + "\n"
 	config += `	  priority = "informational"` + "\n"
