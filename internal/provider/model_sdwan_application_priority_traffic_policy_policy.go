@@ -1993,93 +1993,70 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 					return true
 				},
 			)
-			for cci := range data.Sequences[i].Actions[ci].SlaClasses {
-				keys := [...]string{"slaName.refId", "preferredColor", "preferredColorGroup.refId", "strict", "fallbackToBestPath", "preferredRemoteColor", "remoteColorRestrict"}
-				keyValues := [...]string{data.Sequences[i].Actions[ci].SlaClasses[cci].SlaClassListId.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColors).ValueString(), data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColorGroupListId.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SlaClasses[cci].Strict.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].SlaClasses[cci].FallbackToBestPath.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredRemoteColors).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SlaClasses[cci].RemoteColorRestrict.ValueBool())}
-				keyValuesVariables := [...]string{"", "", "", "", "", "", ""}
+			// Use fromBody approach for sla_classes to avoid matching issues with sparse objects
+			if ccValue := cr.Get("slaClass"); ccValue.Exists() && len(ccValue.Array()) > 0 {
+				data.Sequences[i].Actions[ci].SlaClasses = make([]ApplicationPriorityTrafficPolicySequencesActionsSlaClasses, 0)
+				ccValue.ForEach(func(cck, ccr gjson.Result) bool {
+					ccItem := ApplicationPriorityTrafficPolicySequencesActionsSlaClasses{}
+					ccItem.SlaClassListId = types.StringNull()
 
-				var ccr gjson.Result
-				cr.Get("slaClass").ForEach(
-					func(_, v gjson.Result) bool {
-						found := false
-						for ik := range keys {
-							tt := v.Get(keys[ik] + ".optionType")
-							vv := v.Get(keys[ik] + ".value")
-							if tt.Exists() && vv.Exists() {
-								if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-									found = true
-									continue
-								} else if tt.String() == "default" {
-									continue
-								}
-								found = false
-								break
-							}
-							continue
+					if t := ccr.Get("slaName.refId.optionType"); t.Exists() {
+						va := ccr.Get("slaName.refId.value")
+						if t.String() == "global" {
+							ccItem.SlaClassListId = types.StringValue(va.String())
 						}
-						if found {
-							ccr = v
-							return false
+					}
+					ccItem.PreferredColors = types.SetNull(types.StringType)
+
+					if t := ccr.Get("preferredColor.optionType"); t.Exists() {
+						va := ccr.Get("preferredColor.value")
+						if t.String() == "global" {
+							ccItem.PreferredColors = helpers.GetStringSet(va.Array())
 						}
-						return true
-					},
-				)
-				data.Sequences[i].Actions[ci].SlaClasses[cci].SlaClassListId = types.StringNull()
-
-				if t := ccr.Get("slaName.refId.optionType"); t.Exists() {
-					va := ccr.Get("slaName.refId.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SlaClasses[cci].SlaClassListId = types.StringValue(va.String())
 					}
-				}
-				data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColors = types.SetNull(types.StringType)
+					ccItem.PreferredColorGroupListId = types.StringNull()
 
-				if t := ccr.Get("preferredColor.optionType"); t.Exists() {
-					va := ccr.Get("preferredColor.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColors = helpers.GetStringSet(va.Array())
+					if t := ccr.Get("preferredColorGroup.refId.optionType"); t.Exists() {
+						va := ccr.Get("preferredColorGroup.refId.value")
+						if t.String() == "global" {
+							ccItem.PreferredColorGroupListId = types.StringValue(va.String())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColorGroupListId = types.StringNull()
+					ccItem.Strict = types.BoolNull()
 
-				if t := ccr.Get("preferredColorGroup.refId.optionType"); t.Exists() {
-					va := ccr.Get("preferredColorGroup.refId.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColorGroupListId = types.StringValue(va.String())
+					if t := ccr.Get("strict.optionType"); t.Exists() {
+						va := ccr.Get("strict.value")
+						if t.String() == "global" {
+							ccItem.Strict = types.BoolValue(va.Bool())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SlaClasses[cci].Strict = types.BoolNull()
+					ccItem.FallbackToBestPath = types.BoolNull()
 
-				if t := ccr.Get("strict.optionType"); t.Exists() {
-					va := ccr.Get("strict.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SlaClasses[cci].Strict = types.BoolValue(va.Bool())
+					if t := ccr.Get("fallbackToBestPath.optionType"); t.Exists() {
+						va := ccr.Get("fallbackToBestPath.value")
+						if t.String() == "global" {
+							ccItem.FallbackToBestPath = types.BoolValue(va.Bool())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SlaClasses[cci].FallbackToBestPath = types.BoolNull()
+					ccItem.PreferredRemoteColors = types.SetNull(types.StringType)
 
-				if t := ccr.Get("fallbackToBestPath.optionType"); t.Exists() {
-					va := ccr.Get("fallbackToBestPath.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SlaClasses[cci].FallbackToBestPath = types.BoolValue(va.Bool())
+					if t := ccr.Get("preferredRemoteColor.optionType"); t.Exists() {
+						va := ccr.Get("preferredRemoteColor.value")
+						if t.String() == "global" {
+							ccItem.PreferredRemoteColors = helpers.GetStringSet(va.Array())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredRemoteColors = types.SetNull(types.StringType)
+					ccItem.RemoteColorRestrict = types.BoolNull()
 
-				if t := ccr.Get("preferredRemoteColor.optionType"); t.Exists() {
-					va := ccr.Get("preferredRemoteColor.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredRemoteColors = helpers.GetStringSet(va.Array())
+					if t := ccr.Get("remoteColorRestrict.optionType"); t.Exists() {
+						va := ccr.Get("remoteColorRestrict.value")
+						if t.String() == "global" {
+							ccItem.RemoteColorRestrict = types.BoolValue(va.Bool())
+						}
 					}
-				}
-				data.Sequences[i].Actions[ci].SlaClasses[cci].RemoteColorRestrict = types.BoolNull()
-
-				if t := ccr.Get("remoteColorRestrict.optionType"); t.Exists() {
-					va := ccr.Get("remoteColorRestrict.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SlaClasses[cci].RemoteColorRestrict = types.BoolValue(va.Bool())
-					}
-				}
+					data.Sequences[i].Actions[ci].SlaClasses = append(data.Sequences[i].Actions[ci].SlaClasses, ccItem)
+					return true
+				})
 			}
 			data.Sequences[i].Actions[ci].BackupSlaPreferredColors = types.SetNull(types.StringType)
 
