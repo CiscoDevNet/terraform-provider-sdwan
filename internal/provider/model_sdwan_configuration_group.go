@@ -584,3 +584,22 @@ func (data ConfigurationGroup) hasFeatureVersionChanges(ctx context.Context, sta
 	}
 	return false
 }
+
+func (data ConfigurationGroup) processImport(ctx context.Context) {
+	var elementsFeatureList []attr.Value
+	var countFeatureProfile int = 0
+
+	if !(data.FeatureProfileIds.IsNull() || data.FeatureProfileIds.IsUnknown()) {
+		countFeatureProfile = len(data.FeatureProfileIds.Elements())
+	}
+
+	if countFeatureProfile > 0 {
+		elementsFeatureList = make([]attr.Value, countFeatureProfile)
+		for i := 0; i < countFeatureProfile; i++ {
+			elementsFeatureList[i] = types.Int64Value(0)
+		}
+		data.FeatureVersions = types.ListValueMust(types.Int64Type, elementsFeatureList)
+	} else {
+		data.FeatureVersions = types.ListNull(types.StringType)
+	}
+}

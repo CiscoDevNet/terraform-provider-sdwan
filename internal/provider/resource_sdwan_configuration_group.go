@@ -271,6 +271,8 @@ func (r *ConfigurationGroupResource) Create(ctx context.Context, req resource.Cr
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 // getDeviceVariableTypes fetches the variable schema from the API and extracts type information
@@ -411,6 +413,15 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 
 	state.fromBodyConfigGroup(ctx, res)
 
+	imp, diags := helpers.IsFlagImporting(ctx, req)
+	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
+		return
+	}
+
+	if imp {
+		state.processImport(ctx)
+	}
+
 	// Read config group device associations
 	if value := res.Get("numberOfDevices"); value.Exists() && value.Int() > 0 {
 		path := fmt.Sprintf("/v1/config-group/%v/device/associate/", state.Id.ValueString())
@@ -447,6 +458,8 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 func (r *ConfigurationGroupResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {

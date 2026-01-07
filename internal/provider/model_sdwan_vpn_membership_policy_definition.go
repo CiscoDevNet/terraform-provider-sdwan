@@ -23,6 +23,7 @@ import (
 	"fmt"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -191,7 +192,20 @@ func (data *VPNMembershipPolicyDefinition) processImport(ctx context.Context) {
 			data.Sites[i].SiteListVersion = types.Int64Value(0)
 		}
 		if !data.Sites[i].VpnListIds.IsNull() {
-			data.Sites[i].VpnListVersions = types.ListNull(types.StringType)
+			var elementsVpnListVersions []attr.Value
+			var countVpnListVersions int = 0
+			if !(data.Sites[i].VpnListIds.IsNull() || data.Sites[i].VpnListIds.IsUnknown()) {
+				countVpnListVersions = len(data.Sites[i].VpnListIds.Elements())
+			}
+			if countVpnListVersions > 0 {
+				elementsVpnListVersions = make([]attr.Value, countVpnListVersions)
+				for i := 0; i < countVpnListVersions; i++ {
+					elementsVpnListVersions[i] = types.StringValue("0")
+				}
+				data.Sites[i].VpnListVersions = types.ListValueMust(types.StringType, elementsVpnListVersions)
+			} else {
+				data.Sites[i].VpnListVersions = types.ListNull(types.StringType)
+			}
 		}
 	}
 }
