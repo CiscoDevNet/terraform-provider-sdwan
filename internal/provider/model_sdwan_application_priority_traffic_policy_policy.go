@@ -1994,36 +1994,11 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 				},
 			)
 			for cci := range data.Sequences[i].Actions[ci].SlaClasses {
-				keys := [...]string{"slaName.refId", "preferredColor", "preferredColorGroup.refId", "strict", "fallbackToBestPath", "preferredRemoteColor", "remoteColorRestrict"}
-				keyValues := [...]string{data.Sequences[i].Actions[ci].SlaClasses[cci].SlaClassListId.ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColors).ValueString(), data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColorGroupListId.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SlaClasses[cci].Strict.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].SlaClasses[cci].FallbackToBestPath.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredRemoteColors).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SlaClasses[cci].RemoteColorRestrict.ValueBool())}
-				keyValuesVariables := [...]string{"", "", "", "", "", "", ""}
+				if len(cr.Get("slaClass").Array()) <= 0 {
+					continue
+				}
+				ccr := cr.Get("slaClass").Array()[0]
 
-				var ccr gjson.Result
-				cr.Get("slaClass").ForEach(
-					func(_, v gjson.Result) bool {
-						found := false
-						for ik := range keys {
-							tt := v.Get(keys[ik] + ".optionType")
-							vv := v.Get(keys[ik] + ".value")
-							if tt.Exists() && vv.Exists() {
-								if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-									found = true
-									continue
-								} else if tt.String() == "default" {
-									continue
-								}
-								found = false
-								break
-							}
-							continue
-						}
-						if found {
-							ccr = v
-							return false
-						}
-						return true
-					},
-				)
 				data.Sequences[i].Actions[ci].SlaClasses[cci].SlaClassListId = types.StringNull()
 
 				if t := ccr.Get("slaName.refId.optionType"); t.Exists() {
