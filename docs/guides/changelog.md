@@ -9,6 +9,7 @@ description: |-
 
 ## 0.8.2 (Unreleased)
 
+- Begins bumping UX 2.0 resources minimum support version from `20.12` to `20.15`. The process is ongoing and not all resources have been bumped to `20.15` yet so please check the minimum supported version and the changelog until all resources are supported.
 - Add `sdwan_system_ca_certificate_feature` resource and data source
 - Add `tunnel_bandwidth` attribute, which is automatically included when `tunnel_qos_mode` is set to `hub` in the `sdwan_cisco_vpn_interface_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/429)
 - Add `service` attribute, which is now automatically included when a `prefix` is configured under `ipv4_static_service_routes` in the `sdwan_cisco_vpn_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/429)
