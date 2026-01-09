@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## 0.8.2 (Unreleased)
+## 0.9.0
 
 - Begins bumping UX 2.0 resources minimum support version from `20.12` to `20.15`. The process is ongoing and not all resources have been bumped to `20.15` yet so please check the minimum supported version and the changelog until all resources are supported.
 - Add `sdwan_system_ca_certificate_feature` resource and data source
