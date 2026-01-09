@@ -1,0 +1,23 @@
+{
+  "_comment": "This is a placeholder file. It will be automatically replaced with the actual SBOM after the first release with SBOM generation enabled.",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:00000000-0000-0000-0000-000000000000",
+  "version": 1,
+  "metadata": {
+    "timestamp": "1970-01-01T00:00:00Z",
+    "tools": [
+      {
+        "vendor": "anchore",
+        "name": "syft",
+        "version": "placeholder"
+      }
+    ],
+    "component": {
+      "type": "application",
+      "name": "terraform-provider-sdwan",
+      "version": "0.0.0"
+    }
+  },
+  "components": []
+}

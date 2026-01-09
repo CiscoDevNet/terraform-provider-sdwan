@@ -1,0 +1,16 @@
+{
+  "_comment": "This is a placeholder file. It will be automatically replaced with the actual SBOM after the first release with SBOM generation enabled.",
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "terraform-provider-sdwan",
+  "documentNamespace": "https://github.com/CiscoDevNet/terraform-provider-sdwan",
+  "creationInfo": {
+    "created": "1970-01-01T00:00:00Z",
+    "creators": [
+      "Organization: CiscoDevNet",
+      "Tool: syft-placeholder"
+    ]
+  },
+  "packages": []
+}

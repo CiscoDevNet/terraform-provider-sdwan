@@ -46,6 +46,7 @@
 - Add `topology_label` attribute to `sdwan_configuration_group`
 - Fix problem where `sdwan_activate_centralized_policy` fails to update when Controllers (vSmarts) are using CLI device template
 - Fix problem where `sdwan_configuration_group` resource might fail to deploy configuration when CLI Add-on variable value is an integer value, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/559)
+- Add Software Bill of Materials (SBOM) generation in SPDX and CycloneDX formats during releases
 
 ## 0.8.1
 
