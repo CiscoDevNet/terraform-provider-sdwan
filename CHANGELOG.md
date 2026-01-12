@@ -1,3 +1,6 @@
+## 0.9.1 (Unreleased)
+- Fix idempotency issue with `sdwan_cisco_ospf_feature_template` properties `areas.stub` and `areas.nssa` causing unexpected updates after UI save operations and brownfield imports
+
 ## 0.9.0
 
 - Begins bumping UX 2.0 resources minimum support version from `20.12` to `20.15`. The process is ongoing and not all resources have been bumped to `20.15` yet so please check the minimum supported version and the changelog until all resources are supported.
