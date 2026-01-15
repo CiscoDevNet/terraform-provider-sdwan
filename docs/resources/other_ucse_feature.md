@@ -4,13 +4,13 @@ page_title: "sdwan_other_ucse_feature Resource - terraform-provider-sdwan"
 subcategory: "Features - Other"
 description: |-
   This resource can manage a Other UCSE Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_other_ucse_feature (Resource)
 
 This resource can manage a Other UCSE Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
