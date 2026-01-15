@@ -1,0 +1,186 @@
+---
+name: Embedded Security NGFW
+rest_endpoint: /v1/feature-profile/sdwan/embedded-security/%v/unified/ngfirewall
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
+parcel_type: policy
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_embedded_security_feature_profile.test.id
+  - model_name: defaultActionType
+    tf_name: default_actione
+    example: pass
+  - model_name: sequences
+    tf_name: rules
+    attributes: 
+    - model_name: sequenceId 
+      tf_name: sequence_id
+      example: 1
+    - model_name: sequenceName
+      tf_name: rule_name
+      example: Rule1
+    - model_name: baseAction
+      example: drop
+    - model_name: sequenceType
+      tf_name: rule_type
+      example: ngfirewall
+    - model_name: disableSequence
+      tf_name: disable_rule
+      example: false
+    - model_name: entries
+      tf_name: matches
+      data_path: [match]
+      attributes:
+      - model_name: refId
+        tf_name: source_data_prefix_list_ids
+        data_path: [sourceDataPrefixList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: destination_data_prefix_list_ids
+        data_path: [destinationDataPrefixList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: destination_fqdn_list_ids
+        data_path: [destinationFqdnList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: source_geo_location_list_ids
+        data_path: [sourceGeoLocationList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: destination_geo_location_list_ids
+        data_path: [destinationGeoLocationList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: source_port_list_ids
+        data_path: [sourcePortList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: destination_port_list_ids
+        data_path: [destinationPortList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: source_scalable_group_tag_list_ids
+        data_path: [sourceScalableGroupTagList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: destination_scalable_group_tag_list_ids
+        data_path: [destinationScalableGroupTagList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: source_indentity_list_ids
+        data_path: [sourceIdentityList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: protocol_name_list_ids
+        data_path: [protocolNameList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: app_list_ids
+        data_path: [appList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: flat_app_list_ids
+        data_path: [appListFlat]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: source_security_group_list_ids
+        data_path: [sourceSecurityGroup]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: destination_security_group_list_ids
+        data_path: [destinationSecurityGroup]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: ipv4Value
+        tf_name: source_data_prefixs
+        data_path: [sourceIp]
+        example: 10.0.0.2/12
+        exclude_test: true
+      - model_name: ipv4Value
+        tf_name: destination_data_prefixs
+        data_path: [destinationIp]
+        exclude_test: true
+        example: 10.0.0.3/12
+      - model_name: fqdnValue
+        tf_name: destination_fqdns
+        data_path: [destinationFqdn]
+        exclude_test: true
+        example: cisco.com
+      - model_name: portValue
+        tf_name: source_ports
+        data_path: [sourcePort]
+        example: 123
+      - model_name: portValue
+        tf_name: destination_ports
+        data_path: [destinationPort]
+        exclude_test: true
+        example: 234
+      - model_name: sourceGeoLocation
+        tf_name: source_geo_locations
+        exclude_test: true
+        example: EU
+      - model_name: destinationGeoLocation
+        tf_name: destination_geo_locations
+        exclude_test: true
+        example: EU
+      - model_name: sourceIdentityUser
+        tf_name: source_identity_users
+        exclude_test: true
+        example: example
+      - model_name: sourceIdentityUsergroup
+        tf_name: source_identity_usergroups
+        exclude_test: true
+        example: example
+      - model_name: app
+        tf_name: applications
+        exclude_test: true
+        example: example
+      - model_name: appFamily
+        tf_name: application_families
+        exclude_test: true
+        example: example
+      - model_name: protocol
+        tf_name: protocols
+        exclude_test: true
+        example: 255
+      - model_name: protocolName
+        tf_name: protocol_names
+        exclude_test: true
+        example: 255
+    - model_name: actions
+      attributes:
+      - model_name: type
+        example: log
+      - model_name: parameter
+        example: true
+      - model_name: refId
+        tf_name: parameter_id
+        data_path: [parameter]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+
+test_prerequisites: |
+  resource "sdwan_embedded_security_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }

@@ -819,6 +819,19 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		}
 	}
 
+	if model.Get("oneOf").Exists() && path == "" {
+		index := 0
+		model.Get("oneOf").ForEach(func(k, v gjson.Result) bool {
+			if v.Get(fmt.Sprintf("properties.%s", attr.ModelName)).Exists() {
+				path += fmt.Sprintf("%v.properties.", index)
+				prefix = "oneOf."
+				return false // stop iterating
+			}
+			index += 1
+			return true // keep iterating
+		})
+	}
+
 	path += attr.ModelName
 
 	r := model.Get(prefix + path)
