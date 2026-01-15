@@ -113,30 +113,30 @@ func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Conte
 				Optional:            true,
 			},
 			"authentication_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set authentication type, Attribute conditional on `requires_authentication` being equal to `true`").AddStringEnumDescription("pap", "chap", "pap_chap").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set authentication type, Attribute conditional on `requires_authentication` equal to `true`").AddStringEnumDescription("pap", "chap", "pap_chap").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("pap", "chap", "pap_chap"),
 				},
 			},
 			"authentication_type_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `requires_authentication` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `requires_authentication` equal to `true`").String,
 				Optional:            true,
 			},
 			"profile_username": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set the profile username, Attribute conditional on `requires_authentication` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set the profile username, Attribute conditional on `requires_authentication` equal to `true`").String,
 				Optional:            true,
 			},
 			"profile_username_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `requires_authentication` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `requires_authentication` equal to `true`").String,
 				Optional:            true,
 			},
 			"profile_password": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set the profile password, Attribute conditional on `requires_authentication` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set the profile password, Attribute conditional on `requires_authentication` equal to `true`").String,
 				Optional:            true,
 			},
 			"profile_password_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `requires_authentication` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `requires_authentication` equal to `true`").String,
 				Optional:            true,
 			},
 			"packet_data_network_type": schema.StringAttribute{

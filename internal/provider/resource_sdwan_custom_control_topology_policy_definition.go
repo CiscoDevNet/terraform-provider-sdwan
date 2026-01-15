@@ -147,7 +147,7 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 										},
 									},
 									"color_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Color list ID, Attribute conditional on `type` being equal to `colorList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Color list ID, Attribute conditional on `type` equal to `colorList`").String,
 										Optional:            true,
 									},
 									"color_list_version": schema.Int64Attribute{
@@ -155,7 +155,7 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 										Optional:            true,
 									},
 									"community_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Community list ID, Attribute conditional on `type` being equal to `community`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Community list ID, Attribute conditional on `type` equal to `community`").String,
 										Optional:            true,
 									},
 									"community_list_version": schema.Int64Attribute{
@@ -163,7 +163,7 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 										Optional:            true,
 									},
 									"expanded_community_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Expanded community list ID, Attribute conditional on `type` being equal to `expandedCommunity`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Expanded community list ID, Attribute conditional on `type` equal to `expandedCommunity`").String,
 										Optional:            true,
 									},
 									"expanded_community_list_version": schema.Int64Attribute{
@@ -171,32 +171,32 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 										Optional:            true,
 									},
 									"omp_tag": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("OMP tag, Attribute conditional on `type` being equal to `ompTag`").AddIntegerRangeDescription(0, 4294967295).String,
+										MarkdownDescription: helpers.NewAttributeDescription("OMP tag, Attribute conditional on `type` equal to `ompTag`").AddIntegerRangeDescription(0, 4294967295).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 4294967295),
 										},
 									},
 									"origin": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Origin, Attribute conditional on `type` being equal to `origin`").AddStringEnumDescription("igp", "egp", "incomplete", "aggregrate", "bgp", "bgp-external", "bgp-internal", "connected", "eigrp", "ospf", "ospf-inter-area", "ospf-intra-area", "ospf-external1", "ospf-external2", "rip", "static", "eigrp-summary", "eigrp-internal", "eigrp-external", "lisp", "nat-dia", "natpool", "isis", "isis-level1", "isis-level2").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Origin, Attribute conditional on `type` equal to `origin`").AddStringEnumDescription("igp", "egp", "incomplete", "aggregrate", "bgp", "bgp-external", "bgp-internal", "connected", "eigrp", "ospf", "ospf-inter-area", "ospf-intra-area", "ospf-external1", "ospf-external2", "rip", "static", "eigrp-summary", "eigrp-internal", "eigrp-external", "lisp", "nat-dia", "natpool", "isis", "isis-level1", "isis-level2").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("igp", "egp", "incomplete", "aggregrate", "bgp", "bgp-external", "bgp-internal", "connected", "eigrp", "ospf", "ospf-inter-area", "ospf-intra-area", "ospf-external1", "ospf-external2", "rip", "static", "eigrp-summary", "eigrp-internal", "eigrp-external", "lisp", "nat-dia", "natpool", "isis", "isis-level1", "isis-level2"),
 										},
 									},
 									"originator": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Originator IP, Attribute conditional on `type` being equal to `originator`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Originator IP, Attribute conditional on `type` equal to `originator`").String,
 										Optional:            true,
 									},
 									"preference": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Preference, Attribute conditional on `type` being equal to `preference`").AddIntegerRangeDescription(0, 4294967295).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Preference, Attribute conditional on `type` equal to `preference`").AddIntegerRangeDescription(0, 4294967295).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 4294967295),
 										},
 									},
 									"site_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Site list ID, Attribute conditional on `type` being equal to `siteList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Site list ID, Attribute conditional on `type` equal to `siteList`").String,
 										Optional:            true,
 									},
 									"site_list_version": schema.Int64Attribute{
@@ -204,14 +204,14 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 										Optional:            true,
 									},
 									"path_type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Path type, Attribute conditional on `type` being equal to `pathType`").AddStringEnumDescription("hierarchical-path", "direct-path", "transport-gateway-path").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Path type, Attribute conditional on `type` equal to `pathType`").AddStringEnumDescription("hierarchical-path", "direct-path", "transport-gateway-path").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("hierarchical-path", "direct-path", "transport-gateway-path"),
 										},
 									},
 									"tloc_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("TLOC list ID, Attribute conditional on `type` being equal to `tlocList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("TLOC list ID, Attribute conditional on `type` equal to `tlocList`").String,
 										Optional:            true,
 									},
 									"tloc_list_version": schema.Int64Attribute{
@@ -219,7 +219,7 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 										Optional:            true,
 									},
 									"vpn_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("VPN list ID, Attribute conditional on `type` being equal to `vpnList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("VPN list ID, Attribute conditional on `type` equal to `vpnList`").String,
 										Optional:            true,
 									},
 									"vpn_list_version": schema.Int64Attribute{
@@ -227,7 +227,7 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 										Optional:            true,
 									},
 									"prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Prefix list ID, Attribute conditional on `type` being equal to `prefixList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Prefix list ID, Attribute conditional on `type` equal to `prefixList`").String,
 										Optional:            true,
 									},
 									"prefix_list_version": schema.Int64Attribute{
@@ -235,71 +235,71 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 										Optional:            true,
 									},
 									"vpn_id": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("VPN ID, Attribute conditional on `type` being equal to `vpn`").AddIntegerRangeDescription(0, 65536).String,
+										MarkdownDescription: helpers.NewAttributeDescription("VPN ID, Attribute conditional on `type` equal to `vpn`").AddIntegerRangeDescription(0, 65536).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 65536),
 										},
 									},
 									"tloc_ip": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("TLOC IP address, Attribute conditional on `type` being equal to `tloc`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("TLOC IP address, Attribute conditional on `type` equal to `tloc`").String,
 										Optional:            true,
 									},
 									"tloc_color": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("TLOC color, Attribute conditional on `type` being equal to `tloc`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("TLOC color, Attribute conditional on `type` equal to `tloc`").String,
 										Optional:            true,
 									},
 									"tloc_encapsulation": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("TLOC encapsulation, Attribute conditional on `type` being equal to `tloc`").AddStringEnumDescription("ipsec", "gre").String,
+										MarkdownDescription: helpers.NewAttributeDescription("TLOC encapsulation, Attribute conditional on `type` equal to `tloc`").AddStringEnumDescription("ipsec", "gre").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("ipsec", "gre"),
 										},
 									},
 									"site_id": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Site ID, Attribute conditional on `type` being equal to `siteId`").AddIntegerRangeDescription(0, 4294967295).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Site ID, Attribute conditional on `type` equal to `siteId`").AddIntegerRangeDescription(0, 4294967295).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 4294967295),
 										},
 									},
 									"carrier": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Carrier, Attribute conditional on `type` being equal to `carrier`").AddStringEnumDescription("default", "carrier1", "carrier2", "carrier3", "carrier4", "carrier5", "carrier6", "carrier7", "carrier8").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Carrier, Attribute conditional on `type` equal to `carrier`").AddStringEnumDescription("default", "carrier1", "carrier2", "carrier3", "carrier4", "carrier5", "carrier6", "carrier7", "carrier8").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("default", "carrier1", "carrier2", "carrier3", "carrier4", "carrier5", "carrier6", "carrier7", "carrier8"),
 										},
 									},
 									"domain_id": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Domain ID, Attribute conditional on `type` being equal to `domainId`").AddIntegerRangeDescription(0, 4294967295).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Domain ID, Attribute conditional on `type` equal to `domainId`").AddIntegerRangeDescription(0, 4294967295).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 4294967295),
 										},
 									},
 									"group_id": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Group ID, Attribute conditional on `type` being equal to `groupId`").AddIntegerRangeDescription(0, 4294967295).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Group ID, Attribute conditional on `type` equal to `groupId`").AddIntegerRangeDescription(0, 4294967295).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 4294967295),
 										},
 									},
 									"region_id": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Region ID, Attribute conditional on `type` being equal to `regionId`").AddIntegerRangeDescription(0, 63).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Region ID, Attribute conditional on `type` equal to `regionId`").AddIntegerRangeDescription(0, 63).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 63),
 										},
 									},
 									"role": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Role, Attribute conditional on `type` being equal to `role`").AddStringEnumDescription("border-router", "edge-router").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Role, Attribute conditional on `type` equal to `role`").AddStringEnumDescription("border-router", "edge-router").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("border-router", "edge-router"),
 										},
 									},
 									"region_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Region list ID, Attribute conditional on `type` being equal to `regionList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Region list ID, Attribute conditional on `type` equal to `regionList`").String,
 										Optional:            true,
 									},
 								},
@@ -318,7 +318,7 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 										},
 									},
 									"set_parameters": schema.ListNestedAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("List of set parameters, Attribute conditional on `type` being equal to `set`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("List of set parameters, Attribute conditional on `type` equal to `set`").String,
 										Optional:            true,
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
@@ -330,7 +330,7 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 													},
 												},
 												"tloc_list_id": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("TLOC list ID, Attribute conditional on `type` being equal to `tlocList`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("TLOC list ID, Attribute conditional on `type` equal to `tlocList`").String,
 													Optional:            true,
 												},
 												"tloc_list_version": schema.Int64Attribute{
@@ -338,65 +338,65 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 													Optional:            true,
 												},
 												"tloc_ip": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("TLOC IP address, Attribute conditional on `type` being equal to `tloc`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("TLOC IP address, Attribute conditional on `type` equal to `tloc`").String,
 													Optional:            true,
 												},
 												"tloc_color": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("TLOC color, Attribute conditional on `type` being equal to `tloc`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("TLOC color, Attribute conditional on `type` equal to `tloc`").String,
 													Optional:            true,
 												},
 												"tloc_encapsulation": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("TLOC encapsulation, Attribute conditional on `type` being equal to `tloc`").AddStringEnumDescription("ipsec", "gre").String,
+													MarkdownDescription: helpers.NewAttributeDescription("TLOC encapsulation, Attribute conditional on `type` equal to `tloc`").AddStringEnumDescription("ipsec", "gre").String,
 													Optional:            true,
 													Validators: []validator.String{
 														stringvalidator.OneOf("ipsec", "gre"),
 													},
 												},
 												"tloc_action": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("TLOC action, Attribute conditional on `type` being equal to `tlocAction`").AddStringEnumDescription("strict", "primary", "backup", "ecmp").String,
+													MarkdownDescription: helpers.NewAttributeDescription("TLOC action, Attribute conditional on `type` equal to `tlocAction`").AddStringEnumDescription("strict", "primary", "backup", "ecmp").String,
 													Optional:            true,
 													Validators: []validator.String{
 														stringvalidator.OneOf("strict", "primary", "backup", "ecmp"),
 													},
 												},
 												"preference": schema.Int64Attribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Preference, Attribute conditional on `type` being equal to `preference`").AddIntegerRangeDescription(0, 4294967295).String,
+													MarkdownDescription: helpers.NewAttributeDescription("Preference, Attribute conditional on `type` equal to `preference`").AddIntegerRangeDescription(0, 4294967295).String,
 													Optional:            true,
 													Validators: []validator.Int64{
 														int64validator.Between(0, 4294967295),
 													},
 												},
 												"omp_tag": schema.Int64Attribute{
-													MarkdownDescription: helpers.NewAttributeDescription("OMP tag, Attribute conditional on `type` being equal to `ompTag`").AddIntegerRangeDescription(0, 4294967295).String,
+													MarkdownDescription: helpers.NewAttributeDescription("OMP tag, Attribute conditional on `type` equal to `ompTag`").AddIntegerRangeDescription(0, 4294967295).String,
 													Optional:            true,
 													Validators: []validator.Int64{
 														int64validator.Between(0, 4294967295),
 													},
 												},
 												"community": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Community value, e.g. `1000:10000` or `internet` or `local-AS`, Attribute conditional on `type` being equal to `community`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Community value, e.g. `1000:10000` or `internet` or `local-AS`, Attribute conditional on `type` equal to `community`").String,
 													Optional:            true,
 												},
 												"community_additive": schema.BoolAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Community additive, Attribute conditional on `type` being equal to `communityAdditive`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Community additive, Attribute conditional on `type` equal to `communityAdditive`").String,
 													Optional:            true,
 												},
 												"service_type": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Service type, Attribute conditional on `type` being equal to `service`").AddStringEnumDescription("FW", "IDP", "IDS", "netsvc1", "netsvc2", "netsvc3", "netsvc4", "netsvc5").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Service type, Attribute conditional on `type` equal to `service`").AddStringEnumDescription("FW", "IDP", "IDS", "netsvc1", "netsvc2", "netsvc3", "netsvc4", "netsvc5").String,
 													Optional:            true,
 													Validators: []validator.String{
 														stringvalidator.OneOf("FW", "IDP", "IDS", "netsvc1", "netsvc2", "netsvc3", "netsvc4", "netsvc5"),
 													},
 												},
 												"service_vpn_id": schema.Int64Attribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Service VPN ID, Attribute conditional on `type` being equal to `service`").AddIntegerRangeDescription(0, 65536).String,
+													MarkdownDescription: helpers.NewAttributeDescription("Service VPN ID, Attribute conditional on `type` equal to `service`").AddIntegerRangeDescription(0, 65536).String,
 													Optional:            true,
 													Validators: []validator.Int64{
 														int64validator.Between(0, 65536),
 													},
 												},
 												"service_tloc_list_id": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC list ID, Attribute conditional on `type` being equal to `service`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC list ID, Attribute conditional on `type` equal to `service`").String,
 													Optional:            true,
 												},
 												"service_tloc_list_version": schema.Int64Attribute{
@@ -404,15 +404,15 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 													Optional:            true,
 												},
 												"service_tloc_ip": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC IP address, Attribute conditional on `type` being equal to `service`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC IP address, Attribute conditional on `type` equal to `service`").String,
 													Optional:            true,
 												},
 												"service_tloc_color": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC color, Attribute conditional on `type` being equal to `service`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC color, Attribute conditional on `type` equal to `service`").String,
 													Optional:            true,
 												},
 												"service_tloc_encapsulation": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC encapsulation, Attribute conditional on `type` being equal to `service`").AddStringEnumDescription("ipsec", "gre").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC encapsulation, Attribute conditional on `type` equal to `service`").AddStringEnumDescription("ipsec", "gre").String,
 													Optional:            true,
 													Validators: []validator.String{
 														stringvalidator.OneOf("ipsec", "gre"),
@@ -422,7 +422,7 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 										},
 									},
 									"export_to_vpn_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Export to VPN list ID, Attribute conditional on `type` being equal to `exportTo`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Export to VPN list ID, Attribute conditional on `type` equal to `exportTo`").String,
 										Optional:            true,
 									},
 									"export_to_vpn_list_version": schema.Int64Attribute{

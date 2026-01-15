@@ -85,8 +85,9 @@ attributes:
           - model_name: ref
             tf_name: application_list_id
             conditional_attribute:
-              name: type
-              value: appList
+              conditions:
+                - name: type
+                  value: appList
             type: String
             description: Application list ID
             example: e3aad846-abb9-425f-aaa8-9ed17b9c8d7c
@@ -99,8 +100,9 @@ attributes:
           - model_name: ref
             tf_name: dns_application_list_id
             conditional_attribute:
-              name: type
-              value: dnsAppList
+              conditions:
+                - name: type
+                  value: dnsAppList
             type: String
             description: DNS Application list ID
             example: e3aad846-abb9-425f-aaa8-9ed17b9c8d7c
@@ -113,8 +115,9 @@ attributes:
           - model_name: value
             tf_name: icmp_message
             conditional_attribute:
-              name: type
-              value: icmpMessage
+              conditions:
+                - name: type
+                  value: icmpMessage
             type: String
             description: ICMP Message
             exclude_test: true
@@ -122,8 +125,9 @@ attributes:
           - model_name: value
             tf_name: dns
             conditional_attribute:
-              name: type
-              value: dns
+              conditions:
+                - name: type
+                  value: dns
             type: String
             enum_values: [request, response]
             description: DNS request or response
@@ -132,8 +136,9 @@ attributes:
           - model_name: value
             tf_name: dscp
             conditional_attribute:
-              name: type
-              value: dscp
+              conditions:
+                - name: type
+                  value: dscp
             type: String
             model_type_string: true
             description: DSCP value
@@ -142,8 +147,9 @@ attributes:
           - model_name: value
             tf_name: plp
             conditional_attribute:
-              name: type
-              value: plp
+              conditions:
+                - name: type
+                  value: plp
             type: String
             enum_values: [low, high]
             description: PLP
@@ -152,8 +158,9 @@ attributes:
           - model_name: value
             tf_name: protocol
             conditional_attribute:
-              name: type
-              value: protocol
+              conditions:
+                - name: type
+                  value: protocol
             type: String
             description: IP Protocol, 0-255 (Single value or multiple values separated by spaces)
             example: 10
@@ -161,8 +168,9 @@ attributes:
           - model_name: ref
             tf_name: source_data_prefix_list_id
             conditional_attribute:
-              name: type
-              value: sourceDataPrefixList
+              conditions:
+                - name: type
+                  value: sourceDataPrefixList
             type: String
             description: Source Data Prefix list ID
             example: 7d97276b-321c-4d0c-870e-342bbcd51011
@@ -175,8 +183,9 @@ attributes:
           - model_name: value
             tf_name: source_ip
             conditional_attribute:
-              name: type
-              value: sourceIp
+              conditions:
+                - name: type
+                  value: sourceIp
             type: String
             description: Source IP
             example: 10.0.0.0/12
@@ -184,8 +193,9 @@ attributes:
           - model_name: value
             tf_name: source_port
             conditional_attribute:
-              name: type
-              value: sourcePort
+              conditions:
+                - name: type
+                  value: sourcePort
             type: String
             description: Source port, 0-65535 (Single value, range or multiple values separated by spaces)
             example: 10
@@ -193,8 +203,9 @@ attributes:
           - model_name: ref
             tf_name: destination_data_prefix_list_id
             conditional_attribute:
-              name: type
-              value: destinationDataPrefixList
+              conditions:
+                - name: type
+                  value: destinationDataPrefixList
             type: String
             description: Destination Data Prefix list ID
             example: 7d97276b-321c-4d0c-870e-342bbcd51011
@@ -207,8 +218,9 @@ attributes:
           - model_name: value
             tf_name: destination_ip
             conditional_attribute:
-              name: type
-              value: destinationIp
+              conditions:
+                - name: type
+                  value: destinationIp
             type: String
             description: Destination IP
             example: 10.0.0.0/12
@@ -216,8 +228,9 @@ attributes:
           - model_name: value
             tf_name: destination_port
             conditional_attribute:
-              name: type
-              value: destinationPort
+              conditions:
+                - name: type
+                  value: destinationPort
             type: String
             description: Destination port, 0-65535 (Single value, range or multiple values separated by spaces)
             example: 100
@@ -225,8 +238,9 @@ attributes:
           - model_name: value
             tf_name: destination_region
             conditional_attribute:
-              name: type
-              value: destinationRegion
+              conditions:
+                - name: type
+                  value: destinationRegion
             type: String
             enum_values: [primary-region, secondary-region, other-region]
             description: Destination region
@@ -235,8 +249,9 @@ attributes:
           - model_name: value
             tf_name: traffic_to
             conditional_attribute:
-              name: type
-              value: trafficTo
+              conditions:
+                - name: type
+                  value: trafficTo
             type: String
             enum_values: [access, core, service]
             description: Traffic to
@@ -259,16 +274,18 @@ attributes:
           - model_name: parameter
             tf_name: backup_sla_preferred_color
             conditional_attribute:
-              name: type
-              value: backupSlaPreferredColor
+              conditions:
+                - name: type
+                  value: backupSlaPreferredColor
             type: String
             description: Backup SLA preferred color (Single value or multiple values separated by spaces)
             example: bronze
           - model_name: parameter
             tf_name: counter
             conditional_attribute:
-              name: type
-              value: count
+              conditions:
+                - name: type
+                  value: count
             type: String
             description: Counter name
             example: count1
@@ -276,8 +293,9 @@ attributes:
           - model_name: parameter
             tf_name: log
             conditional_attribute:
-              name: type
-              value: log
+              conditions:
+                - name: type
+                  value: log
             type: Bool
             bool_empty_string: true
             description: Enable logging
@@ -286,8 +304,9 @@ attributes:
           - model_name: parameter
             tf_name: cloud_sla
             conditional_attribute:
-              name: type
-              value: cloudSaas
+              conditions:
+                - name: type
+                  value: cloudSaas
             type: Bool
             bool_empty_string: true
             description: Cloud SLA
@@ -296,8 +315,9 @@ attributes:
           - model_name: parameter
             tf_name: sla_class_parameters
             conditional_attribute:
-              name: type
-              value: slaClass
+              conditions:
+                - name: type
+                  value: slaClass
             type: List
             description: List of SLA class parameters
             exclude_test: true
@@ -320,8 +340,9 @@ attributes:
               - model_name: ref
                 tf_name: sla_class_list_id
                 conditional_attribute:
-                  name: type
-                  value: name
+                  conditions:
+                    - name: type
+                      value: name
                 type: String
                 description: SLA class list ID
                 example: 71920ba0-46e7-411a-a730-387414aabc08
@@ -334,8 +355,9 @@ attributes:
               - model_name: ref
                 tf_name: preferred_color_group_list_id
                 conditional_attribute:
-                  name: type
-                  value: preferredColorGroup
+                  conditions:
+                    - name: type
+                      value: preferredColorGroup
                 type: String
                 description: Preferred color group list ID
                 example: 45bd33f6-f177-42f3-8aa6-60a62dfd6dd2
@@ -348,8 +370,9 @@ attributes:
               - model_name: value
                 tf_name: preferred_color
                 conditional_attribute:
-                  name: type
-                  value: preferredColor
+                  conditions:
+                    - name: type
+                      value: preferredColor
                 type: String
                 description: preferred color (Single value or multiple values separated by spaces)
                 example: bronze
@@ -369,8 +392,9 @@ attributes:
     exclude_example: true
     exclude_test: true
     conditional_attribute:
-      name: default_action
-      value: slaClass
+      conditions:
+        - name: default_action
+          value: slaClass
   - tf_name: default_action_sla_class_list_version
     tf_only: true
     type: Version 

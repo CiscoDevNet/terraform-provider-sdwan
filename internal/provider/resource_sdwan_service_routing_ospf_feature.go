@@ -247,7 +247,7 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Schema(ctx context.Context, re
 							},
 						},
 						"translate_rib_metric": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Translate Rib Metric, Attribute conditional on `protocol` being equal to `omp`").AddDefaultValueDescription("false").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Translate Rib Metric, Attribute conditional on `protocol` equal to `omp`").AddDefaultValueDescription("false").String,
 							Optional:            true,
 						},
 					},

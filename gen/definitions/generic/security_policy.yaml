@@ -88,8 +88,9 @@ attributes:
         type: List
         description: List of zone pair definitions
         conditional_attribute:
-          name: type
-          value: zoneBasedFW
+          conditions:
+            - name: type
+              value: zoneBasedFW
         attributes:
         - model_name: srcZoneListId
           tf_name: source_zone

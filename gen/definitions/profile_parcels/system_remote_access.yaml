@@ -20,9 +20,10 @@ attributes:
     tf_name: any_connect_eap_authentication_type
     ignore_mandatory: true
     conditional_attribute:
-      name: connection_type_ssl
-      value: false
-      type: Bool
+      conditions:
+        - name: connection_type_ssl
+          value: false
+          type: Bool
     example: user
     minimum_test_value: '"user"'
     # ==== Requires support for file upload ===
@@ -49,17 +50,19 @@ attributes:
     tf_name: psk_authentication_type
     data_path: [pskAuth]
     conditional_attribute:
-      name: connection_type_ssl
-      value: false
-      type: Bool
+      conditions:
+        - name: connection_type_ssl
+          value: false
+          type: Bool
     example: aaa
   - model_name: preSharedKey
     tf_name: psk_authentication_pre_shared_key
     data_path: [pskAuth]
     exclude_test: true
     conditional_attribute:
-      name: psk_authentication_type
-      value: group
+      conditions:
+        - name: psk_authentication_type
+          value: group
     example: Cisco123
   - model_name: radiusGroupName
     mandatory: true
@@ -78,17 +81,19 @@ attributes:
     tf_name: aaa_derive_name_from_peer_identity
     data_path: [aaaPolicy]
     conditional_attribute:
-      name: connection_type_ssl
-      value: false
-      type: Bool
+      conditions:
+        - name: connection_type_ssl
+          value: false
+          type: Bool
     example: MyPassword
   - model_name: deriveNameDomain
     tf_name: aaa_derive_name_from_peer_domain
     data_path: [aaaPolicy]
     conditional_attribute:
-      name: connection_type_ssl
-      value: false
-      type: Bool
+      conditions:
+        - name: connection_type_ssl
+          value: false
+          type: Bool
     exclude_test: true
     example: MyPassword
   - model_name: enableAccounting
@@ -97,59 +102,67 @@ attributes:
   - model_name: localIkev2IdentityType
     tf_name: ikev2_local_ike_identity_type
     conditional_attribute:
-      name: connection_type_ssl
-      value: false
-      type: Bool
+      conditions:
+        - name: connection_type_ssl
+          value: false
+          type: Bool
     example: EMAIL
   - model_name: localIkev2IdentityValue
     tf_name: ikev2_local_ike_identity_value
     conditional_attribute:
-      name: connection_type_ssl
-      value: false
-      type: Bool
+      conditions:
+        - name: connection_type_ssl
+          value: false
+          type: Bool
     example: abc@xyz.com
   - model_name: ikev2SaLifetime
     tf_name: ikev2_security_association_lifetime
     conditional_attribute:
-      name: connection_type_ssl
-      value: false
-      type: Bool
+      conditions:
+        - name: connection_type_ssl
+          value: false
+          type: Bool
     example: 86400
   - model_name: antiDosThreshold
     tf_name: ikev2_anti_dos_threshold
     conditional_attribute:
-      name: connection_type_ssl
-      value: false
-      type: Bool
+      conditions:
+        - name: connection_type_ssl
+          value: false
+          type: Bool
     example: 99
   - model_name: enableAntiReplay
     tf_name: ipsec_enable_anti_replay
     conditional_attribute:
-      name: connection_type_ssl
-      value: false
-      type: Bool
+      conditions:
+        - name: connection_type_ssl
+          value: false
+          type: Bool
     example: false
   - model_name: antiReplayWindowSize
     tf_name: ipsec_anti_replay_window_size
     exclude_test: true
     conditional_attribute:
-      name: ipsec_enable_anti_replay
-      value: true
-      type: Bool
+      conditions:
+        - name: ipsec_enable_anti_replay
+          value: true
+          type: Bool
     example: 64
   - model_name: ipSecSaLifetime
     tf_name: ipsec_security_association_lifetime
     conditional_attribute:
-      name: connection_type_ssl
-      value: false
-      type: Bool
+      conditions:
+        - name: connection_type_ssl
+          value: false
+          type: Bool
     example: 3600
   - model_name: enablePFS
     tf_name: ipsec_enable_perfect_foward_secrecy
     conditional_attribute:
-      name: connection_type_ssl
-      value: false
-      type: Bool
+      conditions:
+        - name: connection_type_ssl
+          value: false
+          type: Bool
     example: false
 
 test_prerequisites: |

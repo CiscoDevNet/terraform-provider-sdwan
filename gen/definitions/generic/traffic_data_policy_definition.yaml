@@ -105,8 +105,9 @@ attributes:
           - model_name: ref
             tf_name: application_list_id
             conditional_attribute:
-              name: type
-              value: appList
+              conditions:
+                - name: type
+                  value: appList
             type: String
             description: Application list ID
             example: e3aad846-abb9-425f-aaa8-9ed17b9c8d7c
@@ -119,8 +120,9 @@ attributes:
           - model_name: ref
             tf_name: dns_application_list_id
             conditional_attribute:
-              name: type
-              value: dnsAppList
+              conditions:
+                - name: type
+                  value: dnsAppList
             type: String
             description: DNS Application list ID
             example: e3aad846-abb9-425f-aaa8-9ed17b9c8d7c
@@ -133,8 +135,9 @@ attributes:
           - model_name: value
             tf_name: icmp_message
             conditional_attribute:
-              name: type
-              value: icmpMessage
+              conditions:
+                - name: type
+                  value: icmpMessage
             type: String
             description: ICMP Message
             exclude_test: true
@@ -142,8 +145,9 @@ attributes:
           - model_name: value
             tf_name: dns
             conditional_attribute:
-              name: type
-              value: dns
+              conditions:
+                - name: type
+                  value: dns
             type: String
             enum_values: [request, response]
             description: DNS request or response
@@ -152,8 +156,9 @@ attributes:
           - model_name: value
             tf_name: dscp
             conditional_attribute:
-              name: type
-              value: dscp
+              conditions:
+                - name: type
+                  value: dscp
             type: String
             model_type_string: true
             description: DSCP value
@@ -162,8 +167,9 @@ attributes:
           - model_name: value
             tf_name: packet_length
             conditional_attribute:
-              name: type
-              value: packetLength
+              conditions:
+                - name: type
+                  value: packetLength
             type: Int64
             model_type_string: true
             description: Packet length
@@ -174,8 +180,9 @@ attributes:
           - model_name: value
             tf_name: plp
             conditional_attribute:
-              name: type
-              value: plp
+              conditions:
+                - name: type
+                  value: plp
             type: String
             enum_values: [low, high]
             description: PLP
@@ -184,8 +191,9 @@ attributes:
           - model_name: value
             tf_name: protocol
             conditional_attribute:
-              name: type
-              value: protocol
+              conditions:
+                - name: type
+                  value: protocol
             type: String
             description: IP Protocol, 0-255 (Single value or multiple values separated by spaces)
             example: 10
@@ -193,8 +201,9 @@ attributes:
           - model_name: ref
             tf_name: source_data_prefix_list_id
             conditional_attribute:
-              name: type
-              value: sourceDataPrefixList
+              conditions:
+                - name: type
+                  value: sourceDataPrefixList
             type: String
             description: Source Data Prefix list ID
             example: 7d97276b-321c-4d0c-870e-342bbcd51011
@@ -207,8 +216,9 @@ attributes:
           - model_name: value
             tf_name: source_ip
             conditional_attribute:
-              name: type
-              value: sourceIp
+              conditions:
+                - name: type
+                  value: sourceIp
             type: String
             description: Source IP
             example: 10.0.0.0/12
@@ -216,8 +226,9 @@ attributes:
           - model_name: value
             tf_name: source_port
             conditional_attribute:
-              name: type
-              value: sourcePort
+              conditions:
+                - name: type
+                  value: sourcePort
             type: String
             description: Source port, 0-65535 (Single value, range or multiple values separated by spaces)
             example: 10
@@ -225,8 +236,9 @@ attributes:
           - model_name: ref
             tf_name: destination_data_prefix_list_id
             conditional_attribute:
-              name: type
-              value: destinationDataPrefixList
+              conditions:
+                - name: type
+                  value: destinationDataPrefixList
             type: String
             description: Destination Data Prefix list ID
             example: 7d97276b-321c-4d0c-870e-342bbcd51011
@@ -239,8 +251,9 @@ attributes:
           - model_name: value
             tf_name: destination_ip
             conditional_attribute:
-              name: type
-              value: destinationIp
+              conditions:
+                - name: type
+                  value: destinationIp
             type: String
             description: Destination IP
             example: 10.0.0.0/12
@@ -248,8 +261,9 @@ attributes:
           - model_name: value
             tf_name: destination_port
             conditional_attribute:
-              name: type
-              value: destinationPort
+              conditions:
+                - name: type
+                  value: destinationPort
             type: String
             description: Destination port, 0-65535 (Single value, range or multiple values separated by spaces)
             example: 100
@@ -258,8 +272,9 @@ attributes:
             tf_name: destination_region
             type: String
             conditional_attribute:
-              name: type
-              value: destinationRegion
+              conditions:
+                - name: type
+                  value: destinationRegion
             enum_values: [primary-region, secondary-region, other-region]
             description: Destination region
             example: primary-region
@@ -268,8 +283,9 @@ attributes:
             tf_name: tcp
             type: String
             conditional_attribute:
-              name: type
-              value: tcp
+              conditions:
+                - name: type
+                  value: tcp
             enum_values: [syn]
             description: TCP flags
             example: syn
@@ -277,8 +293,9 @@ attributes:
           - model_name: value
             tf_name: traffic_to
             conditional_attribute:
-              name: type
-              value: trafficTo
+              conditions:
+                - name: type
+                  value: trafficTo
             type: String
             enum_values: [access, core, service]
             description: Traffic to
@@ -316,8 +333,9 @@ attributes:
           - model_name: parameter
             tf_name: cflowd
             conditional_attribute:
-              name: type
-              value: cflowd
+              conditions:
+                - name: type
+                  value: cflowd
             type: Bool
             bool_empty_string: true
             description: Enable cflowd
@@ -326,8 +344,9 @@ attributes:
           - model_name: parameter
             tf_name: counter
             conditional_attribute:
-              name: type
-              value: count
+              conditions:
+                - name: type
+                  value: count
             type: String
             description: Counter name
             example: count1
@@ -335,8 +354,9 @@ attributes:
           - model_name: parameter
             tf_name: dre_optimization
             conditional_attribute:
-              name: type
-              value: dreOptimization
+              conditions:
+                - name: type
+                  value: dreOptimization
             type: Bool
             bool_empty_string: true
             description: Enable DRE optimization
@@ -345,8 +365,9 @@ attributes:
           - model_name: parameter
             tf_name: fallback_to_routing
             conditional_attribute:
-              name: type
-              value: fallbackToRouting
+              conditions:
+                - name: type
+                  value: fallbackToRouting
             type: Bool
             bool_empty_string: true
             description: Enable fallback to routing
@@ -355,8 +376,9 @@ attributes:
           - model_name: parameter
             tf_name: log
             conditional_attribute:
-              name: type
-              value: log
+              conditions:
+                - name: type
+                  value: log
             type: Bool
             bool_empty_string: true
             description: Enable logging
@@ -364,8 +386,9 @@ attributes:
           - model_name: parameter
             tf_name: loss_correction
             conditional_attribute:
-              name: type
-              value: lossProtect
+              conditions:
+                - name: type
+                  value: lossProtect
             type: String
             enum_values: [fecAdaptive, fecAlways, packetDuplication]
             description: Loss correction
@@ -374,8 +397,9 @@ attributes:
           - model_name: parameter
             tf_name: loss_correction_fec
             conditional_attribute:
-              name: type
-              value: lossProtectFec
+              conditions:
+                - name: type
+                  value: lossProtectFec
             type: String
             enum_values: [fecAdaptive, fecAlways, packetDuplication]
             description: Loss correction FEC
@@ -384,8 +408,9 @@ attributes:
           - model_name: parameter
             tf_name: loss_correction_packet_duplication
             conditional_attribute:
-              name: type
-              value: lossProtectPktDup
+              conditions:
+                - name: type
+                  value: lossProtectPktDup
             type: String
             enum_values: [fecAdaptive, fecAlways, packetDuplication]
             description: Loss correction packet duplication
@@ -394,8 +419,9 @@ attributes:
           - model_name: value
             tf_name: loss_correction_fec_threshold
             conditional_attribute:
-              name: type
-              value: lossProtectFec
+              conditions:
+                - name: type
+                  value: lossProtectFec
             type: String
             description: Loss correction FEC threshold
             example: 2
@@ -404,8 +430,9 @@ attributes:
             data_path: [parameter]
             tf_name: nat_pool
             conditional_attribute:
-              name: type
-              value: nat
+              conditions:
+                - name: type
+                  value: nat
             type: String
             enum_values: [pool]
             description: NAT pool
@@ -415,8 +442,9 @@ attributes:
             data_path: [parameter]
             tf_name: nat_pool_id
             conditional_attribute:
-              name: type
-              value: nat
+              conditions:
+                - name: type
+                  value: nat
             type: Int64
             model_type_string: true
             description: NAT pool ID
@@ -428,8 +456,9 @@ attributes:
             data_path: [parameter]
             tf_name: redirect_dns
             conditional_attribute:
-              name: type
-              value: redirectDns
+              conditions:
+                - name: type
+                  value: redirectDns
             type: String
             enum_values: [dnsType, ipAddress]
             description: Redirect DNS
@@ -439,8 +468,9 @@ attributes:
             data_path: [parameter]
             tf_name: redirect_dns_type
             conditional_attribute:
-              name: redirect_dns
-              value: dnsType
+              conditions:
+                - name: redirect_dns
+                  value: dnsType
             type: String
             enum_values: [host, umbrella]
             description: Redirect DNS type
@@ -450,8 +480,9 @@ attributes:
             data_path: [parameter]
             tf_name: redirect_dns_address
             conditional_attribute:
-              name: redirect_dns
-              value: ipAddress
+              conditions:
+                - name: redirect_dns
+                  value: ipAddress
             type: String
             description: Redirect DNS IP address
             example: 10.1.1.1
@@ -459,8 +490,9 @@ attributes:
           - model_name: parameter
             tf_name: service_node_group
             conditional_attribute:
-              name: type
-              value: serviceNodeGroup
+              conditions:
+                - name: type
+                  value: serviceNodeGroup
             type: String
             description: Service node group
             example: SNG-APPQOE1
@@ -468,8 +500,9 @@ attributes:
           - model_name: parameter
             tf_name: secure_internet_gateway
             conditional_attribute:
-              name: type
-              value: sig
+              conditions:
+                - name: type
+                  value: sig
             type: Bool
             bool_empty_string: true
             description: Enable secure internet gateway
@@ -478,8 +511,9 @@ attributes:
           - model_name: parameter
             tf_name: tcp_optimization
             conditional_attribute:
-              name: type
-              value: tcpOptimization
+              conditions:
+                - name: type
+                  value: tcpOptimization
             type: Bool
             bool_empty_string: true
             description: Enable TCP optimization
@@ -488,8 +522,9 @@ attributes:
           - model_name: parameter
             tf_name: set_parameters
             conditional_attribute:
-              name: type
-              value: set
+              conditions:
+                - name: type
+                  value: set
             type: Set
             description: List of set parameters
             exclude_test: true
@@ -519,8 +554,9 @@ attributes:
               - model_name: value
                 tf_name: dscp
                 conditional_attribute:
-                  name: type
-                  value: dscp
+                  conditions:
+                    - name: type
+                      value: dscp
                 type: Int64
                 model_type_string: true
                 description: DSCP
@@ -531,8 +567,9 @@ attributes:
               - model_name: value
                 tf_name: forwarding_class
                 conditional_attribute:
-                  name: type
-                  value: forwardingClass
+                  conditions:
+                    - name: type
+                      value: forwardingClass
                 type: String
                 description: Forwarding class
                 example: abc
@@ -540,8 +577,9 @@ attributes:
               - model_name: value
                 tf_name: next_hop
                 conditional_attribute:
-                  name: type
-                  value: nextHop
+                  conditions:
+                    - name: type
+                      value: nextHop
                 type: String
                 description: Next hop IP
                 example: 10.1.1.1
@@ -550,8 +588,9 @@ attributes:
                 data_path: [value]
                 tf_name: local_tloc_list_color
                 conditional_attribute:
-                  name: type
-                  value: localTlocList
+                  conditions:
+                    - name: type
+                      value: localTlocList
                 type: String
                 description: Local TLOC list color. Space separated list of colors.
                 example: bronze
@@ -560,8 +599,9 @@ attributes:
                 data_path: [value]
                 tf_name: local_tloc_list_encap
                 conditional_attribute:
-                  name: type
-                  value: localTlocList
+                  conditions:
+                    - name: type
+                      value: localTlocList
                 type: String
                 enum_values: [ipsec, gre, "ipsec gre"]
                 description: Local TLOC list encapsulation.
@@ -571,8 +611,9 @@ attributes:
                 data_path: [value]
                 tf_name: local_tloc_list_restrict
                 conditional_attribute:
-                  name: type
-                  value: localTlocList
+                  conditions:
+                    - name: type
+                      value: localTlocList
                 type: Bool
                 bool_empty_string: true
                 description: Local TLOC list restrict
@@ -581,8 +622,9 @@ attributes:
               - model_name: value
                 tf_name: next_hop_loose
                 conditional_attribute:
-                  name: type
-                  value: nextHopLoose
+                  conditions:
+                    - name: type
+                      value: nextHopLoose
                 type: Bool
                 model_type_string: true
                 description: Use routing table entry to forward the packet in case Next-hop is not available
@@ -591,8 +633,9 @@ attributes:
               - model_name: ref
                 tf_name: policer_list_id
                 conditional_attribute:
-                  name: type
-                  value: policer
+                  conditions:
+                    - name: type
+                      value: policer
                 type: String
                 description: Policer list ID
                 example: 4e3b33fb-6919-4f85-9869-2242c9b65aa4
@@ -605,8 +648,9 @@ attributes:
               - model_name: ref
                 tf_name: preferred_color_group_list_id
                 conditional_attribute:
-                  name: type
-                  value: preferredColorGroup
+                  conditions:
+                    - name: type
+                      value: preferredColorGroup
                 type: String
                 description: Preferred color group list ID
                 example: 45bd33f6-f177-42f3-8aa6-60a62dfd6dd2
@@ -619,8 +663,9 @@ attributes:
               - model_name: ref
                 tf_name: tloc_list_id
                 conditional_attribute:
-                  name: type
-                  value: tlocList
+                  conditions:
+                    - name: type
+                      value: tlocList
                 type: String
                 description: TLOC list ID
                 example: 8b249706-7c7f-4ab3-af6f-c91951c1a603
@@ -634,8 +679,9 @@ attributes:
                 data_path: [value]
                 tf_name: tloc_ip
                 conditional_attribute:
-                  name: type
-                  value: tloc
+                  conditions:
+                    - name: type
+                      value: tloc
                 type: String
                 description: TLOC IP address
                 example: 1.2.3.4
@@ -644,8 +690,9 @@ attributes:
                 data_path: [value]
                 tf_name: tloc_color
                 conditional_attribute:
-                  name: type
-                  value: tloc
+                  conditions:
+                    - name: type
+                      value: tloc
                 type: String
                 description: TLOC color
                 example: bronze
@@ -654,8 +701,9 @@ attributes:
                 data_path: [value]
                 tf_name: tloc_encapsulation
                 conditional_attribute:
-                  name: type
-                  value: tloc
+                  conditions:
+                    - name: type
+                      value: tloc
                 type: String
                 enum_values: [ipsec, gre, "ipsec gre"]
                 description: TLOC encapsulation
@@ -665,8 +713,9 @@ attributes:
                 data_path: [value]
                 tf_name: service_type
                 conditional_attribute:
-                  name: type
-                  value: service
+                  conditions:
+                    - name: type
+                      value: service
                 type: String
                 enum_values:
                   [FW, IDP, IDS, netsvc1, netsvc2, netsvc3, netsvc4, netsvc5]
@@ -677,8 +726,9 @@ attributes:
                 data_path: [value]
                 tf_name: service_vpn_id
                 conditional_attribute:
-                  name: type
-                  value: service
+                  conditions:
+                    - name: type
+                      value: service
                 type: Int64
                 model_type_string: true
                 description: Service VPN ID
@@ -690,8 +740,9 @@ attributes:
                 data_path: [value, tlocList]
                 tf_name: service_tloc_list_id
                 conditional_attribute:
-                  name: type
-                  value: service
+                  conditions:
+                    - name: type
+                      value: service
                 type: String
                 description: Service TLOC list ID
                 example: 8b249706-7c7f-4ab3-af6f-c91951c1a603
@@ -705,8 +756,9 @@ attributes:
                 data_path: [value, tloc]
                 tf_name: service_tloc_ip
                 conditional_attribute:
-                  name: type
-                  value: service
+                  conditions:
+                    - name: type
+                      value: service
                 type: String
                 description: Service TLOC IP address
                 example: 1.2.3.4
@@ -715,8 +767,9 @@ attributes:
                 data_path: [value]
                 tf_name: service_tloc_local
                 conditional_attribute:
-                  name: type
-                  value: service
+                  conditions:
+                    - name: type
+                      value: service
                 type: Bool
                 bool_empty_string: true
                 description: Service TLOC Local
@@ -726,8 +779,9 @@ attributes:
                 data_path: [value]
                 tf_name: service_tloc_restrict
                 conditional_attribute:
-                  name: type
-                  value: service
+                  conditions:
+                    - name: type
+                      value: service
                 type: Bool
                 bool_empty_string: true
                 description: Service TLOC Restrict
@@ -737,8 +791,9 @@ attributes:
                 data_path: [value, tloc]
                 tf_name: service_tloc_color
                 conditional_attribute:
-                  name: type
-                  value: service
+                  conditions:
+                    - name: type
+                      value: service
                 type: String
                 description: Service TLOC color
                 example: bronze
@@ -747,8 +802,9 @@ attributes:
                 data_path: [value, tloc]
                 tf_name: service_tloc_encapsulation
                 conditional_attribute:
-                  name: type
-                  value: service
+                  conditions:
+                    - name: type
+                      value: service
                 type: String
                 enum_values: [ipsec, gre, "ipsec gre"]
                 description: Service TLOC encapsulation
@@ -757,8 +813,9 @@ attributes:
               - model_name: value
                 tf_name: vpn_id
                 conditional_attribute:
-                  name: type
-                  value: vpn
+                  conditions:
+                    - name: type
+                      value: vpn
                 type: Int64
                 model_type_string: true
                 description: DSCP
@@ -769,8 +826,9 @@ attributes:
           - model_name: parameter
             tf_name: nat_parameters
             conditional_attribute:
-              name: type
-              value: nat
+              conditions:
+                - name: type
+                  value: nat
             type: List
             description: List of NAT parameters
             exclude_test: true
@@ -787,8 +845,9 @@ attributes:
               - model_name: value
                 tf_name: vpn_id
                 conditional_attribute:
-                  name: type
-                  value: useVpn
+                  conditions:
+                    - name: type
+                      value: useVpn
                 type: Int64
                 model_type_string: true
                 description: DSCP
@@ -799,8 +858,9 @@ attributes:
               - model_name: value
                 tf_name: fallback
                 conditional_attribute:
-                  name: type
-                  value: fallback
+                  conditions:
+                    - name: type
+                      value: fallback
                 type: Bool
                 model_type_string: true
                 description: Fallback

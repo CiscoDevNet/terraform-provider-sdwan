@@ -147,7 +147,7 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 										},
 									},
 									"application_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Application list ID, Attribute conditional on `type` being equal to `appList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Application list ID, Attribute conditional on `type` equal to `appList`").String,
 										Optional:            true,
 									},
 									"application_list_version": schema.Int64Attribute{
@@ -155,7 +155,7 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 										Optional:            true,
 									},
 									"dns_application_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("DNS Application list ID, Attribute conditional on `type` being equal to `dnsAppList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("DNS Application list ID, Attribute conditional on `type` equal to `dnsAppList`").String,
 										Optional:            true,
 									},
 									"dns_application_list_version": schema.Int64Attribute{
@@ -163,40 +163,40 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 										Optional:            true,
 									},
 									"icmp_message": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("ICMP Message, Attribute conditional on `type` being equal to `icmpMessage`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("ICMP Message, Attribute conditional on `type` equal to `icmpMessage`").String,
 										Optional:            true,
 									},
 									"dns": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("DNS request or response, Attribute conditional on `type` being equal to `dns`").AddStringEnumDescription("request", "response").String,
+										MarkdownDescription: helpers.NewAttributeDescription("DNS request or response, Attribute conditional on `type` equal to `dns`").AddStringEnumDescription("request", "response").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("request", "response"),
 										},
 									},
 									"dscp": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` being equal to `dscp`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` equal to `dscp`").String,
 										Optional:            true,
 									},
 									"packet_length": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Packet length, Attribute conditional on `type` being equal to `packetLength`").AddIntegerRangeDescription(0, 65535).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Packet length, Attribute conditional on `type` equal to `packetLength`").AddIntegerRangeDescription(0, 65535).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 65535),
 										},
 									},
 									"plp": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("PLP, Attribute conditional on `type` being equal to `plp`").AddStringEnumDescription("low", "high").String,
+										MarkdownDescription: helpers.NewAttributeDescription("PLP, Attribute conditional on `type` equal to `plp`").AddStringEnumDescription("low", "high").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("low", "high"),
 										},
 									},
 									"protocol": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("IP Protocol, 0-255 (Single value or multiple values separated by spaces), Attribute conditional on `type` being equal to `protocol`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("IP Protocol, 0-255 (Single value or multiple values separated by spaces), Attribute conditional on `type` equal to `protocol`").String,
 										Optional:            true,
 									},
 									"source_data_prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source Data Prefix list ID, Attribute conditional on `type` being equal to `sourceDataPrefixList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Source Data Prefix list ID, Attribute conditional on `type` equal to `sourceDataPrefixList`").String,
 										Optional:            true,
 									},
 									"source_data_prefix_list_version": schema.Int64Attribute{
@@ -204,15 +204,15 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 										Optional:            true,
 									},
 									"source_ip": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source IP, Attribute conditional on `type` being equal to `sourceIp`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Source IP, Attribute conditional on `type` equal to `sourceIp`").String,
 										Optional:            true,
 									},
 									"source_port": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source port, 0-65535 (Single value, range or multiple values separated by spaces), Attribute conditional on `type` being equal to `sourcePort`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Source port, 0-65535 (Single value, range or multiple values separated by spaces), Attribute conditional on `type` equal to `sourcePort`").String,
 										Optional:            true,
 									},
 									"destination_data_prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination Data Prefix list ID, Attribute conditional on `type` being equal to `destinationDataPrefixList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination Data Prefix list ID, Attribute conditional on `type` equal to `destinationDataPrefixList`").String,
 										Optional:            true,
 									},
 									"destination_data_prefix_list_version": schema.Int64Attribute{
@@ -220,29 +220,29 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 										Optional:            true,
 									},
 									"destination_ip": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination IP, Attribute conditional on `type` being equal to `destinationIp`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination IP, Attribute conditional on `type` equal to `destinationIp`").String,
 										Optional:            true,
 									},
 									"destination_port": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination port, 0-65535 (Single value, range or multiple values separated by spaces), Attribute conditional on `type` being equal to `destinationPort`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination port, 0-65535 (Single value, range or multiple values separated by spaces), Attribute conditional on `type` equal to `destinationPort`").String,
 										Optional:            true,
 									},
 									"destination_region": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination region, Attribute conditional on `type` being equal to `destinationRegion`").AddStringEnumDescription("primary-region", "secondary-region", "other-region").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination region, Attribute conditional on `type` equal to `destinationRegion`").AddStringEnumDescription("primary-region", "secondary-region", "other-region").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("primary-region", "secondary-region", "other-region"),
 										},
 									},
 									"tcp": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("TCP flags, Attribute conditional on `type` being equal to `tcp`").AddStringEnumDescription("syn").String,
+										MarkdownDescription: helpers.NewAttributeDescription("TCP flags, Attribute conditional on `type` equal to `tcp`").AddStringEnumDescription("syn").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("syn"),
 										},
 									},
 									"traffic_to": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Traffic to, Attribute conditional on `type` being equal to `trafficTo`").AddStringEnumDescription("access", "core", "service").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Traffic to, Attribute conditional on `type` equal to `trafficTo`").AddStringEnumDescription("access", "core", "service").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("access", "core", "service"),
@@ -264,96 +264,96 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 										},
 									},
 									"cflowd": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Enable cflowd, Attribute conditional on `type` being equal to `cflowd`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Enable cflowd, Attribute conditional on `type` equal to `cflowd`").String,
 										Optional:            true,
 									},
 									"counter": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Counter name, Attribute conditional on `type` being equal to `count`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Counter name, Attribute conditional on `type` equal to `count`").String,
 										Optional:            true,
 									},
 									"dre_optimization": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Enable DRE optimization, Attribute conditional on `type` being equal to `dreOptimization`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Enable DRE optimization, Attribute conditional on `type` equal to `dreOptimization`").String,
 										Optional:            true,
 									},
 									"fallback_to_routing": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Enable fallback to routing, Attribute conditional on `type` being equal to `fallbackToRouting`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Enable fallback to routing, Attribute conditional on `type` equal to `fallbackToRouting`").String,
 										Optional:            true,
 									},
 									"log": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Enable logging, Attribute conditional on `type` being equal to `log`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Enable logging, Attribute conditional on `type` equal to `log`").String,
 										Optional:            true,
 									},
 									"loss_correction": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Loss correction, Attribute conditional on `type` being equal to `lossProtect`").AddStringEnumDescription("fecAdaptive", "fecAlways", "packetDuplication").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Loss correction, Attribute conditional on `type` equal to `lossProtect`").AddStringEnumDescription("fecAdaptive", "fecAlways", "packetDuplication").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("fecAdaptive", "fecAlways", "packetDuplication"),
 										},
 									},
 									"loss_correction_fec": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Loss correction FEC, Attribute conditional on `type` being equal to `lossProtectFec`").AddStringEnumDescription("fecAdaptive", "fecAlways", "packetDuplication").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Loss correction FEC, Attribute conditional on `type` equal to `lossProtectFec`").AddStringEnumDescription("fecAdaptive", "fecAlways", "packetDuplication").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("fecAdaptive", "fecAlways", "packetDuplication"),
 										},
 									},
 									"loss_correction_packet_duplication": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Loss correction packet duplication, Attribute conditional on `type` being equal to `lossProtectPktDup`").AddStringEnumDescription("fecAdaptive", "fecAlways", "packetDuplication").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Loss correction packet duplication, Attribute conditional on `type` equal to `lossProtectPktDup`").AddStringEnumDescription("fecAdaptive", "fecAlways", "packetDuplication").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("fecAdaptive", "fecAlways", "packetDuplication"),
 										},
 									},
 									"loss_correction_fec_threshold": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Loss correction FEC threshold, Attribute conditional on `type` being equal to `lossProtectFec`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Loss correction FEC threshold, Attribute conditional on `type` equal to `lossProtectFec`").String,
 										Optional:            true,
 									},
 									"nat_pool": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("NAT pool, Attribute conditional on `type` being equal to `nat`").AddStringEnumDescription("pool").String,
+										MarkdownDescription: helpers.NewAttributeDescription("NAT pool, Attribute conditional on `type` equal to `nat`").AddStringEnumDescription("pool").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("pool"),
 										},
 									},
 									"nat_pool_id": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("NAT pool ID, Attribute conditional on `type` being equal to `nat`").AddIntegerRangeDescription(1, 31).String,
+										MarkdownDescription: helpers.NewAttributeDescription("NAT pool ID, Attribute conditional on `type` equal to `nat`").AddIntegerRangeDescription(1, 31).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 31),
 										},
 									},
 									"redirect_dns": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Redirect DNS, Attribute conditional on `type` being equal to `redirectDns`").AddStringEnumDescription("dnsType", "ipAddress").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Redirect DNS, Attribute conditional on `type` equal to `redirectDns`").AddStringEnumDescription("dnsType", "ipAddress").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("dnsType", "ipAddress"),
 										},
 									},
 									"redirect_dns_type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Redirect DNS type, Attribute conditional on `redirect_dns` being equal to `dnsType`").AddStringEnumDescription("host", "umbrella").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Redirect DNS type, Attribute conditional on `redirect_dns` equal to `dnsType`").AddStringEnumDescription("host", "umbrella").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("host", "umbrella"),
 										},
 									},
 									"redirect_dns_address": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Redirect DNS IP address, Attribute conditional on `redirect_dns` being equal to `ipAddress`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Redirect DNS IP address, Attribute conditional on `redirect_dns` equal to `ipAddress`").String,
 										Optional:            true,
 									},
 									"service_node_group": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Service node group, Attribute conditional on `type` being equal to `serviceNodeGroup`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Service node group, Attribute conditional on `type` equal to `serviceNodeGroup`").String,
 										Optional:            true,
 									},
 									"secure_internet_gateway": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Enable secure internet gateway, Attribute conditional on `type` being equal to `sig`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Enable secure internet gateway, Attribute conditional on `type` equal to `sig`").String,
 										Optional:            true,
 									},
 									"tcp_optimization": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Enable TCP optimization, Attribute conditional on `type` being equal to `tcpOptimization`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Enable TCP optimization, Attribute conditional on `type` equal to `tcpOptimization`").String,
 										Optional:            true,
 									},
 									"set_parameters": schema.SetNestedAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("List of set parameters, Attribute conditional on `type` being equal to `set`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("List of set parameters, Attribute conditional on `type` equal to `set`").String,
 										Optional:            true,
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
@@ -365,41 +365,41 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 													},
 												},
 												"dscp": schema.Int64Attribute{
-													MarkdownDescription: helpers.NewAttributeDescription("DSCP, Attribute conditional on `type` being equal to `dscp`").AddIntegerRangeDescription(0, 63).String,
+													MarkdownDescription: helpers.NewAttributeDescription("DSCP, Attribute conditional on `type` equal to `dscp`").AddIntegerRangeDescription(0, 63).String,
 													Optional:            true,
 													Validators: []validator.Int64{
 														int64validator.Between(0, 63),
 													},
 												},
 												"forwarding_class": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Forwarding class, Attribute conditional on `type` being equal to `forwardingClass`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Forwarding class, Attribute conditional on `type` equal to `forwardingClass`").String,
 													Optional:            true,
 												},
 												"next_hop": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Next hop IP, Attribute conditional on `type` being equal to `nextHop`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Next hop IP, Attribute conditional on `type` equal to `nextHop`").String,
 													Optional:            true,
 												},
 												"local_tloc_list_color": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Local TLOC list color. Space separated list of colors., Attribute conditional on `type` being equal to `localTlocList`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Local TLOC list color. Space separated list of colors., Attribute conditional on `type` equal to `localTlocList`").String,
 													Optional:            true,
 												},
 												"local_tloc_list_encap": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Local TLOC list encapsulation., Attribute conditional on `type` being equal to `localTlocList`").AddStringEnumDescription("ipsec", "gre", "ipsec gre").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Local TLOC list encapsulation., Attribute conditional on `type` equal to `localTlocList`").AddStringEnumDescription("ipsec", "gre", "ipsec gre").String,
 													Optional:            true,
 													Validators: []validator.String{
 														stringvalidator.OneOf("ipsec", "gre", "ipsec gre"),
 													},
 												},
 												"local_tloc_list_restrict": schema.BoolAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Local TLOC list restrict, Attribute conditional on `type` being equal to `localTlocList`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Local TLOC list restrict, Attribute conditional on `type` equal to `localTlocList`").String,
 													Optional:            true,
 												},
 												"next_hop_loose": schema.BoolAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Use routing table entry to forward the packet in case Next-hop is not available, Attribute conditional on `type` being equal to `nextHopLoose`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Use routing table entry to forward the packet in case Next-hop is not available, Attribute conditional on `type` equal to `nextHopLoose`").String,
 													Optional:            true,
 												},
 												"policer_list_id": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Policer list ID, Attribute conditional on `type` being equal to `policer`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Policer list ID, Attribute conditional on `type` equal to `policer`").String,
 													Optional:            true,
 												},
 												"policer_list_version": schema.Int64Attribute{
@@ -407,7 +407,7 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 													Optional:            true,
 												},
 												"preferred_color_group_list_id": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Preferred color group list ID, Attribute conditional on `type` being equal to `preferredColorGroup`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Preferred color group list ID, Attribute conditional on `type` equal to `preferredColorGroup`").String,
 													Optional:            true,
 												},
 												"preferred_color_group_list_version": schema.Int64Attribute{
@@ -415,7 +415,7 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 													Optional:            true,
 												},
 												"tloc_list_id": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("TLOC list ID, Attribute conditional on `type` being equal to `tlocList`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("TLOC list ID, Attribute conditional on `type` equal to `tlocList`").String,
 													Optional:            true,
 												},
 												"tloc_list_version": schema.Int64Attribute{
@@ -423,36 +423,36 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 													Optional:            true,
 												},
 												"tloc_ip": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("TLOC IP address, Attribute conditional on `type` being equal to `tloc`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("TLOC IP address, Attribute conditional on `type` equal to `tloc`").String,
 													Optional:            true,
 												},
 												"tloc_color": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("TLOC color, Attribute conditional on `type` being equal to `tloc`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("TLOC color, Attribute conditional on `type` equal to `tloc`").String,
 													Optional:            true,
 												},
 												"tloc_encapsulation": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("TLOC encapsulation, Attribute conditional on `type` being equal to `tloc`").AddStringEnumDescription("ipsec", "gre", "ipsec gre").String,
+													MarkdownDescription: helpers.NewAttributeDescription("TLOC encapsulation, Attribute conditional on `type` equal to `tloc`").AddStringEnumDescription("ipsec", "gre", "ipsec gre").String,
 													Optional:            true,
 													Validators: []validator.String{
 														stringvalidator.OneOf("ipsec", "gre", "ipsec gre"),
 													},
 												},
 												"service_type": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Service type, Attribute conditional on `type` being equal to `service`").AddStringEnumDescription("FW", "IDP", "IDS", "netsvc1", "netsvc2", "netsvc3", "netsvc4", "netsvc5").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Service type, Attribute conditional on `type` equal to `service`").AddStringEnumDescription("FW", "IDP", "IDS", "netsvc1", "netsvc2", "netsvc3", "netsvc4", "netsvc5").String,
 													Optional:            true,
 													Validators: []validator.String{
 														stringvalidator.OneOf("FW", "IDP", "IDS", "netsvc1", "netsvc2", "netsvc3", "netsvc4", "netsvc5"),
 													},
 												},
 												"service_vpn_id": schema.Int64Attribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Service VPN ID, Attribute conditional on `type` being equal to `service`").AddIntegerRangeDescription(0, 65536).String,
+													MarkdownDescription: helpers.NewAttributeDescription("Service VPN ID, Attribute conditional on `type` equal to `service`").AddIntegerRangeDescription(0, 65536).String,
 													Optional:            true,
 													Validators: []validator.Int64{
 														int64validator.Between(0, 65536),
 													},
 												},
 												"service_tloc_list_id": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC list ID, Attribute conditional on `type` being equal to `service`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC list ID, Attribute conditional on `type` equal to `service`").String,
 													Optional:            true,
 												},
 												"service_tloc_list_version": schema.Int64Attribute{
@@ -460,30 +460,30 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 													Optional:            true,
 												},
 												"service_tloc_ip": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC IP address, Attribute conditional on `type` being equal to `service`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC IP address, Attribute conditional on `type` equal to `service`").String,
 													Optional:            true,
 												},
 												"service_tloc_local": schema.BoolAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC Local, Attribute conditional on `type` being equal to `service`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC Local, Attribute conditional on `type` equal to `service`").String,
 													Optional:            true,
 												},
 												"service_tloc_restrict": schema.BoolAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC Restrict, Attribute conditional on `type` being equal to `service`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC Restrict, Attribute conditional on `type` equal to `service`").String,
 													Optional:            true,
 												},
 												"service_tloc_color": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC color, Attribute conditional on `type` being equal to `service`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC color, Attribute conditional on `type` equal to `service`").String,
 													Optional:            true,
 												},
 												"service_tloc_encapsulation": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC encapsulation, Attribute conditional on `type` being equal to `service`").AddStringEnumDescription("ipsec", "gre", "ipsec gre").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC encapsulation, Attribute conditional on `type` equal to `service`").AddStringEnumDescription("ipsec", "gre", "ipsec gre").String,
 													Optional:            true,
 													Validators: []validator.String{
 														stringvalidator.OneOf("ipsec", "gre", "ipsec gre"),
 													},
 												},
 												"vpn_id": schema.Int64Attribute{
-													MarkdownDescription: helpers.NewAttributeDescription("DSCP, Attribute conditional on `type` being equal to `vpn`").AddIntegerRangeDescription(0, 65530).String,
+													MarkdownDescription: helpers.NewAttributeDescription("DSCP, Attribute conditional on `type` equal to `vpn`").AddIntegerRangeDescription(0, 65530).String,
 													Optional:            true,
 													Validators: []validator.Int64{
 														int64validator.Between(0, 65530),
@@ -493,7 +493,7 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 										},
 									},
 									"nat_parameters": schema.ListNestedAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("List of NAT parameters, Attribute conditional on `type` being equal to `nat`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("List of NAT parameters, Attribute conditional on `type` equal to `nat`").String,
 										Optional:            true,
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
@@ -505,11 +505,11 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 													},
 												},
 												"vpn_id": schema.Int64Attribute{
-													MarkdownDescription: helpers.NewAttributeDescription("DSCP, Attribute conditional on `type` being equal to `useVpn`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("DSCP, Attribute conditional on `type` equal to `useVpn`").String,
 													Optional:            true,
 												},
 												"fallback": schema.BoolAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Fallback, Attribute conditional on `type` being equal to `fallback`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Fallback, Attribute conditional on `type` equal to `fallback`").String,
 													Optional:            true,
 												},
 											},

@@ -193,7 +193,7 @@ func (r *TransportManagementVPNProfileParcelResource) Schema(ctx context.Context
 							},
 						},
 						"next_hops": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `nextHop`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop, Attribute conditional on `gateway` equal to `nextHop`").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
@@ -220,14 +220,14 @@ func (r *TransportManagementVPNProfileParcelResource) Schema(ctx context.Context
 							},
 						},
 						"administrative_distance": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Administrative distance, Attribute conditional on `gateway` being equal to `null0`").AddIntegerRangeDescription(1, 255).AddDefaultValueDescription("1").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Administrative distance, Attribute conditional on `gateway` equal to `null0`").AddIntegerRangeDescription(1, 255).AddDefaultValueDescription("1").String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.Between(1, 255),
 							},
 						},
 						"administrative_distance_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `gateway` being equal to `null0`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `gateway` equal to `null0`").String,
 							Optional:            true,
 						},
 					},
@@ -257,7 +257,7 @@ func (r *TransportManagementVPNProfileParcelResource) Schema(ctx context.Context
 							},
 						},
 						"next_hops": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `nextHop`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` equal to `nextHop`").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
@@ -284,18 +284,18 @@ func (r *TransportManagementVPNProfileParcelResource) Schema(ctx context.Context
 							},
 						},
 						"null0": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `null0`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` equal to `null0`").String,
 							Optional:            true,
 						},
 						"nat": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Nat, Attribute conditional on `gateway` being equal to `nat`").AddStringEnumDescription("NAT64", "NAT66").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Nat, Attribute conditional on `gateway` equal to `nat`").AddStringEnumDescription("NAT64", "NAT66").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("NAT64", "NAT66"),
 							},
 						},
 						"nat_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `gateway` being equal to `nat`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `gateway` equal to `nat`").String,
 							Optional:            true,
 						},
 					},

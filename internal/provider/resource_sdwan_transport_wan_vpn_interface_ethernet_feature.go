@@ -134,37 +134,37 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				},
 			},
 			"ipv4_dhcp_distance": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("DHCP Distance, Attribute conditional on `ipv4_configuration_type` being equal to `dynamic`").AddIntegerRangeDescription(1, 65536).AddDefaultValueDescription("1").String,
+				MarkdownDescription: helpers.NewAttributeDescription("DHCP Distance, Attribute conditional on `ipv4_configuration_type` equal to `dynamic`").AddIntegerRangeDescription(1, 65536).AddDefaultValueDescription("1").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65536),
 				},
 			},
 			"ipv4_dhcp_distance_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv4_configuration_type` being equal to `dynamic`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv4_configuration_type` equal to `dynamic`").String,
 				Optional:            true,
 			},
 			"ipv4_address": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IP Address, Attribute conditional on `ipv4_configuration_type` being equal to `static`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IP Address, Attribute conditional on `ipv4_configuration_type` equal to `static`").String,
 				Optional:            true,
 			},
 			"ipv4_address_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv4_configuration_type` being equal to `static`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv4_configuration_type` equal to `static`").String,
 				Optional:            true,
 			},
 			"ipv4_subnet_mask": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Subnet Mask, Attribute conditional on `ipv4_configuration_type` being equal to `static`").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Subnet Mask, Attribute conditional on `ipv4_configuration_type` equal to `static`").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0"),
 				},
 			},
 			"ipv4_subnet_mask_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv4_configuration_type` being equal to `static`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv4_configuration_type` equal to `static`").String,
 				Optional:            true,
 			},
 			"ipv4_secondary_addresses": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Secondary IpV4 Addresses, Attribute conditional on `ipv4_configuration_type` being equal to `static`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Secondary IpV4 Addresses, Attribute conditional on `ipv4_configuration_type` equal to `static`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -207,11 +207,11 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				},
 			},
 			"enable_dhcpv6": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable DHCPv6, Attribute conditional on `ipv6_configuration_type` being equal to `dynamic`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable DHCPv6, Attribute conditional on `ipv6_configuration_type` equal to `dynamic`").String,
 				Optional:            true,
 			},
 			"ipv6_dhcp_secondary_address": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` being equal to `dynamic`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` equal to `dynamic`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -230,18 +230,18 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				},
 			},
 			"ipv6_address": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv6 Address Secondary, Attribute conditional on `ipv6_configuration_type` being equal to `static`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv6 Address Secondary, Attribute conditional on `ipv6_configuration_type` equal to `static`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
 				},
 			},
 			"ipv6_address_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv6_configuration_type` being equal to `static`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv6_configuration_type` equal to `static`").String,
 				Optional:            true,
 			},
 			"ipv6_secondary_addresses": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Static secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` being equal to `static`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Static secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` equal to `static`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -318,226 +318,226 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"per_tunnel_qos": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Per-tunnel Qos, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Per-tunnel Qos, Attribute conditional on `tunnel_interface` equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"per_tunnel_qos_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_qos_mode": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set tunnel QoS mode, Attribute conditional on `tunnel_interface` being equal to `true`").AddStringEnumDescription("hub", "spoke").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set tunnel QoS mode, Attribute conditional on `tunnel_interface` equal to `true`").AddStringEnumDescription("hub", "spoke").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("hub", "spoke"),
 				},
 			},
 			"tunnel_qos_mode_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_bandwidth_percent": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Tunnels Bandwidth Percent, Attribute conditional on `tunnel_interface` being equal to `true`").AddIntegerRangeDescription(1, 100).AddDefaultValueDescription("50").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Tunnels Bandwidth Percent, Attribute conditional on `tunnel_interface` equal to `true`").AddIntegerRangeDescription(1, 100).AddDefaultValueDescription("50").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 100),
 				},
 			},
 			"tunnel_bandwidth_percent_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_bind_loopback_tunnel": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Bind loopback tunnel interface to a physical interface, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Bind loopback tunnel interface to a physical interface, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 32),
 				},
 			},
 			"tunnel_interface_bind_loopback_tunnel_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_carrier": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set carrier for TLOC, Attribute conditional on `tunnel_interface` being equal to `true`").AddStringEnumDescription("default", "carrier1", "carrier2", "carrier3", "carrier4", "carrier5", "carrier6", "carrier7", "carrier8").AddDefaultValueDescription("default").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set carrier for TLOC, Attribute conditional on `tunnel_interface` equal to `true`").AddStringEnumDescription("default", "carrier1", "carrier2", "carrier3", "carrier4", "carrier5", "carrier6", "carrier7", "carrier8").AddDefaultValueDescription("default").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("default", "carrier1", "carrier2", "carrier3", "carrier4", "carrier5", "carrier6", "carrier7", "carrier8"),
 				},
 			},
 			"tunnel_interface_carrier_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_color": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set color for TLOC, Attribute conditional on `tunnel_interface` being equal to `true`").AddStringEnumDescription("default", "mpls", "metro-ethernet", "biz-internet", "public-internet", "lte", "3g", "red", "green", "blue", "gold", "silver", "bronze", "custom1", "custom2", "custom3", "private1", "private2", "private3", "private4", "private5", "private6").AddDefaultValueDescription("mpls").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set color for TLOC, Attribute conditional on `tunnel_interface` equal to `true`").AddStringEnumDescription("default", "mpls", "metro-ethernet", "biz-internet", "public-internet", "lte", "3g", "red", "green", "blue", "gold", "silver", "bronze", "custom1", "custom2", "custom3", "private1", "private2", "private3", "private4", "private5", "private6").AddDefaultValueDescription("mpls").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("default", "mpls", "metro-ethernet", "biz-internet", "public-internet", "lte", "3g", "red", "green", "blue", "gold", "silver", "bronze", "custom1", "custom2", "custom3", "private1", "private2", "private3", "private4", "private5", "private6"),
 				},
 			},
 			"tunnel_interface_color_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_hello_interval": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set time period of control hello packets <100..600000> milli seconds, Attribute conditional on `tunnel_interface` being equal to `true`").AddIntegerRangeDescription(100, 600000).AddDefaultValueDescription("1000").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set time period of control hello packets <100..600000> milli seconds, Attribute conditional on `tunnel_interface` equal to `true`").AddIntegerRangeDescription(100, 600000).AddDefaultValueDescription("1000").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(100, 600000),
 				},
 			},
 			"tunnel_interface_hello_interval_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_hello_tolerance": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set tolerance of control hello packets <12..6000> seconds, Attribute conditional on `tunnel_interface` being equal to `true`").AddIntegerRangeDescription(12, 6000).AddDefaultValueDescription("12").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set tolerance of control hello packets <12..6000> seconds, Attribute conditional on `tunnel_interface` equal to `true`").AddIntegerRangeDescription(12, 6000).AddDefaultValueDescription("12").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(12, 6000),
 				},
 			},
 			"tunnel_interface_hello_tolerance_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_last_resort_circuit": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set TLOC as last resort, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set TLOC as last resort, Attribute conditional on `tunnel_interface` equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"tunnel_interface_last_resort_circuit_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_gre_tunnel_destination_ip": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("GRE tunnel destination IP, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("GRE tunnel destination IP, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_gre_tunnel_destination_ip_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_color_restrict": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Restrict this TLOC behavior, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Restrict this TLOC behavior, Attribute conditional on `tunnel_interface` equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"tunnel_interface_color_restrict_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_groups": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of groups, Attribute conditional on `tunnel_interface` being equal to `true`").AddIntegerRangeDescription(1, 4294967295).String,
+				MarkdownDescription: helpers.NewAttributeDescription("List of groups, Attribute conditional on `tunnel_interface` equal to `true`").AddIntegerRangeDescription(1, 4294967295).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 4294967295),
 				},
 			},
 			"tunnel_interface_groups_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_border": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set TLOC as border TLOC, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set TLOC as border TLOC, Attribute conditional on `tunnel_interface` equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"tunnel_interface_border_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_max_control_connections": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Maximum Control Connections, Attribute conditional on `tunnel_interface` being equal to `true`").AddIntegerRangeDescription(0, 100).String,
+				MarkdownDescription: helpers.NewAttributeDescription("Maximum Control Connections, Attribute conditional on `tunnel_interface` equal to `true`").AddIntegerRangeDescription(0, 100).String,
 				Optional:            true,
 			},
 			"tunnel_interface_max_control_connections_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_nat_refresh_interval": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set time period of nat refresh packets <1...60> seconds, Attribute conditional on `tunnel_interface` being equal to `true`").AddIntegerRangeDescription(1, 60).AddDefaultValueDescription("5").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set time period of nat refresh packets <1...60> seconds, Attribute conditional on `tunnel_interface` equal to `true`").AddIntegerRangeDescription(1, 60).AddDefaultValueDescription("5").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 60),
 				},
 			},
 			"tunnel_interface_nat_refresh_interval_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_vbond_as_stun_server": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Put this wan interface in STUN mode only, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Put this wan interface in STUN mode only, Attribute conditional on `tunnel_interface` equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"tunnel_interface_vbond_as_stun_server_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_exclude_controller_group_list": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Exclude the following controller groups defined in this list., Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Exclude the following controller groups defined in this list., Attribute conditional on `tunnel_interface` equal to `true`").String,
 				ElementType:         types.Int64Type,
 				Optional:            true,
 			},
 			"tunnel_interface_exclude_controller_group_list_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_vmanage_connection_preference": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set interface preference for control connection to vManage <0..8>, Attribute conditional on `tunnel_interface` being equal to `true`").AddIntegerRangeDescription(0, 8).AddDefaultValueDescription("5").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set interface preference for control connection to vManage <0..8>, Attribute conditional on `tunnel_interface` equal to `true`").AddIntegerRangeDescription(0, 8).AddDefaultValueDescription("5").String,
 				Optional:            true,
 			},
 			"tunnel_interface_vmanage_connection_preference_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_port_hop": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Disallow port hopping on the tunnel interface, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Disallow port hopping on the tunnel interface, Attribute conditional on `tunnel_interface` equal to `true`").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
 			"tunnel_interface_port_hop_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_low_bandwidth_link": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set the interface as a low-bandwidth circuit, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set the interface as a low-bandwidth circuit, Attribute conditional on `tunnel_interface` equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"tunnel_interface_low_bandwidth_link_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_tunnel_tcp_mss": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Tunnel TCP MSS on SYN packets, in bytes, Attribute conditional on `tunnel_interface` being equal to `true`").AddIntegerRangeDescription(500, 1460).String,
+				MarkdownDescription: helpers.NewAttributeDescription("Tunnel TCP MSS on SYN packets, in bytes, Attribute conditional on `tunnel_interface` equal to `true`").AddIntegerRangeDescription(500, 1460).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(500, 1460),
 				},
 			},
 			"tunnel_interface_tunnel_tcp_mss_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_clear_dont_fragment": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable clear dont fragment (Currently Only SDWAN Tunnel Interface), Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable clear dont fragment (Currently Only SDWAN Tunnel Interface), Attribute conditional on `tunnel_interface` equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"tunnel_interface_clear_dont_fragment_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_cts_sgt_propagation": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("CTS SGT Propagation configuration, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("CTS SGT Propagation configuration, Attribute conditional on `tunnel_interface` equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"tunnel_interface_cts_sgt_propagation_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_network_broadcast": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Accept and respond to network-prefix-directed broadcasts, Attribute conditional on `tunnel_interface` being equal to `true`").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Accept and respond to network-prefix-directed broadcasts, Attribute conditional on `tunnel_interface` equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"tunnel_interface_network_broadcast_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_allow_all": schema.BoolAttribute{
@@ -690,86 +690,86 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"nat_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Type, Attribute conditional on `nat_ipv4` being equal to `true`").AddStringEnumDescription("interface", "pool", "loopback").AddDefaultValueDescription("interface").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT Type, Attribute conditional on `nat_ipv4` equal to `true`").AddStringEnumDescription("interface", "pool", "loopback").AddDefaultValueDescription("interface").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("interface", "pool", "loopback"),
 				},
 			},
 			"nat_type_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_range_start": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Range Start, Attribute conditional on `nat_ipv4` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Range Start, Attribute conditional on `nat_ipv4` equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_range_start_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_range_end": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Range End, Attribute conditional on `nat_ipv4` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Range End, Attribute conditional on `nat_ipv4` equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_range_end_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_prefix_length": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Prefix Length, Attribute conditional on `nat_ipv4` being equal to `true`").AddIntegerRangeDescription(1, 32).String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Prefix Length, Attribute conditional on `nat_ipv4` equal to `true`").AddIntegerRangeDescription(1, 32).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 32),
 				},
 			},
 			"nat_prefix_length_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_overload": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Overload, Attribute conditional on `nat_ipv4` being equal to `true`").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT Overload, Attribute conditional on `nat_ipv4` equal to `true`").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
 			"nat_overload_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_loopback": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Inside Source Loopback Interface, Attribute conditional on `nat_ipv4` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT Inside Source Loopback Interface, Attribute conditional on `nat_ipv4` equal to `true`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 32),
 				},
 			},
 			"nat_loopback_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_udp_timeout": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set NAT UDP session timeout, in minutes, Attribute conditional on `nat_ipv4` being equal to `true`").AddIntegerRangeDescription(1, 8947).AddDefaultValueDescription("1").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set NAT UDP session timeout, in minutes, Attribute conditional on `nat_ipv4` equal to `true`").AddIntegerRangeDescription(1, 8947).AddDefaultValueDescription("1").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 8947),
 				},
 			},
 			"nat_udp_timeout_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` equal to `true`").String,
 				Optional:            true,
 			},
 			"nat_tcp_timeout": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set NAT TCP session timeout, in minutes, Attribute conditional on `nat_ipv4` being equal to `true`").AddIntegerRangeDescription(1, 8947).AddDefaultValueDescription("60").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set NAT TCP session timeout, in minutes, Attribute conditional on `nat_ipv4` equal to `true`").AddIntegerRangeDescription(1, 8947).AddDefaultValueDescription("60").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 8947),
 				},
 			},
 			"nat_tcp_timeout_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `nat_ipv4` equal to `true`").String,
 				Optional:            true,
 			},
 			"new_static_nats": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("static NAT, Attribute conditional on `nat_ipv4` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("static NAT, Attribute conditional on `nat_ipv4` equal to `true`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -819,15 +819,15 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"nat64": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT64 on this interface, Attribute conditional on `nat_ipv6` being equal to `true`").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT64 on this interface, Attribute conditional on `nat_ipv6` equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"nat66": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT66 on this interface, Attribute conditional on `nat_ipv6` being equal to `true`").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT66 on this interface, Attribute conditional on `nat_ipv6` equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"static_nat66": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("static NAT66, Attribute conditional on `nat_ipv6` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("static NAT66, Attribute conditional on `nat_ipv6` equal to `true`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{

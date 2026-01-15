@@ -58,7 +58,7 @@ resource "sdwan_policy_object_unified_tls_ssl_decryption" "example" {
 - `default_ca_certificate_bundle` (Boolean)
 - `description` (String) The description of the Policy_object
 - `file_name` (String)
-- `unknown_revocation_status` (String) Only required if certificateRevocationStatus is oscp, if value is none then field shouldn't be here, Attribute conditional on `certificate_revocation_status` being equal to `ocsp`
+- `unknown_revocation_status` (String) Only required if certificateRevocationStatus is oscp, if value is none then field shouldn't be here, Attribute conditional on `certificate_revocation_status` equal to `ocsp`
   - Choices: `decrypt`, `drop`
 
 ### Read-Only
