@@ -9,7 +9,8 @@ description: |-
 
 ## 0.9.1 (Unreleased)
 
-- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_banner_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_aaa_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_banner_feature` to `20.15.0`
 
 ## 0.9.0
 

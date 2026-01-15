@@ -4,13 +4,13 @@ page_title: "sdwan_system_aaa_feature Resource - terraform-provider-sdwan"
 subcategory: "Features - System"
 description: |-
   This resource can manage a System AAA Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_system_aaa_feature (Resource)
 
 This resource can manage a System AAA Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -188,13 +188,14 @@ Optional:
   - Range: `1`-`65534`
   - Default value: `1812`
 - `auth_port_variable` (String) Variable name
-- `key` (String) Set the Radius server shared key
+- `key` (String) Set the Radius server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `key_enum` (String) Type of encyption. To be used for type 6
   - Choices: `6`, `7`
 - `key_type` (String) key type
   - Choices: `key`, `pac`
   - Default value: `key`
 - `key_type_variable` (String) Variable name
+- `key_variable` (String) Variable name
 - `retransmit` (Number) Configure how many times to contact this Radius server
   - Range: `1`-`100`
   - Default value: `3`
@@ -227,9 +228,10 @@ Optional:
 Optional:
 
 - `address` (String) Set IP address of TACACS server
-- `key` (String) Set the TACACS server shared key
+- `key` (String) Set the TACACS server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `key_enum` (String) Type of encyption. To be used for type 6
   - Choices: `6`, `7`
+- `key_variable` (String) Variable name
 - `port` (Number) TACACS Port
   - Range: `1`-`65535`
   - Default value: `49`
@@ -250,7 +252,7 @@ Optional:
 
 - `name` (String) Set the username
 - `name_variable` (String) Variable name
-- `password` (String) Set the user password
+- `password` (String) Set the user password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `password_variable` (String) Variable name
 - `privilege` (String) Set Privilege Level for this user
   - Choices: `1`, `15`
@@ -264,8 +266,9 @@ Optional:
 Optional:
 
 - `key_string` (String) Set the RSA key string
+- `key_string_variable` (String) Variable name
 - `key_type` (String) Only RSA is supported
-- `key_type_variable` (String) Variable name
+  - Choices: `ssh-rsa`
 
 ## Import
 
