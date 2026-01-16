@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanTransportWANVPNInterfaceEthernetProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "shutdown", "true"))
@@ -40,6 +40,7 @@ func TestAccSdwanTransportWANVPNInterfaceEthernetProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "ipv4_subnet_mask", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "ipv4_secondary_addresses.0.address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "ipv4_secondary_addresses.0.subnet_mask", "0.0.0.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "ipv6_address", "2001:0:0:1::1/64"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "iperf_server", "example"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "block_non_source_ip", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "service_provider", "example"))
@@ -52,7 +53,7 @@ func TestAccSdwanTransportWANVPNInterfaceEthernetProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_bandwidth_percent", "82"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_interface_bind_loopback_tunnel", "example"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_interface_carrier", "default"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_interface_color", "default"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_interface_color", "mpls"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_interface_hello_interval", "1000"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_interface_hello_tolerance", "12"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_interface_last_resort_circuit", "false"))
@@ -70,6 +71,8 @@ func TestAccSdwanTransportWANVPNInterfaceEthernetProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_interface_clear_dont_fragment", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_interface_cts_sgt_propagation", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_interface_network_broadcast", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_interface_allow_fragmentation", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_interface_set_sdwan_tunnel_mtu_to_max", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_interface_allow_all", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_interface_allow_bgp", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_interface_allow_dhcp", "true"))
@@ -88,18 +91,35 @@ func TestAccSdwanTransportWANVPNInterfaceEthernetProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_interface_encapsulations.0.weight", "250"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "nat_ipv4", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "nat_type", "interface"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "nat_ipv4_pools.0.name", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "nat_ipv4_pools.0.range_start", "203.0.115.50"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "nat_ipv4_pools.0.range_end", "203.0.115.100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "nat_ipv4_pools.0.overload", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "nat_ipv4_pools.0.prefix_length", "25"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "nat_ipv4_pools.0.enable_dual_router_ha_mapping", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "nat_ipv4_loopbacks.0.loopback_interface", "Loopback0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "nat_udp_timeout", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "nat_tcp_timeout", "60"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "new_static_nats.0.source_ip", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "new_static_nats.0.translated_ip", "2.3.4.5"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "new_static_nats.0.direction", "inside"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "new_static_nats.0.source_vpn", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "new_static_nats.0.enable_dual_router_ha_mapping", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "static_port_forwards.0.protocol", "tcp"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "static_port_forwards.0.source_ip", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "static_port_forwards.0.source_port", "8080"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "static_port_forwards.0.translated_ip", "2.3.4.5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "static_port_forwards.0.translated_port", "80"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "static_port_forwards.0.direction", "inside"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "static_port_forwards.0.source_vpn", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "static_port_forwards.0.enable_dual_router_ha_mapping", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "nat_ipv6", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "nat64", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "nat66", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "static_nat66.0.source_prefix", "2001:0db8:85a3::/48"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "static_nat66.0.translated_source_prefix", "abcd:1234:5678::/48"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "static_nat66.0.source_vpn_id", "4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "static_nat66.0.egress_interface", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "qos_adaptive", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "qos_shaping_rate", "16"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "arps.0.ip_address", "1.2.3.4"))
@@ -307,6 +327,7 @@ func testAccSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig_all() strin
 	config += `	}]` + "\n"
 	config += `	ipv4_dhcp_helper = ["1.2.3.4"]` + "\n"
 	config += `	ipv6_configuration_type = "static"` + "\n"
+	config += `	ipv6_address = "2001:0:0:1::1/64"` + "\n"
 	config += `	iperf_server = "example"` + "\n"
 	config += `	block_non_source_ip = false` + "\n"
 	config += `	service_provider = "example"` + "\n"
@@ -319,7 +340,7 @@ func testAccSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig_all() strin
 	config += `	tunnel_bandwidth_percent = 82` + "\n"
 	config += `	tunnel_interface_bind_loopback_tunnel = "example"` + "\n"
 	config += `	tunnel_interface_carrier = "default"` + "\n"
-	config += `	tunnel_interface_color = "default"` + "\n"
+	config += `	tunnel_interface_color = "mpls"` + "\n"
 	config += `	tunnel_interface_hello_interval = 1000` + "\n"
 	config += `	tunnel_interface_hello_tolerance = 12` + "\n"
 	config += `	tunnel_interface_last_resort_circuit = false` + "\n"
@@ -338,6 +359,8 @@ func testAccSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig_all() strin
 	config += `	tunnel_interface_clear_dont_fragment = false` + "\n"
 	config += `	tunnel_interface_cts_sgt_propagation = false` + "\n"
 	config += `	tunnel_interface_network_broadcast = false` + "\n"
+	config += `	tunnel_interface_allow_fragmentation = false` + "\n"
+	config += `	tunnel_interface_set_sdwan_tunnel_mtu_to_max = false` + "\n"
 	config += `	tunnel_interface_allow_all = false` + "\n"
 	config += `	tunnel_interface_allow_bgp = false` + "\n"
 	config += `	tunnel_interface_allow_dhcp = true` + "\n"
@@ -358,6 +381,17 @@ func testAccSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig_all() strin
 	config += `	}]` + "\n"
 	config += `	nat_ipv4 = true` + "\n"
 	config += `	nat_type = "interface"` + "\n"
+	config += `	nat_ipv4_pools = [{` + "\n"
+	config += `	  name = 10` + "\n"
+	config += `	  range_start = "203.0.115.50"` + "\n"
+	config += `	  range_end = "203.0.115.100"` + "\n"
+	config += `	  overload = true` + "\n"
+	config += `	  prefix_length = 25` + "\n"
+	config += `	  enable_dual_router_ha_mapping = false` + "\n"
+	config += `	}]` + "\n"
+	config += `	nat_ipv4_loopbacks = [{` + "\n"
+	config += `	  loopback_interface = "Loopback0"` + "\n"
+	config += `	}]` + "\n"
 	config += `	nat_udp_timeout = 1` + "\n"
 	config += `	nat_tcp_timeout = 60` + "\n"
 	config += `	new_static_nats = [{` + "\n"
@@ -365,6 +399,17 @@ func testAccSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig_all() strin
 	config += `	  translated_ip = "2.3.4.5"` + "\n"
 	config += `	  direction = "inside"` + "\n"
 	config += `	  source_vpn = 3` + "\n"
+	config += `	  enable_dual_router_ha_mapping = false` + "\n"
+	config += `	}]` + "\n"
+	config += `	static_port_forwards = [{` + "\n"
+	config += `	  protocol = "tcp"` + "\n"
+	config += `	  source_ip = "1.2.3.4"` + "\n"
+	config += `	  source_port = 8080` + "\n"
+	config += `	  translated_ip = "2.3.4.5"` + "\n"
+	config += `	  translated_port = 80` + "\n"
+	config += `	  direction = "inside"` + "\n"
+	config += `	  source_vpn = 3` + "\n"
+	config += `	  enable_dual_router_ha_mapping = false` + "\n"
 	config += `	}]` + "\n"
 	config += `	nat_ipv6 = true` + "\n"
 	config += `	nat64 = false` + "\n"
@@ -373,6 +418,7 @@ func testAccSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig_all() strin
 	config += `	  source_prefix = "2001:0db8:85a3::/48"` + "\n"
 	config += `	  translated_source_prefix = "abcd:1234:5678::/48"` + "\n"
 	config += `	  source_vpn_id = 4` + "\n"
+	config += `	  egress_interface = true` + "\n"
 	config += `	}]` + "\n"
 	config += `	qos_adaptive = false` + "\n"
 	config += `	qos_shaping_rate = 16` + "\n"
