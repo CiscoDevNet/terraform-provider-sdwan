@@ -65,7 +65,7 @@ func (r *SystemBasicProfileParcelResource) Metadata(ctx context.Context, req res
 func (r *SystemBasicProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System Basic Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System Basic Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -298,6 +298,14 @@ func (r *SystemBasicProfileParcelResource) Schema(ctx context.Context, req resou
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
+			"tracker_dia_stabilize_status": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enable or disable endpoint tracker diaStabilize status").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"tracker_dia_stabilize_status_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
 			"admin_tech_on_failure": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Collect admin-tech before reboot due to daemon failure").AddDefaultValueDescription("true").String,
 				Optional:            true,
@@ -410,7 +418,6 @@ func (r *SystemBasicProfileParcelResource) Schema(ctx context.Context, req resou
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 11),
-								stringvalidator.RegexMatches(regexp.MustCompile(`^\d+|\d+-\d+$`), ""),
 							},
 						},
 						"vrf_range_variable": schema.StringAttribute{

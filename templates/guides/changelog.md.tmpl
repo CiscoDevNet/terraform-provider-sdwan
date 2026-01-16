@@ -11,6 +11,7 @@ description: |-
 
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_aaa_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_banner_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_basic_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_bfd_feature` to `20.15.0`
 
 ## 0.9.0

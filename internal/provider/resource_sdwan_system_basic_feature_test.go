@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanSystemBasicProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_feature.test", "timezone", "UTC"))
@@ -52,6 +52,7 @@ func TestAccSdwanSystemBasicProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_feature.test", "max_omp_sessions", "24"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_feature.test", "multi_tenant", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_feature.test", "track_default_gateway", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_feature.test", "tracker_dia_stabilize_status", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_feature.test", "admin_tech_on_failure", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_feature.test", "idle_timeout", "10"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_feature.test", "on_demand_enable", "true"))
@@ -130,6 +131,7 @@ func testAccSdwanSystemBasicProfileParcelConfig_all() string {
 	config += `	max_omp_sessions = 24` + "\n"
 	config += `	multi_tenant = false` + "\n"
 	config += `	track_default_gateway = true` + "\n"
+	config += `	tracker_dia_stabilize_status = false` + "\n"
 	config += `	admin_tech_on_failure = true` + "\n"
 	config += `	idle_timeout = 10` + "\n"
 	config += `	on_demand_enable = true` + "\n"

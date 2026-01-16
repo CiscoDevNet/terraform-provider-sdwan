@@ -4,13 +4,13 @@ page_title: "sdwan_system_basic_feature Resource - terraform-provider-sdwan"
 subcategory: "Features - System"
 description: |-
   This resource can manage a System Basic Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_system_basic_feature (Resource)
 
 This resource can manage a System Basic Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -32,28 +32,29 @@ resource "sdwan_system_basic_feature" "example" {
       number = "+11111233"
     }
   ]
-  device_groups              = ["example"]
-  controller_groups          = [1]
-  overlay_id                 = 1
-  port_offset                = 19
-  port_hopping               = true
-  control_session_pps        = 300
-  track_transport            = true
-  track_interface_tag        = 2
-  console_baud_rate          = "9600"
-  max_omp_sessions           = 24
-  multi_tenant               = false
-  track_default_gateway      = true
-  admin_tech_on_failure      = true
-  idle_timeout               = 10
-  on_demand_enable           = true
-  on_demand_idle_timeout     = 10
-  transport_gateway          = false
-  enhanced_app_aware_routing = "aggressive"
-  site_types                 = ["type-1"]
-  affinity_group_number      = 1
-  affinity_group_preferences = [1]
-  affinity_preference_auto   = false
+  device_groups                = ["example"]
+  controller_groups            = [1]
+  overlay_id                   = 1
+  port_offset                  = 19
+  port_hopping                 = true
+  control_session_pps          = 300
+  track_transport              = true
+  track_interface_tag          = 2
+  console_baud_rate            = "9600"
+  max_omp_sessions             = 24
+  multi_tenant                 = false
+  track_default_gateway        = true
+  tracker_dia_stabilize_status = false
+  admin_tech_on_failure        = true
+  idle_timeout                 = 10
+  on_demand_enable             = true
+  on_demand_idle_timeout       = 10
+  transport_gateway            = false
+  enhanced_app_aware_routing   = "aggressive"
+  site_types                   = ["type-1"]
+  affinity_group_number        = 1
+  affinity_group_preferences   = [1]
+  affinity_preference_auto     = false
   affinity_per_vrfs = [
     {
       affinity_group_number = 1
@@ -163,6 +164,9 @@ resource "sdwan_system_basic_feature" "example" {
 - `track_transport` (Boolean) Configure tracking of transport
   - Default value: `true`
 - `track_transport_variable` (String) Variable name
+- `tracker_dia_stabilize_status` (Boolean) Enable or disable endpoint tracker diaStabilize status
+  - Default value: `false`
+- `tracker_dia_stabilize_status_variable` (String) Variable name
 - `transport_gateway` (Boolean) Enable transport gateway
   - Default value: `false`
 - `transport_gateway_variable` (String) Variable name
