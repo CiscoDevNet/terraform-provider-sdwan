@@ -92,7 +92,7 @@ attribute:
 conditional_attribute:
   operator: enum('and', 'or', required=False) # Logical operator between conditions (default: 'and')
   conditions: list(include('condition')) # List of conditions (single or multiple)
----
+
 condition:
   name: str() # Reference to other attribute
   value: any(str(), bool()) # Attribute value to check
