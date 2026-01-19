@@ -4,13 +4,13 @@ page_title: "sdwan_other_thousandeyes_feature Resource - terraform-provider-sdwa
 subcategory: "Features - Other"
 description: |-
   This resource can manage a Other ThousandEyes Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_other_thousandeyes_feature (Resource)
 
 This resource can manage a Other ThousandEyes Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
