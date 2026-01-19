@@ -26,17 +26,19 @@ attributes:
   - model_name: decryptThreshold
     ignore_mandatory: true
     conditional_attribute:
-      name: reputation
-      value: true
-      type: Bool
+      conditions:
+        - name: reputation
+          value: true
+          type: Bool
     example: moderate-risk
   - model_name: skipDecryptThreshold
     tf_name: threshold_categories
     ignore_mandatory: true
     conditional_attribute:
-      name: reputation
-      value: true
-      type: Bool
+      conditions:
+        - name: reputation
+          value: true
+          type: Bool
     example: moderate-risk
   - model_name: failDecrypt
     example: true

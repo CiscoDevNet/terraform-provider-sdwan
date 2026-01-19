@@ -130,11 +130,11 @@ func (r *PolicyObjectUnifiedURLFilteringProfileParcelResource) Schema(ctx contex
 				},
 			},
 			"block_page_contents": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `block_page_action` being equal to `text`").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `block_page_action` equal to `text`").String,
 				Optional:            true,
 			},
 			"redirect_url": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `block_page_action` being equal to `redirect-url`").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `block_page_action` equal to `redirect-url`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`^(http://www\.|https://www\.|http://|https://)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(/.*)?$`), ""),
@@ -145,7 +145,7 @@ func (r *PolicyObjectUnifiedURLFilteringProfileParcelResource) Schema(ctx contex
 				Required:            true,
 			},
 			"alerts": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `enable_alerts` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `enable_alerts` equal to `true`").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},

@@ -22,6 +22,7 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"regexp"
 	"strings"
 	"sync"
 
@@ -63,7 +64,7 @@ func (r *SystemAAAProfileParcelResource) Metadata(ctx context.Context, req resou
 func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System AAA Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System AAA Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -120,6 +121,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 64),
+								stringvalidator.RegexMatches(regexp.MustCompile(`^[^&<>! "]+$`), ""),
 							},
 						},
 						"name_variable": schema.StringAttribute{
@@ -127,7 +129,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 							Optional:            true,
 						},
 						"password": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set the user password").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set the user password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
 							Optional:            true,
 						},
 						"password_variable": schema.StringAttribute{
@@ -155,18 +157,19 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthBetween(1, 1024),
+											stringvalidator.RegexMatches(regexp.MustCompile(`^AAAA[0-9A-Za-z+/]+[=]{0,3}$`), ""),
 										},
 									},
-									"key_type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Only RSA is supported").String,
-										Optional:            true,
-										Validators: []validator.String{
-											stringvalidator.LengthBetween(1, 32),
-										},
-									},
-									"key_type_variable": schema.StringAttribute{
+									"key_string_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
+									},
+									"key_type": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Only RSA is supported").AddStringEnumDescription("ssh-rsa").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("ssh-rsa"),
+										},
 									},
 								},
 							},
@@ -197,7 +200,8 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 							MarkdownDescription: helpers.NewAttributeDescription("Set interface to use to reach Radius server").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.LengthAtMost(32),
+								stringvalidator.LengthBetween(3, 32),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
 							},
 						},
 						"source_interface_variable": schema.StringAttribute{
@@ -258,11 +262,15 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 										Optional:            true,
 									},
 									"key": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set the Radius server shared key").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set the Radius server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthAtLeast(1),
 										},
+									},
+									"key_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
 									},
 									"secret_key": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set the Radius server shared type 7 encrypted key").String,
@@ -322,7 +330,8 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 							MarkdownDescription: helpers.NewAttributeDescription("Set interface to use to reach TACACS server").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.LengthAtMost(32),
+								stringvalidator.LengthBetween(3, 32),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
 							},
 						},
 						"source_interface_variable": schema.StringAttribute{
@@ -361,11 +370,15 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 										Optional:            true,
 									},
 									"key": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set the TACACS server shared key").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set the TACACS server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthAtLeast(1),
 										},
+									},
+									"key_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
 									},
 									"secret_key": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set the TACACS server shared type 7 encrypted key").String,

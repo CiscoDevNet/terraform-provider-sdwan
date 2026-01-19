@@ -1,663 +1,643 @@
 {
-    "request": {
-        "$schema": "http://json-schema.org/draft/2019-09/schema",
-        "$id": "https://cisco.com/schema/profileparcel/sdwan/system/bfd/post/request_schema.json",
-        "title": "BFD Parcel Schema",
-        "description": "BFD profile parcel schema for POST request",
+  "request": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/system/bfd/post/request_schema.json",
+    "title": "BFD Parcel Schema",
+    "description": "BFD profile parcel schema for POST request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "description": {
+        "type": "string"
+      },
+      "data": {
         "type": "object",
         "properties": {
-            "name": {
-                "type": "string",
-                "pattern": "^[^&<>! \"]+$",
-                "minLength": 1,
-                "maxLength": 128
-            },
-            "description": {
-                "type": "string"
-            },
-            "data": {
-                "type": "object",
+          "multiplier": {
+            "type": "object",
+            "oneOf": [
+              {
                 "properties": {
-                    "multiplier": {
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "variable"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "string",
-                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                                        "minLength": 1,
-                                        "maxLength": 64
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            },
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "default": 6,
-                                        "maximum": 6,
-                                        "minimum": 1,
-                                        "type": "number"
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            },
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "default"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "integer",
-                                        "minimum": 6,
-                                        "maximum": 6
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    },
-                    "pollInterval": {
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "variable"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "string",
-                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                                        "minLength": 1,
-                                        "maxLength": 64
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            },
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "default": 600000,
-                                        "maximum": 4294967295,
-                                        "minimum": 1,
-                                        "type": "number"
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            },
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "default"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "integer",
-                                        "minimum": 600000,
-                                        "maximum": 600000
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    },
-                    "defaultDscp": {
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "variable"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "string",
-                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                                        "minLength": 1,
-                                        "maxLength": 64
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            },
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "default": 48,
-                                        "maximum": 63,
-                                        "minimum": 0,
-                                        "type": "number"
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            },
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "default"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "integer",
-                                        "minimum": 48,
-                                        "maximum": 48
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    },
-                    "colors": {
-                        "description": "Set color that identifies the WAN transport tunnel",
-                        "type": "array",
-                        "uniqueItems": true,
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "color": {
-                                    "description": "Color that identifies the WAN transport tunnel",
-                                    "type": "object",
-                                    "oneOf": [
-                                        {
-                                            "properties": {
-                                                "optionType": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "variable"
-                                                    ]
-                                                },
-                                                "value": {
-                                                    "type": "string",
-                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                                                    "minLength": 1,
-                                                    "maxLength": 64
-                                                }
-                                            },
-                                            "required": [
-                                                "optionType",
-                                                "value"
-                                            ],
-                                            "additionalProperties": false
-                                        },
-                                        {
-                                            "properties": {
-                                                "optionType": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "global"
-                                                    ]
-                                                },
-                                                "value": {
-                                                    "enum": [
-                                                        "default",
-                                                        "mpls",
-                                                        "metro-ethernet",
-                                                        "biz-internet",
-                                                        "public-internet",
-                                                        "lte",
-                                                        "3g",
-                                                        "red",
-                                                        "green",
-                                                        "blue",
-                                                        "gold",
-                                                        "silver",
-                                                        "bronze",
-                                                        "custom1",
-                                                        "custom2",
-                                                        "custom3",
-                                                        "private1",
-                                                        "private2",
-                                                        "private3",
-                                                        "private4",
-                                                        "private5",
-                                                        "private6"
-                                                    ],
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "required": [
-                                                "optionType",
-                                                "value"
-                                            ],
-                                            "additionalProperties": false
-                                        }
-                                    ]
-                                },
-                                "helloInterval": {
-                                    "description": "Hello Interval (milliseconds)",
-                                    "type": "object",
-                                    "oneOf": [
-                                        {
-                                            "properties": {
-                                                "optionType": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "variable"
-                                                    ]
-                                                },
-                                                "value": {
-                                                    "type": "string",
-                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                                                    "minLength": 1,
-                                                    "maxLength": 64
-                                                }
-                                            },
-                                            "required": [
-                                                "optionType",
-                                                "value"
-                                            ],
-                                            "additionalProperties": false
-                                        },
-                                        {
-                                            "properties": {
-                                                "optionType": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "global"
-                                                    ]
-                                                },
-                                                "value": {
-                                                    "default": 1000,
-                                                    "maximum": 300000,
-                                                    "minimum": 100,
-                                                    "type": "integer"
-                                                }
-                                            },
-                                            "required": [
-                                                "optionType",
-                                                "value"
-                                            ],
-                                            "additionalProperties": false
-                                        },
-                                        {
-                                            "properties": {
-                                                "optionType": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "default"
-                                                    ]
-                                                },
-                                                "value": {
-                                                    "type": "integer",
-                                                    "minimum": 1000,
-                                                    "maximum": 1000
-                                                }
-                                            },
-                                            "required": [
-                                                "optionType",
-                                                "value"
-                                            ],
-                                            "additionalProperties": false
-                                        }
-                                    ]
-                                },
-                                "multiplier": {
-                                    "description": "Multiplier",
-                                    "type": "object",
-                                    "oneOf": [
-                                        {
-                                            "properties": {
-                                                "optionType": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "variable"
-                                                    ]
-                                                },
-                                                "value": {
-                                                    "type": "string",
-                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                                                    "minLength": 1,
-                                                    "maxLength": 64
-                                                }
-                                            },
-                                            "required": [
-                                                "optionType",
-                                                "value"
-                                            ],
-                                            "additionalProperties": false
-                                        },
-                                        {
-                                            "properties": {
-                                                "optionType": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "global"
-                                                    ]
-                                                },
-                                                "value": {
-                                                    "default": 7,
-                                                    "maximum": 60,
-                                                    "minimum": 1,
-                                                    "type": "integer"
-                                                }
-                                            },
-                                            "required": [
-                                                "optionType",
-                                                "value"
-                                            ],
-                                            "additionalProperties": false
-                                        },
-                                        {
-                                            "properties": {
-                                                "optionType": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "default"
-                                                    ]
-                                                },
-                                                "value": {
-                                                    "type": "integer",
-                                                    "minimum": 7,
-                                                    "maximum": 7
-                                                }
-                                            },
-                                            "required": [
-                                                "optionType",
-                                                "value"
-                                            ],
-                                            "additionalProperties": false
-                                        }
-                                    ]
-                                },
-                                "pmtuDiscovery": {
-                                    "description": "Path MTU Discovery",
-                                    "type": "object",
-                                    "oneOf": [
-                                        {
-                                            "properties": {
-                                                "optionType": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "variable"
-                                                    ]
-                                                },
-                                                "value": {
-                                                    "type": "string",
-                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                                                    "minLength": 1,
-                                                    "maxLength": 64
-                                                }
-                                            },
-                                            "required": [
-                                                "optionType",
-                                                "value"
-                                            ],
-                                            "additionalProperties": false
-                                        },
-                                        {
-                                            "properties": {
-                                                "optionType": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "global"
-                                                    ]
-                                                },
-                                                "value": {
-                                                    "type": "boolean"
-                                                }
-                                            },
-                                            "required": [
-                                                "optionType",
-                                                "value"
-                                            ],
-                                            "additionalProperties": false
-                                        },
-                                        {
-                                            "properties": {
-                                                "optionType": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "default"
-                                                    ]
-                                                },
-                                                "value": {
-                                                    "type": "boolean",
-                                                    "enum": [
-                                                        true
-                                                    ]
-                                                }
-                                            },
-                                            "required": [
-                                                "optionType",
-                                                "value"
-                                            ],
-                                            "additionalProperties": false
-                                        }
-                                    ]
-                                },
-                                "dscp": {
-                                    "description": "BFD Default DSCP value for tloc color",
-                                    "type": "object",
-                                    "oneOf": [
-                                        {
-                                            "properties": {
-                                                "optionType": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "variable"
-                                                    ]
-                                                },
-                                                "value": {
-                                                    "type": "string",
-                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                                                    "minLength": 1,
-                                                    "maxLength": 64
-                                                }
-                                            },
-                                            "required": [
-                                                "optionType",
-                                                "value"
-                                            ],
-                                            "additionalProperties": false
-                                        },
-                                        {
-                                            "properties": {
-                                                "optionType": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "global"
-                                                    ]
-                                                },
-                                                "value": {
-                                                    "default": 48,
-                                                    "maximum": 63,
-                                                    "minimum": 0,
-                                                    "type": "integer"
-                                                }
-                                            },
-                                            "required": [
-                                                "optionType",
-                                                "value"
-                                            ],
-                                            "additionalProperties": false
-                                        },
-                                        {
-                                            "properties": {
-                                                "optionType": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "default"
-                                                    ]
-                                                },
-                                                "value": {
-                                                    "type": "integer",
-                                                    "minimum": 48,
-                                                    "maximum": 48
-                                                }
-                                            },
-                                            "required": [
-                                                "optionType",
-                                                "value"
-                                            ],
-                                            "additionalProperties": false
-                                        }
-                                    ]
-                                }
-                            },
-                            "required": [
-                                "color",
-                                "helloInterval",
-                                "multiplier",
-                                "pmtuDiscovery",
-                                "dscp"
-                            ],
-                            "additionalProperties": false
-                        }
-                    }
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["variable"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "default": {
+                    "default": 6,
+                    "maximum": 6,
+                    "minimum": 1,
+                    "type": "number"
+                  },
+                  "description": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 128
+                  }
                 },
-                "required": [
-                    "multiplier",
-                    "pollInterval",
-                    "defaultDscp"
-                ],
+                "required": ["optionType", "value"],
                 "additionalProperties": false
-            },
-            "metadata": {
-                "supportedDeviceTypes": [
-                    "asr",
-                    "c1100",
-                    "c8000be",
-                    "csr1000v",
-                    "ir8100",
-                    "ir8340",
-                    "isr",
-                    "ISRv",
-                    "ir1101"
-                ]
-            },
-            "documentation": {
-                "description": "This is the documentation for POST request schema for BFD profile parcel",
-                "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
-                "details-2": "variable name should not be present if optionType value is NOT variable",
-                "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
-                "details-4": "when option Type is default, value should be present with given default value as specified in schema",
-                "examples": [
-                    {
-                        "data": {
-                            "multiplier": {
-                                "optionType": "global",
-                                "value": 6
-                            },
-                            "pollInterval": {
-                                "optionType": "global",
-                                "value": 600000
-                            },
-                            "defaultDscp": {
-                                "optionType": "global",
-                                "value": 48
-                            },
-                            "color": [
-                                {
-                                    "color": {
-                                        "optionType": "global",
-                                        "value": "MPLS"
-                                    },
-                                    "helloInterval": {
-                                        "optionType": "global",
-                                        "value": 1000
-                                    },
-                                    "multiplier": {
-                                        "optionType": "global",
-                                        "value": 7
-                                    },
-                                    "pmtuDiscovery": {
-                                        "optionType": "global",
-                                        "value": true
-                                    },
-                                    "dscp": {
-                                        "optionType": "global",
-                                        "value": 48
-                                    }
-                                }
-                            ]
-                        },
-                        "name": "SystemBfdParcelGlobalDefault"
-                    }
-                ]
-            }
-        },
-        "required": [
-            "name",
-            "data"
-        ],
-        "not": {
-            "required": [
-                "metadata",
-                "documentation"
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "default": 6,
+                    "maximum": 6,
+                    "minimum": 1,
+                    "type": "number"
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["default"]
+                  },
+                  "value": {
+                    "type": "integer",
+                    "minimum": 6,
+                    "maximum": 6
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              }
             ]
+          },
+          "pollInterval": {
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["variable"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "default": {
+                    "default": 600000,
+                    "maximum": 4294967295,
+                    "minimum": 1,
+                    "type": "number"
+                  },
+                  "description": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 128
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "default": 600000,
+                    "maximum": 4294967295,
+                    "minimum": 1,
+                    "type": "number"
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["default"]
+                  },
+                  "value": {
+                    "type": "integer",
+                    "minimum": 600000,
+                    "maximum": 600000
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "defaultDscp": {
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["variable"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "default": {
+                    "default": 48,
+                    "maximum": 63,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "description": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 128
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "default": 48,
+                    "maximum": 63,
+                    "minimum": 0,
+                    "type": "number"
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["default"]
+                  },
+                  "value": {
+                    "type": "integer",
+                    "minimum": 48,
+                    "maximum": 48
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "colors": {
+            "description": "Set color that identifies the WAN transport tunnel",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "color": {
+                  "description": "Color that identifies the WAN transport tunnel",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "enum": [
+                            "default",
+                            "mpls",
+                            "metro-ethernet",
+                            "biz-internet",
+                            "public-internet",
+                            "lte",
+                            "3g",
+                            "red",
+                            "green",
+                            "blue",
+                            "gold",
+                            "silver",
+                            "bronze",
+                            "custom1",
+                            "custom2",
+                            "custom3",
+                            "private1",
+                            "private2",
+                            "private3",
+                            "private4",
+                            "private5",
+                            "private6"
+                          ],
+                          "type": "string"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "enum": [
+                            "default",
+                            "mpls",
+                            "metro-ethernet",
+                            "biz-internet",
+                            "public-internet",
+                            "lte",
+                            "3g",
+                            "red",
+                            "green",
+                            "blue",
+                            "gold",
+                            "silver",
+                            "bronze",
+                            "custom1",
+                            "custom2",
+                            "custom3",
+                            "private1",
+                            "private2",
+                            "private3",
+                            "private4",
+                            "private5",
+                            "private6"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "helloInterval": {
+                  "description": "Hello Interval (milliseconds)",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "default": 1000,
+                          "maximum": 300000,
+                          "minimum": 100,
+                          "type": "integer"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "default": 1000,
+                          "maximum": 300000,
+                          "minimum": 100,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["default"]
+                        },
+                        "value": {
+                          "type": "integer",
+                          "minimum": 1000,
+                          "maximum": 1000
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "multiplier": {
+                  "description": "Multiplier",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "default": 7,
+                          "maximum": 60,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "default": 7,
+                          "maximum": 60,
+                          "minimum": 1,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["default"]
+                        },
+                        "value": {
+                          "type": "integer",
+                          "minimum": 7,
+                          "maximum": 7
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "pmtuDiscovery": {
+                  "description": "Path MTU Discovery",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "type": "boolean"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["default"]
+                        },
+                        "value": {
+                          "type": "boolean",
+                          "enum": [true]
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "dscp": {
+                  "description": "BFD Default DSCP value for tloc color",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "default": 48,
+                          "maximum": 63,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "default": 48,
+                          "maximum": 63,
+                          "minimum": 0,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["default"]
+                        },
+                        "value": {
+                          "type": "integer",
+                          "minimum": 48,
+                          "maximum": 48
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "color",
+                "helloInterval",
+                "multiplier",
+                "pmtuDiscovery",
+                "dscp"
+              ],
+              "additionalProperties": false
+            }
+          }
         },
+        "required": ["multiplier", "pollInterval", "defaultDscp"],
         "additionalProperties": false
-    }
+      },
+      "metadata": {
+        "supportedDeviceTypes": [
+          "asr",
+          "c1100",
+          "c8000be",
+          "csr1000v",
+          "ir8100",
+          "ir8340",
+          "isr",
+          "ISRv",
+          "ir1101"
+        ],
+        "minVManageVersion": "20.15.1"
+      },
+      "documentation": {
+        "description": "This is the documentation for POST request schema for BFD profile parcel",
+        "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+        "details-2": "variable name should not be present if optionType value is NOT variable",
+        "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+        "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+        "examples": [
+          {
+            "data": {
+              "multiplier": {
+                "optionType": "global",
+                "value": 6
+              },
+              "pollInterval": {
+                "optionType": "global",
+                "value": 600000
+              },
+              "defaultDscp": {
+                "optionType": "global",
+                "value": 48
+              },
+              "color": [
+                {
+                  "color": {
+                    "optionType": "global",
+                    "value": "MPLS"
+                  },
+                  "helloInterval": {
+                    "optionType": "global",
+                    "value": 1000
+                  },
+                  "multiplier": {
+                    "optionType": "global",
+                    "value": 7
+                  },
+                  "pmtuDiscovery": {
+                    "optionType": "global",
+                    "value": true
+                  },
+                  "dscp": {
+                    "optionType": "global",
+                    "value": 48
+                  }
+                }
+              ]
+            },
+            "name": "SystemBfdParcelGlobalDefault"
+          }
+        ]
+      }
+    },
+    "required": ["name", "data"],
+    "not": {
+      "required": ["metadata", "documentation"]
+    },
+    "additionalProperties": false
+  }
 }

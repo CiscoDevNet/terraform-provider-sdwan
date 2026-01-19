@@ -58,8 +58,9 @@ attributes:
     tf_name: hmac_authentication_key
     data_path: [authentication]
     conditional_attribute:
-      name: authentication_type
-      value: hmac-sha-256
+      conditions:
+        - name: authentication_type
+          value: hmac-sha-256
     exclude_test: true
     write_only: true
     example: password123
@@ -67,8 +68,9 @@ attributes:
     tf_name: md5_keys
     data_path: [authentication]
     conditional_attribute:
-      name: authentication_type
-      value: md5
+      conditions:
+        - name: authentication_type
+          value: md5
     attributes:
     - model_name: keyId
       tf_name: key_id

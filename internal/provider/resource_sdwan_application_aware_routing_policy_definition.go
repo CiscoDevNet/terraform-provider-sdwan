@@ -125,7 +125,7 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 										},
 									},
 									"application_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Application list ID, Attribute conditional on `type` being equal to `appList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Application list ID, Attribute conditional on `type` equal to `appList`").String,
 										Optional:            true,
 									},
 									"application_list_version": schema.Int64Attribute{
@@ -133,7 +133,7 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 										Optional:            true,
 									},
 									"dns_application_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("DNS Application list ID, Attribute conditional on `type` being equal to `dnsAppList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("DNS Application list ID, Attribute conditional on `type` equal to `dnsAppList`").String,
 										Optional:            true,
 									},
 									"dns_application_list_version": schema.Int64Attribute{
@@ -141,33 +141,33 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 										Optional:            true,
 									},
 									"icmp_message": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("ICMP Message, Attribute conditional on `type` being equal to `icmpMessage`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("ICMP Message, Attribute conditional on `type` equal to `icmpMessage`").String,
 										Optional:            true,
 									},
 									"dns": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("DNS request or response, Attribute conditional on `type` being equal to `dns`").AddStringEnumDescription("request", "response").String,
+										MarkdownDescription: helpers.NewAttributeDescription("DNS request or response, Attribute conditional on `type` equal to `dns`").AddStringEnumDescription("request", "response").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("request", "response"),
 										},
 									},
 									"dscp": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` being equal to `dscp`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` equal to `dscp`").String,
 										Optional:            true,
 									},
 									"plp": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("PLP, Attribute conditional on `type` being equal to `plp`").AddStringEnumDescription("low", "high").String,
+										MarkdownDescription: helpers.NewAttributeDescription("PLP, Attribute conditional on `type` equal to `plp`").AddStringEnumDescription("low", "high").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("low", "high"),
 										},
 									},
 									"protocol": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("IP Protocol, 0-255 (Single value or multiple values separated by spaces), Attribute conditional on `type` being equal to `protocol`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("IP Protocol, 0-255 (Single value or multiple values separated by spaces), Attribute conditional on `type` equal to `protocol`").String,
 										Optional:            true,
 									},
 									"source_data_prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source Data Prefix list ID, Attribute conditional on `type` being equal to `sourceDataPrefixList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Source Data Prefix list ID, Attribute conditional on `type` equal to `sourceDataPrefixList`").String,
 										Optional:            true,
 									},
 									"source_data_prefix_list_version": schema.Int64Attribute{
@@ -175,15 +175,15 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 										Optional:            true,
 									},
 									"source_ip": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source IP, Attribute conditional on `type` being equal to `sourceIp`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Source IP, Attribute conditional on `type` equal to `sourceIp`").String,
 										Optional:            true,
 									},
 									"source_port": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source port, 0-65535 (Single value, range or multiple values separated by spaces), Attribute conditional on `type` being equal to `sourcePort`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Source port, 0-65535 (Single value, range or multiple values separated by spaces), Attribute conditional on `type` equal to `sourcePort`").String,
 										Optional:            true,
 									},
 									"destination_data_prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination Data Prefix list ID, Attribute conditional on `type` being equal to `destinationDataPrefixList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination Data Prefix list ID, Attribute conditional on `type` equal to `destinationDataPrefixList`").String,
 										Optional:            true,
 									},
 									"destination_data_prefix_list_version": schema.Int64Attribute{
@@ -191,22 +191,22 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 										Optional:            true,
 									},
 									"destination_ip": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination IP, Attribute conditional on `type` being equal to `destinationIp`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination IP, Attribute conditional on `type` equal to `destinationIp`").String,
 										Optional:            true,
 									},
 									"destination_port": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination port, 0-65535 (Single value, range or multiple values separated by spaces), Attribute conditional on `type` being equal to `destinationPort`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination port, 0-65535 (Single value, range or multiple values separated by spaces), Attribute conditional on `type` equal to `destinationPort`").String,
 										Optional:            true,
 									},
 									"destination_region": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination region, Attribute conditional on `type` being equal to `destinationRegion`").AddStringEnumDescription("primary-region", "secondary-region", "other-region").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination region, Attribute conditional on `type` equal to `destinationRegion`").AddStringEnumDescription("primary-region", "secondary-region", "other-region").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("primary-region", "secondary-region", "other-region"),
 										},
 									},
 									"traffic_to": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Traffic to, Attribute conditional on `type` being equal to `trafficTo`").AddStringEnumDescription("access", "core", "service").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Traffic to, Attribute conditional on `type` equal to `trafficTo`").AddStringEnumDescription("access", "core", "service").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("access", "core", "service"),
@@ -228,23 +228,23 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 										},
 									},
 									"backup_sla_preferred_color": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Backup SLA preferred color (Single value or multiple values separated by spaces), Attribute conditional on `type` being equal to `backupSlaPreferredColor`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Backup SLA preferred color (Single value or multiple values separated by spaces), Attribute conditional on `type` equal to `backupSlaPreferredColor`").String,
 										Optional:            true,
 									},
 									"counter": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Counter name, Attribute conditional on `type` being equal to `count`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Counter name, Attribute conditional on `type` equal to `count`").String,
 										Optional:            true,
 									},
 									"log": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Enable logging, Attribute conditional on `type` being equal to `log`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Enable logging, Attribute conditional on `type` equal to `log`").String,
 										Optional:            true,
 									},
 									"cloud_sla": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Cloud SLA, Attribute conditional on `type` being equal to `cloudSaas`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Cloud SLA, Attribute conditional on `type` equal to `cloudSaas`").String,
 										Optional:            true,
 									},
 									"sla_class_parameters": schema.ListNestedAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("List of SLA class parameters, Attribute conditional on `type` being equal to `slaClass`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("List of SLA class parameters, Attribute conditional on `type` equal to `slaClass`").String,
 										Optional:            true,
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
@@ -256,7 +256,7 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 													},
 												},
 												"sla_class_list_id": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("SLA class list ID, Attribute conditional on `type` being equal to `name`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("SLA class list ID, Attribute conditional on `type` equal to `name`").String,
 													Optional:            true,
 												},
 												"sla_class_list_version": schema.Int64Attribute{
@@ -264,7 +264,7 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 													Optional:            true,
 												},
 												"preferred_color_group_list_id": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Preferred color group list ID, Attribute conditional on `type` being equal to `preferredColorGroup`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Preferred color group list ID, Attribute conditional on `type` equal to `preferredColorGroup`").String,
 													Optional:            true,
 												},
 												"preferred_color_group_list_version": schema.Int64Attribute{
@@ -272,7 +272,7 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 													Optional:            true,
 												},
 												"preferred_color": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("preferred color (Single value or multiple values separated by spaces), Attribute conditional on `type` being equal to `preferredColor`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("preferred color (Single value or multiple values separated by spaces), Attribute conditional on `type` equal to `preferredColor`").String,
 													Optional:            true,
 												},
 											},
@@ -292,7 +292,7 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 				},
 			},
 			"default_action_sla_class_list_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("SLA class list ID, Attribute conditional on `default_action` being equal to `slaClass`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("SLA class list ID, Attribute conditional on `default_action` equal to `slaClass`").String,
 				Optional:            true,
 			},
 			"default_action_sla_class_list_version": schema.Int64Attribute{

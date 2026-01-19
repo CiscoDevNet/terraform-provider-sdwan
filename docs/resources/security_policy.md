@@ -91,7 +91,7 @@ Required:
 
 Optional:
 
-- `entries` (Attributes List) List of zone pair definitions, Attribute conditional on `type` being equal to `zoneBasedFW` (see [below for nested schema](#nestedatt--definitions--entries))
+- `entries` (Attributes List) List of zone pair definitions, Attribute conditional on `type` equal to `zoneBasedFW` (see [below for nested schema](#nestedatt--definitions--entries))
 - `version` (Number) Policy definition version
 
 <a id="nestedatt--definitions--entries"></a>

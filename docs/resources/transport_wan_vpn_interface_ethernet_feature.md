@@ -174,7 +174,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `duplex` (String) Duplex mode
   - Choices: `full`, `half`, `auto`
 - `duplex_variable` (String) Variable name
-- `enable_dhcpv6` (Boolean) Enable DHCPv6, Attribute conditional on `ipv6_configuration_type` being equal to `dynamic`
+- `enable_dhcpv6` (Boolean) Enable DHCPv6, Attribute conditional on `ipv6_configuration_type` equal to `dynamic`
 - `gre_tunnel_source_ip` (String) GRE tunnel source IP
 - `gre_tunnel_source_ip_variable` (String) Variable name
 - `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
@@ -197,28 +197,28 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `ip_mtu_variable` (String) Variable name
 - `iperf_server` (String) Iperf server for auto bandwidth detect
 - `iperf_server_variable` (String) Variable name
-- `ipv4_address` (String) IP Address, Attribute conditional on `ipv4_configuration_type` being equal to `static`
-- `ipv4_address_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` being equal to `static`
+- `ipv4_address` (String) IP Address, Attribute conditional on `ipv4_configuration_type` equal to `static`
+- `ipv4_address_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` equal to `static`
 - `ipv4_configuration_type` (String) IPv4 Configuration Type
   - Choices: `dynamic`, `static`
   - Default value: `dynamic`
-- `ipv4_dhcp_distance` (Number) DHCP Distance, Attribute conditional on `ipv4_configuration_type` being equal to `dynamic`
+- `ipv4_dhcp_distance` (Number) DHCP Distance, Attribute conditional on `ipv4_configuration_type` equal to `dynamic`
   - Range: `1`-`65536`
   - Default value: `1`
-- `ipv4_dhcp_distance_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` being equal to `dynamic`
+- `ipv4_dhcp_distance_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` equal to `dynamic`
 - `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
 - `ipv4_dhcp_helper_variable` (String) Variable name
-- `ipv4_secondary_addresses` (Attributes List) Secondary IpV4 Addresses, Attribute conditional on `ipv4_configuration_type` being equal to `static` (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
-- `ipv4_subnet_mask` (String) Subnet Mask, Attribute conditional on `ipv4_configuration_type` being equal to `static`
+- `ipv4_secondary_addresses` (Attributes List) Secondary IpV4 Addresses, Attribute conditional on `ipv4_configuration_type` equal to `static` (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
+- `ipv4_subnet_mask` (String) Subnet Mask, Attribute conditional on `ipv4_configuration_type` equal to `static`
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
-- `ipv4_subnet_mask_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` being equal to `static`
-- `ipv6_address` (String) IPv6 Address Secondary, Attribute conditional on `ipv6_configuration_type` being equal to `static`
-- `ipv6_address_variable` (String) Variable name, Attribute conditional on `ipv6_configuration_type` being equal to `static`
+- `ipv4_subnet_mask_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` equal to `static`
+- `ipv6_address` (String) IPv6 Address Secondary, Attribute conditional on `ipv6_configuration_type` equal to `static`
+- `ipv6_address_variable` (String) Variable name, Attribute conditional on `ipv6_configuration_type` equal to `static`
 - `ipv6_configuration_type` (String) IPv6 Configuration Type
   - Choices: `dynamic`, `static`, `none`
   - Default value: `none`
-- `ipv6_dhcp_secondary_address` (Attributes List) secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` being equal to `dynamic` (see [below for nested schema](#nestedatt--ipv6_dhcp_secondary_address))
-- `ipv6_secondary_addresses` (Attributes List) Static secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` being equal to `static` (see [below for nested schema](#nestedatt--ipv6_secondary_addresses))
+- `ipv6_dhcp_secondary_address` (Attributes List) secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` equal to `dynamic` (see [below for nested schema](#nestedatt--ipv6_dhcp_secondary_address))
+- `ipv6_secondary_addresses` (Attributes List) Static secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` equal to `static` (see [below for nested schema](#nestedatt--ipv6_secondary_addresses))
 - `load_interval` (Number) Interval for interface load calculation
   - Range: `30`-`600`
   - Default value: `30`
@@ -228,9 +228,9 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `media_type` (String) Media type
   - Choices: `auto-select`, `rj45`, `sfp`
 - `media_type_variable` (String) Variable name
-- `nat64` (Boolean) NAT64 on this interface, Attribute conditional on `nat_ipv6` being equal to `true`
+- `nat64` (Boolean) NAT64 on this interface, Attribute conditional on `nat_ipv6` equal to `true`
   - Default value: `false`
-- `nat66` (Boolean) NAT66 on this interface, Attribute conditional on `nat_ipv6` being equal to `true`
+- `nat66` (Boolean) NAT66 on this interface, Attribute conditional on `nat_ipv6` equal to `true`
   - Default value: `false`
 - `nat_ipv4` (Boolean) enable Network Address Translation on this interface
   - Default value: `false`
@@ -238,34 +238,34 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `nat_ipv6` (Boolean) enable Network Address Translation ipv6 on this interface
   - Default value: `false`
 - `nat_ipv6_variable` (String) Variable name
-- `nat_loopback` (String) NAT Inside Source Loopback Interface, Attribute conditional on `nat_ipv4` being equal to `true`
-- `nat_loopback_variable` (String) Variable name, Attribute conditional on `nat_ipv4` being equal to `true`
-- `nat_overload` (Boolean) NAT Overload, Attribute conditional on `nat_ipv4` being equal to `true`
+- `nat_loopback` (String) NAT Inside Source Loopback Interface, Attribute conditional on `nat_ipv4` equal to `true`
+- `nat_loopback_variable` (String) Variable name, Attribute conditional on `nat_ipv4` equal to `true`
+- `nat_overload` (Boolean) NAT Overload, Attribute conditional on `nat_ipv4` equal to `true`
   - Default value: `true`
-- `nat_overload_variable` (String) Variable name, Attribute conditional on `nat_ipv4` being equal to `true`
-- `nat_prefix_length` (Number) NAT Pool Prefix Length, Attribute conditional on `nat_ipv4` being equal to `true`
+- `nat_overload_variable` (String) Variable name, Attribute conditional on `nat_ipv4` equal to `true`
+- `nat_prefix_length` (Number) NAT Pool Prefix Length, Attribute conditional on `nat_ipv4` equal to `true`
   - Range: `1`-`32`
-- `nat_prefix_length_variable` (String) Variable name, Attribute conditional on `nat_ipv4` being equal to `true`
-- `nat_range_end` (String) NAT Pool Range End, Attribute conditional on `nat_ipv4` being equal to `true`
-- `nat_range_end_variable` (String) Variable name, Attribute conditional on `nat_ipv4` being equal to `true`
-- `nat_range_start` (String) NAT Pool Range Start, Attribute conditional on `nat_ipv4` being equal to `true`
-- `nat_range_start_variable` (String) Variable name, Attribute conditional on `nat_ipv4` being equal to `true`
-- `nat_tcp_timeout` (Number) Set NAT TCP session timeout, in minutes, Attribute conditional on `nat_ipv4` being equal to `true`
+- `nat_prefix_length_variable` (String) Variable name, Attribute conditional on `nat_ipv4` equal to `true`
+- `nat_range_end` (String) NAT Pool Range End, Attribute conditional on `nat_ipv4` equal to `true`
+- `nat_range_end_variable` (String) Variable name, Attribute conditional on `nat_ipv4` equal to `true`
+- `nat_range_start` (String) NAT Pool Range Start, Attribute conditional on `nat_ipv4` equal to `true`
+- `nat_range_start_variable` (String) Variable name, Attribute conditional on `nat_ipv4` equal to `true`
+- `nat_tcp_timeout` (Number) Set NAT TCP session timeout, in minutes, Attribute conditional on `nat_ipv4` equal to `true`
   - Range: `1`-`8947`
   - Default value: `60`
-- `nat_tcp_timeout_variable` (String) Variable name, Attribute conditional on `nat_ipv4` being equal to `true`
-- `nat_type` (String) NAT Type, Attribute conditional on `nat_ipv4` being equal to `true`
+- `nat_tcp_timeout_variable` (String) Variable name, Attribute conditional on `nat_ipv4` equal to `true`
+- `nat_type` (String) NAT Type, Attribute conditional on `nat_ipv4` equal to `true`
   - Choices: `interface`, `pool`, `loopback`
   - Default value: `interface`
-- `nat_type_variable` (String) Variable name, Attribute conditional on `nat_ipv4` being equal to `true`
-- `nat_udp_timeout` (Number) Set NAT UDP session timeout, in minutes, Attribute conditional on `nat_ipv4` being equal to `true`
+- `nat_type_variable` (String) Variable name, Attribute conditional on `nat_ipv4` equal to `true`
+- `nat_udp_timeout` (Number) Set NAT UDP session timeout, in minutes, Attribute conditional on `nat_ipv4` equal to `true`
   - Range: `1`-`8947`
   - Default value: `1`
-- `nat_udp_timeout_variable` (String) Variable name, Attribute conditional on `nat_ipv4` being equal to `true`
-- `new_static_nats` (Attributes List) static NAT, Attribute conditional on `nat_ipv4` being equal to `true` (see [below for nested schema](#nestedatt--new_static_nats))
-- `per_tunnel_qos` (Boolean) Per-tunnel Qos, Attribute conditional on `tunnel_interface` being equal to `true`
+- `nat_udp_timeout_variable` (String) Variable name, Attribute conditional on `nat_ipv4` equal to `true`
+- `new_static_nats` (Attributes List) static NAT, Attribute conditional on `nat_ipv4` equal to `true` (see [below for nested schema](#nestedatt--new_static_nats))
+- `per_tunnel_qos` (Boolean) Per-tunnel Qos, Attribute conditional on `tunnel_interface` equal to `true`
   - Default value: `false`
-- `per_tunnel_qos_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
+- `per_tunnel_qos_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
 - `qos_adaptive` (Boolean) Adaptive QoS
   - Default value: `false`
 - `qos_adaptive_bandwidth_downstream` (Boolean) Shaping Rate Downstream
@@ -304,7 +304,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `speed` (String) Set interface speed
   - Choices: `10`, `100`, `1000`, `2500`, `10000`
 - `speed_variable` (String) Variable name
-- `static_nat66` (Attributes List) static NAT66, Attribute conditional on `nat_ipv6` being equal to `true` (see [below for nested schema](#nestedatt--static_nat66))
+- `static_nat66` (Attributes List) static NAT66, Attribute conditional on `nat_ipv6` equal to `true` (see [below for nested schema](#nestedatt--static_nat66))
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
   - Range: `500`-`1460`
 - `tcp_mss_variable` (String) Variable name
@@ -312,10 +312,10 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `tloc_extension_variable` (String) Variable name
 - `tracker` (String) Enable tracker for this interface
 - `tracker_variable` (String) Variable name
-- `tunnel_bandwidth_percent` (Number) Tunnels Bandwidth Percent, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_bandwidth_percent` (Number) Tunnels Bandwidth Percent, Attribute conditional on `tunnel_interface` equal to `true`
   - Range: `1`-`100`
   - Default value: `50`
-- `tunnel_bandwidth_percent_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_bandwidth_percent_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
 - `tunnel_interface` (Boolean) Tunnel Interface on/off
   - Default value: `false`
 - `tunnel_interface_allow_all` (Boolean) Allow all traffic. Overrides all other allow-service options if allow-service all is set
@@ -357,76 +357,76 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `tunnel_interface_allow_stun` (Boolean) Allow/Deny STUN
   - Default value: `false`
 - `tunnel_interface_allow_stun_variable` (String) Variable name
-- `tunnel_interface_bind_loopback_tunnel` (String) Bind loopback tunnel interface to a physical interface, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_bind_loopback_tunnel_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_border` (Boolean) Set TLOC as border TLOC, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_bind_loopback_tunnel` (String) Bind loopback tunnel interface to a physical interface, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_bind_loopback_tunnel_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_border` (Boolean) Set TLOC as border TLOC, Attribute conditional on `tunnel_interface` equal to `true`
   - Default value: `false`
-- `tunnel_interface_border_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_carrier` (String) Set carrier for TLOC, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_border_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_carrier` (String) Set carrier for TLOC, Attribute conditional on `tunnel_interface` equal to `true`
   - Choices: `default`, `carrier1`, `carrier2`, `carrier3`, `carrier4`, `carrier5`, `carrier6`, `carrier7`, `carrier8`
   - Default value: `default`
-- `tunnel_interface_carrier_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_clear_dont_fragment` (Boolean) Enable clear dont fragment (Currently Only SDWAN Tunnel Interface), Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_carrier_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_clear_dont_fragment` (Boolean) Enable clear dont fragment (Currently Only SDWAN Tunnel Interface), Attribute conditional on `tunnel_interface` equal to `true`
   - Default value: `false`
-- `tunnel_interface_clear_dont_fragment_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_color` (String) Set color for TLOC, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_clear_dont_fragment_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_color` (String) Set color for TLOC, Attribute conditional on `tunnel_interface` equal to `true`
   - Choices: `default`, `mpls`, `metro-ethernet`, `biz-internet`, `public-internet`, `lte`, `3g`, `red`, `green`, `blue`, `gold`, `silver`, `bronze`, `custom1`, `custom2`, `custom3`, `private1`, `private2`, `private3`, `private4`, `private5`, `private6`
   - Default value: `mpls`
-- `tunnel_interface_color_restrict` (Boolean) Restrict this TLOC behavior, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_color_restrict` (Boolean) Restrict this TLOC behavior, Attribute conditional on `tunnel_interface` equal to `true`
   - Default value: `false`
-- `tunnel_interface_color_restrict_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_color_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_cts_sgt_propagation` (Boolean) CTS SGT Propagation configuration, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_color_restrict_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_color_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_cts_sgt_propagation` (Boolean) CTS SGT Propagation configuration, Attribute conditional on `tunnel_interface` equal to `true`
   - Default value: `false`
-- `tunnel_interface_cts_sgt_propagation_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_cts_sgt_propagation_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
 - `tunnel_interface_encapsulations` (Attributes List) Encapsulation for TLOC (see [below for nested schema](#nestedatt--tunnel_interface_encapsulations))
-- `tunnel_interface_exclude_controller_group_list` (Set of Number) Exclude the following controller groups defined in this list., Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_exclude_controller_group_list_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_gre_tunnel_destination_ip` (String) GRE tunnel destination IP, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_gre_tunnel_destination_ip_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_groups` (Number) List of groups, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_exclude_controller_group_list` (Set of Number) Exclude the following controller groups defined in this list., Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_exclude_controller_group_list_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_gre_tunnel_destination_ip` (String) GRE tunnel destination IP, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_gre_tunnel_destination_ip_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_groups` (Number) List of groups, Attribute conditional on `tunnel_interface` equal to `true`
   - Range: `1`-`4294967295`
-- `tunnel_interface_groups_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_hello_interval` (Number) Set time period of control hello packets <100..600000> milli seconds, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_groups_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_hello_interval` (Number) Set time period of control hello packets <100..600000> milli seconds, Attribute conditional on `tunnel_interface` equal to `true`
   - Range: `100`-`600000`
   - Default value: `1000`
-- `tunnel_interface_hello_interval_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_hello_tolerance` (Number) Set tolerance of control hello packets <12..6000> seconds, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_hello_interval_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_hello_tolerance` (Number) Set tolerance of control hello packets <12..6000> seconds, Attribute conditional on `tunnel_interface` equal to `true`
   - Range: `12`-`6000`
   - Default value: `12`
-- `tunnel_interface_hello_tolerance_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_last_resort_circuit` (Boolean) Set TLOC as last resort, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_hello_tolerance_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_last_resort_circuit` (Boolean) Set TLOC as last resort, Attribute conditional on `tunnel_interface` equal to `true`
   - Default value: `false`
-- `tunnel_interface_last_resort_circuit_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_low_bandwidth_link` (Boolean) Set the interface as a low-bandwidth circuit, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_last_resort_circuit_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_low_bandwidth_link` (Boolean) Set the interface as a low-bandwidth circuit, Attribute conditional on `tunnel_interface` equal to `true`
   - Default value: `false`
-- `tunnel_interface_low_bandwidth_link_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_max_control_connections` (Number) Maximum Control Connections, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_low_bandwidth_link_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_max_control_connections` (Number) Maximum Control Connections, Attribute conditional on `tunnel_interface` equal to `true`
   - Range: `0`-`100`
-- `tunnel_interface_max_control_connections_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_nat_refresh_interval` (Number) Set time period of nat refresh packets <1...60> seconds, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_max_control_connections_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_nat_refresh_interval` (Number) Set time period of nat refresh packets <1...60> seconds, Attribute conditional on `tunnel_interface` equal to `true`
   - Range: `1`-`60`
   - Default value: `5`
-- `tunnel_interface_nat_refresh_interval_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_network_broadcast` (Boolean) Accept and respond to network-prefix-directed broadcasts, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_nat_refresh_interval_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_network_broadcast` (Boolean) Accept and respond to network-prefix-directed broadcasts, Attribute conditional on `tunnel_interface` equal to `true`
   - Default value: `false`
-- `tunnel_interface_network_broadcast_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_port_hop` (Boolean) Disallow port hopping on the tunnel interface, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_network_broadcast_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_port_hop` (Boolean) Disallow port hopping on the tunnel interface, Attribute conditional on `tunnel_interface` equal to `true`
   - Default value: `true`
-- `tunnel_interface_port_hop_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_tunnel_tcp_mss` (Number) Tunnel TCP MSS on SYN packets, in bytes, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_port_hop_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_tunnel_tcp_mss` (Number) Tunnel TCP MSS on SYN packets, in bytes, Attribute conditional on `tunnel_interface` equal to `true`
   - Range: `500`-`1460`
-- `tunnel_interface_tunnel_tcp_mss_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_vbond_as_stun_server` (Boolean) Put this wan interface in STUN mode only, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_tunnel_tcp_mss_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_vbond_as_stun_server` (Boolean) Put this wan interface in STUN mode only, Attribute conditional on `tunnel_interface` equal to `true`
   - Default value: `false`
-- `tunnel_interface_vbond_as_stun_server_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_interface_vmanage_connection_preference` (Number) Set interface preference for control connection to vManage <0..8>, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_vbond_as_stun_server_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_vmanage_connection_preference` (Number) Set interface preference for control connection to vManage <0..8>, Attribute conditional on `tunnel_interface` equal to `true`
   - Range: `0`-`8`
   - Default value: `5`
-- `tunnel_interface_vmanage_connection_preference_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
-- `tunnel_qos_mode` (String) Set tunnel QoS mode, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_interface_vmanage_connection_preference_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_qos_mode` (String) Set tunnel QoS mode, Attribute conditional on `tunnel_interface` equal to `true`
   - Choices: `hub`, `spoke`
-- `tunnel_qos_mode_variable` (String) Variable name, Attribute conditional on `tunnel_interface` being equal to `true`
+- `tunnel_qos_mode_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
 - `xconnect` (String) Extend remote TLOC over a GRE tunnel to a local WAN interface
 - `xconnect_variable` (String) Variable name
 

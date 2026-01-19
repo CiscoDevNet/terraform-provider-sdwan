@@ -84,12 +84,12 @@ Optional:
 - `e1_linecode` (String) LineCode
   - Choices: `ami`, `hdb3`
 - `e1_linecode_variable` (String) Variable name
-- `length_long` (String) length, Attribute conditional on `cable_length` being equal to `long`
+- `length_long` (String) length, Attribute conditional on `cable_length` equal to `long`
   - Choices: `-15db`, `-22.5db`, `-7.5db`, `0db`
-- `length_long_variable` (String) Variable name, Attribute conditional on `cable_length` being equal to `long`
-- `length_short` (String) length, Attribute conditional on `cable_length` being equal to `short`
+- `length_long_variable` (String) Variable name, Attribute conditional on `cable_length` equal to `long`
+- `length_short` (String) length, Attribute conditional on `cable_length` equal to `short`
   - Choices: `110ft`, `220ft`, `330ft`, `440ft`, `550ft`, `660ft`
-- `length_short_variable` (String) Variable name, Attribute conditional on `cable_length` being equal to `short`
+- `length_short_variable` (String) Variable name, Attribute conditional on `cable_length` equal to `short`
 - `line_mode` (String) Line Mode
   - Choices: `secondary`, `primary`
 - `line_mode_variable` (String) Variable name

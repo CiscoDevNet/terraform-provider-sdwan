@@ -90,6 +90,11 @@ attribute:
   include_default_option: bool(required=False) # If true will always include the default option type in the payload when the attribute value is null
 
 conditional_attribute:
+  operator: enum('and', 'or', required=False) # Logical operator between conditions (default: 'and')
+  conditions: list(include('condition')) # List of conditions (single or multiple)
+
+condition:
   name: str() # Reference to other attribute
-  value: any(str(), bool()) # Attribute value
-  type: str(required=False) # Attribute value type (default is String but can be set to Bool)
+  value: any(str(), bool()) # Attribute value to check
+  type: enum('String', 'Bool', required=False) # Attribute value type (default: String)
+  negate: bool(required=False) # If true, condition passes when value does NOT match (default: false)

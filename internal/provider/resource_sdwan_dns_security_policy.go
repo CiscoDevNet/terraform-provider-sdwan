@@ -105,7 +105,7 @@ func (r *DNSSecurityProfileParcelResource) Schema(ctx context.Context, req resou
 				Required:            true,
 			},
 			"dns_server_ip": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry, Attribute conditional on `match_all_vpn` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry, Attribute conditional on `match_all_vpn` equal to `true`").String,
 				Required:            true,
 			},
 			"local_domain_bypass_enabled": schema.BoolAttribute{
@@ -124,7 +124,7 @@ func (r *DNSSecurityProfileParcelResource) Schema(ctx context.Context, req resou
 				},
 			},
 			"target_vpns": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Will be under data field only if matchAllVpn is false, if matchAllVpn is true field should not be in payload, Attribute conditional on `match_all_vpn` being equal to `false`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Will be under data field only if matchAllVpn is false, if matchAllVpn is true field should not be in payload, Attribute conditional on `match_all_vpn` equal to `false`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{

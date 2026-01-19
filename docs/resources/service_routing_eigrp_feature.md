@@ -76,14 +76,14 @@ resource "sdwan_service_routing_eigrp_feature" "example" {
   - Range: `0`-`65535`
   - Default value: `5`
 - `hello_interval_variable` (String) Variable name
-- `hmac_authentication_key` (String) Set hmac-sha-256 authentication key, Attribute conditional on `authentication_type` being equal to `hmac-sha-256`
-- `hmac_authentication_key_variable` (String) Variable name, Attribute conditional on `authentication_type` being equal to `hmac-sha-256`
+- `hmac_authentication_key` (String) Set hmac-sha-256 authentication key, Attribute conditional on `authentication_type` equal to `hmac-sha-256`
+- `hmac_authentication_key_variable` (String) Variable name, Attribute conditional on `authentication_type` equal to `hmac-sha-256`
 - `hold_time` (Number) Set EIGRP hold time
   - Range: `0`-`65535`
   - Default value: `15`
 - `hold_time_variable` (String) Variable name
 - `interfaces` (Attributes List) Configure IPv4 Static Routes (see [below for nested schema](#nestedatt--interfaces))
-- `md5_keys` (Attributes List) Set keychain details, Attribute conditional on `authentication_type` being equal to `md5` (see [below for nested schema](#nestedatt--md5_keys))
+- `md5_keys` (Attributes List) Set keychain details, Attribute conditional on `authentication_type` equal to `md5` (see [below for nested schema](#nestedatt--md5_keys))
 - `redistributes` (Attributes List) Redistribute routes into EIGRP (see [below for nested schema](#nestedatt--redistributes))
 - `route_policy_id` (String)
 

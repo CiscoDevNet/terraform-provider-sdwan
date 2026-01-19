@@ -94,7 +94,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 			},
 			"any_connect_eap_authentication_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `connection_type_ssl` being equal to `false`").AddStringEnumDescription("user", "device").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `connection_type_ssl` equal to `false`").AddStringEnumDescription("user", "device").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("user", "device"),
@@ -125,25 +125,25 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 			},
 			"psk_authentication_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("PSK Selection, Attribute conditional on `connection_type_ssl` being equal to `false`").AddStringEnumDescription("aaa", "group").String,
+				MarkdownDescription: helpers.NewAttributeDescription("PSK Selection, Attribute conditional on `connection_type_ssl` equal to `false`").AddStringEnumDescription("aaa", "group").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("aaa", "group"),
 				},
 			},
 			"psk_authentication_type_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` equal to `false`").String,
 				Optional:            true,
 			},
 			"psk_authentication_pre_shared_key": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("PSK Pre Shared Key, Attribute conditional on `psk_authentication_type` being equal to `group`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("PSK Pre Shared Key, Attribute conditional on `psk_authentication_type` equal to `group`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 25),
 				},
 			},
 			"psk_authentication_pre_shared_key_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `psk_authentication_type` being equal to `group`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `psk_authentication_type` equal to `group`").String,
 				Optional:            true,
 			},
 			"radius_group_name": schema.StringAttribute{
@@ -180,25 +180,25 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 			},
 			"aaa_derive_name_from_peer_identity": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `connection_type_ssl` being equal to `false`").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `connection_type_ssl` equal to `false`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 25),
 				},
 			},
 			"aaa_derive_name_from_peer_identity_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` equal to `false`").String,
 				Optional:            true,
 			},
 			"aaa_derive_name_from_peer_domain": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `connection_type_ssl` being equal to `false`").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `connection_type_ssl` equal to `false`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 25),
 				},
 			},
 			"aaa_derive_name_from_peer_domain_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` equal to `false`").String,
 				Optional:            true,
 			},
 			"aaa_enable_accounting": schema.BoolAttribute{
@@ -210,82 +210,82 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 			},
 			"ikev2_local_ike_identity_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `connection_type_ssl` being equal to `false`").AddStringEnumDescription("EMAIL", "FQDN", "KEYID", "IPv4 ADDRESS", "IPv6 ADDRESS").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `connection_type_ssl` equal to `false`").AddStringEnumDescription("EMAIL", "FQDN", "KEYID", "IPv4 ADDRESS", "IPv6 ADDRESS").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("EMAIL", "FQDN", "KEYID", "IPv4 ADDRESS", "IPv6 ADDRESS"),
 				},
 			},
 			"ikev2_local_ike_identity_type_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` equal to `false`").String,
 				Optional:            true,
 			},
 			"ikev2_local_ike_identity_value": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `connection_type_ssl` being equal to `false`").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `connection_type_ssl` equal to `false`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthAtLeast(1),
 				},
 			},
 			"ikev2_local_ike_identity_value_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` equal to `false`").String,
 				Optional:            true,
 			},
 			"ikev2_security_association_lifetime": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Security Association Lifetime in Seconds, Attribute conditional on `connection_type_ssl` being equal to `false`").AddIntegerRangeDescription(3600, 86400).AddDefaultValueDescription("86400").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Security Association Lifetime in Seconds, Attribute conditional on `connection_type_ssl` equal to `false`").AddIntegerRangeDescription(3600, 86400).AddDefaultValueDescription("86400").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(3600, 86400),
 				},
 			},
 			"ikev2_security_association_lifetime_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` equal to `false`").String,
 				Optional:            true,
 			},
 			"ikev2_anti_dos_threshold": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Anti-DOS Threshold, Attribute conditional on `connection_type_ssl` being equal to `false`").AddIntegerRangeDescription(10, 1000).AddDefaultValueDescription("100").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Anti-DOS Threshold, Attribute conditional on `connection_type_ssl` equal to `false`").AddIntegerRangeDescription(10, 1000).AddDefaultValueDescription("100").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10, 1000),
 				},
 			},
 			"ikev2_anti_dos_threshold_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` equal to `false`").String,
 				Optional:            true,
 			},
 			"ipsec_enable_anti_replay": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable Anti-Replay, Attribute conditional on `connection_type_ssl` being equal to `false`").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable Anti-Replay, Attribute conditional on `connection_type_ssl` equal to `false`").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
 			"ipsec_enable_anti_replay_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` equal to `false`").String,
 				Optional:            true,
 			},
 			"ipsec_anti_replay_window_size": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("security Association Lifetime, Attribute conditional on `ipsec_enable_anti_replay` being equal to `true`").AddDefaultValueDescription("64").String,
+				MarkdownDescription: helpers.NewAttributeDescription("security Association Lifetime, Attribute conditional on `ipsec_enable_anti_replay` equal to `true`").AddDefaultValueDescription("64").String,
 				Optional:            true,
 			},
 			"ipsec_anti_replay_window_size_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipsec_enable_anti_replay` being equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipsec_enable_anti_replay` equal to `true`").String,
 				Optional:            true,
 			},
 			"ipsec_security_association_lifetime": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Security Association Lifetime in Seconds, Attribute conditional on `connection_type_ssl` being equal to `false`").AddIntegerRangeDescription(3600, 86400).AddDefaultValueDescription("3600").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Security Association Lifetime in Seconds, Attribute conditional on `connection_type_ssl` equal to `false`").AddIntegerRangeDescription(3600, 86400).AddDefaultValueDescription("3600").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(3600, 86400),
 				},
 			},
 			"ipsec_security_association_lifetime_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` equal to `false`").String,
 				Optional:            true,
 			},
 			"ipsec_enable_perfect_foward_secrecy": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("security Association Lifetime, Attribute conditional on `connection_type_ssl` being equal to `false`").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("security Association Lifetime, Attribute conditional on `connection_type_ssl` equal to `false`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"ipsec_enable_perfect_foward_secrecy_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` being equal to `false`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `connection_type_ssl` equal to `false`").String,
 				Optional:            true,
 			},
 		},

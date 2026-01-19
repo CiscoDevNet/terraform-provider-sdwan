@@ -54,9 +54,9 @@ resource "sdwan_other_ucse_feature" "example" {
 
 - `access_port_dedicated` (Boolean) Dedicated
   - Default value: `true`
-- `access_port_shared_failover_type` (String) , Attribute conditional on `access_port_dedicated` being equal to `false`
+- `access_port_shared_failover_type` (String) , Attribute conditional on `access_port_dedicated` equal to `false`
   - Choices: `ge2`, `te2`
-- `access_port_shared_type` (String) , Attribute conditional on `access_port_dedicated` being equal to `false`
+- `access_port_shared_type` (String) , Attribute conditional on `access_port_dedicated` equal to `false`
   - Choices: `ge1`, `ge2`, `ge3`, `te2`, `te3`, `console`, `failover`
 - `assign_priority` (Number) Assign priority
   - Range: `0`-`7`
