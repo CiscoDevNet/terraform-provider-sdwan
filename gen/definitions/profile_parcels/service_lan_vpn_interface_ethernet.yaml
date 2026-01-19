@@ -1,9 +1,9 @@
 ---
-# Manual resource - Modals is manually configured to support sub interfaces and 20.15 schema changes.
+# Manual resource - Modals toBody is manually configured to support sub interfaces and global NAT type pool
 name: Service LAN VPN Interface Ethernet
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/lan/vpn/%s/interface/ethernet
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - Service
 attributes:
@@ -29,15 +29,168 @@ attributes:
   - model_name: description
     tf_name: interface_description
     example: LAN
+  - model_name: portChannelInterface
+    tf_name: port_channel_interface
+    example: false
+    exclude_test: true
+  - tf_name: port_channel_mode
+    type: String
+    tf_only: true
+    description: Port Channel Mode
+    enum_values: [lacp, static]
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_interface
+          value: true
+          type: Bool
+  - model_name: portChannelQosAggregate
+    tf_name: port_channel_lacp_qos_aggregate
+    data_path: [portChannel, mainInterface, lacpModeMainInterface]
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_mode
+          value: lacp
+  - model_name: loadBalance
+    tf_name: port_channel_lacp_load_balance
+    data_path: [portChannel, mainInterface, lacpModeMainInterface]
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_mode
+          value: lacp
+  - model_name: lacpFastSwitchover
+    tf_name: port_channel_lacp_fast_switchover
+    data_path: [portChannel, mainInterface, lacpModeMainInterface]
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_mode
+          value: lacp
+  - model_name: lacpMinBundle
+    tf_name: port_channel_lacp_min_bundle
+    data_path: [portChannel, mainInterface, lacpModeMainInterface]
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_mode
+          value: lacp
+  - model_name: lacpMaxBundle
+    tf_name: port_channel_lacp_max_bundle
+    data_path: [portChannel, mainInterface, lacpModeMainInterface]
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_mode
+          value: lacp
+  - model_name: portChannelMemberLinks
+    tf_name: port_channel_lacp_member_links
+    data_path: [portChannel, mainInterface, lacpModeMainInterface]
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_mode
+          value: lacp
+    attributes:
+      - model_name: refId
+        tf_name: interface_id
+        data_path: [interface]
+        id: true
+        mandatory: true
+      - model_name: lacpMode
+        default_value: active
+        default_value_present: true
+      - model_name: lacpRate
+      - model_name: lacpPortPriority
+  - model_name: portChannelQosAggregate
+    tf_name: port_channel_static_qos_aggregate
+    data_path: [portChannel, mainInterface, staticModeMainInterface]
+    exclude_test: true
+    exclude_example: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_mode
+          value: static
+  - model_name: loadBalance
+    tf_name: port_channel_static_load_balance
+    data_path: [portChannel, mainInterface, staticModeMainInterface]
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_mode
+          value: static
+  - model_name: portChannelMemberLinks
+    tf_name: port_channel_static_member_links
+    data_path: [portChannel, mainInterface, staticModeMainInterface]
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_mode
+          value: static
+    attributes:
+      - model_name: refId
+        tf_name: interface_id
+        data_path: [interface]
+        id: true
+        mandatory: true
+  - tf_name: port_channel_subinterface
+    type: Bool
+    exclude_test: true
+    tf_only: true
+    description: Port Channel Sub Interface on/off
+    conditional_attribute:
+      conditions:
+        - name: port_channel_interface
+          value: true
+          type: Bool
+  - model_name: primaryInterfaceName
+    tf_name: port_channel_subinterface_primary_interface_name
+    exclude_test: true
+    data_path: [portChannel, subInterface]
+    default_value: ""
+    default_value_present: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_interface
+          value: true
+          type: Bool
+        - name: port_channel_subinterface
+          value: true
+          type: Bool
+  - model_name: secondaryInterfaceName
+    tf_name: port_channel_subinterface_secondary_interface_name
+    exclude_test: true
+    data_path: [portChannel, subInterface]
+    default_value: ""
+    default_value_present: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_interface
+          value: true
+          type: Bool
+        - name: port_channel_subinterface
+          value: true
+          type: Bool
+  - model_name: portChannelMemberInterface
+    tf_name: port_channel_member_interface
+    example: false
+    exclude_test: true
   - tf_name: ipv4_configuration_type
     type: String
     tf_only: true
     default_value: "dynamic"
     default_value_present: true
     description: IPv4 Configuration Type
-    enum_values: [dynamic, static]
+    enum_values: [dynamic, static, none]
     example: static
     minimum_test_value: '"static"'
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: dynamicDhcpDistance
     tf_name: ipv4_dhcp_distance
     data_path: [intfIpAddress, dynamic]
@@ -84,6 +237,12 @@ attributes:
   - model_name: dhcpHelper
     tf_name: ipv4_dhcp_helper
     example: 1.2.3.4
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - tf_name: ipv6_configuration_type
     type: String
     tf_only: true
@@ -92,6 +251,12 @@ attributes:
     description: IPv6 Configuration Type
     enum_values: [dynamic, static, none]
     example: static
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: dhcpClient
     tf_name: enable_dhcpv6
     data_path: [intfIpV6Address, dynamic]
@@ -156,11 +321,24 @@ attributes:
   - model_name: nat
     tf_name: ipv4_nat
     example: false
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: natType
     tf_name: ipv4_nat_type
     data_path: [natAttributesIpv4]
-    value: pool
+    type: String
+    value: "pool"
     always_include: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: rangeStart
     tf_name: ipv4_nat_range_start
     data_path: [natAttributesIpv4, natPool]
@@ -193,7 +371,7 @@ attributes:
     #   name: Ipv4NatType
     #   value: pool
     example: true
-  - model_name: natLookback
+  - model_name: natLoopback
     tf_name: ipv4_nat_loopback
     data_path: [natAttributesIpv4]
     exclude_test: true
@@ -233,6 +411,12 @@ attributes:
   - model_name: natIpv6
     tf_name: ipv6_nat
     example: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: nat64
     tf_name: nat64
     data_path: [natAttributesIpv6]
@@ -242,6 +426,12 @@ attributes:
     tf_name: acl_shaping_rate
     data_path: [aclQos]
     example: 12
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: refId
     tf_name: acl_ipv4_egress_policy_id
     data_path: [aclQos, ipv4AclEgress]
@@ -268,6 +458,12 @@ attributes:
     example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
   - model_name: vrrpIpv6
     tf_name: ipv6_vrrps
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
     attributes:
     - model_name: groupId
       id: true
@@ -288,8 +484,19 @@ attributes:
       - model_name: prefix
         tf_name: global_address
         example: 1::1/24
+    - model_name: followDualRouterHAAvailability
+      tf_name: follow_dual_router_high_availability
+      example: false
+    - model_name: minPreemptDelay
+      example: 60
   - model_name: vrrp
     tf_name: ipv4_vrrps
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
     attributes:
     - model_name: group_id
       tf_name: group_id
@@ -331,8 +538,19 @@ attributes:
         example: Decrement
       - model_name: decrementValue
         example: 100
+    - model_name: followDualRouterHAAvailability
+      tf_name: follow_dual_router_high_availability
+      example: false
+    - model_name: minPreemptDelay
+      example: 60
   - model_name: arp
     tf_name: arps
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
     attributes:
     - model_name: ipAddress 
       id: true
@@ -344,66 +562,162 @@ attributes:
     tf_name: trustsec_enable_sgt_propogation
     data_path: [trustsec]
     example: false
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: propogate
     tf_name: trustsec_propogate
     data_path: [trustsec]
     example: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: securityGroupTag
     tf_name: trustsec_security_group_tag
     data_path: [trustsec]
     example: 123
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: enableEnforcedPropogation
     tf_name: trustsec_enable_enforced_propogation
     data_path: [trustsec]
     example: false
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: enforcedSecurityGroupTag
     tf_name: trustsec_enforced_security_group_tag
     data_path: [trustsec]
     example: 1234
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: duplex
     data_path: [advanced]
     example: full
+    conditional_attribute:
+      conditions:
+        - name: port_channel_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: macAddress
     data_path: [advanced]
     example: 00-B0-D0-63-C2-26
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
+        - name: port_channel_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: ipMtu
     data_path: [advanced]
     example: 1500
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: intrfMtu
     tf_name: interface_mtu
     data_path: [advanced]
     example: 1500
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: tcpMss
     data_path: [advanced]
     example: 500
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: speed
     data_path: [advanced]
     example: 1000
+    conditional_attribute:
+      conditions:
+        - name: port_channel_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: arpTimeout
     data_path: [advanced]
     example: 1200
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: autonegotiate
     data_path: [advanced]
     example: false
   - model_name: mediaType
     data_path: [advanced]
     example: auto-select
+    conditional_attribute:
+      conditions:
+        - name: port_channel_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: loadInterval
     data_path: [advanced]
     example: 30
-  - model_name: tracker
-    data_path: [advanced]
-    exclude_test: true
-    example: TRACKER1
   - model_name: icmpRedirectDisable
     data_path: [advanced]
     example: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: xconnect
     data_path: [advanced]
     example: 1
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: ipDirectedBroadcast
     data_path: [advanced]
     example: false
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
 
 test_prerequisites: |
   resource "sdwan_service_feature_profile" "test" {
