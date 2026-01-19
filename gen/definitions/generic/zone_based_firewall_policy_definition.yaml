@@ -33,8 +33,9 @@ attributes:
     data_path: [definition]
     type: List
     conditional_attribute:
-      name: mode
-      value: security
+      conditions:
+        - name: mode
+          value: security
     attributes:
       - model_name: sourceZone
         type: String

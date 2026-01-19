@@ -49,30 +49,34 @@ attributes:
     - model_name: radiusServerIp
       data_path: [securityConfig]
       conditional_attribute:
-        name: securityType
-        value: enterprise
+        conditions:
+          - name: securityType
+            value: enterprise
       exclude_test: true
       example: 1.2.3.4
     - model_name: radiusServerPort
       data_path: [securityConfig]
       conditional_attribute:
-        name: securityType
-        value: enterprise
+        conditions:
+          - name: securityType
+            value: enterprise
       exclude_test: true
       example: 1234
     - model_name: radiusServerSecret
       data_path: [securityConfig]
       conditional_attribute:
-        name: securityType
-        value: enterprise
+        conditions:
+          - name: securityType
+            value: enterprise
       exclude_test: true
       example: MyPassword123
     - model_name: passphrase
       data_path: [securityConfig]
       write_only: true
       conditional_attribute:
-        name: securityType
-        value: personal
+        conditions:
+          - name: securityType
+            value: personal
       example: MyPassword123
       minimum_test_value: '"MyPassword123"'
     - model_name: qosProfile

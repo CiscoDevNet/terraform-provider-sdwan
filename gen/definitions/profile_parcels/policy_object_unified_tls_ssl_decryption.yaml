@@ -27,8 +27,9 @@ attributes:
     tf_name: unknown_revocation_status
     ignore_mandatory: true
     conditional_attribute:
-      name: certificate_revocation_status
-      value: ocsp
+      conditions:
+        - name: certificate_revocation_status
+          value: ocsp
     example: decrypt
     exclude_test: true
   - model_name: unsupportedProtocolVersions

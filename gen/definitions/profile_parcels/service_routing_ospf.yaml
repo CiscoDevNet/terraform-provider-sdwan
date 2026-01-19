@@ -74,8 +74,9 @@ attributes:
       default_value_present: true
       default_value: false
       conditional_attribute:
-        name: protocol
-        value: omp
+        conditions:
+          - name: protocol
+            value: omp
   - model_name: routerLsa
     tf_name: router_lsas
     attributes: 

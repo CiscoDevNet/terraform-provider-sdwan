@@ -97,8 +97,9 @@ attributes:
           - model_name: ref
             tf_name: prefix_list_id
             conditional_attribute:
-              name: type
-              value: address
+              conditions:
+                - name: type
+                  value: address
             type: String
             description: Prefix list ID
             example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
@@ -111,8 +112,9 @@ attributes:
           - model_name: ref
             tf_name: as_path_list_id
             conditional_attribute:
-              name: type
-              value: asPath
+              conditions:
+                - name: type
+                  value: asPath
             type: String
             description: AS path list ID
             example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
@@ -125,8 +127,9 @@ attributes:
           - model_name: ref
             tf_name: community_list_id
             conditional_attribute:
-              name: type
-              value: community
+              conditions:
+                - name: type
+                  value: community
             type: String
             description: Community list ID
             example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
@@ -147,8 +150,9 @@ attributes:
           - model_name: refs
             tf_name: community_list_ids
             conditional_attribute:
-              name: type
-              value: advancedCommunity
+              conditions:
+                - name: type
+                  value: advancedCommunity
             type: Set
             element_type: String
             description: Community list IDs
@@ -162,8 +166,9 @@ attributes:
           - model_name: ref
             tf_name: expanded_community_list_id
             conditional_attribute:
-              name: type
-              value: expandedCommunity
+              conditions:
+                - name: type
+                  value: expandedCommunity
             type: String
             description: Expanded community list ID
             example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
@@ -171,8 +176,9 @@ attributes:
           - model_name: vipVariableName
             tf_name: expanded_community_list_variable
             conditional_attribute:
-              name: type
-              value: expandedCommunityInline
+              conditions:
+                - name: type
+                  value: expandedCommunityInline
             type: String
             description: Expanded community list variable
             exclude_test: true
@@ -185,8 +191,9 @@ attributes:
           - model_name: ref
             tf_name: extended_community_list_id
             conditional_attribute:
-              name: type
-              value: extCommunity
+              conditions:
+                - name: type
+                  value: extCommunity
             type: String
             description: Extended community list ID
             example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
@@ -199,8 +206,9 @@ attributes:
           - model_name: value
             tf_name: local_preference
             conditional_attribute:
-              name: type
-              value: localPreference
+              conditions:
+                - name: type
+                  value: localPreference
             type: Int64
             model_type_string: true
             description: Local preference
@@ -211,8 +219,9 @@ attributes:
           - model_name: value
             tf_name: metric
             conditional_attribute:
-              name: type
-              value: metric
+              conditions:
+                - name: type
+                  value: metric
             type: Int64
             model_type_string: true
             description: Metric
@@ -222,8 +231,9 @@ attributes:
           - model_name: ref
             tf_name: next_hop_prefix_list_id
             conditional_attribute:
-              name: type
-              value: nextHop
+              conditions:
+                - name: type
+                  value: nextHop
             type: String
             description: Next hop prefix list ID
             example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
@@ -236,8 +246,9 @@ attributes:
           - model_name: value
             tf_name: origin
             conditional_attribute:
-              name: type
-              value: origin
+              conditions:
+                - name: type
+                  value: origin
             type: String
             enum_values: [igp, egp, incomplete]
             description: Origin
@@ -246,8 +257,9 @@ attributes:
           - model_name: value
             tf_name: peer
             conditional_attribute:
-              name: type
-              value: peer
+              conditions:
+                - name: type
+                  value: peer
             type: String
             description: Peer IP
             example: 10.1.1.12
@@ -255,8 +267,9 @@ attributes:
           - model_name: value
             tf_name: omp_tag
             conditional_attribute:
-              name: type
-              value: ompTag
+              conditions:
+                - name: type
+                  value: ompTag
             type: Int64
             model_type_string: true
             description: OMP tag
@@ -267,8 +280,9 @@ attributes:
           - model_name: value
             tf_name: ospf_tag
             conditional_attribute:
-              name: type
-              value: ospfTag
+              conditions:
+                - name: type
+                  value: ospfTag
             type: Int64
             model_type_string: true
             description: OSPF tag
@@ -316,8 +330,9 @@ attributes:
             data_path: [value]
             tf_name: aggregator
             conditional_attribute:
-              name: type
-              value: aggregator
+              conditions:
+                - name: type
+                  value: aggregator
             type: Int64
             model_type_string: true
             description: Aggregator
@@ -328,8 +343,9 @@ attributes:
             data_path: [value]
             tf_name: aggregator_ip_address
             conditional_attribute:
-              name: type
-              value: aggregator
+              conditions:
+                - name: type
+                  value: aggregator
             type: String
             description: IP address
             example: 10.1.2.3
@@ -337,8 +353,9 @@ attributes:
             data_path: [value]
             tf_name: as_path_prepend
             conditional_attribute:
-              name: type
-              value: asPath
+              conditions:
+                - name: type
+                  value: asPath
             type: String
             description: Space separated list of ASN to prepend
             example: 65521 65521
@@ -347,8 +364,9 @@ attributes:
             data_path: [value]
             tf_name: as_path_exclude
             conditional_attribute:
-              name: type
-              value: asPath
+              conditions:
+                - name: type
+                  value: asPath
             type: String
             description: Space separated list of ASN to exclude
             example: 110 120
@@ -356,8 +374,9 @@ attributes:
           - model_name: value
             tf_name: atomic_aggregate
             conditional_attribute:
-              name: type
-              value: atomicAggregate
+              conditions:
+                - name: type
+                  value: atomicAggregate
             type: Bool
             model_type_string: true
             description: Atomic aggregate
@@ -366,8 +385,9 @@ attributes:
           - model_name: value
             tf_name: community
             conditional_attribute:
-              name: type
-              value: community
+              conditions:
+                - name: type
+                  value: community
             type: String
             description: Community value, e.g. `1000:10000` or `internet` or `local-AS`
             example: 1000:10000
@@ -375,8 +395,9 @@ attributes:
           - model_name: vipVariableName
             tf_name: community_variable
             conditional_attribute:
-              name: type
-              value: community
+              conditions:
+                - name: type
+                  value: community
             type: String
             description: Community variable
             exclude_test: true
@@ -384,8 +405,9 @@ attributes:
           - model_name: value
             tf_name: community_additive
             conditional_attribute:
-              name: type
-              value: communityAdditive
+              conditions:
+                - name: type
+                  value: communityAdditive
             type: Bool
             model_type_string: true
             description: Community additive
@@ -394,8 +416,9 @@ attributes:
           - model_name: value
             tf_name: local_preference
             conditional_attribute:
-              name: type
-              value: localPreference
+              conditions:
+                - name: type
+                  value: localPreference
             type: Int64
             model_type_string: true
             description: Local preference
@@ -406,8 +429,9 @@ attributes:
           - model_name: value
             tf_name: metric
             conditional_attribute:
-              name: type
-              value: metric
+              conditions:
+                - name: type
+                  value: metric
             type: Int64
             model_type_string: true
             description: Metric
@@ -418,8 +442,9 @@ attributes:
           - model_name: value
             tf_name: weight
             conditional_attribute:
-              name: type
-              value: weight
+              conditions:
+                - name: type
+                  value: weight
             type: Int64
             model_type_string: true
             description: Weight
@@ -430,8 +455,9 @@ attributes:
           - model_name: value
             tf_name: metric_type
             conditional_attribute:
-              name: type
-              value: metricType
+              conditions:
+                - name: type
+                  value: metricType
             type: String
             enum_values: [type1, type2]
             description: Metric type
@@ -440,8 +466,9 @@ attributes:
           - model_name: value
             tf_name: next_hop
             conditional_attribute:
-              name: type
-              value: nextHop
+              conditions:
+                - name: type
+                  value: nextHop
             type: String
             description: Next hop IP
             example: 10.1.1.5
@@ -449,8 +476,9 @@ attributes:
           - model_name: value
             tf_name: omp_tag
             conditional_attribute:
-              name: type
-              value: ompTag
+              conditions:
+                - name: type
+                  value: ompTag
             type: Int64
             model_type_string: true
             description: OMP tag
@@ -461,8 +489,9 @@ attributes:
           - model_name: value
             tf_name: ospf_tag
             conditional_attribute:
-              name: type
-              value: ospfTag
+              conditions:
+                - name: type
+                  value: ospfTag
             type: Int64
             model_type_string: true
             description: OSPF tag
@@ -473,8 +502,9 @@ attributes:
           - model_name: value
             tf_name: origin
             conditional_attribute:
-              name: type
-              value: origin
+              conditions:
+                - name: type
+                  value: origin
             type: String
             enum_values: [igp, egp, incomplete]
             description: Origin
@@ -483,8 +513,9 @@ attributes:
           - model_name: value
             tf_name: originator
             conditional_attribute:
-              name: type
-              value: originator
+              conditions:
+                - name: type
+                  value: originator
             type: String
             description: Originator IP
             example: 192.168.1.10

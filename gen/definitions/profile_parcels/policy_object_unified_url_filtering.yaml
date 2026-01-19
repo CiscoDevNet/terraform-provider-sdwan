@@ -39,14 +39,16 @@ attributes:
   - model_name: blockPageContents
     ignore_mandatory: true
     conditional_attribute:
-      name: block_page_action
-      value: text
+      conditions:
+        - name: block_page_action
+          value: text
     example: Access to the requested page has been denied. Please contact your Network Administrator
   - model_name: redirectUrl
     ignore_mandatory: true
     conditional_attribute:
-      name: block_page_action
-      value: redirect-url
+      conditions:
+        - name: block_page_action
+          value: redirect-url
     exclude_test: true
     example: www.example.com
   - model_name: enableAlerts
@@ -54,9 +56,10 @@ attributes:
   - model_name: alerts
     ignore_mandatory: true
     conditional_attribute:
-      name: enable_alerts
-      value: true
-      type: Bool
+      conditions:
+        - name: enable_alerts
+          value: true
+          type: Bool
     enum_values: ["blacklist", "whitelist", "categories-reputation"]
     ignore_enum: true
     example: blacklist

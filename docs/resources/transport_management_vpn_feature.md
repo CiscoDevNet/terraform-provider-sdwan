@@ -93,16 +93,16 @@ resource "sdwan_transport_management_vpn_feature" "example" {
 
 Optional:
 
-- `administrative_distance` (Number) Administrative distance, Attribute conditional on `gateway` being equal to `null0`
+- `administrative_distance` (Number) Administrative distance, Attribute conditional on `gateway` equal to `null0`
   - Range: `1`-`255`
   - Default value: `1`
-- `administrative_distance_variable` (String) Variable name, Attribute conditional on `gateway` being equal to `null0`
+- `administrative_distance_variable` (String) Variable name, Attribute conditional on `gateway` equal to `null0`
 - `gateway` (String) Gateway
   - Choices: `nextHop`, `dhcp`, `null0`
   - Default value: `nextHop`
 - `network_address` (String) IP Address
 - `network_address_variable` (String) Variable name
-- `next_hops` (Attributes List) IPv4 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `nextHop` (see [below for nested schema](#nestedatt--ipv4_static_routes--next_hops))
+- `next_hops` (Attributes List) IPv4 Route Gateway Next Hop, Attribute conditional on `gateway` equal to `nextHop` (see [below for nested schema](#nestedatt--ipv4_static_routes--next_hops))
 - `subnet_mask` (String) Subnet Mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `subnet_mask_variable` (String) Variable name
@@ -128,11 +128,11 @@ Optional:
 
 - `gateway` (String) Gateway
   - Choices: `nextHop`, `null0`, `nat`
-- `nat` (String) IPv6 Nat, Attribute conditional on `gateway` being equal to `nat`
+- `nat` (String) IPv6 Nat, Attribute conditional on `gateway` equal to `nat`
   - Choices: `NAT64`, `NAT66`
-- `nat_variable` (String) Variable name, Attribute conditional on `gateway` being equal to `nat`
-- `next_hops` (Attributes List) IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `nextHop` (see [below for nested schema](#nestedatt--ipv6_static_routes--next_hops))
-- `null0` (Boolean) IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `null0`
+- `nat_variable` (String) Variable name, Attribute conditional on `gateway` equal to `nat`
+- `next_hops` (Attributes List) IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` equal to `nextHop` (see [below for nested schema](#nestedatt--ipv6_static_routes--next_hops))
+- `null0` (Boolean) IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` equal to `null0`
 - `prefix` (String) Prefix
 - `prefix_variable` (String) Variable name
 

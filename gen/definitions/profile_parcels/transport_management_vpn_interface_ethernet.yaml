@@ -41,8 +41,9 @@ attributes:
     tf_name: ipv4_dhcp_distance
     data_path: [intfIpAddress, dynamic]
     conditional_attribute:
-      name: ipv4_configuration_type
-      value: dynamic
+      conditions:
+        - name: ipv4_configuration_type
+          value: dynamic
     default_value_present: true
     default_value: 1
     example: 1
@@ -51,24 +52,27 @@ attributes:
     tf_name: ipv4_address
     data_path: [intfIpAddress, static, staticIpV4AddressPrimary]
     conditional_attribute:
-      name: ipv4_configuration_type
-      value: static
+      conditions:
+        - name: ipv4_configuration_type
+          value: static
     example: 1.2.3.4
     minimum_test_value: '"1.2.3.4"'
   - model_name: subnetMask
     tf_name: ipv4_subnet_mask
     data_path: [intfIpAddress, static, staticIpV4AddressPrimary]
     conditional_attribute:
-      name: ipv4_configuration_type
-      value: static
+      conditions:
+        - name: ipv4_configuration_type
+          value: static
     example: 0.0.0.0
     minimum_test_value: '"0.0.0.0"'
   - model_name: staticIpV4AddressSecondary
     tf_name: ipv4_secondary_addresses
     data_path: [intfIpAddress, static]
     conditional_attribute:
-      name: ipv4_configuration_type
-      value: static
+      conditions:
+        - name: ipv4_configuration_type
+          value: static
     attributes:
     - model_name: ipAddress
       tf_name: address
@@ -98,16 +102,18 @@ attributes:
     data_path: [intfIpV6Address, dynamic]
     type: Bool
     conditional_attribute:
-      name: ipv6_configuration_type
-      value: dynamic
+      conditions:
+        - name: ipv6_configuration_type
+          value: dynamic
     example: true
     exclude_test: true
   - model_name: address
     tf_name: ipv6_address
     data_path: [intfIpV6Address, static, primaryIpV6Address]
     conditional_attribute:
-      name: ipv6_configuration_type
-      value: static
+      conditions:
+        - name: ipv6_configuration_type
+          value: static
     example: 2001:0:0:1::/64
   - model_name: arp
     tf_name: arp_entries

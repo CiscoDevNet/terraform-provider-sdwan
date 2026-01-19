@@ -87,7 +87,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 			{{- range  .Attributes}}
 			{{- if not .Value}}
 			"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if isStringInt64 .}}String{{else}}{{.Type}}{{end}}Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}")
+				MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}{{buildConditionalDescription .ConditionalAttribute}}")
 					{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 					.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 					{{- end -}}
@@ -153,7 +153,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 						{{- range  .Attributes}}
 						{{- if not .Value}}
 						"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if isStringInt64 .}}String{{else}}{{.Type}}{{end}}Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}")
+							MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}{{buildConditionalDescription .ConditionalAttribute}}")
 								{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 								.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 								{{- end -}}
@@ -215,7 +215,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 									{{- range  .Attributes}}
 									{{- if not .Value}}
 									"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if isStringInt64 .}}String{{else}}{{.Type}}{{end}}Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}")
+										MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}{{buildConditionalDescription .ConditionalAttribute}}")
 											{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 											.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 											{{- end -}}
@@ -277,7 +277,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 												{{- range  .Attributes}}
 												{{- if not .Value}}
 												"{{.TfName}}": schema.{{if isList .}}List{{else if isSet .}}Set{{else if isStringInt64 .}}String{{else}}{{.Type}}{{end}}Attribute{
-													MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}")
+													MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}{{buildConditionalDescription .ConditionalAttribute}}")
 														{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 														.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 														{{- end -}}
@@ -336,7 +336,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 												},
 												{{- if .Variable}}
 												"{{.TfName}}_variable": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Variable name{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Variable name{{buildConditionalDescription .ConditionalAttribute}}").String,
 													Optional:            true,
 												},
 												{{- end}}
@@ -348,7 +348,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 									},
 									{{- if .Variable}}
 									"{{.TfName}}_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name{{buildConditionalDescription .ConditionalAttribute}}").String,
 										Optional:            true,
 									},
 									{{- end}}
@@ -360,7 +360,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 						},
 						{{- if .Variable}}
 						"{{.TfName}}_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name{{buildConditionalDescription .ConditionalAttribute}}").String,
 							Optional:            true,
 						},
 						{{- end}}
@@ -372,7 +372,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 			},
 			{{- if .Variable}}
 			"{{.TfName}}_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name{{buildConditionalDescription .ConditionalAttribute}}").String,
 				Optional:            true,
 			},
 			{{- end}}

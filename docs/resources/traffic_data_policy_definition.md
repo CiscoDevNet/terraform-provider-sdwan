@@ -90,32 +90,32 @@ Required:
 
 Optional:
 
-- `cflowd` (Boolean) Enable cflowd, Attribute conditional on `type` being equal to `cflowd`
-- `counter` (String) Counter name, Attribute conditional on `type` being equal to `count`
-- `dre_optimization` (Boolean) Enable DRE optimization, Attribute conditional on `type` being equal to `dreOptimization`
-- `fallback_to_routing` (Boolean) Enable fallback to routing, Attribute conditional on `type` being equal to `fallbackToRouting`
-- `log` (Boolean) Enable logging, Attribute conditional on `type` being equal to `log`
-- `loss_correction` (String) Loss correction, Attribute conditional on `type` being equal to `lossProtect`
+- `cflowd` (Boolean) Enable cflowd, Attribute conditional on `type` equal to `cflowd`
+- `counter` (String) Counter name, Attribute conditional on `type` equal to `count`
+- `dre_optimization` (Boolean) Enable DRE optimization, Attribute conditional on `type` equal to `dreOptimization`
+- `fallback_to_routing` (Boolean) Enable fallback to routing, Attribute conditional on `type` equal to `fallbackToRouting`
+- `log` (Boolean) Enable logging, Attribute conditional on `type` equal to `log`
+- `loss_correction` (String) Loss correction, Attribute conditional on `type` equal to `lossProtect`
   - Choices: `fecAdaptive`, `fecAlways`, `packetDuplication`
-- `loss_correction_fec` (String) Loss correction FEC, Attribute conditional on `type` being equal to `lossProtectFec`
+- `loss_correction_fec` (String) Loss correction FEC, Attribute conditional on `type` equal to `lossProtectFec`
   - Choices: `fecAdaptive`, `fecAlways`, `packetDuplication`
-- `loss_correction_fec_threshold` (String) Loss correction FEC threshold, Attribute conditional on `type` being equal to `lossProtectFec`
-- `loss_correction_packet_duplication` (String) Loss correction packet duplication, Attribute conditional on `type` being equal to `lossProtectPktDup`
+- `loss_correction_fec_threshold` (String) Loss correction FEC threshold, Attribute conditional on `type` equal to `lossProtectFec`
+- `loss_correction_packet_duplication` (String) Loss correction packet duplication, Attribute conditional on `type` equal to `lossProtectPktDup`
   - Choices: `fecAdaptive`, `fecAlways`, `packetDuplication`
-- `nat_parameters` (Attributes List) List of NAT parameters, Attribute conditional on `type` being equal to `nat` (see [below for nested schema](#nestedatt--sequences--action_entries--nat_parameters))
-- `nat_pool` (String) NAT pool, Attribute conditional on `type` being equal to `nat`
+- `nat_parameters` (Attributes List) List of NAT parameters, Attribute conditional on `type` equal to `nat` (see [below for nested schema](#nestedatt--sequences--action_entries--nat_parameters))
+- `nat_pool` (String) NAT pool, Attribute conditional on `type` equal to `nat`
   - Choices: `pool`
-- `nat_pool_id` (Number) NAT pool ID, Attribute conditional on `type` being equal to `nat`
+- `nat_pool_id` (Number) NAT pool ID, Attribute conditional on `type` equal to `nat`
   - Range: `1`-`31`
-- `redirect_dns` (String) Redirect DNS, Attribute conditional on `type` being equal to `redirectDns`
+- `redirect_dns` (String) Redirect DNS, Attribute conditional on `type` equal to `redirectDns`
   - Choices: `dnsType`, `ipAddress`
-- `redirect_dns_address` (String) Redirect DNS IP address, Attribute conditional on `redirect_dns` being equal to `ipAddress`
-- `redirect_dns_type` (String) Redirect DNS type, Attribute conditional on `redirect_dns` being equal to `dnsType`
+- `redirect_dns_address` (String) Redirect DNS IP address, Attribute conditional on `redirect_dns` equal to `ipAddress`
+- `redirect_dns_type` (String) Redirect DNS type, Attribute conditional on `redirect_dns` equal to `dnsType`
   - Choices: `host`, `umbrella`
-- `secure_internet_gateway` (Boolean) Enable secure internet gateway, Attribute conditional on `type` being equal to `sig`
-- `service_node_group` (String) Service node group, Attribute conditional on `type` being equal to `serviceNodeGroup`
-- `set_parameters` (Attributes Set) List of set parameters, Attribute conditional on `type` being equal to `set` (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
-- `tcp_optimization` (Boolean) Enable TCP optimization, Attribute conditional on `type` being equal to `tcpOptimization`
+- `secure_internet_gateway` (Boolean) Enable secure internet gateway, Attribute conditional on `type` equal to `sig`
+- `service_node_group` (String) Service node group, Attribute conditional on `type` equal to `serviceNodeGroup`
+- `set_parameters` (Attributes Set) List of set parameters, Attribute conditional on `type` equal to `set` (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
+- `tcp_optimization` (Boolean) Enable TCP optimization, Attribute conditional on `type` equal to `tcpOptimization`
 
 <a id="nestedatt--sequences--action_entries--nat_parameters"></a>
 ### Nested Schema for `sequences.action_entries.nat_parameters`
@@ -127,8 +127,8 @@ Required:
 
 Optional:
 
-- `fallback` (Boolean) Fallback, Attribute conditional on `type` being equal to `fallback`
-- `vpn_id` (Number) DSCP, Attribute conditional on `type` being equal to `useVpn`
+- `fallback` (Boolean) Fallback, Attribute conditional on `type` equal to `fallback`
+- `vpn_id` (Number) DSCP, Attribute conditional on `type` equal to `useVpn`
 
 
 <a id="nestedatt--sequences--action_entries--set_parameters"></a>
@@ -141,38 +141,38 @@ Required:
 
 Optional:
 
-- `dscp` (Number) DSCP, Attribute conditional on `type` being equal to `dscp`
+- `dscp` (Number) DSCP, Attribute conditional on `type` equal to `dscp`
   - Range: `0`-`63`
-- `forwarding_class` (String) Forwarding class, Attribute conditional on `type` being equal to `forwardingClass`
-- `local_tloc_list_color` (String) Local TLOC list color. Space separated list of colors., Attribute conditional on `type` being equal to `localTlocList`
-- `local_tloc_list_encap` (String) Local TLOC list encapsulation., Attribute conditional on `type` being equal to `localTlocList`
+- `forwarding_class` (String) Forwarding class, Attribute conditional on `type` equal to `forwardingClass`
+- `local_tloc_list_color` (String) Local TLOC list color. Space separated list of colors., Attribute conditional on `type` equal to `localTlocList`
+- `local_tloc_list_encap` (String) Local TLOC list encapsulation., Attribute conditional on `type` equal to `localTlocList`
   - Choices: `ipsec`, `gre`, `ipsec gre`
-- `local_tloc_list_restrict` (Boolean) Local TLOC list restrict, Attribute conditional on `type` being equal to `localTlocList`
-- `next_hop` (String) Next hop IP, Attribute conditional on `type` being equal to `nextHop`
-- `next_hop_loose` (Boolean) Use routing table entry to forward the packet in case Next-hop is not available, Attribute conditional on `type` being equal to `nextHopLoose`
-- `policer_list_id` (String) Policer list ID, Attribute conditional on `type` being equal to `policer`
+- `local_tloc_list_restrict` (Boolean) Local TLOC list restrict, Attribute conditional on `type` equal to `localTlocList`
+- `next_hop` (String) Next hop IP, Attribute conditional on `type` equal to `nextHop`
+- `next_hop_loose` (Boolean) Use routing table entry to forward the packet in case Next-hop is not available, Attribute conditional on `type` equal to `nextHopLoose`
+- `policer_list_id` (String) Policer list ID, Attribute conditional on `type` equal to `policer`
 - `policer_list_version` (Number) Policer list version
-- `preferred_color_group_list_id` (String) Preferred color group list ID, Attribute conditional on `type` being equal to `preferredColorGroup`
+- `preferred_color_group_list_id` (String) Preferred color group list ID, Attribute conditional on `type` equal to `preferredColorGroup`
 - `preferred_color_group_list_version` (Number) Preferred color group list version
-- `service_tloc_color` (String) Service TLOC color, Attribute conditional on `type` being equal to `service`
-- `service_tloc_encapsulation` (String) Service TLOC encapsulation, Attribute conditional on `type` being equal to `service`
+- `service_tloc_color` (String) Service TLOC color, Attribute conditional on `type` equal to `service`
+- `service_tloc_encapsulation` (String) Service TLOC encapsulation, Attribute conditional on `type` equal to `service`
   - Choices: `ipsec`, `gre`, `ipsec gre`
-- `service_tloc_ip` (String) Service TLOC IP address, Attribute conditional on `type` being equal to `service`
-- `service_tloc_list_id` (String) Service TLOC list ID, Attribute conditional on `type` being equal to `service`
+- `service_tloc_ip` (String) Service TLOC IP address, Attribute conditional on `type` equal to `service`
+- `service_tloc_list_id` (String) Service TLOC list ID, Attribute conditional on `type` equal to `service`
 - `service_tloc_list_version` (Number) Service TLOC list version
-- `service_tloc_local` (Boolean) Service TLOC Local, Attribute conditional on `type` being equal to `service`
-- `service_tloc_restrict` (Boolean) Service TLOC Restrict, Attribute conditional on `type` being equal to `service`
-- `service_type` (String) Service type, Attribute conditional on `type` being equal to `service`
+- `service_tloc_local` (Boolean) Service TLOC Local, Attribute conditional on `type` equal to `service`
+- `service_tloc_restrict` (Boolean) Service TLOC Restrict, Attribute conditional on `type` equal to `service`
+- `service_type` (String) Service type, Attribute conditional on `type` equal to `service`
   - Choices: `FW`, `IDP`, `IDS`, `netsvc1`, `netsvc2`, `netsvc3`, `netsvc4`, `netsvc5`
-- `service_vpn_id` (Number) Service VPN ID, Attribute conditional on `type` being equal to `service`
+- `service_vpn_id` (Number) Service VPN ID, Attribute conditional on `type` equal to `service`
   - Range: `0`-`65536`
-- `tloc_color` (String) TLOC color, Attribute conditional on `type` being equal to `tloc`
-- `tloc_encapsulation` (String) TLOC encapsulation, Attribute conditional on `type` being equal to `tloc`
+- `tloc_color` (String) TLOC color, Attribute conditional on `type` equal to `tloc`
+- `tloc_encapsulation` (String) TLOC encapsulation, Attribute conditional on `type` equal to `tloc`
   - Choices: `ipsec`, `gre`, `ipsec gre`
-- `tloc_ip` (String) TLOC IP address, Attribute conditional on `type` being equal to `tloc`
-- `tloc_list_id` (String) TLOC list ID, Attribute conditional on `type` being equal to `tlocList`
+- `tloc_ip` (String) TLOC IP address, Attribute conditional on `type` equal to `tloc`
+- `tloc_list_id` (String) TLOC list ID, Attribute conditional on `type` equal to `tlocList`
 - `tloc_list_version` (Number) TLOC list version
-- `vpn_id` (Number) DSCP, Attribute conditional on `type` being equal to `vpn`
+- `vpn_id` (Number) DSCP, Attribute conditional on `type` equal to `vpn`
   - Range: `0`-`65530`
 
 
@@ -187,32 +187,32 @@ Required:
 
 Optional:
 
-- `application_list_id` (String) Application list ID, Attribute conditional on `type` being equal to `appList`
+- `application_list_id` (String) Application list ID, Attribute conditional on `type` equal to `appList`
 - `application_list_version` (Number) Application list version
-- `destination_data_prefix_list_id` (String) Destination Data Prefix list ID, Attribute conditional on `type` being equal to `destinationDataPrefixList`
+- `destination_data_prefix_list_id` (String) Destination Data Prefix list ID, Attribute conditional on `type` equal to `destinationDataPrefixList`
 - `destination_data_prefix_list_version` (Number) Destination Data Prefix list version
-- `destination_ip` (String) Destination IP, Attribute conditional on `type` being equal to `destinationIp`
-- `destination_port` (String) Destination port, 0-65535 (Single value, range or multiple values separated by spaces), Attribute conditional on `type` being equal to `destinationPort`
-- `destination_region` (String) Destination region, Attribute conditional on `type` being equal to `destinationRegion`
+- `destination_ip` (String) Destination IP, Attribute conditional on `type` equal to `destinationIp`
+- `destination_port` (String) Destination port, 0-65535 (Single value, range or multiple values separated by spaces), Attribute conditional on `type` equal to `destinationPort`
+- `destination_region` (String) Destination region, Attribute conditional on `type` equal to `destinationRegion`
   - Choices: `primary-region`, `secondary-region`, `other-region`
-- `dns` (String) DNS request or response, Attribute conditional on `type` being equal to `dns`
+- `dns` (String) DNS request or response, Attribute conditional on `type` equal to `dns`
   - Choices: `request`, `response`
-- `dns_application_list_id` (String) DNS Application list ID, Attribute conditional on `type` being equal to `dnsAppList`
+- `dns_application_list_id` (String) DNS Application list ID, Attribute conditional on `type` equal to `dnsAppList`
 - `dns_application_list_version` (Number) DNS Application list version
-- `dscp` (String) DSCP value, Attribute conditional on `type` being equal to `dscp`
-- `icmp_message` (String) ICMP Message, Attribute conditional on `type` being equal to `icmpMessage`
-- `packet_length` (Number) Packet length, Attribute conditional on `type` being equal to `packetLength`
+- `dscp` (String) DSCP value, Attribute conditional on `type` equal to `dscp`
+- `icmp_message` (String) ICMP Message, Attribute conditional on `type` equal to `icmpMessage`
+- `packet_length` (Number) Packet length, Attribute conditional on `type` equal to `packetLength`
   - Range: `0`-`65535`
-- `plp` (String) PLP, Attribute conditional on `type` being equal to `plp`
+- `plp` (String) PLP, Attribute conditional on `type` equal to `plp`
   - Choices: `low`, `high`
-- `protocol` (String) IP Protocol, 0-255 (Single value or multiple values separated by spaces), Attribute conditional on `type` being equal to `protocol`
-- `source_data_prefix_list_id` (String) Source Data Prefix list ID, Attribute conditional on `type` being equal to `sourceDataPrefixList`
+- `protocol` (String) IP Protocol, 0-255 (Single value or multiple values separated by spaces), Attribute conditional on `type` equal to `protocol`
+- `source_data_prefix_list_id` (String) Source Data Prefix list ID, Attribute conditional on `type` equal to `sourceDataPrefixList`
 - `source_data_prefix_list_version` (Number) Source Data Prefix list version
-- `source_ip` (String) Source IP, Attribute conditional on `type` being equal to `sourceIp`
-- `source_port` (String) Source port, 0-65535 (Single value, range or multiple values separated by spaces), Attribute conditional on `type` being equal to `sourcePort`
-- `tcp` (String) TCP flags, Attribute conditional on `type` being equal to `tcp`
+- `source_ip` (String) Source IP, Attribute conditional on `type` equal to `sourceIp`
+- `source_port` (String) Source port, 0-65535 (Single value, range or multiple values separated by spaces), Attribute conditional on `type` equal to `sourcePort`
+- `tcp` (String) TCP flags, Attribute conditional on `type` equal to `tcp`
   - Choices: `syn`
-- `traffic_to` (String) Traffic to, Attribute conditional on `type` being equal to `trafficTo`
+- `traffic_to` (String) Traffic to, Attribute conditional on `type` equal to `trafficTo`
   - Choices: `access`, `core`, `service`
 
 ## Import

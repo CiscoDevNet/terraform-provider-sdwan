@@ -85,7 +85,7 @@ Required:
 
 Optional:
 
-- `counter_name` (String) Counter name, Attribute conditional on `type` being equal to `count`
+- `counter_name` (String) Counter name, Attribute conditional on `type` equal to `count`
 
 
 <a id="nestedatt--sequences--match_entries"></a>
@@ -98,15 +98,15 @@ Required:
 
 Optional:
 
-- `destination_data_ipv6_prefix_list_id` (String) Destination data IPv6 prefix list ID, Attribute conditional on `type` being equal to `destinationDataIpv6PrefixList`
+- `destination_data_ipv6_prefix_list_id` (String) Destination data IPv6 prefix list ID, Attribute conditional on `type` equal to `destinationDataIpv6PrefixList`
 - `destination_data_ipv6_prefix_list_version` (Number) Destination data IPv6 prefix list version
-- `destination_ip` (String) Destination IP prefix, Attribute conditional on `type` being equal to `destinationIpv6`
-- `destination_port` (Number) Destination port, only `22` and `161` supported, Attribute conditional on `type` being equal to `destinationPort`
+- `destination_ip` (String) Destination IP prefix, Attribute conditional on `type` equal to `destinationIpv6`
+- `destination_port` (Number) Destination port, only `22` and `161` supported, Attribute conditional on `type` equal to `destinationPort`
   - Range: `0`-`65535`
-- `source_data_ipv6_prefix_list_id` (String) Source data IPv6 prefix list ID, Attribute conditional on `type` being equal to `sourceDataIpv6PrefixList`
+- `source_data_ipv6_prefix_list_id` (String) Source data IPv6 prefix list ID, Attribute conditional on `type` equal to `sourceDataIpv6PrefixList`
 - `source_data_ipv6_prefix_list_version` (Number) Source data IPv6 prefix list version
-- `source_ip` (String) Source IP prefix, Attribute conditional on `type` being equal to `sourceIpv6`
-- `source_ports` (String) Source ports. Single value (0-65535) or ranges separated by spaces., Attribute conditional on `type` being equal to `sourcePort`
+- `source_ip` (String) Source IP prefix, Attribute conditional on `type` equal to `sourceIpv6`
+- `source_ports` (String) Source ports. Single value (0-65535) or ranges separated by spaces., Attribute conditional on `type` equal to `sourcePort`
 
 ## Import
 

@@ -191,8 +191,9 @@ attributes:
     example: 50
     include_default_option: true
     conditional_attribute:
-      name: tunnel_qos_mode
-      value: hub
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
   - model_name: group
     tf_name: tunnel_interface_groups
     exclude_ignore: true

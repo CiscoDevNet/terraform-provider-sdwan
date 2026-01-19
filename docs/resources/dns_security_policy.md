@@ -36,7 +36,7 @@ resource "sdwan_dns_security_policy" "example" {
 
 - `child_org_id` (String) String that is a number that corresponds to Umbrella Multi Org, can be empty if not using Umbrella Multi Org
 - `dns_crypt` (Boolean) If matchAllVpn is false, this field is only true if at least one of the targetVpns entires contains an umbrellaDefault true
-- `dns_server_ip` (String) Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry, Attribute conditional on `match_all_vpn` being equal to `true`
+- `dns_server_ip` (String) Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry, Attribute conditional on `match_all_vpn` equal to `true`
 - `feature_profile_id` (String) Feature Profile ID
 - `local_domain_bypass_enabled` (Boolean) Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry
 - `local_domain_bypass_list_id` (String)
@@ -47,7 +47,7 @@ resource "sdwan_dns_security_policy" "example" {
 ### Optional
 
 - `description` (String) The description of the Policy
-- `target_vpns` (Attributes List) Will be under data field only if matchAllVpn is false, if matchAllVpn is true field should not be in payload, Attribute conditional on `match_all_vpn` being equal to `false` (see [below for nested schema](#nestedatt--target_vpns))
+- `target_vpns` (Attributes List) Will be under data field only if matchAllVpn is false, if matchAllVpn is true field should not be in payload, Attribute conditional on `match_all_vpn` equal to `false` (see [below for nested schema](#nestedatt--target_vpns))
 
 ### Read-Only
 

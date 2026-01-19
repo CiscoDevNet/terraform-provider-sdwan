@@ -93,8 +93,9 @@ attributes:
       exclude_test: true
       example: true
       conditional_attribute:
-        name: protocol
-        value: omp
+        conditions:
+          - name: protocol
+            value: omp
   - model_name: action
     tf_name: router_lsa_action
     data_path: [maxMetricRouterLsa]

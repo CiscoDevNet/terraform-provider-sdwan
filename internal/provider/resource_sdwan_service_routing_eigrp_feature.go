@@ -182,7 +182,7 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 				Optional:            true,
 			},
 			"hmac_authentication_key": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set hmac-sha-256 authentication key, Attribute conditional on `authentication_type` being equal to `hmac-sha-256`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set hmac-sha-256 authentication key, Attribute conditional on `authentication_type` equal to `hmac-sha-256`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 31),
@@ -190,11 +190,11 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 				},
 			},
 			"hmac_authentication_key_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `authentication_type` being equal to `hmac-sha-256`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `authentication_type` equal to `hmac-sha-256`").String,
 				Optional:            true,
 			},
 			"md5_keys": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set keychain details, Attribute conditional on `authentication_type` being equal to `md5`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set keychain details, Attribute conditional on `authentication_type` equal to `md5`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
