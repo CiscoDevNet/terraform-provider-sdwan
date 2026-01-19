@@ -1,3 +1,7 @@
+## 0.9.1 (Unreleased)
+
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_interface_ethernet_feature` to `20.15.0`
+
 ## 0.9.0
 
 - Begins bumping UX 2.0 resources minimum support version from `20.12` to `20.15`. The process is ongoing and not all resources have been bumped to `20.15` yet so please check the minimum supported version and the changelog until all resources are supported.
