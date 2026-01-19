@@ -1,201 +1,192 @@
 {
   "request": {
-      "$schema": "http://json-schema.org/draft/2019-09/schema",
-      "$id": "https://cisco.com/schema/profileparcel/sdwan/cli/config/post/request_schema.json",
-      "title": "Config Parcel Schema",
-      "description": "Config profile parcel schema for POST request",
-      "type": "object",
-      "properties": {
-          "name": {
-              "type": "string",
-              "pattern": "^[^&<>! \"]+$",
-              "minLength": 1,
-              "maxLength": 128
-          },
-          "description": {
-              "type": "string"
-          },
-          "data": {
-              "type": "object",
-              "properties": {
-                  "config": {
-                      "type": "string"
-                  }
-              },
-              "required": [
-                  "config"
-              ],
-              "additionalProperties": false
-          },
-          "metadata": {
-              "supportedDeviceTypes": [
-                  "all"
-              ]
-          },
-          "documentation": {
-              "description": "This is the documentation for POST request schema for Config profile parcel",
-              "details-1": "data.config attribute will have device CLI configuration as string",
-              "properties": {
-                  "clisSupportedForEncryption": {
-                      "description": "The section below lists the specific CLI's which support type 6 encryption. In the CLI's below, only the fields specified as 'encryptionSupportedField' are supported for type 6 encryption.",
-                      "cliList": [
-                          {
-                              "cliSyntax": "aaa group server radius <server_group>\n server-private <ip/host_name> key <0/6/7> <key_text>",
-                              "encryptionSupportedField": "<key_text>"
-                          },
-                          {
-                              "cliSyntax": "aaa group server tacacs+ <server_group>\n server-private <ip/host_name> key <0/6/7> <key_text>",
-                              "encryptionSupportedField": "<key_text>"
-                          },
-                          {
-                              "cliSyntax": "radius-server key <0/6/7> <key_text>",
-                              "encryptionSupportedField": "<key_text>"
-                          },
-                          {
-                              "cliSyntax": "tacacs-server key <0/6/7> <key_text>",
-                              "encryptionSupportedField": "<key_text>"
-                          },
-                          {
-                              "cliSyntax": "aaa server radius dynamic-author\n server-key <0/6/7> <key_text>",
-                              "encryptionSupportedField": "<key_text>"
-                          },
-                          {
-                              "cliSyntax": "aaa server radius dynamic-author\n client <ipv4/ipv6> vrf <vrf_name> server-key <0/6/7> <key_text>",
-                              "encryptionSupportedField": "<key_text>"
-                          },
-                          {
-                              "cliSyntax": "snmp-server host <ip/snmp_notification_host> <community_or_user>",
-                              "encryptionSupportedField": "<community_or_user>"
-                          },
-                          {
-                              "cliSyntax": "snmp-server community <snmp_community>",
-                              "encryptionSupportedField": "<snmp_community>"
-                          },
-                          {
-                              "cliSyntax": "snmp-server host <host_ip> <community-name>",
-                              "encryptionSupportedField": "<community_name>"
-                          },
-                          {
-                              "cliSyntax": "snmp-server host <host_ip> <community_name> udp-port <port_number>",
-                              "encryptionSupportedField": "<community_name>"
-                          },
-                          {
-                              "cliSyntax": "snmp-server host <host_ip> vrf <vrf_name> <community_name>",
-                              "encryptionSupportedField": "<community_name>"
-                          },
-                          {
-                              "cliSyntax": "snmp-server host <host_ip> vrf <vrf_name> <community_name> udp-port <port_number>",
-                              "encryptionSupportedField": "<community_name>"
-                          },
-                          {
-                              "cliSyntax": "snmp mib community-map <0/6/7> <community_name>",
-                              "encryptionSupportedField": "<community_name>"
-                          },
-                          {
-                              "cliSyntax": "secure-internet-gateway\n umbrella api-secret <secret_text>",
-                              "encryptionSupportedField": "<secret_text>"
-                          },
-                          {
-                              "cliSyntax": "parameter-map type umbrella global\n secret <0,6> <secret_text>",
-                              "encryptionSupportedField": "<secret_text>"
-                          },
-                          {
-                              "cliSyntax": "secure-internet-gateway\n zscaler password <password_text>",
-                              "encryptionSupportedField": "<password_text>"
-                          },
-                          {
-                              "cliSyntax": "cts credentials id <cts_id> password <0/6/7> <password_text>",
-                              "encryptionSupportedField": "<password_text>"
-                          },
-                          {
-                              "cliSyntax": "cts sxp default password <0/6/7> <password_text>",
-                              "encryptionSupportedField": "<password_text>"
-                          },
-                          {
-                              "cliSyntax": "username <user_name> secret <0/5/8/9> <secret_text>",
-                              "encryptionSupportedField": "<secret_text>"
-                          },
-                          {
-                              "cliSyntax": "router bgp <1-4294967295>\n neighbor <ip_address> password <password_text>",
-                              "encryptionSupportedField": "<password_text>"
-                          },
-                          {
-                              "cliSyntax": "router bgp <1-4294967295>\n address-family ipv4 unicast vrf <vrf_name>\n  neighbor <ip_address> password <password_text>",
-                              "encryptionSupportedField": "<password_text>"
-                          },
-                          {
-                              "cliSyntax": "router bgp <1-4294967295>\n address-family ipv6 unicast vrf <vrf_name>\n  neighbor <ip_address> password <password_text>",
-                              "encryptionSupportedField": "<password_text>"
-                          },
-                          {
-                              "cliSyntax": "key chain <key_chain_name>\n key-string <0/6/7> <keystring_text>",
-                              "encryptionSupportedField": "<keystring_text>"
-                          },
-                          {
-                              "cliSyntax": "ntp authentication-key <1-4294967295> md5 <authkey_text>",
-                              "encryptionSupportedField": "<authkey_text>"
-                          },
-                          {
-                              "cliSyntax": "controller Cellular myCellular\n profile id <profile_id> apn <apn_name> authentication <chap/pap/pap_chap> username <user_name> password <password_text>",
-                              "encryptionSupportedField": "<password_text>"
-                          },
-                          {
-                              "cliSyntax": "interface Loopback<no>\n ip ospf message-digest-key <key_id> md5 <md5key_text>",
-                              "encryptionSupportedField": "<md5key_text>"
-                          },
-                          {
-                              "cliSyntax": "interface GigabitEthernet<no>\n ip ospf message-digest-key <key_id> md5 <md5key_text>",
-                              "encryptionSupportedField": "<md5key_text>"
-                          },
-                          {
-                              "cliSyntax": "interface TenGigabitEthernet<no>\n ip ospf message-digest-key <key_id> md5 <md5key_text>",
-                              "encryptionSupportedField": "<md5key_text>"
-                          },
-                          {
-                              "cliSyntax": "interface HundredGigE<no>\n ip ospf message-digest-key <key_id> md5 <md5key_text>",
-                              "encryptionSupportedField": "<md5key_text>"
-                          },
-                          {
-                              "cliSyntax": "interface FortyGigabitEthernet<no>\n ip ospf message-digest-key <key_id> md5 <md5key_text>",
-                              "encryptionSupportedField": "<md5key_text>"
-                          },
-                          {
-                              "cliSyntax": "interface Vlan<no>\n ip ospf message-digest-key <key_id> md5 <md5key_text>",
-                              "encryptionSupportedField": "<md5key_text>"
-                          },
-                          {
-                              "cliSyntax": "ip msdp vrf <vrf_name> password peer <peer_name> <password_text>",
-                              "encryptionSupportedField": "<password_text>"
-                          }
-                      ]
-                  }
-              },
-              "examples": [
-                  {
-                      "data": {
-                          "config": "bfd default-dscp 48\nbfd app-route multiplier 6\nbfd app-route poll-interval 600000"
-                      },
-                      "name": "CliConfigParcel1"
-                  },
-                  {
-                      "data": {
-                          "config": "vrf definition 100"
-                      },
-                      "name": "CliConfigParcel1"
-                  }
-              ]
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/cli/config/post/request_schema.json",
+    "title": "Config Parcel Schema",
+    "description": "Config profile parcel schema for POST request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "description": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "config": {
+            "type": "string"
           }
+        },
+        "required": ["config"],
+        "additionalProperties": false
       },
-      "required": [
-          "name",
-          "data"
-      ],
-      "not": {
-          "required": [
-              "metadata",
-              "documentation"
-          ]
+      "metadata": {
+        "supportedDeviceTypes": ["all"],
+        "minVManageVersion": "20.15.1"
       },
-      "additionalProperties": false
+      "documentation": {
+        "description": "This is the documentation for POST request schema for Config profile parcel",
+        "details-1": "data.config attribute will have device CLI configuration as string",
+        "properties": {
+          "clisSupportedForEncryption": {
+            "description": "The section below lists the specific CLI's which support type 6 encryption. In the CLI's below, only the fields specified as 'encryptionSupportedField' are supported for type 6 encryption.",
+            "cliList": [
+              {
+                "cliSyntax": "aaa group server radius <server_group>\n server-private <ip/host_name> key <0/6/7> <key_text>",
+                "encryptionSupportedField": "<key_text>"
+              },
+              {
+                "cliSyntax": "aaa group server tacacs+ <server_group>\n server-private <ip/host_name> key <0/6/7> <key_text>",
+                "encryptionSupportedField": "<key_text>"
+              },
+              {
+                "cliSyntax": "radius-server key <0/6/7> <key_text>",
+                "encryptionSupportedField": "<key_text>"
+              },
+              {
+                "cliSyntax": "tacacs-server key <0/6/7> <key_text>",
+                "encryptionSupportedField": "<key_text>"
+              },
+              {
+                "cliSyntax": "aaa server radius dynamic-author\n server-key <0/6/7> <key_text>",
+                "encryptionSupportedField": "<key_text>"
+              },
+              {
+                "cliSyntax": "aaa server radius dynamic-author\n client <ipv4/ipv6> vrf <vrf_name> server-key <0/6/7> <key_text>",
+                "encryptionSupportedField": "<key_text>"
+              },
+              {
+                "cliSyntax": "snmp-server host <ip/snmp_notification_host> <community_or_user>",
+                "encryptionSupportedField": "<community_or_user>"
+              },
+              {
+                "cliSyntax": "snmp-server community <snmp_community>",
+                "encryptionSupportedField": "<snmp_community>"
+              },
+              {
+                "cliSyntax": "snmp-server host <host_ip> <community-name>",
+                "encryptionSupportedField": "<community_name>"
+              },
+              {
+                "cliSyntax": "snmp-server host <host_ip> <community_name> udp-port <port_number>",
+                "encryptionSupportedField": "<community_name>"
+              },
+              {
+                "cliSyntax": "snmp-server host <host_ip> vrf <vrf_name> <community_name>",
+                "encryptionSupportedField": "<community_name>"
+              },
+              {
+                "cliSyntax": "snmp-server host <host_ip> vrf <vrf_name> <community_name> udp-port <port_number>",
+                "encryptionSupportedField": "<community_name>"
+              },
+              {
+                "cliSyntax": "snmp mib community-map <0/6/7> <community_name>",
+                "encryptionSupportedField": "<community_name>"
+              },
+              {
+                "cliSyntax": "secure-internet-gateway\n umbrella api-secret <secret_text>",
+                "encryptionSupportedField": "<secret_text>"
+              },
+              {
+                "cliSyntax": "parameter-map type umbrella global\n secret <0,6> <secret_text>",
+                "encryptionSupportedField": "<secret_text>"
+              },
+              {
+                "cliSyntax": "secure-internet-gateway\n zscaler password <password_text>",
+                "encryptionSupportedField": "<password_text>"
+              },
+              {
+                "cliSyntax": "cts credentials id <cts_id> password <0/6/7> <password_text>",
+                "encryptionSupportedField": "<password_text>"
+              },
+              {
+                "cliSyntax": "cts sxp default password <0/6/7> <password_text>",
+                "encryptionSupportedField": "<password_text>"
+              },
+              {
+                "cliSyntax": "username <user_name> secret <0/5/8/9> <secret_text>",
+                "encryptionSupportedField": "<secret_text>"
+              },
+              {
+                "cliSyntax": "router bgp <1-4294967295>\n neighbor <ip_address> password <password_text>",
+                "encryptionSupportedField": "<password_text>"
+              },
+              {
+                "cliSyntax": "router bgp <1-4294967295>\n address-family ipv4 unicast vrf <vrf_name>\n  neighbor <ip_address> password <password_text>",
+                "encryptionSupportedField": "<password_text>"
+              },
+              {
+                "cliSyntax": "router bgp <1-4294967295>\n address-family ipv6 unicast vrf <vrf_name>\n  neighbor <ip_address> password <password_text>",
+                "encryptionSupportedField": "<password_text>"
+              },
+              {
+                "cliSyntax": "key chain <key_chain_name>\n key-string <0/6/7> <keystring_text>",
+                "encryptionSupportedField": "<keystring_text>"
+              },
+              {
+                "cliSyntax": "ntp authentication-key <1-4294967295> md5 <authkey_text>",
+                "encryptionSupportedField": "<authkey_text>"
+              },
+              {
+                "cliSyntax": "controller Cellular myCellular\n profile id <profile_id> apn <apn_name> authentication <chap/pap/pap_chap> username <user_name> password <password_text>",
+                "encryptionSupportedField": "<password_text>"
+              },
+              {
+                "cliSyntax": "interface Loopback<no>\n ip ospf message-digest-key <key_id> md5 <md5key_text>",
+                "encryptionSupportedField": "<md5key_text>"
+              },
+              {
+                "cliSyntax": "interface GigabitEthernet<no>\n ip ospf message-digest-key <key_id> md5 <md5key_text>",
+                "encryptionSupportedField": "<md5key_text>"
+              },
+              {
+                "cliSyntax": "interface TenGigabitEthernet<no>\n ip ospf message-digest-key <key_id> md5 <md5key_text>",
+                "encryptionSupportedField": "<md5key_text>"
+              },
+              {
+                "cliSyntax": "interface HundredGigE<no>\n ip ospf message-digest-key <key_id> md5 <md5key_text>",
+                "encryptionSupportedField": "<md5key_text>"
+              },
+              {
+                "cliSyntax": "interface FortyGigabitEthernet<no>\n ip ospf message-digest-key <key_id> md5 <md5key_text>",
+                "encryptionSupportedField": "<md5key_text>"
+              },
+              {
+                "cliSyntax": "interface Vlan<no>\n ip ospf message-digest-key <key_id> md5 <md5key_text>",
+                "encryptionSupportedField": "<md5key_text>"
+              },
+              {
+                "cliSyntax": "ip msdp vrf <vrf_name> password peer <peer_name> <password_text>",
+                "encryptionSupportedField": "<password_text>"
+              }
+            ]
+          }
+        },
+        "examples": [
+          {
+            "data": {
+              "config": "bfd default-dscp 48\nbfd app-route multiplier 6\nbfd app-route poll-interval 600000"
+            },
+            "name": "CliConfigFeature"
+          },
+          {
+            "data": {
+              "config": "vrf definition 100"
+            },
+            "name": "CliConfigFeature"
+          }
+        ]
+      }
+    },
+    "required": ["name", "data"],
+    "not": {
+      "required": ["metadata", "documentation"]
+    },
+    "additionalProperties": false
   }
 }
