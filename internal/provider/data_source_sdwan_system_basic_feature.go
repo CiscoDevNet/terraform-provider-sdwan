@@ -249,6 +249,14 @@ func (d *SystemBasicProfileParcelDataSource) Schema(ctx context.Context, req dat
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"tracker_dia_stabilize_status": schema.BoolAttribute{
+				MarkdownDescription: "Enable or disable endpoint tracker diaStabilize status",
+				Computed:            true,
+			},
+			"tracker_dia_stabilize_status_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 			"admin_tech_on_failure": schema.BoolAttribute{
 				MarkdownDescription: "Collect admin-tech before reboot due to daemon failure",
 				Computed:            true,

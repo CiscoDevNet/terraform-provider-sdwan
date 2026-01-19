@@ -89,6 +89,8 @@ data "sdwan_system_basic_feature" "example" {
 - `track_interface_tag_variable` (String) Variable name
 - `track_transport` (Boolean) Configure tracking of transport
 - `track_transport_variable` (String) Variable name
+- `tracker_dia_stabilize_status` (Boolean) Enable or disable endpoint tracker diaStabilize status
+- `tracker_dia_stabilize_status_variable` (String) Variable name
 - `transport_gateway` (Boolean) Enable transport gateway
 - `transport_gateway_variable` (String) Variable name
 - `version` (Number) The version of the Feature
