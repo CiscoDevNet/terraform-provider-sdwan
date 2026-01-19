@@ -126,7 +126,7 @@ func (r *SecurityPolicyResource) Schema(ctx context.Context, req resource.Schema
 							},
 						},
 						"entries": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("List of zone pair definitions, Attribute conditional on `type` being equal to `zoneBasedFW`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("List of zone pair definitions, Attribute conditional on `type` equal to `zoneBasedFW`").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{

@@ -289,35 +289,35 @@ Optional:
 
 Optional:
 
-- `disable_peer_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` being equal to `disable-peer`
+- `disable_peer_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` equal to `disable-peer`
   - Range: `1`-`4294967295`
-- `disable_peer_max_number_of_prefixes_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `disable-peer`
-- `disable_peer_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` being equal to `disable-peer`
+- `disable_peer_max_number_of_prefixes_variable` (String) Variable name, Attribute conditional on `policy_type` equal to `disable-peer`
+- `disable_peer_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` equal to `disable-peer`
   - Range: `1`-`100`
   - Default value: `75`
-- `disable_peer_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `disable-peer`
+- `disable_peer_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` equal to `disable-peer`
 - `family_type` (String) Set IPv4 unicast address family
 - `in_route_policy_id` (String)
 - `out_route_policy_id` (String)
 - `policy_type` (String) Neighbor received maximum prefix policy is disabled.
   - Choices: `restart`, `off`, `warning-only`, `disable-peer`
-- `restart_interval` (Number) Set the restart interval(minutes) when to restart BGP connection if threshold is exceeded, Attribute conditional on `policy_type` being equal to `restart`
+- `restart_interval` (Number) Set the restart interval(minutes) when to restart BGP connection if threshold is exceeded, Attribute conditional on `policy_type` equal to `restart`
   - Range: `1`-`65535`
-- `restart_interval_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `restart`
-- `restart_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` being equal to `restart`
+- `restart_interval_variable` (String) Variable name, Attribute conditional on `policy_type` equal to `restart`
+- `restart_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` equal to `restart`
   - Range: `1`-`4294967295`
-- `restart_max_number_of_prefixes_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `restart`
-- `restart_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` being equal to `restart`
+- `restart_max_number_of_prefixes_variable` (String) Variable name, Attribute conditional on `policy_type` equal to `restart`
+- `restart_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` equal to `restart`
   - Range: `1`-`100`
   - Default value: `75`
-- `restart_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `restart`
-- `warning_message_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` being equal to `warning-only`
+- `restart_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` equal to `restart`
+- `warning_message_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` equal to `warning-only`
   - Range: `1`-`4294967295`
-- `warning_message_max_number_of_prefixes_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `warning-only`
-- `warning_message_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` being equal to `warning-only`
+- `warning_message_max_number_of_prefixes_variable` (String) Variable name, Attribute conditional on `policy_type` equal to `warning-only`
+- `warning_message_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` equal to `warning-only`
   - Range: `1`-`100`
   - Default value: `75`
-- `warning_message_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `warning-only`
+- `warning_message_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` equal to `warning-only`
 
 
 
@@ -341,7 +341,7 @@ Optional:
   - Choices: `static`, `connected`, `omp`, `nat`, `ospf`, `ospfv3`, `eigrp`
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
-- `translate_rib_metric` (Boolean) Translate Rib Metric, Attribute conditional on `protocol` being equal to `omp`
+- `translate_rib_metric` (Boolean) Translate Rib Metric, Attribute conditional on `protocol` equal to `omp`
   - Default value: `false`
 
 
@@ -414,35 +414,35 @@ Optional:
 
 Optional:
 
-- `disable_peer_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` being equal to `disable-peer`
+- `disable_peer_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` equal to `disable-peer`
   - Range: `1`-`4294967295`
-- `disable_peer_max_number_of_prefixes_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `disable-peer`
-- `disable_peer_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` being equal to `disable-peer`
+- `disable_peer_max_number_of_prefixes_variable` (String) Variable name, Attribute conditional on `policy_type` equal to `disable-peer`
+- `disable_peer_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` equal to `disable-peer`
   - Range: `1`-`100`
   - Default value: `75`
-- `disable_peer_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `disable-peer`
+- `disable_peer_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` equal to `disable-peer`
 - `family_type` (String) Set IPv6 unicast address family
 - `in_route_policy_id` (String)
 - `out_route_policy_id` (String)
 - `policy_type` (String) Neighbor received maximum prefix policy is disabled.
   - Choices: `restart`, `off`, `warning-only`, `disable-peer`
-- `restart_interval` (Number) Set the restart interval(minutes) when to restart BGP connection if threshold is exceeded, Attribute conditional on `policy_type` being equal to `restart`
+- `restart_interval` (Number) Set the restart interval(minutes) when to restart BGP connection if threshold is exceeded, Attribute conditional on `policy_type` equal to `restart`
   - Range: `1`-`65535`
-- `restart_interval_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `restart`
-- `restart_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` being equal to `restart`
+- `restart_interval_variable` (String) Variable name, Attribute conditional on `policy_type` equal to `restart`
+- `restart_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` equal to `restart`
   - Range: `1`-`4294967295`
-- `restart_max_number_of_prefixes_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `restart`
-- `restart_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` being equal to `restart`
+- `restart_max_number_of_prefixes_variable` (String) Variable name, Attribute conditional on `policy_type` equal to `restart`
+- `restart_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` equal to `restart`
   - Range: `1`-`100`
   - Default value: `75`
-- `restart_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `restart`
-- `warning_message_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` being equal to `warning-only`
+- `restart_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` equal to `restart`
+- `warning_message_max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer, Attribute conditional on `policy_type` equal to `warning-only`
   - Range: `1`-`4294967295`
-- `warning_message_max_number_of_prefixes_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `warning-only`
-- `warning_message_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` being equal to `warning-only`
+- `warning_message_max_number_of_prefixes_variable` (String) Variable name, Attribute conditional on `policy_type` equal to `warning-only`
+- `warning_message_threshold` (Number) Set threshold(1 to 100) at which to generate a warning message, Attribute conditional on `policy_type` equal to `warning-only`
   - Range: `1`-`100`
   - Default value: `75`
-- `warning_message_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` being equal to `warning-only`
+- `warning_message_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` equal to `warning-only`
 
 
 
@@ -464,7 +464,7 @@ Optional:
   - Choices: `static`, `connected`, `ospf`, `omp`
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
-- `translate_rib_metric` (Boolean) Translate Rib Metric, Attribute conditional on `protocol` being equal to `omp`
+- `translate_rib_metric` (Boolean) Translate Rib Metric, Attribute conditional on `protocol` equal to `omp`
   - Default value: `false`
 
 ## Import

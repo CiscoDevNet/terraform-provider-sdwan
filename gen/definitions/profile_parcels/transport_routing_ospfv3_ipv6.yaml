@@ -85,8 +85,9 @@ attributes:
       exclude_test: true
       example: true
       conditional_attribute:
-        name: protocol
-        value: omp
+        conditions:
+          - name: protocol
+            value: omp
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]

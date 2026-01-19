@@ -41,27 +41,30 @@ attributes:
     default_value_present: true
     example: none
     conditional_attribute:
-      name: requires_authentication
-      value: false
-      type: Bool
+      conditions:
+        - name: requires_authentication
+          value: false
+          type: Bool
   - model_name: type
     tf_name: authentication_type
     data_path: [profileConfig, profileInfo, authentication, needAuthentication]
     type: String
     example: pap
     conditional_attribute:
-      name: requires_authentication
-      value: true
-      type: Bool
+      conditions:
+        - name: requires_authentication
+          value: true
+          type: Bool
   - model_name: username
     tf_name: profile_username
     data_path: [profileConfig, profileInfo, authentication, needAuthentication]
     type: String
     example: example
     conditional_attribute:
-      name: requires_authentication
-      value: true
-      type: Bool
+      conditions:
+        - name: requires_authentication
+          value: true
+          type: Bool
   - model_name: password
     tf_name: profile_password
     data_path: [profileConfig, profileInfo, authentication, needAuthentication]
@@ -69,9 +72,10 @@ attributes:
     write_only: true
     example: example123!
     conditional_attribute:
-      name: requires_authentication
-      value: true
-      type: Bool
+      conditions:
+        - name: requires_authentication
+          value: true
+          type: Bool
   - model_name: pdnType
     tf_name: packet_data_network_type
     data_path: [profileConfig, profileInfo]

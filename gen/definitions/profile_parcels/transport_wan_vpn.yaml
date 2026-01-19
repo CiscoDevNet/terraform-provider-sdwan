@@ -62,8 +62,9 @@ attributes:
     - model_name: nextHop
       tf_name: next_hops
       conditional_attribute:
-        name: gateway
-        value: nextHop
+        conditions:
+          - name: gateway
+            value: nextHop
       attributes:
       - model_name: address
         type: String
@@ -78,8 +79,9 @@ attributes:
       tf_name: administrative_distance
       exclude_test: true
       conditional_attribute:
-        name: gateway
-        value: null0
+        conditions:
+          - name: gateway
+            value: null0
       example: 1
       default_value: 1
       default_value_present: true
@@ -99,8 +101,9 @@ attributes:
         tf_name: next_hops
         data_path: [oneOfIpRoute, nextHopContainer]
         conditional_attribute:
-          name: gateway
-          value: nextHop
+          conditions:
+            - name: gateway
+              value: nextHop
         attributes:
           - model_name: address
             id: true
@@ -114,15 +117,17 @@ attributes:
         data_path: [oneOfIpRoute]
         exclude_test: true
         conditional_attribute:
-          name: gateway
-          value: null0
+          conditions:
+            - name: gateway
+              value: null0
         example: true
       - model_name: nat
         data_path: [oneOfIpRoute]
         exclude_test: true
         conditional_attribute:
-          name: gateway
-          value: nat
+          conditions:
+            - name: gateway
+              value: nat
         example: NAT64
   - model_name: service
     tf_name: services

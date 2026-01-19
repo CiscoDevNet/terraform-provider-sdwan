@@ -221,9 +221,9 @@ Optional:
   - Choices: `connected`, `static`, `omp`, `bgp`, `eigrp`
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
-- `translate_rib_metric` (Boolean) Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network., Attribute conditional on `protocol` being equal to `omp`
+- `translate_rib_metric` (Boolean) Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network., Attribute conditional on `protocol` equal to `omp`
   - Default value: `false`
-- `translate_rib_metric_variable` (String) Variable name, Attribute conditional on `protocol` being equal to `omp`
+- `translate_rib_metric_variable` (String) Variable name, Attribute conditional on `protocol` equal to `omp`
 
 ## Import
 

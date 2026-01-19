@@ -24,9 +24,10 @@ attributes:
   - model_name: dnsServerIP
     tf_name: dns_server_ip
     conditional_attribute:
-      name: match_all_vpn
-      value: true
-      type: Bool
+      conditions:
+        - name: match_all_vpn
+          value: true
+          type: Bool
     minimum_test_value: '"1.2.3.4"'
     example: 1.2.3.4
   - model_name: localDomainBypassEnabled
@@ -37,9 +38,10 @@ attributes:
     example: 12334
   - model_name: targetVpns
     conditional_attribute:
-      name: match_all_vpn
-      value: false
-      type: Bool
+      conditions:
+        - name: match_all_vpn
+          value: false
+          type: Bool
     exclude_test: true
     attributes:
       - model_name: vpns

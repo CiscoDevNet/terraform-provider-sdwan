@@ -46,10 +46,10 @@ resource "sdwan_policy_object_unified_url_filtering" "example" {
 
 ### Optional
 
-- `alerts` (Set of String) , Attribute conditional on `enable_alerts` being equal to `true`
-- `block_page_contents` (String) , Attribute conditional on `block_page_action` being equal to `text`
+- `alerts` (Set of String) , Attribute conditional on `enable_alerts` equal to `true`
+- `block_page_contents` (String) , Attribute conditional on `block_page_action` equal to `text`
 - `description` (String) The description of the Policy_object
-- `redirect_url` (String) , Attribute conditional on `block_page_action` being equal to `redirect-url`
+- `redirect_url` (String) , Attribute conditional on `block_page_action` equal to `redirect-url`
 - `url_allow_list_id` (String)
 - `url_block_list_id` (String)
 

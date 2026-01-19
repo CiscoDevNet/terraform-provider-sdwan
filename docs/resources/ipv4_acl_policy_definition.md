@@ -90,15 +90,15 @@ Required:
 
 Optional:
 
-- `class_map_id` (String) Class map ID, Attribute conditional on `type` being equal to `class`
+- `class_map_id` (String) Class map ID, Attribute conditional on `type` equal to `class`
 - `class_map_version` (Number) Class map version
-- `counter_name` (String) Counter name, Attribute conditional on `type` being equal to `count`
-- `log` (Boolean) Enable logging, Attribute conditional on `type` being equal to `log`
-- `mirror_id` (String) Mirror ID, Attribute conditional on `type` being equal to `mirror`
+- `counter_name` (String) Counter name, Attribute conditional on `type` equal to `count`
+- `log` (Boolean) Enable logging, Attribute conditional on `type` equal to `log`
+- `mirror_id` (String) Mirror ID, Attribute conditional on `type` equal to `mirror`
 - `mirror_version` (Number) Mirror version
-- `policer_id` (String) Policer ID, Attribute conditional on `type` being equal to `policer`
+- `policer_id` (String) Policer ID, Attribute conditional on `type` equal to `policer`
 - `policer_version` (Number) Policer version
-- `set_parameters` (Attributes List) List of set parameters, Attribute conditional on `type` being equal to `set` (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
+- `set_parameters` (Attributes List) List of set parameters, Attribute conditional on `type` equal to `set` (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
 
 <a id="nestedatt--sequences--action_entries--set_parameters"></a>
 ### Nested Schema for `sequences.action_entries.set_parameters`
@@ -110,9 +110,9 @@ Required:
 
 Optional:
 
-- `dscp` (Number) DSCP value, Attribute conditional on `type` being equal to `dscp`
+- `dscp` (Number) DSCP value, Attribute conditional on `type` equal to `dscp`
   - Range: `0`-`63`
-- `next_hop` (String) Next hop IP, Attribute conditional on `type` being equal to `nextHop`
+- `next_hop` (String) Next hop IP, Attribute conditional on `type` equal to `nextHop`
 
 
 
@@ -126,26 +126,26 @@ Required:
 
 Optional:
 
-- `class_map_id` (String) Class map ID, Attribute conditional on `type` being equal to `class`
+- `class_map_id` (String) Class map ID, Attribute conditional on `type` equal to `class`
 - `class_map_version` (Number) Class map version
-- `destination_data_ipv4_prefix_list_id` (String) Destination data IPv4 prefix list ID, Attribute conditional on `type` being equal to `destinationDataPrefixList`
+- `destination_data_ipv4_prefix_list_id` (String) Destination data IPv4 prefix list ID, Attribute conditional on `type` equal to `destinationDataPrefixList`
 - `destination_data_ipv4_prefix_list_version` (Number) Destination data IPv4 prefix list version
-- `destination_ip` (String) Destination IP prefix, Attribute conditional on `type` being equal to `destinationIp`
-- `destination_ip_variable` (String) Destination IP prefix variable, Attribute conditional on `type` being equal to `destinationIp`
-- `destination_ports` (String) Destination ports. Single value (0-65535) or ranges separated by spaces., Attribute conditional on `type` being equal to `destinationPort`
-- `dscp` (String) DSCP value, Attribute conditional on `type` being equal to `dscp`
-- `icmp_message` (String) ICMP Message, Attribute conditional on `type` being equal to `icmpMessage`
-- `packet_length` (Number) Packet length, Attribute conditional on `type` being equal to `packetLength`
+- `destination_ip` (String) Destination IP prefix, Attribute conditional on `type` equal to `destinationIp`
+- `destination_ip_variable` (String) Destination IP prefix variable, Attribute conditional on `type` equal to `destinationIp`
+- `destination_ports` (String) Destination ports. Single value (0-65535) or ranges separated by spaces., Attribute conditional on `type` equal to `destinationPort`
+- `dscp` (String) DSCP value, Attribute conditional on `type` equal to `dscp`
+- `icmp_message` (String) ICMP Message, Attribute conditional on `type` equal to `icmpMessage`
+- `packet_length` (Number) Packet length, Attribute conditional on `type` equal to `packetLength`
   - Range: `0`-`65535`
-- `priority` (String) PLP - priority, Attribute conditional on `type` being equal to `plp`
+- `priority` (String) PLP - priority, Attribute conditional on `type` equal to `plp`
   - Choices: `high`, `low`
-- `protocol` (String) Single value (0-255) or multiple values separated by spaces, Attribute conditional on `type` being equal to `protocol`
-- `source_data_ipv4_prefix_list_id` (String) Source data IPv4 prefix list ID, Attribute conditional on `type` being equal to `sourceDataPrefixList`
+- `protocol` (String) Single value (0-255) or multiple values separated by spaces, Attribute conditional on `type` equal to `protocol`
+- `source_data_ipv4_prefix_list_id` (String) Source data IPv4 prefix list ID, Attribute conditional on `type` equal to `sourceDataPrefixList`
 - `source_data_ipv4_prefix_list_version` (Number) Source data IPv4 prefix list version
-- `source_ip` (String) Source IP prefix, Attribute conditional on `type` being equal to `sourceIp`
-- `source_ip_variable` (String) Source IP prefix variable, Attribute conditional on `type` being equal to `sourceIp`
-- `source_ports` (String) Source ports. Single value (0-65535) or ranges separated by spaces., Attribute conditional on `type` being equal to `sourcePort`
-- `tcp` (String) TCP parameters, Attribute conditional on `type` being equal to `tcp`
+- `source_ip` (String) Source IP prefix, Attribute conditional on `type` equal to `sourceIp`
+- `source_ip_variable` (String) Source IP prefix variable, Attribute conditional on `type` equal to `sourceIp`
+- `source_ports` (String) Source ports. Single value (0-65535) or ranges separated by spaces., Attribute conditional on `type` equal to `sourcePort`
+- `tcp` (String) TCP parameters, Attribute conditional on `type` equal to `tcp`
   - Choices: `syn`
 
 ## Import

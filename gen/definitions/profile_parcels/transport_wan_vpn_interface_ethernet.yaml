@@ -42,8 +42,9 @@ attributes:
     tf_name: ipv4_dhcp_distance
     data_path: [intfIpAddress, dynamic]
     conditional_attribute:
-      name: ipv4_configuration_type
-      value: dynamic
+      conditions:
+        - name: ipv4_configuration_type
+          value: dynamic
     default_value_present: true
     default_value: 1
     example: 1
@@ -52,24 +53,27 @@ attributes:
     tf_name: ipv4_address
     data_path: [intfIpAddress, static, staticIpV4AddressPrimary]
     conditional_attribute:
-      name: ipv4_configuration_type
-      value: static
+      conditions:
+        - name: ipv4_configuration_type
+          value: static
     example: 1.2.3.4
     minimum_test_value: '"1.2.3.4"'
   - model_name: subnetMask
     tf_name: ipv4_subnet_mask
     data_path: [intfIpAddress, static, staticIpV4AddressPrimary]
     conditional_attribute:
-      name: ipv4_configuration_type
-      value: static
+      conditions:
+        - name: ipv4_configuration_type
+          value: static
     example: 0.0.0.0
     minimum_test_value: '"0.0.0.0"'
   - model_name: staticIpV4AddressSecondary
     tf_name: ipv4_secondary_addresses
     data_path: [intfIpAddress, static]
     conditional_attribute:
-      name: ipv4_configuration_type
-      value: static
+      conditions:
+        - name: ipv4_configuration_type
+          value: static
     attributes:
     - model_name: ipAddress
       tf_name: address
@@ -92,16 +96,18 @@ attributes:
     tf_name: enable_dhcpv6
     data_path: [intfIpV6Address, dynamic]
     conditional_attribute:
-      name: ipv6_configuration_type
-      value: dynamic
+      conditions:
+        - name: ipv6_configuration_type
+          value: dynamic
     exclude_test: true
     example: false
   - model_name: secondaryIpV6Address
     tf_name: ipv6_dhcp_secondary_address
     data_path: [intfIpV6Address, dynamic]
     conditional_attribute:
-      name: ipv6_configuration_type
-      value: dynamic
+      conditions:
+        - name: ipv6_configuration_type
+          value: dynamic
     exclude_null: true
     exclude_test: true
     attributes:
@@ -112,16 +118,18 @@ attributes:
     tf_name: ipv6_address
     data_path: [intfIpV6Address, static, primaryIpV6Address]
     conditional_attribute:
-      name: ipv6_configuration_type
-      value: static
+      conditions:
+        - name: ipv6_configuration_type
+          value: static
     exclude_test: true
     example: 2001:0:0:1::0
   - model_name: secondaryIpV6Address
     tf_name: ipv6_secondary_addresses
     data_path: [intfIpV6Address, static]
     conditional_attribute:
-      name: ipv6_configuration_type
-      value: static
+      conditions:
+        - name: ipv6_configuration_type
+          value: static
     exclude_null: true
     exclude_test: true
     attributes:
@@ -146,207 +154,231 @@ attributes:
   - model_name: perTunnelQos
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: true
   - model_name: mode
     tf_name: tunnel_qos_mode
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: hub
   - model_name: bandwidthPercent
     tf_name: tunnel_bandwidth_percent
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: 82
   - model_name: bind
     tf_name: tunnel_interface_bind_loopback_tunnel
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: example
   - model_name: carrier
     tf_name: tunnel_interface_carrier
     exclude_ignore: true
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: default
   - model_name: color
     tf_name: tunnel_interface_color
     exclude_ignore: true
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: default
   - model_name: helloInterval
     tf_name: tunnel_interface_hello_interval
     exclude_ignore: true
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: 1000
   - model_name: helloTolerance
     tf_name: tunnel_interface_hello_tolerance
     exclude_ignore: true
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: 12
   - model_name: lastResortCircuit
     tf_name: tunnel_interface_last_resort_circuit
     exclude_ignore: true
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: false
   - model_name: tlocExtensionGreTo
     tf_name: tunnel_interface_gre_tunnel_destination_ip
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: 1.2.3.4
   - model_name: restrict
     tf_name: tunnel_interface_color_restrict
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: true
   - model_name: group
     tf_name: tunnel_interface_groups
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: 42949672
   - model_name: border
     tf_name: tunnel_interface_border
     exclude_ignore: true
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: false
   - model_name: maxControlConnections
     tf_name: tunnel_interface_max_control_connections
     exclude_ignore: true
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: 62
   - model_name: natRefreshInterval
     tf_name: tunnel_interface_nat_refresh_interval
     exclude_ignore: true
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: 5
   - model_name: vBondAsStunServer
     tf_name: tunnel_interface_vbond_as_stun_server
     exclude_ignore: true
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: false
   - model_name: excludeControllerGroupList
     tf_name: tunnel_interface_exclude_controller_group_list
     exclude_ignore: true
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: 2
   - model_name: vManageConnectionPreference
     tf_name: tunnel_interface_vmanage_connection_preference
     exclude_ignore: true
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: 8
   - model_name: portHop
     tf_name: tunnel_interface_port_hop
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: true
   - model_name: lowBandwidthLink
     tf_name: tunnel_interface_low_bandwidth_link
     exclude_ignore: true
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: false
   - model_name: tunnelTcpMss
     tf_name: tunnel_interface_tunnel_tcp_mss
     exclude_ignore: true
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: 1460
   - model_name: clearDontFragment
     tf_name: tunnel_interface_clear_dont_fragment
     exclude_ignore: true
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: false
   - model_name: ctsSgtPropagation
     tf_name: tunnel_interface_cts_sgt_propagation
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: false
   - model_name: networkBroadcast
     tf_name: tunnel_interface_network_broadcast
     data_path: [tunnel]
     conditional_attribute:
-      name: tunnelInterface
-      value: true
-      type: Bool
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
     example: false
   - model_name: all
     tf_name: tunnel_interface_allow_all
@@ -421,18 +453,20 @@ attributes:
     data_path: [natAttributesIpv4]
     example: interface
     conditional_attribute:
-      name: nat_ipv4
-      value: true
-      type: Bool
+      conditions:
+        - name: nat_ipv4
+          value: true
+          type: Bool
   - model_name: rangeStart
     tf_name: nat_range_start
     data_path: [natAttributesIpv4, natPool]
     exclude_test: true
     exclude_null: true
     conditional_attribute:
-      name: nat_ipv4
-      value: true
-      type: Bool
+      conditions:
+        - name: nat_ipv4
+          value: true
+          type: Bool
     # conditional_attribute: 
     #   name: natType
     #   value: pool
@@ -443,9 +477,10 @@ attributes:
     exclude_test: true
     exclude_null: true
     conditional_attribute:
-      name: nat_ipv4
-      value: true
-      type: Bool
+      conditions:
+        - name: nat_ipv4
+          value: true
+          type: Bool
     # conditional_attribute: 
     #   name: natType
     #   value: pool
@@ -456,9 +491,10 @@ attributes:
     exclude_test: true
     exclude_null: true
     conditional_attribute:
-      name: nat_ipv4
-      value: true
-      type: Bool
+      conditions:
+        - name: nat_ipv4
+          value: true
+          type: Bool
     # conditional_attribute: 
     #     name: natType
     #     value: pool
@@ -469,9 +505,10 @@ attributes:
     exclude_test: true
     exclude_null: true
     conditional_attribute:
-      name: nat_ipv4
-      value: true
-      type: Bool
+      conditions:
+        - name: nat_ipv4
+          value: true
+          type: Bool
     # conditional_attribute: 
     #     name: natType
     #     value: pool
@@ -482,9 +519,10 @@ attributes:
     exclude_test: true
     exclude_null: true
     conditional_attribute:
-      name: nat_ipv4
-      value: true
-      type: Bool
+      conditions:
+        - name: nat_ipv4
+          value: true
+          type: Bool
     # conditional_attribute: 
     #     name: natType
     #     value: loopback
@@ -494,24 +532,27 @@ attributes:
     data_path: [natAttributesIpv4]
     example: 1
     conditional_attribute:
-      name: nat_ipv4
-      value: true
-      type: Bool
+      conditions:
+        - name: nat_ipv4
+          value: true
+          type: Bool
   - model_name: tcpTimeout
     tf_name: nat_tcp_timeout
     data_path: [natAttributesIpv4]
     example: 60
     conditional_attribute:
-      name: nat_ipv4
-      value: true
-      type: Bool
+      conditions:
+        - name: nat_ipv4
+          value: true
+          type: Bool
   - model_name: newStaticNat
     tf_name: new_static_nats
     data_path: [natAttributesIpv4]
     conditional_attribute:
-      name: nat_ipv4
-      value: true
-      type: Bool
+      conditions:
+        - name: nat_ipv4
+          value: true
+          type: Bool
     attributes:
       - model_name: sourceIp
         id: true
@@ -533,24 +574,27 @@ attributes:
     exclude_null: true
     example: false
     conditional_attribute:
-      name: nat_ipv6
-      value: true
-      type: Bool
+      conditions:
+        - name: nat_ipv6
+          value: true
+          type: Bool
   - model_name: nat66
     data_path: [natAttributesIpv6]
     exclude_null: true
     example: true
     conditional_attribute:
-      name: nat_ipv6
-      value: true
-      type: Bool
+      conditions:
+        - name: nat_ipv6
+          value: true
+          type: Bool
   - model_name: staticNat66
     data_path: [natAttributesIpv6]
     exclude_null: true
     conditional_attribute:
-      name: nat_ipv6
-      value: true
-      type: Bool
+      conditions:
+        - name: nat_ipv6
+          value: true
+          type: Bool
     attributes:
     - model_name: sourcePrefix
       id: true

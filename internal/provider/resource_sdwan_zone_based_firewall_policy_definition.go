@@ -95,7 +95,7 @@ func (r *ZoneBasedFirewallPolicyDefinitionResource) Schema(ctx context.Context, 
 				},
 			},
 			"apply_zone_pairs": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `mode` being equal to `security`").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `mode` equal to `security`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
