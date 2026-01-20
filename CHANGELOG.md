@@ -7,6 +7,7 @@
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_banner_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_basic_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_bfd_feature` to `20.15.0`
+- Fix issue where `qos_adaptive_bandwidth_downstream_variable` and `qos_adaptive_bandwidth_upstream_variable` attributes in `cisco_vpn_interface_feature_template` are updated during import
 
 ## 0.9.0
 
