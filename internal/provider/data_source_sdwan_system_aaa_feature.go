@@ -114,7 +114,7 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 							Computed:            true,
 						},
 						"password": schema.StringAttribute{
-							MarkdownDescription: "Set the user password",
+							MarkdownDescription: "Set the user password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
 							Computed:            true,
 						},
 						"password_variable": schema.StringAttribute{
@@ -138,12 +138,12 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 										MarkdownDescription: "Set the RSA key string",
 										Computed:            true,
 									},
-									"key_type": schema.StringAttribute{
-										MarkdownDescription: "Only RSA is supported",
+									"key_string_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
-									"key_type_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+									"key_type": schema.StringAttribute{
+										MarkdownDescription: "Only RSA is supported",
 										Computed:            true,
 									},
 								},
@@ -215,7 +215,11 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 										Computed:            true,
 									},
 									"key": schema.StringAttribute{
-										MarkdownDescription: "Set the Radius server shared key",
+										MarkdownDescription: "Set the Radius server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+										Computed:            true,
+									},
+									"key_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
 									"secret_key": schema.StringAttribute{
@@ -291,7 +295,11 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 										Computed:            true,
 									},
 									"key": schema.StringAttribute{
-										MarkdownDescription: "Set the TACACS server shared key",
+										MarkdownDescription: "Set the TACACS server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+										Computed:            true,
+									},
+									"key_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
 									"secret_key": schema.StringAttribute{

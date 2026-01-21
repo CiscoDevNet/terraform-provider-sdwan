@@ -89,30 +89,30 @@ Required:
 
 Optional:
 
-- `aggregator` (Number) Aggregator, Attribute conditional on `type` being equal to `aggregator`
+- `aggregator` (Number) Aggregator, Attribute conditional on `type` equal to `aggregator`
   - Range: `0`-`4294967295`
-- `aggregator_ip_address` (String) IP address, Attribute conditional on `type` being equal to `aggregator`
-- `as_path_exclude` (String) Space separated list of ASN to exclude, Attribute conditional on `type` being equal to `asPath`
-- `as_path_prepend` (String) Space separated list of ASN to prepend, Attribute conditional on `type` being equal to `asPath`
-- `atomic_aggregate` (Boolean) Atomic aggregate, Attribute conditional on `type` being equal to `atomicAggregate`
-- `community` (String) Community value, e.g. `1000:10000` or `internet` or `local-AS`, Attribute conditional on `type` being equal to `community`
-- `community_additive` (Boolean) Community additive, Attribute conditional on `type` being equal to `communityAdditive`
-- `community_variable` (String) Community variable, Attribute conditional on `type` being equal to `community`
-- `local_preference` (Number) Local preference, Attribute conditional on `type` being equal to `localPreference`
+- `aggregator_ip_address` (String) IP address, Attribute conditional on `type` equal to `aggregator`
+- `as_path_exclude` (String) Space separated list of ASN to exclude, Attribute conditional on `type` equal to `asPath`
+- `as_path_prepend` (String) Space separated list of ASN to prepend, Attribute conditional on `type` equal to `asPath`
+- `atomic_aggregate` (Boolean) Atomic aggregate, Attribute conditional on `type` equal to `atomicAggregate`
+- `community` (String) Community value, e.g. `1000:10000` or `internet` or `local-AS`, Attribute conditional on `type` equal to `community`
+- `community_additive` (Boolean) Community additive, Attribute conditional on `type` equal to `communityAdditive`
+- `community_variable` (String) Community variable, Attribute conditional on `type` equal to `community`
+- `local_preference` (Number) Local preference, Attribute conditional on `type` equal to `localPreference`
   - Range: `0`-`4294967295`
-- `metric` (Number) Metric, Attribute conditional on `type` being equal to `metric`
+- `metric` (Number) Metric, Attribute conditional on `type` equal to `metric`
   - Range: `0`-`4294967295`
-- `metric_type` (String) Metric type, Attribute conditional on `type` being equal to `metricType`
+- `metric_type` (String) Metric type, Attribute conditional on `type` equal to `metricType`
   - Choices: `type1`, `type2`
-- `next_hop` (String) Next hop IP, Attribute conditional on `type` being equal to `nextHop`
-- `omp_tag` (Number) OMP tag, Attribute conditional on `type` being equal to `ompTag`
+- `next_hop` (String) Next hop IP, Attribute conditional on `type` equal to `nextHop`
+- `omp_tag` (Number) OMP tag, Attribute conditional on `type` equal to `ompTag`
   - Range: `0`-`4294967295`
-- `origin` (String) Origin, Attribute conditional on `type` being equal to `origin`
+- `origin` (String) Origin, Attribute conditional on `type` equal to `origin`
   - Choices: `igp`, `egp`, `incomplete`
-- `originator` (String) Originator IP, Attribute conditional on `type` being equal to `originator`
-- `ospf_tag` (Number) OSPF tag, Attribute conditional on `type` being equal to `ospfTag`
+- `originator` (String) Originator IP, Attribute conditional on `type` equal to `originator`
+- `ospf_tag` (Number) OSPF tag, Attribute conditional on `type` equal to `ospfTag`
   - Range: `0`-`4294967295`
-- `weight` (Number) Weight, Attribute conditional on `type` being equal to `weight`
+- `weight` (Number) Weight, Attribute conditional on `type` equal to `weight`
   - Range: `0`-`4294967295`
 
 
@@ -126,33 +126,33 @@ Required:
 
 Optional:
 
-- `as_path_list_id` (String) AS path list ID, Attribute conditional on `type` being equal to `asPath`
+- `as_path_list_id` (String) AS path list ID, Attribute conditional on `type` equal to `asPath`
 - `as_path_list_version` (Number) AS path list version
-- `community_list_id` (String) Community list ID, Attribute conditional on `type` being equal to `community`
-- `community_list_ids` (Set of String) Community list IDs, Attribute conditional on `type` being equal to `advancedCommunity`
+- `community_list_id` (String) Community list ID, Attribute conditional on `type` equal to `community`
+- `community_list_ids` (Set of String) Community list IDs, Attribute conditional on `type` equal to `advancedCommunity`
 - `community_list_match_flag` (String) Community list match flag
   - Choices: `and`, `or`, `exact`
 - `community_list_version` (Number) Community list version
 - `community_list_versions` (List of String) Community list versions
-- `expanded_community_list_id` (String) Expanded community list ID, Attribute conditional on `type` being equal to `expandedCommunity`
-- `expanded_community_list_variable` (String) Expanded community list variable, Attribute conditional on `type` being equal to `expandedCommunityInline`
+- `expanded_community_list_id` (String) Expanded community list ID, Attribute conditional on `type` equal to `expandedCommunity`
+- `expanded_community_list_variable` (String) Expanded community list variable, Attribute conditional on `type` equal to `expandedCommunityInline`
 - `expanded_community_list_version` (Number) Expanded community list version
-- `extended_community_list_id` (String) Extended community list ID, Attribute conditional on `type` being equal to `extCommunity`
+- `extended_community_list_id` (String) Extended community list ID, Attribute conditional on `type` equal to `extCommunity`
 - `extended_community_list_version` (Number) Extended community list version
-- `local_preference` (Number) Local preference, Attribute conditional on `type` being equal to `localPreference`
+- `local_preference` (Number) Local preference, Attribute conditional on `type` equal to `localPreference`
   - Range: `0`-`4294967295`
-- `metric` (Number) Metric, Attribute conditional on `type` being equal to `metric`
+- `metric` (Number) Metric, Attribute conditional on `type` equal to `metric`
   - Range: `0`-`4294967295`
-- `next_hop_prefix_list_id` (String) Next hop prefix list ID, Attribute conditional on `type` being equal to `nextHop`
+- `next_hop_prefix_list_id` (String) Next hop prefix list ID, Attribute conditional on `type` equal to `nextHop`
 - `next_hop_prefix_list_version` (Number) Next hop prefix list version
-- `omp_tag` (Number) OMP tag, Attribute conditional on `type` being equal to `ompTag`
+- `omp_tag` (Number) OMP tag, Attribute conditional on `type` equal to `ompTag`
   - Range: `0`-`4294967295`
-- `origin` (String) Origin, Attribute conditional on `type` being equal to `origin`
+- `origin` (String) Origin, Attribute conditional on `type` equal to `origin`
   - Choices: `igp`, `egp`, `incomplete`
-- `ospf_tag` (Number) OSPF tag, Attribute conditional on `type` being equal to `ospfTag`
+- `ospf_tag` (Number) OSPF tag, Attribute conditional on `type` equal to `ospfTag`
   - Range: `0`-`4294967295`
-- `peer` (String) Peer IP, Attribute conditional on `type` being equal to `peer`
-- `prefix_list_id` (String) Prefix list ID, Attribute conditional on `type` being equal to `address`
+- `peer` (String) Peer IP, Attribute conditional on `type` equal to `peer`
+- `prefix_list_id` (String) Prefix list ID, Attribute conditional on `type` equal to `address`
 - `prefix_list_version` (Number) Prefix list version
 
 ## Import

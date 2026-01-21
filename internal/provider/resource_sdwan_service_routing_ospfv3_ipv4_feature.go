@@ -275,11 +275,11 @@ func (r *ServiceRoutingOSPFv3IPv4ProfileParcelResource) Schema(ctx context.Conte
 							},
 						},
 						"translate_rib_metric": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network., Attribute conditional on `protocol` being equal to `omp`").AddDefaultValueDescription("false").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network., Attribute conditional on `protocol` equal to `omp`").AddDefaultValueDescription("false").String,
 							Optional:            true,
 						},
 						"translate_rib_metric_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `protocol` being equal to `omp`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `protocol` equal to `omp`").String,
 							Optional:            true,
 						},
 					},

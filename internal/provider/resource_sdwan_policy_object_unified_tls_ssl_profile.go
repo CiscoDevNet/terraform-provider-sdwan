@@ -109,14 +109,14 @@ func (r *PolicyObjectUnifiedTLSSSLProfileProfileParcelResource) Schema(ctx conte
 				Required:            true,
 			},
 			"decrypt_threshold": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `reputation` being equal to `true`").AddStringEnumDescription("high-risk", "low-risk", "moderate-risk", "suspicious", "trustworthy").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `reputation` equal to `true`").AddStringEnumDescription("high-risk", "low-risk", "moderate-risk", "suspicious", "trustworthy").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("high-risk", "low-risk", "moderate-risk", "suspicious", "trustworthy"),
 				},
 			},
 			"threshold_categories": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `reputation` being equal to `true`").AddStringEnumDescription("high-risk", "low-risk", "moderate-risk", "suspicious", "trustworthy").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `reputation` equal to `true`").AddStringEnumDescription("high-risk", "low-risk", "moderate-risk", "suspicious", "trustworthy").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("high-risk", "low-risk", "moderate-risk", "suspicious", "trustworthy"),

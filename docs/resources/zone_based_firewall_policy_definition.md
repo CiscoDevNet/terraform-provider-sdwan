@@ -61,7 +61,7 @@ resource "sdwan_zone_based_firewall_policy_definition" "example" {
 
 ### Optional
 
-- `apply_zone_pairs` (Attributes List) , Attribute conditional on `mode` being equal to `security` (see [below for nested schema](#nestedatt--apply_zone_pairs))
+- `apply_zone_pairs` (Attributes List) , Attribute conditional on `mode` equal to `security` (see [below for nested schema](#nestedatt--apply_zone_pairs))
 
 ### Read-Only
 

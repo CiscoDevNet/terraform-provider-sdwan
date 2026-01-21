@@ -64,7 +64,7 @@ func (r *OtherUCSEProfileParcelResource) Metadata(ctx context.Context, req resou
 func (r *OtherUCSEProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Other UCSE Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Other UCSE Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -103,14 +103,14 @@ func (r *OtherUCSEProfileParcelResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"access_port_shared_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `access_port_dedicated` being equal to `false`").AddStringEnumDescription("ge1", "ge2", "ge3", "te2", "te3", "console", "failover").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `access_port_dedicated` equal to `false`").AddStringEnumDescription("ge1", "ge2", "ge3", "te2", "te3", "console", "failover").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ge1", "ge2", "ge3", "te2", "te3", "console", "failover"),
 				},
 			},
 			"access_port_shared_failover_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `access_port_dedicated` being equal to `false`").AddStringEnumDescription("ge2", "te2").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `access_port_dedicated` equal to `false`").AddStringEnumDescription("ge2", "te2").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ge2", "te2"),
@@ -120,7 +120,7 @@ func (r *OtherUCSEProfileParcelResource) Schema(ctx context.Context, req resourc
 				MarkdownDescription: helpers.NewAttributeDescription("Assign IPv4 address").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.RegexMatches(regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(/)([0-2]?[0-9]$|[3]?[0-2])`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])`), ""),
 				},
 			},
 			"ipv4_address_variable": schema.StringAttribute{
@@ -130,6 +130,9 @@ func (r *OtherUCSEProfileParcelResource) Schema(ctx context.Context, req resourc
 			"default_gateway": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Assign default gateway").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)`), ""),
+				},
 			},
 			"default_gateway_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -186,7 +189,7 @@ func (r *OtherUCSEProfileParcelResource) Schema(ctx context.Context, req resourc
 							MarkdownDescription: helpers.NewAttributeDescription("Assign IPv4 address").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.RegexMatches(regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(/)([0-2]?[0-9]$|[3]?[0-2])`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])`), ""),
 							},
 						},
 						"ipv4_address_variable": schema.StringAttribute{

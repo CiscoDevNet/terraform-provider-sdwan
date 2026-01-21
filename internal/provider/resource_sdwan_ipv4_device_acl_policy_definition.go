@@ -136,34 +136,34 @@ func (r *IPv4DeviceACLPolicyDefinitionResource) Schema(ctx context.Context, req 
 										},
 									},
 									"source_ip": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix, Attribute conditional on `type` being equal to `sourceIp`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix, Attribute conditional on `type` equal to `sourceIp`").String,
 										Optional:            true,
 									},
 									"source_ip_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix variable, Attribute conditional on `type` being equal to `sourceIp`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix variable, Attribute conditional on `type` equal to `sourceIp`").String,
 										Optional:            true,
 									},
 									"destination_ip": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix, Attribute conditional on `type` being equal to `destinationIp`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix, Attribute conditional on `type` equal to `destinationIp`").String,
 										Optional:            true,
 									},
 									"destination_ip_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix variable, Attribute conditional on `type` being equal to `destinationIp`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix variable, Attribute conditional on `type` equal to `destinationIp`").String,
 										Optional:            true,
 									},
 									"source_ports": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source ports. Single value (0-65535) or ranges separated by spaces., Attribute conditional on `type` being equal to `sourcePort`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Source ports. Single value (0-65535) or ranges separated by spaces., Attribute conditional on `type` equal to `sourcePort`").String,
 										Optional:            true,
 									},
 									"destination_port": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination port, only `22` and `161` supported, Attribute conditional on `type` being equal to `destinationPort`").AddIntegerRangeDescription(0, 65535).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination port, only `22` and `161` supported, Attribute conditional on `type` equal to `destinationPort`").AddIntegerRangeDescription(0, 65535).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 65535),
 										},
 									},
 									"source_data_ipv4_prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source data IPv4 prefix list ID, Attribute conditional on `type` being equal to `sourceDataPrefixList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Source data IPv4 prefix list ID, Attribute conditional on `type` equal to `sourceDataPrefixList`").String,
 										Optional:            true,
 									},
 									"source_data_ipv4_prefix_list_version": schema.Int64Attribute{
@@ -171,7 +171,7 @@ func (r *IPv4DeviceACLPolicyDefinitionResource) Schema(ctx context.Context, req 
 										Optional:            true,
 									},
 									"destination_data_ipv4_prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination data IPv4 prefix list ID, Attribute conditional on `type` being equal to `destinationDataPrefixList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination data IPv4 prefix list ID, Attribute conditional on `type` equal to `destinationDataPrefixList`").String,
 										Optional:            true,
 									},
 									"destination_data_ipv4_prefix_list_version": schema.Int64Attribute{
@@ -194,7 +194,7 @@ func (r *IPv4DeviceACLPolicyDefinitionResource) Schema(ctx context.Context, req 
 										},
 									},
 									"counter_name": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Counter name, Attribute conditional on `type` being equal to `count`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Counter name, Attribute conditional on `type` equal to `count`").String,
 										Optional:            true,
 									},
 								},

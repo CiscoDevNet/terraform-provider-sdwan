@@ -376,7 +376,7 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							},
 						},
 						"next_hops": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `nextHop`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop, Attribute conditional on `gateway` equal to `nextHop`").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
@@ -403,7 +403,7 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							},
 						},
 						"next_hop_with_trackers": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop with Tracker, Attribute conditional on `gateway` being equal to `nextHop`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop with Tracker, Attribute conditional on `gateway` equal to `nextHop`").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
@@ -437,30 +437,30 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							},
 						},
 						"null0": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `null0`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop, Attribute conditional on `gateway` equal to `null0`").String,
 							Optional:            true,
 						},
 						"administrative_distance": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Gateway distance, Attribute conditional on `gateway` being equal to `null0`").AddIntegerRangeDescription(1, 255).String,
+							MarkdownDescription: helpers.NewAttributeDescription("Gateway distance, Attribute conditional on `gateway` equal to `null0`").AddIntegerRangeDescription(1, 255).String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.Between(1, 255),
 							},
 						},
 						"administrative_distance_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `gateway` being equal to `null0`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `gateway` equal to `null0`").String,
 							Optional:            true,
 						},
 						"dhcp": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway DHCP, Attribute conditional on `gateway` being equal to `dhcp`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway DHCP, Attribute conditional on `gateway` equal to `dhcp`").String,
 							Optional:            true,
 						},
 						"vpn": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway VPN, Attribute conditional on `gateway` being equal to `vpn`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway VPN, Attribute conditional on `gateway` equal to `vpn`").String,
 							Optional:            true,
 						},
 						"ip_static_route_interface": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `gateway` being equal to `staticRouteInterface`").String,
+							MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `gateway` equal to `staticRouteInterface`").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
@@ -529,7 +529,7 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							},
 						},
 						"next_hops": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `nextHop`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` equal to `nextHop`").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
@@ -556,22 +556,22 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							},
 						},
 						"null0": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `null0`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` equal to `null0`").String,
 							Optional:            true,
 						},
 						"nat": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Nat, Attribute conditional on `gateway` being equal to `nat`").AddStringEnumDescription("NAT64", "NAT66").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Nat, Attribute conditional on `gateway` equal to `nat`").AddStringEnumDescription("NAT64", "NAT66").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("NAT64", "NAT66"),
 							},
 						},
 						"nat_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `gateway` being equal to `nat`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `gateway` equal to `nat`").String,
 							Optional:            true,
 						},
 						"ipv6_static_route_interface": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `gateway` being equal to `staticRouteInterface`").String,
+							MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `gateway` equal to `staticRouteInterface`").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{

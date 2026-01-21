@@ -110,7 +110,7 @@ func (r *PolicyObjectUnifiedTLSSSLDecryptionProfileParcelResource) Schema(ctx co
 				},
 			},
 			"unknown_revocation_status": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Only required if certificateRevocationStatus is oscp, if value is none then field shouldn't be here, Attribute conditional on `certificate_revocation_status` being equal to `ocsp`").AddStringEnumDescription("decrypt", "drop").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Only required if certificateRevocationStatus is oscp, if value is none then field shouldn't be here, Attribute conditional on `certificate_revocation_status` equal to `ocsp`").AddStringEnumDescription("decrypt", "drop").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("decrypt", "drop"),

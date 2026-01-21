@@ -280,9 +280,15 @@ type YamlConfigAttribute struct {
 }
 
 type YamlConfigConditionalAttribute struct {
-	Name  string `yaml:"name"`
-	Value string `yaml:"value"`
-	Type  string `yaml:"type"`
+	Operator   string                 `yaml:"operator"`
+	Conditions []YamlConfigCondition  `yaml:"conditions"`
+}
+
+type YamlConfigCondition struct {
+	Name   string `yaml:"name"`
+	Value  string `yaml:"value"`
+	Type   string `yaml:"type"`
+	Negate bool   `yaml:"negate"`
 }
 
 // Templating helper function to convert TF name to GO name
@@ -431,6 +437,100 @@ func Add(x, y int) int {
 	return x + y
 }
 
+// Templating helper function to check if conditional attribute has conditions
+func HasConditional(attr YamlConfigConditionalAttribute) bool {
+	return len(attr.Conditions) > 0
+}
+
+// Templating helper function to build conditional logic check for a single condition
+func BuildConditionCheck(cond YamlConfigCondition, context string) string {
+	varName := ToGoName(cond.Name)
+	var check string
+
+	if cond.Value == "" {
+		// Empty/null value means "check if attribute is null"
+		// Use negate: true to check if attribute is NOT null
+		check = fmt.Sprintf("%s.%s.IsNull()", context, varName)
+	} else if cond.Type == "Bool" {
+		check = fmt.Sprintf("%s.%s.ValueBool() == %s", context, varName, cond.Value)
+	} else {
+		check = fmt.Sprintf("%s.%s.ValueString() == \"%s\"", context, varName, cond.Value)
+	}
+
+	if cond.Negate {
+		check = "!(" + check + ")"
+	}
+
+	return check
+}
+
+// Templating helper function to build full conditional logic
+func BuildConditionalLogic(attr YamlConfigConditionalAttribute, context string) string {
+	if !HasConditional(attr) {
+		return ""
+	}
+
+	operator := attr.Operator
+	if operator == "" {
+		operator = "and"
+	}
+
+	var checks []string
+	for _, cond := range attr.Conditions {
+		checks = append(checks, BuildConditionCheck(cond, context))
+	}
+
+	if len(checks) == 0 {
+		return ""
+	}
+
+	if len(checks) == 1 {
+		return " && " + checks[0]
+	}
+
+	if operator == "or" {
+		return " && (" + strings.Join(checks, " || ") + ")"
+	}
+
+	return " && " + strings.Join(checks, " && ")
+}
+
+// Templating helper function to build conditional description for documentation
+func BuildConditionalDescription(attr YamlConfigConditionalAttribute) string {
+	if !HasConditional(attr) {
+		return ""
+	}
+
+	operator := attr.Operator
+	if operator == "" {
+		operator = "and"
+	}
+
+	var parts []string
+	for _, cond := range attr.Conditions {
+		negation := ""
+		if cond.Negate {
+			negation = "not "
+		}
+		parts = append(parts, fmt.Sprintf("`%s` %sequal to `%s`", cond.Name, negation, cond.Value))
+	}
+
+	if len(parts) == 0 {
+		return ""
+	}
+
+	if len(parts) == 1 {
+		return ", Attribute conditional on " + parts[0]
+	}
+
+	joiner := " and "
+	if operator == "or" {
+		joiner = " or "
+	}
+
+	return ", Attribute conditional on " + strings.Join(parts, joiner)
+}
+
 // Templating helper function to return GJSON type
 func GetGjsonType(t string) string {
 	if t == "String" {
@@ -564,36 +664,39 @@ func contains(s []string, str string) bool {
 
 // Map of templating functions
 var functions = template.FuncMap{
-	"toGoName":               ToGoName,
-	"toVersionName":          ToVersionName,
-	"camelCase":              CamelCase,
-	"snakeCase":              SnakeCase,
-	"sprintf":                fmt.Sprintf,
-	"toLower":                strings.ToLower,
-	"path":                   BuildPath,
-	"hasId":                  HasId,
-	"hasName":                HasName,
-	"hasVersionAttribute":    HasVersionAttribute,
-	"getResponseModelPath":   GetResponseModelPath,
-	"hasReference":           HasReference,
-	"countReferences":        CountReferences,
-	"add":                    Add,
-	"getGjsonType":           GetGjsonType,
-	"getId":                  GetId,
-	"isUx20Feature":          IsUx20Feature,
-	"isListSet":              IsListSet,
-	"isList":                 IsList,
-	"isSet":                  IsSet,
-	"isStringListSet":        IsStringListSet,
-	"isInt64ListSet":         IsInt64ListSet,
-	"isStringInt64":          IsStringInt64,
-	"isNestedListSet":        IsNestedListSet,
-	"isNestedList":           IsNestedList,
-	"isNestedSet":            IsNestedSet,
-	"getParentModelName":     GetParentModelName,
-	"getProfileParcelSuffix": GetProfileParcelSuffix,
-	"getProfileParcelName":   GetProfileParcelName,
-	"contains":               contains,
+	"toGoName":                   ToGoName,
+	"toVersionName":              ToVersionName,
+	"camelCase":                  CamelCase,
+	"snakeCase":                  SnakeCase,
+	"sprintf":                    fmt.Sprintf,
+	"toLower":                    strings.ToLower,
+	"path":                       BuildPath,
+	"hasId":                      HasId,
+	"hasName":                    HasName,
+	"hasVersionAttribute":        HasVersionAttribute,
+	"getResponseModelPath":       GetResponseModelPath,
+	"hasReference":               HasReference,
+	"countReferences":            CountReferences,
+	"add":                        Add,
+	"getGjsonType":               GetGjsonType,
+	"getId":                      GetId,
+	"isUx20Feature":              IsUx20Feature,
+	"isListSet":                  IsListSet,
+	"isList":                     IsList,
+	"isSet":                      IsSet,
+	"isStringListSet":            IsStringListSet,
+	"isInt64ListSet":             IsInt64ListSet,
+	"isStringInt64":              IsStringInt64,
+	"isNestedListSet":            IsNestedListSet,
+	"isNestedList":               IsNestedList,
+	"isNestedSet":                IsNestedSet,
+	"getParentModelName":         GetParentModelName,
+	"getProfileParcelSuffix":     GetProfileParcelSuffix,
+	"getProfileParcelName":       GetProfileParcelName,
+	"contains":                   contains,
+	"hasConditional":             HasConditional,
+	"buildConditionalLogic":      BuildConditionalLogic,
+	"buildConditionalDescription": BuildConditionalDescription,
 }
 
 func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result) {
@@ -833,8 +936,10 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		attr.TfName = SnakeCase(attr.ModelName)
 	}
 
-	if attr.ConditionalAttribute.Name != "" {
-		attr.ConditionalAttribute.Name = SnakeCase(attr.ConditionalAttribute.Name)
+	for i := range attr.ConditionalAttribute.Conditions {
+		if attr.ConditionalAttribute.Conditions[i].Name != "" {
+			attr.ConditionalAttribute.Conditions[i].Name = SnakeCase(attr.ConditionalAttribute.Conditions[i].Name)
+		}
 	}
 
 	if attr.Value == "" && (r.Get("type").String() == "object" || !r.Get("type").Exists()) {

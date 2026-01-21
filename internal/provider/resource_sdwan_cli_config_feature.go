@@ -63,7 +63,7 @@ func (r *CLIConfigFeatureResource) Metadata(ctx context.Context, req resource.Me
 func (r *CLIConfigFeatureResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a CLI Config Feature .").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a CLI Config Feature .").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{

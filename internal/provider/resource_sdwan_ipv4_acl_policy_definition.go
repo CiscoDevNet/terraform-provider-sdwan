@@ -136,31 +136,31 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 										},
 									},
 									"dscp": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` being equal to `dscp`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` equal to `dscp`").String,
 										Optional:            true,
 									},
 									"source_ip": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix, Attribute conditional on `type` being equal to `sourceIp`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix, Attribute conditional on `type` equal to `sourceIp`").String,
 										Optional:            true,
 									},
 									"source_ip_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix variable, Attribute conditional on `type` being equal to `sourceIp`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix variable, Attribute conditional on `type` equal to `sourceIp`").String,
 										Optional:            true,
 									},
 									"icmp_message": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("ICMP Message, Attribute conditional on `type` being equal to `icmpMessage`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("ICMP Message, Attribute conditional on `type` equal to `icmpMessage`").String,
 										Optional:            true,
 									},
 									"destination_ip": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix, Attribute conditional on `type` being equal to `destinationIp`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix, Attribute conditional on `type` equal to `destinationIp`").String,
 										Optional:            true,
 									},
 									"destination_ip_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix variable, Attribute conditional on `type` being equal to `destinationIp`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix variable, Attribute conditional on `type` equal to `destinationIp`").String,
 										Optional:            true,
 									},
 									"class_map_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Class map ID, Attribute conditional on `type` being equal to `class`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Class map ID, Attribute conditional on `type` equal to `class`").String,
 										Optional:            true,
 									},
 									"class_map_version": schema.Int64Attribute{
@@ -168,29 +168,29 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 										Optional:            true,
 									},
 									"packet_length": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Packet length, Attribute conditional on `type` being equal to `packetLength`").AddIntegerRangeDescription(0, 65535).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Packet length, Attribute conditional on `type` equal to `packetLength`").AddIntegerRangeDescription(0, 65535).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 65535),
 										},
 									},
 									"priority": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("PLP - priority, Attribute conditional on `type` being equal to `plp`").AddStringEnumDescription("high", "low").String,
+										MarkdownDescription: helpers.NewAttributeDescription("PLP - priority, Attribute conditional on `type` equal to `plp`").AddStringEnumDescription("high", "low").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("high", "low"),
 										},
 									},
 									"source_ports": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source ports. Single value (0-65535) or ranges separated by spaces., Attribute conditional on `type` being equal to `sourcePort`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Source ports. Single value (0-65535) or ranges separated by spaces., Attribute conditional on `type` equal to `sourcePort`").String,
 										Optional:            true,
 									},
 									"destination_ports": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination ports. Single value (0-65535) or ranges separated by spaces., Attribute conditional on `type` being equal to `destinationPort`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination ports. Single value (0-65535) or ranges separated by spaces., Attribute conditional on `type` equal to `destinationPort`").String,
 										Optional:            true,
 									},
 									"source_data_ipv4_prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source data IPv4 prefix list ID, Attribute conditional on `type` being equal to `sourceDataPrefixList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Source data IPv4 prefix list ID, Attribute conditional on `type` equal to `sourceDataPrefixList`").String,
 										Optional:            true,
 									},
 									"source_data_ipv4_prefix_list_version": schema.Int64Attribute{
@@ -198,7 +198,7 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 										Optional:            true,
 									},
 									"destination_data_ipv4_prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination data IPv4 prefix list ID, Attribute conditional on `type` being equal to `destinationDataPrefixList`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination data IPv4 prefix list ID, Attribute conditional on `type` equal to `destinationDataPrefixList`").String,
 										Optional:            true,
 									},
 									"destination_data_ipv4_prefix_list_version": schema.Int64Attribute{
@@ -206,11 +206,11 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 										Optional:            true,
 									},
 									"protocol": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Single value (0-255) or multiple values separated by spaces, Attribute conditional on `type` being equal to `protocol`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Single value (0-255) or multiple values separated by spaces, Attribute conditional on `type` equal to `protocol`").String,
 										Optional:            true,
 									},
 									"tcp": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("TCP parameters, Attribute conditional on `type` being equal to `tcp`").AddStringEnumDescription("syn").String,
+										MarkdownDescription: helpers.NewAttributeDescription("TCP parameters, Attribute conditional on `type` equal to `tcp`").AddStringEnumDescription("syn").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("syn"),
@@ -232,7 +232,7 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 										},
 									},
 									"class_map_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Class map ID, Attribute conditional on `type` being equal to `class`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Class map ID, Attribute conditional on `type` equal to `class`").String,
 										Optional:            true,
 									},
 									"class_map_version": schema.Int64Attribute{
@@ -240,15 +240,15 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 										Optional:            true,
 									},
 									"counter_name": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Counter name, Attribute conditional on `type` being equal to `count`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Counter name, Attribute conditional on `type` equal to `count`").String,
 										Optional:            true,
 									},
 									"log": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Enable logging, Attribute conditional on `type` being equal to `log`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Enable logging, Attribute conditional on `type` equal to `log`").String,
 										Optional:            true,
 									},
 									"mirror_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Mirror ID, Attribute conditional on `type` being equal to `mirror`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Mirror ID, Attribute conditional on `type` equal to `mirror`").String,
 										Optional:            true,
 									},
 									"mirror_version": schema.Int64Attribute{
@@ -256,7 +256,7 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 										Optional:            true,
 									},
 									"policer_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Policer ID, Attribute conditional on `type` being equal to `policer`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Policer ID, Attribute conditional on `type` equal to `policer`").String,
 										Optional:            true,
 									},
 									"policer_version": schema.Int64Attribute{
@@ -264,7 +264,7 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 										Optional:            true,
 									},
 									"set_parameters": schema.ListNestedAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("List of set parameters, Attribute conditional on `type` being equal to `set`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("List of set parameters, Attribute conditional on `type` equal to `set`").String,
 										Optional:            true,
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
@@ -276,14 +276,14 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 													},
 												},
 												"dscp": schema.Int64Attribute{
-													MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` being equal to `dscp`").AddIntegerRangeDescription(0, 63).String,
+													MarkdownDescription: helpers.NewAttributeDescription("DSCP value, Attribute conditional on `type` equal to `dscp`").AddIntegerRangeDescription(0, 63).String,
 													Optional:            true,
 													Validators: []validator.Int64{
 														int64validator.Between(0, 63),
 													},
 												},
 												"next_hop": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Next hop IP, Attribute conditional on `type` being equal to `nextHop`").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Next hop IP, Attribute conditional on `type` equal to `nextHop`").String,
 													Optional:            true,
 												},
 											},

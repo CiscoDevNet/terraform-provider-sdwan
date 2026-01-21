@@ -162,7 +162,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
 		{{- else if ( .IncludeDefaultOption)}}
-        if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Value ""}} && !data.{{toGoName .ConditionalAttribute.Name}}.IsNull() {{else if eq .ConditionalAttribute.Type "Bool"}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+        if true{{buildConditionalLogic .ConditionalAttribute "data"}} {
 			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "{{.DefaultOption}}")
 			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipValue", {{if eq .Type "String"}} "{{.DefaultValue}}" {{else}} {{.DefaultValue}} {{end}})
@@ -269,7 +269,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
 			{{- else if ( .IncludeDefaultOption)}}
-            if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Value ""}} && !item.{{toGoName .ConditionalAttribute.Name}}.IsNull() {{else if eq .ConditionalAttribute.Type "Bool"}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+            if true{{buildConditionalLogic .ConditionalAttribute "item"}} {
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "{{.DefaultOption}}")
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipValue", {{if eq .Type "String"}} "{{.DefaultValue}}" {{else}} {{.DefaultValue}} {{end}})

@@ -98,9 +98,9 @@ type SystemAAAAuthorizationRules struct {
 }
 
 type SystemAAAUsersPublicKeys struct {
-	KeyString       types.String `tfsdk:"key_string"`
-	KeyType         types.String `tfsdk:"key_type"`
-	KeyTypeVariable types.String `tfsdk:"key_type_variable"`
+	KeyString         types.String `tfsdk:"key_string"`
+	KeyStringVariable types.String `tfsdk:"key_string_variable"`
+	KeyType           types.String `tfsdk:"key_type"`
 }
 
 type SystemAAARadiusGroupsServers struct {
@@ -114,6 +114,7 @@ type SystemAAARadiusGroupsServers struct {
 	Retransmit         types.Int64  `tfsdk:"retransmit"`
 	RetransmitVariable types.String `tfsdk:"retransmit_variable"`
 	Key                types.String `tfsdk:"key"`
+	KeyVariable        types.String `tfsdk:"key_variable"`
 	SecretKey          types.String `tfsdk:"secret_key"`
 	SecretKeyVariable  types.String `tfsdk:"secret_key_variable"`
 	KeyEnum            types.String `tfsdk:"key_enum"`
@@ -128,6 +129,7 @@ type SystemAAATacacsGroupsServers struct {
 	Timeout           types.Int64  `tfsdk:"timeout"`
 	TimeoutVariable   types.String `tfsdk:"timeout_variable"`
 	Key               types.String `tfsdk:"key"`
+	KeyVariable       types.String `tfsdk:"key_variable"`
 	SecretKey         types.String `tfsdk:"secret_key"`
 	SecretKeyVariable types.String `tfsdk:"secret_key_variable"`
 	KeyEnum           types.String `tfsdk:"key_enum"`
@@ -246,24 +248,19 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "pubkeyChain", []interface{}{})
 				for _, childItem := range item.PublicKeys {
 					itemChildBody := ""
-					if !childItem.KeyString.IsNull() {
+
+					if !childItem.KeyStringVariable.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "keyString.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "keyString.value", childItem.KeyStringVariable.ValueString())
+						}
+					} else if !childItem.KeyString.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "keyString.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "keyString.value", childItem.KeyString.ValueString())
 						}
 					}
-
-					if !childItem.KeyTypeVariable.IsNull() {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "keyType.optionType", "variable")
-							itemChildBody, _ = sjson.Set(itemChildBody, "keyType.value", childItem.KeyTypeVariable.ValueString())
-						}
-					} else if childItem.KeyType.IsNull() {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "keyType.optionType", "default")
-
-						}
-					} else {
+					if !childItem.KeyType.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "keyType.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "keyType.value", childItem.KeyType.ValueString())
@@ -391,7 +388,13 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "retransmit.value", childItem.Retransmit.ValueInt64())
 						}
 					}
-					if !childItem.Key.IsNull() {
+
+					if !childItem.KeyVariable.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "key.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "key.value", childItem.KeyVariable.ValueString())
+						}
+					} else if !childItem.Key.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "key.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "key.value", childItem.Key.ValueString())
@@ -530,7 +533,13 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "timeout.value", childItem.Timeout.ValueInt64())
 						}
 					}
-					if !childItem.Key.IsNull() {
+
+					if !childItem.KeyVariable.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "key.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "key.value", childItem.KeyVariable.ValueString())
+						}
+					} else if !childItem.Key.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "key.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "key.value", childItem.Key.ValueString())
@@ -769,20 +778,20 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := SystemAAAUsersPublicKeys{}
 					cItem.KeyString = types.StringNull()
-
+					cItem.KeyStringVariable = types.StringNull()
 					if t := cv.Get("keyString.optionType"); t.Exists() {
 						va := cv.Get("keyString.value")
-						if t.String() == "global" {
+						if t.String() == "variable" {
+							cItem.KeyStringVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
 							cItem.KeyString = types.StringValue(va.String())
 						}
 					}
 					cItem.KeyType = types.StringNull()
-					cItem.KeyTypeVariable = types.StringNull()
+
 					if t := cv.Get("keyType.optionType"); t.Exists() {
 						va := cv.Get("keyType.value")
-						if t.String() == "variable" {
-							cItem.KeyTypeVariable = types.StringValue(va.String())
-						} else if t.String() == "global" {
+						if t.String() == "global" {
 							cItem.KeyType = types.StringValue(va.String())
 						}
 					}
@@ -1213,7 +1222,7 @@ func (data *SystemAAA) updateFromBody(ctx context.Context, res gjson.Result) {
 		for ci := range data.Users[i].PublicKeys {
 			keys := [...]string{"keyString"}
 			keyValues := [...]string{data.Users[i].PublicKeys[ci].KeyString.ValueString()}
-			keyValuesVariables := [...]string{""}
+			keyValuesVariables := [...]string{data.Users[i].PublicKeys[ci].KeyStringVariable.ValueString()}
 
 			var cr gjson.Result
 			r.Get("pubkeyChain").ForEach(
@@ -1242,20 +1251,20 @@ func (data *SystemAAA) updateFromBody(ctx context.Context, res gjson.Result) {
 				},
 			)
 			data.Users[i].PublicKeys[ci].KeyString = types.StringNull()
-
+			data.Users[i].PublicKeys[ci].KeyStringVariable = types.StringNull()
 			if t := cr.Get("keyString.optionType"); t.Exists() {
 				va := cr.Get("keyString.value")
-				if t.String() == "global" {
+				if t.String() == "variable" {
+					data.Users[i].PublicKeys[ci].KeyStringVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
 					data.Users[i].PublicKeys[ci].KeyString = types.StringValue(va.String())
 				}
 			}
 			data.Users[i].PublicKeys[ci].KeyType = types.StringNull()
-			data.Users[i].PublicKeys[ci].KeyTypeVariable = types.StringNull()
+
 			if t := cr.Get("keyType.optionType"); t.Exists() {
 				va := cr.Get("keyType.value")
-				if t.String() == "variable" {
-					data.Users[i].PublicKeys[ci].KeyTypeVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
+				if t.String() == "global" {
 					data.Users[i].PublicKeys[ci].KeyType = types.StringValue(va.String())
 				}
 			}

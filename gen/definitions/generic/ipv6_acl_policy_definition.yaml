@@ -93,8 +93,9 @@ attributes:
           - model_name: value
             tf_name: next_header
             conditional_attribute:
-              name: type
-              value: nextHeader
+              conditions:
+                - name: type
+                  value: nextHeader
             type: Int64
             model_type_string: true
             min_int: 0
@@ -104,8 +105,9 @@ attributes:
           - model_name: value
             tf_name: source_ip
             conditional_attribute:
-              name: type
-              value: sourceIpv6
+              conditions:
+                - name: type
+                  value: sourceIpv6
             type: String
             description: Source IPv6 prefix
             exclude_test: true
@@ -113,8 +115,9 @@ attributes:
           - model_name: value
             tf_name: destination_ip
             conditional_attribute:
-              name: type
-              value: destinationIpv6
+              conditions:
+                - name: type
+                  value: destinationIpv6
             type: String
             description: Destination IPv6 prefix
             exclude_test: true
@@ -122,8 +125,9 @@ attributes:
           - model_name: ref
             tf_name: class_map_id
             conditional_attribute:
-              name: type
-              value: class
+              conditions:
+                - name: type
+                  value: class
             type: String
             description: Class map ID
             example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
@@ -136,8 +140,9 @@ attributes:
           - model_name: value
             tf_name: packet_length
             conditional_attribute:
-              name: type
-              value: packetLength
+              conditions:
+                - name: type
+                  value: packetLength
             type: Int64
             model_type_string: true
             description: Packet length
@@ -148,8 +153,9 @@ attributes:
           - model_name: value
             tf_name: priority
             conditional_attribute:
-              name: type
-              value: plp
+              conditions:
+                - name: type
+                  value: plp
             type: String
             enum_values: [high, low]
             description: PLP - priority
@@ -158,8 +164,9 @@ attributes:
           - model_name: value
             tf_name: source_ports
             conditional_attribute:
-              name: type
-              value: sourcePort
+              conditions:
+                - name: type
+                  value: sourcePort
             type: String
             description: Source ports. Single value (0-65535) or ranges separated by spaces.
             exclude_test: true
@@ -167,8 +174,9 @@ attributes:
           - model_name: value
             tf_name: destination_ports
             conditional_attribute:
-              name: type
-              value: destinationPort
+              conditions:
+                - name: type
+                  value: destinationPort
             type: String
             description: Destination ports. Single value (0-65535) or ranges separated by spaces.
             exclude_test: true
@@ -176,8 +184,9 @@ attributes:
           - model_name: ref
             tf_name: source_data_ipv6_prefix_list_id
             conditional_attribute:
-              name: type
-              value: sourceDataIpv6PrefixList
+              conditions:
+                - name: type
+                  value: sourceDataIpv6PrefixList
             type: String
             description: Source data IPv6 prefix list ID
             exclude_test: true
@@ -190,8 +199,9 @@ attributes:
           - model_name: ref
             tf_name: destination_data_ipv6_prefix_list_id
             conditional_attribute:
-              name: type
-              value: destinationDataIpv6PrefixList
+              conditions:
+                - name: type
+                  value: destinationDataIpv6PrefixList
             type: String
             description: Destination dataIPv6 prefix list ID
             exclude_test: true
@@ -204,8 +214,9 @@ attributes:
           - model_name: value
             tf_name: tcp
             conditional_attribute:
-              name: type
-              value: tcp
+              conditions:
+                - name: type
+                  value: tcp
             type: String
             enum_values: [syn]
             description: TCP parameters
@@ -214,8 +225,9 @@ attributes:
           - model_name: value
             tf_name: traffic_class
             conditional_attribute:
-              name: type
-              value: trafficClass
+              conditions:
+                - name: type
+                  value: trafficClass
             type: Int64
             model_type_string: true
             min_int: 0
@@ -240,8 +252,9 @@ attributes:
             data_path: [parameter]
             tf_name: class_map_id
             conditional_attribute:
-              name: type
-              value: class
+              conditions:
+                - name: type
+                  value: class
             type: String
             description: Class map ID
             exclude_test: true
@@ -254,8 +267,9 @@ attributes:
           - model_name: parameter
             tf_name: counter_name
             conditional_attribute:
-              name: type
-              value: count
+              conditions:
+                - name: type
+                  value: count
             type: String
             description: Counter name
             exclude_test: true
@@ -263,8 +277,9 @@ attributes:
           - model_name: parameter
             tf_name: log
             conditional_attribute:
-              name: type
-              value: log
+              conditions:
+                - name: type
+                  value: log
             type: Bool
             bool_empty_string: true
             description: Enable logging
@@ -274,8 +289,9 @@ attributes:
             data_path: [parameter]
             tf_name: mirror_id
             conditional_attribute:
-              name: type
-              value: mirror
+              conditions:
+                - name: type
+                  value: mirror
             type: String
             description: Mirror ID
             exclude_test: true
@@ -289,8 +305,9 @@ attributes:
             data_path: [parameter]
             tf_name: policer_id
             conditional_attribute:
-              name: type
-              value: policer
+              conditions:
+                - name: type
+                  value: policer
             type: String
             description: Policer ID
             exclude_test: true
@@ -303,8 +320,9 @@ attributes:
           - model_name: parameter
             tf_name: set_parameters
             conditional_attribute:
-              name: type
-              value: set
+              conditions:
+                - name: type
+                  value: set
             type: List
             description: List of set parameters
             attributes:
@@ -319,8 +337,9 @@ attributes:
               - model_name: value
                 tf_name: traffic_class
                 conditional_attribute:
-                  name: type
-                  value: trafficClass
+                  conditions:
+                    - name: type
+                      value: trafficClass
                 type: Int64
                 model_type_string: true
                 description: Traffic class
@@ -330,8 +349,9 @@ attributes:
               - model_name: value
                 tf_name: next_hop
                 conditional_attribute:
-                  name: type
-                  value: nextHop
+                  conditions:
+                    - name: type
+                      value: nextHop
                 type: String
                 description: Next hop IP
                 example: 2001::1

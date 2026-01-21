@@ -165,44 +165,44 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 							},
 						},
 						"radius_server_ip": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server IP, Attribute conditional on `security_type` being equal to `enterprise`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server IP, Attribute conditional on `security_type` equal to `enterprise`").String,
 							Optional:            true,
 						},
 						"radius_server_ip_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `security_type` being equal to `enterprise`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `security_type` equal to `enterprise`").String,
 							Optional:            true,
 						},
 						"radius_server_port": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server authentication port, Attribute conditional on `security_type` being equal to `enterprise`").AddIntegerRangeDescription(1, 65535).AddDefaultValueDescription("1812").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server authentication port, Attribute conditional on `security_type` equal to `enterprise`").AddIntegerRangeDescription(1, 65535).AddDefaultValueDescription("1812").String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.Between(1, 65535),
 							},
 						},
 						"radius_server_port_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `security_type` being equal to `enterprise`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `security_type` equal to `enterprise`").String,
 							Optional:            true,
 						},
 						"radius_server_secret": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server shared secret, Attribute conditional on `security_type` being equal to `enterprise`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server shared secret, Attribute conditional on `security_type` equal to `enterprise`").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(8, 32),
 							},
 						},
 						"radius_server_secret_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `security_type` being equal to `enterprise`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `security_type` equal to `enterprise`").String,
 							Optional:            true,
 						},
 						"passphrase": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set passphrase, Attribute conditional on `security_type` being equal to `personal`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set passphrase, Attribute conditional on `security_type` equal to `personal`").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(8, 63),
 							},
 						},
 						"passphrase_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `security_type` being equal to `personal`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `security_type` equal to `personal`").String,
 							Optional:            true,
 						},
 						"qos_profile": schema.StringAttribute{

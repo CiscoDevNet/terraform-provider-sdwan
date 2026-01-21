@@ -174,26 +174,26 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 	path := "data."
 	{{- range .Attributes}}
 	{{- if .Value}}
-	if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+	if true{{buildConditionalLogic .ConditionalAttribute "data"}} {
 	body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", {{if .ValueType}}"{{.ValueType}}"{{else}}"default"{{end}})
 	body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.Value}}{{if eq .Type "String"}}"{{end}})
 	}
 	{{- else if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .TfOnly) (not .Reference)}}
 	{{if .Variable}}
 	if !data.{{toGoName .TfName}}Variable.IsNull() {
-		if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+		if true{{buildConditionalLogic .ConditionalAttribute "data"}} {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", data.{{toGoName .TfName}}Variable.ValueString())
 		}
 	} else {{end}}{{if and .DefaultValuePresent (not .ExcludeNull)}}if data.{{toGoName .TfName}}.IsNull() {{if and .DynamicDefault .DefaultValuePresent}}|| data.{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"{{end}} {
-		if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+		if true{{buildConditionalLogic .ConditionalAttribute "data"}} {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 		{{if or .DefaultValue .DefaultValueEmptyString}}body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
 		}
 	} else {{else if .AlwaysIncludeParent }}if data.{{toGoName .TfName}}.IsNull() {
 			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 	} else {{else}}if !data.{{toGoName .TfName}}.IsNull(){{end}} {
-		if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+		if true{{buildConditionalLogic .ConditionalAttribute "data"}} {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
 		{{- if isListSet .}}
 		var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int64{{end}}
@@ -213,32 +213,32 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		}
 	}
 	{{- else if isNestedListSet .}}
-	if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+	if true{{buildConditionalLogic .ConditionalAttribute "data"}} {
 		{{if and (not .MinList) (not .ExcludeNull)}}body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{}){{end}}
 		for _, item := range data.{{toGoName .TfName}} {
 			itemBody := ""
 			{{- range .Attributes}}
 			{{- if .Value}}
-			if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+			if true{{buildConditionalLogic .ConditionalAttribute "item"}} {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", {{if .ValueType}}"{{.ValueType}}"{{else}}"default"{{end}})
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.Value}}{{if eq .Type "String"}}"{{end}})
 			}
 			{{- else if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .TfOnly)}}
 			{{if .Variable}}
 			if !item.{{toGoName .TfName}}Variable.IsNull() {
-				if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+				if true{{buildConditionalLogic .ConditionalAttribute "item"}} {
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", item.{{toGoName .TfName}}Variable.ValueString())
 				}
 			} else {{end}}{{if and .DefaultValuePresent (not .ExcludeNull)}}if item.{{toGoName .TfName}}.IsNull() {{if and .DynamicDefault .DefaultValuePresent}}|| data.{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"{{end}} {
-				if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+				if true{{buildConditionalLogic .ConditionalAttribute "item"}} {
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 				{{if or .DefaultValue .DefaultValueEmptyString}}itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
 				}
 			} else {{else if .AlwaysIncludeParent }}if data.{{toGoName .TfName}}.IsNull() {
 				body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 			} else {{else}}if !item.{{toGoName .TfName}}.IsNull(){{end}} {
-				if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+				if true{{buildConditionalLogic .ConditionalAttribute "item"}} {
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
 				{{- if isListSet .}}
 				var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int64{{end}}
@@ -258,32 +258,32 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				}
 			}
 			{{- else if isNestedListSet .}}
-				if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+				if true{{buildConditionalLogic .ConditionalAttribute "item"}} {
 				{{if and (not .MinList) (not .ExcludeNull)}}itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{}){{end}}
 				for _, childItem := range item.{{toGoName .TfName}} {
 					itemChildBody := ""
 					{{- range .Attributes}}
 					{{- if .Value}}
-					if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+					if true{{buildConditionalLogic .ConditionalAttribute "childItem"}} {
 					itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", {{if .ValueType}}"{{.ValueType}}"{{else}}"default"{{end}})
 					itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.Value}}{{if eq .Type "String"}}"{{end}})
 					}
 					{{- else if or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)}}
 					{{if .Variable}}
 					if !childItem.{{toGoName .TfName}}Variable.IsNull() {
-						if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+						if true{{buildConditionalLogic .ConditionalAttribute "childItem"}} {
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", childItem.{{toGoName .TfName}}Variable.ValueString())
 						}
 					} else {{end}}{{if and .DefaultValuePresent (not .ExcludeNull)}}if childItem.{{toGoName .TfName}}.IsNull() {{if and .DynamicDefault .DefaultValuePresent}}|| data.{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"{{end}} {
-						if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+						if true{{buildConditionalLogic .ConditionalAttribute "childItem"}} {
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 						{{if or .DefaultValue .DefaultValueEmptyString}}itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
 						}
 					} else {{else if .AlwaysIncludeParent }}if data.{{toGoName .TfName}}.IsNull() {
 						body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 					} else {{else}}if !childItem.{{toGoName .TfName}}.IsNull(){{end}} {
-						if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+						if true{{buildConditionalLogic .ConditionalAttribute "childItem"}} {
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
 						{{- if isListSet .}}
 						var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int64{{end}}
@@ -303,31 +303,31 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 						}
 					}
 					{{- else if isNestedListSet .}}
-					if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && itemChildBody.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && itemChildBody.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+					if true{{buildConditionalLogic .ConditionalAttribute "itemChildBody"}} {
 						{{if and (not .MinList) (not .ExcludeNull)}}itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{}){{end}}
 						for _, childChildItem := range childItem.{{toGoName .TfName}} {
 							itemChildChildBody := ""
 							{{- range .Attributes}}
 							{{- if .Value}}
-							if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+							if true{{buildConditionalLogic .ConditionalAttribute "childChildItem"}} {
 							itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", {{if .ValueType}}"{{.ValueType}}"{{else}}"default"{{end}})
 							itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.Value}}{{if eq .Type "String"}}"{{end}})
 							}
 							{{- else if and (or (eq .Type "String") (eq .Type "StringInt64") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .TfOnly)}}
 							{{if .Variable}}
 							if !childChildItem.{{toGoName .TfName}}Variable.IsNull() {
-								if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+								if true{{buildConditionalLogic .ConditionalAttribute "childChildItem"}} {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", childChildItem.{{toGoName .TfName}}Variable.ValueString())
 								}
 							} else {{end}}{{if and .DefaultValuePresent (not .ExcludeNull)}}if childChildItem.{{toGoName .TfName}}.IsNull() {{if and .DynamicDefault .DefaultValuePresent}}|| data.{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"{{end}} {
-								if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+								if true{{buildConditionalLogic .ConditionalAttribute "childChildItem"}} {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 								{{if or .DefaultValue .DefaultValueEmptyString}}itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
 							} else {{else if .AlwaysIncludeParent }}if data.{{toGoName .TfName}}.IsNull() {
 								body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 							} else {{else}}if !childChildItem.{{toGoName .TfName}}.IsNull(){{end}} {
-								if true{{if ne .ConditionalAttribute.Name ""}} {{if eq .ConditionalAttribute.Type "Bool"}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueBool() == {{.ConditionalAttribute.Value}} {{else}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}" {{end}}{{end}} {
+								if true{{buildConditionalLogic .ConditionalAttribute "childChildItem"}} {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
 								{{- if isListSet .}}
 								var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int64{{end}}
@@ -399,8 +399,10 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			data.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 			{{- end}}
 		}
-		{{- if ne .ConditionalAttribute.Name ""}}
-		data.{{toGoName .ConditionalAttribute.Name}} = {{if eq .ConditionalAttribute.Type "Bool"}}types.BoolValue({{.ConditionalAttribute.Value}}){{else}}types.StringValue("{{.ConditionalAttribute.Value}}"){{end}}
+		{{- if hasConditional .ConditionalAttribute}}
+		{{- range .ConditionalAttribute.Conditions}}
+		data.{{toGoName .Name}} = {{if eq .Type "Bool"}}types.BoolValue({{.Value}}){{else}}types.StringValue("{{.Value}}"){{end}}
+		{{- end}}
 		{{- end}}
 	}
 	{{- else if isNestedListSet .}}
@@ -431,8 +433,10 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 					item.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 					{{- end}}
 				}
-				{{- if ne .ConditionalAttribute.Name ""}}
-				item.{{toGoName .ConditionalAttribute.Name}} = {{if eq .ConditionalAttribute.Type "Bool"}}types.BoolValue({{.ConditionalAttribute.Value}}){{else}}types.StringValue("{{.ConditionalAttribute.Value}}"){{end}}
+				{{- if hasConditional .ConditionalAttribute}}
+				{{- range .ConditionalAttribute.Conditions}}
+				item.{{toGoName .Name}} = {{if eq .Type "Bool"}}types.BoolValue({{.Value}}){{else}}types.StringValue("{{.Value}}"){{end}}
+				{{- end}}
 				{{- end}}
 			}
 			{{- else if isNestedListSet .}}
@@ -462,8 +466,10 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 							cItem.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 							{{- end}}
 						}
-						{{- if ne .ConditionalAttribute.Name ""}}
-						cItem.{{toGoName .ConditionalAttribute.Name}} = {{if eq .ConditionalAttribute.Type "Bool"}}types.BoolValue({{.ConditionalAttribute.Value}}){{else}}types.StringValue("{{.ConditionalAttribute.Value}}"){{end}}
+						{{- if hasConditional .ConditionalAttribute}}
+						{{- range .ConditionalAttribute.Conditions}}
+						cItem.{{toGoName .Name}} = {{if eq .Type "Bool"}}types.BoolValue({{.Value}}){{else}}types.StringValue("{{.Value}}"){{end}}
+						{{- end}}
 						{{- end}}
 					}
 					{{- else if isNestedListSet .}}
@@ -493,8 +499,10 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 									ccItem.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 									{{- end}}
 								}
-								{{- if ne .ConditionalAttribute.Name ""}}
-								ccItem.{{toGoName .ConditionalAttribute.Name}} = {{if eq .ConditionalAttribute.Type "Bool"}}types.BoolValue({{.ConditionalAttribute.Value}}){{else}}types.StringValue("{{.ConditionalAttribute.Value}}"){{end}}
+								{{- if hasConditional .ConditionalAttribute}}
+								{{- range .ConditionalAttribute.Conditions}}
+								ccItem.{{toGoName .Name}} = {{if eq .Type "Bool"}}types.BoolValue({{.Value}}){{else}}types.StringValue("{{.Value}}"){{end}}
+								{{- end}}
 								{{- end}}
 							}
 							{{- end}}
@@ -502,8 +510,10 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 							cItem.{{toGoName .TfName}} = append(cItem.{{toGoName .TfName}}, ccItem)
 							return true
 						})
-						{{- if ne .ConditionalAttribute.Name ""}}
-						cItem.{{toGoName .ConditionalAttribute.Name}} = {{if eq .ConditionalAttribute.Type "Bool"}}types.BoolValue({{.ConditionalAttribute.Value}}){{else}}types.StringValue("{{.ConditionalAttribute.Value}}"){{end}}
+						{{- if hasConditional .ConditionalAttribute}}
+						{{- range .ConditionalAttribute.Conditions}}
+						cItem.{{toGoName .Name}} = {{if eq .Type "Bool"}}types.BoolValue({{.Value}}){{else}}types.StringValue("{{.Value}}"){{end}}
+						{{- end}}
 						{{- end}}
 					}
 					{{- end}}
@@ -511,8 +521,10 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 					item.{{toGoName .TfName}} = append(item.{{toGoName .TfName}}, cItem)
 					return true
 				})
-				{{- if ne .ConditionalAttribute.Name ""}}
-				item.{{toGoName .ConditionalAttribute.Name}} = {{if eq .ConditionalAttribute.Type "Bool"}}types.BoolValue({{.ConditionalAttribute.Value}}){{else}}types.StringValue("{{.ConditionalAttribute.Value}}"){{end}}
+				{{- if hasConditional .ConditionalAttribute}}
+				{{- range .ConditionalAttribute.Conditions}}
+				item.{{toGoName .Name}} = {{if eq .Type "Bool"}}types.BoolValue({{.Value}}){{else}}types.StringValue("{{.Value}}"){{end}}
+				{{- end}}
 				{{- end}}
 			}
 			{{- end}}
@@ -520,8 +532,10 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			data.{{toGoName .TfName}} = append(data.{{toGoName .TfName}}, item)
 			return true
 		})
-		{{- if ne .ConditionalAttribute.Name ""}}
-		data.{{toGoName .ConditionalAttribute.Name}} = {{if eq .ConditionalAttribute.Type "Bool"}}types.BoolValue({{.ConditionalAttribute.Value}}){{else}}types.StringValue("{{.ConditionalAttribute.Value}}"){{end}}
+		{{- if hasConditional .ConditionalAttribute}}
+		{{- range .ConditionalAttribute.Conditions}}
+		data.{{toGoName .Name}} = {{if eq .Type "Bool"}}types.BoolValue({{.Value}}){{else}}types.StringValue("{{.Value}}"){{end}}
+		{{- end}}
 		{{- end}}
 	}
 	{{- end}}

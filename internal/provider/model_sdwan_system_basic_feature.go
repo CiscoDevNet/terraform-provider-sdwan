@@ -34,71 +34,73 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type SystemBasic struct {
-	Id                               types.String                     `tfsdk:"id"`
-	Version                          types.Int64                      `tfsdk:"version"`
-	Name                             types.String                     `tfsdk:"name"`
-	Description                      types.String                     `tfsdk:"description"`
-	FeatureProfileId                 types.String                     `tfsdk:"feature_profile_id"`
-	Timezone                         types.String                     `tfsdk:"timezone"`
-	TimezoneVariable                 types.String                     `tfsdk:"timezone_variable"`
-	ConfigDescription                types.String                     `tfsdk:"config_description"`
-	ConfigDescriptionVariable        types.String                     `tfsdk:"config_description_variable"`
-	Location                         types.String                     `tfsdk:"location"`
-	LocationVariable                 types.String                     `tfsdk:"location_variable"`
-	GpsLongitude                     types.Float64                    `tfsdk:"gps_longitude"`
-	GpsLongitudeVariable             types.String                     `tfsdk:"gps_longitude_variable"`
-	GpsLatitude                      types.Float64                    `tfsdk:"gps_latitude"`
-	GpsLatitudeVariable              types.String                     `tfsdk:"gps_latitude_variable"`
-	GpsGeoFencingEnable              types.Bool                       `tfsdk:"gps_geo_fencing_enable"`
-	GpsGeoFencingRange               types.Int64                      `tfsdk:"gps_geo_fencing_range"`
-	GpsGeoFencingRangeVariable       types.String                     `tfsdk:"gps_geo_fencing_range_variable"`
-	GpsSmsEnable                     types.Bool                       `tfsdk:"gps_sms_enable"`
-	GpsSmsMobileNumbers              []SystemBasicGpsSmsMobileNumbers `tfsdk:"gps_sms_mobile_numbers"`
-	DeviceGroups                     types.Set                        `tfsdk:"device_groups"`
-	DeviceGroupsVariable             types.String                     `tfsdk:"device_groups_variable"`
-	ControllerGroups                 types.Set                        `tfsdk:"controller_groups"`
-	ControllerGroupsVariable         types.String                     `tfsdk:"controller_groups_variable"`
-	OverlayId                        types.Int64                      `tfsdk:"overlay_id"`
-	OverlayIdVariable                types.String                     `tfsdk:"overlay_id_variable"`
-	PortOffset                       types.Int64                      `tfsdk:"port_offset"`
-	PortOffsetVariable               types.String                     `tfsdk:"port_offset_variable"`
-	PortHopping                      types.Bool                       `tfsdk:"port_hopping"`
-	PortHoppingVariable              types.String                     `tfsdk:"port_hopping_variable"`
-	ControlSessionPps                types.Int64                      `tfsdk:"control_session_pps"`
-	ControlSessionPpsVariable        types.String                     `tfsdk:"control_session_pps_variable"`
-	TrackTransport                   types.Bool                       `tfsdk:"track_transport"`
-	TrackTransportVariable           types.String                     `tfsdk:"track_transport_variable"`
-	TrackInterfaceTag                types.Int64                      `tfsdk:"track_interface_tag"`
-	TrackInterfaceTagVariable        types.String                     `tfsdk:"track_interface_tag_variable"`
-	ConsoleBaudRate                  types.String                     `tfsdk:"console_baud_rate"`
-	ConsoleBaudRateVariable          types.String                     `tfsdk:"console_baud_rate_variable"`
-	MaxOmpSessions                   types.Int64                      `tfsdk:"max_omp_sessions"`
-	MaxOmpSessionsVariable           types.String                     `tfsdk:"max_omp_sessions_variable"`
-	MultiTenant                      types.Bool                       `tfsdk:"multi_tenant"`
-	MultiTenantVariable              types.String                     `tfsdk:"multi_tenant_variable"`
-	TrackDefaultGateway              types.Bool                       `tfsdk:"track_default_gateway"`
-	TrackDefaultGatewayVariable      types.String                     `tfsdk:"track_default_gateway_variable"`
-	AdminTechOnFailure               types.Bool                       `tfsdk:"admin_tech_on_failure"`
-	AdminTechOnFailureVariable       types.String                     `tfsdk:"admin_tech_on_failure_variable"`
-	IdleTimeout                      types.Int64                      `tfsdk:"idle_timeout"`
-	IdleTimeoutVariable              types.String                     `tfsdk:"idle_timeout_variable"`
-	OnDemandEnable                   types.Bool                       `tfsdk:"on_demand_enable"`
-	OnDemandEnableVariable           types.String                     `tfsdk:"on_demand_enable_variable"`
-	OnDemandIdleTimeout              types.Int64                      `tfsdk:"on_demand_idle_timeout"`
-	OnDemandIdleTimeoutVariable      types.String                     `tfsdk:"on_demand_idle_timeout_variable"`
-	TransportGateway                 types.Bool                       `tfsdk:"transport_gateway"`
-	TransportGatewayVariable         types.String                     `tfsdk:"transport_gateway_variable"`
-	EnhancedAppAwareRouting          types.String                     `tfsdk:"enhanced_app_aware_routing"`
-	EnhancedAppAwareRoutingVariable  types.String                     `tfsdk:"enhanced_app_aware_routing_variable"`
-	SiteTypes                        types.Set                        `tfsdk:"site_types"`
-	SiteTypesVariable                types.String                     `tfsdk:"site_types_variable"`
-	AffinityGroupNumber              types.Int64                      `tfsdk:"affinity_group_number"`
-	AffinityGroupNumberVariable      types.String                     `tfsdk:"affinity_group_number_variable"`
-	AffinityGroupPreferences         types.Set                        `tfsdk:"affinity_group_preferences"`
-	AffinityGroupPreferencesVariable types.String                     `tfsdk:"affinity_group_preferences_variable"`
-	AffinityPreferenceAuto           types.Bool                       `tfsdk:"affinity_preference_auto"`
-	AffinityPreferenceAutoVariable   types.String                     `tfsdk:"affinity_preference_auto_variable"`
-	AffinityPerVrfs                  []SystemBasicAffinityPerVrfs     `tfsdk:"affinity_per_vrfs"`
+	Id                                types.String                     `tfsdk:"id"`
+	Version                           types.Int64                      `tfsdk:"version"`
+	Name                              types.String                     `tfsdk:"name"`
+	Description                       types.String                     `tfsdk:"description"`
+	FeatureProfileId                  types.String                     `tfsdk:"feature_profile_id"`
+	Timezone                          types.String                     `tfsdk:"timezone"`
+	TimezoneVariable                  types.String                     `tfsdk:"timezone_variable"`
+	ConfigDescription                 types.String                     `tfsdk:"config_description"`
+	ConfigDescriptionVariable         types.String                     `tfsdk:"config_description_variable"`
+	Location                          types.String                     `tfsdk:"location"`
+	LocationVariable                  types.String                     `tfsdk:"location_variable"`
+	GpsLongitude                      types.Float64                    `tfsdk:"gps_longitude"`
+	GpsLongitudeVariable              types.String                     `tfsdk:"gps_longitude_variable"`
+	GpsLatitude                       types.Float64                    `tfsdk:"gps_latitude"`
+	GpsLatitudeVariable               types.String                     `tfsdk:"gps_latitude_variable"`
+	GpsGeoFencingEnable               types.Bool                       `tfsdk:"gps_geo_fencing_enable"`
+	GpsGeoFencingRange                types.Int64                      `tfsdk:"gps_geo_fencing_range"`
+	GpsGeoFencingRangeVariable        types.String                     `tfsdk:"gps_geo_fencing_range_variable"`
+	GpsSmsEnable                      types.Bool                       `tfsdk:"gps_sms_enable"`
+	GpsSmsMobileNumbers               []SystemBasicGpsSmsMobileNumbers `tfsdk:"gps_sms_mobile_numbers"`
+	DeviceGroups                      types.Set                        `tfsdk:"device_groups"`
+	DeviceGroupsVariable              types.String                     `tfsdk:"device_groups_variable"`
+	ControllerGroups                  types.Set                        `tfsdk:"controller_groups"`
+	ControllerGroupsVariable          types.String                     `tfsdk:"controller_groups_variable"`
+	OverlayId                         types.Int64                      `tfsdk:"overlay_id"`
+	OverlayIdVariable                 types.String                     `tfsdk:"overlay_id_variable"`
+	PortOffset                        types.Int64                      `tfsdk:"port_offset"`
+	PortOffsetVariable                types.String                     `tfsdk:"port_offset_variable"`
+	PortHopping                       types.Bool                       `tfsdk:"port_hopping"`
+	PortHoppingVariable               types.String                     `tfsdk:"port_hopping_variable"`
+	ControlSessionPps                 types.Int64                      `tfsdk:"control_session_pps"`
+	ControlSessionPpsVariable         types.String                     `tfsdk:"control_session_pps_variable"`
+	TrackTransport                    types.Bool                       `tfsdk:"track_transport"`
+	TrackTransportVariable            types.String                     `tfsdk:"track_transport_variable"`
+	TrackInterfaceTag                 types.Int64                      `tfsdk:"track_interface_tag"`
+	TrackInterfaceTagVariable         types.String                     `tfsdk:"track_interface_tag_variable"`
+	ConsoleBaudRate                   types.String                     `tfsdk:"console_baud_rate"`
+	ConsoleBaudRateVariable           types.String                     `tfsdk:"console_baud_rate_variable"`
+	MaxOmpSessions                    types.Int64                      `tfsdk:"max_omp_sessions"`
+	MaxOmpSessionsVariable            types.String                     `tfsdk:"max_omp_sessions_variable"`
+	MultiTenant                       types.Bool                       `tfsdk:"multi_tenant"`
+	MultiTenantVariable               types.String                     `tfsdk:"multi_tenant_variable"`
+	TrackDefaultGateway               types.Bool                       `tfsdk:"track_default_gateway"`
+	TrackDefaultGatewayVariable       types.String                     `tfsdk:"track_default_gateway_variable"`
+	TrackerDiaStabilizeStatus         types.Bool                       `tfsdk:"tracker_dia_stabilize_status"`
+	TrackerDiaStabilizeStatusVariable types.String                     `tfsdk:"tracker_dia_stabilize_status_variable"`
+	AdminTechOnFailure                types.Bool                       `tfsdk:"admin_tech_on_failure"`
+	AdminTechOnFailureVariable        types.String                     `tfsdk:"admin_tech_on_failure_variable"`
+	IdleTimeout                       types.Int64                      `tfsdk:"idle_timeout"`
+	IdleTimeoutVariable               types.String                     `tfsdk:"idle_timeout_variable"`
+	OnDemandEnable                    types.Bool                       `tfsdk:"on_demand_enable"`
+	OnDemandEnableVariable            types.String                     `tfsdk:"on_demand_enable_variable"`
+	OnDemandIdleTimeout               types.Int64                      `tfsdk:"on_demand_idle_timeout"`
+	OnDemandIdleTimeoutVariable       types.String                     `tfsdk:"on_demand_idle_timeout_variable"`
+	TransportGateway                  types.Bool                       `tfsdk:"transport_gateway"`
+	TransportGatewayVariable          types.String                     `tfsdk:"transport_gateway_variable"`
+	EnhancedAppAwareRouting           types.String                     `tfsdk:"enhanced_app_aware_routing"`
+	EnhancedAppAwareRoutingVariable   types.String                     `tfsdk:"enhanced_app_aware_routing_variable"`
+	SiteTypes                         types.Set                        `tfsdk:"site_types"`
+	SiteTypesVariable                 types.String                     `tfsdk:"site_types_variable"`
+	AffinityGroupNumber               types.Int64                      `tfsdk:"affinity_group_number"`
+	AffinityGroupNumberVariable       types.String                     `tfsdk:"affinity_group_number_variable"`
+	AffinityGroupPreferences          types.Set                        `tfsdk:"affinity_group_preferences"`
+	AffinityGroupPreferencesVariable  types.String                     `tfsdk:"affinity_group_preferences_variable"`
+	AffinityPreferenceAuto            types.Bool                       `tfsdk:"affinity_preference_auto"`
+	AffinityPreferenceAutoVariable    types.String                     `tfsdk:"affinity_preference_auto_variable"`
+	AffinityPerVrfs                   []SystemBasicAffinityPerVrfs     `tfsdk:"affinity_per_vrfs"`
 }
 
 type SystemBasicGpsSmsMobileNumbers struct {
@@ -484,6 +486,23 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		if true {
 			body, _ = sjson.Set(body, path+"trackDefaultGateway.optionType", "global")
 			body, _ = sjson.Set(body, path+"trackDefaultGateway.value", data.TrackDefaultGateway.ValueBool())
+		}
+	}
+
+	if !data.TrackerDiaStabilizeStatusVariable.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"trackerDiaStabilizeStatus.optionType", "variable")
+			body, _ = sjson.Set(body, path+"trackerDiaStabilizeStatus.value", data.TrackerDiaStabilizeStatusVariable.ValueString())
+		}
+	} else if data.TrackerDiaStabilizeStatus.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"trackerDiaStabilizeStatus.optionType", "default")
+			body, _ = sjson.Set(body, path+"trackerDiaStabilizeStatus.value", false)
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"trackerDiaStabilizeStatus.optionType", "global")
+			body, _ = sjson.Set(body, path+"trackerDiaStabilizeStatus.value", data.TrackerDiaStabilizeStatus.ValueBool())
 		}
 	}
 
@@ -929,6 +948,16 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 			data.TrackDefaultGateway = types.BoolValue(va.Bool())
 		}
 	}
+	data.TrackerDiaStabilizeStatus = types.BoolNull()
+	data.TrackerDiaStabilizeStatusVariable = types.StringNull()
+	if t := res.Get(path + "trackerDiaStabilizeStatus.optionType"); t.Exists() {
+		va := res.Get(path + "trackerDiaStabilizeStatus.value")
+		if t.String() == "variable" {
+			data.TrackerDiaStabilizeStatusVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TrackerDiaStabilizeStatus = types.BoolValue(va.Bool())
+		}
+	}
 	data.AdminTechOnFailure = types.BoolNull()
 	data.AdminTechOnFailureVariable = types.StringNull()
 	if t := res.Get(path + "adminTechOnFailure.optionType"); t.Exists() {
@@ -1306,6 +1335,16 @@ func (data *SystemBasic) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.TrackDefaultGatewayVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.TrackDefaultGateway = types.BoolValue(va.Bool())
+		}
+	}
+	data.TrackerDiaStabilizeStatus = types.BoolNull()
+	data.TrackerDiaStabilizeStatusVariable = types.StringNull()
+	if t := res.Get(path + "trackerDiaStabilizeStatus.optionType"); t.Exists() {
+		va := res.Get(path + "trackerDiaStabilizeStatus.value")
+		if t.String() == "variable" {
+			data.TrackerDiaStabilizeStatusVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TrackerDiaStabilizeStatus = types.BoolValue(va.Bool())
 		}
 	}
 	data.AdminTechOnFailure = types.BoolNull()
