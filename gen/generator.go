@@ -279,8 +279,8 @@ type YamlConfigAttribute struct {
 }
 
 type YamlConfigConditionalAttribute struct {
-	Operator   string                 `yaml:"operator"`
-	Conditions []YamlConfigCondition  `yaml:"conditions"`
+	Operator   string                `yaml:"operator"`
+	Conditions []YamlConfigCondition `yaml:"conditions"`
 }
 
 type YamlConfigCondition struct {
@@ -663,38 +663,38 @@ func contains(s []string, str string) bool {
 
 // Map of templating functions
 var functions = template.FuncMap{
-	"toGoName":                   ToGoName,
-	"toVersionName":              ToVersionName,
-	"camelCase":                  CamelCase,
-	"snakeCase":                  SnakeCase,
-	"sprintf":                    fmt.Sprintf,
-	"toLower":                    strings.ToLower,
-	"path":                       BuildPath,
-	"hasId":                      HasId,
-	"hasName":                    HasName,
-	"hasVersionAttribute":        HasVersionAttribute,
-	"getResponseModelPath":       GetResponseModelPath,
-	"hasReference":               HasReference,
-	"countReferences":            CountReferences,
-	"add":                        Add,
-	"getGjsonType":               GetGjsonType,
-	"getId":                      GetId,
-	"isUx20Feature":              IsUx20Feature,
-	"isListSet":                  IsListSet,
-	"isList":                     IsList,
-	"isSet":                      IsSet,
-	"isStringListSet":            IsStringListSet,
-	"isInt64ListSet":             IsInt64ListSet,
-	"isStringInt64":              IsStringInt64,
-	"isNestedListSet":            IsNestedListSet,
-	"isNestedList":               IsNestedList,
-	"isNestedSet":                IsNestedSet,
-	"getParentModelName":         GetParentModelName,
-	"getProfileParcelSuffix":     GetProfileParcelSuffix,
-	"getProfileParcelName":       GetProfileParcelName,
-	"contains":                   contains,
-	"hasConditional":             HasConditional,
-	"buildConditionalLogic":      BuildConditionalLogic,
+	"toGoName":                    ToGoName,
+	"toVersionName":               ToVersionName,
+	"camelCase":                   CamelCase,
+	"snakeCase":                   SnakeCase,
+	"sprintf":                     fmt.Sprintf,
+	"toLower":                     strings.ToLower,
+	"path":                        BuildPath,
+	"hasId":                       HasId,
+	"hasName":                     HasName,
+	"hasVersionAttribute":         HasVersionAttribute,
+	"getResponseModelPath":        GetResponseModelPath,
+	"hasReference":                HasReference,
+	"countReferences":             CountReferences,
+	"add":                         Add,
+	"getGjsonType":                GetGjsonType,
+	"getId":                       GetId,
+	"isUx20Feature":               IsUx20Feature,
+	"isListSet":                   IsListSet,
+	"isList":                      IsList,
+	"isSet":                       IsSet,
+	"isStringListSet":             IsStringListSet,
+	"isInt64ListSet":              IsInt64ListSet,
+	"isStringInt64":               IsStringInt64,
+	"isNestedListSet":             IsNestedListSet,
+	"isNestedList":                IsNestedList,
+	"isNestedSet":                 IsNestedSet,
+	"getParentModelName":          GetParentModelName,
+	"getProfileParcelSuffix":      GetProfileParcelSuffix,
+	"getProfileParcelName":        GetProfileParcelName,
+	"contains":                    contains,
+	"hasConditional":              HasConditional,
+	"buildConditionalLogic":       BuildConditionalLogic,
 	"buildConditionalDescription": BuildConditionalDescription,
 }
 
@@ -920,6 +920,19 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		} else {
 			path += e + ".properties."
 		}
+	}
+
+	if model.Get("oneOf").Exists() && path == "" {
+		index := 0
+		model.Get("oneOf").ForEach(func(k, v gjson.Result) bool {
+			if v.Get(fmt.Sprintf("properties.%s", attr.ModelName)).Exists() {
+				path += fmt.Sprintf("%v.properties.", index)
+				prefix = "oneOf."
+				return false // stop iterating
+			}
+			index += 1
+			return true // keep iterating
+		})
 	}
 
 	path += attr.ModelName
