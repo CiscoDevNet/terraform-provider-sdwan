@@ -42,7 +42,6 @@ func TestAccDataSourceSdwanEmbeddedSecurityProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "session_reclassify_allow", "off"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "imcp_unreachable_allow", "off"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "failure_mode", "close"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "security_logging", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "nat", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "download_url_database_on_device", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "resource_profile", "low"))
@@ -89,7 +88,6 @@ func testAccDataSourceSdwanEmbeddedSecurityProfileParcelConfig() string {
 	config += `	session_reclassify_allow = "off"` + "\n"
 	config += `	imcp_unreachable_allow = "off"` + "\n"
 	config += `	failure_mode = "close"` + "\n"
-	config += `	security_logging = "true"` + "\n"
 	config += `	nat = true` + "\n"
 	config += `	download_url_database_on_device = false` + "\n"
 	config += `	resource_profile = "low"` + "\n"

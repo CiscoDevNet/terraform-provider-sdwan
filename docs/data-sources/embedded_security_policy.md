@@ -44,7 +44,6 @@ data "sdwan_embedded_security_policy" "example" {
 - `nat_variable` (String) Variable name
 - `resource_profile` (String)
 - `resource_profile_variable` (String) Variable name
-- `security_logging` (String) HSL and UTD syslog, pulled from network settings page
 - `session_reclassify_allow` (String) Setting can be string 'on' or missing for off
 - `tcp_syn_flood_limit` (String)
 - `unified_logging` (String) Setting can be string 'on' or missing for off

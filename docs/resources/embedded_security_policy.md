@@ -36,7 +36,6 @@ resource "sdwan_embedded_security_policy" "example" {
   session_reclassify_allow        = "off"
   imcp_unreachable_allow          = "off"
   failure_mode                    = "close"
-  security_logging                = "true"
   nat                             = true
   download_url_database_on_device = false
   resource_profile                = "low"
@@ -58,7 +57,6 @@ resource "sdwan_embedded_security_policy" "example" {
 - `max_incomplete_tcp_limit` (String)
 - `max_incomplete_udp_limit` (String)
 - `name` (String) The name of the Policy
-- `security_logging` (String) HSL and UTD syslog, pulled from network settings page
 - `session_reclassify_allow` (String) Setting can be string 'on' or missing for off
   - Choices: `on`
 - `tcp_syn_flood_limit` (String)

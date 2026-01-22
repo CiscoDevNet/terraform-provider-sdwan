@@ -150,10 +150,6 @@ func (d *EmbeddedSecurityProfileParcelDataSource) Schema(ctx context.Context, re
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"security_logging": schema.StringAttribute{
-				MarkdownDescription: "HSL and UTD syslog, pulled from network settings page",
-				Computed:            true,
-			},
 			"nat": schema.BoolAttribute{
 				MarkdownDescription: "",
 				Computed:            true,

@@ -203,10 +203,6 @@ func (r *EmbeddedSecurityProfileParcelResource) Schema(ctx context.Context, req 
 					stringvalidator.OneOf("close", "open"),
 				},
 			},
-			"security_logging": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("HSL and UTD syslog, pulled from network settings page").String,
-				Required:            true,
-			},
 			"nat": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Optional:            true,

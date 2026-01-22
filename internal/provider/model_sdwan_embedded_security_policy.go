@@ -47,7 +47,6 @@ type EmbeddedSecurity struct {
 	SessionReclassifyAllow              types.String               `tfsdk:"session_reclassify_allow"`
 	ImcpUnreachableAllow                types.String               `tfsdk:"imcp_unreachable_allow"`
 	FailureMode                         types.String               `tfsdk:"failure_mode"`
-	SecurityLogging                     types.String               `tfsdk:"security_logging"`
 	Nat                                 types.Bool                 `tfsdk:"nat"`
 	NatVariable                         types.String               `tfsdk:"nat_variable"`
 	DownloadUrlDatabaseOnDevice         types.Bool                 `tfsdk:"download_url_database_on_device"`
@@ -84,7 +83,6 @@ func (data EmbeddedSecurity) getPath() string {
 
 // End of section. //template:end getPath
 
-// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data EmbeddedSecurity) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
@@ -188,12 +186,13 @@ func (data EmbeddedSecurity) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"settings.failureMode.value", data.FailureMode.ValueString())
 		}
 	}
-	if !data.SecurityLogging.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"settings.securityLogging.optionType", "global")
-			body, _ = sjson.Set(body, path+"settings.securityLogging.value", data.SecurityLogging.ValueString())
-		}
+
+	// Section below is manually configured
+	if true {
+		body, _ = sjson.Set(body, path+"settings.securityLogging.optionType", "network-settings")
+		body, _ = sjson.Set(body, path+"settings.securityLogging.value", true)
 	}
+	// Section below is manually configured
 
 	if !data.NatVariable.IsNull() {
 		if true {
@@ -232,8 +231,6 @@ func (data EmbeddedSecurity) toBody(ctx context.Context) string {
 	}
 	return body
 }
-
-// End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *EmbeddedSecurity) fromBody(ctx context.Context, res gjson.Result) {
@@ -370,14 +367,6 @@ func (data *EmbeddedSecurity) fromBody(ctx context.Context, res gjson.Result) {
 		va := res.Get(path + "settings.failureMode.value")
 		if t.String() == "global" {
 			data.FailureMode = types.StringValue(va.String())
-		}
-	}
-	data.SecurityLogging = types.StringNull()
-
-	if t := res.Get(path + "settings.securityLogging.optionType"); t.Exists() {
-		va := res.Get(path + "settings.securityLogging.value")
-		if t.String() == "global" {
-			data.SecurityLogging = types.StringValue(va.String())
 		}
 	}
 	data.Nat = types.BoolNull()
@@ -597,14 +586,6 @@ func (data *EmbeddedSecurity) updateFromBody(ctx context.Context, res gjson.Resu
 		va := res.Get(path + "settings.failureMode.value")
 		if t.String() == "global" {
 			data.FailureMode = types.StringValue(va.String())
-		}
-	}
-	data.SecurityLogging = types.StringNull()
-
-	if t := res.Get(path + "settings.securityLogging.optionType"); t.Exists() {
-		va := res.Get(path + "settings.securityLogging.value")
-		if t.String() == "global" {
-			data.SecurityLogging = types.StringValue(va.String())
 		}
 	}
 	data.Nat = types.BoolNull()

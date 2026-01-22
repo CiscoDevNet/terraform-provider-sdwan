@@ -1,3 +1,4 @@
+# Manual resource - toBody is manual configured to support security logging network-settings option type
 ---
 name: Embedded Security
 rest_endpoint: /v1/feature-profile/sdwan/embedded-security/%v/policy
@@ -77,7 +78,7 @@ attributes:
   - model_name: failureMode
     tf_name: failure_mode
     data_path: [settings]
-    example: close    
+    example: close
   - model_name: nat
     data_path: [appHosting]
     example: true

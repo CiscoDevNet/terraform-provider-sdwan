@@ -19,7 +19,6 @@ resource "sdwan_embedded_security_policy" "example" {
   session_reclassify_allow        = "off"
   imcp_unreachable_allow          = "off"
   failure_mode                    = "close"
-  security_logging                = "true"
   nat                             = true
   download_url_database_on_device = false
   resource_profile                = "low"
