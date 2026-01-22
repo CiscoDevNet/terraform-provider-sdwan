@@ -1,0 +1,97 @@
+# Manual resource - toBody is manual configured to support security logging network-settings option type
+---
+name: Embedded Security
+rest_endpoint: /v1/feature-profile/sdwan/embedded-security/%v/policy
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
+parcel_type: policy
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_embedded_security_feature_profile.test.id
+  - model_name: assembly
+    attributes:
+    - model_name: refId
+      tf_name: advanced_inspection_profile_policy_id
+      data_path: [advancedInspectionProfile]
+      exclude_test: true
+      example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+    - model_name: refId
+      tf_name: ssl_decryption_profile_id
+      data_path: [sslDecryption]
+      exclude_test: true
+      example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+    - model_name: refId
+      tf_name: ngfw_policy_id
+      data_path: [ngfirewall]
+      exclude_test: true
+      example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+    - model_name: entries
+      data_path: [ngfirewall]
+      attributes:
+      - model_name: refId
+        tf_name: source_zone_list_id
+        data_path: [srcZone]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: destination_zone_list_id
+        data_path: [dstZone]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+  - model_name: tcpSynFloodLimit
+    tf_name: tcp_syn_flood_limit
+    data_path: [settings]
+    example: 432
+  - model_name: maxIncompleteTcpLimit
+    tf_name: max_incomplete_tcp_limit
+    data_path: [settings]
+    example: 12345
+  - model_name: maxIncompleteUdpLimit
+    tf_name: max_incomplete_udp_limit
+    data_path: [settings]
+    example: 12345
+  - model_name: maxIncompleteIcmpLimit
+    tf_name: max_incomplete_icmp_limit
+    data_path: [settings]
+    example: 12345
+  - model_name: auditTrail
+    tf_name: audit_trail
+    data_path: [settings]
+    example: on
+  - model_name: unifiedLogging
+    tf_name: unified_logging
+    data_path: [settings]
+    example: off
+  - model_name: sessionReclassifyAllow
+    tf_name: session_reclassify_allow
+    data_path: [settings]
+    example: off
+  - model_name: icmpUnreachableAllow
+    tf_name: imcp_unreachable_allow
+    data_path: [settings]
+    example: off
+  - model_name: failureMode
+    tf_name: failure_mode
+    data_path: [settings]
+    example: close
+  - model_name: nat
+    data_path: [appHosting]
+    example: true
+  - model_name: databaseUrl
+    tf_name: download_url_database_on_device
+    data_path: [appHosting]
+    example: false
+  - model_name: resourceProfile
+    data_path: [appHosting]
+    example: low
+
+test_prerequisites: |
+  resource "sdwan_embedded_security_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
