@@ -100,6 +100,30 @@ data "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `media_type_variable` (String) Variable name
 - `name` (String) The name of the Feature
 - `nat64` (Boolean) NAT64 on this interface
+- `port_channel_interface` (Boolean) Port-Channel interface on/off
+- `port_channel_lacp_fast_switchover` (Boolean) Eanble lacp fast switchover
+- `port_channel_lacp_fast_switchover_variable` (String) Variable name
+- `port_channel_lacp_load_balance` (String) Enable QoS Port-Channel aggregate
+- `port_channel_lacp_load_balance_variable` (String) Variable name
+- `port_channel_lacp_max_bundle` (Number) Set LACP max bundle
+- `port_channel_lacp_max_bundle_variable` (String) Variable name
+- `port_channel_lacp_member_links` (Attributes List) Configure Port-Channel member links (see [below for nested schema](#nestedatt--port_channel_lacp_member_links))
+- `port_channel_lacp_min_bundle` (Number) Set LACP min bundle
+- `port_channel_lacp_min_bundle_variable` (String) Variable name
+- `port_channel_lacp_qos_aggregate` (Boolean) Enable QoS Port-Channel aggregate
+- `port_channel_lacp_qos_aggregate_variable` (String) Variable name
+- `port_channel_member_interface` (Boolean) Port-Channel member interface on/off
+- `port_channel_mode` (String) Port Channel Mode
+- `port_channel_static_load_balance` (String) Enable QoS Port-Channel aggregate
+- `port_channel_static_load_balance_variable` (String) Variable name
+- `port_channel_static_member_links` (Attributes List) Configure Port-Channel member links (see [below for nested schema](#nestedatt--port_channel_static_member_links))
+- `port_channel_static_qos_aggregate` (Boolean) Enable QoS Port-Channel aggregate
+- `port_channel_static_qos_aggregate_variable` (String) Variable name
+- `port_channel_subinterface` (Boolean) Port Channel Sub Interface on/off
+- `port_channel_subinterface_primary_interface_name` (String)
+- `port_channel_subinterface_primary_interface_name_variable` (String) Variable name
+- `port_channel_subinterface_secondary_interface_name` (String)
+- `port_channel_subinterface_secondary_interface_name_variable` (String) Variable name
 - `shutdown` (Boolean)
 - `shutdown_variable` (String) Variable name
 - `speed` (String) Set interface speed
@@ -107,8 +131,6 @@ data "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `static_nats` (Attributes List) static NAT (see [below for nested schema](#nestedatt--static_nats))
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
 - `tcp_mss_variable` (String) Variable name
-- `tracker` (String) Enable tracker for this interface
-- `tracker_variable` (String) Variable name
 - `trustsec_enable_enforced_propogation` (Boolean) Enable/Disable SGT Enforcement on an interface
 - `trustsec_enable_sgt_propogation` (Boolean) Indicates that the interface is trustworthy for CTS
 - `trustsec_enforced_security_group_tag` (Number) SGT value between 2 and 65519
@@ -149,8 +171,11 @@ Read-Only:
 
 - `address` (String) VRRP Ip Address
 - `address_variable` (String) Variable name
+- `follow_dual_router_high_availability` (Boolean) Follow RG state by default when B2B HA is configured
 - `group_id` (Number) Group ID
 - `group_id_variable` (String) Variable name
+- `min_preempt_delay` (Number) Minimum preempt delay in seconds
+- `min_preempt_delay_variable` (String) Variable name
 - `priority` (Number) Set priority
 - `priority_variable` (String) Variable name
 - `secondary_addresses` (Attributes List) VRRP Secondary Ip Addresses (see [below for nested schema](#nestedatt--ipv4_vrrps--secondary_addresses))
@@ -219,9 +244,12 @@ Read-Only:
 
 Read-Only:
 
+- `follow_dual_router_high_availability` (Boolean) Follow RG state by default when B2B HA is configured
 - `group_id` (Number) Group ID
 - `group_id_variable` (String) Variable name
 - `ipv6_addresses` (Attributes List) IPv6 VRRP (see [below for nested schema](#nestedatt--ipv6_vrrps--ipv6_addresses))
+- `min_preempt_delay` (Number) Minimum preempt delay in seconds
+- `min_preempt_delay_variable` (String) Variable name
 - `priority` (Number) Set priority
 - `priority_variable` (String) Variable name
 - `timer` (Number) Timer interval for successive advertisements, in milliseconds
@@ -238,6 +266,28 @@ Read-Only:
 - `link_local_address` (String) Use link-local IPv6 Address
 - `link_local_address_variable` (String) Variable name
 
+
+
+<a id="nestedatt--port_channel_lacp_member_links"></a>
+### Nested Schema for `port_channel_lacp_member_links`
+
+Read-Only:
+
+- `interface_id` (String)
+- `lacp_mode` (String) Set lacp mode
+- `lacp_mode_variable` (String) Variable name
+- `lacp_port_priority` (Number) Set lacp port priority
+- `lacp_port_priority_variable` (String) Variable name
+- `lacp_rate` (String) Set lacp rate
+- `lacp_rate_variable` (String) Variable name
+
+
+<a id="nestedatt--port_channel_static_member_links"></a>
+### Nested Schema for `port_channel_static_member_links`
+
+Read-Only:
+
+- `interface_id` (String)
 
 
 <a id="nestedatt--static_nats"></a>
