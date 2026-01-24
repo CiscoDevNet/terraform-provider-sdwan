@@ -7,6 +7,26 @@
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_banner_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_basic_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_bfd_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_local_application_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_local_domain_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_ips_signature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_geolocation_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_identity_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_scalable_group_tag_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_sla_class_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_data_ipv6_prefix_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_ipv6_prefix_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_ipv4_prefix_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_standard_community_list` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_vpn_group` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_app_probe_class` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_preferred_color_group` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_advanced_inspection_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_intrusion_prevention` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_url_filtering` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_advanced_malware_protection` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_tls_ssl_decryption` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_tls_ssl_profile` to `20.15.0`
 
 ## 0.9.0
 
