@@ -276,6 +276,7 @@ type YamlConfigAttribute struct {
 	PriorityOrderAlways     bool                           `yaml:"priority_order_always"`
 	IncludeDefaultOption    bool                           `yaml:"include_default_option"`
 	DefaultOption           string                         `yaml:"default_option"`
+	ResetContainerIfIgnore  bool                           `yaml:"reset_container_if_ignore"`
 }
 
 type YamlConfigConditionalAttribute struct {

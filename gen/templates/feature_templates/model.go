@@ -808,6 +808,9 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 					item.{{toGoName .TfName}} = types.BoolNull()
 					{{- end}}
 					{{if .Variable}}item.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
+					{{- if and .ResetContainerIfIgnore .DataPath}}
+					item.{{range $i, $e := .DataPath}}{{if $i}}.{{end}}{{toGoName $e}}{{end}} = types.BoolNull()
+					{{- end}}
 				} else if cValue.String() == "constant" {
 					cv := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipValue")
 					item.{{toGoName .TfName}} = types.BoolValue(cv.Bool())
