@@ -1,642 +1,642 @@
 {
-    "request": {
-        "$schema": "http://json-schema.org/draft/2019-09/schema",
-        "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/unified/ssl-decryption-profile/post/request_schema.json",
-        "title": "ssl-decryption-profile Parcel Schema",
-        "description": "ssl-decryption-profile profile parcel schema for POST request",
+  "request": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/unified/ssl-decryption-profile/post/request_schema.json",
+    "title": "ssl-decryption-profile Parcel Schema",
+    "description": "ssl-decryption-profile profile parcel schema for POST request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 32
+      },
+      "description": {
+        "type": "string"
+      },
+      "data": {
         "type": "object",
+        "minProperties": 1,
         "properties": {
-            "name": {
-                "type": "string",
-                "pattern": "^[^&<>! \"]+$",
-                "minLength": 1,
-                "maxLength": 32
-            },
-            "description": {
-                "type": "string"
-            },
-            "data": {
-                "type": "object",
-                "minProperties": 1,
+          "decryptCategories": {
+            "description": "",
+            "type": "object",
+            "oneOf": [
+              {
                 "properties": {
-                    "decryptCategories": {
-                        "description": "",
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "enum": [
-                                                "abortion",
-                                                "abused-drugs",
-                                                "adult-and-pornography",
-                                                "alcohol-and-tobacco",
-                                                "auctions",
-                                                "bot-nets",
-                                                "business-and-economy",
-                                                "cdns",
-                                                "cheating",
-                                                "computer-and-internet-info",
-                                                "computer-and-internet-security",
-                                                "confirmed-spam-sources",
-                                                "cult-and-occult",
-                                                "dating",
-                                                "dead-sites",
-                                                "dynamic-content",
-                                                "educational-institutions",
-                                                "entertainment-and-arts",
-                                                "fashion-and-beauty",
-                                                "financial-services",
-                                                "gambling",
-                                                "games",
-                                                "government",
-                                                "gross",
-                                                "hacking",
-                                                "hate-and-racism",
-                                                "health-and-medicine",
-                                                "home",
-                                                "hunting-and-fishing",
-                                                "illegal",
-                                                "image-and-video-search",
-                                                "individual-stock-advice-and-tools",
-                                                "internet-communications",
-                                                "internet-portals",
-                                                "job-search",
-                                                "keyloggers-and-monitoring",
-                                                "kids",
-                                                "legal",
-                                                "local-information",
-                                                "malware-sites",
-                                                "marijuana",
-                                                "military",
-                                                "motor-vehicles",
-                                                "music",
-                                                "news-and-media",
-                                                "nudity",
-                                                "online-greeting-cards",
-                                                "online-personal-storage",
-                                                "open-http-proxies",
-                                                "p2p",
-                                                "parked-sites",
-                                                "pay-to-surf",
-                                                "personal-sites-and-blogs",
-                                                "philosophy-and-political-advocacy",
-                                                "phishing-and-other-frauds",
-                                                "private-ip-addresses",
-                                                "proxy-avoid-and-anonymizers",
-                                                "questionable",
-                                                "real-estate",
-                                                "recreation-and-hobbies",
-                                                "reference-and-research",
-                                                "religion",
-                                                "search-engines",
-                                                "sex-education",
-                                                "shareware-and-freeware",
-                                                "shopping",
-                                                "social-network",
-                                                "society",
-                                                "spam-urls",
-                                                "sports",
-                                                "spyware-and-adware",
-                                                "streaming-media",
-                                                "swimsuits-and-intimate-apparel",
-                                                "training-and-tools",
-                                                "translation",
-                                                "travel",
-                                                "uncategorized",
-                                                "unconfirmed-spam-sources",
-                                                "violence",
-                                                "weapons",
-                                                "web-advertisements",
-                                                "web-based-email",
-                                                "web-hosting"
-                                            ]
-                                        }
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    },
-                    "neverDecryptCategories": {
-                        "description": "",
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "enum": [
-                                                "abortion",
-                                                "abused-drugs",
-                                                "adult-and-pornography",
-                                                "alcohol-and-tobacco",
-                                                "auctions",
-                                                "bot-nets",
-                                                "business-and-economy",
-                                                "cdns",
-                                                "cheating",
-                                                "computer-and-internet-info",
-                                                "computer-and-internet-security",
-                                                "confirmed-spam-sources",
-                                                "cult-and-occult",
-                                                "dating",
-                                                "dead-sites",
-                                                "dynamic-content",
-                                                "educational-institutions",
-                                                "entertainment-and-arts",
-                                                "fashion-and-beauty",
-                                                "financial-services",
-                                                "gambling",
-                                                "games",
-                                                "government",
-                                                "gross",
-                                                "hacking",
-                                                "hate-and-racism",
-                                                "health-and-medicine",
-                                                "home",
-                                                "hunting-and-fishing",
-                                                "illegal",
-                                                "image-and-video-search",
-                                                "individual-stock-advice-and-tools",
-                                                "internet-communications",
-                                                "internet-portals",
-                                                "job-search",
-                                                "keyloggers-and-monitoring",
-                                                "kids",
-                                                "legal",
-                                                "local-information",
-                                                "malware-sites",
-                                                "marijuana",
-                                                "military",
-                                                "motor-vehicles",
-                                                "music",
-                                                "news-and-media",
-                                                "nudity",
-                                                "online-greeting-cards",
-                                                "online-personal-storage",
-                                                "open-http-proxies",
-                                                "p2p",
-                                                "parked-sites",
-                                                "pay-to-surf",
-                                                "personal-sites-and-blogs",
-                                                "philosophy-and-political-advocacy",
-                                                "phishing-and-other-frauds",
-                                                "private-ip-addresses",
-                                                "proxy-avoid-and-anonymizers",
-                                                "questionable",
-                                                "real-estate",
-                                                "recreation-and-hobbies",
-                                                "reference-and-research",
-                                                "religion",
-                                                "search-engines",
-                                                "sex-education",
-                                                "shareware-and-freeware",
-                                                "shopping",
-                                                "social-network",
-                                                "society",
-                                                "spam-urls",
-                                                "sports",
-                                                "spyware-and-adware",
-                                                "streaming-media",
-                                                "swimsuits-and-intimate-apparel",
-                                                "training-and-tools",
-                                                "translation",
-                                                "travel",
-                                                "uncategorized",
-                                                "unconfirmed-spam-sources",
-                                                "violence",
-                                                "weapons",
-                                                "web-advertisements",
-                                                "web-based-email",
-                                                "web-hosting"
-                                            ]
-                                        }
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    },
-                    "skipDecryptCategories": {
-                        "description": "",
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "enum": [
-                                                "abortion",
-                                                "abused-drugs",
-                                                "adult-and-pornography",
-                                                "alcohol-and-tobacco",
-                                                "auctions",
-                                                "bot-nets",
-                                                "business-and-economy",
-                                                "cdns",
-                                                "cheating",
-                                                "computer-and-internet-info",
-                                                "computer-and-internet-security",
-                                                "confirmed-spam-sources",
-                                                "cult-and-occult",
-                                                "dating",
-                                                "dead-sites",
-                                                "dynamic-content",
-                                                "educational-institutions",
-                                                "entertainment-and-arts",
-                                                "fashion-and-beauty",
-                                                "financial-services",
-                                                "gambling",
-                                                "games",
-                                                "government",
-                                                "gross",
-                                                "hacking",
-                                                "hate-and-racism",
-                                                "health-and-medicine",
-                                                "home",
-                                                "hunting-and-fishing",
-                                                "illegal",
-                                                "image-and-video-search",
-                                                "individual-stock-advice-and-tools",
-                                                "internet-communications",
-                                                "internet-portals",
-                                                "job-search",
-                                                "keyloggers-and-monitoring",
-                                                "kids",
-                                                "legal",
-                                                "local-information",
-                                                "malware-sites",
-                                                "marijuana",
-                                                "military",
-                                                "motor-vehicles",
-                                                "music",
-                                                "news-and-media",
-                                                "nudity",
-                                                "online-greeting-cards",
-                                                "online-personal-storage",
-                                                "open-http-proxies",
-                                                "p2p",
-                                                "parked-sites",
-                                                "pay-to-surf",
-                                                "personal-sites-and-blogs",
-                                                "philosophy-and-political-advocacy",
-                                                "phishing-and-other-frauds",
-                                                "private-ip-addresses",
-                                                "proxy-avoid-and-anonymizers",
-                                                "questionable",
-                                                "real-estate",
-                                                "recreation-and-hobbies",
-                                                "reference-and-research",
-                                                "religion",
-                                                "search-engines",
-                                                "sex-education",
-                                                "shareware-and-freeware",
-                                                "shopping",
-                                                "social-network",
-                                                "society",
-                                                "spam-urls",
-                                                "sports",
-                                                "spyware-and-adware",
-                                                "streaming-media",
-                                                "swimsuits-and-intimate-apparel",
-                                                "training-and-tools",
-                                                "translation",
-                                                "travel",
-                                                "uncategorized",
-                                                "unconfirmed-spam-sources",
-                                                "violence",
-                                                "weapons",
-                                                "web-advertisements",
-                                                "web-based-email",
-                                                "web-hosting"
-                                            ]
-                                        }
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    },
-                    "reputation": {
-                        "description": "",
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "boolean"
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    },
-                    "decryptThreshold": {
-                        "description": "",
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "enum": [
-                                            "high-risk",
-                                            "low-risk",
-                                            "moderate-risk",
-                                            "suspicious",
-                                            "trustworthy"
-                                        ],
-                                        "type": "string"
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    },
-                    "skipDecryptThreshold": {
-                        "description": "",
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "enum": [
-                                            "high-risk",
-                                            "low-risk",
-                                            "moderate-risk",
-                                            "suspicious",
-                                            "trustworthy"
-                                        ],
-                                        "type": "string"
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    },
-                    "failDecrypt": {
-                        "description": "",
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "boolean"
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    },
-                    "urlAllowedList": {
-                        "description": "",
-                        "type": "object",
-                        "properties": {
-                            "refId": {
-                                "type": "object",
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "string",
-                                        "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        }
-                    },
-                    "urlBlockedList": {
-                        "description": "",
-                        "type": "object",
-                        "properties": {
-                            "refId": {
-                                "type": "object",
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "string",
-                                        "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        }
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "abortion",
+                        "abused-drugs",
+                        "adult-and-pornography",
+                        "alcohol-and-tobacco",
+                        "auctions",
+                        "bot-nets",
+                        "business-and-economy",
+                        "cdns",
+                        "cheating",
+                        "computer-and-internet-info",
+                        "computer-and-internet-security",
+                        "confirmed-spam-sources",
+                        "cult-and-occult",
+                        "dating",
+                        "dead-sites",
+                        "dynamic-content",
+                        "educational-institutions",
+                        "entertainment-and-arts",
+                        "fashion-and-beauty",
+                        "financial-services",
+                        "gambling",
+                        "games",
+                        "government",
+                        "gross",
+                        "hacking",
+                        "hate-and-racism",
+                        "health-and-medicine",
+                        "home",
+                        "hunting-and-fishing",
+                        "illegal",
+                        "image-and-video-search",
+                        "individual-stock-advice-and-tools",
+                        "internet-communications",
+                        "internet-portals",
+                        "job-search",
+                        "keyloggers-and-monitoring",
+                        "kids",
+                        "legal",
+                        "local-information",
+                        "malware-sites",
+                        "marijuana",
+                        "military",
+                        "motor-vehicles",
+                        "music",
+                        "news-and-media",
+                        "nudity",
+                        "online-greeting-cards",
+                        "online-personal-storage",
+                        "open-http-proxies",
+                        "p2p",
+                        "parked-sites",
+                        "pay-to-surf",
+                        "personal-sites-and-blogs",
+                        "philosophy-and-political-advocacy",
+                        "phishing-and-other-frauds",
+                        "private-ip-addresses",
+                        "proxy-avoid-and-anonymizers",
+                        "questionable",
+                        "real-estate",
+                        "recreation-and-hobbies",
+                        "reference-and-research",
+                        "religion",
+                        "search-engines",
+                        "sex-education",
+                        "shareware-and-freeware",
+                        "shopping",
+                        "social-network",
+                        "society",
+                        "spam-urls",
+                        "sports",
+                        "spyware-and-adware",
+                        "streaming-media",
+                        "swimsuits-and-intimate-apparel",
+                        "training-and-tools",
+                        "translation",
+                        "travel",
+                        "uncategorized",
+                        "unconfirmed-spam-sources",
+                        "violence",
+                        "weapons",
+                        "web-advertisements",
+                        "web-based-email",
+                        "web-hosting"
+                      ]
                     }
+                  }
                 },
                 "required": [
-                    "decryptCategories",
-                    "neverDecryptCategories",
-                    "reputation",
-                    "failDecrypt"
+                  "optionType",
+                  "value"
                 ],
                 "additionalProperties": false
-            },
-            "documentation": {
-                "description": "This is the documentation for POST request schema for ssl-decryption-profile profile parcel",
-                "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
-                "details-2": "variable name should not be present if optionType value is NOT variable",
-                "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
-                "details-4": "when option Type is default, value should be present with given default value as specified in schema",
-                "examples": [
-                    {
-                        "data": {
-                            "decryptCategories": {
-                                "optionType": "global",
-                                "value": [
-                                    "alcohol-and-tobacco"
-                                ]
-                            },
-                            "neverDecryptCategories": {
-                                "optionType": "global",
-                                "value": [
-                                    "abortion"
-                                ]
-                            },
-                            "skipDecryptCategories": {
-                                "optionType": "global",
-                                "value": [
-                                    "auctions"
-                                ]
-                            },
-                            "reputation": {
-                                "optionType": "global",
-                                "value": true
-                            },
-                            "decryptThreshold": {
-                                "optionType": "global",
-                                "value": "moderate-risk"
-                            },
-                            "skipDecryptThreshold": {
-                                "optionType": "global",
-                                "value": "moderate-risk"
-                            },
-                            "failDecrypt": {
-                                "optionType": "global",
-                                "value": true
-                            },
-                            "urlAllowedList": {
-                                "optionType": "global",
-                                "value": "da9094b1-40fa-4eb1-bcbd-0ab79be8cae0"
-                            },
-                            "urlBlockedList": {
-                                "optionType": "global",
-                                "value": "1f2a32f5-3251-40b1-b45f-61a2c44320cc"
-                            }
-                        },
-                        "name": "ssl-decryption-profileParcelGlobalDefault"
+              }
+            ]
+          },
+          "neverDecryptCategories": {
+            "description": "",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "abortion",
+                        "abused-drugs",
+                        "adult-and-pornography",
+                        "alcohol-and-tobacco",
+                        "auctions",
+                        "bot-nets",
+                        "business-and-economy",
+                        "cdns",
+                        "cheating",
+                        "computer-and-internet-info",
+                        "computer-and-internet-security",
+                        "confirmed-spam-sources",
+                        "cult-and-occult",
+                        "dating",
+                        "dead-sites",
+                        "dynamic-content",
+                        "educational-institutions",
+                        "entertainment-and-arts",
+                        "fashion-and-beauty",
+                        "financial-services",
+                        "gambling",
+                        "games",
+                        "government",
+                        "gross",
+                        "hacking",
+                        "hate-and-racism",
+                        "health-and-medicine",
+                        "home",
+                        "hunting-and-fishing",
+                        "illegal",
+                        "image-and-video-search",
+                        "individual-stock-advice-and-tools",
+                        "internet-communications",
+                        "internet-portals",
+                        "job-search",
+                        "keyloggers-and-monitoring",
+                        "kids",
+                        "legal",
+                        "local-information",
+                        "malware-sites",
+                        "marijuana",
+                        "military",
+                        "motor-vehicles",
+                        "music",
+                        "news-and-media",
+                        "nudity",
+                        "online-greeting-cards",
+                        "online-personal-storage",
+                        "open-http-proxies",
+                        "p2p",
+                        "parked-sites",
+                        "pay-to-surf",
+                        "personal-sites-and-blogs",
+                        "philosophy-and-political-advocacy",
+                        "phishing-and-other-frauds",
+                        "private-ip-addresses",
+                        "proxy-avoid-and-anonymizers",
+                        "questionable",
+                        "real-estate",
+                        "recreation-and-hobbies",
+                        "reference-and-research",
+                        "religion",
+                        "search-engines",
+                        "sex-education",
+                        "shareware-and-freeware",
+                        "shopping",
+                        "social-network",
+                        "society",
+                        "spam-urls",
+                        "sports",
+                        "spyware-and-adware",
+                        "streaming-media",
+                        "swimsuits-and-intimate-apparel",
+                        "training-and-tools",
+                        "translation",
+                        "travel",
+                        "uncategorized",
+                        "unconfirmed-spam-sources",
+                        "violence",
+                        "weapons",
+                        "web-advertisements",
+                        "web-based-email",
+                        "web-hosting"
+                      ]
                     }
-                ]
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "skipDecryptCategories": {
+            "description": "",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "abortion",
+                        "abused-drugs",
+                        "adult-and-pornography",
+                        "alcohol-and-tobacco",
+                        "auctions",
+                        "bot-nets",
+                        "business-and-economy",
+                        "cdns",
+                        "cheating",
+                        "computer-and-internet-info",
+                        "computer-and-internet-security",
+                        "confirmed-spam-sources",
+                        "cult-and-occult",
+                        "dating",
+                        "dead-sites",
+                        "dynamic-content",
+                        "educational-institutions",
+                        "entertainment-and-arts",
+                        "fashion-and-beauty",
+                        "financial-services",
+                        "gambling",
+                        "games",
+                        "government",
+                        "gross",
+                        "hacking",
+                        "hate-and-racism",
+                        "health-and-medicine",
+                        "home",
+                        "hunting-and-fishing",
+                        "illegal",
+                        "image-and-video-search",
+                        "individual-stock-advice-and-tools",
+                        "internet-communications",
+                        "internet-portals",
+                        "job-search",
+                        "keyloggers-and-monitoring",
+                        "kids",
+                        "legal",
+                        "local-information",
+                        "malware-sites",
+                        "marijuana",
+                        "military",
+                        "motor-vehicles",
+                        "music",
+                        "news-and-media",
+                        "nudity",
+                        "online-greeting-cards",
+                        "online-personal-storage",
+                        "open-http-proxies",
+                        "p2p",
+                        "parked-sites",
+                        "pay-to-surf",
+                        "personal-sites-and-blogs",
+                        "philosophy-and-political-advocacy",
+                        "phishing-and-other-frauds",
+                        "private-ip-addresses",
+                        "proxy-avoid-and-anonymizers",
+                        "questionable",
+                        "real-estate",
+                        "recreation-and-hobbies",
+                        "reference-and-research",
+                        "religion",
+                        "search-engines",
+                        "sex-education",
+                        "shareware-and-freeware",
+                        "shopping",
+                        "social-network",
+                        "society",
+                        "spam-urls",
+                        "sports",
+                        "spyware-and-adware",
+                        "streaming-media",
+                        "swimsuits-and-intimate-apparel",
+                        "training-and-tools",
+                        "translation",
+                        "travel",
+                        "uncategorized",
+                        "unconfirmed-spam-sources",
+                        "violence",
+                        "weapons",
+                        "web-advertisements",
+                        "web-based-email",
+                        "web-hosting"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "reputation": {
+            "description": "",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "decryptThreshold": {
+            "description": "",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "enum": [
+                      "high-risk",
+                      "low-risk",
+                      "moderate-risk",
+                      "suspicious",
+                      "trustworthy"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "skipDecryptThreshold": {
+            "description": "",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "enum": [
+                      "high-risk",
+                      "low-risk",
+                      "moderate-risk",
+                      "suspicious",
+                      "trustworthy"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "failDecrypt": {
+            "description": "",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "urlAllowedList": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "refId": {
+                "type": "object",
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
             }
+          },
+          "urlBlockedList": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "refId": {
+                "type": "object",
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
         },
         "required": [
-            "data",
-            "description",
-            "name"
-        ],
-        "not": {
-            "required": [
-                "documentation"
-            ]
-        },
-        "allOf": [
-            {
-                "if": {
-                    "properties": {
-                        "data": {
-                            "properties": {
-                                "reputation": {
-                                    "properties": {
-                                        "value": {
-                                            "enum": [
-                                                true
-                                            ]
-                                        }
-                                    }
-                                }
-                            },
-                            "required": [
-                                "reputation"
-                            ]
-                        }
-                    }
-                },
-                "then": {
-                    "properties": {
-                        "data": {
-                            "required": [
-                                "decryptThreshold"
-                            ]
-                        }
-                    }
-                },
-                "else": {
-                    "properties": {
-                        "data": {
-                            "not": {
-                                "required": [
-                                    "decryptThreshold"
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
+          "decryptCategories",
+          "neverDecryptCategories",
+          "reputation",
+          "failDecrypt"
         ],
         "additionalProperties": false
-    }
+      },
+      "documentation": {
+        "description": "This is the documentation for POST request schema for ssl-decryption-profile profile parcel",
+        "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+        "details-2": "variable name should not be present if optionType value is NOT variable",
+        "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+        "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+        "examples": [
+          {
+            "data": {
+              "decryptCategories": {
+                "optionType": "global",
+                "value": [
+                  "alcohol-and-tobacco"
+                ]
+              },
+              "neverDecryptCategories": {
+                "optionType": "global",
+                "value": [
+                  "abortion"
+                ]
+              },
+              "skipDecryptCategories": {
+                "optionType": "global",
+                "value": [
+                  "auctions"
+                ]
+              },
+              "reputation": {
+                "optionType": "global",
+                "value": true
+              },
+              "decryptThreshold": {
+                "optionType": "global",
+                "value": "moderate-risk"
+              },
+              "skipDecryptThreshold": {
+                "optionType": "global",
+                "value": "moderate-risk"
+              },
+              "failDecrypt": {
+                "optionType": "global",
+                "value": true
+              },
+              "urlAllowedList": {
+                "optionType": "global",
+                "value": "da9094b1-40fa-4eb1-bcbd-0ab79be8cae0"
+              },
+              "urlBlockedList": {
+                "optionType": "global",
+                "value": "1f2a32f5-3251-40b1-b45f-61a2c44320cc"
+              }
+            },
+            "name": "ssl-decryption-profileParcelGlobalDefault"
+          }
+        ]
+      }
+    },
+    "required": [
+      "data",
+      "description",
+      "name"
+    ],
+    "not": {
+      "required": [
+        "documentation"
+      ]
+    },
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "data": {
+              "properties": {
+                "reputation": {
+                  "properties": {
+                    "value": {
+                      "enum": [
+                        true
+                      ]
+                    }
+                  }
+                }
+              },
+              "required": [
+                "reputation"
+              ]
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "data": {
+              "required": [
+                "decryptThreshold"
+              ]
+            }
+          }
+        },
+        "else": {
+          "properties": {
+            "data": {
+              "not": {
+                "required": [
+                  "decryptThreshold"
+                ]
+              }
+            }
+          }
+        }
+      }
+    ],
+    "additionalProperties": false
+  }
 }

@@ -4,13 +4,13 @@ page_title: "sdwan_policy_object_unified_url_filtering Resource - terraform-prov
 subcategory: "Policy Objects"
 description: |-
   This resource can manage a Policy Object Unified URL Filtering Policy_object.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_policy_object_unified_url_filtering (Resource)
 
 This resource can manage a Policy Object Unified URL Filtering Policy_object.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
