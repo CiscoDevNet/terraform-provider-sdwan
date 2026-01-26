@@ -32,7 +32,9 @@
                   "properties": {
                     "optionType": {
                       "type": "string",
-                      "enum": ["global"]
+                      "enum": [
+                        "global"
+                      ]
                     },
                     "value": {
                       "oneOf": [
@@ -52,16 +54,23 @@
                       ]
                     }
                   },
-                  "required": ["optionType", "value"],
+                  "required": [
+                    "optionType",
+                    "value"
+                  ],
                   "additionalProperties": false
                 }
               },
-              "required": ["standardCommunity"],
+              "required": [
+                "standardCommunity"
+              ],
               "additionalProperties": false
             }
           }
         },
-        "required": ["entries"],
+        "required": [
+          "entries"
+        ],
         "additionalProperties": false
       },
       "documentation": {
@@ -88,14 +97,23 @@
                 }
               ]
             },
-            "name": "standardCommunityList1"
+            "name": "StandardCommunityList"
           }
         ]
+      },
+      "metadata": {
+        "minVManageVersion": "20.15.1"
       }
     },
-    "required": ["name", "data"],
+    "required": [
+      "name",
+      "data"
+    ],
     "not": {
-      "required": ["documentation"]
+      "required": [
+        "documentation",
+        "metadata"
+      ]
     },
     "additionalProperties": false
   }

@@ -1,122 +1,126 @@
 {
   "request": {
-      "$schema": "http://json-schema.org/draft/2019-09/schema",
-      "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/data-prefix/post/request_schema.json",
-      "title": "Ipv4 Data Prefix Parcel Schema",
-      "description": "ipv4 data prefix profile parcel schema for POST request",
-      "type": "object",
-      "properties": {
-          "name": {
-              "type": "string",
-              "pattern": "^[^&<>! \"]+$",
-              "minLength": 1,
-              "maxLength": 32
-          },
-          "description": {
-              "type": "string"
-          },
-          "data": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/data-prefix/post/request_schema.json",
+    "title": "Ipv4 Data Prefix Parcel Schema",
+    "description": "ipv4 data prefix profile parcel schema for POST request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 32
+      },
+      "description": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "entries": {
+            "description": "IPv4 Data Prefix List",
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
               "type": "object",
               "properties": {
-                  "entries": {
-                      "description": "IPv4 Data Prefix List",
-                      "type": "array",
-                      "minItems": 1,
-                      "uniqueItems": true,
-                      "items": {
-                          "type": "object",
-                          "properties": {
-                              "ipv4Address": {
-                                  "description": "IPv4 address",
-                                  "type": "object",
-                                  "properties": {
-                                      "optionType": {
-                                          "type": "string",
-                                          "enum": [
-                                              "global"
-                                          ]
-                                      },
-                                      "value": {
-                                          "type": "string",
-                                          "format": "ipv4"
-                                      }
-                                  },
-                                  "required": [
-                                      "optionType",
-                                      "value"
-                                  ],
-                                  "additionalProperties": false
-                              },
-                              "ipv4PrefixLength": {
-                                  "description": "IPv4 prefix Length",
-                                  "type": "object",
-                                  "properties": {
-                                      "optionType": {
-                                          "type": "string",
-                                          "enum": [
-                                              "global"
-                                          ]
-                                      },
-                                      "value": {
-                                          "minimum": 0,
-                                          "maximum": 32,
-                                          "type": "integer"
-                                      }
-                                  },
-                                  "required": [
-                                      "optionType",
-                                      "value"
-                                  ],
-                                  "additionalProperties": false
-                              }
-                          },
-                          "required": [
-                              "ipv4Address",
-                              "ipv4PrefixLength"
-                          ],
-                          "additionalProperties": false
-                      }
-                  }
+                "ipv4Address": {
+                  "description": "IPv4 address",
+                  "type": "object",
+                  "properties": {
+                    "optionType": {
+                      "type": "string",
+                      "enum": [
+                        "global"
+                      ]
+                    },
+                    "value": {
+                      "type": "string",
+                      "format": "ipv4"
+                    }
+                  },
+                  "required": [
+                    "optionType",
+                    "value"
+                  ],
+                  "additionalProperties": false
+                },
+                "ipv4PrefixLength": {
+                  "description": "IPv4 prefix Length",
+                  "type": "object",
+                  "properties": {
+                    "optionType": {
+                      "type": "string",
+                      "enum": [
+                        "global"
+                      ]
+                    },
+                    "value": {
+                      "minimum": 0,
+                      "maximum": 32,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "optionType",
+                    "value"
+                  ],
+                  "additionalProperties": false
+                }
               },
-              "required": [],
+              "required": [
+                "ipv4Address",
+                "ipv4PrefixLength"
+              ],
               "additionalProperties": false
-          },
-          "documentation": {
-              "description": "This is the documentation for POST request schema for ipv4 data prefix profile parcel",
-              "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
-              "details-2": "variable name should not be present if optionType value is NOT variable",
-              "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
-              "details-4": "when option Type is default, value should be present with given default value as specified in schema",
-              "examples": [
-                  {
-                      "data": {
-                          "entries": [
-                              {
-                                  "ipv4Address": {
-                                      "optionType": "global",
-                                      "value": "10.0.0.0"
-                                  },
-                                  "ipv4PrefixLength": {
-                                      "optionType": "global",
-                                      "value": 8
-                                  }
-                              }
-                          ]
-                      },
-                      "name": "Ipv4DataPrefixList"
-                  }
-              ]
+            }
           }
+        },
+        "required": [],
+        "additionalProperties": false
       },
+      "documentation": {
+        "description": "This is the documentation for POST request schema for ipv4 data prefix profile parcel",
+        "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+        "details-2": "variable name should not be present if optionType value is NOT variable",
+        "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+        "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+        "examples": [
+          {
+            "data": {
+              "entries": [
+                {
+                  "ipv4Address": {
+                    "optionType": "global",
+                    "value": "10.0.0.0"
+                  },
+                  "ipv4PrefixLength": {
+                    "optionType": "global",
+                    "value": 8
+                  }
+                }
+              ]
+            },
+            "name": "Ipv4DataPrefixList"
+          }
+        ]
+      },
+      "metadata": {
+        "minVManageVersion": "20.15.1"
+      }
+    },
+    "required": [
+      "name",
+      "data"
+    ],
+    "not": {
       "required": [
-          "name",
-          "data"
-      ],
-      "not": {
-          "required": [
-              "documentation"
-          ]
-      },
-      "additionalProperties": false
+        "documentation",
+        "metadata"
+      ]
+    },
+    "additionalProperties": false
   }
 }

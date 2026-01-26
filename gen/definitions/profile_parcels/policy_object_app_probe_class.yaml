@@ -1,8 +1,8 @@
 ---
 name: Policy Object App Probe Class
 rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/app-probe
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 skip_minimum_test: true
 parcel_type: policy_object
 full_update: true
@@ -28,6 +28,11 @@ attributes:
     - model_name: forwardingClass
       mandatory: true
       example: classlist1
+    - model_name: refId
+      tf_name: forwarding_class_id
+      data_path: [forwardingClass]
+      example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+      exclude_test: true
 
 test_prerequisites: |
   resource "sdwan_policy_object_feature_profile" "test" {
