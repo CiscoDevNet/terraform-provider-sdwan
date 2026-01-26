@@ -27,6 +27,7 @@
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_advanced_malware_protection` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_tls_ssl_decryption` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_tls_ssl_profile` to `20.15.0`
+- Add `sdwan_policy_object_security_zone` resource and data source
 
 ## 0.9.0
 

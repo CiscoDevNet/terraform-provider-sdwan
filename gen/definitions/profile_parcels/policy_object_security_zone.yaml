@@ -1,0 +1,37 @@
+---
+name: Policy Object Security Zone
+rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/security-zone
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
+skip_minimum_test: true
+parcel_type: policy_object
+full_update: true
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_policy_object_feature_profile.test.id
+  - model_name: entries
+    mandatory: true
+    type: List
+    min_list: 1
+    description: List of entries
+    attributes:
+      - model_name: vpn
+        type: String
+        tf_name: vpn
+        example: Guest
+      - model_name: interface
+        exclude_test: true
+        type: String
+        tf_name: interface
+        example: GigabitEthernet1
+
+test_prerequisites: |
+  resource "sdwan_policy_object_feature_profile" "test" {
+    name = "POLICY_OBJECT_FP_1"
+    description = "My policy object feature profile 1"
+  }
