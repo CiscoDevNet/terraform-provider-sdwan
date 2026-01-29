@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanServiceSwitchportProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_switchport_feature.test", "interfaces.0.interface_name", "GigabitEthernet"))
@@ -41,6 +41,7 @@ func TestAccSdwanServiceSwitchportProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_switchport_feature.test", "interfaces.0.switchport_access_vlan", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_switchport_feature.test", "interfaces.0.switchport_trunk_allowed_vlans", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_switchport_feature.test", "interfaces.0.switchport_trunk_native_vlan", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_switchport_feature.test", "interfaces.0.enable_dot1x", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_switchport_feature.test", "interfaces.0.port_control", "auto"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_switchport_feature.test", "interfaces.0.voice_vlan", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_switchport_feature.test", "interfaces.0.pae_enable", "true"))
@@ -112,6 +113,7 @@ func testAccSdwanServiceSwitchportProfileParcelConfig_all() string {
 	config += `	  switchport_access_vlan = 1` + "\n"
 	config += `	  switchport_trunk_allowed_vlans = "1"` + "\n"
 	config += `	  switchport_trunk_native_vlan = 1` + "\n"
+	config += `	  enable_dot1x = false` + "\n"
 	config += `	  port_control = "auto"` + "\n"
 	config += `	  voice_vlan = 1` + "\n"
 	config += `	  pae_enable = true` + "\n"

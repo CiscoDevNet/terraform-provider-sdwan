@@ -64,7 +64,7 @@ func (r *ServiceSwitchportProfileParcelResource) Metadata(ctx context.Context, r
 func (r *ServiceSwitchportProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Switchport Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Switchport Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -119,10 +119,10 @@ func (r *ServiceSwitchportProfileParcelResource) Schema(ctx context.Context, req
 							Optional:            true,
 						},
 						"speed": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set interface speed").AddStringEnumDescription("10", "100", "1000", "2500", "10000").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set interface speed").AddStringEnumDescription("10", "100", "1000", "2500", "10000", "25000").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.OneOf("10", "100", "1000", "2500", "10000"),
+								stringvalidator.OneOf("10", "100", "1000", "2500", "10000", "25000"),
 							},
 						},
 						"speed_variable": schema.StringAttribute{
@@ -171,6 +171,10 @@ func (r *ServiceSwitchportProfileParcelResource) Schema(ctx context.Context, req
 						},
 						"switchport_trunk_native_vlan_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"enable_dot1x": schema.BoolAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set 802.1x on off").AddDefaultValueDescription("true").String,
 							Optional:            true,
 						},
 						"port_control": schema.StringAttribute{
