@@ -34,26 +34,26 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type EmbeddedSecurityNGFW struct {
-	Id               types.String                `tfsdk:"id"`
-	Version          types.Int64                 `tfsdk:"version"`
-	Name             types.String                `tfsdk:"name"`
-	Description      types.String                `tfsdk:"description"`
-	FeatureProfileId types.String                `tfsdk:"feature_profile_id"`
-	DefaultAction    types.String                `tfsdk:"default_action"`
-	Rules            []EmbeddedSecurityNGFWRules `tfsdk:"rules"`
+	Id               types.String                    `tfsdk:"id"`
+	Version          types.Int64                     `tfsdk:"version"`
+	Name             types.String                    `tfsdk:"name"`
+	Description      types.String                    `tfsdk:"description"`
+	FeatureProfileId types.String                    `tfsdk:"feature_profile_id"`
+	DefaultAction    types.String                    `tfsdk:"default_action"`
+	Sequences        []EmbeddedSecurityNGFWSequences `tfsdk:"sequences"`
 }
 
-type EmbeddedSecurityNGFWRules struct {
-	RuleId       types.String                            `tfsdk:"rule_id"`
-	RuleName     types.String                            `tfsdk:"rule_name"`
-	BaseAction   types.String                            `tfsdk:"base_action"`
-	RuleType     types.String                            `tfsdk:"rule_type"`
-	DisableRule  types.Bool                              `tfsdk:"disable_rule"`
-	MatchEntries []EmbeddedSecurityNGFWRulesMatchEntries `tfsdk:"match_entries"`
-	Actions      []EmbeddedSecurityNGFWRulesActions      `tfsdk:"actions"`
+type EmbeddedSecurityNGFWSequences struct {
+	SequenceId   types.String                                `tfsdk:"sequence_id"`
+	SequenceName types.String                                `tfsdk:"sequence_name"`
+	BaseAction   types.String                                `tfsdk:"base_action"`
+	RuleType     types.String                                `tfsdk:"rule_type"`
+	DisableRule  types.Bool                                  `tfsdk:"disable_rule"`
+	MatchEntries []EmbeddedSecurityNGFWSequencesMatchEntries `tfsdk:"match_entries"`
+	Actions      []EmbeddedSecurityNGFWSequencesActions      `tfsdk:"actions"`
 }
 
-type EmbeddedSecurityNGFWRulesMatchEntries struct {
+type EmbeddedSecurityNGFWSequencesMatchEntries struct {
 	SourceDataPrefixListIds            types.Set    `tfsdk:"source_data_prefix_list_ids"`
 	DestinationDataPrefixListIds       types.Set    `tfsdk:"destination_data_prefix_list_ids"`
 	DestinationFqdnListIds             types.Set    `tfsdk:"destination_fqdn_list_ids"`
@@ -90,7 +90,7 @@ type EmbeddedSecurityNGFWRulesMatchEntries struct {
 	Protocols                          types.Set    `tfsdk:"protocols"`
 	ProtocolNames                      types.Set    `tfsdk:"protocol_names"`
 }
-type EmbeddedSecurityNGFWRulesActions struct {
+type EmbeddedSecurityNGFWSequencesActions struct {
 	Type        types.String `tfsdk:"type"`
 	Parameter   types.String `tfsdk:"parameter"`
 	ParameterId types.String `tfsdk:"parameter_id"`
@@ -126,18 +126,18 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context) string {
 	}
 	if true {
 		body, _ = sjson.Set(body, path+"sequences", []interface{}{})
-		for _, item := range data.Rules {
+		for _, item := range data.Sequences {
 			itemBody := ""
-			if !item.RuleId.IsNull() {
+			if !item.SequenceId.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "sequenceId.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "sequenceId.value", item.RuleId.ValueString())
+					itemBody, _ = sjson.Set(itemBody, "sequenceId.value", item.SequenceId.ValueString())
 				}
 			}
-			if !item.RuleName.IsNull() {
+			if !item.SequenceName.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "sequenceName.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "sequenceName.value", item.RuleName.ValueString())
+					itemBody, _ = sjson.Set(itemBody, "sequenceName.value", item.SequenceName.ValueString())
 				}
 			}
 			if !item.BaseAction.IsNull() {
@@ -482,23 +482,23 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 		}
 	}
 	if value := res.Get(path + "sequences"); value.Exists() && len(value.Array()) > 0 {
-		data.Rules = make([]EmbeddedSecurityNGFWRules, 0)
+		data.Sequences = make([]EmbeddedSecurityNGFWSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := EmbeddedSecurityNGFWRules{}
-			item.RuleId = types.StringNull()
+			item := EmbeddedSecurityNGFWSequences{}
+			item.SequenceId = types.StringNull()
 
 			if t := v.Get("sequenceId.optionType"); t.Exists() {
 				va := v.Get("sequenceId.value")
 				if t.String() == "global" {
-					item.RuleId = types.StringValue(va.String())
+					item.SequenceId = types.StringValue(va.String())
 				}
 			}
-			item.RuleName = types.StringNull()
+			item.SequenceName = types.StringNull()
 
 			if t := v.Get("sequenceName.optionType"); t.Exists() {
 				va := v.Get("sequenceName.value")
 				if t.String() == "global" {
-					item.RuleName = types.StringValue(va.String())
+					item.SequenceName = types.StringValue(va.String())
 				}
 			}
 			item.BaseAction = types.StringNull()
@@ -526,9 +526,9 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 				}
 			}
 			if cValue := v.Get("match.entries"); cValue.Exists() && len(cValue.Array()) > 0 {
-				item.MatchEntries = make([]EmbeddedSecurityNGFWRulesMatchEntries, 0)
+				item.MatchEntries = make([]EmbeddedSecurityNGFWSequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := EmbeddedSecurityNGFWRulesMatchEntries{}
+					cItem := EmbeddedSecurityNGFWSequencesMatchEntries{}
 					cItem.SourceDataPrefixListIds = types.SetNull(types.StringType)
 
 					if t := cv.Get("sourceDataPrefixList.refId.optionType"); t.Exists() {
@@ -772,9 +772,9 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 				})
 			}
 			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
-				item.Actions = make([]EmbeddedSecurityNGFWRulesActions, 0)
+				item.Actions = make([]EmbeddedSecurityNGFWSequencesActions, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := EmbeddedSecurityNGFWRulesActions{}
+					cItem := EmbeddedSecurityNGFWSequencesActions{}
 					cItem.Type = types.StringNull()
 
 					if t := cv.Get("type.optionType"); t.Exists() {
@@ -803,7 +803,7 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 					return true
 				})
 			}
-			data.Rules = append(data.Rules, item)
+			data.Sequences = append(data.Sequences, item)
 			return true
 		})
 	}
@@ -828,9 +828,9 @@ func (data *EmbeddedSecurityNGFW) updateFromBody(ctx context.Context, res gjson.
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
-	for i := range data.Rules {
+	for i := range data.Sequences {
 		keys := [...]string{"sequenceId", "sequenceName", "baseAction", "sequenceType", "disableSequence"}
-		keyValues := [...]string{data.Rules[i].RuleId.ValueString(), data.Rules[i].RuleName.ValueString(), data.Rules[i].BaseAction.ValueString(), data.Rules[i].RuleType.ValueString(), strconv.FormatBool(data.Rules[i].DisableRule.ValueBool())}
+		keyValues := [...]string{data.Sequences[i].SequenceId.ValueString(), data.Sequences[i].SequenceName.ValueString(), data.Sequences[i].BaseAction.ValueString(), data.Sequences[i].RuleType.ValueString(), strconv.FormatBool(data.Sequences[i].DisableRule.ValueBool())}
 		keyValuesVariables := [...]string{"", "", "", "", ""}
 
 		var r gjson.Result
@@ -859,50 +859,50 @@ func (data *EmbeddedSecurityNGFW) updateFromBody(ctx context.Context, res gjson.
 				return true
 			},
 		)
-		data.Rules[i].RuleId = types.StringNull()
+		data.Sequences[i].SequenceId = types.StringNull()
 
 		if t := r.Get("sequenceId.optionType"); t.Exists() {
 			va := r.Get("sequenceId.value")
 			if t.String() == "global" {
-				data.Rules[i].RuleId = types.StringValue(va.String())
+				data.Sequences[i].SequenceId = types.StringValue(va.String())
 			}
 		}
-		data.Rules[i].RuleName = types.StringNull()
+		data.Sequences[i].SequenceName = types.StringNull()
 
 		if t := r.Get("sequenceName.optionType"); t.Exists() {
 			va := r.Get("sequenceName.value")
 			if t.String() == "global" {
-				data.Rules[i].RuleName = types.StringValue(va.String())
+				data.Sequences[i].SequenceName = types.StringValue(va.String())
 			}
 		}
-		data.Rules[i].BaseAction = types.StringNull()
+		data.Sequences[i].BaseAction = types.StringNull()
 
 		if t := r.Get("baseAction.optionType"); t.Exists() {
 			va := r.Get("baseAction.value")
 			if t.String() == "global" {
-				data.Rules[i].BaseAction = types.StringValue(va.String())
+				data.Sequences[i].BaseAction = types.StringValue(va.String())
 			}
 		}
-		data.Rules[i].RuleType = types.StringNull()
+		data.Sequences[i].RuleType = types.StringNull()
 
 		if t := r.Get("sequenceType.optionType"); t.Exists() {
 			va := r.Get("sequenceType.value")
 			if t.String() == "global" {
-				data.Rules[i].RuleType = types.StringValue(va.String())
+				data.Sequences[i].RuleType = types.StringValue(va.String())
 			}
 		}
-		data.Rules[i].DisableRule = types.BoolNull()
+		data.Sequences[i].DisableRule = types.BoolNull()
 
 		if t := r.Get("disableSequence.optionType"); t.Exists() {
 			va := r.Get("disableSequence.value")
 			if t.String() == "global" {
-				data.Rules[i].DisableRule = types.BoolValue(va.Bool())
+				data.Sequences[i].DisableRule = types.BoolValue(va.Bool())
 			}
 		}
-		for ci := range data.Rules[i].MatchEntries {
+		for ci := range data.Sequences[i].MatchEntries {
 			keys := [...]string{"sourceDataPrefixList.refId", "destinationDataPrefixList.refId", "destinationFqdnList.refId", "sourceGeoLocationList.refId", "destinationGeoLocationList.refId", "sourcePortList.refId", "destinationPortList.refId", "sourceScalableGroupTagList.refId", "destinationScalableGroupTagList.refId", "sourceIdentityList.refId", "protocolNameList.refId", "appList.refId", "appListFlat.refId", "sourceSecurityGroup.refId", "destinationSecurityGroup.refId", "sourceIp.ipv4Value", "destinationIp.ipv4Value", "destinationFqdn.fqdnValue", "sourcePort.portValue", "destinationPort.portValue", "sourceGeoLocation", "destinationGeoLocation", "sourceIdentityUser", "sourceIdentityUsergroup", "app", "appFamily", "protocol", "protocolName"}
-			keyValues := [...]string{helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].SourceDataPrefixListIds).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].DestinationDataPrefixListIds).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].DestinationFqdnListIds).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].SourceGeoLocationListIds).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].DestinationGeoLocationListIds).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].SourcePortListIds).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].DestinationPortListIds).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].SourceScalableGroupTagListIds).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].DestinationScalableGroupTagListIds).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].SourceIndentityListIds).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].ProtocolNameListIds).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].AppListIds).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].FlatAppListIds).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].SourceSecurityGroupListIds).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].DestinationSecurityGroupListIds).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].SourceDataPrefixs).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].DestinationDataPrefixs).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].DestinationFqdns).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].SourcePorts).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].DestinationPorts).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].SourceGeoLocations).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].DestinationGeoLocations).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].SourceIdentityUsers).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].SourceIdentityUsergroups).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].Applications).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].ApplicationFamilies).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].Protocols).ValueString(), helpers.GetStringFromSet(data.Rules[i].MatchEntries[ci].ProtocolNames).ValueString()}
-			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", data.Rules[i].MatchEntries[ci].SourceDataPrefixsVariable.ValueString(), data.Rules[i].MatchEntries[ci].DestinationDataPrefixsVariable.ValueString(), data.Rules[i].MatchEntries[ci].DestinationFqdnsVariable.ValueString(), data.Rules[i].MatchEntries[ci].SourcePortsVariable.ValueString(), data.Rules[i].MatchEntries[ci].DestinationPortsVariable.ValueString(), data.Rules[i].MatchEntries[ci].SourceGeoLocationsVariable.ValueString(), data.Rules[i].MatchEntries[ci].DestinationGeoLocationsVariable.ValueString(), "", "", "", "", "", ""}
+			keyValues := [...]string{helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceDataPrefixListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationFqdnListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceGeoLocationListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationGeoLocationListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourcePortListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationPortListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceScalableGroupTagListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationScalableGroupTagListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceIndentityListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].ProtocolNameListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].AppListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].FlatAppListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceSecurityGroupListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationSecurityGroupListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceDataPrefixs).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationDataPrefixs).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationFqdns).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourcePorts).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationPorts).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceGeoLocations).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationGeoLocations).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceIdentityUsers).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceIdentityUsergroups).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Applications).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].ApplicationFamilies).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Protocols).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].ProtocolNames).ValueString()}
+			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", data.Sequences[i].MatchEntries[ci].SourceDataPrefixsVariable.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefixsVariable.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationFqdnsVariable.ValueString(), data.Sequences[i].MatchEntries[ci].SourcePortsVariable.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationPortsVariable.ValueString(), data.Sequences[i].MatchEntries[ci].SourceGeoLocationsVariable.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationGeoLocationsVariable.ValueString(), "", "", "", "", "", ""}
 
 			var cr gjson.Result
 			r.Get("match.entries").ForEach(
@@ -930,248 +930,248 @@ func (data *EmbeddedSecurityNGFW) updateFromBody(ctx context.Context, res gjson.
 					return true
 				},
 			)
-			data.Rules[i].MatchEntries[ci].SourceDataPrefixListIds = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].SourceDataPrefixListIds = types.SetNull(types.StringType)
 
 			if t := cr.Get("sourceDataPrefixList.refId.optionType"); t.Exists() {
 				va := cr.Get("sourceDataPrefixList.refId.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].SourceDataPrefixListIds = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].SourceDataPrefixListIds = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].DestinationDataPrefixListIds = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListIds = types.SetNull(types.StringType)
 
 			if t := cr.Get("destinationDataPrefixList.refId.optionType"); t.Exists() {
 				va := cr.Get("destinationDataPrefixList.refId.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].DestinationDataPrefixListIds = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListIds = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].DestinationFqdnListIds = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].DestinationFqdnListIds = types.SetNull(types.StringType)
 
 			if t := cr.Get("destinationFqdnList.refId.optionType"); t.Exists() {
 				va := cr.Get("destinationFqdnList.refId.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].DestinationFqdnListIds = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].DestinationFqdnListIds = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].SourceGeoLocationListIds = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].SourceGeoLocationListIds = types.SetNull(types.StringType)
 
 			if t := cr.Get("sourceGeoLocationList.refId.optionType"); t.Exists() {
 				va := cr.Get("sourceGeoLocationList.refId.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].SourceGeoLocationListIds = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].SourceGeoLocationListIds = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].DestinationGeoLocationListIds = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].DestinationGeoLocationListIds = types.SetNull(types.StringType)
 
 			if t := cr.Get("destinationGeoLocationList.refId.optionType"); t.Exists() {
 				va := cr.Get("destinationGeoLocationList.refId.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].DestinationGeoLocationListIds = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].DestinationGeoLocationListIds = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].SourcePortListIds = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].SourcePortListIds = types.SetNull(types.StringType)
 
 			if t := cr.Get("sourcePortList.refId.optionType"); t.Exists() {
 				va := cr.Get("sourcePortList.refId.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].SourcePortListIds = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].SourcePortListIds = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].DestinationPortListIds = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].DestinationPortListIds = types.SetNull(types.StringType)
 
 			if t := cr.Get("destinationPortList.refId.optionType"); t.Exists() {
 				va := cr.Get("destinationPortList.refId.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].DestinationPortListIds = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].DestinationPortListIds = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].SourceScalableGroupTagListIds = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].SourceScalableGroupTagListIds = types.SetNull(types.StringType)
 
 			if t := cr.Get("sourceScalableGroupTagList.refId.optionType"); t.Exists() {
 				va := cr.Get("sourceScalableGroupTagList.refId.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].SourceScalableGroupTagListIds = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].SourceScalableGroupTagListIds = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].DestinationScalableGroupTagListIds = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].DestinationScalableGroupTagListIds = types.SetNull(types.StringType)
 
 			if t := cr.Get("destinationScalableGroupTagList.refId.optionType"); t.Exists() {
 				va := cr.Get("destinationScalableGroupTagList.refId.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].DestinationScalableGroupTagListIds = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].DestinationScalableGroupTagListIds = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].SourceIndentityListIds = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].SourceIndentityListIds = types.SetNull(types.StringType)
 
 			if t := cr.Get("sourceIdentityList.refId.optionType"); t.Exists() {
 				va := cr.Get("sourceIdentityList.refId.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].SourceIndentityListIds = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].SourceIndentityListIds = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].ProtocolNameListIds = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].ProtocolNameListIds = types.SetNull(types.StringType)
 
 			if t := cr.Get("protocolNameList.refId.optionType"); t.Exists() {
 				va := cr.Get("protocolNameList.refId.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].ProtocolNameListIds = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].ProtocolNameListIds = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].AppListIds = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].AppListIds = types.SetNull(types.StringType)
 
 			if t := cr.Get("appList.refId.optionType"); t.Exists() {
 				va := cr.Get("appList.refId.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].AppListIds = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].AppListIds = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].FlatAppListIds = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].FlatAppListIds = types.SetNull(types.StringType)
 
 			if t := cr.Get("appListFlat.refId.optionType"); t.Exists() {
 				va := cr.Get("appListFlat.refId.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].FlatAppListIds = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].FlatAppListIds = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].SourceSecurityGroupListIds = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].SourceSecurityGroupListIds = types.SetNull(types.StringType)
 
 			if t := cr.Get("sourceSecurityGroup.refId.optionType"); t.Exists() {
 				va := cr.Get("sourceSecurityGroup.refId.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].SourceSecurityGroupListIds = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].SourceSecurityGroupListIds = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].DestinationSecurityGroupListIds = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].DestinationSecurityGroupListIds = types.SetNull(types.StringType)
 
 			if t := cr.Get("destinationSecurityGroup.refId.optionType"); t.Exists() {
 				va := cr.Get("destinationSecurityGroup.refId.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].DestinationSecurityGroupListIds = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].DestinationSecurityGroupListIds = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].SourceDataPrefixs = types.SetNull(types.StringType)
-			data.Rules[i].MatchEntries[ci].SourceDataPrefixsVariable = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].SourceDataPrefixs = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].SourceDataPrefixsVariable = types.StringNull()
 			if t := cr.Get("sourceIp.ipv4Value.optionType"); t.Exists() {
 				va := cr.Get("sourceIp.ipv4Value.value")
 				if t.String() == "variable" {
-					data.Rules[i].MatchEntries[ci].SourceDataPrefixsVariable = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].SourceDataPrefixsVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].SourceDataPrefixs = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].SourceDataPrefixs = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].DestinationDataPrefixs = types.SetNull(types.StringType)
-			data.Rules[i].MatchEntries[ci].DestinationDataPrefixsVariable = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].DestinationDataPrefixs = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].DestinationDataPrefixsVariable = types.StringNull()
 			if t := cr.Get("destinationIp.ipv4Value.optionType"); t.Exists() {
 				va := cr.Get("destinationIp.ipv4Value.value")
 				if t.String() == "variable" {
-					data.Rules[i].MatchEntries[ci].DestinationDataPrefixsVariable = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].DestinationDataPrefixsVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].DestinationDataPrefixs = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].DestinationDataPrefixs = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].DestinationFqdns = types.SetNull(types.StringType)
-			data.Rules[i].MatchEntries[ci].DestinationFqdnsVariable = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].DestinationFqdns = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].DestinationFqdnsVariable = types.StringNull()
 			if t := cr.Get("destinationFqdn.fqdnValue.optionType"); t.Exists() {
 				va := cr.Get("destinationFqdn.fqdnValue.value")
 				if t.String() == "variable" {
-					data.Rules[i].MatchEntries[ci].DestinationFqdnsVariable = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].DestinationFqdnsVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].DestinationFqdns = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].DestinationFqdns = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].SourcePorts = types.SetNull(types.StringType)
-			data.Rules[i].MatchEntries[ci].SourcePortsVariable = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].SourcePorts = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].SourcePortsVariable = types.StringNull()
 			if t := cr.Get("sourcePort.portValue.optionType"); t.Exists() {
 				va := cr.Get("sourcePort.portValue.value")
 				if t.String() == "variable" {
-					data.Rules[i].MatchEntries[ci].SourcePortsVariable = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].SourcePortsVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].SourcePorts = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].SourcePorts = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].DestinationPorts = types.SetNull(types.StringType)
-			data.Rules[i].MatchEntries[ci].DestinationPortsVariable = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].DestinationPorts = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].DestinationPortsVariable = types.StringNull()
 			if t := cr.Get("destinationPort.portValue.optionType"); t.Exists() {
 				va := cr.Get("destinationPort.portValue.value")
 				if t.String() == "variable" {
-					data.Rules[i].MatchEntries[ci].DestinationPortsVariable = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].DestinationPortsVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].DestinationPorts = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].DestinationPorts = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].SourceGeoLocations = types.SetNull(types.StringType)
-			data.Rules[i].MatchEntries[ci].SourceGeoLocationsVariable = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].SourceGeoLocations = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].SourceGeoLocationsVariable = types.StringNull()
 			if t := cr.Get("sourceGeoLocation.optionType"); t.Exists() {
 				va := cr.Get("sourceGeoLocation.value")
 				if t.String() == "variable" {
-					data.Rules[i].MatchEntries[ci].SourceGeoLocationsVariable = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].SourceGeoLocationsVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].SourceGeoLocations = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].SourceGeoLocations = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].DestinationGeoLocations = types.SetNull(types.StringType)
-			data.Rules[i].MatchEntries[ci].DestinationGeoLocationsVariable = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].DestinationGeoLocations = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].DestinationGeoLocationsVariable = types.StringNull()
 			if t := cr.Get("destinationGeoLocation.optionType"); t.Exists() {
 				va := cr.Get("destinationGeoLocation.value")
 				if t.String() == "variable" {
-					data.Rules[i].MatchEntries[ci].DestinationGeoLocationsVariable = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].DestinationGeoLocationsVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].DestinationGeoLocations = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].DestinationGeoLocations = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].SourceIdentityUsers = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].SourceIdentityUsers = types.SetNull(types.StringType)
 
 			if t := cr.Get("sourceIdentityUser.optionType"); t.Exists() {
 				va := cr.Get("sourceIdentityUser.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].SourceIdentityUsers = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].SourceIdentityUsers = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].SourceIdentityUsergroups = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].SourceIdentityUsergroups = types.SetNull(types.StringType)
 
 			if t := cr.Get("sourceIdentityUsergroup.optionType"); t.Exists() {
 				va := cr.Get("sourceIdentityUsergroup.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].SourceIdentityUsergroups = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].SourceIdentityUsergroups = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].Applications = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].Applications = types.SetNull(types.StringType)
 
 			if t := cr.Get("app.optionType"); t.Exists() {
 				va := cr.Get("app.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].Applications = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].Applications = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].ApplicationFamilies = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].ApplicationFamilies = types.SetNull(types.StringType)
 
 			if t := cr.Get("appFamily.optionType"); t.Exists() {
 				va := cr.Get("appFamily.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].ApplicationFamilies = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].ApplicationFamilies = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].Protocols = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].Protocols = types.SetNull(types.StringType)
 
 			if t := cr.Get("protocol.optionType"); t.Exists() {
 				va := cr.Get("protocol.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].Protocols = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].Protocols = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Rules[i].MatchEntries[ci].ProtocolNames = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].ProtocolNames = types.SetNull(types.StringType)
 
 			if t := cr.Get("protocolName.optionType"); t.Exists() {
 				va := cr.Get("protocolName.value")
 				if t.String() == "global" {
-					data.Rules[i].MatchEntries[ci].ProtocolNames = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].ProtocolNames = helpers.GetStringSet(va.Array())
 				}
 			}
 		}
-		for ci := range data.Rules[i].Actions {
+		for ci := range data.Sequences[i].Actions {
 			keys := [...]string{"type", "parameter", "parameter.refId"}
-			keyValues := [...]string{data.Rules[i].Actions[ci].Type.ValueString(), data.Rules[i].Actions[ci].Parameter.ValueString(), data.Rules[i].Actions[ci].ParameterId.ValueString()}
+			keyValues := [...]string{data.Sequences[i].Actions[ci].Type.ValueString(), data.Sequences[i].Actions[ci].Parameter.ValueString(), data.Sequences[i].Actions[ci].ParameterId.ValueString()}
 			keyValuesVariables := [...]string{"", "", ""}
 
 			var cr gjson.Result
@@ -1200,28 +1200,28 @@ func (data *EmbeddedSecurityNGFW) updateFromBody(ctx context.Context, res gjson.
 					return true
 				},
 			)
-			data.Rules[i].Actions[ci].Type = types.StringNull()
+			data.Sequences[i].Actions[ci].Type = types.StringNull()
 
 			if t := cr.Get("type.optionType"); t.Exists() {
 				va := cr.Get("type.value")
 				if t.String() == "global" {
-					data.Rules[i].Actions[ci].Type = types.StringValue(va.String())
+					data.Sequences[i].Actions[ci].Type = types.StringValue(va.String())
 				}
 			}
-			data.Rules[i].Actions[ci].Parameter = types.StringNull()
+			data.Sequences[i].Actions[ci].Parameter = types.StringNull()
 
 			if t := cr.Get("parameter.optionType"); t.Exists() {
 				va := cr.Get("parameter.value")
 				if t.String() == "global" {
-					data.Rules[i].Actions[ci].Parameter = types.StringValue(va.String())
+					data.Sequences[i].Actions[ci].Parameter = types.StringValue(va.String())
 				}
 			}
-			data.Rules[i].Actions[ci].ParameterId = types.StringNull()
+			data.Sequences[i].Actions[ci].ParameterId = types.StringNull()
 
 			if t := cr.Get("parameter.refId.optionType"); t.Exists() {
 				va := cr.Get("parameter.refId.value")
 				if t.String() == "global" {
-					data.Rules[i].Actions[ci].ParameterId = types.StringValue(va.String())
+					data.Sequences[i].Actions[ci].ParameterId = types.StringValue(va.String())
 				}
 			}
 		}

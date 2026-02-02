@@ -96,19 +96,19 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 					stringvalidator.OneOf("pass", "drop"),
 				},
 			},
-			"rules": schema.ListNestedAttribute{
+			"sequences": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"rule_id": schema.StringAttribute{
+						"sequence_id": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.RegexMatches(regexp.MustCompile(`^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$`), ""),
 							},
 						},
-						"rule_name": schema.StringAttribute{
+						"sequence_name": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							Optional:            true,
 							Validators: []validator.String{

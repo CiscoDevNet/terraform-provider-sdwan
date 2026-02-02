@@ -34,13 +34,13 @@ func TestAccDataSourceSdwanEmbeddedSecurityNGFWProfileParcel(t *testing.T) {
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "default_action", "pass"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "rules.0.rule_id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "rules.0.rule_name", "Rule1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "rules.0.base_action", "drop"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "rules.0.rule_type", "ngfirewall"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "rules.0.disable_rule", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "rules.0.actions.0.type", "log"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "rules.0.actions.0.parameter", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.sequence_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.sequence_name", "security"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.base_action", "drop"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.rule_type", "ngfirewall"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.disable_rule", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.actions.0.type", "log"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.actions.0.parameter", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -72,9 +72,9 @@ func testAccDataSourceSdwanEmbeddedSecurityNGFWProfileParcelConfig() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_embedded_security_feature_profile.test.id` + "\n"
 	config += `	default_action = "pass"` + "\n"
-	config += `	rules = [{` + "\n"
-	config += `	  rule_id = "1"` + "\n"
-	config += `	  rule_name = "Rule1"` + "\n"
+	config += `	sequences = [{` + "\n"
+	config += `	  sequence_id = "1"` + "\n"
+	config += `	  sequence_name = "security"` + "\n"
 	config += `	  base_action = "drop"` + "\n"
 	config += `	  rule_type = "ngfirewall"` + "\n"
 	config += `	  disable_rule = false` + "\n"

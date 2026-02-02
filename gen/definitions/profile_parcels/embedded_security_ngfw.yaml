@@ -16,14 +16,11 @@ attributes:
     tf_name: default_action
     example: pass
   - model_name: sequences
-    tf_name: rules
     attributes: 
     - model_name: sequenceId 
-      tf_name: rule_id
       example: 1
     - model_name: sequenceName
-      tf_name: rule_name
-      example: Rule1
+      example: security
     - model_name: baseAction
       example: drop
     - model_name: sequenceType

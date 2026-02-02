@@ -83,16 +83,16 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"rules": schema.ListNestedAttribute{
+			"sequences": schema.ListNestedAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"rule_id": schema.StringAttribute{
+						"sequence_id": schema.StringAttribute{
 							MarkdownDescription: "",
 							Computed:            true,
 						},
-						"rule_name": schema.StringAttribute{
+						"sequence_name": schema.StringAttribute{
 							MarkdownDescription: "",
 							Computed:            true,
 						},

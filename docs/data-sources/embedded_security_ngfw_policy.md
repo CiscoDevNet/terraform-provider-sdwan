@@ -32,24 +32,24 @@ data "sdwan_embedded_security_ngfw_policy" "example" {
 - `default_action` (String)
 - `description` (String) The description of the Policy
 - `name` (String) The name of the Policy
-- `rules` (Attributes List) (see [below for nested schema](#nestedatt--rules))
+- `sequences` (Attributes List) (see [below for nested schema](#nestedatt--sequences))
 - `version` (Number) The version of the Policy
 
-<a id="nestedatt--rules"></a>
-### Nested Schema for `rules`
+<a id="nestedatt--sequences"></a>
+### Nested Schema for `sequences`
 
 Read-Only:
 
-- `actions` (Attributes List) can be empty array or with type or parameter (see [below for nested schema](#nestedatt--rules--actions))
+- `actions` (Attributes List) can be empty array or with type or parameter (see [below for nested schema](#nestedatt--sequences--actions))
 - `base_action` (String)
 - `disable_rule` (Boolean)
-- `match_entries` (Attributes List) (see [below for nested schema](#nestedatt--rules--match_entries))
-- `rule_id` (String)
-- `rule_name` (String)
+- `match_entries` (Attributes List) (see [below for nested schema](#nestedatt--sequences--match_entries))
 - `rule_type` (String)
+- `sequence_id` (String)
+- `sequence_name` (String)
 
-<a id="nestedatt--rules--actions"></a>
-### Nested Schema for `rules.actions`
+<a id="nestedatt--sequences--actions"></a>
+### Nested Schema for `sequences.actions`
 
 Read-Only:
 
@@ -58,8 +58,8 @@ Read-Only:
 - `type` (String)
 
 
-<a id="nestedatt--rules--match_entries"></a>
-### Nested Schema for `rules.match_entries`
+<a id="nestedatt--sequences--match_entries"></a>
+### Nested Schema for `sequences.match_entries`
 
 Read-Only:
 

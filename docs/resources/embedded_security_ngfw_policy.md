@@ -20,13 +20,13 @@ resource "sdwan_embedded_security_ngfw_policy" "example" {
   description        = "My Example"
   feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   default_action     = "pass"
-  rules = [
+  sequences = [
     {
-      rule_id      = "1"
-      rule_name    = "Rule1"
-      base_action  = "drop"
-      rule_type    = "ngfirewall"
-      disable_rule = false
+      sequence_id   = "1"
+      sequence_name = "security"
+      base_action   = "drop"
+      rule_type     = "ngfirewall"
+      disable_rule  = false
       match_entries = [
         {
           source_ports = ["123"]
@@ -55,28 +55,28 @@ resource "sdwan_embedded_security_ngfw_policy" "example" {
 ### Optional
 
 - `description` (String) The description of the Policy
-- `rules` (Attributes List) (see [below for nested schema](#nestedatt--rules))
+- `sequences` (Attributes List) (see [below for nested schema](#nestedatt--sequences))
 
 ### Read-Only
 
 - `id` (String) The id of the Policy
 - `version` (Number) The version of the Policy
 
-<a id="nestedatt--rules"></a>
-### Nested Schema for `rules`
+<a id="nestedatt--sequences"></a>
+### Nested Schema for `sequences`
 
 Optional:
 
-- `actions` (Attributes List) can be empty array or with type or parameter (see [below for nested schema](#nestedatt--rules--actions))
+- `actions` (Attributes List) can be empty array or with type or parameter (see [below for nested schema](#nestedatt--sequences--actions))
 - `base_action` (String) - Choices: `pass`, `inspect`, `drop`
 - `disable_rule` (Boolean)
-- `match_entries` (Attributes List) (see [below for nested schema](#nestedatt--rules--match_entries))
-- `rule_id` (String)
-- `rule_name` (String)
+- `match_entries` (Attributes List) (see [below for nested schema](#nestedatt--sequences--match_entries))
 - `rule_type` (String)
+- `sequence_id` (String)
+- `sequence_name` (String)
 
-<a id="nestedatt--rules--actions"></a>
-### Nested Schema for `rules.actions`
+<a id="nestedatt--sequences--actions"></a>
+### Nested Schema for `sequences.actions`
 
 Optional:
 
@@ -85,8 +85,8 @@ Optional:
 - `type` (String) - Choices: `log`, `connectionEvents`
 
 
-<a id="nestedatt--rules--match_entries"></a>
-### Nested Schema for `rules.match_entries`
+<a id="nestedatt--sequences--match_entries"></a>
+### Nested Schema for `sequences.match_entries`
 
 Optional:
 
