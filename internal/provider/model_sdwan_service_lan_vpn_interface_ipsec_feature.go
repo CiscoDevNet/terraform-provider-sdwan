@@ -42,30 +42,41 @@ type ServiceLANVPNInterfaceIPSec struct {
 	InterfaceNameVariable                   types.String `tfsdk:"interface_name_variable"`
 	Shutdown                                types.Bool   `tfsdk:"shutdown"`
 	ShutdownVariable                        types.String `tfsdk:"shutdown_variable"`
+	TunnelMode                              types.String `tfsdk:"tunnel_mode"`
 	InterfaceDescription                    types.String `tfsdk:"interface_description"`
 	InterfaceDescriptionVariable            types.String `tfsdk:"interface_description_variable"`
 	Ipv4Address                             types.String `tfsdk:"ipv4_address"`
 	Ipv4AddressVariable                     types.String `tfsdk:"ipv4_address_variable"`
 	Ipv4SubnetMask                          types.String `tfsdk:"ipv4_subnet_mask"`
 	Ipv4SubnetMaskVariable                  types.String `tfsdk:"ipv4_subnet_mask_variable"`
+	Ipv6Address                             types.String `tfsdk:"ipv6_address"`
+	Ipv6AddressVariable                     types.String `tfsdk:"ipv6_address_variable"`
 	TunnelSourceIpv4Address                 types.String `tfsdk:"tunnel_source_ipv4_address"`
 	TunnelSourceIpv4AddressVariable         types.String `tfsdk:"tunnel_source_ipv4_address_variable"`
 	TunnelSourceIpv4SubnetMask              types.String `tfsdk:"tunnel_source_ipv4_subnet_mask"`
 	TunnelSourceIpv4SubnetMaskVariable      types.String `tfsdk:"tunnel_source_ipv4_subnet_mask_variable"`
+	TunnelSourceIpv6Address                 types.String `tfsdk:"tunnel_source_ipv6_address"`
+	TunnelSourceIpv6AddressVariable         types.String `tfsdk:"tunnel_source_ipv6_address_variable"`
 	TunnelSourceInterface                   types.String `tfsdk:"tunnel_source_interface"`
 	TunnelSourceInterfaceVariable           types.String `tfsdk:"tunnel_source_interface_variable"`
 	TunnelDestinationIpv4Address            types.String `tfsdk:"tunnel_destination_ipv4_address"`
 	TunnelDestinationIpv4AddressVariable    types.String `tfsdk:"tunnel_destination_ipv4_address_variable"`
 	TunnelDestinationIpv4SubnetMask         types.String `tfsdk:"tunnel_destination_ipv4_subnet_mask"`
 	TunnelDestinationIpv4SubnetMaskVariable types.String `tfsdk:"tunnel_destination_ipv4_subnet_mask_variable"`
+	TunnelDestinationIpv6Address            types.String `tfsdk:"tunnel_destination_ipv6_address"`
+	TunnelDestinationIpv6AddressVariable    types.String `tfsdk:"tunnel_destination_ipv6_address_variable"`
 	ApplicationTunnelType                   types.String `tfsdk:"application_tunnel_type"`
 	ApplicationTunnelTypeVariable           types.String `tfsdk:"application_tunnel_type_variable"`
-	TcpMss                                  types.Int64  `tfsdk:"tcp_mss"`
-	TcpMssVariable                          types.String `tfsdk:"tcp_mss_variable"`
+	Ipv4TcpMss                              types.Int64  `tfsdk:"ipv4_tcp_mss"`
+	Ipv4TcpMssVariable                      types.String `tfsdk:"ipv4_tcp_mss_variable"`
+	Ipv6TcpMss                              types.Int64  `tfsdk:"ipv6_tcp_mss"`
+	Ipv6TcpMssVariable                      types.String `tfsdk:"ipv6_tcp_mss_variable"`
 	ClearDontFragment                       types.Bool   `tfsdk:"clear_dont_fragment"`
 	ClearDontFragmentVariable               types.String `tfsdk:"clear_dont_fragment_variable"`
-	IpMtu                                   types.Int64  `tfsdk:"ip_mtu"`
-	IpMtuVariable                           types.String `tfsdk:"ip_mtu_variable"`
+	Ipv4Mtu                                 types.Int64  `tfsdk:"ipv4_mtu"`
+	Ipv4MtuVariable                         types.String `tfsdk:"ipv4_mtu_variable"`
+	Ipv6Mtu                                 types.Int64  `tfsdk:"ipv6_mtu"`
+	Ipv6MtuVariable                         types.String `tfsdk:"ipv6_mtu_variable"`
 	DpdInterval                             types.Int64  `tfsdk:"dpd_interval"`
 	DpdIntervalVariable                     types.String `tfsdk:"dpd_interval_variable"`
 	DpdRetries                              types.Int64  `tfsdk:"dpd_retries"`
@@ -150,6 +161,17 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"shutdown.value", data.Shutdown.ValueBool())
 		}
 	}
+	if data.TunnelMode.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"tunnelMode.optionType", "default")
+			body, _ = sjson.Set(body, path+"tunnelMode.value", "ipv4")
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"tunnelMode.optionType", "global")
+			body, _ = sjson.Set(body, path+"tunnelMode.value", data.TunnelMode.ValueString())
+		}
+	}
 
 	if !data.InterfaceDescriptionVariable.IsNull() {
 		if true {
@@ -169,50 +191,74 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 	}
 
 	if !data.Ipv4AddressVariable.IsNull() {
-		if true {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"address.address.optionType", "variable")
 			body, _ = sjson.Set(body, path+"address.address.value", data.Ipv4AddressVariable.ValueString())
 		}
 	} else if !data.Ipv4Address.IsNull() {
-		if true {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"address.address.optionType", "global")
 			body, _ = sjson.Set(body, path+"address.address.value", data.Ipv4Address.ValueString())
 		}
 	}
 
 	if !data.Ipv4SubnetMaskVariable.IsNull() {
-		if true {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"address.mask.optionType", "variable")
 			body, _ = sjson.Set(body, path+"address.mask.value", data.Ipv4SubnetMaskVariable.ValueString())
 		}
 	} else if !data.Ipv4SubnetMask.IsNull() {
-		if true {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"address.mask.optionType", "global")
 			body, _ = sjson.Set(body, path+"address.mask.value", data.Ipv4SubnetMask.ValueString())
 		}
 	}
 
+	if !data.Ipv6AddressVariable.IsNull() {
+		if true && (data.TunnelMode.ValueString() == "ipv6" || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
+			body, _ = sjson.Set(body, path+"ipv6Address.ipv6Address.optionType", "variable")
+			body, _ = sjson.Set(body, path+"ipv6Address.ipv6Address.value", data.Ipv6AddressVariable.ValueString())
+		}
+	} else if !data.Ipv6Address.IsNull() {
+		if true && (data.TunnelMode.ValueString() == "ipv6" || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
+			body, _ = sjson.Set(body, path+"ipv6Address.ipv6Address.optionType", "global")
+			body, _ = sjson.Set(body, path+"ipv6Address.ipv6Address.value", data.Ipv6Address.ValueString())
+		}
+	}
+
 	if !data.TunnelSourceIpv4AddressVariable.IsNull() {
-		if true {
+		if true && ((data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
 			body, _ = sjson.Set(body, path+"tunnelSource.address.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnelSource.address.value", data.TunnelSourceIpv4AddressVariable.ValueString())
 		}
 	} else if !data.TunnelSourceIpv4Address.IsNull() {
-		if true {
+		if true && ((data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
 			body, _ = sjson.Set(body, path+"tunnelSource.address.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnelSource.address.value", data.TunnelSourceIpv4Address.ValueString())
 		}
 	}
 
 	if !data.TunnelSourceIpv4SubnetMaskVariable.IsNull() {
-		if true {
+		if true && ((data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
 			body, _ = sjson.Set(body, path+"tunnelSource.mask.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnelSource.mask.value", data.TunnelSourceIpv4SubnetMaskVariable.ValueString())
 		}
 	} else if !data.TunnelSourceIpv4SubnetMask.IsNull() {
-		if true {
+		if true && ((data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
 			body, _ = sjson.Set(body, path+"tunnelSource.mask.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnelSource.mask.value", data.TunnelSourceIpv4SubnetMask.ValueString())
+		}
+	}
+
+	if !data.TunnelSourceIpv6AddressVariable.IsNull() {
+		if true && data.TunnelMode.ValueString() == "ipv6" {
+			body, _ = sjson.Set(body, path+"tunnelSourceV6.optionType", "variable")
+			body, _ = sjson.Set(body, path+"tunnelSourceV6.value", data.TunnelSourceIpv6AddressVariable.ValueString())
+		}
+	} else if !data.TunnelSourceIpv6Address.IsNull() {
+		if true && data.TunnelMode.ValueString() == "ipv6" {
+			body, _ = sjson.Set(body, path+"tunnelSourceV6.optionType", "global")
+			body, _ = sjson.Set(body, path+"tunnelSourceV6.value", data.TunnelSourceIpv6Address.ValueString())
 		}
 	}
 
@@ -229,26 +275,38 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 	}
 
 	if !data.TunnelDestinationIpv4AddressVariable.IsNull() {
-		if true {
+		if true && ((data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
 			body, _ = sjson.Set(body, path+"tunnelDestination.address.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnelDestination.address.value", data.TunnelDestinationIpv4AddressVariable.ValueString())
 		}
 	} else if !data.TunnelDestinationIpv4Address.IsNull() {
-		if true {
+		if true && ((data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
 			body, _ = sjson.Set(body, path+"tunnelDestination.address.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnelDestination.address.value", data.TunnelDestinationIpv4Address.ValueString())
 		}
 	}
 
 	if !data.TunnelDestinationIpv4SubnetMaskVariable.IsNull() {
-		if true {
+		if true && ((data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
 			body, _ = sjson.Set(body, path+"tunnelDestination.mask.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnelDestination.mask.value", data.TunnelDestinationIpv4SubnetMaskVariable.ValueString())
 		}
 	} else if !data.TunnelDestinationIpv4SubnetMask.IsNull() {
-		if true {
+		if true && ((data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
 			body, _ = sjson.Set(body, path+"tunnelDestination.mask.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnelDestination.mask.value", data.TunnelDestinationIpv4SubnetMask.ValueString())
+		}
+	}
+
+	if !data.TunnelDestinationIpv6AddressVariable.IsNull() {
+		if true && data.TunnelMode.ValueString() == "ipv6" {
+			body, _ = sjson.Set(body, path+"tunnelDestinationV6.optionType", "variable")
+			body, _ = sjson.Set(body, path+"tunnelDestinationV6.value", data.TunnelDestinationIpv6AddressVariable.ValueString())
+		}
+	} else if !data.TunnelDestinationIpv6Address.IsNull() {
+		if true && data.TunnelMode.ValueString() == "ipv6" {
+			body, _ = sjson.Set(body, path+"tunnelDestinationV6.optionType", "global")
+			body, _ = sjson.Set(body, path+"tunnelDestinationV6.value", data.TunnelDestinationIpv6Address.ValueString())
 		}
 	}
 
@@ -264,20 +322,37 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 		}
 	}
 
-	if !data.TcpMssVariable.IsNull() {
-		if true {
+	if !data.Ipv4TcpMssVariable.IsNull() {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"tcpMssAdjust.optionType", "variable")
-			body, _ = sjson.Set(body, path+"tcpMssAdjust.value", data.TcpMssVariable.ValueString())
+			body, _ = sjson.Set(body, path+"tcpMssAdjust.value", data.Ipv4TcpMssVariable.ValueString())
 		}
-	} else if data.TcpMss.IsNull() {
-		if true {
+	} else if data.Ipv4TcpMss.IsNull() {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"tcpMssAdjust.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"tcpMssAdjust.optionType", "global")
-			body, _ = sjson.Set(body, path+"tcpMssAdjust.value", data.TcpMss.ValueInt64())
+			body, _ = sjson.Set(body, path+"tcpMssAdjust.value", data.Ipv4TcpMss.ValueInt64())
+		}
+	}
+
+	if !data.Ipv6TcpMssVariable.IsNull() {
+		if true && (data.TunnelMode.ValueString() == "ipv6" || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
+			body, _ = sjson.Set(body, path+"tcpMssAdjustV6.optionType", "variable")
+			body, _ = sjson.Set(body, path+"tcpMssAdjustV6.value", data.Ipv6TcpMssVariable.ValueString())
+		}
+	} else if data.Ipv6TcpMss.IsNull() {
+		if true && (data.TunnelMode.ValueString() == "ipv6" || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
+			body, _ = sjson.Set(body, path+"tcpMssAdjustV6.optionType", "default")
+
+		}
+	} else {
+		if true && (data.TunnelMode.ValueString() == "ipv6" || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
+			body, _ = sjson.Set(body, path+"tcpMssAdjustV6.optionType", "global")
+			body, _ = sjson.Set(body, path+"tcpMssAdjustV6.value", data.Ipv6TcpMss.ValueInt64())
 		}
 	}
 
@@ -298,20 +373,37 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 		}
 	}
 
-	if !data.IpMtuVariable.IsNull() {
-		if true {
+	if !data.Ipv4MtuVariable.IsNull() {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"mtu.optionType", "variable")
-			body, _ = sjson.Set(body, path+"mtu.value", data.IpMtuVariable.ValueString())
+			body, _ = sjson.Set(body, path+"mtu.value", data.Ipv4MtuVariable.ValueString())
 		}
-	} else if data.IpMtu.IsNull() {
-		if true {
+	} else if data.Ipv4Mtu.IsNull() {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"mtu.optionType", "default")
 			body, _ = sjson.Set(body, path+"mtu.value", 1500)
 		}
 	} else {
-		if true {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"mtu.optionType", "global")
-			body, _ = sjson.Set(body, path+"mtu.value", data.IpMtu.ValueInt64())
+			body, _ = sjson.Set(body, path+"mtu.value", data.Ipv4Mtu.ValueInt64())
+		}
+	}
+
+	if !data.Ipv6MtuVariable.IsNull() {
+		if true && (data.TunnelMode.ValueString() == "ipv6" || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
+			body, _ = sjson.Set(body, path+"mtuV6.optionType", "variable")
+			body, _ = sjson.Set(body, path+"mtuV6.value", data.Ipv6MtuVariable.ValueString())
+		}
+	} else if data.Ipv6Mtu.IsNull() {
+		if true && (data.TunnelMode.ValueString() == "ipv6" || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
+			body, _ = sjson.Set(body, path+"mtuV6.optionType", "default")
+
+		}
+	} else {
+		if true && (data.TunnelMode.ValueString() == "ipv6" || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
+			body, _ = sjson.Set(body, path+"mtuV6.optionType", "global")
+			body, _ = sjson.Set(body, path+"mtuV6.value", data.Ipv6Mtu.ValueInt64())
 		}
 	}
 
@@ -609,6 +701,14 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 			data.Shutdown = types.BoolValue(va.Bool())
 		}
 	}
+	data.TunnelMode = types.StringNull()
+
+	if t := res.Get(path + "tunnelMode.optionType"); t.Exists() {
+		va := res.Get(path + "tunnelMode.value")
+		if t.String() == "global" {
+			data.TunnelMode = types.StringValue(va.String())
+		}
+	}
 	data.InterfaceDescription = types.StringNull()
 	data.InterfaceDescriptionVariable = types.StringNull()
 	if t := res.Get(path + "description.optionType"); t.Exists() {
@@ -628,6 +728,7 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.Ipv4Address = types.StringValue(va.String())
 		}
+		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.Ipv4SubnetMask = types.StringNull()
 	data.Ipv4SubnetMaskVariable = types.StringNull()
@@ -638,6 +739,19 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
+		data.TunnelMode = types.StringValue("ipv4")
+	}
+	data.Ipv6Address = types.StringNull()
+	data.Ipv6AddressVariable = types.StringNull()
+	if t := res.Get(path + "ipv6Address.ipv6Address.optionType"); t.Exists() {
+		va := res.Get(path + "ipv6Address.ipv6Address.value")
+		if t.String() == "variable" {
+			data.Ipv6AddressVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.Ipv6Address = types.StringValue(va.String())
+		}
+		data.TunnelMode = types.StringValue("ipv6")
+		data.TunnelMode = types.StringValue("ipv4-v6overlay")
 	}
 	data.TunnelSourceIpv4Address = types.StringNull()
 	data.TunnelSourceIpv4AddressVariable = types.StringNull()
@@ -648,6 +762,8 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelSourceIpv4Address = types.StringValue(va.String())
 		}
+		data.TunnelMode = types.StringValue("ipv4")
+		data.TunnelMode = types.StringValue("ipv4-v6overlay")
 	}
 	data.TunnelSourceIpv4SubnetMask = types.StringNull()
 	data.TunnelSourceIpv4SubnetMaskVariable = types.StringNull()
@@ -658,6 +774,19 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelSourceIpv4SubnetMask = types.StringValue(va.String())
 		}
+		data.TunnelMode = types.StringValue("ipv4")
+		data.TunnelMode = types.StringValue("ipv4-v6overlay")
+	}
+	data.TunnelSourceIpv6Address = types.StringNull()
+	data.TunnelSourceIpv6AddressVariable = types.StringNull()
+	if t := res.Get(path + "tunnelSourceV6.optionType"); t.Exists() {
+		va := res.Get(path + "tunnelSourceV6.value")
+		if t.String() == "variable" {
+			data.TunnelSourceIpv6AddressVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TunnelSourceIpv6Address = types.StringValue(va.String())
+		}
+		data.TunnelMode = types.StringValue("ipv6")
 	}
 	data.TunnelSourceInterface = types.StringNull()
 	data.TunnelSourceInterfaceVariable = types.StringNull()
@@ -678,6 +807,8 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelDestinationIpv4Address = types.StringValue(va.String())
 		}
+		data.TunnelMode = types.StringValue("ipv4")
+		data.TunnelMode = types.StringValue("ipv4-v6overlay")
 	}
 	data.TunnelDestinationIpv4SubnetMask = types.StringNull()
 	data.TunnelDestinationIpv4SubnetMaskVariable = types.StringNull()
@@ -688,6 +819,19 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelDestinationIpv4SubnetMask = types.StringValue(va.String())
 		}
+		data.TunnelMode = types.StringValue("ipv4")
+		data.TunnelMode = types.StringValue("ipv4-v6overlay")
+	}
+	data.TunnelDestinationIpv6Address = types.StringNull()
+	data.TunnelDestinationIpv6AddressVariable = types.StringNull()
+	if t := res.Get(path + "tunnelDestinationV6.optionType"); t.Exists() {
+		va := res.Get(path + "tunnelDestinationV6.value")
+		if t.String() == "variable" {
+			data.TunnelDestinationIpv6AddressVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TunnelDestinationIpv6Address = types.StringValue(va.String())
+		}
+		data.TunnelMode = types.StringValue("ipv6")
 	}
 	data.ApplicationTunnelType = types.StringNull()
 	data.ApplicationTunnelTypeVariable = types.StringNull()
@@ -699,15 +843,28 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 			data.ApplicationTunnelType = types.StringValue(va.String())
 		}
 	}
-	data.TcpMss = types.Int64Null()
-	data.TcpMssVariable = types.StringNull()
+	data.Ipv4TcpMss = types.Int64Null()
+	data.Ipv4TcpMssVariable = types.StringNull()
 	if t := res.Get(path + "tcpMssAdjust.optionType"); t.Exists() {
 		va := res.Get(path + "tcpMssAdjust.value")
 		if t.String() == "variable" {
-			data.TcpMssVariable = types.StringValue(va.String())
+			data.Ipv4TcpMssVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TcpMss = types.Int64Value(va.Int())
+			data.Ipv4TcpMss = types.Int64Value(va.Int())
 		}
+		data.TunnelMode = types.StringValue("ipv4")
+	}
+	data.Ipv6TcpMss = types.Int64Null()
+	data.Ipv6TcpMssVariable = types.StringNull()
+	if t := res.Get(path + "tcpMssAdjustV6.optionType"); t.Exists() {
+		va := res.Get(path + "tcpMssAdjustV6.value")
+		if t.String() == "variable" {
+			data.Ipv6TcpMssVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.Ipv6TcpMss = types.Int64Value(va.Int())
+		}
+		data.TunnelMode = types.StringValue("ipv6")
+		data.TunnelMode = types.StringValue("ipv4-v6overlay")
 	}
 	data.ClearDontFragment = types.BoolNull()
 	data.ClearDontFragmentVariable = types.StringNull()
@@ -719,15 +876,28 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 			data.ClearDontFragment = types.BoolValue(va.Bool())
 		}
 	}
-	data.IpMtu = types.Int64Null()
-	data.IpMtuVariable = types.StringNull()
+	data.Ipv4Mtu = types.Int64Null()
+	data.Ipv4MtuVariable = types.StringNull()
 	if t := res.Get(path + "mtu.optionType"); t.Exists() {
 		va := res.Get(path + "mtu.value")
 		if t.String() == "variable" {
-			data.IpMtuVariable = types.StringValue(va.String())
+			data.Ipv4MtuVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.IpMtu = types.Int64Value(va.Int())
+			data.Ipv4Mtu = types.Int64Value(va.Int())
 		}
+		data.TunnelMode = types.StringValue("ipv4")
+	}
+	data.Ipv6Mtu = types.Int64Null()
+	data.Ipv6MtuVariable = types.StringNull()
+	if t := res.Get(path + "mtuV6.optionType"); t.Exists() {
+		va := res.Get(path + "mtuV6.value")
+		if t.String() == "variable" {
+			data.Ipv6MtuVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.Ipv6Mtu = types.Int64Value(va.Int())
+		}
+		data.TunnelMode = types.StringValue("ipv6")
+		data.TunnelMode = types.StringValue("ipv4-v6overlay")
 	}
 	data.DpdInterval = types.Int64Null()
 	data.DpdIntervalVariable = types.StringNull()
@@ -920,6 +1090,14 @@ func (data *ServiceLANVPNInterfaceIPSec) updateFromBody(ctx context.Context, res
 			data.Shutdown = types.BoolValue(va.Bool())
 		}
 	}
+	data.TunnelMode = types.StringNull()
+
+	if t := res.Get(path + "tunnelMode.optionType"); t.Exists() {
+		va := res.Get(path + "tunnelMode.value")
+		if t.String() == "global" {
+			data.TunnelMode = types.StringValue(va.String())
+		}
+	}
 	data.InterfaceDescription = types.StringNull()
 	data.InterfaceDescriptionVariable = types.StringNull()
 	if t := res.Get(path + "description.optionType"); t.Exists() {
@@ -950,6 +1128,16 @@ func (data *ServiceLANVPNInterfaceIPSec) updateFromBody(ctx context.Context, res
 			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
 	}
+	data.Ipv6Address = types.StringNull()
+	data.Ipv6AddressVariable = types.StringNull()
+	if t := res.Get(path + "ipv6Address.ipv6Address.optionType"); t.Exists() {
+		va := res.Get(path + "ipv6Address.ipv6Address.value")
+		if t.String() == "variable" {
+			data.Ipv6AddressVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.Ipv6Address = types.StringValue(va.String())
+		}
+	}
 	data.TunnelSourceIpv4Address = types.StringNull()
 	data.TunnelSourceIpv4AddressVariable = types.StringNull()
 	if t := res.Get(path + "tunnelSource.address.optionType"); t.Exists() {
@@ -968,6 +1156,16 @@ func (data *ServiceLANVPNInterfaceIPSec) updateFromBody(ctx context.Context, res
 			data.TunnelSourceIpv4SubnetMaskVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.TunnelSourceIpv4SubnetMask = types.StringValue(va.String())
+		}
+	}
+	data.TunnelSourceIpv6Address = types.StringNull()
+	data.TunnelSourceIpv6AddressVariable = types.StringNull()
+	if t := res.Get(path + "tunnelSourceV6.optionType"); t.Exists() {
+		va := res.Get(path + "tunnelSourceV6.value")
+		if t.String() == "variable" {
+			data.TunnelSourceIpv6AddressVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TunnelSourceIpv6Address = types.StringValue(va.String())
 		}
 	}
 	data.TunnelSourceInterface = types.StringNull()
@@ -1000,6 +1198,16 @@ func (data *ServiceLANVPNInterfaceIPSec) updateFromBody(ctx context.Context, res
 			data.TunnelDestinationIpv4SubnetMask = types.StringValue(va.String())
 		}
 	}
+	data.TunnelDestinationIpv6Address = types.StringNull()
+	data.TunnelDestinationIpv6AddressVariable = types.StringNull()
+	if t := res.Get(path + "tunnelDestinationV6.optionType"); t.Exists() {
+		va := res.Get(path + "tunnelDestinationV6.value")
+		if t.String() == "variable" {
+			data.TunnelDestinationIpv6AddressVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TunnelDestinationIpv6Address = types.StringValue(va.String())
+		}
+	}
 	data.ApplicationTunnelType = types.StringNull()
 	data.ApplicationTunnelTypeVariable = types.StringNull()
 	if t := res.Get(path + "application.optionType"); t.Exists() {
@@ -1010,14 +1218,24 @@ func (data *ServiceLANVPNInterfaceIPSec) updateFromBody(ctx context.Context, res
 			data.ApplicationTunnelType = types.StringValue(va.String())
 		}
 	}
-	data.TcpMss = types.Int64Null()
-	data.TcpMssVariable = types.StringNull()
+	data.Ipv4TcpMss = types.Int64Null()
+	data.Ipv4TcpMssVariable = types.StringNull()
 	if t := res.Get(path + "tcpMssAdjust.optionType"); t.Exists() {
 		va := res.Get(path + "tcpMssAdjust.value")
 		if t.String() == "variable" {
-			data.TcpMssVariable = types.StringValue(va.String())
+			data.Ipv4TcpMssVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TcpMss = types.Int64Value(va.Int())
+			data.Ipv4TcpMss = types.Int64Value(va.Int())
+		}
+	}
+	data.Ipv6TcpMss = types.Int64Null()
+	data.Ipv6TcpMssVariable = types.StringNull()
+	if t := res.Get(path + "tcpMssAdjustV6.optionType"); t.Exists() {
+		va := res.Get(path + "tcpMssAdjustV6.value")
+		if t.String() == "variable" {
+			data.Ipv6TcpMssVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.Ipv6TcpMss = types.Int64Value(va.Int())
 		}
 	}
 	data.ClearDontFragment = types.BoolNull()
@@ -1030,14 +1248,24 @@ func (data *ServiceLANVPNInterfaceIPSec) updateFromBody(ctx context.Context, res
 			data.ClearDontFragment = types.BoolValue(va.Bool())
 		}
 	}
-	data.IpMtu = types.Int64Null()
-	data.IpMtuVariable = types.StringNull()
+	data.Ipv4Mtu = types.Int64Null()
+	data.Ipv4MtuVariable = types.StringNull()
 	if t := res.Get(path + "mtu.optionType"); t.Exists() {
 		va := res.Get(path + "mtu.value")
 		if t.String() == "variable" {
-			data.IpMtuVariable = types.StringValue(va.String())
+			data.Ipv4MtuVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.IpMtu = types.Int64Value(va.Int())
+			data.Ipv4Mtu = types.Int64Value(va.Int())
+		}
+	}
+	data.Ipv6Mtu = types.Int64Null()
+	data.Ipv6MtuVariable = types.StringNull()
+	if t := res.Get(path + "mtuV6.optionType"); t.Exists() {
+		va := res.Get(path + "mtuV6.value")
+		if t.String() == "variable" {
+			data.Ipv6MtuVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.Ipv6Mtu = types.Int64Value(va.Int())
 		}
 	}
 	data.DpdInterval = types.Int64Null()
