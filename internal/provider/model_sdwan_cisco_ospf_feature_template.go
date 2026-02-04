@@ -1292,6 +1292,7 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 				} else if cValue.String() == "ignore" {
 					item.StubNoSummary = types.BoolNull()
 					item.StubNoSummaryVariable = types.StringNull()
+					item.Stub = types.BoolNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("stub.no-summary.vipValue")
 					item.StubNoSummary = types.BoolValue(cv.Bool())
@@ -1330,6 +1331,7 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 				} else if cValue.String() == "ignore" {
 					item.NssaNoSummary = types.BoolNull()
 					item.NssaNoSummaryVariable = types.StringNull()
+					item.Nssa = types.BoolNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("nssa.no-summary.vipValue")
 					item.NssaNoSummary = types.BoolValue(cv.Bool())

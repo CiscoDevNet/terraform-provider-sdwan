@@ -8,7 +8,7 @@ description: |-
 # Changelog
 
 ## 0.9.1 (Unreleased)
-
+- Fix idempotency issue with `sdwan_cisco_ospf_feature_template` properties `areas.stub` and `areas.nssa` causing unexpected updates after UI save operations and brownfield imports
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_other_ucse_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_other_thousandeyes_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_cli_config_feature` to `20.15.0`
