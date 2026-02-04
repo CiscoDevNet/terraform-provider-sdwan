@@ -4,13 +4,13 @@ page_title: "sdwan_service_lan_vpn_interface_ipsec_feature Resource - terraform-
 subcategory: "Features - Service"
 description: |-
   This resource can manage a Service LAN VPN Interface IPSec Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_service_lan_vpn_interface_ipsec_feature (Resource)
 
 This resource can manage a Service LAN VPN Interface IPSec Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -22,18 +22,18 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
   service_lan_vpn_feature_id          = "140331f6-5418-4755-a059-13c77eb96037"
   interface_name                      = "ipsec987"
   shutdown                            = true
+  tunnel_mode                         = "ipv4"
   interface_description               = "ipsec987"
   ipv4_address                        = "9.7.5.4"
   ipv4_subnet_mask                    = "255.255.255.0"
   tunnel_source_ipv4_address          = "1.3.5.88"
   tunnel_source_ipv4_subnet_mask      = "255.255.255.0"
-  tunnel_source_interface             = "GigabitEthernet8"
   tunnel_destination_ipv4_address     = "2.55.67.99"
   tunnel_destination_ipv4_subnet_mask = "255.255.255.0"
   application_tunnel_type             = "none"
-  tcp_mss                             = 1460
+  ipv4_tcp_mss                        = 1460
   clear_dont_fragment                 = false
-  ip_mtu                              = 1500
+  ipv4_mtu                            = 1500
   dpd_interval                        = 10
   dpd_retries                         = 3
   ike_preshared_key                   = "123"
@@ -60,7 +60,6 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 - `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
-- `tunnel_destination_ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 
 ### Optional
 
@@ -108,10 +107,6 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
 - `interface_description_variable` (String) Variable name
 - `interface_name` (String) Interface name: IPsec when present
 - `interface_name_variable` (String) Variable name
-- `ip_mtu` (Number) Interface MTU <68..9216>, in bytes
-  - Range: `68`-`9216`
-  - Default value: `1500`
-- `ip_mtu_variable` (String) Variable name
 - `ipsec_ciphersuite` (String) IPsec(ESP) encryption and integrity protocol
   - Choices: `aes256-cbc-sha1`, `aes256-cbc-sha384`, `aes256-cbc-sha256`, `aes256-cbc-sha512`, `aes256-gcm`, `null-sha1`, `null-sha384`, `null-sha256`, `null-sha512`
   - Default value: `aes256-gcm`
@@ -124,10 +119,26 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
   - Range: `64`-`4096`
   - Default value: `512`
 - `ipsec_replay_window_variable` (String) Variable name
-- `ipv4_address` (String)
-- `ipv4_address_variable` (String) Variable name
-- `ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
-- `ipv4_subnet_mask_variable` (String) Variable name
+- `ipv4_address` (String) , Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `ipv4_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `ipv4_mtu` (Number) Interface MTU <68..9216>, in bytes, Attribute conditional on `tunnel_mode` equal to `ipv4`
+  - Range: `68`-`9216`
+  - Default value: `1500`
+- `ipv4_mtu_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `ipv4_subnet_mask` (String) , Attribute conditional on `tunnel_mode` equal to `ipv4`
+  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
+- `ipv4_subnet_mask_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `ipv4_tcp_mss` (Number) TCP MSS on SYN packets, in bytes, Attribute conditional on `tunnel_mode` equal to `ipv4`
+  - Range: `500`-`1460`
+- `ipv4_tcp_mss_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `ipv6_address` (String) Assign IPv6 address, Attribute conditional on `tunnel_mode` equal to `ipv6` or `tunnel_mode` equal to `ipv4-v6overlay`
+- `ipv6_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6` or `tunnel_mode` equal to `ipv4-v6overlay`
+- `ipv6_mtu` (Number) Interface MTU <1280..9976>, in bytes, Attribute conditional on `tunnel_mode` equal to `ipv6` or `tunnel_mode` equal to `ipv4-v6overlay`
+  - Range: `1280`-`9976`
+- `ipv6_mtu_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6` or `tunnel_mode` equal to `ipv4-v6overlay`
+- `ipv6_tcp_mss` (Number) IPv6 TCP MSS on SYN packets, in bytes, Attribute conditional on `tunnel_mode` equal to `ipv6` or `tunnel_mode` equal to `ipv4-v6overlay`
+  - Range: `40`-`1454`
+- `ipv6_tcp_mss_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6` or `tunnel_mode` equal to `ipv4-v6overlay`
 - `perfect_forward_secrecy` (String) IPsec perfect forward secrecy settings
   - Choices: `group-1`, `group-2`, `group-5`, `group-14`, `group-15`, `group-16`, `group-19`, `group-20`, `group-21`, `group-24`, `none`
   - Default value: `group-16`
@@ -135,22 +146,29 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
 - `shutdown` (Boolean) Administrative state
   - Default value: `true`
 - `shutdown_variable` (String) Variable name
-- `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
-  - Range: `500`-`1460`
-- `tcp_mss_variable` (String) Variable name
 - `tracker_id` (String) Enable tracker for this interface
 - `tracker_id_variable` (String) Variable name
-- `tunnel_destination_ipv4_address` (String)
-- `tunnel_destination_ipv4_address_variable` (String) Variable name
-- `tunnel_destination_ipv4_subnet_mask_variable` (String) Variable name
+- `tunnel_destination_ipv4_address` (String) , Attribute conditional on `tunnel_mode` equal to `ipv4` or `tunnel_mode` equal to `ipv4-v6overlay`
+- `tunnel_destination_ipv4_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4` or `tunnel_mode` equal to `ipv4-v6overlay`
+- `tunnel_destination_ipv4_subnet_mask` (String) , Attribute conditional on `tunnel_mode` equal to `ipv4` or `tunnel_mode` equal to `ipv4-v6overlay`
+  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
+- `tunnel_destination_ipv4_subnet_mask_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4` or `tunnel_mode` equal to `ipv4-v6overlay`
+- `tunnel_destination_ipv6_address` (String) Tunnel destination IPv6 Address, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `tunnel_destination_ipv6_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `tunnel_mode` (String) IPsec Tunnel Mode
+  - Choices: `ipv4`, `ipv6`, `ipv4-v6overlay`
+  - Default value: `ipv4`
 - `tunnel_route_via` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
 - `tunnel_route_via_variable` (String) Variable name
 - `tunnel_source_interface` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
 - `tunnel_source_interface_variable` (String) Variable name
-- `tunnel_source_ipv4_address` (String)
-- `tunnel_source_ipv4_address_variable` (String) Variable name
-- `tunnel_source_ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
-- `tunnel_source_ipv4_subnet_mask_variable` (String) Variable name
+- `tunnel_source_ipv4_address` (String) , Attribute conditional on `tunnel_mode` equal to `ipv4` or `tunnel_mode` equal to `ipv4-v6overlay`
+- `tunnel_source_ipv4_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4` or `tunnel_mode` equal to `ipv4-v6overlay`
+- `tunnel_source_ipv4_subnet_mask` (String) , Attribute conditional on `tunnel_mode` equal to `ipv4` or `tunnel_mode` equal to `ipv4-v6overlay`
+  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
+- `tunnel_source_ipv4_subnet_mask_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4` or `tunnel_mode` equal to `ipv4-v6overlay`
+- `tunnel_source_ipv6_address` (String) Tunnel source IPv6 Address, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `tunnel_source_ipv6_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`
 
 ### Read-Only
 

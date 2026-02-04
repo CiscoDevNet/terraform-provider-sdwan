@@ -174,26 +174,26 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 	path := "data."
 	{{- range .Attributes}}
 	{{- if .Value}}
-	if true{{buildConditionalLogic .ConditionalAttribute "data"}} {
+	if true{{buildConditionalLogic .ConditionalAttribute $.Attributes "data"}} {
 	body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", {{if .ValueType}}"{{.ValueType}}"{{else}}"default"{{end}})
 	body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.Value}}{{if eq .Type "String"}}"{{end}})
 	}
 	{{- else if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .TfOnly) (not .Reference)}}
 	{{if .Variable}}
 	if !data.{{toGoName .TfName}}Variable.IsNull() {
-		if true{{buildConditionalLogic .ConditionalAttribute "data"}} {
+		if true{{buildConditionalLogic .ConditionalAttribute $.Attributes "data"}} {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", data.{{toGoName .TfName}}Variable.ValueString())
 		}
 	} else {{end}}{{if and .DefaultValuePresent (not .ExcludeNull)}}if data.{{toGoName .TfName}}.IsNull() {{if and .DynamicDefault .DefaultValuePresent}}|| data.{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"{{end}} {
-		if true{{buildConditionalLogic .ConditionalAttribute "data"}} {
+		if true{{buildConditionalLogic .ConditionalAttribute $.Attributes "data"}} {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 		{{if or .DefaultValue .DefaultValueEmptyString}}body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
 		}
 	} else {{else if .AlwaysIncludeParent }}if data.{{toGoName .TfName}}.IsNull() {
 			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 	} else {{else}}if !data.{{toGoName .TfName}}.IsNull(){{end}} {
-		if true{{buildConditionalLogic .ConditionalAttribute "data"}} {
+		if true{{buildConditionalLogic .ConditionalAttribute $.Attributes "data"}} {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
 		{{- if isListSet .}}
 		var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int64{{end}}
@@ -213,7 +213,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		}
 	}
 	{{- else if isNestedListSet .}}
-	if true{{buildConditionalLogic .ConditionalAttribute "data"}} {
+	if true{{buildConditionalLogic .ConditionalAttribute $.Attributes "data"}} {
 		{{if and (not .MinList) (not .ExcludeNull)}}body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{}){{end}}
 		for _, item := range data.{{toGoName .TfName}} {
 			itemBody := ""
