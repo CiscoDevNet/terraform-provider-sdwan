@@ -29,15 +29,17 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanTransportWANVPNInterfaceIPSECProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_feature.test", "shutdown", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_feature.test", "multiplexing", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_feature.test", "tunnel_mode", "ipv4"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_feature.test", "interface_description", "ipsec987"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_feature.test", "tcp_mss", "1460"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_feature.test", "ipv4_tcp_mss", "1460"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_feature.test", "clear_dont_fragment", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_feature.test", "ip_mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_feature.test", "ipv4_mtu", "1500"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_feature.test", "dpd_interval", "10"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_feature.test", "dpd_retries", "3"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_feature.test", "ike_version", "1"))
@@ -141,18 +143,19 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceIPSECProfileParcelConfig() st
 	config += `	transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id` + "\n"
 	config += `	interface_name = "ipsec987"` + "\n"
 	config += `	shutdown = true` + "\n"
+	config += `	multiplexing = false` + "\n"
+	config += `	tunnel_mode = "ipv4"` + "\n"
 	config += `	interface_description = "ipsec987"` + "\n"
 	config += `	ipv4_address = "9.7.5.4"` + "\n"
 	config += `	ipv4_subnet_mask = "255.255.255.0"` + "\n"
 	config += `	tunnel_source_ipv4_address = "1.3.5.88"` + "\n"
 	config += `	tunnel_source_ipv4_subnet_mask = "255.255.255.0"` + "\n"
-	config += `	tunnel_source_interface = "GigabitEthernet8"` + "\n"
 	config += `	tunnel_destination_ipv4_address = "2.55.67.99"` + "\n"
 	config += `	tunnel_destination_ipv4_subnet_mask = "255.255.255.0"` + "\n"
 	config += `	application_tunnel_type = "none"` + "\n"
-	config += `	tcp_mss = 1460` + "\n"
+	config += `	ipv4_tcp_mss = 1460` + "\n"
 	config += `	clear_dont_fragment = false` + "\n"
-	config += `	ip_mtu = 1500` + "\n"
+	config += `	ipv4_mtu = 1500` + "\n"
 	config += `	dpd_interval = 10` + "\n"
 	config += `	dpd_retries = 3` + "\n"
 	config += `	ike_preshared_key = "123"` + "\n"
