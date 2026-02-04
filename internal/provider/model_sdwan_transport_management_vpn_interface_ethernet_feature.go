@@ -174,17 +174,17 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context) 
 	}
 
 	if !data.Ipv4DhcpDistanceVariable.IsNull() {
-		if true && data.Ipv4ConfigurationType.ValueString() == "dynamic" {
+		if true && (data.Ipv4ConfigurationType.ValueString() == "dynamic" || data.Ipv4ConfigurationType.IsNull()) {
 			body, _ = sjson.Set(body, path+"intfIpAddress.dynamic.dynamicDhcpDistance.optionType", "variable")
 			body, _ = sjson.Set(body, path+"intfIpAddress.dynamic.dynamicDhcpDistance.value", data.Ipv4DhcpDistanceVariable.ValueString())
 		}
 	} else if data.Ipv4DhcpDistance.IsNull() {
-		if true && data.Ipv4ConfigurationType.ValueString() == "dynamic" {
+		if true && (data.Ipv4ConfigurationType.ValueString() == "dynamic" || data.Ipv4ConfigurationType.IsNull()) {
 			body, _ = sjson.Set(body, path+"intfIpAddress.dynamic.dynamicDhcpDistance.optionType", "default")
 			body, _ = sjson.Set(body, path+"intfIpAddress.dynamic.dynamicDhcpDistance.value", 1)
 		}
 	} else {
-		if true && data.Ipv4ConfigurationType.ValueString() == "dynamic" {
+		if true && (data.Ipv4ConfigurationType.ValueString() == "dynamic" || data.Ipv4ConfigurationType.IsNull()) {
 			body, _ = sjson.Set(body, path+"intfIpAddress.dynamic.dynamicDhcpDistance.optionType", "global")
 			body, _ = sjson.Set(body, path+"intfIpAddress.dynamic.dynamicDhcpDistance.value", data.Ipv4DhcpDistance.ValueInt64())
 		}
