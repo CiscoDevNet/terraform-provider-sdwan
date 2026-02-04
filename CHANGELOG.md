@@ -27,6 +27,7 @@
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_advanced_malware_protection` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_tls_ssl_decryption` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_tls_ssl_profile` to `20.15.0`
+- Fix perpetual diff in `sdwan_configuration_group` resource for `topology_label` attribute when not specified in non-dual-edge configurations
 
 ## 0.9.0
 
