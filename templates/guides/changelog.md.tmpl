@@ -36,6 +36,9 @@ description: |-
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_advanced_malware_protection` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_tls_ssl_decryption` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_tls_ssl_profile` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_interface_gre` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_interface_svi` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_lan_vpn_interface_gre` to `20.15.0`
 
 ## 0.9.0
 

@@ -107,38 +107,40 @@ type ServiceLANVPNInterfaceSVIArps struct {
 }
 
 type ServiceLANVPNInterfaceSVIIpv4Vrrps struct {
-	GroupId                       types.Int64                                            `tfsdk:"group_id"`
-	GroupIdVariable               types.String                                           `tfsdk:"group_id_variable"`
-	Priority                      types.Int64                                            `tfsdk:"priority"`
-	PriorityVariable              types.String                                           `tfsdk:"priority_variable"`
-	Timer                         types.Int64                                            `tfsdk:"timer"`
-	TimerVariable                 types.String                                           `tfsdk:"timer_variable"`
-	TrackOmp                      types.Bool                                             `tfsdk:"track_omp"`
-	TrackOmpVariable              types.String                                           `tfsdk:"track_omp_variable"`
-	PrefixList                    types.String                                           `tfsdk:"prefix_list"`
-	PrefixListVariable            types.String                                           `tfsdk:"prefix_list_variable"`
-	Address                       types.String                                           `tfsdk:"address"`
-	AddressVariable               types.String                                           `tfsdk:"address_variable"`
-	SecondaryAddresses            []ServiceLANVPNInterfaceSVIIpv4VrrpsSecondaryAddresses `tfsdk:"secondary_addresses"`
-	TlocPrefixChange              types.Bool                                             `tfsdk:"tloc_prefix_change"`
-	TlocPrefixChangeValue         types.Int64                                            `tfsdk:"tloc_prefix_change_value"`
-	TlocPrefixChangeValueVariable types.String                                           `tfsdk:"tloc_prefix_change_value_variable"`
-	TrackingObjects               []ServiceLANVPNInterfaceSVIIpv4VrrpsTrackingObjects    `tfsdk:"tracking_objects"`
+	GroupId                          types.Int64                                            `tfsdk:"group_id"`
+	GroupIdVariable                  types.String                                           `tfsdk:"group_id_variable"`
+	Priority                         types.Int64                                            `tfsdk:"priority"`
+	PriorityVariable                 types.String                                           `tfsdk:"priority_variable"`
+	Timer                            types.Int64                                            `tfsdk:"timer"`
+	TimerVariable                    types.String                                           `tfsdk:"timer_variable"`
+	TrackOmp                         types.Bool                                             `tfsdk:"track_omp"`
+	TrackOmpVariable                 types.String                                           `tfsdk:"track_omp_variable"`
+	PrefixList                       types.String                                           `tfsdk:"prefix_list"`
+	PrefixListVariable               types.String                                           `tfsdk:"prefix_list_variable"`
+	Address                          types.String                                           `tfsdk:"address"`
+	AddressVariable                  types.String                                           `tfsdk:"address_variable"`
+	SecondaryAddresses               []ServiceLANVPNInterfaceSVIIpv4VrrpsSecondaryAddresses `tfsdk:"secondary_addresses"`
+	TlocPrefixChange                 types.Bool                                             `tfsdk:"tloc_prefix_change"`
+	TlocPrefixChangeValue            types.Int64                                            `tfsdk:"tloc_prefix_change_value"`
+	TlocPrefixChangeValueVariable    types.String                                           `tfsdk:"tloc_prefix_change_value_variable"`
+	TrackingObjects                  []ServiceLANVPNInterfaceSVIIpv4VrrpsTrackingObjects    `tfsdk:"tracking_objects"`
+	FollowDualRouterHighAvailability types.Bool                                             `tfsdk:"follow_dual_router_high_availability"`
 }
 
 type ServiceLANVPNInterfaceSVIIpv6Vrrps struct {
-	GroupId                 types.Int64                                            `tfsdk:"group_id"`
-	GroupIdVariable         types.String                                           `tfsdk:"group_id_variable"`
-	Priority                types.Int64                                            `tfsdk:"priority"`
-	PriorityVariable        types.String                                           `tfsdk:"priority_variable"`
-	Timer                   types.Int64                                            `tfsdk:"timer"`
-	TimerVariable           types.String                                           `tfsdk:"timer_variable"`
-	TrackOmp                types.Bool                                             `tfsdk:"track_omp"`
-	TrackOmpVariable        types.String                                           `tfsdk:"track_omp_variable"`
-	TrackPrefixList         types.String                                           `tfsdk:"track_prefix_list"`
-	TrackPrefixListVariable types.String                                           `tfsdk:"track_prefix_list_variable"`
-	Addresses               []ServiceLANVPNInterfaceSVIIpv6VrrpsAddresses          `tfsdk:"addresses"`
-	SecondaryAddresses      []ServiceLANVPNInterfaceSVIIpv6VrrpsSecondaryAddresses `tfsdk:"secondary_addresses"`
+	GroupId                          types.Int64                                            `tfsdk:"group_id"`
+	GroupIdVariable                  types.String                                           `tfsdk:"group_id_variable"`
+	Priority                         types.Int64                                            `tfsdk:"priority"`
+	PriorityVariable                 types.String                                           `tfsdk:"priority_variable"`
+	Timer                            types.Int64                                            `tfsdk:"timer"`
+	TimerVariable                    types.String                                           `tfsdk:"timer_variable"`
+	TrackOmp                         types.Bool                                             `tfsdk:"track_omp"`
+	TrackOmpVariable                 types.String                                           `tfsdk:"track_omp_variable"`
+	TrackPrefixList                  types.String                                           `tfsdk:"track_prefix_list"`
+	TrackPrefixListVariable          types.String                                           `tfsdk:"track_prefix_list_variable"`
+	Addresses                        []ServiceLANVPNInterfaceSVIIpv6VrrpsAddresses          `tfsdk:"addresses"`
+	SecondaryAddresses               []ServiceLANVPNInterfaceSVIIpv6VrrpsSecondaryAddresses `tfsdk:"secondary_addresses"`
+	FollowDualRouterHighAvailability types.Bool                                             `tfsdk:"follow_dual_router_high_availability"`
 }
 
 type ServiceLANVPNInterfaceSVIIpv4VrrpsSecondaryAddresses struct {
@@ -647,6 +649,17 @@ func (data ServiceLANVPNInterfaceSVI) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.SetRaw(itemBody, "trackingObject.-1", itemChildBody)
 				}
 			}
+			if item.FollowDualRouterHighAvailability.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "followDualRouterHAAvailability.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "followDualRouterHAAvailability.value", true)
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "followDualRouterHAAvailability.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "followDualRouterHAAvailability.value", item.FollowDualRouterHighAvailability.ValueBool())
+				}
+			}
 			body, _ = sjson.SetRaw(body, path+"vrrp.-1", itemBody)
 		}
 	}
@@ -787,6 +800,17 @@ func (data ServiceLANVPNInterfaceSVI) toBody(ctx context.Context) string {
 						}
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "ipv6Secondary.-1", itemChildBody)
+				}
+			}
+			if item.FollowDualRouterHighAvailability.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "followDualRouterHAAvailability.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "followDualRouterHAAvailability.value", true)
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "followDualRouterHAAvailability.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "followDualRouterHAAvailability.value", item.FollowDualRouterHighAvailability.ValueBool())
 				}
 			}
 			body, _ = sjson.SetRaw(body, path+"vrrpIpv6.-1", itemBody)
@@ -1251,6 +1275,14 @@ func (data *ServiceLANVPNInterfaceSVI) fromBody(ctx context.Context, res gjson.R
 					return true
 				})
 			}
+			item.FollowDualRouterHighAvailability = types.BoolNull()
+
+			if t := v.Get("followDualRouterHAAvailability.optionType"); t.Exists() {
+				va := v.Get("followDualRouterHAAvailability.value")
+				if t.String() == "global" {
+					item.FollowDualRouterHighAvailability = types.BoolValue(va.Bool())
+				}
+			}
 			data.Ipv4Vrrps = append(data.Ipv4Vrrps, item)
 			return true
 		})
@@ -1354,6 +1386,14 @@ func (data *ServiceLANVPNInterfaceSVI) fromBody(ctx context.Context, res gjson.R
 					item.SecondaryAddresses = append(item.SecondaryAddresses, cItem)
 					return true
 				})
+			}
+			item.FollowDualRouterHighAvailability = types.BoolNull()
+
+			if t := v.Get("followDualRouterHAAvailability.optionType"); t.Exists() {
+				va := v.Get("followDualRouterHAAvailability.value")
+				if t.String() == "global" {
+					item.FollowDualRouterHighAvailability = types.BoolValue(va.Bool())
+				}
 			}
 			data.Ipv6Vrrps = append(data.Ipv6Vrrps, item)
 			return true
@@ -1953,6 +1993,14 @@ func (data *ServiceLANVPNInterfaceSVI) updateFromBody(ctx context.Context, res g
 				}
 			}
 		}
+		data.Ipv4Vrrps[i].FollowDualRouterHighAvailability = types.BoolNull()
+
+		if t := r.Get("followDualRouterHAAvailability.optionType"); t.Exists() {
+			va := r.Get("followDualRouterHAAvailability.value")
+			if t.String() == "global" {
+				data.Ipv4Vrrps[i].FollowDualRouterHighAvailability = types.BoolValue(va.Bool())
+			}
+		}
 	}
 	for i := range data.Ipv6Vrrps {
 		keys := [...]string{"groupId"}
@@ -2127,6 +2175,14 @@ func (data *ServiceLANVPNInterfaceSVI) updateFromBody(ctx context.Context, res g
 				} else if t.String() == "global" {
 					data.Ipv6Vrrps[i].SecondaryAddresses[ci].Prefix = types.StringValue(va.String())
 				}
+			}
+		}
+		data.Ipv6Vrrps[i].FollowDualRouterHighAvailability = types.BoolNull()
+
+		if t := r.Get("followDualRouterHAAvailability.optionType"); t.Exists() {
+			va := r.Get("followDualRouterHAAvailability.value")
+			if t.String() == "global" {
+				data.Ipv6Vrrps[i].FollowDualRouterHighAvailability = types.BoolValue(va.Bool())
 			}
 		}
 	}

@@ -4,13 +4,13 @@ page_title: "sdwan_service_lan_vpn_interface_svi_feature Resource - terraform-pr
 subcategory: "Features - Service"
 description: |-
   This resource can manage a Service LAN VPN Interface SVI Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_service_lan_vpn_interface_svi_feature (Resource)
 
 This resource can manage a Service LAN VPN Interface SVI Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -76,6 +76,7 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
           decrement_value = 100
         }
       ]
+      follow_dual_router_high_availability = false
     }
   ]
   ipv6_vrrps = [
@@ -96,6 +97,7 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
           prefix = "::20/32"
         }
       ]
+      follow_dual_router_high_availability = false
     }
   ]
   enable_dhcpv6         = false
@@ -204,6 +206,8 @@ Optional:
 
 - `address` (String) Assign IPV4 Address
 - `address_variable` (String) Variable name
+- `follow_dual_router_high_availability` (Boolean) Follow RG state by default when B2B HA is configured
+  - Default value: `true`
 - `group_id` (Number) Group ID
   - Range: `1`-`255`
 - `group_id_variable` (String) Variable name
@@ -279,6 +283,8 @@ Optional:
 Optional:
 
 - `addresses` (Attributes List) IPv6 VRRP (see [below for nested schema](#nestedatt--ipv6_vrrps--addresses))
+- `follow_dual_router_high_availability` (Boolean) Follow RG state by default when B2B HA is configured
+  - Default value: `true`
 - `group_id` (Number) Group ID
   - Range: `1`-`255`
 - `group_id_variable` (String) Variable name

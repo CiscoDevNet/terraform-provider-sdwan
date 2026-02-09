@@ -64,7 +64,7 @@ func (r *TransportWANVPNInterfaceGREProfileParcelResource) Metadata(ctx context.
 func (r *TransportWANVPNInterfaceGREProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Transport WAN VPN Interface GRE Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Transport WAN VPN Interface GRE Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -120,6 +120,9 @@ func (r *TransportWANVPNInterfaceGREProfileParcelResource) Schema(ctx context.Co
 			"ipv4_address": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)`), ""),
+				},
 			},
 			"ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -136,6 +139,17 @@ func (r *TransportWANVPNInterfaceGREProfileParcelResource) Schema(ctx context.Co
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
+			"ipv6_address": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Assign IPv6 address").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(\/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
+				},
+			},
+			"ipv6_address_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
 			"shutdown": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Administrative state").AddDefaultValueDescription("false").String,
 				Optional:            true,
@@ -144,11 +158,41 @@ func (r *TransportWANVPNInterfaceGREProfileParcelResource) Schema(ctx context.Co
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
+			"multiplexing": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Tunnel multiplexing state").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"multiplexing_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"tunnel_protection": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Tunnel protection state").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"tunnel_mode": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("GRE Tunnel Mode").AddStringEnumDescription("ipv4", "ipv6").AddDefaultValueDescription("ipv4").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("ipv4", "ipv6"),
+				},
+			},
 			"tunnel_source_ipv4_address": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Tunnel source IP Address").String,
 				Optional:            true,
 			},
 			"tunnel_source_ipv4_address_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"tunnel_route_via_ipv4_address": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 32),
+				},
+			},
+			"tunnel_route_via_ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -160,6 +204,17 @@ func (r *TransportWANVPNInterfaceGREProfileParcelResource) Schema(ctx context.Co
 				},
 			},
 			"tunnel_source_interface_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"tunnel_route_via_interface": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 32),
+				},
+			},
+			"tunnel_route_via_interface_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -175,13 +230,32 @@ func (r *TransportWANVPNInterfaceGREProfileParcelResource) Schema(ctx context.Co
 				Optional:            true,
 			},
 			"tunnel_route_via_loopback": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name, can't be Loopback interface").String,
+				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 32),
 				},
 			},
 			"tunnel_route_via_loopback_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"tunnel_source_ipv6_address": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Tunnel source IPv6 Address").String,
+				Optional:            true,
+			},
+			"tunnel_source_ipv6_address_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"tunnel_route_via_ipv6_address": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 32),
+				},
+			},
+			"tunnel_route_via_ipv6_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -193,25 +267,55 @@ func (r *TransportWANVPNInterfaceGREProfileParcelResource) Schema(ctx context.Co
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"ip_mtu": schema.Int64Attribute{
+			"tunnel_destination_ipv6_address": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Tunnel destination IPv6 Address").String,
+				Optional:            true,
+			},
+			"tunnel_destination_ipv6_address_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"ipv4_mtu": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Interface MTU <576..9976>, in bytes").AddIntegerRangeDescription(576, 9976).AddDefaultValueDescription("1500").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(576, 9976),
 				},
 			},
-			"ip_mtu_variable": schema.StringAttribute{
+			"ipv4_mtu_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"tcp_mss": schema.Int64Attribute{
+			"ipv6_mtu": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Interface MTU <1280..9976>, in bytes").AddIntegerRangeDescription(1280, 9976).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1280, 9976),
+				},
+			},
+			"ipv6_mtu_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"ipv4_tcp_mss": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("TCP MSS on SYN packets, in bytes").AddIntegerRangeDescription(500, 1460).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(500, 1460),
 				},
 			},
-			"tcp_mss_variable": schema.StringAttribute{
+			"ipv4_tcp_mss_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"ipv6_tcp_mss": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("IPv6 TCP MSS on SYN packets, in bytes").AddIntegerRangeDescription(40, 1454).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(40, 1454),
+				},
+			},
+			"ipv6_tcp_mss_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -220,6 +324,156 @@ func (r *TransportWANVPNInterfaceGREProfileParcelResource) Schema(ctx context.Co
 				Optional:            true,
 			},
 			"clear_dont_fragment_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"dpd_interval": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("IKE keepalive interval (seconds)").AddIntegerRangeDescription(10, 3600).AddDefaultValueDescription("10").String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(10, 3600),
+				},
+			},
+			"dpd_interval_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"dpd_retries": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("IKE keepalive retries").AddIntegerRangeDescription(2, 60).AddDefaultValueDescription("3").String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(2, 60),
+				},
+			},
+			"dpd_retries_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"ike_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("IKE Version <1..2>").AddIntegerRangeDescription(1, 2).AddDefaultValueDescription("1").String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 2),
+				},
+			},
+			"ike_mode": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("IKE integrity protocol").AddStringEnumDescription("main", "aggressive").AddDefaultValueDescription("main").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("main", "aggressive"),
+				},
+			},
+			"ike_mode_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"ike_rekey_interval": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("IKE rekey interval <60..86400> seconds").AddIntegerRangeDescription(60, 86400).AddDefaultValueDescription("14400").String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(60, 86400),
+				},
+			},
+			"ike_rekey_interval_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"ike_ciphersuite": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("IKE identity the IKE preshared secret belongs to").AddStringEnumDescription("aes256-cbc-sha1", "aes256-cbc-sha2", "aes128-cbc-sha1", "aes128-cbc-sha2").AddDefaultValueDescription("aes256-cbc-sha1").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("aes256-cbc-sha1", "aes256-cbc-sha2", "aes128-cbc-sha1", "aes128-cbc-sha2"),
+				},
+			},
+			"ike_ciphersuite_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"ike_group": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("IKE Diffie Hellman Groups").AddStringEnumDescription("2", "14", "15", "16", "19", "20", "21", "24").AddDefaultValueDescription("16").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("2", "14", "15", "16", "19", "20", "21", "24"),
+				},
+			},
+			"ike_group_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"pre_shared_secret": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Use preshared key to authenticate IKE peer").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 127),
+				},
+			},
+			"pre_shared_secret_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"ike_local_id": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("IKE ID for the local endpoint. Input IPv4 address, domain name, or email address").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 63),
+				},
+			},
+			"ike_local_id_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"ike_remote_id": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("IKE ID for the remote endpoint. Input IPv4 address, domain name, or email address").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 63),
+				},
+			},
+			"ike_remote_id_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"ipsec_rekey_interval": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("IPsec rekey interval <300..1209600> seconds").AddIntegerRangeDescription(120, 2592000).AddDefaultValueDescription("3600").String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(120, 2592000),
+				},
+			},
+			"ipsec_rekey_interval_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"ipsec_replay_window": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Replay window size 32..8192 (must be a power of 2)").AddIntegerRangeDescription(64, 4096).AddDefaultValueDescription("512").String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(64, 4096),
+				},
+			},
+			"ipsec_replay_window_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"ipsec_ciphersuite": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("IPsec(ESP) encryption and integrity protocol").AddStringEnumDescription("aes256-cbc-sha1", "aes256-cbc-sha384", "aes256-cbc-sha256", "aes256-cbc-sha512", "aes256-gcm", "null-sha1", "null-sha384", "null-sha256", "null-sha512").AddDefaultValueDescription("aes256-gcm").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("aes256-cbc-sha1", "aes256-cbc-sha384", "aes256-cbc-sha256", "aes256-cbc-sha512", "aes256-gcm", "null-sha1", "null-sha384", "null-sha256", "null-sha512"),
+				},
+			},
+			"ipsec_ciphersuite_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"perfect_forward_secrecy": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("IPsec perfect forward secrecy settings").AddStringEnumDescription("group-1", "group-2", "group-5", "group-14", "group-15", "group-16", "group-19", "group-20", "group-21", "group-24", "none").AddDefaultValueDescription("group-16").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("group-1", "group-2", "group-5", "group-14", "group-15", "group-16", "group-19", "group-20", "group-21", "group-24", "none"),
+				},
+			},
+			"perfect_forward_secrecy_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

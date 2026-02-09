@@ -59,6 +59,7 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
           decrement_value = 100
         }
       ]
+      follow_dual_router_high_availability = false
     }
   ]
   ipv6_vrrps = [
@@ -79,6 +80,7 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
           prefix = "::20/32"
         }
       ]
+      follow_dual_router_high_availability = false
     }
   ]
   enable_dhcpv6         = false

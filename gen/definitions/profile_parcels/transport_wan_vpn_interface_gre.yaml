@@ -1,8 +1,8 @@
 ---
 name: Transport WAN VPN Interface GRE
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/gre
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - Transport
 attributes:
@@ -42,18 +42,40 @@ attributes:
     example: 255.255.255.0
     test_value: '"255.255.255.0"'
     minimum_test_value: '"255.255.255.0"'
+  - model_name: ipv6Address
+    data_path: [basic]
+    example: 2001:0:0:1::0
   - model_name: shutdown
     data_path: [basic]
     example: true
+  - model_name: multiplexing
+    data_path: [basic]
+    example: true
+  - model_name: tunnelProtection
+    data_path: [basic]
+    example: false
+  - model_name: tunnelMode
+    data_path: [basic]
+    example: ipv4
   - model_name: tunnelSource
     tf_name: tunnel_source_ipv4_address
     data_path: [basic, tunnelSourceType, sourceIp]
     example: 78.1.1.1
+  - model_name: tunnelRouteVia
+    tf_name: tunnel_route_via_ipv4_address
+    data_path: [basic, tunnelSourceType, sourceIp]
+    exclude_test: true
+    example: 78.1.1.2
   - model_name: tunnelSourceInterface
     tf_name: tunnel_source_interface
     data_path: [basic, tunnelSourceType, sourceNotLoopback]
     exclude_test: true
     example: INTERFACE_1
+  - model_name: tunnelRouteVia
+    tf_name: tunnel_route_via_interface
+    data_path: [basic, tunnelSourceType, sourceNotLoopback]
+    exclude_test: true
+    example: INTERFACE_2
   - model_name: tunnelSourceInterface
     tf_name: tunnel_source_interface_loopback
     data_path: [basic, tunnelSourceType, sourceLoopback]
@@ -63,24 +85,91 @@ attributes:
     tf_name: tunnel_route_via_loopback
     data_path: [basic, tunnelSourceType, sourceLoopback]
     exclude_test: true
-    example: 1
+    example: LOOPBACK_2
+  - model_name: tunnelSourceV6
+    tf_name: tunnel_source_ipv6_address
+    data_path: [basic, tunnelSourceType, sourceIpv6]
+    exclude_test: true
+    example: 2001:0:0:1::0
+  - model_name: tunnelRouteVia
+    tf_name: tunnel_route_via_ipv6_address
+    data_path: [basic, tunnelSourceType, sourceIpv6]
+    exclude_test: true
+    example: 2001:0:0:2::0
   - model_name: tunnelDestination
     tf_name: tunnel_destination_ipv4_address
     data_path: [basic]
     example: 79.1.1.1
     test_value: '"79.1.1.1"'
     minimum_test_value: '"79.1.1.1"'
+  - model_name: tunnelDestinationV6
+    tf_name: tunnel_destination_ipv6_address
+    data_path: [basic]
+    exclude_test: true
+    example: 2001:0:0:3::0
   - model_name: mtu
-    tf_name: ip_mtu
+    tf_name: ipv4_mtu
     data_path: [basic]
     example: 1500
-  - model_name: tcpMssAdjust
-    tf_name: tcp_mss
+  - model_name: mtuV6
+    tf_name: ipv6_mtu
     data_path: [basic]
+    exclude_test: true
+    example: 1500
+  - model_name: tcpMssAdjust
+    tf_name: ipv4_tcp_mss
+    data_path: [basic]
+    example: 1460
+  - model_name: tcpMssAdjustV6
+    tf_name: ipv6_tcp_mss
+    data_path: [basic]
+    exclude_test: true
     example: 1460
   - model_name: clearDontFragment
     data_path: [basic]
     example: false
+  - model_name: dpdInterval
+    data_path: [basic]
+    example: 10
+  - model_name: dpdRetries
+    data_path: [basic]
+    example: 3
+  - model_name: ikeVersion
+    data_path: [basic]
+    example: 1
+  - model_name: ikeMode
+    data_path: [basic]
+    example: main
+  - model_name: ikeRekeyInterval
+    data_path: [basic]
+    example: 14400
+  - model_name: ikeCiphersuite
+    data_path: [basic]
+    example: aes256-cbc-sha1
+  - model_name: ikeGroup
+    data_path: [basic]
+    example: 16
+  - model_name: preSharedSecret
+    data_path: [basic]
+    example: 123
+  - model_name: ikeLocalId
+    data_path: [basic]
+    example: xxx
+  - model_name: ikeRemoteId
+    data_path: [basic]
+    example: xxx
+  - model_name: ipsecRekeyInterval
+    data_path: [basic]
+    example: 3600
+  - model_name: ipsecReplayWindow
+    data_path: [basic]
+    example: 512
+  - model_name: ipsecCiphersuite
+    data_path: [basic]
+    example: aes256-gcm
+  - model_name: perfectForwardSecrecy
+    data_path: [basic]
+    example: group-16
   - model_name: application
     tf_name: application_tunnel_type
     data_path: [advanced]
