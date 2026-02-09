@@ -8,7 +8,7 @@ description: |-
 # Changelog
 
 ## 0.9.1 (Unreleased)
-
+- Fix idempotency issue with `sdwan_cisco_ospf_feature_template` properties `areas.stub` and `areas.nssa` causing unexpected updates after UI save operations and brownfield imports
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_other_ucse_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_other_thousandeyes_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_cli_config_feature` to `20.15.0`
@@ -37,6 +37,7 @@ description: |-
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_tls_ssl_decryption` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_tls_ssl_profile` to `20.15.0`
 - Add `sdwan_policy_object_security_zone` resource and data source
+- Fix perpetual diff in `sdwan_configuration_group` resource for `topology_label` attribute when not specified in non-dual-edge configurations
 
 ## 0.9.0
 
