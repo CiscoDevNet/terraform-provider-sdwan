@@ -89,7 +89,7 @@ attribute:
   priority_order_always: bool(required=False) # If true will always set priority-order in feature template payload
   include_default_option: bool(required=False) # If true will always include the default option type in the payload when the attribute value is null
   include_variable_check: bool(required=False) # UX1.0, If true will check for both "variableName" and "variable" vipType values in the fromBody method during read operation.
-
+  reset_container_if_ignore: bool(required=False) # When true, resets the container attribute during read operations if the attribute's vipType is set to ignore.
 conditional_attribute:
   operator: enum('and', 'or', required=False) # Logical operator between conditions (default: 'and')
   conditions: list(include('condition')) # List of conditions (single or multiple)

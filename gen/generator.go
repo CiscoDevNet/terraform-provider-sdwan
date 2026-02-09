@@ -277,6 +277,7 @@ type YamlConfigAttribute struct {
 	IncludeDefaultOption    bool                           `yaml:"include_default_option"`
 	DefaultOption           string                         `yaml:"default_option"`
 	IncludeVariableCheck    bool                           `yaml:"include_variable_check"`
+	ResetContainerIfIgnore  bool                           `yaml:"reset_container_if_ignore"`
 }
 
 type YamlConfigConditionalAttribute struct {
