@@ -36,15 +36,27 @@ attributes:
     example: 70.1.1.1
     test_value: '"70.1.1.1"'
     minimum_test_value: '"70.1.1.1"'
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv4
   - model_name: mask
     tf_name: ipv4_subnet_mask
     data_path: [basic, address]
     example: 255.255.255.0
     test_value: '"255.255.255.0"'
     minimum_test_value: '"255.255.255.0"'
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv4
   - model_name: ipv6Address
     data_path: [basic]
     example: 2001:0:0:1::0
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv6
   - model_name: shutdown
     data_path: [basic]
     example: true
@@ -61,70 +73,126 @@ attributes:
     tf_name: tunnel_source_ipv4_address
     data_path: [basic, tunnelSourceType, sourceIp]
     example: 78.1.1.1
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv4
   - model_name: tunnelRouteVia
     tf_name: tunnel_route_via_ipv4_address
     data_path: [basic, tunnelSourceType, sourceIp]
     exclude_test: true
     example: 78.1.1.2
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv4
   - model_name: tunnelSourceInterface
     tf_name: tunnel_source_interface
     data_path: [basic, tunnelSourceType, sourceNotLoopback]
     exclude_test: true
     example: INTERFACE_1
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv4
   - model_name: tunnelRouteVia
     tf_name: tunnel_route_via_interface
     data_path: [basic, tunnelSourceType, sourceNotLoopback]
     exclude_test: true
     example: INTERFACE_2
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv4
   - model_name: tunnelSourceInterface
     tf_name: tunnel_source_interface_loopback
     data_path: [basic, tunnelSourceType, sourceLoopback]
     exclude_test: true
     example: LOOPBACK_1
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv4
   - model_name: tunnelRouteVia
     tf_name: tunnel_route_via_loopback
     data_path: [basic, tunnelSourceType, sourceLoopback]
     exclude_test: true
     example: LOOPBACK_2
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv4
   - model_name: tunnelSourceV6
     tf_name: tunnel_source_ipv6_address
     data_path: [basic, tunnelSourceType, sourceIpv6]
     exclude_test: true
     example: 2001:0:0:1::0
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv6
   - model_name: tunnelRouteVia
     tf_name: tunnel_route_via_ipv6_address
     data_path: [basic, tunnelSourceType, sourceIpv6]
     exclude_test: true
     example: 2001:0:0:2::0
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv6
   - model_name: tunnelDestination
     tf_name: tunnel_destination_ipv4_address
     data_path: [basic]
     example: 79.1.1.1
     test_value: '"79.1.1.1"'
     minimum_test_value: '"79.1.1.1"'
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv4
   - model_name: tunnelDestinationV6
     tf_name: tunnel_destination_ipv6_address
     data_path: [basic]
     exclude_test: true
     example: 2001:0:0:3::0
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv6
   - model_name: mtu
     tf_name: ipv4_mtu
     data_path: [basic]
     example: 1500
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv4
   - model_name: mtuV6
     tf_name: ipv6_mtu
     data_path: [basic]
     exclude_test: true
     example: 1500
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv6
   - model_name: tcpMssAdjust
     tf_name: ipv4_tcp_mss
     data_path: [basic]
     example: 1460
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv4
   - model_name: tcpMssAdjustV6
     tf_name: ipv6_tcp_mss
     data_path: [basic]
     exclude_test: true
     example: 1460
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv6
   - model_name: clearDontFragment
     data_path: [basic]
     example: false

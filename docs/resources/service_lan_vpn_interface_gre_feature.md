@@ -116,25 +116,26 @@ resource "sdwan_service_lan_vpn_interface_gre_feature" "example" {
   - Range: `64`-`4096`
   - Default value: `512`
 - `ipsec_replay_window_variable` (String) Variable name
-- `ipv4_address` (String)
-- `ipv4_address_variable` (String) Variable name
-- `ipv4_mtu` (Number) Interface MTU <576..9976>, in bytes
+- `ipv4_address` (String) , Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `ipv4_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `ipv4_mtu` (Number) Interface MTU <576..9976>, in bytes, Attribute conditional on `tunnel_mode` equal to `ipv4`
   - Range: `576`-`9976`
   - Default value: `1500`
-- `ipv4_mtu_variable` (String) Variable name
-- `ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
-- `ipv4_subnet_mask_variable` (String) Variable name
-- `ipv4_tcp_mss` (Number) TCP MSS on SYN packets, in bytes
+- `ipv4_mtu_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `ipv4_subnet_mask` (String) , Attribute conditional on `tunnel_mode` equal to `ipv4`
+  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
+- `ipv4_subnet_mask_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `ipv4_tcp_mss` (Number) TCP MSS on SYN packets, in bytes, Attribute conditional on `tunnel_mode` equal to `ipv4`
   - Range: `500`-`1460`
-- `ipv4_tcp_mss_variable` (String) Variable name
-- `ipv6_address` (String) Assign IPv6 address
-- `ipv6_address_variable` (String) Variable name
-- `ipv6_mtu` (Number) Interface MTU <1280..9976>, in bytes
+- `ipv4_tcp_mss_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `ipv6_address` (String) Assign IPv6 address, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `ipv6_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `ipv6_mtu` (Number) Interface MTU <1280..9976>, in bytes, Attribute conditional on `tunnel_mode` equal to `ipv6`
   - Range: `1280`-`9976`
-- `ipv6_mtu_variable` (String) Variable name
-- `ipv6_tcp_mss` (Number) IPv6 TCP MSS on SYN packets, in bytes
+- `ipv6_mtu_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `ipv6_tcp_mss` (Number) IPv6 TCP MSS on SYN packets, in bytes, Attribute conditional on `tunnel_mode` equal to `ipv6`
   - Range: `40`-`1454`
-- `ipv6_tcp_mss_variable` (String) Variable name
+- `ipv6_tcp_mss_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`
 - `perfect_forward_secrecy` (String) IPsec perfect forward secrecy settings
   - Choices: `group-1`, `group-2`, `group-5`, `group-14`, `group-15`, `group-16`, `group-19`, `group-20`, `group-21`, `group-24`, `none`
   - Default value: `group-16`
@@ -144,31 +145,31 @@ resource "sdwan_service_lan_vpn_interface_gre_feature" "example" {
 - `shutdown` (Boolean) Administrative state
   - Default value: `false`
 - `shutdown_variable` (String) Variable name
-- `tunnel_destination_ipv4_address` (String) Tunnel destination IP Address
-- `tunnel_destination_ipv4_address_variable` (String) Variable name
-- `tunnel_destination_ipv6_address` (String) Tunnel destination IPv6 Address
-- `tunnel_destination_ipv6_address_variable` (String) Variable name
+- `tunnel_destination_ipv4_address` (String) Tunnel destination IP Address, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_destination_ipv4_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_destination_ipv6_address` (String) Tunnel destination IPv6 Address, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `tunnel_destination_ipv6_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`
 - `tunnel_mode` (String) GRE Tunnel Mode
   - Choices: `ipv4`, `ipv6`
   - Default value: `ipv4`
 - `tunnel_protection` (Boolean) Tunnel protection state
   - Default value: `false`
-- `tunnel_route_via_interface` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
-- `tunnel_route_via_interface_variable` (String) Variable name
-- `tunnel_route_via_ipv4_address` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
-- `tunnel_route_via_ipv4_address_variable` (String) Variable name
-- `tunnel_route_via_ipv6_address` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
-- `tunnel_route_via_ipv6_address_variable` (String) Variable name
-- `tunnel_route_via_loopback` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
-- `tunnel_route_via_loopback_variable` (String) Variable name
-- `tunnel_source_interface` (String) <1..32 characters> Interface name
-- `tunnel_source_interface_loopback` (String) <1..32 characters> Interface name
-- `tunnel_source_interface_loopback_variable` (String) Variable name
-- `tunnel_source_interface_variable` (String) Variable name
-- `tunnel_source_ipv4_address` (String) Tunnel source IP Address
-- `tunnel_source_ipv4_address_variable` (String) Variable name
-- `tunnel_source_ipv6_address` (String) Tunnel source IPv6 Address
-- `tunnel_source_ipv6_address_variable` (String) Variable name
+- `tunnel_route_via_interface` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_route_via_interface_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_route_via_ipv4_address` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_route_via_ipv4_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_route_via_ipv6_address` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `tunnel_route_via_ipv6_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `tunnel_route_via_loopback` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_route_via_loopback_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_source_interface` (String) <1..32 characters> Interface name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_source_interface_loopback` (String) <1..32 characters> Interface name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_source_interface_loopback_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_source_interface_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_source_ipv4_address` (String) Tunnel source IP Address, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_source_ipv4_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_source_ipv6_address` (String) Tunnel source IPv6 Address, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `tunnel_source_ipv6_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`
 
 ### Read-Only
 

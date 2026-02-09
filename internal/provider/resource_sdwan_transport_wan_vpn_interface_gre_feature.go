@@ -118,36 +118,36 @@ func (r *TransportWANVPNInterfaceGREProfileParcelResource) Schema(ctx context.Co
 				Optional:            true,
 			},
 			"ipv4_address": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)`), ""),
 				},
 			},
 			"ipv4_address_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 			},
 			"ipv4_subnet_mask": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `tunnel_mode` equal to `ipv4`").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0"),
 				},
 			},
 			"ipv4_subnet_mask_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 			},
 			"ipv6_address": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Assign IPv6 address").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Assign IPv6 address, Attribute conditional on `tunnel_mode` equal to `ipv6`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(\/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
 				},
 			},
 			"ipv6_address_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`").String,
 				Optional:            true,
 			},
 			"shutdown": schema.BoolAttribute{
@@ -178,145 +178,145 @@ func (r *TransportWANVPNInterfaceGREProfileParcelResource) Schema(ctx context.Co
 				},
 			},
 			"tunnel_source_ipv4_address": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Tunnel source IP Address").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Tunnel source IP Address, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 			},
 			"tunnel_source_ipv4_address_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 			},
 			"tunnel_route_via_ipv4_address": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid").String,
+				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 32),
 				},
 			},
 			"tunnel_route_via_ipv4_address_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 			},
 			"tunnel_source_interface": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 32),
 				},
 			},
 			"tunnel_source_interface_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 			},
 			"tunnel_route_via_interface": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid").String,
+				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 32),
 				},
 			},
 			"tunnel_route_via_interface_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 			},
 			"tunnel_source_interface_loopback": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 32),
 				},
 			},
 			"tunnel_source_interface_loopback_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 			},
 			"tunnel_route_via_loopback": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid").String,
+				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 32),
 				},
 			},
 			"tunnel_route_via_loopback_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 			},
 			"tunnel_source_ipv6_address": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Tunnel source IPv6 Address").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Tunnel source IPv6 Address, Attribute conditional on `tunnel_mode` equal to `ipv6`").String,
 				Optional:            true,
 			},
 			"tunnel_source_ipv6_address_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`").String,
 				Optional:            true,
 			},
 			"tunnel_route_via_ipv6_address": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid").String,
+				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid, Attribute conditional on `tunnel_mode` equal to `ipv6`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 32),
 				},
 			},
 			"tunnel_route_via_ipv6_address_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`").String,
 				Optional:            true,
 			},
 			"tunnel_destination_ipv4_address": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Tunnel destination IP Address").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Tunnel destination IP Address, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 			},
 			"tunnel_destination_ipv4_address_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 			},
 			"tunnel_destination_ipv6_address": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Tunnel destination IPv6 Address").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Tunnel destination IPv6 Address, Attribute conditional on `tunnel_mode` equal to `ipv6`").String,
 				Optional:            true,
 			},
 			"tunnel_destination_ipv6_address_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`").String,
 				Optional:            true,
 			},
 			"ipv4_mtu": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Interface MTU <576..9976>, in bytes").AddIntegerRangeDescription(576, 9976).AddDefaultValueDescription("1500").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Interface MTU <576..9976>, in bytes, Attribute conditional on `tunnel_mode` equal to `ipv4`").AddIntegerRangeDescription(576, 9976).AddDefaultValueDescription("1500").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(576, 9976),
 				},
 			},
 			"ipv4_mtu_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 			},
 			"ipv6_mtu": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Interface MTU <1280..9976>, in bytes").AddIntegerRangeDescription(1280, 9976).String,
+				MarkdownDescription: helpers.NewAttributeDescription("Interface MTU <1280..9976>, in bytes, Attribute conditional on `tunnel_mode` equal to `ipv6`").AddIntegerRangeDescription(1280, 9976).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1280, 9976),
 				},
 			},
 			"ipv6_mtu_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`").String,
 				Optional:            true,
 			},
 			"ipv4_tcp_mss": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("TCP MSS on SYN packets, in bytes").AddIntegerRangeDescription(500, 1460).String,
+				MarkdownDescription: helpers.NewAttributeDescription("TCP MSS on SYN packets, in bytes, Attribute conditional on `tunnel_mode` equal to `ipv4`").AddIntegerRangeDescription(500, 1460).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(500, 1460),
 				},
 			},
 			"ipv4_tcp_mss_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`").String,
 				Optional:            true,
 			},
 			"ipv6_tcp_mss": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv6 TCP MSS on SYN packets, in bytes").AddIntegerRangeDescription(40, 1454).String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv6 TCP MSS on SYN packets, in bytes, Attribute conditional on `tunnel_mode` equal to `ipv6`").AddIntegerRangeDescription(40, 1454).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(40, 1454),
 				},
 			},
 			"ipv6_tcp_mss_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`").String,
 				Optional:            true,
 			},
 			"clear_dont_fragment": schema.BoolAttribute{
