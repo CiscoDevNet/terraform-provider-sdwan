@@ -27,7 +27,6 @@ attributes:
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
-      always_include_parent: true
       example: 8bd324a6-c273-411b-a489-941865f58b66
   - model_name: network
     tf_name: networks
