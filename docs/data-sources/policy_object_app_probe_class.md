@@ -40,6 +40,7 @@ data "sdwan_policy_object_app_probe_class" "example" {
 Read-Only:
 
 - `forwarding_class` (String) Forwarding Class Name
+- `forwarding_class_id` (String)
 - `map` (Attributes List) Map (see [below for nested schema](#nestedatt--entries--map))
 
 <a id="nestedatt--entries--map"></a>
