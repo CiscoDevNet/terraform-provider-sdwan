@@ -43,6 +43,8 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
           global_address     = "1::1/24"
         }
       ]
+      follow_dual_router_high_availability = false
+      min_preempt_delay                    = 60
     }
   ]
   ipv4_vrrps = [
@@ -67,6 +69,8 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
           decrement_value = 100
         }
       ]
+      follow_dual_router_high_availability = false
+      min_preempt_delay                    = 60
     }
   ]
   arps = [
