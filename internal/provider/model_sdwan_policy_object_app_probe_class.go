@@ -42,8 +42,9 @@ type PolicyObjectAppProbeClass struct {
 }
 
 type PolicyObjectAppProbeClassEntries struct {
-	Map             []PolicyObjectAppProbeClassEntriesMap `tfsdk:"map"`
-	ForwardingClass types.String                          `tfsdk:"forwarding_class"`
+	Map               []PolicyObjectAppProbeClassEntriesMap `tfsdk:"map"`
+	ForwardingClass   types.String                          `tfsdk:"forwarding_class"`
+	ForwardingClassId types.String                          `tfsdk:"forwarding_class_id"`
 }
 
 type PolicyObjectAppProbeClassEntriesMap struct {
@@ -102,6 +103,12 @@ func (data PolicyObjectAppProbeClass) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "forwardingClass.value", item.ForwardingClass.ValueString())
 				}
 			}
+			if !item.ForwardingClassId.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "forwardingClass.refId.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "forwardingClass.refId.value", item.ForwardingClassId.ValueString())
+				}
+			}
 			body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
 		}
 	}
@@ -155,6 +162,14 @@ func (data *PolicyObjectAppProbeClass) fromBody(ctx context.Context, res gjson.R
 					item.ForwardingClass = types.StringValue(va.String())
 				}
 			}
+			item.ForwardingClassId = types.StringNull()
+
+			if t := v.Get("forwardingClass.refId.optionType"); t.Exists() {
+				va := v.Get("forwardingClass.refId.value")
+				if t.String() == "global" {
+					item.ForwardingClassId = types.StringValue(va.String())
+				}
+			}
 			data.Entries = append(data.Entries, item)
 			return true
 		})
@@ -173,9 +188,9 @@ func (data *PolicyObjectAppProbeClass) updateFromBody(ctx context.Context, res g
 	}
 	path := "payload.data."
 	for i := range data.Entries {
-		keys := [...]string{"forwardingClass"}
-		keyValues := [...]string{data.Entries[i].ForwardingClass.ValueString()}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"forwardingClass", "forwardingClass.refId"}
+		keyValues := [...]string{data.Entries[i].ForwardingClass.ValueString(), data.Entries[i].ForwardingClassId.ValueString()}
+		keyValuesVariables := [...]string{"", ""}
 
 		var r gjson.Result
 		res.Get(path + "entries").ForEach(
@@ -257,6 +272,14 @@ func (data *PolicyObjectAppProbeClass) updateFromBody(ctx context.Context, res g
 			va := r.Get("forwardingClass.value")
 			if t.String() == "global" {
 				data.Entries[i].ForwardingClass = types.StringValue(va.String())
+			}
+		}
+		data.Entries[i].ForwardingClassId = types.StringNull()
+
+		if t := r.Get("forwardingClass.refId.optionType"); t.Exists() {
+			va := r.Get("forwardingClass.refId.value")
+			if t.String() == "global" {
+				data.Entries[i].ForwardingClassId = types.StringValue(va.String())
 			}
 		}
 	}

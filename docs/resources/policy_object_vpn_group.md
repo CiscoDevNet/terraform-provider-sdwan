@@ -4,13 +4,13 @@ page_title: "sdwan_policy_object_vpn_group Resource - terraform-provider-sdwan"
 subcategory: "Policy Objects"
 description: |-
   This resource can manage a Policy Object VPN Group Policy_object.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_policy_object_vpn_group (Resource)
 
 This resource can manage a Policy Object VPN Group Policy_object.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
