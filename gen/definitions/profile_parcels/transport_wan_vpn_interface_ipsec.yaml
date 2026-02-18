@@ -82,16 +82,19 @@ attributes:
   - model_name: mask
     tf_name: tunnel_source_ipv4_subnet_mask
     data_path: [tunnelSource]
-    example: 255.255.255.0
-    test_value: '"255.255.255.0"'
-    minimum_test_value: '"255.255.255.0"'
+    type: String
+    value: "0.0.0.0"
+    value_type: global
+    always_include: true
     conditional_attribute:
       operator: or
       conditions:
-        - name: tunnel_mode
-          value: ipv4
-        - name: tunnel_mode
-          value: ipv4-v6overlay
+        - name: tunnel_source_ipv4_address
+          value: ''
+          negate: true
+        - name: tunnel_source_ipv4_address_variable
+          value: ''
+          negate: true
   - model_name: tunnelSourceV6
     tf_name: tunnel_source_ipv6_address
     example: 2001:0:0:1::1
