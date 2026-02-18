@@ -142,9 +142,7 @@ func (data ServiceRoutingEIGRP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "protocol.value", item.Protocol.ValueString())
 				}
 			}
-			if data.RoutePolicyId.IsNull() {
-				body, _ = sjson.Set(body, path+"routePolicy.optionType", "default")
-			} else {
+			if !item.RoutePolicyId.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.value", item.RoutePolicyId.ValueString())
