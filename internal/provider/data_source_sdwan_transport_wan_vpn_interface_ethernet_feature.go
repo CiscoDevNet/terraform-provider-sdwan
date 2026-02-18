@@ -24,7 +24,6 @@ import (
 	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
-	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -106,6 +105,126 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 			},
 			"interface_description_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_interface": schema.BoolAttribute{
+				MarkdownDescription: "Port-Channel interface on/off",
+				Computed:            true,
+			},
+			"port_channel_mode": schema.StringAttribute{
+				MarkdownDescription: "Port Channel Mode",
+				Computed:            true,
+			},
+			"port_channel_lacp_qos_aggregate": schema.BoolAttribute{
+				MarkdownDescription: "Enable QoS Port-Channel aggregate",
+				Computed:            true,
+			},
+			"port_channel_lacp_qos_aggregate_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_lacp_load_balance": schema.StringAttribute{
+				MarkdownDescription: "Enable QoS Port-Channel aggregate",
+				Computed:            true,
+			},
+			"port_channel_lacp_load_balance_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_lacp_fast_switchover": schema.BoolAttribute{
+				MarkdownDescription: "Eanble lacp fast switchover",
+				Computed:            true,
+			},
+			"port_channel_lacp_fast_switchover_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_lacp_min_bundle": schema.Int64Attribute{
+				MarkdownDescription: "Set LACP min bundle",
+				Computed:            true,
+			},
+			"port_channel_lacp_min_bundle_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_lacp_max_bundle": schema.Int64Attribute{
+				MarkdownDescription: "Set LACP max bundle",
+				Computed:            true,
+			},
+			"port_channel_lacp_max_bundle_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_lacp_member_links": schema.ListNestedAttribute{
+				MarkdownDescription: "Configure Port-Channel member links",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"interface_id": schema.StringAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+						},
+						"lacp_mode": schema.StringAttribute{
+							MarkdownDescription: "Set lacp mode",
+							Computed:            true,
+						},
+						"lacp_mode_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"lacp_rate": schema.StringAttribute{
+							MarkdownDescription: "Set lacp rate",
+							Computed:            true,
+						},
+						"lacp_rate_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"lacp_port_priority": schema.Int64Attribute{
+							MarkdownDescription: "Set lacp port priority",
+							Computed:            true,
+						},
+						"lacp_port_priority_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+					},
+				},
+			},
+			"port_channel_static_qos_aggregate": schema.BoolAttribute{
+				MarkdownDescription: "Enable QoS Port-Channel aggregate",
+				Computed:            true,
+			},
+			"port_channel_static_qos_aggregate_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_static_load_balance": schema.StringAttribute{
+				MarkdownDescription: "Enable QoS Port-Channel aggregate",
+				Computed:            true,
+			},
+			"port_channel_static_load_balance_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_static_member_links": schema.ListNestedAttribute{
+				MarkdownDescription: "Configure Port-Channel member links",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"interface_id": schema.StringAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+						},
+					},
+				},
+			},
+			"port_channel_subinterface": schema.BoolAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+			},
+			"port_channel_member_interface": schema.BoolAttribute{
+				MarkdownDescription: "Port-Channel member interface on/off",
 				Computed:            true,
 			},
 			"ipv4_configuration_type": schema.StringAttribute{
@@ -462,6 +581,22 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"tunnel_interface_allow_fragmentation": schema.BoolAttribute{
+				MarkdownDescription: "Allow Fragmentation and will clear DF bit in outer IP",
+				Computed:            true,
+			},
+			"tunnel_interface_allow_fragmentation_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"tunnel_interface_set_sdwan_tunnel_mtu_to_max": schema.BoolAttribute{
+				MarkdownDescription: "Set current tunnel mtu to 9k",
+				Computed:            true,
+			},
+			"tunnel_interface_set_sdwan_tunnel_mtu_to_max_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 			"tunnel_interface_allow_all": schema.BoolAttribute{
 				MarkdownDescription: "Allow all traffic. Overrides all other allow-service options if allow-service all is set",
 				Computed:            true,
@@ -594,6 +729,14 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 					},
 				},
 			},
+			"mrf_enable_core_region": schema.BoolAttribute{
+				MarkdownDescription: "Enable Core Region",
+				Computed:            true,
+			},
+			"mrf_core_region_type": schema.StringAttribute{
+				MarkdownDescription: "Core Region",
+				Computed:            true,
+			},
 			"nat_ipv4": schema.BoolAttribute{
 				MarkdownDescription: "enable Network Address Translation on this interface",
 				Computed:            true,
@@ -604,10 +747,6 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 			},
 			"nat_type": schema.StringAttribute{
 				MarkdownDescription: "NAT Type",
-				Computed:            true,
-			},
-			"nat_type_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
 			"nat_range_start": schema.StringAttribute{
@@ -649,6 +788,82 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 			"nat_loopback_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
+			},
+			"nat_match_interface": schema.BoolAttribute{
+				MarkdownDescription: "NAT Match Interface",
+				Computed:            true,
+			},
+			"nat_match_interface_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"nat_ipv4_pools": schema.ListNestedAttribute{
+				MarkdownDescription: "NAT Multiple Pool",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"name": schema.Int64Attribute{
+							MarkdownDescription: "NAT Pool Name",
+							Computed:            true,
+						},
+						"name_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"range_start": schema.StringAttribute{
+							MarkdownDescription: "NAT Pool Range Start",
+							Computed:            true,
+						},
+						"range_start_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"range_end": schema.StringAttribute{
+							MarkdownDescription: "NAT Pool Range End",
+							Computed:            true,
+						},
+						"range_end_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"overload": schema.BoolAttribute{
+							MarkdownDescription: "NAT Overload",
+							Computed:            true,
+						},
+						"overload_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"prefix_length": schema.Int64Attribute{
+							MarkdownDescription: "NAT Pool Prefix Length",
+							Computed:            true,
+						},
+						"prefix_length_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"enable_dual_router_ha_mapping": schema.BoolAttribute{
+							MarkdownDescription: "Enable DualRouter HA Mapping",
+							Computed:            true,
+						},
+					},
+				},
+			},
+			"nat_ipv4_loopbacks": schema.ListNestedAttribute{
+				MarkdownDescription: "NAT Multiple Loopback",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"loopback_interface": schema.StringAttribute{
+							MarkdownDescription: "NAT Inside Source Loopback Interface",
+							Computed:            true,
+						},
+						"loopback_interface_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+					},
+				},
 			},
 			"nat_udp_timeout": schema.Int64Attribute{
 				MarkdownDescription: "Set NAT UDP session timeout, in minutes",
@@ -699,6 +914,74 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
+						"enable_dual_router_ha_mapping": schema.BoolAttribute{
+							MarkdownDescription: "Enable DualRouter HA Mapping",
+							Computed:            true,
+						},
+					},
+				},
+			},
+			"static_port_forwards": schema.ListNestedAttribute{
+				MarkdownDescription: "Configure Port Forward entries",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"protocol": schema.StringAttribute{
+							MarkdownDescription: "Protocol",
+							Computed:            true,
+						},
+						"protocol_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"source_ip": schema.StringAttribute{
+							MarkdownDescription: "Source IP address to be translated",
+							Computed:            true,
+						},
+						"source_ip_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"source_port": schema.Int64Attribute{
+							MarkdownDescription: "source port to be translated",
+							Computed:            true,
+						},
+						"source_port_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"translated_ip": schema.StringAttribute{
+							MarkdownDescription: "Statically translated source IP address",
+							Computed:            true,
+						},
+						"translated_ip_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"translated_port": schema.Int64Attribute{
+							MarkdownDescription: "Statically translated source IP address",
+							Computed:            true,
+						},
+						"translated_port_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"direction": schema.StringAttribute{
+							MarkdownDescription: "Direction of static NAT translation",
+							Computed:            true,
+						},
+						"source_vpn": schema.Int64Attribute{
+							MarkdownDescription: "Source VPN ID",
+							Computed:            true,
+						},
+						"source_vpn_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"enable_dual_router_ha_mapping": schema.BoolAttribute{
+							MarkdownDescription: "Enable DualRouter HA Mapping",
+							Computed:            true,
+						},
 					},
 				},
 			},
@@ -744,6 +1027,14 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 							Computed:            true,
 						},
 						"source_vpn_id_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"egress_interface": schema.BoolAttribute{
+							MarkdownDescription: "Egress Interface",
+							Computed:            true,
+						},
+						"egress_interface_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
@@ -1008,6 +1299,7 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Configure(_ co
 
 // End of section. //template:end model
 
+// Section below is generated&owned by "gen/generator.go". //template:begin read
 func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	var config TransportWANVPNInterfaceEthernet
 
@@ -1020,19 +1312,18 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Read(ctx conte
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
 
-	// Get Manager Version
-	currentVersion := version.Must(version.NewVersion(d.client.ManagerVersion))
-
 	res, err := d.client.Get(config.getPath() + "/" + url.QueryEscape(config.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return
 	}
 
-	config.fromBody(ctx, res, currentVersion)
+	config.fromBody(ctx, res)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Name.ValueString()))
 
 	diags = resp.State.Set(ctx, &config)
 	resp.Diagnostics.Append(diags...)
 }
+
+// End of section. //template:end read
