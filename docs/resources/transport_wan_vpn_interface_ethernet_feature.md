@@ -4,13 +4,13 @@ page_title: "sdwan_transport_wan_vpn_interface_ethernet_feature Resource - terra
 subcategory: "Features - Transport"
 description: |-
   This resource can manage a Transport WAN VPN Interface Ethernet Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_transport_wan_vpn_interface_ethernet_feature (Resource)
 
 This resource can manage a Transport WAN VPN Interface Ethernet Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -34,6 +34,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
   ]
   ipv4_dhcp_helper                               = ["1.2.3.4"]
   ipv6_configuration_type                        = "static"
+  ipv6_address                                   = "2001:0:0:1::1/64"
   iperf_server                                   = "example"
   block_non_source_ip                            = false
   service_provider                               = "example"
@@ -46,7 +47,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
   tunnel_bandwidth_percent                       = 82
   tunnel_interface_bind_loopback_tunnel          = "example"
   tunnel_interface_carrier                       = "default"
-  tunnel_interface_color                         = "default"
+  tunnel_interface_color                         = "mpls"
   tunnel_interface_hello_interval                = 1000
   tunnel_interface_hello_tolerance               = 12
   tunnel_interface_last_resort_circuit           = false
@@ -65,6 +66,8 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
   tunnel_interface_clear_dont_fragment           = false
   tunnel_interface_cts_sgt_propagation           = false
   tunnel_interface_network_broadcast             = false
+  tunnel_interface_allow_fragmentation           = false
+  tunnel_interface_set_sdwan_tunnel_mtu_to_max   = false
   tunnel_interface_allow_all                     = false
   tunnel_interface_allow_bgp                     = false
   tunnel_interface_allow_dhcp                    = true
@@ -85,16 +88,44 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
       weight        = 250
     }
   ]
-  nat_ipv4        = true
-  nat_type        = "interface"
+  nat_ipv4 = true
+  nat_type = "interface"
+  nat_ipv4_pools = [
+    {
+      name                          = 10
+      range_start                   = "203.0.115.50"
+      range_end                     = "203.0.115.100"
+      overload                      = true
+      prefix_length                 = 25
+      enable_dual_router_ha_mapping = false
+    }
+  ]
+  nat_ipv4_loopbacks = [
+    {
+      loopback_interface = "Loopback0"
+    }
+  ]
   nat_udp_timeout = 1
   nat_tcp_timeout = 60
   new_static_nats = [
     {
-      source_ip     = "1.2.3.4"
-      translated_ip = "2.3.4.5"
-      direction     = "inside"
-      source_vpn    = 3
+      source_ip                     = "1.2.3.4"
+      translated_ip                 = "2.3.4.5"
+      direction                     = "inside"
+      source_vpn                    = 3
+      enable_dual_router_ha_mapping = false
+    }
+  ]
+  static_port_forwards = [
+    {
+      protocol                      = "tcp"
+      source_ip                     = "1.2.3.4"
+      source_port                   = 8080
+      translated_ip                 = "2.3.4.5"
+      translated_port               = 80
+      direction                     = "inside"
+      source_vpn                    = 3
+      enable_dual_router_ha_mapping = false
     }
   ]
   nat_ipv6 = true
@@ -105,6 +136,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
       source_prefix            = "2001:0db8:85a3::/48"
       translated_source_prefix = "abcd:1234:5678::/48"
       source_vpn_id            = 4
+      egress_interface         = true
     }
   ]
   qos_adaptive                = false
@@ -151,70 +183,70 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `acl_ipv4_ingress_feature_id` (String)
 - `acl_ipv6_egress_feature_id` (String)
 - `acl_ipv6_ingress_feature_id` (String)
-- `arp_timeout` (Number) Timeout value for dynamically learned ARP entries, <0..2678400> seconds
+- `arp_timeout` (Number) Timeout value for dynamically learned ARP entries, <0..2678400> seconds, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `0`-`2147483`
   - Default value: `1200`
-- `arp_timeout_variable` (String) Variable name
-- `arps` (Attributes List) Configure ARP entries (see [below for nested schema](#nestedatt--arps))
-- `auto_detect_bandwidth` (Boolean) Interface auto detect bandwidth
+- `arp_timeout_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `arps` (Attributes List) Configure ARP entries, Attribute conditional on `port_channel_member_interface` not equal to `true` (see [below for nested schema](#nestedatt--arps))
+- `auto_detect_bandwidth` (Boolean) Interface auto detect bandwidth, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
-- `auto_detect_bandwidth_variable` (String) Variable name
+- `auto_detect_bandwidth_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `autonegotiate` (Boolean) Link autonegotiation
 - `autonegotiate_variable` (String) Variable name
-- `bandwidth_downstream` (Number) Interface downstream bandwidth capacity, in kbps
+- `bandwidth_downstream` (Number) Interface downstream bandwidth capacity, in kbps, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `1`-`2147483647`
-- `bandwidth_downstream_variable` (String) Variable name
-- `bandwidth_upstream` (Number) Interface upstream bandwidth capacity, in kbps
+- `bandwidth_downstream_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `bandwidth_upstream` (Number) Interface upstream bandwidth capacity, in kbps, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `1`-`2147483647`
-- `bandwidth_upstream_variable` (String) Variable name
-- `block_non_source_ip` (Boolean) Block packets originating from IP address that is not from this source
+- `bandwidth_upstream_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `block_non_source_ip` (Boolean) Block packets originating from IP address that is not from this source, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
-- `block_non_source_ip_variable` (String) Variable name
+- `block_non_source_ip_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `description` (String) The description of the Feature
-- `duplex` (String) Duplex mode
+- `duplex` (String) Duplex mode, Attribute conditional on `port_channel_interface` not equal to `true`
   - Choices: `full`, `half`, `auto`
-- `duplex_variable` (String) Variable name
+- `duplex_variable` (String) Variable name, Attribute conditional on `port_channel_interface` not equal to `true`
 - `enable_dhcpv6` (Boolean) Enable DHCPv6, Attribute conditional on `ipv6_configuration_type` equal to `dynamic`
-- `gre_tunnel_source_ip` (String) GRE tunnel source IP
-- `gre_tunnel_source_ip_variable` (String) Variable name
-- `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
+- `gre_tunnel_source_ip` (String) GRE tunnel source IP, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `gre_tunnel_source_ip_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `true`
-- `icmp_redirect_disable_variable` (String) Variable name
+- `icmp_redirect_disable_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `interface_description` (String)
 - `interface_description_variable` (String) Variable name
-- `interface_mtu` (Number) Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes
+- `interface_mtu` (Number) Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `1500`-`9216`
   - Default value: `1500`
-- `interface_mtu_variable` (String) Variable name
+- `interface_mtu_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `interface_name` (String)
 - `interface_name_variable` (String) Variable name
-- `ip_directed_broadcast` (Boolean) IP Directed-Broadcast
+- `ip_directed_broadcast` (Boolean) IP Directed-Broadcast, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
-- `ip_directed_broadcast_variable` (String) Variable name
-- `ip_mtu` (Number) IP MTU for GigabitEthernet main <576..Interface MTU>, GigabitEthernet subinterface <576..9216>, Other Interfaces <576..2000> in bytes
+- `ip_directed_broadcast_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `ip_mtu` (Number) IP MTU for GigabitEthernet main <576..Interface MTU>, GigabitEthernet subinterface <576..9216>, Other Interfaces <576..2000> in bytes, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `576`-`9216`
   - Default value: `1500`
-- `ip_mtu_variable` (String) Variable name
-- `iperf_server` (String) Iperf server for auto bandwidth detect
-- `iperf_server_variable` (String) Variable name
+- `ip_mtu_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `iperf_server` (String) Iperf server for auto bandwidth detect, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `iperf_server_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `ipv4_address` (String) IP Address, Attribute conditional on `ipv4_configuration_type` equal to `static`
 - `ipv4_address_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` equal to `static`
-- `ipv4_configuration_type` (String) IPv4 Configuration Type
-  - Choices: `dynamic`, `static`
+- `ipv4_configuration_type` (String) IPv4 Configuration Type, Attribute conditional on `port_channel_member_interface` not equal to `true`
+  - Choices: `dynamic`, `static`, `none`
   - Default value: `dynamic`
 - `ipv4_dhcp_distance` (Number) DHCP Distance, Attribute conditional on `ipv4_configuration_type` equal to `dynamic`
-  - Range: `1`-`65536`
+  - Range: `1`-`255`
   - Default value: `1`
 - `ipv4_dhcp_distance_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` equal to `dynamic`
-- `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
-- `ipv4_dhcp_helper_variable` (String) Variable name
+- `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8), Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `ipv4_dhcp_helper_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `ipv4_secondary_addresses` (Attributes List) Secondary IpV4 Addresses, Attribute conditional on `ipv4_configuration_type` equal to `static` (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
 - `ipv4_subnet_mask` (String) Subnet Mask, Attribute conditional on `ipv4_configuration_type` equal to `static`
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `ipv4_subnet_mask_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` equal to `static`
 - `ipv6_address` (String) IPv6 Address Secondary, Attribute conditional on `ipv6_configuration_type` equal to `static`
 - `ipv6_address_variable` (String) Variable name, Attribute conditional on `ipv6_configuration_type` equal to `static`
-- `ipv6_configuration_type` (String) IPv6 Configuration Type
+- `ipv6_configuration_type` (String) IPv6 Configuration Type, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Choices: `dynamic`, `static`, `none`
   - Default value: `none`
 - `ipv6_dhcp_secondary_address` (Attributes List) secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` equal to `dynamic` (see [below for nested schema](#nestedatt--ipv6_dhcp_secondary_address))
@@ -223,23 +255,33 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
   - Range: `30`-`600`
   - Default value: `30`
 - `load_interval_variable` (String) Variable name
-- `mac_address` (String) MAC Address
-- `mac_address_variable` (String) Variable name
-- `media_type` (String) Media type
+- `mac_address` (String) MAC Address, Attribute conditional on `port_channel_member_interface` not equal to `true` and `port_channel_interface` not equal to `true`
+- `mac_address_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true` and `port_channel_interface` not equal to `true`
+- `media_type` (String) Media type, Attribute conditional on `port_channel_interface` not equal to `true`
   - Choices: `auto-select`, `rj45`, `sfp`
-- `media_type_variable` (String) Variable name
+- `media_type_variable` (String) Variable name, Attribute conditional on `port_channel_interface` not equal to `true`
+- `mrf_core_region_type` (String) Core Region, Attribute conditional on `port_channel_member_interface` not equal to `true`
+  - Choices: `core-shared`, `core`
+  - Default value: `core-shared`
+- `mrf_enable_core_region` (Boolean) Enable Core Region, Attribute conditional on `port_channel_member_interface` not equal to `true`
+  - Default value: `false`
 - `nat64` (Boolean) NAT64 on this interface, Attribute conditional on `nat_ipv6` equal to `true`
   - Default value: `false`
 - `nat66` (Boolean) NAT66 on this interface, Attribute conditional on `nat_ipv6` equal to `true`
   - Default value: `false`
-- `nat_ipv4` (Boolean) enable Network Address Translation on this interface
+- `nat_ipv4` (Boolean) enable Network Address Translation on this interface, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
-- `nat_ipv4_variable` (String) Variable name
-- `nat_ipv6` (Boolean) enable Network Address Translation ipv6 on this interface
+- `nat_ipv4_loopbacks` (Attributes List) NAT Multiple Loopback, Attribute conditional on `nat_ipv4` equal to `true` (see [below for nested schema](#nestedatt--nat_ipv4_loopbacks))
+- `nat_ipv4_pools` (Attributes List) NAT Multiple Pool, Attribute conditional on `nat_ipv4` equal to `true` (see [below for nested schema](#nestedatt--nat_ipv4_pools))
+- `nat_ipv4_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `nat_ipv6` (Boolean) enable Network Address Translation ipv6 on this interface, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
-- `nat_ipv6_variable` (String) Variable name
+- `nat_ipv6_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `nat_loopback` (String) NAT Inside Source Loopback Interface, Attribute conditional on `nat_ipv4` equal to `true`
 - `nat_loopback_variable` (String) Variable name, Attribute conditional on `nat_ipv4` equal to `true`
+- `nat_match_interface` (Boolean) NAT Match Interface, Attribute conditional on `nat_ipv4` equal to `true`
+  - Default value: `false`
+- `nat_match_interface_variable` (String) Variable name, Attribute conditional on `nat_ipv4` equal to `true`
 - `nat_overload` (Boolean) NAT Overload, Attribute conditional on `nat_ipv4` equal to `true`
   - Default value: `true`
 - `nat_overload_variable` (String) Variable name, Attribute conditional on `nat_ipv4` equal to `true`
@@ -257,7 +299,6 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `nat_type` (String) NAT Type, Attribute conditional on `nat_ipv4` equal to `true`
   - Choices: `interface`, `pool`, `loopback`
   - Default value: `interface`
-- `nat_type_variable` (String) Variable name, Attribute conditional on `nat_ipv4` equal to `true`
 - `nat_udp_timeout` (Number) Set NAT UDP session timeout, in minutes, Attribute conditional on `nat_ipv4` equal to `true`
   - Range: `1`-`8947`
   - Default value: `1`
@@ -266,7 +307,34 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `per_tunnel_qos` (Boolean) Per-tunnel Qos, Attribute conditional on `tunnel_interface` equal to `true`
   - Default value: `false`
 - `per_tunnel_qos_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
-- `qos_adaptive` (Boolean) Adaptive QoS
+- `port_channel_interface` (Boolean) Port-Channel interface on/off
+  - Default value: `false`
+- `port_channel_lacp_fast_switchover` (Boolean) Eanble lacp fast switchover, Attribute conditional on `port_channel_mode` equal to `lacp`
+- `port_channel_lacp_fast_switchover_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`
+- `port_channel_lacp_load_balance` (String) Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `lacp`
+  - Choices: `flow`, `vlan`
+- `port_channel_lacp_load_balance_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`
+- `port_channel_lacp_max_bundle` (Number) Set LACP max bundle, Attribute conditional on `port_channel_mode` equal to `lacp`
+  - Range: `1`-`16`
+- `port_channel_lacp_max_bundle_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`
+- `port_channel_lacp_member_links` (Attributes List) Configure Port-Channel member links, Attribute conditional on `port_channel_mode` equal to `lacp` (see [below for nested schema](#nestedatt--port_channel_lacp_member_links))
+- `port_channel_lacp_min_bundle` (Number) Set LACP min bundle, Attribute conditional on `port_channel_mode` equal to `lacp`
+  - Range: `1`-`16`
+- `port_channel_lacp_min_bundle_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`
+- `port_channel_lacp_qos_aggregate` (Boolean) Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `lacp`
+- `port_channel_lacp_qos_aggregate_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`
+- `port_channel_member_interface` (Boolean) Port-Channel member interface on/off
+  - Default value: `false`
+- `port_channel_mode` (String) Port Channel Mode, Attribute conditional on `port_channel_interface` equal to `true`
+  - Choices: `lacp`, `static`
+- `port_channel_static_load_balance` (String) Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `static`
+  - Choices: `flow`, `vlan`
+- `port_channel_static_load_balance_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `static`
+- `port_channel_static_member_links` (Attributes List) Configure Port-Channel member links, Attribute conditional on `port_channel_mode` equal to `static` (see [below for nested schema](#nestedatt--port_channel_static_member_links))
+- `port_channel_static_qos_aggregate` (Boolean) Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `static`
+- `port_channel_static_qos_aggregate_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `static`
+- `port_channel_subinterface` (Boolean) , Attribute conditional on `port_channel_interface` equal to `true`
+- `qos_adaptive` (Boolean) Adaptive QoS, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
 - `qos_adaptive_bandwidth_downstream` (Boolean) Shaping Rate Downstream
   - Default value: `false`
@@ -297,66 +365,70 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `qos_shaping_rate` (Number) Shaping Rate (Kbps)
   - Range: `8`-`100000000`
 - `qos_shaping_rate_variable` (String) Variable name
-- `service_provider` (String) Service Provider Name
-- `service_provider_variable` (String) Variable name
+- `service_provider` (String) Service Provider Name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `service_provider_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `shutdown` (Boolean) - Default value: `true`
 - `shutdown_variable` (String) Variable name
-- `speed` (String) Set interface speed
-  - Choices: `10`, `100`, `1000`, `2500`, `10000`
-- `speed_variable` (String) Variable name
+- `speed` (String) Set interface speed, Attribute conditional on `port_channel_interface` not equal to `true`
+  - Choices: `10`, `100`, `1000`, `2500`, `10000`, `25000`
+- `speed_variable` (String) Variable name, Attribute conditional on `port_channel_interface` not equal to `true`
 - `static_nat66` (Attributes List) static NAT66, Attribute conditional on `nat_ipv6` equal to `true` (see [below for nested schema](#nestedatt--static_nat66))
-- `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
+- `static_port_forwards` (Attributes List) Configure Port Forward entries, Attribute conditional on `nat_ipv4` equal to `true` (see [below for nested schema](#nestedatt--static_port_forwards))
+- `tcp_mss` (Number) TCP MSS on SYN packets, in bytes, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `500`-`1460`
-- `tcp_mss_variable` (String) Variable name
-- `tloc_extension` (String) Extends a local TLOC to a remote node only for vpn 0
-- `tloc_extension_variable` (String) Variable name
-- `tracker` (String) Enable tracker for this interface
-- `tracker_variable` (String) Variable name
+- `tcp_mss_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `tloc_extension` (String) Extends a local TLOC to a remote node only for vpn 0, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `tloc_extension_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `tracker` (String) Enable tracker for this interface, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `tracker_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `tunnel_bandwidth_percent` (Number) Tunnels Bandwidth Percent, Attribute conditional on `tunnel_interface` equal to `true`
   - Range: `1`-`100`
   - Default value: `50`
 - `tunnel_bandwidth_percent_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
 - `tunnel_interface` (Boolean) Tunnel Interface on/off
   - Default value: `false`
-- `tunnel_interface_allow_all` (Boolean) Allow all traffic. Overrides all other allow-service options if allow-service all is set
+- `tunnel_interface_allow_all` (Boolean) Allow all traffic. Overrides all other allow-service options if allow-service all is set, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
-- `tunnel_interface_allow_all_variable` (String) Variable name
-- `tunnel_interface_allow_bfd` (Boolean) Allow/Deny BFD
+- `tunnel_interface_allow_all_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `tunnel_interface_allow_bfd` (Boolean) Allow/Deny BFD, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
-- `tunnel_interface_allow_bfd_variable` (String) Variable name
-- `tunnel_interface_allow_bgp` (Boolean) Allow/deny BGP
+- `tunnel_interface_allow_bfd_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `tunnel_interface_allow_bgp` (Boolean) Allow/deny BGP, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
-- `tunnel_interface_allow_bgp_variable` (String) Variable name
-- `tunnel_interface_allow_dhcp` (Boolean) Allow/Deny DHCP
+- `tunnel_interface_allow_bgp_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `tunnel_interface_allow_dhcp` (Boolean) Allow/Deny DHCP, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `true`
-- `tunnel_interface_allow_dhcp_variable` (String) Variable name
-- `tunnel_interface_allow_dns` (Boolean) Allow/Deny DNS
+- `tunnel_interface_allow_dhcp_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `tunnel_interface_allow_dns` (Boolean) Allow/Deny DNS, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `true`
-- `tunnel_interface_allow_dns_variable` (String) Variable name
-- `tunnel_interface_allow_https` (Boolean) Allow/Deny HTTPS
-  - Default value: `true`
-- `tunnel_interface_allow_https_variable` (String) Variable name
-- `tunnel_interface_allow_icmp` (Boolean) Allow/Deny ICMP
-  - Default value: `true`
-- `tunnel_interface_allow_icmp_variable` (String) Variable name
-- `tunnel_interface_allow_netconf` (Boolean) Allow/Deny NETCONF
+- `tunnel_interface_allow_dns_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `tunnel_interface_allow_fragmentation` (Boolean) Allow Fragmentation and will clear DF bit in outer IP, Attribute conditional on `tunnel_interface` equal to `true`
   - Default value: `false`
-- `tunnel_interface_allow_netconf_variable` (String) Variable name
-- `tunnel_interface_allow_ntp` (Boolean) Allow/Deny NTP
+- `tunnel_interface_allow_fragmentation_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_allow_https` (Boolean) Allow/Deny HTTPS, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `true`
-- `tunnel_interface_allow_ntp_variable` (String) Variable name
-- `tunnel_interface_allow_ospf` (Boolean) Allow/Deny OSPF
-  - Default value: `false`
-- `tunnel_interface_allow_ospf_variable` (String) Variable name
-- `tunnel_interface_allow_snmp` (Boolean) Allow/Deny SNMP
-  - Default value: `false`
-- `tunnel_interface_allow_snmp_variable` (String) Variable name
-- `tunnel_interface_allow_ssh` (Boolean) Allow/Deny SSH
+- `tunnel_interface_allow_https_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `tunnel_interface_allow_icmp` (Boolean) Allow/Deny ICMP, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `true`
-- `tunnel_interface_allow_ssh_variable` (String) Variable name
-- `tunnel_interface_allow_stun` (Boolean) Allow/Deny STUN
+- `tunnel_interface_allow_icmp_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `tunnel_interface_allow_netconf` (Boolean) Allow/Deny NETCONF, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
-- `tunnel_interface_allow_stun_variable` (String) Variable name
+- `tunnel_interface_allow_netconf_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `tunnel_interface_allow_ntp` (Boolean) Allow/Deny NTP, Attribute conditional on `port_channel_member_interface` not equal to `true`
+  - Default value: `false`
+- `tunnel_interface_allow_ntp_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `tunnel_interface_allow_ospf` (Boolean) Allow/Deny OSPF, Attribute conditional on `port_channel_member_interface` not equal to `true`
+  - Default value: `false`
+- `tunnel_interface_allow_ospf_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `tunnel_interface_allow_snmp` (Boolean) Allow/Deny SNMP, Attribute conditional on `port_channel_member_interface` not equal to `true`
+  - Default value: `false`
+- `tunnel_interface_allow_snmp_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `tunnel_interface_allow_ssh` (Boolean) Allow/Deny SSH, Attribute conditional on `port_channel_member_interface` not equal to `true`
+  - Default value: `false`
+- `tunnel_interface_allow_ssh_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `tunnel_interface_allow_stun` (Boolean) Allow/Deny STUN, Attribute conditional on `port_channel_member_interface` not equal to `true`
+  - Default value: `false`
+- `tunnel_interface_allow_stun_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `tunnel_interface_bind_loopback_tunnel` (String) Bind loopback tunnel interface to a physical interface, Attribute conditional on `tunnel_interface` equal to `true`
 - `tunnel_interface_bind_loopback_tunnel_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
 - `tunnel_interface_border` (Boolean) Set TLOC as border TLOC, Attribute conditional on `tunnel_interface` equal to `true`
@@ -379,7 +451,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `tunnel_interface_cts_sgt_propagation` (Boolean) CTS SGT Propagation configuration, Attribute conditional on `tunnel_interface` equal to `true`
   - Default value: `false`
 - `tunnel_interface_cts_sgt_propagation_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
-- `tunnel_interface_encapsulations` (Attributes List) Encapsulation for TLOC (see [below for nested schema](#nestedatt--tunnel_interface_encapsulations))
+- `tunnel_interface_encapsulations` (Attributes List) Encapsulation for TLOC, Attribute conditional on `port_channel_member_interface` not equal to `true` (see [below for nested schema](#nestedatt--tunnel_interface_encapsulations))
 - `tunnel_interface_exclude_controller_group_list` (Set of Number) Exclude the following controller groups defined in this list., Attribute conditional on `tunnel_interface` equal to `true`
 - `tunnel_interface_exclude_controller_group_list_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
 - `tunnel_interface_gre_tunnel_destination_ip` (String) GRE tunnel destination IP, Attribute conditional on `tunnel_interface` equal to `true`
@@ -414,6 +486,9 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `tunnel_interface_port_hop` (Boolean) Disallow port hopping on the tunnel interface, Attribute conditional on `tunnel_interface` equal to `true`
   - Default value: `true`
 - `tunnel_interface_port_hop_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_set_sdwan_tunnel_mtu_to_max` (Boolean) Set current tunnel mtu to 9k, Attribute conditional on `tunnel_interface` equal to `true`
+  - Default value: `false`
+- `tunnel_interface_set_sdwan_tunnel_mtu_to_max_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
 - `tunnel_interface_tunnel_tcp_mss` (Number) Tunnel TCP MSS on SYN packets, in bytes, Attribute conditional on `tunnel_interface` equal to `true`
   - Range: `500`-`1460`
 - `tunnel_interface_tunnel_tcp_mss_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
@@ -427,8 +502,8 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `tunnel_qos_mode` (String) Set tunnel QoS mode, Attribute conditional on `tunnel_interface` equal to `true`
   - Choices: `hub`, `spoke`
 - `tunnel_qos_mode_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
-- `xconnect` (String) Extend remote TLOC over a GRE tunnel to a local WAN interface
-- `xconnect_variable` (String) Variable name
+- `xconnect` (String) Extend remote TLOC over a GRE tunnel to a local WAN interface, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `xconnect_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 
 ### Read-Only
 
@@ -476,14 +551,47 @@ Optional:
 - `address_variable` (String) Variable name
 
 
+<a id="nestedatt--nat_ipv4_loopbacks"></a>
+### Nested Schema for `nat_ipv4_loopbacks`
+
+Optional:
+
+- `loopback_interface` (String) NAT Inside Source Loopback Interface
+- `loopback_interface_variable` (String) Variable name
+
+
+<a id="nestedatt--nat_ipv4_pools"></a>
+### Nested Schema for `nat_ipv4_pools`
+
+Optional:
+
+- `enable_dual_router_ha_mapping` (Boolean) Enable DualRouter HA Mapping
+  - Default value: `false`
+- `name` (Number) NAT Pool Name
+  - Range: `1`-`4095`
+- `name_variable` (String) Variable name
+- `overload` (Boolean) NAT Overload
+  - Default value: `true`
+- `overload_variable` (String) Variable name
+- `prefix_length` (Number) NAT Pool Prefix Length
+  - Range: `1`-`32`
+- `prefix_length_variable` (String) Variable name
+- `range_end` (String) NAT Pool Range End
+- `range_end_variable` (String) Variable name
+- `range_start` (String) NAT Pool Range Start
+- `range_start_variable` (String) Variable name
+
+
 <a id="nestedatt--new_static_nats"></a>
 ### Nested Schema for `new_static_nats`
 
 Optional:
 
 - `direction` (String) Direction of static NAT translation
-  - Choices: `inside`, `outside`
+  - Choices: `inside`
   - Default value: `inside`
+- `enable_dual_router_ha_mapping` (Boolean) Enable DualRouter HA Mapping
+  - Default value: `false`
 - `source_ip` (String) Source IP address to be translated
 - `source_ip_variable` (String) Variable name
 - `source_vpn` (Number) Source VPN ID
@@ -494,11 +602,40 @@ Optional:
 - `translated_ip_variable` (String) Variable name
 
 
+<a id="nestedatt--port_channel_lacp_member_links"></a>
+### Nested Schema for `port_channel_lacp_member_links`
+
+Optional:
+
+- `interface_id` (String)
+- `lacp_mode` (String) Set lacp mode
+  - Choices: `active`, `passive`
+  - Default value: `active`
+- `lacp_mode_variable` (String) Variable name
+- `lacp_port_priority` (Number) Set lacp port priority
+  - Range: `1`-`65535`
+- `lacp_port_priority_variable` (String) Variable name
+- `lacp_rate` (String) Set lacp rate
+  - Choices: `fast`, `normal`
+- `lacp_rate_variable` (String) Variable name
+
+
+<a id="nestedatt--port_channel_static_member_links"></a>
+### Nested Schema for `port_channel_static_member_links`
+
+Optional:
+
+- `interface_id` (String)
+
+
 <a id="nestedatt--static_nat66"></a>
 ### Nested Schema for `static_nat66`
 
 Optional:
 
+- `egress_interface` (Boolean) Egress Interface
+  - Default value: `false`
+- `egress_interface_variable` (String) Variable name
 - `source_prefix` (String) Source Prefix
 - `source_prefix_variable` (String) Variable name
 - `source_vpn_id` (Number) Source VPN ID
@@ -506,6 +643,35 @@ Optional:
 - `source_vpn_id_variable` (String) Variable name
 - `translated_source_prefix` (String) Translated Source Prefix
 - `translated_source_prefix_variable` (String) Variable name
+
+
+<a id="nestedatt--static_port_forwards"></a>
+### Nested Schema for `static_port_forwards`
+
+Optional:
+
+- `direction` (String) Direction of static NAT translation
+  - Choices: `inside`
+  - Default value: `inside`
+- `enable_dual_router_ha_mapping` (Boolean) Enable DualRouter HA Mapping
+  - Default value: `false`
+- `protocol` (String) Protocol
+  - Choices: `tcp`, `udp`
+- `protocol_variable` (String) Variable name
+- `source_ip` (String) Source IP address to be translated
+- `source_ip_variable` (String) Variable name
+- `source_port` (Number) source port to be translated
+  - Range: `1`-`65535`
+- `source_port_variable` (String) Variable name
+- `source_vpn` (Number) Source VPN ID
+  - Range: `0`-`65530`
+  - Default value: `0`
+- `source_vpn_variable` (String) Variable name
+- `translated_ip` (String) Statically translated source IP address
+- `translated_ip_variable` (String) Variable name
+- `translated_port` (Number) Statically translated source IP address
+  - Range: `1`-`65535`
+- `translated_port_variable` (String) Variable name
 
 
 <a id="nestedatt--tunnel_interface_encapsulations"></a>

@@ -37,6 +37,9 @@ description: |-
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_tls_ssl_decryption` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_unified_tls_ssl_profile` to `20.15.0`
 - Fix perpetual diff in `sdwan_configuration_group` resource for `topology_label` attribute when not specified in non-dual-edge configurations
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_switchport_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_ethernet_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_interface_ethernet_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_ipsec` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_interface_ipsec` to `20.15.0`
 

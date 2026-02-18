@@ -17,6 +17,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
   ]
   ipv4_dhcp_helper                               = ["1.2.3.4"]
   ipv6_configuration_type                        = "static"
+  ipv6_address                                   = "2001:0:0:1::1/64"
   iperf_server                                   = "example"
   block_non_source_ip                            = false
   service_provider                               = "example"
@@ -29,7 +30,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
   tunnel_bandwidth_percent                       = 82
   tunnel_interface_bind_loopback_tunnel          = "example"
   tunnel_interface_carrier                       = "default"
-  tunnel_interface_color                         = "default"
+  tunnel_interface_color                         = "mpls"
   tunnel_interface_hello_interval                = 1000
   tunnel_interface_hello_tolerance               = 12
   tunnel_interface_last_resort_circuit           = false
@@ -48,6 +49,8 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
   tunnel_interface_clear_dont_fragment           = false
   tunnel_interface_cts_sgt_propagation           = false
   tunnel_interface_network_broadcast             = false
+  tunnel_interface_allow_fragmentation           = false
+  tunnel_interface_set_sdwan_tunnel_mtu_to_max   = false
   tunnel_interface_allow_all                     = false
   tunnel_interface_allow_bgp                     = false
   tunnel_interface_allow_dhcp                    = true
@@ -68,16 +71,44 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
       weight        = 250
     }
   ]
-  nat_ipv4        = true
-  nat_type        = "interface"
+  nat_ipv4 = true
+  nat_type = "interface"
+  nat_ipv4_pools = [
+    {
+      name                          = 10
+      range_start                   = "203.0.115.50"
+      range_end                     = "203.0.115.100"
+      overload                      = true
+      prefix_length                 = 25
+      enable_dual_router_ha_mapping = false
+    }
+  ]
+  nat_ipv4_loopbacks = [
+    {
+      loopback_interface = "Loopback0"
+    }
+  ]
   nat_udp_timeout = 1
   nat_tcp_timeout = 60
   new_static_nats = [
     {
-      source_ip     = "1.2.3.4"
-      translated_ip = "2.3.4.5"
-      direction     = "inside"
-      source_vpn    = 3
+      source_ip                     = "1.2.3.4"
+      translated_ip                 = "2.3.4.5"
+      direction                     = "inside"
+      source_vpn                    = 3
+      enable_dual_router_ha_mapping = false
+    }
+  ]
+  static_port_forwards = [
+    {
+      protocol                      = "tcp"
+      source_ip                     = "1.2.3.4"
+      source_port                   = 8080
+      translated_ip                 = "2.3.4.5"
+      translated_port               = 80
+      direction                     = "inside"
+      source_vpn                    = 3
+      enable_dual_router_ha_mapping = false
     }
   ]
   nat_ipv6 = true
@@ -88,6 +119,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
       source_prefix            = "2001:0db8:85a3::/48"
       translated_source_prefix = "abcd:1234:5678::/48"
       source_vpn_id            = 4
+      egress_interface         = true
     }
   ]
   qos_adaptive                = false
