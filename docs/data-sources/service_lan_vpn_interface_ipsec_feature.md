@@ -99,8 +99,6 @@ data "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
 - `tunnel_source_interface_variable` (String) Variable name
 - `tunnel_source_ipv4_address` (String)
 - `tunnel_source_ipv4_address_variable` (String) Variable name
-- `tunnel_source_ipv4_subnet_mask` (String)
-- `tunnel_source_ipv4_subnet_mask_variable` (String) Variable name
 - `tunnel_source_ipv6_address` (String) Tunnel source IPv6 Address
 - `tunnel_source_ipv6_address_variable` (String) Variable name
 - `version` (Number) The version of the Feature

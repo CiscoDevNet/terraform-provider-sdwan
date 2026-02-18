@@ -53,8 +53,6 @@ type ServiceLANVPNInterfaceIPSec struct {
 	Ipv6AddressVariable                     types.String `tfsdk:"ipv6_address_variable"`
 	TunnelSourceIpv4Address                 types.String `tfsdk:"tunnel_source_ipv4_address"`
 	TunnelSourceIpv4AddressVariable         types.String `tfsdk:"tunnel_source_ipv4_address_variable"`
-	TunnelSourceIpv4SubnetMask              types.String `tfsdk:"tunnel_source_ipv4_subnet_mask"`
-	TunnelSourceIpv4SubnetMaskVariable      types.String `tfsdk:"tunnel_source_ipv4_subnet_mask_variable"`
 	TunnelSourceIpv6Address                 types.String `tfsdk:"tunnel_source_ipv6_address"`
 	TunnelSourceIpv6AddressVariable         types.String `tfsdk:"tunnel_source_ipv6_address_variable"`
 	TunnelSourceInterface                   types.String `tfsdk:"tunnel_source_interface"`
@@ -237,17 +235,9 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"tunnelSource.address.value", data.TunnelSourceIpv4Address.ValueString())
 		}
 	}
-
-	if !data.TunnelSourceIpv4SubnetMaskVariable.IsNull() {
-		if true && ((data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
-			body, _ = sjson.Set(body, path+"tunnelSource.mask.optionType", "variable")
-			body, _ = sjson.Set(body, path+"tunnelSource.mask.value", data.TunnelSourceIpv4SubnetMaskVariable.ValueString())
-		}
-	} else if !data.TunnelSourceIpv4SubnetMask.IsNull() {
-		if true && ((data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
-			body, _ = sjson.Set(body, path+"tunnelSource.mask.optionType", "global")
-			body, _ = sjson.Set(body, path+"tunnelSource.mask.value", data.TunnelSourceIpv4SubnetMask.ValueString())
-		}
+	if true && (!(data.TunnelSourceIpv4Address.IsNull()) || !(data.TunnelSourceIpv4AddressVariable.IsNull())) {
+		body, _ = sjson.Set(body, path+"tunnelSource.mask.optionType", "global")
+		body, _ = sjson.Set(body, path+"tunnelSource.mask.value", "0.0.0.0")
 	}
 
 	if !data.TunnelSourceIpv6AddressVariable.IsNull() {
@@ -765,18 +755,6 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		data.TunnelMode = types.StringValue("ipv4")
 		data.TunnelMode = types.StringValue("ipv4-v6overlay")
 	}
-	data.TunnelSourceIpv4SubnetMask = types.StringNull()
-	data.TunnelSourceIpv4SubnetMaskVariable = types.StringNull()
-	if t := res.Get(path + "tunnelSource.mask.optionType"); t.Exists() {
-		va := res.Get(path + "tunnelSource.mask.value")
-		if t.String() == "variable" {
-			data.TunnelSourceIpv4SubnetMaskVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TunnelSourceIpv4SubnetMask = types.StringValue(va.String())
-		}
-		data.TunnelMode = types.StringValue("ipv4")
-		data.TunnelMode = types.StringValue("ipv4-v6overlay")
-	}
 	data.TunnelSourceIpv6Address = types.StringNull()
 	data.TunnelSourceIpv6AddressVariable = types.StringNull()
 	if t := res.Get(path + "tunnelSourceV6.optionType"); t.Exists() {
@@ -1146,16 +1124,6 @@ func (data *ServiceLANVPNInterfaceIPSec) updateFromBody(ctx context.Context, res
 			data.TunnelSourceIpv4AddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.TunnelSourceIpv4Address = types.StringValue(va.String())
-		}
-	}
-	data.TunnelSourceIpv4SubnetMask = types.StringNull()
-	data.TunnelSourceIpv4SubnetMaskVariable = types.StringNull()
-	if t := res.Get(path + "tunnelSource.mask.optionType"); t.Exists() {
-		va := res.Get(path + "tunnelSource.mask.value")
-		if t.String() == "variable" {
-			data.TunnelSourceIpv4SubnetMaskVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TunnelSourceIpv4SubnetMask = types.StringValue(va.String())
 		}
 	}
 	data.TunnelSourceIpv6Address = types.StringNull()

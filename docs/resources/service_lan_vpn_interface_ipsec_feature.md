@@ -27,7 +27,6 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
   ipv4_address                        = "9.7.5.4"
   ipv4_subnet_mask                    = "255.255.255.0"
   tunnel_source_ipv4_address          = "1.3.5.88"
-  tunnel_source_ipv4_subnet_mask      = "255.255.255.0"
   tunnel_destination_ipv4_address     = "2.55.67.99"
   tunnel_destination_ipv4_subnet_mask = "255.255.255.0"
   application_tunnel_type             = "none"
@@ -164,9 +163,6 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
 - `tunnel_source_interface_variable` (String) Variable name
 - `tunnel_source_ipv4_address` (String) , Attribute conditional on `tunnel_mode` equal to `ipv4` or `tunnel_mode` equal to `ipv4-v6overlay`
 - `tunnel_source_ipv4_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4` or `tunnel_mode` equal to `ipv4-v6overlay`
-- `tunnel_source_ipv4_subnet_mask` (String) , Attribute conditional on `tunnel_mode` equal to `ipv4` or `tunnel_mode` equal to `ipv4-v6overlay`
-  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
-- `tunnel_source_ipv4_subnet_mask_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4` or `tunnel_mode` equal to `ipv4-v6overlay`
 - `tunnel_source_ipv6_address` (String) Tunnel source IPv6 Address, Attribute conditional on `tunnel_mode` equal to `ipv6`
 - `tunnel_source_ipv6_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`
 
