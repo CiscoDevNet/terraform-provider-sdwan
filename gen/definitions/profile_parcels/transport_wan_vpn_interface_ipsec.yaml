@@ -57,7 +57,6 @@ attributes:
           value: ipv4
   - model_name: ipv6Address
     tf_name: ipv6_address
-    data_path: [ipv6Address]
     example: 2001:0:0:1::1
     exclude_test: true
     conditional_attribute:

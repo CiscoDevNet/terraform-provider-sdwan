@@ -216,13 +216,13 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 
 	if !data.Ipv6AddressVariable.IsNull() {
 		if true && (data.TunnelMode.ValueString() == "ipv6" || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
-			body, _ = sjson.Set(body, path+"ipv6Address.ipv6Address.optionType", "variable")
-			body, _ = sjson.Set(body, path+"ipv6Address.ipv6Address.value", data.Ipv6AddressVariable.ValueString())
+			body, _ = sjson.Set(body, path+"ipv6Address.optionType", "variable")
+			body, _ = sjson.Set(body, path+"ipv6Address.value", data.Ipv6AddressVariable.ValueString())
 		}
 	} else if !data.Ipv6Address.IsNull() {
 		if true && (data.TunnelMode.ValueString() == "ipv6" || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
-			body, _ = sjson.Set(body, path+"ipv6Address.ipv6Address.optionType", "global")
-			body, _ = sjson.Set(body, path+"ipv6Address.ipv6Address.value", data.Ipv6Address.ValueString())
+			body, _ = sjson.Set(body, path+"ipv6Address.optionType", "global")
+			body, _ = sjson.Set(body, path+"ipv6Address.value", data.Ipv6Address.ValueString())
 		}
 	}
 
@@ -743,8 +743,8 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 	}
 	data.Ipv6Address = types.StringNull()
 	data.Ipv6AddressVariable = types.StringNull()
-	if t := res.Get(path + "ipv6Address.ipv6Address.optionType"); t.Exists() {
-		va := res.Get(path + "ipv6Address.ipv6Address.value")
+	if t := res.Get(path + "ipv6Address.optionType"); t.Exists() {
+		va := res.Get(path + "ipv6Address.value")
 		if t.String() == "variable" {
 			data.Ipv6AddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
@@ -1130,8 +1130,8 @@ func (data *ServiceLANVPNInterfaceIPSec) updateFromBody(ctx context.Context, res
 	}
 	data.Ipv6Address = types.StringNull()
 	data.Ipv6AddressVariable = types.StringNull()
-	if t := res.Get(path + "ipv6Address.ipv6Address.optionType"); t.Exists() {
-		va := res.Get(path + "ipv6Address.ipv6Address.value")
+	if t := res.Get(path + "ipv6Address.optionType"); t.Exists() {
+		va := res.Get(path + "ipv6Address.value")
 		if t.String() == "variable" {
 			data.Ipv6AddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
