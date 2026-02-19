@@ -29,20 +29,37 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanServiceLANVPNInterfaceGREProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "interface_name", "gre1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "interface_description", "gre1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "ipv4_address", "70.1.1.1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "ipv4_subnet_mask", "255.255.255.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "ipv6_address", "2001:0:0:1::0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "shutdown", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "tunnel_protection", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "tunnel_mode", "ipv4"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "tunnel_source_ipv4_address", "78.1.1.1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "tunnel_destination_ipv4_address", "79.1.1.1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "ip_mtu", "1500"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "tcp_mss", "1460"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "ipv4_mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "ipv4_tcp_mss", "1460"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "clear_dont_fragment", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "dpd_interval", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "dpd_retries", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "ike_version", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "ike_mode", "main"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "ike_rekey_interval", "14400"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "ike_ciphersuite", "aes256-cbc-sha1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "ike_group", "16"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "pre_shared_secret", "123"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "ike_local_id", "xxx"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "ike_remote_id", "xxx"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "ipsec_rekey_interval", "3600"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "ipsec_replay_window", "512"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "ipsec_ciphersuite", "aes256-gcm"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "perfect_forward_secrecy", "group-16"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "application_tunnel_type", "none"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
@@ -84,12 +101,29 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceGREProfileParcelConfig() string
 	config += `	interface_description = "gre1"` + "\n"
 	config += `	ipv4_address = "70.1.1.1"` + "\n"
 	config += `	ipv4_subnet_mask = "255.255.255.0"` + "\n"
+	config += `	ipv6_address = "2001:0:0:1::0"` + "\n"
 	config += `	shutdown = true` + "\n"
+	config += `	tunnel_protection = false` + "\n"
+	config += `	tunnel_mode = "ipv4"` + "\n"
 	config += `	tunnel_source_ipv4_address = "78.1.1.1"` + "\n"
 	config += `	tunnel_destination_ipv4_address = "79.1.1.1"` + "\n"
-	config += `	ip_mtu = 1500` + "\n"
-	config += `	tcp_mss = 1460` + "\n"
+	config += `	ipv4_mtu = 1500` + "\n"
+	config += `	ipv4_tcp_mss = 1460` + "\n"
 	config += `	clear_dont_fragment = false` + "\n"
+	config += `	dpd_interval = 10` + "\n"
+	config += `	dpd_retries = 3` + "\n"
+	config += `	ike_version = 1` + "\n"
+	config += `	ike_mode = "main"` + "\n"
+	config += `	ike_rekey_interval = 14400` + "\n"
+	config += `	ike_ciphersuite = "aes256-cbc-sha1"` + "\n"
+	config += `	ike_group = "16"` + "\n"
+	config += `	pre_shared_secret = "123"` + "\n"
+	config += `	ike_local_id = "xxx"` + "\n"
+	config += `	ike_remote_id = "xxx"` + "\n"
+	config += `	ipsec_rekey_interval = 3600` + "\n"
+	config += `	ipsec_replay_window = 512` + "\n"
+	config += `	ipsec_ciphersuite = "aes256-gcm"` + "\n"
+	config += `	perfect_forward_secrecy = "group-16"` + "\n"
 	config += `	application_tunnel_type = "none"` + "\n"
 	config += `}` + "\n"
 

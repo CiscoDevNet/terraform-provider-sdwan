@@ -4,13 +4,13 @@ page_title: "sdwan_transport_wan_vpn_interface_gre_feature Resource - terraform-
 subcategory: "Features - Transport"
 description: |-
   This resource can manage a Transport WAN VPN Interface GRE Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_transport_wan_vpn_interface_gre_feature (Resource)
 
 This resource can manage a Transport WAN VPN Interface GRE Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -24,12 +24,30 @@ resource "sdwan_transport_wan_vpn_interface_gre_feature" "example" {
   interface_description           = "gre1"
   ipv4_address                    = "70.1.1.1"
   ipv4_subnet_mask                = "255.255.255.0"
+  ipv6_address                    = "2001:0:0:1::0"
   shutdown                        = true
+  multiplexing                    = true
+  tunnel_protection               = false
+  tunnel_mode                     = "ipv4"
   tunnel_source_ipv4_address      = "78.1.1.1"
   tunnel_destination_ipv4_address = "79.1.1.1"
-  ip_mtu                          = 1500
-  tcp_mss                         = 1460
+  ipv4_mtu                        = 1500
+  ipv4_tcp_mss                    = 1460
   clear_dont_fragment             = false
+  dpd_interval                    = 10
+  dpd_retries                     = 3
+  ike_version                     = 1
+  ike_mode                        = "main"
+  ike_rekey_interval              = 14400
+  ike_ciphersuite                 = "aes256-cbc-sha1"
+  ike_group                       = "16"
+  pre_shared_secret               = "123"
+  ike_local_id                    = "xxx"
+  ike_remote_id                   = "xxx"
+  ipsec_rekey_interval            = 3600
+  ipsec_replay_window             = 512
+  ipsec_ciphersuite               = "aes256-gcm"
+  perfect_forward_secrecy         = "group-16"
   application_tunnel_type         = "none"
 }
 ```
@@ -52,34 +70,110 @@ resource "sdwan_transport_wan_vpn_interface_gre_feature" "example" {
   - Default value: `false`
 - `clear_dont_fragment_variable` (String) Variable name
 - `description` (String) The description of the Feature
+- `dpd_interval` (Number) IKE keepalive interval (seconds)
+  - Range: `10`-`3600`
+  - Default value: `10`
+- `dpd_interval_variable` (String) Variable name
+- `dpd_retries` (Number) IKE keepalive retries
+  - Range: `2`-`60`
+  - Default value: `3`
+- `dpd_retries_variable` (String) Variable name
+- `ike_ciphersuite` (String) IKE identity the IKE preshared secret belongs to
+  - Choices: `aes256-cbc-sha1`, `aes256-cbc-sha2`, `aes128-cbc-sha1`, `aes128-cbc-sha2`
+  - Default value: `aes256-cbc-sha1`
+- `ike_ciphersuite_variable` (String) Variable name
+- `ike_group` (String) IKE Diffie Hellman Groups
+  - Choices: `2`, `14`, `15`, `16`, `19`, `20`, `21`, `24`
+  - Default value: `16`
+- `ike_group_variable` (String) Variable name
+- `ike_local_id` (String) IKE ID for the local endpoint. Input IPv4 address, domain name, or email address
+- `ike_local_id_variable` (String) Variable name
+- `ike_mode` (String) IKE integrity protocol
+  - Choices: `main`, `aggressive`
+  - Default value: `main`
+- `ike_mode_variable` (String) Variable name
+- `ike_rekey_interval` (Number) IKE rekey interval <60..86400> seconds
+  - Range: `60`-`86400`
+  - Default value: `14400`
+- `ike_rekey_interval_variable` (String) Variable name
+- `ike_remote_id` (String) IKE ID for the remote endpoint. Input IPv4 address, domain name, or email address
+- `ike_remote_id_variable` (String) Variable name
+- `ike_version` (Number) IKE Version <1..2>
+  - Range: `1`-`2`
+  - Default value: `1`
 - `interface_description` (String) Interface description
 - `interface_description_variable` (String) Variable name
 - `interface_name` (String) Interface name (1..255)
 - `interface_name_variable` (String) Variable name
-- `ip_mtu` (Number) Interface MTU <576..9976>, in bytes
+- `ipsec_ciphersuite` (String) IPsec(ESP) encryption and integrity protocol
+  - Choices: `aes256-cbc-sha1`, `aes256-cbc-sha384`, `aes256-cbc-sha256`, `aes256-cbc-sha512`, `aes256-gcm`, `null-sha1`, `null-sha384`, `null-sha256`, `null-sha512`
+  - Default value: `aes256-gcm`
+- `ipsec_ciphersuite_variable` (String) Variable name
+- `ipsec_rekey_interval` (Number) IPsec rekey interval <300..1209600> seconds
+  - Range: `120`-`2592000`
+  - Default value: `3600`
+- `ipsec_rekey_interval_variable` (String) Variable name
+- `ipsec_replay_window` (Number) Replay window size 32..8192 (must be a power of 2)
+  - Range: `64`-`4096`
+  - Default value: `512`
+- `ipsec_replay_window_variable` (String) Variable name
+- `ipv4_address` (String) , Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `ipv4_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `ipv4_mtu` (Number) Interface MTU <576..9976>, in bytes, Attribute conditional on `tunnel_mode` equal to `ipv4`
   - Range: `576`-`9976`
   - Default value: `1500`
-- `ip_mtu_variable` (String) Variable name
-- `ipv4_address` (String)
-- `ipv4_address_variable` (String) Variable name
-- `ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
-- `ipv4_subnet_mask_variable` (String) Variable name
+- `ipv4_mtu_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `ipv4_subnet_mask` (String) , Attribute conditional on `tunnel_mode` equal to `ipv4`
+  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
+- `ipv4_subnet_mask_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `ipv4_tcp_mss` (Number) TCP MSS on SYN packets, in bytes, Attribute conditional on `tunnel_mode` equal to `ipv4`
+  - Range: `500`-`1460`
+- `ipv4_tcp_mss_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `ipv6_address` (String) Assign IPv6 address, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `ipv6_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `ipv6_mtu` (Number) Interface MTU <1280..9976>, in bytes, Attribute conditional on `tunnel_mode` equal to `ipv6`
+  - Range: `1280`-`9976`
+- `ipv6_mtu_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `ipv6_tcp_mss` (Number) IPv6 TCP MSS on SYN packets, in bytes, Attribute conditional on `tunnel_mode` equal to `ipv6`
+  - Range: `40`-`1454`
+- `ipv6_tcp_mss_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `multiplexing` (Boolean) Tunnel multiplexing state
+  - Default value: `false`
+- `multiplexing_variable` (String) Variable name
+- `perfect_forward_secrecy` (String) IPsec perfect forward secrecy settings
+  - Choices: `group-1`, `group-2`, `group-5`, `group-14`, `group-15`, `group-16`, `group-19`, `group-20`, `group-21`, `group-24`, `none`
+  - Default value: `group-16`
+- `perfect_forward_secrecy_variable` (String) Variable name
+- `pre_shared_secret` (String) Use preshared key to authenticate IKE peer
+- `pre_shared_secret_variable` (String) Variable name
 - `shutdown` (Boolean) Administrative state
   - Default value: `false`
 - `shutdown_variable` (String) Variable name
-- `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
-  - Range: `500`-`1460`
-- `tcp_mss_variable` (String) Variable name
-- `tunnel_destination_ipv4_address` (String) Tunnel destination IP Address
-- `tunnel_destination_ipv4_address_variable` (String) Variable name
-- `tunnel_route_via_loopback` (String) <1..32 characters> Interface name, can't be Loopback interface
-- `tunnel_route_via_loopback_variable` (String) Variable name
-- `tunnel_source_interface` (String) <1..32 characters> Interface name
-- `tunnel_source_interface_loopback` (String) <1..32 characters> Interface name
-- `tunnel_source_interface_loopback_variable` (String) Variable name
-- `tunnel_source_interface_variable` (String) Variable name
-- `tunnel_source_ipv4_address` (String) Tunnel source IP Address
-- `tunnel_source_ipv4_address_variable` (String) Variable name
+- `tunnel_destination_ipv4_address` (String) Tunnel destination IP Address, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_destination_ipv4_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_destination_ipv6_address` (String) Tunnel destination IPv6 Address, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `tunnel_destination_ipv6_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `tunnel_mode` (String) GRE Tunnel Mode
+  - Choices: `ipv4`, `ipv6`
+  - Default value: `ipv4`
+- `tunnel_protection` (Boolean) Tunnel protection state
+  - Default value: `false`
+- `tunnel_route_via_interface` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_route_via_interface_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_route_via_ipv4_address` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_route_via_ipv4_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_route_via_ipv6_address` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `tunnel_route_via_ipv6_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `tunnel_route_via_loopback` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_route_via_loopback_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_source_interface` (String) <1..32 characters> Interface name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_source_interface_loopback` (String) <1..32 characters> Interface name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_source_interface_loopback_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_source_interface_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_source_ipv4_address` (String) Tunnel source IP Address, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_source_ipv4_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4`
+- `tunnel_source_ipv6_address` (String) Tunnel source IPv6 Address, Attribute conditional on `tunnel_mode` equal to `ipv6`
+- `tunnel_source_ipv6_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv6`
 
 ### Read-Only
 
