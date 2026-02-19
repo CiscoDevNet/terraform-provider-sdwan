@@ -168,34 +168,34 @@ func (data TransportWANVPNInterfaceGRE) toBody(ctx context.Context) string {
 	}
 
 	if !data.Ipv4AddressVariable.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.address.address.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.address.address.value", data.Ipv4AddressVariable.ValueString())
 		}
 	} else if data.Ipv4Address.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.address.address.optionType", "default")
 
 		}
 	} else {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.address.address.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.address.address.value", data.Ipv4Address.ValueString())
 		}
 	}
 
 	if !data.Ipv4SubnetMaskVariable.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.address.mask.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.address.mask.value", data.Ipv4SubnetMaskVariable.ValueString())
 		}
 	} else if data.Ipv4SubnetMask.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.address.mask.optionType", "default")
 
 		}
 	} else {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.address.mask.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.address.mask.value", data.Ipv4SubnetMask.ValueString())
 		}
@@ -275,72 +275,72 @@ func (data TransportWANVPNInterfaceGRE) toBody(ctx context.Context) string {
 	}
 
 	if !data.TunnelSourceIpv4AddressVariable.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelSource.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelSource.value", data.TunnelSourceIpv4AddressVariable.ValueString())
 		}
 	} else if !data.TunnelSourceIpv4Address.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelSource.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelSource.value", data.TunnelSourceIpv4Address.ValueString())
 		}
 	}
 
 	if !data.TunnelRouteViaIpv4AddressVariable.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelRouteVia.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelRouteVia.value", data.TunnelRouteViaIpv4AddressVariable.ValueString())
 		}
 	} else if !data.TunnelRouteViaIpv4Address.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelRouteVia.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelRouteVia.value", data.TunnelRouteViaIpv4Address.ValueString())
 		}
 	}
 
 	if !data.TunnelSourceInterfaceVariable.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelSourceInterface.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelSourceInterface.value", data.TunnelSourceInterfaceVariable.ValueString())
 		}
 	} else if !data.TunnelSourceInterface.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelSourceInterface.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelSourceInterface.value", data.TunnelSourceInterface.ValueString())
 		}
 	}
 
 	if !data.TunnelRouteViaInterfaceVariable.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelRouteVia.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelRouteVia.value", data.TunnelRouteViaInterfaceVariable.ValueString())
 		}
 	} else if !data.TunnelRouteViaInterface.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelRouteVia.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelRouteVia.value", data.TunnelRouteViaInterface.ValueString())
 		}
 	}
 
 	if !data.TunnelSourceInterfaceLoopbackVariable.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.value", data.TunnelSourceInterfaceLoopbackVariable.ValueString())
 		}
 	} else if !data.TunnelSourceInterfaceLoopback.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.value", data.TunnelSourceInterfaceLoopback.ValueString())
 		}
 	}
 
 	if !data.TunnelRouteViaLoopbackVariable.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.value", data.TunnelRouteViaLoopbackVariable.ValueString())
 		}
 	} else if !data.TunnelRouteViaLoopback.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.value", data.TunnelRouteViaLoopback.ValueString())
 		}
@@ -371,12 +371,12 @@ func (data TransportWANVPNInterfaceGRE) toBody(ctx context.Context) string {
 	}
 
 	if !data.TunnelDestinationIpv4AddressVariable.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.tunnelDestination.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.tunnelDestination.value", data.TunnelDestinationIpv4AddressVariable.ValueString())
 		}
 	} else if !data.TunnelDestinationIpv4Address.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.tunnelDestination.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.tunnelDestination.value", data.TunnelDestinationIpv4Address.ValueString())
 		}
@@ -395,17 +395,17 @@ func (data TransportWANVPNInterfaceGRE) toBody(ctx context.Context) string {
 	}
 
 	if !data.Ipv4MtuVariable.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.mtu.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.mtu.value", data.Ipv4MtuVariable.ValueString())
 		}
 	} else if data.Ipv4Mtu.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.mtu.optionType", "default")
 			body, _ = sjson.Set(body, path+"basic.mtu.value", 1500)
 		}
 	} else {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.mtu.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.mtu.value", data.Ipv4Mtu.ValueInt64())
 		}
@@ -429,17 +429,17 @@ func (data TransportWANVPNInterfaceGRE) toBody(ctx context.Context) string {
 	}
 
 	if !data.Ipv4TcpMssVariable.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.value", data.Ipv4TcpMssVariable.ValueString())
 		}
 	} else if data.Ipv4TcpMss.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.optionType", "default")
 
 		}
 	} else {
-		if true && data.TunnelMode.ValueString() == "ipv4" {
+		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
 			body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.value", data.Ipv4TcpMss.ValueInt64())
 		}
