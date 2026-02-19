@@ -32,80 +32,78 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type ServiceLANVPNInterfaceIPSec struct {
-	Id                                      types.String `tfsdk:"id"`
-	Version                                 types.Int64  `tfsdk:"version"`
-	Name                                    types.String `tfsdk:"name"`
-	Description                             types.String `tfsdk:"description"`
-	FeatureProfileId                        types.String `tfsdk:"feature_profile_id"`
-	ServiceLanVpnFeatureId                  types.String `tfsdk:"service_lan_vpn_feature_id"`
-	InterfaceName                           types.String `tfsdk:"interface_name"`
-	InterfaceNameVariable                   types.String `tfsdk:"interface_name_variable"`
-	Shutdown                                types.Bool   `tfsdk:"shutdown"`
-	ShutdownVariable                        types.String `tfsdk:"shutdown_variable"`
-	TunnelMode                              types.String `tfsdk:"tunnel_mode"`
-	InterfaceDescription                    types.String `tfsdk:"interface_description"`
-	InterfaceDescriptionVariable            types.String `tfsdk:"interface_description_variable"`
-	Ipv4Address                             types.String `tfsdk:"ipv4_address"`
-	Ipv4AddressVariable                     types.String `tfsdk:"ipv4_address_variable"`
-	Ipv4SubnetMask                          types.String `tfsdk:"ipv4_subnet_mask"`
-	Ipv4SubnetMaskVariable                  types.String `tfsdk:"ipv4_subnet_mask_variable"`
-	Ipv6Address                             types.String `tfsdk:"ipv6_address"`
-	Ipv6AddressVariable                     types.String `tfsdk:"ipv6_address_variable"`
-	TunnelSourceIpv4Address                 types.String `tfsdk:"tunnel_source_ipv4_address"`
-	TunnelSourceIpv4AddressVariable         types.String `tfsdk:"tunnel_source_ipv4_address_variable"`
-	TunnelSourceIpv6Address                 types.String `tfsdk:"tunnel_source_ipv6_address"`
-	TunnelSourceIpv6AddressVariable         types.String `tfsdk:"tunnel_source_ipv6_address_variable"`
-	TunnelSourceInterface                   types.String `tfsdk:"tunnel_source_interface"`
-	TunnelSourceInterfaceVariable           types.String `tfsdk:"tunnel_source_interface_variable"`
-	TunnelDestinationIpv4Address            types.String `tfsdk:"tunnel_destination_ipv4_address"`
-	TunnelDestinationIpv4AddressVariable    types.String `tfsdk:"tunnel_destination_ipv4_address_variable"`
-	TunnelDestinationIpv4SubnetMask         types.String `tfsdk:"tunnel_destination_ipv4_subnet_mask"`
-	TunnelDestinationIpv4SubnetMaskVariable types.String `tfsdk:"tunnel_destination_ipv4_subnet_mask_variable"`
-	TunnelDestinationIpv6Address            types.String `tfsdk:"tunnel_destination_ipv6_address"`
-	TunnelDestinationIpv6AddressVariable    types.String `tfsdk:"tunnel_destination_ipv6_address_variable"`
-	ApplicationTunnelType                   types.String `tfsdk:"application_tunnel_type"`
-	ApplicationTunnelTypeVariable           types.String `tfsdk:"application_tunnel_type_variable"`
-	Ipv4TcpMss                              types.Int64  `tfsdk:"ipv4_tcp_mss"`
-	Ipv4TcpMssVariable                      types.String `tfsdk:"ipv4_tcp_mss_variable"`
-	Ipv6TcpMss                              types.Int64  `tfsdk:"ipv6_tcp_mss"`
-	Ipv6TcpMssVariable                      types.String `tfsdk:"ipv6_tcp_mss_variable"`
-	ClearDontFragment                       types.Bool   `tfsdk:"clear_dont_fragment"`
-	ClearDontFragmentVariable               types.String `tfsdk:"clear_dont_fragment_variable"`
-	Ipv4Mtu                                 types.Int64  `tfsdk:"ipv4_mtu"`
-	Ipv4MtuVariable                         types.String `tfsdk:"ipv4_mtu_variable"`
-	Ipv6Mtu                                 types.Int64  `tfsdk:"ipv6_mtu"`
-	Ipv6MtuVariable                         types.String `tfsdk:"ipv6_mtu_variable"`
-	DpdInterval                             types.Int64  `tfsdk:"dpd_interval"`
-	DpdIntervalVariable                     types.String `tfsdk:"dpd_interval_variable"`
-	DpdRetries                              types.Int64  `tfsdk:"dpd_retries"`
-	DpdRetriesVariable                      types.String `tfsdk:"dpd_retries_variable"`
-	IkePresharedKey                         types.String `tfsdk:"ike_preshared_key"`
-	IkePresharedKeyVariable                 types.String `tfsdk:"ike_preshared_key_variable"`
-	IkeVersion                              types.Int64  `tfsdk:"ike_version"`
-	IkeIntegrityProtocol                    types.String `tfsdk:"ike_integrity_protocol"`
-	IkeIntegrityProtocolVariable            types.String `tfsdk:"ike_integrity_protocol_variable"`
-	IkeRekeyInterval                        types.Int64  `tfsdk:"ike_rekey_interval"`
-	IkeRekeyIntervalVariable                types.String `tfsdk:"ike_rekey_interval_variable"`
-	IkeCiphersuite                          types.String `tfsdk:"ike_ciphersuite"`
-	IkeCiphersuiteVariable                  types.String `tfsdk:"ike_ciphersuite_variable"`
-	IkeDiffieHellmanGroup                   types.String `tfsdk:"ike_diffie_hellman_group"`
-	IkeDiffieHellmanGroupVariable           types.String `tfsdk:"ike_diffie_hellman_group_variable"`
-	IkeIdLocalEndPoint                      types.String `tfsdk:"ike_id_local_end_point"`
-	IkeIdLocalEndPointVariable              types.String `tfsdk:"ike_id_local_end_point_variable"`
-	IkeIdRemoteEndPoint                     types.String `tfsdk:"ike_id_remote_end_point"`
-	IkeIdRemoteEndPointVariable             types.String `tfsdk:"ike_id_remote_end_point_variable"`
-	IpsecRekeyInterval                      types.Int64  `tfsdk:"ipsec_rekey_interval"`
-	IpsecRekeyIntervalVariable              types.String `tfsdk:"ipsec_rekey_interval_variable"`
-	IpsecReplayWindow                       types.Int64  `tfsdk:"ipsec_replay_window"`
-	IpsecReplayWindowVariable               types.String `tfsdk:"ipsec_replay_window_variable"`
-	IpsecCiphersuite                        types.String `tfsdk:"ipsec_ciphersuite"`
-	IpsecCiphersuiteVariable                types.String `tfsdk:"ipsec_ciphersuite_variable"`
-	PerfectForwardSecrecy                   types.String `tfsdk:"perfect_forward_secrecy"`
-	PerfectForwardSecrecyVariable           types.String `tfsdk:"perfect_forward_secrecy_variable"`
-	TrackerId                               types.String `tfsdk:"tracker_id"`
-	TrackerIdVariable                       types.String `tfsdk:"tracker_id_variable"`
-	TunnelRouteVia                          types.String `tfsdk:"tunnel_route_via"`
-	TunnelRouteViaVariable                  types.String `tfsdk:"tunnel_route_via_variable"`
+	Id                                   types.String `tfsdk:"id"`
+	Version                              types.Int64  `tfsdk:"version"`
+	Name                                 types.String `tfsdk:"name"`
+	Description                          types.String `tfsdk:"description"`
+	FeatureProfileId                     types.String `tfsdk:"feature_profile_id"`
+	ServiceLanVpnFeatureId               types.String `tfsdk:"service_lan_vpn_feature_id"`
+	InterfaceName                        types.String `tfsdk:"interface_name"`
+	InterfaceNameVariable                types.String `tfsdk:"interface_name_variable"`
+	Shutdown                             types.Bool   `tfsdk:"shutdown"`
+	ShutdownVariable                     types.String `tfsdk:"shutdown_variable"`
+	TunnelMode                           types.String `tfsdk:"tunnel_mode"`
+	InterfaceDescription                 types.String `tfsdk:"interface_description"`
+	InterfaceDescriptionVariable         types.String `tfsdk:"interface_description_variable"`
+	Ipv4Address                          types.String `tfsdk:"ipv4_address"`
+	Ipv4AddressVariable                  types.String `tfsdk:"ipv4_address_variable"`
+	Ipv4SubnetMask                       types.String `tfsdk:"ipv4_subnet_mask"`
+	Ipv4SubnetMaskVariable               types.String `tfsdk:"ipv4_subnet_mask_variable"`
+	Ipv6Address                          types.String `tfsdk:"ipv6_address"`
+	Ipv6AddressVariable                  types.String `tfsdk:"ipv6_address_variable"`
+	TunnelSourceIpv4Address              types.String `tfsdk:"tunnel_source_ipv4_address"`
+	TunnelSourceIpv4AddressVariable      types.String `tfsdk:"tunnel_source_ipv4_address_variable"`
+	TunnelSourceIpv6Address              types.String `tfsdk:"tunnel_source_ipv6_address"`
+	TunnelSourceIpv6AddressVariable      types.String `tfsdk:"tunnel_source_ipv6_address_variable"`
+	TunnelSourceInterface                types.String `tfsdk:"tunnel_source_interface"`
+	TunnelSourceInterfaceVariable        types.String `tfsdk:"tunnel_source_interface_variable"`
+	TunnelDestinationIpv4Address         types.String `tfsdk:"tunnel_destination_ipv4_address"`
+	TunnelDestinationIpv4AddressVariable types.String `tfsdk:"tunnel_destination_ipv4_address_variable"`
+	TunnelDestinationIpv6Address         types.String `tfsdk:"tunnel_destination_ipv6_address"`
+	TunnelDestinationIpv6AddressVariable types.String `tfsdk:"tunnel_destination_ipv6_address_variable"`
+	ApplicationTunnelType                types.String `tfsdk:"application_tunnel_type"`
+	ApplicationTunnelTypeVariable        types.String `tfsdk:"application_tunnel_type_variable"`
+	Ipv4TcpMss                           types.Int64  `tfsdk:"ipv4_tcp_mss"`
+	Ipv4TcpMssVariable                   types.String `tfsdk:"ipv4_tcp_mss_variable"`
+	Ipv6TcpMss                           types.Int64  `tfsdk:"ipv6_tcp_mss"`
+	Ipv6TcpMssVariable                   types.String `tfsdk:"ipv6_tcp_mss_variable"`
+	ClearDontFragment                    types.Bool   `tfsdk:"clear_dont_fragment"`
+	ClearDontFragmentVariable            types.String `tfsdk:"clear_dont_fragment_variable"`
+	Ipv4Mtu                              types.Int64  `tfsdk:"ipv4_mtu"`
+	Ipv4MtuVariable                      types.String `tfsdk:"ipv4_mtu_variable"`
+	Ipv6Mtu                              types.Int64  `tfsdk:"ipv6_mtu"`
+	Ipv6MtuVariable                      types.String `tfsdk:"ipv6_mtu_variable"`
+	DpdInterval                          types.Int64  `tfsdk:"dpd_interval"`
+	DpdIntervalVariable                  types.String `tfsdk:"dpd_interval_variable"`
+	DpdRetries                           types.Int64  `tfsdk:"dpd_retries"`
+	DpdRetriesVariable                   types.String `tfsdk:"dpd_retries_variable"`
+	IkePresharedKey                      types.String `tfsdk:"ike_preshared_key"`
+	IkePresharedKeyVariable              types.String `tfsdk:"ike_preshared_key_variable"`
+	IkeVersion                           types.Int64  `tfsdk:"ike_version"`
+	IkeIntegrityProtocol                 types.String `tfsdk:"ike_integrity_protocol"`
+	IkeIntegrityProtocolVariable         types.String `tfsdk:"ike_integrity_protocol_variable"`
+	IkeRekeyInterval                     types.Int64  `tfsdk:"ike_rekey_interval"`
+	IkeRekeyIntervalVariable             types.String `tfsdk:"ike_rekey_interval_variable"`
+	IkeCiphersuite                       types.String `tfsdk:"ike_ciphersuite"`
+	IkeCiphersuiteVariable               types.String `tfsdk:"ike_ciphersuite_variable"`
+	IkeDiffieHellmanGroup                types.String `tfsdk:"ike_diffie_hellman_group"`
+	IkeDiffieHellmanGroupVariable        types.String `tfsdk:"ike_diffie_hellman_group_variable"`
+	IkeIdLocalEndPoint                   types.String `tfsdk:"ike_id_local_end_point"`
+	IkeIdLocalEndPointVariable           types.String `tfsdk:"ike_id_local_end_point_variable"`
+	IkeIdRemoteEndPoint                  types.String `tfsdk:"ike_id_remote_end_point"`
+	IkeIdRemoteEndPointVariable          types.String `tfsdk:"ike_id_remote_end_point_variable"`
+	IpsecRekeyInterval                   types.Int64  `tfsdk:"ipsec_rekey_interval"`
+	IpsecRekeyIntervalVariable           types.String `tfsdk:"ipsec_rekey_interval_variable"`
+	IpsecReplayWindow                    types.Int64  `tfsdk:"ipsec_replay_window"`
+	IpsecReplayWindowVariable            types.String `tfsdk:"ipsec_replay_window_variable"`
+	IpsecCiphersuite                     types.String `tfsdk:"ipsec_ciphersuite"`
+	IpsecCiphersuiteVariable             types.String `tfsdk:"ipsec_ciphersuite_variable"`
+	PerfectForwardSecrecy                types.String `tfsdk:"perfect_forward_secrecy"`
+	PerfectForwardSecrecyVariable        types.String `tfsdk:"perfect_forward_secrecy_variable"`
+	TrackerId                            types.String `tfsdk:"tracker_id"`
+	TrackerIdVariable                    types.String `tfsdk:"tracker_id_variable"`
+	TunnelRouteVia                       types.String `tfsdk:"tunnel_route_via"`
+	TunnelRouteViaVariable               types.String `tfsdk:"tunnel_route_via_variable"`
 }
 
 // End of section. //template:end types
@@ -275,17 +273,9 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"tunnelDestination.address.value", data.TunnelDestinationIpv4Address.ValueString())
 		}
 	}
-
-	if !data.TunnelDestinationIpv4SubnetMaskVariable.IsNull() {
-		if true && ((data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
-			body, _ = sjson.Set(body, path+"tunnelDestination.mask.optionType", "variable")
-			body, _ = sjson.Set(body, path+"tunnelDestination.mask.value", data.TunnelDestinationIpv4SubnetMaskVariable.ValueString())
-		}
-	} else if !data.TunnelDestinationIpv4SubnetMask.IsNull() {
-		if true && ((data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) || data.TunnelMode.ValueString() == "ipv4-v6overlay") {
-			body, _ = sjson.Set(body, path+"tunnelDestination.mask.optionType", "global")
-			body, _ = sjson.Set(body, path+"tunnelDestination.mask.value", data.TunnelDestinationIpv4SubnetMask.ValueString())
-		}
+	if true && (!(data.TunnelDestinationIpv4Address.IsNull()) || !(data.TunnelDestinationIpv4AddressVariable.IsNull())) {
+		body, _ = sjson.Set(body, path+"tunnelDestination.mask.optionType", "global")
+		body, _ = sjson.Set(body, path+"tunnelDestination.mask.value", "0.0.0.0")
 	}
 
 	if !data.TunnelDestinationIpv6AddressVariable.IsNull() {
@@ -788,18 +778,6 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		data.TunnelMode = types.StringValue("ipv4")
 		data.TunnelMode = types.StringValue("ipv4-v6overlay")
 	}
-	data.TunnelDestinationIpv4SubnetMask = types.StringNull()
-	data.TunnelDestinationIpv4SubnetMaskVariable = types.StringNull()
-	if t := res.Get(path + "tunnelDestination.mask.optionType"); t.Exists() {
-		va := res.Get(path + "tunnelDestination.mask.value")
-		if t.String() == "variable" {
-			data.TunnelDestinationIpv4SubnetMaskVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TunnelDestinationIpv4SubnetMask = types.StringValue(va.String())
-		}
-		data.TunnelMode = types.StringValue("ipv4")
-		data.TunnelMode = types.StringValue("ipv4-v6overlay")
-	}
 	data.TunnelDestinationIpv6Address = types.StringNull()
 	data.TunnelDestinationIpv6AddressVariable = types.StringNull()
 	if t := res.Get(path + "tunnelDestinationV6.optionType"); t.Exists() {
@@ -1154,16 +1132,6 @@ func (data *ServiceLANVPNInterfaceIPSec) updateFromBody(ctx context.Context, res
 			data.TunnelDestinationIpv4AddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.TunnelDestinationIpv4Address = types.StringValue(va.String())
-		}
-	}
-	data.TunnelDestinationIpv4SubnetMask = types.StringNull()
-	data.TunnelDestinationIpv4SubnetMaskVariable = types.StringNull()
-	if t := res.Get(path + "tunnelDestination.mask.optionType"); t.Exists() {
-		va := res.Get(path + "tunnelDestination.mask.value")
-		if t.String() == "variable" {
-			data.TunnelDestinationIpv4SubnetMaskVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TunnelDestinationIpv4SubnetMask = types.StringValue(va.String())
 		}
 	}
 	data.TunnelDestinationIpv6Address = types.StringNull()

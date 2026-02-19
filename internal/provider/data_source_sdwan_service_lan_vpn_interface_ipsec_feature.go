@@ -166,14 +166,6 @@ func (d *ServiceLANVPNInterfaceIPSecProfileParcelDataSource) Schema(ctx context.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tunnel_destination_ipv4_subnet_mask": schema.StringAttribute{
-				MarkdownDescription: "",
-				Computed:            true,
-			},
-			"tunnel_destination_ipv4_subnet_mask_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Computed:            true,
-			},
 			"tunnel_destination_ipv6_address": schema.StringAttribute{
 				MarkdownDescription: "Tunnel destination IPv6 Address",
 				Computed:            true,

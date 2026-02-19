@@ -41,7 +41,6 @@ func TestAccDataSourceSdwanServiceLANVPNInterfaceIPSecProfileParcel(t *testing.T
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ipv4_subnet_mask", "255.255.255.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "tunnel_source_ipv4_address", "1.3.5.88"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "tunnel_destination_ipv4_address", "2.55.67.99"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "tunnel_destination_ipv4_subnet_mask", "255.255.255.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "application_tunnel_type", "none"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ipv4_tcp_mss", "1460"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "clear_dont_fragment", "false"))
@@ -105,7 +104,6 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceIPSecProfileParcelConfig() stri
 	config += `	ipv4_subnet_mask = "255.255.255.0"` + "\n"
 	config += `	tunnel_source_ipv4_address = "1.3.5.88"` + "\n"
 	config += `	tunnel_destination_ipv4_address = "2.55.67.99"` + "\n"
-	config += `	tunnel_destination_ipv4_subnet_mask = "255.255.255.0"` + "\n"
 	config += `	application_tunnel_type = "none"` + "\n"
 	config += `	ipv4_tcp_mss = 1460` + "\n"
 	config += `	clear_dont_fragment = false` + "\n"
