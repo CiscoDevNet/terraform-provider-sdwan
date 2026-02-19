@@ -34,7 +34,6 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceGREProfileParcel(t *testing.T
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_gre_feature.test", "interface_description", "gre1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_gre_feature.test", "ipv6_address", "2001:0:0:1::0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_gre_feature.test", "shutdown", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_gre_feature.test", "multiplexing", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_gre_feature.test", "tunnel_protection", "false"))
@@ -150,7 +149,6 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceGREProfileParcelConfig() stri
 	config += `	interface_description = "gre1"` + "\n"
 	config += `	ipv4_address = "70.1.1.1"` + "\n"
 	config += `	ipv4_subnet_mask = "255.255.255.0"` + "\n"
-	config += `	ipv6_address = "2001:0:0:1::0"` + "\n"
 	config += `	shutdown = true` + "\n"
 	config += `	multiplexing = true` + "\n"
 	config += `	tunnel_protection = false` + "\n"

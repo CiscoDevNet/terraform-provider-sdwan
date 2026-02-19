@@ -7,7 +7,6 @@ resource "sdwan_service_lan_vpn_interface_gre_feature" "example" {
   interface_description           = "gre1"
   ipv4_address                    = "70.1.1.1"
   ipv4_subnet_mask                = "255.255.255.0"
-  ipv6_address                    = "2001:0:0:1::0"
   shutdown                        = true
   tunnel_protection               = false
   tunnel_mode                     = "ipv4"

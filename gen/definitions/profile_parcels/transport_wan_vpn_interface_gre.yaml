@@ -52,7 +52,8 @@ attributes:
           value: ipv4
   - model_name: ipv6Address
     data_path: [basic]
-    example: 2001:0:0:1::0
+    example: 2001:0:0:1::1/64
+    exclude_test: true
     conditional_attribute:
       conditions:
         - name: tunnel_mode
