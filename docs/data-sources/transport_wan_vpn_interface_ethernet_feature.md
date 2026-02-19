@@ -89,15 +89,21 @@ data "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `mac_address_variable` (String) Variable name
 - `media_type` (String) Media type
 - `media_type_variable` (String) Variable name
+- `mrf_core_region_type` (String) Core Region
+- `mrf_enable_core_region` (Boolean) Enable Core Region
 - `name` (String) The name of the Feature
 - `nat64` (Boolean) NAT64 on this interface
 - `nat66` (Boolean) NAT66 on this interface
 - `nat_ipv4` (Boolean) enable Network Address Translation on this interface
+- `nat_ipv4_loopbacks` (Attributes List) NAT Multiple Loopback (see [below for nested schema](#nestedatt--nat_ipv4_loopbacks))
+- `nat_ipv4_pools` (Attributes List) NAT Multiple Pool (see [below for nested schema](#nestedatt--nat_ipv4_pools))
 - `nat_ipv4_variable` (String) Variable name
 - `nat_ipv6` (Boolean) enable Network Address Translation ipv6 on this interface
 - `nat_ipv6_variable` (String) Variable name
 - `nat_loopback` (String) NAT Inside Source Loopback Interface
 - `nat_loopback_variable` (String) Variable name
+- `nat_match_interface` (Boolean) NAT Match Interface
+- `nat_match_interface_variable` (String) Variable name
 - `nat_overload` (Boolean) NAT Overload
 - `nat_overload_variable` (String) Variable name
 - `nat_prefix_length` (Number) NAT Pool Prefix Length
@@ -109,12 +115,31 @@ data "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `nat_tcp_timeout` (Number) Set NAT TCP session timeout, in minutes
 - `nat_tcp_timeout_variable` (String) Variable name
 - `nat_type` (String) NAT Type
-- `nat_type_variable` (String) Variable name
 - `nat_udp_timeout` (Number) Set NAT UDP session timeout, in minutes
 - `nat_udp_timeout_variable` (String) Variable name
 - `new_static_nats` (Attributes List) static NAT (see [below for nested schema](#nestedatt--new_static_nats))
 - `per_tunnel_qos` (Boolean) Per-tunnel Qos
 - `per_tunnel_qos_variable` (String) Variable name
+- `port_channel_interface` (Boolean) Port-Channel interface on/off
+- `port_channel_lacp_fast_switchover` (Boolean) Eanble lacp fast switchover
+- `port_channel_lacp_fast_switchover_variable` (String) Variable name
+- `port_channel_lacp_load_balance` (String) Enable QoS Port-Channel aggregate
+- `port_channel_lacp_load_balance_variable` (String) Variable name
+- `port_channel_lacp_max_bundle` (Number) Set LACP max bundle
+- `port_channel_lacp_max_bundle_variable` (String) Variable name
+- `port_channel_lacp_member_links` (Attributes List) Configure Port-Channel member links (see [below for nested schema](#nestedatt--port_channel_lacp_member_links))
+- `port_channel_lacp_min_bundle` (Number) Set LACP min bundle
+- `port_channel_lacp_min_bundle_variable` (String) Variable name
+- `port_channel_lacp_qos_aggregate` (Boolean) Enable QoS Port-Channel aggregate
+- `port_channel_lacp_qos_aggregate_variable` (String) Variable name
+- `port_channel_member_interface` (Boolean) Port-Channel member interface on/off
+- `port_channel_mode` (String) Port Channel Mode
+- `port_channel_static_load_balance` (String) Enable QoS Port-Channel aggregate
+- `port_channel_static_load_balance_variable` (String) Variable name
+- `port_channel_static_member_links` (Attributes List) Configure Port-Channel member links (see [below for nested schema](#nestedatt--port_channel_static_member_links))
+- `port_channel_static_qos_aggregate` (Boolean) Enable QoS Port-Channel aggregate
+- `port_channel_static_qos_aggregate_variable` (String) Variable name
+- `port_channel_subinterface` (Boolean)
 - `qos_adaptive` (Boolean) Adaptive QoS
 - `qos_adaptive_bandwidth_downstream` (Boolean) Shaping Rate Downstream
 - `qos_adaptive_bandwidth_upstream` (Boolean) Shaping Rate Upstream
@@ -141,6 +166,7 @@ data "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `speed` (String) Set interface speed
 - `speed_variable` (String) Variable name
 - `static_nat66` (Attributes List) static NAT66 (see [below for nested schema](#nestedatt--static_nat66))
+- `static_port_forwards` (Attributes List) Configure Port Forward entries (see [below for nested schema](#nestedatt--static_port_forwards))
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
 - `tcp_mss_variable` (String) Variable name
 - `tloc_extension` (String) Extends a local TLOC to a remote node only for vpn 0
@@ -160,6 +186,8 @@ data "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `tunnel_interface_allow_dhcp_variable` (String) Variable name
 - `tunnel_interface_allow_dns` (Boolean) Allow/Deny DNS
 - `tunnel_interface_allow_dns_variable` (String) Variable name
+- `tunnel_interface_allow_fragmentation` (Boolean) Allow Fragmentation and will clear DF bit in outer IP
+- `tunnel_interface_allow_fragmentation_variable` (String) Variable name
 - `tunnel_interface_allow_https` (Boolean) Allow/Deny HTTPS
 - `tunnel_interface_allow_https_variable` (String) Variable name
 - `tunnel_interface_allow_icmp` (Boolean) Allow/Deny ICMP
@@ -213,6 +241,8 @@ data "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `tunnel_interface_network_broadcast_variable` (String) Variable name
 - `tunnel_interface_port_hop` (Boolean) Disallow port hopping on the tunnel interface
 - `tunnel_interface_port_hop_variable` (String) Variable name
+- `tunnel_interface_set_sdwan_tunnel_mtu_to_max` (Boolean) Set current tunnel mtu to 9k
+- `tunnel_interface_set_sdwan_tunnel_mtu_to_max_variable` (String) Variable name
 - `tunnel_interface_tunnel_tcp_mss` (Number) Tunnel TCP MSS on SYN packets, in bytes
 - `tunnel_interface_tunnel_tcp_mss_variable` (String) Variable name
 - `tunnel_interface_vbond_as_stun_server` (Boolean) Put this wan interface in STUN mode only
@@ -265,12 +295,40 @@ Read-Only:
 - `address_variable` (String) Variable name
 
 
+<a id="nestedatt--nat_ipv4_loopbacks"></a>
+### Nested Schema for `nat_ipv4_loopbacks`
+
+Read-Only:
+
+- `loopback_interface` (String) NAT Inside Source Loopback Interface
+- `loopback_interface_variable` (String) Variable name
+
+
+<a id="nestedatt--nat_ipv4_pools"></a>
+### Nested Schema for `nat_ipv4_pools`
+
+Read-Only:
+
+- `enable_dual_router_ha_mapping` (Boolean) Enable DualRouter HA Mapping
+- `name` (Number) NAT Pool Name
+- `name_variable` (String) Variable name
+- `overload` (Boolean) NAT Overload
+- `overload_variable` (String) Variable name
+- `prefix_length` (Number) NAT Pool Prefix Length
+- `prefix_length_variable` (String) Variable name
+- `range_end` (String) NAT Pool Range End
+- `range_end_variable` (String) Variable name
+- `range_start` (String) NAT Pool Range Start
+- `range_start_variable` (String) Variable name
+
+
 <a id="nestedatt--new_static_nats"></a>
 ### Nested Schema for `new_static_nats`
 
 Read-Only:
 
 - `direction` (String) Direction of static NAT translation
+- `enable_dual_router_ha_mapping` (Boolean) Enable DualRouter HA Mapping
 - `source_ip` (String) Source IP address to be translated
 - `source_ip_variable` (String) Variable name
 - `source_vpn` (Number) Source VPN ID
@@ -279,17 +337,62 @@ Read-Only:
 - `translated_ip_variable` (String) Variable name
 
 
+<a id="nestedatt--port_channel_lacp_member_links"></a>
+### Nested Schema for `port_channel_lacp_member_links`
+
+Read-Only:
+
+- `interface_id` (String)
+- `lacp_mode` (String) Set lacp mode
+- `lacp_mode_variable` (String) Variable name
+- `lacp_port_priority` (Number) Set lacp port priority
+- `lacp_port_priority_variable` (String) Variable name
+- `lacp_rate` (String) Set lacp rate
+- `lacp_rate_variable` (String) Variable name
+
+
+<a id="nestedatt--port_channel_static_member_links"></a>
+### Nested Schema for `port_channel_static_member_links`
+
+Read-Only:
+
+- `interface_id` (String)
+
+
 <a id="nestedatt--static_nat66"></a>
 ### Nested Schema for `static_nat66`
 
 Read-Only:
 
+- `egress_interface` (Boolean) Egress Interface
+- `egress_interface_variable` (String) Variable name
 - `source_prefix` (String) Source Prefix
 - `source_prefix_variable` (String) Variable name
 - `source_vpn_id` (Number) Source VPN ID
 - `source_vpn_id_variable` (String) Variable name
 - `translated_source_prefix` (String) Translated Source Prefix
 - `translated_source_prefix_variable` (String) Variable name
+
+
+<a id="nestedatt--static_port_forwards"></a>
+### Nested Schema for `static_port_forwards`
+
+Read-Only:
+
+- `direction` (String) Direction of static NAT translation
+- `enable_dual_router_ha_mapping` (Boolean) Enable DualRouter HA Mapping
+- `protocol` (String) Protocol
+- `protocol_variable` (String) Variable name
+- `source_ip` (String) Source IP address to be translated
+- `source_ip_variable` (String) Variable name
+- `source_port` (Number) source port to be translated
+- `source_port_variable` (String) Variable name
+- `source_vpn` (Number) Source VPN ID
+- `source_vpn_variable` (String) Variable name
+- `translated_ip` (String) Statically translated source IP address
+- `translated_ip_variable` (String) Variable name
+- `translated_port` (Number) Statically translated source IP address
+- `translated_port_variable` (String) Variable name
 
 
 <a id="nestedatt--tunnel_interface_encapsulations"></a>

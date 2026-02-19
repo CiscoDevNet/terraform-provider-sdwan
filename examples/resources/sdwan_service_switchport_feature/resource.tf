@@ -12,6 +12,7 @@ resource "sdwan_service_switchport_feature" "example" {
       switchport_access_vlan         = 1
       switchport_trunk_allowed_vlans = "1"
       switchport_trunk_native_vlan   = 1
+      enable_dot1x                   = false
       port_control                   = "auto"
       voice_vlan                     = 1
       pae_enable                     = true

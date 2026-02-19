@@ -143,6 +143,10 @@ func (d *ServiceSwitchportProfileParcelDataSource) Schema(ctx context.Context, r
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
+						"enable_dot1x": schema.BoolAttribute{
+							MarkdownDescription: "Set 802.1x on off",
+							Computed:            true,
+						},
 						"port_control": schema.StringAttribute{
 							MarkdownDescription: "Set Port-Control Mode",
 							Computed:            true,

@@ -28,6 +28,7 @@ delete_mutex: bool(required=False) # Set to true if DELETE operation is mutually
 skip_minimum_test: bool(required=False) # Set to true to prevent "minimum" resource acceptance testing
 parcel_type: enum('feature', 'policy', 'policy_object', required=False) # Type of profile parcel
 full_update: bool(required=False) # Set to true to exclude updateFromBody and just use updateBody within update method
+create_mutex: bool(required=False) # Set to true if CREATE operation is mutually exclusive with other CREATE operations
 ---
 attribute:
   model_name: str(required=False) # Name of the attribute in the model (payload)
@@ -88,7 +89,8 @@ attribute:
   dynamic_default: bool(required=False) # If true when the provided value matches the default value `optionType` will be set to `default` rather than `global`
   priority_order_always: bool(required=False) # If true will always set priority-order in feature template payload
   include_default_option: bool(required=False) # If true will always include the default option type in the payload when the attribute value is null
-
+  include_variable_check: bool(required=False) # UX1.0, If true will check for both "variableName" and "variable" vipType values in the fromBody method during read operation.
+  reset_container_if_ignore: bool(required=False) # When true, resets the container attribute during read operations if the attribute's vipType is set to ignore.
 conditional_attribute:
   operator: enum('and', 'or', required=False) # Logical operator between conditions (default: 'and')
   conditions: list(include('condition')) # List of conditions (single or multiple)

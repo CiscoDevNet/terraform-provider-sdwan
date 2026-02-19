@@ -4,13 +4,13 @@ page_title: "sdwan_service_switchport_feature Resource - terraform-provider-sdwa
 subcategory: "Features - Service"
 description: |-
   This resource can manage a Service Switchport Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_service_switchport_feature (Resource)
 
 This resource can manage a Service Switchport Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -29,6 +29,7 @@ resource "sdwan_service_switchport_feature" "example" {
       switchport_access_vlan         = 1
       switchport_trunk_allowed_vlans = "1"
       switchport_trunk_native_vlan   = 1
+      enable_dot1x                   = false
       port_control                   = "auto"
       voice_vlan                     = 1
       pae_enable                     = true
@@ -92,6 +93,8 @@ Optional:
 - `duplex` (String) Duplex mode
   - Choices: `full`, `half`
 - `duplex_variable` (String) Variable name
+- `enable_dot1x` (Boolean) Set 802.1x on off
+  - Default value: `true`
 - `enable_periodic_reauth` (Boolean) Enable Periodic Reauthentication
 - `enable_periodic_reauth_variable` (String) Variable name
 - `enable_voice` (Boolean) Enable Critical Voice VLAN
@@ -127,7 +130,7 @@ Optional:
   - Default value: `true`
 - `shutdown_variable` (String) Variable name
 - `speed` (String) Set interface speed
-  - Choices: `10`, `100`, `1000`, `2500`, `10000`
+  - Choices: `10`, `100`, `1000`, `2500`, `10000`, `25000`
 - `speed_variable` (String) Variable name
 - `switchport_access_vlan` (Number) Set VLAN identifier associated with bridging domain
   - Range: `1`-`4094`

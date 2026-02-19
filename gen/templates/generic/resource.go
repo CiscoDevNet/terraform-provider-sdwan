@@ -478,7 +478,13 @@ func (r *{{camelCase .Name}}Resource) Create(ctx context.Context, req resource.C
 	// Create object
 	body := plan.toBody(ctx)
 
+	{{ if .CreateMutex}}
+	r.updateMutex.Lock()
+	{{- end}}
 	res, err := r.client.Post({{if .PostRestEndpoint}}"{{.PostRestEndpoint}}"{{else}}plan.getPath(){{end}}, body)
+	{{- if .CreateMutex}}
+	r.updateMutex.Unlock()
+	{{- end}}
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
