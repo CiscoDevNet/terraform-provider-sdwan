@@ -287,10 +287,11 @@ type YamlConfigConditionalAttribute struct {
 }
 
 type YamlConfigCondition struct {
-	Name   string `yaml:"name"`
-	Value  string `yaml:"value"`
-	Type   string `yaml:"type"`
-	Negate bool   `yaml:"negate"`
+	Name         string `yaml:"name"`
+	Value        string `yaml:"value"`
+	Type         string `yaml:"type"`
+	Negate       bool   `yaml:"negate"`
+	DefaultValue string // Populated during template execution, not from YAML
 }
 
 // Templating helper function to convert TF name to GO name
@@ -456,7 +457,13 @@ func BuildConditionCheck(cond YamlConfigCondition, context string) string {
 	} else if cond.Type == "Bool" {
 		check = fmt.Sprintf("%s.%s.ValueBool() == %s", context, varName, cond.Value)
 	} else {
-		check = fmt.Sprintf("%s.%s.ValueString() == \"%s\"", context, varName, cond.Value)
+		// For string conditions, also accept null if the attribute has a matching default value
+		// This is stored in cond.DefaultValue field, populated during template execution
+		if cond.DefaultValue != "" && cond.DefaultValue == cond.Value {
+			check = fmt.Sprintf("(%s.%s.ValueString() == \"%s\" || %s.%s.IsNull())", context, varName, cond.Value, context, varName)
+		} else {
+			check = fmt.Sprintf("%s.%s.ValueString() == \"%s\"", context, varName, cond.Value)
+		}
 	}
 
 	if cond.Negate {
@@ -467,9 +474,34 @@ func BuildConditionCheck(cond YamlConfigCondition, context string) string {
 }
 
 // Templating helper function to build full conditional logic
-func BuildConditionalLogic(attr YamlConfigConditionalAttribute, context string) string {
+func BuildConditionalLogic(attr YamlConfigConditionalAttribute, attributesOrContext interface{}, contextOrEmpty ...string) string {
 	if !HasConditional(attr) {
 		return ""
+	}
+
+	// Handle both old signature (attr, context) and new signature (attr, attributes, context)
+	var context string
+	var attributes []YamlConfigAttribute
+
+	if len(contextOrEmpty) > 0 {
+		// New signature: BuildConditionalLogic(attr, attributes, context)
+		context = contextOrEmpty[0]
+		if attrs, ok := attributesOrContext.([]YamlConfigAttribute); ok {
+			attributes = attrs
+		}
+	} else {
+		// Old signature: BuildConditionalLogic(attr, context)
+		if ctx, ok := attributesOrContext.(string); ok {
+			context = ctx
+		}
+	}
+
+	// Build a map of attribute tf_name to default_value for quick lookup
+	defaultValueMap := make(map[string]string)
+	for _, a := range attributes {
+		if a.DefaultValue != "" {
+			defaultValueMap[a.TfName] = a.DefaultValue
+		}
 	}
 
 	operator := attr.Operator
@@ -479,6 +511,10 @@ func BuildConditionalLogic(attr YamlConfigConditionalAttribute, context string) 
 
 	var checks []string
 	for _, cond := range attr.Conditions {
+		// Populate the default value if it exists for this condition's attribute
+		if defaultVal, exists := defaultValueMap[cond.Name]; exists {
+			cond.DefaultValue = defaultVal
+		}
 		checks = append(checks, BuildConditionCheck(cond, context))
 	}
 
@@ -695,9 +731,9 @@ var functions = template.FuncMap{
 	"getParentModelName":         GetParentModelName,
 	"getProfileParcelSuffix":     GetProfileParcelSuffix,
 	"getProfileParcelName":       GetProfileParcelName,
-	"contains":                   contains,
-	"hasConditional":             HasConditional,
-	"buildConditionalLogic":      BuildConditionalLogic,
+	"contains":                    contains,
+	"hasConditional":              HasConditional,
+	"buildConditionalLogic":       BuildConditionalLogic,
 	"buildConditionalDescription": BuildConditionalDescription,
 }
 

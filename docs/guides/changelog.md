@@ -42,6 +42,8 @@ description: |-
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_switchport_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_ethernet_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_interface_ethernet_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_ipsec` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_interface_ipsec` to `20.15.0`
 
 ## 0.9.0
 
