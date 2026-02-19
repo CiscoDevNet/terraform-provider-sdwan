@@ -366,30 +366,37 @@ attributes:
     tf_name: qos_adaptive_period
     exclude_ignore: true
     example: 15
+    include_variable_check: true
   - model_name: bandwidth-down
     tf_name: qos_adaptive_bandwidth_downstream
     exclude_ignore: true
     example: 10000
+    include_variable_check: true
   - model_name: dmin
     tf_name: qos_adaptive_min_downstream
     exclude_ignore: true
     example: 100
+    include_variable_check: true
   - model_name: dmax
     tf_name: qos_adaptive_max_downstream
     exclude_ignore: true
     example: 100000
+    include_variable_check: true
   - model_name: bandwidth-up
     tf_name: qos_adaptive_bandwidth_upstream
     exclude_ignore: true
     example: 10000
+    include_variable_check: true
   - model_name: umin
     tf_name: qos_adaptive_min_upstream
     exclude_ignore: true
     example: 100
+    include_variable_check: true
   - model_name: umax
     tf_name: qos_adaptive_max_upstream
     exclude_ignore: true
     example: 100000
+    include_variable_check: true
   - model_name: shaping-rate
     example: 1000
   - model_name: qos-map
