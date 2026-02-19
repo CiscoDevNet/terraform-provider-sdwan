@@ -7,6 +7,7 @@ id_from_query_path: data
 id_from_query_path_attribute: policyId
 get_before_delete: true
 delete_mutex: true
+create_mutex: true
 doc_category: (Classic) Security Policies
 attributes:
   - model_name: policyType

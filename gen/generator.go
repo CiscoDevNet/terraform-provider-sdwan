@@ -214,6 +214,7 @@ type YamlConfig struct {
 	DeleteMutex              bool                  `yaml:"delete_mutex"`
 	ParcelType               string                `yaml:"parcel_type"`
 	FullUpdate               bool                  `yaml:"full_update"`
+	CreateMutex              bool                  `yaml:"create_mutex"`
 }
 
 type YamlConfigAttribute struct {
