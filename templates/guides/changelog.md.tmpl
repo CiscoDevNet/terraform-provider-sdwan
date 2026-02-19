@@ -45,6 +45,8 @@ description: |-
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_interface_gre` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_interface_svi` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_lan_vpn_interface_gre` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_configuration_group` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_group` to `20.15.0`
 - Fix perpetual diff in `sdwan_configuration_group` resource for `topology_label` attribute when not specified in non-dual-edge configurations
 - Fix intermittent 400 error when creating multiple `sdwan_security_policy` resources by implementing mutex for CREATE operations 
 
