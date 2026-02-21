@@ -4,13 +4,13 @@ page_title: "sdwan_transport_ipv6_tracker_feature Resource - terraform-provider-
 subcategory: "Features - Transport"
 description: |-
   This resource can manage a Transport IPv6 Tracker Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_transport_ipv6_tracker_feature (Resource)
 
 This resource can manage a Transport IPv6 Tracker Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -44,18 +44,21 @@ resource "sdwan_transport_ipv6_tracker_feature" "example" {
 - `description` (String) The description of the Feature
 - `endpoint_api_url` (String) API url of endpoint
 - `endpoint_api_url_variable` (String) Variable name
-- `endpoint_dns_name` (String) Endpoint DNS Name
+- `endpoint_dns_name` (String) DNS Name
 - `endpoint_dns_name_variable` (String) Variable name
-- `endpoint_ip` (String) Endpoint IP
+- `endpoint_ip` (String) IP
 - `endpoint_ip_variable` (String) Variable name
 - `endpoint_tracker_type` (String) Endpoint Tracker Type
-  - Choices: `ipv6-interface`
+  - Choices: `ipv6-interface`, `ipv6-interface-icmp`
   - Default value: `ipv6-interface`
-- `endpoint_tracker_type_variable` (String) Variable name
-- `interval` (Number) Interval
+- `icmp_interval` (Number) Probe Interval, Attribute conditional on `endpoint_tracker_type` equal to `ipv6-interface-icmp`
+  - Range: `2`-`1000`
+  - Default value: `2`
+- `icmp_interval_variable` (String) Variable name, Attribute conditional on `endpoint_tracker_type` equal to `ipv6-interface-icmp`
+- `interval` (Number) Probe Interval, Attribute conditional on `endpoint_tracker_type` equal to `ipv6-interface`
   - Range: `20`-`600`
   - Default value: `60`
-- `interval_variable` (String) Variable name
+- `interval_variable` (String) Variable name, Attribute conditional on `endpoint_tracker_type` equal to `ipv6-interface`
 - `multiplier` (Number) Multiplier
   - Range: `1`-`10`
   - Default value: `3`
