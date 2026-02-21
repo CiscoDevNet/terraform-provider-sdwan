@@ -22,7 +22,9 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"strconv"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -180,9 +182,13 @@ type TransportRoutingBGPIpv4Networks struct {
 }
 
 type TransportRoutingBGPIpv4Redistributes struct {
-	Protocol         types.String `tfsdk:"protocol"`
-	ProtocolVariable types.String `tfsdk:"protocol_variable"`
-	RoutePolicyId    types.String `tfsdk:"route_policy_id"`
+	Protocol               types.String `tfsdk:"protocol"`
+	ProtocolVariable       types.String `tfsdk:"protocol_variable"`
+	RoutePolicyId          types.String `tfsdk:"route_policy_id"`
+	Metric                 types.Int64  `tfsdk:"metric"`
+	MetricVariable         types.String `tfsdk:"metric_variable"`
+	OspfMatchRoute         types.Set    `tfsdk:"ospf_match_route"`
+	OspfMatchRouteVariable types.String `tfsdk:"ospf_match_route_variable"`
 }
 
 type TransportRoutingBGPIpv6AggregateAddresses struct {
@@ -200,9 +206,13 @@ type TransportRoutingBGPIpv6Networks struct {
 }
 
 type TransportRoutingBGPIpv6Redistributes struct {
-	Protocol         types.String `tfsdk:"protocol"`
-	ProtocolVariable types.String `tfsdk:"protocol_variable"`
-	RoutePolicyId    types.String `tfsdk:"route_policy_id"`
+	Protocol               types.String `tfsdk:"protocol"`
+	ProtocolVariable       types.String `tfsdk:"protocol_variable"`
+	RoutePolicyId          types.String `tfsdk:"route_policy_id"`
+	Metric                 types.Int64  `tfsdk:"metric"`
+	MetricVariable         types.String `tfsdk:"metric_variable"`
+	OspfMatchRoute         types.Set    `tfsdk:"ospf_match_route"`
+	OspfMatchRouteVariable types.String `tfsdk:"ospf_match_route_variable"`
 }
 
 type TransportRoutingBGPMplsInterfaces struct {
@@ -1476,6 +1486,42 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.value", item.RoutePolicyId.ValueString())
 				}
 			}
+
+			if !item.MetricVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "metric.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "metric.value", item.MetricVariable.ValueString())
+				}
+			} else if item.Metric.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "metric.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "metric.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "metric.value", item.Metric.ValueInt64())
+				}
+			}
+
+			if !item.OspfMatchRouteVariable.IsNull() {
+				if true && item.Protocol.ValueString() == "ospf" {
+					itemBody, _ = sjson.Set(itemBody, "ospfMatchRoute.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "ospfMatchRoute.value", item.OspfMatchRouteVariable.ValueString())
+				}
+			} else if item.OspfMatchRoute.IsNull() {
+				if true && item.Protocol.ValueString() == "ospf" {
+					itemBody, _ = sjson.Set(itemBody, "ospfMatchRoute.optionType", "default")
+
+				}
+			} else {
+				if true && item.Protocol.ValueString() == "ospf" {
+					itemBody, _ = sjson.Set(itemBody, "ospfMatchRoute.optionType", "global")
+					var values []string
+					item.OspfMatchRoute.ElementsAs(ctx, &values, false)
+					itemBody, _ = sjson.Set(itemBody, "ospfMatchRoute.value", values)
+				}
+			}
 			body, _ = sjson.SetRaw(body, path+"addressFamily.redistribute.-1", itemBody)
 		}
 	}
@@ -1630,6 +1676,42 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.value", item.RoutePolicyId.ValueString())
+				}
+			}
+
+			if !item.MetricVariable.IsNull() {
+				if true && item.Protocol.ValueString() == "ospf" {
+					itemBody, _ = sjson.Set(itemBody, "metric.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "metric.value", item.MetricVariable.ValueString())
+				}
+			} else if item.Metric.IsNull() {
+				if true && item.Protocol.ValueString() == "ospf" {
+					itemBody, _ = sjson.Set(itemBody, "metric.optionType", "default")
+
+				}
+			} else {
+				if true && item.Protocol.ValueString() == "ospf" {
+					itemBody, _ = sjson.Set(itemBody, "metric.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "metric.value", item.Metric.ValueInt64())
+				}
+			}
+
+			if !item.OspfMatchRouteVariable.IsNull() {
+				if true && item.Protocol.ValueString() == "ospf" {
+					itemBody, _ = sjson.Set(itemBody, "ospfMatchRoute.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "ospfMatchRoute.value", item.OspfMatchRouteVariable.ValueString())
+				}
+			} else if item.OspfMatchRoute.IsNull() {
+				if true && item.Protocol.ValueString() == "ospf" {
+					itemBody, _ = sjson.Set(itemBody, "ospfMatchRoute.optionType", "default")
+
+				}
+			} else {
+				if true && item.Protocol.ValueString() == "ospf" {
+					itemBody, _ = sjson.Set(itemBody, "ospfMatchRoute.optionType", "global")
+					var values []string
+					item.OspfMatchRoute.ElementsAs(ctx, &values, false)
+					itemBody, _ = sjson.Set(itemBody, "ospfMatchRoute.value", values)
 				}
 			}
 			body, _ = sjson.SetRaw(body, path+"ipv6AddressFamily.redistribute.-1", itemBody)
@@ -2519,6 +2601,27 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 					item.RoutePolicyId = types.StringValue(va.String())
 				}
 			}
+			item.Metric = types.Int64Null()
+			item.MetricVariable = types.StringNull()
+			if t := v.Get("metric.optionType"); t.Exists() {
+				va := v.Get("metric.value")
+				if t.String() == "variable" {
+					item.MetricVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.Metric = types.Int64Value(va.Int())
+				}
+			}
+			item.OspfMatchRoute = types.SetNull(types.StringType)
+			item.OspfMatchRouteVariable = types.StringNull()
+			if t := v.Get("ospfMatchRoute.optionType"); t.Exists() {
+				va := v.Get("ospfMatchRoute.value")
+				if t.String() == "variable" {
+					item.OspfMatchRouteVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.OspfMatchRoute = helpers.GetStringSet(va.Array())
+				}
+				item.Protocol = types.StringValue("ospf")
+			}
 			data.Ipv4Redistributes = append(data.Ipv4Redistributes, item)
 			return true
 		})
@@ -2638,6 +2741,28 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 				if t.String() == "global" {
 					item.RoutePolicyId = types.StringValue(va.String())
 				}
+			}
+			item.Metric = types.Int64Null()
+			item.MetricVariable = types.StringNull()
+			if t := v.Get("metric.optionType"); t.Exists() {
+				va := v.Get("metric.value")
+				if t.String() == "variable" {
+					item.MetricVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.Metric = types.Int64Value(va.Int())
+				}
+				item.Protocol = types.StringValue("ospf")
+			}
+			item.OspfMatchRoute = types.SetNull(types.StringType)
+			item.OspfMatchRouteVariable = types.StringNull()
+			if t := v.Get("ospfMatchRoute.optionType"); t.Exists() {
+				va := v.Get("ospfMatchRoute.value")
+				if t.String() == "variable" {
+					item.OspfMatchRouteVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.OspfMatchRoute = helpers.GetStringSet(va.Array())
+				}
+				item.Protocol = types.StringValue("ospf")
 			}
 			data.Ipv6Redistributes = append(data.Ipv6Redistributes, item)
 			return true
@@ -3632,9 +3757,9 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 		}
 	}
 	for i := range data.Ipv4Redistributes {
-		keys := [...]string{"protocol", "routePolicy.refId"}
-		keyValues := [...]string{data.Ipv4Redistributes[i].Protocol.ValueString(), data.Ipv4Redistributes[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{data.Ipv4Redistributes[i].ProtocolVariable.ValueString(), ""}
+		keys := [...]string{"protocol", "routePolicy.refId", "metric", "ospfMatchRoute"}
+		keyValues := [...]string{data.Ipv4Redistributes[i].Protocol.ValueString(), data.Ipv4Redistributes[i].RoutePolicyId.ValueString(), strconv.FormatInt(data.Ipv4Redistributes[i].Metric.ValueInt64(), 10), helpers.GetStringFromSet(data.Ipv4Redistributes[i].OspfMatchRoute).ValueString()}
+		keyValuesVariables := [...]string{data.Ipv4Redistributes[i].ProtocolVariable.ValueString(), "", data.Ipv4Redistributes[i].MetricVariable.ValueString(), data.Ipv4Redistributes[i].OspfMatchRouteVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "addressFamily.redistribute").ForEach(
@@ -3678,6 +3803,26 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 			va := r.Get("routePolicy.refId.value")
 			if t.String() == "global" {
 				data.Ipv4Redistributes[i].RoutePolicyId = types.StringValue(va.String())
+			}
+		}
+		data.Ipv4Redistributes[i].Metric = types.Int64Null()
+		data.Ipv4Redistributes[i].MetricVariable = types.StringNull()
+		if t := r.Get("metric.optionType"); t.Exists() {
+			va := r.Get("metric.value")
+			if t.String() == "variable" {
+				data.Ipv4Redistributes[i].MetricVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				data.Ipv4Redistributes[i].Metric = types.Int64Value(va.Int())
+			}
+		}
+		data.Ipv4Redistributes[i].OspfMatchRoute = types.SetNull(types.StringType)
+		data.Ipv4Redistributes[i].OspfMatchRouteVariable = types.StringNull()
+		if t := r.Get("ospfMatchRoute.optionType"); t.Exists() {
+			va := r.Get("ospfMatchRoute.value")
+			if t.String() == "variable" {
+				data.Ipv4Redistributes[i].OspfMatchRouteVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				data.Ipv4Redistributes[i].OspfMatchRoute = helpers.GetStringSet(va.Array())
 			}
 		}
 	}
@@ -3824,9 +3969,9 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 		}
 	}
 	for i := range data.Ipv6Redistributes {
-		keys := [...]string{"protocol", "routePolicy.refId"}
-		keyValues := [...]string{data.Ipv6Redistributes[i].Protocol.ValueString(), data.Ipv6Redistributes[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{data.Ipv6Redistributes[i].ProtocolVariable.ValueString(), ""}
+		keys := [...]string{"protocol", "routePolicy.refId", "metric", "ospfMatchRoute"}
+		keyValues := [...]string{data.Ipv6Redistributes[i].Protocol.ValueString(), data.Ipv6Redistributes[i].RoutePolicyId.ValueString(), strconv.FormatInt(data.Ipv6Redistributes[i].Metric.ValueInt64(), 10), helpers.GetStringFromSet(data.Ipv6Redistributes[i].OspfMatchRoute).ValueString()}
+		keyValuesVariables := [...]string{data.Ipv6Redistributes[i].ProtocolVariable.ValueString(), "", data.Ipv6Redistributes[i].MetricVariable.ValueString(), data.Ipv6Redistributes[i].OspfMatchRouteVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "ipv6AddressFamily.redistribute").ForEach(
@@ -3870,6 +4015,26 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 			va := r.Get("routePolicy.refId.value")
 			if t.String() == "global" {
 				data.Ipv6Redistributes[i].RoutePolicyId = types.StringValue(va.String())
+			}
+		}
+		data.Ipv6Redistributes[i].Metric = types.Int64Null()
+		data.Ipv6Redistributes[i].MetricVariable = types.StringNull()
+		if t := r.Get("metric.optionType"); t.Exists() {
+			va := r.Get("metric.value")
+			if t.String() == "variable" {
+				data.Ipv6Redistributes[i].MetricVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				data.Ipv6Redistributes[i].Metric = types.Int64Value(va.Int())
+			}
+		}
+		data.Ipv6Redistributes[i].OspfMatchRoute = types.SetNull(types.StringType)
+		data.Ipv6Redistributes[i].OspfMatchRouteVariable = types.StringNull()
+		if t := r.Get("ospfMatchRoute.optionType"); t.Exists() {
+			va := r.Get("ospfMatchRoute.value")
+			if t.String() == "variable" {
+				data.Ipv6Redistributes[i].OspfMatchRouteVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				data.Ipv6Redistributes[i].OspfMatchRoute = helpers.GetStringSet(va.Array())
 			}
 		}
 	}

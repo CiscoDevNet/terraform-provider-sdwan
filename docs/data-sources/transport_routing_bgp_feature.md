@@ -125,7 +125,7 @@ Read-Only:
 - `local_as_variable` (String) Variable name
 - `next_hop_self` (Boolean) Set router to be next hop for routes advertised to neighbor
 - `next_hop_self_variable` (String) Variable name
-- `password` (String) Set MD5 password on TCP connection with BGP peer
+- `password` (String) Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `password_variable` (String) Variable name
 - `remote_as` (Number) Set remote autonomous system number
 - `remote_as_variable` (String) Variable name
@@ -181,6 +181,10 @@ Read-Only:
 
 Read-Only:
 
+- `metric` (Number) Metric value, the metric value helps determine the preference of routes when multiple paths are available. A lower metric is typically more preferred
+- `metric_variable` (String) Variable name
+- `ospf_match_route` (Set of String) Match the OSPF internal,external type 1 or external type 2 route and redistribute them to BGP.
+- `ospf_match_route_variable` (String) Variable name
 - `protocol` (String) Set the protocol to redistribute routes from
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
@@ -223,7 +227,7 @@ Read-Only:
 - `local_as_variable` (String) Variable name
 - `next_hop_self` (Boolean) Set router to be next hop for routes advertised to neighbor
 - `next_hop_self_variable` (String) Variable name
-- `password` (String) Set MD5 password on TCP connection with BGP peer
+- `password` (String) Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `password_variable` (String) Variable name
 - `remote_as` (Number) Set remote autonomous system number
 - `remote_as_variable` (String) Variable name
@@ -276,6 +280,10 @@ Read-Only:
 
 Read-Only:
 
+- `metric` (Number) Metric value, the metric value helps determine the preference of routes when multiple paths are available. A lower metric is typically more preferred
+- `metric_variable` (String) Variable name
+- `ospf_match_route` (Set of String) Match the OSPF internal,external type 1 or external type 2 route and redistribute them to BGP.
+- `ospf_match_route_variable` (String) Variable name
 - `protocol` (String) Set the protocol to redistribute routes from
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
