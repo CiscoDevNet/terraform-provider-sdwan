@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanTransportRoutePolicyProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "sequences.0.id", "1"))
@@ -97,7 +97,7 @@ func testAccSdwanTransportRoutePolicyProfileParcelConfig_all() string {
 	config += `	  base_action = "reject"` + "\n"
 	config += `	  protocol = "IPV4"` + "\n"
 	config += `	  actions = [{` + "\n"
-	config += `		as_path_prepend = [65521]` + "\n"
+	config += `		as_path_prepend = ["65521"]` + "\n"
 	config += `		community_additive = false` + "\n"
 	config += `		community = ["internet"]` + "\n"
 	config += `		local_preference = 100` + "\n"
