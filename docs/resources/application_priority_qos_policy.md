@@ -4,13 +4,13 @@ page_title: "sdwan_application_priority_qos_policy Resource - terraform-provider
 subcategory: "Policies"
 description: |-
   This resource can manage a Application Priority QoS Policy.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_application_priority_qos_policy (Resource)
 
 This resource can manage a Application Priority QoS Policy.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
