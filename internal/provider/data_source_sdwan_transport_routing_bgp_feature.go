@@ -26,6 +26,7 @@ import (
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
@@ -292,7 +293,7 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 							Computed:            true,
 						},
 						"password": schema.StringAttribute{
-							MarkdownDescription: "Set MD5 password on TCP connection with BGP peer",
+							MarkdownDescription: "Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
 							Computed:            true,
 						},
 						"password_variable": schema.StringAttribute{
@@ -512,7 +513,7 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 							Computed:            true,
 						},
 						"password": schema.StringAttribute{
-							MarkdownDescription: "Set MD5 password on TCP connection with BGP peer",
+							MarkdownDescription: "Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
 							Computed:            true,
 						},
 						"password_variable": schema.StringAttribute{
@@ -727,6 +728,23 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 							MarkdownDescription: "",
 							Computed:            true,
 						},
+						"metric": schema.Int64Attribute{
+							MarkdownDescription: "Metric value, the metric value helps determine the preference of routes when multiple paths are available. A lower metric is typically more preferred",
+							Computed:            true,
+						},
+						"metric_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"ospf_match_route": schema.SetAttribute{
+							MarkdownDescription: "Match the OSPF internal,external type 1 or external type 2 route and redistribute them to BGP.",
+							ElementType:         types.StringType,
+							Computed:            true,
+						},
+						"ospf_match_route_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
 					},
 				},
 			},
@@ -821,6 +839,23 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 						},
 						"route_policy_id": schema.StringAttribute{
 							MarkdownDescription: "",
+							Computed:            true,
+						},
+						"metric": schema.Int64Attribute{
+							MarkdownDescription: "Metric value, the metric value helps determine the preference of routes when multiple paths are available. A lower metric is typically more preferred",
+							Computed:            true,
+						},
+						"metric_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"ospf_match_route": schema.SetAttribute{
+							MarkdownDescription: "Match the OSPF internal,external type 1 or external type 2 route and redistribute them to BGP.",
+							ElementType:         types.StringType,
+							Computed:            true,
+						},
+						"ospf_match_route_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
 					},

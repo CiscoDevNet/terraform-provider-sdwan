@@ -26,6 +26,7 @@ import (
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
@@ -292,7 +293,7 @@ func (d *ServiceRoutingBGPProfileParcelDataSource) Schema(ctx context.Context, r
 							Computed:            true,
 						},
 						"password": schema.StringAttribute{
-							MarkdownDescription: "Set MD5 password on TCP connection with BGP peer",
+							MarkdownDescription: "Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
 							Computed:            true,
 						},
 						"password_variable": schema.StringAttribute{
@@ -508,7 +509,7 @@ func (d *ServiceRoutingBGPProfileParcelDataSource) Schema(ctx context.Context, r
 							Computed:            true,
 						},
 						"password": schema.StringAttribute{
-							MarkdownDescription: "Set MD5 password on TCP connection with BGP peer",
+							MarkdownDescription: "Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
 							Computed:            true,
 						},
 						"password_variable": schema.StringAttribute{
@@ -724,7 +725,28 @@ func (d *ServiceRoutingBGPProfileParcelDataSource) Schema(ctx context.Context, r
 							Computed:            true,
 						},
 						"translate_rib_metric": schema.BoolAttribute{
-							MarkdownDescription: "Translate Rib Metric",
+							MarkdownDescription: "Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network.",
+							Computed:            true,
+						},
+						"translate_rib_metric_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"metric": schema.Int64Attribute{
+							MarkdownDescription: "Metric value, the metric value helps determine the preference of routes when multiple paths are available. A lower metric is typically more preferred",
+							Computed:            true,
+						},
+						"metric_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"ospf_match_route": schema.SetAttribute{
+							MarkdownDescription: "Match the OSPF internal,external type 1 or external type 2 route and redistribute them to BGP.",
+							ElementType:         types.StringType,
+							Computed:            true,
+						},
+						"ospf_match_route_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
 					},
@@ -824,7 +846,28 @@ func (d *ServiceRoutingBGPProfileParcelDataSource) Schema(ctx context.Context, r
 							Computed:            true,
 						},
 						"translate_rib_metric": schema.BoolAttribute{
-							MarkdownDescription: "Translate Rib Metric",
+							MarkdownDescription: "Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network.",
+							Computed:            true,
+						},
+						"translate_rib_metric_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"metric": schema.Int64Attribute{
+							MarkdownDescription: "Metric value, the metric value helps determine the preference of routes when multiple paths are available. A lower metric is typically more preferred",
+							Computed:            true,
+						},
+						"metric_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"ospf_match_route": schema.SetAttribute{
+							MarkdownDescription: "Match the OSPF internal,external type 1 or external type 2 route and redistribute them to BGP.",
+							ElementType:         types.StringType,
+							Computed:            true,
+						},
+						"ospf_match_route_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
 					},
