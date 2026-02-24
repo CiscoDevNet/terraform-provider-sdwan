@@ -4,13 +4,13 @@ page_title: "sdwan_configuration_group Resource - terraform-provider-sdwan"
 subcategory: "Configuration Groups"
 description: |-
   This resource can manage a Configuration Group .
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_configuration_group (Resource)
 
 This resource can manage a Configuration Group .
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 

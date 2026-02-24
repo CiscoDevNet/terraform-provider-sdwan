@@ -614,7 +614,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 	{{- $cname := toGoName .TfName}}
 	{{- if eq .Type "String"}}
 	if value := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipType"); value.Exists() {
-		if value.String() == "variableName" {
+		if value.String() == "variableName" {{if .IncludeVariableCheck}} || value.String() == "variable" {{end}} {
 			data.{{toGoName .TfName}} = types.StringNull()
 			{{if .Variable}}
 			v := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipVariableName")
@@ -634,7 +634,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 	}
 	{{- else if eq .Type "Int64"}}
 	if value := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipType"); value.Exists() {
-		if value.String() == "variableName" {
+		if value.String() == "variableName" {{if .IncludeVariableCheck}} || value.String() == "variable" {{end}} {
 			data.{{toGoName .TfName}} = types.Int64Null()
 			{{if .Variable}}
 			v := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipVariableName")
@@ -654,7 +654,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 	}
 	{{- else if eq .Type "Float64"}}
 	if value := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipType"); value.Exists() {
-		if value.String() == "variableName" {
+		if value.String() == "variableName" {{if .IncludeVariableCheck}} || value.String() == "variable" {{end}} {
 			data.{{toGoName .TfName}} = types.Float64Null()
 			{{if .Variable}}
 			v := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipVariableName")
@@ -674,7 +674,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 	}
 	{{- else if eq .Type "Bool"}}
 	if value := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipType"); value.Exists() {
-		if value.String() == "variableName" {
+		if value.String() == "variableName" {{if .IncludeVariableCheck}} || value.String() == "variable" {{end}} {
 			data.{{toGoName .TfName}} = types.BoolNull()
 			{{if .Variable}}
 			v := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipVariableName")

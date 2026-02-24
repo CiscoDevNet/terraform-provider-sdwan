@@ -1,4 +1,10 @@
-## 0.9.1 (Unreleased)
+## 0.10.1 (Unreleased)
+
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_qos_policy` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_dns_security_policy` to `20.15.0`
+
+## 0.10.0
+
 - Fix idempotency issue with `sdwan_cisco_ospf_feature_template` properties `areas.stub` and `areas.nssa` causing unexpected updates after UI save operations and brownfield imports
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_other_ucse_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_other_thousandeyes_feature` to `20.15.0`
@@ -7,6 +13,7 @@
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_banner_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_basic_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_bfd_feature` to `20.15.0`
+- Fix issue where `qos_adaptive_bandwidth_downstream_variable` and `qos_adaptive_bandwidth_upstream_variable` attributes in `cisco_vpn_interface_feature_template` are updated during import
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_local_application_list` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_local_domain_list` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_object_security_ips_signature` to `20.15.0`
@@ -32,6 +39,16 @@
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_switchport_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_ethernet_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_interface_ethernet_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_switchport_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_ipsec` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_interface_ipsec` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_interface_gre` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_interface_svi` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_lan_vpn_interface_gre` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_configuration_group` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_policy_group` to `20.15.0`
+- Fix perpetual diff in `sdwan_configuration_group` resource for `topology_label` attribute when not specified in non-dual-edge configurations
+- Fix intermittent 400 error when creating multiple `sdwan_security_policy` resources by implementing mutex for CREATE operations 
 
 ## 0.9.0
 

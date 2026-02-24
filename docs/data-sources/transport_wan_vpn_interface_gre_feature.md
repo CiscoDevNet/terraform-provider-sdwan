@@ -36,24 +36,69 @@ data "sdwan_transport_wan_vpn_interface_gre_feature" "example" {
 - `clear_dont_fragment` (Boolean) Enable clear dont fragment (Currently Only SDWAN Tunnel Interface)
 - `clear_dont_fragment_variable` (String) Variable name
 - `description` (String) The description of the Feature
+- `dpd_interval` (Number) IKE keepalive interval (seconds)
+- `dpd_interval_variable` (String) Variable name
+- `dpd_retries` (Number) IKE keepalive retries
+- `dpd_retries_variable` (String) Variable name
+- `ike_ciphersuite` (String) IKE identity the IKE preshared secret belongs to
+- `ike_ciphersuite_variable` (String) Variable name
+- `ike_group` (String) IKE Diffie Hellman Groups
+- `ike_group_variable` (String) Variable name
+- `ike_local_id` (String) IKE ID for the local endpoint. Input IPv4 address, domain name, or email address
+- `ike_local_id_variable` (String) Variable name
+- `ike_mode` (String) IKE integrity protocol
+- `ike_mode_variable` (String) Variable name
+- `ike_rekey_interval` (Number) IKE rekey interval <60..86400> seconds
+- `ike_rekey_interval_variable` (String) Variable name
+- `ike_remote_id` (String) IKE ID for the remote endpoint. Input IPv4 address, domain name, or email address
+- `ike_remote_id_variable` (String) Variable name
+- `ike_version` (Number) IKE Version <1..2>
 - `interface_description` (String) Interface description
 - `interface_description_variable` (String) Variable name
 - `interface_name` (String) Interface name (1..255)
 - `interface_name_variable` (String) Variable name
-- `ip_mtu` (Number) Interface MTU <576..9976>, in bytes
-- `ip_mtu_variable` (String) Variable name
+- `ipsec_ciphersuite` (String) IPsec(ESP) encryption and integrity protocol
+- `ipsec_ciphersuite_variable` (String) Variable name
+- `ipsec_rekey_interval` (Number) IPsec rekey interval <300..1209600> seconds
+- `ipsec_rekey_interval_variable` (String) Variable name
+- `ipsec_replay_window` (Number) Replay window size 32..8192 (must be a power of 2)
+- `ipsec_replay_window_variable` (String) Variable name
 - `ipv4_address` (String)
 - `ipv4_address_variable` (String) Variable name
+- `ipv4_mtu` (Number) Interface MTU <576..9976>, in bytes
+- `ipv4_mtu_variable` (String) Variable name
 - `ipv4_subnet_mask` (String)
 - `ipv4_subnet_mask_variable` (String) Variable name
+- `ipv4_tcp_mss` (Number) TCP MSS on SYN packets, in bytes
+- `ipv4_tcp_mss_variable` (String) Variable name
+- `ipv6_address` (String) Assign IPv6 address
+- `ipv6_address_variable` (String) Variable name
+- `ipv6_mtu` (Number) Interface MTU <1280..9976>, in bytes
+- `ipv6_mtu_variable` (String) Variable name
+- `ipv6_tcp_mss` (Number) IPv6 TCP MSS on SYN packets, in bytes
+- `ipv6_tcp_mss_variable` (String) Variable name
+- `multiplexing` (Boolean) Tunnel multiplexing state
+- `multiplexing_variable` (String) Variable name
 - `name` (String) The name of the Feature
+- `perfect_forward_secrecy` (String) IPsec perfect forward secrecy settings
+- `perfect_forward_secrecy_variable` (String) Variable name
+- `pre_shared_secret` (String) Use preshared key to authenticate IKE peer
+- `pre_shared_secret_variable` (String) Variable name
 - `shutdown` (Boolean) Administrative state
 - `shutdown_variable` (String) Variable name
-- `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
-- `tcp_mss_variable` (String) Variable name
 - `tunnel_destination_ipv4_address` (String) Tunnel destination IP Address
 - `tunnel_destination_ipv4_address_variable` (String) Variable name
-- `tunnel_route_via_loopback` (String) <1..32 characters> Interface name, can't be Loopback interface
+- `tunnel_destination_ipv6_address` (String) Tunnel destination IPv6 Address
+- `tunnel_destination_ipv6_address_variable` (String) Variable name
+- `tunnel_mode` (String) GRE Tunnel Mode
+- `tunnel_protection` (Boolean) Tunnel protection state
+- `tunnel_route_via_interface` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
+- `tunnel_route_via_interface_variable` (String) Variable name
+- `tunnel_route_via_ipv4_address` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
+- `tunnel_route_via_ipv4_address_variable` (String) Variable name
+- `tunnel_route_via_ipv6_address` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
+- `tunnel_route_via_ipv6_address_variable` (String) Variable name
+- `tunnel_route_via_loopback` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
 - `tunnel_route_via_loopback_variable` (String) Variable name
 - `tunnel_source_interface` (String) <1..32 characters> Interface name
 - `tunnel_source_interface_loopback` (String) <1..32 characters> Interface name
@@ -61,4 +106,6 @@ data "sdwan_transport_wan_vpn_interface_gre_feature" "example" {
 - `tunnel_source_interface_variable` (String) Variable name
 - `tunnel_source_ipv4_address` (String) Tunnel source IP Address
 - `tunnel_source_ipv4_address_variable` (String) Variable name
+- `tunnel_source_ipv6_address` (String) Tunnel source IPv6 Address
+- `tunnel_source_ipv6_address_variable` (String) Variable name
 - `version` (Number) The version of the Feature
