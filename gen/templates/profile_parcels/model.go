@@ -235,7 +235,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 				{{if or .DefaultValue .DefaultValueEmptyString}}itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
 				}
-			} else {{else if .AlwaysIncludeParent }}if data.{{toGoName .TfName}}.IsNull() {
+			} else {{else if and .AlwaysInclude (not .AlwaysIncludeParent)}}if item.{{toGoName .TfName}}.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}{{end}}.optionType", "default")
+			} else {{else if and .AlwaysIncludeParent (not .AlwaysInclude) }}if data.{{toGoName .TfName}}.IsNull() {
 				body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 			} else {{else}}if !item.{{toGoName .TfName}}.IsNull(){{end}} {
 				if true{{buildConditionalLogic .ConditionalAttribute "item"}} {
