@@ -36,10 +36,12 @@ func TestAccSdwanTransportWANVPNInterfaceEthernetProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "shutdown", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "interface_name", "GigabitEthernet1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "interface_description", "WAN"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "ipv4_address_type", "static"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "ipv4_address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "ipv4_subnet_mask", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "ipv4_secondary_addresses.0.address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "ipv4_secondary_addresses.0.subnet_mask", "0.0.0.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "ipv6_address_type", "static"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "ipv6_address", "2001:0:0:1::1/64"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "iperf_server", "example"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_feature.test", "block_non_source_ip", "false"))
@@ -299,7 +301,7 @@ func testAccSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig_minimum() s
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
 	config += `	transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id` + "\n"
 	config += `	interface_name = "GigabitEthernet1"` + "\n"
-	config += `	ipv4_configuration_type = "static"` + "\n"
+	config += `	ipv4_address_type = "static"` + "\n"
 	config += `	ipv4_address = "1.2.3.4"` + "\n"
 	config += `	ipv4_subnet_mask = "0.0.0.0"` + "\n"
 	config += `}` + "\n"
@@ -318,7 +320,7 @@ func testAccSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig_all() strin
 	config += `	shutdown = true` + "\n"
 	config += `	interface_name = "GigabitEthernet1"` + "\n"
 	config += `	interface_description = "WAN"` + "\n"
-	config += `	ipv4_configuration_type = "static"` + "\n"
+	config += `	ipv4_address_type = "static"` + "\n"
 	config += `	ipv4_address = "1.2.3.4"` + "\n"
 	config += `	ipv4_subnet_mask = "0.0.0.0"` + "\n"
 	config += `	ipv4_secondary_addresses = [{` + "\n"
@@ -326,7 +328,7 @@ func testAccSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig_all() strin
 	config += `	  subnet_mask = "0.0.0.0"` + "\n"
 	config += `	}]` + "\n"
 	config += `	ipv4_dhcp_helper = ["1.2.3.4"]` + "\n"
-	config += `	ipv6_configuration_type = "static"` + "\n"
+	config += `	ipv6_address_type = "static"` + "\n"
 	config += `	ipv6_address = "2001:0:0:1::1/64"` + "\n"
 	config += `	iperf_server = "example"` + "\n"
 	config += `	block_non_source_ip = false` + "\n"
