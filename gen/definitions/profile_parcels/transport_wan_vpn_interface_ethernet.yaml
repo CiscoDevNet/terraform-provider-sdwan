@@ -1,6 +1,5 @@
 ---
-# Manual resource - Modals toBody is manually configured to support sub interfaces
-# Manual resource - Modals toBody, fromBody, updateFromBody are manually configured to support port-channel subinterfaces and "either" address option for 20.18
+# Manual resource - Modals toBody, fromBody, updateFromBody are manually configured to support "either" address option for 20.18
 name: Transport WAN VPN Interface Ethernet
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/ethernet
 minimum_version: 20.15.0
