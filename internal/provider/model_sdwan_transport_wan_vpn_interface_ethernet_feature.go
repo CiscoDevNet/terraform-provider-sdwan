@@ -511,7 +511,7 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 		}
 	}
 	if true && data.PortChannelMode.ValueString() == "lacp" {
-
+		body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelMemberLinks", []interface{}{})
 		for _, item := range data.PortChannelLacpMemberLinks {
 			itemBody := ""
 			if !item.InterfaceId.IsNull() {
@@ -589,7 +589,7 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 		}
 	}
 	if true && data.PortChannelMode.ValueString() == "static" {
-
+		body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelMemberLinks", []interface{}{})
 		for _, item := range data.PortChannelStaticMemberLinks {
 			itemBody := ""
 			if !item.InterfaceId.IsNull() {

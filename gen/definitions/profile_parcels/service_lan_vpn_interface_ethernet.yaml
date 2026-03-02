@@ -88,6 +88,7 @@ attributes:
     tf_name: port_channel_lacp_member_links
     data_path: [portChannel, mainInterface, lacpModeMainInterface]
     exclude_test: true
+    always_include: true
     conditional_attribute:
       conditions:
         - name: port_channel_mode
@@ -124,6 +125,7 @@ attributes:
     tf_name: port_channel_static_member_links
     data_path: [portChannel, mainInterface, staticModeMainInterface]
     exclude_test: true
+    always_include: true
     conditional_attribute:
       conditions:
         - name: port_channel_mode

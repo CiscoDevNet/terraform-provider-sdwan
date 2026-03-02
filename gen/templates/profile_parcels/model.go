@@ -214,7 +214,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 	}
 	{{- else if isNestedListSet .}}
 	if true{{buildConditionalLogic .ConditionalAttribute $.Attributes "data"}} {
-		{{if and (not .MinList) (not .ExcludeNull)}}body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{}){{end}}
+		{{if or .AlwaysInclude (and (not .MinList) (not .ExcludeNull))}}body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{}){{end}}
 		for _, item := range data.{{toGoName .TfName}} {
 			itemBody := ""
 			{{- range .Attributes}}
@@ -261,7 +261,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			}
 			{{- else if isNestedListSet .}}
 				if true{{buildConditionalLogic .ConditionalAttribute "item"}} {
-				{{if and (not .MinList) (not .ExcludeNull)}}itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{}){{end}}
+				{{if or .AlwaysInclude (and (not .MinList) (not .ExcludeNull))}}itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{}){{end}}
 				for _, childItem := range item.{{toGoName .TfName}} {
 					itemChildBody := ""
 					{{- range .Attributes}}
@@ -308,7 +308,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 					}
 					{{- else if isNestedListSet .}}
 					if true{{buildConditionalLogic .ConditionalAttribute "itemChildBody"}} {
-						{{if and (not .MinList) (not .ExcludeNull)}}itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{}){{end}}
+						{{if or .AlwaysInclude (and (not .MinList) (not .ExcludeNull))}}itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{}){{end}}
 						for _, childChildItem := range childItem.{{toGoName .TfName}} {
 							itemChildChildBody := ""
 							{{- range .Attributes}}
