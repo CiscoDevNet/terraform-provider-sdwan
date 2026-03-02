@@ -765,7 +765,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.Ipv4Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.Ipv4SubnetMask = types.StringNull()
 	data.Ipv4SubnetMaskVariable = types.StringNull()
@@ -776,7 +775,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.Ipv6Address = types.StringNull()
 	data.Ipv6AddressVariable = types.StringNull()
@@ -787,7 +785,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.Ipv6Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv6")
 	}
 	data.Shutdown = types.BoolNull()
 	data.ShutdownVariable = types.StringNull()
@@ -834,7 +831,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelSourceIpv4Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.TunnelRouteViaIpv4Address = types.StringNull()
 	data.TunnelRouteViaIpv4AddressVariable = types.StringNull()
@@ -845,7 +841,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelRouteViaIpv4Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.TunnelSourceInterface = types.StringNull()
 	data.TunnelSourceInterfaceVariable = types.StringNull()
@@ -856,7 +851,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelSourceInterface = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.TunnelRouteViaInterface = types.StringNull()
 	data.TunnelRouteViaInterfaceVariable = types.StringNull()
@@ -867,7 +861,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelRouteViaInterface = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.TunnelSourceInterfaceLoopback = types.StringNull()
 	data.TunnelSourceInterfaceLoopbackVariable = types.StringNull()
@@ -878,7 +871,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelSourceInterfaceLoopback = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.TunnelRouteViaLoopback = types.StringNull()
 	data.TunnelRouteViaLoopbackVariable = types.StringNull()
@@ -889,7 +881,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelRouteViaLoopback = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.TunnelSourceIpv6Address = types.StringNull()
 	data.TunnelSourceIpv6AddressVariable = types.StringNull()
@@ -900,7 +891,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelSourceIpv6Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv6")
 	}
 	data.TunnelRouteViaIpv6Address = types.StringNull()
 	data.TunnelRouteViaIpv6AddressVariable = types.StringNull()
@@ -911,7 +901,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelRouteViaIpv6Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv6")
 	}
 	data.TunnelDestinationIpv4Address = types.StringNull()
 	data.TunnelDestinationIpv4AddressVariable = types.StringNull()
@@ -922,7 +911,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelDestinationIpv4Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.TunnelDestinationIpv6Address = types.StringNull()
 	data.TunnelDestinationIpv6AddressVariable = types.StringNull()
@@ -933,7 +921,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelDestinationIpv6Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv6")
 	}
 	data.Ipv4Mtu = types.Int64Null()
 	data.Ipv4MtuVariable = types.StringNull()
@@ -944,7 +931,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.Ipv4Mtu = types.Int64Value(va.Int())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.Ipv6Mtu = types.Int64Null()
 	data.Ipv6MtuVariable = types.StringNull()
@@ -955,7 +941,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.Ipv6Mtu = types.Int64Value(va.Int())
 		}
-		data.TunnelMode = types.StringValue("ipv6")
 	}
 	data.Ipv4TcpMss = types.Int64Null()
 	data.Ipv4TcpMssVariable = types.StringNull()
@@ -966,7 +951,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.Ipv4TcpMss = types.Int64Value(va.Int())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.Ipv6TcpMss = types.Int64Null()
 	data.Ipv6TcpMssVariable = types.StringNull()
@@ -977,7 +961,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.Ipv6TcpMss = types.Int64Value(va.Int())
 		}
-		data.TunnelMode = types.StringValue("ipv6")
 	}
 	data.ClearDontFragment = types.BoolNull()
 	data.ClearDontFragmentVariable = types.StringNull()

@@ -708,7 +708,6 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.Ipv4Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.Ipv4SubnetMask = types.StringNull()
 	data.Ipv4SubnetMaskVariable = types.StringNull()
@@ -719,7 +718,6 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.Ipv6Address = types.StringNull()
 	data.Ipv6AddressVariable = types.StringNull()
@@ -730,8 +728,6 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.Ipv6Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv6")
-		data.TunnelMode = types.StringValue("ipv4-v6overlay")
 	}
 	data.TunnelSourceIpv4Address = types.StringNull()
 	data.TunnelSourceIpv4AddressVariable = types.StringNull()
@@ -742,8 +738,6 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelSourceIpv4Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
-		data.TunnelMode = types.StringValue("ipv4-v6overlay")
 	}
 	data.TunnelSourceIpv6Address = types.StringNull()
 	data.TunnelSourceIpv6AddressVariable = types.StringNull()
@@ -754,7 +748,6 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelSourceIpv6Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv6")
 	}
 	data.TunnelSourceInterface = types.StringNull()
 	data.TunnelSourceInterfaceVariable = types.StringNull()
@@ -775,8 +768,6 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelDestinationIpv4Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
-		data.TunnelMode = types.StringValue("ipv4-v6overlay")
 	}
 	data.TunnelDestinationIpv6Address = types.StringNull()
 	data.TunnelDestinationIpv6AddressVariable = types.StringNull()
@@ -787,7 +778,6 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelDestinationIpv6Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv6")
 	}
 	data.ApplicationTunnelType = types.StringNull()
 	data.ApplicationTunnelTypeVariable = types.StringNull()
@@ -808,7 +798,6 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.Ipv4TcpMss = types.Int64Value(va.Int())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.Ipv6TcpMss = types.Int64Null()
 	data.Ipv6TcpMssVariable = types.StringNull()
@@ -819,8 +808,6 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.Ipv6TcpMss = types.Int64Value(va.Int())
 		}
-		data.TunnelMode = types.StringValue("ipv6")
-		data.TunnelMode = types.StringValue("ipv4-v6overlay")
 	}
 	data.ClearDontFragment = types.BoolNull()
 	data.ClearDontFragmentVariable = types.StringNull()
@@ -841,7 +828,6 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.Ipv4Mtu = types.Int64Value(va.Int())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.Ipv6Mtu = types.Int64Null()
 	data.Ipv6MtuVariable = types.StringNull()
@@ -852,8 +838,6 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.Ipv6Mtu = types.Int64Value(va.Int())
 		}
-		data.TunnelMode = types.StringValue("ipv6")
-		data.TunnelMode = types.StringValue("ipv4-v6overlay")
 	}
 	data.DpdInterval = types.Int64Null()
 	data.DpdIntervalVariable = types.StringNull()

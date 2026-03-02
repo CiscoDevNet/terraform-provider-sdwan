@@ -282,8 +282,8 @@ type YamlConfigAttribute struct {
 }
 
 type YamlConfigConditionalAttribute struct {
-	Operator   string                 `yaml:"operator"`
-	Conditions []YamlConfigCondition  `yaml:"conditions"`
+	Operator   string                `yaml:"operator"`
+	Conditions []YamlConfigCondition `yaml:"conditions"`
 }
 
 type YamlConfigCondition struct {
@@ -291,6 +291,7 @@ type YamlConfigCondition struct {
 	Value        string `yaml:"value"`
 	Type         string `yaml:"type"`
 	Negate       bool   `yaml:"negate"`
+	TfOnly       bool   // Populated during augmentation, true if the target attribute is tf_only
 	DefaultValue string // Populated during template execution, not from YAML
 }
 
@@ -443,6 +444,52 @@ func Add(x, y int) int {
 // Templating helper function to check if conditional attribute has conditions
 func HasConditional(attr YamlConfigConditionalAttribute) bool {
 	return len(attr.Conditions) > 0
+}
+
+// HasTfOnlyConditional checks if the conditional attribute has any conditions
+// whose target attribute is tf_only.
+func HasTfOnlyConditional(attr YamlConfigConditionalAttribute) bool {
+	for _, c := range attr.Conditions {
+		if c.TfOnly {
+			return true
+		}
+	}
+	return false
+}
+
+// FilterTfOnlyConditions returns only the conditions whose target attribute is tf_only.
+func FilterTfOnlyConditions(conditions []YamlConfigCondition) []YamlConfigCondition {
+	var filtered []YamlConfigCondition
+	for _, c := range conditions {
+		if c.TfOnly {
+			filtered = append(filtered, c)
+		}
+	}
+	return filtered
+}
+
+// resolveConditionTfOnly walks the attributes tree and sets TfOnly on each condition
+// whose target attribute (matched by Name == TfName) has TfOnly set to true.
+func resolveConditionTfOnly(attributes []YamlConfigAttribute) {
+	// Build a map of tf_name -> tf_only for sibling lookup
+	tfOnlyMap := make(map[string]bool)
+	for _, a := range attributes {
+		if a.TfOnly {
+			tfOnlyMap[a.TfName] = true
+		}
+	}
+
+	for i := range attributes {
+		for j := range attributes[i].ConditionalAttribute.Conditions {
+			if tfOnlyMap[attributes[i].ConditionalAttribute.Conditions[j].Name] {
+				attributes[i].ConditionalAttribute.Conditions[j].TfOnly = true
+			}
+		}
+		// Recurse into nested attributes
+		if len(attributes[i].Attributes) > 0 {
+			resolveConditionTfOnly(attributes[i].Attributes)
+		}
+	}
 }
 
 // Templating helper function to build conditional logic check for a single condition
@@ -702,37 +749,39 @@ func contains(s []string, str string) bool {
 
 // Map of templating functions
 var functions = template.FuncMap{
-	"toGoName":                   ToGoName,
-	"toVersionName":              ToVersionName,
-	"camelCase":                  CamelCase,
-	"snakeCase":                  SnakeCase,
-	"sprintf":                    fmt.Sprintf,
-	"toLower":                    strings.ToLower,
-	"path":                       BuildPath,
-	"hasId":                      HasId,
-	"hasName":                    HasName,
-	"hasVersionAttribute":        HasVersionAttribute,
-	"getResponseModelPath":       GetResponseModelPath,
-	"hasReference":               HasReference,
-	"countReferences":            CountReferences,
-	"add":                        Add,
-	"getGjsonType":               GetGjsonType,
-	"getId":                      GetId,
-	"isUx20Feature":              IsUx20Feature,
-	"isListSet":                  IsListSet,
-	"isList":                     IsList,
-	"isSet":                      IsSet,
-	"isStringListSet":            IsStringListSet,
-	"isInt64ListSet":             IsInt64ListSet,
-	"isStringInt64":              IsStringInt64,
-	"isNestedListSet":            IsNestedListSet,
-	"isNestedList":               IsNestedList,
-	"isNestedSet":                IsNestedSet,
-	"getParentModelName":         GetParentModelName,
-	"getProfileParcelSuffix":     GetProfileParcelSuffix,
-	"getProfileParcelName":       GetProfileParcelName,
+	"toGoName":                    ToGoName,
+	"toVersionName":               ToVersionName,
+	"camelCase":                   CamelCase,
+	"snakeCase":                   SnakeCase,
+	"sprintf":                     fmt.Sprintf,
+	"toLower":                     strings.ToLower,
+	"path":                        BuildPath,
+	"hasId":                       HasId,
+	"hasName":                     HasName,
+	"hasVersionAttribute":         HasVersionAttribute,
+	"getResponseModelPath":        GetResponseModelPath,
+	"hasReference":                HasReference,
+	"countReferences":             CountReferences,
+	"add":                         Add,
+	"getGjsonType":                GetGjsonType,
+	"getId":                       GetId,
+	"isUx20Feature":               IsUx20Feature,
+	"isListSet":                   IsListSet,
+	"isList":                      IsList,
+	"isSet":                       IsSet,
+	"isStringListSet":             IsStringListSet,
+	"isInt64ListSet":              IsInt64ListSet,
+	"isStringInt64":               IsStringInt64,
+	"isNestedListSet":             IsNestedListSet,
+	"isNestedList":                IsNestedList,
+	"isNestedSet":                 IsNestedSet,
+	"getParentModelName":          GetParentModelName,
+	"getProfileParcelSuffix":      GetProfileParcelSuffix,
+	"getProfileParcelName":        GetProfileParcelName,
 	"contains":                    contains,
 	"hasConditional":              HasConditional,
+	"hasTfOnlyConditional":        HasTfOnlyConditional,
+	"filterTfOnlyConditions":      FilterTfOnlyConditions,
 	"buildConditionalLogic":       BuildConditionalLogic,
 	"buildConditionalDescription": BuildConditionalDescription,
 }
@@ -1139,6 +1188,7 @@ func augmentProfileParcelConfig(config *YamlConfig) {
 			parseProfileParcelAttribute(&config.Attributes[ia], model.Get("request.properties.data"), false)
 		}
 	}
+	resolveConditionTfOnly(config.Attributes)
 	if config.DsDescription == "" {
 		config.DsDescription = fmt.Sprintf("This data source can read the %s %s.", config.Name, CamelCase(config.ParcelType))
 	}
