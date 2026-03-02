@@ -603,7 +603,7 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 	}
 	if !data.PortChannelSubinterface.IsNull() {
 		if true && data.PortChannelInterface.ValueBool() == true {
-			body, _ = sjson.Set(body, path+"portChannel.subInterface.wan", true)
+			body, _ = sjson.Set(body, path+"portChannel.subInterface.wan", data.PortChannelSubinterface.ValueBool())
 		}
 	}
 	if data.PortChannelMemberInterface.IsNull() {
@@ -2505,17 +2505,17 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 	}
 
 	if !data.InterfaceMtuVariable.IsNull() {
-		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && !(strings.Contains(data.InterfaceName.ValueString(), ".")) {
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "variable")
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.InterfaceMtuVariable.ValueString())
 		}
 	} else if data.InterfaceMtu.IsNull() {
-		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && !strings.Contains(data.InterfaceName.ValueString(), ".") {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && !(strings.Contains(data.InterfaceName.ValueString(), ".")) {
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "default")
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", 1500)
 		}
 	} else {
-		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && !(strings.Contains(data.InterfaceName.ValueString(), ".")) {
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "global")
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.InterfaceMtu.ValueInt64())
 		}
@@ -2900,7 +2900,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 	data.PortChannelSubinterface = types.BoolNull()
 
 	if va := res.Get(path + "portChannel.subInterface.wan"); va.Exists() {
-		data.PortChannelInterface = types.BoolValue(true)
+		data.PortChannelSubinterface = types.BoolValue(va.Bool())
 	}
 	data.PortChannelMemberInterface = types.BoolNull()
 

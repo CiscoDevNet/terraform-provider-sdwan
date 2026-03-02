@@ -1420,14 +1420,14 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"interface_mtu": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddIntegerRangeDescription(1500, 9216).AddDefaultValueDescription("1500").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes, Attribute conditional on `port_channel_member_interface` not equal to `true` and `interface_name` not containing `.`").AddIntegerRangeDescription(1500, 9216).AddDefaultValueDescription("1500").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1500, 9216),
 				},
 			},
 			"interface_mtu_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true` and `interface_name` not containing `.`").String,
 				Optional:            true,
 			},
 			"tcp_mss": schema.Int64Attribute{

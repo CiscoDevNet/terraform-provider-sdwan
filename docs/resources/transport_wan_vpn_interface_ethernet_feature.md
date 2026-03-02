@@ -214,10 +214,10 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `icmp_redirect_disable_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `interface_description` (String)
 - `interface_description_variable` (String) Variable name
-- `interface_mtu` (Number) Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `interface_mtu` (Number) Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes, Attribute conditional on `port_channel_member_interface` not equal to `true` and `interface_name` not containing `.`
   - Range: `1500`-`9216`
   - Default value: `1500`
-- `interface_mtu_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `interface_mtu_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true` and `interface_name` not containing `.`
 - `interface_name` (String)
 - `interface_name_variable` (String) Variable name
 - `ip_directed_broadcast` (Boolean) IP Directed-Broadcast, Attribute conditional on `port_channel_member_interface` not equal to `true`

@@ -140,6 +140,7 @@ attributes:
   - model_name: wan
     tf_name: port_channel_subinterface
     type: Bool
+    no_option_type: true
     exclude_test: true
     data_path: [portChannel, subInterface]
     conditional_attribute:
@@ -1193,6 +1194,10 @@ attributes:
         - name: port_channel_member_interface
           value: true
           type: Bool
+          negate: true
+        - name: interface_name
+          value: "."
+          type: StringContains
           negate: true
   - model_name: tcpMss
     data_path: [advanced]
