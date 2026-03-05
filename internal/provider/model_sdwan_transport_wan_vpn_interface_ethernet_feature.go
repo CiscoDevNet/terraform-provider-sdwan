@@ -3045,7 +3045,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.Ipv4DhcpHelper = helpers.GetStringSet(va.Array())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Ipv6AddressType = types.StringNull()
 	data.Ipv6AddressTypeVariable = types.StringNull()
@@ -3170,7 +3169,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.IperfServer = types.StringValue(va.String())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.BlockNonSourceIp = types.BoolNull()
 	data.BlockNonSourceIpVariable = types.StringNull()
@@ -3181,7 +3179,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.BlockNonSourceIp = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.ServiceProvider = types.StringNull()
 	data.ServiceProviderVariable = types.StringNull()
@@ -3192,7 +3189,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.ServiceProvider = types.StringValue(va.String())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.BandwidthUpstream = types.Int64Null()
 	data.BandwidthUpstreamVariable = types.StringNull()
@@ -3203,7 +3199,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.BandwidthUpstream = types.Int64Value(va.Int())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.BandwidthDownstream = types.Int64Null()
 	data.BandwidthDownstreamVariable = types.StringNull()
@@ -3214,7 +3209,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.BandwidthDownstream = types.Int64Value(va.Int())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.AutoDetectBandwidth = types.BoolNull()
 	data.AutoDetectBandwidthVariable = types.StringNull()
@@ -3225,7 +3219,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.AutoDetectBandwidth = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TunnelInterface = types.BoolNull()
 
@@ -3244,7 +3237,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.PerTunnelQos = types.BoolValue(va.Bool())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelQosMode = types.StringNull()
 	data.TunnelQosModeVariable = types.StringNull()
@@ -3255,7 +3247,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelQosMode = types.StringValue(va.String())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelBandwidthPercent = types.Int64Null()
 	data.TunnelBandwidthPercentVariable = types.StringNull()
@@ -3266,7 +3257,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelBandwidthPercent = types.Int64Value(va.Int())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceBindLoopbackTunnel = types.StringNull()
 	data.TunnelInterfaceBindLoopbackTunnelVariable = types.StringNull()
@@ -3277,7 +3267,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceBindLoopbackTunnel = types.StringValue(va.String())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceCarrier = types.StringNull()
 	data.TunnelInterfaceCarrierVariable = types.StringNull()
@@ -3288,7 +3277,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceCarrier = types.StringValue(va.String())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceColor = types.StringNull()
 	data.TunnelInterfaceColorVariable = types.StringNull()
@@ -3299,7 +3287,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceColor = types.StringValue(va.String())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceHelloInterval = types.Int64Null()
 	data.TunnelInterfaceHelloIntervalVariable = types.StringNull()
@@ -3310,7 +3297,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceHelloInterval = types.Int64Value(va.Int())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceHelloTolerance = types.Int64Null()
 	data.TunnelInterfaceHelloToleranceVariable = types.StringNull()
@@ -3321,7 +3307,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceHelloTolerance = types.Int64Value(va.Int())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceLastResortCircuit = types.BoolNull()
 	data.TunnelInterfaceLastResortCircuitVariable = types.StringNull()
@@ -3332,7 +3317,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceLastResortCircuit = types.BoolValue(va.Bool())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceGreTunnelDestinationIp = types.StringNull()
 	data.TunnelInterfaceGreTunnelDestinationIpVariable = types.StringNull()
@@ -3343,7 +3327,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceGreTunnelDestinationIp = types.StringValue(va.String())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceColorRestrict = types.BoolNull()
 	data.TunnelInterfaceColorRestrictVariable = types.StringNull()
@@ -3354,7 +3337,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceColorRestrict = types.BoolValue(va.Bool())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceGroups = types.Int64Null()
 	data.TunnelInterfaceGroupsVariable = types.StringNull()
@@ -3365,7 +3347,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceGroups = types.Int64Value(va.Int())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceBorder = types.BoolNull()
 	data.TunnelInterfaceBorderVariable = types.StringNull()
@@ -3376,7 +3357,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceBorder = types.BoolValue(va.Bool())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceMaxControlConnections = types.Int64Null()
 	data.TunnelInterfaceMaxControlConnectionsVariable = types.StringNull()
@@ -3387,7 +3367,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceMaxControlConnections = types.Int64Value(va.Int())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceNatRefreshInterval = types.Int64Null()
 	data.TunnelInterfaceNatRefreshIntervalVariable = types.StringNull()
@@ -3398,7 +3377,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceNatRefreshInterval = types.Int64Value(va.Int())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceVbondAsStunServer = types.BoolNull()
 	data.TunnelInterfaceVbondAsStunServerVariable = types.StringNull()
@@ -3409,7 +3387,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceVbondAsStunServer = types.BoolValue(va.Bool())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceExcludeControllerGroupList = types.SetNull(types.Int64Type)
 	data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringNull()
@@ -3420,7 +3397,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceExcludeControllerGroupList = helpers.GetInt64Set(va.Array())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceVmanageConnectionPreference = types.Int64Null()
 	data.TunnelInterfaceVmanageConnectionPreferenceVariable = types.StringNull()
@@ -3431,7 +3407,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceVmanageConnectionPreference = types.Int64Value(va.Int())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfacePortHop = types.BoolNull()
 	data.TunnelInterfacePortHopVariable = types.StringNull()
@@ -3442,7 +3417,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfacePortHop = types.BoolValue(va.Bool())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceLowBandwidthLink = types.BoolNull()
 	data.TunnelInterfaceLowBandwidthLinkVariable = types.StringNull()
@@ -3453,7 +3427,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceLowBandwidthLink = types.BoolValue(va.Bool())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceTunnelTcpMss = types.Int64Null()
 	data.TunnelInterfaceTunnelTcpMssVariable = types.StringNull()
@@ -3464,7 +3437,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceTunnelTcpMss = types.Int64Value(va.Int())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceClearDontFragment = types.BoolNull()
 	data.TunnelInterfaceClearDontFragmentVariable = types.StringNull()
@@ -3475,7 +3447,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceClearDontFragment = types.BoolValue(va.Bool())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceCtsSgtPropagation = types.BoolNull()
 	data.TunnelInterfaceCtsSgtPropagationVariable = types.StringNull()
@@ -3486,7 +3457,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceCtsSgtPropagation = types.BoolValue(va.Bool())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceNetworkBroadcast = types.BoolNull()
 	data.TunnelInterfaceNetworkBroadcastVariable = types.StringNull()
@@ -3497,7 +3467,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceNetworkBroadcast = types.BoolValue(va.Bool())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceAllowFragmentation = types.BoolNull()
 	data.TunnelInterfaceAllowFragmentationVariable = types.StringNull()
@@ -3508,7 +3477,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceAllowFragmentation = types.BoolValue(va.Bool())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceSetSdwanTunnelMtuToMax = types.BoolNull()
 	data.TunnelInterfaceSetSdwanTunnelMtuToMaxVariable = types.StringNull()
@@ -3519,7 +3487,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceSetSdwanTunnelMtuToMax = types.BoolValue(va.Bool())
 		}
-		data.TunnelInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceAllowAll = types.BoolNull()
 	data.TunnelInterfaceAllowAllVariable = types.StringNull()
@@ -3530,7 +3497,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceAllowAll = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceAllowBgp = types.BoolNull()
 	data.TunnelInterfaceAllowBgpVariable = types.StringNull()
@@ -3541,7 +3507,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceAllowBgp = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceAllowDhcp = types.BoolNull()
 	data.TunnelInterfaceAllowDhcpVariable = types.StringNull()
@@ -3552,7 +3517,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceAllowDhcp = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceAllowNtp = types.BoolNull()
 	data.TunnelInterfaceAllowNtpVariable = types.StringNull()
@@ -3563,7 +3527,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceAllowNtp = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceAllowSsh = types.BoolNull()
 	data.TunnelInterfaceAllowSshVariable = types.StringNull()
@@ -3574,7 +3537,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceAllowSsh = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceAllowDns = types.BoolNull()
 	data.TunnelInterfaceAllowDnsVariable = types.StringNull()
@@ -3585,7 +3547,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceAllowDns = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceAllowIcmp = types.BoolNull()
 	data.TunnelInterfaceAllowIcmpVariable = types.StringNull()
@@ -3596,7 +3557,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceAllowIcmp = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceAllowHttps = types.BoolNull()
 	data.TunnelInterfaceAllowHttpsVariable = types.StringNull()
@@ -3607,7 +3567,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceAllowHttps = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceAllowOspf = types.BoolNull()
 	data.TunnelInterfaceAllowOspfVariable = types.StringNull()
@@ -3618,7 +3577,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceAllowOspf = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceAllowStun = types.BoolNull()
 	data.TunnelInterfaceAllowStunVariable = types.StringNull()
@@ -3629,7 +3587,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceAllowStun = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceAllowSnmp = types.BoolNull()
 	data.TunnelInterfaceAllowSnmpVariable = types.StringNull()
@@ -3640,7 +3597,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceAllowSnmp = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceAllowNetconf = types.BoolNull()
 	data.TunnelInterfaceAllowNetconfVariable = types.StringNull()
@@ -3651,7 +3607,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceAllowNetconf = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TunnelInterfaceAllowBfd = types.BoolNull()
 	data.TunnelInterfaceAllowBfdVariable = types.StringNull()
@@ -3662,7 +3617,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TunnelInterfaceAllowBfd = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	if value := res.Get(path + "encapsulation"); value.Exists() && len(value.Array()) > 0 {
 		data.TunnelInterfaceEncapsulations = make([]TransportWANVPNInterfaceEthernetTunnelInterfaceEncapsulations, 0)
@@ -3699,7 +3653,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.TunnelInterfaceEncapsulations = append(data.TunnelInterfaceEncapsulations, item)
 			return true
 		})
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.MrfEnableCoreRegion = types.BoolNull()
 
@@ -3708,7 +3661,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		if t.String() == "global" {
 			data.MrfEnableCoreRegion = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.MrfCoreRegionType = types.StringNull()
 
@@ -3717,7 +3669,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		if t.String() == "global" {
 			data.MrfCoreRegionType = types.StringValue(va.String())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.NatIpv4 = types.BoolNull()
 	data.NatIpv4Variable = types.StringNull()
@@ -3728,7 +3679,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.NatIpv4 = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.NatType = types.StringNull()
 
@@ -4062,7 +4012,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.NatIpv6 = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Nat64 = types.BoolNull()
 
@@ -4138,7 +4087,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		if t.String() == "global" {
 			data.QosAdaptive = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.QosAdaptivePeriod = types.Int64Null()
 	data.QosAdaptivePeriodVariable = types.StringNull()
@@ -4295,7 +4243,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.Arps = append(data.Arps, item)
 			return true
 		})
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.IcmpRedirectDisable = types.BoolNull()
 	data.IcmpRedirectDisableVariable = types.StringNull()
@@ -4306,7 +4253,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.IcmpRedirectDisable = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Duplex = types.StringNull()
 	data.DuplexVariable = types.StringNull()
@@ -4317,7 +4263,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.Duplex = types.StringValue(va.String())
 		}
-		data.PortChannelInterface = types.BoolValue(true)
 	}
 	data.MacAddress = types.StringNull()
 	data.MacAddressVariable = types.StringNull()
@@ -4328,8 +4273,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.MacAddress = types.StringValue(va.String())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
-		data.PortChannelInterface = types.BoolValue(true)
 	}
 	data.IpMtu = types.Int64Null()
 	data.IpMtuVariable = types.StringNull()
@@ -4340,7 +4283,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.IpMtu = types.Int64Value(va.Int())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.InterfaceMtu = types.Int64Null()
 	data.InterfaceMtuVariable = types.StringNull()
@@ -4351,7 +4293,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.InterfaceMtu = types.Int64Value(va.Int())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TcpMss = types.Int64Null()
 	data.TcpMssVariable = types.StringNull()
@@ -4362,7 +4303,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TcpMss = types.Int64Value(va.Int())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Speed = types.StringNull()
 	data.SpeedVariable = types.StringNull()
@@ -4373,7 +4313,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.Speed = types.StringValue(va.String())
 		}
-		data.PortChannelInterface = types.BoolValue(true)
 	}
 	data.ArpTimeout = types.Int64Null()
 	data.ArpTimeoutVariable = types.StringNull()
@@ -4384,7 +4323,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.ArpTimeout = types.Int64Value(va.Int())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Autonegotiate = types.BoolNull()
 	data.AutonegotiateVariable = types.StringNull()
@@ -4405,7 +4343,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.MediaType = types.StringValue(va.String())
 		}
-		data.PortChannelInterface = types.BoolValue(true)
 	}
 	data.TlocExtension = types.StringNull()
 	data.TlocExtensionVariable = types.StringNull()
@@ -4416,7 +4353,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.TlocExtension = types.StringValue(va.String())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.GreTunnelSourceIp = types.StringNull()
 	data.GreTunnelSourceIpVariable = types.StringNull()
@@ -4427,7 +4363,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.GreTunnelSourceIp = types.StringValue(va.String())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Xconnect = types.StringNull()
 	data.XconnectVariable = types.StringNull()
@@ -4438,7 +4373,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.Xconnect = types.StringValue(va.String())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.LoadInterval = types.Int64Null()
 	data.LoadIntervalVariable = types.StringNull()
@@ -4459,7 +4393,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.Tracker = types.StringValue(va.String())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.IpDirectedBroadcast = types.BoolNull()
 	data.IpDirectedBroadcastVariable = types.StringNull()
@@ -4470,7 +4403,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		} else if t.String() == "global" {
 			data.IpDirectedBroadcast = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 }
 

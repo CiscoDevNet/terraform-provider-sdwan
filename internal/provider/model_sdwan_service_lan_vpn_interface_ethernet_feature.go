@@ -1966,7 +1966,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.PortChannelSubinterfacePrimaryInterfaceName = types.StringValue(va.String())
 		}
-		data.PortChannelInterface = types.BoolValue(true)
 		data.PortChannelSubinterface = types.BoolValue(true)
 	}
 	data.PortChannelSubinterfaceSecondaryInterfaceName = types.StringNull()
@@ -1978,7 +1977,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.PortChannelSubinterfaceSecondaryInterfaceName = types.StringValue(va.String())
 		}
-		data.PortChannelInterface = types.BoolValue(true)
 		data.PortChannelSubinterface = types.BoolValue(true)
 	}
 	data.PortChannelMemberInterface = types.BoolNull()
@@ -2124,7 +2122,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.Ipv4DhcpHelper = helpers.GetStringSet(va.Array())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Ipv6AddressType = types.StringNull()
 	data.Ipv6AddressTypeVariable = types.StringNull()
@@ -2303,7 +2300,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		if t.String() == "global" {
 			data.Ipv4Nat = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Ipv4NatRangeStart = types.StringNull()
 	data.Ipv4NatRangeStartVariable = types.StringNull()
@@ -2428,7 +2424,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		if t.String() == "global" {
 			data.Ipv6Nat = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Nat64 = types.BoolNull()
 
@@ -2447,7 +2442,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.AclShapingRate = types.Int64Value(va.Int())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.AclIpv4EgressPolicyId = types.StringNull()
 
@@ -2572,7 +2566,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.Ipv6Vrrps = append(data.Ipv6Vrrps, item)
 			return true
 		})
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	if value := res.Get(path + "vrrp"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4Vrrps = make([]ServiceLANVPNInterfaceEthernetIpv4Vrrps, 0)
@@ -2727,7 +2720,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.Ipv4Vrrps = append(data.Ipv4Vrrps, item)
 			return true
 		})
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	if value := res.Get(path + "arp"); value.Exists() && len(value.Array()) > 0 {
 		data.Arps = make([]ServiceLANVPNInterfaceEthernetArps, 0)
@@ -2756,7 +2748,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.Arps = append(data.Arps, item)
 			return true
 		})
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TrustsecEnableSgtPropogation = types.BoolNull()
 
@@ -2765,7 +2756,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		if t.String() == "global" {
 			data.TrustsecEnableSgtPropogation = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TrustsecPropogate = types.BoolNull()
 
@@ -2774,7 +2764,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		if t.String() == "global" {
 			data.TrustsecPropogate = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TrustsecSecurityGroupTag = types.Int64Null()
 	data.TrustsecSecurityGroupTagVariable = types.StringNull()
@@ -2785,7 +2774,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.TrustsecSecurityGroupTag = types.Int64Value(va.Int())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TrustsecEnableEnforcedPropogation = types.BoolNull()
 
@@ -2794,7 +2782,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		if t.String() == "global" {
 			data.TrustsecEnableEnforcedPropogation = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TrustsecEnforcedSecurityGroupTag = types.Int64Null()
 	data.TrustsecEnforcedSecurityGroupTagVariable = types.StringNull()
@@ -2805,7 +2792,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.TrustsecEnforcedSecurityGroupTag = types.Int64Value(va.Int())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Duplex = types.StringNull()
 	data.DuplexVariable = types.StringNull()
@@ -2816,7 +2802,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.Duplex = types.StringValue(va.String())
 		}
-		data.PortChannelInterface = types.BoolValue(true)
 	}
 	data.MacAddress = types.StringNull()
 	data.MacAddressVariable = types.StringNull()
@@ -2827,8 +2812,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.MacAddress = types.StringValue(va.String())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
-		data.PortChannelInterface = types.BoolValue(true)
 	}
 	data.IpMtu = types.Int64Null()
 	data.IpMtuVariable = types.StringNull()
@@ -2839,7 +2822,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.IpMtu = types.Int64Value(va.Int())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.InterfaceMtu = types.Int64Null()
 	data.InterfaceMtuVariable = types.StringNull()
@@ -2850,7 +2832,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.InterfaceMtu = types.Int64Value(va.Int())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TcpMss = types.Int64Null()
 	data.TcpMssVariable = types.StringNull()
@@ -2861,7 +2842,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.TcpMss = types.Int64Value(va.Int())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Speed = types.StringNull()
 	data.SpeedVariable = types.StringNull()
@@ -2872,7 +2852,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.Speed = types.StringValue(va.String())
 		}
-		data.PortChannelInterface = types.BoolValue(true)
 	}
 	data.ArpTimeout = types.Int64Null()
 	data.ArpTimeoutVariable = types.StringNull()
@@ -2883,7 +2862,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.ArpTimeout = types.Int64Value(va.Int())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Autonegotiate = types.BoolNull()
 	data.AutonegotiateVariable = types.StringNull()
@@ -2904,7 +2882,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.MediaType = types.StringValue(va.String())
 		}
-		data.PortChannelInterface = types.BoolValue(true)
 	}
 	data.LoadInterval = types.Int64Null()
 	data.LoadIntervalVariable = types.StringNull()
@@ -2925,7 +2902,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.IcmpRedirectDisable = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Xconnect = types.StringNull()
 	data.XconnectVariable = types.StringNull()
@@ -2936,7 +2912,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.Xconnect = types.StringValue(va.String())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.IpDirectedBroadcast = types.BoolNull()
 	data.IpDirectedBroadcastVariable = types.StringNull()
@@ -2947,7 +2922,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.IpDirectedBroadcast = types.BoolValue(va.Bool())
 		}
-		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 }
 
