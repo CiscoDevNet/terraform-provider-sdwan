@@ -52,7 +52,7 @@ data "sdwan_system_aaa_feature" "example" {
 
 Read-Only:
 
-- `group` (Set of String) Use Server-group
+- `group` (List of String) Use Server-group
 - `level` (String) Privilege level when method is commands
 - `method` (String) Configure Accounting Method
 - `rule_id` (String) Configure Accounting Rule ID
@@ -65,7 +65,7 @@ Read-Only:
 
 Read-Only:
 
-- `group` (Set of String) Use Server-group
+- `group` (List of String) Use Server-group
 - `if_authenticated` (Boolean) Succeed if user has authenticated
 - `level` (String) Privilege level when method is commands
 - `method` (String) Method
