@@ -580,6 +580,10 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, ver *vers
 				body, _ = sjson.Set(body, path+"intfIpAddress.either.static.staticIpV4AddressPrimary.ipAddress.optionType", "global")
 				body, _ = sjson.Set(body, path+"intfIpAddress.either.static.staticIpV4AddressPrimary.ipAddress.value", data.Ipv4Address.ValueString())
 			}
+		} else {
+			if data.Ipv4AddressType.ValueString() == "static" {
+				body, _ = sjson.Set(body, path+"intfIpAddress.either.static.staticIpV4AddressPrimary.ipAddress.optionType", "default")
+			}
 		}
 
 		if !data.Ipv4SubnetMaskVariable.IsNull() {
@@ -591,6 +595,10 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, ver *vers
 			if true && (data.Ipv4AddressType.ValueString() == "static" || !data.Ipv4AddressTypeVariable.IsNull()) {
 				body, _ = sjson.Set(body, path+"intfIpAddress.either.static.staticIpV4AddressPrimary.subnetMask.optionType", "global")
 				body, _ = sjson.Set(body, path+"intfIpAddress.either.static.staticIpV4AddressPrimary.subnetMask.value", data.Ipv4SubnetMask.ValueString())
+			}
+		} else {
+			if data.Ipv4AddressType.ValueString() == "static" {
+				body, _ = sjson.Set(body, path+"intfIpAddress.either.static.staticIpV4AddressPrimary.subnetMask.optionType", "default")
 			}
 		}
 		if true && (data.Ipv4AddressType.ValueString() == "static" || !data.Ipv4AddressTypeVariable.IsNull()) {
