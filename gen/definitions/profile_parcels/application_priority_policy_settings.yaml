@@ -15,24 +15,16 @@ attributes:
     test_value: sdwan_application_priority_feature_profile.test.id
   - model_name: appVisibility
     tf_name: ipv4_application_visibility
-    type: Bool
-    description: Enables application visibility
     example: "true"
   - model_name: appVisibilityIPv6
     tf_name: ipv6_application_visibility
-    type: Bool
-    description: Enables IPv6 application visibility
     example: "false"
     exclude_test: true
   - model_name: flowVisibility
     tf_name: ipv4_flow_visibility
-    type: Bool
-    description: Enables flow visibility
     example: "true"
   - model_name: flowVisibilityIPv6
     tf_name: ipv6_flow_visibility
-    type: Bool
-    description: Enables IPv6 flow visibility
     example: "false"
     exclude_test: true
 
