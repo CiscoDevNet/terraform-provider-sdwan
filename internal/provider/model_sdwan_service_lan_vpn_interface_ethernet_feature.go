@@ -2014,7 +2014,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.Ipv4DhcpDistance = types.Int64Value(va.Int())
 		}
-		data.Ipv4AddressType = types.StringValue("dynamic")
 	} else if t := res.Get(path + "intfIpAddress.dynamic.dynamicDhcpDistance.optionType"); t.Exists() {
 		va := res.Get(path + "intfIpAddress.dynamic.dynamicDhcpDistance.value")
 		if t.String() == "variable" {
@@ -2033,7 +2032,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.Ipv4Address = types.StringValue(va.String())
 		}
-		data.Ipv4AddressType = types.StringValue("static")
 	} else if t := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType"); t.Exists() {
 		va := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.value")
 		if t.String() == "variable" {
@@ -2053,7 +2051,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
-		data.Ipv4AddressType = types.StringValue("static")
 	} else if t := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType"); t.Exists() {
 		va := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value")
 		if t.String() == "variable" {
@@ -2091,7 +2088,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.Ipv4SecondaryAddresses = append(data.Ipv4SecondaryAddresses, item)
 			return true
 		})
-		data.Ipv4AddressType = types.StringValue("static")
 	} else if value := res.Get(path + "intfIpAddress.static.staticIpV4AddressSecondary"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4SecondaryAddresses = make([]ServiceLANVPNInterfaceEthernetIpv4SecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
