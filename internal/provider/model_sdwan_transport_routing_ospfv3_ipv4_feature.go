@@ -404,17 +404,17 @@ func (data TransportRoutingOSPFv3IPv4) toBody(ctx context.Context) string {
 			}
 
 			if !item.NatDiaVariable.IsNull() {
-				if true {
+				if true && item.Protocol.ValueString() == "nat-route" {
 					itemBody, _ = sjson.Set(itemBody, "natDia.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "natDia.value", item.NatDiaVariable.ValueString())
 				}
 			} else if item.NatDia.IsNull() {
-				if true {
+				if true && item.Protocol.ValueString() == "nat-route" {
 					itemBody, _ = sjson.Set(itemBody, "natDia.optionType", "default")
 					itemBody, _ = sjson.Set(itemBody, "natDia.value", true)
 				}
 			} else {
-				if true {
+				if true && item.Protocol.ValueString() == "nat-route" {
 					itemBody, _ = sjson.Set(itemBody, "natDia.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "natDia.value", item.NatDia.ValueBool())
 				}
@@ -921,6 +921,7 @@ func (data *TransportRoutingOSPFv3IPv4) fromBody(ctx context.Context, res gjson.
 				} else if t.String() == "global" {
 					item.NatDia = types.BoolValue(va.Bool())
 				}
+				item.Protocol = types.StringValue("nat-route")
 			}
 			item.TranslateRibMetric = types.BoolNull()
 			item.TranslateRibMetricVariable = types.StringNull()

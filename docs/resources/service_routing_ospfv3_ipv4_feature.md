@@ -221,9 +221,9 @@ Optional:
 
 Optional:
 
-- `nat_dia` (Boolean) Enable NAT DIA for redistributed routes
+- `nat_dia` (Boolean) Enable NAT DIA for redistributed routes, Attribute conditional on `protocol` equal to `nat-route`
   - Default value: `true`
-- `nat_dia_variable` (String) Variable name
+- `nat_dia_variable` (String) Variable name, Attribute conditional on `protocol` equal to `nat-route`
 - `protocol` (String) Set the protocol
   - Choices: `connected`, `static`, `omp`, `nat-route`, `bgp`, `eigrp`
 - `protocol_variable` (String) Variable name
