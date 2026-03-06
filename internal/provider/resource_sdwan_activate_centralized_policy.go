@@ -102,6 +102,8 @@ func (r *ActivateCentralizedPolicyResource) Create(ctx context.Context, req reso
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 func (r *ActivateCentralizedPolicyResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
@@ -131,10 +133,21 @@ func (r *ActivateCentralizedPolicyResource) Read(ctx context.Context, req resour
 		}
 	}
 
+	imp, diags := helpers.IsFlagImporting(ctx, req)
+	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
+		return
+	}
+
+	if imp {
+		state.processImport(ctx)
+	}
+
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Id.ValueString()))
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 func (r *ActivateCentralizedPolicyResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
@@ -235,4 +248,5 @@ func (r *ActivateCentralizedPolicyResource) Delete(ctx context.Context, req reso
 
 func (r *ActivateCentralizedPolicyResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }

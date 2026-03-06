@@ -711,7 +711,12 @@ func (data *{{camelCase .Name}}) processImport(ctx context.Context) {
 	}
 	{{- else if eq .Type "Versions"}}
 	if !data.{{toVersionName .TfName}}.IsNull() {
-		data.{{toGoName .TfName}} = types.ListNull(types.StringType)
+		count := len(data.{{toVersionName .TfName}}.Elements())
+		versions := make([]string, count)
+		for j := range versions {
+			versions[j] = "0"
+		}
+		data.{{toGoName .TfName}}, _ = types.ListValueFrom(ctx, types.StringType, versions)
 	}
 	{{- else if and (isNestedListSet .) (hasVersionAttribute .Attributes)}}
 	for i := range data.{{toGoName .TfName}} {
@@ -730,7 +735,12 @@ func (data *{{camelCase .Name}}) processImport(ctx context.Context) {
 		}
 		{{- else if eq .Type "Versions"}}
 		if !data.{{$name}}[i].{{toVersionName .TfName}}.IsNull() {
-			data.{{$name}}[i].{{toGoName .TfName}} = types.ListNull(types.StringType)
+			count := len(data.{{$name}}[i].{{toVersionName .TfName}}.Elements())
+			versions := make([]string, count)
+			for j := range versions {
+				versions[j] = "0"
+			}
+			data.{{$name}}[i].{{toGoName .TfName}}, _ = types.ListValueFrom(ctx, types.StringType, versions)
 		}
 		{{- else if and (isNestedListSet .) (hasVersionAttribute .Attributes)}}
 		for ii := range data.{{$name}}[i].{{toGoName .TfName}} {
@@ -749,7 +759,12 @@ func (data *{{camelCase .Name}}) processImport(ctx context.Context) {
 			}
 			{{- else if eq .Type "Versions"}}
 			if !data.{{$name}}[i].{{$cname}}[ii].{{toVersionName .TfName}}.IsNull() {
-				data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} = types.ListNull(types.StringType)
+				count := len(data.{{$name}}[i].{{$cname}}[ii].{{toVersionName .TfName}}.Elements())
+				versions := make([]string, count)
+				for j := range versions {
+					versions[j] = "0"
+				}
+				data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}}, _ = types.ListValueFrom(ctx, types.StringType, versions)
 			}
 			{{- else if and (isNestedListSet .) (hasVersionAttribute .Attributes)}}
 			for iii := range data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} {
@@ -766,7 +781,12 @@ func (data *{{camelCase .Name}}) processImport(ctx context.Context) {
 				}
 				{{- else if eq .Type "Versions"}}
 				if !data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toVersionName .TfName}}.IsNull() {
-					data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}} = types.ListNull(types.StringType)
+					count := len(data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toVersionName .TfName}}.Elements())
+					versions := make([]string, count)
+					for j := range versions {
+						versions[j] = "0"
+					}
+					data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}}, _ = types.ListValueFrom(ctx, types.StringType, versions)
 				}
 				{{- end}}
 				{{- end}}

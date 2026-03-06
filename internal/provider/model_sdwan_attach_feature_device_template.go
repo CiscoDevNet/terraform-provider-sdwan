@@ -350,6 +350,6 @@ func (data *AttachFeatureDeviceTemplate) getUpdatedDevices(ctx context.Context, 
 	return updatedDevices
 }
 
-// Section below is generated&owned by "gen/generator.go". //template:begin processImport
-
-// End of section. //template:end processImport
+func (data *AttachFeatureDeviceTemplate) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+}

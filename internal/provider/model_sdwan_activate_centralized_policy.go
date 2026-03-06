@@ -145,6 +145,6 @@ func determineAttachEndpoint(configTypes map[string]string) string {
 	}
 }
 
-// Section below is generated&owned by "gen/generator.go". //template:begin processImport
-
-// End of section. //template:end processImport
+func (data *ActivateCentralizedPolicy) processImport(ctx context.Context) {
+	data.Version = types.Int64Value(0)
+}

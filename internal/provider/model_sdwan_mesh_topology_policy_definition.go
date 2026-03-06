@@ -199,7 +199,12 @@ func (data *MeshTopologyPolicyDefinition) processImport(ctx context.Context) {
 	}
 	for i := range data.Regions {
 		if !data.Regions[i].SiteListIds.IsNull() {
-			data.Regions[i].SiteListVersions = types.ListNull(types.StringType)
+			count := len(data.Regions[i].SiteListIds.Elements())
+			versions := make([]string, count)
+			for j := range versions {
+				versions[j] = "0"
+			}
+			data.Regions[i].SiteListVersions, _ = types.ListValueFrom(ctx, types.StringType, versions)
 		}
 	}
 }

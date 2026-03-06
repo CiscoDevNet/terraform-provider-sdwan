@@ -138,6 +138,8 @@ func (r *AttachFeatureDeviceTemplateResource) Create(ctx context.Context, req re
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 func (r *AttachFeatureDeviceTemplateResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
@@ -161,10 +163,21 @@ func (r *AttachFeatureDeviceTemplateResource) Read(ctx context.Context, req reso
 		return
 	}
 
+	imp, diags := helpers.IsFlagImporting(ctx, req)
+	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
+		return
+	}
+
+	if imp {
+		state.processImport(ctx)
+	}
+
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Id.ValueString()))
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 func (r *AttachFeatureDeviceTemplateResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
@@ -323,4 +336,6 @@ func (r *AttachFeatureDeviceTemplateResource) ImportState(ctx context.Context, r
 
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), templateId)...)
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("devices"), devices)...)
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }

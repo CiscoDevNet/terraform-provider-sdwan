@@ -764,7 +764,12 @@ func (data *RoutePolicyDefinition) processImport(ctx context.Context) {
 				data.Sequences[i].MatchEntries[ii].CommunityListVersion = types.Int64Value(0)
 			}
 			if !data.Sequences[i].MatchEntries[ii].CommunityListIds.IsNull() {
-				data.Sequences[i].MatchEntries[ii].CommunityListVersions = types.ListNull(types.StringType)
+				count := len(data.Sequences[i].MatchEntries[ii].CommunityListIds.Elements())
+				versions := make([]string, count)
+				for j := range versions {
+					versions[j] = "0"
+				}
+				data.Sequences[i].MatchEntries[ii].CommunityListVersions, _ = types.ListValueFrom(ctx, types.StringType, versions)
 			}
 			if data.Sequences[i].MatchEntries[ii].ExpandedCommunityListId != types.StringNull() {
 				data.Sequences[i].MatchEntries[ii].ExpandedCommunityListVersion = types.Int64Value(0)

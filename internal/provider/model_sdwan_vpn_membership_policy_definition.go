@@ -191,7 +191,12 @@ func (data *VPNMembershipPolicyDefinition) processImport(ctx context.Context) {
 			data.Sites[i].SiteListVersion = types.Int64Value(0)
 		}
 		if !data.Sites[i].VpnListIds.IsNull() {
-			data.Sites[i].VpnListVersions = types.ListNull(types.StringType)
+			count := len(data.Sites[i].VpnListIds.Elements())
+			versions := make([]string, count)
+			for j := range versions {
+				versions[j] = "0"
+			}
+			data.Sites[i].VpnListVersions, _ = types.ListValueFrom(ctx, types.StringType, versions)
 		}
 	}
 }
