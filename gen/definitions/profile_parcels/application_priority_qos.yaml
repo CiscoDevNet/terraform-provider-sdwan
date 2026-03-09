@@ -1,9 +1,9 @@
 ---
 name: Application Priority QoS
 rest_endpoint: /v1/feature-profile/sdwan/application-priority/%v/qos-policy
-minimum_version: 20.12.0
+minimum_version: 20.15.0
 id_attribute: id
-test_tags: [SDWAN_2015_IN_PROGRESS]
+test_tags: [SDWAN_2015]
 parcel_type: policy
 attributes:
   - tf_name: feature_profile_id

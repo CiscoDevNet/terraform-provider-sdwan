@@ -98,6 +98,10 @@ func (d *ServiceLANVPNInterfaceIPSecProfileParcelDataSource) Schema(ctx context.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"tunnel_mode": schema.StringAttribute{
+				MarkdownDescription: "IPsec Tunnel Mode",
+				Computed:            true,
+			},
 			"interface_description": schema.StringAttribute{
 				MarkdownDescription: "Interface description",
 				Computed:            true,
@@ -122,6 +126,14 @@ func (d *ServiceLANVPNInterfaceIPSecProfileParcelDataSource) Schema(ctx context.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"ipv6_address": schema.StringAttribute{
+				MarkdownDescription: "Assign IPv6 address",
+				Computed:            true,
+			},
+			"ipv6_address_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 			"tunnel_source_ipv4_address": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
@@ -130,11 +142,11 @@ func (d *ServiceLANVPNInterfaceIPSecProfileParcelDataSource) Schema(ctx context.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tunnel_source_ipv4_subnet_mask": schema.StringAttribute{
-				MarkdownDescription: "",
+			"tunnel_source_ipv6_address": schema.StringAttribute{
+				MarkdownDescription: "Tunnel source IPv6 Address",
 				Computed:            true,
 			},
-			"tunnel_source_ipv4_subnet_mask_variable": schema.StringAttribute{
+			"tunnel_source_ipv6_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -154,11 +166,11 @@ func (d *ServiceLANVPNInterfaceIPSecProfileParcelDataSource) Schema(ctx context.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tunnel_destination_ipv4_subnet_mask": schema.StringAttribute{
-				MarkdownDescription: "",
+			"tunnel_destination_ipv6_address": schema.StringAttribute{
+				MarkdownDescription: "Tunnel destination IPv6 Address",
 				Computed:            true,
 			},
-			"tunnel_destination_ipv4_subnet_mask_variable": schema.StringAttribute{
+			"tunnel_destination_ipv6_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -170,11 +182,19 @@ func (d *ServiceLANVPNInterfaceIPSecProfileParcelDataSource) Schema(ctx context.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tcp_mss": schema.Int64Attribute{
+			"ipv4_tcp_mss": schema.Int64Attribute{
 				MarkdownDescription: "TCP MSS on SYN packets, in bytes",
 				Computed:            true,
 			},
-			"tcp_mss_variable": schema.StringAttribute{
+			"ipv4_tcp_mss_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ipv6_tcp_mss": schema.Int64Attribute{
+				MarkdownDescription: "IPv6 TCP MSS on SYN packets, in bytes",
+				Computed:            true,
+			},
+			"ipv6_tcp_mss_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -186,11 +206,19 @@ func (d *ServiceLANVPNInterfaceIPSecProfileParcelDataSource) Schema(ctx context.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"ip_mtu": schema.Int64Attribute{
+			"ipv4_mtu": schema.Int64Attribute{
 				MarkdownDescription: "Interface MTU <68..9216>, in bytes",
 				Computed:            true,
 			},
-			"ip_mtu_variable": schema.StringAttribute{
+			"ipv4_mtu_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ipv6_mtu": schema.Int64Attribute{
+				MarkdownDescription: "Interface MTU <1280..9976>, in bytes",
+				Computed:            true,
+			},
+			"ipv6_mtu_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

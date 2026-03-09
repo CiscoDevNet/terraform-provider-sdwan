@@ -1,8 +1,8 @@
 ---
 name: Service Switchport
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/switchport
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - Service
 attributes:
@@ -34,6 +34,8 @@ attributes:
       example: 1
     - model_name: switchportTrunkNativeVlan
       example: 1
+    - model_name: enableDot1x
+      example: false
     - model_name: portControl
       example: auto
     - model_name: voiceVlan

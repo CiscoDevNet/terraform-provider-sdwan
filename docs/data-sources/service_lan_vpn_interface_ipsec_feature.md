@@ -59,8 +59,6 @@ data "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
 - `interface_description_variable` (String) Variable name
 - `interface_name` (String) Interface name: IPsec when present
 - `interface_name_variable` (String) Variable name
-- `ip_mtu` (Number) Interface MTU <68..9216>, in bytes
-- `ip_mtu_variable` (String) Variable name
 - `ipsec_ciphersuite` (String) IPsec(ESP) encryption and integrity protocol
 - `ipsec_ciphersuite_variable` (String) Variable name
 - `ipsec_rekey_interval` (Number) IPsec rekey interval <300..1209600> seconds
@@ -69,27 +67,36 @@ data "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
 - `ipsec_replay_window_variable` (String) Variable name
 - `ipv4_address` (String)
 - `ipv4_address_variable` (String) Variable name
+- `ipv4_mtu` (Number) Interface MTU <68..9216>, in bytes
+- `ipv4_mtu_variable` (String) Variable name
 - `ipv4_subnet_mask` (String)
 - `ipv4_subnet_mask_variable` (String) Variable name
+- `ipv4_tcp_mss` (Number) TCP MSS on SYN packets, in bytes
+- `ipv4_tcp_mss_variable` (String) Variable name
+- `ipv6_address` (String) Assign IPv6 address
+- `ipv6_address_variable` (String) Variable name
+- `ipv6_mtu` (Number) Interface MTU <1280..9976>, in bytes
+- `ipv6_mtu_variable` (String) Variable name
+- `ipv6_tcp_mss` (Number) IPv6 TCP MSS on SYN packets, in bytes
+- `ipv6_tcp_mss_variable` (String) Variable name
 - `name` (String) The name of the Feature
 - `perfect_forward_secrecy` (String) IPsec perfect forward secrecy settings
 - `perfect_forward_secrecy_variable` (String) Variable name
 - `shutdown` (Boolean) Administrative state
 - `shutdown_variable` (String) Variable name
-- `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
-- `tcp_mss_variable` (String) Variable name
 - `tracker_id` (String) Enable tracker for this interface
 - `tracker_id_variable` (String) Variable name
 - `tunnel_destination_ipv4_address` (String)
 - `tunnel_destination_ipv4_address_variable` (String) Variable name
-- `tunnel_destination_ipv4_subnet_mask` (String)
-- `tunnel_destination_ipv4_subnet_mask_variable` (String) Variable name
+- `tunnel_destination_ipv6_address` (String) Tunnel destination IPv6 Address
+- `tunnel_destination_ipv6_address_variable` (String) Variable name
+- `tunnel_mode` (String) IPsec Tunnel Mode
 - `tunnel_route_via` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
 - `tunnel_route_via_variable` (String) Variable name
 - `tunnel_source_interface` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
 - `tunnel_source_interface_variable` (String) Variable name
 - `tunnel_source_ipv4_address` (String)
 - `tunnel_source_ipv4_address_variable` (String) Variable name
-- `tunnel_source_ipv4_subnet_mask` (String)
-- `tunnel_source_ipv4_subnet_mask_variable` (String) Variable name
+- `tunnel_source_ipv6_address` (String) Tunnel source IPv6 Address
+- `tunnel_source_ipv6_address_variable` (String) Variable name
 - `version` (Number) The version of the Feature

@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanServiceLANVPNInterfaceEthernetProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "shutdown", "false"))
@@ -56,6 +56,8 @@ func TestAccSdwanServiceLANVPNInterfaceEthernetProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv6_vrrps.0.track_omp", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv6_vrrps.0.ipv6_addresses.0.link_local_address", "1::1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv6_vrrps.0.ipv6_addresses.0.global_address", "1::1/24"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv6_vrrps.0.follow_dual_router_high_availability", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv6_vrrps.0.min_preempt_delay", "60"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_vrrps.0.group_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_vrrps.0.priority", "100"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_vrrps.0.timer", "1000"))
@@ -67,6 +69,8 @@ func TestAccSdwanServiceLANVPNInterfaceEthernetProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_vrrps.0.tloc_pref_change_value", "100"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_vrrps.0.tracking_objects.0.tracker_action", "Decrement"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_vrrps.0.tracking_objects.0.decrement_value", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_vrrps.0.follow_dual_router_high_availability", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_vrrps.0.min_preempt_delay", "60"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "arps.0.ip_address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "arps.0.mac_address", "00-B0-D0-63-C2-26"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "trustsec_enable_sgt_propogation", "false"))
@@ -191,6 +195,8 @@ func testAccSdwanServiceLANVPNInterfaceEthernetProfileParcelConfig_all() string 
 	config += `		link_local_address = "1::1"` + "\n"
 	config += `		global_address = "1::1/24"` + "\n"
 	config += `	}]` + "\n"
+	config += `	  follow_dual_router_high_availability = false` + "\n"
+	config += `	  min_preempt_delay = 60` + "\n"
 	config += `	}]` + "\n"
 	config += `	ipv4_vrrps = [{` + "\n"
 	config += `	  group_id = 1` + "\n"
@@ -209,6 +215,8 @@ func testAccSdwanServiceLANVPNInterfaceEthernetProfileParcelConfig_all() string 
 	config += `		tracker_action = "Decrement"` + "\n"
 	config += `		decrement_value = 100` + "\n"
 	config += `	}]` + "\n"
+	config += `	  follow_dual_router_high_availability = false` + "\n"
+	config += `	  min_preempt_delay = 60` + "\n"
 	config += `	}]` + "\n"
 	config += `	arps = [{` + "\n"
 	config += `	  ip_address = "1.2.3.4"` + "\n"

@@ -369,6 +369,10 @@ func (d *ServiceLANVPNInterfaceSVIProfileParcelDataSource) Schema(ctx context.Co
 								},
 							},
 						},
+						"follow_dual_router_high_availability": schema.BoolAttribute{
+							MarkdownDescription: "Follow RG state by default when B2B HA is configured",
+							Computed:            true,
+						},
 					},
 				},
 			},
@@ -456,6 +460,10 @@ func (d *ServiceLANVPNInterfaceSVIProfileParcelDataSource) Schema(ctx context.Co
 									},
 								},
 							},
+						},
+						"follow_dual_router_high_availability": schema.BoolAttribute{
+							MarkdownDescription: "Follow RG state by default when B2B HA is configured",
+							Computed:            true,
 						},
 					},
 				},

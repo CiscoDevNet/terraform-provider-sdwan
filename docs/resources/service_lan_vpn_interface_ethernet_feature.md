@@ -4,13 +4,13 @@ page_title: "sdwan_service_lan_vpn_interface_ethernet_feature Resource - terrafo
 subcategory: "Features - Service"
 description: |-
   This resource can manage a Service LAN VPN Interface Ethernet Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_service_lan_vpn_interface_ethernet_feature (Resource)
 
 This resource can manage a Service LAN VPN Interface Ethernet Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -60,6 +60,8 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
           global_address     = "1::1/24"
         }
       ]
+      follow_dual_router_high_availability = false
+      min_preempt_delay                    = 60
     }
   ]
   ipv4_vrrps = [
@@ -84,6 +86,8 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
           decrement_value = 100
         }
       ]
+      follow_dual_router_high_availability = false
+      min_preempt_delay                    = 60
     }
   ]
   arps = [
@@ -128,51 +132,51 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `acl_ipv4_ingress_policy_id` (String)
 - `acl_ipv6_egress_policy_id` (String)
 - `acl_ipv6_ingress_policy_id` (String)
-- `acl_shaping_rate` (Number) Shaping Rate (Kbps)
+- `acl_shaping_rate` (Number) Shaping Rate (Kbps), Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `8`-`100000000`
-- `acl_shaping_rate_variable` (String) Variable name
-- `arp_timeout` (Number) Timeout value for dynamically learned ARP entries, <0..2678400> seconds
+- `acl_shaping_rate_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `arp_timeout` (Number) Timeout value for dynamically learned ARP entries, <0..2678400> seconds, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `0`-`2147483`
   - Default value: `1200`
-- `arp_timeout_variable` (String) Variable name
-- `arps` (Attributes List) Configure ARP entries (see [below for nested schema](#nestedatt--arps))
+- `arp_timeout_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `arps` (Attributes List) Configure ARP entries, Attribute conditional on `port_channel_member_interface` not equal to `true` (see [below for nested schema](#nestedatt--arps))
 - `autonegotiate` (Boolean) Link autonegotiation
 - `autonegotiate_variable` (String) Variable name
 - `description` (String) The description of the Feature
-- `duplex` (String) Duplex mode
+- `duplex` (String) Duplex mode, Attribute conditional on `port_channel_interface` not equal to `true`
   - Choices: `full`, `half`, `auto`
-- `duplex_variable` (String) Variable name
+- `duplex_variable` (String) Variable name, Attribute conditional on `port_channel_interface` not equal to `true`
 - `enable_dhcpv6` (Boolean) Enable DHCPv6, Attribute conditional on `ipv6_configuration_type` equal to `dynamic`
-- `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
+- `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `true`
-- `icmp_redirect_disable_variable` (String) Variable name
+- `icmp_redirect_disable_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `interface_description` (String)
 - `interface_description_variable` (String) Variable name
-- `interface_mtu` (Number) Interface MTU
+- `interface_mtu` (Number) Interface MTU, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `1500`-`9216`
   - Default value: `1500`
-- `interface_mtu_variable` (String) Variable name
+- `interface_mtu_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `interface_name` (String)
 - `interface_name_variable` (String) Variable name
-- `ip_directed_broadcast` (Boolean) IP Directed-Broadcast
+- `ip_directed_broadcast` (Boolean) IP Directed-Broadcast, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
-- `ip_directed_broadcast_variable` (String) Variable name
-- `ip_mtu` (Number) IP MTU for GigabitEthernet main <576..Interface MTU>, GigabitEthernet subinterface <576..9216>, Other Interfaces <576..2000> in bytes
+- `ip_directed_broadcast_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `ip_mtu` (Number) IP MTU for GigabitEthernet main <576..Interface MTU>, GigabitEthernet subinterface <576..9216>, Other Interfaces <576..2000> in bytes, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `576`-`9216`
   - Default value: `1500`
-- `ip_mtu_variable` (String) Variable name
+- `ip_mtu_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `ipv4_address` (String) IP Address, Attribute conditional on `ipv4_configuration_type` equal to `static`
 - `ipv4_address_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` equal to `static`
-- `ipv4_configuration_type` (String) IPv4 Configuration Type
-  - Choices: `dynamic`, `static`
+- `ipv4_configuration_type` (String) IPv4 Configuration Type, Attribute conditional on `port_channel_member_interface` not equal to `true`
+  - Choices: `dynamic`, `static`, `none`
   - Default value: `dynamic`
 - `ipv4_dhcp_distance` (Number) DHCP Distance, Attribute conditional on `ipv4_configuration_type` equal to `dynamic`
-  - Range: `1`-`65536`
+  - Range: `1`-`255`
   - Default value: `1`
 - `ipv4_dhcp_distance_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` equal to `dynamic`
-- `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
-- `ipv4_dhcp_helper_variable` (String) Variable name
-- `ipv4_nat` (Boolean) enable Network Address Translation on this interface
+- `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8), Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `ipv4_dhcp_helper_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `ipv4_nat` (Boolean) enable Network Address Translation on this interface, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
 - `ipv4_nat_loopback` (String) NAT Inside Source Loopback Interface
 - `ipv4_nat_loopback_variable` (String) Variable name
@@ -198,53 +202,82 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `ipv4_subnet_mask` (String) Subnet Mask, Attribute conditional on `ipv4_configuration_type` equal to `static`
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `ipv4_subnet_mask_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` equal to `static`
-- `ipv4_vrrps` (Attributes List) Enable VRRP (see [below for nested schema](#nestedatt--ipv4_vrrps))
+- `ipv4_vrrps` (Attributes List) Enable VRRP, Attribute conditional on `port_channel_member_interface` not equal to `true` (see [below for nested schema](#nestedatt--ipv4_vrrps))
 - `ipv6_address` (String) IPv6 Address Secondary, Attribute conditional on `ipv6_configuration_type` equal to `static`
 - `ipv6_address_variable` (String) Variable name, Attribute conditional on `ipv6_configuration_type` equal to `static`
-- `ipv6_configuration_type` (String) IPv6 Configuration Type
+- `ipv6_configuration_type` (String) IPv6 Configuration Type, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Choices: `dynamic`, `static`, `none`
   - Default value: `none`
 - `ipv6_dhcp_helpers` (Attributes List) DHCPv6 Helper, Attribute conditional on `ipv6_configuration_type` equal to `static` (see [below for nested schema](#nestedatt--ipv6_dhcp_helpers))
 - `ipv6_dhcp_secondary_addresses` (Attributes List) secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` equal to `dynamic` (see [below for nested schema](#nestedatt--ipv6_dhcp_secondary_addresses))
-- `ipv6_nat` (Boolean) enable Network Address Translation ipv6 on this interface
+- `ipv6_nat` (Boolean) enable Network Address Translation ipv6 on this interface, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
 - `ipv6_secondary_addresses` (Attributes List) Static secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` equal to `static` (see [below for nested schema](#nestedatt--ipv6_secondary_addresses))
-- `ipv6_vrrps` (Attributes List) Enable VRRP Ipv6 (see [below for nested schema](#nestedatt--ipv6_vrrps))
+- `ipv6_vrrps` (Attributes List) Enable VRRP Ipv6, Attribute conditional on `port_channel_member_interface` not equal to `true` (see [below for nested schema](#nestedatt--ipv6_vrrps))
 - `load_interval` (Number) Interval for interface load calculation
   - Range: `30`-`600`
   - Default value: `30`
 - `load_interval_variable` (String) Variable name
-- `mac_address` (String) MAC Address
-- `mac_address_variable` (String) Variable name
-- `media_type` (String) Media type
+- `mac_address` (String) MAC Address, Attribute conditional on `port_channel_member_interface` not equal to `true` and `port_channel_interface` not equal to `true`
+- `mac_address_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true` and `port_channel_interface` not equal to `true`
+- `media_type` (String) Media type, Attribute conditional on `port_channel_interface` not equal to `true`
   - Choices: `auto-select`, `rj45`, `sfp`
-- `media_type_variable` (String) Variable name
+- `media_type_variable` (String) Variable name, Attribute conditional on `port_channel_interface` not equal to `true`
 - `nat64` (Boolean) NAT64 on this interface
   - Default value: `false`
+- `port_channel_interface` (Boolean) Port-Channel interface on/off
+  - Default value: `false`
+- `port_channel_lacp_fast_switchover` (Boolean) Eanble lacp fast switchover, Attribute conditional on `port_channel_mode` equal to `lacp`
+- `port_channel_lacp_fast_switchover_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`
+- `port_channel_lacp_load_balance` (String) Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `lacp`
+  - Choices: `flow`, `vlan`
+- `port_channel_lacp_load_balance_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`
+- `port_channel_lacp_max_bundle` (Number) Set LACP max bundle, Attribute conditional on `port_channel_mode` equal to `lacp`
+  - Range: `1`-`16`
+- `port_channel_lacp_max_bundle_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`
+- `port_channel_lacp_member_links` (Attributes List) Configure Port-Channel member links, Attribute conditional on `port_channel_mode` equal to `lacp` (see [below for nested schema](#nestedatt--port_channel_lacp_member_links))
+- `port_channel_lacp_min_bundle` (Number) Set LACP min bundle, Attribute conditional on `port_channel_mode` equal to `lacp`
+  - Range: `1`-`16`
+- `port_channel_lacp_min_bundle_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`
+- `port_channel_lacp_qos_aggregate` (Boolean) Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `lacp`
+- `port_channel_lacp_qos_aggregate_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`
+- `port_channel_member_interface` (Boolean) Port-Channel member interface on/off
+  - Default value: `false`
+- `port_channel_mode` (String) Port Channel Mode, Attribute conditional on `port_channel_interface` equal to `true`
+  - Choices: `lacp`, `static`
+- `port_channel_static_load_balance` (String) Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `static`
+  - Choices: `flow`, `vlan`
+- `port_channel_static_load_balance_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `static`
+- `port_channel_static_member_links` (Attributes List) Configure Port-Channel member links, Attribute conditional on `port_channel_mode` equal to `static` (see [below for nested schema](#nestedatt--port_channel_static_member_links))
+- `port_channel_static_qos_aggregate` (Boolean) Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `static`
+- `port_channel_static_qos_aggregate_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `static`
+- `port_channel_subinterface` (Boolean) Port Channel Sub Interface on/off, Attribute conditional on `port_channel_interface` equal to `true`
+- `port_channel_subinterface_primary_interface_name` (String) , Attribute conditional on `port_channel_interface` equal to `true` and `port_channel_subinterface` equal to `true`
+- `port_channel_subinterface_primary_interface_name_variable` (String) Variable name, Attribute conditional on `port_channel_interface` equal to `true` and `port_channel_subinterface` equal to `true`
+- `port_channel_subinterface_secondary_interface_name` (String) , Attribute conditional on `port_channel_interface` equal to `true` and `port_channel_subinterface` equal to `true`
+- `port_channel_subinterface_secondary_interface_name_variable` (String) Variable name, Attribute conditional on `port_channel_interface` equal to `true` and `port_channel_subinterface` equal to `true`
 - `shutdown` (Boolean) - Default value: `true`
 - `shutdown_variable` (String) Variable name
-- `speed` (String) Set interface speed
-  - Choices: `10`, `100`, `1000`, `2500`, `10000`
-- `speed_variable` (String) Variable name
+- `speed` (String) Set interface speed, Attribute conditional on `port_channel_interface` not equal to `true`
+  - Choices: `10`, `100`, `1000`, `2500`, `10000`, `25000`
+- `speed_variable` (String) Variable name, Attribute conditional on `port_channel_interface` not equal to `true`
 - `static_nats` (Attributes List) static NAT (see [below for nested schema](#nestedatt--static_nats))
-- `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
+- `tcp_mss` (Number) TCP MSS on SYN packets, in bytes, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `500`-`1460`
-- `tcp_mss_variable` (String) Variable name
-- `tracker` (String) Enable tracker for this interface
-- `tracker_variable` (String) Variable name
-- `trustsec_enable_enforced_propogation` (Boolean) Enable/Disable SGT Enforcement on an interface
-- `trustsec_enable_sgt_propogation` (Boolean) Indicates that the interface is trustworthy for CTS
+- `tcp_mss_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `trustsec_enable_enforced_propogation` (Boolean) Enable/Disable SGT Enforcement on an interface, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `trustsec_enable_sgt_propogation` (Boolean) Indicates that the interface is trustworthy for CTS, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
-- `trustsec_enforced_security_group_tag` (Number) SGT value between 2 and 65519
+- `trustsec_enforced_security_group_tag` (Number) SGT value between 2 and 65519, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `2`-`65519`
-- `trustsec_enforced_security_group_tag_variable` (String) Variable name
-- `trustsec_propogate` (Boolean) Enables the interface for CTS SGT authorization and forwarding
+- `trustsec_enforced_security_group_tag_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `trustsec_propogate` (Boolean) Enables the interface for CTS SGT authorization and forwarding, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `true`
-- `trustsec_security_group_tag` (Number) SGT value between 2 and 65519
+- `trustsec_security_group_tag` (Number) SGT value between 2 and 65519, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `2`-`65519`
-- `trustsec_security_group_tag_variable` (String) Variable name
-- `xconnect` (String) Extend remote TLOC over a GRE tunnel to a local LAN interface
-- `xconnect_variable` (String) Variable name
+- `trustsec_security_group_tag_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `xconnect` (String) Extend remote TLOC over a GRE tunnel to a local LAN interface, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `xconnect_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 
 ### Read-Only
 
@@ -281,9 +314,14 @@ Optional:
 
 - `address` (String) VRRP Ip Address
 - `address_variable` (String) Variable name
+- `follow_dual_router_high_availability` (Boolean) Follow RG state by default when B2B HA is configured
+  - Default value: `true`
 - `group_id` (Number) Group ID
   - Range: `1`-`255`
 - `group_id_variable` (String) Variable name
+- `min_preempt_delay` (Number) Minimum preempt delay in seconds
+  - Range: `0`-`3600`
+- `min_preempt_delay_variable` (String) Variable name
 - `priority` (Number) Set priority
   - Range: `1`-`254`
   - Default value: `100`
@@ -294,7 +332,7 @@ Optional:
   - Default value: `1000`
 - `timer_variable` (String) Variable name
 - `tloc_pref_change_value` (Number) Timer interval for successive advertisements, in milliseconds
-  - Range: `100`-`4294967295`
+  - Range: `1`-`4294967295`
 - `tloc_prefix_change` (Boolean) Timer interval for successive advertisements, in milliseconds
   - Default value: `false`
 - `track_omp` (Boolean) Track OMP status
@@ -363,10 +401,15 @@ Optional:
 
 Optional:
 
+- `follow_dual_router_high_availability` (Boolean) Follow RG state by default when B2B HA is configured
+  - Default value: `true`
 - `group_id` (Number) Group ID
   - Range: `1`-`255`
 - `group_id_variable` (String) Variable name
 - `ipv6_addresses` (Attributes List) IPv6 VRRP (see [below for nested schema](#nestedatt--ipv6_vrrps--ipv6_addresses))
+- `min_preempt_delay` (Number) Minimum preempt delay in seconds
+  - Range: `0`-`3600`
+- `min_preempt_delay_variable` (String) Variable name
 - `priority` (Number) Set priority
   - Range: `1`-`254`
   - Default value: `100`
@@ -388,6 +431,32 @@ Optional:
 - `link_local_address` (String) Use link-local IPv6 Address
 - `link_local_address_variable` (String) Variable name
 
+
+
+<a id="nestedatt--port_channel_lacp_member_links"></a>
+### Nested Schema for `port_channel_lacp_member_links`
+
+Optional:
+
+- `interface_id` (String)
+- `lacp_mode` (String) Set lacp mode
+  - Choices: `active`, `passive`
+  - Default value: `active`
+- `lacp_mode_variable` (String) Variable name
+- `lacp_port_priority` (Number) Set lacp port priority
+  - Range: `1`-`65535`
+- `lacp_port_priority_variable` (String) Variable name
+- `lacp_rate` (String) Set lacp rate
+  - Choices: `fast`, `normal`
+- `lacp_rate_variable` (String) Variable name
+
+
+<a id="nestedatt--port_channel_static_member_links"></a>
+### Nested Schema for `port_channel_static_member_links`
+
+Optional:
+
+- `interface_id` (String)
 
 
 <a id="nestedatt--static_nats"></a>

@@ -60,6 +60,7 @@ type ServiceSwitchportInterfaces struct {
 	SwitchportTrunkAllowedVlansVariable types.String `tfsdk:"switchport_trunk_allowed_vlans_variable"`
 	SwitchportTrunkNativeVlan           types.Int64  `tfsdk:"switchport_trunk_native_vlan"`
 	SwitchportTrunkNativeVlanVariable   types.String `tfsdk:"switchport_trunk_native_vlan_variable"`
+	EnableDot1x                         types.Bool   `tfsdk:"enable_dot1x"`
 	PortControl                         types.String `tfsdk:"port_control"`
 	PortControlVariable                 types.String `tfsdk:"port_control_variable"`
 	VoiceVlan                           types.Int64  `tfsdk:"voice_vlan"`
@@ -241,6 +242,17 @@ func (data ServiceSwitchport) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "switchportTrunkNativeVlan.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "switchportTrunkNativeVlan.value", item.SwitchportTrunkNativeVlan.ValueInt64())
+				}
+			}
+			if item.EnableDot1x.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "enableDot1x.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "enableDot1x.value", true)
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "enableDot1x.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "enableDot1x.value", item.EnableDot1x.ValueBool())
 				}
 			}
 
@@ -623,6 +635,14 @@ func (data *ServiceSwitchport) fromBody(ctx context.Context, res gjson.Result) {
 					item.SwitchportTrunkNativeVlan = types.Int64Value(va.Int())
 				}
 			}
+			item.EnableDot1x = types.BoolNull()
+
+			if t := v.Get("enableDot1x.optionType"); t.Exists() {
+				va := v.Get("enableDot1x.value")
+				if t.String() == "global" {
+					item.EnableDot1x = types.BoolValue(va.Bool())
+				}
+			}
 			item.PortControl = types.StringNull()
 			item.PortControlVariable = types.StringNull()
 			if t := v.Get("portControl.optionType"); t.Exists() {
@@ -925,6 +945,14 @@ func (data *ServiceSwitchport) updateFromBody(ctx context.Context, res gjson.Res
 				data.Interfaces[i].SwitchportTrunkNativeVlanVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
 				data.Interfaces[i].SwitchportTrunkNativeVlan = types.Int64Value(va.Int())
+			}
+		}
+		data.Interfaces[i].EnableDot1x = types.BoolNull()
+
+		if t := r.Get("enableDot1x.optionType"); t.Exists() {
+			va := r.Get("enableDot1x.value")
+			if t.String() == "global" {
+				data.Interfaces[i].EnableDot1x = types.BoolValue(va.Bool())
 			}
 		}
 		data.Interfaces[i].PortControl = types.StringNull()

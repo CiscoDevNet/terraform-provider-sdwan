@@ -114,12 +114,36 @@ func (d *TransportWANVPNInterfaceGREProfileParcelDataSource) Schema(ctx context.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"ipv6_address": schema.StringAttribute{
+				MarkdownDescription: "Assign IPv6 address",
+				Computed:            true,
+			},
+			"ipv6_address_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 			"shutdown": schema.BoolAttribute{
 				MarkdownDescription: "Administrative state",
 				Computed:            true,
 			},
 			"shutdown_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"multiplexing": schema.BoolAttribute{
+				MarkdownDescription: "Tunnel multiplexing state",
+				Computed:            true,
+			},
+			"multiplexing_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"tunnel_protection": schema.BoolAttribute{
+				MarkdownDescription: "Tunnel protection state",
+				Computed:            true,
+			},
+			"tunnel_mode": schema.StringAttribute{
+				MarkdownDescription: "GRE Tunnel Mode",
 				Computed:            true,
 			},
 			"tunnel_source_ipv4_address": schema.StringAttribute{
@@ -130,11 +154,27 @@ func (d *TransportWANVPNInterfaceGREProfileParcelDataSource) Schema(ctx context.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"tunnel_route_via_ipv4_address": schema.StringAttribute{
+				MarkdownDescription: "<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid",
+				Computed:            true,
+			},
+			"tunnel_route_via_ipv4_address_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 			"tunnel_source_interface": schema.StringAttribute{
 				MarkdownDescription: "<1..32 characters> Interface name",
 				Computed:            true,
 			},
 			"tunnel_source_interface_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"tunnel_route_via_interface": schema.StringAttribute{
+				MarkdownDescription: "<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid",
+				Computed:            true,
+			},
+			"tunnel_route_via_interface_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -147,10 +187,26 @@ func (d *TransportWANVPNInterfaceGREProfileParcelDataSource) Schema(ctx context.
 				Computed:            true,
 			},
 			"tunnel_route_via_loopback": schema.StringAttribute{
-				MarkdownDescription: "<1..32 characters> Interface name, can't be Loopback interface",
+				MarkdownDescription: "<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid",
 				Computed:            true,
 			},
 			"tunnel_route_via_loopback_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"tunnel_source_ipv6_address": schema.StringAttribute{
+				MarkdownDescription: "Tunnel source IPv6 Address",
+				Computed:            true,
+			},
+			"tunnel_source_ipv6_address_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"tunnel_route_via_ipv6_address": schema.StringAttribute{
+				MarkdownDescription: "<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid",
+				Computed:            true,
+			},
+			"tunnel_route_via_ipv6_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -162,19 +218,43 @@ func (d *TransportWANVPNInterfaceGREProfileParcelDataSource) Schema(ctx context.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"ip_mtu": schema.Int64Attribute{
-				MarkdownDescription: "Interface MTU <576..9976>, in bytes",
+			"tunnel_destination_ipv6_address": schema.StringAttribute{
+				MarkdownDescription: "Tunnel destination IPv6 Address",
 				Computed:            true,
 			},
-			"ip_mtu_variable": schema.StringAttribute{
+			"tunnel_destination_ipv6_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tcp_mss": schema.Int64Attribute{
+			"ipv4_mtu": schema.Int64Attribute{
+				MarkdownDescription: "Interface MTU <576..9976>, in bytes",
+				Computed:            true,
+			},
+			"ipv4_mtu_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ipv6_mtu": schema.Int64Attribute{
+				MarkdownDescription: "Interface MTU <1280..9976>, in bytes",
+				Computed:            true,
+			},
+			"ipv6_mtu_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ipv4_tcp_mss": schema.Int64Attribute{
 				MarkdownDescription: "TCP MSS on SYN packets, in bytes",
 				Computed:            true,
 			},
-			"tcp_mss_variable": schema.StringAttribute{
+			"ipv4_tcp_mss_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ipv6_tcp_mss": schema.Int64Attribute{
+				MarkdownDescription: "IPv6 TCP MSS on SYN packets, in bytes",
+				Computed:            true,
+			},
+			"ipv6_tcp_mss_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -183,6 +263,114 @@ func (d *TransportWANVPNInterfaceGREProfileParcelDataSource) Schema(ctx context.
 				Computed:            true,
 			},
 			"clear_dont_fragment_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"dpd_interval": schema.Int64Attribute{
+				MarkdownDescription: "IKE keepalive interval (seconds)",
+				Computed:            true,
+			},
+			"dpd_interval_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"dpd_retries": schema.Int64Attribute{
+				MarkdownDescription: "IKE keepalive retries",
+				Computed:            true,
+			},
+			"dpd_retries_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ike_version": schema.Int64Attribute{
+				MarkdownDescription: "IKE Version <1..2>",
+				Computed:            true,
+			},
+			"ike_mode": schema.StringAttribute{
+				MarkdownDescription: "IKE integrity protocol",
+				Computed:            true,
+			},
+			"ike_mode_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ike_rekey_interval": schema.Int64Attribute{
+				MarkdownDescription: "IKE rekey interval <60..86400> seconds",
+				Computed:            true,
+			},
+			"ike_rekey_interval_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ike_ciphersuite": schema.StringAttribute{
+				MarkdownDescription: "IKE identity the IKE preshared secret belongs to",
+				Computed:            true,
+			},
+			"ike_ciphersuite_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ike_group": schema.StringAttribute{
+				MarkdownDescription: "IKE Diffie Hellman Groups",
+				Computed:            true,
+			},
+			"ike_group_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"pre_shared_secret": schema.StringAttribute{
+				MarkdownDescription: "Use preshared key to authenticate IKE peer",
+				Computed:            true,
+			},
+			"pre_shared_secret_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ike_local_id": schema.StringAttribute{
+				MarkdownDescription: "IKE ID for the local endpoint. Input IPv4 address, domain name, or email address",
+				Computed:            true,
+			},
+			"ike_local_id_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ike_remote_id": schema.StringAttribute{
+				MarkdownDescription: "IKE ID for the remote endpoint. Input IPv4 address, domain name, or email address",
+				Computed:            true,
+			},
+			"ike_remote_id_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ipsec_rekey_interval": schema.Int64Attribute{
+				MarkdownDescription: "IPsec rekey interval <300..1209600> seconds",
+				Computed:            true,
+			},
+			"ipsec_rekey_interval_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ipsec_replay_window": schema.Int64Attribute{
+				MarkdownDescription: "Replay window size 32..8192 (must be a power of 2)",
+				Computed:            true,
+			},
+			"ipsec_replay_window_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ipsec_ciphersuite": schema.StringAttribute{
+				MarkdownDescription: "IPsec(ESP) encryption and integrity protocol",
+				Computed:            true,
+			},
+			"ipsec_ciphersuite_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"perfect_forward_secrecy": schema.StringAttribute{
+				MarkdownDescription: "IPsec perfect forward secrecy settings",
+				Computed:            true,
+			},
+			"perfect_forward_secrecy_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
