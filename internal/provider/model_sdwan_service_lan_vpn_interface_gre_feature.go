@@ -166,51 +166,51 @@ func (data ServiceLANVPNInterfaceGRE) toBody(ctx context.Context) string {
 	}
 
 	if !data.Ipv4AddressVariable.IsNull() {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.address.address.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.address.address.value", data.Ipv4AddressVariable.ValueString())
 		}
 	} else if data.Ipv4Address.IsNull() {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.address.address.optionType", "default")
 
 		}
 	} else {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.address.address.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.address.address.value", data.Ipv4Address.ValueString())
 		}
 	}
 
 	if !data.Ipv4SubnetMaskVariable.IsNull() {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.address.mask.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.address.mask.value", data.Ipv4SubnetMaskVariable.ValueString())
 		}
 	} else if data.Ipv4SubnetMask.IsNull() {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.address.mask.optionType", "default")
 
 		}
 	} else {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.address.mask.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.address.mask.value", data.Ipv4SubnetMask.ValueString())
 		}
 	}
 
 	if !data.Ipv6AddressVariable.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv6" {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.ipv6Address.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.ipv6Address.value", data.Ipv6AddressVariable.ValueString())
 		}
 	} else if data.Ipv6Address.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv6" {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.ipv6Address.optionType", "default")
 
 		}
 	} else {
-		if true && data.TunnelMode.ValueString() == "ipv6" {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.ipv6Address.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.ipv6Address.value", data.Ipv6Address.ValueString())
 		}
@@ -280,48 +280,48 @@ func (data ServiceLANVPNInterfaceGRE) toBody(ctx context.Context) string {
 	}
 
 	if !data.TunnelSourceInterfaceVariable.IsNull() {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelSourceInterface.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelSourceInterface.value", data.TunnelSourceInterfaceVariable.ValueString())
 		}
 	} else if !data.TunnelSourceInterface.IsNull() {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelSourceInterface.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelSourceInterface.value", data.TunnelSourceInterface.ValueString())
 		}
 	}
 
 	if !data.TunnelRouteViaInterfaceVariable.IsNull() {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelRouteVia.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelRouteVia.value", data.TunnelRouteViaInterfaceVariable.ValueString())
 		}
 	} else if !data.TunnelRouteViaInterface.IsNull() {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelRouteVia.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelRouteVia.value", data.TunnelRouteViaInterface.ValueString())
 		}
 	}
 
 	if !data.TunnelSourceInterfaceLoopbackVariable.IsNull() {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.value", data.TunnelSourceInterfaceLoopbackVariable.ValueString())
 		}
 	} else if !data.TunnelSourceInterfaceLoopback.IsNull() {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.value", data.TunnelSourceInterfaceLoopback.ValueString())
 		}
 	}
 
 	if !data.TunnelRouteViaLoopbackVariable.IsNull() {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.value", data.TunnelRouteViaLoopbackVariable.ValueString())
 		}
 	} else if !data.TunnelRouteViaLoopback.IsNull() {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.value", data.TunnelRouteViaLoopback.ValueString())
 		}
@@ -376,68 +376,68 @@ func (data ServiceLANVPNInterfaceGRE) toBody(ctx context.Context) string {
 	}
 
 	if !data.Ipv4MtuVariable.IsNull() {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.mtu.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.mtu.value", data.Ipv4MtuVariable.ValueString())
 		}
 	} else if data.Ipv4Mtu.IsNull() {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.mtu.optionType", "default")
 			body, _ = sjson.Set(body, path+"basic.mtu.value", 1500)
 		}
 	} else {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.mtu.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.mtu.value", data.Ipv4Mtu.ValueInt64())
 		}
 	}
 
 	if !data.Ipv6MtuVariable.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv6" {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.mtuV6.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.mtuV6.value", data.Ipv6MtuVariable.ValueString())
 		}
 	} else if data.Ipv6Mtu.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv6" {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.mtuV6.optionType", "default")
 
 		}
 	} else {
-		if true && data.TunnelMode.ValueString() == "ipv6" {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.mtuV6.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.mtuV6.value", data.Ipv6Mtu.ValueInt64())
 		}
 	}
 
 	if !data.Ipv4TcpMssVariable.IsNull() {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.value", data.Ipv4TcpMssVariable.ValueString())
 		}
 	} else if data.Ipv4TcpMss.IsNull() {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.optionType", "default")
 
 		}
 	} else {
-		if true && (data.TunnelMode.ValueString() == "ipv4" || data.TunnelMode.IsNull()) {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.value", data.Ipv4TcpMss.ValueInt64())
 		}
 	}
 
 	if !data.Ipv6TcpMssVariable.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv6" {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.tcpMssAdjustV6.optionType", "variable")
 			body, _ = sjson.Set(body, path+"basic.tcpMssAdjustV6.value", data.Ipv6TcpMssVariable.ValueString())
 		}
 	} else if data.Ipv6TcpMss.IsNull() {
-		if true && data.TunnelMode.ValueString() == "ipv6" {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.tcpMssAdjustV6.optionType", "default")
 
 		}
 	} else {
-		if true && data.TunnelMode.ValueString() == "ipv6" {
+		if true {
 			body, _ = sjson.Set(body, path+"basic.tcpMssAdjustV6.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.tcpMssAdjustV6.value", data.Ipv6TcpMss.ValueInt64())
 		}
@@ -746,7 +746,6 @@ func (data *ServiceLANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.R
 		} else if t.String() == "global" {
 			data.Ipv4Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.Ipv4SubnetMask = types.StringNull()
 	data.Ipv4SubnetMaskVariable = types.StringNull()
@@ -757,7 +756,6 @@ func (data *ServiceLANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.R
 		} else if t.String() == "global" {
 			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.Ipv6Address = types.StringNull()
 	data.Ipv6AddressVariable = types.StringNull()
@@ -768,7 +766,6 @@ func (data *ServiceLANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.R
 		} else if t.String() == "global" {
 			data.Ipv6Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv6")
 	}
 	data.Shutdown = types.BoolNull()
 	data.ShutdownVariable = types.StringNull()
@@ -827,7 +824,6 @@ func (data *ServiceLANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.R
 		} else if t.String() == "global" {
 			data.TunnelSourceInterface = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.TunnelRouteViaInterface = types.StringNull()
 	data.TunnelRouteViaInterfaceVariable = types.StringNull()
@@ -838,7 +834,6 @@ func (data *ServiceLANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.R
 		} else if t.String() == "global" {
 			data.TunnelRouteViaInterface = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.TunnelSourceInterfaceLoopback = types.StringNull()
 	data.TunnelSourceInterfaceLoopbackVariable = types.StringNull()
@@ -849,7 +844,6 @@ func (data *ServiceLANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.R
 		} else if t.String() == "global" {
 			data.TunnelSourceInterfaceLoopback = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.TunnelRouteViaLoopback = types.StringNull()
 	data.TunnelRouteViaLoopbackVariable = types.StringNull()
@@ -860,7 +854,6 @@ func (data *ServiceLANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.R
 		} else if t.String() == "global" {
 			data.TunnelRouteViaLoopback = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.TunnelSourceIpv6Address = types.StringNull()
 	data.TunnelSourceIpv6AddressVariable = types.StringNull()
@@ -915,7 +908,6 @@ func (data *ServiceLANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.R
 		} else if t.String() == "global" {
 			data.Ipv4Mtu = types.Int64Value(va.Int())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.Ipv6Mtu = types.Int64Null()
 	data.Ipv6MtuVariable = types.StringNull()
@@ -926,7 +918,6 @@ func (data *ServiceLANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.R
 		} else if t.String() == "global" {
 			data.Ipv6Mtu = types.Int64Value(va.Int())
 		}
-		data.TunnelMode = types.StringValue("ipv6")
 	}
 	data.Ipv4TcpMss = types.Int64Null()
 	data.Ipv4TcpMssVariable = types.StringNull()
@@ -937,7 +928,6 @@ func (data *ServiceLANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.R
 		} else if t.String() == "global" {
 			data.Ipv4TcpMss = types.Int64Value(va.Int())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.Ipv6TcpMss = types.Int64Null()
 	data.Ipv6TcpMssVariable = types.StringNull()
@@ -948,7 +938,6 @@ func (data *ServiceLANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.R
 		} else if t.String() == "global" {
 			data.Ipv6TcpMss = types.Int64Value(va.Int())
 		}
-		data.TunnelMode = types.StringValue("ipv6")
 	}
 	data.ClearDontFragment = types.BoolNull()
 	data.ClearDontFragmentVariable = types.StringNull()

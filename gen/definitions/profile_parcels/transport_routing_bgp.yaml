@@ -1,9 +1,9 @@
-# Manual resource - Modals updateBody and updateFromBody are manually configured to support 'restart', 'warning-only', and 'disable-peer' conditional attributes.
+# Manual resource - Modals fromBody and updateFromBody are manually configured to support 'restart', 'warning-only', and 'disable-peer' conditional attributes.
 ---
 name: Transport Routing BGP
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/routing/bgp
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - Transport
 attributes:
@@ -366,11 +366,19 @@ attributes:
     exclude_test: true
     attributes:
     - model_name: protocol
-      example: static
+      example: ospf
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
       example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+    - model_name: metric
+      example: 100
+    - model_name: ospfMatchRoute
+      example: false
+      conditional_attribute:
+        conditions:
+          - name: protocol
+            value: ospf
   - model_name: ipv6AggregateAddress
     tf_name: ipv6_aggregate_addresses
     data_path: [ipv6AddressFamily]
@@ -421,6 +429,18 @@ attributes:
       tf_name: route_policy_id
       data_path: [routePolicy]
       example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+    - model_name: metric
+      example: 100
+      conditional_attribute:
+        conditions:
+          - name: protocol
+            value: ospf
+    - model_name: ospfMatchRoute
+      example: false
+      conditional_attribute:
+        conditions:
+          - name: protocol
+            value: ospf
   - model_name: mplsInterface
     tf_name: mpls_interfaces
     attributes:
