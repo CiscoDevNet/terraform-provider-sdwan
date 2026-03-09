@@ -1,0 +1,35 @@
+# Manual resource - toBody is manually configured to support cflowd network-settings option type
+name: Application Priority Policy Settings
+rest_endpoint: /v1/feature-profile/sdwan/application-priority/%v/policy-settings
+minimum_version: 20.15.1
+id_attribute: id
+test_tags: [SDWAN_2015]
+parcel_type: policy
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_application_priority_feature_profile.test.id
+  - model_name: appVisibility
+    tf_name: ipv4_application_visibility
+    example: "true"
+  - model_name: appVisibilityIPv6
+    tf_name: ipv6_application_visibility
+    example: "false"
+    exclude_test: true
+  - model_name: flowVisibility
+    tf_name: ipv4_flow_visibility
+    example: "true"
+  - model_name: flowVisibilityIPv6
+    tf_name: ipv6_flow_visibility
+    example: "false"
+    exclude_test: true
+
+test_prerequisites: |
+  resource "sdwan_application_priority_feature_profile" "test" {
+    name        = "TF_TEST"
+    description = "Terraform test"
+  }

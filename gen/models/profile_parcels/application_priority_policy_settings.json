@@ -1,0 +1,272 @@
+{
+  "request": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/application-priority/policy-settings/post/request_schema.json",
+    "title": "Policy Settings Parcel Schema",
+    "description": "Policy settings profile parcel schema for POST request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "description": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "appVisibility": {
+            "description": "Application Visibility",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "default"
+                    ]
+                  },
+                  "value": {
+                    "type": "boolean",
+                    "enum": [
+                      false
+                    ]
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "appVisibilityIPv6": {
+            "description": "Application Visibility IPv6",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "default"
+                    ]
+                  },
+                  "value": {
+                    "type": "boolean",
+                    "enum": [
+                      false
+                    ]
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "flowVisibility": {
+            "description": "Flow Visibility",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "default"
+                    ]
+                  },
+                  "value": {
+                    "type": "boolean",
+                    "enum": [
+                      false
+                    ]
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "flowVisibilityIPv6": {
+            "description": "Flow Visibility IPv6",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "default"
+                    ]
+                  },
+                  "value": {
+                    "type": "boolean",
+                    "enum": [
+                      false
+                    ]
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "cflowd": {
+            "description": "Cflowd flag to retrieve cflowd from Network Hierarchy Settings",
+            "type": "object",
+            "properties": {
+              "optionType": {
+                "type": "string",
+                "enum": [
+                  "network-settings"
+                ]
+              },
+              "value": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "optionType",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "metadata": {
+        "minVManageVersion": "20.15.1"
+      },
+      "documentation": {
+        "description": "This is the documentation for POST request schema for [parcelType] profile parcel",
+        "details-1": "when option Type is global, value should be present with given format/restrictions as specified in schema",
+        "details-2": "when option Type is network-settings, value should be a boolean to specify intent to retrieve parcel from Network Hierarchy Settings",
+        "examples": [
+          {
+            "data": {
+              "appVisibility": {
+                "optionType": "global",
+                "value": true
+              },
+              "appVisibilityIPv6": {
+                "optionType": "global",
+                "value": true
+              },
+              "flowVisibility": {
+                "optionType": "global",
+                "value": true
+              },
+              "flowVisibilityIPv6": {
+                "optionType": "global",
+                "value": true
+              },
+              "cflowd": {
+                "optionType": "network-settings",
+                "value": true
+              }
+            },
+            "description": "Policy Settings For East Coast",
+            "name": "policy-settings-1"
+          }
+        ]
+      }
+    },
+    "required": [
+      "data"
+    ],
+    "not": {
+      "required": [
+        "documentation",
+        "metadata"
+      ]
+    },
+    "additionalProperties": false
+  }
+}

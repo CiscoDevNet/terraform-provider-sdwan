@@ -7,7 +7,22 @@ description: |-
 
 # Changelog
 
-## 0.9.1 (Unreleased)
+## 0.11.0 (Unreleased)
+
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_qos_policy` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_dns_security_policy` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_dhcp_server_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_bgp_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_bgp_feature` to `20.15.0`
+- Fix `Not Defined in Schema Attributes: data.routerPolicy` error in `sdwan_service_routing_eigrp_feature`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_eigrp_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_ospf_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_ospf_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_multicast_feature` to `20.15.0`
+- Add `sdwan_application_priority_policy_settings` resource and data source
+
+## 0.10.0
+
 - Fix idempotency issue with `sdwan_cisco_ospf_feature_template` properties `areas.stub` and `areas.nssa` causing unexpected updates after UI save operations and brownfield imports
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_other_ucse_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_other_thousandeyes_feature` to `20.15.0`
