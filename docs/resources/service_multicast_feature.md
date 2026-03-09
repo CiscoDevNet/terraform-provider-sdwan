@@ -4,13 +4,13 @@ page_title: "sdwan_service_multicast_feature Resource - terraform-provider-sdwan
 subcategory: "Features - Service"
 description: |-
   This resource can manage a Service Multicast Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_service_multicast_feature (Resource)
 
 This resource can manage a Service Multicast Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -210,7 +210,7 @@ Optional:
 - `keepalive_interval` (Number) Set MSDP peer ip keepalive interval
   - Range: `1`-`60`
 - `keepalive_interval_variable` (String) Variable name
-- `peer_authentication_password` (String) Set MSDP peer ip password
+- `peer_authentication_password` (String) Set MSDP peer ip password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `peer_authentication_password_variable` (String) Variable name
 - `peer_ip` (String) Set MSDP peer ip
 - `peer_ip_variable` (String) Variable name

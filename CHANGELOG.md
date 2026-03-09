@@ -9,6 +9,7 @@
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_eigrp_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_ospf_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_ospf_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_multicast_feature` to `20.15.0`
 
 ## 0.10.0
 
