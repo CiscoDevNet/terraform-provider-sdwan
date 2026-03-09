@@ -270,6 +270,13 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context, 
 		if data.Ipv4AddressType.ValueString() == "static" && len(data.Ipv4SecondaryAddresses) == 0 {
 			body, _ = sjson.Set(body, path+"intfIpAddress.either.static.staticIpV4AddressSecondary", []interface{}{})
 		}
+		// When no IPv4 address type is configured (e.g. IPv6-only), the API still requires intfIpAddress.
+		// Emit a default either.static structure so the payload is accepted.
+		if data.Ipv4AddressType.IsNull() && data.Ipv4AddressTypeVariable.IsNull() {
+			body, _ = sjson.Set(body, path+"intfIpAddress.either.static.staticIpV4AddressPrimary.ipAddress.optionType", "default")
+			body, _ = sjson.Set(body, path+"intfIpAddress.either.static.staticIpV4AddressPrimary.subnetMask.optionType", "default")
+			body, _ = sjson.Set(body, path+"intfIpAddress.either.static.staticIpV4AddressSecondary", []interface{}{})
+		}
 	} else {
 		// < 20.18: use legacy intfIpAddress.dynamic/static sub-paths (no addressType field)
 		if !data.Ipv4DhcpDistanceVariable.IsNull() {
@@ -339,6 +346,13 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context, 
 				}
 				body, _ = sjson.SetRaw(body, path+"intfIpAddress.static.staticIpV4AddressSecondary.-1", itemBody)
 			}
+		}
+		// When no IPv4 address type is configured (e.g. IPv6-only), the API still requires intfIpAddress.
+		// Emit a default static structure so the payload is accepted.
+		if data.Ipv4AddressType.IsNull() && data.Ipv4AddressTypeVariable.IsNull() {
+			body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType", "default")
+			body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType", "default")
+			body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressSecondary", []interface{}{})
 		}
 	}
 
