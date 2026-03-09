@@ -64,7 +64,7 @@ func (r *ServiceMulticastProfileParcelResource) Metadata(ctx context.Context, re
 func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Multicast Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Multicast Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -124,7 +124,7 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(3, 32),
-								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
 							},
 						},
 						"interface_name_variable": schema.StringAttribute{
@@ -157,6 +157,9 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 									"source_address": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set source address").String,
 										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.RegexMatches(regexp.MustCompile(`^((25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)$`), ""),
+										},
 									},
 									"source_address_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -204,7 +207,7 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(3, 32),
-								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
 							},
 						},
 						"interface_name_variable": schema.StringAttribute{
@@ -244,6 +247,9 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 						"ip_address": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set Static RP IP Address").String,
 							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`^((25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)$`), ""),
+							},
 						},
 						"ip_address_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -289,7 +295,7 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(3, 32),
-								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
 							},
 						},
 						"interface_name_variable": schema.StringAttribute{
@@ -320,7 +326,7 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(3, 32),
-								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
 							},
 						},
 						"interface_name_variable": schema.StringAttribute{
@@ -351,7 +357,7 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(3, 32),
-								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
 							},
 						},
 						"interface_name_variable": schema.StringAttribute{
@@ -404,7 +410,7 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(3, 32),
-								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
 							},
 						},
 						"interface_name_variable": schema.StringAttribute{
@@ -498,7 +504,7 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 										Optional:            true,
 									},
 									"peer_authentication_password": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set MSDP peer ip password").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set MSDP peer ip password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthBetween(1, 25),

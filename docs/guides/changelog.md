@@ -7,11 +7,19 @@ description: |-
 
 # Changelog
 
-## 0.10.1 (Unreleased)
+## 0.11.0 (Unreleased)
 
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_qos_policy` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_dns_security_policy` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_dhcp_server_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_bgp_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_bgp_feature` to `20.15.0`
 - Fix `Not Defined in Schema Attributes: data.routerPolicy` error in `sdwan_service_routing_eigrp_feature`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_eigrp_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_ospf_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_ospf_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_multicast_feature` to `20.15.0`
+- Add `sdwan_application_priority_policy_settings` resource and data source
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_management_vpn_interface_ethernet_feature` to `20.15.0`
 
 ## 0.10.0
