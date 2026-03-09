@@ -63,7 +63,7 @@ func (r *DNSSecurityProfileParcelResource) Metadata(ctx context.Context, req res
 func (r *DNSSecurityProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a DNS Security Policy.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a DNS Security Policy.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -107,6 +107,9 @@ func (r *DNSSecurityProfileParcelResource) Schema(ctx context.Context, req resou
 			"dns_server_ip": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry, Attribute conditional on `match_all_vpn` equal to `true`").String,
 				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile(`^((25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)$`), ""),
+				},
 			},
 			"local_domain_bypass_enabled": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry").String,
@@ -140,6 +143,9 @@ func (r *DNSSecurityProfileParcelResource) Schema(ctx context.Context, req resou
 						"dns_server_ip": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry").String,
 							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`^((25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)$`), ""),
+							},
 						},
 						"local_domain_bypass_enabled": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry").String,

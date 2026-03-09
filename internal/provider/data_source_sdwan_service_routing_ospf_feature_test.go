@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanServiceRoutingOSPFProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_ospf_feature.test", "router_id", "1.2.3.4"))
@@ -46,8 +46,9 @@ func TestAccDataSourceSdwanServiceRoutingOSPFProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_ospf_feature.test", "spf_calculation_delay", "200"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_ospf_feature.test", "spf_initial_hold_time", "1000"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_ospf_feature.test", "spf_maximum_hold_time", "10000"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_ospf_feature.test", "redistributes.0.protocol", "static"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_ospf_feature.test", "redistributes.0.protocol", "omp"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_ospf_feature.test", "redistributes.0.nat_dia", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_ospf_feature.test", "redistributes.0.translate_rib_metric", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_ospf_feature.test", "router_lsas.0.type", "on-startup"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_ospf_feature.test", "router_lsas.0.time", "5"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_ospf_feature.test", "areas.0.area_number", "1"))
@@ -111,8 +112,9 @@ func testAccDataSourceSdwanServiceRoutingOSPFProfileParcelConfig() string {
 	config += `	spf_initial_hold_time = 1000` + "\n"
 	config += `	spf_maximum_hold_time = 10000` + "\n"
 	config += `	redistributes = [{` + "\n"
-	config += `	  protocol = "static"` + "\n"
+	config += `	  protocol = "omp"` + "\n"
 	config += `	  nat_dia = true` + "\n"
+	config += `	  translate_rib_metric = false` + "\n"
 	config += `	}]` + "\n"
 	config += `	router_lsas = [{` + "\n"
 	config += `	  type = "on-startup"` + "\n"
