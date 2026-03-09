@@ -282,8 +282,8 @@ type YamlConfigAttribute struct {
 }
 
 type YamlConfigConditionalAttribute struct {
-	Operator   string                 `yaml:"operator"`
-	Conditions []YamlConfigCondition  `yaml:"conditions"`
+	Operator   string                `yaml:"operator"`
+	Conditions []YamlConfigCondition `yaml:"conditions"`
 }
 
 type YamlConfigCondition struct {
@@ -702,35 +702,35 @@ func contains(s []string, str string) bool {
 
 // Map of templating functions
 var functions = template.FuncMap{
-	"toGoName":                   ToGoName,
-	"toVersionName":              ToVersionName,
-	"camelCase":                  CamelCase,
-	"snakeCase":                  SnakeCase,
-	"sprintf":                    fmt.Sprintf,
-	"toLower":                    strings.ToLower,
-	"path":                       BuildPath,
-	"hasId":                      HasId,
-	"hasName":                    HasName,
-	"hasVersionAttribute":        HasVersionAttribute,
-	"getResponseModelPath":       GetResponseModelPath,
-	"hasReference":               HasReference,
-	"countReferences":            CountReferences,
-	"add":                        Add,
-	"getGjsonType":               GetGjsonType,
-	"getId":                      GetId,
-	"isUx20Feature":              IsUx20Feature,
-	"isListSet":                  IsListSet,
-	"isList":                     IsList,
-	"isSet":                      IsSet,
-	"isStringListSet":            IsStringListSet,
-	"isInt64ListSet":             IsInt64ListSet,
-	"isStringInt64":              IsStringInt64,
-	"isNestedListSet":            IsNestedListSet,
-	"isNestedList":               IsNestedList,
-	"isNestedSet":                IsNestedSet,
-	"getParentModelName":         GetParentModelName,
-	"getProfileParcelSuffix":     GetProfileParcelSuffix,
-	"getProfileParcelName":       GetProfileParcelName,
+	"toGoName":                    ToGoName,
+	"toVersionName":               ToVersionName,
+	"camelCase":                   CamelCase,
+	"snakeCase":                   SnakeCase,
+	"sprintf":                     fmt.Sprintf,
+	"toLower":                     strings.ToLower,
+	"path":                        BuildPath,
+	"hasId":                       HasId,
+	"hasName":                     HasName,
+	"hasVersionAttribute":         HasVersionAttribute,
+	"getResponseModelPath":        GetResponseModelPath,
+	"hasReference":                HasReference,
+	"countReferences":             CountReferences,
+	"add":                         Add,
+	"getGjsonType":                GetGjsonType,
+	"getId":                       GetId,
+	"isUx20Feature":               IsUx20Feature,
+	"isListSet":                   IsListSet,
+	"isList":                      IsList,
+	"isSet":                       IsSet,
+	"isStringListSet":             IsStringListSet,
+	"isInt64ListSet":              IsInt64ListSet,
+	"isStringInt64":               IsStringInt64,
+	"isNestedListSet":             IsNestedListSet,
+	"isNestedList":                IsNestedList,
+	"isNestedSet":                 IsNestedSet,
+	"getParentModelName":          GetParentModelName,
+	"getProfileParcelSuffix":      GetProfileParcelSuffix,
+	"getProfileParcelName":        GetProfileParcelName,
 	"contains":                    contains,
 	"hasConditional":              HasConditional,
 	"buildConditionalLogic":       BuildConditionalLogic,
@@ -918,6 +918,13 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	}
 	path := ""
 	prefix := "properties."
+
+	// Check before loop for cases where DataPath is empty
+	// Only treat it as wrapped oneOf if properties don't exist at same level
+	if model.Get("oneOf").Exists() && !model.Get("properties").Exists() {
+		prefix = "oneOf."
+	}
+
 	for i, e := range attr.DataPath {
 
 		next := ""
@@ -925,10 +932,6 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 			next = attr.DataPath[i+1]
 		} else {
 			next = attr.ModelName
-		}
-
-		if model.Get("oneOf").Exists() {
-			prefix = "oneOf."
 		}
 
 		if path == "" && prefix == "oneOf." {
@@ -953,12 +956,38 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				return true // keep iterating
 			})
 
+		} else if model.Get(prefix + path + e + ".items.oneOf").Exists() {
+			index := 0
+			model.Get(prefix + path + e + ".items.oneOf").ForEach(func(k, v gjson.Result) bool {
+				if v.Get("properties." + next).Exists() {
+					path += fmt.Sprintf("%s.items.oneOf.%v.properties.", e, index)
+					isOneOfAttribute = true
+					return false // stop iterating
+				}
+				index += 1
+				return true // keep iterating
+			})
+
 		} else if model.Get(prefix + path + e + ".items").Exists() {
 			path += fmt.Sprintf("%s.items.properties.", e)
 
 		} else {
 			path += e + ".properties."
 		}
+	}
+
+	// If DataPath is empty and model has oneOf at root (without properties), search through oneOf options
+	if len(attr.DataPath) == 0 && prefix == "oneOf." && !model.Get("properties").Exists() {
+		index := 0
+		model.Get("oneOf").ForEach(func(k, v gjson.Result) bool {
+			if v.Get("properties." + attr.ModelName).Exists() {
+				path = fmt.Sprintf("%v.properties.", index)
+				isOneOfAttribute = true
+				return false // stop iterating
+			}
+			index += 1
+			return true // keep iterating
+		})
 	}
 
 	path += attr.ModelName

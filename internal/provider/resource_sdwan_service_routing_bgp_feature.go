@@ -27,7 +27,6 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
-	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -65,7 +64,7 @@ func (r *ServiceRoutingBGPProfileParcelResource) Metadata(ctx context.Context, r
 func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Routing BGP Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Routing BGP Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -220,6 +219,9 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 						"address": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set neighbor address").String,
 							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`^((25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)$`), ""),
+							},
 						},
 						"address_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -330,7 +332,7 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 							Optional:            true,
 						},
 						"password": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 password on TCP connection with BGP peer").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 25),
@@ -373,8 +375,11 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"family_type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set IPv4 unicast address family").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set IPv4 unicast address family").AddStringEnumDescription("ipv4-unicast").String,
 										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("ipv4-unicast"),
+										},
 									},
 									"policy_type": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Neighbor received maximum prefix policy is disabled.").AddStringEnumDescription("restart", "off", "warning-only", "disable-peer").String,
@@ -598,7 +603,7 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 							Optional:            true,
 						},
 						"password": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 password on TCP connection with BGP peer").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 25),
@@ -633,8 +638,11 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"family_type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set IPv6 unicast address family").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set IPv6 unicast address family").AddStringEnumDescription("ipv6-unicast").String,
 										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("ipv6-unicast"),
+										},
 									},
 									"policy_type": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Neighbor received maximum prefix policy is disabled.").AddStringEnumDescription("restart", "off", "warning-only", "disable-peer").String,
@@ -748,6 +756,9 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 						"network_address": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`^((25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)$`), ""),
+							},
 						},
 						"network_address_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -791,6 +802,9 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 						"network_address": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`^((25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)$`), ""),
+							},
 						},
 						"network_address_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -868,7 +882,31 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 							},
 						},
 						"translate_rib_metric": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Translate Rib Metric, Attribute conditional on `protocol` equal to `omp`").AddDefaultValueDescription("false").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network., Attribute conditional on `protocol` equal to `omp`").AddDefaultValueDescription("false").String,
+							Optional:            true,
+						},
+						"translate_rib_metric_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `protocol` equal to `omp`").String,
+							Optional:            true,
+						},
+						"metric": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Metric value, the metric value helps determine the preference of routes when multiple paths are available. A lower metric is typically more preferred").AddIntegerRangeDescription(0, 4294967295).String,
+							Optional:            true,
+							Validators: []validator.Int64{
+								int64validator.AtMost(4294967295),
+							},
+						},
+						"metric_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"ospf_match_route": schema.SetAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Match the OSPF internal,external type 1 or external type 2 route and redistribute them to BGP., Attribute conditional on `protocol` equal to `ospf`").String,
+							ElementType:         types.StringType,
+							Optional:            true,
+						},
+						"ospf_match_route_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `protocol` equal to `ospf`").String,
 							Optional:            true,
 						},
 					},
@@ -883,7 +921,7 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 							MarkdownDescription: helpers.NewAttributeDescription("Configure the IPv6 prefixes to aggregate").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(\/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
 							},
 						},
 						"aggregate_prefix_variable": schema.StringAttribute{
@@ -918,7 +956,7 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 							MarkdownDescription: helpers.NewAttributeDescription("Configure the prefixes for BGP to announce").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(\/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
 							},
 						},
 						"network_prefix_variable": schema.StringAttribute{
@@ -986,7 +1024,31 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 							},
 						},
 						"translate_rib_metric": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Translate Rib Metric, Attribute conditional on `protocol` equal to `omp`").AddDefaultValueDescription("false").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network., Attribute conditional on `protocol` equal to `omp`").AddDefaultValueDescription("false").String,
+							Optional:            true,
+						},
+						"translate_rib_metric_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `protocol` equal to `omp`").String,
+							Optional:            true,
+						},
+						"metric": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Metric value, the metric value helps determine the preference of routes when multiple paths are available. A lower metric is typically more preferred, Attribute conditional on `protocol` equal to `ospf`").AddIntegerRangeDescription(0, 4294967295).String,
+							Optional:            true,
+							Validators: []validator.Int64{
+								int64validator.AtMost(4294967295),
+							},
+						},
+						"metric_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `protocol` equal to `ospf`").String,
+							Optional:            true,
+						},
+						"ospf_match_route": schema.SetAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Match the OSPF internal,external type 1 or external type 2 route and redistribute them to BGP., Attribute conditional on `protocol` equal to `ospf`").String,
+							ElementType:         types.StringType,
+							Optional:            true,
+						},
+						"ospf_match_route_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `protocol` equal to `ospf`").String,
 							Optional:            true,
 						},
 					},
@@ -1007,6 +1069,7 @@ func (r *ServiceRoutingBGPProfileParcelResource) Configure(_ context.Context, re
 
 // End of section. //template:end model
 
+// Section below is generated&owned by "gen/generator.go". //template:begin create
 func (r *ServiceRoutingBGPProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan ServiceRoutingBGP
 
@@ -1019,10 +1082,8 @@ func (r *ServiceRoutingBGPProfileParcelResource) Create(ctx context.Context, req
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
-	version := version.Must(version.NewVersion(r.client.ManagerVersion))
-
 	// Create object
-	body := plan.toBody(ctx, version)
+	body := plan.toBody(ctx)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -1040,6 +1101,8 @@ func (r *ServiceRoutingBGPProfileParcelResource) Create(ctx context.Context, req
 
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
+
+// End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
 func (r *ServiceRoutingBGPProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
@@ -1088,6 +1151,7 @@ func (r *ServiceRoutingBGPProfileParcelResource) Read(ctx context.Context, req r
 
 // End of section. //template:end read
 
+// Section below is generated&owned by "gen/generator.go". //template:begin update
 func (r *ServiceRoutingBGPProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var plan, state ServiceRoutingBGP
 
@@ -1106,9 +1170,7 @@ func (r *ServiceRoutingBGPProfileParcelResource) Update(ctx context.Context, req
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	version := version.Must(version.NewVersion(r.client.ManagerVersion))
-
-	body := plan.toBody(ctx, version)
+	body := plan.toBody(ctx)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
@@ -1122,6 +1184,8 @@ func (r *ServiceRoutingBGPProfileParcelResource) Update(ctx context.Context, req
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 }
+
+// End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
 func (r *ServiceRoutingBGPProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
