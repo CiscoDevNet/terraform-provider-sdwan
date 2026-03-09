@@ -17,8 +17,9 @@ resource "sdwan_service_routing_ospf_feature" "example" {
   spf_maximum_hold_time                     = 10000
   redistributes = [
     {
-      protocol = "static"
-      nat_dia  = true
+      protocol             = "omp"
+      nat_dia              = true
+      translate_rib_metric = false
     }
   ]
   router_lsas = [

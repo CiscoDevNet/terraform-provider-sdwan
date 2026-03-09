@@ -4,13 +4,13 @@ page_title: "sdwan_transport_routing_ospf_feature Resource - terraform-provider-
 subcategory: "Features - Transport"
 description: |-
   This resource can manage a Transport Routing OSPF Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_transport_routing_ospf_feature (Resource)
 
 This resource can manage a Transport Routing OSPF Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -185,7 +185,7 @@ Optional:
   - Range: `1`-`65535`
   - Default value: `5`
 - `lsa_retransmit_interval_variable` (String) Variable name
-- `message_digest_key` (String) Set MD5 authentication key
+- `message_digest_key` (String) Set MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `message_digest_key_id` (Number) Set MD5 message digest key
   - Range: `1`-`255`
 - `message_digest_key_id_variable` (String) Variable name
