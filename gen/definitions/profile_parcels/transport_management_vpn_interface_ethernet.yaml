@@ -29,51 +29,63 @@ attributes:
   - model_name: description
     tf_name: interface_description
     example: Transport Management VPN Interface Ethernet
-  - tf_name: ipv4_configuration_type
-    type: String
-    tf_only: true
-    default_value: "dynamic"
-    default_value_present: true
-    description: IPv4 Configuration Type
-    enum_values: [dynamic, static]
+  - model_name: addressType
+    tf_name: ipv4_address_type
+    data_path: [intfIpAddress, either]
     example: static
     minimum_test_value: '"static"'
   - model_name: dynamicDhcpDistance
     tf_name: ipv4_dhcp_distance
-    data_path: [intfIpAddress, dynamic]
+    data_path: [intfIpAddress, either, dynamic]
     conditional_attribute:
+      operator: or
       conditions:
-        - name: ipv4_configuration_type
+        - name: ipv4_address_type
           value: dynamic
+        - name: ipv4_address_type_variable
+          value: ''
+          negate: true
     default_value_present: true
     default_value: 1
     example: 1
     exclude_test: true
   - model_name: ipAddress
     tf_name: ipv4_address
-    data_path: [intfIpAddress, static, staticIpV4AddressPrimary]
+    data_path: [intfIpAddress, either, static, staticIpV4AddressPrimary]
     conditional_attribute:
+      operator: or
       conditions:
-        - name: ipv4_configuration_type
+        - name: ipv4_address_type
           value: static
+        - name: ipv4_address_type_variable
+          value: ''
+          negate: true
     example: 1.2.3.4
     minimum_test_value: '"1.2.3.4"'
   - model_name: subnetMask
     tf_name: ipv4_subnet_mask
-    data_path: [intfIpAddress, static, staticIpV4AddressPrimary]
+    data_path: [intfIpAddress, either, static, staticIpV4AddressPrimary]
     conditional_attribute:
+      operator: or
       conditions:
-        - name: ipv4_configuration_type
+        - name: ipv4_address_type
           value: static
+        - name: ipv4_address_type_variable
+          value: ''
+          negate: true
     example: 0.0.0.0
     minimum_test_value: '"0.0.0.0"'
   - model_name: staticIpV4AddressSecondary
     tf_name: ipv4_secondary_addresses
-    data_path: [intfIpAddress, static]
+    data_path: [intfIpAddress, either, static]
     conditional_attribute:
+      operator: or
       conditions:
-        - name: ipv4_configuration_type
+        - name: ipv4_address_type
           value: static
+        - name: ipv4_address_type_variable
+          value: ''
+          negate: true
     attributes:
     - model_name: ipAddress
       tf_name: address
@@ -90,31 +102,35 @@ attributes:
   - model_name: autoDetectBandwidth
     tf_name: ipv4_auto_detect_bandwidth
     example: false
-  - tf_name: ipv6_configuration_type
-    type: String
-    tf_only: true
-    default_value: "none"
-    default_value_present: true
-    description: IPv6 Configuration Type
-    enum_values: [dynamic, static, none]
+  - model_name: addressType
+    tf_name: ipv6_address_type
+    data_path: [intfIpV6Address, either]
     example: static
   - model_name: dhcpClient
     tf_name: enable_dhcpv6
-    data_path: [intfIpV6Address, dynamic]
+    data_path: [intfIpV6Address, either, dynamic]
     type: Bool
     conditional_attribute:
+      operator: or
       conditions:
-        - name: ipv6_configuration_type
+        - name: ipv6_address_type
           value: dynamic
+        - name: ipv6_address_type_variable
+          value: ''
+          negate: true
     example: true
     exclude_test: true
   - model_name: address
     tf_name: ipv6_address
-    data_path: [intfIpV6Address, static, primaryIpV6Address]
+    data_path: [intfIpV6Address, either, static, primaryIpV6Address]
     conditional_attribute:
+      operator: or
       conditions:
-        - name: ipv6_configuration_type
+        - name: ipv6_address_type
           value: static
+        - name: ipv6_address_type_variable
+          value: ''
+          negate: true
     example: 2001:0:0:1::/64
   - model_name: arp
     tf_name: arp_entries
