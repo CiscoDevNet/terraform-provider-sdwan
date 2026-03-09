@@ -4,13 +4,13 @@ page_title: "sdwan_transport_management_vpn_interface_ethernet_feature Resource 
 subcategory: "Features - Transport"
 description: |-
   This resource can manage a Transport Management VPN Interface Ethernet Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_transport_management_vpn_interface_ethernet_feature (Resource)
 
 This resource can manage a Transport Management VPN Interface Ethernet Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -108,7 +108,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
   - Choices: `dynamic`, `static`
   - Default value: `dynamic`
 - `ipv4_dhcp_distance` (Number) DHCP Distance, Attribute conditional on `ipv4_configuration_type` equal to `dynamic`
-  - Range: `1`-`65536`
+  - Range: `1`-`255`
   - Default value: `1`
 - `ipv4_dhcp_distance_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` equal to `dynamic`
 - `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
@@ -136,7 +136,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
 - `shutdown` (Boolean) - Default value: `true`
 - `shutdown_variable` (String) Variable name
 - `speed` (String) Set interface speed
-  - Choices: `10`, `100`, `1000`, `2500`, `10000`
+  - Choices: `10`, `100`, `1000`, `2500`, `10000`, `25000`
 - `speed_variable` (String) Variable name
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
   - Range: `500`-`1460`

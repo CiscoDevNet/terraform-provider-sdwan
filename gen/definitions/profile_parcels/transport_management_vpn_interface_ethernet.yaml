@@ -1,8 +1,9 @@
 ---
+# Manual resource - Modals toBody, fromBody, updateFromBody are manually configured to support "either" address option for 20.18
 name: Transport Management VPN Interface Ethernet
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/management/vpn/%s/interface/ethernet
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - Transport
 attributes:
