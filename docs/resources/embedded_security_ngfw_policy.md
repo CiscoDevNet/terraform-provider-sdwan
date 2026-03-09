@@ -22,11 +22,11 @@ resource "sdwan_embedded_security_ngfw_policy" "example" {
   default_action     = "pass"
   sequences = [
     {
-      sequence_id   = "1"
-      sequence_name = "security"
-      base_action   = "drop"
-      rule_type     = "ngfirewall"
-      disable_rule  = false
+      sequence_id      = "1"
+      sequence_name    = "security"
+      base_action      = "drop"
+      sequence_type    = "ngfirewall"
+      disable_sequence = false
       match_entries = [
         {
           source_ports = ["123"]
@@ -69,11 +69,11 @@ Optional:
 
 - `actions` (Attributes List) can be empty array or with type or parameter (see [below for nested schema](#nestedatt--sequences--actions))
 - `base_action` (String) - Choices: `pass`, `inspect`, `drop`
-- `disable_rule` (Boolean)
+- `disable_sequence` (Boolean)
 - `match_entries` (Attributes List) (see [below for nested schema](#nestedatt--sequences--match_entries))
-- `rule_type` (String)
 - `sequence_id` (String)
 - `sequence_name` (String)
+- `sequence_type` (String)
 
 <a id="nestedatt--sequences--actions"></a>
 ### Nested Schema for `sequences.actions`
@@ -82,7 +82,7 @@ Optional:
 
 - `parameter` (String)
 - `parameter_id` (String)
-- `type` (String) - Choices: `log`, `connectionEvents`
+- `type` (String) - Choices: `log`, `connectionEvents`, `advancedInspectionProfile`, `log`, `connectionEvents`
 
 
 <a id="nestedatt--sequences--match_entries"></a>
@@ -94,8 +94,8 @@ Optional:
 - `application_families` (Set of String)
 - `applications` (Set of String)
 - `destination_data_prefix_list_ids` (Set of String)
-- `destination_data_prefixs` (Set of String)
-- `destination_data_prefixs_variable` (String) Variable name
+- `destination_data_prefixes` (Set of String)
+- `destination_data_prefixes_variable` (String) Variable name
 - `destination_fqdn_list_ids` (Set of String)
 - `destination_fqdns` (Set of String)
 - `destination_fqdns_variable` (String) Variable name
@@ -112,14 +112,14 @@ Optional:
 - `protocol_names` (Set of String)
 - `protocols` (Set of String)
 - `source_data_prefix_list_ids` (Set of String)
-- `source_data_prefixs` (Set of String)
-- `source_data_prefixs_variable` (String) Variable name
+- `source_data_prefixes` (Set of String)
+- `source_data_prefixes_variable` (String) Variable name
 - `source_geo_location_list_ids` (Set of String)
 - `source_geo_locations` (Set of String)
 - `source_geo_locations_variable` (String) Variable name
+- `source_identity_list_ids` (Set of String)
 - `source_identity_usergroups` (Set of String)
 - `source_identity_users` (Set of String)
-- `source_indentity_list_ids` (Set of String)
 - `source_port_list_ids` (Set of String)
 - `source_ports` (Set of String)
 - `source_ports_variable` (String) Variable name

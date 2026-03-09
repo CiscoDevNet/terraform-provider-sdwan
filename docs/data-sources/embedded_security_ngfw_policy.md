@@ -42,11 +42,11 @@ Read-Only:
 
 - `actions` (Attributes List) can be empty array or with type or parameter (see [below for nested schema](#nestedatt--sequences--actions))
 - `base_action` (String)
-- `disable_rule` (Boolean)
+- `disable_sequence` (Boolean)
 - `match_entries` (Attributes List) (see [below for nested schema](#nestedatt--sequences--match_entries))
-- `rule_type` (String)
 - `sequence_id` (String)
 - `sequence_name` (String)
+- `sequence_type` (String)
 
 <a id="nestedatt--sequences--actions"></a>
 ### Nested Schema for `sequences.actions`
@@ -67,8 +67,8 @@ Read-Only:
 - `application_families` (Set of String)
 - `applications` (Set of String)
 - `destination_data_prefix_list_ids` (Set of String)
-- `destination_data_prefixs` (Set of String)
-- `destination_data_prefixs_variable` (String) Variable name
+- `destination_data_prefixes` (Set of String)
+- `destination_data_prefixes_variable` (String) Variable name
 - `destination_fqdn_list_ids` (Set of String)
 - `destination_fqdns` (Set of String)
 - `destination_fqdns_variable` (String) Variable name
@@ -85,14 +85,14 @@ Read-Only:
 - `protocol_names` (Set of String)
 - `protocols` (Set of String)
 - `source_data_prefix_list_ids` (Set of String)
-- `source_data_prefixs` (Set of String)
-- `source_data_prefixs_variable` (String) Variable name
+- `source_data_prefixes` (Set of String)
+- `source_data_prefixes_variable` (String) Variable name
 - `source_geo_location_list_ids` (Set of String)
 - `source_geo_locations` (Set of String)
 - `source_geo_locations_variable` (String) Variable name
+- `source_identity_list_ids` (Set of String)
 - `source_identity_usergroups` (Set of String)
 - `source_identity_users` (Set of String)
-- `source_indentity_list_ids` (Set of String)
 - `source_port_list_ids` (Set of String)
 - `source_ports` (Set of String)
 - `source_ports_variable` (String) Variable name

@@ -37,8 +37,8 @@ func TestAccSdwanEmbeddedSecurityNGFWProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_ngfw_policy.test", "sequences.0.sequence_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_ngfw_policy.test", "sequences.0.sequence_name", "security"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_ngfw_policy.test", "sequences.0.base_action", "drop"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_ngfw_policy.test", "sequences.0.rule_type", "ngfirewall"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_ngfw_policy.test", "sequences.0.disable_rule", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_ngfw_policy.test", "sequences.0.sequence_type", "ngfirewall"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_ngfw_policy.test", "sequences.0.disable_sequence", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_ngfw_policy.test", "sequences.0.actions.0.type", "log"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_ngfw_policy.test", "sequences.0.actions.0.parameter", "true"))
 	resource.Test(t, resource.TestCase{
@@ -92,8 +92,8 @@ func testAccSdwanEmbeddedSecurityNGFWProfileParcelConfig_all() string {
 	config += `	  sequence_id = "1"` + "\n"
 	config += `	  sequence_name = "security"` + "\n"
 	config += `	  base_action = "drop"` + "\n"
-	config += `	  rule_type = "ngfirewall"` + "\n"
-	config += `	  disable_rule = false` + "\n"
+	config += `	  sequence_type = "ngfirewall"` + "\n"
+	config += `	  disable_sequence = false` + "\n"
 	config += `	  match_entries = [{` + "\n"
 	config += `		source_ports = ["123"]` + "\n"
 	config += `	}]` + "\n"

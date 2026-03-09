@@ -44,13 +44,13 @@ type EmbeddedSecurityNGFW struct {
 }
 
 type EmbeddedSecurityNGFWSequences struct {
-	SequenceId   types.String                                `tfsdk:"sequence_id"`
-	SequenceName types.String                                `tfsdk:"sequence_name"`
-	BaseAction   types.String                                `tfsdk:"base_action"`
-	RuleType     types.String                                `tfsdk:"rule_type"`
-	DisableRule  types.Bool                                  `tfsdk:"disable_rule"`
-	MatchEntries []EmbeddedSecurityNGFWSequencesMatchEntries `tfsdk:"match_entries"`
-	Actions      []EmbeddedSecurityNGFWSequencesActions      `tfsdk:"actions"`
+	SequenceId      types.String                                `tfsdk:"sequence_id"`
+	SequenceName    types.String                                `tfsdk:"sequence_name"`
+	BaseAction      types.String                                `tfsdk:"base_action"`
+	SequenceType    types.String                                `tfsdk:"sequence_type"`
+	DisableSequence types.Bool                                  `tfsdk:"disable_sequence"`
+	MatchEntries    []EmbeddedSecurityNGFWSequencesMatchEntries `tfsdk:"match_entries"`
+	Actions         []EmbeddedSecurityNGFWSequencesActions      `tfsdk:"actions"`
 }
 
 type EmbeddedSecurityNGFWSequencesMatchEntries struct {
@@ -63,16 +63,16 @@ type EmbeddedSecurityNGFWSequencesMatchEntries struct {
 	DestinationPortListIds             types.Set    `tfsdk:"destination_port_list_ids"`
 	SourceScalableGroupTagListIds      types.Set    `tfsdk:"source_scalable_group_tag_list_ids"`
 	DestinationScalableGroupTagListIds types.Set    `tfsdk:"destination_scalable_group_tag_list_ids"`
-	SourceIndentityListIds             types.Set    `tfsdk:"source_indentity_list_ids"`
+	SourceIdentityListIds              types.Set    `tfsdk:"source_identity_list_ids"`
 	ProtocolNameListIds                types.Set    `tfsdk:"protocol_name_list_ids"`
 	AppListIds                         types.Set    `tfsdk:"app_list_ids"`
 	FlatAppListIds                     types.Set    `tfsdk:"flat_app_list_ids"`
 	SourceSecurityGroupListIds         types.Set    `tfsdk:"source_security_group_list_ids"`
 	DestinationSecurityGroupListIds    types.Set    `tfsdk:"destination_security_group_list_ids"`
-	SourceDataPrefixs                  types.Set    `tfsdk:"source_data_prefixs"`
-	SourceDataPrefixsVariable          types.String `tfsdk:"source_data_prefixs_variable"`
-	DestinationDataPrefixs             types.Set    `tfsdk:"destination_data_prefixs"`
-	DestinationDataPrefixsVariable     types.String `tfsdk:"destination_data_prefixs_variable"`
+	SourceDataPrefixes                 types.Set    `tfsdk:"source_data_prefixes"`
+	SourceDataPrefixesVariable         types.String `tfsdk:"source_data_prefixes_variable"`
+	DestinationDataPrefixes            types.Set    `tfsdk:"destination_data_prefixes"`
+	DestinationDataPrefixesVariable    types.String `tfsdk:"destination_data_prefixes_variable"`
 	DestinationFqdns                   types.Set    `tfsdk:"destination_fqdns"`
 	DestinationFqdnsVariable           types.String `tfsdk:"destination_fqdns_variable"`
 	SourcePorts                        types.Set    `tfsdk:"source_ports"`
@@ -146,16 +146,16 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "baseAction.value", item.BaseAction.ValueString())
 				}
 			}
-			if !item.RuleType.IsNull() {
+			if !item.SequenceType.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "sequenceType.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "sequenceType.value", item.RuleType.ValueString())
+					itemBody, _ = sjson.Set(itemBody, "sequenceType.value", item.SequenceType.ValueString())
 				}
 			}
-			if !item.DisableRule.IsNull() {
+			if !item.DisableSequence.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "disableSequence.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "disableSequence.value", item.DisableRule.ValueBool())
+					itemBody, _ = sjson.Set(itemBody, "disableSequence.value", item.DisableSequence.ValueBool())
 				}
 			}
 			if true {
@@ -234,11 +234,11 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "destinationScalableGroupTagList.refId.value", values)
 						}
 					}
-					if !childItem.SourceIndentityListIds.IsNull() {
+					if !childItem.SourceIdentityListIds.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "sourceIdentityList.refId.optionType", "global")
 							var values []string
-							childItem.SourceIndentityListIds.ElementsAs(ctx, &values, false)
+							childItem.SourceIdentityListIds.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "sourceIdentityList.refId.value", values)
 						}
 					}
@@ -283,30 +283,30 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context) string {
 						}
 					}
 
-					if !childItem.SourceDataPrefixsVariable.IsNull() {
+					if !childItem.SourceDataPrefixesVariable.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "sourceIp.ipv4Value.optionType", "variable")
-							itemChildBody, _ = sjson.Set(itemChildBody, "sourceIp.ipv4Value.value", childItem.SourceDataPrefixsVariable.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "sourceIp.ipv4Value.value", childItem.SourceDataPrefixesVariable.ValueString())
 						}
-					} else if !childItem.SourceDataPrefixs.IsNull() {
+					} else if !childItem.SourceDataPrefixes.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "sourceIp.ipv4Value.optionType", "global")
 							var values []string
-							childItem.SourceDataPrefixs.ElementsAs(ctx, &values, false)
+							childItem.SourceDataPrefixes.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "sourceIp.ipv4Value.value", values)
 						}
 					}
 
-					if !childItem.DestinationDataPrefixsVariable.IsNull() {
+					if !childItem.DestinationDataPrefixesVariable.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "destinationIp.ipv4Value.optionType", "variable")
-							itemChildBody, _ = sjson.Set(itemChildBody, "destinationIp.ipv4Value.value", childItem.DestinationDataPrefixsVariable.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "destinationIp.ipv4Value.value", childItem.DestinationDataPrefixesVariable.ValueString())
 						}
-					} else if !childItem.DestinationDataPrefixs.IsNull() {
+					} else if !childItem.DestinationDataPrefixes.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "destinationIp.ipv4Value.optionType", "global")
 							var values []string
-							childItem.DestinationDataPrefixs.ElementsAs(ctx, &values, false)
+							childItem.DestinationDataPrefixes.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "destinationIp.ipv4Value.value", values)
 						}
 					}
@@ -509,20 +509,20 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 					item.BaseAction = types.StringValue(va.String())
 				}
 			}
-			item.RuleType = types.StringNull()
+			item.SequenceType = types.StringNull()
 
 			if t := v.Get("sequenceType.optionType"); t.Exists() {
 				va := v.Get("sequenceType.value")
 				if t.String() == "global" {
-					item.RuleType = types.StringValue(va.String())
+					item.SequenceType = types.StringValue(va.String())
 				}
 			}
-			item.DisableRule = types.BoolNull()
+			item.DisableSequence = types.BoolNull()
 
 			if t := v.Get("disableSequence.optionType"); t.Exists() {
 				va := v.Get("disableSequence.value")
 				if t.String() == "global" {
-					item.DisableRule = types.BoolValue(va.Bool())
+					item.DisableSequence = types.BoolValue(va.Bool())
 				}
 			}
 			if cValue := v.Get("match.entries"); cValue.Exists() && len(cValue.Array()) > 0 {
@@ -601,12 +601,12 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 							cItem.DestinationScalableGroupTagListIds = helpers.GetStringSet(va.Array())
 						}
 					}
-					cItem.SourceIndentityListIds = types.SetNull(types.StringType)
+					cItem.SourceIdentityListIds = types.SetNull(types.StringType)
 
 					if t := cv.Get("sourceIdentityList.refId.optionType"); t.Exists() {
 						va := cv.Get("sourceIdentityList.refId.value")
 						if t.String() == "global" {
-							cItem.SourceIndentityListIds = helpers.GetStringSet(va.Array())
+							cItem.SourceIdentityListIds = helpers.GetStringSet(va.Array())
 						}
 					}
 					cItem.ProtocolNameListIds = types.SetNull(types.StringType)
@@ -649,24 +649,24 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 							cItem.DestinationSecurityGroupListIds = helpers.GetStringSet(va.Array())
 						}
 					}
-					cItem.SourceDataPrefixs = types.SetNull(types.StringType)
-					cItem.SourceDataPrefixsVariable = types.StringNull()
+					cItem.SourceDataPrefixes = types.SetNull(types.StringType)
+					cItem.SourceDataPrefixesVariable = types.StringNull()
 					if t := cv.Get("sourceIp.ipv4Value.optionType"); t.Exists() {
 						va := cv.Get("sourceIp.ipv4Value.value")
 						if t.String() == "variable" {
-							cItem.SourceDataPrefixsVariable = types.StringValue(va.String())
+							cItem.SourceDataPrefixesVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.SourceDataPrefixs = helpers.GetStringSet(va.Array())
+							cItem.SourceDataPrefixes = helpers.GetStringSet(va.Array())
 						}
 					}
-					cItem.DestinationDataPrefixs = types.SetNull(types.StringType)
-					cItem.DestinationDataPrefixsVariable = types.StringNull()
+					cItem.DestinationDataPrefixes = types.SetNull(types.StringType)
+					cItem.DestinationDataPrefixesVariable = types.StringNull()
 					if t := cv.Get("destinationIp.ipv4Value.optionType"); t.Exists() {
 						va := cv.Get("destinationIp.ipv4Value.value")
 						if t.String() == "variable" {
-							cItem.DestinationDataPrefixsVariable = types.StringValue(va.String())
+							cItem.DestinationDataPrefixesVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.DestinationDataPrefixs = helpers.GetStringSet(va.Array())
+							cItem.DestinationDataPrefixes = helpers.GetStringSet(va.Array())
 						}
 					}
 					cItem.DestinationFqdns = types.SetNull(types.StringType)
@@ -830,7 +830,7 @@ func (data *EmbeddedSecurityNGFW) updateFromBody(ctx context.Context, res gjson.
 	}
 	for i := range data.Sequences {
 		keys := [...]string{"sequenceId", "sequenceName", "baseAction", "sequenceType", "disableSequence"}
-		keyValues := [...]string{data.Sequences[i].SequenceId.ValueString(), data.Sequences[i].SequenceName.ValueString(), data.Sequences[i].BaseAction.ValueString(), data.Sequences[i].RuleType.ValueString(), strconv.FormatBool(data.Sequences[i].DisableRule.ValueBool())}
+		keyValues := [...]string{data.Sequences[i].SequenceId.ValueString(), data.Sequences[i].SequenceName.ValueString(), data.Sequences[i].BaseAction.ValueString(), data.Sequences[i].SequenceType.ValueString(), strconv.FormatBool(data.Sequences[i].DisableSequence.ValueBool())}
 		keyValuesVariables := [...]string{"", "", "", "", ""}
 
 		var r gjson.Result
@@ -883,26 +883,26 @@ func (data *EmbeddedSecurityNGFW) updateFromBody(ctx context.Context, res gjson.
 				data.Sequences[i].BaseAction = types.StringValue(va.String())
 			}
 		}
-		data.Sequences[i].RuleType = types.StringNull()
+		data.Sequences[i].SequenceType = types.StringNull()
 
 		if t := r.Get("sequenceType.optionType"); t.Exists() {
 			va := r.Get("sequenceType.value")
 			if t.String() == "global" {
-				data.Sequences[i].RuleType = types.StringValue(va.String())
+				data.Sequences[i].SequenceType = types.StringValue(va.String())
 			}
 		}
-		data.Sequences[i].DisableRule = types.BoolNull()
+		data.Sequences[i].DisableSequence = types.BoolNull()
 
 		if t := r.Get("disableSequence.optionType"); t.Exists() {
 			va := r.Get("disableSequence.value")
 			if t.String() == "global" {
-				data.Sequences[i].DisableRule = types.BoolValue(va.Bool())
+				data.Sequences[i].DisableSequence = types.BoolValue(va.Bool())
 			}
 		}
 		for ci := range data.Sequences[i].MatchEntries {
 			keys := [...]string{"sourceDataPrefixList.refId", "destinationDataPrefixList.refId", "destinationFqdnList.refId", "sourceGeoLocationList.refId", "destinationGeoLocationList.refId", "sourcePortList.refId", "destinationPortList.refId", "sourceScalableGroupTagList.refId", "destinationScalableGroupTagList.refId", "sourceIdentityList.refId", "protocolNameList.refId", "appList.refId", "appListFlat.refId", "sourceSecurityGroup.refId", "destinationSecurityGroup.refId", "sourceIp.ipv4Value", "destinationIp.ipv4Value", "destinationFqdn.fqdnValue", "sourcePort.portValue", "destinationPort.portValue", "sourceGeoLocation", "destinationGeoLocation", "sourceIdentityUser", "sourceIdentityUsergroup", "app", "appFamily", "protocol", "protocolName"}
-			keyValues := [...]string{helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceDataPrefixListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationFqdnListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceGeoLocationListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationGeoLocationListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourcePortListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationPortListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceScalableGroupTagListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationScalableGroupTagListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceIndentityListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].ProtocolNameListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].AppListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].FlatAppListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceSecurityGroupListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationSecurityGroupListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceDataPrefixs).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationDataPrefixs).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationFqdns).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourcePorts).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationPorts).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceGeoLocations).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationGeoLocations).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceIdentityUsers).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceIdentityUsergroups).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Applications).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].ApplicationFamilies).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Protocols).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].ProtocolNames).ValueString()}
-			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", data.Sequences[i].MatchEntries[ci].SourceDataPrefixsVariable.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefixsVariable.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationFqdnsVariable.ValueString(), data.Sequences[i].MatchEntries[ci].SourcePortsVariable.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationPortsVariable.ValueString(), data.Sequences[i].MatchEntries[ci].SourceGeoLocationsVariable.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationGeoLocationsVariable.ValueString(), "", "", "", "", "", ""}
+			keyValues := [...]string{helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceDataPrefixListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationFqdnListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceGeoLocationListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationGeoLocationListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourcePortListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationPortListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceScalableGroupTagListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationScalableGroupTagListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceIdentityListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].ProtocolNameListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].AppListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].FlatAppListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceSecurityGroupListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationSecurityGroupListIds).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceDataPrefixes).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationDataPrefixes).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationFqdns).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourcePorts).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationPorts).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceGeoLocations).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationGeoLocations).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceIdentityUsers).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourceIdentityUsergroups).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Applications).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].ApplicationFamilies).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Protocols).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].ProtocolNames).ValueString()}
+			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", data.Sequences[i].MatchEntries[ci].SourceDataPrefixesVariable.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataPrefixesVariable.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationFqdnsVariable.ValueString(), data.Sequences[i].MatchEntries[ci].SourcePortsVariable.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationPortsVariable.ValueString(), data.Sequences[i].MatchEntries[ci].SourceGeoLocationsVariable.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationGeoLocationsVariable.ValueString(), "", "", "", "", "", ""}
 
 			var cr gjson.Result
 			r.Get("match.entries").ForEach(
@@ -1002,12 +1002,12 @@ func (data *EmbeddedSecurityNGFW) updateFromBody(ctx context.Context, res gjson.
 					data.Sequences[i].MatchEntries[ci].DestinationScalableGroupTagListIds = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Sequences[i].MatchEntries[ci].SourceIndentityListIds = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].SourceIdentityListIds = types.SetNull(types.StringType)
 
 			if t := cr.Get("sourceIdentityList.refId.optionType"); t.Exists() {
 				va := cr.Get("sourceIdentityList.refId.value")
 				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].SourceIndentityListIds = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].SourceIdentityListIds = helpers.GetStringSet(va.Array())
 				}
 			}
 			data.Sequences[i].MatchEntries[ci].ProtocolNameListIds = types.SetNull(types.StringType)
@@ -1050,24 +1050,24 @@ func (data *EmbeddedSecurityNGFW) updateFromBody(ctx context.Context, res gjson.
 					data.Sequences[i].MatchEntries[ci].DestinationSecurityGroupListIds = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Sequences[i].MatchEntries[ci].SourceDataPrefixs = types.SetNull(types.StringType)
-			data.Sequences[i].MatchEntries[ci].SourceDataPrefixsVariable = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].SourceDataPrefixes = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].SourceDataPrefixesVariable = types.StringNull()
 			if t := cr.Get("sourceIp.ipv4Value.optionType"); t.Exists() {
 				va := cr.Get("sourceIp.ipv4Value.value")
 				if t.String() == "variable" {
-					data.Sequences[i].MatchEntries[ci].SourceDataPrefixsVariable = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].SourceDataPrefixesVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].SourceDataPrefixs = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].SourceDataPrefixes = helpers.GetStringSet(va.Array())
 				}
 			}
-			data.Sequences[i].MatchEntries[ci].DestinationDataPrefixs = types.SetNull(types.StringType)
-			data.Sequences[i].MatchEntries[ci].DestinationDataPrefixsVariable = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].DestinationDataPrefixes = types.SetNull(types.StringType)
+			data.Sequences[i].MatchEntries[ci].DestinationDataPrefixesVariable = types.StringNull()
 			if t := cr.Get("destinationIp.ipv4Value.optionType"); t.Exists() {
 				va := cr.Get("destinationIp.ipv4Value.value")
 				if t.String() == "variable" {
-					data.Sequences[i].MatchEntries[ci].DestinationDataPrefixsVariable = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].DestinationDataPrefixesVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].DestinationDataPrefixs = helpers.GetStringSet(va.Array())
+					data.Sequences[i].MatchEntries[ci].DestinationDataPrefixes = helpers.GetStringSet(va.Array())
 				}
 			}
 			data.Sequences[i].MatchEntries[ci].DestinationFqdns = types.SetNull(types.StringType)

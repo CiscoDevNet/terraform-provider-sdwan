@@ -5,11 +5,11 @@ resource "sdwan_embedded_security_ngfw_policy" "example" {
   default_action     = "pass"
   sequences = [
     {
-      sequence_id   = "1"
-      sequence_name = "security"
-      base_action   = "drop"
-      rule_type     = "ngfirewall"
-      disable_rule  = false
+      sequence_id      = "1"
+      sequence_name    = "security"
+      base_action      = "drop"
+      sequence_type    = "ngfirewall"
+      disable_sequence = false
       match_entries = [
         {
           source_ports = ["123"]

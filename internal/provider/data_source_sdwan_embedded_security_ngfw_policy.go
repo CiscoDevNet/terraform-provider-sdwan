@@ -100,11 +100,11 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 							MarkdownDescription: "",
 							Computed:            true,
 						},
-						"rule_type": schema.StringAttribute{
+						"sequence_type": schema.StringAttribute{
 							MarkdownDescription: "",
 							Computed:            true,
 						},
-						"disable_rule": schema.BoolAttribute{
+						"disable_sequence": schema.BoolAttribute{
 							MarkdownDescription: "",
 							Computed:            true,
 						},
@@ -158,7 +158,7 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
-									"source_indentity_list_ids": schema.SetAttribute{
+									"source_identity_list_ids": schema.SetAttribute{
 										MarkdownDescription: "",
 										ElementType:         types.StringType,
 										Computed:            true,
@@ -188,21 +188,21 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
-									"source_data_prefixs": schema.SetAttribute{
+									"source_data_prefixes": schema.SetAttribute{
 										MarkdownDescription: "",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
-									"source_data_prefixs_variable": schema.StringAttribute{
+									"source_data_prefixes_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
-									"destination_data_prefixs": schema.SetAttribute{
+									"destination_data_prefixes": schema.SetAttribute{
 										MarkdownDescription: "",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
-									"destination_data_prefixs_variable": schema.StringAttribute{
+									"destination_data_prefixes_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
