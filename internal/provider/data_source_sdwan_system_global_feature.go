@@ -262,6 +262,38 @@ func (d *SystemGlobalProfileParcelDataSource) Schema(ctx context.Context, req da
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"lacp_system_priority": schema.Int64Attribute{
+				MarkdownDescription: "Set LACP system priority",
+				Computed:            true,
+			},
+			"lacp_system_priority_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"etherchannel_flow_load_balance": schema.StringAttribute{
+				MarkdownDescription: "Set Etherchannel load balance hash algorithm",
+				Computed:            true,
+			},
+			"etherchannel_flow_load_balance_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"etherchannel_vlan_load_balance": schema.BoolAttribute{
+				MarkdownDescription: "Set Etherchannel vlan manual load balance",
+				Computed:            true,
+			},
+			"etherchannel_vlan_load_balance_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"bgp_community_new_format": schema.BoolAttribute{
+				MarkdownDescription: "Display community attributes in the newer format. Instead of displaying communities as a 32-bit value, it shows them as two 16-bit integers separated by a colon (AA:NN format)",
+				Computed:            true,
+			},
+			"bgp_community_new_format_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 		},
 	}
 }
