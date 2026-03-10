@@ -15,6 +15,7 @@
 - Add `sdwan_system_ipv6_device_access_feature` resource and data source
 - Add `sdwan_system_remote_access_feature` resource and data source
 - Add `sdwan_system_performance_monitoring_feature` resource and data source
+- Add `sdwan_system_flexible_port_speed_feature` resource and data source
 
 ## 0.10.0
 
