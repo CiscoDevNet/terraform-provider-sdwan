@@ -58,6 +58,7 @@ type SystemSNMPViews struct {
 
 type SystemSNMPCommunities struct {
 	Name                  types.String `tfsdk:"name"`
+	NameVariable          types.String `tfsdk:"name_variable"`
 	UserLabel             types.String `tfsdk:"user_label"`
 	View                  types.String `tfsdk:"view"`
 	ViewVariable          types.String `tfsdk:"view_variable"`
@@ -233,7 +234,13 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"community", []interface{}{})
 		for _, item := range data.Communities {
 			itemBody := ""
-			if !item.Name.IsNull() {
+
+			if !item.NameVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "name.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "name.value", item.NameVariable.ValueString())
+				}
+			} else if !item.Name.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "name.value", item.Name.ValueString())

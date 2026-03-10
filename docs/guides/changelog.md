@@ -31,6 +31,7 @@ description: |-
 - Add `sdwan_system_logging_feature` resource and data source
 - Add `sdwan_system_mrf_feature` resource and data source
 - Add `sdwan_system_global_feature` resource and data source
+- Add `sdwan_system_snmp_feature` resource and data source
 
 ## 0.10.0
 
