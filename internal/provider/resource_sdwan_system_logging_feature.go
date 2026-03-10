@@ -22,6 +22,7 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"regexp"
 	"strings"
 	"sync"
 
@@ -63,7 +64,7 @@ func (r *SystemLoggingProfileParcelResource) Metadata(ctx context.Context, req r
 func (r *SystemLoggingProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System Logging Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System Logging Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -128,7 +129,7 @@ func (r *SystemLoggingProfileParcelResource) Schema(ctx context.Context, req res
 							MarkdownDescription: helpers.NewAttributeDescription("Specify the name of the TLS profile").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.LengthAtLeast(1),
+								stringvalidator.LengthBetween(1, 30),
 							},
 						},
 						"profile_variable": schema.StringAttribute{
@@ -164,15 +165,18 @@ func (r *SystemLoggingProfileParcelResource) Schema(ctx context.Context, req res
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"hostname_ip": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set hostname or IPv4 address of server").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set IPv4 address of server").String,
 							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])-(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$`), ""),
+							},
 						},
 						"hostname_ip_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
 						"vpn": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set hostname or IPv4 address of server").AddIntegerRangeDescription(0, 65530).AddDefaultValueDescription("0").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set vpn of server").AddIntegerRangeDescription(0, 65530).AddDefaultValueDescription("0").String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.AtMost(65530),
@@ -240,7 +244,7 @@ func (r *SystemLoggingProfileParcelResource) Schema(ctx context.Context, req res
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"hostname_ip": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set IPv6 hostname or IPv6 address of server").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set IPv6 address of server").String,
 							Optional:            true,
 						},
 						"hostname_ip_variable": schema.StringAttribute{
@@ -248,7 +252,7 @@ func (r *SystemLoggingProfileParcelResource) Schema(ctx context.Context, req res
 							Optional:            true,
 						},
 						"vpn": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set hostname or IPv4 address of server").AddIntegerRangeDescription(0, 65530).AddDefaultValueDescription("0").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set vpn of server").AddIntegerRangeDescription(0, 65530).AddDefaultValueDescription("0").String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.AtMost(65530),
