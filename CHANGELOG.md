@@ -11,6 +11,8 @@
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_ospf_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_multicast_feature` to `20.15.0`
 - Add `sdwan_application_priority_policy_settings` resource and data source
+- Add `sdwan_system_ipv4_device_access_feature` resource and data source
+- Add `sdwan_system_ipv6_device_access_feature` resource and data source
 
 ## 0.10.0
 
