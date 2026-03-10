@@ -18,6 +18,7 @@
 - Add `sdwan_system_flexible_port_speed_feature` resource and data source
 - Add `sdwan_system_security_feature` resource and data source
 - Add `sdwan_system_omp_feature` resource and data source
+- Add `sdwan_system_ntp_feature` resource and data source
 
 ## 0.10.0
 

@@ -149,7 +149,7 @@ func (d *SystemNTPProfileParcelDataSource) Schema(ctx context.Context, req datas
 							Computed:            true,
 						},
 						"md5_value": schema.StringAttribute{
-							MarkdownDescription: "Enter cleartext or AES-encrypted MD5 authentication key",
+							MarkdownDescription: "Enter cleartext or AES-encrypted MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
 							Computed:            true,
 						},
 						"md5_value_variable": schema.StringAttribute{
