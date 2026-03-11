@@ -16,18 +16,12 @@ attributes:
     test_value: sdwan_policy_object_feature_profile.test.id
   - model_name: entries
     mandatory: true
-    type: List
-    min_list: 1
     description: List of entries
     attributes:
       - model_name: vpn
-        type: String
-        tf_name: vpn
         example: Guest
       - model_name: interface
         exclude_test: true
-        type: String
-        tf_name: interface
         example: GigabitEthernet1
 
 test_prerequisites: |
