@@ -35,7 +35,7 @@ data "sdwan_embedded_security_policy" "example" {
 - `download_url_database_on_device` (Boolean)
 - `download_url_database_on_device_variable` (String) Variable name
 - `failure_mode` (String)
-- `imcp_unreachable_allow` (String) Setting can be string 'on' or missing for off
+- `icmp_unreachable_allow` (String) Setting can be string 'on' or missing for off
 - `max_incomplete_icmp_limit` (String)
 - `max_incomplete_tcp_limit` (String)
 - `max_incomplete_udp_limit` (String)
@@ -64,5 +64,7 @@ Read-Only:
 
 Read-Only:
 
+- `destination_zone` (String)
 - `destination_zone_list_id` (String)
+- `source_zone` (String)
 - `source_zone_list_id` (String)

@@ -100,7 +100,15 @@ func (d *EmbeddedSecurityProfileParcelDataSource) Schema(ctx context.Context, re
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
+									"source_zone": schema.StringAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
 									"source_zone_list_id": schema.StringAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"destination_zone": schema.StringAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
 									},
@@ -142,7 +150,7 @@ func (d *EmbeddedSecurityProfileParcelDataSource) Schema(ctx context.Context, re
 				MarkdownDescription: "Setting can be string 'on' or missing for off",
 				Computed:            true,
 			},
-			"imcp_unreachable_allow": schema.StringAttribute{
+			"icmp_unreachable_allow": schema.StringAttribute{
 				MarkdownDescription: "Setting can be string 'on' or missing for off",
 				Computed:            true,
 			},

@@ -45,7 +45,7 @@ type EmbeddedSecurity struct {
 	AuditTrail                          types.String               `tfsdk:"audit_trail"`
 	UnifiedLogging                      types.String               `tfsdk:"unified_logging"`
 	SessionReclassifyAllow              types.String               `tfsdk:"session_reclassify_allow"`
-	ImcpUnreachableAllow                types.String               `tfsdk:"imcp_unreachable_allow"`
+	IcmpUnreachableAllow                types.String               `tfsdk:"icmp_unreachable_allow"`
 	FailureMode                         types.String               `tfsdk:"failure_mode"`
 	Nat                                 types.Bool                 `tfsdk:"nat"`
 	NatVariable                         types.String               `tfsdk:"nat_variable"`
@@ -63,7 +63,9 @@ type EmbeddedSecurityAssembly struct {
 }
 
 type EmbeddedSecurityAssemblyEntries struct {
+	SourceZone            types.String `tfsdk:"source_zone"`
 	SourceZoneListId      types.String `tfsdk:"source_zone_list_id"`
+	DestinationZone       types.String `tfsdk:"destination_zone"`
 	DestinationZoneListId types.String `tfsdk:"destination_zone_list_id"`
 }
 
@@ -114,10 +116,22 @@ func (data EmbeddedSecurity) toBody(ctx context.Context) string {
 
 				for _, childItem := range item.Entries {
 					itemChildBody := ""
+					if !childItem.SourceZone.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "srcZone.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "srcZone.value", childItem.SourceZone.ValueString())
+						}
+					}
 					if !childItem.SourceZoneListId.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "srcZone.refId.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "srcZone.refId.value", childItem.SourceZoneListId.ValueString())
+						}
+					}
+					if !childItem.DestinationZone.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "dstZone.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "dstZone.value", childItem.DestinationZone.ValueString())
 						}
 					}
 					if !childItem.DestinationZoneListId.IsNull() {
@@ -174,10 +188,10 @@ func (data EmbeddedSecurity) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"settings.sessionReclassifyAllow.value", data.SessionReclassifyAllow.ValueString())
 		}
 	}
-	if !data.ImcpUnreachableAllow.IsNull() {
+	if !data.IcmpUnreachableAllow.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"settings.icmpUnreachableAllow.optionType", "global")
-			body, _ = sjson.Set(body, path+"settings.icmpUnreachableAllow.value", data.ImcpUnreachableAllow.ValueString())
+			body, _ = sjson.Set(body, path+"settings.icmpUnreachableAllow.value", data.IcmpUnreachableAllow.ValueString())
 		}
 	}
 	if !data.FailureMode.IsNull() {
@@ -273,12 +287,28 @@ func (data *EmbeddedSecurity) fromBody(ctx context.Context, res gjson.Result) {
 				item.Entries = make([]EmbeddedSecurityAssemblyEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := EmbeddedSecurityAssemblyEntries{}
+					cItem.SourceZone = types.StringNull()
+
+					if t := cv.Get("srcZone.optionType"); t.Exists() {
+						va := cv.Get("srcZone.value")
+						if t.String() == "global" {
+							cItem.SourceZone = types.StringValue(va.String())
+						}
+					}
 					cItem.SourceZoneListId = types.StringNull()
 
 					if t := cv.Get("srcZone.refId.optionType"); t.Exists() {
 						va := cv.Get("srcZone.refId.value")
 						if t.String() == "global" {
 							cItem.SourceZoneListId = types.StringValue(va.String())
+						}
+					}
+					cItem.DestinationZone = types.StringNull()
+
+					if t := cv.Get("dstZone.optionType"); t.Exists() {
+						va := cv.Get("dstZone.value")
+						if t.String() == "global" {
+							cItem.DestinationZone = types.StringValue(va.String())
 						}
 					}
 					cItem.DestinationZoneListId = types.StringNull()
@@ -353,12 +383,12 @@ func (data *EmbeddedSecurity) fromBody(ctx context.Context, res gjson.Result) {
 			data.SessionReclassifyAllow = types.StringValue(va.String())
 		}
 	}
-	data.ImcpUnreachableAllow = types.StringNull()
+	data.IcmpUnreachableAllow = types.StringNull()
 
 	if t := res.Get(path + "settings.icmpUnreachableAllow.optionType"); t.Exists() {
 		va := res.Get(path + "settings.icmpUnreachableAllow.value")
 		if t.String() == "global" {
-			data.ImcpUnreachableAllow = types.StringValue(va.String())
+			data.IcmpUnreachableAllow = types.StringValue(va.String())
 		}
 	}
 	data.FailureMode = types.StringNull()
@@ -468,9 +498,9 @@ func (data *EmbeddedSecurity) updateFromBody(ctx context.Context, res gjson.Resu
 			}
 		}
 		for ci := range data.Assembly[i].Entries {
-			keys := [...]string{"srcZone.refId", "dstZone.refId"}
-			keyValues := [...]string{data.Assembly[i].Entries[ci].SourceZoneListId.ValueString(), data.Assembly[i].Entries[ci].DestinationZoneListId.ValueString()}
-			keyValuesVariables := [...]string{"", ""}
+			keys := [...]string{"srcZone", "srcZone.refId", "dstZone", "dstZone.refId"}
+			keyValues := [...]string{data.Assembly[i].Entries[ci].SourceZone.ValueString(), data.Assembly[i].Entries[ci].SourceZoneListId.ValueString(), data.Assembly[i].Entries[ci].DestinationZone.ValueString(), data.Assembly[i].Entries[ci].DestinationZoneListId.ValueString()}
+			keyValuesVariables := [...]string{"", "", "", ""}
 
 			var cr gjson.Result
 			r.Get("ngfirewall.entries").ForEach(
@@ -498,12 +528,28 @@ func (data *EmbeddedSecurity) updateFromBody(ctx context.Context, res gjson.Resu
 					return true
 				},
 			)
+			data.Assembly[i].Entries[ci].SourceZone = types.StringNull()
+
+			if t := cr.Get("srcZone.optionType"); t.Exists() {
+				va := cr.Get("srcZone.value")
+				if t.String() == "global" {
+					data.Assembly[i].Entries[ci].SourceZone = types.StringValue(va.String())
+				}
+			}
 			data.Assembly[i].Entries[ci].SourceZoneListId = types.StringNull()
 
 			if t := cr.Get("srcZone.refId.optionType"); t.Exists() {
 				va := cr.Get("srcZone.refId.value")
 				if t.String() == "global" {
 					data.Assembly[i].Entries[ci].SourceZoneListId = types.StringValue(va.String())
+				}
+			}
+			data.Assembly[i].Entries[ci].DestinationZone = types.StringNull()
+
+			if t := cr.Get("dstZone.optionType"); t.Exists() {
+				va := cr.Get("dstZone.value")
+				if t.String() == "global" {
+					data.Assembly[i].Entries[ci].DestinationZone = types.StringValue(va.String())
 				}
 			}
 			data.Assembly[i].Entries[ci].DestinationZoneListId = types.StringNull()
@@ -572,12 +618,12 @@ func (data *EmbeddedSecurity) updateFromBody(ctx context.Context, res gjson.Resu
 			data.SessionReclassifyAllow = types.StringValue(va.String())
 		}
 	}
-	data.ImcpUnreachableAllow = types.StringNull()
+	data.IcmpUnreachableAllow = types.StringNull()
 
 	if t := res.Get(path + "settings.icmpUnreachableAllow.optionType"); t.Exists() {
 		va := res.Get(path + "settings.icmpUnreachableAllow.value")
 		if t.String() == "global" {
-			data.ImcpUnreachableAllow = types.StringValue(va.String())
+			data.IcmpUnreachableAllow = types.StringValue(va.String())
 		}
 	}
 	data.FailureMode = types.StringNull()

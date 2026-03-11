@@ -21,8 +21,11 @@ resource "sdwan_embedded_security_policy" "example" {
   feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   assembly = [
     {
+      ngfw_policy_id = "df8c5043-7438-47e2-97b0-8304d3bf1a82"
       entries = [
         {
+          source_zone      = "untrusted"
+          destination_zone = "untrusted"
         }
       ]
     }
@@ -32,9 +35,9 @@ resource "sdwan_embedded_security_policy" "example" {
   max_incomplete_udp_limit        = "12345"
   max_incomplete_icmp_limit       = "12345"
   audit_trail                     = "on"
-  unified_logging                 = "off"
-  session_reclassify_allow        = "off"
-  imcp_unreachable_allow          = "off"
+  unified_logging                 = "on"
+  session_reclassify_allow        = "on"
+  icmp_unreachable_allow          = "on"
   failure_mode                    = "close"
   nat                             = true
   download_url_database_on_device = false
@@ -47,32 +50,32 @@ resource "sdwan_embedded_security_policy" "example" {
 
 ### Required
 
+- `feature_profile_id` (String) Feature Profile ID
+- `name` (String) The name of the Policy
+
+### Optional
+
+- `assembly` (Attributes List) (see [below for nested schema](#nestedatt--assembly))
 - `audit_trail` (String) Setting can be string 'on' or missing for off
   - Choices: `on`
+- `description` (String) The description of the Policy
+- `download_url_database_on_device` (Boolean)
+- `download_url_database_on_device_variable` (String) Variable name
 - `failure_mode` (String) - Choices: `close`, `open`
-- `feature_profile_id` (String) Feature Profile ID
-- `imcp_unreachable_allow` (String) Setting can be string 'on' or missing for off
+- `icmp_unreachable_allow` (String) Setting can be string 'on' or missing for off
   - Choices: `on`
 - `max_incomplete_icmp_limit` (String)
 - `max_incomplete_tcp_limit` (String)
 - `max_incomplete_udp_limit` (String)
-- `name` (String) The name of the Policy
+- `nat` (Boolean)
+- `nat_variable` (String) Variable name
+- `resource_profile` (String) - Choices: `low`, `medium`, `high`
+- `resource_profile_variable` (String) Variable name
 - `session_reclassify_allow` (String) Setting can be string 'on' or missing for off
   - Choices: `on`
 - `tcp_syn_flood_limit` (String)
 - `unified_logging` (String) Setting can be string 'on' or missing for off
   - Choices: `on`
-
-### Optional
-
-- `assembly` (Attributes List) (see [below for nested schema](#nestedatt--assembly))
-- `description` (String) The description of the Policy
-- `download_url_database_on_device` (Boolean)
-- `download_url_database_on_device_variable` (String) Variable name
-- `nat` (Boolean)
-- `nat_variable` (String) Variable name
-- `resource_profile` (String) - Choices: `low`, `medium`, `high`
-- `resource_profile_variable` (String) Variable name
 
 ### Read-Only
 
@@ -94,7 +97,9 @@ Optional:
 
 Optional:
 
+- `destination_zone` (String) - Choices: `self`, `default`, `untrusted`
 - `destination_zone_list_id` (String)
+- `source_zone` (String) - Choices: `self`, `default`, `untrusted`
 - `source_zone_list_id` (String)
 
 ## Import

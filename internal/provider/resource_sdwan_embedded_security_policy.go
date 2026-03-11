@@ -120,11 +120,25 @@ func (r *EmbeddedSecurityProfileParcelResource) Schema(ctx context.Context, req 
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
+									"source_zone": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("self", "default", "untrusted").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("self", "default", "untrusted"),
+										},
+									},
 									"source_zone_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
+										},
+									},
+									"destination_zone": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("self", "default", "untrusted").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("self", "default", "untrusted"),
 										},
 									},
 									"destination_zone_list_id": schema.StringAttribute{
@@ -142,63 +156,63 @@ func (r *EmbeddedSecurityProfileParcelResource) Schema(ctx context.Context, req 
 			},
 			"tcp_syn_flood_limit": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`^([1-9]|[1-9][0-9]{1,8}|[1-3][0-9]{9}|4[01][0-9]{8}|42[0-8][0-9]{7}|429[0-3][0-9]{6}|4294[0-8][0-9]{5}|42949[0-5][0-9]{4}|429496[0-6][0-9]{3}|4294967[01][0-9]{2}|42949672[0-8][0-9]|429496729[0-5])$`), ""),
 				},
 			},
 			"max_incomplete_tcp_limit": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`^([1-9]|[1-9][0-9]{1,8}|[1-3][0-9]{9}|4[01][0-9]{8}|42[0-8][0-9]{7}|429[0-3][0-9]{6}|4294[0-8][0-9]{5}|42949[0-5][0-9]{4}|429496[0-6][0-9]{3}|4294967[01][0-9]{2}|42949672[0-8][0-9]|429496729[0-5])$`), ""),
 				},
 			},
 			"max_incomplete_udp_limit": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`^([1-9]|[1-9][0-9]{1,8}|[1-3][0-9]{9}|4[01][0-9]{8}|42[0-8][0-9]{7}|429[0-3][0-9]{6}|4294[0-8][0-9]{5}|42949[0-5][0-9]{4}|429496[0-6][0-9]{3}|4294967[01][0-9]{2}|42949672[0-8][0-9]|429496729[0-5])$`), ""),
 				},
 			},
 			"max_incomplete_icmp_limit": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`^([1-9]|[1-9][0-9]{1,8}|[1-3][0-9]{9}|4[01][0-9]{8}|42[0-8][0-9]{7}|429[0-3][0-9]{6}|4294[0-8][0-9]{5}|42949[0-5][0-9]{4}|429496[0-6][0-9]{3}|4294967[01][0-9]{2}|42949672[0-8][0-9]|429496729[0-5])$`), ""),
 				},
 			},
 			"audit_trail": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Setting can be string 'on' or missing for off").AddStringEnumDescription("on").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("on"),
 				},
 			},
 			"unified_logging": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Setting can be string 'on' or missing for off").AddStringEnumDescription("on").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("on"),
 				},
 			},
 			"session_reclassify_allow": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Setting can be string 'on' or missing for off").AddStringEnumDescription("on").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("on"),
 				},
 			},
-			"imcp_unreachable_allow": schema.StringAttribute{
+			"icmp_unreachable_allow": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Setting can be string 'on' or missing for off").AddStringEnumDescription("on").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("on"),
 				},
 			},
 			"failure_mode": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("close", "open").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("close", "open"),
 				},

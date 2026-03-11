@@ -33,14 +33,16 @@ func TestAccSdwanEmbeddedSecurityProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_policy.test", "assembly.0.entries.0.source_zone", "untrusted"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_policy.test", "assembly.0.entries.0.destination_zone", "untrusted"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_policy.test", "tcp_syn_flood_limit", "432"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_policy.test", "max_incomplete_tcp_limit", "12345"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_policy.test", "max_incomplete_udp_limit", "12345"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_policy.test", "max_incomplete_icmp_limit", "12345"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_policy.test", "audit_trail", "on"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_policy.test", "unified_logging", "off"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_policy.test", "session_reclassify_allow", "off"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_policy.test", "imcp_unreachable_allow", "off"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_policy.test", "unified_logging", "on"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_policy.test", "session_reclassify_allow", "on"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_policy.test", "icmp_unreachable_allow", "on"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_policy.test", "failure_mode", "close"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_policy.test", "nat", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_policy.test", "download_url_database_on_device", "false"))
@@ -49,9 +51,7 @@ func TestAccSdwanEmbeddedSecurityProfileParcel(t *testing.T) {
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
-			{
-				Config: testAccSdwanEmbeddedSecurityPrerequisitesProfileParcelConfig + testAccSdwanEmbeddedSecurityProfileParcelConfig_minimum(),
-			},
+
 			{
 				Config: testAccSdwanEmbeddedSecurityPrerequisitesProfileParcelConfig + testAccSdwanEmbeddedSecurityProfileParcelConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
@@ -68,28 +68,38 @@ resource "sdwan_embedded_security_feature_profile" "test" {
   name = "TF_TEST"
   description = "Terraform test"
 }
+
+resource "sdwan_embedded_security_ngfw_policy" "test" {
+  name               = "TF_TEST_NGFW_POLIGY"
+  description        = "My Example"
+  feature_profile_id = sdwan_embedded_security_feature_profile.test.id
+  default_action     = "pass"
+  sequences = [
+    {
+      sequence_id      = "1"
+      sequence_name    = "security"
+      base_action      = "pass"
+      sequence_type    = "ngfirewall"
+      disable_sequence = false
+      match_entries = [
+        {
+          source_ports = ["123"]
+        }
+      ]
+      actions = [
+        {
+          type      = "log"
+          parameter = "true"
+        }
+      ]
+    }
+  ]
+}
 `
 
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
-func testAccSdwanEmbeddedSecurityProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_embedded_security_policy" "test" {` + "\n"
-	config += ` name = "TF_TEST_MIN"` + "\n"
-	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = sdwan_embedded_security_feature_profile.test.id` + "\n"
-	config += `	tcp_syn_flood_limit = "432"` + "\n"
-	config += `	max_incomplete_tcp_limit = "12345"` + "\n"
-	config += `	max_incomplete_udp_limit = "12345"` + "\n"
-	config += `	max_incomplete_icmp_limit = "12345"` + "\n"
-	config += `	audit_trail = "on"` + "\n"
-	config += `	unified_logging = "off"` + "\n"
-	config += `	session_reclassify_allow = "off"` + "\n"
-	config += `	imcp_unreachable_allow = "off"` + "\n"
-	config += `	failure_mode = "close"` + "\n"
-	config += `}` + "\n"
-	return config
-}
 
 // End of section. //template:end testAccConfigMinimum
 
@@ -100,7 +110,10 @@ func testAccSdwanEmbeddedSecurityProfileParcelConfig_all() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_embedded_security_feature_profile.test.id` + "\n"
 	config += `	assembly = [{` + "\n"
+	config += `	  ngfw_policy_id = sdwan_embedded_security_ngfw_policy.test.id` + "\n"
 	config += `	  entries = [{` + "\n"
+	config += `		source_zone = "untrusted"` + "\n"
+	config += `		destination_zone = "untrusted"` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
 	config += `	tcp_syn_flood_limit = "432"` + "\n"
@@ -108,9 +121,9 @@ func testAccSdwanEmbeddedSecurityProfileParcelConfig_all() string {
 	config += `	max_incomplete_udp_limit = "12345"` + "\n"
 	config += `	max_incomplete_icmp_limit = "12345"` + "\n"
 	config += `	audit_trail = "on"` + "\n"
-	config += `	unified_logging = "off"` + "\n"
-	config += `	session_reclassify_allow = "off"` + "\n"
-	config += `	imcp_unreachable_allow = "off"` + "\n"
+	config += `	unified_logging = "on"` + "\n"
+	config += `	session_reclassify_allow = "on"` + "\n"
+	config += `	icmp_unreachable_allow = "on"` + "\n"
 	config += `	failure_mode = "close"` + "\n"
 	config += `	nat = true` + "\n"
 	config += `	download_url_database_on_device = false` + "\n"
