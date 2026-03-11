@@ -61,6 +61,8 @@ data "sdwan_system_omp_feature" "example" {
 - `advertise_ipv6_static_variable` (String) Variable name
 - `advertisement_interval` (Number) Advertisement Interval (seconds)
 - `advertisement_interval_variable` (String) Variable name
+- `aspath_auto_translation` (Boolean) Enable BGP AS Path Auto-Translation
+- `aspath_auto_translation_variable` (String) Variable name
 - `description` (String) The description of the Feature
 - `ecmp_limit` (Number) Set maximum number of OMP paths to install in cEdge route table
 - `ecmp_limit_variable` (String) Variable name
@@ -85,7 +87,9 @@ data "sdwan_system_omp_feature" "example" {
 - `paths_advertised_per_prefix_variable` (String) Variable name
 - `shutdown` (Boolean) Shutdown
 - `shutdown_variable` (String) Variable name
-- `site_types` (Set of String) Site Types
+- `site_types` (Set of String) Site Types for 20.12 backward compatiblity
+- `site_types_for_transport_gateway` (Set of String) Site Types
+- `site_types_for_transport_gateway_variable` (String) Variable name
 - `site_types_variable` (String) Variable name
 - `transport_gateway` (String) Transport Gateway Path Behavior
 - `transport_gateway_variable` (String) Variable name

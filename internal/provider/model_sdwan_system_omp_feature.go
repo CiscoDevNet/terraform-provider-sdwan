@@ -33,69 +33,73 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type SystemOMP struct {
-	Id                               types.String `tfsdk:"id"`
-	Version                          types.Int64  `tfsdk:"version"`
-	Name                             types.String `tfsdk:"name"`
-	Description                      types.String `tfsdk:"description"`
-	FeatureProfileId                 types.String `tfsdk:"feature_profile_id"`
-	GracefulRestart                  types.Bool   `tfsdk:"graceful_restart"`
-	GracefulRestartVariable          types.String `tfsdk:"graceful_restart_variable"`
-	OverlayAs                        types.Int64  `tfsdk:"overlay_as"`
-	OverlayAsVariable                types.String `tfsdk:"overlay_as_variable"`
-	PathsAdvertisedPerPrefix         types.Int64  `tfsdk:"paths_advertised_per_prefix"`
-	PathsAdvertisedPerPrefixVariable types.String `tfsdk:"paths_advertised_per_prefix_variable"`
-	EcmpLimit                        types.Int64  `tfsdk:"ecmp_limit"`
-	EcmpLimitVariable                types.String `tfsdk:"ecmp_limit_variable"`
-	Shutdown                         types.Bool   `tfsdk:"shutdown"`
-	ShutdownVariable                 types.String `tfsdk:"shutdown_variable"`
-	OmpAdminDistanceIpv4             types.Int64  `tfsdk:"omp_admin_distance_ipv4"`
-	OmpAdminDistanceIpv4Variable     types.String `tfsdk:"omp_admin_distance_ipv4_variable"`
-	OmpAdminDistanceIpv6             types.Int64  `tfsdk:"omp_admin_distance_ipv6"`
-	OmpAdminDistanceIpv6Variable     types.String `tfsdk:"omp_admin_distance_ipv6_variable"`
-	AdvertisementInterval            types.Int64  `tfsdk:"advertisement_interval"`
-	AdvertisementIntervalVariable    types.String `tfsdk:"advertisement_interval_variable"`
-	GracefulRestartTimer             types.Int64  `tfsdk:"graceful_restart_timer"`
-	GracefulRestartTimerVariable     types.String `tfsdk:"graceful_restart_timer_variable"`
-	EorTimer                         types.Int64  `tfsdk:"eor_timer"`
-	EorTimerVariable                 types.String `tfsdk:"eor_timer_variable"`
-	Holdtime                         types.Int64  `tfsdk:"holdtime"`
-	HoldtimeVariable                 types.String `tfsdk:"holdtime_variable"`
-	AdvertiseIpv4Bgp                 types.Bool   `tfsdk:"advertise_ipv4_bgp"`
-	AdvertiseIpv4BgpVariable         types.String `tfsdk:"advertise_ipv4_bgp_variable"`
-	AdvertiseIpv4Ospf                types.Bool   `tfsdk:"advertise_ipv4_ospf"`
-	AdvertiseIpv4OspfVariable        types.String `tfsdk:"advertise_ipv4_ospf_variable"`
-	AdvertiseIpv4OspfV3              types.Bool   `tfsdk:"advertise_ipv4_ospf_v3"`
-	AdvertiseIpv4OspfV3Variable      types.String `tfsdk:"advertise_ipv4_ospf_v3_variable"`
-	AdvertiseIpv4Connected           types.Bool   `tfsdk:"advertise_ipv4_connected"`
-	AdvertiseIpv4ConnectedVariable   types.String `tfsdk:"advertise_ipv4_connected_variable"`
-	AdvertiseIpv4Static              types.Bool   `tfsdk:"advertise_ipv4_static"`
-	AdvertiseIpv4StaticVariable      types.String `tfsdk:"advertise_ipv4_static_variable"`
-	AdvertiseIpv4Eigrp               types.Bool   `tfsdk:"advertise_ipv4_eigrp"`
-	AdvertiseIpv4EigrpVariable       types.String `tfsdk:"advertise_ipv4_eigrp_variable"`
-	AdvertiseIpv4Lisp                types.Bool   `tfsdk:"advertise_ipv4_lisp"`
-	AdvertiseIpv4LispVariable        types.String `tfsdk:"advertise_ipv4_lisp_variable"`
-	AdvertiseIpv4Isis                types.Bool   `tfsdk:"advertise_ipv4_isis"`
-	AdvertiseIpv4IsisVariable        types.String `tfsdk:"advertise_ipv4_isis_variable"`
-	AdvertiseIpv6Bgp                 types.Bool   `tfsdk:"advertise_ipv6_bgp"`
-	AdvertiseIpv6BgpVariable         types.String `tfsdk:"advertise_ipv6_bgp_variable"`
-	AdvertiseIpv6Ospf                types.Bool   `tfsdk:"advertise_ipv6_ospf"`
-	AdvertiseIpv6OspfVariable        types.String `tfsdk:"advertise_ipv6_ospf_variable"`
-	AdvertiseIpv6Connected           types.Bool   `tfsdk:"advertise_ipv6_connected"`
-	AdvertiseIpv6ConnectedVariable   types.String `tfsdk:"advertise_ipv6_connected_variable"`
-	AdvertiseIpv6Static              types.Bool   `tfsdk:"advertise_ipv6_static"`
-	AdvertiseIpv6StaticVariable      types.String `tfsdk:"advertise_ipv6_static_variable"`
-	AdvertiseIpv6Eigrp               types.Bool   `tfsdk:"advertise_ipv6_eigrp"`
-	AdvertiseIpv6EigrpVariable       types.String `tfsdk:"advertise_ipv6_eigrp_variable"`
-	AdvertiseIpv6Lisp                types.Bool   `tfsdk:"advertise_ipv6_lisp"`
-	AdvertiseIpv6LispVariable        types.String `tfsdk:"advertise_ipv6_lisp_variable"`
-	AdvertiseIpv6Isis                types.Bool   `tfsdk:"advertise_ipv6_isis"`
-	AdvertiseIpv6IsisVariable        types.String `tfsdk:"advertise_ipv6_isis_variable"`
-	IgnoreRegionPathLength           types.Bool   `tfsdk:"ignore_region_path_length"`
-	IgnoreRegionPathLengthVariable   types.String `tfsdk:"ignore_region_path_length_variable"`
-	TransportGateway                 types.String `tfsdk:"transport_gateway"`
-	TransportGatewayVariable         types.String `tfsdk:"transport_gateway_variable"`
-	SiteTypes                        types.Set    `tfsdk:"site_types"`
-	SiteTypesVariable                types.String `tfsdk:"site_types_variable"`
+	Id                                   types.String `tfsdk:"id"`
+	Version                              types.Int64  `tfsdk:"version"`
+	Name                                 types.String `tfsdk:"name"`
+	Description                          types.String `tfsdk:"description"`
+	FeatureProfileId                     types.String `tfsdk:"feature_profile_id"`
+	GracefulRestart                      types.Bool   `tfsdk:"graceful_restart"`
+	GracefulRestartVariable              types.String `tfsdk:"graceful_restart_variable"`
+	OverlayAs                            types.Int64  `tfsdk:"overlay_as"`
+	OverlayAsVariable                    types.String `tfsdk:"overlay_as_variable"`
+	PathsAdvertisedPerPrefix             types.Int64  `tfsdk:"paths_advertised_per_prefix"`
+	PathsAdvertisedPerPrefixVariable     types.String `tfsdk:"paths_advertised_per_prefix_variable"`
+	EcmpLimit                            types.Int64  `tfsdk:"ecmp_limit"`
+	EcmpLimitVariable                    types.String `tfsdk:"ecmp_limit_variable"`
+	Shutdown                             types.Bool   `tfsdk:"shutdown"`
+	ShutdownVariable                     types.String `tfsdk:"shutdown_variable"`
+	OmpAdminDistanceIpv4                 types.Int64  `tfsdk:"omp_admin_distance_ipv4"`
+	OmpAdminDistanceIpv4Variable         types.String `tfsdk:"omp_admin_distance_ipv4_variable"`
+	OmpAdminDistanceIpv6                 types.Int64  `tfsdk:"omp_admin_distance_ipv6"`
+	OmpAdminDistanceIpv6Variable         types.String `tfsdk:"omp_admin_distance_ipv6_variable"`
+	AdvertisementInterval                types.Int64  `tfsdk:"advertisement_interval"`
+	AdvertisementIntervalVariable        types.String `tfsdk:"advertisement_interval_variable"`
+	GracefulRestartTimer                 types.Int64  `tfsdk:"graceful_restart_timer"`
+	GracefulRestartTimerVariable         types.String `tfsdk:"graceful_restart_timer_variable"`
+	EorTimer                             types.Int64  `tfsdk:"eor_timer"`
+	EorTimerVariable                     types.String `tfsdk:"eor_timer_variable"`
+	Holdtime                             types.Int64  `tfsdk:"holdtime"`
+	HoldtimeVariable                     types.String `tfsdk:"holdtime_variable"`
+	AdvertiseIpv4Bgp                     types.Bool   `tfsdk:"advertise_ipv4_bgp"`
+	AdvertiseIpv4BgpVariable             types.String `tfsdk:"advertise_ipv4_bgp_variable"`
+	AdvertiseIpv4Ospf                    types.Bool   `tfsdk:"advertise_ipv4_ospf"`
+	AdvertiseIpv4OspfVariable            types.String `tfsdk:"advertise_ipv4_ospf_variable"`
+	AdvertiseIpv4OspfV3                  types.Bool   `tfsdk:"advertise_ipv4_ospf_v3"`
+	AdvertiseIpv4OspfV3Variable          types.String `tfsdk:"advertise_ipv4_ospf_v3_variable"`
+	AdvertiseIpv4Connected               types.Bool   `tfsdk:"advertise_ipv4_connected"`
+	AdvertiseIpv4ConnectedVariable       types.String `tfsdk:"advertise_ipv4_connected_variable"`
+	AdvertiseIpv4Static                  types.Bool   `tfsdk:"advertise_ipv4_static"`
+	AdvertiseIpv4StaticVariable          types.String `tfsdk:"advertise_ipv4_static_variable"`
+	AdvertiseIpv4Eigrp                   types.Bool   `tfsdk:"advertise_ipv4_eigrp"`
+	AdvertiseIpv4EigrpVariable           types.String `tfsdk:"advertise_ipv4_eigrp_variable"`
+	AdvertiseIpv4Lisp                    types.Bool   `tfsdk:"advertise_ipv4_lisp"`
+	AdvertiseIpv4LispVariable            types.String `tfsdk:"advertise_ipv4_lisp_variable"`
+	AdvertiseIpv4Isis                    types.Bool   `tfsdk:"advertise_ipv4_isis"`
+	AdvertiseIpv4IsisVariable            types.String `tfsdk:"advertise_ipv4_isis_variable"`
+	AdvertiseIpv6Bgp                     types.Bool   `tfsdk:"advertise_ipv6_bgp"`
+	AdvertiseIpv6BgpVariable             types.String `tfsdk:"advertise_ipv6_bgp_variable"`
+	AdvertiseIpv6Ospf                    types.Bool   `tfsdk:"advertise_ipv6_ospf"`
+	AdvertiseIpv6OspfVariable            types.String `tfsdk:"advertise_ipv6_ospf_variable"`
+	AdvertiseIpv6Connected               types.Bool   `tfsdk:"advertise_ipv6_connected"`
+	AdvertiseIpv6ConnectedVariable       types.String `tfsdk:"advertise_ipv6_connected_variable"`
+	AdvertiseIpv6Static                  types.Bool   `tfsdk:"advertise_ipv6_static"`
+	AdvertiseIpv6StaticVariable          types.String `tfsdk:"advertise_ipv6_static_variable"`
+	AdvertiseIpv6Eigrp                   types.Bool   `tfsdk:"advertise_ipv6_eigrp"`
+	AdvertiseIpv6EigrpVariable           types.String `tfsdk:"advertise_ipv6_eigrp_variable"`
+	AdvertiseIpv6Lisp                    types.Bool   `tfsdk:"advertise_ipv6_lisp"`
+	AdvertiseIpv6LispVariable            types.String `tfsdk:"advertise_ipv6_lisp_variable"`
+	AdvertiseIpv6Isis                    types.Bool   `tfsdk:"advertise_ipv6_isis"`
+	AdvertiseIpv6IsisVariable            types.String `tfsdk:"advertise_ipv6_isis_variable"`
+	IgnoreRegionPathLength               types.Bool   `tfsdk:"ignore_region_path_length"`
+	IgnoreRegionPathLengthVariable       types.String `tfsdk:"ignore_region_path_length_variable"`
+	TransportGateway                     types.String `tfsdk:"transport_gateway"`
+	TransportGatewayVariable             types.String `tfsdk:"transport_gateway_variable"`
+	SiteTypes                            types.Set    `tfsdk:"site_types"`
+	SiteTypesVariable                    types.String `tfsdk:"site_types_variable"`
+	SiteTypesForTransportGateway         types.Set    `tfsdk:"site_types_for_transport_gateway"`
+	SiteTypesForTransportGatewayVariable types.String `tfsdk:"site_types_for_transport_gateway_variable"`
+	AspathAutoTranslation                types.Bool   `tfsdk:"aspath_auto_translation"`
+	AspathAutoTranslationVariable        types.String `tfsdk:"aspath_auto_translation_variable"`
 }
 
 // End of section. //template:end types
@@ -486,7 +490,7 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 	} else if data.AdvertiseIpv6Connected.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"advertiseIpv6.connected.optionType", "default")
-			body, _ = sjson.Set(body, path+"advertiseIpv6.connected.value", false)
+			body, _ = sjson.Set(body, path+"advertiseIpv6.connected.value", true)
 		}
 	} else {
 		if true {
@@ -503,7 +507,7 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 	} else if data.AdvertiseIpv6Static.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"advertiseIpv6.static.optionType", "default")
-			body, _ = sjson.Set(body, path+"advertiseIpv6.static.value", false)
+			body, _ = sjson.Set(body, path+"advertiseIpv6.static.value", true)
 		}
 	} else {
 		if true {
@@ -613,6 +617,42 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			var values []string
 			data.SiteTypes.ElementsAs(ctx, &values, false)
 			body, _ = sjson.Set(body, path+"siteTypes.value", values)
+		}
+	}
+
+	if !data.SiteTypesForTransportGatewayVariable.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"siteTypesForTransportGateway.optionType", "variable")
+			body, _ = sjson.Set(body, path+"siteTypesForTransportGateway.value", data.SiteTypesForTransportGatewayVariable.ValueString())
+		}
+	} else if data.SiteTypesForTransportGateway.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"siteTypesForTransportGateway.optionType", "default")
+
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"siteTypesForTransportGateway.optionType", "global")
+			var values []string
+			data.SiteTypesForTransportGateway.ElementsAs(ctx, &values, false)
+			body, _ = sjson.Set(body, path+"siteTypesForTransportGateway.value", values)
+		}
+	}
+
+	if !data.AspathAutoTranslationVariable.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"aspathAutoTranslation.optionType", "variable")
+			body, _ = sjson.Set(body, path+"aspathAutoTranslation.value", data.AspathAutoTranslationVariable.ValueString())
+		}
+	} else if data.AspathAutoTranslation.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"aspathAutoTranslation.optionType", "default")
+			body, _ = sjson.Set(body, path+"aspathAutoTranslation.value", false)
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"aspathAutoTranslation.optionType", "global")
+			body, _ = sjson.Set(body, path+"aspathAutoTranslation.value", data.AspathAutoTranslation.ValueBool())
 		}
 	}
 	return body
@@ -919,6 +959,26 @@ func (data *SystemOMP) fromBody(ctx context.Context, res gjson.Result) {
 			data.SiteTypes = helpers.GetStringSet(va.Array())
 		}
 	}
+	data.SiteTypesForTransportGateway = types.SetNull(types.StringType)
+	data.SiteTypesForTransportGatewayVariable = types.StringNull()
+	if t := res.Get(path + "siteTypesForTransportGateway.optionType"); t.Exists() {
+		va := res.Get(path + "siteTypesForTransportGateway.value")
+		if t.String() == "variable" {
+			data.SiteTypesForTransportGatewayVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.SiteTypesForTransportGateway = helpers.GetStringSet(va.Array())
+		}
+	}
+	data.AspathAutoTranslation = types.BoolNull()
+	data.AspathAutoTranslationVariable = types.StringNull()
+	if t := res.Get(path + "aspathAutoTranslation.optionType"); t.Exists() {
+		va := res.Get(path + "aspathAutoTranslation.value")
+		if t.String() == "variable" {
+			data.AspathAutoTranslationVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.AspathAutoTranslation = types.BoolValue(va.Bool())
+		}
+	}
 }
 
 // End of section. //template:end fromBody
@@ -1220,6 +1280,26 @@ func (data *SystemOMP) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.SiteTypesVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.SiteTypes = helpers.GetStringSet(va.Array())
+		}
+	}
+	data.SiteTypesForTransportGateway = types.SetNull(types.StringType)
+	data.SiteTypesForTransportGatewayVariable = types.StringNull()
+	if t := res.Get(path + "siteTypesForTransportGateway.optionType"); t.Exists() {
+		va := res.Get(path + "siteTypesForTransportGateway.value")
+		if t.String() == "variable" {
+			data.SiteTypesForTransportGatewayVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.SiteTypesForTransportGateway = helpers.GetStringSet(va.Array())
+		}
+	}
+	data.AspathAutoTranslation = types.BoolNull()
+	data.AspathAutoTranslationVariable = types.StringNull()
+	if t := res.Get(path + "aspathAutoTranslation.optionType"); t.Exists() {
+		va := res.Get(path + "aspathAutoTranslation.value")
+		if t.String() == "variable" {
+			data.AspathAutoTranslationVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.AspathAutoTranslation = types.BoolValue(va.Bool())
 		}
 	}
 }
