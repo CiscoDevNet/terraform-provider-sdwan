@@ -23,6 +23,7 @@
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_mrf_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_global_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_snmp_feature` to `20.15.0`
+- Add sdwan_embedded_security_ngfw_policy resource and data source
 
 ## 0.10.0
 
