@@ -64,7 +64,7 @@ func (r *SystemNTPProfileParcelResource) Metadata(ctx context.Context, req resou
 func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System NTP Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System NTP Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -104,10 +104,10 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 							Optional:            true,
 						},
 						"authentication_key": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set authentication key for the server").AddIntegerRangeDescription(1, 65535).String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set authentication key for the server").AddIntegerRangeDescription(1, 4294967295).String,
 							Optional:            true,
 							Validators: []validator.Int64{
-								int64validator.Between(1, 65535),
+								int64validator.Between(1, 4294967295),
 							},
 						},
 						"authentication_key_variable": schema.StringAttribute{
@@ -165,10 +165,10 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"key_id": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("MD5 authentication key ID").AddIntegerRangeDescription(1, 65535).String,
+							MarkdownDescription: helpers.NewAttributeDescription("MD5 authentication key ID").AddIntegerRangeDescription(1, 4294967295).String,
 							Optional:            true,
 							Validators: []validator.Int64{
-								int64validator.Between(1, 65535),
+								int64validator.Between(1, 4294967295),
 							},
 						},
 						"key_id_variable": schema.StringAttribute{
@@ -176,7 +176,7 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 							Optional:            true,
 						},
 						"md5_value": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Enter cleartext or AES-encrypted MD5 authentication key").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Enter cleartext or AES-encrypted MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthAtLeast(1),

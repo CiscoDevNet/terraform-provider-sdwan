@@ -4,13 +4,13 @@ page_title: "sdwan_service_routing_ospf_feature Resource - terraform-provider-sd
 subcategory: "Features - Service"
 description: |-
   This resource can manage a Service Routing OSPF Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_service_routing_ospf_feature (Resource)
 
 This resource can manage a Service Routing OSPF Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -34,8 +34,9 @@ resource "sdwan_service_routing_ospf_feature" "example" {
   spf_maximum_hold_time                     = 10000
   redistributes = [
     {
-      protocol = "static"
-      nat_dia  = true
+      protocol             = "omp"
+      nat_dia              = true
+      translate_rib_metric = false
     }
   ]
   router_lsas = [
@@ -185,7 +186,7 @@ Optional:
   - Range: `1`-`65535`
   - Default value: `5`
 - `lsa_retransmit_interval_variable` (String) Variable name
-- `message_digest_key` (String) Set MD5 authentication key
+- `message_digest_key` (String) Set MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `message_digest_key_id` (Number) Set MD5 message digest key
   - Range: `1`-`255`
 - `message_digest_key_id_variable` (String) Variable name
@@ -232,8 +233,9 @@ Optional:
   - Choices: `static`, `connected`, `bgp`, `omp`, `nat`, `eigrp`
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
-- `translate_rib_metric` (Boolean) Translate Rib Metric, Attribute conditional on `protocol` equal to `omp`
+- `translate_rib_metric` (Boolean) Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network., Attribute conditional on `protocol` equal to `omp`
   - Default value: `false`
+- `translate_rib_metric_variable` (String) Variable name, Attribute conditional on `protocol` equal to `omp`
 
 
 <a id="nestedatt--router_lsas"></a>

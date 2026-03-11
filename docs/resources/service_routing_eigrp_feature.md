@@ -4,13 +4,13 @@ page_title: "sdwan_service_routing_eigrp_feature Resource - terraform-provider-s
 subcategory: "Features - Service"
 description: |-
   This resource can manage a Service Routing EIGRP Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_service_routing_eigrp_feature (Resource)
 
 This resource can manage a Service Routing EIGRP Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -135,7 +135,7 @@ Optional:
 - `key_id` (Number) Set MD5 key ID
   - Range: `1`-`255`
 - `key_id_variable` (String) Variable name
-- `key_string` (String) Set MD5 key
+- `key_string` (String) Set MD5 key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `key_string_variable` (String) Variable name
 
 

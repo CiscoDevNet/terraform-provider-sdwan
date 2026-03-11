@@ -1,11 +1,30 @@
-## 0.10.1 (Unreleased)
+## 0.11.0 (Unreleased)
 
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_qos_policy` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_dns_security_policy` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_dhcp_server_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_bgp_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_bgp_feature` to `20.15.0`
 - Fix `Not Defined in Schema Attributes: data.routerPolicy` error in `sdwan_service_routing_eigrp_feature`
 - Add `sdwan_policy_object_security_zone` resource and data source
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_eigrp_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_ospf_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_ospf_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_multicast_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_policy_settings` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_ipv4_device_access_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_ipv6_device_access_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_remote_access_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_performance_monitoring_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_flexible_port_speed_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_security_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_omp_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_ntp_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_logging_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_mrf_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_global_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_snmp_feature` to `20.15.0`
+- Add sdwan_embedded_security_ngfw_policy resource and data source
 
 ## 0.10.0
 

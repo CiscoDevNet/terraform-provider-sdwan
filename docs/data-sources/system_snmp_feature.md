@@ -51,7 +51,8 @@ Read-Only:
 
 - `authorization` (String) Configure access permissions
 - `authorization_variable` (String) Variable name
-- `name` (String) Set name of the SNMP community
+- `name` (String) Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `name_variable` (String) Variable name
 - `user_label` (String) Set user label of the SNMP community
 - `view` (String) Set name of the SNMP view
 - `view_variable` (String) Variable name
