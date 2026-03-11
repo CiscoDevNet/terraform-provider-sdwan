@@ -4518,7 +4518,7 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 		data.IcmpRedirectDisableVariable = types.StringNull()
 	}
 	if value := res.Get(path + "qos-adaptive.period.vipType"); value.Exists() {
-		if value.String() == "variableName" {
+		if value.String() == "variableName" || value.String() == "variable" {
 			data.QosAdaptivePeriod = types.Int64Null()
 
 			v := res.Get(path + "qos-adaptive.period.vipVariableName")
@@ -4537,7 +4537,7 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 		data.QosAdaptivePeriodVariable = types.StringNull()
 	}
 	if value := res.Get(path + "qos-adaptive.downstream.bandwidth-down.vipType"); value.Exists() {
-		if value.String() == "variableName" {
+		if value.String() == "variableName" || value.String() == "variable" {
 			data.QosAdaptiveBandwidthDownstream = types.Int64Null()
 
 			v := res.Get(path + "qos-adaptive.downstream.bandwidth-down.vipVariableName")
@@ -4556,7 +4556,7 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 		data.QosAdaptiveBandwidthDownstreamVariable = types.StringNull()
 	}
 	if value := res.Get(path + "qos-adaptive.downstream.range.dmin.vipType"); value.Exists() {
-		if value.String() == "variableName" {
+		if value.String() == "variableName" || value.String() == "variable" {
 			data.QosAdaptiveMinDownstream = types.Int64Null()
 
 			v := res.Get(path + "qos-adaptive.downstream.range.dmin.vipVariableName")
@@ -4575,7 +4575,7 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 		data.QosAdaptiveMinDownstreamVariable = types.StringNull()
 	}
 	if value := res.Get(path + "qos-adaptive.downstream.range.dmax.vipType"); value.Exists() {
-		if value.String() == "variableName" {
+		if value.String() == "variableName" || value.String() == "variable" {
 			data.QosAdaptiveMaxDownstream = types.Int64Null()
 
 			v := res.Get(path + "qos-adaptive.downstream.range.dmax.vipVariableName")
@@ -4594,7 +4594,7 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 		data.QosAdaptiveMaxDownstreamVariable = types.StringNull()
 	}
 	if value := res.Get(path + "qos-adaptive.upstream.bandwidth-up.vipType"); value.Exists() {
-		if value.String() == "variableName" {
+		if value.String() == "variableName" || value.String() == "variable" {
 			data.QosAdaptiveBandwidthUpstream = types.Int64Null()
 
 			v := res.Get(path + "qos-adaptive.upstream.bandwidth-up.vipVariableName")
@@ -4613,7 +4613,7 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 		data.QosAdaptiveBandwidthUpstreamVariable = types.StringNull()
 	}
 	if value := res.Get(path + "qos-adaptive.upstream.range.umin.vipType"); value.Exists() {
-		if value.String() == "variableName" {
+		if value.String() == "variableName" || value.String() == "variable" {
 			data.QosAdaptiveMinUpstream = types.Int64Null()
 
 			v := res.Get(path + "qos-adaptive.upstream.range.umin.vipVariableName")
@@ -4632,7 +4632,7 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 		data.QosAdaptiveMinUpstreamVariable = types.StringNull()
 	}
 	if value := res.Get(path + "qos-adaptive.upstream.range.umax.vipType"); value.Exists() {
-		if value.String() == "variableName" {
+		if value.String() == "variableName" || value.String() == "variable" {
 			data.QosAdaptiveMaxUpstream = types.Int64Null()
 
 			v := res.Get(path + "qos-adaptive.upstream.range.umax.vipVariableName")

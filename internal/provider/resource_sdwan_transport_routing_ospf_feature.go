@@ -64,7 +64,7 @@ func (r *TransportRoutingOSPFProfileParcelResource) Metadata(ctx context.Context
 func (r *TransportRoutingOSPFProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Transport Routing OSPF Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Transport Routing OSPF Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -426,7 +426,7 @@ func (r *TransportRoutingOSPFProfileParcelResource) Schema(ctx context.Context, 
 										Optional:            true,
 									},
 									"message_digest_key": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set MD5 authentication key").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthBetween(1, 127),

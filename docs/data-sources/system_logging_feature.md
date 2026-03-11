@@ -47,7 +47,7 @@ data "sdwan_system_logging_feature" "example" {
 
 Read-Only:
 
-- `hostname_ip` (String) Set hostname or IPv4 address of server
+- `hostname_ip` (String) Set IPv4 address of server
 - `hostname_ip_variable` (String) Variable name
 - `priority` (String) Set logging level for messages logged to server
 - `priority_variable` (String) Variable name
@@ -59,7 +59,7 @@ Read-Only:
 - `tls_properties_custom_profile_variable` (String) Variable name
 - `tls_properties_profile` (String) Configure a TLS profile
 - `tls_properties_profile_variable` (String) Variable name
-- `vpn` (Number) Set hostname or IPv4 address of server
+- `vpn` (Number) Set vpn of server
 - `vpn_variable` (String) Variable name
 
 
@@ -68,7 +68,7 @@ Read-Only:
 
 Read-Only:
 
-- `hostname_ip` (String) Set IPv6 hostname or IPv6 address of server
+- `hostname_ip` (String) Set IPv6 address of server
 - `hostname_ip_variable` (String) Variable name
 - `priority` (String) Set logging level for messages logged to server
 - `priority_variable` (String) Variable name
@@ -80,7 +80,7 @@ Read-Only:
 - `tls_properties_custom_profile_variable` (String) Variable name
 - `tls_properties_profile` (String) Configure a TLS profile
 - `tls_properties_profile_variable` (String) Variable name
-- `vpn` (Number) Set hostname or IPv4 address of server
+- `vpn` (Number) Set vpn of server
 - `vpn_variable` (String) Variable name
 
 

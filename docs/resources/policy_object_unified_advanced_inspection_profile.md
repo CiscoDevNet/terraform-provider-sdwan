@@ -4,13 +4,13 @@ page_title: "sdwan_policy_object_unified_advanced_inspection_profile Resource - 
 subcategory: "Policy Objects"
 description: |-
   This resource can manage a Policy Object Unified Advanced Inspection Profile Policy_object.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_policy_object_unified_advanced_inspection_profile (Resource)
 
 This resource can manage a Policy Object Unified Advanced Inspection Profile Policy_object.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 

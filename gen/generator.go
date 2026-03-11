@@ -214,6 +214,7 @@ type YamlConfig struct {
 	DeleteMutex              bool                  `yaml:"delete_mutex"`
 	ParcelType               string                `yaml:"parcel_type"`
 	FullUpdate               bool                  `yaml:"full_update"`
+	CreateMutex              bool                  `yaml:"create_mutex"`
 }
 
 type YamlConfigAttribute struct {
@@ -276,18 +277,21 @@ type YamlConfigAttribute struct {
 	PriorityOrderAlways     bool                           `yaml:"priority_order_always"`
 	IncludeDefaultOption    bool                           `yaml:"include_default_option"`
 	DefaultOption           string                         `yaml:"default_option"`
+	IncludeVariableCheck    bool                           `yaml:"include_variable_check"`
+	ResetContainerIfIgnore  bool                           `yaml:"reset_container_if_ignore"`
 }
 
 type YamlConfigConditionalAttribute struct {
-	Operator   string                 `yaml:"operator"`
-	Conditions []YamlConfigCondition  `yaml:"conditions"`
+	Operator   string                `yaml:"operator"`
+	Conditions []YamlConfigCondition `yaml:"conditions"`
 }
 
 type YamlConfigCondition struct {
-	Name   string `yaml:"name"`
-	Value  string `yaml:"value"`
-	Type   string `yaml:"type"`
-	Negate bool   `yaml:"negate"`
+	Name         string `yaml:"name"`
+	Value        string `yaml:"value"`
+	Type         string `yaml:"type"`
+	Negate       bool   `yaml:"negate"`
+	DefaultValue string // Populated during template execution, not from YAML
 }
 
 // Templating helper function to convert TF name to GO name
@@ -453,7 +457,13 @@ func BuildConditionCheck(cond YamlConfigCondition, context string) string {
 	} else if cond.Type == "Bool" {
 		check = fmt.Sprintf("%s.%s.ValueBool() == %s", context, varName, cond.Value)
 	} else {
-		check = fmt.Sprintf("%s.%s.ValueString() == \"%s\"", context, varName, cond.Value)
+		// For string conditions, also accept null if the attribute has a matching default value
+		// This is stored in cond.DefaultValue field, populated during template execution
+		if cond.DefaultValue != "" && cond.DefaultValue == cond.Value {
+			check = fmt.Sprintf("(%s.%s.ValueString() == \"%s\" || %s.%s.IsNull())", context, varName, cond.Value, context, varName)
+		} else {
+			check = fmt.Sprintf("%s.%s.ValueString() == \"%s\"", context, varName, cond.Value)
+		}
 	}
 
 	if cond.Negate {
@@ -464,9 +474,34 @@ func BuildConditionCheck(cond YamlConfigCondition, context string) string {
 }
 
 // Templating helper function to build full conditional logic
-func BuildConditionalLogic(attr YamlConfigConditionalAttribute, context string) string {
+func BuildConditionalLogic(attr YamlConfigConditionalAttribute, attributesOrContext interface{}, contextOrEmpty ...string) string {
 	if !HasConditional(attr) {
 		return ""
+	}
+
+	// Handle both old signature (attr, context) and new signature (attr, attributes, context)
+	var context string
+	var attributes []YamlConfigAttribute
+
+	if len(contextOrEmpty) > 0 {
+		// New signature: BuildConditionalLogic(attr, attributes, context)
+		context = contextOrEmpty[0]
+		if attrs, ok := attributesOrContext.([]YamlConfigAttribute); ok {
+			attributes = attrs
+		}
+	} else {
+		// Old signature: BuildConditionalLogic(attr, context)
+		if ctx, ok := attributesOrContext.(string); ok {
+			context = ctx
+		}
+	}
+
+	// Build a map of attribute tf_name to default_value for quick lookup
+	defaultValueMap := make(map[string]string)
+	for _, a := range attributes {
+		if a.DefaultValue != "" {
+			defaultValueMap[a.TfName] = a.DefaultValue
+		}
 	}
 
 	operator := attr.Operator
@@ -476,6 +511,10 @@ func BuildConditionalLogic(attr YamlConfigConditionalAttribute, context string) 
 
 	var checks []string
 	for _, cond := range attr.Conditions {
+		// Populate the default value if it exists for this condition's attribute
+		if defaultVal, exists := defaultValueMap[cond.Name]; exists {
+			cond.DefaultValue = defaultVal
+		}
 		checks = append(checks, BuildConditionCheck(cond, context))
 	}
 
@@ -663,38 +702,38 @@ func contains(s []string, str string) bool {
 
 // Map of templating functions
 var functions = template.FuncMap{
-	"toGoName":                   ToGoName,
-	"toVersionName":              ToVersionName,
-	"camelCase":                  CamelCase,
-	"snakeCase":                  SnakeCase,
-	"sprintf":                    fmt.Sprintf,
-	"toLower":                    strings.ToLower,
-	"path":                       BuildPath,
-	"hasId":                      HasId,
-	"hasName":                    HasName,
-	"hasVersionAttribute":        HasVersionAttribute,
-	"getResponseModelPath":       GetResponseModelPath,
-	"hasReference":               HasReference,
-	"countReferences":            CountReferences,
-	"add":                        Add,
-	"getGjsonType":               GetGjsonType,
-	"getId":                      GetId,
-	"isUx20Feature":              IsUx20Feature,
-	"isListSet":                  IsListSet,
-	"isList":                     IsList,
-	"isSet":                      IsSet,
-	"isStringListSet":            IsStringListSet,
-	"isInt64ListSet":             IsInt64ListSet,
-	"isStringInt64":              IsStringInt64,
-	"isNestedListSet":            IsNestedListSet,
-	"isNestedList":               IsNestedList,
-	"isNestedSet":                IsNestedSet,
-	"getParentModelName":         GetParentModelName,
-	"getProfileParcelSuffix":     GetProfileParcelSuffix,
-	"getProfileParcelName":       GetProfileParcelName,
-	"contains":                   contains,
-	"hasConditional":             HasConditional,
-	"buildConditionalLogic":      BuildConditionalLogic,
+	"toGoName":                    ToGoName,
+	"toVersionName":               ToVersionName,
+	"camelCase":                   CamelCase,
+	"snakeCase":                   SnakeCase,
+	"sprintf":                     fmt.Sprintf,
+	"toLower":                     strings.ToLower,
+	"path":                        BuildPath,
+	"hasId":                       HasId,
+	"hasName":                     HasName,
+	"hasVersionAttribute":         HasVersionAttribute,
+	"getResponseModelPath":        GetResponseModelPath,
+	"hasReference":                HasReference,
+	"countReferences":             CountReferences,
+	"add":                         Add,
+	"getGjsonType":                GetGjsonType,
+	"getId":                       GetId,
+	"isUx20Feature":               IsUx20Feature,
+	"isListSet":                   IsListSet,
+	"isList":                      IsList,
+	"isSet":                       IsSet,
+	"isStringListSet":             IsStringListSet,
+	"isInt64ListSet":              IsInt64ListSet,
+	"isStringInt64":               IsStringInt64,
+	"isNestedListSet":             IsNestedListSet,
+	"isNestedList":                IsNestedList,
+	"isNestedSet":                 IsNestedSet,
+	"getParentModelName":          GetParentModelName,
+	"getProfileParcelSuffix":      GetProfileParcelSuffix,
+	"getProfileParcelName":        GetProfileParcelName,
+	"contains":                    contains,
+	"hasConditional":              HasConditional,
+	"buildConditionalLogic":       BuildConditionalLogic,
 	"buildConditionalDescription": BuildConditionalDescription,
 }
 
@@ -879,6 +918,13 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	}
 	path := ""
 	prefix := "properties."
+
+	// Check before loop for cases where DataPath is empty
+	// Only treat it as wrapped oneOf if properties don't exist at same level
+	if model.Get("oneOf").Exists() && !model.Get("properties").Exists() {
+		prefix = "oneOf."
+	}
+
 	for i, e := range attr.DataPath {
 
 		next := ""
@@ -886,10 +932,6 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 			next = attr.DataPath[i+1]
 		} else {
 			next = attr.ModelName
-		}
-
-		if model.Get("oneOf").Exists() {
-			prefix = "oneOf."
 		}
 
 		if path == "" && prefix == "oneOf." {
@@ -914,12 +956,38 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				return true // keep iterating
 			})
 
+		} else if model.Get(prefix + path + e + ".items.oneOf").Exists() {
+			index := 0
+			model.Get(prefix + path + e + ".items.oneOf").ForEach(func(k, v gjson.Result) bool {
+				if v.Get("properties." + next).Exists() {
+					path += fmt.Sprintf("%s.items.oneOf.%v.properties.", e, index)
+					isOneOfAttribute = true
+					return false // stop iterating
+				}
+				index += 1
+				return true // keep iterating
+			})
+
 		} else if model.Get(prefix + path + e + ".items").Exists() {
 			path += fmt.Sprintf("%s.items.properties.", e)
 
 		} else {
 			path += e + ".properties."
 		}
+	}
+
+	// If DataPath is empty and model has oneOf at root (without properties), search through oneOf options
+	if len(attr.DataPath) == 0 && prefix == "oneOf." && !model.Get("properties").Exists() {
+		index := 0
+		model.Get("oneOf").ForEach(func(k, v gjson.Result) bool {
+			if v.Get("properties." + attr.ModelName).Exists() {
+				path = fmt.Sprintf("%v.properties.", index)
+				isOneOfAttribute = true
+				return false // stop iterating
+			}
+			index += 1
+			return true // keep iterating
+		})
 	}
 
 	path += attr.ModelName
@@ -970,7 +1038,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				}
 			} else if attr.Type == "Bool" || t.Get("properties.value.type").String() == "boolean" || t.Get("properties.value.oneOf.0.properties.value.type").String() == "boolean" {
 				attr.Type = "Bool"
-			} else if attr.Type == "Int64" || t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" || t.Get("properties.value.oneOf.0.type").String() == "integer" || t.Get("properties.value.oneOf.0.type").String() == "number" {
+			} else if attr.Type == "Int64" || t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" || t.Get("properties.value.oneOf.0.type").String() == "integer" || t.Get("properties.value.oneOf.0.type").String() == "number" || t.Get("properties.value.anyOf.0.type").String() == "integer" || t.Get("properties.value.anyOf.0.type").String() == "number" {
 
 				if value := t.Get("properties.value.multipleOf"); value.Exists() {
 					attr.Type = "Float64"

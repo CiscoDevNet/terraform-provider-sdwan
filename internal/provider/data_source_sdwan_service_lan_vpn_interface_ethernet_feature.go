@@ -24,7 +24,6 @@ import (
 	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
-	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -106,6 +105,142 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx conte
 			},
 			"interface_description_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_interface": schema.BoolAttribute{
+				MarkdownDescription: "Port-Channel interface on/off",
+				Computed:            true,
+			},
+			"port_channel_mode": schema.StringAttribute{
+				MarkdownDescription: "Port Channel Mode",
+				Computed:            true,
+			},
+			"port_channel_lacp_qos_aggregate": schema.BoolAttribute{
+				MarkdownDescription: "Enable QoS Port-Channel aggregate",
+				Computed:            true,
+			},
+			"port_channel_lacp_qos_aggregate_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_lacp_load_balance": schema.StringAttribute{
+				MarkdownDescription: "Enable QoS Port-Channel aggregate",
+				Computed:            true,
+			},
+			"port_channel_lacp_load_balance_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_lacp_fast_switchover": schema.BoolAttribute{
+				MarkdownDescription: "Eanble lacp fast switchover",
+				Computed:            true,
+			},
+			"port_channel_lacp_fast_switchover_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_lacp_min_bundle": schema.Int64Attribute{
+				MarkdownDescription: "Set LACP min bundle",
+				Computed:            true,
+			},
+			"port_channel_lacp_min_bundle_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_lacp_max_bundle": schema.Int64Attribute{
+				MarkdownDescription: "Set LACP max bundle",
+				Computed:            true,
+			},
+			"port_channel_lacp_max_bundle_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_lacp_member_links": schema.ListNestedAttribute{
+				MarkdownDescription: "Configure Port-Channel member links",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"interface_id": schema.StringAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+						},
+						"lacp_mode": schema.StringAttribute{
+							MarkdownDescription: "Set lacp mode",
+							Computed:            true,
+						},
+						"lacp_mode_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"lacp_rate": schema.StringAttribute{
+							MarkdownDescription: "Set lacp rate",
+							Computed:            true,
+						},
+						"lacp_rate_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"lacp_port_priority": schema.Int64Attribute{
+							MarkdownDescription: "Set lacp port priority",
+							Computed:            true,
+						},
+						"lacp_port_priority_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+					},
+				},
+			},
+			"port_channel_static_qos_aggregate": schema.BoolAttribute{
+				MarkdownDescription: "Enable QoS Port-Channel aggregate",
+				Computed:            true,
+			},
+			"port_channel_static_qos_aggregate_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_static_load_balance": schema.StringAttribute{
+				MarkdownDescription: "Enable QoS Port-Channel aggregate",
+				Computed:            true,
+			},
+			"port_channel_static_load_balance_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_static_member_links": schema.ListNestedAttribute{
+				MarkdownDescription: "Configure Port-Channel member links",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"interface_id": schema.StringAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+						},
+					},
+				},
+			},
+			"port_channel_subinterface": schema.BoolAttribute{
+				MarkdownDescription: "Port Channel Sub Interface on/off",
+				Computed:            true,
+			},
+			"port_channel_subinterface_primary_interface_name": schema.StringAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+			},
+			"port_channel_subinterface_primary_interface_name_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_subinterface_secondary_interface_name": schema.StringAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+			},
+			"port_channel_subinterface_secondary_interface_name_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"port_channel_member_interface": schema.BoolAttribute{
+				MarkdownDescription: "Port-Channel member interface on/off",
 				Computed:            true,
 			},
 			"ipv4_configuration_type": schema.StringAttribute{
@@ -426,6 +561,18 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx conte
 								},
 							},
 						},
+						"follow_dual_router_high_availability": schema.BoolAttribute{
+							MarkdownDescription: "Follow RG state by default when B2B HA is configured",
+							Computed:            true,
+						},
+						"min_preempt_delay": schema.Int64Attribute{
+							MarkdownDescription: "Minimum preempt delay in seconds",
+							Computed:            true,
+						},
+						"min_preempt_delay_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
 					},
 				},
 			},
@@ -529,6 +676,18 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx conte
 									},
 								},
 							},
+						},
+						"follow_dual_router_high_availability": schema.BoolAttribute{
+							MarkdownDescription: "Follow RG state by default when B2B HA is configured",
+							Computed:            true,
+						},
+						"min_preempt_delay": schema.Int64Attribute{
+							MarkdownDescription: "Minimum preempt delay in seconds",
+							Computed:            true,
+						},
+						"min_preempt_delay_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
 						},
 					},
 				},
@@ -665,14 +824,6 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tracker": schema.StringAttribute{
-				MarkdownDescription: "Enable tracker for this interface",
-				Computed:            true,
-			},
-			"tracker_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Computed:            true,
-			},
 			"icmp_redirect_disable": schema.BoolAttribute{
 				MarkdownDescription: "ICMP/ICMPv6 Redirect Disable",
 				Computed:            true,
@@ -711,6 +862,7 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Configure(_ cont
 
 // End of section. //template:end model
 
+// Section below is generated&owned by "gen/generator.go". //template:begin read
 func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	var config ServiceLANVPNInterfaceEthernet
 
@@ -723,19 +875,18 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Read(ctx context
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
 
-	// Get Manager Version
-	currentVersion := version.Must(version.NewVersion(d.client.ManagerVersion))
-
 	res, err := d.client.Get(config.getPath() + "/" + url.QueryEscape(config.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return
 	}
 
-	config.fromBody(ctx, res, currentVersion)
+	config.fromBody(ctx, res)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Name.ValueString()))
 
 	diags = resp.State.Set(ctx, &config)
 	resp.Diagnostics.Append(diags...)
 }
+
+// End of section. //template:end read

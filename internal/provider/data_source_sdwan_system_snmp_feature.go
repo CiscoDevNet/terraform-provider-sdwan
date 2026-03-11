@@ -144,7 +144,11 @@ func (d *SystemSNMPProfileParcelDataSource) Schema(ctx context.Context, req data
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
-							MarkdownDescription: "Set name of the SNMP community",
+							MarkdownDescription: "Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+							Computed:            true,
+						},
+						"name_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
 						"user_label": schema.StringAttribute{

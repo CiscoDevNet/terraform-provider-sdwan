@@ -1,122 +1,126 @@
 {
   "request": {
-      "$schema": "http://json-schema.org/draft/2019-09/schema",
-      "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/data-ipv6-prefix/post/request_schema.json",
-      "title": "Ipv6 Data Prefix Parcel Schema",
-      "description": "Ipv6 data prefix profile parcel schema for POST request",
-      "type": "object",
-      "properties": {
-          "name": {
-              "type": "string",
-              "pattern": "^[^&<>! \"]+$",
-              "minLength": 1,
-              "maxLength": 32
-          },
-          "description": {
-              "type": "string"
-          },
-          "data": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/data-ipv6-prefix/post/request_schema.json",
+    "title": "Ipv6 Data Prefix Parcel Schema",
+    "description": "Ipv6 data prefix profile parcel schema for POST request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 32
+      },
+      "description": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "entries": {
+            "description": "IPv6 Prefix List",
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
               "type": "object",
               "properties": {
-                  "entries": {
-                      "description": "IPv6 Prefix List",
-                      "type": "array",
-                      "minItems": 1,
-                      "uniqueItems": true,
-                      "items": {
-                          "type": "object",
-                          "properties": {
-                              "ipv6Address": {
-                                  "description": "IPv6 address",
-                                  "type": "object",
-                                  "properties": {
-                                      "optionType": {
-                                          "type": "string",
-                                          "enum": [
-                                              "global"
-                                          ]
-                                      },
-                                      "value": {
-                                          "type": "string",
-                                          "format": "ipv6"
-                                      }
-                                  },
-                                  "required": [
-                                      "optionType",
-                                      "value"
-                                  ],
-                                  "additionalProperties": false
-                              },
-                              "ipv6PrefixLength": {
-                                  "description": "IPv6 prefix",
-                                  "type": "object",
-                                  "properties": {
-                                      "optionType": {
-                                          "type": "string",
-                                          "enum": [
-                                              "global"
-                                          ]
-                                      },
-                                      "value": {
-                                          "minimum": 0,
-                                          "maximum": 128,
-                                          "type": "integer"
-                                      }
-                                  },
-                                  "required": [
-                                      "optionType",
-                                      "value"
-                                  ],
-                                  "additionalProperties": false
-                              }
-                          },
-                          "required": [
-                              "ipv6Address",
-                              "ipv6PrefixLength"
-                          ],
-                          "additionalProperties": false
-                      }
-                  }
+                "ipv6Address": {
+                  "description": "IPv6 address",
+                  "type": "object",
+                  "properties": {
+                    "optionType": {
+                      "type": "string",
+                      "enum": [
+                        "global"
+                      ]
+                    },
+                    "value": {
+                      "type": "string",
+                      "format": "ipv6"
+                    }
+                  },
+                  "required": [
+                    "optionType",
+                    "value"
+                  ],
+                  "additionalProperties": false
+                },
+                "ipv6PrefixLength": {
+                  "description": "IPv6 prefix",
+                  "type": "object",
+                  "properties": {
+                    "optionType": {
+                      "type": "string",
+                      "enum": [
+                        "global"
+                      ]
+                    },
+                    "value": {
+                      "minimum": 0,
+                      "maximum": 128,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "optionType",
+                    "value"
+                  ],
+                  "additionalProperties": false
+                }
               },
-              "required": [],
+              "required": [
+                "ipv6Address",
+                "ipv6PrefixLength"
+              ],
               "additionalProperties": false
-          },
-          "documentation": {
-              "description": "This is the documentation for POST request schema for ipv6 data prefix profile parcel",
-              "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
-              "details-2": "variable name should not be present if optionType value is NOT variable",
-              "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
-              "details-4": "when option Type is default, value should be present with given default value as specified in schema",
-              "examples": [
-                  {
-                      "data": {
-                          "entries": [
-                              {
-                                  "ipv6Address": {
-                                      "optionType": "global",
-                                      "value": "2001:db8:85a3::8a2e:370:7334"
-                                  },
-                                  "ipv6PrefixLength": {
-                                      "optionType": "global",
-                                      "value": 64
-                                  }
-                              }
-                          ]
-                      },
-                      "name": "Ipv6DataPrefixList"
-                  }
-              ]
+            }
           }
+        },
+        "required": [],
+        "additionalProperties": false
       },
+      "documentation": {
+        "description": "This is the documentation for POST request schema for ipv6 data prefix profile parcel",
+        "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+        "details-2": "variable name should not be present if optionType value is NOT variable",
+        "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+        "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+        "examples": [
+          {
+            "data": {
+              "entries": [
+                {
+                  "ipv6Address": {
+                    "optionType": "global",
+                    "value": "2001:db8:85a3::8a2e:370:7334"
+                  },
+                  "ipv6PrefixLength": {
+                    "optionType": "global",
+                    "value": 64
+                  }
+                }
+              ]
+            },
+            "name": "Ipv6DataPrefixList"
+          }
+        ]
+      },
+      "metadata": {
+        "minVManageVersion": "20.15.1"
+      }
+    },
+    "required": [
+      "name",
+      "data"
+    ],
+    "not": {
       "required": [
-          "name",
-          "data"
-      ],
-      "not": {
-          "required": [
-              "documentation"
-          ]
-      },
-      "additionalProperties": false
+        "documentation",
+        "metadata"
+      ]
+    },
+    "additionalProperties": false
   }
 }

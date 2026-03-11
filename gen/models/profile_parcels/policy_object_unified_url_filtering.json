@@ -1,674 +1,674 @@
 {
-    "request": {
-        "$schema": "http://json-schema.org/draft/2019-09/schema",
-        "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/unified/url-filtering/post/request_schema.json",
-        "title": "url-filtering Parcel Schema",
-        "description": "url-filtering profile parcel schema for POST request",
+  "request": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/unified/url-filtering/post/request_schema.json",
+    "title": "url-filtering Parcel Schema",
+    "description": "url-filtering profile parcel schema for POST request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 32
+      },
+      "description": {
+        "type": "string"
+      },
+      "data": {
         "type": "object",
+        "minProperties": 1,
         "properties": {
-            "name": {
-                "type": "string",
-                "pattern": "^[^&<>! \"]+$",
-                "minLength": 1,
-                "maxLength": 32
-            },
-            "description": {
-                "type": "string"
-            },
-            "data": {
-                "type": "object",
-                "minProperties": 1,
+          "webCategoriesAction": {
+            "description": "",
+            "type": "object",
+            "oneOf": [
+              {
                 "properties": {
-                    "webCategoriesAction": {
-                        "description": "",
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "enum": [
-                                            "block",
-                                            "allow"
-                                        ],
-                                        "type": "string"
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    },
-                    "webCategories": {
-                        "description": "",
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "enum": [
-                                                "abortion",
-                                                "abused-drugs",
-                                                "adult-and-pornography",
-                                                "alcohol-and-tobacco",
-                                                "auctions",
-                                                "bot-nets",
-                                                "business-and-economy",
-                                                "cdns",
-                                                "cheating",
-                                                "computer-and-internet-info",
-                                                "computer-and-internet-security",
-                                                "confirmed-spam-sources",
-                                                "cult-and-occult",
-                                                "dating",
-                                                "dead-sites",
-                                                "dynamic-content",
-                                                "educational-institutions",
-                                                "entertainment-and-arts",
-                                                "fashion-and-beauty",
-                                                "financial-services",
-                                                "gambling",
-                                                "games",
-                                                "government",
-                                                "gross",
-                                                "hacking",
-                                                "hate-and-racism",
-                                                "health-and-medicine",
-                                                "home",
-                                                "hunting-and-fishing",
-                                                "illegal",
-                                                "image-and-video-search",
-                                                "individual-stock-advice-and-tools",
-                                                "internet-communications",
-                                                "internet-portals",
-                                                "job-search",
-                                                "keyloggers-and-monitoring",
-                                                "kids",
-                                                "legal",
-                                                "local-information",
-                                                "malware-sites",
-                                                "marijuana",
-                                                "military",
-                                                "motor-vehicles",
-                                                "music",
-                                                "news-and-media",
-                                                "nudity",
-                                                "online-greeting-cards",
-                                                "online-personal-storage",
-                                                "open-http-proxies",
-                                                "p2p",
-                                                "parked-sites",
-                                                "pay-to-surf",
-                                                "personal-sites-and-blogs",
-                                                "philosophy-and-political-advocacy",
-                                                "phishing-and-other-frauds",
-                                                "private-ip-addresses",
-                                                "proxy-avoid-and-anonymizers",
-                                                "questionable",
-                                                "real-estate",
-                                                "recreation-and-hobbies",
-                                                "reference-and-research",
-                                                "religion",
-                                                "search-engines",
-                                                "sex-education",
-                                                "shareware-and-freeware",
-                                                "shopping",
-                                                "social-network",
-                                                "society",
-                                                "spam-urls",
-                                                "sports",
-                                                "spyware-and-adware",
-                                                "streaming-media",
-                                                "swimsuits-and-intimate-apparel",
-                                                "training-and-tools",
-                                                "translation",
-                                                "travel",
-                                                "uncategorized",
-                                                "unconfirmed-spam-sources",
-                                                "violence",
-                                                "weapons",
-                                                "web-advertisements",
-                                                "web-based-email",
-                                                "web-hosting"
-                                            ]
-                                        }
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    },
-                    "webReputation": {
-                        "description": "",
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "enum": [
-                                            "high-risk",
-                                            "low-risk",
-                                            "moderate-risk",
-                                            "suspicious",
-                                            "trustworthy"
-                                        ],
-                                        "type": "string"
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    },
-                    "urlAllowedList": {
-                        "description": "",
-                        "type": "object",
-                        "properties": {
-                            "refId": {
-                                "type": "object",
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "string",
-                                        "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        }
-                    },
-                    "urlBlockedList": {
-                        "description": "",
-                        "type": "object",
-                        "properties": {
-                            "refId": {
-                                "type": "object",
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "string",
-                                        "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        }
-                    },
-                    "blockPageAction": {
-                        "description": "",
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "enum": [
-                                            "text",
-                                            "redirect-url"
-                                        ],
-                                        "type": "string"
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    },
-                    "blockPageContents": {
-                        "description": "",
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "string"
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    },
-                    "redirectUrl": {
-                        "description": "",
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "string",
-                                        "pattern": "^(http:\/\/www\\.|https:\/\/www\\.|http:\/\/|https:\/\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$"
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    },
-                    "enableAlerts": {
-                        "description": "",
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "boolean"
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    },
-                    "alerts": {
-                        "description": "",
-                        "type": "object",
-                        "oneOf": [
-                            {
-                                "properties": {
-                                    "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                            "global"
-                                        ]
-                                    },
-                                    "value": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "enum": [
-                                                "blacklist",
-                                                "whitelist",
-                                                "categories-reputation"
-                                            ]
-                                        }
-                                    }
-                                },
-                                "required": [
-                                    "optionType",
-                                    "value"
-                                ],
-                                "additionalProperties": false
-                            }
-                        ]
-                    }
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "enum": [
+                      "block",
+                      "allow"
+                    ],
+                    "type": "string"
+                  }
                 },
                 "required": [
-                    "webCategoriesAction",
-                    "webReputation",
-                    "blockPageAction",
-                    "enableAlerts"
+                  "optionType",
+                  "value"
                 ],
                 "additionalProperties": false
-            }
-        },
-        "documentation": {
-            "description": "This is the documentation for POST request schema for url-filtering profile parcel",
-            "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
-            "details-2": "variable name should not be present if optionType value is NOT variable",
-            "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
-            "details-4": "when option Type is default, value should be present with given default value as specified in schema",
-            "examples": [
-                {
-                    "data": {
-                        "webCategoriesAction": {
-                            "optionType": "global",
-                            "value": "block"
-                        },
-                        "webCategories": {
-                            "optionType": "global",
-                            "value": "confirmed-spam-sources"
-                        },
-                        "webReputation": {
-                            "optionType": "global",
-                            "value": "suspicious"
-                        },
-                        "urlAllowedList": {
-                            "optionType": "global",
-                            "value": "2ad58d78-59ee-46d3-86dd-7b6b7ca09f38"
-                        },
-                        "urlBlockedList": {
-                            "optionType": "global",
-                            "value": "258d8410-f741-4776-9a4f-300ead0948cc"
-                        },
-                        "blockPageAction": {
-                            "optionType": "global",
-                            "value": "text"
-                        },
-                        "blockPageContents": {
-                            "optionType": "global",
-                            "value": "Access to the requested page has been denied. Please contact your Network Administrator"
-                        },
-                        "enableAlerts": {
-                            "optionType": "global",
-                            "value": true
-                        },
-                        "alerts": {
-                            "optionType": "global",
-                            "value": "blacklist"
-                        }
-                    },
-                    "name": "security-urlfilteringParcelGlobalDefault"
-                }
+              }
             ]
+          },
+          "webCategories": {
+            "description": "",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "abortion",
+                        "abused-drugs",
+                        "adult-and-pornography",
+                        "alcohol-and-tobacco",
+                        "auctions",
+                        "bot-nets",
+                        "business-and-economy",
+                        "cdns",
+                        "cheating",
+                        "computer-and-internet-info",
+                        "computer-and-internet-security",
+                        "confirmed-spam-sources",
+                        "cult-and-occult",
+                        "dating",
+                        "dead-sites",
+                        "dynamic-content",
+                        "educational-institutions",
+                        "entertainment-and-arts",
+                        "fashion-and-beauty",
+                        "financial-services",
+                        "gambling",
+                        "games",
+                        "government",
+                        "gross",
+                        "hacking",
+                        "hate-and-racism",
+                        "health-and-medicine",
+                        "home",
+                        "hunting-and-fishing",
+                        "illegal",
+                        "image-and-video-search",
+                        "individual-stock-advice-and-tools",
+                        "internet-communications",
+                        "internet-portals",
+                        "job-search",
+                        "keyloggers-and-monitoring",
+                        "kids",
+                        "legal",
+                        "local-information",
+                        "malware-sites",
+                        "marijuana",
+                        "military",
+                        "motor-vehicles",
+                        "music",
+                        "news-and-media",
+                        "nudity",
+                        "online-greeting-cards",
+                        "online-personal-storage",
+                        "open-http-proxies",
+                        "p2p",
+                        "parked-sites",
+                        "pay-to-surf",
+                        "personal-sites-and-blogs",
+                        "philosophy-and-political-advocacy",
+                        "phishing-and-other-frauds",
+                        "private-ip-addresses",
+                        "proxy-avoid-and-anonymizers",
+                        "questionable",
+                        "real-estate",
+                        "recreation-and-hobbies",
+                        "reference-and-research",
+                        "religion",
+                        "search-engines",
+                        "sex-education",
+                        "shareware-and-freeware",
+                        "shopping",
+                        "social-network",
+                        "society",
+                        "spam-urls",
+                        "sports",
+                        "spyware-and-adware",
+                        "streaming-media",
+                        "swimsuits-and-intimate-apparel",
+                        "training-and-tools",
+                        "translation",
+                        "travel",
+                        "uncategorized",
+                        "unconfirmed-spam-sources",
+                        "violence",
+                        "weapons",
+                        "web-advertisements",
+                        "web-based-email",
+                        "web-hosting"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "webReputation": {
+            "description": "",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "enum": [
+                      "high-risk",
+                      "low-risk",
+                      "moderate-risk",
+                      "suspicious",
+                      "trustworthy"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "urlAllowedList": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "refId": {
+                "type": "object",
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "urlBlockedList": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "refId": {
+                "type": "object",
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "blockPageAction": {
+            "description": "",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "enum": [
+                      "text",
+                      "redirect-url"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "blockPageContents": {
+            "description": "",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "redirectUrl": {
+            "description": "",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^(http:\/\/www\\.|https:\/\/www\\.|http:\/\/|https:\/\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "enableAlerts": {
+            "description": "",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "alerts": {
+            "description": "",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "blacklist",
+                        "whitelist",
+                        "categories-reputation"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
         },
         "required": [
-            "data",
-            "name"
-        ],
-        "not": {
-            "required": [
-                "documentation"
-            ]
-        },
-        "anyOf": [
-            {
-                "if": {
-                    "properties": {
-                        "data": {
-                            "properties": {
-                                "webCategoriesAction": {
-                                    "properties": {
-                                        "value": {
-                                            "enum": [
-                                                "accept"
-                                            ]
-                                        }
-                                    }
-                                }
-                            },
-                            "required": [
-                                "webCategoriesAction"
-                            ]
-                        }
-                    }
-                },
-                "then": {
-                    "properties": {
-                        "data": {
-                            "required": [
-                                "webCategories"
-                            ]
-                        }
-                    }
-                }
-            },
-            {
-                "if": {
-                    "properties": {
-                        "data": {
-                            "properties": {
-                                "enableAlerts": {
-                                    "properties": {
-                                        "value": {
-                                            "boolean": [
-                                                true
-                                            ]
-                                        }
-                                    }
-                                }
-                            },
-                            "required": [
-                                "enableAlerts"
-                            ]
-                        }
-                    }
-                },
-                "then": {
-                    "properties": {
-                        "data": {
-                            "required": [
-                                "alerts"
-                            ]
-                        }
-                    }
-                }
-            },
-            {
-                "if": {
-                    "properties": {
-                        "data": {
-                            "properties": {
-                                "enableAlerts": {
-                                    "properties": {
-                                        "value": {
-                                            "boolean": [
-                                                false
-                                            ]
-                                        }
-                                    }
-                                }
-                            },
-                            "required": [
-                                "enableAlerts"
-                            ]
-                        }
-                    }
-                },
-                "then": {
-                    "properties": {
-                        "data": {
-                            "not": {
-                                "required": [
-                                    "alerts"
-                                ]
-                            }
-                        }
-                    }
-                }
-            },
-            {
-                "if": {
-                    "properties": {
-                        "data": {
-                            "properties": {
-                                "blockPageAction": {
-                                    "properties": {
-                                        "value": {
-                                            "enum": [
-                                                "text"
-                                            ]
-                                        }
-                                    }
-                                }
-                            },
-                            "required": [
-                                "blockPageAction"
-                            ]
-                        }
-                    }
-                },
-                "then": {
-                    "properties": {
-                        "data": {
-                            "required": [
-                                "blockPageContents"
-                            ]
-                        }
-                    }
-                }
-            },
-            {
-                "if": {
-                    "properties": {
-                        "data": {
-                            "properties": {
-                                "blockPageAction": {
-                                    "properties": {
-                                        "value": {
-                                            "enum": [
-                                                "redirectUrl"
-                                            ]
-                                        }
-                                    }
-                                }
-                            },
-                            "required": [
-                                "blockPageAction"
-                            ]
-                        }
-                    }
-                },
-                "then": {
-                    "properties": {
-                        "data": {
-                            "not": {
-                                "required": [
-                                    "blockPageContents"
-                                ]
-                            }
-                        }
-                    }
-                }
-            },
-            {
-                "if": {
-                    "properties": {
-                        "data": {
-                            "properties": {
-                                "blockPageAction": {
-                                    "properties": {
-                                        "value": {
-                                            "enum": [
-                                                "redirect-url"
-                                            ]
-                                        }
-                                    }
-                                }
-                            },
-                            "required": [
-                                "blockPageAction"
-                            ]
-                        }
-                    }
-                },
-                "then": {
-                    "properties": {
-                        "data": {
-                            "required": [
-                                "redirectUrl"
-                            ]
-                        }
-                    }
-                }
-            },
-            {
-                "if": {
-                    "properties": {
-                        "data": {
-                            "properties": {
-                                "blockPageAction": {
-                                    "properties": {
-                                        "value": {
-                                            "enum": [
-                                                "text"
-                                            ]
-                                        }
-                                    }
-                                }
-                            },
-                            "required": [
-                                "blockPageAction"
-                            ]
-                        }
-                    }
-                },
-                "then": {
-                    "properties": {
-                        "data": {
-                            "not": {
-                                "required": [
-                                    "redirectUrl"
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
+          "webCategoriesAction",
+          "webReputation",
+          "blockPageAction",
+          "enableAlerts"
         ],
         "additionalProperties": false
-    }
+      }
+    },
+    "documentation": {
+      "description": "This is the documentation for POST request schema for url-filtering profile parcel",
+      "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+      "details-2": "variable name should not be present if optionType value is NOT variable",
+      "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+      "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+      "examples": [
+        {
+          "data": {
+            "webCategoriesAction": {
+              "optionType": "global",
+              "value": "block"
+            },
+            "webCategories": {
+              "optionType": "global",
+              "value": "confirmed-spam-sources"
+            },
+            "webReputation": {
+              "optionType": "global",
+              "value": "suspicious"
+            },
+            "urlAllowedList": {
+              "optionType": "global",
+              "value": "2ad58d78-59ee-46d3-86dd-7b6b7ca09f38"
+            },
+            "urlBlockedList": {
+              "optionType": "global",
+              "value": "258d8410-f741-4776-9a4f-300ead0948cc"
+            },
+            "blockPageAction": {
+              "optionType": "global",
+              "value": "text"
+            },
+            "blockPageContents": {
+              "optionType": "global",
+              "value": "Access to the requested page has been denied. Please contact your Network Administrator"
+            },
+            "enableAlerts": {
+              "optionType": "global",
+              "value": true
+            },
+            "alerts": {
+              "optionType": "global",
+              "value": "blacklist"
+            }
+          },
+          "name": "security-urlfilteringParcelGlobalDefault"
+        }
+      ]
+    },
+    "required": [
+      "data",
+      "name"
+    ],
+    "not": {
+      "required": [
+        "documentation"
+      ]
+    },
+    "anyOf": [
+      {
+        "if": {
+          "properties": {
+            "data": {
+              "properties": {
+                "webCategoriesAction": {
+                  "properties": {
+                    "value": {
+                      "enum": [
+                        "accept"
+                      ]
+                    }
+                  }
+                }
+              },
+              "required": [
+                "webCategoriesAction"
+              ]
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "data": {
+              "required": [
+                "webCategories"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "data": {
+              "properties": {
+                "enableAlerts": {
+                  "properties": {
+                    "value": {
+                      "boolean": [
+                        true
+                      ]
+                    }
+                  }
+                }
+              },
+              "required": [
+                "enableAlerts"
+              ]
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "data": {
+              "required": [
+                "alerts"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "data": {
+              "properties": {
+                "enableAlerts": {
+                  "properties": {
+                    "value": {
+                      "boolean": [
+                        false
+                      ]
+                    }
+                  }
+                }
+              },
+              "required": [
+                "enableAlerts"
+              ]
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "data": {
+              "not": {
+                "required": [
+                  "alerts"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "data": {
+              "properties": {
+                "blockPageAction": {
+                  "properties": {
+                    "value": {
+                      "enum": [
+                        "text"
+                      ]
+                    }
+                  }
+                }
+              },
+              "required": [
+                "blockPageAction"
+              ]
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "data": {
+              "required": [
+                "blockPageContents"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "data": {
+              "properties": {
+                "blockPageAction": {
+                  "properties": {
+                    "value": {
+                      "enum": [
+                        "redirectUrl"
+                      ]
+                    }
+                  }
+                }
+              },
+              "required": [
+                "blockPageAction"
+              ]
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "data": {
+              "not": {
+                "required": [
+                  "blockPageContents"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "data": {
+              "properties": {
+                "blockPageAction": {
+                  "properties": {
+                    "value": {
+                      "enum": [
+                        "redirect-url"
+                      ]
+                    }
+                  }
+                }
+              },
+              "required": [
+                "blockPageAction"
+              ]
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "data": {
+              "required": [
+                "redirectUrl"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "data": {
+              "properties": {
+                "blockPageAction": {
+                  "properties": {
+                    "value": {
+                      "enum": [
+                        "text"
+                      ]
+                    }
+                  }
+                }
+              },
+              "required": [
+                "blockPageAction"
+              ]
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "data": {
+              "not": {
+                "required": [
+                  "redirectUrl"
+                ]
+              }
+            }
+          }
+        }
+      }
+    ],
+    "additionalProperties": false
+  }
 }

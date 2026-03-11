@@ -102,6 +102,7 @@ Read-Only:
 
 - `address` (String) Assign IPV4 Address
 - `address_variable` (String) Variable name
+- `follow_dual_router_high_availability` (Boolean) Follow RG state by default when B2B HA is configured
 - `group_id` (Number) Group ID
 - `group_id_variable` (String) Variable name
 - `prefix_list` (String) Track Prefix List
@@ -166,6 +167,7 @@ Read-Only:
 Read-Only:
 
 - `addresses` (Attributes List) IPv6 VRRP (see [below for nested schema](#nestedatt--ipv6_vrrps--addresses))
+- `follow_dual_router_high_availability` (Boolean) Follow RG state by default when B2B HA is configured
 - `group_id` (Number) Group ID
 - `group_id_variable` (String) Variable name
 - `priority` (Number) Set priority

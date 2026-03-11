@@ -1,8 +1,8 @@
 ---
 name: Service LAN VPN Interface SVI
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/lan/vpn/%s/interface/svi
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - Service
 attributes:
@@ -161,6 +161,9 @@ attributes:
         example: decrement
       - model_name: decrementValue
         example: 100
+    - model_name: followDualRouterHAAvailability
+      tf_name: follow_dual_router_high_availability
+      example: false
   - model_name: vrrpIpv6
     tf_name: ipv6_vrrps
     attributes:
@@ -191,6 +194,9 @@ attributes:
       - model_name: prefix
         id: true
         example: ::20/32
+    - model_name: followDualRouterHAAvailability
+      tf_name: follow_dual_router_high_availability
+      example: false
   - model_name: dhcpClientV6
     tf_name: enable_dhcpv6
     example: false

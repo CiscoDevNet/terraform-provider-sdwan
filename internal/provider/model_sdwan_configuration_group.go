@@ -354,7 +354,7 @@ func (data *ConfigurationGroup) fromBodyConfigGroupDevices(ctx context.Context, 
 			} else {
 				item.Id = types.StringNull()
 			}
-			if cValue := v.Get("groupTopologyLabel"); cValue.Exists() {
+			if cValue := v.Get("groupTopologyLabel"); cValue.Exists() && cValue.String() != "" {
 				item.TopologyLabel = types.StringValue(cValue.String())
 			} else {
 				item.TopologyLabel = types.StringNull()

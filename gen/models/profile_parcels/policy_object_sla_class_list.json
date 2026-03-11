@@ -1,7 +1,7 @@
 {
   "request": {
     "$schema": "http://json-schema.org/draft/2019-09/schema",
-    "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/post/request_schema.json",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/sla-class/post/request_schema.json",
     "title": "Sla class Parcel Schema",
     "description": "Sla class profile parcel schema for POST request",
     "type": "object",
@@ -34,7 +34,9 @@
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["global"]
+                          "enum": [
+                            "global"
+                          ]
                         },
                         "value": {
                           "minimum": 1,
@@ -42,7 +44,10 @@
                           "type": "integer"
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     }
                   ]
@@ -55,7 +60,9 @@
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["global"]
+                          "enum": [
+                            "global"
+                          ]
                         },
                         "value": {
                           "minimum": 0,
@@ -63,7 +70,10 @@
                           "type": "integer"
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     }
                   ]
@@ -76,7 +86,9 @@
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["global"]
+                          "enum": [
+                            "global"
+                          ]
                         },
                         "value": {
                           "minimum": 1,
@@ -84,7 +96,10 @@
                           "type": "integer"
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     }
                   ]
@@ -97,18 +112,25 @@
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["global"]
+                          "enum": [
+                            "global"
+                          ]
                         },
                         "value": {
                           "type": "string",
                           "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     }
                   },
-                  "required": ["refId"],
+                  "required": [
+                    "refId"
+                  ],
                   "additionalProperties": false
                 },
                 "fallbackBestTunnel": {
@@ -123,7 +145,9 @@
                           "properties": {
                             "optionType": {
                               "type": "string",
-                              "enum": ["global"]
+                              "enum": [
+                                "global"
+                              ]
                             },
                             "value": {
                               "default": "low",
@@ -147,7 +171,10 @@
                               "type": "string"
                             }
                           },
-                          "required": ["optionType", "value"],
+                          "required": [
+                            "optionType",
+                            "value"
+                          ],
                           "additionalProperties": false
                         }
                       ]
@@ -160,7 +187,9 @@
                           "properties": {
                             "optionType": {
                               "type": "string",
-                              "enum": ["global"]
+                              "enum": [
+                                "global"
+                              ]
                             },
                             "value": {
                               "minimum": 0,
@@ -168,7 +197,10 @@
                               "type": "integer"
                             }
                           },
-                          "required": ["optionType", "value"],
+                          "required": [
+                            "optionType",
+                            "value"
+                          ],
                           "additionalProperties": false
                         }
                       ]
@@ -181,7 +213,9 @@
                           "properties": {
                             "optionType": {
                               "type": "string",
-                              "enum": ["global"]
+                              "enum": [
+                                "global"
+                              ]
                             },
                             "value": {
                               "minimum": 1,
@@ -189,7 +223,10 @@
                               "type": "integer"
                             }
                           },
-                          "required": ["optionType", "value"],
+                          "required": [
+                            "optionType",
+                            "value"
+                          ],
                           "additionalProperties": false
                         }
                       ]
@@ -202,7 +239,9 @@
                           "properties": {
                             "optionType": {
                               "type": "string",
-                              "enum": ["global"]
+                              "enum": [
+                                "global"
+                              ]
                             },
                             "value": {
                               "minimum": 1,
@@ -210,7 +249,10 @@
                               "type": "integer"
                             }
                           },
-                          "required": ["optionType", "value"],
+                          "required": [
+                            "optionType",
+                            "value"
+                          ],
                           "additionalProperties": false
                         }
                       ]
@@ -220,34 +262,38 @@
               },
               "anyOf": [
                 {
-                  "required": ["latency"]
+                  "required": [
+                    "latency"
+                  ]
                 },
                 {
-                  "required": ["loss"]
+                  "required": [
+                    "loss"
+                  ]
                 },
                 {
-                  "required": ["jitter"]
+                  "required": [
+                    "jitter"
+                  ]
                 }
               ],
               "additionalProperties": false
             }
           }
         },
-        "required": ["entries"],
+        "required": [
+          "entries"
+        ],
         "additionalProperties": false
-      }
-    },
-    "required": ["data", "name"],
-    "additionalProperties": false,
-    "propertyNames": {
-      "description": "This is the documentation for POST request schema for Sla class profile parcel",
-      "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
-      "details-2": "variable name should not be present if optionType value is NOT variable",
-      "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
-      "details-4": "when option Type is default, value should be present with given default value as specified in schema",
-      "examples": {
-        "centralized-slaclassParcelGlobalDefault": {
-          "value": {
+      },
+      "documentation": {
+        "description": "This is the documentation for POST request schema for Sla class profile parcel",
+        "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+        "details-2": "variable name should not be present if optionType value is NOT variable",
+        "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+        "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+        "examples": [
+          {
             "data": {
               "entries": [
                 {
@@ -282,10 +328,24 @@
                 }
               ]
             },
-            "name": "centralized-slaclassParcelGlobalDefault"
+            "name": "SlaClass"
           }
-        }
+        ]
+      },
+      "metadata": {
+        "minVManageVersion": "20.15.1"
       }
-    }
+    },
+    "required": [
+      "data",
+      "name"
+    ],
+    "not": {
+      "required": [
+        "documentation",
+        "metadata"
+      ]
+    },
+    "additionalProperties": false
   }
 }

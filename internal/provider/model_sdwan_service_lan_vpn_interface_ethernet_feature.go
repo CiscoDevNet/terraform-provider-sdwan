@@ -26,7 +26,6 @@ import (
 	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
-	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -34,101 +33,135 @@ import (
 
 // End of section. //template:end imports
 
-var MinServiceLANVPNInterfaceEthernetUpdateVersion = version.Must(version.NewVersion("20.14.0"))
-
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type ServiceLANVPNInterfaceEthernet struct {
-	Id                                       types.String                                               `tfsdk:"id"`
-	Version                                  types.Int64                                                `tfsdk:"version"`
-	Name                                     types.String                                               `tfsdk:"name"`
-	Description                              types.String                                               `tfsdk:"description"`
-	FeatureProfileId                         types.String                                               `tfsdk:"feature_profile_id"`
-	ServiceLanVpnFeatureId                   types.String                                               `tfsdk:"service_lan_vpn_feature_id"`
-	Shutdown                                 types.Bool                                                 `tfsdk:"shutdown"`
-	ShutdownVariable                         types.String                                               `tfsdk:"shutdown_variable"`
-	InterfaceName                            types.String                                               `tfsdk:"interface_name"`
-	InterfaceNameVariable                    types.String                                               `tfsdk:"interface_name_variable"`
-	InterfaceDescription                     types.String                                               `tfsdk:"interface_description"`
-	InterfaceDescriptionVariable             types.String                                               `tfsdk:"interface_description_variable"`
-	Ipv4ConfigurationType                    types.String                                               `tfsdk:"ipv4_configuration_type"`
-	Ipv4DhcpDistance                         types.Int64                                                `tfsdk:"ipv4_dhcp_distance"`
-	Ipv4DhcpDistanceVariable                 types.String                                               `tfsdk:"ipv4_dhcp_distance_variable"`
-	Ipv4Address                              types.String                                               `tfsdk:"ipv4_address"`
-	Ipv4AddressVariable                      types.String                                               `tfsdk:"ipv4_address_variable"`
-	Ipv4SubnetMask                           types.String                                               `tfsdk:"ipv4_subnet_mask"`
-	Ipv4SubnetMaskVariable                   types.String                                               `tfsdk:"ipv4_subnet_mask_variable"`
-	Ipv4SecondaryAddresses                   []ServiceLANVPNInterfaceEthernetIpv4SecondaryAddresses     `tfsdk:"ipv4_secondary_addresses"`
-	Ipv4DhcpHelper                           types.Set                                                  `tfsdk:"ipv4_dhcp_helper"`
-	Ipv4DhcpHelperVariable                   types.String                                               `tfsdk:"ipv4_dhcp_helper_variable"`
-	Ipv6ConfigurationType                    types.String                                               `tfsdk:"ipv6_configuration_type"`
-	EnableDhcpv6                             types.Bool                                                 `tfsdk:"enable_dhcpv6"`
-	Ipv6DhcpSecondaryAddresses               []ServiceLANVPNInterfaceEthernetIpv6DhcpSecondaryAddresses `tfsdk:"ipv6_dhcp_secondary_addresses"`
-	Ipv6Address                              types.String                                               `tfsdk:"ipv6_address"`
-	Ipv6AddressVariable                      types.String                                               `tfsdk:"ipv6_address_variable"`
-	Ipv6SecondaryAddresses                   []ServiceLANVPNInterfaceEthernetIpv6SecondaryAddresses     `tfsdk:"ipv6_secondary_addresses"`
-	Ipv6DhcpHelpers                          []ServiceLANVPNInterfaceEthernetIpv6DhcpHelpers            `tfsdk:"ipv6_dhcp_helpers"`
-	Ipv4Nat                                  types.Bool                                                 `tfsdk:"ipv4_nat"`
-	Ipv4NatRangeStart                        types.String                                               `tfsdk:"ipv4_nat_range_start"`
-	Ipv4NatRangeStartVariable                types.String                                               `tfsdk:"ipv4_nat_range_start_variable"`
-	Ipv4NatRangeEnd                          types.String                                               `tfsdk:"ipv4_nat_range_end"`
-	Ipv4NatRangeEndVariable                  types.String                                               `tfsdk:"ipv4_nat_range_end_variable"`
-	Ipv4NatPrefixLength                      types.Int64                                                `tfsdk:"ipv4_nat_prefix_length"`
-	Ipv4NatPrefixLengthVariable              types.String                                               `tfsdk:"ipv4_nat_prefix_length_variable"`
-	Ipv4NatOverload                          types.Bool                                                 `tfsdk:"ipv4_nat_overload"`
-	Ipv4NatOverloadVariable                  types.String                                               `tfsdk:"ipv4_nat_overload_variable"`
-	Ipv4NatLoopback                          types.String                                               `tfsdk:"ipv4_nat_loopback"`
-	Ipv4NatLoopbackVariable                  types.String                                               `tfsdk:"ipv4_nat_loopback_variable"`
-	Ipv4NatUdpTimeout                        types.Int64                                                `tfsdk:"ipv4_nat_udp_timeout"`
-	Ipv4NatUdpTimeoutVariable                types.String                                               `tfsdk:"ipv4_nat_udp_timeout_variable"`
-	Ipv4NatTcpTimeout                        types.Int64                                                `tfsdk:"ipv4_nat_tcp_timeout"`
-	Ipv4NatTcpTimeoutVariable                types.String                                               `tfsdk:"ipv4_nat_tcp_timeout_variable"`
-	StaticNats                               []ServiceLANVPNInterfaceEthernetStaticNats                 `tfsdk:"static_nats"`
-	Ipv6Nat                                  types.Bool                                                 `tfsdk:"ipv6_nat"`
-	Nat64                                    types.Bool                                                 `tfsdk:"nat64"`
-	AclShapingRate                           types.Int64                                                `tfsdk:"acl_shaping_rate"`
-	AclShapingRateVariable                   types.String                                               `tfsdk:"acl_shaping_rate_variable"`
-	AclIpv4EgressPolicyId                    types.String                                               `tfsdk:"acl_ipv4_egress_policy_id"`
-	AclIpv4IngressPolicyId                   types.String                                               `tfsdk:"acl_ipv4_ingress_policy_id"`
-	AclIpv6EgressPolicyId                    types.String                                               `tfsdk:"acl_ipv6_egress_policy_id"`
-	AclIpv6IngressPolicyId                   types.String                                               `tfsdk:"acl_ipv6_ingress_policy_id"`
-	Ipv6Vrrps                                []ServiceLANVPNInterfaceEthernetIpv6Vrrps                  `tfsdk:"ipv6_vrrps"`
-	Ipv4Vrrps                                []ServiceLANVPNInterfaceEthernetIpv4Vrrps                  `tfsdk:"ipv4_vrrps"`
-	Arps                                     []ServiceLANVPNInterfaceEthernetArps                       `tfsdk:"arps"`
-	TrustsecEnableSgtPropogation             types.Bool                                                 `tfsdk:"trustsec_enable_sgt_propogation"`
-	TrustsecPropogate                        types.Bool                                                 `tfsdk:"trustsec_propogate"`
-	TrustsecSecurityGroupTag                 types.Int64                                                `tfsdk:"trustsec_security_group_tag"`
-	TrustsecSecurityGroupTagVariable         types.String                                               `tfsdk:"trustsec_security_group_tag_variable"`
-	TrustsecEnableEnforcedPropogation        types.Bool                                                 `tfsdk:"trustsec_enable_enforced_propogation"`
-	TrustsecEnforcedSecurityGroupTag         types.Int64                                                `tfsdk:"trustsec_enforced_security_group_tag"`
-	TrustsecEnforcedSecurityGroupTagVariable types.String                                               `tfsdk:"trustsec_enforced_security_group_tag_variable"`
-	Duplex                                   types.String                                               `tfsdk:"duplex"`
-	DuplexVariable                           types.String                                               `tfsdk:"duplex_variable"`
-	MacAddress                               types.String                                               `tfsdk:"mac_address"`
-	MacAddressVariable                       types.String                                               `tfsdk:"mac_address_variable"`
-	IpMtu                                    types.Int64                                                `tfsdk:"ip_mtu"`
-	IpMtuVariable                            types.String                                               `tfsdk:"ip_mtu_variable"`
-	InterfaceMtu                             types.Int64                                                `tfsdk:"interface_mtu"`
-	InterfaceMtuVariable                     types.String                                               `tfsdk:"interface_mtu_variable"`
-	TcpMss                                   types.Int64                                                `tfsdk:"tcp_mss"`
-	TcpMssVariable                           types.String                                               `tfsdk:"tcp_mss_variable"`
-	Speed                                    types.String                                               `tfsdk:"speed"`
-	SpeedVariable                            types.String                                               `tfsdk:"speed_variable"`
-	ArpTimeout                               types.Int64                                                `tfsdk:"arp_timeout"`
-	ArpTimeoutVariable                       types.String                                               `tfsdk:"arp_timeout_variable"`
-	Autonegotiate                            types.Bool                                                 `tfsdk:"autonegotiate"`
-	AutonegotiateVariable                    types.String                                               `tfsdk:"autonegotiate_variable"`
-	MediaType                                types.String                                               `tfsdk:"media_type"`
-	MediaTypeVariable                        types.String                                               `tfsdk:"media_type_variable"`
-	LoadInterval                             types.Int64                                                `tfsdk:"load_interval"`
-	LoadIntervalVariable                     types.String                                               `tfsdk:"load_interval_variable"`
-	Tracker                                  types.String                                               `tfsdk:"tracker"`
-	TrackerVariable                          types.String                                               `tfsdk:"tracker_variable"`
-	IcmpRedirectDisable                      types.Bool                                                 `tfsdk:"icmp_redirect_disable"`
-	IcmpRedirectDisableVariable              types.String                                               `tfsdk:"icmp_redirect_disable_variable"`
-	Xconnect                                 types.String                                               `tfsdk:"xconnect"`
-	XconnectVariable                         types.String                                               `tfsdk:"xconnect_variable"`
-	IpDirectedBroadcast                      types.Bool                                                 `tfsdk:"ip_directed_broadcast"`
-	IpDirectedBroadcastVariable              types.String                                               `tfsdk:"ip_directed_broadcast_variable"`
+	Id                                                    types.String                                                 `tfsdk:"id"`
+	Version                                               types.Int64                                                  `tfsdk:"version"`
+	Name                                                  types.String                                                 `tfsdk:"name"`
+	Description                                           types.String                                                 `tfsdk:"description"`
+	FeatureProfileId                                      types.String                                                 `tfsdk:"feature_profile_id"`
+	ServiceLanVpnFeatureId                                types.String                                                 `tfsdk:"service_lan_vpn_feature_id"`
+	Shutdown                                              types.Bool                                                   `tfsdk:"shutdown"`
+	ShutdownVariable                                      types.String                                                 `tfsdk:"shutdown_variable"`
+	InterfaceName                                         types.String                                                 `tfsdk:"interface_name"`
+	InterfaceNameVariable                                 types.String                                                 `tfsdk:"interface_name_variable"`
+	InterfaceDescription                                  types.String                                                 `tfsdk:"interface_description"`
+	InterfaceDescriptionVariable                          types.String                                                 `tfsdk:"interface_description_variable"`
+	PortChannelInterface                                  types.Bool                                                   `tfsdk:"port_channel_interface"`
+	PortChannelMode                                       types.String                                                 `tfsdk:"port_channel_mode"`
+	PortChannelLacpQosAggregate                           types.Bool                                                   `tfsdk:"port_channel_lacp_qos_aggregate"`
+	PortChannelLacpQosAggregateVariable                   types.String                                                 `tfsdk:"port_channel_lacp_qos_aggregate_variable"`
+	PortChannelLacpLoadBalance                            types.String                                                 `tfsdk:"port_channel_lacp_load_balance"`
+	PortChannelLacpLoadBalanceVariable                    types.String                                                 `tfsdk:"port_channel_lacp_load_balance_variable"`
+	PortChannelLacpFastSwitchover                         types.Bool                                                   `tfsdk:"port_channel_lacp_fast_switchover"`
+	PortChannelLacpFastSwitchoverVariable                 types.String                                                 `tfsdk:"port_channel_lacp_fast_switchover_variable"`
+	PortChannelLacpMinBundle                              types.Int64                                                  `tfsdk:"port_channel_lacp_min_bundle"`
+	PortChannelLacpMinBundleVariable                      types.String                                                 `tfsdk:"port_channel_lacp_min_bundle_variable"`
+	PortChannelLacpMaxBundle                              types.Int64                                                  `tfsdk:"port_channel_lacp_max_bundle"`
+	PortChannelLacpMaxBundleVariable                      types.String                                                 `tfsdk:"port_channel_lacp_max_bundle_variable"`
+	PortChannelLacpMemberLinks                            []ServiceLANVPNInterfaceEthernetPortChannelLacpMemberLinks   `tfsdk:"port_channel_lacp_member_links"`
+	PortChannelStaticQosAggregate                         types.Bool                                                   `tfsdk:"port_channel_static_qos_aggregate"`
+	PortChannelStaticQosAggregateVariable                 types.String                                                 `tfsdk:"port_channel_static_qos_aggregate_variable"`
+	PortChannelStaticLoadBalance                          types.String                                                 `tfsdk:"port_channel_static_load_balance"`
+	PortChannelStaticLoadBalanceVariable                  types.String                                                 `tfsdk:"port_channel_static_load_balance_variable"`
+	PortChannelStaticMemberLinks                          []ServiceLANVPNInterfaceEthernetPortChannelStaticMemberLinks `tfsdk:"port_channel_static_member_links"`
+	PortChannelSubinterface                               types.Bool                                                   `tfsdk:"port_channel_subinterface"`
+	PortChannelSubinterfacePrimaryInterfaceName           types.String                                                 `tfsdk:"port_channel_subinterface_primary_interface_name"`
+	PortChannelSubinterfacePrimaryInterfaceNameVariable   types.String                                                 `tfsdk:"port_channel_subinterface_primary_interface_name_variable"`
+	PortChannelSubinterfaceSecondaryInterfaceName         types.String                                                 `tfsdk:"port_channel_subinterface_secondary_interface_name"`
+	PortChannelSubinterfaceSecondaryInterfaceNameVariable types.String                                                 `tfsdk:"port_channel_subinterface_secondary_interface_name_variable"`
+	PortChannelMemberInterface                            types.Bool                                                   `tfsdk:"port_channel_member_interface"`
+	Ipv4ConfigurationType                                 types.String                                                 `tfsdk:"ipv4_configuration_type"`
+	Ipv4DhcpDistance                                      types.Int64                                                  `tfsdk:"ipv4_dhcp_distance"`
+	Ipv4DhcpDistanceVariable                              types.String                                                 `tfsdk:"ipv4_dhcp_distance_variable"`
+	Ipv4Address                                           types.String                                                 `tfsdk:"ipv4_address"`
+	Ipv4AddressVariable                                   types.String                                                 `tfsdk:"ipv4_address_variable"`
+	Ipv4SubnetMask                                        types.String                                                 `tfsdk:"ipv4_subnet_mask"`
+	Ipv4SubnetMaskVariable                                types.String                                                 `tfsdk:"ipv4_subnet_mask_variable"`
+	Ipv4SecondaryAddresses                                []ServiceLANVPNInterfaceEthernetIpv4SecondaryAddresses       `tfsdk:"ipv4_secondary_addresses"`
+	Ipv4DhcpHelper                                        types.Set                                                    `tfsdk:"ipv4_dhcp_helper"`
+	Ipv4DhcpHelperVariable                                types.String                                                 `tfsdk:"ipv4_dhcp_helper_variable"`
+	Ipv6ConfigurationType                                 types.String                                                 `tfsdk:"ipv6_configuration_type"`
+	EnableDhcpv6                                          types.Bool                                                   `tfsdk:"enable_dhcpv6"`
+	Ipv6DhcpSecondaryAddresses                            []ServiceLANVPNInterfaceEthernetIpv6DhcpSecondaryAddresses   `tfsdk:"ipv6_dhcp_secondary_addresses"`
+	Ipv6Address                                           types.String                                                 `tfsdk:"ipv6_address"`
+	Ipv6AddressVariable                                   types.String                                                 `tfsdk:"ipv6_address_variable"`
+	Ipv6SecondaryAddresses                                []ServiceLANVPNInterfaceEthernetIpv6SecondaryAddresses       `tfsdk:"ipv6_secondary_addresses"`
+	Ipv6DhcpHelpers                                       []ServiceLANVPNInterfaceEthernetIpv6DhcpHelpers              `tfsdk:"ipv6_dhcp_helpers"`
+	Ipv4Nat                                               types.Bool                                                   `tfsdk:"ipv4_nat"`
+	Ipv4NatRangeStart                                     types.String                                                 `tfsdk:"ipv4_nat_range_start"`
+	Ipv4NatRangeStartVariable                             types.String                                                 `tfsdk:"ipv4_nat_range_start_variable"`
+	Ipv4NatRangeEnd                                       types.String                                                 `tfsdk:"ipv4_nat_range_end"`
+	Ipv4NatRangeEndVariable                               types.String                                                 `tfsdk:"ipv4_nat_range_end_variable"`
+	Ipv4NatPrefixLength                                   types.Int64                                                  `tfsdk:"ipv4_nat_prefix_length"`
+	Ipv4NatPrefixLengthVariable                           types.String                                                 `tfsdk:"ipv4_nat_prefix_length_variable"`
+	Ipv4NatOverload                                       types.Bool                                                   `tfsdk:"ipv4_nat_overload"`
+	Ipv4NatOverloadVariable                               types.String                                                 `tfsdk:"ipv4_nat_overload_variable"`
+	Ipv4NatLoopback                                       types.String                                                 `tfsdk:"ipv4_nat_loopback"`
+	Ipv4NatLoopbackVariable                               types.String                                                 `tfsdk:"ipv4_nat_loopback_variable"`
+	Ipv4NatUdpTimeout                                     types.Int64                                                  `tfsdk:"ipv4_nat_udp_timeout"`
+	Ipv4NatUdpTimeoutVariable                             types.String                                                 `tfsdk:"ipv4_nat_udp_timeout_variable"`
+	Ipv4NatTcpTimeout                                     types.Int64                                                  `tfsdk:"ipv4_nat_tcp_timeout"`
+	Ipv4NatTcpTimeoutVariable                             types.String                                                 `tfsdk:"ipv4_nat_tcp_timeout_variable"`
+	StaticNats                                            []ServiceLANVPNInterfaceEthernetStaticNats                   `tfsdk:"static_nats"`
+	Ipv6Nat                                               types.Bool                                                   `tfsdk:"ipv6_nat"`
+	Nat64                                                 types.Bool                                                   `tfsdk:"nat64"`
+	AclShapingRate                                        types.Int64                                                  `tfsdk:"acl_shaping_rate"`
+	AclShapingRateVariable                                types.String                                                 `tfsdk:"acl_shaping_rate_variable"`
+	AclIpv4EgressPolicyId                                 types.String                                                 `tfsdk:"acl_ipv4_egress_policy_id"`
+	AclIpv4IngressPolicyId                                types.String                                                 `tfsdk:"acl_ipv4_ingress_policy_id"`
+	AclIpv6EgressPolicyId                                 types.String                                                 `tfsdk:"acl_ipv6_egress_policy_id"`
+	AclIpv6IngressPolicyId                                types.String                                                 `tfsdk:"acl_ipv6_ingress_policy_id"`
+	Ipv6Vrrps                                             []ServiceLANVPNInterfaceEthernetIpv6Vrrps                    `tfsdk:"ipv6_vrrps"`
+	Ipv4Vrrps                                             []ServiceLANVPNInterfaceEthernetIpv4Vrrps                    `tfsdk:"ipv4_vrrps"`
+	Arps                                                  []ServiceLANVPNInterfaceEthernetArps                         `tfsdk:"arps"`
+	TrustsecEnableSgtPropogation                          types.Bool                                                   `tfsdk:"trustsec_enable_sgt_propogation"`
+	TrustsecPropogate                                     types.Bool                                                   `tfsdk:"trustsec_propogate"`
+	TrustsecSecurityGroupTag                              types.Int64                                                  `tfsdk:"trustsec_security_group_tag"`
+	TrustsecSecurityGroupTagVariable                      types.String                                                 `tfsdk:"trustsec_security_group_tag_variable"`
+	TrustsecEnableEnforcedPropogation                     types.Bool                                                   `tfsdk:"trustsec_enable_enforced_propogation"`
+	TrustsecEnforcedSecurityGroupTag                      types.Int64                                                  `tfsdk:"trustsec_enforced_security_group_tag"`
+	TrustsecEnforcedSecurityGroupTagVariable              types.String                                                 `tfsdk:"trustsec_enforced_security_group_tag_variable"`
+	Duplex                                                types.String                                                 `tfsdk:"duplex"`
+	DuplexVariable                                        types.String                                                 `tfsdk:"duplex_variable"`
+	MacAddress                                            types.String                                                 `tfsdk:"mac_address"`
+	MacAddressVariable                                    types.String                                                 `tfsdk:"mac_address_variable"`
+	IpMtu                                                 types.Int64                                                  `tfsdk:"ip_mtu"`
+	IpMtuVariable                                         types.String                                                 `tfsdk:"ip_mtu_variable"`
+	InterfaceMtu                                          types.Int64                                                  `tfsdk:"interface_mtu"`
+	InterfaceMtuVariable                                  types.String                                                 `tfsdk:"interface_mtu_variable"`
+	TcpMss                                                types.Int64                                                  `tfsdk:"tcp_mss"`
+	TcpMssVariable                                        types.String                                                 `tfsdk:"tcp_mss_variable"`
+	Speed                                                 types.String                                                 `tfsdk:"speed"`
+	SpeedVariable                                         types.String                                                 `tfsdk:"speed_variable"`
+	ArpTimeout                                            types.Int64                                                  `tfsdk:"arp_timeout"`
+	ArpTimeoutVariable                                    types.String                                                 `tfsdk:"arp_timeout_variable"`
+	Autonegotiate                                         types.Bool                                                   `tfsdk:"autonegotiate"`
+	AutonegotiateVariable                                 types.String                                                 `tfsdk:"autonegotiate_variable"`
+	MediaType                                             types.String                                                 `tfsdk:"media_type"`
+	MediaTypeVariable                                     types.String                                                 `tfsdk:"media_type_variable"`
+	LoadInterval                                          types.Int64                                                  `tfsdk:"load_interval"`
+	LoadIntervalVariable                                  types.String                                                 `tfsdk:"load_interval_variable"`
+	IcmpRedirectDisable                                   types.Bool                                                   `tfsdk:"icmp_redirect_disable"`
+	IcmpRedirectDisableVariable                           types.String                                                 `tfsdk:"icmp_redirect_disable_variable"`
+	Xconnect                                              types.String                                                 `tfsdk:"xconnect"`
+	XconnectVariable                                      types.String                                                 `tfsdk:"xconnect_variable"`
+	IpDirectedBroadcast                                   types.Bool                                                   `tfsdk:"ip_directed_broadcast"`
+	IpDirectedBroadcastVariable                           types.String                                                 `tfsdk:"ip_directed_broadcast_variable"`
+}
+
+type ServiceLANVPNInterfaceEthernetPortChannelLacpMemberLinks struct {
+	InterfaceId              types.String `tfsdk:"interface_id"`
+	LacpMode                 types.String `tfsdk:"lacp_mode"`
+	LacpModeVariable         types.String `tfsdk:"lacp_mode_variable"`
+	LacpRate                 types.String `tfsdk:"lacp_rate"`
+	LacpRateVariable         types.String `tfsdk:"lacp_rate_variable"`
+	LacpPortPriority         types.Int64  `tfsdk:"lacp_port_priority"`
+	LacpPortPriorityVariable types.String `tfsdk:"lacp_port_priority_variable"`
+}
+
+type ServiceLANVPNInterfaceEthernetPortChannelStaticMemberLinks struct {
+	InterfaceId types.String `tfsdk:"interface_id"`
 }
 
 type ServiceLANVPNInterfaceEthernetIpv4SecondaryAddresses struct {
@@ -166,30 +199,36 @@ type ServiceLANVPNInterfaceEthernetStaticNats struct {
 }
 
 type ServiceLANVPNInterfaceEthernetIpv6Vrrps struct {
-	GroupId          types.Int64                                            `tfsdk:"group_id"`
-	GroupIdVariable  types.String                                           `tfsdk:"group_id_variable"`
-	Priority         types.Int64                                            `tfsdk:"priority"`
-	PriorityVariable types.String                                           `tfsdk:"priority_variable"`
-	Timer            types.Int64                                            `tfsdk:"timer"`
-	TimerVariable    types.String                                           `tfsdk:"timer_variable"`
-	TrackOmp         types.Bool                                             `tfsdk:"track_omp"`
-	Ipv6Addresses    []ServiceLANVPNInterfaceEthernetIpv6VrrpsIpv6Addresses `tfsdk:"ipv6_addresses"`
+	GroupId                          types.Int64                                            `tfsdk:"group_id"`
+	GroupIdVariable                  types.String                                           `tfsdk:"group_id_variable"`
+	Priority                         types.Int64                                            `tfsdk:"priority"`
+	PriorityVariable                 types.String                                           `tfsdk:"priority_variable"`
+	Timer                            types.Int64                                            `tfsdk:"timer"`
+	TimerVariable                    types.String                                           `tfsdk:"timer_variable"`
+	TrackOmp                         types.Bool                                             `tfsdk:"track_omp"`
+	Ipv6Addresses                    []ServiceLANVPNInterfaceEthernetIpv6VrrpsIpv6Addresses `tfsdk:"ipv6_addresses"`
+	FollowDualRouterHighAvailability types.Bool                                             `tfsdk:"follow_dual_router_high_availability"`
+	MinPreemptDelay                  types.Int64                                            `tfsdk:"min_preempt_delay"`
+	MinPreemptDelayVariable          types.String                                           `tfsdk:"min_preempt_delay_variable"`
 }
 
 type ServiceLANVPNInterfaceEthernetIpv4Vrrps struct {
-	GroupId             types.Int64                                                 `tfsdk:"group_id"`
-	GroupIdVariable     types.String                                                `tfsdk:"group_id_variable"`
-	Priority            types.Int64                                                 `tfsdk:"priority"`
-	PriorityVariable    types.String                                                `tfsdk:"priority_variable"`
-	Timer               types.Int64                                                 `tfsdk:"timer"`
-	TimerVariable       types.String                                                `tfsdk:"timer_variable"`
-	TrackOmp            types.Bool                                                  `tfsdk:"track_omp"`
-	Address             types.String                                                `tfsdk:"address"`
-	AddressVariable     types.String                                                `tfsdk:"address_variable"`
-	SecondaryAddresses  []ServiceLANVPNInterfaceEthernetIpv4VrrpsSecondaryAddresses `tfsdk:"secondary_addresses"`
-	TlocPrefixChange    types.Bool                                                  `tfsdk:"tloc_prefix_change"`
-	TlocPrefChangeValue types.Int64                                                 `tfsdk:"tloc_pref_change_value"`
-	TrackingObjects     []ServiceLANVPNInterfaceEthernetIpv4VrrpsTrackingObjects    `tfsdk:"tracking_objects"`
+	GroupId                          types.Int64                                                 `tfsdk:"group_id"`
+	GroupIdVariable                  types.String                                                `tfsdk:"group_id_variable"`
+	Priority                         types.Int64                                                 `tfsdk:"priority"`
+	PriorityVariable                 types.String                                                `tfsdk:"priority_variable"`
+	Timer                            types.Int64                                                 `tfsdk:"timer"`
+	TimerVariable                    types.String                                                `tfsdk:"timer_variable"`
+	TrackOmp                         types.Bool                                                  `tfsdk:"track_omp"`
+	Address                          types.String                                                `tfsdk:"address"`
+	AddressVariable                  types.String                                                `tfsdk:"address_variable"`
+	SecondaryAddresses               []ServiceLANVPNInterfaceEthernetIpv4VrrpsSecondaryAddresses `tfsdk:"secondary_addresses"`
+	TlocPrefixChange                 types.Bool                                                  `tfsdk:"tloc_prefix_change"`
+	TlocPrefChangeValue              types.Int64                                                 `tfsdk:"tloc_pref_change_value"`
+	TrackingObjects                  []ServiceLANVPNInterfaceEthernetIpv4VrrpsTrackingObjects    `tfsdk:"tracking_objects"`
+	FollowDualRouterHighAvailability types.Bool                                                  `tfsdk:"follow_dual_router_high_availability"`
+	MinPreemptDelay                  types.Int64                                                 `tfsdk:"min_preempt_delay"`
+	MinPreemptDelayVariable          types.String                                                `tfsdk:"min_preempt_delay_variable"`
 }
 
 type ServiceLANVPNInterfaceEthernetArps struct {
@@ -236,7 +275,7 @@ func (data ServiceLANVPNInterfaceEthernet) getPath() string {
 
 // End of section. //template:end getPath
 
-func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVersion *version.Version) string {
+func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -285,6 +324,213 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 		if true {
 			body, _ = sjson.Set(body, path+"description.optionType", "global")
 			body, _ = sjson.Set(body, path+"description.value", data.InterfaceDescription.ValueString())
+		}
+	}
+	if data.PortChannelInterface.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"portChannelInterface.optionType", "default")
+			body, _ = sjson.Set(body, path+"portChannelInterface.value", false)
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"portChannelInterface.optionType", "global")
+			body, _ = sjson.Set(body, path+"portChannelInterface.value", data.PortChannelInterface.ValueBool())
+		}
+	}
+
+	if !data.PortChannelLacpQosAggregateVariable.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.optionType", "variable")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.value", data.PortChannelLacpQosAggregateVariable.ValueString())
+		}
+	} else if !data.PortChannelLacpQosAggregate.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.optionType", "global")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.value", data.PortChannelLacpQosAggregate.ValueBool())
+		}
+	}
+
+	if !data.PortChannelLacpLoadBalanceVariable.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.loadBalance.optionType", "variable")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.loadBalance.value", data.PortChannelLacpLoadBalanceVariable.ValueString())
+		}
+	} else if !data.PortChannelLacpLoadBalance.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.loadBalance.optionType", "global")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.loadBalance.value", data.PortChannelLacpLoadBalance.ValueString())
+		}
+	}
+
+	if !data.PortChannelLacpFastSwitchoverVariable.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.optionType", "variable")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.value", data.PortChannelLacpFastSwitchoverVariable.ValueString())
+		}
+	} else if !data.PortChannelLacpFastSwitchover.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.optionType", "global")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.value", data.PortChannelLacpFastSwitchover.ValueBool())
+		}
+	}
+
+	if !data.PortChannelLacpMinBundleVariable.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.optionType", "variable")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.value", data.PortChannelLacpMinBundleVariable.ValueString())
+		}
+	} else if !data.PortChannelLacpMinBundle.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.optionType", "global")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.value", data.PortChannelLacpMinBundle.ValueInt64())
+		}
+	}
+
+	if !data.PortChannelLacpMaxBundleVariable.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.optionType", "variable")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.value", data.PortChannelLacpMaxBundleVariable.ValueString())
+		}
+	} else if !data.PortChannelLacpMaxBundle.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.optionType", "global")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.value", data.PortChannelLacpMaxBundle.ValueInt64())
+		}
+	}
+	if true && data.PortChannelMode.ValueString() == "lacp" {
+
+		for _, item := range data.PortChannelLacpMemberLinks {
+			itemBody := ""
+			if !item.InterfaceId.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "interface.refId.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "interface.refId.value", item.InterfaceId.ValueString())
+				}
+			}
+
+			if !item.LacpModeVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "lacpMode.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "lacpMode.value", item.LacpModeVariable.ValueString())
+				}
+			} else if item.LacpMode.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "lacpMode.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "lacpMode.value", "active")
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "lacpMode.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "lacpMode.value", item.LacpMode.ValueString())
+				}
+			}
+
+			if !item.LacpRateVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "lacpRate.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "lacpRate.value", item.LacpRateVariable.ValueString())
+				}
+			} else if !item.LacpRate.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "lacpRate.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "lacpRate.value", item.LacpRate.ValueString())
+				}
+			}
+
+			if !item.LacpPortPriorityVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "lacpPortPriority.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "lacpPortPriority.value", item.LacpPortPriorityVariable.ValueString())
+				}
+			} else if !item.LacpPortPriority.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "lacpPortPriority.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "lacpPortPriority.value", item.LacpPortPriority.ValueInt64())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelMemberLinks.-1", itemBody)
+		}
+	}
+
+	if !data.PortChannelStaticQosAggregateVariable.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "static" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.optionType", "variable")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.value", data.PortChannelStaticQosAggregateVariable.ValueString())
+		}
+	} else if !data.PortChannelStaticQosAggregate.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "static" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.optionType", "global")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.value", data.PortChannelStaticQosAggregate.ValueBool())
+		}
+	}
+
+	if !data.PortChannelStaticLoadBalanceVariable.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "static" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.loadBalance.optionType", "variable")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.loadBalance.value", data.PortChannelStaticLoadBalanceVariable.ValueString())
+		}
+	} else if !data.PortChannelStaticLoadBalance.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "static" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.loadBalance.optionType", "global")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.loadBalance.value", data.PortChannelStaticLoadBalance.ValueString())
+		}
+	}
+	if true && data.PortChannelMode.ValueString() == "static" {
+
+		for _, item := range data.PortChannelStaticMemberLinks {
+			itemBody := ""
+			if !item.InterfaceId.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "interface.refId.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "interface.refId.value", item.InterfaceId.ValueString())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelMemberLinks.-1", itemBody)
+		}
+	}
+
+	if !data.PortChannelSubinterfacePrimaryInterfaceNameVariable.IsNull() {
+		if true && data.PortChannelInterface.ValueBool() == true && data.PortChannelSubinterface.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"portChannel.subInterface.primaryInterfaceName.optionType", "variable")
+			body, _ = sjson.Set(body, path+"portChannel.subInterface.primaryInterfaceName.value", data.PortChannelSubinterfacePrimaryInterfaceNameVariable.ValueString())
+		}
+	} else if data.PortChannelSubinterfacePrimaryInterfaceName.IsNull() {
+		if true && data.PortChannelInterface.ValueBool() == true && data.PortChannelSubinterface.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"portChannel.subInterface.primaryInterfaceName.optionType", "default")
+
+		}
+	} else {
+		if true && data.PortChannelInterface.ValueBool() == true && data.PortChannelSubinterface.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"portChannel.subInterface.primaryInterfaceName.optionType", "global")
+			body, _ = sjson.Set(body, path+"portChannel.subInterface.primaryInterfaceName.value", data.PortChannelSubinterfacePrimaryInterfaceName.ValueString())
+		}
+	}
+
+	if !data.PortChannelSubinterfaceSecondaryInterfaceNameVariable.IsNull() {
+		if true && data.PortChannelInterface.ValueBool() == true && data.PortChannelSubinterface.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"portChannel.subInterface.secondaryInterfaceName.optionType", "variable")
+			body, _ = sjson.Set(body, path+"portChannel.subInterface.secondaryInterfaceName.value", data.PortChannelSubinterfaceSecondaryInterfaceNameVariable.ValueString())
+		}
+	} else if data.PortChannelSubinterfaceSecondaryInterfaceName.IsNull() {
+		if true && data.PortChannelInterface.ValueBool() == true && data.PortChannelSubinterface.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"portChannel.subInterface.secondaryInterfaceName.optionType", "default")
+
+		}
+	} else {
+		if true && data.PortChannelInterface.ValueBool() == true && data.PortChannelSubinterface.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"portChannel.subInterface.secondaryInterfaceName.optionType", "global")
+			body, _ = sjson.Set(body, path+"portChannel.subInterface.secondaryInterfaceName.value", data.PortChannelSubinterfaceSecondaryInterfaceName.ValueString())
+		}
+	}
+	if data.PortChannelMemberInterface.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"portChannelMemberInterface.optionType", "default")
+			body, _ = sjson.Set(body, path+"portChannelMemberInterface.value", false)
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"portChannelMemberInterface.optionType", "global")
+			body, _ = sjson.Set(body, path+"portChannelMemberInterface.value", data.PortChannelMemberInterface.ValueBool())
 		}
 	}
 
@@ -361,17 +607,17 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 	}
 
 	if !data.Ipv4DhcpHelperVariable.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"dhcpHelper.optionType", "variable")
 			body, _ = sjson.Set(body, path+"dhcpHelper.value", data.Ipv4DhcpHelperVariable.ValueString())
 		}
 	} else if data.Ipv4DhcpHelper.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"dhcpHelper.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"dhcpHelper.optionType", "global")
 			var values []string
 			data.Ipv4DhcpHelper.ElementsAs(ctx, &values, false)
@@ -466,17 +712,17 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 		}
 	}
 	if data.Ipv4Nat.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"nat.optionType", "default")
 			body, _ = sjson.Set(body, path+"nat.value", false)
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"nat.optionType", "global")
 			body, _ = sjson.Set(body, path+"nat.value", data.Ipv4Nat.ValueBool())
 		}
 	}
-	if true {
+	if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natType.optionType", "global")
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natType.value", "pool")
 	}
@@ -529,19 +775,15 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 		}
 	}
 
-	natLookBackRef := "natLookback"
-	if !currentVersion.LessThan(MinServiceLANVPNInterfaceEthernetUpdateVersion) {
-		natLookBackRef = "natLoopback"
-	}
 	if !data.Ipv4NatLoopbackVariable.IsNull() {
 		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4."+natLookBackRef+".optionType", "variable")
-			body, _ = sjson.Set(body, path+"natAttributesIpv4."+natLookBackRef+".value", data.Ipv4NatLoopbackVariable.ValueString())
+			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLoopback.optionType", "variable")
+			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLoopback.value", data.Ipv4NatLoopbackVariable.ValueString())
 		}
 	} else if !data.Ipv4NatLoopback.IsNull() {
 		if true {
-			body, _ = sjson.Set(body, path+"natAttributesIpv4."+natLookBackRef+".optionType", "global")
-			body, _ = sjson.Set(body, path+"natAttributesIpv4."+natLookBackRef+".value", data.Ipv4NatLoopback.ValueString())
+			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLoopback.optionType", "global")
+			body, _ = sjson.Set(body, path+"natAttributesIpv4.natLoopback.value", data.Ipv4NatLoopback.ValueString())
 		}
 	}
 
@@ -638,12 +880,12 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 		}
 	}
 	if data.Ipv6Nat.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"natIpv6.optionType", "default")
 			body, _ = sjson.Set(body, path+"natIpv6.value", false)
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"natIpv6.optionType", "global")
 			body, _ = sjson.Set(body, path+"natIpv6.value", data.Ipv6Nat.ValueBool())
 		}
@@ -656,17 +898,17 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 	}
 
 	if !data.AclShapingRateVariable.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRate.optionType", "variable")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRate.value", data.AclShapingRateVariable.ValueString())
 		}
 	} else if data.AclShapingRate.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRate.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRate.optionType", "global")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRate.value", data.AclShapingRate.ValueInt64())
 		}
@@ -695,7 +937,7 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 			body, _ = sjson.Set(body, path+"aclQos.ipv6AclIngress.refId.value", data.AclIpv6IngressPolicyId.ValueString())
 		}
 	}
-	if true {
+	if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 		body, _ = sjson.Set(body, path+"vrrpIpv6", []interface{}{})
 		for _, item := range data.Ipv6Vrrps {
 			itemBody := ""
@@ -792,10 +1034,38 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 					itemBody, _ = sjson.SetRaw(itemBody, "ipv6.-1", itemChildBody)
 				}
 			}
+			if item.FollowDualRouterHighAvailability.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "followDualRouterHAAvailability.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "followDualRouterHAAvailability.value", true)
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "followDualRouterHAAvailability.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "followDualRouterHAAvailability.value", item.FollowDualRouterHighAvailability.ValueBool())
+				}
+			}
+
+			if !item.MinPreemptDelayVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "minPreemptDelay.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "minPreemptDelay.value", item.MinPreemptDelayVariable.ValueString())
+				}
+			} else if item.MinPreemptDelay.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "minPreemptDelay.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "minPreemptDelay.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "minPreemptDelay.value", item.MinPreemptDelay.ValueInt64())
+				}
+			}
 			body, _ = sjson.SetRaw(body, path+"vrrpIpv6.-1", itemBody)
 		}
 	}
-	if true {
+	if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 		body, _ = sjson.Set(body, path+"vrrp", []interface{}{})
 		for _, item := range data.Ipv4Vrrps {
 			itemBody := ""
@@ -958,10 +1228,38 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 					itemBody, _ = sjson.SetRaw(itemBody, "trackingObject.-1", itemChildBody)
 				}
 			}
+			if item.FollowDualRouterHighAvailability.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "followDualRouterHAAvailability.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "followDualRouterHAAvailability.value", true)
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "followDualRouterHAAvailability.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "followDualRouterHAAvailability.value", item.FollowDualRouterHighAvailability.ValueBool())
+				}
+			}
+
+			if !item.MinPreemptDelayVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "minPreemptDelay.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "minPreemptDelay.value", item.MinPreemptDelayVariable.ValueString())
+				}
+			} else if item.MinPreemptDelay.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "minPreemptDelay.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "minPreemptDelay.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "minPreemptDelay.value", item.MinPreemptDelay.ValueInt64())
+				}
+			}
 			body, _ = sjson.SetRaw(body, path+"vrrp.-1", itemBody)
 		}
 	}
-	if true {
+	if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 		body, _ = sjson.Set(body, path+"arp", []interface{}{})
 		for _, item := range data.Arps {
 			itemBody := ""
@@ -998,187 +1296,187 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 		}
 	}
 	if data.TrustsecEnableSgtPropogation.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"trustsec.enableSGTPropogation.optionType", "default")
 			body, _ = sjson.Set(body, path+"trustsec.enableSGTPropogation.value", false)
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"trustsec.enableSGTPropogation.optionType", "global")
 			body, _ = sjson.Set(body, path+"trustsec.enableSGTPropogation.value", data.TrustsecEnableSgtPropogation.ValueBool())
 		}
 	}
 	if data.TrustsecPropogate.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"trustsec.propogate.optionType", "default")
 			body, _ = sjson.Set(body, path+"trustsec.propogate.value", true)
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"trustsec.propogate.optionType", "global")
 			body, _ = sjson.Set(body, path+"trustsec.propogate.value", data.TrustsecPropogate.ValueBool())
 		}
 	}
 
 	if !data.TrustsecSecurityGroupTagVariable.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"trustsec.securityGroupTag.optionType", "variable")
 			body, _ = sjson.Set(body, path+"trustsec.securityGroupTag.value", data.TrustsecSecurityGroupTagVariable.ValueString())
 		}
 	} else if data.TrustsecSecurityGroupTag.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"trustsec.securityGroupTag.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"trustsec.securityGroupTag.optionType", "global")
 			body, _ = sjson.Set(body, path+"trustsec.securityGroupTag.value", data.TrustsecSecurityGroupTag.ValueInt64())
 		}
 	}
 	if data.TrustsecEnableEnforcedPropogation.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"trustsec.enableEnforcedPropogation.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"trustsec.enableEnforcedPropogation.optionType", "global")
 			body, _ = sjson.Set(body, path+"trustsec.enableEnforcedPropogation.value", data.TrustsecEnableEnforcedPropogation.ValueBool())
 		}
 	}
 
 	if !data.TrustsecEnforcedSecurityGroupTagVariable.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"trustsec.enforcedSecurityGroupTag.optionType", "variable")
 			body, _ = sjson.Set(body, path+"trustsec.enforcedSecurityGroupTag.value", data.TrustsecEnforcedSecurityGroupTagVariable.ValueString())
 		}
 	} else if data.TrustsecEnforcedSecurityGroupTag.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"trustsec.enforcedSecurityGroupTag.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"trustsec.enforcedSecurityGroupTag.optionType", "global")
 			body, _ = sjson.Set(body, path+"trustsec.enforcedSecurityGroupTag.value", data.TrustsecEnforcedSecurityGroupTag.ValueInt64())
 		}
 	}
 
 	if !data.DuplexVariable.IsNull() {
-		if true {
+		if true && !(data.PortChannelInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.duplex.optionType", "variable")
 			body, _ = sjson.Set(body, path+"advanced.duplex.value", data.DuplexVariable.ValueString())
 		}
 	} else if data.Duplex.IsNull() {
-		if true {
+		if true && !(data.PortChannelInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.duplex.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.duplex.optionType", "global")
 			body, _ = sjson.Set(body, path+"advanced.duplex.value", data.Duplex.ValueString())
 		}
 	}
 
 	if !data.MacAddressVariable.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && !(data.PortChannelInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.macAddress.optionType", "variable")
 			body, _ = sjson.Set(body, path+"advanced.macAddress.value", data.MacAddressVariable.ValueString())
 		}
 	} else if data.MacAddress.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && !(data.PortChannelInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.macAddress.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && !(data.PortChannelInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.macAddress.optionType", "global")
 			body, _ = sjson.Set(body, path+"advanced.macAddress.value", data.MacAddress.ValueString())
 		}
 	}
 
 	if !data.IpMtuVariable.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.ipMtu.optionType", "variable")
 			body, _ = sjson.Set(body, path+"advanced.ipMtu.value", data.IpMtuVariable.ValueString())
 		}
 	} else if data.IpMtu.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.ipMtu.optionType", "default")
 			body, _ = sjson.Set(body, path+"advanced.ipMtu.value", 1500)
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.ipMtu.optionType", "global")
 			body, _ = sjson.Set(body, path+"advanced.ipMtu.value", data.IpMtu.ValueInt64())
 		}
 	}
 
 	if !data.InterfaceMtuVariable.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "variable")
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.InterfaceMtuVariable.ValueString())
 		}
 	} else if data.InterfaceMtu.IsNull() {
-		if !strings.Contains(data.InterfaceName.ValueString(), ".") {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && !strings.Contains(data.InterfaceName.ValueString(), ".") {
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "default")
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", 1500)
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "global")
 			body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.InterfaceMtu.ValueInt64())
 		}
 	}
 
 	if !data.TcpMssVariable.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.tcpMss.optionType", "variable")
 			body, _ = sjson.Set(body, path+"advanced.tcpMss.value", data.TcpMssVariable.ValueString())
 		}
 	} else if data.TcpMss.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.tcpMss.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.tcpMss.optionType", "global")
 			body, _ = sjson.Set(body, path+"advanced.tcpMss.value", data.TcpMss.ValueInt64())
 		}
 	}
 
 	if !data.SpeedVariable.IsNull() {
-		if true {
+		if true && !(data.PortChannelInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.speed.optionType", "variable")
 			body, _ = sjson.Set(body, path+"advanced.speed.value", data.SpeedVariable.ValueString())
 		}
 	} else if data.Speed.IsNull() {
-		if true {
+		if true && !(data.PortChannelInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.speed.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.speed.optionType", "global")
 			body, _ = sjson.Set(body, path+"advanced.speed.value", data.Speed.ValueString())
 		}
 	}
 
 	if !data.ArpTimeoutVariable.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.arpTimeout.optionType", "variable")
 			body, _ = sjson.Set(body, path+"advanced.arpTimeout.value", data.ArpTimeoutVariable.ValueString())
 		}
 	} else if data.ArpTimeout.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.arpTimeout.optionType", "default")
 			body, _ = sjson.Set(body, path+"advanced.arpTimeout.value", 1200)
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.arpTimeout.optionType", "global")
 			body, _ = sjson.Set(body, path+"advanced.arpTimeout.value", data.ArpTimeout.ValueInt64())
 		}
@@ -1202,17 +1500,17 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 	}
 
 	if !data.MediaTypeVariable.IsNull() {
-		if true {
+		if true && !(data.PortChannelInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.mediaType.optionType", "variable")
 			body, _ = sjson.Set(body, path+"advanced.mediaType.value", data.MediaTypeVariable.ValueString())
 		}
 	} else if data.MediaType.IsNull() {
-		if true {
+		if true && !(data.PortChannelInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.mediaType.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.mediaType.optionType", "global")
 			body, _ = sjson.Set(body, path+"advanced.mediaType.value", data.MediaType.ValueString())
 		}
@@ -1235,70 +1533,52 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 		}
 	}
 
-	if !data.TrackerVariable.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"advanced.tracker.optionType", "variable")
-			body, _ = sjson.Set(body, path+"advanced.tracker.value", data.TrackerVariable.ValueString())
-		}
-	} else if data.Tracker.IsNull() {
-		if currentVersion.LessThan(MinServiceLANVPNInterfaceEthernetUpdateVersion) {
-			if true {
-				body, _ = sjson.Set(body, path+"advanced.tracker.optionType", "default")
-			}
-		}
-	} else {
-		if true {
-			body, _ = sjson.Set(body, path+"advanced.tracker.optionType", "global")
-			body, _ = sjson.Set(body, path+"advanced.tracker.value", data.Tracker.ValueString())
-		}
-	}
-
 	if !data.IcmpRedirectDisableVariable.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.icmpRedirectDisable.optionType", "variable")
 			body, _ = sjson.Set(body, path+"advanced.icmpRedirectDisable.value", data.IcmpRedirectDisableVariable.ValueString())
 		}
 	} else if data.IcmpRedirectDisable.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.icmpRedirectDisable.optionType", "default")
 			body, _ = sjson.Set(body, path+"advanced.icmpRedirectDisable.value", true)
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.icmpRedirectDisable.optionType", "global")
 			body, _ = sjson.Set(body, path+"advanced.icmpRedirectDisable.value", data.IcmpRedirectDisable.ValueBool())
 		}
 	}
 
 	if !data.XconnectVariable.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.xconnect.optionType", "variable")
 			body, _ = sjson.Set(body, path+"advanced.xconnect.value", data.XconnectVariable.ValueString())
 		}
 	} else if data.Xconnect.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.xconnect.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.xconnect.optionType", "global")
 			body, _ = sjson.Set(body, path+"advanced.xconnect.value", data.Xconnect.ValueString())
 		}
 	}
 
 	if !data.IpDirectedBroadcastVariable.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.ipDirectedBroadcast.optionType", "variable")
 			body, _ = sjson.Set(body, path+"advanced.ipDirectedBroadcast.value", data.IpDirectedBroadcastVariable.ValueString())
 		}
 	} else if data.IpDirectedBroadcast.IsNull() {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.ipDirectedBroadcast.optionType", "default")
 			body, _ = sjson.Set(body, path+"advanced.ipDirectedBroadcast.value", false)
 		}
 	} else {
-		if true {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"advanced.ipDirectedBroadcast.optionType", "global")
 			body, _ = sjson.Set(body, path+"advanced.ipDirectedBroadcast.value", data.IpDirectedBroadcast.ValueBool())
 		}
@@ -1306,7 +1586,8 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, currentVe
 	return body
 }
 
-func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gjson.Result, currentVersion *version.Version) {
+// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
+func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -1342,6 +1623,187 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.InterfaceDescriptionVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.InterfaceDescription = types.StringValue(va.String())
+		}
+	}
+	data.PortChannelInterface = types.BoolNull()
+
+	if t := res.Get(path + "portChannelInterface.optionType"); t.Exists() {
+		va := res.Get(path + "portChannelInterface.value")
+		if t.String() == "global" {
+			data.PortChannelInterface = types.BoolValue(va.Bool())
+		}
+	}
+	data.PortChannelLacpQosAggregate = types.BoolNull()
+	data.PortChannelLacpQosAggregateVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.value")
+		if t.String() == "variable" {
+			data.PortChannelLacpQosAggregateVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelLacpQosAggregate = types.BoolValue(va.Bool())
+		}
+		data.PortChannelMode = types.StringValue("lacp")
+	}
+	data.PortChannelLacpLoadBalance = types.StringNull()
+	data.PortChannelLacpLoadBalanceVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.loadBalance.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.loadBalance.value")
+		if t.String() == "variable" {
+			data.PortChannelLacpLoadBalanceVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelLacpLoadBalance = types.StringValue(va.String())
+		}
+		data.PortChannelMode = types.StringValue("lacp")
+	}
+	data.PortChannelLacpFastSwitchover = types.BoolNull()
+	data.PortChannelLacpFastSwitchoverVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.value")
+		if t.String() == "variable" {
+			data.PortChannelLacpFastSwitchoverVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelLacpFastSwitchover = types.BoolValue(va.Bool())
+		}
+		data.PortChannelMode = types.StringValue("lacp")
+	}
+	data.PortChannelLacpMinBundle = types.Int64Null()
+	data.PortChannelLacpMinBundleVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.value")
+		if t.String() == "variable" {
+			data.PortChannelLacpMinBundleVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelLacpMinBundle = types.Int64Value(va.Int())
+		}
+		data.PortChannelMode = types.StringValue("lacp")
+	}
+	data.PortChannelLacpMaxBundle = types.Int64Null()
+	data.PortChannelLacpMaxBundleVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.value")
+		if t.String() == "variable" {
+			data.PortChannelLacpMaxBundleVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelLacpMaxBundle = types.Int64Value(va.Int())
+		}
+		data.PortChannelMode = types.StringValue("lacp")
+	}
+	if value := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.portChannelMemberLinks"); value.Exists() && len(value.Array()) > 0 {
+		data.PortChannelLacpMemberLinks = make([]ServiceLANVPNInterfaceEthernetPortChannelLacpMemberLinks, 0)
+		value.ForEach(func(k, v gjson.Result) bool {
+			item := ServiceLANVPNInterfaceEthernetPortChannelLacpMemberLinks{}
+			item.InterfaceId = types.StringNull()
+
+			if t := v.Get("interface.refId.optionType"); t.Exists() {
+				va := v.Get("interface.refId.value")
+				if t.String() == "global" {
+					item.InterfaceId = types.StringValue(va.String())
+				}
+			}
+			item.LacpMode = types.StringNull()
+			item.LacpModeVariable = types.StringNull()
+			if t := v.Get("lacpMode.optionType"); t.Exists() {
+				va := v.Get("lacpMode.value")
+				if t.String() == "variable" {
+					item.LacpModeVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.LacpMode = types.StringValue(va.String())
+				}
+			}
+			item.LacpRate = types.StringNull()
+			item.LacpRateVariable = types.StringNull()
+			if t := v.Get("lacpRate.optionType"); t.Exists() {
+				va := v.Get("lacpRate.value")
+				if t.String() == "variable" {
+					item.LacpRateVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.LacpRate = types.StringValue(va.String())
+				}
+			}
+			item.LacpPortPriority = types.Int64Null()
+			item.LacpPortPriorityVariable = types.StringNull()
+			if t := v.Get("lacpPortPriority.optionType"); t.Exists() {
+				va := v.Get("lacpPortPriority.value")
+				if t.String() == "variable" {
+					item.LacpPortPriorityVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.LacpPortPriority = types.Int64Value(va.Int())
+				}
+			}
+			data.PortChannelLacpMemberLinks = append(data.PortChannelLacpMemberLinks, item)
+			return true
+		})
+		data.PortChannelMode = types.StringValue("lacp")
+	}
+	data.PortChannelStaticQosAggregate = types.BoolNull()
+	data.PortChannelStaticQosAggregateVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.value")
+		if t.String() == "variable" {
+			data.PortChannelStaticQosAggregateVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelStaticQosAggregate = types.BoolValue(va.Bool())
+		}
+		data.PortChannelMode = types.StringValue("static")
+	}
+	data.PortChannelStaticLoadBalance = types.StringNull()
+	data.PortChannelStaticLoadBalanceVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.mainInterface.staticModeMainInterface.loadBalance.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.mainInterface.staticModeMainInterface.loadBalance.value")
+		if t.String() == "variable" {
+			data.PortChannelStaticLoadBalanceVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelStaticLoadBalance = types.StringValue(va.String())
+		}
+		data.PortChannelMode = types.StringValue("static")
+	}
+	if value := res.Get(path + "portChannel.mainInterface.staticModeMainInterface.portChannelMemberLinks"); value.Exists() && len(value.Array()) > 0 {
+		data.PortChannelStaticMemberLinks = make([]ServiceLANVPNInterfaceEthernetPortChannelStaticMemberLinks, 0)
+		value.ForEach(func(k, v gjson.Result) bool {
+			item := ServiceLANVPNInterfaceEthernetPortChannelStaticMemberLinks{}
+			item.InterfaceId = types.StringNull()
+
+			if t := v.Get("interface.refId.optionType"); t.Exists() {
+				va := v.Get("interface.refId.value")
+				if t.String() == "global" {
+					item.InterfaceId = types.StringValue(va.String())
+				}
+			}
+			data.PortChannelStaticMemberLinks = append(data.PortChannelStaticMemberLinks, item)
+			return true
+		})
+		data.PortChannelMode = types.StringValue("static")
+	}
+	data.PortChannelSubinterfacePrimaryInterfaceName = types.StringNull()
+	data.PortChannelSubinterfacePrimaryInterfaceNameVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.subInterface.primaryInterfaceName.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.subInterface.primaryInterfaceName.value")
+		if t.String() == "variable" {
+			data.PortChannelSubinterfacePrimaryInterfaceNameVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelSubinterfacePrimaryInterfaceName = types.StringValue(va.String())
+		}
+		data.PortChannelInterface = types.BoolValue(true)
+		data.PortChannelSubinterface = types.BoolValue(true)
+	}
+	data.PortChannelSubinterfaceSecondaryInterfaceName = types.StringNull()
+	data.PortChannelSubinterfaceSecondaryInterfaceNameVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.subInterface.secondaryInterfaceName.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.subInterface.secondaryInterfaceName.value")
+		if t.String() == "variable" {
+			data.PortChannelSubinterfaceSecondaryInterfaceNameVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelSubinterfaceSecondaryInterfaceName = types.StringValue(va.String())
+		}
+		data.PortChannelInterface = types.BoolValue(true)
+		data.PortChannelSubinterface = types.BoolValue(true)
+	}
+	data.PortChannelMemberInterface = types.BoolNull()
+
+	if t := res.Get(path + "portChannelMemberInterface.optionType"); t.Exists() {
+		va := res.Get(path + "portChannelMemberInterface.value")
+		if t.String() == "global" {
+			data.PortChannelMemberInterface = types.BoolValue(va.Bool())
 		}
 	}
 	data.Ipv4DhcpDistance = types.Int64Null()
@@ -1415,6 +1877,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.Ipv4DhcpHelper = helpers.GetStringSet(va.Array())
 		}
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.EnableDhcpv6 = types.BoolNull()
 
@@ -1510,6 +1973,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		if t.String() == "global" {
 			data.Ipv4Nat = types.BoolValue(va.Bool())
 		}
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Ipv4NatRangeStart = types.StringNull()
 	data.Ipv4NatRangeStartVariable = types.StringNull()
@@ -1553,12 +2017,8 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 	}
 	data.Ipv4NatLoopback = types.StringNull()
 	data.Ipv4NatLoopbackVariable = types.StringNull()
-	natLookBackRef := "natLookback"
-	if !currentVersion.LessThan(MinServiceLANVPNInterfaceEthernetUpdateVersion) {
-		natLookBackRef = "natLoopback"
-	}
-	if t := res.Get(path + "natAttributesIpv4." + natLookBackRef + ".optionType"); t.Exists() {
-		va := res.Get(path + "natAttributesIpv4." + natLookBackRef + ".value")
+	if t := res.Get(path + "natAttributesIpv4.natLoopback.optionType"); t.Exists() {
+		va := res.Get(path + "natAttributesIpv4.natLoopback.value")
 		if t.String() == "variable" {
 			data.Ipv4NatLoopbackVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
@@ -1638,6 +2098,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		if t.String() == "global" {
 			data.Ipv6Nat = types.BoolValue(va.Bool())
 		}
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Nat64 = types.BoolNull()
 
@@ -1656,6 +2117,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.AclShapingRate = types.Int64Value(va.Int())
 		}
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.AclIpv4EgressPolicyId = types.StringNull()
 
@@ -1759,9 +2221,28 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 					return true
 				})
 			}
+			item.FollowDualRouterHighAvailability = types.BoolNull()
+
+			if t := v.Get("followDualRouterHAAvailability.optionType"); t.Exists() {
+				va := v.Get("followDualRouterHAAvailability.value")
+				if t.String() == "global" {
+					item.FollowDualRouterHighAvailability = types.BoolValue(va.Bool())
+				}
+			}
+			item.MinPreemptDelay = types.Int64Null()
+			item.MinPreemptDelayVariable = types.StringNull()
+			if t := v.Get("minPreemptDelay.optionType"); t.Exists() {
+				va := v.Get("minPreemptDelay.value")
+				if t.String() == "variable" {
+					item.MinPreemptDelayVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.MinPreemptDelay = types.Int64Value(va.Int())
+				}
+			}
 			data.Ipv6Vrrps = append(data.Ipv6Vrrps, item)
 			return true
 		})
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	if value := res.Get(path + "vrrp"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4Vrrps = make([]ServiceLANVPNInterfaceEthernetIpv4Vrrps, 0)
@@ -1895,9 +2376,28 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 					return true
 				})
 			}
+			item.FollowDualRouterHighAvailability = types.BoolNull()
+
+			if t := v.Get("followDualRouterHAAvailability.optionType"); t.Exists() {
+				va := v.Get("followDualRouterHAAvailability.value")
+				if t.String() == "global" {
+					item.FollowDualRouterHighAvailability = types.BoolValue(va.Bool())
+				}
+			}
+			item.MinPreemptDelay = types.Int64Null()
+			item.MinPreemptDelayVariable = types.StringNull()
+			if t := v.Get("minPreemptDelay.optionType"); t.Exists() {
+				va := v.Get("minPreemptDelay.value")
+				if t.String() == "variable" {
+					item.MinPreemptDelayVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.MinPreemptDelay = types.Int64Value(va.Int())
+				}
+			}
 			data.Ipv4Vrrps = append(data.Ipv4Vrrps, item)
 			return true
 		})
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	if value := res.Get(path + "arp"); value.Exists() && len(value.Array()) > 0 {
 		data.Arps = make([]ServiceLANVPNInterfaceEthernetArps, 0)
@@ -1926,6 +2426,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.Arps = append(data.Arps, item)
 			return true
 		})
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TrustsecEnableSgtPropogation = types.BoolNull()
 
@@ -1934,6 +2435,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		if t.String() == "global" {
 			data.TrustsecEnableSgtPropogation = types.BoolValue(va.Bool())
 		}
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TrustsecPropogate = types.BoolNull()
 
@@ -1942,6 +2444,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		if t.String() == "global" {
 			data.TrustsecPropogate = types.BoolValue(va.Bool())
 		}
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TrustsecSecurityGroupTag = types.Int64Null()
 	data.TrustsecSecurityGroupTagVariable = types.StringNull()
@@ -1952,6 +2455,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.TrustsecSecurityGroupTag = types.Int64Value(va.Int())
 		}
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TrustsecEnableEnforcedPropogation = types.BoolNull()
 
@@ -1960,6 +2464,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		if t.String() == "global" {
 			data.TrustsecEnableEnforcedPropogation = types.BoolValue(va.Bool())
 		}
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TrustsecEnforcedSecurityGroupTag = types.Int64Null()
 	data.TrustsecEnforcedSecurityGroupTagVariable = types.StringNull()
@@ -1970,6 +2475,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.TrustsecEnforcedSecurityGroupTag = types.Int64Value(va.Int())
 		}
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Duplex = types.StringNull()
 	data.DuplexVariable = types.StringNull()
@@ -1980,6 +2486,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.Duplex = types.StringValue(va.String())
 		}
+		data.PortChannelInterface = types.BoolValue(true)
 	}
 	data.MacAddress = types.StringNull()
 	data.MacAddressVariable = types.StringNull()
@@ -1990,6 +2497,8 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.MacAddress = types.StringValue(va.String())
 		}
+		data.PortChannelMemberInterface = types.BoolValue(true)
+		data.PortChannelInterface = types.BoolValue(true)
 	}
 	data.IpMtu = types.Int64Null()
 	data.IpMtuVariable = types.StringNull()
@@ -2000,6 +2509,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.IpMtu = types.Int64Value(va.Int())
 		}
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.InterfaceMtu = types.Int64Null()
 	data.InterfaceMtuVariable = types.StringNull()
@@ -2010,6 +2520,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.InterfaceMtu = types.Int64Value(va.Int())
 		}
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.TcpMss = types.Int64Null()
 	data.TcpMssVariable = types.StringNull()
@@ -2020,6 +2531,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.TcpMss = types.Int64Value(va.Int())
 		}
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Speed = types.StringNull()
 	data.SpeedVariable = types.StringNull()
@@ -2030,6 +2542,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.Speed = types.StringValue(va.String())
 		}
+		data.PortChannelInterface = types.BoolValue(true)
 	}
 	data.ArpTimeout = types.Int64Null()
 	data.ArpTimeoutVariable = types.StringNull()
@@ -2040,6 +2553,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.ArpTimeout = types.Int64Value(va.Int())
 		}
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Autonegotiate = types.BoolNull()
 	data.AutonegotiateVariable = types.StringNull()
@@ -2060,6 +2574,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.MediaType = types.StringValue(va.String())
 		}
+		data.PortChannelInterface = types.BoolValue(true)
 	}
 	data.LoadInterval = types.Int64Null()
 	data.LoadIntervalVariable = types.StringNull()
@@ -2071,16 +2586,6 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.LoadInterval = types.Int64Value(va.Int())
 		}
 	}
-	data.Tracker = types.StringNull()
-	data.TrackerVariable = types.StringNull()
-	if t := res.Get(path + "advanced.tracker.optionType"); t.Exists() {
-		va := res.Get(path + "advanced.tracker.value")
-		if t.String() == "variable" {
-			data.TrackerVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Tracker = types.StringValue(va.String())
-		}
-	}
 	data.IcmpRedirectDisable = types.BoolNull()
 	data.IcmpRedirectDisableVariable = types.StringNull()
 	if t := res.Get(path + "advanced.icmpRedirectDisable.optionType"); t.Exists() {
@@ -2090,6 +2595,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.IcmpRedirectDisable = types.BoolValue(va.Bool())
 		}
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.Xconnect = types.StringNull()
 	data.XconnectVariable = types.StringNull()
@@ -2100,6 +2606,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.Xconnect = types.StringValue(va.String())
 		}
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 	data.IpDirectedBroadcast = types.BoolNull()
 	data.IpDirectedBroadcastVariable = types.StringNull()
@@ -2110,10 +2617,14 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		} else if t.String() == "global" {
 			data.IpDirectedBroadcast = types.BoolValue(va.Bool())
 		}
+		data.PortChannelMemberInterface = types.BoolValue(true)
 	}
 }
 
-func (data *ServiceLANVPNInterfaceEthernet) updateFromBody(ctx context.Context, res gjson.Result, currentVersion *version.Version) {
+// End of section. //template:end fromBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
+func (data *ServiceLANVPNInterfaceEthernet) updateFromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -2149,6 +2660,222 @@ func (data *ServiceLANVPNInterfaceEthernet) updateFromBody(ctx context.Context, 
 			data.InterfaceDescriptionVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.InterfaceDescription = types.StringValue(va.String())
+		}
+	}
+	data.PortChannelInterface = types.BoolNull()
+
+	if t := res.Get(path + "portChannelInterface.optionType"); t.Exists() {
+		va := res.Get(path + "portChannelInterface.value")
+		if t.String() == "global" {
+			data.PortChannelInterface = types.BoolValue(va.Bool())
+		}
+	}
+	data.PortChannelLacpQosAggregate = types.BoolNull()
+	data.PortChannelLacpQosAggregateVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.value")
+		if t.String() == "variable" {
+			data.PortChannelLacpQosAggregateVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelLacpQosAggregate = types.BoolValue(va.Bool())
+		}
+	}
+	data.PortChannelLacpLoadBalance = types.StringNull()
+	data.PortChannelLacpLoadBalanceVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.loadBalance.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.loadBalance.value")
+		if t.String() == "variable" {
+			data.PortChannelLacpLoadBalanceVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelLacpLoadBalance = types.StringValue(va.String())
+		}
+	}
+	data.PortChannelLacpFastSwitchover = types.BoolNull()
+	data.PortChannelLacpFastSwitchoverVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.value")
+		if t.String() == "variable" {
+			data.PortChannelLacpFastSwitchoverVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelLacpFastSwitchover = types.BoolValue(va.Bool())
+		}
+	}
+	data.PortChannelLacpMinBundle = types.Int64Null()
+	data.PortChannelLacpMinBundleVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.value")
+		if t.String() == "variable" {
+			data.PortChannelLacpMinBundleVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelLacpMinBundle = types.Int64Value(va.Int())
+		}
+	}
+	data.PortChannelLacpMaxBundle = types.Int64Null()
+	data.PortChannelLacpMaxBundleVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.value")
+		if t.String() == "variable" {
+			data.PortChannelLacpMaxBundleVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelLacpMaxBundle = types.Int64Value(va.Int())
+		}
+	}
+	for i := range data.PortChannelLacpMemberLinks {
+		keys := [...]string{"interface.refId"}
+		keyValues := [...]string{data.PortChannelLacpMemberLinks[i].InterfaceId.ValueString()}
+		keyValuesVariables := [...]string{""}
+
+		var r gjson.Result
+		res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.portChannelMemberLinks").ForEach(
+			func(_, v gjson.Result) bool {
+				found := false
+				for ik := range keys {
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						} else if tt.String() == "default" {
+							continue
+						}
+						found = false
+						break
+					}
+					continue
+				}
+				if found {
+					r = v
+					return false
+				}
+				return true
+			},
+		)
+		data.PortChannelLacpMemberLinks[i].InterfaceId = types.StringNull()
+
+		if t := r.Get("interface.refId.optionType"); t.Exists() {
+			va := r.Get("interface.refId.value")
+			if t.String() == "global" {
+				data.PortChannelLacpMemberLinks[i].InterfaceId = types.StringValue(va.String())
+			}
+		}
+		data.PortChannelLacpMemberLinks[i].LacpMode = types.StringNull()
+		data.PortChannelLacpMemberLinks[i].LacpModeVariable = types.StringNull()
+		if t := r.Get("lacpMode.optionType"); t.Exists() {
+			va := r.Get("lacpMode.value")
+			if t.String() == "variable" {
+				data.PortChannelLacpMemberLinks[i].LacpModeVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				data.PortChannelLacpMemberLinks[i].LacpMode = types.StringValue(va.String())
+			}
+		}
+		data.PortChannelLacpMemberLinks[i].LacpRate = types.StringNull()
+		data.PortChannelLacpMemberLinks[i].LacpRateVariable = types.StringNull()
+		if t := r.Get("lacpRate.optionType"); t.Exists() {
+			va := r.Get("lacpRate.value")
+			if t.String() == "variable" {
+				data.PortChannelLacpMemberLinks[i].LacpRateVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				data.PortChannelLacpMemberLinks[i].LacpRate = types.StringValue(va.String())
+			}
+		}
+		data.PortChannelLacpMemberLinks[i].LacpPortPriority = types.Int64Null()
+		data.PortChannelLacpMemberLinks[i].LacpPortPriorityVariable = types.StringNull()
+		if t := r.Get("lacpPortPriority.optionType"); t.Exists() {
+			va := r.Get("lacpPortPriority.value")
+			if t.String() == "variable" {
+				data.PortChannelLacpMemberLinks[i].LacpPortPriorityVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				data.PortChannelLacpMemberLinks[i].LacpPortPriority = types.Int64Value(va.Int())
+			}
+		}
+	}
+	data.PortChannelStaticQosAggregate = types.BoolNull()
+	data.PortChannelStaticQosAggregateVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.value")
+		if t.String() == "variable" {
+			data.PortChannelStaticQosAggregateVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelStaticQosAggregate = types.BoolValue(va.Bool())
+		}
+	}
+	data.PortChannelStaticLoadBalance = types.StringNull()
+	data.PortChannelStaticLoadBalanceVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.mainInterface.staticModeMainInterface.loadBalance.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.mainInterface.staticModeMainInterface.loadBalance.value")
+		if t.String() == "variable" {
+			data.PortChannelStaticLoadBalanceVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelStaticLoadBalance = types.StringValue(va.String())
+		}
+	}
+	for i := range data.PortChannelStaticMemberLinks {
+		keys := [...]string{"interface.refId"}
+		keyValues := [...]string{data.PortChannelStaticMemberLinks[i].InterfaceId.ValueString()}
+		keyValuesVariables := [...]string{""}
+
+		var r gjson.Result
+		res.Get(path + "portChannel.mainInterface.staticModeMainInterface.portChannelMemberLinks").ForEach(
+			func(_, v gjson.Result) bool {
+				found := false
+				for ik := range keys {
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						} else if tt.String() == "default" {
+							continue
+						}
+						found = false
+						break
+					}
+					continue
+				}
+				if found {
+					r = v
+					return false
+				}
+				return true
+			},
+		)
+		data.PortChannelStaticMemberLinks[i].InterfaceId = types.StringNull()
+
+		if t := r.Get("interface.refId.optionType"); t.Exists() {
+			va := r.Get("interface.refId.value")
+			if t.String() == "global" {
+				data.PortChannelStaticMemberLinks[i].InterfaceId = types.StringValue(va.String())
+			}
+		}
+	}
+	data.PortChannelSubinterfacePrimaryInterfaceName = types.StringNull()
+	data.PortChannelSubinterfacePrimaryInterfaceNameVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.subInterface.primaryInterfaceName.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.subInterface.primaryInterfaceName.value")
+		if t.String() == "variable" {
+			data.PortChannelSubinterfacePrimaryInterfaceNameVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelSubinterfacePrimaryInterfaceName = types.StringValue(va.String())
+		}
+	}
+	data.PortChannelSubinterfaceSecondaryInterfaceName = types.StringNull()
+	data.PortChannelSubinterfaceSecondaryInterfaceNameVariable = types.StringNull()
+	if t := res.Get(path + "portChannel.subInterface.secondaryInterfaceName.optionType"); t.Exists() {
+		va := res.Get(path + "portChannel.subInterface.secondaryInterfaceName.value")
+		if t.String() == "variable" {
+			data.PortChannelSubinterfaceSecondaryInterfaceNameVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PortChannelSubinterfaceSecondaryInterfaceName = types.StringValue(va.String())
+		}
+	}
+	data.PortChannelMemberInterface = types.BoolNull()
+
+	if t := res.Get(path + "portChannelMemberInterface.optionType"); t.Exists() {
+		va := res.Get(path + "portChannelMemberInterface.value")
+		if t.String() == "global" {
+			data.PortChannelMemberInterface = types.BoolValue(va.Bool())
 		}
 	}
 	data.Ipv4DhcpDistance = types.Int64Null()
@@ -2447,12 +3174,8 @@ func (data *ServiceLANVPNInterfaceEthernet) updateFromBody(ctx context.Context, 
 	}
 	data.Ipv4NatLoopback = types.StringNull()
 	data.Ipv4NatLoopbackVariable = types.StringNull()
-	natLookBackRef := "natLookback"
-	if !currentVersion.LessThan(MinServiceLANVPNInterfaceEthernetUpdateVersion) {
-		natLookBackRef = "natLoopback"
-	}
-	if t := res.Get(path + "natAttributesIpv4." + natLookBackRef + ".optionType"); t.Exists() {
-		va := res.Get(path + "natAttributesIpv4." + natLookBackRef + ".value")
+	if t := res.Get(path + "natAttributesIpv4.natLoopback.optionType"); t.Exists() {
+		va := res.Get(path + "natAttributesIpv4.natLoopback.value")
 		if t.String() == "variable" {
 			data.Ipv4NatLoopbackVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
@@ -2728,6 +3451,24 @@ func (data *ServiceLANVPNInterfaceEthernet) updateFromBody(ctx context.Context, 
 				}
 			}
 		}
+		data.Ipv6Vrrps[i].FollowDualRouterHighAvailability = types.BoolNull()
+
+		if t := r.Get("followDualRouterHAAvailability.optionType"); t.Exists() {
+			va := r.Get("followDualRouterHAAvailability.value")
+			if t.String() == "global" {
+				data.Ipv6Vrrps[i].FollowDualRouterHighAvailability = types.BoolValue(va.Bool())
+			}
+		}
+		data.Ipv6Vrrps[i].MinPreemptDelay = types.Int64Null()
+		data.Ipv6Vrrps[i].MinPreemptDelayVariable = types.StringNull()
+		if t := r.Get("minPreemptDelay.optionType"); t.Exists() {
+			va := r.Get("minPreemptDelay.value")
+			if t.String() == "variable" {
+				data.Ipv6Vrrps[i].MinPreemptDelayVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				data.Ipv6Vrrps[i].MinPreemptDelay = types.Int64Value(va.Int())
+			}
+		}
 	}
 	for i := range data.Ipv4Vrrps {
 		keys := [...]string{"group_id"}
@@ -2936,6 +3677,24 @@ func (data *ServiceLANVPNInterfaceEthernet) updateFromBody(ctx context.Context, 
 				}
 			}
 		}
+		data.Ipv4Vrrps[i].FollowDualRouterHighAvailability = types.BoolNull()
+
+		if t := r.Get("followDualRouterHAAvailability.optionType"); t.Exists() {
+			va := r.Get("followDualRouterHAAvailability.value")
+			if t.String() == "global" {
+				data.Ipv4Vrrps[i].FollowDualRouterHighAvailability = types.BoolValue(va.Bool())
+			}
+		}
+		data.Ipv4Vrrps[i].MinPreemptDelay = types.Int64Null()
+		data.Ipv4Vrrps[i].MinPreemptDelayVariable = types.StringNull()
+		if t := r.Get("minPreemptDelay.optionType"); t.Exists() {
+			va := r.Get("minPreemptDelay.value")
+			if t.String() == "variable" {
+				data.Ipv4Vrrps[i].MinPreemptDelayVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				data.Ipv4Vrrps[i].MinPreemptDelay = types.Int64Value(va.Int())
+			}
+		}
 	}
 	for i := range data.Arps {
 		keys := [...]string{"ipAddress", "macAddress"}
@@ -3133,16 +3892,6 @@ func (data *ServiceLANVPNInterfaceEthernet) updateFromBody(ctx context.Context, 
 			data.LoadInterval = types.Int64Value(va.Int())
 		}
 	}
-	data.Tracker = types.StringNull()
-	data.TrackerVariable = types.StringNull()
-	if t := res.Get(path + "advanced.tracker.optionType"); t.Exists() {
-		va := res.Get(path + "advanced.tracker.value")
-		if t.String() == "variable" {
-			data.TrackerVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Tracker = types.StringValue(va.String())
-		}
-	}
 	data.IcmpRedirectDisable = types.BoolNull()
 	data.IcmpRedirectDisableVariable = types.StringNull()
 	if t := res.Get(path + "advanced.icmpRedirectDisable.optionType"); t.Exists() {
@@ -3174,3 +3923,5 @@ func (data *ServiceLANVPNInterfaceEthernet) updateFromBody(ctx context.Context, 
 		}
 	}
 }
+
+// End of section. //template:end updateFromBody

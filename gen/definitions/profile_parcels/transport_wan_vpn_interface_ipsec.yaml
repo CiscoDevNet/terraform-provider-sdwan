@@ -1,8 +1,8 @@
 ---
 name: Transport WAN VPN Interface IPSEC
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/ipsec
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - Transport
 attributes:
@@ -27,6 +27,11 @@ attributes:
     minimum_test_value: '"ipsec987"'
   - model_name: shutdown
     example: true
+  - model_name: multiplexing
+    example: false
+  - model_name: tunnelMode
+    tf_name: tunnel_mode
+    example: ipv4
   - model_name: description
     tf_name: interface_description
     example: ipsec987
@@ -36,54 +41,152 @@ attributes:
     example: 9.7.5.4
     test_value: '"9.7.5.4"'
     minimum_test_value: '"9.7.5.4"'
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv4
   - model_name: mask
     tf_name: ipv4_subnet_mask
     data_path: [address]
     example: 255.255.255.0
     test_value: '"255.255.255.0"'
     minimum_test_value: '"255.255.255.0"'
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv4
+  - model_name: ipv6Address
+    tf_name: ipv6_address
+    example: 2001:0:0:1::1
+    exclude_test: true
+    conditional_attribute:
+      operator: or
+      conditions:
+        - name: tunnel_mode
+          value: ipv6
+        - name: tunnel_mode
+          value: ipv4-v6overlay
   - model_name: address
     tf_name: tunnel_source_ipv4_address
     data_path: [tunnelSource]
     example: 1.3.5.88
     test_value: '"1.3.5.88"'
     minimum_test_value: '"1.3.5.88"'
+    conditional_attribute:
+      operator: or
+      conditions:
+        - name: tunnel_mode
+          value: ipv4
+        - name: tunnel_mode
+          value: ipv4-v6overlay
   - model_name: mask
     tf_name: tunnel_source_ipv4_subnet_mask
     data_path: [tunnelSource]
-    example: 255.255.255.0
-    test_value: '"255.255.255.0"'
-    minimum_test_value: '"255.255.255.0"'
+    type: String
+    value: "0.0.0.0"
+    value_type: global
+    always_include: true
+    conditional_attribute:
+      operator: or
+      conditions:
+        - name: tunnel_source_ipv4_address
+          value: ''
+          negate: true
+        - name: tunnel_source_ipv4_address_variable
+          value: ''
+          negate: true
+  - model_name: tunnelSourceV6
+    tf_name: tunnel_source_ipv6_address
+    example: 2001:0:0:1::1
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv6
   - model_name: tunnelSourceInterface
     tf_name: tunnel_source_interface
     example: GigabitEthernet8
-    test_value: '"GigabitEthernet8"'
-    minimum_test_value: '"GigabitEthernet8"'
+    exclude_test: true
   - model_name: address
     tf_name: tunnel_destination_ipv4_address
     data_path: [tunnelDestination]
     example: 2.55.67.99
     test_value: '"2.55.67.99"'
     minimum_test_value: '"2.55.67.99"'
+    conditional_attribute:
+      operator: or
+      conditions:
+        - name: tunnel_mode
+          value: ipv4
+        - name: tunnel_mode
+          value: ipv4-v6overlay
   - model_name: mask
     tf_name: tunnel_destination_ipv4_subnet_mask
     data_path: [tunnelDestination]
-    example: 255.255.255.0
-    test_value: '"255.255.255.0"'
-    minimum_test_value: '"255.255.255.0"'
+    type: String
+    value: "0.0.0.0"
+    value_type: global
+    always_include: true
+    conditional_attribute:
+      operator: or
+      conditions:
+        - name: tunnel_destination_ipv4_address
+          value: ''
+          negate: true
+        - name: tunnel_destination_ipv4_address_variable
+          value: ''
+          negate: true
+  - model_name: tunnelDestinationV6
+    tf_name: tunnel_destination_ipv6_address
+    example: 2001:0:0:2::2
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv6
   - model_name: application
     tf_name: application_tunnel_type
     example: none
     test_value: '"none"'
     minimum_test_value: '"none"'
   - model_name: tcpMssAdjust
-    tf_name: tcp_mss
+    tf_name: ipv4_tcp_mss
     example: 1460
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv4
+  - model_name: tcpMssAdjustV6
+    tf_name: ipv6_tcp_mss
+    example: 1460
+    exclude_test: true
+    conditional_attribute:
+      operator: or
+      conditions:
+        - name: tunnel_mode
+          value: ipv6
+        - name: tunnel_mode
+          value: ipv4-v6overlay
   - model_name: clearDontFragment
     example: false
   - model_name: mtu
-    tf_name: ip_mtu
+    tf_name: ipv4_mtu
     example: 1500
+    conditional_attribute:
+      conditions:
+        - name: tunnel_mode
+          value: ipv4
+  - model_name: mtuV6
+    tf_name: ipv6_mtu
+    example: 1500
+    exclude_test: true
+    conditional_attribute:
+      operator: or
+      conditions:
+        - name: tunnel_mode
+          value: ipv6
+        - name: tunnel_mode
+          value: ipv4-v6overlay
   - model_name: dpdInterval
     example: 10
   - model_name: dpdRetries 
