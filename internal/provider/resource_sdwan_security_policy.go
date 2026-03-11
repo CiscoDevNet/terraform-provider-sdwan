@@ -280,7 +280,9 @@ func (r *SecurityPolicyResource) Create(ctx context.Context, req resource.Create
 	// Create object
 	body := plan.toBody(ctx)
 
+	r.updateMutex.Lock()
 	res, err := r.client.Post(plan.getPath(), body)
+	r.updateMutex.Unlock()
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return

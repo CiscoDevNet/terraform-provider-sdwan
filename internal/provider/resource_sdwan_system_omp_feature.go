@@ -63,7 +63,7 @@ func (r *SystemOMPProfileParcelResource) Metadata(ctx context.Context, req resou
 func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System OMP Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System OMP Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -276,7 +276,7 @@ func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"advertise_ipv6_connected": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Connected").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Connected").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
 			"advertise_ipv6_connected_variable": schema.StringAttribute{
@@ -284,7 +284,7 @@ func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"advertise_ipv6_static": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Static").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Static").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
 			"advertise_ipv6_static_variable": schema.StringAttribute{
@@ -335,11 +335,28 @@ func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"site_types": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Site Types").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Site Types for 20.12 backward compatiblity").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"site_types_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"site_types_for_transport_gateway": schema.SetAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Site Types").String,
+				ElementType:         types.StringType,
+				Optional:            true,
+			},
+			"site_types_for_transport_gateway_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"aspath_auto_translation": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enable BGP AS Path Auto-Translation").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"aspath_auto_translation_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

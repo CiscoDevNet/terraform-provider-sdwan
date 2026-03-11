@@ -1,117 +1,121 @@
 {
   "request": {
-      "$schema": "http://json-schema.org/draft/2019-09/schema",
-      "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/vpn-group/common/request_schema.json",
-      "title": "VPN List Parcel Schema",
-      "description": "vpn list profile parcel schema",
-      "type": "object",
-      "properties": {
-          "name": {
-              "type": "string",
-              "pattern": "^[^&<>! \"]+$",
-              "minLength": 1,
-              "maxLength": 128
-          },
-          "description": {
-              "type": "string"
-          },
-          "data": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/vpn-group/common/request_schema.json",
+    "title": "VPN List Parcel Schema",
+    "description": "vpn list profile parcel schema",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "description": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "entries": {
+            "description": "VPN List",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
               "type": "object",
               "properties": {
-                  "entries": {
-                      "description": "VPN List",
-                      "type": "array",
-                      "uniqueItems": true,
-                      "items": {
-                          "type": "object",
-                          "properties": {
-                              "vpn": {
-                                  "description": "can be single vpn id or vpn id range",
-                                  "type": "object",
-                                  "properties": {
-                                      "optionType": {
-                                          "type": "string",
-                                          "enum": [
-                                              "global"
-                                          ]
-                                      },
-                                      "value": {
-                                          "oneOf": [
-                                              {
-                                                  "type": "integer",
-                                                  "minimum": 0,
-                                                  "maximum": 65530
-                                              },
-                                              {
-                                                  "type": "string",
-                                                  "pattern": "^(0|[1-9]\\d{0,3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|65530)\\-(0|[1-9]\\d{0,3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|65530)$"
-                                              }
-                                          ]
-                                      }
-                                  },
-                                  "required": [
-                                      "optionType",
-                                      "value"
-                                  ],
-                                  "additionalProperties": false
-                              }
-                          },
-                          "required": [
-                              "vpn"
-                          ],
-                          "additionalProperties": false
-                      }
-                  }
+                "vpn": {
+                  "description": "can be single vpn id or vpn id range",
+                  "type": "object",
+                  "properties": {
+                    "optionType": {
+                      "type": "string",
+                      "enum": [
+                        "global"
+                      ]
+                    },
+                    "value": {
+                      "oneOf": [
+                        {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 65530
+                        },
+                        {
+                          "type": "string",
+                          "pattern": "^(0|[1-9]\\d{0,3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|65530)\\-(0|[1-9]\\d{0,3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|65530)$"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "optionType",
+                    "value"
+                  ],
+                  "additionalProperties": false
+                }
               },
               "required": [
-                  "entries"
+                "vpn"
               ],
               "additionalProperties": false
-          },
-          "documentation": {
-              "description": "This is the documentation for vpn profile parcel",
-              "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
-              "details-2": "variable name should not be present if optionType value is NOT variable",
-              "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
-              "details-4": "when option Type is default, value should be present with given default value as specified in schema",
-              "examples": [
-                  {
-                      "data": {
-                          "entries": [
-                              {
-                                  "vpn": {
-                                      "optionType": "global",
-                                      "value": 100
-                                  }
-                              },
-                              {
-                                  "vpn": {
-                                      "optionType": "global",
-                                      "value": 200
-                                  }
-                              },
-                              {
-                                  "vpn": {
-                                      "optionType": "global",
-                                      "value": "300-400"
-                                  }
-                              }
-                          ]
-                      },
-                      "name": "vpnList1"
-                  }
-              ]
+            }
           }
+        },
+        "required": [
+          "entries"
+        ],
+        "additionalProperties": false
       },
+      "documentation": {
+        "description": "This is the documentation for vpn profile parcel",
+        "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+        "details-2": "variable name should not be present if optionType value is NOT variable",
+        "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+        "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+        "examples": [
+          {
+            "data": {
+              "entries": [
+                {
+                  "vpn": {
+                    "optionType": "global",
+                    "value": 100
+                  }
+                },
+                {
+                  "vpn": {
+                    "optionType": "global",
+                    "value": 200
+                  }
+                },
+                {
+                  "vpn": {
+                    "optionType": "global",
+                    "value": "300-400"
+                  }
+                }
+              ]
+            },
+            "name": "VpnList"
+          }
+        ]
+      },
+      "metadata": {
+        "minVManageVersion": "20.15.1"
+      }
+    },
+    "required": [
+      "name",
+      "data"
+    ],
+    "not": {
       "required": [
-          "name",
-          "data"
-      ],
-      "not": {
-          "required": [
-              "documentation"
-          ]
-      },
-      "additionalProperties": false
+        "documentation",
+        "metadata"
+      ]
+    },
+    "additionalProperties": false
   }
 }

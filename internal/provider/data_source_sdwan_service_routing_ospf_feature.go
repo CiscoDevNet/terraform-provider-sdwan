@@ -204,7 +204,11 @@ func (d *ServiceRoutingOSPFProfileParcelDataSource) Schema(ctx context.Context, 
 							Computed:            true,
 						},
 						"translate_rib_metric": schema.BoolAttribute{
-							MarkdownDescription: "Translate Rib Metric",
+							MarkdownDescription: "Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network.",
+							Computed:            true,
+						},
+						"translate_rib_metric_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
 					},
@@ -345,7 +349,7 @@ func (d *ServiceRoutingOSPFProfileParcelDataSource) Schema(ctx context.Context, 
 										Computed:            true,
 									},
 									"message_digest_key": schema.StringAttribute{
-										MarkdownDescription: "Set MD5 authentication key",
+										MarkdownDescription: "Set MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
 										Computed:            true,
 									},
 									"message_digest_key_variable": schema.StringAttribute{

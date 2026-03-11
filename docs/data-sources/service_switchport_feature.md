@@ -48,6 +48,7 @@ Read-Only:
 - `critical_vlan_variable` (String) Variable name
 - `duplex` (String) Duplex mode
 - `duplex_variable` (String) Variable name
+- `enable_dot1x` (Boolean) Set 802.1x on off
 - `enable_periodic_reauth` (Boolean) Enable Periodic Reauthentication
 - `enable_periodic_reauth_variable` (String) Variable name
 - `enable_voice` (Boolean) Enable Critical Voice VLAN

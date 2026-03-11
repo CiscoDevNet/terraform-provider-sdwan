@@ -4,13 +4,13 @@ page_title: "sdwan_policy_object_security_scalable_group_tag_list Resource - ter
 subcategory: "Policy Objects"
 description: |-
   This resource can manage a Policy Object Security Scalable Group Tag List Policy_object.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_policy_object_security_scalable_group_tag_list (Resource)
 
 This resource can manage a Policy Object Security Scalable Group Tag List Policy_object.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 

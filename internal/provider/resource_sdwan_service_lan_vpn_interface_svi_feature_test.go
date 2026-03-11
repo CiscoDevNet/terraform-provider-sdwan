@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanServiceLANVPNInterfaceSVIProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "shutdown", "false"))
@@ -59,6 +59,7 @@ func TestAccSdwanServiceLANVPNInterfaceSVIProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_vrrps.0.tloc_prefix_change_value", "100"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_vrrps.0.tracking_objects.0.track_action", "decrement"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_vrrps.0.tracking_objects.0.decrement_value", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_vrrps.0.follow_dual_router_high_availability", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_vrrps.0.group_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_vrrps.0.priority", "100"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_vrrps.0.timer", "1000"))
@@ -67,6 +68,7 @@ func TestAccSdwanServiceLANVPNInterfaceSVIProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_vrrps.0.addresses.0.link_local_address", "1::1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_vrrps.0.addresses.0.global_address", "1::1/24"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_vrrps.0.secondary_addresses.0.prefix", "::20/32"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_vrrps.0.follow_dual_router_high_availability", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "enable_dhcpv6", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "tcp_mss", "1024"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "arp_timeout", "1200"))
@@ -253,6 +255,7 @@ func testAccSdwanServiceLANVPNInterfaceSVIProfileParcelConfig_all() string {
 	config += `		track_action = "decrement"` + "\n"
 	config += `		decrement_value = 100` + "\n"
 	config += `	}]` + "\n"
+	config += `	  follow_dual_router_high_availability = false` + "\n"
 	config += `	}]` + "\n"
 	config += `	ipv6_vrrps = [{` + "\n"
 	config += `	  group_id = 1` + "\n"
@@ -267,6 +270,7 @@ func testAccSdwanServiceLANVPNInterfaceSVIProfileParcelConfig_all() string {
 	config += `	  secondary_addresses = [{` + "\n"
 	config += `		prefix = "::20/32"` + "\n"
 	config += `	}]` + "\n"
+	config += `	  follow_dual_router_high_availability = false` + "\n"
 	config += `	}]` + "\n"
 	config += `	enable_dhcpv6 = false` + "\n"
 	config += `	tcp_mss = 1024` + "\n"

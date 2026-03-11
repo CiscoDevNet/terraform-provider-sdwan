@@ -26,6 +26,7 @@ import (
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
@@ -78,10 +79,6 @@ func (d *SystemMRFProfileParcelDataSource) Schema(ctx context.Context, req datas
 				MarkdownDescription: "Feature Profile ID",
 				Required:            true,
 			},
-			"region_id": schema.Int64Attribute{
-				MarkdownDescription: "Set region ID",
-				Computed:            true,
-			},
 			"secondary_region_id": schema.Int64Attribute{
 				MarkdownDescription: "Set secondary region ID",
 				Computed:            true,
@@ -104,6 +101,39 @@ func (d *SystemMRFProfileParcelDataSource) Schema(ctx context.Context, req datas
 			},
 			"migration_bgp_community": schema.Int64Attribute{
 				MarkdownDescription: "Set BGP community during migration from BGP-core based network",
+				Computed:            true,
+			},
+			"enable_management_region": schema.BoolAttribute{
+				MarkdownDescription: "Enable management region",
+				Computed:            true,
+			},
+			"enable_management_region_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"vrf_id": schema.Int64Attribute{
+				MarkdownDescription: "VRF name for management region",
+				Computed:            true,
+			},
+			"vrf_id_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"gateway_preference": schema.SetAttribute{
+				MarkdownDescription: "List of affinity group preferences for VRF",
+				ElementType:         types.Int64Type,
+				Computed:            true,
+			},
+			"gateway_preference_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"management_gateway": schema.BoolAttribute{
+				MarkdownDescription: "Enable management gateway",
+				Computed:            true,
+			},
+			"management_gateway_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
 		},

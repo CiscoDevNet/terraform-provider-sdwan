@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanPolicyObjectDataIPv6PrefixListProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_data_ipv6_prefix_list.test", "entries.0.ipv6_address", "2001:db8:85a3::8a2e:370:7334"))

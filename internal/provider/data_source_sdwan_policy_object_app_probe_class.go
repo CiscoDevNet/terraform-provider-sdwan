@@ -102,6 +102,10 @@ func (d *PolicyObjectAppProbeClassProfileParcelDataSource) Schema(ctx context.Co
 							MarkdownDescription: "Forwarding Class Name",
 							Computed:            true,
 						},
+						"forwarding_class_id": schema.StringAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+						},
 					},
 				},
 			},

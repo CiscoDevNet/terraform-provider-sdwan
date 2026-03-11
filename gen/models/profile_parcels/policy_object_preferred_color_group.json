@@ -1,360 +1,376 @@
 {
   "request": {
-      "$schema": "http://json-schema.org/draft/2019-09/schema",
-      "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/preferred-color-group/post/request_schema.json",
-      "title": "preferred-color-group Parcel Schema",
-      "description": "preferred-color-group profile parcel schema for POST request",
-      "type": "object",
-      "properties": {
-          "name": {
-              "minLength": 1,
-              "maxLength": 32,
-              "pattern": "^[^&<>! \"]+$",
-              "type": "string"
-          },
-          "description": {
-              "type": "string"
-          },
-          "data": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/preferred-color-group/post/request_schema.json",
+    "title": "preferred-color-group Parcel Schema",
+    "description": "preferred-color-group profile parcel schema for POST request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "minLength": 1,
+        "maxLength": 32,
+        "pattern": "^[^&<>! \"]+$",
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "entries": {
+            "description": "Preferred Color Group List",
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
               "type": "object",
               "properties": {
-                  "entries": {
-                      "description": "Preferred Color Group List",
-                      "type": "array",
-                      "minItems": 1,
-                      "uniqueItems": true,
-                      "items": {
-                          "type": "object",
+                "primaryPreference": {
+                  "description": "Object with an color and path preference",
+                  "type": "object",
+                  "properties": {
+                    "colorPreference": {
+                      "oneOf": [
+                        {
                           "properties": {
-                              "primaryPreference": {
-                                  "description": "Object with an color and path preference",
-                                  "type": "object",
-                                  "properties": {
-                                      "colorPreference": {
-                                          "oneOf": [
-                                              {
-                                                  "properties": {
-                                                      "optionType": {
-                                                          "type": "string",
-                                                          "enum": [
-                                                              "global"
-                                                          ]
-                                                      },
-                                                      "value": {
-                                                          "type": "array",
-                                                          "minItems": 1,
-                                                          "uniqueItems": true,
-                                                          "items": {
-                                                              "enum": [
-                                                                  "default",
-                                                                  "3g",
-                                                                  "biz-internet",
-                                                                  "blue",
-                                                                  "bronze",
-                                                                  "custom1",
-                                                                  "custom2",
-                                                                  "custom3",
-                                                                  "gold",
-                                                                  "green",
-                                                                  "lte",
-                                                                  "metro-ethernet",
-                                                                  "mpls",
-                                                                  "private1",
-                                                                  "private2",
-                                                                  "private3",
-                                                                  "private4",
-                                                                  "private5",
-                                                                  "private6",
-                                                                  "public-internet",
-                                                                  "red",
-                                                                  "silver"
-                                                              ],
-                                                              "type": "string"
-                                                          }
-                                                      }
-                                                  },
-                                                  "required": [
-                                                      "optionType",
-                                                      "value"
-                                                  ],
-                                                  "additionalProperties": false
-                                              }
-                                          ]
-                                      },
-                                      "pathPreference": {
-                                          "oneOf": [
-                                              {
-                                                  "properties": {
-                                                      "optionType": {
-                                                          "type": "string",
-                                                          "enum": [
-                                                              "global"
-                                                          ]
-                                                      },
-                                                      "value": {
-                                                          "enum": [
-                                                              "all-paths",
-                                                              "direct-path",
-                                                              "multi-hop-path"
-                                                          ],
-                                                          "type": "string"
-                                                      }
-                                                  },
-                                                  "required": [
-                                                      "optionType",
-                                                      "value"
-                                                  ],
-                                                  "additionalProperties": false
-                                              }
-                                          ]
-                                      }
-                                  }
-                              },
-                              "secondaryPreference": {
-                                  "description": "Object with an color and path preference",
-                                  "type": "object",
-                                  "properties": {
-                                      "colorPreference": {
-                                          "oneOf": [
-                                              {
-                                                  "properties": {
-                                                      "optionType": {
-                                                          "type": "string",
-                                                          "enum": [
-                                                              "global"
-                                                          ]
-                                                      },
-                                                      "value": {
-                                                          "type": "array",
-                                                          "minItems": 1,
-                                                          "uniqueItems": true,
-                                                          "items": {
-                                                              "enum": [
-                                                                  "default",
-                                                                  "3g",
-                                                                  "biz-internet",
-                                                                  "blue",
-                                                                  "bronze",
-                                                                  "custom1",
-                                                                  "custom2",
-                                                                  "custom3",
-                                                                  "gold",
-                                                                  "green",
-                                                                  "lte",
-                                                                  "metro-ethernet",
-                                                                  "mpls",
-                                                                  "private1",
-                                                                  "private2",
-                                                                  "private3",
-                                                                  "private4",
-                                                                  "private5",
-                                                                  "private6",
-                                                                  "public-internet",
-                                                                  "red",
-                                                                  "silver"
-                                                              ],
-                                                              "type": "string"
-                                                          }
-                                                      }
-                                                  },
-                                                  "required": [
-                                                      "optionType",
-                                                      "value"
-                                                  ],
-                                                  "additionalProperties": false
-                                              }
-                                          ]
-                                      },
-                                      "pathPreference": {
-                                          "oneOf": [
-                                              {
-                                                  "properties": {
-                                                      "optionType": {
-                                                          "type": "string",
-                                                          "enum": [
-                                                              "global"
-                                                          ]
-                                                      },
-                                                      "value": {
-                                                          "enum": [
-                                                              "all-paths",
-                                                              "direct-path",
-                                                              "multi-hop-path"
-                                                          ],
-                                                          "type": "string"
-                                                      }
-                                                  },
-                                                  "required": [
-                                                      "optionType",
-                                                      "value"
-                                                  ],
-                                                  "additionalProperties": false
-                                              }
-                                          ]
-                                      }
-                                  }
-                              },
-                              "tertiaryPreference": {
-                                  "description": "Object with an color and path preference",
-                                  "type": "object",
-                                  "properties": {
-                                      "colorPreference": {
-                                          "oneOf": [
-                                              {
-                                                  "properties": {
-                                                      "optionType": {
-                                                          "type": "string",
-                                                          "enum": [
-                                                              "global"
-                                                          ]
-                                                      },
-                                                      "value": {
-                                                          "type": "array",
-                                                          "minItems": 1,
-                                                          "uniqueItems": true,
-                                                          "items": {
-                                                              "enum": [
-                                                                  "default",
-                                                                  "3g",
-                                                                  "biz-internet",
-                                                                  "blue",
-                                                                  "bronze",
-                                                                  "custom1",
-                                                                  "custom2",
-                                                                  "custom3",
-                                                                  "gold",
-                                                                  "green",
-                                                                  "lte",
-                                                                  "metro-ethernet",
-                                                                  "mpls",
-                                                                  "private1",
-                                                                  "private2",
-                                                                  "private3",
-                                                                  "private4",
-                                                                  "private5",
-                                                                  "private6",
-                                                                  "public-internet",
-                                                                  "red",
-                                                                  "silver"
-                                                              ],
-                                                              "type": "string"
-                                                          }
-                                                      }
-                                                  },
-                                                  "required": [
-                                                      "optionType",
-                                                      "value"
-                                                  ],
-                                                  "additionalProperties": false
-                                              }
-                                          ]
-                                      },
-                                      "pathPreference": {
-                                          "oneOf": [
-                                              {
-                                                  "properties": {
-                                                      "optionType": {
-                                                          "type": "string",
-                                                          "enum": [
-                                                              "global"
-                                                          ]
-                                                      },
-                                                      "value": {
-                                                          "enum": [
-                                                              "all-paths",
-                                                              "direct-path",
-                                                              "multi-hop-path"
-                                                          ],
-                                                          "type": "string"
-                                                      }
-                                                  },
-                                                  "required": [
-                                                      "optionType",
-                                                      "value"
-                                                  ],
-                                                  "additionalProperties": false
-                                              }
-                                          ]
-                                      }
-                                  }
+                            "optionType": {
+                              "type": "string",
+                              "enum": [
+                                "global"
+                              ]
+                            },
+                            "value": {
+                              "type": "array",
+                              "minItems": 1,
+                              "uniqueItems": true,
+                              "items": {
+                                "enum": [
+                                  "default",
+                                  "3g",
+                                  "biz-internet",
+                                  "blue",
+                                  "bronze",
+                                  "custom1",
+                                  "custom2",
+                                  "custom3",
+                                  "gold",
+                                  "green",
+                                  "lte",
+                                  "metro-ethernet",
+                                  "mpls",
+                                  "private1",
+                                  "private2",
+                                  "private3",
+                                  "private4",
+                                  "private5",
+                                  "private6",
+                                  "public-internet",
+                                  "red",
+                                  "silver"
+                                ],
+                                "type": "string"
                               }
+                            }
                           },
                           "required": [
-                              "primaryPreference"
+                            "optionType",
+                            "value"
                           ],
-                          "dependentRequired": {
-                              "secondaryPreference": [
-                                  "primaryPreference"
-                              ],
-                              "tertiaryPreference": [
-                                  "primaryPreference",
-                                  "secondaryPreference"
-                              ]
-                          },
                           "additionalProperties": false
-                      }
-                  }
-              },
-              "required": [],
-              "additionalProperties": false
-          },
-          "documentation": {
-              "description": "This is the documentation for POST request schema for preferred-color-group profile parcel",
-              "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
-              "details-2": "variable name should not be present if optionType value is NOT variable",
-              "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
-              "details-4": "when option Type is default, value should be present with given default value as specified in schema",
-              "examples": [
-                  {
-                      "data": {
-                          "entries": [
-                              {
-                                  "primaryPreference": {
-                                      "colorPreference": {
-                                          "optionType": "global",
-                                          "value": "default 3g biz-internet"
-                                      },
-                                      "pathPreference": {
-                                          "optionType": "global",
-                                          "value": "direct-path"
-                                      }
-                                  },
-                                  "secondaryPreference": {
-                                      "colorPreference": {
-                                          "optionType": "global",
-                                          "value": "bronze blue"
-                                      },
-                                      "pathPreference": {
-                                          "optionType": "global",
-                                          "value": "all-paths"
-                                      }
-                                  },
-                                  "tertiaryPreference": {
-                                      "colorPreference": {
-                                          "optionType": "global",
-                                          "value": "bronze blue"
-                                      },
-                                      "pathPreference": {
-                                          "optionType": "global",
-                                          "value": "all-paths"
-                                      }
-                                  }
+                        }
+                      ]
+                    },
+                    "pathPreference": {
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": [
+                                "global"
+                              ]
+                            },
+                            "value": {
+                              "enum": [
+                                "all-paths",
+                                "direct-path",
+                                "multi-hop-path"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "optionType",
+                            "value"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  },
+                  "anyOf": [
+                    {
+                      "required": [
+                        "colorPreference"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "pathPreference"
+                      ]
+                    }
+                  ]
+                },
+                "secondaryPreference": {
+                  "description": "Object with an color and path preference",
+                  "type": "object",
+                  "properties": {
+                    "colorPreference": {
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": [
+                                "global"
+                              ]
+                            },
+                            "value": {
+                              "type": "array",
+                              "minItems": 1,
+                              "uniqueItems": true,
+                              "items": {
+                                "enum": [
+                                  "default",
+                                  "3g",
+                                  "biz-internet",
+                                  "blue",
+                                  "bronze",
+                                  "custom1",
+                                  "custom2",
+                                  "custom3",
+                                  "gold",
+                                  "green",
+                                  "lte",
+                                  "metro-ethernet",
+                                  "mpls",
+                                  "private1",
+                                  "private2",
+                                  "private3",
+                                  "private4",
+                                  "private5",
+                                  "private6",
+                                  "public-internet",
+                                  "red",
+                                  "silver"
+                                ],
+                                "type": "string"
                               }
-                          ]
-                      },
-                      "name": "preferred-color-groupParcelGlobalDefault"
+                            }
+                          },
+                          "required": [
+                            "optionType",
+                            "value"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "pathPreference": {
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": [
+                                "global"
+                              ]
+                            },
+                            "value": {
+                              "enum": [
+                                "all-paths",
+                                "direct-path",
+                                "multi-hop-path"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "optionType",
+                            "value"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
                   }
-              ]
+                },
+                "tertiaryPreference": {
+                  "description": "Object with an color and path preference",
+                  "type": "object",
+                  "properties": {
+                    "colorPreference": {
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": [
+                                "global"
+                              ]
+                            },
+                            "value": {
+                              "type": "array",
+                              "minItems": 1,
+                              "uniqueItems": true,
+                              "items": {
+                                "enum": [
+                                  "default",
+                                  "3g",
+                                  "biz-internet",
+                                  "blue",
+                                  "bronze",
+                                  "custom1",
+                                  "custom2",
+                                  "custom3",
+                                  "gold",
+                                  "green",
+                                  "lte",
+                                  "metro-ethernet",
+                                  "mpls",
+                                  "private1",
+                                  "private2",
+                                  "private3",
+                                  "private4",
+                                  "private5",
+                                  "private6",
+                                  "public-internet",
+                                  "red",
+                                  "silver"
+                                ],
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "required": [
+                            "optionType",
+                            "value"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "pathPreference": {
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": [
+                                "global"
+                              ]
+                            },
+                            "value": {
+                              "enum": [
+                                "all-paths",
+                                "direct-path",
+                                "multi-hop-path"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "optionType",
+                            "value"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "required": [
+                "primaryPreference"
+              ],
+              "dependentRequired": {
+                "secondaryPreference": [
+                  "primaryPreference"
+                ],
+                "tertiaryPreference": [
+                  "primaryPreference",
+                  "secondaryPreference"
+                ]
+              },
+              "additionalProperties": false
+            }
           }
+        },
+        "required": [],
+        "additionalProperties": false
       },
+      "documentation": {
+        "description": "This is the documentation for POST request schema for preferred-color-group profile parcel",
+        "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+        "details-2": "variable name should not be present if optionType value is NOT variable",
+        "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+        "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+        "examples": [
+          {
+            "data": {
+              "entries": [
+                {
+                  "primaryPreference": {
+                    "colorPreference": {
+                      "optionType": "global",
+                      "value": "default 3g biz-internet"
+                    },
+                    "pathPreference": {
+                      "optionType": "global",
+                      "value": "direct-path"
+                    }
+                  },
+                  "secondaryPreference": {
+                    "colorPreference": {
+                      "optionType": "global",
+                      "value": "bronze blue"
+                    },
+                    "pathPreference": {
+                      "optionType": "global",
+                      "value": "all-paths"
+                    }
+                  },
+                  "tertiaryPreference": {
+                    "colorPreference": {
+                      "optionType": "global",
+                      "value": "bronze blue"
+                    },
+                    "pathPreference": {
+                      "optionType": "global",
+                      "value": "all-paths"
+                    }
+                  }
+                }
+              ]
+            },
+            "name": "PreferredColorGroup"
+          }
+        ]
+      },
+      "metadata": {
+        "minVManageVersion": "20.15.1"
+      }
+    },
+    "required": [
+      "data"
+    ],
+    "not": {
       "required": [
-          "data"
-      ],
-      "not": {
-          "required": [
-              "documentation"
-          ]
-      },
-      "additionalProperties": false
+        "documentation",
+        "metadata"
+      ]
+    },
+    "additionalProperties": false
   }
 }

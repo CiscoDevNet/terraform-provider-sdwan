@@ -2,8 +2,8 @@
 name: Policy Group
 rest_endpoint: /v1/policy-group/
 id_attribute: id
-minimum_version: 20.12.0
-test_tags: [SDWAN_2012]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 doc_category: Policy Groups
 attributes:
   - model_name: name

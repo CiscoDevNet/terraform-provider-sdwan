@@ -27,7 +27,6 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
-	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -65,7 +64,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Metadata(ctx conte
 func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service LAN VPN Interface Ethernet Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service LAN VPN Interface Ethernet Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -126,18 +125,192 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"ipv4_configuration_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv4 Configuration Type").AddStringEnumDescription("dynamic", "static").AddDefaultValueDescription("dynamic").String,
+			"port_channel_interface": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Port-Channel interface on/off").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"port_channel_mode": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Port Channel Mode, Attribute conditional on `port_channel_interface` equal to `true`").AddStringEnumDescription("lacp", "static").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("dynamic", "static"),
+					stringvalidator.OneOf("lacp", "static"),
+				},
+			},
+			"port_channel_lacp_qos_aggregate": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `lacp`").String,
+				Optional:            true,
+			},
+			"port_channel_lacp_qos_aggregate_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`").String,
+				Optional:            true,
+			},
+			"port_channel_lacp_load_balance": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `lacp`").AddStringEnumDescription("flow", "vlan").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("flow", "vlan"),
+				},
+			},
+			"port_channel_lacp_load_balance_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`").String,
+				Optional:            true,
+			},
+			"port_channel_lacp_fast_switchover": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Eanble lacp fast switchover, Attribute conditional on `port_channel_mode` equal to `lacp`").String,
+				Optional:            true,
+			},
+			"port_channel_lacp_fast_switchover_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`").String,
+				Optional:            true,
+			},
+			"port_channel_lacp_min_bundle": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set LACP min bundle, Attribute conditional on `port_channel_mode` equal to `lacp`").AddIntegerRangeDescription(1, 16).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 16),
+				},
+			},
+			"port_channel_lacp_min_bundle_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`").String,
+				Optional:            true,
+			},
+			"port_channel_lacp_max_bundle": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set LACP max bundle, Attribute conditional on `port_channel_mode` equal to `lacp`").AddIntegerRangeDescription(1, 16).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 16),
+				},
+			},
+			"port_channel_lacp_max_bundle_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`").String,
+				Optional:            true,
+			},
+			"port_channel_lacp_member_links": schema.ListNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Configure Port-Channel member links, Attribute conditional on `port_channel_mode` equal to `lacp`").String,
+				Optional:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"interface_id": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
+							},
+						},
+						"lacp_mode": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set lacp mode").AddStringEnumDescription("active", "passive").AddDefaultValueDescription("active").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("active", "passive"),
+							},
+						},
+						"lacp_mode_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"lacp_rate": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set lacp rate").AddStringEnumDescription("fast", "normal").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("fast", "normal"),
+							},
+						},
+						"lacp_rate_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"lacp_port_priority": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set lacp port priority").AddIntegerRangeDescription(1, 65535).String,
+							Optional:            true,
+							Validators: []validator.Int64{
+								int64validator.Between(1, 65535),
+							},
+						},
+						"lacp_port_priority_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+					},
+				},
+			},
+			"port_channel_static_qos_aggregate": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `static`").String,
+				Optional:            true,
+			},
+			"port_channel_static_qos_aggregate_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_mode` equal to `static`").String,
+				Optional:            true,
+			},
+			"port_channel_static_load_balance": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `static`").AddStringEnumDescription("flow", "vlan").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("flow", "vlan"),
+				},
+			},
+			"port_channel_static_load_balance_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_mode` equal to `static`").String,
+				Optional:            true,
+			},
+			"port_channel_static_member_links": schema.ListNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Configure Port-Channel member links, Attribute conditional on `port_channel_mode` equal to `static`").String,
+				Optional:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"interface_id": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
+							},
+						},
+					},
+				},
+			},
+			"port_channel_subinterface": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Port Channel Sub Interface on/off, Attribute conditional on `port_channel_interface` equal to `true`").String,
+				Optional:            true,
+			},
+			"port_channel_subinterface_primary_interface_name": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `port_channel_interface` equal to `true` and `port_channel_subinterface` equal to `true`").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 32),
+					stringvalidator.RegexMatches(regexp.MustCompile(`^(FastEthernet|GigabitEthernet|TwoGigabitEthernet|FiveGigabitEthernet|AppGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|FortyGigabitEthernet|HundredGigE)[0-9]+(/[0-9]+)*$`), ""),
+				},
+			},
+			"port_channel_subinterface_primary_interface_name_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_interface` equal to `true` and `port_channel_subinterface` equal to `true`").String,
+				Optional:            true,
+			},
+			"port_channel_subinterface_secondary_interface_name": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `port_channel_interface` equal to `true` and `port_channel_subinterface` equal to `true`").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 32),
+					stringvalidator.RegexMatches(regexp.MustCompile(`^(FastEthernet|GigabitEthernet|TwoGigabitEthernet|FiveGigabitEthernet|AppGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|FortyGigabitEthernet|HundredGigE)[0-9]+(/[0-9]+)*$`), ""),
+				},
+			},
+			"port_channel_subinterface_secondary_interface_name_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_interface` equal to `true` and `port_channel_subinterface` equal to `true`").String,
+				Optional:            true,
+			},
+			"port_channel_member_interface": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Port-Channel member interface on/off").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"ipv4_configuration_type": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("IPv4 Configuration Type, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddStringEnumDescription("dynamic", "static", "none").AddDefaultValueDescription("dynamic").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("dynamic", "static", "none"),
 				},
 			},
 			"ipv4_dhcp_distance": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("DHCP Distance, Attribute conditional on `ipv4_configuration_type` equal to `dynamic`").AddIntegerRangeDescription(1, 65536).AddDefaultValueDescription("1").String,
+				MarkdownDescription: helpers.NewAttributeDescription("DHCP Distance, Attribute conditional on `ipv4_configuration_type` equal to `dynamic`").AddIntegerRangeDescription(1, 255).AddDefaultValueDescription("1").String,
 				Optional:            true,
 				Validators: []validator.Int64{
-					int64validator.Between(1, 65536),
+					int64validator.Between(1, 255),
 				},
 			},
 			"ipv4_dhcp_distance_variable": schema.StringAttribute{
@@ -171,6 +344,9 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 						"address": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IpV4 Address").String,
 							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`^((25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)$`), ""),
+							},
 						},
 						"address_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -191,16 +367,16 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				},
 			},
 			"ipv4_dhcp_helper": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of DHCP IPv4 helper addresses (min 1, max 8)").String,
+				MarkdownDescription: helpers.NewAttributeDescription("List of DHCP IPv4 helper addresses (min 1, max 8), Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"ipv4_dhcp_helper_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"ipv6_configuration_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv6 Configuration Type").AddStringEnumDescription("dynamic", "static", "none").AddDefaultValueDescription("none").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv6 Configuration Type, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddStringEnumDescription("dynamic", "static", "none").AddDefaultValueDescription("none").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("dynamic", "static", "none"),
@@ -219,7 +395,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Address Secondary").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(\/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
 							},
 						},
 						"address_variable": schema.StringAttribute{
@@ -233,7 +409,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				MarkdownDescription: helpers.NewAttributeDescription("IPv6 Address Secondary, Attribute conditional on `ipv6_configuration_type` equal to `static`").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(\/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
 				},
 			},
 			"ipv6_address_variable": schema.StringAttribute{
@@ -249,7 +425,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Address Secondary").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(\/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
 							},
 						},
 						"address_variable": schema.StringAttribute{
@@ -287,7 +463,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				},
 			},
 			"ipv4_nat": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("enable Network Address Translation on this interface").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("enable Network Address Translation on this interface, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"ipv4_nat_range_start": schema.StringAttribute{
@@ -401,7 +577,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				},
 			},
 			"ipv6_nat": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("enable Network Address Translation ipv6 on this interface").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("enable Network Address Translation ipv6 on this interface, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"nat64": schema.BoolAttribute{
@@ -409,14 +585,14 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				Optional:            true,
 			},
 			"acl_shaping_rate": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Shaping Rate (Kbps)").AddIntegerRangeDescription(8, 100000000).String,
+				MarkdownDescription: helpers.NewAttributeDescription("Shaping Rate (Kbps), Attribute conditional on `port_channel_member_interface` not equal to `true`").AddIntegerRangeDescription(8, 100000000).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(8, 100000000),
 				},
 			},
 			"acl_shaping_rate_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"acl_ipv4_egress_policy_id": schema.StringAttribute{
@@ -448,7 +624,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				},
 			},
 			"ipv6_vrrps": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable VRRP Ipv6").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable VRRP Ipv6, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -506,7 +682,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 										MarkdownDescription: helpers.NewAttributeDescription("Assign Global IPv6 Prefix").String,
 										Optional:            true,
 										Validators: []validator.String{
-											stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
+											stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(\/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
 										},
 									},
 									"global_address_variable": schema.StringAttribute{
@@ -516,11 +692,26 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 								},
 							},
 						},
+						"follow_dual_router_high_availability": schema.BoolAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Follow RG state by default when B2B HA is configured").AddDefaultValueDescription("true").String,
+							Optional:            true,
+						},
+						"min_preempt_delay": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Minimum preempt delay in seconds").AddIntegerRangeDescription(0, 3600).String,
+							Optional:            true,
+							Validators: []validator.Int64{
+								int64validator.AtMost(3600),
+							},
+						},
+						"min_preempt_delay_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
 					},
 				},
 			},
 			"ipv4_vrrps": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable VRRP").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable VRRP, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -564,6 +755,9 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 						"address": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("VRRP Ip Address").String,
 							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`^((25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)$`), ""),
+							},
 						},
 						"address_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -577,6 +771,9 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 									"address": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Ip Address").String,
 										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.RegexMatches(regexp.MustCompile(`^((25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)$`), ""),
+										},
 									},
 									"address_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -601,10 +798,10 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 							Optional:            true,
 						},
 						"tloc_pref_change_value": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Timer interval for successive advertisements, in milliseconds").AddIntegerRangeDescription(100, 4294967295).String,
+							MarkdownDescription: helpers.NewAttributeDescription("Timer interval for successive advertisements, in milliseconds").AddIntegerRangeDescription(1, 4294967295).String,
 							Optional:            true,
 							Validators: []validator.Int64{
-								int64validator.Between(100, 4294967295),
+								int64validator.Between(1, 4294967295),
 							},
 						},
 						"tracking_objects": schema.ListNestedAttribute{
@@ -644,11 +841,26 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 								},
 							},
 						},
+						"follow_dual_router_high_availability": schema.BoolAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Follow RG state by default when B2B HA is configured").AddDefaultValueDescription("true").String,
+							Optional:            true,
+						},
+						"min_preempt_delay": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Minimum preempt delay in seconds").AddIntegerRangeDescription(0, 3600).String,
+							Optional:            true,
+							Validators: []validator.Int64{
+								int64validator.AtMost(3600),
+							},
+						},
+						"min_preempt_delay_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
 					},
 				},
 			},
 			"arps": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Configure ARP entries").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Configure ARP entries, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -672,108 +884,108 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				},
 			},
 			"trustsec_enable_sgt_propogation": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Indicates that the interface is trustworthy for CTS").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Indicates that the interface is trustworthy for CTS, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"trustsec_propogate": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enables the interface for CTS SGT authorization and forwarding").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enables the interface for CTS SGT authorization and forwarding, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
 			"trustsec_security_group_tag": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("SGT value between 2 and 65519").AddIntegerRangeDescription(2, 65519).String,
+				MarkdownDescription: helpers.NewAttributeDescription("SGT value between 2 and 65519, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddIntegerRangeDescription(2, 65519).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(2, 65519),
 				},
 			},
 			"trustsec_security_group_tag_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"trustsec_enable_enforced_propogation": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable/Disable SGT Enforcement on an interface").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable/Disable SGT Enforcement on an interface, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"trustsec_enforced_security_group_tag": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("SGT value between 2 and 65519").AddIntegerRangeDescription(2, 65519).String,
+				MarkdownDescription: helpers.NewAttributeDescription("SGT value between 2 and 65519, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddIntegerRangeDescription(2, 65519).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(2, 65519),
 				},
 			},
 			"trustsec_enforced_security_group_tag_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"duplex": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Duplex mode").AddStringEnumDescription("full", "half", "auto").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Duplex mode, Attribute conditional on `port_channel_interface` not equal to `true`").AddStringEnumDescription("full", "half", "auto").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("full", "half", "auto"),
 				},
 			},
 			"duplex_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"mac_address": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("MAC Address").String,
+				MarkdownDescription: helpers.NewAttributeDescription("MAC Address, Attribute conditional on `port_channel_member_interface` not equal to `true` and `port_channel_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"mac_address_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true` and `port_channel_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"ip_mtu": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IP MTU for GigabitEthernet main <576..Interface MTU>, GigabitEthernet subinterface <576..9216>, Other Interfaces <576..2000> in bytes").AddIntegerRangeDescription(576, 9216).AddDefaultValueDescription("1500").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IP MTU for GigabitEthernet main <576..Interface MTU>, GigabitEthernet subinterface <576..9216>, Other Interfaces <576..2000> in bytes, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddIntegerRangeDescription(576, 9216).AddDefaultValueDescription("1500").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(576, 9216),
 				},
 			},
 			"ip_mtu_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"interface_mtu": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Interface MTU").AddIntegerRangeDescription(1500, 9216).AddDefaultValueDescription("1500").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Interface MTU, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddIntegerRangeDescription(1500, 9216).AddDefaultValueDescription("1500").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1500, 9216),
 				},
 			},
 			"interface_mtu_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"tcp_mss": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("TCP MSS on SYN packets, in bytes").AddIntegerRangeDescription(500, 1460).String,
+				MarkdownDescription: helpers.NewAttributeDescription("TCP MSS on SYN packets, in bytes, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddIntegerRangeDescription(500, 1460).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(500, 1460),
 				},
 			},
 			"tcp_mss_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"speed": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set interface speed").AddStringEnumDescription("10", "100", "1000", "2500", "10000").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set interface speed, Attribute conditional on `port_channel_interface` not equal to `true`").AddStringEnumDescription("10", "100", "1000", "2500", "10000", "25000").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("10", "100", "1000", "2500", "10000"),
+					stringvalidator.OneOf("10", "100", "1000", "2500", "10000", "25000"),
 				},
 			},
 			"speed_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"arp_timeout": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Timeout value for dynamically learned ARP entries, <0..2678400> seconds").AddIntegerRangeDescription(0, 2147483).AddDefaultValueDescription("1200").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Timeout value for dynamically learned ARP entries, <0..2678400> seconds, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddIntegerRangeDescription(0, 2147483).AddDefaultValueDescription("1200").String,
 				Optional:            true,
 			},
 			"arp_timeout_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"autonegotiate": schema.BoolAttribute{
@@ -785,14 +997,14 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				Optional:            true,
 			},
 			"media_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Media type").AddStringEnumDescription("auto-select", "rj45", "sfp").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Media type, Attribute conditional on `port_channel_interface` not equal to `true`").AddStringEnumDescription("auto-select", "rj45", "sfp").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("auto-select", "rj45", "sfp"),
 				},
 			},
 			"media_type_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"load_interval": schema.Int64Attribute{
@@ -806,36 +1018,28 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"tracker": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable tracker for this interface").String,
-				Optional:            true,
-			},
-			"tracker_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
 			"icmp_redirect_disable": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("ICMP/ICMPv6 Redirect Disable").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("ICMP/ICMPv6 Redirect Disable, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
 			"icmp_redirect_disable_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"xconnect": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Extend remote TLOC over a GRE tunnel to a local LAN interface").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Extend remote TLOC over a GRE tunnel to a local LAN interface, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"xconnect_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"ip_directed_broadcast": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IP Directed-Broadcast").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IP Directed-Broadcast, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"ip_directed_broadcast_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 		},
@@ -853,6 +1057,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Configure(_ contex
 
 // End of section. //template:end model
 
+// Section below is generated&owned by "gen/generator.go". //template:begin create
 func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan ServiceLANVPNInterfaceEthernet
 
@@ -865,11 +1070,8 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Create(ctx context
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
-	// Get Manager Version
-	currentVersion := version.Must(version.NewVersion(r.client.ManagerVersion))
-
 	// Create object
-	body := plan.toBody(ctx, currentVersion)
+	body := plan.toBody(ctx)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -888,6 +1090,9 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Create(ctx context
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
+// End of section. //template:end create
+
+// Section below is generated&owned by "gen/generator.go". //template:begin read
 func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var state ServiceLANVPNInterfaceEthernet
 
@@ -899,9 +1104,6 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Read(ctx context.C
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
-
-	// Get Manager Version
-	currentVersion := version.Must(version.NewVersion(r.client.ManagerVersion))
 
 	res, err := r.client.Get(state.getPath() + "/" + url.QueryEscape(state.Id.ValueString()))
 	if res.Get("error.message").String() == "Invalid feature Id" {
@@ -919,9 +1121,9 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Read(ctx context.C
 	}
 
 	if imp {
-		state.fromBody(ctx, res, currentVersion)
+		state.fromBody(ctx, res)
 	} else {
-		state.updateFromBody(ctx, res, currentVersion)
+		state.updateFromBody(ctx, res)
 	}
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
@@ -935,6 +1137,9 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Read(ctx context.C
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
+// End of section. //template:end read
+
+// Section below is generated&owned by "gen/generator.go". //template:begin update
 func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var plan, state ServiceLANVPNInterfaceEthernet
 
@@ -953,10 +1158,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Update(ctx context
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	// Get Manager Version
-	currentVersion := version.Must(version.NewVersion(r.client.ManagerVersion))
-
-	body := plan.toBody(ctx, currentVersion)
+	body := plan.toBody(ctx)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
@@ -970,6 +1172,8 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Update(ctx context
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 }
+
+// End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
 func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {

@@ -64,7 +64,7 @@ func (r *SystemSNMPProfileParcelResource) Metadata(ctx context.Context, req reso
 func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System SNMP Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System SNMP Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -169,12 +169,16 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set name of the SNMP community").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthAtLeast(1),
 								stringvalidator.RegexMatches(regexp.MustCompile(`^[\S]+$`), ""),
 							},
+						},
+						"name_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
 						},
 						"user_label": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set user label of the SNMP community").String,
