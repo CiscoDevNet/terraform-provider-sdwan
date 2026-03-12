@@ -142,7 +142,7 @@ func (d *SystemLoggingProfileParcelDataSource) Schema(ctx context.Context, req d
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"hostname_ip": schema.StringAttribute{
-							MarkdownDescription: "Set hostname or IPv4 address of server",
+							MarkdownDescription: "Set IPv4 address of server",
 							Computed:            true,
 						},
 						"hostname_ip_variable": schema.StringAttribute{
@@ -150,7 +150,7 @@ func (d *SystemLoggingProfileParcelDataSource) Schema(ctx context.Context, req d
 							Computed:            true,
 						},
 						"vpn": schema.Int64Attribute{
-							MarkdownDescription: "Set hostname or IPv4 address of server",
+							MarkdownDescription: "Set vpn of server",
 							Computed:            true,
 						},
 						"vpn_variable": schema.StringAttribute{
@@ -206,7 +206,7 @@ func (d *SystemLoggingProfileParcelDataSource) Schema(ctx context.Context, req d
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"hostname_ip": schema.StringAttribute{
-							MarkdownDescription: "Set IPv6 hostname or IPv6 address of server",
+							MarkdownDescription: "Set IPv6 address of server",
 							Computed:            true,
 						},
 						"hostname_ip_variable": schema.StringAttribute{
@@ -214,7 +214,7 @@ func (d *SystemLoggingProfileParcelDataSource) Schema(ctx context.Context, req d
 							Computed:            true,
 						},
 						"vpn": schema.Int64Attribute{
-							MarkdownDescription: "Set hostname or IPv4 address of server",
+							MarkdownDescription: "Set vpn of server",
 							Computed:            true,
 						},
 						"vpn_variable": schema.StringAttribute{

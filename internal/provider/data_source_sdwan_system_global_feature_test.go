@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanSystemGlobalProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "http_server", "false"))
@@ -56,6 +56,10 @@ func TestAccDataSourceSdwanSystemGlobalProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "nat64_tcp_timeout", "3600"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "http_authentication", "aaa"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "ssh_version", "2"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "lacp_system_priority", "1234"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "etherchannel_flow_load_balance", "src-ip"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "etherchannel_vlan_load_balance", "123"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "bgp_community_new_format", "123"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -109,6 +113,10 @@ func testAccDataSourceSdwanSystemGlobalProfileParcelConfig() string {
 	config += `	nat64_tcp_timeout = 3600` + "\n"
 	config += `	http_authentication = "aaa"` + "\n"
 	config += `	ssh_version = "2"` + "\n"
+	config += `	lacp_system_priority = 1234` + "\n"
+	config += `	etherchannel_flow_load_balance = "src-ip"` + "\n"
+	config += `	etherchannel_vlan_load_balance = 123` + "\n"
+	config += `	bgp_community_new_format = 123` + "\n"
 	config += `}` + "\n"
 
 	config += `

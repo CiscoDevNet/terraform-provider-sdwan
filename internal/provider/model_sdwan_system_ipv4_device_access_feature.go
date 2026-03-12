@@ -106,7 +106,12 @@ func (data SystemIPv4DeviceAccess) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "sequenceName.value", item.Name.ValueString())
 				}
 			}
-			if !item.BaseAction.IsNull() {
+			if item.BaseAction.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "baseAction.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "baseAction.value", "accept")
+				}
+			} else {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "baseAction.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "baseAction.value", item.BaseAction.ValueString())

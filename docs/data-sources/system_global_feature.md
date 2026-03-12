@@ -31,6 +31,8 @@ data "sdwan_system_global_feature" "example" {
 
 - `arp_proxy` (Boolean) Set ARP Proxy
 - `arp_proxy_variable` (String) Variable name
+- `bgp_community_new_format` (Boolean) Display community attributes in the newer format. Instead of displaying communities as a 32-bit value, it shows them as two 16-bit integers separated by a colon (AA:NN format)
+- `bgp_community_new_format_variable` (String) Variable name
 - `cdp` (Boolean) Configure CDP
 - `cdp_variable` (String) Variable name
 - `console_logging` (Boolean) Configure Console Logging
@@ -38,6 +40,10 @@ data "sdwan_system_global_feature" "example" {
 - `description` (String) The description of the Feature
 - `domain_lookup` (Boolean) Configure Domain-Lookup
 - `domain_lookup_variable` (String) Variable name
+- `etherchannel_flow_load_balance` (String) Set Etherchannel load balance hash algorithm
+- `etherchannel_flow_load_balance_variable` (String) Variable name
+- `etherchannel_vlan_load_balance` (Boolean) Set Etherchannel vlan manual load balance
+- `etherchannel_vlan_load_balance_variable` (String) Variable name
 - `ftp_passive` (Boolean) Set Passive FTP
 - `ftp_passive_variable` (String) Variable name
 - `http_authentication` (String) Set preference for HTTP Authentication
@@ -50,6 +56,8 @@ data "sdwan_system_global_feature" "example" {
 - `ignore_bootp_variable` (String) Variable name
 - `ip_source_routing` (Boolean) Set Source Route
 - `ip_source_routing_variable` (String) Variable name
+- `lacp_system_priority` (Number) Set LACP system priority
+- `lacp_system_priority_variable` (String) Variable name
 - `line_vty` (Boolean) Configure Telnet (Outbound)
 - `line_vty_variable` (String) Variable name
 - `lldp` (Boolean) Configure LLDP
