@@ -40,6 +40,7 @@ description: |-
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_global_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_snmp_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_wireless_lan_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_t1_e1_serial_feature` to `20.15.0`
 - Add `sdwan_embedded_security_ngfw_policy` resource and data source
 - Add `sdwan_embedded_security_policy` resource and data source
 - Add `sdwan_application_priority_policy_settings` resource and data source

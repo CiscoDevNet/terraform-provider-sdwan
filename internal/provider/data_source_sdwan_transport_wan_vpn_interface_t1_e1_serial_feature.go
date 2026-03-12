@@ -468,6 +468,14 @@ func (d *TransportWANVPNInterfaceT1E1SerialProfileParcelDataSource) Schema(ctx c
 					},
 				},
 			},
+			"mrf_enable_core_region": schema.BoolAttribute{
+				MarkdownDescription: "Enable Core Region",
+				Computed:            true,
+			},
+			"mrf_core_region_type": schema.StringAttribute{
+				MarkdownDescription: "Core Region",
+				Computed:            true,
+			},
 			"qos_shaping_rate": schema.Int64Attribute{
 				MarkdownDescription: "1ge  interfaces: [0..1000000]kbps; 10ge interfaces: [0..10000000]kbps",
 				Computed:            true,
