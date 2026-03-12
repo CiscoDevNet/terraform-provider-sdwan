@@ -135,7 +135,7 @@ resource "sdwan_system_aaa_feature" "example" {
 
 Optional:
 
-- `group` (Set of String) Use Server-group
+- `group` (List of String) Use Server-group
 - `level` (String) Privilege level when method is commands
   - Choices: `1`, `15`
 - `method` (String) Configure Accounting Method
@@ -151,7 +151,7 @@ Optional:
 
 Optional:
 
-- `group` (Set of String) Use Server-group
+- `group` (List of String) Use Server-group
 - `if_authenticated` (Boolean) Succeed if user has authenticated
   - Default value: `false`
 - `level` (String) Privilege level when method is commands

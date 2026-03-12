@@ -28,7 +28,9 @@
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["variable"]
+                    "enum": [
+                      "variable"
+                    ]
                   },
                   "value": {
                     "type": "string",
@@ -37,9 +39,9 @@
                     "maxLength": 128
                   },
                   "default": {
-                    "minLength": 1,
-                    "type": "string",
-                    "maxLength": 2048
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000
                   },
                   "description": {
                     "minLength": 1,
@@ -47,14 +49,19 @@
                     "maxLength": 128
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               },
               {
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["global"]
+                    "enum": [
+                      "global"
+                    ]
                   },
                   "value": {
                     "type": "integer",
@@ -62,7 +69,10 @@
                     "maximum": 1000
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               }
             ]
@@ -79,22 +89,31 @@
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["global"]
+                          "enum": [
+                            "global"
+                          ]
                         },
                         "value": {
                           "type": "string",
                           "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     }
                   },
-                  "required": ["refId"],
+                  "required": [
+                    "refId"
+                  ],
                   "additionalProperties": false
                 }
               },
-              "required": ["trackerRef"],
+              "required": [
+                "trackerRef"
+              ],
               "additionalProperties": false
             },
             "minItems": 2,
@@ -109,7 +128,9 @@
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["variable"]
+                    "enum": [
+                      "variable"
+                    ]
                   },
                   "value": {
                     "type": "string",
@@ -118,9 +139,11 @@
                     "maxLength": 128
                   },
                   "default": {
-                    "minLength": 1,
                     "type": "string",
-                    "maxLength": 2048
+                    "enum": [
+                      "and",
+                      "or"
+                    ]
                   },
                   "description": {
                     "minLength": 1,
@@ -128,48 +151,72 @@
                     "maxLength": 128
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               },
               {
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["global"]
+                    "enum": [
+                      "global"
+                    ]
                   },
                   "value": {
                     "type": "string",
-                    "enum": ["and", "or"]
+                    "enum": [
+                      "and",
+                      "or"
+                    ]
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               },
               {
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["default"]
+                    "enum": [
+                      "default"
+                    ]
                   },
                   "value": {
                     "type": "string",
-                    "enum": ["or"]
+                    "enum": [
+                      "or"
+                    ]
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               }
             ]
           }
         },
-        "required": ["objectId", "trackerRefs", "criteria"],
+        "required": [
+          "objectId",
+          "trackerRefs",
+          "criteria"
+        ],
         "additionalProperties": false
       },
       "metadata": {
         "parcelRefDefinition": [
           {
             "refIdPath": "data.trackerRefs[*].trackerRef",
-            "parcelType": ["objecttracker"]
+            "parcelType": [
+              "objecttracker"
+            ]
           }
         ],
         "minVManageVersion": "20.15.1"
@@ -212,9 +259,15 @@
         ]
       }
     },
-    "required": ["name", "data"],
+    "required": [
+      "name",
+      "data"
+    ],
     "not": {
-      "required": ["metadata", "documentation"]
+      "required": [
+        "metadata",
+        "documentation"
+      ]
     },
     "additionalProperties": false
   }

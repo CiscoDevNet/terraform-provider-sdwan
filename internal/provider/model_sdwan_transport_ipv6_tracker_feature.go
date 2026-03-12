@@ -32,29 +32,30 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type TransportIPv6Tracker struct {
-	Id                          types.String `tfsdk:"id"`
-	Version                     types.Int64  `tfsdk:"version"`
-	Name                        types.String `tfsdk:"name"`
-	Description                 types.String `tfsdk:"description"`
-	FeatureProfileId            types.String `tfsdk:"feature_profile_id"`
-	TrackerName                 types.String `tfsdk:"tracker_name"`
-	TrackerNameVariable         types.String `tfsdk:"tracker_name_variable"`
-	EndpointApiUrl              types.String `tfsdk:"endpoint_api_url"`
-	EndpointApiUrlVariable      types.String `tfsdk:"endpoint_api_url_variable"`
-	EndpointDnsName             types.String `tfsdk:"endpoint_dns_name"`
-	EndpointDnsNameVariable     types.String `tfsdk:"endpoint_dns_name_variable"`
-	EndpointIp                  types.String `tfsdk:"endpoint_ip"`
-	EndpointIpVariable          types.String `tfsdk:"endpoint_ip_variable"`
-	Interval                    types.Int64  `tfsdk:"interval"`
-	IntervalVariable            types.String `tfsdk:"interval_variable"`
-	Multiplier                  types.Int64  `tfsdk:"multiplier"`
-	MultiplierVariable          types.String `tfsdk:"multiplier_variable"`
-	Threshold                   types.Int64  `tfsdk:"threshold"`
-	ThresholdVariable           types.String `tfsdk:"threshold_variable"`
-	EndpointTrackerType         types.String `tfsdk:"endpoint_tracker_type"`
-	EndpointTrackerTypeVariable types.String `tfsdk:"endpoint_tracker_type_variable"`
-	TrackerType                 types.String `tfsdk:"tracker_type"`
-	TrackerTypeVariable         types.String `tfsdk:"tracker_type_variable"`
+	Id                      types.String `tfsdk:"id"`
+	Version                 types.Int64  `tfsdk:"version"`
+	Name                    types.String `tfsdk:"name"`
+	Description             types.String `tfsdk:"description"`
+	FeatureProfileId        types.String `tfsdk:"feature_profile_id"`
+	TrackerName             types.String `tfsdk:"tracker_name"`
+	TrackerNameVariable     types.String `tfsdk:"tracker_name_variable"`
+	EndpointApiUrl          types.String `tfsdk:"endpoint_api_url"`
+	EndpointApiUrlVariable  types.String `tfsdk:"endpoint_api_url_variable"`
+	EndpointDnsName         types.String `tfsdk:"endpoint_dns_name"`
+	EndpointDnsNameVariable types.String `tfsdk:"endpoint_dns_name_variable"`
+	EndpointIp              types.String `tfsdk:"endpoint_ip"`
+	EndpointIpVariable      types.String `tfsdk:"endpoint_ip_variable"`
+	Interval                types.Int64  `tfsdk:"interval"`
+	IntervalVariable        types.String `tfsdk:"interval_variable"`
+	IcmpInterval            types.Int64  `tfsdk:"icmp_interval"`
+	IcmpIntervalVariable    types.String `tfsdk:"icmp_interval_variable"`
+	Multiplier              types.Int64  `tfsdk:"multiplier"`
+	MultiplierVariable      types.String `tfsdk:"multiplier_variable"`
+	Threshold               types.Int64  `tfsdk:"threshold"`
+	ThresholdVariable       types.String `tfsdk:"threshold_variable"`
+	EndpointTrackerType     types.String `tfsdk:"endpoint_tracker_type"`
+	TrackerType             types.String `tfsdk:"tracker_type"`
+	TrackerTypeVariable     types.String `tfsdk:"tracker_type_variable"`
 }
 
 // End of section. //template:end types
@@ -129,19 +130,36 @@ func (data TransportIPv6Tracker) toBody(ctx context.Context) string {
 	}
 
 	if !data.IntervalVariable.IsNull() {
-		if true {
+		if true && (data.EndpointTrackerType.ValueString() == "ipv6-interface" || data.EndpointTrackerType.IsNull()) {
 			body, _ = sjson.Set(body, path+"interval.optionType", "variable")
 			body, _ = sjson.Set(body, path+"interval.value", data.IntervalVariable.ValueString())
 		}
 	} else if data.Interval.IsNull() {
-		if true {
+		if true && (data.EndpointTrackerType.ValueString() == "ipv6-interface" || data.EndpointTrackerType.IsNull()) {
 			body, _ = sjson.Set(body, path+"interval.optionType", "default")
 			body, _ = sjson.Set(body, path+"interval.value", 60)
 		}
 	} else {
-		if true {
+		if true && (data.EndpointTrackerType.ValueString() == "ipv6-interface" || data.EndpointTrackerType.IsNull()) {
 			body, _ = sjson.Set(body, path+"interval.optionType", "global")
 			body, _ = sjson.Set(body, path+"interval.value", data.Interval.ValueInt64())
+		}
+	}
+
+	if !data.IcmpIntervalVariable.IsNull() {
+		if true && data.EndpointTrackerType.ValueString() == "ipv6-interface-icmp" {
+			body, _ = sjson.Set(body, path+"icmpInterval.optionType", "variable")
+			body, _ = sjson.Set(body, path+"icmpInterval.value", data.IcmpIntervalVariable.ValueString())
+		}
+	} else if data.IcmpInterval.IsNull() {
+		if true && data.EndpointTrackerType.ValueString() == "ipv6-interface-icmp" {
+			body, _ = sjson.Set(body, path+"icmpInterval.optionType", "default")
+			body, _ = sjson.Set(body, path+"icmpInterval.value", 2)
+		}
+	} else {
+		if true && data.EndpointTrackerType.ValueString() == "ipv6-interface-icmp" {
+			body, _ = sjson.Set(body, path+"icmpInterval.optionType", "global")
+			body, _ = sjson.Set(body, path+"icmpInterval.value", data.IcmpInterval.ValueInt64())
 		}
 	}
 
@@ -178,13 +196,7 @@ func (data TransportIPv6Tracker) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"threshold.value", data.Threshold.ValueInt64())
 		}
 	}
-
-	if !data.EndpointTrackerTypeVariable.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"endpointTrackerType.optionType", "variable")
-			body, _ = sjson.Set(body, path+"endpointTrackerType.value", data.EndpointTrackerTypeVariable.ValueString())
-		}
-	} else if data.EndpointTrackerType.IsNull() {
+	if data.EndpointTrackerType.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"endpointTrackerType.optionType", "default")
 			body, _ = sjson.Set(body, path+"endpointTrackerType.value", "ipv6-interface")
@@ -275,6 +287,18 @@ func (data *TransportIPv6Tracker) fromBody(ctx context.Context, res gjson.Result
 		} else if t.String() == "global" {
 			data.Interval = types.Int64Value(va.Int())
 		}
+		data.EndpointTrackerType = types.StringValue("ipv6-interface")
+	}
+	data.IcmpInterval = types.Int64Null()
+	data.IcmpIntervalVariable = types.StringNull()
+	if t := res.Get(path + "icmpInterval.optionType"); t.Exists() {
+		va := res.Get(path + "icmpInterval.value")
+		if t.String() == "variable" {
+			data.IcmpIntervalVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.IcmpInterval = types.Int64Value(va.Int())
+		}
+		data.EndpointTrackerType = types.StringValue("ipv6-interface-icmp")
 	}
 	data.Multiplier = types.Int64Null()
 	data.MultiplierVariable = types.StringNull()
@@ -297,12 +321,10 @@ func (data *TransportIPv6Tracker) fromBody(ctx context.Context, res gjson.Result
 		}
 	}
 	data.EndpointTrackerType = types.StringNull()
-	data.EndpointTrackerTypeVariable = types.StringNull()
+
 	if t := res.Get(path + "endpointTrackerType.optionType"); t.Exists() {
 		va := res.Get(path + "endpointTrackerType.value")
-		if t.String() == "variable" {
-			data.EndpointTrackerTypeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
+		if t.String() == "global" {
 			data.EndpointTrackerType = types.StringValue(va.String())
 		}
 	}
@@ -379,6 +401,16 @@ func (data *TransportIPv6Tracker) updateFromBody(ctx context.Context, res gjson.
 			data.Interval = types.Int64Value(va.Int())
 		}
 	}
+	data.IcmpInterval = types.Int64Null()
+	data.IcmpIntervalVariable = types.StringNull()
+	if t := res.Get(path + "icmpInterval.optionType"); t.Exists() {
+		va := res.Get(path + "icmpInterval.value")
+		if t.String() == "variable" {
+			data.IcmpIntervalVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.IcmpInterval = types.Int64Value(va.Int())
+		}
+	}
 	data.Multiplier = types.Int64Null()
 	data.MultiplierVariable = types.StringNull()
 	if t := res.Get(path + "multiplier.optionType"); t.Exists() {
@@ -400,12 +432,10 @@ func (data *TransportIPv6Tracker) updateFromBody(ctx context.Context, res gjson.
 		}
 	}
 	data.EndpointTrackerType = types.StringNull()
-	data.EndpointTrackerTypeVariable = types.StringNull()
+
 	if t := res.Get(path + "endpointTrackerType.optionType"); t.Exists() {
 		va := res.Get(path + "endpointTrackerType.value")
-		if t.String() == "variable" {
-			data.EndpointTrackerTypeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
+		if t.String() == "global" {
 			data.EndpointTrackerType = types.StringValue(va.String())
 		}
 	}
