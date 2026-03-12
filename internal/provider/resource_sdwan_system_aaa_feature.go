@@ -438,7 +438,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"group": schema.SetAttribute{
+						"group": schema.ListAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Use Server-group").String,
 							ElementType:         types.StringType,
 							Optional:            true,
@@ -488,7 +488,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 								stringvalidator.OneOf("1", "15"),
 							},
 						},
-						"group": schema.SetAttribute{
+						"group": schema.ListAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Use Server-group").String,
 							ElementType:         types.StringType,
 							Optional:            true,

@@ -4,13 +4,13 @@ page_title: "sdwan_system_ntp_feature Resource - terraform-provider-sdwan"
 subcategory: "Features - System"
 description: |-
   This resource can manage a System NTP Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_system_ntp_feature (Resource)
 
 This resource can manage a System NTP Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -77,9 +77,9 @@ resource "sdwan_system_ntp_feature" "example" {
 Optional:
 
 - `key_id` (Number) MD5 authentication key ID
-  - Range: `1`-`65535`
+  - Range: `1`-`4294967295`
 - `key_id_variable` (String) Variable name
-- `md5_value` (String) Enter cleartext or AES-encrypted MD5 authentication key
+- `md5_value` (String) Enter cleartext or AES-encrypted MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `md5_value_variable` (String) Variable name
 
 
@@ -89,7 +89,7 @@ Optional:
 Optional:
 
 - `authentication_key` (Number) Set authentication key for the server
-  - Range: `1`-`65535`
+  - Range: `1`-`4294967295`
 - `authentication_key_variable` (String) Variable name
 - `hostname_ip_address` (String) Set hostname or IP address of server
 - `hostname_ip_address_variable` (String) Variable name

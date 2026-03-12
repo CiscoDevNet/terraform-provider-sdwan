@@ -64,7 +64,7 @@ func (r *SystemGlobalProfileParcelResource) Metadata(ctx context.Context, req re
 func (r *SystemGlobalProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System Global Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System Global Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -287,6 +287,44 @@ func (r *SystemGlobalProfileParcelResource) Schema(ctx context.Context, req reso
 				},
 			},
 			"ssh_version_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"lacp_system_priority": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set LACP system priority").AddIntegerRangeDescription(1, 65535).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 65535),
+				},
+			},
+			"lacp_system_priority_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"etherchannel_flow_load_balance": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set Etherchannel load balance hash algorithm").AddStringEnumDescription("src-ip", "dst-ip", "src-dst-ip", "src-mac", "dst-mac", "src-dst-mac", "src-dst-mixed-ip-port", "sdwan").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("src-ip", "dst-ip", "src-dst-ip", "src-mac", "dst-mac", "src-dst-mac", "src-dst-mixed-ip-port", "sdwan"),
+				},
+			},
+			"etherchannel_flow_load_balance_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"etherchannel_vlan_load_balance": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set Etherchannel vlan manual load balance").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"etherchannel_vlan_load_balance_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"bgp_community_new_format": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Display community attributes in the newer format. Instead of displaying communities as a 32-bit value, it shows them as two 16-bit integers separated by a colon (AA:NN format)").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"bgp_community_new_format_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

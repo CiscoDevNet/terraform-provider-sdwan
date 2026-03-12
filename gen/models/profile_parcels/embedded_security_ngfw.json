@@ -1,0 +1,2927 @@
+{
+  "request": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/embedded-security/unified/ngfirewall/post/request_schema.json",
+    "title": "Ngfirewall Feature Schema",
+    "description": "ngfirewall profile feature schema for POST request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "description": {
+        "type": "string"
+      },
+      "optimized": {
+        "default": true,
+        "type": "boolean"
+      },
+      "containsUtd": {
+        "type": "boolean",
+        "default": false
+      },
+      "containsTls": {
+        "type": "boolean",
+        "default": false
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "defaultActionType": {
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "default": "drop",
+                    "enum": [
+                      "pass",
+                      "drop"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "sequences": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 0,
+            "items": {
+              "type": "object",
+              "properties": {
+                "sequenceId": {
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": [
+                            "global"
+                          ]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                        }
+                      },
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "sequenceName": {
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": [
+                            "global"
+                          ]
+                        },
+                        "value": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 128
+                        }
+                      },
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "baseAction": {
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": [
+                            "global"
+                          ]
+                        },
+                        "value": {
+                          "default": "drop",
+                          "enum": [
+                            "pass",
+                            "inspect",
+                            "drop"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "sequenceType": {
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": [
+                            "global"
+                          ]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "ngfirewall"
+                        }
+                      },
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "match": {
+                  "type": "object",
+                  "properties": {
+                    "entries": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 0,
+                      "items": {
+                        "type": "object",
+                        "minProperties": 1,
+                        "maxProperties": 1,
+                        "properties": {
+                          "sourceDataPrefixList": {
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "destinationDataPrefixList": {
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "destinationFqdnList": {
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "sourceGeoLocationList": {
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "destinationGeoLocationList": {
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "sourcePortList": {
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "destinationPortList": {
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "sourceScalableGroupTagList": {
+                            "maxItems": 1,
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "destinationScalableGroupTagList": {
+                            "maxItems": 1,
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "sourceIdentityList": {
+                            "maxItems": 1,
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "protocolNameList": {
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "appList": {
+                            "maxItems": 1,
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "appListFlat": {
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "ruleSetList": {
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "sourceSecurityGroup": {
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "destinationSecurityGroup": {
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "sourceIp": {
+                            "type": "object",
+                            "properties": {
+                              "ipv4Value": {
+                                "oneOf": [
+                                  {
+                                    "properties": {
+                                      "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "global"
+                                        ]
+                                      },
+                                      "value": {
+                                        "type": "array",
+                                        "minItems": 1,
+                                        "uniqueItems": true,
+                                        "items": {
+                                          "type": "string",
+                                          "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
+                                        }
+                                      }
+                                    },
+                                    "required": [
+                                      "optionType",
+                                      "value"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "properties": {
+                                      "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "variable"
+                                        ]
+                                      },
+                                      "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 128
+                                      },
+                                      "default": {
+                                        "type": "array",
+                                        "minItems": 1,
+                                        "uniqueItems": true,
+                                        "items": {
+                                          "type": "string",
+                                          "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
+                                        }
+                                      },
+                                      "description": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 128
+                                      }
+                                    },
+                                    "required": [
+                                      "optionType",
+                                      "value"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "ipv4Value"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "destinationIp": {
+                            "type": "object",
+                            "properties": {
+                              "ipv4Value": {
+                                "oneOf": [
+                                  {
+                                    "properties": {
+                                      "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "global"
+                                        ]
+                                      },
+                                      "value": {
+                                        "type": "array",
+                                        "minItems": 1,
+                                        "uniqueItems": true,
+                                        "items": {
+                                          "type": "string",
+                                          "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
+                                        }
+                                      }
+                                    },
+                                    "required": [
+                                      "optionType",
+                                      "value"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "properties": {
+                                      "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "variable"
+                                        ]
+                                      },
+                                      "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 128
+                                      },
+                                      "default": {
+                                        "type": "array",
+                                        "minItems": 1,
+                                        "uniqueItems": true,
+                                        "items": {
+                                          "type": "string",
+                                          "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
+                                        }
+                                      },
+                                      "description": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 128
+                                      }
+                                    },
+                                    "required": [
+                                      "optionType",
+                                      "value"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "ipv4Value"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "destinationFqdn": {
+                            "type": "object",
+                            "properties": {
+                              "fqdnValue": {
+                                "oneOf": [
+                                  {
+                                    "properties": {
+                                      "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "global"
+                                        ]
+                                      },
+                                      "value": {
+                                        "type": "array",
+                                        "minItems": 1,
+                                        "items": {
+                                          "type": "string",
+                                          "minLength": 1,
+                                          "maxLength": 120,
+                                          "pattern": "^([*][.])?([a-zA-Z0-9-]+\\.)+([a-zA-Z0-9-])+$"
+                                        }
+                                      }
+                                    },
+                                    "required": [
+                                      "optionType",
+                                      "value"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "properties": {
+                                      "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "variable"
+                                        ]
+                                      },
+                                      "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 128
+                                      },
+                                      "default": {
+                                        "type": "array",
+                                        "minItems": 1,
+                                        "items": {
+                                          "type": "string",
+                                          "minLength": 1,
+                                          "maxLength": 120,
+                                          "pattern": "^([*][.])?([a-zA-Z0-9-]+\\.)+([a-zA-Z0-9-])+$"
+                                        }
+                                      },
+                                      "description": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 128
+                                      }
+                                    },
+                                    "required": [
+                                      "optionType",
+                                      "value"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "fqdnValue"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "sourcePort": {
+                            "type": "object",
+                            "properties": {
+                              "portValue": {
+                                "oneOf": [
+                                  {
+                                    "properties": {
+                                      "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "global"
+                                        ]
+                                      },
+                                      "value": {
+                                        "type": "array",
+                                        "minItems": 1,
+                                        "items": {
+                                          "oneOf": [
+                                            {
+                                              "type": "string",
+                                              "pattern": "^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                                            },
+                                            {
+                                              "type": "string",
+                                              "pattern": "^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])\\-(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    },
+                                    "required": [
+                                      "optionType",
+                                      "value"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "properties": {
+                                      "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "variable"
+                                        ]
+                                      },
+                                      "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 128
+                                      },
+                                      "default": {
+                                        "type": "array",
+                                        "minItems": 1,
+                                        "items": {
+                                          "oneOf": [
+                                            {
+                                              "type": "string",
+                                              "pattern": "^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                                            },
+                                            {
+                                              "type": "string",
+                                              "pattern": "^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])\\-(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "description": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 128
+                                      }
+                                    },
+                                    "required": [
+                                      "optionType",
+                                      "value"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "portValue"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "destinationPort": {
+                            "type": "object",
+                            "properties": {
+                              "portValue": {
+                                "oneOf": [
+                                  {
+                                    "properties": {
+                                      "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "global"
+                                        ]
+                                      },
+                                      "value": {
+                                        "type": "array",
+                                        "minItems": 1,
+                                        "items": {
+                                          "oneOf": [
+                                            {
+                                              "type": "string",
+                                              "pattern": "^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                                            },
+                                            {
+                                              "type": "string",
+                                              "pattern": "^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])\\-(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "app": {
+                                        "oneOf": [
+                                          {
+                                            "properties": {
+                                              "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "global"
+                                                ]
+                                              },
+                                              "value": {
+                                                "type": "array",
+                                                "minItems": 1,
+                                                "items": {
+                                                  "type": "string",
+                                                  "minLength": 1
+                                                }
+                                              }
+                                            },
+                                            "required": [
+                                              "optionType",
+                                              "value"
+                                            ],
+                                            "additionalProperties": false
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "optionType",
+                                      "value"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "properties": {
+                                      "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "variable"
+                                        ]
+                                      },
+                                      "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 128
+                                      },
+                                      "default": {
+                                        "type": "array",
+                                        "minItems": 1,
+                                        "items": {
+                                          "oneOf": [
+                                            {
+                                              "type": "string",
+                                              "pattern": "^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                                            },
+                                            {
+                                              "type": "string",
+                                              "pattern": "^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])\\-(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "description": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 128
+                                      }
+                                    },
+                                    "required": [
+                                      "optionType",
+                                      "value"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "portValue"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "sourceGeoLocation": {
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "enum": [
+                                        "AF",
+                                        "AN",
+                                        "AS",
+                                        "EU",
+                                        "NA",
+                                        "OC",
+                                        "SA",
+                                        "AFG",
+                                        "ALB",
+                                        "ATA",
+                                        "DZA",
+                                        "ASM",
+                                        "AND",
+                                        "AGO",
+                                        "ATG",
+                                        "AZE",
+                                        "ARG",
+                                        "AUS",
+                                        "AUT",
+                                        "BHS",
+                                        "BHR",
+                                        "BGD",
+                                        "ARM",
+                                        "BRB",
+                                        "BEL",
+                                        "BMU",
+                                        "BTN",
+                                        "BOL",
+                                        "BIH",
+                                        "BWA",
+                                        "BVT",
+                                        "BRA",
+                                        "BLZ",
+                                        "IOT",
+                                        "SLB",
+                                        "VGB",
+                                        "BRN",
+                                        "BGR",
+                                        "MMR",
+                                        "BDI",
+                                        "BLR",
+                                        "KHM",
+                                        "CMR",
+                                        "CAN",
+                                        "CPV",
+                                        "CYM",
+                                        "CAF",
+                                        "LKA",
+                                        "TCD",
+                                        "CHL",
+                                        "CHN",
+                                        "TWN",
+                                        "CXR",
+                                        "CCK",
+                                        "COL",
+                                        "COM",
+                                        "MYT",
+                                        "COG",
+                                        "COD",
+                                        "COK",
+                                        "CRI",
+                                        "HRV",
+                                        "CUB",
+                                        "CYP",
+                                        "CZE",
+                                        "BEN",
+                                        "DNK",
+                                        "DMA",
+                                        "DOM",
+                                        "ECU",
+                                        "SLV",
+                                        "GNQ",
+                                        "ETH",
+                                        "ERI",
+                                        "EST",
+                                        "FRO",
+                                        "FLK",
+                                        "SGS",
+                                        "FJI",
+                                        "FIN",
+                                        "ALA",
+                                        "FRA",
+                                        "GUF",
+                                        "PYF",
+                                        "ATF",
+                                        "DJI",
+                                        "GAB",
+                                        "GEO",
+                                        "GMB",
+                                        "PSE",
+                                        "DEU",
+                                        "GHA",
+                                        "GIB",
+                                        "KIR",
+                                        "GRC",
+                                        "GRL",
+                                        "GRD",
+                                        "GLP",
+                                        "GUM",
+                                        "GTM",
+                                        "GIN",
+                                        "GUY",
+                                        "HTI",
+                                        "HMD",
+                                        "VAT",
+                                        "HND",
+                                        "HKG",
+                                        "HUN",
+                                        "ISL",
+                                        "IND",
+                                        "IDN",
+                                        "IRN",
+                                        "IRQ",
+                                        "IRL",
+                                        "ISR",
+                                        "ITA",
+                                        "CIV",
+                                        "JAM",
+                                        "JPN",
+                                        "KAZ",
+                                        "JOR",
+                                        "KEN",
+                                        "PRK",
+                                        "KOR",
+                                        "KWT",
+                                        "KGZ",
+                                        "LAO",
+                                        "LBN",
+                                        "LSO",
+                                        "LVA",
+                                        "LBR",
+                                        "LBY",
+                                        "LIE",
+                                        "LTU",
+                                        "LUX",
+                                        "MAC",
+                                        "MDG",
+                                        "MWI",
+                                        "MYS",
+                                        "MDV",
+                                        "MLI",
+                                        "MLT",
+                                        "MTQ",
+                                        "MRT",
+                                        "MUS",
+                                        "MEX",
+                                        "MCO",
+                                        "MNG",
+                                        "MDA",
+                                        "MNE",
+                                        "MSR",
+                                        "MAR",
+                                        "MOZ",
+                                        "OMN",
+                                        "NAM",
+                                        "NRU",
+                                        "NPL",
+                                        "NLD",
+                                        "ANT",
+                                        "CUW",
+                                        "ABW",
+                                        "SXM",
+                                        "BES",
+                                        "NCL",
+                                        "VUT",
+                                        "NZL",
+                                        "NIC",
+                                        "NER",
+                                        "NGA",
+                                        "NIU",
+                                        "NFK",
+                                        "NOR",
+                                        "MNP",
+                                        "UMI",
+                                        "FSM",
+                                        "MHL",
+                                        "PLW",
+                                        "PAK",
+                                        "PAN",
+                                        "PNG",
+                                        "PRY",
+                                        "PER",
+                                        "PHL",
+                                        "PCN",
+                                        "POL",
+                                        "PRT",
+                                        "GNB",
+                                        "TLS",
+                                        "PRI",
+                                        "QAT",
+                                        "REU",
+                                        "ROU",
+                                        "RUS",
+                                        "RWA",
+                                        "BLM",
+                                        "SHN",
+                                        "KNA",
+                                        "AIA",
+                                        "LCA",
+                                        "MAF",
+                                        "SPM",
+                                        "VCT",
+                                        "SMR",
+                                        "STP",
+                                        "SAU",
+                                        "SEN",
+                                        "SRB",
+                                        "SYC",
+                                        "SLE",
+                                        "SGP",
+                                        "SVK",
+                                        "VNM",
+                                        "SVN",
+                                        "SOM",
+                                        "ZAF",
+                                        "ZWE",
+                                        "ESP",
+                                        "SSD",
+                                        "ESH",
+                                        "SDN",
+                                        "SUR",
+                                        "SJM",
+                                        "SWZ",
+                                        "SWE",
+                                        "CHE",
+                                        "SYR",
+                                        "TJK",
+                                        "THA",
+                                        "TGO",
+                                        "TKL",
+                                        "TON",
+                                        "TTO",
+                                        "ARE",
+                                        "TUN",
+                                        "TUR",
+                                        "TKM",
+                                        "TCA",
+                                        "TUV",
+                                        "UGA",
+                                        "UKR",
+                                        "MKD",
+                                        "EGY",
+                                        "GBR",
+                                        "GGY",
+                                        "JEY",
+                                        "IMN",
+                                        "TZA",
+                                        "USA",
+                                        "VIR",
+                                        "BFA",
+                                        "URY",
+                                        "UZB",
+                                        "VEN",
+                                        "WLF",
+                                        "WSM",
+                                        "YEM",
+                                        "ZMB"
+                                      ],
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "variable"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                    "minLength": 1,
+                                    "maxLength": 128
+                                  },
+                                  "default": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "enum": [
+                                        "AF",
+                                        "AN",
+                                        "AS",
+                                        "EU",
+                                        "NA",
+                                        "OC",
+                                        "SA",
+                                        "AFG",
+                                        "ALB",
+                                        "ATA",
+                                        "DZA",
+                                        "ASM",
+                                        "AND",
+                                        "AGO",
+                                        "ATG",
+                                        "AZE",
+                                        "ARG",
+                                        "AUS",
+                                        "AUT",
+                                        "BHS",
+                                        "BHR",
+                                        "BGD",
+                                        "ARM",
+                                        "BRB",
+                                        "BEL",
+                                        "BMU",
+                                        "BTN",
+                                        "BOL",
+                                        "BIH",
+                                        "BWA",
+                                        "BVT",
+                                        "BRA",
+                                        "BLZ",
+                                        "IOT",
+                                        "SLB",
+                                        "VGB",
+                                        "BRN",
+                                        "BGR",
+                                        "MMR",
+                                        "BDI",
+                                        "BLR",
+                                        "KHM",
+                                        "CMR",
+                                        "CAN",
+                                        "CPV",
+                                        "CYM",
+                                        "CAF",
+                                        "LKA",
+                                        "TCD",
+                                        "CHL",
+                                        "CHN",
+                                        "TWN",
+                                        "CXR",
+                                        "CCK",
+                                        "COL",
+                                        "COM",
+                                        "MYT",
+                                        "COG",
+                                        "COD",
+                                        "COK",
+                                        "CRI",
+                                        "HRV",
+                                        "CUB",
+                                        "CYP",
+                                        "CZE",
+                                        "BEN",
+                                        "DNK",
+                                        "DMA",
+                                        "DOM",
+                                        "ECU",
+                                        "SLV",
+                                        "GNQ",
+                                        "ETH",
+                                        "ERI",
+                                        "EST",
+                                        "FRO",
+                                        "FLK",
+                                        "SGS",
+                                        "FJI",
+                                        "FIN",
+                                        "ALA",
+                                        "FRA",
+                                        "GUF",
+                                        "PYF",
+                                        "ATF",
+                                        "DJI",
+                                        "GAB",
+                                        "GEO",
+                                        "GMB",
+                                        "PSE",
+                                        "DEU",
+                                        "GHA",
+                                        "GIB",
+                                        "KIR",
+                                        "GRC",
+                                        "GRL",
+                                        "GRD",
+                                        "GLP",
+                                        "GUM",
+                                        "GTM",
+                                        "GIN",
+                                        "GUY",
+                                        "HTI",
+                                        "HMD",
+                                        "VAT",
+                                        "HND",
+                                        "HKG",
+                                        "HUN",
+                                        "ISL",
+                                        "IND",
+                                        "IDN",
+                                        "IRN",
+                                        "IRQ",
+                                        "IRL",
+                                        "ISR",
+                                        "ITA",
+                                        "CIV",
+                                        "JAM",
+                                        "JPN",
+                                        "KAZ",
+                                        "JOR",
+                                        "KEN",
+                                        "PRK",
+                                        "KOR",
+                                        "KWT",
+                                        "KGZ",
+                                        "LAO",
+                                        "LBN",
+                                        "LSO",
+                                        "LVA",
+                                        "LBR",
+                                        "LBY",
+                                        "LIE",
+                                        "LTU",
+                                        "LUX",
+                                        "MAC",
+                                        "MDG",
+                                        "MWI",
+                                        "MYS",
+                                        "MDV",
+                                        "MLI",
+                                        "MLT",
+                                        "MTQ",
+                                        "MRT",
+                                        "MUS",
+                                        "MEX",
+                                        "MCO",
+                                        "MNG",
+                                        "MDA",
+                                        "MNE",
+                                        "MSR",
+                                        "MAR",
+                                        "MOZ",
+                                        "OMN",
+                                        "NAM",
+                                        "NRU",
+                                        "NPL",
+                                        "NLD",
+                                        "ANT",
+                                        "CUW",
+                                        "ABW",
+                                        "SXM",
+                                        "BES",
+                                        "NCL",
+                                        "VUT",
+                                        "NZL",
+                                        "NIC",
+                                        "NER",
+                                        "NGA",
+                                        "NIU",
+                                        "NFK",
+                                        "NOR",
+                                        "MNP",
+                                        "UMI",
+                                        "FSM",
+                                        "MHL",
+                                        "PLW",
+                                        "PAK",
+                                        "PAN",
+                                        "PNG",
+                                        "PRY",
+                                        "PER",
+                                        "PHL",
+                                        "PCN",
+                                        "POL",
+                                        "PRT",
+                                        "GNB",
+                                        "TLS",
+                                        "PRI",
+                                        "QAT",
+                                        "REU",
+                                        "ROU",
+                                        "RUS",
+                                        "RWA",
+                                        "BLM",
+                                        "SHN",
+                                        "KNA",
+                                        "AIA",
+                                        "LCA",
+                                        "MAF",
+                                        "SPM",
+                                        "VCT",
+                                        "SMR",
+                                        "STP",
+                                        "SAU",
+                                        "SEN",
+                                        "SRB",
+                                        "SYC",
+                                        "SLE",
+                                        "SGP",
+                                        "SVK",
+                                        "VNM",
+                                        "SVN",
+                                        "SOM",
+                                        "ZAF",
+                                        "ZWE",
+                                        "ESP",
+                                        "SSD",
+                                        "ESH",
+                                        "SDN",
+                                        "SUR",
+                                        "SJM",
+                                        "SWZ",
+                                        "SWE",
+                                        "CHE",
+                                        "SYR",
+                                        "TJK",
+                                        "THA",
+                                        "TGO",
+                                        "TKL",
+                                        "TON",
+                                        "TTO",
+                                        "ARE",
+                                        "TUN",
+                                        "TUR",
+                                        "TKM",
+                                        "TCA",
+                                        "TUV",
+                                        "UGA",
+                                        "UKR",
+                                        "MKD",
+                                        "EGY",
+                                        "GBR",
+                                        "GGY",
+                                        "JEY",
+                                        "IMN",
+                                        "TZA",
+                                        "USA",
+                                        "VIR",
+                                        "BFA",
+                                        "URY",
+                                        "UZB",
+                                        "VEN",
+                                        "WLF",
+                                        "WSM",
+                                        "YEM",
+                                        "ZMB"
+                                      ],
+                                      "type": "string"
+                                    }
+                                  },
+                                  "description": {
+                                    "minLength": 1,
+                                    "type": "string",
+                                    "maxLength": 128
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "destinationGeoLocation": {
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "enum": [
+                                        "AF",
+                                        "AN",
+                                        "AS",
+                                        "EU",
+                                        "NA",
+                                        "OC",
+                                        "SA",
+                                        "AFG",
+                                        "ALB",
+                                        "ATA",
+                                        "DZA",
+                                        "ASM",
+                                        "AND",
+                                        "AGO",
+                                        "ATG",
+                                        "AZE",
+                                        "ARG",
+                                        "AUS",
+                                        "AUT",
+                                        "BHS",
+                                        "BHR",
+                                        "BGD",
+                                        "ARM",
+                                        "BRB",
+                                        "BEL",
+                                        "BMU",
+                                        "BTN",
+                                        "BOL",
+                                        "BIH",
+                                        "BWA",
+                                        "BVT",
+                                        "BRA",
+                                        "BLZ",
+                                        "IOT",
+                                        "SLB",
+                                        "VGB",
+                                        "BRN",
+                                        "BGR",
+                                        "MMR",
+                                        "BDI",
+                                        "BLR",
+                                        "KHM",
+                                        "CMR",
+                                        "CAN",
+                                        "CPV",
+                                        "CYM",
+                                        "CAF",
+                                        "LKA",
+                                        "TCD",
+                                        "CHL",
+                                        "CHN",
+                                        "TWN",
+                                        "CXR",
+                                        "CCK",
+                                        "COL",
+                                        "COM",
+                                        "MYT",
+                                        "COG",
+                                        "COD",
+                                        "COK",
+                                        "CRI",
+                                        "HRV",
+                                        "CUB",
+                                        "CYP",
+                                        "CZE",
+                                        "BEN",
+                                        "DNK",
+                                        "DMA",
+                                        "DOM",
+                                        "ECU",
+                                        "SLV",
+                                        "GNQ",
+                                        "ETH",
+                                        "ERI",
+                                        "EST",
+                                        "FRO",
+                                        "FLK",
+                                        "SGS",
+                                        "FJI",
+                                        "FIN",
+                                        "ALA",
+                                        "FRA",
+                                        "GUF",
+                                        "PYF",
+                                        "ATF",
+                                        "DJI",
+                                        "GAB",
+                                        "GEO",
+                                        "GMB",
+                                        "PSE",
+                                        "DEU",
+                                        "GHA",
+                                        "GIB",
+                                        "KIR",
+                                        "GRC",
+                                        "GRL",
+                                        "GRD",
+                                        "GLP",
+                                        "GUM",
+                                        "GTM",
+                                        "GIN",
+                                        "GUY",
+                                        "HTI",
+                                        "HMD",
+                                        "VAT",
+                                        "HND",
+                                        "HKG",
+                                        "HUN",
+                                        "ISL",
+                                        "IND",
+                                        "IDN",
+                                        "IRN",
+                                        "IRQ",
+                                        "IRL",
+                                        "ISR",
+                                        "ITA",
+                                        "CIV",
+                                        "JAM",
+                                        "JPN",
+                                        "KAZ",
+                                        "JOR",
+                                        "KEN",
+                                        "PRK",
+                                        "KOR",
+                                        "KWT",
+                                        "KGZ",
+                                        "LAO",
+                                        "LBN",
+                                        "LSO",
+                                        "LVA",
+                                        "LBR",
+                                        "LBY",
+                                        "LIE",
+                                        "LTU",
+                                        "LUX",
+                                        "MAC",
+                                        "MDG",
+                                        "MWI",
+                                        "MYS",
+                                        "MDV",
+                                        "MLI",
+                                        "MLT",
+                                        "MTQ",
+                                        "MRT",
+                                        "MUS",
+                                        "MEX",
+                                        "MCO",
+                                        "MNG",
+                                        "MDA",
+                                        "MNE",
+                                        "MSR",
+                                        "MAR",
+                                        "MOZ",
+                                        "OMN",
+                                        "NAM",
+                                        "NRU",
+                                        "NPL",
+                                        "NLD",
+                                        "ANT",
+                                        "CUW",
+                                        "ABW",
+                                        "SXM",
+                                        "BES",
+                                        "NCL",
+                                        "VUT",
+                                        "NZL",
+                                        "NIC",
+                                        "NER",
+                                        "NGA",
+                                        "NIU",
+                                        "NFK",
+                                        "NOR",
+                                        "MNP",
+                                        "UMI",
+                                        "FSM",
+                                        "MHL",
+                                        "PLW",
+                                        "PAK",
+                                        "PAN",
+                                        "PNG",
+                                        "PRY",
+                                        "PER",
+                                        "PHL",
+                                        "PCN",
+                                        "POL",
+                                        "PRT",
+                                        "GNB",
+                                        "TLS",
+                                        "PRI",
+                                        "QAT",
+                                        "REU",
+                                        "ROU",
+                                        "RUS",
+                                        "RWA",
+                                        "BLM",
+                                        "SHN",
+                                        "KNA",
+                                        "AIA",
+                                        "LCA",
+                                        "MAF",
+                                        "SPM",
+                                        "VCT",
+                                        "SMR",
+                                        "STP",
+                                        "SAU",
+                                        "SEN",
+                                        "SRB",
+                                        "SYC",
+                                        "SLE",
+                                        "SGP",
+                                        "SVK",
+                                        "VNM",
+                                        "SVN",
+                                        "SOM",
+                                        "ZAF",
+                                        "ZWE",
+                                        "ESP",
+                                        "SSD",
+                                        "ESH",
+                                        "SDN",
+                                        "SUR",
+                                        "SJM",
+                                        "SWZ",
+                                        "SWE",
+                                        "CHE",
+                                        "SYR",
+                                        "TJK",
+                                        "THA",
+                                        "TGO",
+                                        "TKL",
+                                        "TON",
+                                        "TTO",
+                                        "ARE",
+                                        "TUN",
+                                        "TUR",
+                                        "TKM",
+                                        "TCA",
+                                        "TUV",
+                                        "UGA",
+                                        "UKR",
+                                        "MKD",
+                                        "EGY",
+                                        "GBR",
+                                        "GGY",
+                                        "JEY",
+                                        "IMN",
+                                        "TZA",
+                                        "USA",
+                                        "VIR",
+                                        "BFA",
+                                        "URY",
+                                        "UZB",
+                                        "VEN",
+                                        "WLF",
+                                        "WSM",
+                                        "YEM",
+                                        "ZMB"
+                                      ],
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "variable"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                    "minLength": 1,
+                                    "maxLength": 128
+                                  },
+                                  "default": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "enum": [
+                                        "AF",
+                                        "AN",
+                                        "AS",
+                                        "EU",
+                                        "NA",
+                                        "OC",
+                                        "SA",
+                                        "AFG",
+                                        "ALB",
+                                        "ATA",
+                                        "DZA",
+                                        "ASM",
+                                        "AND",
+                                        "AGO",
+                                        "ATG",
+                                        "AZE",
+                                        "ARG",
+                                        "AUS",
+                                        "AUT",
+                                        "BHS",
+                                        "BHR",
+                                        "BGD",
+                                        "ARM",
+                                        "BRB",
+                                        "BEL",
+                                        "BMU",
+                                        "BTN",
+                                        "BOL",
+                                        "BIH",
+                                        "BWA",
+                                        "BVT",
+                                        "BRA",
+                                        "BLZ",
+                                        "IOT",
+                                        "SLB",
+                                        "VGB",
+                                        "BRN",
+                                        "BGR",
+                                        "MMR",
+                                        "BDI",
+                                        "BLR",
+                                        "KHM",
+                                        "CMR",
+                                        "CAN",
+                                        "CPV",
+                                        "CYM",
+                                        "CAF",
+                                        "LKA",
+                                        "TCD",
+                                        "CHL",
+                                        "CHN",
+                                        "TWN",
+                                        "CXR",
+                                        "CCK",
+                                        "COL",
+                                        "COM",
+                                        "MYT",
+                                        "COG",
+                                        "COD",
+                                        "COK",
+                                        "CRI",
+                                        "HRV",
+                                        "CUB",
+                                        "CYP",
+                                        "CZE",
+                                        "BEN",
+                                        "DNK",
+                                        "DMA",
+                                        "DOM",
+                                        "ECU",
+                                        "SLV",
+                                        "GNQ",
+                                        "ETH",
+                                        "ERI",
+                                        "EST",
+                                        "FRO",
+                                        "FLK",
+                                        "SGS",
+                                        "FJI",
+                                        "FIN",
+                                        "ALA",
+                                        "FRA",
+                                        "GUF",
+                                        "PYF",
+                                        "ATF",
+                                        "DJI",
+                                        "GAB",
+                                        "GEO",
+                                        "GMB",
+                                        "PSE",
+                                        "DEU",
+                                        "GHA",
+                                        "GIB",
+                                        "KIR",
+                                        "GRC",
+                                        "GRL",
+                                        "GRD",
+                                        "GLP",
+                                        "GUM",
+                                        "GTM",
+                                        "GIN",
+                                        "GUY",
+                                        "HTI",
+                                        "HMD",
+                                        "VAT",
+                                        "HND",
+                                        "HKG",
+                                        "HUN",
+                                        "ISL",
+                                        "IND",
+                                        "IDN",
+                                        "IRN",
+                                        "IRQ",
+                                        "IRL",
+                                        "ISR",
+                                        "ITA",
+                                        "CIV",
+                                        "JAM",
+                                        "JPN",
+                                        "KAZ",
+                                        "JOR",
+                                        "KEN",
+                                        "PRK",
+                                        "KOR",
+                                        "KWT",
+                                        "KGZ",
+                                        "LAO",
+                                        "LBN",
+                                        "LSO",
+                                        "LVA",
+                                        "LBR",
+                                        "LBY",
+                                        "LIE",
+                                        "LTU",
+                                        "LUX",
+                                        "MAC",
+                                        "MDG",
+                                        "MWI",
+                                        "MYS",
+                                        "MDV",
+                                        "MLI",
+                                        "MLT",
+                                        "MTQ",
+                                        "MRT",
+                                        "MUS",
+                                        "MEX",
+                                        "MCO",
+                                        "MNG",
+                                        "MDA",
+                                        "MNE",
+                                        "MSR",
+                                        "MAR",
+                                        "MOZ",
+                                        "OMN",
+                                        "NAM",
+                                        "NRU",
+                                        "NPL",
+                                        "NLD",
+                                        "ANT",
+                                        "CUW",
+                                        "ABW",
+                                        "SXM",
+                                        "BES",
+                                        "NCL",
+                                        "VUT",
+                                        "NZL",
+                                        "NIC",
+                                        "NER",
+                                        "NGA",
+                                        "NIU",
+                                        "NFK",
+                                        "NOR",
+                                        "MNP",
+                                        "UMI",
+                                        "FSM",
+                                        "MHL",
+                                        "PLW",
+                                        "PAK",
+                                        "PAN",
+                                        "PNG",
+                                        "PRY",
+                                        "PER",
+                                        "PHL",
+                                        "PCN",
+                                        "POL",
+                                        "PRT",
+                                        "GNB",
+                                        "TLS",
+                                        "PRI",
+                                        "QAT",
+                                        "REU",
+                                        "ROU",
+                                        "RUS",
+                                        "RWA",
+                                        "BLM",
+                                        "SHN",
+                                        "KNA",
+                                        "AIA",
+                                        "LCA",
+                                        "MAF",
+                                        "SPM",
+                                        "VCT",
+                                        "SMR",
+                                        "STP",
+                                        "SAU",
+                                        "SEN",
+                                        "SRB",
+                                        "SYC",
+                                        "SLE",
+                                        "SGP",
+                                        "SVK",
+                                        "VNM",
+                                        "SVN",
+                                        "SOM",
+                                        "ZAF",
+                                        "ZWE",
+                                        "ESP",
+                                        "SSD",
+                                        "ESH",
+                                        "SDN",
+                                        "SUR",
+                                        "SJM",
+                                        "SWZ",
+                                        "SWE",
+                                        "CHE",
+                                        "SYR",
+                                        "TJK",
+                                        "THA",
+                                        "TGO",
+                                        "TKL",
+                                        "TON",
+                                        "TTO",
+                                        "ARE",
+                                        "TUN",
+                                        "TUR",
+                                        "TKM",
+                                        "TCA",
+                                        "TUV",
+                                        "UGA",
+                                        "UKR",
+                                        "MKD",
+                                        "EGY",
+                                        "GBR",
+                                        "GGY",
+                                        "JEY",
+                                        "IMN",
+                                        "TZA",
+                                        "USA",
+                                        "VIR",
+                                        "BFA",
+                                        "URY",
+                                        "UZB",
+                                        "VEN",
+                                        "WLF",
+                                        "WSM",
+                                        "YEM",
+                                        "ZMB"
+                                      ],
+                                      "type": "string"
+                                    }
+                                  },
+                                  "description": {
+                                    "minLength": 1,
+                                    "type": "string",
+                                    "maxLength": 128
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "sourceIdentityUser": {
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "description": "Mustn't contain non standard unicode characters",
+                                      "pattern": "^.*[a-zA-Z0-9]+.*$",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "sourceIdentityUsergroup": {
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "description": "Mustn't contain non standard unicode characters",
+                                      "pattern": "^.*[a-zA-Z0-9]+.*$",
+                                      "maxLength": 96,
+                                      "minLength": 1
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "app": {
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "appFamily": {
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "protocol": {
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  },
+                                  "app": {
+                                    "oneOf": [
+                                      {
+                                        "properties": {
+                                          "optionType": {
+                                            "type": "string",
+                                            "enum": [
+                                              "global"
+                                            ]
+                                          },
+                                          "value": {
+                                            "type": "array",
+                                            "minItems": 1,
+                                            "items": {
+                                              "type": "string",
+                                              "minLength": 1
+                                            }
+                                          }
+                                        },
+                                        "required": [
+                                          "optionType",
+                                          "value"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "protocolName": {
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "enum": [
+                                        "snmp",
+                                        "icmp",
+                                        "tcp",
+                                        "udp",
+                                        "echo",
+                                        "telnet",
+                                        "wins",
+                                        "n2h2server",
+                                        "nntp",
+                                        "pptp",
+                                        "rtsp",
+                                        "bootpc",
+                                        "gdoi",
+                                        "tacacs",
+                                        "gopher",
+                                        "icabrowser",
+                                        "skinny",
+                                        "sunrpc",
+                                        "biff",
+                                        "router",
+                                        "ircs",
+                                        "orasrv",
+                                        "ms-cluster-net",
+                                        "kermit",
+                                        "isakmp",
+                                        "sshell",
+                                        "realsecure",
+                                        "ircu",
+                                        "appleqtc",
+                                        "pwdgen",
+                                        "rdb-dbs-disp",
+                                        "creativepartnr",
+                                        "finger",
+                                        "ftps",
+                                        "giop",
+                                        "rsvd",
+                                        "hp-alarm-mgr",
+                                        "uucp",
+                                        "kerberos",
+                                        "imap",
+                                        "time",
+                                        "bootps",
+                                        "tftp",
+                                        "oracle",
+                                        "snmptrap",
+                                        "http",
+                                        "qmtp",
+                                        "radius",
+                                        "oracle-em-vp",
+                                        "tarantella",
+                                        "pcanywheredata",
+                                        "ldap",
+                                        "mgcp",
+                                        "sqlsrv",
+                                        "hsrp",
+                                        "cisco-net-mgmt",
+                                        "smtp",
+                                        "pcanywherestat",
+                                        "exec",
+                                        "send",
+                                        "stun",
+                                        "syslog",
+                                        "ms-sql-m",
+                                        "citrix",
+                                        "creativeserver",
+                                        "cifs",
+                                        "cisco-sys",
+                                        "cisco-tna",
+                                        "ms-dotnetster",
+                                        "gtpv1",
+                                        "gtpv0",
+                                        "imap3",
+                                        "fcip-port",
+                                        "netbios-dgm",
+                                        "sip-tls",
+                                        "pop3s",
+                                        "cisco-fna",
+                                        "802-11-iapp",
+                                        "oem-agent",
+                                        "cisco-tdp",
+                                        "tr-rsrb",
+                                        "r-winsock",
+                                        "sql-net",
+                                        "syslog-conn",
+                                        "tacacs-ds",
+                                        "h225ras",
+                                        "ace-svr",
+                                        "dhcp-failover",
+                                        "igmpv3lite",
+                                        "irc-serv",
+                                        "entrust-svcs",
+                                        "dbcontrol_agent",
+                                        "cisco-svcs",
+                                        "ipsec-msft",
+                                        "microsoft-ds",
+                                        "ms-sna",
+                                        "rsvp_tunnel",
+                                        "rsvp-encap",
+                                        "hp-collector",
+                                        "netbios-ns",
+                                        "msexch-routing",
+                                        "h323",
+                                        "l2tp",
+                                        "ldap-admin",
+                                        "pop3",
+                                        "h323callsigalt",
+                                        "ms-sql",
+                                        "iscsi-target",
+                                        "webster",
+                                        "lotusnote",
+                                        "ipx",
+                                        "entrust-svc-hand",
+                                        "citriximaclient",
+                                        "rtc-pm-port",
+                                        "ftp",
+                                        "aol",
+                                        "xdmcp",
+                                        "oraclenames",
+                                        "login",
+                                        "iscsi",
+                                        "ttc",
+                                        "imaps",
+                                        "socks",
+                                        "ssh",
+                                        "dnsix",
+                                        "daytime",
+                                        "sip",
+                                        "discard",
+                                        "ntp",
+                                        "ldaps",
+                                        "https",
+                                        "vdolive",
+                                        "ica",
+                                        "net8-cman",
+                                        "cuseeme",
+                                        "netstat",
+                                        "sms",
+                                        "streamworks",
+                                        "rtelnet",
+                                        "who",
+                                        "kazaa",
+                                        "ssp",
+                                        "dbase",
+                                        "timed",
+                                        "cddbp",
+                                        "telnets",
+                                        "ymsgr",
+                                        "ident",
+                                        "bgp",
+                                        "ddns-v3",
+                                        "vqp",
+                                        "irc",
+                                        "ipass",
+                                        "x11",
+                                        "dns",
+                                        "lotusmtap",
+                                        "mysql",
+                                        "nfs",
+                                        "msnmsgr",
+                                        "netshow",
+                                        "sqlserv",
+                                        "hp-managed-node",
+                                        "ncp",
+                                        "shell",
+                                        "realmedia",
+                                        "msrpc",
+                                        "clp"
+                                      ],
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            ]
+                          }
+                        },
+                        "required": [],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "entries"
+                  ],
+                  "additionalProperties": false
+                },
+                "actions": {
+                  "type": "array",
+                  "description": "can be empty array or with type or parameter",
+                  "uniqueItems": true,
+                  "minItems": 0,
+                  "maxItems": 2,
+                  "items": {
+                    "type": "object",
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "type": {
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "enum": [
+                                      "log",
+                                      "connectionEvents"
+                                    ],
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "parameter": {
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "parameter"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "properties": {
+                          "type": {
+                            "type": "object",
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": [
+                                  "global"
+                                ]
+                              },
+                              "value": {
+                                "type": "string",
+                                "pattern": "advancedInspectionProfile"
+                              }
+                            },
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "parameter": {
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "type": "object",
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "parameter"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                },
+                "disableSequence": {
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": [
+                            "global"
+                          ]
+                        },
+                        "value": {
+                          "type": "boolean",
+                          "default": false
+                        }
+                      },
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "sequenceId",
+                "sequenceName",
+                "sequenceType",
+                "baseAction",
+                "match",
+                "actions"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "defaultActionType",
+          "sequences"
+        ],
+        "additionalProperties": false
+      },
+      "documentation": {
+        "description": "This is the documentation for POST request schema for ngfirewall profile feature",
+        "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+        "details-2": "variable name should not be present if optionType value is NOT variable",
+        "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+        "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+        "examples": [
+          {
+            "name": "ngfirewallFeatureGlobalDefault",
+            "description": "test ngfirewall",
+            "optimized": true,
+            "containsUtd": false,
+            "containsTls": false,
+            "data": {
+              "defaultActionType": {
+                "optionType": "global",
+                "value": "drop"
+              },
+              "sequences": [
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": "1"
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "my rule"
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "drop"
+                  },
+                  "sequenceType": {
+                    "optionType": "global",
+                    "value": "ngfirewall"
+                  },
+                  "actions": [
+                    {
+                      "type": {
+                        "optionType": "global",
+                        "value": "log"
+                      },
+                      "parameter": {
+                        "optionType": "global",
+                        "value": ""
+                      }
+                    },
+                    {
+                      "type": {
+                        "optionType": "global",
+                        "value": "advancedInspectionProfile"
+                      },
+                      "parameter": {
+                        "refId": {
+                          "optionType": "global",
+                          "value": "5588da7f-a06b-40be-9fda-15cd8f7def13"
+                        }
+                      }
+                    }
+                  ],
+                  "match": {
+                    "entries": [
+                      {
+                        "sourceDataPrefixList": {
+                          "refId": {
+                            "optionType": "global",
+                            "value": [
+                              "31cc53c4-b2e4-41dd-a2c4-c609e8cf432c",
+                              "41ce53f4-b2e4-42cc-a2c4-b309a7cf442c"
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "destinationIp": {
+                          "optionType": "global",
+                          "value": [
+                            "10.0.0.35/32"
+                          ]
+                        }
+                      },
+                      {
+                        "destinationGeoLocation": {
+                          "optionType": "variable",
+                          "value": "{{testVarName}}"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "minVManageVersion": "20.15.1"
+      }
+    },
+    "required": [
+      "name",
+      "description",
+      "data"
+    ],
+    "not": {
+      "required": [
+        "documentation",
+        "metadata"
+      ]
+    },
+    "additionalProperties": false
+  }
+}

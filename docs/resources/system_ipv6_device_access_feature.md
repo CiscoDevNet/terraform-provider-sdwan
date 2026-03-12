@@ -4,13 +4,13 @@ page_title: "sdwan_system_ipv6_device_access_feature Resource - terraform-provid
 subcategory: "Features - System"
 description: |-
   This resource can manage a System IPv6 Device Access Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_system_ipv6_device_access_feature (Resource)
 
 This resource can manage a System IPv6 Device Access Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 

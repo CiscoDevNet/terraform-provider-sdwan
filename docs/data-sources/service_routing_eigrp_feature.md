@@ -80,7 +80,7 @@ Read-Only:
 
 - `key_id` (Number) Set MD5 key ID
 - `key_id_variable` (String) Variable name
-- `key_string` (String) Set MD5 key
+- `key_string` (String) Set MD5 key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `key_string_variable` (String) Variable name
 
 

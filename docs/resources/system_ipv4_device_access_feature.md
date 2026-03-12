@@ -4,13 +4,13 @@ page_title: "sdwan_system_ipv4_device_access_feature Resource - terraform-provid
 subcategory: "Features - System"
 description: |-
   This resource can manage a System IPv4 Device Access Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_system_ipv4_device_access_feature (Resource)
 
 This resource can manage a System IPv4 Device Access Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -59,6 +59,7 @@ Optional:
 
 - `base_action` (String) Base Action
   - Choices: `drop`, `accept`
+  - Default value: `accept`
 - `destination_data_prefix_list_id` (String)
 - `destination_ip_prefix_list` (Set of String) Destination Data IP Prefix List
 - `destination_ip_prefix_list_variable` (String) Variable name

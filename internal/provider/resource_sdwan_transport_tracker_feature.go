@@ -64,7 +64,7 @@ func (r *TransportTrackerProfileParcelResource) Metadata(ctx context.Context, re
 func (r *TransportTrackerProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Transport Tracker Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Transport Tracker Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -114,7 +114,7 @@ func (r *TransportTrackerProfileParcelResource) Schema(ctx context.Context, req 
 				Optional:            true,
 			},
 			"endpoint_dns_name": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Endpoint DNS Name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("DNS Name").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthAtMost(63),
@@ -125,7 +125,7 @@ func (r *TransportTrackerProfileParcelResource) Schema(ctx context.Context, req 
 				Optional:            true,
 			},
 			"endpoint_ip": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Endpoint IP").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IP").String,
 				Optional:            true,
 			},
 			"endpoint_ip_variable": schema.StringAttribute{
@@ -133,14 +133,25 @@ func (r *TransportTrackerProfileParcelResource) Schema(ctx context.Context, req 
 				Optional:            true,
 			},
 			"interval": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Interval").AddIntegerRangeDescription(20, 600).AddDefaultValueDescription("60").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Probe Interval, Attribute conditional on `endpoint_tracker_type` equal to `interface`").AddIntegerRangeDescription(20, 600).AddDefaultValueDescription("60").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(20, 600),
 				},
 			},
 			"interval_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `endpoint_tracker_type` equal to `interface`").String,
+				Optional:            true,
+			},
+			"icmp_interval": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Probe Interval, Attribute conditional on `endpoint_tracker_type` equal to `interface-icmp`").AddIntegerRangeDescription(2, 1000).AddDefaultValueDescription("2").String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(2, 1000),
+				},
+			},
+			"icmp_interval_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `endpoint_tracker_type` equal to `interface-icmp`").String,
 				Optional:            true,
 			},
 			"multiplier": schema.Int64Attribute{
@@ -166,15 +177,11 @@ func (r *TransportTrackerProfileParcelResource) Schema(ctx context.Context, req 
 				Optional:            true,
 			},
 			"endpoint_tracker_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Endpoint Tracker Type").AddStringEnumDescription("interface").AddDefaultValueDescription("interface").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Endpoint Tracker Type").AddStringEnumDescription("interface", "interface-icmp").AddDefaultValueDescription("interface").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("interface"),
+					stringvalidator.OneOf("interface", "interface-icmp"),
 				},
-			},
-			"endpoint_tracker_type_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
 			},
 			"tracker_type": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Tracker Type").AddStringEnumDescription("endpoint", "object").AddDefaultValueDescription("endpoint").String,

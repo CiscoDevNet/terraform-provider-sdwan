@@ -1,8 +1,8 @@
 ---
 name: Transport Tracker
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/tracker
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - Transport
 attributes:
@@ -24,11 +24,23 @@ attributes:
     example: 1.2.3.4
   - model_name: interval
     example: 30
+    conditional_attribute:
+      conditions:
+        - name: endpoint_tracker_type
+          value: interface
+  - model_name: icmpInterval
+    example: 30
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: endpoint_tracker_type
+          value: interface-icmp
   - model_name: multiplier
     example: 3
   - model_name: threshold
     example: 300
   - model_name: endpointTrackerType
+    tf_name: endpoint_tracker_type
     example: interface
   - model_name: trackerType
     example: endpoint

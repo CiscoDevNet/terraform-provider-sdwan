@@ -95,7 +95,7 @@ func (d *TransportTrackerProfileParcelDataSource) Schema(ctx context.Context, re
 				Computed:            true,
 			},
 			"endpoint_dns_name": schema.StringAttribute{
-				MarkdownDescription: "Endpoint DNS Name",
+				MarkdownDescription: "DNS Name",
 				Computed:            true,
 			},
 			"endpoint_dns_name_variable": schema.StringAttribute{
@@ -103,7 +103,7 @@ func (d *TransportTrackerProfileParcelDataSource) Schema(ctx context.Context, re
 				Computed:            true,
 			},
 			"endpoint_ip": schema.StringAttribute{
-				MarkdownDescription: "Endpoint IP",
+				MarkdownDescription: "IP",
 				Computed:            true,
 			},
 			"endpoint_ip_variable": schema.StringAttribute{
@@ -111,10 +111,18 @@ func (d *TransportTrackerProfileParcelDataSource) Schema(ctx context.Context, re
 				Computed:            true,
 			},
 			"interval": schema.Int64Attribute{
-				MarkdownDescription: "Interval",
+				MarkdownDescription: "Probe Interval",
 				Computed:            true,
 			},
 			"interval_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"icmp_interval": schema.Int64Attribute{
+				MarkdownDescription: "Probe Interval",
+				Computed:            true,
+			},
+			"icmp_interval_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -136,10 +144,6 @@ func (d *TransportTrackerProfileParcelDataSource) Schema(ctx context.Context, re
 			},
 			"endpoint_tracker_type": schema.StringAttribute{
 				MarkdownDescription: "Endpoint Tracker Type",
-				Computed:            true,
-			},
-			"endpoint_tracker_type_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
 			"tracker_type": schema.StringAttribute{

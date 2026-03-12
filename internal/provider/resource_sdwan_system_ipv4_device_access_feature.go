@@ -64,7 +64,7 @@ func (r *SystemIPv4DeviceAccessProfileParcelResource) Metadata(ctx context.Conte
 func (r *SystemIPv4DeviceAccessProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System IPv4 Device Access Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System IPv4 Device Access Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -117,7 +117,7 @@ func (r *SystemIPv4DeviceAccessProfileParcelResource) Schema(ctx context.Context
 							},
 						},
 						"base_action": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Base Action").AddStringEnumDescription("drop", "accept").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Base Action").AddStringEnumDescription("drop", "accept").AddDefaultValueDescription("accept").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("drop", "accept"),

@@ -4,13 +4,13 @@ page_title: "sdwan_service_routing_bgp_feature Resource - terraform-provider-sdw
 subcategory: "Features - Service"
 description: |-
   This resource can manage a Service Routing BGP Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_service_routing_bgp_feature (Resource)
 
 This resource can manage a Service Routing BGP Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -265,7 +265,7 @@ Optional:
 - `next_hop_self` (Boolean) Set router to be next hop for routes advertised to neighbor
   - Default value: `false`
 - `next_hop_self_variable` (String) Variable name
-- `password` (String) Set MD5 password on TCP connection with BGP peer
+- `password` (String) Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `password_variable` (String) Variable name
 - `remote_as` (Number) Set remote autonomous system number
 - `remote_as_variable` (String) Variable name
@@ -297,6 +297,7 @@ Optional:
   - Default value: `75`
 - `disable_peer_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` equal to `disable-peer`
 - `family_type` (String) Set IPv4 unicast address family
+  - Choices: `ipv4-unicast`
 - `in_route_policy_id` (String)
 - `out_route_policy_id` (String)
 - `policy_type` (String) Neighbor received maximum prefix policy is disabled.
@@ -337,12 +338,18 @@ Optional:
 
 Optional:
 
+- `metric` (Number) Metric value, the metric value helps determine the preference of routes when multiple paths are available. A lower metric is typically more preferred
+  - Range: `0`-`4294967295`
+- `metric_variable` (String) Variable name
+- `ospf_match_route` (Set of String) Match the OSPF internal,external type 1 or external type 2 route and redistribute them to BGP., Attribute conditional on `protocol` equal to `ospf`
+- `ospf_match_route_variable` (String) Variable name, Attribute conditional on `protocol` equal to `ospf`
 - `protocol` (String) Set the protocol to redistribute routes from
   - Choices: `static`, `connected`, `omp`, `nat`, `ospf`, `ospfv3`, `eigrp`
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
-- `translate_rib_metric` (Boolean) Translate Rib Metric, Attribute conditional on `protocol` equal to `omp`
+- `translate_rib_metric` (Boolean) Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network., Attribute conditional on `protocol` equal to `omp`
   - Default value: `false`
+- `translate_rib_metric_variable` (String) Variable name, Attribute conditional on `protocol` equal to `omp`
 
 
 <a id="nestedatt--ipv6_aggregate_addresses"></a>
@@ -393,7 +400,7 @@ Optional:
 - `next_hop_self` (Boolean) Set router to be next hop for routes advertised to neighbor
   - Default value: `false`
 - `next_hop_self_variable` (String) Variable name
-- `password` (String) Set MD5 password on TCP connection with BGP peer
+- `password` (String) Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `password_variable` (String) Variable name
 - `remote_as` (Number) Set remote autonomous system number
 - `remote_as_variable` (String) Variable name
@@ -422,6 +429,7 @@ Optional:
   - Default value: `75`
 - `disable_peer_threshold_variable` (String) Variable name, Attribute conditional on `policy_type` equal to `disable-peer`
 - `family_type` (String) Set IPv6 unicast address family
+  - Choices: `ipv6-unicast`
 - `in_route_policy_id` (String)
 - `out_route_policy_id` (String)
 - `policy_type` (String) Neighbor received maximum prefix policy is disabled.
@@ -460,12 +468,18 @@ Optional:
 
 Optional:
 
+- `metric` (Number) Metric value, the metric value helps determine the preference of routes when multiple paths are available. A lower metric is typically more preferred, Attribute conditional on `protocol` equal to `ospf`
+  - Range: `0`-`4294967295`
+- `metric_variable` (String) Variable name, Attribute conditional on `protocol` equal to `ospf`
+- `ospf_match_route` (Set of String) Match the OSPF internal,external type 1 or external type 2 route and redistribute them to BGP., Attribute conditional on `protocol` equal to `ospf`
+- `ospf_match_route_variable` (String) Variable name, Attribute conditional on `protocol` equal to `ospf`
 - `protocol` (String) Set the protocol to redistribute routes from
   - Choices: `static`, `connected`, `ospf`, `omp`
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
-- `translate_rib_metric` (Boolean) Translate Rib Metric, Attribute conditional on `protocol` equal to `omp`
+- `translate_rib_metric` (Boolean) Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network., Attribute conditional on `protocol` equal to `omp`
   - Default value: `false`
+- `translate_rib_metric_variable` (String) Variable name, Attribute conditional on `protocol` equal to `omp`
 
 ## Import
 
