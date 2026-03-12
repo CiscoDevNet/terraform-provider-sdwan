@@ -4,13 +4,13 @@ page_title: "sdwan_system_logging_feature Resource - terraform-provider-sdwan"
 subcategory: "Features - System"
 description: |-
   This resource can manage a System Logging Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_system_logging_feature (Resource)
 
 This resource can manage a System Logging Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -90,7 +90,7 @@ resource "sdwan_system_logging_feature" "example" {
 
 Optional:
 
-- `hostname_ip` (String) Set hostname or IPv4 address of server
+- `hostname_ip` (String) Set IPv4 address of server
 - `hostname_ip_variable` (String) Variable name
 - `priority` (String) Set logging level for messages logged to server
   - Choices: `informational`, `debugging`, `notice`, `warn`, `error`, `critical`, `alert`, `emergency`
@@ -106,7 +106,7 @@ Optional:
 - `tls_properties_custom_profile_variable` (String) Variable name
 - `tls_properties_profile` (String) Configure a TLS profile
 - `tls_properties_profile_variable` (String) Variable name
-- `vpn` (Number) Set hostname or IPv4 address of server
+- `vpn` (Number) Set vpn of server
   - Range: `0`-`65530`
   - Default value: `0`
 - `vpn_variable` (String) Variable name
@@ -117,7 +117,7 @@ Optional:
 
 Optional:
 
-- `hostname_ip` (String) Set IPv6 hostname or IPv6 address of server
+- `hostname_ip` (String) Set IPv6 address of server
 - `hostname_ip_variable` (String) Variable name
 - `priority` (String) Set logging level for messages logged to server
   - Choices: `informational`, `debugging`, `notice`, `warn`, `error`, `critical`, `alert`, `emergency`
@@ -133,7 +133,7 @@ Optional:
 - `tls_properties_custom_profile_variable` (String) Variable name
 - `tls_properties_profile` (String) Configure a TLS profile
 - `tls_properties_profile_variable` (String) Variable name
-- `vpn` (Number) Set hostname or IPv4 address of server
+- `vpn` (Number) Set vpn of server
   - Range: `0`-`65530`
   - Default value: `0`
 - `vpn_variable` (String) Variable name

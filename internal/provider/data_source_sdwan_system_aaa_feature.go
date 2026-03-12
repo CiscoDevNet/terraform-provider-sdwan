@@ -345,7 +345,7 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"group": schema.SetAttribute{
+						"group": schema.ListAttribute{
 							MarkdownDescription: "Use Server-group",
 							ElementType:         types.StringType,
 							Computed:            true,
@@ -386,7 +386,7 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 							MarkdownDescription: "Privilege level when method is commands",
 							Computed:            true,
 						},
-						"group": schema.SetAttribute{
+						"group": schema.ListAttribute{
 							MarkdownDescription: "Use Server-group",
 							ElementType:         types.StringType,
 							Computed:            true,

@@ -1,8 +1,8 @@
 ---
 name: Service Routing OSPF
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/routing/ospf
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - Service
 attributes:
@@ -55,7 +55,7 @@ attributes:
     attributes: 
     - model_name: protocol
       id: true
-      example: static
+      example: omp
     - model_name: dia
       tf_name: nat_dia
       example: true
@@ -66,13 +66,7 @@ attributes:
       example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
     - model_name: translateRibMetric
       tf_name: translate_rib_metric
-      type: Bool
-      description: Translate Rib Metric
-      example: true
-      exclude_test: true
-      no_augment_config: true
-      default_value_present: true
-      default_value: false
+      example: false
       conditional_attribute:
         conditions:
           - name: protocol
