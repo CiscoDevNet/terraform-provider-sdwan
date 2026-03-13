@@ -235,7 +235,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 				{{if or .DefaultValue .DefaultValueEmptyString}}itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
 				}
-			} else {{else if .AlwaysIncludeParent }}if data.{{toGoName .TfName}}.IsNull() {
+			} else {{else if .AlwaysInclude}}if item.{{toGoName .TfName}}.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}optionType", "default")
+			} else {{else if .AlwaysIncludeParent}}if data.{{toGoName .TfName}}.IsNull() {
 				body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 			} else {{else}}if !item.{{toGoName .TfName}}.IsNull(){{end}} {
 				if true{{buildConditionalLogic .ConditionalAttribute "item"}} {
@@ -280,6 +282,8 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 						{{if or .DefaultValue .DefaultValueEmptyString}}itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
 						}
+					} else {{else if .AlwaysInclude }}if childItem.{{toGoName .TfName}}.IsNull() {
+						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 					} else {{else if .AlwaysIncludeParent }}if data.{{toGoName .TfName}}.IsNull() {
 						body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 					} else {{else}}if !childItem.{{toGoName .TfName}}.IsNull(){{end}} {
@@ -324,6 +328,8 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 								if true{{buildConditionalLogic .ConditionalAttribute "childChildItem"}} {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 								{{if or .DefaultValue .DefaultValueEmptyString}}itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
+							} else {{else if .AlwaysInclude }}if childChildItem.{{toGoName .TfName}}.IsNull() {
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 							} else {{else if .AlwaysIncludeParent }}if data.{{toGoName .TfName}}.IsNull() {
 								body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 							} else {{else}}if !childChildItem.{{toGoName .TfName}}.IsNull(){{end}} {

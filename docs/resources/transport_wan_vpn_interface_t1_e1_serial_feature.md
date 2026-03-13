@@ -4,13 +4,13 @@ page_title: "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature Resource - t
 subcategory: "Features - Transport"
 description: |-
   This resource can manage a Transport WAN VPN Interface T1 E1 Serial Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_transport_wan_vpn_interface_t1_e1_serial_feature (Resource)
 
 This resource can manage a Transport WAN VPN Interface T1 E1 Serial Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -32,7 +32,7 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
   tunnel_interface                               = true
   per_tunnel_qos                                 = true
   per_tunnel_qos_aggregator                      = false
-  tunnel_qos_mode                                = "hub"
+  tunnel_qos_mode                                = "spoke"
   tunnel_interface_color                         = "mpls"
   tunnel_interface_restrict                      = true
   tunnel_interface_groups                        = 42949672
@@ -121,6 +121,11 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
 - `ipv4_subnet_mask_variable` (String) Variable name
 - `ipv6_address` (String) Assign IPv6 address
 - `ipv6_address_variable` (String) Variable name
+- `mrf_core_region_type` (String) Core Region
+  - Choices: `core-shared`, `core`
+  - Default value: `core-shared`
+- `mrf_enable_core_region` (Boolean) Enable Core Region
+  - Default value: `false`
 - `mtu` (Number) Interface MTU <68...2000>, in bytes
   - Range: `576`-`9216`
   - Default value: `1500`
@@ -246,7 +251,7 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
   - Default value: `5`
 - `tunnel_interface_vmanage_connection_preference_variable` (String) Variable name
 - `tunnel_qos_mode` (String) Set tunnel QoS mode
-  - Choices: `spoke`, `hub`
+  - Choices: `spoke`
 - `tunnel_qos_mode_variable` (String) Variable name
 
 ### Read-Only

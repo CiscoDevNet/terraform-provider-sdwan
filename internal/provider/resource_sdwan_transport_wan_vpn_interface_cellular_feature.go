@@ -64,7 +64,7 @@ func (r *TransportWANVPNInterfaceCellularProfileParcelResource) Metadata(ctx con
 func (r *TransportWANVPNInterfaceCellularProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Transport WAN VPN Interface Cellular Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Transport WAN VPN Interface Cellular Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -99,6 +99,14 @@ func (r *TransportWANVPNInterfaceCellularProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"shutdown_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"enable_ipv6": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("").AddDefaultValueDescription("true").String,
+				Optional:            true,
+			},
+			"enable_ipv6_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -176,24 +184,13 @@ func (r *TransportWANVPNInterfaceCellularProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"tunnel_qos_mode": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set tunnel QoS mode").AddStringEnumDescription("hub", "spoke").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set tunnel QoS mode").AddStringEnumDescription("spoke").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("hub", "spoke"),
+					stringvalidator.OneOf("spoke"),
 				},
 			},
 			"tunnel_qos_mode_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"tunnel_bandwidth_percent": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Tunnels Bandwidth Percent").AddIntegerRangeDescription(1, 100).AddDefaultValueDescription("50").String,
-				Optional:            true,
-				Validators: []validator.Int64{
-					int64validator.Between(1, 100),
-				},
-			},
-			"tunnel_bandwidth_percent_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -220,10 +217,10 @@ func (r *TransportWANVPNInterfaceCellularProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"tunnel_interface_color": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set color for TLOC").AddStringEnumDescription("default", "mpls", "metro ethernet", "biz internet", "public internet", "lte", "3g", "red", "green", "blue", "gold", "silver", "bronze", "custom1", "custom2", "custom3", "private1", "private2", "private3", "private4", "private5", "private6").AddDefaultValueDescription("mpls").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set color for TLOC").AddStringEnumDescription("default", "mpls", "metro-ethernet", "biz-internet", "public-internet", "lte", "3g", "red", "green", "blue", "gold", "silver", "bronze", "custom1", "custom2", "custom3", "private1", "private2", "private3", "private4", "private5", "private6").AddDefaultValueDescription("mpls").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("default", "mpls", "metro ethernet", "biz internet", "public internet", "lte", "3g", "red", "green", "blue", "gold", "silver", "bronze", "custom1", "custom2", "custom3", "private1", "private2", "private3", "private4", "private5", "private6"),
+					stringvalidator.OneOf("default", "mpls", "metro-ethernet", "biz-internet", "public-internet", "lte", "3g", "red", "green", "blue", "gold", "silver", "bronze", "custom1", "custom2", "custom3", "private1", "private2", "private3", "private4", "private5", "private6"),
 				},
 			},
 			"tunnel_interface_color_variable": schema.StringAttribute{
@@ -513,6 +510,17 @@ func (r *TransportWANVPNInterfaceCellularProfileParcelResource) Schema(ctx conte
 							Optional:            true,
 						},
 					},
+				},
+			},
+			"mrf_enable_core_region": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enable Core Region").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"mrf_core_region_type": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Core Region").AddStringEnumDescription("core-shared", "core").AddDefaultValueDescription("core-shared").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("core-shared", "core"),
 				},
 			},
 			"nat_ipv4": schema.BoolAttribute{

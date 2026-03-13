@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanSystemOMPProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_omp_feature.test", "graceful_restart", "true"))
@@ -61,6 +61,7 @@ func TestAccSdwanSystemOMPProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_omp_feature.test", "advertise_ipv6_isis", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_omp_feature.test", "ignore_region_path_length", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_omp_feature.test", "transport_gateway", "prefer"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_omp_feature.test", "aspath_auto_translation", "123"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -135,6 +136,8 @@ func testAccSdwanSystemOMPProfileParcelConfig_all() string {
 	config += `	ignore_region_path_length = false` + "\n"
 	config += `	transport_gateway = "prefer"` + "\n"
 	config += `	site_types = ["type-1"]` + "\n"
+	config += `	site_types_for_transport_gateway = ["type-1"]` + "\n"
+	config += `	aspath_auto_translation = 123` + "\n"
 	config += `}` + "\n"
 	return config
 }

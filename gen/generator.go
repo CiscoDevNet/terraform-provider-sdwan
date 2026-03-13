@@ -593,11 +593,20 @@ func BuildConditionalDescription(attr YamlConfigConditionalAttribute) string {
 
 	var parts []string
 	for _, cond := range attr.Conditions {
-		negation := ""
-		if cond.Negate {
-			negation = "not "
+		// Special handling for empty string checks to make description more readable
+		if cond.Value == "" {
+			if cond.Negate {
+				parts = append(parts, fmt.Sprintf("`%s` being set", cond.Name))
+			} else {
+				parts = append(parts, fmt.Sprintf("`%s` not being set", cond.Name))
+			}
+		} else {
+			negation := ""
+			if cond.Negate {
+				negation = "not "
+			}
+			parts = append(parts, fmt.Sprintf("`%s` %sequal to `%s`", cond.Name, negation, cond.Value))
 		}
-		parts = append(parts, fmt.Sprintf("`%s` %sequal to `%s`", cond.Name, negation, cond.Value))
 	}
 
 	if len(parts) == 0 {
@@ -967,6 +976,13 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	}
 	path := ""
 	prefix := "properties."
+
+	// Check before loop for cases where DataPath is empty
+	// Only treat it as wrapped oneOf if properties don't exist at same level
+	if model.Get("oneOf").Exists() && !model.Get("properties").Exists() {
+		prefix = "oneOf."
+	}
+
 	for i, e := range attr.DataPath {
 
 		next := ""
@@ -974,10 +990,6 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 			next = attr.DataPath[i+1]
 		} else {
 			next = attr.ModelName
-		}
-
-		if model.Get("oneOf").Exists() {
-			prefix = "oneOf."
 		}
 
 		if path == "" && prefix == "oneOf." {
@@ -1002,12 +1014,38 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				return true // keep iterating
 			})
 
+		} else if model.Get(prefix + path + e + ".items.oneOf").Exists() {
+			index := 0
+			model.Get(prefix + path + e + ".items.oneOf").ForEach(func(k, v gjson.Result) bool {
+				if v.Get("properties." + next).Exists() {
+					path += fmt.Sprintf("%s.items.oneOf.%v.properties.", e, index)
+					isOneOfAttribute = true
+					return false // stop iterating
+				}
+				index += 1
+				return true // keep iterating
+			})
+
 		} else if model.Get(prefix + path + e + ".items").Exists() {
 			path += fmt.Sprintf("%s.items.properties.", e)
 
 		} else {
 			path += e + ".properties."
 		}
+	}
+
+	// If DataPath is empty and model has oneOf at root (without properties), search through oneOf options
+	if len(attr.DataPath) == 0 && prefix == "oneOf." && !model.Get("properties").Exists() {
+		index := 0
+		model.Get("oneOf").ForEach(func(k, v gjson.Result) bool {
+			if v.Get("properties." + attr.ModelName).Exists() {
+				path = fmt.Sprintf("%v.properties.", index)
+				isOneOfAttribute = true
+				return false // stop iterating
+			}
+			index += 1
+			return true // keep iterating
+		})
 	}
 
 	path += attr.ModelName
@@ -1029,6 +1067,26 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		}
 	}
 
+	if r.Get("oneOf.0.type").String() == "array" && len(attr.Attributes) > 0 {
+		attr.Type = "List"
+		if r.Get("minItems").Exists() {
+			attr.MinList = r.Get("minItems").Int()
+		}
+		if r.Get("maxItems").Exists() {
+			attr.MaxList = r.Get("maxItems").Int()
+		}
+		for a := range attr.Attributes {
+			r.Get("oneOf").ForEach(func(k, v gjson.Result) bool {
+				items := v.Get("items")
+				if items.Get("properties." + attr.Attributes[a].ModelName).Exists() {
+					parseProfileParcelAttribute(&attr.Attributes[a], items, true)
+					return false
+				}
+				return true
+			})
+		}
+		return
+	}
 	if attr.Value == "" && (r.Get("type").String() == "object" || !r.Get("type").Exists()) {
 		noGlobal := false
 
@@ -1058,7 +1116,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				}
 			} else if attr.Type == "Bool" || t.Get("properties.value.type").String() == "boolean" || t.Get("properties.value.oneOf.0.properties.value.type").String() == "boolean" {
 				attr.Type = "Bool"
-			} else if attr.Type == "Int64" || t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" || t.Get("properties.value.oneOf.0.type").String() == "integer" || t.Get("properties.value.oneOf.0.type").String() == "number" {
+			} else if attr.Type == "Int64" || t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" || t.Get("properties.value.oneOf.0.type").String() == "integer" || t.Get("properties.value.oneOf.0.type").String() == "number" || t.Get("properties.value.anyOf.0.type").String() == "integer" || t.Get("properties.value.anyOf.0.type").String() == "number" {
 
 				if value := t.Get("properties.value.multipleOf"); value.Exists() {
 					attr.Type = "Float64"

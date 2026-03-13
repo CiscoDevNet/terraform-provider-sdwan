@@ -92,7 +92,7 @@ Read-Only:
 - `hello_interval_variable` (String) Variable name
 - `lsa_retransmit_interval` (Number) Set time between retransmitting LSAs
 - `lsa_retransmit_interval_variable` (String) Variable name
-- `message_digest_key` (String) Set MD5 authentication key
+- `message_digest_key` (String) Set MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `message_digest_key_id` (Number) Set MD5 message digest key
 - `message_digest_key_id_variable` (String) Variable name
 - `message_digest_key_variable` (String) Variable name
@@ -130,7 +130,8 @@ Read-Only:
 - `protocol` (String) Set the protocol
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
-- `translate_rib_metric` (Boolean) Translate Rib Metric
+- `translate_rib_metric` (Boolean) Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network.
+- `translate_rib_metric_variable` (String) Variable name
 
 
 <a id="nestedatt--router_lsas"></a>

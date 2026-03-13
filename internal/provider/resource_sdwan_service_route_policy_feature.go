@@ -64,7 +64,7 @@ func (r *ServiceRoutePolicyProfileParcelResource) Metadata(ctx context.Context, 
 func (r *ServiceRoutePolicyProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Route Policy Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Route Policy Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -244,7 +244,7 @@ func (r *ServiceRoutePolicyProfileParcelResource) Schema(ctx context.Context, re
 								Attributes: map[string]schema.Attribute{
 									"as_path_prepend": schema.ListAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
-										ElementType:         types.Int64Type,
+										ElementType:         types.StringType,
 										Optional:            true,
 									},
 									"community_additive": schema.BoolAttribute{

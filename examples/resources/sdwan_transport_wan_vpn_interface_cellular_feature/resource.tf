@@ -4,6 +4,7 @@ resource "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
   feature_profile_id                             = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   transport_wan_vpn_feature_id                   = "140331f6-5418-4755-a059-13c77eb96037"
   shutdown                                       = true
+  enable_ipv6                                    = true
   interface_name                                 = "GigabitEthernet1"
   interface_description                          = "WAN"
   ipv4_dhcp_helper                               = ["1.2.3.4"]
@@ -12,8 +13,7 @@ resource "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
   bandwidth_downstream                           = 21474836
   tunnel_interface                               = true
   per_tunnel_qos                                 = true
-  tunnel_qos_mode                                = "hub"
-  tunnel_bandwidth_percent                       = 82
+  tunnel_qos_mode                                = "spoke"
   tunnel_interface_bind_loopback_tunnel          = "example"
   tunnel_interface_carrier                       = "default"
   tunnel_interface_color                         = "default"

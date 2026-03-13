@@ -32,13 +32,14 @@ data "sdwan_transport_tracker_feature" "example" {
 - `description` (String) The description of the Feature
 - `endpoint_api_url` (String) API url of endpoint
 - `endpoint_api_url_variable` (String) Variable name
-- `endpoint_dns_name` (String) Endpoint DNS Name
+- `endpoint_dns_name` (String) DNS Name
 - `endpoint_dns_name_variable` (String) Variable name
-- `endpoint_ip` (String) Endpoint IP
+- `endpoint_ip` (String) IP
 - `endpoint_ip_variable` (String) Variable name
 - `endpoint_tracker_type` (String) Endpoint Tracker Type
-- `endpoint_tracker_type_variable` (String) Variable name
-- `interval` (Number) Interval
+- `icmp_interval` (Number) Probe Interval
+- `icmp_interval_variable` (String) Variable name
+- `interval` (Number) Probe Interval
 - `interval_variable` (String) Variable name
 - `multiplier` (Number) Multiplier
 - `multiplier_variable` (String) Variable name

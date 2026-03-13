@@ -4,13 +4,13 @@ page_title: "sdwan_transport_cellular_controller_feature Resource - terraform-pr
 subcategory: "Features - Transport"
 description: |-
   This resource can manage a Transport Cellular Controller Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_transport_cellular_controller_feature (Resource)
 
 This resource can manage a Transport Cellular Controller Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 

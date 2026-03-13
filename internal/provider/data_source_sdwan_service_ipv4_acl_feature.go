@@ -200,6 +200,30 @@ func (d *ServiceIPv4ACLProfileParcelDataSource) Schema(ctx context.Context, req 
 										MarkdownDescription: "Set Next Hop (IPV4 address)",
 										Computed:            true,
 									},
+									"accept_set_service_chain_name": schema.StringAttribute{
+										MarkdownDescription: "Set Service Chain Number",
+										Computed:            true,
+									},
+									"accept_set_service_chain_name_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"accept_set_service_chain_vpn": schema.Int64Attribute{
+										MarkdownDescription: "Set Service Chain VPN",
+										Computed:            true,
+									},
+									"accept_set_service_chain_vpn_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"accept_set_service_chain_fallback": schema.BoolAttribute{
+										MarkdownDescription: "fallback",
+										Computed:            true,
+									},
+									"accept_set_service_chain_fallback_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
 									"accept_mirror_list_id": schema.StringAttribute{
 										MarkdownDescription: "",
 										Computed:            true,

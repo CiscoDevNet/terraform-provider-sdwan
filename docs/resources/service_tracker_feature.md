@@ -4,13 +4,13 @@ page_title: "sdwan_service_tracker_feature Resource - terraform-provider-sdwan"
 subcategory: "Features - Service"
 description: |-
   This resource can manage a Service Tracker Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_service_tracker_feature (Resource)
 
 This resource can manage a Service Tracker Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 

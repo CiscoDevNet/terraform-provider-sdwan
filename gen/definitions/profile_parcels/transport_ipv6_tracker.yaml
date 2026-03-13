@@ -1,8 +1,8 @@
 ---
 name: Transport IPv6 Tracker
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/ipv6-tracker
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - Transport
 attributes:
@@ -24,6 +24,17 @@ attributes:
     example: 2001:0:0:1::0
   - model_name: interval
     example: 30
+    conditional_attribute:
+      conditions:
+        - name: endpoint_tracker_type
+          value: ipv6-interface
+  - model_name: icmpInterval
+    example: 30
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: endpoint_tracker_type
+          value: ipv6-interface-icmp
   - model_name: multiplier
     example: 3
   - model_name: threshold

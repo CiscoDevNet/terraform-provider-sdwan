@@ -4,13 +4,13 @@ page_title: "sdwan_system_snmp_feature Resource - terraform-provider-sdwan"
 subcategory: "Features - System"
 description: |-
   This resource can manage a System SNMP Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_system_snmp_feature (Resource)
 
 This resource can manage a System SNMP Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -108,7 +108,8 @@ Optional:
 - `authorization` (String) Configure access permissions
   - Choices: `read-only`, `read-write`
 - `authorization_variable` (String) Variable name
-- `name` (String) Set name of the SNMP community
+- `name` (String) Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `name_variable` (String) Variable name
 - `user_label` (String) Set user label of the SNMP community
 - `view` (String) Set name of the SNMP view
 - `view_variable` (String) Variable name
