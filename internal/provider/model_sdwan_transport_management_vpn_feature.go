@@ -558,7 +558,6 @@ func (data *TransportManagementVPN) fromBody(ctx context.Context, res gjson.Resu
 					item.NextHops = append(item.NextHops, cItem)
 					return true
 				})
-				item.Gateway = types.StringValue("nextHop")
 			}
 			item.AdministrativeDistance = types.Int64Null()
 			item.AdministrativeDistanceVariable = types.StringNull()
@@ -569,7 +568,6 @@ func (data *TransportManagementVPN) fromBody(ctx context.Context, res gjson.Resu
 				} else if t.String() == "global" {
 					item.AdministrativeDistance = types.Int64Value(va.Int())
 				}
-				item.Gateway = types.StringValue("null0")
 			}
 			data.Ipv4StaticRoutes = append(data.Ipv4StaticRoutes, item)
 			return true
