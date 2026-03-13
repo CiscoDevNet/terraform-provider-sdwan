@@ -29,11 +29,12 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanTransportWANVPNInterfaceCellularProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_cellular_feature.test", "shutdown", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_cellular_feature.test", "enable_ipv6", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_cellular_feature.test", "interface_name", "GigabitEthernet1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_cellular_feature.test", "interface_description", "WAN"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_cellular_feature.test", "service_provider", "example"))
@@ -41,8 +42,7 @@ func TestAccSdwanTransportWANVPNInterfaceCellularProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_cellular_feature.test", "bandwidth_downstream", "21474836"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_cellular_feature.test", "tunnel_interface", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_cellular_feature.test", "per_tunnel_qos", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_cellular_feature.test", "tunnel_qos_mode", "hub"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_cellular_feature.test", "tunnel_bandwidth_percent", "82"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_cellular_feature.test", "tunnel_qos_mode", "spoke"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_cellular_feature.test", "tunnel_interface_bind_loopback_tunnel", "example"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_cellular_feature.test", "tunnel_interface_carrier", "default"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_cellular_feature.test", "tunnel_interface_color", "default"))
@@ -264,6 +264,7 @@ func testAccSdwanTransportWANVPNInterfaceCellularProfileParcelConfig_all() strin
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
 	config += `	transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id` + "\n"
 	config += `	shutdown = true` + "\n"
+	config += `	enable_ipv6 = true` + "\n"
 	config += `	interface_name = "GigabitEthernet1"` + "\n"
 	config += `	interface_description = "WAN"` + "\n"
 	config += `	ipv4_dhcp_helper = ["1.2.3.4"]` + "\n"
@@ -272,8 +273,7 @@ func testAccSdwanTransportWANVPNInterfaceCellularProfileParcelConfig_all() strin
 	config += `	bandwidth_downstream = 21474836` + "\n"
 	config += `	tunnel_interface = true` + "\n"
 	config += `	per_tunnel_qos = true` + "\n"
-	config += `	tunnel_qos_mode = "hub"` + "\n"
-	config += `	tunnel_bandwidth_percent = 82` + "\n"
+	config += `	tunnel_qos_mode = "spoke"` + "\n"
 	config += `	tunnel_interface_bind_loopback_tunnel = "example"` + "\n"
 	config += `	tunnel_interface_carrier = "default"` + "\n"
 	config += `	tunnel_interface_color = "default"` + "\n"

@@ -43,6 +43,7 @@
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_cellular_profile_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_gps_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_management_vpn_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_cellular_feature` to `20.15.0`
 - Add `sdwan_embedded_security_ngfw_policy` resource and data source
 - Add `sdwan_embedded_security_policy` resource and data source
 - Add `sdwan_application_priority_policy_settings` resource and data source

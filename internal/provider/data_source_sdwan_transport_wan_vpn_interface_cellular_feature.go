@@ -91,6 +91,14 @@ func (d *TransportWANVPNInterfaceCellularProfileParcelDataSource) Schema(ctx con
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"enable_ipv6": schema.BoolAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+			},
+			"enable_ipv6_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 			"interface_name": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
@@ -157,14 +165,6 @@ func (d *TransportWANVPNInterfaceCellularProfileParcelDataSource) Schema(ctx con
 				Computed:            true,
 			},
 			"tunnel_qos_mode_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Computed:            true,
-			},
-			"tunnel_bandwidth_percent": schema.Int64Attribute{
-				MarkdownDescription: "Tunnels Bandwidth Percent",
-				Computed:            true,
-			},
-			"tunnel_bandwidth_percent_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -452,6 +452,14 @@ func (d *TransportWANVPNInterfaceCellularProfileParcelDataSource) Schema(ctx con
 						},
 					},
 				},
+			},
+			"mrf_enable_core_region": schema.BoolAttribute{
+				MarkdownDescription: "Enable Core Region",
+				Computed:            true,
+			},
+			"mrf_core_region_type": schema.StringAttribute{
+				MarkdownDescription: "Core Region",
+				Computed:            true,
 			},
 			"nat_ipv4": schema.BoolAttribute{
 				MarkdownDescription: "Network Address Translation on this interface",
