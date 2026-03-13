@@ -405,7 +405,7 @@
                                                                             },
                                                                             "value": {
                                                                                 "type": "string",
-                                                                                "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])"
+                                                                                "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
                                                                             }
                                                                         },
                                                                         "required": [
@@ -424,9 +424,18 @@
                                                                             },
                                                                             "value": {
                                                                                 "type": "string",
-                                                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                                                 "minLength": 1,
-                                                                                "maxLength": 64
+                                                                                "maxLength": 128
+                                                                            },
+                                                                            "default": {
+                                                                                "type": "string",
+                                                                                "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
+                                                                            },
+                                                                            "description": {
+                                                                                "minLength": 1,
+                                                                                "type": "string",
+                                                                                "maxLength": 128
                                                                             }
                                                                         },
                                                                         "required": [
@@ -550,7 +559,7 @@
                                                                             },
                                                                             "value": {
                                                                                 "type": "string",
-                                                                                "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])"
+                                                                                "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
                                                                             }
                                                                         },
                                                                         "required": [
@@ -569,9 +578,18 @@
                                                                             },
                                                                             "value": {
                                                                                 "type": "string",
-                                                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                                                 "minLength": 1,
-                                                                                "maxLength": 64
+                                                                                "maxLength": 128
+                                                                            },
+                                                                            "default": {
+                                                                                "type": "string",
+                                                                                "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
+                                                                            },
+                                                                            "description": {
+                                                                                "minLength": 1,
+                                                                                "type": "string",
+                                                                                "maxLength": 128
                                                                             }
                                                                         },
                                                                         "required": [
@@ -700,7 +718,6 @@
                                         "oneOf": [
                                             {
                                                 "properties": {
-                                                    "type": "object",
                                                     "accept": {
                                                         "description": "Accept Action",
                                                         "type": "object",
@@ -745,9 +762,9 @@
                                                                                 ]
                                                                             },
                                                                             "value": {
-                                                                                "type": "string",
                                                                                 "minLength": 1,
-                                                                                "maxLength": 20
+                                                                                "type": "string",
+                                                                                "maxLength": 32
                                                                             }
                                                                         },
                                                                         "required": [
@@ -828,6 +845,253 @@
                                                                     }
                                                                 ]
                                                             },
+                                                            "setServiceChain": {
+                                                                "description": "Set Service Chain",
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "serviceChainNumber": {
+                                                                        "description": "Set Service Chain Number",
+                                                                        "type": "object",
+                                                                        "oneOf": [
+                                                                            {
+                                                                                "properties": {
+                                                                                    "optionType": {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "global"
+                                                                                        ]
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "SC1",
+                                                                                            "SC2",
+                                                                                            "SC3",
+                                                                                            "SC4",
+                                                                                            "SC5",
+                                                                                            "SC6",
+                                                                                            "SC7",
+                                                                                            "SC8",
+                                                                                            "SC9",
+                                                                                            "SC10",
+                                                                                            "SC11",
+                                                                                            "SC12",
+                                                                                            "SC13",
+                                                                                            "SC14",
+                                                                                            "SC15",
+                                                                                            "SC16"
+                                                                                        ]
+                                                                                    }
+                                                                                },
+                                                                                "required": [
+                                                                                    "optionType",
+                                                                                    "value"
+                                                                                ],
+                                                                                "additionalProperties": false
+                                                                            },
+                                                                            {
+                                                                                "properties": {
+                                                                                    "optionType": {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "variable"
+                                                                                        ]
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "type": "string",
+                                                                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                                        "minLength": 1,
+                                                                                        "maxLength": 128
+                                                                                    },
+                                                                                    "default": {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "SC1",
+                                                                                            "SC2",
+                                                                                            "SC3",
+                                                                                            "SC4",
+                                                                                            "SC5",
+                                                                                            "SC6",
+                                                                                            "SC7",
+                                                                                            "SC8",
+                                                                                            "SC9",
+                                                                                            "SC10",
+                                                                                            "SC11",
+                                                                                            "SC12",
+                                                                                            "SC13",
+                                                                                            "SC14",
+                                                                                            "SC15",
+                                                                                            "SC16"
+                                                                                        ]
+                                                                                    },
+                                                                                    "description": {
+                                                                                        "minLength": 1,
+                                                                                        "type": "string",
+                                                                                        "maxLength": 128
+                                                                                    }
+                                                                                },
+                                                                                "required": [
+                                                                                    "optionType",
+                                                                                    "value"
+                                                                                ],
+                                                                                "additionalProperties": false
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    "vpn": {
+                                                                        "description": "Set Service Chain VPN",
+                                                                        "type": "object",
+                                                                        "oneOf": [
+                                                                            {
+                                                                                "properties": {
+                                                                                    "optionType": {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "global"
+                                                                                        ]
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "anyOf": [
+                                                                                            {
+                                                                                                "type": "number",
+                                                                                                "minimum": 1,
+                                                                                                "maximum": 511
+                                                                                            },
+                                                                                            {
+                                                                                                "type": "number",
+                                                                                                "minimum": 513,
+                                                                                                "maximum": 65531
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                },
+                                                                                "required": [
+                                                                                    "optionType",
+                                                                                    "value"
+                                                                                ],
+                                                                                "additionalProperties": false
+                                                                            },
+                                                                            {
+                                                                                "properties": {
+                                                                                    "optionType": {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "variable"
+                                                                                        ]
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "type": "string",
+                                                                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                                        "minLength": 1,
+                                                                                        "maxLength": 128
+                                                                                    },
+                                                                                    "default": {
+                                                                                        "anyOf": [
+                                                                                            {
+                                                                                                "type": "number",
+                                                                                                "minimum": 1,
+                                                                                                "maximum": 511
+                                                                                            },
+                                                                                            {
+                                                                                                "type": "number",
+                                                                                                "minimum": 513,
+                                                                                                "maximum": 65531
+                                                                                            }
+                                                                                        ]
+                                                                                    },
+                                                                                    "description": {
+                                                                                        "minLength": 1,
+                                                                                        "type": "string",
+                                                                                        "maxLength": 128
+                                                                                    }
+                                                                                },
+                                                                                "required": [
+                                                                                    "optionType",
+                                                                                    "value"
+                                                                                ],
+                                                                                "additionalProperties": false
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    "fallback": {
+                                                                        "type": "object",
+                                                                        "description": "fallback",
+                                                                        "oneOf": [
+                                                                            {
+                                                                                "properties": {
+                                                                                    "optionType": {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "global"
+                                                                                        ]
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "type": "boolean"
+                                                                                    }
+                                                                                },
+                                                                                "required": [
+                                                                                    "optionType",
+                                                                                    "value"
+                                                                                ],
+                                                                                "additionalProperties": false
+                                                                            },
+                                                                            {
+                                                                                "properties": {
+                                                                                    "optionType": {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "variable"
+                                                                                        ]
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "type": "string",
+                                                                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                                        "minLength": 1,
+                                                                                        "maxLength": 128
+                                                                                    },
+                                                                                    "default": {
+                                                                                        "type": "boolean"
+                                                                                    },
+                                                                                    "description": {
+                                                                                        "minLength": 1,
+                                                                                        "type": "string",
+                                                                                        "maxLength": 128
+                                                                                    }
+                                                                                },
+                                                                                "required": [
+                                                                                    "optionType",
+                                                                                    "value"
+                                                                                ],
+                                                                                "additionalProperties": false
+                                                                            },
+                                                                            {
+                                                                                "properties": {
+                                                                                    "optionType": {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "default"
+                                                                                        ]
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "type": "boolean",
+                                                                                        "enum": [
+                                                                                            false
+                                                                                        ]
+                                                                                    }
+                                                                                },
+                                                                                "required": [
+                                                                                    "optionType",
+                                                                                    "value"
+                                                                                ],
+                                                                                "additionalProperties": false
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "serviceChainNumber"
+                                                                ]
+                                                            },
                                                             "mirror": {
                                                                 "description": "Select a Mirror Parcel UUID",
                                                                 "type": "object",
@@ -887,7 +1151,37 @@
                                                                 "additionalProperties": false
                                                             }
                                                         },
-                                                        "additionalProperties": false
+                                                        "additionalProperties": false,
+                                                        "allOf": [
+                                                            {
+                                                                "if": {
+                                                                    "required": [
+                                                                        "setNextHop"
+                                                                    ]
+                                                                },
+                                                                "then": {
+                                                                    "not": {
+                                                                        "required": [
+                                                                            "setServiceChain"
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "if": {
+                                                                    "required": [
+                                                                        "setServiceChain"
+                                                                    ]
+                                                                },
+                                                                "then": {
+                                                                    "not": {
+                                                                        "required": [
+                                                                            "setNextHop"
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 "required": [
@@ -915,9 +1209,9 @@
                                                                                 ]
                                                                             },
                                                                             "value": {
-                                                                                "type": "string",
                                                                                 "minLength": 1,
-                                                                                "maxLength": 20
+                                                                                "type": "string",
+                                                                                "maxLength": 32
                                                                             }
                                                                         },
                                                                         "required": [
@@ -1185,6 +1479,9 @@
                         "name": "acl2"
                     }
                 ]
+            },
+            "metadata": {
+                "minVManageVersion": "20.15.1"
             }
         },
         "required": [
@@ -1193,7 +1490,8 @@
         ],
         "not": {
             "required": [
-                "documentation"
+                "documentation",
+                "metadata"
             ]
         },
         "additionalProperties": false

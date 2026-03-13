@@ -546,11 +546,20 @@ func BuildConditionalDescription(attr YamlConfigConditionalAttribute) string {
 
 	var parts []string
 	for _, cond := range attr.Conditions {
-		negation := ""
-		if cond.Negate {
-			negation = "not "
+		// Special handling for empty string checks to make description more readable
+		if cond.Value == "" {
+			if cond.Negate {
+				parts = append(parts, fmt.Sprintf("`%s` being set", cond.Name))
+			} else {
+				parts = append(parts, fmt.Sprintf("`%s` not being set", cond.Name))
+			}
+		} else {
+			negation := ""
+			if cond.Negate {
+				negation = "not "
+			}
+			parts = append(parts, fmt.Sprintf("`%s` %sequal to `%s`", cond.Name, negation, cond.Value))
 		}
-		parts = append(parts, fmt.Sprintf("`%s` %sequal to `%s`", cond.Name, negation, cond.Value))
 	}
 
 	if len(parts) == 0 {
