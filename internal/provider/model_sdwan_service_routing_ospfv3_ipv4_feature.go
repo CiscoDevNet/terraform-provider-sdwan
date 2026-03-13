@@ -921,7 +921,6 @@ func (data *ServiceRoutingOSPFv3IPv4) fromBody(ctx context.Context, res gjson.Re
 				} else if t.String() == "global" {
 					item.NatDia = types.BoolValue(va.Bool())
 				}
-				item.Protocol = types.StringValue("nat-route")
 			}
 			item.RoutePolicyId = types.StringNull()
 

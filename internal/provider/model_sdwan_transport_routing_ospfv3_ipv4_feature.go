@@ -921,7 +921,6 @@ func (data *TransportRoutingOSPFv3IPv4) fromBody(ctx context.Context, res gjson.
 				} else if t.String() == "global" {
 					item.NatDia = types.BoolValue(va.Bool())
 				}
-				item.Protocol = types.StringValue("nat-route")
 			}
 			item.TranslateRibMetric = types.BoolNull()
 			item.TranslateRibMetricVariable = types.StringNull()
