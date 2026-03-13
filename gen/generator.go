@@ -1009,6 +1009,26 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		}
 	}
 
+	if r.Get("oneOf.0.type").String() == "array" && len(attr.Attributes) > 0 {
+		attr.Type = "List"
+		if r.Get("minItems").Exists() {
+			attr.MinList = r.Get("minItems").Int()
+		}
+		if r.Get("maxItems").Exists() {
+			attr.MaxList = r.Get("maxItems").Int()
+		}
+		for a := range attr.Attributes {
+			r.Get("oneOf").ForEach(func(k, v gjson.Result) bool {
+				items := v.Get("items")
+				if items.Get("properties." + attr.Attributes[a].ModelName).Exists() {
+					parseProfileParcelAttribute(&attr.Attributes[a], items, true)
+					return false
+				}
+				return true
+			})
+		}
+		return
+	}
 	if attr.Value == "" && (r.Get("type").String() == "object" || !r.Get("type").Exists()) {
 		noGlobal := false
 
