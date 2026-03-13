@@ -1,8 +1,8 @@
 ---
 name: Transport WAN VPN Interface Cellular
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/cellular
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - Transport
 attributes:
@@ -21,6 +21,8 @@ attributes:
     example: 140331f6-5418-4755-a059-13c77eb96037
     test_value: sdwan_transport_wan_vpn_feature.test.id
   - model_name: shutdown
+    example: true
+  - model_name: enableIpv6
     example: true
   - model_name: interfaceName
     example: GigabitEthernet1
@@ -46,14 +48,7 @@ attributes:
   - model_name: mode
     tf_name: tunnel_qos_mode
     data_path: [tunnel]
-    example: hub
-  - model_name: bandwidthPercent
-    tf_name: tunnel_bandwidth_percent
-    data_path: [tunnel]
-    # conditional_attribute: 
-    #   name: tunnel_qos_mode
-    #   value: hub
-    example: 82
+    example: spoke
   - model_name: bind
     tf_name: tunnel_interface_bind_loopback_tunnel
     data_path: [tunnel]
@@ -209,6 +204,14 @@ attributes:
       example: 4294967
     - model_name: weight
       example: 250
+  - model_name: enableCoreRegion
+    tf_name: mrf_enable_core_region
+    data_path: [multiRegionFabric]
+    exclude_test: true
+  - model_name: coreRegion
+    tf_name: mrf_core_region_type
+    data_path: [multiRegionFabric]
+    exclude_test: true
   - model_name: nat
     tf_name: nat_ipv4
     example: true

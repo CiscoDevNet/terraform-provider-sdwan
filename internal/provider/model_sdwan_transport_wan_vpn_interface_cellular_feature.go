@@ -41,6 +41,8 @@ type TransportWANVPNInterfaceCellular struct {
 	TransportWanVpnFeatureId                           types.String                                                    `tfsdk:"transport_wan_vpn_feature_id"`
 	Shutdown                                           types.Bool                                                      `tfsdk:"shutdown"`
 	ShutdownVariable                                   types.String                                                    `tfsdk:"shutdown_variable"`
+	EnableIpv6                                         types.Bool                                                      `tfsdk:"enable_ipv6"`
+	EnableIpv6Variable                                 types.String                                                    `tfsdk:"enable_ipv6_variable"`
 	InterfaceName                                      types.String                                                    `tfsdk:"interface_name"`
 	InterfaceNameVariable                              types.String                                                    `tfsdk:"interface_name_variable"`
 	InterfaceDescription                               types.String                                                    `tfsdk:"interface_description"`
@@ -58,8 +60,6 @@ type TransportWANVPNInterfaceCellular struct {
 	PerTunnelQosVariable                               types.String                                                    `tfsdk:"per_tunnel_qos_variable"`
 	TunnelQosMode                                      types.String                                                    `tfsdk:"tunnel_qos_mode"`
 	TunnelQosModeVariable                              types.String                                                    `tfsdk:"tunnel_qos_mode_variable"`
-	TunnelBandwidthPercent                             types.Int64                                                     `tfsdk:"tunnel_bandwidth_percent"`
-	TunnelBandwidthPercentVariable                     types.String                                                    `tfsdk:"tunnel_bandwidth_percent_variable"`
 	TunnelInterfaceBindLoopbackTunnel                  types.String                                                    `tfsdk:"tunnel_interface_bind_loopback_tunnel"`
 	TunnelInterfaceBindLoopbackTunnelVariable          types.String                                                    `tfsdk:"tunnel_interface_bind_loopback_tunnel_variable"`
 	TunnelInterfaceCarrier                             types.String                                                    `tfsdk:"tunnel_interface_carrier"`
@@ -125,6 +125,8 @@ type TransportWANVPNInterfaceCellular struct {
 	TunnelInterfaceAllowBfd                            types.Bool                                                      `tfsdk:"tunnel_interface_allow_bfd"`
 	TunnelInterfaceAllowBfdVariable                    types.String                                                    `tfsdk:"tunnel_interface_allow_bfd_variable"`
 	TunnelInterfaceEncapsulations                      []TransportWANVPNInterfaceCellularTunnelInterfaceEncapsulations `tfsdk:"tunnel_interface_encapsulations"`
+	MrfEnableCoreRegion                                types.Bool                                                      `tfsdk:"mrf_enable_core_region"`
+	MrfCoreRegionType                                  types.String                                                    `tfsdk:"mrf_core_region_type"`
 	NatIpv4                                            types.Bool                                                      `tfsdk:"nat_ipv4"`
 	NatIpv4Variable                                    types.String                                                    `tfsdk:"nat_ipv4_variable"`
 	NatUdpTimeout                                      types.Int64                                                     `tfsdk:"nat_udp_timeout"`
@@ -221,6 +223,23 @@ func (data TransportWANVPNInterfaceCellular) toBody(ctx context.Context) string 
 		if true {
 			body, _ = sjson.Set(body, path+"shutdown.optionType", "global")
 			body, _ = sjson.Set(body, path+"shutdown.value", data.Shutdown.ValueBool())
+		}
+	}
+
+	if !data.EnableIpv6Variable.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"enableIpv6.optionType", "variable")
+			body, _ = sjson.Set(body, path+"enableIpv6.value", data.EnableIpv6Variable.ValueString())
+		}
+	} else if data.EnableIpv6.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"enableIpv6.optionType", "default")
+			body, _ = sjson.Set(body, path+"enableIpv6.value", true)
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"enableIpv6.optionType", "global")
+			body, _ = sjson.Set(body, path+"enableIpv6.value", data.EnableIpv6.ValueBool())
 		}
 	}
 
@@ -360,23 +379,6 @@ func (data TransportWANVPNInterfaceCellular) toBody(ctx context.Context) string 
 		if true {
 			body, _ = sjson.Set(body, path+"tunnel.mode.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.mode.value", data.TunnelQosMode.ValueString())
-		}
-	}
-
-	if !data.TunnelBandwidthPercentVariable.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.optionType", "variable")
-			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.value", data.TunnelBandwidthPercentVariable.ValueString())
-		}
-	} else if data.TunnelBandwidthPercent.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.optionType", "default")
-			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.value", 50)
-		}
-	} else {
-		if true {
-			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.optionType", "global")
-			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.value", data.TunnelBandwidthPercent.ValueInt64())
 		}
 	}
 
@@ -962,6 +964,28 @@ func (data TransportWANVPNInterfaceCellular) toBody(ctx context.Context) string 
 			body, _ = sjson.SetRaw(body, path+"encapsulation.-1", itemBody)
 		}
 	}
+	if data.MrfEnableCoreRegion.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"multiRegionFabric.enableCoreRegion.optionType", "default")
+			body, _ = sjson.Set(body, path+"multiRegionFabric.enableCoreRegion.value", false)
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"multiRegionFabric.enableCoreRegion.optionType", "global")
+			body, _ = sjson.Set(body, path+"multiRegionFabric.enableCoreRegion.value", data.MrfEnableCoreRegion.ValueBool())
+		}
+	}
+	if data.MrfCoreRegionType.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"multiRegionFabric.coreRegion.optionType", "default")
+			body, _ = sjson.Set(body, path+"multiRegionFabric.coreRegion.value", "core-shared")
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"multiRegionFabric.coreRegion.optionType", "global")
+			body, _ = sjson.Set(body, path+"multiRegionFabric.coreRegion.value", data.MrfCoreRegionType.ValueString())
+		}
+	}
 
 	if !data.NatIpv4Variable.IsNull() {
 		if true {
@@ -1318,6 +1342,16 @@ func (data *TransportWANVPNInterfaceCellular) fromBody(ctx context.Context, res 
 			data.Shutdown = types.BoolValue(va.Bool())
 		}
 	}
+	data.EnableIpv6 = types.BoolNull()
+	data.EnableIpv6Variable = types.StringNull()
+	if t := res.Get(path + "enableIpv6.optionType"); t.Exists() {
+		va := res.Get(path + "enableIpv6.value")
+		if t.String() == "variable" {
+			data.EnableIpv6Variable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.EnableIpv6 = types.BoolValue(va.Bool())
+		}
+	}
 	data.InterfaceName = types.StringNull()
 	data.InterfaceNameVariable = types.StringNull()
 	if t := res.Get(path + "interfaceName.optionType"); t.Exists() {
@@ -1404,16 +1438,6 @@ func (data *TransportWANVPNInterfaceCellular) fromBody(ctx context.Context, res 
 			data.TunnelQosModeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.TunnelQosMode = types.StringValue(va.String())
-		}
-	}
-	data.TunnelBandwidthPercent = types.Int64Null()
-	data.TunnelBandwidthPercentVariable = types.StringNull()
-	if t := res.Get(path + "tunnel.bandwidthPercent.optionType"); t.Exists() {
-		va := res.Get(path + "tunnel.bandwidthPercent.value")
-		if t.String() == "variable" {
-			data.TunnelBandwidthPercentVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TunnelBandwidthPercent = types.Int64Value(va.Int())
 		}
 	}
 	data.TunnelInterfaceBindLoopbackTunnel = types.StringNull()
@@ -1772,6 +1796,22 @@ func (data *TransportWANVPNInterfaceCellular) fromBody(ctx context.Context, res 
 			return true
 		})
 	}
+	data.MrfEnableCoreRegion = types.BoolNull()
+
+	if t := res.Get(path + "multiRegionFabric.enableCoreRegion.optionType"); t.Exists() {
+		va := res.Get(path + "multiRegionFabric.enableCoreRegion.value")
+		if t.String() == "global" {
+			data.MrfEnableCoreRegion = types.BoolValue(va.Bool())
+		}
+	}
+	data.MrfCoreRegionType = types.StringNull()
+
+	if t := res.Get(path + "multiRegionFabric.coreRegion.optionType"); t.Exists() {
+		va := res.Get(path + "multiRegionFabric.coreRegion.value")
+		if t.String() == "global" {
+			data.MrfCoreRegionType = types.StringValue(va.String())
+		}
+	}
 	data.NatIpv4 = types.BoolNull()
 	data.NatIpv4Variable = types.StringNull()
 	if t := res.Get(path + "nat.optionType"); t.Exists() {
@@ -2049,6 +2089,16 @@ func (data *TransportWANVPNInterfaceCellular) updateFromBody(ctx context.Context
 			data.Shutdown = types.BoolValue(va.Bool())
 		}
 	}
+	data.EnableIpv6 = types.BoolNull()
+	data.EnableIpv6Variable = types.StringNull()
+	if t := res.Get(path + "enableIpv6.optionType"); t.Exists() {
+		va := res.Get(path + "enableIpv6.value")
+		if t.String() == "variable" {
+			data.EnableIpv6Variable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.EnableIpv6 = types.BoolValue(va.Bool())
+		}
+	}
 	data.InterfaceName = types.StringNull()
 	data.InterfaceNameVariable = types.StringNull()
 	if t := res.Get(path + "interfaceName.optionType"); t.Exists() {
@@ -2135,16 +2185,6 @@ func (data *TransportWANVPNInterfaceCellular) updateFromBody(ctx context.Context
 			data.TunnelQosModeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.TunnelQosMode = types.StringValue(va.String())
-		}
-	}
-	data.TunnelBandwidthPercent = types.Int64Null()
-	data.TunnelBandwidthPercentVariable = types.StringNull()
-	if t := res.Get(path + "tunnel.bandwidthPercent.optionType"); t.Exists() {
-		va := res.Get(path + "tunnel.bandwidthPercent.value")
-		if t.String() == "variable" {
-			data.TunnelBandwidthPercentVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TunnelBandwidthPercent = types.Int64Value(va.Int())
 		}
 	}
 	data.TunnelInterfaceBindLoopbackTunnel = types.StringNull()
@@ -2525,6 +2565,22 @@ func (data *TransportWANVPNInterfaceCellular) updateFromBody(ctx context.Context
 			} else if t.String() == "global" {
 				data.TunnelInterfaceEncapsulations[i].Weight = types.Int64Value(va.Int())
 			}
+		}
+	}
+	data.MrfEnableCoreRegion = types.BoolNull()
+
+	if t := res.Get(path + "multiRegionFabric.enableCoreRegion.optionType"); t.Exists() {
+		va := res.Get(path + "multiRegionFabric.enableCoreRegion.value")
+		if t.String() == "global" {
+			data.MrfEnableCoreRegion = types.BoolValue(va.Bool())
+		}
+	}
+	data.MrfCoreRegionType = types.StringNull()
+
+	if t := res.Get(path + "multiRegionFabric.coreRegion.optionType"); t.Exists() {
+		va := res.Get(path + "multiRegionFabric.coreRegion.value")
+		if t.String() == "global" {
+			data.MrfCoreRegionType = types.StringValue(va.String())
 		}
 	}
 	data.NatIpv4 = types.BoolNull()
