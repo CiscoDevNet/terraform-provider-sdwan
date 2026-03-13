@@ -40,6 +40,7 @@
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_route_policy_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_route_policy_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_cellular_controller_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_cellular_profile_feature` to `20.15.0`
 - Add `sdwan_embedded_security_ngfw_policy` resource and data source
 - Add `sdwan_embedded_security_policy` resource and data source
 - Add `sdwan_application_priority_policy_settings` resource and data source
