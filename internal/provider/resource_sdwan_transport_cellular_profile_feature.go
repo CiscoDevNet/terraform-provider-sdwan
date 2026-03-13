@@ -63,7 +63,7 @@ func (r *TransportCellularProfileProfileParcelResource) Metadata(ctx context.Con
 func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Transport Cellular Profile Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Transport Cellular Profile Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -132,7 +132,7 @@ func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Conte
 				Optional:            true,
 			},
 			"profile_password": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set the profile password, Attribute conditional on `requires_authentication` equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.], Attribute conditional on `requires_authentication` equal to `true`").String,
 				Optional:            true,
 			},
 			"profile_password_variable": schema.StringAttribute{
