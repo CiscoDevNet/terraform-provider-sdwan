@@ -260,11 +260,11 @@ func (r *ServiceRoutingOSPFv3IPv4ProfileParcelResource) Schema(ctx context.Conte
 							Optional:            true,
 						},
 						"nat_dia": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Enable NAT DIA for redistributed routes").AddDefaultValueDescription("true").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Enable NAT DIA for redistributed routes, Attribute conditional on `protocol` equal to `nat-route`").AddDefaultValueDescription("true").String,
 							Optional:            true,
 						},
 						"nat_dia_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `protocol` equal to `nat-route`").String,
 							Optional:            true,
 						},
 						"route_policy_id": schema.StringAttribute{

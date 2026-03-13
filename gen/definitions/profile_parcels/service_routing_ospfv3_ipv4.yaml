@@ -84,6 +84,10 @@ attributes:
     - model_name: natDia
       tf_name: nat_dia
       example: true
+      conditional_attribute:
+        conditions:
+          - name: protocol
+            value: nat-route
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
