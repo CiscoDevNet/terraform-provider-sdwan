@@ -287,7 +287,6 @@ func (data *TransportTracker) fromBody(ctx context.Context, res gjson.Result) {
 		} else if t.String() == "global" {
 			data.Interval = types.Int64Value(va.Int())
 		}
-		data.EndpointTrackerType = types.StringValue("interface")
 	}
 	data.IcmpInterval = types.Int64Null()
 	data.IcmpIntervalVariable = types.StringNull()
@@ -298,7 +297,6 @@ func (data *TransportTracker) fromBody(ctx context.Context, res gjson.Result) {
 		} else if t.String() == "global" {
 			data.IcmpInterval = types.Int64Value(va.Int())
 		}
-		data.EndpointTrackerType = types.StringValue("interface-icmp")
 	}
 	data.Multiplier = types.Int64Null()
 	data.MultiplierVariable = types.StringNull()

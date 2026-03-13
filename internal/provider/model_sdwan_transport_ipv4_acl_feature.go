@@ -583,8 +583,6 @@ func (data *TransportIPv4ACL) fromBody(ctx context.Context, res gjson.Result) {
 						} else if t.String() == "global" {
 							cItem.AcceptSetServiceChainVpn = types.Int64Value(va.Int())
 						}
-						cItem.AcceptSetServiceChainName = types.StringValue("")
-						cItem.AcceptSetServiceChainNameVariable = types.StringValue("")
 					}
 					cItem.AcceptSetServiceChainFallback = types.BoolNull()
 					cItem.AcceptSetServiceChainFallbackVariable = types.StringNull()
@@ -595,8 +593,6 @@ func (data *TransportIPv4ACL) fromBody(ctx context.Context, res gjson.Result) {
 						} else if t.String() == "global" {
 							cItem.AcceptSetServiceChainFallback = types.BoolValue(va.Bool())
 						}
-						cItem.AcceptSetServiceChainName = types.StringValue("")
-						cItem.AcceptSetServiceChainNameVariable = types.StringValue("")
 					}
 					cItem.AcceptMirrorListId = types.StringNull()
 
