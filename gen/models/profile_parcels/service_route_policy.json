@@ -714,9 +714,17 @@
                                                                                     },
                                                                                     "value": {
                                                                                         "items": {
-                                                                                            "type": "integer",
-                                                                                            "minimum": 1,
-                                                                                            "maximum": 4294967295
+                                                                                            "oneOf": [
+                                                                                                {
+                                                                                                    "type": "integer",
+                                                                                                    "minimum": 1,
+                                                                                                    "maximum": 4294967295
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "string",
+                                                                                                    "format": "([0-9]+|[0-9]*\\.[0-9]+)"
+                                                                                                }
+                                                                                            ]
                                                                                         },
                                                                                         "additionalProperties": false,
                                                                                         "uniqueItems": false,
@@ -831,9 +839,37 @@
                                                                                     },
                                                                                     "value": {
                                                                                         "type": "string",
-                                                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                                                         "minLength": 1,
-                                                                                        "maxLength": 64
+                                                                                        "maxLength": 128
+                                                                                    },
+                                                                                    "default": {
+                                                                                        "type": "array",
+                                                                                        "items": {
+                                                                                            "uniqueItems": true,
+                                                                                            "type": "string",
+                                                                                            "oneOf": [
+                                                                                                {
+                                                                                                    "enum": [
+                                                                                                        "internet",
+                                                                                                        "local-AS",
+                                                                                                        "no-advertise",
+                                                                                                        "no-export"
+                                                                                                    ],
+                                                                                                    "type": "string"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "string",
+                                                                                                    "pattern": "^(0|[1-9]\\d{0,3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|6553[0-5]):(0|[1-9]\\d{0,3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|6553[0-5])$"
+                                                                                                }
+                                                                                            ]
+                                                                                        },
+                                                                                        "additionalProperties": false
+                                                                                    },
+                                                                                    "description": {
+                                                                                        "minLength": 1,
+                                                                                        "type": "string",
+                                                                                        "maxLength": 128
                                                                                     }
                                                                                 },
                                                                                 "required": [
@@ -1156,7 +1192,8 @@
                     "isr",
                     "ISRv",
                     "ir1101"
-                ]
+                ],
+                "minVManageVersion": "20.15.1"
             },
             "documentation": {
                 "description": "This is the documentation for route policy profile parcel",
@@ -1389,7 +1426,8 @@
         ],
         "not": {
             "required": [
-                "documentation"
+                "documentation",
+                "metadata"
             ]
         },
         "additionalProperties": false

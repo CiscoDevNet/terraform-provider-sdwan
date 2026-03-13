@@ -115,7 +115,7 @@ func (d *TransportCellularProfileProfileParcelDataSource) Schema(ctx context.Con
 				Computed:            true,
 			},
 			"profile_password": schema.StringAttribute{
-				MarkdownDescription: "Set the profile password",
+				MarkdownDescription: "Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
 				Computed:            true,
 			},
 			"profile_password_variable": schema.StringAttribute{

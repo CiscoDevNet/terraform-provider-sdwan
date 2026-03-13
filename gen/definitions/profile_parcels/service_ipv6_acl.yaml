@@ -2,8 +2,8 @@
 # Manual resource - Modals updateFromBody is manually configured to support match entries embedded objects - https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/381
 name: Service IPv6 ACL
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/ipv6-acl
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 skip_minimum_test: true
 parcel_type: feature
 doc_category: Features - Service
@@ -98,6 +98,40 @@ attributes:
         tf_name: accept_set_next_hop
         data_path: [accept]
         example: 2001:0db8:85a3:0000:0000:8a2e:0370:7334
+      - model_name: serviceChainNumber
+        tf_name: accept_set_service_chain_name
+        data_path: [accept, setServiceChain]
+        example: SC1
+        exclude_test: true
+      - model_name: vpn
+        tf_name: accept_set_service_chain_vpn
+        data_path: [accept, setServiceChain]
+        type: Int64
+        example: 1
+        exclude_test: true
+        conditional_attribute:
+          operator: or
+          conditions:
+            - name: accept_set_service_chain_name
+              value: ''
+              negate: true
+            - name: accept_set_service_chain_name_variable
+              value: ''
+              negate: true
+      - model_name: fallback
+        tf_name: accept_set_service_chain_fallback
+        data_path: [accept, setServiceChain]
+        example: true
+        exclude_test: true
+        conditional_attribute:
+          operator: or
+          conditions:
+            - name: accept_set_service_chain_name
+              value: ''
+              negate: true
+            - name: accept_set_service_chain_name_variable
+              value: ''
+              negate: true
       - model_name: setTrafficClass
         tf_name: accept_traffic_class
         data_path: [accept]

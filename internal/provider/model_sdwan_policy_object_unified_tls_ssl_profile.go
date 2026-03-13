@@ -184,7 +184,6 @@ func (data *PolicyObjectUnifiedTLSSSLProfile) fromBody(ctx context.Context, res 
 		if t.String() == "global" {
 			data.DecryptThreshold = types.StringValue(va.String())
 		}
-		data.Reputation = types.BoolValue(true)
 	}
 	data.ThresholdCategories = types.StringNull()
 
@@ -193,7 +192,6 @@ func (data *PolicyObjectUnifiedTLSSSLProfile) fromBody(ctx context.Context, res 
 		if t.String() == "global" {
 			data.ThresholdCategories = types.StringValue(va.String())
 		}
-		data.Reputation = types.BoolValue(true)
 	}
 	data.FailDecrypt = types.BoolNull()
 

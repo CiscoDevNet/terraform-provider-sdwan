@@ -212,7 +212,6 @@ func (data *PolicyObjectUnifiedTLSSSLDecryption) fromBody(ctx context.Context, r
 		if t.String() == "global" {
 			data.UnknownRevocationStatus = types.StringValue(va.String())
 		}
-		data.CertificateRevocationStatus = types.StringValue("ocsp")
 	}
 	data.UnsupportedProtocolVersions = types.StringNull()
 

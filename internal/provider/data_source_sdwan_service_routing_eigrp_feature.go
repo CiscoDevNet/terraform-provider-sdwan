@@ -176,7 +176,7 @@ func (d *ServiceRoutingEIGRPProfileParcelDataSource) Schema(ctx context.Context,
 							Computed:            true,
 						},
 						"key_string": schema.StringAttribute{
-							MarkdownDescription: "Set MD5 key",
+							MarkdownDescription: "Set MD5 key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
 							Computed:            true,
 						},
 						"key_string_variable": schema.StringAttribute{

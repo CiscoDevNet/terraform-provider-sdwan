@@ -4,13 +4,13 @@ page_title: "sdwan_transport_route_policy_feature Resource - terraform-provider-
 subcategory: "Features - Transport"
 description: |-
   This resource can manage a Transport Route Policy Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_transport_route_policy_feature (Resource)
 
 This resource can manage a Transport Route Policy Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -28,7 +28,7 @@ resource "sdwan_transport_route_policy_feature" "example" {
       protocol    = "IPV4"
       actions = [
         {
-          as_path_prepend    = [65521]
+          as_path_prepend    = ["65521"]
           community_additive = false
           community          = ["internet"]
           local_preference   = 100
@@ -89,7 +89,7 @@ Optional:
 
 Optional:
 
-- `as_path_prepend` (List of Number)
+- `as_path_prepend` (List of String)
 - `community` (Set of String)
 - `community_additive` (Boolean) - Default value: `false`
 - `community_variable` (String) Variable name

@@ -7,7 +7,6 @@
     "type": "object",
     "properties": {
       "name": {
-        "description": "Set the tracker name",
         "type": "string",
         "pattern": "^[^&<>! \"]+$",
         "minLength": 1,
@@ -27,7 +26,9 @@
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["variable"]
+                    "enum": [
+                      "variable"
+                    ]
                   },
                   "value": {
                     "type": "string",
@@ -36,9 +37,9 @@
                     "maxLength": 128
                   },
                   "default": {
-                    "minLength": 1,
-                    "type": "string",
-                    "maxLength": 2048
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000
                   },
                   "description": {
                     "minLength": 1,
@@ -46,14 +47,19 @@
                     "maxLength": 128
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               },
               {
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["global"]
+                    "enum": [
+                      "global"
+                    ]
                   },
                   "value": {
                     "type": "integer",
@@ -61,7 +67,10 @@
                     "maximum": 1000
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               }
             ]
@@ -74,14 +83,23 @@
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["global"]
+                    "enum": [
+                      "global"
+                    ]
                   },
                   "value": {
-                    "enum": ["Interface", "SIG", "Route"],
+                    "enum": [
+                      "Interface",
+                      "SIG",
+                      "Route"
+                    ],
                     "type": "string"
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               }
             ]
@@ -94,7 +112,9 @@
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["global"]
+                    "enum": [
+                      "global"
+                    ]
                   },
                   "value": {
                     "type": "string",
@@ -103,14 +123,19 @@
                     "maxLength": 32
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               },
               {
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["variable"]
+                    "enum": [
+                      "variable"
+                    ]
                   },
                   "value": {
                     "type": "string",
@@ -119,9 +144,10 @@
                     "maxLength": 128
                   },
                   "default": {
-                    "minLength": 1,
                     "type": "string",
-                    "maxLength": 2048
+                    "pattern": "(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                    "minLength": 3,
+                    "maxLength": 32
                   },
                   "description": {
                     "minLength": 1,
@@ -129,7 +155,10 @@
                     "maxLength": 128
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               }
             ]
@@ -142,7 +171,9 @@
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["variable"]
+                    "enum": [
+                      "variable"
+                    ]
                   },
                   "value": {
                     "type": "string",
@@ -151,9 +182,8 @@
                     "maxLength": 128
                   },
                   "default": {
-                    "minLength": 1,
                     "type": "string",
-                    "maxLength": 2048
+                    "pattern": "^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)$"
                   },
                   "description": {
                     "minLength": 1,
@@ -161,21 +191,29 @@
                     "maxLength": 128
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               },
               {
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["global"]
+                    "enum": [
+                      "global"
+                    ]
                   },
                   "value": {
                     "type": "string",
-                    "format": "ipv4"
+                    "pattern": "^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)$"
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               }
             ]
@@ -188,7 +226,9 @@
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["variable"]
+                    "enum": [
+                      "variable"
+                    ]
                   },
                   "value": {
                     "type": "string",
@@ -197,9 +237,41 @@
                     "maxLength": 128
                   },
                   "default": {
-                    "minLength": 1,
                     "type": "string",
-                    "maxLength": 2048
+                    "enum": [
+                      "255.255.255.255",
+                      "255.255.255.254",
+                      "255.255.255.252",
+                      "255.255.255.248",
+                      "255.255.255.240",
+                      "255.255.255.224",
+                      "255.255.255.192",
+                      "255.255.255.128",
+                      "255.255.255.0",
+                      "255.255.254.0",
+                      "255.255.252.0",
+                      "255.255.248.0",
+                      "255.255.240.0",
+                      "255.255.224.0",
+                      "255.255.192.0",
+                      "255.255.128.0",
+                      "255.255.0.0",
+                      "255.254.0.0",
+                      "255.252.0.0",
+                      "255.240.0.0",
+                      "255.224.0.0",
+                      "255.192.0.0",
+                      "255.128.0.0",
+                      "255.0.0.0",
+                      "254.0.0.0",
+                      "252.0.0.0",
+                      "248.0.0.0",
+                      "240.0.0.0",
+                      "224.0.0.0",
+                      "192.0.0.0",
+                      "128.0.0.0",
+                      "0.0.0.0"
+                    ]
                   },
                   "description": {
                     "minLength": 1,
@@ -207,14 +279,19 @@
                     "maxLength": 128
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               },
               {
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["global"]
+                    "enum": [
+                      "global"
+                    ]
                   },
                   "value": {
                     "type": "string",
@@ -254,21 +331,31 @@
                     ]
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               },
               {
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["default"]
+                    "enum": [
+                      "default"
+                    ]
                   },
                   "value": {
-                    "enum": ["0.0.0.0"],
+                    "enum": [
+                      "0.0.0.0"
+                    ],
                     "type": "string"
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               }
             ]
@@ -281,7 +368,9 @@
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["global"]
+                    "enum": [
+                      "global"
+                    ]
                   },
                   "value": {
                     "type": "integer",
@@ -289,14 +378,19 @@
                     "maximum": 65530
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               },
               {
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["variable"]
+                    "enum": [
+                      "variable"
+                    ]
                   },
                   "value": {
                     "type": "string",
@@ -305,9 +399,9 @@
                     "maxLength": 128
                   },
                   "default": {
-                    "minLength": 1,
-                    "type": "string",
-                    "maxLength": 2048
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 65530
                   },
                   "description": {
                     "minLength": 1,
@@ -315,17 +409,24 @@
                     "maxLength": 128
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               },
               {
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["default"]
+                    "enum": [
+                      "default"
+                    ]
                   }
                 },
-                "required": ["optionType"],
+                "required": [
+                  "optionType"
+                ],
                 "additionalProperties": false
               }
             ]
@@ -345,7 +446,10 @@
               }
             },
             "then": {
-              "required": ["objectId", "interface"]
+              "required": [
+                "objectId",
+                "interface"
+              ]
             }
           },
           {
@@ -361,7 +465,12 @@
               }
             },
             "then": {
-              "required": ["objectId", "routeIp", "routeMask", "vpn"]
+              "required": [
+                "objectId",
+                "routeIp",
+                "routeMask",
+                "vpn"
+              ]
             }
           },
           {
@@ -377,7 +486,9 @@
               }
             },
             "then": {
-              "required": ["objectId"]
+              "required": [
+                "objectId"
+              ]
             }
           }
         ],
@@ -410,9 +521,14 @@
         "minVManageVersion": "20.15.1"
       }
     },
-    "required": ["data"],
+    "required": [
+      "data"
+    ],
     "not": {
-      "required": ["documentation", "metadata"]
+      "required": [
+        "documentation",
+        "metadata"
+      ]
     },
     "additionalProperties": false
   }

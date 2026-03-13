@@ -4,13 +4,13 @@ page_title: "sdwan_transport_cellular_profile_feature Resource - terraform-provi
 subcategory: "Features - Transport"
 description: |-
   This resource can manage a Transport Cellular Profile Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_transport_cellular_profile_feature (Resource)
 
 This resource can manage a Transport Cellular Profile Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -55,7 +55,7 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
 - `profile_id` (Number) Set Profile ID
   - Range: `1`-`16`
 - `profile_id_variable` (String) Variable name
-- `profile_password` (String) Set the profile password, Attribute conditional on `requires_authentication` equal to `true`
+- `profile_password` (String) Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.], Attribute conditional on `requires_authentication` equal to `true`
 - `profile_password_variable` (String) Variable name, Attribute conditional on `requires_authentication` equal to `true`
 - `profile_username` (String) Set the profile username, Attribute conditional on `requires_authentication` equal to `true`
 - `profile_username_variable` (String) Variable name, Attribute conditional on `requires_authentication` equal to `true`
