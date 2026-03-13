@@ -57,9 +57,19 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
-                                        "maxLength": 64
+                                        "maxLength": 128
+                                    },
+                                    "default": {
+                                        "minLength": 0,
+                                        "maxLength": 244,
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 128
                                     }
                                 },
                                 "required": [
@@ -121,9 +131,18 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "string",
+                                                "format": "ipv4"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -181,9 +200,18 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "string",
+                                                "format": "ipv4"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -248,9 +276,18 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "string",
+                                                "format": "ipv6"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -308,9 +345,18 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "string",
+                                                "format": "ipv6"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -379,9 +425,20 @@
                                                 },
                                                 "value": {
                                                     "type": "string",
-                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                     "minLength": 1,
-                                                    "maxLength": 64
+                                                    "maxLength": 128
+                                                },
+                                                "default": {
+                                                    "type": "string",
+                                                    "pattern": "^[a-zA-Z0-9._-]{1,63}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 63
+                                                },
+                                                "description": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 128
                                                 }
                                             },
                                             "required": [
@@ -400,8 +457,9 @@
                                                 },
                                                 "value": {
                                                     "type": "string",
+                                                    "pattern": "^[a-zA-Z0-9._-]{1,63}$",
                                                     "minLength": 1,
-                                                    "maxLength": 32
+                                                    "maxLength": 63
                                                 }
                                             },
                                             "required": [
@@ -426,9 +484,32 @@
                                                 },
                                                 "value": {
                                                     "type": "string",
-                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                     "minLength": 1,
-                                                    "maxLength": 64
+                                                    "maxLength": 128
+                                                },
+                                                "default": {
+                                                    "type": "array",
+                                                    "minItems": 1,
+                                                    "maxItems": 14,
+                                                    "items": {
+                                                        "uniqueItems": true,
+                                                        "type": "string",
+                                                        "oneOf": [
+                                                            {
+                                                                "format": "ipv4"
+                                                            },
+                                                            {
+                                                                "format": "ipv6"
+                                                            }
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                },
+                                                "description": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 128
                                                 }
                                             },
                                             "required": [
@@ -506,9 +587,18 @@
                                                         },
                                                         "value": {
                                                             "type": "string",
-                                                            "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                            "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                             "minLength": 1,
-                                                            "maxLength": 64
+                                                            "maxLength": 128
+                                                        },
+                                                        "default": {
+                                                            "type": "string",
+                                                            "format": "ipv4"
+                                                        },
+                                                        "description": {
+                                                            "minLength": 1,
+                                                            "type": "string",
+                                                            "maxLength": 128
                                                         }
                                                     },
                                                     "required": [
@@ -552,9 +642,51 @@
                                                         },
                                                         "value": {
                                                             "type": "string",
-                                                            "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                            "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                             "minLength": 1,
-                                                            "maxLength": 64
+                                                            "maxLength": 128
+                                                        },
+                                                        "default": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "255.255.255.255",
+                                                                "255.255.255.254",
+                                                                "255.255.255.252",
+                                                                "255.255.255.248",
+                                                                "255.255.255.240",
+                                                                "255.255.255.224",
+                                                                "255.255.255.192",
+                                                                "255.255.255.128",
+                                                                "255.255.255.0",
+                                                                "255.255.254.0",
+                                                                "255.255.252.0",
+                                                                "255.255.248.0",
+                                                                "255.255.240.0",
+                                                                "255.255.224.0",
+                                                                "255.255.192.0",
+                                                                "255.255.128.0",
+                                                                "255.255.0.0",
+                                                                "255.254.0.0",
+                                                                "255.252.0.0",
+                                                                "255.240.0.0",
+                                                                "255.224.0.0",
+                                                                "255.192.0.0",
+                                                                "255.128.0.0",
+                                                                "255.0.0.0",
+                                                                "254.0.0.0",
+                                                                "252.0.0.0",
+                                                                "248.0.0.0",
+                                                                "240.0.0.0",
+                                                                "224.0.0.0",
+                                                                "192.0.0.0",
+                                                                "128.0.0.0",
+                                                                "0.0.0.0"
+                                                            ]
+                                                        },
+                                                        "description": {
+                                                            "minLength": 1,
+                                                            "type": "string",
+                                                            "maxLength": 128
                                                         }
                                                     },
                                                     "required": [
@@ -696,9 +828,28 @@
                                                             },
                                                             "value": {
                                                                 "type": "string",
-                                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                                 "minLength": 1,
-                                                                "maxLength": 64
+                                                                "maxLength": 128
+                                                            },
+                                                            "default": {
+                                                                "oneOf": [
+                                                                    {
+                                                                        "type": "string",
+                                                                        "pattern": "^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)$"
+                                                                    },
+                                                                    {
+                                                                        "type": "string",
+                                                                        "pattern": "(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                                                                        "minLength": 3,
+                                                                        "maxLength": 32
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "description": {
+                                                                "minLength": 1,
+                                                                "type": "string",
+                                                                "maxLength": 128
                                                             }
                                                         },
                                                         "required": [
@@ -719,7 +870,7 @@
                                                                 "oneOf": [
                                                                     {
                                                                         "type": "string",
-                                                                        "format": "ipv4"
+                                                                        "pattern": "^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)$"
                                                                     },
                                                                     {
                                                                         "type": "string",
@@ -752,9 +903,20 @@
                                                             },
                                                             "value": {
                                                                 "type": "string",
-                                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                                 "minLength": 1,
-                                                                "maxLength": 64
+                                                                "maxLength": 128
+                                                            },
+                                                            "default": {
+                                                                "maximum": 255,
+                                                                "minimum": 1,
+                                                                "type": "integer",
+                                                                "default": 1
+                                                            },
+                                                            "description": {
+                                                                "minLength": 1,
+                                                                "type": "string",
+                                                                "maxLength": 128
                                                             }
                                                         },
                                                         "required": [
@@ -828,9 +990,20 @@
                                                 },
                                                 "value": {
                                                     "type": "string",
-                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                     "minLength": 1,
-                                                    "maxLength": 64
+                                                    "maxLength": 128
+                                                },
+                                                "default": {
+                                                    "maximum": 255,
+                                                    "minimum": 1,
+                                                    "type": "integer",
+                                                    "default": 1
+                                                },
+                                                "description": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 128
                                                 }
                                             },
                                             "required": [
@@ -931,9 +1104,18 @@
                                                 },
                                                 "value": {
                                                     "type": "string",
-                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                     "minLength": 1,
-                                                    "maxLength": 64
+                                                    "maxLength": 128
+                                                },
+                                                "default": {
+                                                    "type": "string",
+                                                    "pattern": "((^\\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?\\s*(\\/)(\\b([0-9]{1,2}|1[01][0-9]|12[0-8])\\b)$))"
+                                                },
+                                                "description": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 128
                                                 }
                                             },
                                             "required": [
@@ -952,7 +1134,7 @@
                                                 },
                                                 "value": {
                                                     "type": "string",
-                                                    "pattern": "((^\\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?\\s*(\/)(\\b([0-9]{1,2}|1[01][0-9]|12[0-8])\\b)$))"
+                                                    "pattern": "((^\\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?\\s*(\\/)(\\b([0-9]{1,2}|1[01][0-9]|12[0-8])\\b)$))"
                                                 }
                                             },
                                             "required": [
@@ -993,9 +1175,18 @@
                                                                                     },
                                                                                     "value": {
                                                                                         "type": "string",
-                                                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                                                         "minLength": 1,
-                                                                                        "maxLength": 64
+                                                                                        "maxLength": 128
+                                                                                    },
+                                                                                    "default": {
+                                                                                        "type": "string",
+                                                                                        "format": "ipv6"
+                                                                                    },
+                                                                                    "description": {
+                                                                                        "minLength": 1,
+                                                                                        "type": "string",
+                                                                                        "maxLength": 128
                                                                                     }
                                                                                 },
                                                                                 "required": [
@@ -1039,9 +1230,20 @@
                                                                                     },
                                                                                     "value": {
                                                                                         "type": "string",
-                                                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                                                         "minLength": 1,
-                                                                                        "maxLength": 64
+                                                                                        "maxLength": 128
+                                                                                    },
+                                                                                    "default": {
+                                                                                        "maximum": 254,
+                                                                                        "minimum": 1,
+                                                                                        "type": "integer",
+                                                                                        "default": 1
+                                                                                    },
+                                                                                    "description": {
+                                                                                        "minLength": 1,
+                                                                                        "type": "string",
+                                                                                        "maxLength": 128
                                                                                     }
                                                                                 },
                                                                                 "required": [
@@ -1181,9 +1383,21 @@
                                                                 },
                                                                 "value": {
                                                                     "type": "string",
-                                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                                     "minLength": 1,
-                                                                    "maxLength": 64
+                                                                    "maxLength": 128
+                                                                },
+                                                                "default": {
+                                                                    "enum": [
+                                                                        "NAT64",
+                                                                        "NAT66"
+                                                                    ],
+                                                                    "type": "string"
+                                                                },
+                                                                "description": {
+                                                                    "minLength": 1,
+                                                                    "type": "string",
+                                                                    "maxLength": 128
                                                                 }
                                                             },
                                                             "required": [
@@ -1248,7 +1462,8 @@
                     "isr",
                     "ISRv",
                     "ir1101"
-                ]
+                ],
+                "minVManageVersion": "20.15.1"
             },
             "documentation": {
                 "description": "This is the documentation for associate POST API request schema for management vpn profile parcel.",
