@@ -27,7 +27,6 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
-	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -65,7 +64,7 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Metadata(ctx context.Context, 
 func (r *ServiceRoutingOSPFProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Routing OSPF Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Routing OSPF Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -247,7 +246,11 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Schema(ctx context.Context, re
 							},
 						},
 						"translate_rib_metric": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Translate Rib Metric, Attribute conditional on `protocol` equal to `omp`").AddDefaultValueDescription("false").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network., Attribute conditional on `protocol` equal to `omp`").AddDefaultValueDescription("false").String,
+							Optional:            true,
+						},
+						"translate_rib_metric_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `protocol` equal to `omp`").String,
 							Optional:            true,
 						},
 					},
@@ -431,7 +434,7 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Schema(ctx context.Context, re
 										Optional:            true,
 									},
 									"message_digest_key": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set MD5 authentication key").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthBetween(1, 127),
@@ -508,6 +511,7 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Configure(_ context.Context, r
 
 // End of section. //template:end model
 
+// Section below is generated&owned by "gen/generator.go". //template:begin create
 func (r *ServiceRoutingOSPFProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan ServiceRoutingOSPF
 
@@ -520,10 +524,8 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Create(ctx context.Context, re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
-	version := version.Must(version.NewVersion(r.client.ManagerVersion))
-
 	// Create object
-	body := plan.toBody(ctx, version)
+	body := plan.toBody(ctx)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -541,6 +543,8 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Create(ctx context.Context, re
 
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
+
+// End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
 func (r *ServiceRoutingOSPFProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
@@ -589,6 +593,7 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Read(ctx context.Context, req 
 
 // End of section. //template:end read
 
+// Section below is generated&owned by "gen/generator.go". //template:begin update
 func (r *ServiceRoutingOSPFProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var plan, state ServiceRoutingOSPF
 
@@ -607,9 +612,7 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Update(ctx context.Context, re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	version := version.Must(version.NewVersion(r.client.ManagerVersion))
-
-	body := plan.toBody(ctx, version)
+	body := plan.toBody(ctx)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
@@ -623,6 +626,8 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Update(ctx context.Context, re
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 }
+
+// End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
 func (r *ServiceRoutingOSPFProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {

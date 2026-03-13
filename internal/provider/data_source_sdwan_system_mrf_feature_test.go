@@ -29,15 +29,17 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanSystemMRFProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_feature.test", "region_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_feature.test", "secondary_region_id", "2"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_feature.test", "role", "edge-router"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_feature.test", "enable_migration_to_mrf", "enabled"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_feature.test", "migration_bgp_community", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_feature.test", "enable_management_region", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_feature.test", "vrf_id", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_feature.test", "management_gateway", "false"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -68,11 +70,14 @@ func testAccDataSourceSdwanSystemMRFProfileParcelConfig() string {
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
-	config += `	region_id = 1` + "\n"
 	config += `	secondary_region_id = 2` + "\n"
 	config += `	role = "edge-router"` + "\n"
 	config += `	enable_migration_to_mrf = "enabled"` + "\n"
 	config += `	migration_bgp_community = 100` + "\n"
+	config += `	enable_management_region = false` + "\n"
+	config += `	vrf_id = false` + "\n"
+	config += `	gateway_preference = [1]` + "\n"
+	config += `	management_gateway = false` + "\n"
 	config += `}` + "\n"
 
 	config += `

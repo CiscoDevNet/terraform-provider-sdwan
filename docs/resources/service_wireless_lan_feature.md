@@ -4,13 +4,13 @@ page_title: "sdwan_service_wireless_lan_feature Resource - terraform-provider-sd
 subcategory: "Features - Service"
 description: |-
   This resource can manage a Service Wireless LAN Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_service_wireless_lan_feature (Resource)
 
 This resource can manage a Service Wireless LAN Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 

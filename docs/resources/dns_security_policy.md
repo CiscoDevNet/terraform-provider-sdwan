@@ -4,13 +4,13 @@ page_title: "sdwan_dns_security_policy Resource - terraform-provider-sdwan"
 subcategory: "Policies"
 description: |-
   This resource can manage a DNS Security Policy.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_dns_security_policy (Resource)
 
 This resource can manage a DNS Security Policy.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 

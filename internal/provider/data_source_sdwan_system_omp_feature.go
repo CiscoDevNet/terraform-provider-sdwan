@@ -304,11 +304,28 @@ func (d *SystemOMPProfileParcelDataSource) Schema(ctx context.Context, req datas
 				Computed:            true,
 			},
 			"site_types": schema.SetAttribute{
-				MarkdownDescription: "Site Types",
+				MarkdownDescription: "Site Types for 20.12 backward compatiblity",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
 			"site_types_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"site_types_for_transport_gateway": schema.SetAttribute{
+				MarkdownDescription: "Site Types",
+				ElementType:         types.StringType,
+				Computed:            true,
+			},
+			"site_types_for_transport_gateway_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"aspath_auto_translation": schema.BoolAttribute{
+				MarkdownDescription: "Enable BGP AS Path Auto-Translation",
+				Computed:            true,
+			},
+			"aspath_auto_translation_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

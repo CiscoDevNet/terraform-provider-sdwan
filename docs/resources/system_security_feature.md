@@ -4,13 +4,13 @@ page_title: "sdwan_system_security_feature Resource - terraform-provider-sdwan"
 subcategory: "Features - System"
 description: |-
   This resource can manage a System Security Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_system_security_feature (Resource)
 
 This resource can manage a System Security Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -121,7 +121,7 @@ Optional:
 - `include_tcp_options` (Boolean) Configure Include TCP Options
   - Default value: `false`
 - `include_tcp_options_variable` (String) Variable name
-- `key_string` (String) Specify the Key String
+- `key_string` (String) Specify the Key String [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `key_string_variable` (String) Variable name
 - `name` (String) Select the chain name
 - `receiver_id` (Number) Specify the Receiver ID
