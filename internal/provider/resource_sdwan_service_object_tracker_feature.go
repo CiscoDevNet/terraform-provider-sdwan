@@ -64,7 +64,7 @@ func (r *ServiceObjectTrackerProfileParcelResource) Metadata(ctx context.Context
 func (r *ServiceObjectTrackerProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Object Tracker Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Object Tracker Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -123,6 +123,9 @@ func (r *ServiceObjectTrackerProfileParcelResource) Schema(ctx context.Context, 
 			"route_ip": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("IP address").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile(`^((25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)$`), ""),
+				},
 			},
 			"route_ip_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

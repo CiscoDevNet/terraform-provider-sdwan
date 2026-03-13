@@ -26,7 +26,6 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
-	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -64,7 +63,7 @@ func (r *SystemMRFProfileParcelResource) Metadata(ctx context.Context, req resou
 func (r *SystemMRFProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System MRF Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System MRF Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -89,13 +88,6 @@ func (r *SystemMRFProfileParcelResource) Schema(ctx context.Context, req resourc
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
 				Required:            true,
-			},
-			"region_id": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set region ID").AddIntegerRangeDescription(1, 63).String,
-				Optional:            true,
-				Validators: []validator.Int64{
-					int64validator.Between(1, 63),
-				},
 			},
 			"secondary_region_id": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set secondary region ID").AddIntegerRangeDescription(1, 63).String,
@@ -133,6 +125,42 @@ func (r *SystemMRFProfileParcelResource) Schema(ctx context.Context, req resourc
 					int64validator.Between(1, 4294967295),
 				},
 			},
+			"enable_management_region": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enable management region").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"enable_management_region_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"vrf_id": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("VRF name for management region").AddIntegerRangeDescription(1, 65531).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 65531),
+				},
+			},
+			"vrf_id_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"gateway_preference": schema.SetAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("List of affinity group preferences for VRF").String,
+				ElementType:         types.Int64Type,
+				Optional:            true,
+			},
+			"gateway_preference_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"management_gateway": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enable management gateway").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"management_gateway_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
 		},
 	}
 }
@@ -148,6 +176,7 @@ func (r *SystemMRFProfileParcelResource) Configure(_ context.Context, req resour
 
 // End of section. //template:end model
 
+// Section below is generated&owned by "gen/generator.go". //template:begin create
 func (r *SystemMRFProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan SystemMRF
 
@@ -160,9 +189,8 @@ func (r *SystemMRFProfileParcelResource) Create(ctx context.Context, req resourc
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
-	version := version.Must(version.NewVersion(r.client.ManagerVersion))
 	// Create object
-	body := plan.toBody(ctx, version)
+	body := plan.toBody(ctx)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -180,6 +208,8 @@ func (r *SystemMRFProfileParcelResource) Create(ctx context.Context, req resourc
 
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
+
+// End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
 func (r *SystemMRFProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
@@ -228,6 +258,7 @@ func (r *SystemMRFProfileParcelResource) Read(ctx context.Context, req resource.
 
 // End of section. //template:end read
 
+// Section below is generated&owned by "gen/generator.go". //template:begin update
 func (r *SystemMRFProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var plan, state SystemMRF
 
@@ -246,10 +277,7 @@ func (r *SystemMRFProfileParcelResource) Update(ctx context.Context, req resourc
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	version := version.Must(version.NewVersion(r.client.ManagerVersion))
-	// Create object
-	body := plan.toBody(ctx, version)
-
+	body := plan.toBody(ctx)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
@@ -263,6 +291,8 @@ func (r *SystemMRFProfileParcelResource) Update(ctx context.Context, req resourc
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 }
+
+// End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
 func (r *SystemMRFProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {

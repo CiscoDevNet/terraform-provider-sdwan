@@ -4,44 +4,48 @@ page_title: "sdwan_system_global_feature Resource - terraform-provider-sdwan"
 subcategory: "Features - System"
 description: |-
   This resource can manage a System Global Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_system_global_feature (Resource)
 
 This resource can manage a System Global Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
 ```terraform
 resource "sdwan_system_global_feature" "example" {
-  name                 = "Example"
-  description          = "My Example"
-  feature_profile_id   = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  http_server          = false
-  https_server         = false
-  ftp_passive          = false
-  domain_lookup        = false
-  arp_proxy            = false
-  rsh_rcp              = false
-  line_vty             = false
-  cdp                  = true
-  lldp                 = true
-  source_interface     = "GigabitEthernet0/0/1"
-  tcp_keepalives_in    = true
-  tcp_keepalives_out   = true
-  tcp_small_servers    = false
-  udp_small_servers    = false
-  console_logging      = true
-  ip_source_routing    = false
-  vty_line_logging     = false
-  snmp_ifindex_persist = true
-  ignore_bootp         = true
-  nat64_udp_timeout    = 300
-  nat64_tcp_timeout    = 3600
-  http_authentication  = "aaa"
-  ssh_version          = "2"
+  name                           = "Example"
+  description                    = "My Example"
+  feature_profile_id             = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  http_server                    = false
+  https_server                   = false
+  ftp_passive                    = false
+  domain_lookup                  = false
+  arp_proxy                      = false
+  rsh_rcp                        = false
+  line_vty                       = false
+  cdp                            = true
+  lldp                           = true
+  source_interface               = "GigabitEthernet0/0/1"
+  tcp_keepalives_in              = true
+  tcp_keepalives_out             = true
+  tcp_small_servers              = false
+  udp_small_servers              = false
+  console_logging                = true
+  ip_source_routing              = false
+  vty_line_logging               = false
+  snmp_ifindex_persist           = true
+  ignore_bootp                   = true
+  nat64_udp_timeout              = 300
+  nat64_tcp_timeout              = 3600
+  http_authentication            = "aaa"
+  ssh_version                    = "2"
+  lacp_system_priority           = 1234
+  etherchannel_flow_load_balance = "src-ip"
+  etherchannel_vlan_load_balance = 123
+  bgp_community_new_format       = 123
 }
 ```
 
@@ -58,6 +62,9 @@ resource "sdwan_system_global_feature" "example" {
 - `arp_proxy` (Boolean) Set ARP Proxy
   - Default value: `false`
 - `arp_proxy_variable` (String) Variable name
+- `bgp_community_new_format` (Boolean) Display community attributes in the newer format. Instead of displaying communities as a 32-bit value, it shows them as two 16-bit integers separated by a colon (AA:NN format)
+  - Default value: `false`
+- `bgp_community_new_format_variable` (String) Variable name
 - `cdp` (Boolean) Configure CDP
   - Default value: `true`
 - `cdp_variable` (String) Variable name
@@ -68,6 +75,12 @@ resource "sdwan_system_global_feature" "example" {
 - `domain_lookup` (Boolean) Configure Domain-Lookup
   - Default value: `false`
 - `domain_lookup_variable` (String) Variable name
+- `etherchannel_flow_load_balance` (String) Set Etherchannel load balance hash algorithm
+  - Choices: `src-ip`, `dst-ip`, `src-dst-ip`, `src-mac`, `dst-mac`, `src-dst-mac`, `src-dst-mixed-ip-port`, `sdwan`
+- `etherchannel_flow_load_balance_variable` (String) Variable name
+- `etherchannel_vlan_load_balance` (Boolean) Set Etherchannel vlan manual load balance
+  - Default value: `false`
+- `etherchannel_vlan_load_balance_variable` (String) Variable name
 - `ftp_passive` (Boolean) Set Passive FTP
   - Default value: `false`
 - `ftp_passive_variable` (String) Variable name
@@ -86,6 +99,9 @@ resource "sdwan_system_global_feature" "example" {
 - `ip_source_routing` (Boolean) Set Source Route
   - Default value: `false`
 - `ip_source_routing_variable` (String) Variable name
+- `lacp_system_priority` (Number) Set LACP system priority
+  - Range: `1`-`65535`
+- `lacp_system_priority_variable` (String) Variable name
 - `line_vty` (Boolean) Configure Telnet (Outbound)
   - Default value: `false`
 - `line_vty_variable` (String) Variable name

@@ -1,9 +1,8 @@
 ---
-# Manual resource - Modals toBody is manually configured to support 20.13 regionId changes.
 name: System MRF
 rest_endpoint: /v1/feature-profile/sdwan/system/%v/mrf
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - System
 attributes:
@@ -14,9 +13,6 @@ attributes:
     description: Feature Profile ID
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_system_feature_profile.test.id
-  - model_name: regionId
-    id: true
-    example: 1
   - model_name: secondaryRegion
     tf_name: secondary_region_id
     example: 2
@@ -27,6 +23,17 @@ attributes:
     example: enabled
   - model_name: migrationBgpCommunity
     example: 100
+  - model_name: enableManagementRegion
+    example: false
+  - model_name: vrfId
+    data_path: [managementRegion]
+    example: false
+  - model_name: gatewayPreference
+    data_path: [managementRegion]
+    example: 1
+  - model_name: managementGateway
+    data_path: [managementRegion]
+    example: false
 
 test_prerequisites: |
   resource "sdwan_system_feature_profile" "test" {

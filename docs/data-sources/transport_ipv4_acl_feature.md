@@ -57,6 +57,12 @@ Read-Only:
 - `accept_policer_id` (String)
 - `accept_set_dscp` (Number) DSCP number
 - `accept_set_next_hop` (String) Set Next Hop (IPV4 address)
+- `accept_set_service_chain_fallback` (Boolean) fallback
+- `accept_set_service_chain_fallback_variable` (String) Variable name
+- `accept_set_service_chain_name` (String) Set Service Chain Number
+- `accept_set_service_chain_name_variable` (String) Variable name
+- `accept_set_service_chain_vpn` (Number) Set Service Chain VPN
+- `accept_set_service_chain_vpn_variable` (String) Variable name
 - `drop_counter_name` (String) Counter Name
 - `drop_log` (Boolean) Enable Log
 

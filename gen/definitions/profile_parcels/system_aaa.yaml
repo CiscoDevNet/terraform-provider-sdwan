@@ -113,6 +113,8 @@ attributes:
       - model_name: startStop
         example: true
       - model_name: group
+        type: List
+        element_type: String
         example: RGROUP1
   - model_name: authorizationConsole
     example: true
@@ -129,6 +131,8 @@ attributes:
       - model_name: level
         example: 15
       - model_name: group
+        type: List
+        element_type: String
         example: RGROUP1
       - model_name: ifAuthenticated
         example: true

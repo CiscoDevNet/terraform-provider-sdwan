@@ -4,13 +4,13 @@ page_title: "sdwan_transport_routing_bgp_feature Resource - terraform-provider-s
 subcategory: "Features - Transport"
 description: |-
   This resource can manage a Transport Routing BGP Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_transport_routing_bgp_feature (Resource)
 
 This resource can manage a Transport Routing BGP Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -275,7 +275,7 @@ Optional:
 - `next_hop_self` (Boolean) Set router to be next hop for routes advertised to neighbor
   - Default value: `false`
 - `next_hop_self_variable` (String) Variable name
-- `password` (String) Set MD5 password on TCP connection with BGP peer
+- `password` (String) Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `password_variable` (String) Variable name
 - `remote_as` (Number) Set remote autonomous system number
 - `remote_as_variable` (String) Variable name
@@ -347,6 +347,11 @@ Optional:
 
 Optional:
 
+- `metric` (Number) Metric value, the metric value helps determine the preference of routes when multiple paths are available. A lower metric is typically more preferred
+  - Range: `0`-`4294967295`
+- `metric_variable` (String) Variable name
+- `ospf_match_route` (Set of String) Match the OSPF internal,external type 1 or external type 2 route and redistribute them to BGP., Attribute conditional on `protocol` equal to `ospf`
+- `ospf_match_route_variable` (String) Variable name, Attribute conditional on `protocol` equal to `ospf`
 - `protocol` (String) Set the protocol to redistribute routes from
   - Choices: `static`, `connected`, `ospf`, `ospfv3`, `nat`
 - `protocol_variable` (String) Variable name
@@ -401,7 +406,7 @@ Optional:
 - `next_hop_self` (Boolean) Set router to be next hop for routes advertised to neighbor
   - Default value: `false`
 - `next_hop_self_variable` (String) Variable name
-- `password` (String) Set MD5 password on TCP connection with BGP peer
+- `password` (String) Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `password_variable` (String) Variable name
 - `remote_as` (Number) Set remote autonomous system number
 - `remote_as_variable` (String) Variable name
@@ -469,6 +474,11 @@ Optional:
 
 Optional:
 
+- `metric` (Number) Metric value, the metric value helps determine the preference of routes when multiple paths are available. A lower metric is typically more preferred, Attribute conditional on `protocol` equal to `ospf`
+  - Range: `0`-`4294967295`
+- `metric_variable` (String) Variable name, Attribute conditional on `protocol` equal to `ospf`
+- `ospf_match_route` (Set of String) Match the OSPF internal,external type 1 or external type 2 route and redistribute them to BGP., Attribute conditional on `protocol` equal to `ospf`
+- `ospf_match_route_variable` (String) Variable name, Attribute conditional on `protocol` equal to `ospf`
 - `protocol` (String) Set the protocol to redistribute routes from
   - Choices: `static`, `connected`, `ospf`
 - `protocol_variable` (String) Variable name

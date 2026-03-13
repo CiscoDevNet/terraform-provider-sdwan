@@ -130,6 +130,8 @@ type TransportWANVPNInterfaceT1E1Serial struct {
 	TunnelInterfaceAllowBfd                            types.Bool                                                        `tfsdk:"tunnel_interface_allow_bfd"`
 	TunnelInterfaceAllowBfdVariable                    types.String                                                      `tfsdk:"tunnel_interface_allow_bfd_variable"`
 	TunnelInterfaceEncapsulations                      []TransportWANVPNInterfaceT1E1SerialTunnelInterfaceEncapsulations `tfsdk:"tunnel_interface_encapsulations"`
+	MrfEnableCoreRegion                                types.Bool                                                        `tfsdk:"mrf_enable_core_region"`
+	MrfCoreRegionType                                  types.String                                                      `tfsdk:"mrf_core_region_type"`
 	QosShapingRate                                     types.Int64                                                       `tfsdk:"qos_shaping_rate"`
 	QosShapingRateVariable                             types.String                                                      `tfsdk:"qos_shaping_rate_variable"`
 	AclIpv4EgressFeatureId                             types.String                                                      `tfsdk:"acl_ipv4_egress_feature_id"`
@@ -228,7 +230,12 @@ func (data TransportWANVPNInterfaceT1E1Serial) toBody(ctx context.Context) strin
 			body, _ = sjson.Set(body, path+"addressV4.mask.optionType", "variable")
 			body, _ = sjson.Set(body, path+"addressV4.mask.value", data.Ipv4SubnetMaskVariable.ValueString())
 		}
-	} else if !data.Ipv4SubnetMask.IsNull() {
+	} else if data.Ipv4SubnetMask.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"addressV4.mask.optionType", "default")
+
+		}
+	} else {
 		if true {
 			body, _ = sjson.Set(body, path+"addressV4.mask.optionType", "global")
 			body, _ = sjson.Set(body, path+"addressV4.mask.value", data.Ipv4SubnetMask.ValueString())
@@ -959,6 +966,28 @@ func (data TransportWANVPNInterfaceT1E1Serial) toBody(ctx context.Context) strin
 			body, _ = sjson.SetRaw(body, path+"encapsulation.-1", itemBody)
 		}
 	}
+	if data.MrfEnableCoreRegion.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"multiRegionFabric.enableCoreRegion.optionType", "default")
+			body, _ = sjson.Set(body, path+"multiRegionFabric.enableCoreRegion.value", false)
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"multiRegionFabric.enableCoreRegion.optionType", "global")
+			body, _ = sjson.Set(body, path+"multiRegionFabric.enableCoreRegion.value", data.MrfEnableCoreRegion.ValueBool())
+		}
+	}
+	if data.MrfCoreRegionType.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"multiRegionFabric.coreRegion.optionType", "default")
+			body, _ = sjson.Set(body, path+"multiRegionFabric.coreRegion.value", "core-shared")
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"multiRegionFabric.coreRegion.optionType", "global")
+			body, _ = sjson.Set(body, path+"multiRegionFabric.coreRegion.value", data.MrfCoreRegionType.ValueString())
+		}
+	}
 
 	if !data.QosShapingRateVariable.IsNull() {
 		if true {
@@ -1561,6 +1590,22 @@ func (data *TransportWANVPNInterfaceT1E1Serial) fromBody(ctx context.Context, re
 			return true
 		})
 	}
+	data.MrfEnableCoreRegion = types.BoolNull()
+
+	if t := res.Get(path + "multiRegionFabric.enableCoreRegion.optionType"); t.Exists() {
+		va := res.Get(path + "multiRegionFabric.enableCoreRegion.value")
+		if t.String() == "global" {
+			data.MrfEnableCoreRegion = types.BoolValue(va.Bool())
+		}
+	}
+	data.MrfCoreRegionType = types.StringNull()
+
+	if t := res.Get(path + "multiRegionFabric.coreRegion.optionType"); t.Exists() {
+		va := res.Get(path + "multiRegionFabric.coreRegion.value")
+		if t.String() == "global" {
+			data.MrfCoreRegionType = types.StringValue(va.String())
+		}
+	}
 	data.QosShapingRate = types.Int64Null()
 	data.QosShapingRateVariable = types.StringNull()
 	if t := res.Get(path + "aclQos.shapingRate.optionType"); t.Exists() {
@@ -2162,6 +2207,22 @@ func (data *TransportWANVPNInterfaceT1E1Serial) updateFromBody(ctx context.Conte
 			} else if t.String() == "global" {
 				data.TunnelInterfaceEncapsulations[i].Weight = types.Int64Value(va.Int())
 			}
+		}
+	}
+	data.MrfEnableCoreRegion = types.BoolNull()
+
+	if t := res.Get(path + "multiRegionFabric.enableCoreRegion.optionType"); t.Exists() {
+		va := res.Get(path + "multiRegionFabric.enableCoreRegion.value")
+		if t.String() == "global" {
+			data.MrfEnableCoreRegion = types.BoolValue(va.Bool())
+		}
+	}
+	data.MrfCoreRegionType = types.StringNull()
+
+	if t := res.Get(path + "multiRegionFabric.coreRegion.optionType"); t.Exists() {
+		va := res.Get(path + "multiRegionFabric.coreRegion.value")
+		if t.String() == "global" {
+			data.MrfCoreRegionType = types.StringValue(va.String())
 		}
 	}
 	data.QosShapingRate = types.Int64Null()

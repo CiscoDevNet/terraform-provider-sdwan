@@ -1,8 +1,8 @@
 ---
 name: System Global
 rest_endpoint: /v1/feature-profile/sdwan/system/%v/global
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - System
 attributes:
@@ -105,6 +105,18 @@ attributes:
     data_path: [services_global, services_ip]
     tf_name: ssh_version
     example: "2"
+  - model_name: lacpSystemPriority
+    data_path: [services_global, services_ip]
+    example: 1234
+  - model_name: etherchannelFlowLoadBalance
+    data_path: [services_global, services_ip]
+    example: src-ip
+  - model_name: etherchannelVlanLoadBalance
+    data_path: [services_global, services_ip]
+    example: 123
+  - model_name: bgpCommunityNewFormat
+    data_path: [services_global, services_ip]
+    example: 123
 
 test_prerequisites: |
   resource "sdwan_system_feature_profile" "test" {

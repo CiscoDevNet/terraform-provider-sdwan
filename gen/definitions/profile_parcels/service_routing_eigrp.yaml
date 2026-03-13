@@ -1,8 +1,8 @@
 ---
 name: Service Routing EIGRP
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/routing/eigrp
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - Service
 attributes:
@@ -27,7 +27,7 @@ attributes:
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
-      always_include_parent: true
+      always_include: true
       example: 8bd324a6-c273-411b-a489-941865f58b66
   - model_name: network
     tf_name: networks

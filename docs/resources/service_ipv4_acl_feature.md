@@ -4,13 +4,13 @@ page_title: "sdwan_service_ipv4_acl_feature Resource - terraform-provider-sdwan"
 subcategory: "Features - Service"
 description: |-
   This resource can manage a Service IPv4 ACL Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_service_ipv4_acl_feature (Resource)
 
 This resource can manage a Service IPv4 ACL Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -98,6 +98,14 @@ Optional:
 - `accept_set_dscp` (Number) DSCP number
   - Range: `0`-`63`
 - `accept_set_next_hop` (String) Set Next Hop (IPV4 address)
+- `accept_set_service_chain_fallback` (Boolean) fallback, Attribute conditional on `accept_set_service_chain_name` being set or `accept_set_service_chain_name_variable` being set
+  - Default value: `false`
+- `accept_set_service_chain_fallback_variable` (String) Variable name, Attribute conditional on `accept_set_service_chain_name` being set or `accept_set_service_chain_name_variable` being set
+- `accept_set_service_chain_name` (String) Set Service Chain Number
+  - Choices: `SC1`, `SC2`, `SC3`, `SC4`, `SC5`, `SC6`, `SC7`, `SC8`, `SC9`, `SC10`, `SC11`, `SC12`, `SC13`, `SC14`, `SC15`, `SC16`
+- `accept_set_service_chain_name_variable` (String) Variable name
+- `accept_set_service_chain_vpn` (Number) Set Service Chain VPN, Attribute conditional on `accept_set_service_chain_name` being set or `accept_set_service_chain_name_variable` being set
+- `accept_set_service_chain_vpn_variable` (String) Variable name, Attribute conditional on `accept_set_service_chain_name` being set or `accept_set_service_chain_name_variable` being set
 - `drop_counter_name` (String) Counter Name
 - `drop_log` (Boolean) Enable Log
   - Default value: `false`
