@@ -63,7 +63,7 @@ func (r *TransportIPv6TrackerProfileParcelResource) Metadata(ctx context.Context
 func (r *TransportIPv6TrackerProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Transport IPv6 Tracker Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Transport IPv6 Tracker Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -112,7 +112,7 @@ func (r *TransportIPv6TrackerProfileParcelResource) Schema(ctx context.Context, 
 				Optional:            true,
 			},
 			"endpoint_dns_name": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Endpoint DNS Name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("DNS Name").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthAtMost(63),
@@ -123,7 +123,7 @@ func (r *TransportIPv6TrackerProfileParcelResource) Schema(ctx context.Context, 
 				Optional:            true,
 			},
 			"endpoint_ip": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Endpoint IP").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IP").String,
 				Optional:            true,
 			},
 			"endpoint_ip_variable": schema.StringAttribute{
@@ -131,14 +131,25 @@ func (r *TransportIPv6TrackerProfileParcelResource) Schema(ctx context.Context, 
 				Optional:            true,
 			},
 			"interval": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Interval").AddIntegerRangeDescription(20, 600).AddDefaultValueDescription("60").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Probe Interval, Attribute conditional on `endpoint_tracker_type` equal to `ipv6-interface`").AddIntegerRangeDescription(20, 600).AddDefaultValueDescription("60").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(20, 600),
 				},
 			},
 			"interval_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `endpoint_tracker_type` equal to `ipv6-interface`").String,
+				Optional:            true,
+			},
+			"icmp_interval": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Probe Interval, Attribute conditional on `endpoint_tracker_type` equal to `ipv6-interface-icmp`").AddIntegerRangeDescription(2, 1000).AddDefaultValueDescription("2").String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(2, 1000),
+				},
+			},
+			"icmp_interval_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `endpoint_tracker_type` equal to `ipv6-interface-icmp`").String,
 				Optional:            true,
 			},
 			"multiplier": schema.Int64Attribute{
@@ -164,15 +175,11 @@ func (r *TransportIPv6TrackerProfileParcelResource) Schema(ctx context.Context, 
 				Optional:            true,
 			},
 			"endpoint_tracker_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Endpoint Tracker Type").AddStringEnumDescription("ipv6-interface").AddDefaultValueDescription("ipv6-interface").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Endpoint Tracker Type").AddStringEnumDescription("ipv6-interface", "ipv6-interface-icmp").AddDefaultValueDescription("ipv6-interface").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("ipv6-interface"),
+					stringvalidator.OneOf("ipv6-interface", "ipv6-interface-icmp"),
 				},
-			},
-			"endpoint_tracker_type_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
 			},
 			"tracker_type": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Tracker Type").AddStringEnumDescription("endpoint").AddDefaultValueDescription("endpoint").String,

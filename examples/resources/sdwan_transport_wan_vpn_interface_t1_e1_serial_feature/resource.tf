@@ -15,7 +15,7 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
   tunnel_interface                               = true
   per_tunnel_qos                                 = true
   per_tunnel_qos_aggregator                      = false
-  tunnel_qos_mode                                = "hub"
+  tunnel_qos_mode                                = "spoke"
   tunnel_interface_color                         = "mpls"
   tunnel_interface_restrict                      = true
   tunnel_interface_groups                        = 42949672

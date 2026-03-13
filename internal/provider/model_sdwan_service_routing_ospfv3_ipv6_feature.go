@@ -896,7 +896,6 @@ func (data *ServiceRoutingOSPFv3IPv6) fromBody(ctx context.Context, res gjson.Re
 				} else if t.String() == "global" {
 					item.TranslateRibMetric = types.BoolValue(va.Bool())
 				}
-				item.Protocol = types.StringValue("omp")
 			}
 			data.Redistributes = append(data.Redistributes, item)
 			return true

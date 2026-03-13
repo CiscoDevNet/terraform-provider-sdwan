@@ -49,9 +49,90 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
-                                        "maxLength": 64
+                                        "maxLength": 128
+                                    },
+                                    "default": {
+                                        "type": "boolean"
+                                    },
+                                    "description": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 128
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "default"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "boolean",
+                                        "enum": [
+                                            true
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "enableIpv6": {
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "variable"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 128
+                                    },
+                                    "default": {
+                                        "type": "boolean"
+                                    },
+                                    "description": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 128
                                     }
                                 },
                                 "required": [
@@ -116,9 +197,19 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
-                                        "maxLength": 64
+                                        "maxLength": 128
+                                    },
+                                    "default": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 32
+                                    },
+                                    "description": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 128
                                     }
                                 },
                                 "required": [
@@ -162,9 +253,19 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
-                                        "maxLength": 64
+                                        "maxLength": 128
+                                    },
+                                    "default": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 128
+                                    },
+                                    "description": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 128
                                     }
                                 },
                                 "required": [
@@ -203,9 +304,23 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
-                                        "maxLength": 64
+                                        "maxLength": 128
+                                    },
+                                    "default": {
+                                        "type": "array",
+                                        "items": {
+                                            "uniqueItems": true,
+                                            "type": "string",
+                                            "additionalProperties": false,
+                                            "format": "ipv4"
+                                        }
+                                    },
+                                    "description": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 128
                                     }
                                 },
                                 "required": [
@@ -286,9 +401,17 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
-                                        "maxLength": 64
+                                        "maxLength": 128
+                                    },
+                                    "default": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 128
                                     }
                                 },
                                 "required": [
@@ -347,9 +470,19 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
-                                        "maxLength": 64
+                                        "maxLength": 128
+                                    },
+                                    "default": {
+                                        "minimum": 1,
+                                        "maximum": 2147483647,
+                                        "type": "integer"
+                                    },
+                                    "description": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 128
                                     }
                                 },
                                 "required": [
@@ -408,9 +541,19 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
-                                        "maxLength": 64
+                                        "maxLength": 128
+                                    },
+                                    "default": {
+                                        "minimum": 1,
+                                        "maximum": 2147483647,
+                                        "type": "integer"
+                                    },
+                                    "description": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 128
                                     }
                                 },
                                 "required": [
@@ -516,9 +659,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -564,7 +715,6 @@
                                             },
                                             "value": {
                                                 "enum": [
-                                                    "hub",
                                                     "spoke"
                                                 ],
                                                 "type": "string"
@@ -586,76 +736,20 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
-                                            }
-                                        },
-                                        "required": [
-                                            "optionType",
-                                            "value"
-                                        ],
-                                        "additionalProperties": false
-                                    }
-                                ]
-                            },
-                            "bandwidthPercent": {
-                                "description": "Tunnels Bandwidth Percent",
-                                "type": "object",
-                                "oneOf": [
-                                    {
-                                        "properties": {
-                                            "optionType": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "global"
-                                                ]
+                                                "maxLength": 128
                                             },
-                                            "value": {
-                                                "type": "integer",
-                                                "minimum": 1,
-                                                "maximum": 100
-                                            }
-                                        },
-                                        "required": [
-                                            "optionType",
-                                            "value"
-                                        ],
-                                        "additionalProperties": false
-                                    },
-                                    {
-                                        "properties": {
-                                            "optionType": {
-                                                "type": "string",
+                                            "default": {
                                                 "enum": [
-                                                    "default"
-                                                ]
+                                                    "spoke"
+                                                ],
+                                                "type": "string"
                                             },
-                                            "value": {
-                                                "type": "integer",
-                                                "minimum": 50,
-                                                "maximum": 50
-                                            }
-                                        },
-                                        "required": [
-                                            "optionType",
-                                            "value"
-                                        ],
-                                        "additionalProperties": false
-                                    },
-                                    {
-                                        "properties": {
-                                            "optionType": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "variable"
-                                                ]
-                                            },
-                                            "value": {
-                                                "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                            "description": {
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -700,9 +794,19 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 32
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -771,9 +875,29 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "default": "default",
+                                                "enum": [
+                                                    "default",
+                                                    "carrier1",
+                                                    "carrier2",
+                                                    "carrier3",
+                                                    "carrier4",
+                                                    "carrier5",
+                                                    "carrier6",
+                                                    "carrier7",
+                                                    "carrier8"
+                                                ],
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -821,9 +945,9 @@
                                                 "enum": [
                                                     "default",
                                                     "mpls",
-                                                    "metro ethernet",
-                                                    "biz internet",
-                                                    "public internet",
+                                                    "metro-ethernet",
+                                                    "biz-internet",
+                                                    "public-internet",
                                                     "lte",
                                                     "3g",
                                                     "red",
@@ -861,9 +985,41 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "enum": [
+                                                    "default",
+                                                    "mpls",
+                                                    "metro-ethernet",
+                                                    "biz-internet",
+                                                    "public-internet",
+                                                    "lte",
+                                                    "3g",
+                                                    "red",
+                                                    "green",
+                                                    "blue",
+                                                    "gold",
+                                                    "silver",
+                                                    "bronze",
+                                                    "custom1",
+                                                    "custom2",
+                                                    "custom3",
+                                                    "private1",
+                                                    "private2",
+                                                    "private3",
+                                                    "private4",
+                                                    "private5",
+                                                    "private6"
+                                                ],
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -930,9 +1086,20 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "default": 1000,
+                                                "minimum": 100,
+                                                "maximum": 600000,
+                                                "type": "integer"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -998,9 +1165,20 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "default": 12,
+                                                "minimum": 12,
+                                                "maximum": 6000,
+                                                "type": "integer"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -1063,9 +1241,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -1129,9 +1315,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -1197,9 +1391,19 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "minimum": 1,
+                                                "maximum": 4294967295,
+                                                "type": "integer"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -1256,9 +1460,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -1324,9 +1536,19 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "minimum": 0,
+                                                "maximum": 100,
+                                                "type": "integer"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -1386,9 +1608,20 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "default": 5,
+                                                "minimum": 1,
+                                                "maximum": 60,
+                                                "type": "integer"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -1451,9 +1684,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -1524,9 +1765,24 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "items": {
+                                                    "type": "integer",
+                                                    "minimum": 1,
+                                                    "maximum": 100
+                                                },
+                                                "additionalProperties": false,
+                                                "uniqueItems": true,
+                                                "type": "array"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -1586,9 +1842,20 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "default": 5,
+                                                "minimum": 0,
+                                                "maximum": 8,
+                                                "type": "integer"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -1651,9 +1918,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -1717,9 +1992,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -1785,9 +2068,19 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "minimum": 500,
+                                                "maximum": 1460,
+                                                "type": "integer"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -1844,9 +2137,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -1910,9 +2211,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -1946,18 +2255,6 @@
                             }
                         },
                         "dependencies": {
-                            "bandwidthPercent": {
-                                "properties": {
-                                    "mode": {
-                                        "type": "object",
-                                        "properties": {
-                                            "value": {
-                                                "const": "hub"
-                                            }
-                                        }
-                                    }
-                                }
-                            },
                             "mode": {
                                 "properties": {
                                     "perTunnelQos": {
@@ -2009,9 +2306,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -2075,9 +2380,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -2141,9 +2454,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -2207,9 +2528,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -2273,9 +2602,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -2339,9 +2676,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -2405,9 +2750,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -2471,9 +2824,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -2537,9 +2898,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -2603,9 +2972,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -2669,9 +3046,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -2735,9 +3120,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -2801,9 +3194,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -2907,9 +3308,19 @@
                                                 },
                                                 "value": {
                                                     "type": "string",
-                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                     "minLength": 1,
-                                                    "maxLength": 64
+                                                    "maxLength": 128
+                                                },
+                                                "default": {
+                                                    "minimum": 0,
+                                                    "maximum": 4294967295,
+                                                    "type": "integer"
+                                                },
+                                                "description": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 128
                                                 }
                                             },
                                             "required": [
@@ -2969,9 +3380,20 @@
                                                 },
                                                 "value": {
                                                     "type": "string",
-                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                     "minLength": 1,
-                                                    "maxLength": 64
+                                                    "maxLength": 128
+                                                },
+                                                "default": {
+                                                    "default": 1,
+                                                    "minimum": 1,
+                                                    "maximum": 255,
+                                                    "type": "integer"
+                                                },
+                                                "description": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 128
                                                 }
                                             },
                                             "required": [
@@ -3009,6 +3431,201 @@
                             "additionalProperties": false
                         }
                     },
+                    "multiRegionFabric": {
+                        "description": "Multi-Region Fabric",
+                        "type": "object",
+                        "properties": {
+                            "enableCoreRegion": {
+                                "type": "object",
+                                "description": "Enable Core Region",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean",
+                                                "enum": [
+                                                    false
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "coreRegion": {
+                                "type": "object",
+                                "description": "Core Region",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "enum": [
+                                                    "core-shared",
+                                                    "core"
+                                                ],
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "core-shared"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "enableSecondaryRegion": {
+                                "type": "object",
+                                "description": "Enable Secondary Region",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean",
+                                                "enum": [
+                                                    false
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "secondaryRegion": {
+                                "type": "object",
+                                "description": "Enable secondary region",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "enum": [
+                                                    "secondary-shared",
+                                                    "secondary-only"
+                                                ],
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "secondary-shared"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            }
+                        },
+                        "additionalProperties": false
+                    },
                     "nat": {
                         "type": "object",
                         "description": "Network Address Translation on this interface",
@@ -3041,9 +3658,17 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
-                                        "maxLength": 64
+                                        "maxLength": 128
+                                    },
+                                    "default": {
+                                        "type": "boolean"
+                                    },
+                                    "description": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 128
                                     }
                                 },
                                 "required": [
@@ -3114,9 +3739,20 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "default": 1,
+                                                "minimum": 1,
+                                                "maximum": 8947,
+                                                "type": "integer"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -3182,9 +3818,20 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "default": 60,
+                                                "minimum": 1,
+                                                "maximum": 8947,
+                                                "type": "integer"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -3306,9 +3953,20 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "default": 15,
+                                                "minimum": 1,
+                                                "maximum": 720,
+                                                "type": "integer"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -3422,9 +4080,19 @@
                                                     },
                                                     "value": {
                                                         "type": "string",
-                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                         "minLength": 1,
-                                                        "maxLength": 64
+                                                        "maxLength": 128
+                                                    },
+                                                    "default": {
+                                                        "minimum": 8,
+                                                        "maximum": 100000000,
+                                                        "type": "integer"
+                                                    },
+                                                    "description": {
+                                                        "minLength": 1,
+                                                        "type": "string",
+                                                        "maxLength": 128
                                                     }
                                                 },
                                                 "required": [
@@ -3469,9 +4137,19 @@
                                                     },
                                                     "value": {
                                                         "type": "string",
-                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                         "minLength": 1,
-                                                        "maxLength": 64
+                                                        "maxLength": 128
+                                                    },
+                                                    "default": {
+                                                        "minimum": 8,
+                                                        "maximum": 100000000,
+                                                        "type": "integer"
+                                                    },
+                                                    "description": {
+                                                        "minLength": 1,
+                                                        "type": "string",
+                                                        "maxLength": 128
                                                     }
                                                 },
                                                 "required": [
@@ -3516,9 +4194,19 @@
                                                     },
                                                     "value": {
                                                         "type": "string",
-                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                         "minLength": 1,
-                                                        "maxLength": 64
+                                                        "maxLength": 128
+                                                    },
+                                                    "default": {
+                                                        "minimum": 8,
+                                                        "maximum": 100000000,
+                                                        "type": "integer"
+                                                    },
+                                                    "description": {
+                                                        "minLength": 1,
+                                                        "type": "string",
+                                                        "maxLength": 128
                                                     }
                                                 },
                                                 "required": [
@@ -3620,9 +4308,19 @@
                                                     },
                                                     "value": {
                                                         "type": "string",
-                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                         "minLength": 1,
-                                                        "maxLength": 64
+                                                        "maxLength": 128
+                                                    },
+                                                    "default": {
+                                                        "minimum": 8,
+                                                        "maximum": 100000000,
+                                                        "type": "integer"
+                                                    },
+                                                    "description": {
+                                                        "minLength": 1,
+                                                        "type": "string",
+                                                        "maxLength": 128
                                                     }
                                                 },
                                                 "required": [
@@ -3667,9 +4365,19 @@
                                                     },
                                                     "value": {
                                                         "type": "string",
-                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                         "minLength": 1,
-                                                        "maxLength": 64
+                                                        "maxLength": 128
+                                                    },
+                                                    "default": {
+                                                        "minimum": 8,
+                                                        "maximum": 100000000,
+                                                        "type": "integer"
+                                                    },
+                                                    "description": {
+                                                        "minLength": 1,
+                                                        "type": "string",
+                                                        "maxLength": 128
                                                     }
                                                 },
                                                 "required": [
@@ -3714,9 +4422,19 @@
                                                     },
                                                     "value": {
                                                         "type": "string",
-                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                         "minLength": 1,
-                                                        "maxLength": 64
+                                                        "maxLength": 128
+                                                    },
+                                                    "default": {
+                                                        "minimum": 8,
+                                                        "maximum": 100000000,
+                                                        "type": "integer"
+                                                    },
+                                                    "description": {
+                                                        "minLength": 1,
+                                                        "type": "string",
+                                                        "maxLength": 128
                                                     }
                                                 },
                                                 "required": [
@@ -3769,9 +4487,19 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "minimum": 8,
+                                                "maximum": 100000000,
+                                                "type": "integer"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -4069,9 +4797,18 @@
                                                 },
                                                 "value": {
                                                     "type": "string",
-                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                     "minLength": 1,
-                                                    "maxLength": 64
+                                                    "maxLength": 128
+                                                },
+                                                "default": {
+                                                    "type": "string",
+                                                    "format": "ipv4"
+                                                },
+                                                "description": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 128
                                                 }
                                             },
                                             "required": [
@@ -4147,9 +4884,17 @@
                                                 },
                                                 "value": {
                                                     "type": "string",
-                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                     "minLength": 1,
-                                                    "maxLength": 64
+                                                    "maxLength": 128
+                                                },
+                                                "default": {
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 128
                                                 }
                                             },
                                             "required": [
@@ -4221,9 +4966,20 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "default": 1500,
+                                                "minimum": 576,
+                                                "maximum": 9216,
+                                                "type": "integer"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -4289,9 +5045,20 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "default": 1500,
+                                                "minimum": 1500,
+                                                "maximum": 9216,
+                                                "type": "integer"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -4356,9 +5123,19 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "minimum": 500,
+                                                "maximum": 1460,
+                                                "type": "integer"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -4415,9 +5192,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -4474,9 +5259,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -4533,9 +5326,17 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
-                                                "maxLength": 64
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
                                             }
                                         },
                                         "required": [
@@ -4587,8 +5388,10 @@
                     "c8000be",
                     "isr",
                     "ISRv",
-                    "ir1101"
-                ]
+                    "ir1101",
+                    "ir8340"
+                ],
+                "minVManageVersion": "20.15.1"
             },
             "documentation": {
                 "description": "This is the documentation for POST request schema for WAN VPN Cellular Interface profile parcel",
@@ -4643,7 +5446,8 @@
         ],
         "not": {
             "required": [
-                "documentation"
+                "documentation",
+                "metadata"
             ]
         },
         "additionalProperties": false

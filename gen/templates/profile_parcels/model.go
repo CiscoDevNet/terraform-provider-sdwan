@@ -418,8 +418,8 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			data.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 			{{- end}}
 		}
-		{{- if hasConditional .ConditionalAttribute}}
-		{{- range .ConditionalAttribute.Conditions}}
+		{{- if hasTfOnlyConditional .ConditionalAttribute}}
+		{{- range filterTfOnlyConditions .ConditionalAttribute.Conditions}}
 		data.{{toGoName .Name}} = {{if eq .Type "Bool"}}types.BoolValue({{.Value}}){{else}}types.StringValue("{{.Value}}"){{end}}
 		{{- end}}
 		{{- end}}
@@ -453,8 +453,8 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 					item.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 					{{- end}}
 				}
-				{{- if hasConditional .ConditionalAttribute}}
-				{{- range .ConditionalAttribute.Conditions}}
+				{{- if hasTfOnlyConditional .ConditionalAttribute}}
+				{{- range filterTfOnlyConditions .ConditionalAttribute.Conditions}}
 				item.{{toGoName .Name}} = {{if eq .Type "Bool"}}types.BoolValue({{.Value}}){{else}}types.StringValue("{{.Value}}"){{end}}
 				{{- end}}
 				{{- end}}
@@ -486,8 +486,8 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 							cItem.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 							{{- end}}
 						}
-						{{- if hasConditional .ConditionalAttribute}}
-						{{- range .ConditionalAttribute.Conditions}}
+						{{- if hasTfOnlyConditional .ConditionalAttribute}}
+						{{- range filterTfOnlyConditions .ConditionalAttribute.Conditions}}
 						cItem.{{toGoName .Name}} = {{if eq .Type "Bool"}}types.BoolValue({{.Value}}){{else}}types.StringValue("{{.Value}}"){{end}}
 						{{- end}}
 						{{- end}}
@@ -519,8 +519,8 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 									ccItem.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 									{{- end}}
 								}
-								{{- if hasConditional .ConditionalAttribute}}
-								{{- range .ConditionalAttribute.Conditions}}
+								{{- if hasTfOnlyConditional .ConditionalAttribute}}
+								{{- range filterTfOnlyConditions .ConditionalAttribute.Conditions}}
 								ccItem.{{toGoName .Name}} = {{if eq .Type "Bool"}}types.BoolValue({{.Value}}){{else}}types.StringValue("{{.Value}}"){{end}}
 								{{- end}}
 								{{- end}}
@@ -530,8 +530,8 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 							cItem.{{toGoName .TfName}} = append(cItem.{{toGoName .TfName}}, ccItem)
 							return true
 						})
-						{{- if hasConditional .ConditionalAttribute}}
-						{{- range .ConditionalAttribute.Conditions}}
+						{{- if hasTfOnlyConditional .ConditionalAttribute}}
+						{{- range filterTfOnlyConditions .ConditionalAttribute.Conditions}}
 						cItem.{{toGoName .Name}} = {{if eq .Type "Bool"}}types.BoolValue({{.Value}}){{else}}types.StringValue("{{.Value}}"){{end}}
 						{{- end}}
 						{{- end}}
@@ -541,8 +541,8 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 					item.{{toGoName .TfName}} = append(item.{{toGoName .TfName}}, cItem)
 					return true
 				})
-				{{- if hasConditional .ConditionalAttribute}}
-				{{- range .ConditionalAttribute.Conditions}}
+				{{- if hasTfOnlyConditional .ConditionalAttribute}}
+				{{- range filterTfOnlyConditions .ConditionalAttribute.Conditions}}
 				item.{{toGoName .Name}} = {{if eq .Type "Bool"}}types.BoolValue({{.Value}}){{else}}types.StringValue("{{.Value}}"){{end}}
 				{{- end}}
 				{{- end}}
@@ -552,8 +552,8 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			data.{{toGoName .TfName}} = append(data.{{toGoName .TfName}}, item)
 			return true
 		})
-		{{- if hasConditional .ConditionalAttribute}}
-		{{- range .ConditionalAttribute.Conditions}}
+		{{- if hasTfOnlyConditional .ConditionalAttribute}}
+		{{- range filterTfOnlyConditions .ConditionalAttribute.Conditions}}
 		data.{{toGoName .Name}} = {{if eq .Type "Bool"}}types.BoolValue({{.Value}}){{else}}types.StringValue("{{.Value}}"){{end}}
 		{{- end}}
 		{{- end}}

@@ -54,6 +54,8 @@ data "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
 - `ipv4_subnet_mask_variable` (String) Variable name
 - `ipv6_address` (String) Assign IPv6 address
 - `ipv6_address_variable` (String) Variable name
+- `mrf_core_region_type` (String) Core Region
+- `mrf_enable_core_region` (Boolean) Enable Core Region
 - `mtu` (Number) Interface MTU <68...2000>, in bytes
 - `mtu_variable` (String) Variable name
 - `name` (String) The name of the Feature

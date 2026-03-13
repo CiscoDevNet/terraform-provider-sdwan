@@ -64,7 +64,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Metadata(ctx context.Context, 
 func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Wireless LAN Feature.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Wireless LAN Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -167,6 +167,9 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 						"radius_server_ip": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server IP, Attribute conditional on `security_type` equal to `enterprise`").String,
 							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`^((25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)$`), ""),
+							},
 						},
 						"radius_server_ip_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `security_type` equal to `enterprise`").String,
@@ -245,9 +248,6 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 			"password": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.").String,
 				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9~!@#%^&()_+|<>,.?/:;'\[\]{}"]{8,64}$`), ""),
-				},
 			},
 			"password_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -260,6 +260,9 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 			"me_ipv4_address": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set mobile express controller address").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile(`^((25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)$`), ""),
+				},
 			},
 			"me_ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -279,6 +282,9 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 			"me_default_gateway": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set mobile express default gateway").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile(`^((25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)$`), ""),
+				},
 			},
 			"me_default_gateway_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

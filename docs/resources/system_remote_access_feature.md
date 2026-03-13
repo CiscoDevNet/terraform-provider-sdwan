@@ -4,13 +4,13 @@ page_title: "sdwan_system_remote_access_feature Resource - terraform-provider-sd
 subcategory: "Features - System"
 description: |-
   This resource can manage a System Remote Access Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_system_remote_access_feature (Resource)
 
 This resource can manage a System Remote Access Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 

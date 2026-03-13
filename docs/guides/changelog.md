@@ -15,10 +15,46 @@ description: |-
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_bgp_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_bgp_feature` to `20.15.0`
 - Fix `Not Defined in Schema Attributes: data.routerPolicy` error in `sdwan_service_routing_eigrp_feature`
+- Add `sdwan_policy_object_security_zone` resource and data source
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_eigrp_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_ospf_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_ospf_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_multicast_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_object_tracker_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_object_tracker_group_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_tracker_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_tracker_group_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_tracker_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_tracker_group_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_ipv6_tracker_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_ipv6_tracker_group_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_ipv4_device_access_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_ipv6_device_access_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_remote_access_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_performance_monitoring_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_flexible_port_speed_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_security_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_omp_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_ntp_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_logging_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_mrf_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_global_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_system_snmp_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_wireless_lan_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_t1_e1_serial_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_ipv4_acl_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_ipv6_acl_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_ipv4_acl_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_ipv6_acl_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_route_policy_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_route_policy_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_cellular_controller_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_cellular_profile_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_gps_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_management_vpn_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_cellular_feature` to `20.15.0`
+- Add `sdwan_embedded_security_ngfw_policy` resource and data source
+- Add `sdwan_embedded_security_policy` resource and data source
 - Add `sdwan_application_priority_policy_settings` resource and data source
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_management_vpn_interface_ethernet_feature` to `20.15.0`
 

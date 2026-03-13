@@ -41,6 +41,8 @@ data "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
 - `bandwidth_upstream` (Number) Interface upstream bandwidth capacity, in kbps
 - `bandwidth_upstream_variable` (String) Variable name
 - `description` (String) The description of the Feature
+- `enable_ipv6` (Boolean)
+- `enable_ipv6_variable` (String) Variable name
 - `interface_description` (String)
 - `interface_description_variable` (String) Variable name
 - `interface_mtu` (Number) Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes
@@ -53,6 +55,8 @@ data "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
 - `ip_mtu_variable` (String) Variable name
 - `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
 - `ipv4_dhcp_helper_variable` (String) Variable name
+- `mrf_core_region_type` (String) Core Region
+- `mrf_enable_core_region` (Boolean) Enable Core Region
 - `name` (String) The name of the Feature
 - `nat_ipv4` (Boolean) Network Address Translation on this interface
 - `nat_ipv4_variable` (String) Variable name
@@ -91,8 +95,6 @@ data "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
 - `tloc_extension_variable` (String) Variable name
 - `tracker` (String) Enable tracker for this interface
 - `tracker_variable` (String) Variable name
-- `tunnel_bandwidth_percent` (Number) Tunnels Bandwidth Percent
-- `tunnel_bandwidth_percent_variable` (String) Variable name
 - `tunnel_interface` (Boolean) Tunnel Interface on/off
 - `tunnel_interface_allow_all` (Boolean) Allow all traffic. Overrides all other allow-service options if allow-service all is set
 - `tunnel_interface_allow_all_variable` (String) Variable name

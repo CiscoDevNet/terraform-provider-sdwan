@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -184,6 +185,30 @@ func (d *TransportIPv6ACLProfileParcelDataSource) Schema(ctx context.Context, re
 									},
 									"accept_set_next_hop": schema.StringAttribute{
 										MarkdownDescription: "Set Next Hop (IPV6 address)",
+										Computed:            true,
+									},
+									"accept_set_service_chain_name": schema.StringAttribute{
+										MarkdownDescription: "Set Service Chain Number",
+										Computed:            true,
+									},
+									"accept_set_service_chain_name_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"accept_set_service_chain_vpn": schema.Int64Attribute{
+										MarkdownDescription: "Set Service Chain VPN",
+										Computed:            true,
+									},
+									"accept_set_service_chain_vpn_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"accept_set_service_chain_fallback": schema.BoolAttribute{
+										MarkdownDescription: "fallback",
+										Computed:            true,
+									},
+									"accept_set_service_chain_fallback_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
 									"accept_traffic_class": schema.Int64Attribute{

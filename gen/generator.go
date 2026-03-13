@@ -292,6 +292,7 @@ type YamlConfigCondition struct {
 	Value        string `yaml:"value"`
 	Type         string `yaml:"type"`
 	Negate       bool   `yaml:"negate"`
+	TfOnly       bool   // Populated during augmentation, true if the target attribute is tf_only
 	DefaultValue string // Populated during template execution, not from YAML
 }
 
@@ -446,6 +447,52 @@ func HasConditional(attr YamlConfigConditionalAttribute) bool {
 	return len(attr.Conditions) > 0
 }
 
+// HasTfOnlyConditional checks if the conditional attribute has any conditions
+// whose target attribute is tf_only.
+func HasTfOnlyConditional(attr YamlConfigConditionalAttribute) bool {
+	for _, c := range attr.Conditions {
+		if c.TfOnly {
+			return true
+		}
+	}
+	return false
+}
+
+// FilterTfOnlyConditions returns only the conditions whose target attribute is tf_only.
+func FilterTfOnlyConditions(conditions []YamlConfigCondition) []YamlConfigCondition {
+	var filtered []YamlConfigCondition
+	for _, c := range conditions {
+		if c.TfOnly {
+			filtered = append(filtered, c)
+		}
+	}
+	return filtered
+}
+
+// resolveConditionTfOnly walks the attributes tree and sets TfOnly on each condition
+// whose target attribute (matched by Name == TfName) has TfOnly set to true.
+func resolveConditionTfOnly(attributes []YamlConfigAttribute) {
+	// Build a map of tf_name -> tf_only for sibling lookup
+	tfOnlyMap := make(map[string]bool)
+	for _, a := range attributes {
+		if a.TfOnly {
+			tfOnlyMap[a.TfName] = true
+		}
+	}
+
+	for i := range attributes {
+		for j := range attributes[i].ConditionalAttribute.Conditions {
+			if tfOnlyMap[attributes[i].ConditionalAttribute.Conditions[j].Name] {
+				attributes[i].ConditionalAttribute.Conditions[j].TfOnly = true
+			}
+		}
+		// Recurse into nested attributes
+		if len(attributes[i].Attributes) > 0 {
+			resolveConditionTfOnly(attributes[i].Attributes)
+		}
+	}
+}
+
 // Templating helper function to build conditional logic check for a single condition
 func BuildConditionCheck(cond YamlConfigCondition, context string) string {
 	varName := ToGoName(cond.Name)
@@ -555,6 +602,13 @@ func BuildConditionalDescription(attr YamlConfigConditionalAttribute) string {
 				part = fmt.Sprintf("`%s` not containing `%s`", cond.Name, cond.Value)
 			} else {
 				part = fmt.Sprintf("`%s` containing `%s`", cond.Name, cond.Value)
+			}
+		} else if cond.Value == "" {
+			// Special handling for empty string checks to make description more readable
+			if cond.Negate {
+				part = fmt.Sprintf("`%s` being set", cond.Name)
+			} else {
+				part = fmt.Sprintf("`%s` not being set", cond.Name)
 			}
 		} else {
 			negation := ""
@@ -746,6 +800,8 @@ var functions = template.FuncMap{
 	"getProfileParcelName":        GetProfileParcelName,
 	"contains":                    contains,
 	"hasConditional":              HasConditional,
+	"hasTfOnlyConditional":        HasTfOnlyConditional,
+	"filterTfOnlyConditions":      FilterTfOnlyConditions,
 	"buildConditionalLogic":       BuildConditionalLogic,
 	"buildConditionalDescription": BuildConditionalDescription,
 }
@@ -1022,6 +1078,26 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		}
 	}
 
+	if r.Get("oneOf.0.type").String() == "array" && len(attr.Attributes) > 0 {
+		attr.Type = "List"
+		if r.Get("minItems").Exists() {
+			attr.MinList = r.Get("minItems").Int()
+		}
+		if r.Get("maxItems").Exists() {
+			attr.MaxList = r.Get("maxItems").Int()
+		}
+		for a := range attr.Attributes {
+			r.Get("oneOf").ForEach(func(k, v gjson.Result) bool {
+				items := v.Get("items")
+				if items.Get("properties." + attr.Attributes[a].ModelName).Exists() {
+					parseProfileParcelAttribute(&attr.Attributes[a], items, true)
+					return false
+				}
+				return true
+			})
+		}
+		return
+	}
 	if attr.Value == "" && (r.Get("type").String() == "object" || !r.Get("type").Exists()) {
 		noGlobal := false
 
@@ -1051,7 +1127,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				}
 			} else if attr.Type == "Bool" || t.Get("properties.value.type").String() == "boolean" || t.Get("properties.value.oneOf.0.properties.value.type").String() == "boolean" {
 				attr.Type = "Bool"
-			} else if attr.Type == "Int64" || t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" || t.Get("properties.value.oneOf.0.type").String() == "integer" || t.Get("properties.value.oneOf.0.type").String() == "number" {
+			} else if attr.Type == "Int64" || t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" || t.Get("properties.value.oneOf.0.type").String() == "integer" || t.Get("properties.value.oneOf.0.type").String() == "number" || t.Get("properties.value.anyOf.0.type").String() == "integer" || t.Get("properties.value.anyOf.0.type").String() == "number" {
 
 				if value := t.Get("properties.value.multipleOf"); value.Exists() {
 					attr.Type = "Float64"
@@ -1181,6 +1257,7 @@ func augmentProfileParcelConfig(config *YamlConfig) {
 			parseProfileParcelAttribute(&config.Attributes[ia], model.Get("request.properties.data"), false)
 		}
 	}
+	resolveConditionTfOnly(config.Attributes)
 	if config.DsDescription == "" {
 		config.DsDescription = fmt.Sprintf("This data source can read the %s %s.", config.Name, CamelCase(config.ParcelType))
 	}

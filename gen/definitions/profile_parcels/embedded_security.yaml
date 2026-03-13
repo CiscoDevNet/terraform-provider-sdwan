@@ -1,0 +1,142 @@
+# Manual resource - toBody is manual configured to support security logging network-settings option type
+---
+name: Embedded Security
+rest_endpoint: /v1/feature-profile/sdwan/embedded-security/%v/policy
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
+parcel_type: policy
+skip_minimum_test: true
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_embedded_security_feature_profile.test.id
+  - model_name: assembly
+    attributes:
+    - model_name: refId
+      tf_name: advanced_inspection_profile_policy_id
+      data_path: [advancedInspectionProfile]
+      exclude_test: true
+      example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+    - model_name: refId
+      tf_name: ssl_decryption_profile_id
+      data_path: [sslDecryption]
+      exclude_test: true
+      example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+    - model_name: refId
+      tf_name: ngfw_policy_id
+      data_path: [ngfirewall]
+      mandatory: true
+      example: df8c5043-7438-47e2-97b0-8304d3bf1a82
+      test_value: sdwan_embedded_security_ngfw_policy.test.id
+      minimum_test_value: sdwan_embedded_security_ngfw_policy.test.id
+    - model_name: entries
+      data_path: [ngfirewall]
+      attributes:
+      - model_name: srcZone
+        tf_name: source_zone
+        example: untrusted
+      - model_name: refId
+        tf_name: source_zone_list_id
+        data_path: [srcZone]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: dstZone
+        tf_name: destination_zone
+        example: untrusted
+      - model_name: refId
+        tf_name: destination_zone_list_id
+        data_path: [dstZone]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+  - model_name: tcpSynFloodLimit
+    tf_name: tcp_syn_flood_limit
+    data_path: [settings]
+    ignore_mandatory: true
+    example: 432
+  - model_name: maxIncompleteTcpLimit
+    tf_name: max_incomplete_tcp_limit
+    data_path: [settings]
+    ignore_mandatory: true
+    example: 12345
+  - model_name: maxIncompleteUdpLimit
+    tf_name: max_incomplete_udp_limit
+    data_path: [settings]
+    ignore_mandatory: true
+    example: 12345
+  - model_name: maxIncompleteIcmpLimit
+    tf_name: max_incomplete_icmp_limit
+    data_path: [settings]
+    ignore_mandatory: true
+    example: 12345
+  - model_name: auditTrail
+    tf_name: audit_trail
+    data_path: [settings]
+    ignore_mandatory: true
+    example: on
+  - model_name: unifiedLogging
+    tf_name: unified_logging
+    data_path: [settings]
+    ignore_mandatory: true
+    example: on
+  - model_name: sessionReclassifyAllow
+    tf_name: session_reclassify_allow
+    data_path: [settings]
+    ignore_mandatory: true
+    example: on
+  - model_name: icmpUnreachableAllow
+    tf_name: icmp_unreachable_allow
+    data_path: [settings]
+    ignore_mandatory: true
+    example: on
+  - model_name: failureMode
+    tf_name: failure_mode
+    data_path: [settings]
+    ignore_mandatory: true
+    example: close
+  - model_name: nat
+    data_path: [appHosting]
+    example: true
+  - model_name: databaseUrl
+    tf_name: download_url_database_on_device
+    data_path: [appHosting]
+    example: false
+  - model_name: resourceProfile
+    data_path: [appHosting]
+    example: low
+
+test_prerequisites: |
+  resource "sdwan_embedded_security_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_embedded_security_ngfw_policy" "test" {
+    name               = "TF_TEST_NGFW_POLIGY"
+    description        = "My Example"
+    feature_profile_id = sdwan_embedded_security_feature_profile.test.id
+    default_action     = "pass"
+    sequences = [
+      {
+        sequence_id      = "1"
+        sequence_name    = "security"
+        base_action      = "pass"
+        sequence_type    = "ngfirewall"
+        disable_sequence = false
+        match_entries = [
+          {
+            source_ports = ["123"]
+          }
+        ]
+        actions = [
+          {
+            type      = "log"
+            parameter = "true"
+          }
+        ]
+      }
+    ]
+  }

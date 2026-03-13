@@ -65,14 +65,20 @@ type TransportIPv6ACLSequencesMatchEntries struct {
 	IcmpMessages                types.Set                                               `tfsdk:"icmp_messages"`
 }
 type TransportIPv6ACLSequencesActions struct {
-	AcceptCounterName  types.String `tfsdk:"accept_counter_name"`
-	AcceptLog          types.Bool   `tfsdk:"accept_log"`
-	AcceptSetNextHop   types.String `tfsdk:"accept_set_next_hop"`
-	AcceptTrafficClass types.Int64  `tfsdk:"accept_traffic_class"`
-	AcceptMirrorListId types.String `tfsdk:"accept_mirror_list_id"`
-	AcceptPolicerId    types.String `tfsdk:"accept_policer_id"`
-	DropCounterName    types.String `tfsdk:"drop_counter_name"`
-	DropLog            types.Bool   `tfsdk:"drop_log"`
+	AcceptCounterName                     types.String `tfsdk:"accept_counter_name"`
+	AcceptLog                             types.Bool   `tfsdk:"accept_log"`
+	AcceptSetNextHop                      types.String `tfsdk:"accept_set_next_hop"`
+	AcceptSetServiceChainName             types.String `tfsdk:"accept_set_service_chain_name"`
+	AcceptSetServiceChainNameVariable     types.String `tfsdk:"accept_set_service_chain_name_variable"`
+	AcceptSetServiceChainVpn              types.Int64  `tfsdk:"accept_set_service_chain_vpn"`
+	AcceptSetServiceChainVpnVariable      types.String `tfsdk:"accept_set_service_chain_vpn_variable"`
+	AcceptSetServiceChainFallback         types.Bool   `tfsdk:"accept_set_service_chain_fallback"`
+	AcceptSetServiceChainFallbackVariable types.String `tfsdk:"accept_set_service_chain_fallback_variable"`
+	AcceptTrafficClass                    types.Int64  `tfsdk:"accept_traffic_class"`
+	AcceptMirrorListId                    types.String `tfsdk:"accept_mirror_list_id"`
+	AcceptPolicerId                       types.String `tfsdk:"accept_policer_id"`
+	DropCounterName                       types.String `tfsdk:"drop_counter_name"`
+	DropLog                               types.Bool   `tfsdk:"drop_log"`
 }
 
 type TransportIPv6ACLSequencesMatchEntriesSourcePorts struct {
@@ -260,6 +266,47 @@ func (data TransportIPv6ACL) toBody(ctx context.Context) string {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setNextHop.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setNextHop.value", childItem.AcceptSetNextHop.ValueString())
+						}
+					}
+
+					if !childItem.AcceptSetServiceChainNameVariable.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setServiceChain.serviceChainNumber.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setServiceChain.serviceChainNumber.value", childItem.AcceptSetServiceChainNameVariable.ValueString())
+						}
+					} else if !childItem.AcceptSetServiceChainName.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setServiceChain.serviceChainNumber.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setServiceChain.serviceChainNumber.value", childItem.AcceptSetServiceChainName.ValueString())
+						}
+					}
+
+					if !childItem.AcceptSetServiceChainVpnVariable.IsNull() {
+						if true && (!(childItem.AcceptSetServiceChainName.IsNull()) || !(childItem.AcceptSetServiceChainNameVariable.IsNull())) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setServiceChain.vpn.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setServiceChain.vpn.value", childItem.AcceptSetServiceChainVpnVariable.ValueString())
+						}
+					} else if !childItem.AcceptSetServiceChainVpn.IsNull() {
+						if true && (!(childItem.AcceptSetServiceChainName.IsNull()) || !(childItem.AcceptSetServiceChainNameVariable.IsNull())) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setServiceChain.vpn.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setServiceChain.vpn.value", childItem.AcceptSetServiceChainVpn.ValueInt64())
+						}
+					}
+
+					if !childItem.AcceptSetServiceChainFallbackVariable.IsNull() {
+						if true && (!(childItem.AcceptSetServiceChainName.IsNull()) || !(childItem.AcceptSetServiceChainNameVariable.IsNull())) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setServiceChain.fallback.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setServiceChain.fallback.value", childItem.AcceptSetServiceChainFallbackVariable.ValueString())
+						}
+					} else if childItem.AcceptSetServiceChainFallback.IsNull() {
+						if true && (!(childItem.AcceptSetServiceChainName.IsNull()) || !(childItem.AcceptSetServiceChainNameVariable.IsNull())) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setServiceChain.fallback.optionType", "default")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setServiceChain.fallback.value", false)
+						}
+					} else {
+						if true && (!(childItem.AcceptSetServiceChainName.IsNull()) || !(childItem.AcceptSetServiceChainNameVariable.IsNull())) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setServiceChain.fallback.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setServiceChain.fallback.value", childItem.AcceptSetServiceChainFallback.ValueBool())
 						}
 					}
 					if !childItem.AcceptTrafficClass.IsNull() {
@@ -487,6 +534,36 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 						va := cv.Get("accept.setNextHop.value")
 						if t.String() == "global" {
 							cItem.AcceptSetNextHop = types.StringValue(va.String())
+						}
+					}
+					cItem.AcceptSetServiceChainName = types.StringNull()
+					cItem.AcceptSetServiceChainNameVariable = types.StringNull()
+					if t := cv.Get("accept.setServiceChain.serviceChainNumber.optionType"); t.Exists() {
+						va := cv.Get("accept.setServiceChain.serviceChainNumber.value")
+						if t.String() == "variable" {
+							cItem.AcceptSetServiceChainNameVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
+							cItem.AcceptSetServiceChainName = types.StringValue(va.String())
+						}
+					}
+					cItem.AcceptSetServiceChainVpn = types.Int64Null()
+					cItem.AcceptSetServiceChainVpnVariable = types.StringNull()
+					if t := cv.Get("accept.setServiceChain.vpn.optionType"); t.Exists() {
+						va := cv.Get("accept.setServiceChain.vpn.value")
+						if t.String() == "variable" {
+							cItem.AcceptSetServiceChainVpnVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
+							cItem.AcceptSetServiceChainVpn = types.Int64Value(va.Int())
+						}
+					}
+					cItem.AcceptSetServiceChainFallback = types.BoolNull()
+					cItem.AcceptSetServiceChainFallbackVariable = types.StringNull()
+					if t := cv.Get("accept.setServiceChain.fallback.optionType"); t.Exists() {
+						va := cv.Get("accept.setServiceChain.fallback.value")
+						if t.String() == "variable" {
+							cItem.AcceptSetServiceChainFallbackVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
+							cItem.AcceptSetServiceChainFallback = types.BoolValue(va.Bool())
 						}
 					}
 					cItem.AcceptTrafficClass = types.Int64Null()
@@ -773,9 +850,9 @@ func (data *TransportIPv6ACL) updateFromBody(ctx context.Context, res gjson.Resu
 			}
 		}
 		for ci := range data.Sequences[i].Actions {
-			keys := [...]string{"accept.counterName", "accept.log", "accept.setNextHop", "accept.setTrafficClass", "accept.mirror.refId", "accept.policer.refId", "drop.counterName", "drop.log"}
-			keyValues := [...]string{data.Sequences[i].Actions[ci].AcceptCounterName.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].AcceptLog.ValueBool()), data.Sequences[i].Actions[ci].AcceptSetNextHop.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].AcceptTrafficClass.ValueInt64(), 10), data.Sequences[i].Actions[ci].AcceptMirrorListId.ValueString(), data.Sequences[i].Actions[ci].AcceptPolicerId.ValueString(), data.Sequences[i].Actions[ci].DropCounterName.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].DropLog.ValueBool())}
-			keyValuesVariables := [...]string{"", "", "", "", "", "", "", ""}
+			keys := [...]string{"accept.counterName", "accept.log", "accept.setNextHop", "accept.setServiceChain.serviceChainNumber", "accept.setServiceChain.vpn", "accept.setServiceChain.fallback", "accept.setTrafficClass", "accept.mirror.refId", "accept.policer.refId", "drop.counterName", "drop.log"}
+			keyValues := [...]string{data.Sequences[i].Actions[ci].AcceptCounterName.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].AcceptLog.ValueBool()), data.Sequences[i].Actions[ci].AcceptSetNextHop.ValueString(), data.Sequences[i].Actions[ci].AcceptSetServiceChainName.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].AcceptSetServiceChainVpn.ValueInt64(), 10), strconv.FormatBool(data.Sequences[i].Actions[ci].AcceptSetServiceChainFallback.ValueBool()), strconv.FormatInt(data.Sequences[i].Actions[ci].AcceptTrafficClass.ValueInt64(), 10), data.Sequences[i].Actions[ci].AcceptMirrorListId.ValueString(), data.Sequences[i].Actions[ci].AcceptPolicerId.ValueString(), data.Sequences[i].Actions[ci].DropCounterName.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].DropLog.ValueBool())}
+			keyValuesVariables := [...]string{"", "", "", data.Sequences[i].Actions[ci].AcceptSetServiceChainNameVariable.ValueString(), data.Sequences[i].Actions[ci].AcceptSetServiceChainVpnVariable.ValueString(), data.Sequences[i].Actions[ci].AcceptSetServiceChainFallbackVariable.ValueString(), "", "", "", "", ""}
 
 			var cr gjson.Result
 			r.Get("actions").ForEach(
@@ -825,6 +902,36 @@ func (data *TransportIPv6ACL) updateFromBody(ctx context.Context, res gjson.Resu
 				va := cr.Get("accept.setNextHop.value")
 				if t.String() == "global" {
 					data.Sequences[i].Actions[ci].AcceptSetNextHop = types.StringValue(va.String())
+				}
+			}
+			data.Sequences[i].Actions[ci].AcceptSetServiceChainName = types.StringNull()
+			data.Sequences[i].Actions[ci].AcceptSetServiceChainNameVariable = types.StringNull()
+			if t := cr.Get("accept.setServiceChain.serviceChainNumber.optionType"); t.Exists() {
+				va := cr.Get("accept.setServiceChain.serviceChainNumber.value")
+				if t.String() == "variable" {
+					data.Sequences[i].Actions[ci].AcceptSetServiceChainNameVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					data.Sequences[i].Actions[ci].AcceptSetServiceChainName = types.StringValue(va.String())
+				}
+			}
+			data.Sequences[i].Actions[ci].AcceptSetServiceChainVpn = types.Int64Null()
+			data.Sequences[i].Actions[ci].AcceptSetServiceChainVpnVariable = types.StringNull()
+			if t := cr.Get("accept.setServiceChain.vpn.optionType"); t.Exists() {
+				va := cr.Get("accept.setServiceChain.vpn.value")
+				if t.String() == "variable" {
+					data.Sequences[i].Actions[ci].AcceptSetServiceChainVpnVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					data.Sequences[i].Actions[ci].AcceptSetServiceChainVpn = types.Int64Value(va.Int())
+				}
+			}
+			data.Sequences[i].Actions[ci].AcceptSetServiceChainFallback = types.BoolNull()
+			data.Sequences[i].Actions[ci].AcceptSetServiceChainFallbackVariable = types.StringNull()
+			if t := cr.Get("accept.setServiceChain.fallback.optionType"); t.Exists() {
+				va := cr.Get("accept.setServiceChain.fallback.value")
+				if t.String() == "variable" {
+					data.Sequences[i].Actions[ci].AcceptSetServiceChainFallbackVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					data.Sequences[i].Actions[ci].AcceptSetServiceChainFallback = types.BoolValue(va.Bool())
 				}
 			}
 			data.Sequences[i].Actions[ci].AcceptTrafficClass = types.Int64Null()
