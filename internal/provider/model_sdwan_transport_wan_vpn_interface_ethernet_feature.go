@@ -2964,7 +2964,6 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		}
 	} else if t := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType"); t.Exists() {
 		// Backward compatibility for < 20.18
-		// Only infer address type when a real value is present; "default" means no address was configured
 		va := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.value")
 		if t.String() == "variable" {
 			data.Ipv4AddressVariable = types.StringValue(va.String())
@@ -4708,7 +4707,6 @@ func (data *TransportWANVPNInterfaceEthernet) updateFromBody(ctx context.Context
 		}
 	} else if t := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType"); t.Exists() {
 		// Backward compatibility for < 20.18
-		// Only infer address type when a real value is present; "default" means no address was configured
 		va := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value")
 		if t.String() == "variable" {
 			data.Ipv4SubnetMaskVariable = types.StringValue(va.String())
