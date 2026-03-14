@@ -41,7 +41,7 @@ data "sdwan_transport_cellular_profile_feature" "example" {
 - `packet_data_network_type_variable` (String) Variable name
 - `profile_id` (Number) Set Profile ID
 - `profile_id_variable` (String) Variable name
-- `profile_password` (String) Set the profile password
+- `profile_password` (String) Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `profile_password_variable` (String) Variable name
 - `profile_username` (String) Set the profile username
 - `profile_username_variable` (String) Variable name

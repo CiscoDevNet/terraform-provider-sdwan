@@ -4,13 +4,13 @@ page_title: "sdwan_transport_wan_vpn_interface_cellular_feature Resource - terra
 subcategory: "Features - Transport"
 description: |-
   This resource can manage a Transport WAN VPN Interface Cellular Feature.
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_transport_wan_vpn_interface_cellular_feature (Resource)
 
 This resource can manage a Transport WAN VPN Interface Cellular Feature.
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
@@ -21,6 +21,7 @@ resource "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
   feature_profile_id                             = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   transport_wan_vpn_feature_id                   = "140331f6-5418-4755-a059-13c77eb96037"
   shutdown                                       = true
+  enable_ipv6                                    = true
   interface_name                                 = "GigabitEthernet1"
   interface_description                          = "WAN"
   ipv4_dhcp_helper                               = ["1.2.3.4"]
@@ -29,8 +30,7 @@ resource "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
   bandwidth_downstream                           = 21474836
   tunnel_interface                               = true
   per_tunnel_qos                                 = true
-  tunnel_qos_mode                                = "hub"
-  tunnel_bandwidth_percent                       = 82
+  tunnel_qos_mode                                = "spoke"
   tunnel_interface_bind_loopback_tunnel          = "example"
   tunnel_interface_carrier                       = "default"
   tunnel_interface_color                         = "default"
@@ -115,6 +115,8 @@ resource "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
   - Range: `1`-`2147483647`
 - `bandwidth_upstream_variable` (String) Variable name
 - `description` (String) The description of the Feature
+- `enable_ipv6` (Boolean) - Default value: `true`
+- `enable_ipv6_variable` (String) Variable name
 - `interface_description` (String)
 - `interface_description_variable` (String) Variable name
 - `interface_mtu` (Number) Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes
@@ -132,6 +134,11 @@ resource "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
 - `ip_mtu_variable` (String) Variable name
 - `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
 - `ipv4_dhcp_helper_variable` (String) Variable name
+- `mrf_core_region_type` (String) Core Region
+  - Choices: `core-shared`, `core`
+  - Default value: `core-shared`
+- `mrf_enable_core_region` (Boolean) Enable Core Region
+  - Default value: `false`
 - `nat_ipv4` (Boolean) Network Address Translation on this interface
   - Default value: `false`
 - `nat_ipv4_variable` (String) Variable name
@@ -188,10 +195,6 @@ resource "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
 - `tloc_extension_variable` (String) Variable name
 - `tracker` (String) Enable tracker for this interface
 - `tracker_variable` (String) Variable name
-- `tunnel_bandwidth_percent` (Number) Tunnels Bandwidth Percent
-  - Range: `1`-`100`
-  - Default value: `50`
-- `tunnel_bandwidth_percent_variable` (String) Variable name
 - `tunnel_interface` (Boolean) Tunnel Interface on/off
   - Default value: `false`
 - `tunnel_interface_allow_all` (Boolean) Allow all traffic. Overrides all other allow-service options if allow-service all is set
@@ -246,7 +249,7 @@ resource "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
   - Default value: `false`
 - `tunnel_interface_clear_dont_fragment_variable` (String) Variable name
 - `tunnel_interface_color` (String) Set color for TLOC
-  - Choices: `default`, `mpls`, `metro ethernet`, `biz internet`, `public internet`, `lte`, `3g`, `red`, `green`, `blue`, `gold`, `silver`, `bronze`, `custom1`, `custom2`, `custom3`, `private1`, `private2`, `private3`, `private4`, `private5`, `private6`
+  - Choices: `default`, `mpls`, `metro-ethernet`, `biz-internet`, `public-internet`, `lte`, `3g`, `red`, `green`, `blue`, `gold`, `silver`, `bronze`, `custom1`, `custom2`, `custom3`, `private1`, `private2`, `private3`, `private4`, `private5`, `private6`
   - Default value: `mpls`
 - `tunnel_interface_color_restrict` (Boolean) Restrict this TLOC behavior
   - Default value: `false`
@@ -296,7 +299,7 @@ resource "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
   - Default value: `5`
 - `tunnel_interface_vmanage_connection_preference_variable` (String) Variable name
 - `tunnel_qos_mode` (String) Set tunnel QoS mode
-  - Choices: `hub`, `spoke`
+  - Choices: `spoke`
 - `tunnel_qos_mode_variable` (String) Variable name
 
 ### Read-Only

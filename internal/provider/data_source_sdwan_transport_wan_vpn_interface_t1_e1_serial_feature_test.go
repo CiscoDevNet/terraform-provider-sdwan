@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015_IN_PROGRESS") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015_IN_PROGRESS")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "shutdown", "true"))
@@ -44,7 +44,7 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcel(t *te
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "per_tunnel_qos", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "per_tunnel_qos_aggregator", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_qos_mode", "hub"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_qos_mode", "spoke"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_color", "mpls"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_restrict", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_groups", "42949672"))
@@ -250,7 +250,7 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelConfig
 	config += `	tunnel_interface = true` + "\n"
 	config += `	per_tunnel_qos = true` + "\n"
 	config += `	per_tunnel_qos_aggregator = false` + "\n"
-	config += `	tunnel_qos_mode = "hub"` + "\n"
+	config += `	tunnel_qos_mode = "spoke"` + "\n"
 	config += `	tunnel_interface_color = "mpls"` + "\n"
 	config += `	tunnel_interface_restrict = true` + "\n"
 	config += `	tunnel_interface_groups = 42949672` + "\n"

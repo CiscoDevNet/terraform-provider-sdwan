@@ -1,9 +1,9 @@
 ---
-# Manual resource - Modals toBody is manually configured to support required defaults in the case actions is empty .
+# Manual resource - Modals toBody is manually configured to support required defaults in the case actions is empty.
 name: Transport Route Policy
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/route-policy
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - Transport
 attributes:
@@ -101,8 +101,8 @@ attributes:
         tf_name: as_path_prepend
         data_path: [accept, setAsPath]
         type: List
-        element_type: Int64
-        example: 65521
+        element_type: String
+        example: "65521"
       - model_name: additive
         tf_name: community_additive
         data_path: [accept, setCommunity]

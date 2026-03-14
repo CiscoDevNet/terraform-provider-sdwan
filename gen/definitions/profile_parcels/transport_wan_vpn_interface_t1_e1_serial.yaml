@@ -1,8 +1,8 @@
 ---
 name: Transport WAN VPN Interface T1 E1 Serial
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/serial
-minimum_version: 20.12.0
-test_tags: [SDWAN_2015_IN_PROGRESS]
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - Transport
 attributes:
@@ -58,7 +58,7 @@ attributes:
   - model_name: mode
     tf_name: tunnel_qos_mode
     data_path: [tunnel]
-    example: hub
+    example: spoke
   - model_name: color
     tf_name: tunnel_interface_color
     exclude_ignore: true
@@ -216,6 +216,14 @@ attributes:
       example: 4294967
     - model_name: weight
       example: 250
+  - model_name: enableCoreRegion
+    tf_name: mrf_enable_core_region
+    data_path: [multiRegionFabric]
+    exclude_test: true
+  - model_name: coreRegion
+    tf_name: mrf_core_region_type
+    data_path: [multiRegionFabric]
+    exclude_test: true
   - model_name: shapingRate
     tf_name: qos_shaping_rate
     data_path: [aclQos]

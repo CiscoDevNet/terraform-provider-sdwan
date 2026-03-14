@@ -831,7 +831,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelSourceIpv4Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.TunnelRouteViaIpv4Address = types.StringNull()
 	data.TunnelRouteViaIpv4AddressVariable = types.StringNull()
@@ -842,7 +841,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelRouteViaIpv4Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.TunnelSourceInterface = types.StringNull()
 	data.TunnelSourceInterfaceVariable = types.StringNull()
@@ -893,7 +891,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelSourceIpv6Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv6")
 	}
 	data.TunnelRouteViaIpv6Address = types.StringNull()
 	data.TunnelRouteViaIpv6AddressVariable = types.StringNull()
@@ -904,7 +901,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelRouteViaIpv6Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv6")
 	}
 	data.TunnelDestinationIpv4Address = types.StringNull()
 	data.TunnelDestinationIpv4AddressVariable = types.StringNull()
@@ -915,7 +911,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelDestinationIpv4Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv4")
 	}
 	data.TunnelDestinationIpv6Address = types.StringNull()
 	data.TunnelDestinationIpv6AddressVariable = types.StringNull()
@@ -926,7 +921,6 @@ func (data *TransportWANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson
 		} else if t.String() == "global" {
 			data.TunnelDestinationIpv6Address = types.StringValue(va.String())
 		}
-		data.TunnelMode = types.StringValue("ipv6")
 	}
 	data.Ipv4Mtu = types.Int64Null()
 	data.Ipv4MtuVariable = types.StringNull()

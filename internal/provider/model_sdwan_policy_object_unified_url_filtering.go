@@ -205,7 +205,6 @@ func (data *PolicyObjectUnifiedURLFiltering) fromBody(ctx context.Context, res g
 		if t.String() == "global" {
 			data.BlockPageContents = types.StringValue(va.String())
 		}
-		data.BlockPageAction = types.StringValue("text")
 	}
 	data.RedirectUrl = types.StringNull()
 
@@ -214,7 +213,6 @@ func (data *PolicyObjectUnifiedURLFiltering) fromBody(ctx context.Context, res g
 		if t.String() == "global" {
 			data.RedirectUrl = types.StringValue(va.String())
 		}
-		data.BlockPageAction = types.StringValue("redirect-url")
 	}
 	data.EnableAlerts = types.BoolNull()
 
@@ -231,7 +229,6 @@ func (data *PolicyObjectUnifiedURLFiltering) fromBody(ctx context.Context, res g
 		if t.String() == "global" {
 			data.Alerts = helpers.GetStringSet(va.Array())
 		}
-		data.EnableAlerts = types.BoolValue(true)
 	}
 }
 

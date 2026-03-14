@@ -397,7 +397,6 @@ func (data *TransportT1E1Controller) fromBody(ctx context.Context, res gjson.Res
 				} else if t.String() == "global" {
 					item.LengthShort = types.StringValue(va.String())
 				}
-				item.CableLength = types.StringValue("short")
 			}
 			item.LengthLong = types.StringNull()
 			item.LengthLongVariable = types.StringNull()
@@ -408,7 +407,6 @@ func (data *TransportT1E1Controller) fromBody(ctx context.Context, res gjson.Res
 				} else if t.String() == "global" {
 					item.LengthLong = types.StringValue(va.String())
 				}
-				item.CableLength = types.StringValue("long")
 			}
 			item.ClockSource = types.StringNull()
 
