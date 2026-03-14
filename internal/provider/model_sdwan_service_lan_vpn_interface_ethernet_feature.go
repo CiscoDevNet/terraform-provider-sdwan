@@ -922,6 +922,7 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, ver *vers
 		}
 	}
 	if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
+		// Manual override for optionType to be global
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natType.optionType", "global")
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natType.value", "pool")
 	}
