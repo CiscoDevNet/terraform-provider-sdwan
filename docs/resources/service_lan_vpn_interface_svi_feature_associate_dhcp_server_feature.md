@@ -4,13 +4,13 @@ page_title: "sdwan_service_lan_vpn_interface_svi_feature_associate_dhcp_server_f
 subcategory: "Features - Service"
 description: |-
   This resource can manage a Service LAN VPN Interface SVI Feature Associate DHCP Server Feature .
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_service_lan_vpn_interface_svi_feature_associate_dhcp_server_feature (Resource)
 
 This resource can manage a Service LAN VPN Interface SVI Feature Associate DHCP Server Feature .
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
