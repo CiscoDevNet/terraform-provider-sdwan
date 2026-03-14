@@ -177,6 +177,7 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context, 
 		}
 	}
 
+	// Start of manually modified section to handle address assignment for <20.18 and =>20.18
 	if ver.GreaterThanOrEqual(MinTransportManagementVPNInterfaceEthernetEitherVersion) {
 		// >= 20.18: use intfIpAddress.either.addressType + either.dynamic/static sub-paths
 		if !data.Ipv4AddressTypeVariable.IsNull() {
@@ -240,6 +241,7 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context, 
 			}
 		}
 		if true && (data.Ipv4AddressType.ValueString() == "static" || !data.Ipv4AddressTypeVariable.IsNull()) {
+			body, _ = sjson.Set(body, path+"intfIpAddress.either.static.staticIpV4AddressSecondary", []interface{}{})
 			for _, item := range data.Ipv4SecondaryAddresses {
 				itemBody := ""
 				if !item.AddressVariable.IsNull() {
@@ -266,9 +268,6 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context, 
 				}
 				body, _ = sjson.SetRaw(body, path+"intfIpAddress.either.static.staticIpV4AddressSecondary.-1", itemBody)
 			}
-		}
-		if data.Ipv4AddressType.ValueString() == "static" && len(data.Ipv4SecondaryAddresses) == 0 {
-			body, _ = sjson.Set(body, path+"intfIpAddress.either.static.staticIpV4AddressSecondary", []interface{}{})
 		}
 		// When no IPv4 address type is configured (e.g. IPv6-only), the API still requires intfIpAddress.
 		// Emit a default either.static structure so the payload is accepted.
@@ -320,6 +319,7 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context, 
 			}
 		}
 		if true && (data.Ipv4AddressType.ValueString() == "static" || !data.Ipv4AddressTypeVariable.IsNull()) {
+			body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressSecondary", []interface{}{})
 			for _, item := range data.Ipv4SecondaryAddresses {
 				itemBody := ""
 				if !item.AddressVariable.IsNull() {
@@ -355,6 +355,7 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context, 
 			body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressSecondary", []interface{}{})
 		}
 	}
+	// End of manually modified section to handle address assignment for <20.18 and =>20.18
 
 	if !data.Ipv4DhcpHelperVariable.IsNull() {
 		if true {
@@ -409,6 +410,7 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context, 
 		}
 	}
 
+	// Start of manually modified section to handle address assignment for <20.18 and =>20.18
 	if ver.GreaterThanOrEqual(MinTransportManagementVPNInterfaceEthernetEitherVersion) {
 		// >= 20.18: use intfIpV6Address.either.addressType + either.dynamic/static sub-paths
 		if !data.Ipv6AddressTypeVariable.IsNull() {
@@ -461,6 +463,7 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context, 
 			}
 		}
 	}
+	// End of manually modified section to handle address assignment for <20.18 and =>20.18
 	if true {
 		body, _ = sjson.Set(body, path+"arp", []interface{}{})
 		for _, item := range data.ArpEntries {
@@ -757,6 +760,7 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 			data.Ipv4DhcpDistance = types.Int64Value(va.Int())
 		}
 	} else if t := res.Get(path + "intfIpAddress.dynamic.dynamicDhcpDistance.optionType"); t.Exists() {
+		// Backward compatibility for < 20.18
 		va := res.Get(path + "intfIpAddress.dynamic.dynamicDhcpDistance.value")
 		if t.String() == "variable" {
 			data.Ipv4DhcpDistanceVariable = types.StringValue(va.String())
@@ -775,6 +779,7 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 			data.Ipv4Address = types.StringValue(va.String())
 		}
 	} else if t := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType"); t.Exists() {
+		// Backward compatibility for < 20.18
 		va := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.value")
 		if t.String() == "variable" {
 			data.Ipv4AddressVariable = types.StringValue(va.String())
@@ -794,6 +799,7 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
 	} else if t := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType"); t.Exists() {
+		// Backward compatibility for < 20.18
 		va := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value")
 		if t.String() == "variable" {
 			data.Ipv4SubnetMaskVariable = types.StringValue(va.String())
@@ -831,6 +837,7 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 			return true
 		})
 	} else if value := res.Get(path + "intfIpAddress.static.staticIpV4AddressSecondary"); value.Exists() && len(value.Array()) > 0 {
+		// Backward compatibility for < 20.18
 		data.Ipv4SecondaryAddresses = make([]TransportManagementVPNInterfaceEthernetIpv4SecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TransportManagementVPNInterfaceEthernetIpv4SecondaryAddresses{}
@@ -907,6 +914,7 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 			data.EnableDhcpv6 = types.BoolValue(va.Bool())
 		}
 	} else if t := res.Get(path + "intfIpV6Address.dynamic.dhcpClient.optionType"); t.Exists() {
+		// Backward compatibility for < 20.18
 		va := res.Get(path + "intfIpV6Address.dynamic.dhcpClient.value")
 		if t.String() == "global" {
 			data.EnableDhcpv6 = types.BoolValue(va.Bool())
@@ -923,6 +931,7 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 			data.Ipv6Address = types.StringValue(va.String())
 		}
 	} else if t := res.Get(path + "intfIpV6Address.static.primaryIpV6Address.address.optionType"); t.Exists() {
+		// Backward compatibility for < 20.18
 		va := res.Get(path + "intfIpV6Address.static.primaryIpV6Address.address.value")
 		if t.String() == "variable" {
 			data.Ipv6AddressVariable = types.StringValue(va.String())
@@ -1139,6 +1148,7 @@ func (data *TransportManagementVPNInterfaceEthernet) updateFromBody(ctx context.
 			data.Ipv4DhcpDistance = types.Int64Value(va.Int())
 		}
 	} else if t := res.Get(path + "intfIpAddress.dynamic.dynamicDhcpDistance.optionType"); t.Exists() {
+		// Backward compatibility for < 20.18
 		va := res.Get(path + "intfIpAddress.dynamic.dynamicDhcpDistance.value")
 		if t.String() == "variable" {
 			data.Ipv4DhcpDistanceVariable = types.StringValue(va.String())
@@ -1157,6 +1167,7 @@ func (data *TransportManagementVPNInterfaceEthernet) updateFromBody(ctx context.
 			data.Ipv4Address = types.StringValue(va.String())
 		}
 	} else if t := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType"); t.Exists() {
+		// Backward compatibility for < 20.18
 		va := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.value")
 		if t.String() == "variable" {
 			data.Ipv4AddressVariable = types.StringValue(va.String())
@@ -1176,6 +1187,7 @@ func (data *TransportManagementVPNInterfaceEthernet) updateFromBody(ctx context.
 			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
 	} else if t := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType"); t.Exists() {
+		// Backward compatibility for < 20.18
 		va := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value")
 		if t.String() == "variable" {
 			data.Ipv4SubnetMaskVariable = types.StringValue(va.String())
@@ -1191,6 +1203,7 @@ func (data *TransportManagementVPNInterfaceEthernet) updateFromBody(ctx context.
 		keyValuesVariables := [...]string{data.Ipv4SecondaryAddresses[i].AddressVariable.ValueString()}
 
 		var r gjson.Result
+		// Start of manually modified section to handle address assignment for <20.18 and =>20.18
 		if eitherVal := res.Get(path + "intfIpAddress.either.static.staticIpV4AddressSecondary"); eitherVal.Exists() {
 			eitherVal.ForEach(
 				func(_, v gjson.Result) bool {
@@ -1244,6 +1257,7 @@ func (data *TransportManagementVPNInterfaceEthernet) updateFromBody(ctx context.
 				},
 			)
 		}
+		// End of manually modified section to handle address assignment for <20.18 and =>20.18
 		data.Ipv4SecondaryAddresses[i].Address = types.StringNull()
 		data.Ipv4SecondaryAddresses[i].AddressVariable = types.StringNull()
 		if t := r.Get("ipAddress.optionType"); t.Exists() {
@@ -1313,6 +1327,7 @@ func (data *TransportManagementVPNInterfaceEthernet) updateFromBody(ctx context.
 			data.EnableDhcpv6 = types.BoolValue(va.Bool())
 		}
 	} else if t := res.Get(path + "intfIpV6Address.dynamic.dhcpClient.optionType"); t.Exists() {
+		// Backward compatibility for < 20.18
 		va := res.Get(path + "intfIpV6Address.dynamic.dhcpClient.value")
 		if t.String() == "global" {
 			data.EnableDhcpv6 = types.BoolValue(va.Bool())
@@ -1329,6 +1344,7 @@ func (data *TransportManagementVPNInterfaceEthernet) updateFromBody(ctx context.
 			data.Ipv6Address = types.StringValue(va.String())
 		}
 	} else if t := res.Get(path + "intfIpV6Address.static.primaryIpV6Address.address.optionType"); t.Exists() {
+		// Backward compatibility for < 20.18
 		va := res.Get(path + "intfIpV6Address.static.primaryIpV6Address.address.value")
 		if t.String() == "variable" {
 			data.Ipv6AddressVariable = types.StringValue(va.String())
