@@ -82,6 +82,7 @@ description: |-
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_tracker_group` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_gre_feature_associate_tracker` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_ipsec_feature_associate_tracker` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_tag` to `20.15.0`
 
 ## 0.10.0
 
