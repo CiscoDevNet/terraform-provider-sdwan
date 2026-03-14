@@ -658,10 +658,6 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, ver *vers
 				body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType", "global")
 				body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.value", data.Ipv4Address.ValueString())
 			}
-		} else {
-			if data.Ipv4AddressType.ValueString() == "static" {
-				body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType", "default")
-			}
 		}
 
 		if !data.Ipv4SubnetMaskVariable.IsNull() {
@@ -673,10 +669,6 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, ver *vers
 			if true && (data.Ipv4AddressType.ValueString() == "static" || !data.Ipv4AddressTypeVariable.IsNull()) {
 				body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType", "global")
 				body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value", data.Ipv4SubnetMask.ValueString())
-			}
-		} else {
-			if data.Ipv4AddressType.ValueString() == "static" {
-				body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType", "default")
 			}
 		}
 		if true && (data.Ipv4AddressType.ValueString() == "static" || !data.Ipv4AddressTypeVariable.IsNull()) {
@@ -712,10 +704,6 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, ver *vers
 		if data.Ipv4AddressType.IsNull() && data.Ipv4AddressTypeVariable.IsNull() && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType", "default")
 			body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType", "default")
-			body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressSecondary", []interface{}{})
-		}
-		// When static address type is set but no secondary addresses exist, ensure the empty array is emitted.
-		if data.Ipv4AddressType.ValueString() == "static" && len(data.Ipv4SecondaryAddresses) == 0 {
 			body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressSecondary", []interface{}{})
 		}
 	}
