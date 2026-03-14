@@ -7,6 +7,8 @@
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_bgp_feature` to `20.15.0`
 - Fix `Not Defined in Schema Attributes: data.routerPolicy` error in `sdwan_service_routing_eigrp_feature`
 - Add `sdwan_policy_object_security_zone` resource and data source
+- Fix issue where `sdwan_attach_feature_device_template` resource shows unexpected version changes after import
+- Fix issue where `site_list_versions`, `vpn_list_versions` and `region_list_versions` attributes in `sdwan_centralized_policy` and `sdwan_activate_centralized_policy` resources are updated in-place after import
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_eigrp_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_ospf_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_ospf_feature` to `20.15.0`

@@ -310,13 +310,28 @@ func (data *CentralizedPolicy) processImport(ctx context.Context) {
 		}
 		for ii := range data.Definitions[i].Entries {
 			if !data.Definitions[i].Entries[ii].SiteListIds.IsNull() {
-				data.Definitions[i].Entries[ii].SiteListVersions = types.ListNull(types.StringType)
+				count := len(data.Definitions[i].Entries[ii].SiteListIds.Elements())
+				versions := make([]string, count)
+				for j := range versions {
+					versions[j] = "0"
+				}
+				data.Definitions[i].Entries[ii].SiteListVersions, _ = types.ListValueFrom(ctx, types.StringType, versions)
 			}
 			if !data.Definitions[i].Entries[ii].VpnListIds.IsNull() {
-				data.Definitions[i].Entries[ii].VpnListVersions = types.ListNull(types.StringType)
+				count := len(data.Definitions[i].Entries[ii].VpnListIds.Elements())
+				versions := make([]string, count)
+				for j := range versions {
+					versions[j] = "0"
+				}
+				data.Definitions[i].Entries[ii].VpnListVersions, _ = types.ListValueFrom(ctx, types.StringType, versions)
 			}
 			if !data.Definitions[i].Entries[ii].RegionListIds.IsNull() {
-				data.Definitions[i].Entries[ii].RegionListVersions = types.ListNull(types.StringType)
+				count := len(data.Definitions[i].Entries[ii].RegionListIds.Elements())
+				versions := make([]string, count)
+				for j := range versions {
+					versions[j] = "0"
+				}
+				data.Definitions[i].Entries[ii].RegionListVersions, _ = types.ListValueFrom(ctx, types.StringType, versions)
 			}
 		}
 	}
