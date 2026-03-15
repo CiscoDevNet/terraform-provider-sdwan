@@ -84,6 +84,10 @@ attributes:
     - model_name: natDia
       tf_name: nat_dia
       example: true
+      conditional_attribute:
+        conditions:
+          - name: protocol
+            value: nat-route
     - model_name: translateRibMetric
       exclude_test: true
       example: true
