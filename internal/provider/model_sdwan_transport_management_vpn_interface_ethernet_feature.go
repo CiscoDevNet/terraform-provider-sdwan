@@ -441,6 +441,10 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context, 
 				body, _ = sjson.Set(body, path+"intfIpV6Address.either.static.primaryIpV6Address.address.optionType", "global")
 				body, _ = sjson.Set(body, path+"intfIpV6Address.either.static.primaryIpV6Address.address.value", data.Ipv6Address.ValueString())
 			}
+		} else {
+			if data.Ipv6AddressType.ValueString() == "static" {
+				body, _ = sjson.Set(body, path+"intfIpV6Address.either.static.primaryIpV6Address.address.optionType", "default")
+			}
 		}
 	} else {
 		// < 20.18: use legacy intfIpV6Address.dynamic/static sub-paths (no addressType field)

@@ -858,6 +858,10 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 				body, _ = sjson.Set(body, path+"intfIpV6Address.either.static.primaryIpV6Address.address.optionType", "global")
 				body, _ = sjson.Set(body, path+"intfIpV6Address.either.static.primaryIpV6Address.address.value", data.Ipv6Address.ValueString())
 			}
+		} else {
+			if data.Ipv6AddressType.ValueString() == "static" {
+				body, _ = sjson.Set(body, path+"intfIpV6Address.either.static.primaryIpV6Address.address.optionType", "default")
+			}
 		}
 		if true && (data.Ipv6AddressType.ValueString() == "static" || !data.Ipv6AddressTypeVariable.IsNull()) {
 			for _, item := range data.Ipv6SecondaryAddresses {
