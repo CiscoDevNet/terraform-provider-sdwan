@@ -4,13 +4,13 @@ page_title: "sdwan_transport_wan_vpn_interface_ipsec_feature_associate_tracker_f
 subcategory: "Features - Transport"
 description: |-
   This resource can manage a Transport WAN VPN Interface IPSEC Feature Associate Tracker Feature .
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_transport_wan_vpn_interface_ipsec_feature_associate_tracker_feature (Resource)
 
 This resource can manage a Transport WAN VPN Interface IPSEC Feature Associate Tracker Feature .
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 

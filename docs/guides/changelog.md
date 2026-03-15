@@ -16,6 +16,8 @@ description: |-
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_bgp_feature` to `20.15.0`
 - Fix `Not Defined in Schema Attributes: data.routerPolicy` error in `sdwan_service_routing_eigrp_feature`
 - Add `sdwan_policy_object_security_zone` resource and data source
+- Fix issue where `sdwan_attach_feature_device_template` resource shows unexpected version changes after import
+- Fix issue where `site_list_versions`, `vpn_list_versions` and `region_list_versions` attributes in `sdwan_centralized_policy` and `sdwan_activate_centralized_policy` resources are updated in-place after import
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_eigrp_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_routing_ospf_feature` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_routing_ospf_feature` to `20.15.0`
@@ -56,6 +58,31 @@ description: |-
 - Add `sdwan_embedded_security_ngfw_policy` resource and data source
 - Add `sdwan_embedded_security_policy` resource and data source
 - Add `sdwan_application_priority_policy_settings` resource and data source
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_t1_e1_controller_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_interface_ethernet_feature_associate_dhcp_server_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_ethernet_interface_feature_associate_tracker_group_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_ethernet_interface_feature_associate_tracker_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_ethernet_ipsec_feature_associate_dhcp_server_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_ethernet_svi_feature_associate_dhcp_server_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_feature_associate_mulitcast_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_feature_associate_routing_bgp_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_feature_associate_routing_eigrp_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_feature_associate_routing_ospf_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_feature_associate_routing_ospfv3_ipv4_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_service_lan_vpn_feature_associate_routing_ospfv3_ipv6_feature` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_feature_associate_routing_bgp` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_feature_associate_routing_ospf` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_feature_associate_routing_ospfv3_ipv4` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_feature_associate_routing_ospfv3_ipv6` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_cellular_feature_associate_tracker` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_cellular_feature_associate_tracker_group` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_ipv6_tracker` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_ipv6_tracker_group` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_tracker` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_ethernet_feature_associate_tracker_group` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_gre_feature_associate_tracker` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_ipsec_feature_associate_tracker` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_tag` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_management_vpn_interface_ethernet_feature` to `20.15.0`
 
 ## 0.10.0

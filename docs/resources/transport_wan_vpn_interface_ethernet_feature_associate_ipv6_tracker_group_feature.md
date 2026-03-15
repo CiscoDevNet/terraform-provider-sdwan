@@ -4,13 +4,13 @@ page_title: "sdwan_transport_wan_vpn_interface_ethernet_feature_associate_ipv6_t
 subcategory: "Features - Transport"
 description: |-
   This resource can manage a Transport WAN VPN Interface Ethernet Feature Associate IPv6 Tracker Group Feature .
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_transport_wan_vpn_interface_ethernet_feature_associate_ipv6_tracker_group_feature (Resource)
 
 This resource can manage a Transport WAN VPN Interface Ethernet Feature Associate IPv6 Tracker Group Feature .
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 

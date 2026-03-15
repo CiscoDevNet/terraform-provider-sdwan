@@ -4,13 +4,13 @@ page_title: "sdwan_tag Resource - terraform-provider-sdwan"
 subcategory: "Inventory"
 description: |-
   This resource can manage a Tag .
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_tag (Resource)
 
 This resource can manage a Tag .
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 

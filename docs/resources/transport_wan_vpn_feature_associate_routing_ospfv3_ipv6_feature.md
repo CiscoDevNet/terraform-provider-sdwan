@@ -4,13 +4,13 @@ page_title: "sdwan_transport_wan_vpn_feature_associate_routing_ospfv3_ipv6_featu
 subcategory: "Features - Transport"
 description: |-
   This resource can manage a Transport WAN VPN Feature Associate Routing OSPFv3 IPv6 Feature .
-  Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_transport_wan_vpn_feature_associate_routing_ospfv3_ipv6_feature (Resource)
 
 This resource can manage a Transport WAN VPN Feature Associate Routing OSPFv3 IPv6 Feature .
-  - Minimum SD-WAN Manager version: `20.12.0`
+  - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
 
