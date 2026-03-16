@@ -755,12 +755,12 @@ func (data VPNInterfaceCellular) toBody(ctx context.Context) string {
 	}
 
 	if !data.TunnelInterfaceColorRestrictVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipObjectType", "node-only")
+		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipVariableName", data.TunnelInterfaceColorRestrictVariable.ValueString())
 	} else if data.TunnelInterfaceColorRestrict.IsNull() {
 	} else {
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipObjectType", "node-only")
+		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipValue", strconv.FormatBool(data.TunnelInterfaceColorRestrict.ValueBool()))
 	}
