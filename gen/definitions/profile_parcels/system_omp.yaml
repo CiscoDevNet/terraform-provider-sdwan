@@ -105,7 +105,7 @@ attributes:
   - model_name: siteTypesForTransportGateway
     example: type-1
   - model_name: aspathAutoTranslation
-    example: 123
+    example: true
 
 test_prerequisites: |
   resource "sdwan_system_feature_profile" "test" {

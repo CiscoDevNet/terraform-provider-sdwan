@@ -104,8 +104,6 @@ resource "sdwan_transport_wan_vpn_interface_cellular_feature" "test" {
   bandwidth_downstream                           = 21474836
   tunnel_interface                               = true
   per_tunnel_qos                                 = true
-  tunnel_qos_mode                                = "hub"
-  tunnel_bandwidth_percent                       = 82
   tunnel_interface_bind_loopback_tunnel          = "example"
   tunnel_interface_carrier                       = "default"
   tunnel_interface_color                         = "default"

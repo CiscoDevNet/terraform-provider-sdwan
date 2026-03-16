@@ -15,7 +15,7 @@ attributes:
     test_value: sdwan_system_feature_profile.test.id
   - model_name: secondaryRegion
     tf_name: secondary_region_id
-    example: 2
+    exclude_test: true
   - model_name: role
     example: edge-router
   - model_name: enableMrfMigration
@@ -24,10 +24,10 @@ attributes:
   - model_name: migrationBgpCommunity
     example: 100
   - model_name: enableManagementRegion
-    example: false
+    example: true
   - model_name: vrfId
     data_path: [managementRegion]
-    example: false
+    example: 1
   - model_name: gatewayPreference
     data_path: [managementRegion]
     example: 1
