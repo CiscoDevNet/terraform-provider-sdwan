@@ -80,8 +80,8 @@ resource "sdwan_transport_wan_vpn_interface_gre_feature" "test" {
   shutdown                        = true
   tunnel_source_ipv4_address      = "78.1.1.1"
   tunnel_destination_ipv4_address = "79.1.1.1"
-  ip_mtu                          = 1500
-  tcp_mss                         = 1460
+  ipv4_mtu                        = 1500
+  ipv4_tcp_mss                    = 1460
   clear_dont_fragment             = false
   application_tunnel_type         = "none"
 }

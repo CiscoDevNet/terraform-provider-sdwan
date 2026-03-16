@@ -32,5 +32,5 @@ resource "sdwan_system_omp_feature" "example" {
   transport_gateway                = "prefer"
   site_types                       = ["type-1"]
   site_types_for_transport_gateway = ["type-1"]
-  aspath_auto_translation          = 123
+  aspath_auto_translation          = true
 }

@@ -69,10 +69,8 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "test" {
   ipv4_address                        = "9.7.5.4"
   ipv4_subnet_mask                    = "255.255.255.0"
   tunnel_source_ipv4_address          = "1.3.5.88"
-  tunnel_source_ipv4_subnet_mask      = "255.255.255.0"
   tunnel_source_interface             = "GigabitEthernet8"
   tunnel_destination_ipv4_address     = "2.55.67.99"
-  tunnel_destination_ipv4_subnet_mask = "255.255.255.0"
   application_tunnel_type             = "none"
   ike_preshared_key                   = "123"
 }
