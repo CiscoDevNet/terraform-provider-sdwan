@@ -61,7 +61,7 @@ func TestAccSdwanSystemOMPProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_omp_feature.test", "advertise_ipv6_isis", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_omp_feature.test", "ignore_region_path_length", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_omp_feature.test", "transport_gateway", "prefer"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_omp_feature.test", "aspath_auto_translation", "123"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_omp_feature.test", "aspath_auto_translation", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -137,7 +137,7 @@ func testAccSdwanSystemOMPProfileParcelConfig_all() string {
 	config += `	transport_gateway = "prefer"` + "\n"
 	config += `	site_types = ["type-1"]` + "\n"
 	config += `	site_types_for_transport_gateway = ["type-1"]` + "\n"
-	config += `	aspath_auto_translation = 123` + "\n"
+	config += `	aspath_auto_translation = true` + "\n"
 	config += `}` + "\n"
 	return config
 }
