@@ -305,6 +305,10 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context, 
 				body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType", "global")
 				body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.value", data.Ipv4Address.ValueString())
 			}
+		} else {
+			if data.Ipv4AddressType.ValueString() == "static" {
+				body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType", "default")
+			}
 		}
 
 		if !data.Ipv4SubnetMaskVariable.IsNull() {
@@ -316,6 +320,10 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context, 
 			if true && (data.Ipv4AddressType.ValueString() == "static" || !data.Ipv4AddressTypeVariable.IsNull()) {
 				body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType", "global")
 				body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value", data.Ipv4SubnetMask.ValueString())
+			}
+		} else {
+			if data.Ipv4AddressType.ValueString() == "static" {
+				body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType", "default")
 			}
 		}
 		if true && (data.Ipv4AddressType.ValueString() == "static" || !data.Ipv4AddressTypeVariable.IsNull()) {
@@ -791,6 +799,8 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 		} else if t.String() == "global" {
 			data.Ipv4Address = types.StringValue(va.String())
 			data.Ipv4AddressType = types.StringValue("static")
+		} else if t.String() == "default" {
+			data.Ipv4AddressType = types.StringValue("static")
 		}
 	}
 	data.Ipv4SubnetMask = types.StringNull()
@@ -810,6 +820,8 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 			data.Ipv4AddressType = types.StringValue("static")
 		} else if t.String() == "global" {
 			data.Ipv4SubnetMask = types.StringValue(va.String())
+			data.Ipv4AddressType = types.StringValue("static")
+		} else if t.String() == "default" {
 			data.Ipv4AddressType = types.StringValue("static")
 		}
 	}
@@ -1179,6 +1191,8 @@ func (data *TransportManagementVPNInterfaceEthernet) updateFromBody(ctx context.
 		} else if t.String() == "global" {
 			data.Ipv4Address = types.StringValue(va.String())
 			data.Ipv4AddressType = types.StringValue("static")
+		} else if t.String() == "default" {
+			data.Ipv4AddressType = types.StringValue("static")
 		}
 	}
 	data.Ipv4SubnetMask = types.StringNull()
@@ -1198,6 +1212,8 @@ func (data *TransportManagementVPNInterfaceEthernet) updateFromBody(ctx context.
 			data.Ipv4AddressType = types.StringValue("static")
 		} else if t.String() == "global" {
 			data.Ipv4SubnetMask = types.StringValue(va.String())
+			data.Ipv4AddressType = types.StringValue("static")
+		} else if t.String() == "default" {
 			data.Ipv4AddressType = types.StringValue("static")
 		}
 	}
