@@ -3603,6 +3603,7 @@ func (data *ServiceLANVPNInterfaceEthernet) updateFromBody(ctx context.Context, 
 				},
 			)
 		} else {
+			// Backward compatibility for < 20.18
 			res.Get(path + "intfIpV6Address.static.dhcpHelperV6").ForEach(
 				func(_, v gjson.Result) bool {
 					found := false
@@ -3628,6 +3629,7 @@ func (data *ServiceLANVPNInterfaceEthernet) updateFromBody(ctx context.Context, 
 					return true
 				},
 			)
+			data.Ipv6AddressType = types.StringValue("static")
 		}
 		// End of manually modified section to handle address assignment for <20.18 and =>20.18
 		data.Ipv6DhcpHelpers[i].Address = types.StringNull()
