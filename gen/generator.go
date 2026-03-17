@@ -279,6 +279,7 @@ type YamlConfigAttribute struct {
 	DefaultOption           string                         `yaml:"default_option"`
 	IncludeVariableCheck    bool                           `yaml:"include_variable_check"`
 	ResetContainerIfIgnore  bool                           `yaml:"reset_container_if_ignore"`
+	NoOptionType            bool                           `yaml:"no_option_type"`
 }
 
 type YamlConfigConditionalAttribute struct {
@@ -503,6 +504,8 @@ func BuildConditionCheck(cond YamlConfigCondition, context string) string {
 		check = fmt.Sprintf("%s.%s.IsNull()", context, varName)
 	} else if cond.Type == "Bool" {
 		check = fmt.Sprintf("%s.%s.ValueBool() == %s", context, varName, cond.Value)
+	} else if cond.Type == "StringContains" {
+		check = fmt.Sprintf("strings.Contains(%s.%s.ValueString(), \"%s\")", context, varName, cond.Value)
 	} else {
 		// For string conditions, also accept null if the attribute has a matching default value
 		// This is stored in cond.DefaultValue field, populated during template execution
@@ -593,20 +596,28 @@ func BuildConditionalDescription(attr YamlConfigConditionalAttribute) string {
 
 	var parts []string
 	for _, cond := range attr.Conditions {
-		// Special handling for empty string checks to make description more readable
-		if cond.Value == "" {
+		var part string
+		if cond.Type == "StringContains" {
 			if cond.Negate {
-				parts = append(parts, fmt.Sprintf("`%s` being set", cond.Name))
+				part = fmt.Sprintf("`%s` not containing `%s`", cond.Name, cond.Value)
 			} else {
-				parts = append(parts, fmt.Sprintf("`%s` not being set", cond.Name))
+				part = fmt.Sprintf("`%s` containing `%s`", cond.Name, cond.Value)
+			}
+		} else if cond.Value == "" {
+			// Special handling for empty string checks to make description more readable
+			if cond.Negate {
+				part = fmt.Sprintf("`%s` being set", cond.Name)
+			} else {
+				part = fmt.Sprintf("`%s` not being set", cond.Name)
 			}
 		} else {
 			negation := ""
 			if cond.Negate {
 				negation = "not "
 			}
-			parts = append(parts, fmt.Sprintf("`%s` %sequal to `%s`", cond.Name, negation, cond.Value))
+			part = fmt.Sprintf("`%s` %sequal to `%s`", cond.Name, negation, cond.Value)
 		}
+		parts = append(parts, part)
 	}
 
 	if len(parts) == 0 {

@@ -6,7 +6,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
   shutdown                     = true
   interface_name               = "GigabitEthernet1"
   interface_description        = "WAN"
-  ipv4_configuration_type      = "static"
+  ipv4_address_type            = "static"
   ipv4_address                 = "1.2.3.4"
   ipv4_subnet_mask             = "0.0.0.0"
   ipv4_secondary_addresses = [
@@ -16,7 +16,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
     }
   ]
   ipv4_dhcp_helper                               = ["1.2.3.4"]
-  ipv6_configuration_type                        = "static"
+  ipv6_address_type                              = "static"
   ipv6_address                                   = "2001:0:0:1::1/64"
   iperf_server                                   = "example"
   block_non_source_ip                            = false

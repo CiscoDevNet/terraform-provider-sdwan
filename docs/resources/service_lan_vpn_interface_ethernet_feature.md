@@ -23,7 +23,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
   shutdown                   = false
   interface_name             = "GigabitEthernet3"
   interface_description      = "LAN"
-  ipv4_configuration_type    = "static"
+  ipv4_address_type          = "static"
   ipv4_address               = "1.2.3.4"
   ipv4_subnet_mask           = "0.0.0.0"
   ipv4_secondary_addresses = [
@@ -32,8 +32,8 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
       subnet_mask = "0.0.0.0"
     }
   ]
-  ipv4_dhcp_helper        = ["1.2.3.4"]
-  ipv6_configuration_type = "static"
+  ipv4_dhcp_helper  = ["1.2.3.4"]
+  ipv6_address_type = "static"
   ipv6_dhcp_helpers = [
     {
       address           = "2001:0:0:1::0"
@@ -146,16 +146,16 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `duplex` (String) Duplex mode, Attribute conditional on `port_channel_interface` not equal to `true`
   - Choices: `full`, `half`, `auto`
 - `duplex_variable` (String) Variable name, Attribute conditional on `port_channel_interface` not equal to `true`
-- `enable_dhcpv6` (Boolean) Enable DHCPv6, Attribute conditional on `ipv6_configuration_type` equal to `dynamic`
+- `enable_dhcpv6` (Boolean) Enable DHCPv6, Attribute conditional on `ipv6_address_type` equal to `dynamic` or `ipv6_address_type_variable` being set
 - `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `true`
 - `icmp_redirect_disable_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `interface_description` (String)
 - `interface_description_variable` (String) Variable name
-- `interface_mtu` (Number) Interface MTU, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `interface_mtu` (Number) Interface MTU, Attribute conditional on `port_channel_member_interface` not equal to `true` and `interface_name` not containing `.`
   - Range: `1500`-`9216`
   - Default value: `1500`
-- `interface_mtu_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `interface_mtu_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true` and `interface_name` not containing `.`
 - `interface_name` (String)
 - `interface_name_variable` (String) Variable name
 - `ip_directed_broadcast` (Boolean) IP Directed-Broadcast, Attribute conditional on `port_channel_member_interface` not equal to `true`
@@ -165,15 +165,15 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
   - Range: `576`-`9216`
   - Default value: `1500`
 - `ip_mtu_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
-- `ipv4_address` (String) IP Address, Attribute conditional on `ipv4_configuration_type` equal to `static`
-- `ipv4_address_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` equal to `static`
-- `ipv4_configuration_type` (String) IPv4 Configuration Type, Attribute conditional on `port_channel_member_interface` not equal to `true`
-  - Choices: `dynamic`, `static`, `none`
-  - Default value: `dynamic`
-- `ipv4_dhcp_distance` (Number) DHCP Distance, Attribute conditional on `ipv4_configuration_type` equal to `dynamic`
+- `ipv4_address` (String) IP Address, Attribute conditional on `ipv4_address_type` equal to `static` or `ipv4_address_type_variable` being set
+- `ipv4_address_type` (String) address type, Attribute conditional on `port_channel_member_interface` not equal to `true`
+  - Choices: `dynamic`, `static`
+- `ipv4_address_type_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `ipv4_address_variable` (String) Variable name, Attribute conditional on `ipv4_address_type` equal to `static` or `ipv4_address_type_variable` being set
+- `ipv4_dhcp_distance` (Number) DHCP Distance, Attribute conditional on `ipv4_address_type` equal to `dynamic` or `ipv4_address_type_variable` being set
   - Range: `1`-`255`
   - Default value: `1`
-- `ipv4_dhcp_distance_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` equal to `dynamic`
+- `ipv4_dhcp_distance_variable` (String) Variable name, Attribute conditional on `ipv4_address_type` equal to `dynamic` or `ipv4_address_type_variable` being set
 - `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8), Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `ipv4_dhcp_helper_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `ipv4_nat` (Boolean) enable Network Address Translation on this interface, Attribute conditional on `port_channel_member_interface` not equal to `true`
@@ -198,21 +198,21 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
   - Range: `1`-`8947`
   - Default value: `1`
 - `ipv4_nat_udp_timeout_variable` (String) Variable name
-- `ipv4_secondary_addresses` (Attributes List) Secondary IpV4 Addresses, Attribute conditional on `ipv4_configuration_type` equal to `static` (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
-- `ipv4_subnet_mask` (String) Subnet Mask, Attribute conditional on `ipv4_configuration_type` equal to `static`
-  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
-- `ipv4_subnet_mask_variable` (String) Variable name, Attribute conditional on `ipv4_configuration_type` equal to `static`
+- `ipv4_secondary_addresses` (Attributes List) Secondary IpV4 Addresses, Attribute conditional on `ipv4_address_type` equal to `static` or `ipv4_address_type_variable` being set (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
+- `ipv4_subnet_mask` (String) Subnet Mask, Attribute conditional on `ipv4_address_type` equal to `static` or `ipv4_address_type_variable` being set
+  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.248.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
+- `ipv4_subnet_mask_variable` (String) Variable name, Attribute conditional on `ipv4_address_type` equal to `static` or `ipv4_address_type_variable` being set
 - `ipv4_vrrps` (Attributes List) Enable VRRP, Attribute conditional on `port_channel_member_interface` not equal to `true` (see [below for nested schema](#nestedatt--ipv4_vrrps))
-- `ipv6_address` (String) IPv6 Address Secondary, Attribute conditional on `ipv6_configuration_type` equal to `static`
-- `ipv6_address_variable` (String) Variable name, Attribute conditional on `ipv6_configuration_type` equal to `static`
-- `ipv6_configuration_type` (String) IPv6 Configuration Type, Attribute conditional on `port_channel_member_interface` not equal to `true`
-  - Choices: `dynamic`, `static`, `none`
-  - Default value: `none`
-- `ipv6_dhcp_helpers` (Attributes List) DHCPv6 Helper, Attribute conditional on `ipv6_configuration_type` equal to `static` (see [below for nested schema](#nestedatt--ipv6_dhcp_helpers))
-- `ipv6_dhcp_secondary_addresses` (Attributes List) secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` equal to `dynamic` (see [below for nested schema](#nestedatt--ipv6_dhcp_secondary_addresses))
+- `ipv6_address` (String) IPv6 Address Secondary, Attribute conditional on `ipv6_address_type` equal to `static` or `ipv6_address_type_variable` being set
+- `ipv6_address_type` (String) address type, Attribute conditional on `port_channel_member_interface` not equal to `true`
+  - Choices: `dynamic`, `static`
+- `ipv6_address_type_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `ipv6_address_variable` (String) Variable name, Attribute conditional on `ipv6_address_type` equal to `static` or `ipv6_address_type_variable` being set
+- `ipv6_dhcp_helpers` (Attributes List) DHCPv6 Helper, Attribute conditional on `ipv6_address_type` equal to `static` or `ipv6_address_type_variable` being set (see [below for nested schema](#nestedatt--ipv6_dhcp_helpers))
+- `ipv6_dhcp_secondary_addresses` (Attributes List) secondary IPv6 addresses, Attribute conditional on `ipv6_address_type` equal to `dynamic` or `ipv6_address_type_variable` being set (see [below for nested schema](#nestedatt--ipv6_dhcp_secondary_addresses))
 - `ipv6_nat` (Boolean) enable Network Address Translation ipv6 on this interface, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
-- `ipv6_secondary_addresses` (Attributes List) Static secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` equal to `static` (see [below for nested schema](#nestedatt--ipv6_secondary_addresses))
+- `ipv6_secondary_addresses` (Attributes List) Static secondary IPv6 addresses, Attribute conditional on `ipv6_address_type` equal to `static` or `ipv6_address_type_variable` being set (see [below for nested schema](#nestedatt--ipv6_secondary_addresses))
 - `ipv6_vrrps` (Attributes List) Enable VRRP Ipv6, Attribute conditional on `port_channel_member_interface` not equal to `true` (see [below for nested schema](#nestedatt--ipv6_vrrps))
 - `load_interval` (Number) Interval for interface load calculation
   - Range: `30`-`600`
@@ -259,7 +259,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `shutdown` (Boolean) - Default value: `true`
 - `shutdown_variable` (String) Variable name
 - `speed` (String) Set interface speed, Attribute conditional on `port_channel_interface` not equal to `true`
-  - Choices: `10`, `100`, `1000`, `2500`, `10000`, `25000`
+  - Choices: `10`, `100`, `1000`, `2500`, `5000`, `10000`, `25000`
 - `speed_variable` (String) Variable name, Attribute conditional on `port_channel_interface` not equal to `true`
 - `static_nats` (Attributes List) static NAT (see [below for nested schema](#nestedatt--static_nats))
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes, Attribute conditional on `port_channel_member_interface` not equal to `true`
@@ -303,7 +303,7 @@ Optional:
 - `address` (String) IpV4 Address
 - `address_variable` (String) Variable name
 - `subnet_mask` (String) Subnet Mask
-  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
+  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.248.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `subnet_mask_variable` (String) Variable name
 
 
@@ -347,7 +347,7 @@ Optional:
 - `address` (String) Ip Address
 - `address_variable` (String) Variable name
 - `subnet_mask` (String) Subnet Mask
-  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
+  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.248.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `subnet_mask_variable` (String) Variable name
 
 

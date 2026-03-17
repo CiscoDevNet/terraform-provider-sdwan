@@ -1,6 +1,5 @@
 ---
-# Manual resource - Modals toBody is manually configured to support sub interfaces
-# Manual resource - Modals toBody, fromBody, updateFromBody are manually configured to support port-channel subinterfaces
+# Manual resource - Modals toBody, fromBody, updateFromBody are manually configured to support "either" address option for 20.18
 name: Transport WAN VPN Interface Ethernet
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/ethernet
 minimum_version: 20.15.0
@@ -89,6 +88,7 @@ attributes:
     tf_name: port_channel_lacp_member_links
     data_path: [portChannel, mainInterface, lacpModeMainInterface]
     exclude_test: true
+    always_include: true
     conditional_attribute:
       conditions:
         - name: port_channel_mode
@@ -125,6 +125,7 @@ attributes:
     tf_name: port_channel_static_member_links
     data_path: [portChannel, mainInterface, staticModeMainInterface]
     exclude_test: true
+    always_include: true
     conditional_attribute:
       conditions:
         - name: port_channel_mode
@@ -138,6 +139,7 @@ attributes:
   - model_name: wan
     tf_name: port_channel_subinterface
     type: Bool
+    no_option_type: true
     exclude_test: true
     data_path: [portChannel, subInterface]
     conditional_attribute:
@@ -149,13 +151,9 @@ attributes:
     tf_name: port_channel_member_interface
     example: false
     exclude_test: true
-  - tf_name: ipv4_configuration_type
-    type: String
-    tf_only: true
-    default_value: "dynamic"
-    default_value_present: true
-    description: IPv4 Configuration Type
-    enum_values: [dynamic, static, none]
+  - model_name: addressType
+    tf_name: ipv4_address_type
+    data_path: [intfIpAddress, either]
     example: static
     minimum_test_value: '"static"'
     conditional_attribute:
@@ -166,40 +164,56 @@ attributes:
           negate: true
   - model_name: dynamicDhcpDistance
     tf_name: ipv4_dhcp_distance
-    data_path: [intfIpAddress, dynamic]
+    data_path: [intfIpAddress, either, dynamic]
     conditional_attribute:
+      operator: or
       conditions:
-        - name: ipv4_configuration_type
+        - name: ipv4_address_type
           value: dynamic
+        - name: ipv4_address_type_variable
+          value: ''
+          negate: true
     default_value_present: true
     default_value: 1
     example: 1
     exclude_test: true
   - model_name: ipAddress
     tf_name: ipv4_address
-    data_path: [intfIpAddress, static, staticIpV4AddressPrimary]
+    data_path: [intfIpAddress, either, static, staticIpV4AddressPrimary]
     conditional_attribute:
+      operator: or
       conditions:
-        - name: ipv4_configuration_type
+        - name: ipv4_address_type
           value: static
+        - name: ipv4_address_type_variable
+          value: ''
+          negate: true
     example: 1.2.3.4
     minimum_test_value: '"1.2.3.4"'
   - model_name: subnetMask
     tf_name: ipv4_subnet_mask
-    data_path: [intfIpAddress, static, staticIpV4AddressPrimary]
+    data_path: [intfIpAddress, either, static, staticIpV4AddressPrimary]
     conditional_attribute:
+      operator: or
       conditions:
-        - name: ipv4_configuration_type
+        - name: ipv4_address_type
           value: static
+        - name: ipv4_address_type_variable
+          value: ''
+          negate: true
     example: 0.0.0.0
     minimum_test_value: '"0.0.0.0"'
   - model_name: staticIpV4AddressSecondary
     tf_name: ipv4_secondary_addresses
-    data_path: [intfIpAddress, static]
+    data_path: [intfIpAddress, either, static]
     conditional_attribute:
+      operator: or
       conditions:
-        - name: ipv4_configuration_type
+        - name: ipv4_address_type
           value: static
+        - name: ipv4_address_type_variable
+          value: ''
+          negate: true
     attributes:
     - model_name: ipAddress
       tf_name: address
@@ -216,13 +230,9 @@ attributes:
           value: true
           type: Bool
           negate: true
-  - tf_name: ipv6_configuration_type
-    type: String
-    tf_only: true
-    default_value: "none"
-    default_value_present: true
-    description: IPv6 Configuration Type
-    enum_values: [dynamic, static, none]
+  - model_name: addressType
+    tf_name: ipv6_address_type
+    data_path: [intfIpV6Address, either]
     example: static
     conditional_attribute:
       conditions:
@@ -232,20 +242,28 @@ attributes:
           negate: true
   - model_name: dhcpClient
     tf_name: enable_dhcpv6
-    data_path: [intfIpV6Address, dynamic]
+    data_path: [intfIpV6Address, either, dynamic]
     conditional_attribute:
+      operator: or
       conditions:
-        - name: ipv6_configuration_type
+        - name: ipv6_address_type
           value: dynamic
+        - name: ipv6_address_type_variable
+          value: ''
+          negate: true
     exclude_test: true
     example: false
   - model_name: secondaryIpV6Address
     tf_name: ipv6_dhcp_secondary_address
-    data_path: [intfIpV6Address, dynamic]
+    data_path: [intfIpV6Address, either, dynamic]
     conditional_attribute:
+      operator: or
       conditions:
-        - name: ipv6_configuration_type
+        - name: ipv6_address_type
           value: dynamic
+        - name: ipv6_address_type_variable
+          value: ''
+          negate: true
     exclude_null: true
     exclude_test: true
     attributes:
@@ -254,19 +272,27 @@ attributes:
         example: 2001:0:0:1::2/64
   - model_name: address
     tf_name: ipv6_address
-    data_path: [intfIpV6Address, static, primaryIpV6Address]
+    data_path: [intfIpV6Address, either, static, primaryIpV6Address]
     conditional_attribute:
+      operator: or
       conditions:
-        - name: ipv6_configuration_type
+        - name: ipv6_address_type
           value: static
+        - name: ipv6_address_type_variable
+          value: ''
+          negate: true
     example: 2001:0:0:1::1/64
   - model_name: secondaryIpV6Address
     tf_name: ipv6_secondary_addresses
-    data_path: [intfIpV6Address, static]
+    data_path: [intfIpV6Address, either, static]
     conditional_attribute:
+      operator: or
       conditions:
-        - name: ipv6_configuration_type
+        - name: ipv6_address_type
           value: static
+        - name: ipv6_address_type_variable
+          value: ''
+          negate: true
     exclude_null: true
     exclude_test: true
     attributes:
@@ -1167,6 +1193,10 @@ attributes:
         - name: port_channel_member_interface
           value: true
           type: Bool
+          negate: true
+        - name: interface_name
+          value: "."
+          type: StringContains
           negate: true
   - model_name: tcpMss
     data_path: [advanced]

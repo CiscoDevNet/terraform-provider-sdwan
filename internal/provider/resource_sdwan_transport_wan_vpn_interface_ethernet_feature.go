@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -275,45 +276,49 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				MarkdownDescription: helpers.NewAttributeDescription("Port-Channel member interface on/off").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"ipv4_configuration_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv4 Configuration Type, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddStringEnumDescription("dynamic", "static", "none").AddDefaultValueDescription("dynamic").String,
+			"ipv4_address_type": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("address type, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddStringEnumDescription("dynamic", "static").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("dynamic", "static", "none"),
+					stringvalidator.OneOf("dynamic", "static"),
 				},
 			},
+			"ipv4_address_type_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
+				Optional:            true,
+			},
 			"ipv4_dhcp_distance": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("DHCP Distance, Attribute conditional on `ipv4_configuration_type` equal to `dynamic`").AddIntegerRangeDescription(1, 255).AddDefaultValueDescription("1").String,
+				MarkdownDescription: helpers.NewAttributeDescription("DHCP Distance, Attribute conditional on `ipv4_address_type` equal to `dynamic` or `ipv4_address_type_variable` being set").AddIntegerRangeDescription(1, 255).AddDefaultValueDescription("1").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 255),
 				},
 			},
 			"ipv4_dhcp_distance_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv4_configuration_type` equal to `dynamic`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv4_address_type` equal to `dynamic` or `ipv4_address_type_variable` being set").String,
 				Optional:            true,
 			},
 			"ipv4_address": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IP Address, Attribute conditional on `ipv4_configuration_type` equal to `static`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IP Address, Attribute conditional on `ipv4_address_type` equal to `static` or `ipv4_address_type_variable` being set").String,
 				Optional:            true,
 			},
 			"ipv4_address_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv4_configuration_type` equal to `static`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv4_address_type` equal to `static` or `ipv4_address_type_variable` being set").String,
 				Optional:            true,
 			},
 			"ipv4_subnet_mask": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Subnet Mask, Attribute conditional on `ipv4_configuration_type` equal to `static`").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Subnet Mask, Attribute conditional on `ipv4_address_type` equal to `static` or `ipv4_address_type_variable` being set").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.248.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0"),
+					stringvalidator.OneOf("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.248.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0"),
 				},
 			},
 			"ipv4_subnet_mask_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv4_configuration_type` equal to `static`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv4_address_type` equal to `static` or `ipv4_address_type_variable` being set").String,
 				Optional:            true,
 			},
 			"ipv4_secondary_addresses": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Secondary IpV4 Addresses, Attribute conditional on `ipv4_configuration_type` equal to `static`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Secondary IpV4 Addresses, Attribute conditional on `ipv4_address_type` equal to `static` or `ipv4_address_type_variable` being set").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -329,10 +334,10 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 							Optional:            true,
 						},
 						"subnet_mask": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Subnet Mask").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Subnet Mask").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.248.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.OneOf("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0"),
+								stringvalidator.OneOf("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.248.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0"),
 							},
 						},
 						"subnet_mask_variable": schema.StringAttribute{
@@ -351,19 +356,23 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
-			"ipv6_configuration_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv6 Configuration Type, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddStringEnumDescription("dynamic", "static", "none").AddDefaultValueDescription("none").String,
+			"ipv6_address_type": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("address type, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddStringEnumDescription("dynamic", "static").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("dynamic", "static", "none"),
+					stringvalidator.OneOf("dynamic", "static"),
 				},
 			},
+			"ipv6_address_type_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
+				Optional:            true,
+			},
 			"enable_dhcpv6": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable DHCPv6, Attribute conditional on `ipv6_configuration_type` equal to `dynamic`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable DHCPv6, Attribute conditional on `ipv6_address_type` equal to `dynamic` or `ipv6_address_type_variable` being set").String,
 				Optional:            true,
 			},
 			"ipv6_dhcp_secondary_address": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` equal to `dynamic`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("secondary IPv6 addresses, Attribute conditional on `ipv6_address_type` equal to `dynamic` or `ipv6_address_type_variable` being set").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -382,18 +391,18 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				},
 			},
 			"ipv6_address": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv6 Address Secondary, Attribute conditional on `ipv6_configuration_type` equal to `static`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv6 Address Secondary, Attribute conditional on `ipv6_address_type` equal to `static` or `ipv6_address_type_variable` being set").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(\/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
 				},
 			},
 			"ipv6_address_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv6_configuration_type` equal to `static`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `ipv6_address_type` equal to `static` or `ipv6_address_type_variable` being set").String,
 				Optional:            true,
 			},
 			"ipv6_secondary_addresses": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Static secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` equal to `static`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Static secondary IPv6 addresses, Attribute conditional on `ipv6_address_type` equal to `static` or `ipv6_address_type_variable` being set").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -1411,14 +1420,14 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"interface_mtu": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddIntegerRangeDescription(1500, 9216).AddDefaultValueDescription("1500").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes, Attribute conditional on `port_channel_member_interface` not equal to `true` and `interface_name` not containing `.`").AddIntegerRangeDescription(1500, 9216).AddDefaultValueDescription("1500").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1500, 9216),
 				},
 			},
 			"interface_mtu_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true` and `interface_name` not containing `.`").String,
 				Optional:            true,
 			},
 			"tcp_mss": schema.Int64Attribute{
@@ -1433,10 +1442,10 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"speed": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set interface speed, Attribute conditional on `port_channel_interface` not equal to `true`").AddStringEnumDescription("10", "100", "1000", "2500", "10000", "25000").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set interface speed, Attribute conditional on `port_channel_interface` not equal to `true`").AddStringEnumDescription("10", "100", "1000", "2500", "5000", "10000", "25000").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("10", "100", "1000", "2500", "10000", "25000"),
+					stringvalidator.OneOf("10", "100", "1000", "2500", "5000", "10000", "25000"),
 				},
 			},
 			"speed_variable": schema.StringAttribute{
@@ -1536,7 +1545,6 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Configure(_ cont
 
 // End of section. //template:end model
 
-// Section below is generated&owned by "gen/generator.go". //template:begin create
 func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan TransportWANVPNInterfaceEthernet
 
@@ -1549,8 +1557,10 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Create(ctx conte
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+
 	// Create object
-	body := plan.toBody(ctx)
+	body := plan.toBody(ctx, ver)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -1568,8 +1578,6 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Create(ctx conte
 
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
-
-// End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
 func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
@@ -1618,7 +1626,6 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Read(ctx context
 
 // End of section. //template:end read
 
-// Section below is generated&owned by "gen/generator.go". //template:begin update
 func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var plan, state TransportWANVPNInterfaceEthernet
 
@@ -1637,7 +1644,9 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Update(ctx conte
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+
+	body := plan.toBody(ctx, ver)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
@@ -1651,8 +1660,6 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Update(ctx conte
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 }
-
-// End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
 func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {

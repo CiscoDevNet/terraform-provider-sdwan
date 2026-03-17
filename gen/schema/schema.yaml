@@ -91,6 +91,7 @@ attribute:
   include_default_option: bool(required=False) # If true will always include the default option type in the payload when the attribute value is null
   include_variable_check: bool(required=False) # UX1.0, If true will check for both "variableName" and "variable" vipType values in the fromBody method during read operation.
   reset_container_if_ignore: bool(required=False) # When true, resets the container attribute during read operations if the attribute's vipType is set to ignore.
+  no_option_type: bool(required=False) # If true, the attribute is serialized as a bare value (no optionType/value envelope) in the API payload. Use for fields that the API stores as a plain JSON value rather than the standard {"optionType":"global","value":...} object. fromBody/updateFromBody will also read the value directly from the path without an optionType wrapper.
 conditional_attribute:
   operator: enum('and', 'or', required=False) # Logical operator between conditions (default: 'and')
   conditions: list(include('condition')) # List of conditions (single or multiple)
@@ -98,5 +99,5 @@ conditional_attribute:
 condition:
   name: str() # Reference to other attribute
   value: any(str(), bool()) # Attribute value to check
-  type: enum('String', 'Bool', required=False) # Attribute value type (default: String)
+  type: enum('String', 'Bool', 'StringContains', required=False) # Attribute value type: String (equality check), Bool (boolean equality), StringContains (substring check). Default: String.
   negate: bool(required=False) # If true, condition passes when value does NOT match (default: false)
