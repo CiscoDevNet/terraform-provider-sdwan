@@ -1,4 +1,4 @@
-## 0.11.0 (Unreleased)
+## 0.11.0
 
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_qos_policy` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_dns_security_policy` to `20.15.0`
