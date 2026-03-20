@@ -1,4 +1,4 @@
-## 0.11.0 (Unreleased)
+## 0.11.0
 
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_qos_policy` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_dns_security_policy` to `20.15.0`
@@ -74,6 +74,8 @@
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_gre_feature_associate_tracker` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_wan_vpn_interface_ipsec_feature_associate_tracker` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_tag` to `20.15.0`
+- BREAKING CHANGE: Bump the minimum supported version of `sdwan_transport_management_vpn_interface_ethernet_feature` to `20.15.0`
+- BREAKING CHANGE: add support for 20.18 and rename `ipv4_configuration_type` and `ipv6_configuration_type` parameters to `ipv4_address_type` and `ipv6_address_type` in `sdwan_transport_management_vpn_interface_ethernet_feature`, `sdwan_transport_wan_vpn_interface_ethernet_feature` and `sdwan_service_lan_vpn_interface_ethernet_feature`
 
 ## 0.10.0
 

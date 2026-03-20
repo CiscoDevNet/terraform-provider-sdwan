@@ -96,7 +96,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "test" {
   feature_profile_id           = sdwan_transport_feature_profile.test.id
   transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id
   interface_name               = "GigabitEthernet1"
-  ipv4_configuration_type      = "static"
+  ipv4_address_type      = "static"
   ipv4_address                 = "1.2.3.4"
   ipv4_subnet_mask             = "0.0.0.0"
 }

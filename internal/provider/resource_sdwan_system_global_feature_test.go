@@ -58,8 +58,8 @@ func TestAccSdwanSystemGlobalProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_global_feature.test", "ssh_version", "2"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_global_feature.test", "lacp_system_priority", "1234"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_global_feature.test", "etherchannel_flow_load_balance", "src-ip"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_global_feature.test", "etherchannel_vlan_load_balance", "123"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_global_feature.test", "bgp_community_new_format", "123"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_global_feature.test", "etherchannel_vlan_load_balance", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_global_feature.test", "bgp_community_new_format", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -130,8 +130,8 @@ func testAccSdwanSystemGlobalProfileParcelConfig_all() string {
 	config += `	ssh_version = "2"` + "\n"
 	config += `	lacp_system_priority = 1234` + "\n"
 	config += `	etherchannel_flow_load_balance = "src-ip"` + "\n"
-	config += `	etherchannel_vlan_load_balance = 123` + "\n"
-	config += `	bgp_community_new_format = 123` + "\n"
+	config += `	etherchannel_vlan_load_balance = true` + "\n"
+	config += `	bgp_community_new_format = true` + "\n"
 	config += `}` + "\n"
 	return config
 }

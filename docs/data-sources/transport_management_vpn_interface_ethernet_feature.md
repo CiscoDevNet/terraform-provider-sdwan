@@ -53,10 +53,11 @@ data "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
 - `ip_mtu` (Number) IP MTU for GigabitEthernet main <576..Interface MTU>, GigabitEthernet subinterface <576..9216>, Other Interfaces <576..2000> in bytes
 - `ip_mtu_variable` (String) Variable name
 - `ipv4_address` (String) IP Address
+- `ipv4_address_type` (String) address type
+- `ipv4_address_type_variable` (String) Variable name
 - `ipv4_address_variable` (String) Variable name
 - `ipv4_auto_detect_bandwidth` (Boolean) Interface auto detect bandwidth
 - `ipv4_auto_detect_bandwidth_variable` (String) Variable name
-- `ipv4_configuration_type` (String) IPv4 Configuration Type
 - `ipv4_dhcp_distance` (Number) DHCP Distance
 - `ipv4_dhcp_distance_variable` (String) Variable name
 - `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
@@ -67,8 +68,9 @@ data "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
 - `ipv4_subnet_mask` (String) Subnet Mask
 - `ipv4_subnet_mask_variable` (String) Variable name
 - `ipv6_address` (String) IPv6 Address Secondary
+- `ipv6_address_type` (String) address type
+- `ipv6_address_type_variable` (String) Variable name
 - `ipv6_address_variable` (String) Variable name
-- `ipv6_configuration_type` (String) IPv6 Configuration Type
 - `load_interval` (Number) Interval for interface load calculation
 - `load_interval_variable` (String) Variable name
 - `mac_address` (String) MAC Address

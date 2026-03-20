@@ -44,8 +44,8 @@ resource "sdwan_system_global_feature" "example" {
   ssh_version                    = "2"
   lacp_system_priority           = 1234
   etherchannel_flow_load_balance = "src-ip"
-  etherchannel_vlan_load_balance = 123
-  bgp_community_new_format       = 123
+  etherchannel_vlan_load_balance = true
+  bgp_community_new_format       = true
 }
 ```
 

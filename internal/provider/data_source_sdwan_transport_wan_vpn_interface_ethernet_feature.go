@@ -227,8 +227,12 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 				MarkdownDescription: "Port-Channel member interface on/off",
 				Computed:            true,
 			},
-			"ipv4_configuration_type": schema.StringAttribute{
-				MarkdownDescription: "IPv4 Configuration Type",
+			"ipv4_address_type": schema.StringAttribute{
+				MarkdownDescription: "address type",
+				Computed:            true,
+			},
+			"ipv4_address_type_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
 			"ipv4_dhcp_distance": schema.Int64Attribute{
@@ -288,8 +292,12 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"ipv6_configuration_type": schema.StringAttribute{
-				MarkdownDescription: "IPv6 Configuration Type",
+			"ipv6_address_type": schema.StringAttribute{
+				MarkdownDescription: "address type",
+				Computed:            true,
+			},
+			"ipv6_address_type_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
 			"enable_dhcpv6": schema.BoolAttribute{

@@ -113,10 +113,10 @@ attributes:
     example: src-ip
   - model_name: etherchannelVlanLoadBalance
     data_path: [services_global, services_ip]
-    example: 123
+    example: true
   - model_name: bgpCommunityNewFormat
     data_path: [services_global, services_ip]
-    example: 123
+    example: true
 
 test_prerequisites: |
   resource "sdwan_system_feature_profile" "test" {
