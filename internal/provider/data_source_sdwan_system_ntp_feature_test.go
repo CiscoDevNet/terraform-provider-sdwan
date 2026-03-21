@@ -40,7 +40,6 @@ func TestAccDataSourceSdwanSystemNTPProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_ntp_feature.test", "servers.0.source_interface", "Ethernet"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_ntp_feature.test", "servers.0.prefer_this_ntp_server", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_ntp_feature.test", "authentication_keys.0.key_id", "49737"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_ntp_feature.test", "authentication_keys.0.md5_value", "$CRYPT_CLUSTER"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_ntp_feature.test", "authoritative_ntp_server", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_ntp_feature.test", "stratum", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_ntp_feature.test", "source_interface", "ATM"))

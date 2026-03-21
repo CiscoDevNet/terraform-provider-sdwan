@@ -234,6 +234,17 @@ func (data *TransportCellularProfile) fromBody(ctx context.Context, res gjson.Re
 		}
 		data.RequiresAuthentication = types.BoolValue(true)
 	}
+	data.ProfilePassword = types.StringNull()
+	data.ProfilePasswordVariable = types.StringNull()
+	if t := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.password.optionType"); t.Exists() {
+		va := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.password.value")
+		if t.String() == "variable" {
+			data.ProfilePasswordVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.ProfilePassword = types.StringValue(va.String())
+		}
+		data.RequiresAuthentication = types.BoolValue(true)
+	}
 	data.PacketDataNetworkType = types.StringNull()
 	data.PacketDataNetworkTypeVariable = types.StringNull()
 	if t := res.Get(path + "profileConfig.profileInfo.pdnType.optionType"); t.Exists() {

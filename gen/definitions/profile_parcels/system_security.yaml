@@ -57,7 +57,7 @@ attributes:
         tf_name: crypto_algorithm
         example: aes-128-cmac
       - model_name: keyString
-        write_only: true
+        encrypted: true
         example: abcabc
       - model_name: local
         tf_name: send_life_time_local
