@@ -28,7 +28,7 @@ attributes:
         id: true
         example: User1
       - model_name: password
-        write_only: true
+        encrypted: true
         example: cisco123
       - model_name: privilege
         example: 15
@@ -65,7 +65,7 @@ attributes:
           - model_name: retransmit
             example: 3
           - model_name: key
-            write_only: true
+            encrypted: true
             example: cisco123
           - model_name: secretKey
             example: cisco123
@@ -94,7 +94,7 @@ attributes:
           - model_name: timeout
             example: 5
           - model_name: key
-            write_only: true
+            encrypted: true
             example: cisco123
           - model_name: secretKey
             example: cisco123

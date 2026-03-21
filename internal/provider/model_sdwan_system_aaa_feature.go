@@ -763,6 +763,16 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 					item.Name = types.StringValue(va.String())
 				}
 			}
+			item.Password = types.StringNull()
+			item.PasswordVariable = types.StringNull()
+			if t := v.Get("password.optionType"); t.Exists() {
+				va := v.Get("password.value")
+				if t.String() == "variable" {
+					item.PasswordVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.Password = types.StringValue(va.String())
+				}
+			}
 			item.Privilege = types.StringNull()
 			item.PrivilegeVariable = types.StringNull()
 			if t := v.Get("privilege.optionType"); t.Exists() {
@@ -885,6 +895,16 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.Retransmit = types.Int64Value(va.Int())
 						}
 					}
+					cItem.Key = types.StringNull()
+					cItem.KeyVariable = types.StringNull()
+					if t := cv.Get("key.optionType"); t.Exists() {
+						va := cv.Get("key.value")
+						if t.String() == "variable" {
+							cItem.KeyVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
+							cItem.Key = types.StringValue(va.String())
+						}
+					}
 					cItem.SecretKey = types.StringNull()
 					cItem.SecretKeyVariable = types.StringNull()
 					if t := cv.Get("secretKey.optionType"); t.Exists() {
@@ -981,6 +1001,16 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.TimeoutVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
 							cItem.Timeout = types.Int64Value(va.Int())
+						}
+					}
+					cItem.Key = types.StringNull()
+					cItem.KeyVariable = types.StringNull()
+					if t := cv.Get("key.optionType"); t.Exists() {
+						va := cv.Get("key.value")
+						if t.String() == "variable" {
+							cItem.KeyVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
+							cItem.Key = types.StringValue(va.String())
 						}
 					}
 					cItem.SecretKey = types.StringNull()

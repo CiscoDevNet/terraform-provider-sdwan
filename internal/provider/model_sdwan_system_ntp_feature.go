@@ -596,16 +596,6 @@ func (data *SystemNTP) updateFromBody(ctx context.Context, res gjson.Result) {
 				data.AuthenticationKeys[i].KeyId = types.Int64Value(va.Int())
 			}
 		}
-		data.AuthenticationKeys[i].Md5Value = types.StringNull()
-		data.AuthenticationKeys[i].Md5ValueVariable = types.StringNull()
-		if t := r.Get("md5Value.optionType"); t.Exists() {
-			va := r.Get("md5Value.value")
-			if t.String() == "variable" {
-				data.AuthenticationKeys[i].Md5ValueVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.AuthenticationKeys[i].Md5Value = types.StringValue(va.String())
-			}
-		}
 	}
 	data.TrustedKeys = types.SetNull(types.Int64Type)
 	data.TrustedKeysVariable = types.StringNull()

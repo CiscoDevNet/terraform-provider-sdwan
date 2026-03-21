@@ -568,6 +568,16 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result) {
 		data.Communities = make([]SystemSNMPCommunities, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemSNMPCommunities{}
+			item.Name = types.StringNull()
+			item.NameVariable = types.StringNull()
+			if t := v.Get("name.optionType"); t.Exists() {
+				va := v.Get("name.value")
+				if t.String() == "variable" {
+					item.NameVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.Name = types.StringValue(va.String())
+				}
+			}
 			item.UserLabel = types.StringNull()
 
 			if t := v.Get("userLabel.optionType"); t.Exists() {
