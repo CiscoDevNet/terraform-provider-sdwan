@@ -570,6 +570,16 @@ func (data *SystemSecurity) fromBody(ctx context.Context, res gjson.Result) {
 					item.CryptoAlgorithm = types.StringValue(va.String())
 				}
 			}
+			item.KeyString = types.StringNull()
+			item.KeyStringVariable = types.StringNull()
+			if t := v.Get("keyString.optionType"); t.Exists() {
+				va := v.Get("keyString.value")
+				if t.String() == "variable" {
+					item.KeyStringVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.KeyString = types.StringValue(va.String())
+				}
+			}
 			item.SendLifeTimeLocal = types.BoolNull()
 			item.SendLifeTimeLocalVariable = types.StringNull()
 			if t := v.Get("sendLifetime.local.optionType"); t.Exists() {

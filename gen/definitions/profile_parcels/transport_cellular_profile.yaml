@@ -69,7 +69,7 @@ attributes:
     tf_name: profile_password
     data_path: [profileConfig, profileInfo, authentication, needAuthentication]
     type: String
-    write_only: true
+    encrypted: true
     example: example123!
     conditional_attribute:
       conditions:

@@ -236,6 +236,7 @@ type YamlConfigAttribute struct {
 	IgnoreMandatory         bool                           `yaml:"ignore_mandatory"`
 	Optional                bool                           `yaml:"optional"`
 	WriteOnly               bool                           `yaml:"write_only"`
+	Encrypted               bool                           `yaml:"encrypted"`
 	TfOnly                  bool                           `yaml:"tf_only"`
 	ExcludeTest             bool                           `yaml:"exclude_test"`
 	ExcludeExample          bool                           `yaml:"exclude_example"`

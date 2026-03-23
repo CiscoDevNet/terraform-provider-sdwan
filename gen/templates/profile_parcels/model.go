@@ -573,7 +573,7 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 	}
 	path := "payload.data."
 	{{- range .Attributes}}
-	{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .TfOnly) (not .WriteOnly) (not .Value)}}
+	{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .TfOnly) (not .WriteOnly) (not .Encrypted) (not .Value)}}
 	{{- if eq .Type "StringInt64"}}
 	data.{{toGoName .TfName}} = types.StringNull()
 	{{- else}}
@@ -675,7 +675,7 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 		)
 
 		{{- range .Attributes}}
-		{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .TfOnly) (not .WriteOnly) (not .Value)}}
+		{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .TfOnly) (not .WriteOnly) (not .Encrypted) (not .Value)}}
 		{{- if eq .Type "StringInt64"}}
 		data.{{$list}}[i].{{toGoName .TfName}} = types.StringNull()
 		{{- else}}
@@ -771,7 +771,7 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 			)
 
 			{{- range .Attributes}}
-			{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .TfOnly) (not .WriteOnly) (not .Value)}}
+			{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .TfOnly) (not .WriteOnly) (not .Encrypted) (not .Value)}}
 			{{- if eq .Type "StringInt64"}}
 			data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} = types.StringNull()
 			{{- else}}
@@ -867,7 +867,7 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 				)
 
 				{{- range .Attributes}}
-				{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .TfOnly) (not .WriteOnly) (not .Value)}}
+				{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .TfOnly) (not .WriteOnly) (not .Encrypted) (not .Value)}}
 				{{- if eq .Type "StringInt64"}}
 				data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}} = types.StringNull()
 				{{- else}}
