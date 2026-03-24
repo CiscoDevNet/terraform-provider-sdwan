@@ -138,7 +138,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				},
 			},
 			"port_channel_lacp_qos_aggregate": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `lacp`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `lacp`").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
 			"port_channel_lacp_qos_aggregate_variable": schema.StringAttribute{

@@ -47,6 +47,7 @@ attributes:
   - model_name: portChannelQosAggregate
     tf_name: port_channel_lacp_qos_aggregate
     data_path: [portChannel, mainInterface, lacpModeMainInterface]
+    default_value_present: true
     exclude_test: true
     conditional_attribute:
       conditions:
@@ -55,6 +56,7 @@ attributes:
   - model_name: loadBalance
     tf_name: port_channel_lacp_load_balance
     data_path: [portChannel, mainInterface, lacpModeMainInterface]
+    default_value_present: true
     exclude_test: true
     conditional_attribute:
       conditions:
@@ -72,6 +74,7 @@ attributes:
   - model_name: lacpMinBundle
     tf_name: port_channel_lacp_min_bundle
     data_path: [portChannel, mainInterface, lacpModeMainInterface]
+    default_value_present: true
     exclude_test: true
     conditional_attribute:
       conditions:
@@ -80,6 +83,7 @@ attributes:
   - model_name: lacpMaxBundle
     tf_name: port_channel_lacp_max_bundle
     data_path: [portChannel, mainInterface, lacpModeMainInterface]
+    default_value_present: true
     exclude_test: true
     conditional_attribute:
       conditions:

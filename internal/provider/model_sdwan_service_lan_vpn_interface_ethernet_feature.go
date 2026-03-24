@@ -348,7 +348,12 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, ver *vers
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.optionType", "variable")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.value", data.PortChannelLacpQosAggregateVariable.ValueString())
 		}
-	} else if !data.PortChannelLacpQosAggregate.IsNull() {
+	} else if data.PortChannelLacpQosAggregate.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.optionType", "default")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.value", true)
+		}
+	} else {
 		if true && data.PortChannelMode.ValueString() == "lacp" {
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.optionType", "global")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.value", data.PortChannelLacpQosAggregate.ValueBool())
@@ -360,7 +365,12 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, ver *vers
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.loadBalance.optionType", "variable")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.loadBalance.value", data.PortChannelLacpLoadBalanceVariable.ValueString())
 		}
-	} else if !data.PortChannelLacpLoadBalance.IsNull() {
+	} else if data.PortChannelLacpLoadBalance.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.loadBalance.optionType", "default")
+
+		}
+	} else {
 		if true && data.PortChannelMode.ValueString() == "lacp" {
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.loadBalance.optionType", "global")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.loadBalance.value", data.PortChannelLacpLoadBalance.ValueString())
@@ -389,7 +399,12 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, ver *vers
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.optionType", "variable")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.value", data.PortChannelLacpMinBundleVariable.ValueString())
 		}
-	} else if !data.PortChannelLacpMinBundle.IsNull() {
+	} else if data.PortChannelLacpMinBundle.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.optionType", "default")
+
+		}
+	} else {
 		if true && data.PortChannelMode.ValueString() == "lacp" {
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.optionType", "global")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.value", data.PortChannelLacpMinBundle.ValueInt64())
@@ -401,7 +416,12 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, ver *vers
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.optionType", "variable")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.value", data.PortChannelLacpMaxBundleVariable.ValueString())
 		}
-	} else if !data.PortChannelLacpMaxBundle.IsNull() {
+	} else if data.PortChannelLacpMaxBundle.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.optionType", "default")
+
+		}
+	} else {
 		if true && data.PortChannelMode.ValueString() == "lacp" {
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.optionType", "global")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.value", data.PortChannelLacpMaxBundle.ValueInt64())
