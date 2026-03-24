@@ -41,6 +41,7 @@ attributes:
         example: 49737
       - model_name: md5Value
         example: $CRYPT_CLUSTER
+        encrypted: true
   - model_name: trustedKeys
     data_path: [authentication]
     example: 49737

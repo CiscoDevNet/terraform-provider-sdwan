@@ -7,7 +7,10 @@ description: |-
 
 # Changelog
 
-## 0.11.0 (Unreleased)
+## 0.11.1 (unreleased)
+- Fix issue where `sdwan_transport_cellular_profile_feature`, `sdwan_system_aaa_feature`, `sdwan_system_ntp_feature`, `sdwan_system_security_feature` and `sdwan_system_snmp_feature` resource produces unexpected changes for the encrypted attributes after the import.
+
+## 0.11.0
 
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_application_priority_qos_policy` to `20.15.0`
 - BREAKING CHANGE: Bump the minimum supported version of `sdwan_dns_security_policy` to `20.15.0`

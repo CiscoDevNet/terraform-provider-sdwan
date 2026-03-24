@@ -39,7 +39,7 @@ attributes:
     tf_name: communities
     attributes:
       - model_name: name
-        write_only: true
+        encrypted: true
         example: example
       - model_name: userLabel
         id: true
