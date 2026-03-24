@@ -228,6 +228,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `port_channel_interface` (Boolean) Port-Channel interface on/off
   - Default value: `false`
 - `port_channel_lacp_fast_switchover` (Boolean) Eanble lacp fast switchover, Attribute conditional on `port_channel_mode` equal to `lacp`
+  - Default value: `false`
 - `port_channel_lacp_fast_switchover_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`
 - `port_channel_lacp_load_balance` (String) Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `lacp`
   - Choices: `flow`, `vlan`

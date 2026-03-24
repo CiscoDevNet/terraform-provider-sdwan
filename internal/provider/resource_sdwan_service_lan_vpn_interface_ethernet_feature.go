@@ -157,7 +157,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				Optional:            true,
 			},
 			"port_channel_lacp_fast_switchover": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Eanble lacp fast switchover, Attribute conditional on `port_channel_mode` equal to `lacp`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Eanble lacp fast switchover, Attribute conditional on `port_channel_mode` equal to `lacp`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"port_channel_lacp_fast_switchover_variable": schema.StringAttribute{

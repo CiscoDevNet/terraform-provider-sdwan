@@ -372,7 +372,12 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, ver *vers
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.optionType", "variable")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.value", data.PortChannelLacpFastSwitchoverVariable.ValueString())
 		}
-	} else if !data.PortChannelLacpFastSwitchover.IsNull() {
+	} else if data.PortChannelLacpFastSwitchover.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.optionType", "default")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.value", false)
+		}
+	} else {
 		if true && data.PortChannelMode.ValueString() == "lacp" {
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.optionType", "global")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.value", data.PortChannelLacpFastSwitchover.ValueBool())

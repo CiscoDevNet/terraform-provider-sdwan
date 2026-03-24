@@ -63,6 +63,7 @@ attributes:
   - model_name: lacpFastSwitchover
     tf_name: port_channel_lacp_fast_switchover
     data_path: [portChannel, mainInterface, lacpModeMainInterface]
+    default_value_present: true
     exclude_test: true
     conditional_attribute:
       conditions:
