@@ -323,6 +323,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
   - Range: `1`-`16`
 - `port_channel_lacp_min_bundle_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`
 - `port_channel_lacp_qos_aggregate` (Boolean) Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `lacp`
+  - Default value: `true`
 - `port_channel_lacp_qos_aggregate_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`
 - `port_channel_member_interface` (Boolean) Port-Channel member interface on/off
   - Default value: `false`
