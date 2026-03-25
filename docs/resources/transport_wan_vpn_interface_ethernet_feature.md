@@ -265,6 +265,11 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
   - Default value: `core-shared`
 - `mrf_enable_core_region` (Boolean) Enable Core Region, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
+- `mrf_enable_secondary_region` (Boolean) Enable Secondary Region, Attribute conditional on `port_channel_member_interface` not equal to `true`
+  - Default value: `false`
+- `mrf_secondary_region_type` (String) Enable secondary region, Attribute conditional on `port_channel_member_interface` not equal to `true`
+  - Choices: `secondary-shared`, `secondary-only`
+  - Default value: `secondary-shared`
 - `nat64` (Boolean) NAT64 on this interface, Attribute conditional on `nat_ipv6` equal to `true`
   - Default value: `false`
 - `nat66` (Boolean) NAT66 on this interface, Attribute conditional on `nat_ipv6` equal to `true`
@@ -334,6 +339,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `port_channel_static_load_balance_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `static`
 - `port_channel_static_member_links` (Attributes List) Configure Port-Channel member links, Attribute conditional on `port_channel_mode` equal to `static` (see [below for nested schema](#nestedatt--port_channel_static_member_links))
 - `port_channel_static_qos_aggregate` (Boolean) Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `static`
+  - Default value: `true`
 - `port_channel_static_qos_aggregate_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `static`
 - `port_channel_subinterface` (Boolean) , Attribute conditional on `port_channel_interface` equal to `true`
 - `qos_adaptive` (Boolean) Adaptive QoS, Attribute conditional on `port_channel_member_interface` not equal to `true`

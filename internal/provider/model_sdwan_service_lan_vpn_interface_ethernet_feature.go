@@ -487,7 +487,12 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, ver *vers
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.optionType", "variable")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.value", data.PortChannelStaticQosAggregateVariable.ValueString())
 		}
-	} else if !data.PortChannelStaticQosAggregate.IsNull() {
+	} else if data.PortChannelStaticQosAggregate.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "static" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.optionType", "default")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.value", true)
+		}
+	} else {
 		if true && data.PortChannelMode.ValueString() == "static" {
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.optionType", "global")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.value", data.PortChannelStaticQosAggregate.ValueBool())
@@ -499,7 +504,12 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, ver *vers
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.loadBalance.optionType", "variable")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.loadBalance.value", data.PortChannelStaticLoadBalanceVariable.ValueString())
 		}
-	} else if !data.PortChannelStaticLoadBalance.IsNull() {
+	} else if data.PortChannelStaticLoadBalance.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "static" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.loadBalance.optionType", "default")
+
+		}
+	} else {
 		if true && data.PortChannelMode.ValueString() == "static" {
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.loadBalance.optionType", "global")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.loadBalance.value", data.PortChannelStaticLoadBalance.ValueString())

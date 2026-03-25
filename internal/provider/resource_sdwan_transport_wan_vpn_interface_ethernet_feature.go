@@ -235,7 +235,7 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				},
 			},
 			"port_channel_static_qos_aggregate": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `static`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `static`").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
 			"port_channel_static_qos_aggregate_variable": schema.StringAttribute{
@@ -867,6 +867,17 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("core-shared", "core"),
+				},
+			},
+			"mrf_enable_secondary_region": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enable Secondary Region, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"mrf_secondary_region_type": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enable secondary region, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddStringEnumDescription("secondary-shared", "secondary-only").AddDefaultValueDescription("secondary-shared").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("secondary-shared", "secondary-only"),
 				},
 			},
 			"nat_ipv4": schema.BoolAttribute{

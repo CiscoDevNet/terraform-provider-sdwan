@@ -112,6 +112,7 @@ attributes:
   - model_name: portChannelQosAggregate
     tf_name: port_channel_static_qos_aggregate
     data_path: [portChannel, mainInterface, staticModeMainInterface]
+    default_value_present: true
     exclude_test: true
     exclude_example: true
     conditional_attribute:
@@ -121,6 +122,7 @@ attributes:
   - model_name: loadBalance
     tf_name: port_channel_static_load_balance
     data_path: [portChannel, mainInterface, staticModeMainInterface]
+    default_value_present: true
     exclude_test: true
     conditional_attribute:
       conditions:
