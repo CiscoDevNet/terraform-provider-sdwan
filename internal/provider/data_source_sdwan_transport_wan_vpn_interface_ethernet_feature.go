@@ -745,6 +745,14 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 				MarkdownDescription: "Core Region",
 				Computed:            true,
 			},
+			"mrf_enable_secondary_region": schema.BoolAttribute{
+				MarkdownDescription: "Enable Secondary Region",
+				Computed:            true,
+			},
+			"mrf_secondary_region_type": schema.StringAttribute{
+				MarkdownDescription: "Enable secondary region",
+				Computed:            true,
+			},
 			"nat_ipv4": schema.BoolAttribute{
 				MarkdownDescription: "enable Network Address Translation on this interface",
 				Computed:            true,

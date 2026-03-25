@@ -93,6 +93,8 @@ data "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `media_type_variable` (String) Variable name
 - `mrf_core_region_type` (String) Core Region
 - `mrf_enable_core_region` (Boolean) Enable Core Region
+- `mrf_enable_secondary_region` (Boolean) Enable Secondary Region
+- `mrf_secondary_region_type` (String) Enable secondary region
 - `name` (String) The name of the Feature
 - `nat64` (Boolean) NAT64 on this interface
 - `nat66` (Boolean) NAT66 on this interface

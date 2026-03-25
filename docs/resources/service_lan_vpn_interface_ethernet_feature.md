@@ -228,6 +228,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `port_channel_interface` (Boolean) Port-Channel interface on/off
   - Default value: `false`
 - `port_channel_lacp_fast_switchover` (Boolean) Eanble lacp fast switchover, Attribute conditional on `port_channel_mode` equal to `lacp`
+  - Default value: `false`
 - `port_channel_lacp_fast_switchover_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`
 - `port_channel_lacp_load_balance` (String) Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `lacp`
   - Choices: `flow`, `vlan`
@@ -240,6 +241,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
   - Range: `1`-`16`
 - `port_channel_lacp_min_bundle_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`
 - `port_channel_lacp_qos_aggregate` (Boolean) Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `lacp`
+  - Default value: `true`
 - `port_channel_lacp_qos_aggregate_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `lacp`
 - `port_channel_member_interface` (Boolean) Port-Channel member interface on/off
   - Default value: `false`
@@ -250,6 +252,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `port_channel_static_load_balance_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `static`
 - `port_channel_static_member_links` (Attributes List) Configure Port-Channel member links, Attribute conditional on `port_channel_mode` equal to `static` (see [below for nested schema](#nestedatt--port_channel_static_member_links))
 - `port_channel_static_qos_aggregate` (Boolean) Enable QoS Port-Channel aggregate, Attribute conditional on `port_channel_mode` equal to `static`
+  - Default value: `true`
 - `port_channel_static_qos_aggregate_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `static`
 - `port_channel_subinterface` (Boolean) Port Channel Sub Interface on/off, Attribute conditional on `port_channel_interface` equal to `true`
 - `port_channel_subinterface_primary_interface_name` (String) , Attribute conditional on `port_channel_interface` equal to `true` and `port_channel_subinterface` equal to `true`
