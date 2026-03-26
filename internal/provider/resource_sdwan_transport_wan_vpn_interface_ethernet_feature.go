@@ -498,14 +498,14 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"tunnel_bandwidth_percent": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Tunnels Bandwidth Percent, Attribute conditional on `tunnel_interface` equal to `true`").AddIntegerRangeDescription(1, 100).AddDefaultValueDescription("50").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Tunnels Bandwidth Percent, Attribute conditional on `tunnel_interface` equal to `true` and `tunnel_qos_mode` equal to `hub`").AddIntegerRangeDescription(1, 100).AddDefaultValueDescription("50").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 100),
 				},
 			},
 			"tunnel_bandwidth_percent_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true` and `tunnel_qos_mode` equal to `hub`").String,
 				Optional:            true,
 			},
 			"tunnel_interface_bind_loopback_tunnel": schema.StringAttribute{

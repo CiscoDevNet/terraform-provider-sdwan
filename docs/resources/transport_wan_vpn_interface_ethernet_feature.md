@@ -389,10 +389,10 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `tloc_extension_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `tracker` (String) Enable tracker for this interface, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `tracker_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
-- `tunnel_bandwidth_percent` (Number) Tunnels Bandwidth Percent, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_bandwidth_percent` (Number) Tunnels Bandwidth Percent, Attribute conditional on `tunnel_interface` equal to `true` and `tunnel_qos_mode` equal to `hub`
   - Range: `1`-`100`
   - Default value: `50`
-- `tunnel_bandwidth_percent_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_bandwidth_percent_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true` and `tunnel_qos_mode` equal to `hub`
 - `tunnel_interface` (Boolean) Tunnel Interface on/off
   - Default value: `false`
 - `tunnel_interface_allow_all` (Boolean) Allow all traffic. Overrides all other allow-service options if allow-service all is set, Attribute conditional on `port_channel_member_interface` not equal to `true`

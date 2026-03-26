@@ -382,6 +382,8 @@ attributes:
         - name: tunnelInterface
           value: true
           type: Bool
+        - name: tunnel_qos_mode
+          value: hub
     example: 82
   - model_name: bind
     tf_name: tunnel_interface_bind_loopback_tunnel
