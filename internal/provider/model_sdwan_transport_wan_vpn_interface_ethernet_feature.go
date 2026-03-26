@@ -1125,17 +1125,17 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 	}
 
 	if !data.TunnelBandwidthPercentVariable.IsNull() {
-		if true && data.TunnelInterface.ValueBool() == true {
+		if true && data.TunnelInterface.ValueBool() == true && data.TunnelQosMode.ValueString() == "hub" {
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.value", data.TunnelBandwidthPercentVariable.ValueString())
 		}
 	} else if data.TunnelBandwidthPercent.IsNull() {
-		if true && data.TunnelInterface.ValueBool() == true {
+		if true && data.TunnelInterface.ValueBool() == true && data.TunnelQosMode.ValueString() == "hub" {
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.value", 50)
 		}
 	} else {
-		if true && data.TunnelInterface.ValueBool() == true {
+		if true && data.TunnelInterface.ValueBool() == true && data.TunnelQosMode.ValueString() == "hub" {
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.value", data.TunnelBandwidthPercent.ValueInt64())
 		}

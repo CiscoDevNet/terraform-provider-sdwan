@@ -1,5 +1,6 @@
 ## 0.11.1 (unreleased)
 - Fix issue where `sdwan_transport_cellular_profile_feature`, `sdwan_system_aaa_feature`, `sdwan_system_ntp_feature`, `sdwan_system_security_feature` and `sdwan_system_snmp_feature` resource produces unexpected changes for the encrypted attributes after the import.
+- Fix issue where `per_tunnel_qos_mode` attribute set to spoke in `sdwan_transport_wan_vpn_interface_ethernet_feature` resource fails.
 
 ## 0.11.0
 
