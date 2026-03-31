@@ -182,6 +182,8 @@ type TransportWANVPNInterfaceEthernet struct {
 	TunnelInterfaceEncapsulations                      []TransportWANVPNInterfaceEthernetTunnelInterfaceEncapsulations `tfsdk:"tunnel_interface_encapsulations"`
 	MrfEnableCoreRegion                                types.Bool                                                      `tfsdk:"mrf_enable_core_region"`
 	MrfCoreRegionType                                  types.String                                                    `tfsdk:"mrf_core_region_type"`
+	MrfEnableSecondaryRegion                           types.Bool                                                      `tfsdk:"mrf_enable_secondary_region"`
+	MrfSecondaryRegionType                             types.String                                                    `tfsdk:"mrf_secondary_region_type"`
 	NatIpv4                                            types.Bool                                                      `tfsdk:"nat_ipv4"`
 	NatIpv4Variable                                    types.String                                                    `tfsdk:"nat_ipv4_variable"`
 	NatType                                            types.String                                                    `tfsdk:"nat_type"`
@@ -456,7 +458,12 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.optionType", "variable")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.value", data.PortChannelLacpQosAggregateVariable.ValueString())
 		}
-	} else if !data.PortChannelLacpQosAggregate.IsNull() {
+	} else if data.PortChannelLacpQosAggregate.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.optionType", "default")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.value", true)
+		}
+	} else {
 		if true && data.PortChannelMode.ValueString() == "lacp" {
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.optionType", "global")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.value", data.PortChannelLacpQosAggregate.ValueBool())
@@ -468,7 +475,12 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.loadBalance.optionType", "variable")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.loadBalance.value", data.PortChannelLacpLoadBalanceVariable.ValueString())
 		}
-	} else if !data.PortChannelLacpLoadBalance.IsNull() {
+	} else if data.PortChannelLacpLoadBalance.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.loadBalance.optionType", "default")
+
+		}
+	} else {
 		if true && data.PortChannelMode.ValueString() == "lacp" {
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.loadBalance.optionType", "global")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.loadBalance.value", data.PortChannelLacpLoadBalance.ValueString())
@@ -480,7 +492,12 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.optionType", "variable")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.value", data.PortChannelLacpFastSwitchoverVariable.ValueString())
 		}
-	} else if !data.PortChannelLacpFastSwitchover.IsNull() {
+	} else if data.PortChannelLacpFastSwitchover.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.optionType", "default")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.value", false)
+		}
+	} else {
 		if true && data.PortChannelMode.ValueString() == "lacp" {
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.optionType", "global")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.value", data.PortChannelLacpFastSwitchover.ValueBool())
@@ -492,7 +509,12 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.optionType", "variable")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.value", data.PortChannelLacpMinBundleVariable.ValueString())
 		}
-	} else if !data.PortChannelLacpMinBundle.IsNull() {
+	} else if data.PortChannelLacpMinBundle.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.optionType", "default")
+
+		}
+	} else {
 		if true && data.PortChannelMode.ValueString() == "lacp" {
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.optionType", "global")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.value", data.PortChannelLacpMinBundle.ValueInt64())
@@ -504,7 +526,12 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.optionType", "variable")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.value", data.PortChannelLacpMaxBundleVariable.ValueString())
 		}
-	} else if !data.PortChannelLacpMaxBundle.IsNull() {
+	} else if data.PortChannelLacpMaxBundle.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "lacp" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.optionType", "default")
+
+		}
+	} else {
 		if true && data.PortChannelMode.ValueString() == "lacp" {
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.optionType", "global")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.value", data.PortChannelLacpMaxBundle.ValueInt64())
@@ -570,7 +597,12 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.optionType", "variable")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.value", data.PortChannelStaticQosAggregateVariable.ValueString())
 		}
-	} else if !data.PortChannelStaticQosAggregate.IsNull() {
+	} else if data.PortChannelStaticQosAggregate.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "static" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.optionType", "default")
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.value", true)
+		}
+	} else {
 		if true && data.PortChannelMode.ValueString() == "static" {
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.optionType", "global")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.value", data.PortChannelStaticQosAggregate.ValueBool())
@@ -582,7 +614,12 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.loadBalance.optionType", "variable")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.loadBalance.value", data.PortChannelStaticLoadBalanceVariable.ValueString())
 		}
-	} else if !data.PortChannelStaticLoadBalance.IsNull() {
+	} else if data.PortChannelStaticLoadBalance.IsNull() {
+		if true && data.PortChannelMode.ValueString() == "static" {
+			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.loadBalance.optionType", "default")
+
+		}
+	} else {
 		if true && data.PortChannelMode.ValueString() == "static" {
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.loadBalance.optionType", "global")
 			body, _ = sjson.Set(body, path+"portChannel.mainInterface.staticModeMainInterface.loadBalance.value", data.PortChannelStaticLoadBalance.ValueString())
@@ -1088,17 +1125,17 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 	}
 
 	if !data.TunnelBandwidthPercentVariable.IsNull() {
-		if true && data.TunnelInterface.ValueBool() == true {
+		if true && data.TunnelInterface.ValueBool() == true && data.TunnelQosMode.ValueString() == "hub" {
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.value", data.TunnelBandwidthPercentVariable.ValueString())
 		}
 	} else if data.TunnelBandwidthPercent.IsNull() {
-		if true && data.TunnelInterface.ValueBool() == true {
+		if true && data.TunnelInterface.ValueBool() == true && data.TunnelQosMode.ValueString() == "hub" {
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.value", 50)
 		}
 	} else {
-		if true && data.TunnelInterface.ValueBool() == true {
+		if true && data.TunnelInterface.ValueBool() == true && data.TunnelQosMode.ValueString() == "hub" {
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.value", data.TunnelBandwidthPercent.ValueInt64())
 		}
@@ -1774,6 +1811,28 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"multiRegionFabric.coreRegion.optionType", "global")
 			body, _ = sjson.Set(body, path+"multiRegionFabric.coreRegion.value", data.MrfCoreRegionType.ValueString())
+		}
+	}
+	if data.MrfEnableSecondaryRegion.IsNull() {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
+			body, _ = sjson.Set(body, path+"multiRegionFabric.enableSecondaryRegion.optionType", "default")
+			body, _ = sjson.Set(body, path+"multiRegionFabric.enableSecondaryRegion.value", false)
+		}
+	} else {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
+			body, _ = sjson.Set(body, path+"multiRegionFabric.enableSecondaryRegion.optionType", "global")
+			body, _ = sjson.Set(body, path+"multiRegionFabric.enableSecondaryRegion.value", data.MrfEnableSecondaryRegion.ValueBool())
+		}
+	}
+	if data.MrfSecondaryRegionType.IsNull() {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
+			body, _ = sjson.Set(body, path+"multiRegionFabric.secondaryRegion.optionType", "default")
+			body, _ = sjson.Set(body, path+"multiRegionFabric.secondaryRegion.value", "secondary-shared")
+		}
+	} else {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
+			body, _ = sjson.Set(body, path+"multiRegionFabric.secondaryRegion.optionType", "global")
+			body, _ = sjson.Set(body, path+"multiRegionFabric.secondaryRegion.value", data.MrfSecondaryRegionType.ValueString())
 		}
 	}
 
@@ -3704,6 +3763,22 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.MrfCoreRegionType = types.StringValue(va.String())
 		}
 	}
+	data.MrfEnableSecondaryRegion = types.BoolNull()
+
+	if t := res.Get(path + "multiRegionFabric.enableSecondaryRegion.optionType"); t.Exists() {
+		va := res.Get(path + "multiRegionFabric.enableSecondaryRegion.value")
+		if t.String() == "global" {
+			data.MrfEnableSecondaryRegion = types.BoolValue(va.Bool())
+		}
+	}
+	data.MrfSecondaryRegionType = types.StringNull()
+
+	if t := res.Get(path + "multiRegionFabric.secondaryRegion.optionType"); t.Exists() {
+		va := res.Get(path + "multiRegionFabric.secondaryRegion.value")
+		if t.String() == "global" {
+			data.MrfSecondaryRegionType = types.StringValue(va.String())
+		}
+	}
 	data.NatIpv4 = types.BoolNull()
 	data.NatIpv4Variable = types.StringNull()
 	if t := res.Get(path + "nat.optionType"); t.Exists() {
@@ -5548,6 +5623,22 @@ func (data *TransportWANVPNInterfaceEthernet) updateFromBody(ctx context.Context
 		va := res.Get(path + "multiRegionFabric.coreRegion.value")
 		if t.String() == "global" {
 			data.MrfCoreRegionType = types.StringValue(va.String())
+		}
+	}
+	data.MrfEnableSecondaryRegion = types.BoolNull()
+
+	if t := res.Get(path + "multiRegionFabric.enableSecondaryRegion.optionType"); t.Exists() {
+		va := res.Get(path + "multiRegionFabric.enableSecondaryRegion.value")
+		if t.String() == "global" {
+			data.MrfEnableSecondaryRegion = types.BoolValue(va.Bool())
+		}
+	}
+	data.MrfSecondaryRegionType = types.StringNull()
+
+	if t := res.Get(path + "multiRegionFabric.secondaryRegion.optionType"); t.Exists() {
+		va := res.Get(path + "multiRegionFabric.secondaryRegion.value")
+		if t.String() == "global" {
+			data.MrfSecondaryRegionType = types.StringValue(va.String())
 		}
 	}
 	data.NatIpv4 = types.BoolNull()
