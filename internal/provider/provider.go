@@ -48,6 +48,7 @@ type SdwanProviderModel struct {
 	Username    types.String `tfsdk:"username"`
 	Password    types.String `tfsdk:"password"`
 	URL         types.String `tfsdk:"url"`
+	APIToken    types.String `tfsdk:"api_token"`
 	Insecure    types.Bool   `tfsdk:"insecure"`
 	Retries     types.Int64  `tfsdk:"retries"`
 	TaskTimeout types.Int64  `tfsdk:"task_timeout"`
@@ -82,6 +83,11 @@ func (p *SdwanProvider) Schema(ctx context.Context, req provider.SchemaRequest, 
 				MarkdownDescription: "URL of the Cisco SD-WAN Manager device. This can also be set as the `SDWAN_URL` environment variable.",
 				Optional:            true,
 			},
+			"api_token": schema.StringAttribute{
+				MarkdownDescription: "API Token for the SD-WAN Manager. Can be used instead of username and password. This can also be set as the `SDWAN_API_TOKEN` environment variable.",
+				Optional:            true,
+				Sensitive:           true,
+			},
 			"insecure": schema.BoolAttribute{
 				MarkdownDescription: "Allow insecure HTTPS client. This can also be set as the `SDWAN_INSECURE` environment variable. Defaults to `true`.",
 				Optional:            true,
@@ -113,10 +119,25 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 		return
 	}
 
-	// User must provide a username to the provider
+	// Resolve API token
+	var apiToken string
+	if config.APIToken.IsUnknown() {
+		resp.Diagnostics.AddWarning(
+			"Unable to create client",
+			"Cannot use unknown value as api_token",
+		)
+		return
+	}
+
+	if config.APIToken.IsNull() {
+		apiToken = os.Getenv("SDWAN_API_TOKEN")
+	} else {
+		apiToken = config.APIToken.ValueString()
+	}
+
+	// Resolve username
 	var username string
 	if config.Username.IsUnknown() {
-		// Cannot connect to client with an unknown value
 		resp.Diagnostics.AddWarning(
 			"Unable to create client",
 			"Cannot use unknown value as username",
@@ -130,19 +151,9 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 		username = config.Username.ValueString()
 	}
 
-	if username == "" {
-		// Error vs warning - empty value must stop execution
-		resp.Diagnostics.AddError(
-			"Unable to find username",
-			"Username cannot be an empty string",
-		)
-		return
-	}
-
-	// User must provide a password to the provider
+	// Resolve password
 	var password string
 	if config.Password.IsUnknown() {
-		// Cannot connect to client with an unknown value
 		resp.Diagnostics.AddWarning(
 			"Unable to create client",
 			"Cannot use unknown value as password",
@@ -156,16 +167,16 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 		password = config.Password.ValueString()
 	}
 
-	if password == "" {
-		// Error vs warning - empty value must stop execution
+	// Validate that either api_token or username+password is provided
+	if apiToken == "" && (username == "" || password == "") {
 		resp.Diagnostics.AddError(
-			"Unable to find password",
-			"Password cannot be an empty string",
+			"Unable to create client",
+			"Either 'api_token' or both 'username' and 'password' must be provided.",
 		)
 		return
 	}
 
-	// User must provide a username to the provider
+	// User must provide a URL to the provider
 	var url string
 	if config.URL.IsUnknown() {
 		// Cannot connect to client with an unknown value
@@ -255,7 +266,13 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 	}
 
 	// Create a new SDWAN client and set it to the provider client
-	c, err := sdwan.NewClient(url, username, password, insecure, sdwan.MaxRetries(int(retries)))
+	var c sdwan.Client
+	var err error
+	if apiToken != "" {
+		c, err = sdwan.NewClientToken(url, apiToken, insecure, sdwan.MaxRetries(int(retries)))
+	} else {
+		c, err = sdwan.NewClient(url, username, password, insecure, sdwan.MaxRetries(int(retries)))
+	}
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to create client",
