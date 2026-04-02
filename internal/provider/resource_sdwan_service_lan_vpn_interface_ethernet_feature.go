@@ -476,75 +476,75 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				Optional:            true,
 			},
 			"ipv4_nat_range_start": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Range Start").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Range Start, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"ipv4_nat_range_start_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"ipv4_nat_range_end": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Range End").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Range End, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"ipv4_nat_range_end_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"ipv4_nat_prefix_length": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Prefix Length").AddIntegerRangeDescription(1, 32).String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Prefix Length, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddIntegerRangeDescription(1, 32).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 32),
 				},
 			},
 			"ipv4_nat_prefix_length_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"ipv4_nat_overload": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Overload").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT Overload, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
 			"ipv4_nat_overload_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"ipv4_nat_loopback": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("NAT Inside Source Loopback Interface").String,
+				MarkdownDescription: helpers.NewAttributeDescription("NAT Inside Source Loopback Interface, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 32),
 				},
 			},
 			"ipv4_nat_loopback_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"ipv4_nat_udp_timeout": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set NAT UDP session timeout, in minutes").AddIntegerRangeDescription(1, 8947).AddDefaultValueDescription("1").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set NAT UDP session timeout, in minutes, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddIntegerRangeDescription(1, 8947).AddDefaultValueDescription("1").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 8947),
 				},
 			},
 			"ipv4_nat_udp_timeout_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"ipv4_nat_tcp_timeout": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set NAT TCP session timeout, in minutes").AddIntegerRangeDescription(1, 8947).AddDefaultValueDescription("60").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set NAT TCP session timeout, in minutes, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddIntegerRangeDescription(1, 8947).AddDefaultValueDescription("60").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 8947),
 				},
 			},
 			"ipv4_nat_tcp_timeout_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
 			"static_nats": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("static NAT").String,
+				MarkdownDescription: helpers.NewAttributeDescription("static NAT, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{

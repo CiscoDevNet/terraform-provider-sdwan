@@ -178,26 +178,26 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `ipv4_dhcp_helper_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `ipv4_nat` (Boolean) enable Network Address Translation on this interface, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
-- `ipv4_nat_loopback` (String) NAT Inside Source Loopback Interface
-- `ipv4_nat_loopback_variable` (String) Variable name
-- `ipv4_nat_overload` (Boolean) NAT Overload
+- `ipv4_nat_loopback` (String) NAT Inside Source Loopback Interface, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `ipv4_nat_loopback_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `ipv4_nat_overload` (Boolean) NAT Overload, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `true`
-- `ipv4_nat_overload_variable` (String) Variable name
-- `ipv4_nat_prefix_length` (Number) NAT Pool Prefix Length
+- `ipv4_nat_overload_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `ipv4_nat_prefix_length` (Number) NAT Pool Prefix Length, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `1`-`32`
-- `ipv4_nat_prefix_length_variable` (String) Variable name
-- `ipv4_nat_range_end` (String) NAT Pool Range End
-- `ipv4_nat_range_end_variable` (String) Variable name
-- `ipv4_nat_range_start` (String) NAT Pool Range Start
-- `ipv4_nat_range_start_variable` (String) Variable name
-- `ipv4_nat_tcp_timeout` (Number) Set NAT TCP session timeout, in minutes
+- `ipv4_nat_prefix_length_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `ipv4_nat_range_end` (String) NAT Pool Range End, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `ipv4_nat_range_end_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `ipv4_nat_range_start` (String) NAT Pool Range Start, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `ipv4_nat_range_start_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `ipv4_nat_tcp_timeout` (Number) Set NAT TCP session timeout, in minutes, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `1`-`8947`
   - Default value: `60`
-- `ipv4_nat_tcp_timeout_variable` (String) Variable name
-- `ipv4_nat_udp_timeout` (Number) Set NAT UDP session timeout, in minutes
+- `ipv4_nat_tcp_timeout_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `ipv4_nat_udp_timeout` (Number) Set NAT UDP session timeout, in minutes, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `1`-`8947`
   - Default value: `1`
-- `ipv4_nat_udp_timeout_variable` (String) Variable name
+- `ipv4_nat_udp_timeout_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `ipv4_secondary_addresses` (Attributes List) Secondary IpV4 Addresses, Attribute conditional on `ipv4_address_type` equal to `static` or `ipv4_address_type_variable` being set (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
 - `ipv4_subnet_mask` (String) Subnet Mask, Attribute conditional on `ipv4_address_type` equal to `static` or `ipv4_address_type_variable` being set
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.248.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
@@ -264,7 +264,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `speed` (String) Set interface speed, Attribute conditional on `port_channel_interface` not equal to `true`
   - Choices: `10`, `100`, `1000`, `2500`, `5000`, `10000`, `25000`
 - `speed_variable` (String) Variable name, Attribute conditional on `port_channel_interface` not equal to `true`
-- `static_nats` (Attributes List) static NAT (see [below for nested schema](#nestedatt--static_nats))
+- `static_nats` (Attributes List) static NAT, Attribute conditional on `port_channel_member_interface` not equal to `true` (see [below for nested schema](#nestedatt--static_nats))
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `500`-`1460`
 - `tcp_mss_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
