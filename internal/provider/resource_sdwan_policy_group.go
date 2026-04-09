@@ -346,7 +346,7 @@ func (r *PolicyGroupResource) Read(ctx context.Context, req resource.ReadRequest
 		return
 	}
 	if imp {
-		state.processImport(ctx, &oldState)
+		state.processImport(ctx)
 	}
 
 	diags = resp.State.Set(ctx, &state)
