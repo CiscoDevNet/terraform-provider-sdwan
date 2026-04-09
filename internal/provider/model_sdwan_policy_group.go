@@ -410,3 +410,9 @@ func (data PolicyGroup) hasPolicyVersionChanges(ctx context.Context, state *Poli
 	}
 	return false
 }
+
+func (data *PolicyGroup) processImport(ctx context.Context, state *PolicyGroup) {
+	for i := range data.Devices {
+		data.Devices[i].Deploy = types.BoolValue(true)
+	}
+}
