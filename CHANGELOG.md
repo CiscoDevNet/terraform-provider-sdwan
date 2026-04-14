@@ -1,3 +1,7 @@
+## 0.11.2 (unreleased)
+
+- Fix issue where `sdwan_policy_group` and `sdwan_configuration_group` resources produce unexpected diffs after import
+
 ## 0.11.1
 
 - Fix issue where `sdwan_transport_cellular_profile_feature`, `sdwan_system_aaa_feature`, `sdwan_system_ntp_feature`, `sdwan_system_security_feature` and `sdwan_system_snmp_feature` resource produces unexpected changes for the encrypted attributes after the import.

@@ -604,3 +604,9 @@ func (data ConfigurationGroup) hasFeatureVersionChanges(ctx context.Context, sta
 	}
 	return false
 }
+
+func (data *ConfigurationGroup) processImport(ctx context.Context) {
+	for i := range data.Devices {
+		data.Devices[i].Deploy = types.BoolValue(true)
+	}
+}

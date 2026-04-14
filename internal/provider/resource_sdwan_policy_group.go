@@ -225,6 +225,7 @@ func (r *PolicyGroupResource) Create(ctx context.Context, req resource.CreateReq
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 func (r *PolicyGroupResource) Deploy(ctx context.Context, plan PolicyGroup, state *PolicyGroup, diag *diag.Diagnostics, deleteOnError bool) {
@@ -340,9 +341,17 @@ func (r *PolicyGroupResource) Read(ctx context.Context, req resource.ReadRequest
 	}
 
 	state.updateTfAttributes(ctx, &oldState)
+	imp, diags := helpers.IsFlagImporting(ctx, req)
+	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
+		return
+	}
+	if imp {
+		state.processImport(ctx)
+	}
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 func (r *PolicyGroupResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
