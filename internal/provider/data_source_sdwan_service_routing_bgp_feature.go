@@ -220,7 +220,7 @@ func (d *ServiceRoutingBGPProfileParcelDataSource) Schema(ctx context.Context, r
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"remote_as": schema.Int64Attribute{
+						"remote_as": schema.StringAttribute{
 							MarkdownDescription: "Set remote autonomous system number",
 							Computed:            true,
 						},
@@ -228,7 +228,7 @@ func (d *ServiceRoutingBGPProfileParcelDataSource) Schema(ctx context.Context, r
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"local_as": schema.Int64Attribute{
+						"local_as": schema.StringAttribute{
 							MarkdownDescription: "Set local autonomous number,Local-AS cannot have the local BGP protocol AS number or the AS number of the remote peer.The local-as is valid only if the peer is a true eBGP peer. It does not work for two peers in different sub-ASs in a confederation.",
 							Computed:            true,
 						},
@@ -436,7 +436,7 @@ func (d *ServiceRoutingBGPProfileParcelDataSource) Schema(ctx context.Context, r
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"remote_as": schema.Int64Attribute{
+						"remote_as": schema.StringAttribute{
 							MarkdownDescription: "Set remote autonomous system number",
 							Computed:            true,
 						},
@@ -444,7 +444,7 @@ func (d *ServiceRoutingBGPProfileParcelDataSource) Schema(ctx context.Context, r
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"local_as": schema.Int64Attribute{
+						"local_as": schema.StringAttribute{
 							MarkdownDescription: "Set local autonomous number,Local-AS cannot have the local BGP protocol AS number or the AS number of the remote peer.The local-as is valid only if the peer is a true eBGP peer. It does not work for two peers in different sub-ASs in a confederation.",
 							Computed:            true,
 						},
