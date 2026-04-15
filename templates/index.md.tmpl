@@ -29,6 +29,19 @@ The following guides with examples exist to demonstrate the use of the provider:
 
 ## Example Usage
 
+### Username/Password Authentication
+
 {{tffile "examples/provider/provider.tf"}}
+
+### API Token Authentication
+
+Alternatively, you can use an API token for authentication:
+
+```terraform
+provider "sdwan" {
+  api_token = "my-api-token"
+  url       = "https://10.1.1.1"
+}
+```
 
 {{ .SchemaMarkdown | trimspace }}
