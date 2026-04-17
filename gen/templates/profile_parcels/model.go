@@ -215,9 +215,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		{{- else}}
 		{{- if eq .Type "StringInt64" }}
 		if numValue, err := strconv.Atoi(data.{{toGoName .TfName}}.ValueString()); err != nil {
-			body, _ = sjson.Set(body, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", data.{{toGoName .TfName}}.ValueString())
+			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", data.{{toGoName .TfName}}.ValueString())
 		} else {
-			body, _ = sjson.Set(body, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", numValue)
+			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", numValue)
 		}
 		{{- else}}
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", data.{{toGoName .TfName}}.Value{{.Type}}())
