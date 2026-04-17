@@ -10,6 +10,7 @@ description: |-
 ## 0.11.2 (unreleased)
 
 - Fix issue where `sdwan_policy_group` and `sdwan_configuration_group` resources produce unexpected diffs after import
+- Bump `sdwan_service_dhcp_server_feature` schema to `20.18.0`
 
 ## 0.11.1
 

@@ -98,7 +98,7 @@ conditional_attribute:
   conditions: list(include('condition')) # List of conditions (single or multiple)
 
 condition:
-  name: str() # Reference to other attribute
+  name: str(required=False) # Reference to other attribute (not used for MinVersion conditions)
   value: any(str(), bool()) # Attribute value to check
-  type: enum('String', 'Bool', 'StringContains', required=False) # Attribute value type: String (equality check), Bool (boolean equality), StringContains (substring check). Default: String.
+  type: enum('String', 'Bool', 'StringContains', 'MinVersion', required=False) # Attribute value type: String (equality check), Bool (boolean equality), StringContains (substring check), MinVersion (manager version check). Default: String.
   negate: bool(required=False) # If true, condition passes when value does NOT match (default: false)
