@@ -49,6 +49,9 @@ type {{camelCase .Name}} struct {
 	{{toGoName .TfName}} []{{$name}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "StringInt64"}}
 	{{toGoName .TfName}} types.String `tfsdk:"{{.TfName}}"`
+{{- if .Variable}}
+	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
+{{- end}}
 {{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
@@ -70,6 +73,9 @@ type {{$name}}{{toGoName .TfName}} struct {
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "StringInt64"}}
 	{{toGoName .TfName}} types.String `tfsdk:"{{.TfName}}"`
+{{- if .Variable}}
+	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
+{{- end}}
 {{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
