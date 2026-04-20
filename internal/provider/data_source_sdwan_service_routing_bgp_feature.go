@@ -79,7 +79,7 @@ func (d *ServiceRoutingBGPProfileParcelDataSource) Schema(ctx context.Context, r
 				MarkdownDescription: "Feature Profile ID",
 				Required:            true,
 			},
-			"as_number": schema.Int64Attribute{
+			"as_number": schema.StringAttribute{
 				MarkdownDescription: "Set autonomous system number <1..4294967295> or <XX.YY>",
 				Computed:            true,
 			},

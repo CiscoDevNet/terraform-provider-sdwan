@@ -39,7 +39,7 @@ type TransportRoutingBGP struct {
 	Name                           types.String                                `tfsdk:"name"`
 	Description                    types.String                                `tfsdk:"description"`
 	FeatureProfileId               types.String                                `tfsdk:"feature_profile_id"`
-	AsNumber                       types.Int64                                 `tfsdk:"as_number"`
+	AsNumber                       types.String                                `tfsdk:"as_number"`
 	AsNumberVariable               types.String                                `tfsdk:"as_number_variable"`
 	RouterId                       types.String                                `tfsdk:"router_id"`
 	RouterIdVariable               types.String                                `tfsdk:"router_id_variable"`
@@ -293,7 +293,11 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 	} else if !data.AsNumber.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"asNum.optionType", "global")
-			body, _ = sjson.Set(body, path+"asNum.value", data.AsNumber.ValueInt64())
+			if numValue, err := strconv.Atoi(data.AsNumber.ValueString()); err != nil {
+				body, _ = sjson.Set(body, path+"asNum.value", data.AsNumber.ValueString())
+			} else {
+				body, _ = sjson.Set(body, path+"asNum.value", numValue)
+			}
 		}
 	}
 
@@ -1765,14 +1769,14 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	data.AsNumber = types.Int64Null()
+	data.AsNumber = types.StringNull()
 	data.AsNumberVariable = types.StringNull()
 	if t := res.Get(path + "asNum.optionType"); t.Exists() {
 		va := res.Get(path + "asNum.value")
 		if t.String() == "variable" {
 			data.AsNumberVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AsNumber = types.Int64Value(va.Int())
+			data.AsNumber = types.StringValue(va.String())
 		}
 	}
 	data.RouterId = types.StringNull()
@@ -2812,14 +2816,14 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	data.AsNumber = types.Int64Null()
+	data.AsNumber = types.StringNull()
 	data.AsNumberVariable = types.StringNull()
 	if t := res.Get(path + "asNum.optionType"); t.Exists() {
 		va := res.Get(path + "asNum.value")
 		if t.String() == "variable" {
 			data.AsNumberVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AsNumber = types.Int64Value(va.Int())
+			data.AsNumber = types.StringValue(va.String())
 		}
 	}
 	data.RouterId = types.StringNull()
