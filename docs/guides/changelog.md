@@ -13,7 +13,6 @@ description: |-
 - Fix `sdwan_transport_routing_bgp_feature` and `sdwan_service_routing_bgp_feature` resources to correctly handle BGP ASDOT notation for `local_as` and `remote_as` device variables in configuration groups
 - Bump `sdwan_service_dhcp_server_feature` schema to `20.18.0`
 
-
 ## 0.11.1
 
 - Fix issue where `sdwan_transport_cellular_profile_feature`, `sdwan_system_aaa_feature`, `sdwan_system_ntp_feature`, `sdwan_system_security_feature` and `sdwan_system_snmp_feature` resource produces unexpected changes for the encrypted attributes after the import.
