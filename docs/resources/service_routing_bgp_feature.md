@@ -138,7 +138,7 @@ resource "sdwan_service_routing_bgp_feature" "example" {
 - `always_compare_med` (Boolean) Compare MEDs from all ASs when selecting active BGP paths
   - Default value: `false`
 - `always_compare_med_variable` (String) Variable name
-- `as_number` (Number) Set autonomous system number <1..4294967295> or <XX.YY>
+- `as_number` (String) Set autonomous system number <1..4294967295> or <XX.YY>
 - `as_number_variable` (String) Variable name
 - `compare_router_id` (Boolean) Compare router IDs when selecting active BGP paths
   - Default value: `false`
