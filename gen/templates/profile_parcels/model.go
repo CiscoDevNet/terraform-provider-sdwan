@@ -46,6 +46,9 @@ type {{camelCase .Name}} struct {
 	{{toGoName .TfName}} []{{$name}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "StringInt64"}}
 	{{toGoName .TfName}} types.String `tfsdk:"{{.TfName}}"`
+{{- if .Variable}}
+	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
+{{- end}}
 {{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
@@ -67,6 +70,9 @@ type {{$name}}{{toGoName .TfName}} struct {
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "StringInt64"}}
 	{{toGoName .TfName}} types.String `tfsdk:"{{.TfName}}"`
+{{- if .Variable}}
+	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
+{{- end}}
 {{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
@@ -209,9 +215,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		{{- else}}
 		{{- if eq .Type "StringInt64" }}
 		if numValue, err := strconv.Atoi(data.{{toGoName .TfName}}.ValueString()); err != nil {
-			body, _ = sjson.Set(body, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", data.{{toGoName .TfName}}.ValueString())
+			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", data.{{toGoName .TfName}}.ValueString())
 		} else {
-			body, _ = sjson.Set(body, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", numValue)
+			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", numValue)
 		}
 		{{- else}}
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", data.{{toGoName .TfName}}.Value{{.Type}}())

@@ -39,7 +39,7 @@ type ServiceRoutingBGP struct {
 	Name                           types.String                              `tfsdk:"name"`
 	Description                    types.String                              `tfsdk:"description"`
 	FeatureProfileId               types.String                              `tfsdk:"feature_profile_id"`
-	AsNumber                       types.Int64                               `tfsdk:"as_number"`
+	AsNumber                       types.String                              `tfsdk:"as_number"`
 	AsNumberVariable               types.String                              `tfsdk:"as_number_variable"`
 	RouterId                       types.String                              `tfsdk:"router_id"`
 	RouterIdVariable               types.String                              `tfsdk:"router_id_variable"`
@@ -98,9 +98,9 @@ type ServiceRoutingBGPIpv4Neighbors struct {
 	DescriptionVariable           types.String                                    `tfsdk:"description_variable"`
 	Shutdown                      types.Bool                                      `tfsdk:"shutdown"`
 	ShutdownVariable              types.String                                    `tfsdk:"shutdown_variable"`
-	RemoteAs                      types.Int64                                     `tfsdk:"remote_as"`
+	RemoteAs                      types.String                                    `tfsdk:"remote_as"`
 	RemoteAsVariable              types.String                                    `tfsdk:"remote_as_variable"`
-	LocalAs                       types.Int64                                     `tfsdk:"local_as"`
+	LocalAs                       types.String                                    `tfsdk:"local_as"`
 	LocalAsVariable               types.String                                    `tfsdk:"local_as_variable"`
 	KeepaliveTime                 types.Int64                                     `tfsdk:"keepalive_time"`
 	KeepaliveTimeVariable         types.String                                    `tfsdk:"keepalive_time_variable"`
@@ -134,9 +134,9 @@ type ServiceRoutingBGPIpv6Neighbors struct {
 	DescriptionVariable           types.String                                    `tfsdk:"description_variable"`
 	Shutdown                      types.Bool                                      `tfsdk:"shutdown"`
 	ShutdownVariable              types.String                                    `tfsdk:"shutdown_variable"`
-	RemoteAs                      types.Int64                                     `tfsdk:"remote_as"`
+	RemoteAs                      types.String                                    `tfsdk:"remote_as"`
 	RemoteAsVariable              types.String                                    `tfsdk:"remote_as_variable"`
-	LocalAs                       types.Int64                                     `tfsdk:"local_as"`
+	LocalAs                       types.String                                    `tfsdk:"local_as"`
 	LocalAsVariable               types.String                                    `tfsdk:"local_as_variable"`
 	KeepaliveTime                 types.Int64                                     `tfsdk:"keepalive_time"`
 	KeepaliveTimeVariable         types.String                                    `tfsdk:"keepalive_time_variable"`
@@ -290,7 +290,11 @@ func (data ServiceRoutingBGP) toBody(ctx context.Context) string {
 	} else if !data.AsNumber.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"asNum.optionType", "global")
-			body, _ = sjson.Set(body, path+"asNum.value", data.AsNumber.ValueInt64())
+			if numValue, err := strconv.Atoi(data.AsNumber.ValueString()); err != nil {
+				body, _ = sjson.Set(body, path+"asNum.value", data.AsNumber.ValueString())
+			} else {
+				body, _ = sjson.Set(body, path+"asNum.value", numValue)
+			}
 		}
 	}
 
@@ -573,7 +577,11 @@ func (data ServiceRoutingBGP) toBody(ctx context.Context) string {
 			} else if !item.RemoteAs.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "remoteAs.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "remoteAs.value", item.RemoteAs.ValueInt64())
+					if numValue, err := strconv.Atoi(item.RemoteAs.ValueString()); err != nil {
+						itemBody, _ = sjson.Set(itemBody, "remoteAs.value", item.RemoteAs.ValueString())
+					} else {
+						itemBody, _ = sjson.Set(itemBody, "remoteAs.value", numValue)
+					}
 				}
 			}
 
@@ -590,7 +598,11 @@ func (data ServiceRoutingBGP) toBody(ctx context.Context) string {
 			} else {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "localAs.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "localAs.value", item.LocalAs.ValueInt64())
+					if numValue, err := strconv.Atoi(item.LocalAs.ValueString()); err != nil {
+						itemBody, _ = sjson.Set(itemBody, "localAs.value", item.LocalAs.ValueString())
+					} else {
+						itemBody, _ = sjson.Set(itemBody, "localAs.value", numValue)
+					}
 				}
 			}
 
@@ -972,7 +984,11 @@ func (data ServiceRoutingBGP) toBody(ctx context.Context) string {
 			} else if !item.RemoteAs.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "remoteAs.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "remoteAs.value", item.RemoteAs.ValueInt64())
+					if numValue, err := strconv.Atoi(item.RemoteAs.ValueString()); err != nil {
+						itemBody, _ = sjson.Set(itemBody, "remoteAs.value", item.RemoteAs.ValueString())
+					} else {
+						itemBody, _ = sjson.Set(itemBody, "remoteAs.value", numValue)
+					}
 				}
 			}
 
@@ -989,7 +1005,11 @@ func (data ServiceRoutingBGP) toBody(ctx context.Context) string {
 			} else {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "localAs.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "localAs.value", item.LocalAs.ValueInt64())
+					if numValue, err := strconv.Atoi(item.LocalAs.ValueString()); err != nil {
+						itemBody, _ = sjson.Set(itemBody, "localAs.value", item.LocalAs.ValueString())
+					} else {
+						itemBody, _ = sjson.Set(itemBody, "localAs.value", numValue)
+					}
 				}
 			}
 
@@ -1750,14 +1770,14 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	data.AsNumber = types.Int64Null()
+	data.AsNumber = types.StringNull()
 	data.AsNumberVariable = types.StringNull()
 	if t := res.Get(path + "asNum.optionType"); t.Exists() {
 		va := res.Get(path + "asNum.value")
 		if t.String() == "variable" {
 			data.AsNumberVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AsNumber = types.Int64Value(va.Int())
+			data.AsNumber = types.StringValue(va.String())
 		}
 	}
 	data.RouterId = types.StringNull()
@@ -1924,24 +1944,24 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 					item.Shutdown = types.BoolValue(va.Bool())
 				}
 			}
-			item.RemoteAs = types.Int64Null()
+			item.RemoteAs = types.StringNull()
 			item.RemoteAsVariable = types.StringNull()
 			if t := v.Get("remoteAs.optionType"); t.Exists() {
 				va := v.Get("remoteAs.value")
 				if t.String() == "variable" {
 					item.RemoteAsVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.RemoteAs = types.Int64Value(va.Int())
+					item.RemoteAs = types.StringValue(va.String())
 				}
 			}
-			item.LocalAs = types.Int64Null()
+			item.LocalAs = types.StringNull()
 			item.LocalAsVariable = types.StringNull()
 			if t := v.Get("localAs.optionType"); t.Exists() {
 				va := v.Get("localAs.value")
 				if t.String() == "variable" {
 					item.LocalAsVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.LocalAs = types.Int64Value(va.Int())
+					item.LocalAs = types.StringValue(va.String())
 				}
 			}
 			item.KeepaliveTime = types.Int64Null()
@@ -2213,24 +2233,24 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 					item.Shutdown = types.BoolValue(va.Bool())
 				}
 			}
-			item.RemoteAs = types.Int64Null()
+			item.RemoteAs = types.StringNull()
 			item.RemoteAsVariable = types.StringNull()
 			if t := v.Get("remoteAs.optionType"); t.Exists() {
 				va := v.Get("remoteAs.value")
 				if t.String() == "variable" {
 					item.RemoteAsVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.RemoteAs = types.Int64Value(va.Int())
+					item.RemoteAs = types.StringValue(va.String())
 				}
 			}
-			item.LocalAs = types.Int64Null()
+			item.LocalAs = types.StringNull()
 			item.LocalAsVariable = types.StringNull()
 			if t := v.Get("localAs.optionType"); t.Exists() {
 				va := v.Get("localAs.value")
 				if t.String() == "variable" {
 					item.LocalAsVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.LocalAs = types.Int64Value(va.Int())
+					item.LocalAs = types.StringValue(va.String())
 				}
 			}
 			item.KeepaliveTime = types.Int64Null()
@@ -2793,14 +2813,14 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	data.AsNumber = types.Int64Null()
+	data.AsNumber = types.StringNull()
 	data.AsNumberVariable = types.StringNull()
 	if t := res.Get(path + "asNum.optionType"); t.Exists() {
 		va := res.Get(path + "asNum.value")
 		if t.String() == "variable" {
 			data.AsNumberVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AsNumber = types.Int64Value(va.Int())
+			data.AsNumber = types.StringValue(va.String())
 		}
 	}
 	data.RouterId = types.StringNull()
@@ -2994,24 +3014,24 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 				data.Ipv4Neighbors[i].Shutdown = types.BoolValue(va.Bool())
 			}
 		}
-		data.Ipv4Neighbors[i].RemoteAs = types.Int64Null()
+		data.Ipv4Neighbors[i].RemoteAs = types.StringNull()
 		data.Ipv4Neighbors[i].RemoteAsVariable = types.StringNull()
 		if t := r.Get("remoteAs.optionType"); t.Exists() {
 			va := r.Get("remoteAs.value")
 			if t.String() == "variable" {
 				data.Ipv4Neighbors[i].RemoteAsVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Ipv4Neighbors[i].RemoteAs = types.Int64Value(va.Int())
+				data.Ipv4Neighbors[i].RemoteAs = types.StringValue(va.String())
 			}
 		}
-		data.Ipv4Neighbors[i].LocalAs = types.Int64Null()
+		data.Ipv4Neighbors[i].LocalAs = types.StringNull()
 		data.Ipv4Neighbors[i].LocalAsVariable = types.StringNull()
 		if t := r.Get("localAs.optionType"); t.Exists() {
 			va := r.Get("localAs.value")
 			if t.String() == "variable" {
 				data.Ipv4Neighbors[i].LocalAsVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Ipv4Neighbors[i].LocalAs = types.Int64Value(va.Int())
+				data.Ipv4Neighbors[i].LocalAs = types.StringValue(va.String())
 			}
 		}
 		data.Ipv4Neighbors[i].KeepaliveTime = types.Int64Null()
@@ -3324,24 +3344,24 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 				data.Ipv6Neighbors[i].Shutdown = types.BoolValue(va.Bool())
 			}
 		}
-		data.Ipv6Neighbors[i].RemoteAs = types.Int64Null()
+		data.Ipv6Neighbors[i].RemoteAs = types.StringNull()
 		data.Ipv6Neighbors[i].RemoteAsVariable = types.StringNull()
 		if t := r.Get("remoteAs.optionType"); t.Exists() {
 			va := r.Get("remoteAs.value")
 			if t.String() == "variable" {
 				data.Ipv6Neighbors[i].RemoteAsVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Ipv6Neighbors[i].RemoteAs = types.Int64Value(va.Int())
+				data.Ipv6Neighbors[i].RemoteAs = types.StringValue(va.String())
 			}
 		}
-		data.Ipv6Neighbors[i].LocalAs = types.Int64Null()
+		data.Ipv6Neighbors[i].LocalAs = types.StringNull()
 		data.Ipv6Neighbors[i].LocalAsVariable = types.StringNull()
 		if t := r.Get("localAs.optionType"); t.Exists() {
 			va := r.Get("localAs.value")
 			if t.String() == "variable" {
 				data.Ipv6Neighbors[i].LocalAsVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Ipv6Neighbors[i].LocalAs = types.Int64Value(va.Int())
+				data.Ipv6Neighbors[i].LocalAs = types.StringValue(va.String())
 			}
 		}
 		data.Ipv6Neighbors[i].KeepaliveTime = types.Int64Null()

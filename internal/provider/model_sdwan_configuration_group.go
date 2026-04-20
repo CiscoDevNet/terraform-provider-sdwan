@@ -34,6 +34,21 @@ import (
 
 // End of section. //template:end imports
 
+// isASDOTNotation checks if a string is in ASDOT notation format (e.g., "1.10", "65000.100").
+// ASDOT format: <high-order 16-bit>.<low-order 16-bit> where each part is 0-65535.
+func isASDOTNotation(s string) bool {
+	parts := strings.Split(s, ".")
+	if len(parts) != 2 {
+		return false
+	}
+	highPart, err1 := strconv.Atoi(parts[0])
+	lowPart, err2 := strconv.Atoi(parts[1])
+	if err1 != nil || err2 != nil {
+		return false
+	}
+	return highPart >= 0 && highPart <= 65535 && lowPart >= 0 && lowPart <= 65535
+}
+
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type ConfigurationGroup struct {
 	Id                  types.String                        `tfsdk:"id"`
@@ -172,8 +187,13 @@ func convertValueByType(valueStr, schemaType string) interface{} {
 		// Auto-detect type for unknown schema types
 		if val, err := strconv.Atoi(valueStr); err == nil {
 			return val
-		} else if val, err := strconv.ParseFloat(valueStr, 64); err == nil {
-			return val
+		} else if strings.Contains(valueStr, ".") {
+			if isASDOTNotation(valueStr) {
+				return valueStr
+			}
+			if val, err := strconv.ParseFloat(valueStr, 64); err == nil {
+				return val
+			}
 		} else if val, err := strconv.ParseBool(valueStr); err == nil {
 			return val
 		}

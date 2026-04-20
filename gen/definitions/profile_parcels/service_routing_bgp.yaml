@@ -16,7 +16,8 @@ attributes:
     test_value: sdwan_transport_feature_profile.test.id
   - model_name: asNum
     tf_name: as_number
-    example: 429
+    type: StringInt64
+    example: "429"
     minimum_test_value: '429'
   - model_name: routerId
     tf_name: router_id
@@ -65,9 +66,11 @@ attributes:
     - model_name: shutdown
       example: false
     - model_name: remoteAs
-      example: 200
+      type: StringInt64
+      example: "200"
     - model_name: localAs
-      example: 200
+      type: StringInt64
+      example: "200"
     - model_name: keepalive
       tf_name: keepalive_time
       example: 40
@@ -193,9 +196,11 @@ attributes:
     - model_name: shutdown
       example: false
     - model_name: remoteAs
-      example: 200
+      type: StringInt64
+      example: "200"
     - model_name: localAs
-      example: 200
+      type: StringInt64
+      example: "200"
     - model_name: keepalive
       tf_name: keepalive_time
       example: 180

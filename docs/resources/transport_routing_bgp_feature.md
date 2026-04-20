@@ -144,7 +144,7 @@ resource "sdwan_transport_routing_bgp_feature" "example" {
 - `always_compare_med` (Boolean) Compare MEDs from all ASs when selecting active BGP paths
   - Default value: `false`
 - `always_compare_med_variable` (String) Variable name
-- `as_number` (Number) Set autonomous system number <1..4294967295> or <XX.YY>
+- `as_number` (String) Set autonomous system number <1..4294967295> or <XX.YY>
 - `as_number_variable` (String) Variable name
 - `compare_router_id` (Boolean) Compare router IDs when selecting active BGP paths
   - Default value: `false`
@@ -270,14 +270,14 @@ Optional:
   - Range: `0`-`65535`
   - Default value: `60`
 - `keepalive_time_variable` (String) Variable name
-- `local_as` (Number) Set local autonomous number,Local-AS cannot have the local BGP protocol AS number or the AS number of the remote peer.The local-as is valid only if the peer is a true eBGP peer. It does not work for two peers in different sub-ASs in a confederation.
+- `local_as` (String) Set local autonomous number,Local-AS cannot have the local BGP protocol AS number or the AS number of the remote peer.The local-as is valid only if the peer is a true eBGP peer. It does not work for two peers in different sub-ASs in a confederation.
 - `local_as_variable` (String) Variable name
 - `next_hop_self` (Boolean) Set router to be next hop for routes advertised to neighbor
   - Default value: `false`
 - `next_hop_self_variable` (String) Variable name
 - `password` (String) Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `password_variable` (String) Variable name
-- `remote_as` (Number) Set remote autonomous system number
+- `remote_as` (String) Set remote autonomous system number
 - `remote_as_variable` (String) Variable name
 - `send_community` (Boolean) Send community attribute
   - Default value: `true`
@@ -401,14 +401,14 @@ Optional:
   - Range: `0`-`65535`
   - Default value: `60`
 - `keepalive_time_variable` (String) Variable name
-- `local_as` (Number) Set local autonomous system number,Local-AS cannot have the local BGP protocol AS number or the AS number of the remote peer.The local-as is valid only if the peer is a true eBGP peer. It does not work for two peers in different sub-ASs in a confederation.
+- `local_as` (String) Set local autonomous system number,Local-AS cannot have the local BGP protocol AS number or the AS number of the remote peer.The local-as is valid only if the peer is a true eBGP peer. It does not work for two peers in different sub-ASs in a confederation.
 - `local_as_variable` (String) Variable name
 - `next_hop_self` (Boolean) Set router to be next hop for routes advertised to neighbor
   - Default value: `false`
 - `next_hop_self_variable` (String) Variable name
 - `password` (String) Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `password_variable` (String) Variable name
-- `remote_as` (Number) Set remote autonomous system number
+- `remote_as` (String) Set remote autonomous system number
 - `remote_as_variable` (String) Variable name
 - `send_community` (Boolean) Send community attribute
   - Default value: `true`
