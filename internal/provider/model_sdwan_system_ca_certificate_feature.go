@@ -92,7 +92,7 @@ func (data SystemCACertificate) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *SystemCACertificate) fromBody(ctx context.Context, res gjson.Result) {
+func (data *SystemCACertificate) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -100,6 +100,7 @@ func (data *SystemCACertificate) fromBody(ctx context.Context, res gjson.Result)
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
+	oldCertificates := data.Certificates
 	if value := res.Get(path + "certificates"); value.Exists() && len(value.Array()) > 0 {
 		data.Certificates = make([]SystemCACertificateCertificates, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -123,68 +124,42 @@ func (data *SystemCACertificate) fromBody(ctx context.Context, res gjson.Result)
 			data.Certificates = append(data.Certificates, item)
 			return true
 		})
+	} else {
+		data.Certificates = nil
+	}
+	if !fullRead {
+		resultCertificates := make([]SystemCACertificateCertificates, 0, len(data.Certificates))
+		matchedCertificates := make([]bool, len(data.Certificates))
+		for _, oldItem := range oldCertificates {
+			for ni := range data.Certificates {
+				if matchedCertificates[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.TrustPointName.ValueString() != data.Certificates[ni].TrustPointName.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.CaCertificateId.ValueString() != data.Certificates[ni].CaCertificateId.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedCertificates[ni] = true
+					resultCertificates = append(resultCertificates, data.Certificates[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Certificates {
+			if !matchedCertificates[ni] {
+				resultCertificates = append(resultCertificates, data.Certificates[ni])
+			}
+		}
+		data.Certificates = resultCertificates
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *SystemCACertificate) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	for i := range data.Certificates {
-		keys := [...]string{"trustPointName", "certificateUUID"}
-		keyValues := [...]string{data.Certificates[i].TrustPointName.ValueString(), data.Certificates[i].CaCertificateId.ValueString()}
-		keyValuesVariables := [...]string{"", ""}
-
-		var r gjson.Result
-		res.Get(path + "certificates").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Certificates[i].TrustPointName = types.StringNull()
-
-		if t := r.Get("trustPointName.optionType"); t.Exists() {
-			va := r.Get("trustPointName.value")
-			if t.String() == "global" {
-				data.Certificates[i].TrustPointName = types.StringValue(va.String())
-			}
-		}
-		data.Certificates[i].CaCertificateId = types.StringNull()
-
-		if t := r.Get("certificateUUID.optionType"); t.Exists() {
-			va := r.Get("certificateUUID.value")
-			if t.String() == "global" {
-				data.Certificates[i].CaCertificateId = types.StringValue(va.String())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

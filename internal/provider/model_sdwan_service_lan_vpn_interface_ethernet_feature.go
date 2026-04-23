@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
@@ -1833,7 +1832,7 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, ver *vers
 	return body
 }
 
-func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -1934,6 +1933,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		}
 		data.PortChannelMode = types.StringValue("lacp")
 	}
+	oldPortChannelLacpMemberLinks := data.PortChannelLacpMemberLinks
 	if value := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.portChannelMemberLinks"); value.Exists() && len(value.Array()) > 0 {
 		data.PortChannelLacpMemberLinks = make([]ServiceLANVPNInterfaceEthernetPortChannelLacpMemberLinks, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -1980,6 +1980,36 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			return true
 		})
 		data.PortChannelMode = types.StringValue("lacp")
+	} else {
+		data.PortChannelLacpMemberLinks = nil
+	}
+	if !fullRead {
+		resultPortChannelLacpMemberLinks := make([]ServiceLANVPNInterfaceEthernetPortChannelLacpMemberLinks, 0, len(data.PortChannelLacpMemberLinks))
+		matchedPortChannelLacpMemberLinks := make([]bool, len(data.PortChannelLacpMemberLinks))
+		for _, oldItem := range oldPortChannelLacpMemberLinks {
+			for ni := range data.PortChannelLacpMemberLinks {
+				if matchedPortChannelLacpMemberLinks[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.InterfaceId.ValueString() != data.PortChannelLacpMemberLinks[ni].InterfaceId.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedPortChannelLacpMemberLinks[ni] = true
+					resultPortChannelLacpMemberLinks = append(resultPortChannelLacpMemberLinks, data.PortChannelLacpMemberLinks[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.PortChannelLacpMemberLinks {
+			if !matchedPortChannelLacpMemberLinks[ni] {
+				resultPortChannelLacpMemberLinks = append(resultPortChannelLacpMemberLinks, data.PortChannelLacpMemberLinks[ni])
+			}
+		}
+		data.PortChannelLacpMemberLinks = resultPortChannelLacpMemberLinks
 	}
 	data.PortChannelStaticQosAggregate = types.BoolNull()
 	data.PortChannelStaticQosAggregateVariable = types.StringNull()
@@ -2003,6 +2033,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		}
 		data.PortChannelMode = types.StringValue("static")
 	}
+	oldPortChannelStaticMemberLinks := data.PortChannelStaticMemberLinks
 	if value := res.Get(path + "portChannel.mainInterface.staticModeMainInterface.portChannelMemberLinks"); value.Exists() && len(value.Array()) > 0 {
 		data.PortChannelStaticMemberLinks = make([]ServiceLANVPNInterfaceEthernetPortChannelStaticMemberLinks, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -2019,6 +2050,36 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			return true
 		})
 		data.PortChannelMode = types.StringValue("static")
+	} else {
+		data.PortChannelStaticMemberLinks = nil
+	}
+	if !fullRead {
+		resultPortChannelStaticMemberLinks := make([]ServiceLANVPNInterfaceEthernetPortChannelStaticMemberLinks, 0, len(data.PortChannelStaticMemberLinks))
+		matchedPortChannelStaticMemberLinks := make([]bool, len(data.PortChannelStaticMemberLinks))
+		for _, oldItem := range oldPortChannelStaticMemberLinks {
+			for ni := range data.PortChannelStaticMemberLinks {
+				if matchedPortChannelStaticMemberLinks[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.InterfaceId.ValueString() != data.PortChannelStaticMemberLinks[ni].InterfaceId.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedPortChannelStaticMemberLinks[ni] = true
+					resultPortChannelStaticMemberLinks = append(resultPortChannelStaticMemberLinks, data.PortChannelStaticMemberLinks[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.PortChannelStaticMemberLinks {
+			if !matchedPortChannelStaticMemberLinks[ni] {
+				resultPortChannelStaticMemberLinks = append(resultPortChannelStaticMemberLinks, data.PortChannelStaticMemberLinks[ni])
+			}
+		}
+		data.PortChannelStaticMemberLinks = resultPortChannelStaticMemberLinks
 	}
 	data.PortChannelSubinterfacePrimaryInterfaceName = types.StringNull()
 	data.PortChannelSubinterfacePrimaryInterfaceNameVariable = types.StringNull()
@@ -2123,6 +2184,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.Ipv4AddressType = types.StringValue("static")
 		}
 	}
+	oldIpv4SecondaryAddresses := data.Ipv4SecondaryAddresses
 	if value := res.Get(path + "intfIpAddress.either.static.staticIpV4AddressSecondary"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4SecondaryAddresses = make([]ServiceLANVPNInterfaceEthernetIpv4SecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -2179,6 +2241,40 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			return true
 		})
 		data.Ipv4AddressType = types.StringValue("static")
+	} else {
+		data.Ipv4SecondaryAddresses = nil
+	}
+	if !fullRead {
+		resultIpv4SecondaryAddresses := make([]ServiceLANVPNInterfaceEthernetIpv4SecondaryAddresses, 0, len(data.Ipv4SecondaryAddresses))
+		matchedIpv4SecondaryAddresses := make([]bool, len(data.Ipv4SecondaryAddresses))
+		for _, oldItem := range oldIpv4SecondaryAddresses {
+			for ni := range data.Ipv4SecondaryAddresses {
+				if matchedIpv4SecondaryAddresses[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.AddressVariable.ValueString() != "" || data.Ipv4SecondaryAddresses[ni].AddressVariable.ValueString() != "") {
+					if oldItem.AddressVariable.ValueString() != data.Ipv4SecondaryAddresses[ni].AddressVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.Address.ValueString() != data.Ipv4SecondaryAddresses[ni].Address.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedIpv4SecondaryAddresses[ni] = true
+					resultIpv4SecondaryAddresses = append(resultIpv4SecondaryAddresses, data.Ipv4SecondaryAddresses[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Ipv4SecondaryAddresses {
+			if !matchedIpv4SecondaryAddresses[ni] {
+				resultIpv4SecondaryAddresses = append(resultIpv4SecondaryAddresses, data.Ipv4SecondaryAddresses[ni])
+			}
+		}
+		data.Ipv4SecondaryAddresses = resultIpv4SecondaryAddresses
 	}
 	data.Ipv4DhcpHelper = types.SetNull(types.StringType)
 	data.Ipv4DhcpHelperVariable = types.StringNull()
@@ -2215,6 +2311,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		}
 		data.Ipv6AddressType = types.StringValue("dynamic")
 	}
+	oldIpv6DhcpSecondaryAddresses := data.Ipv6DhcpSecondaryAddresses
 	if value := res.Get(path + "intfIpV6Address.either.dynamic.secondaryIpV6Address"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6DhcpSecondaryAddresses = make([]ServiceLANVPNInterfaceEthernetIpv6DhcpSecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -2251,6 +2348,40 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			return true
 		})
 		data.Ipv6AddressType = types.StringValue("dynamic")
+	} else {
+		data.Ipv6DhcpSecondaryAddresses = nil
+	}
+	if !fullRead {
+		resultIpv6DhcpSecondaryAddresses := make([]ServiceLANVPNInterfaceEthernetIpv6DhcpSecondaryAddresses, 0, len(data.Ipv6DhcpSecondaryAddresses))
+		matchedIpv6DhcpSecondaryAddresses := make([]bool, len(data.Ipv6DhcpSecondaryAddresses))
+		for _, oldItem := range oldIpv6DhcpSecondaryAddresses {
+			for ni := range data.Ipv6DhcpSecondaryAddresses {
+				if matchedIpv6DhcpSecondaryAddresses[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.AddressVariable.ValueString() != "" || data.Ipv6DhcpSecondaryAddresses[ni].AddressVariable.ValueString() != "") {
+					if oldItem.AddressVariable.ValueString() != data.Ipv6DhcpSecondaryAddresses[ni].AddressVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.Address.ValueString() != data.Ipv6DhcpSecondaryAddresses[ni].Address.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedIpv6DhcpSecondaryAddresses[ni] = true
+					resultIpv6DhcpSecondaryAddresses = append(resultIpv6DhcpSecondaryAddresses, data.Ipv6DhcpSecondaryAddresses[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Ipv6DhcpSecondaryAddresses {
+			if !matchedIpv6DhcpSecondaryAddresses[ni] {
+				resultIpv6DhcpSecondaryAddresses = append(resultIpv6DhcpSecondaryAddresses, data.Ipv6DhcpSecondaryAddresses[ni])
+			}
+		}
+		data.Ipv6DhcpSecondaryAddresses = resultIpv6DhcpSecondaryAddresses
 	}
 	data.Ipv6Address = types.StringNull()
 	data.Ipv6AddressVariable = types.StringNull()
@@ -2271,6 +2402,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 		}
 		data.Ipv6AddressType = types.StringValue("static")
 	}
+	oldIpv6SecondaryAddresses := data.Ipv6SecondaryAddresses
 	if value := res.Get(path + "intfIpV6Address.either.static.secondaryIpV6Address"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6SecondaryAddresses = make([]ServiceLANVPNInterfaceEthernetIpv6SecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -2307,7 +2439,42 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			return true
 		})
 		data.Ipv6AddressType = types.StringValue("static")
+	} else {
+		data.Ipv6SecondaryAddresses = nil
 	}
+	if !fullRead {
+		resultIpv6SecondaryAddresses := make([]ServiceLANVPNInterfaceEthernetIpv6SecondaryAddresses, 0, len(data.Ipv6SecondaryAddresses))
+		matchedIpv6SecondaryAddresses := make([]bool, len(data.Ipv6SecondaryAddresses))
+		for _, oldItem := range oldIpv6SecondaryAddresses {
+			for ni := range data.Ipv6SecondaryAddresses {
+				if matchedIpv6SecondaryAddresses[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.AddressVariable.ValueString() != "" || data.Ipv6SecondaryAddresses[ni].AddressVariable.ValueString() != "") {
+					if oldItem.AddressVariable.ValueString() != data.Ipv6SecondaryAddresses[ni].AddressVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.Address.ValueString() != data.Ipv6SecondaryAddresses[ni].Address.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedIpv6SecondaryAddresses[ni] = true
+					resultIpv6SecondaryAddresses = append(resultIpv6SecondaryAddresses, data.Ipv6SecondaryAddresses[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Ipv6SecondaryAddresses {
+			if !matchedIpv6SecondaryAddresses[ni] {
+				resultIpv6SecondaryAddresses = append(resultIpv6SecondaryAddresses, data.Ipv6SecondaryAddresses[ni])
+			}
+		}
+		data.Ipv6SecondaryAddresses = resultIpv6SecondaryAddresses
+	}
+	oldIpv6DhcpHelpers := data.Ipv6DhcpHelpers
 	if value := res.Get(path + "intfIpV6Address.either.static.dhcpHelperV6"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6DhcpHelpers = make([]ServiceLANVPNInterfaceEthernetIpv6DhcpHelpers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -2364,6 +2531,49 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			return true
 		})
 		data.Ipv6AddressType = types.StringValue("static")
+	} else {
+		data.Ipv6DhcpHelpers = nil
+	}
+	if !fullRead {
+		resultIpv6DhcpHelpers := make([]ServiceLANVPNInterfaceEthernetIpv6DhcpHelpers, 0, len(data.Ipv6DhcpHelpers))
+		matchedIpv6DhcpHelpers := make([]bool, len(data.Ipv6DhcpHelpers))
+		for _, oldItem := range oldIpv6DhcpHelpers {
+			for ni := range data.Ipv6DhcpHelpers {
+				if matchedIpv6DhcpHelpers[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.AddressVariable.ValueString() != "" || data.Ipv6DhcpHelpers[ni].AddressVariable.ValueString() != "") {
+					if oldItem.AddressVariable.ValueString() != data.Ipv6DhcpHelpers[ni].AddressVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.Address.ValueString() != data.Ipv6DhcpHelpers[ni].Address.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch && (oldItem.Dhcpv6HelperVpnVariable.ValueString() != "" || data.Ipv6DhcpHelpers[ni].Dhcpv6HelperVpnVariable.ValueString() != "") {
+					if oldItem.Dhcpv6HelperVpnVariable.ValueString() != data.Ipv6DhcpHelpers[ni].Dhcpv6HelperVpnVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.Dhcpv6HelperVpn.ValueInt64() != data.Ipv6DhcpHelpers[ni].Dhcpv6HelperVpn.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedIpv6DhcpHelpers[ni] = true
+					resultIpv6DhcpHelpers = append(resultIpv6DhcpHelpers, data.Ipv6DhcpHelpers[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Ipv6DhcpHelpers {
+			if !matchedIpv6DhcpHelpers[ni] {
+				resultIpv6DhcpHelpers = append(resultIpv6DhcpHelpers, data.Ipv6DhcpHelpers[ni])
+			}
+		}
+		data.Ipv6DhcpHelpers = resultIpv6DhcpHelpers
 	}
 	data.Ipv4Nat = types.BoolNull()
 
@@ -2443,6 +2653,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.Ipv4NatTcpTimeout = types.Int64Value(va.Int())
 		}
 	}
+	oldStaticNats := data.StaticNats
 	if value := res.Get(path + "natAttributesIpv4.newStaticNat"); value.Exists() && len(value.Array()) > 0 {
 		data.StaticNats = make([]ServiceLANVPNInterfaceEthernetStaticNats, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -2488,6 +2699,63 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.StaticNats = append(data.StaticNats, item)
 			return true
 		})
+	} else {
+		data.StaticNats = nil
+	}
+	if !fullRead {
+		resultStaticNats := make([]ServiceLANVPNInterfaceEthernetStaticNats, 0, len(data.StaticNats))
+		matchedStaticNats := make([]bool, len(data.StaticNats))
+		for _, oldItem := range oldStaticNats {
+			for ni := range data.StaticNats {
+				if matchedStaticNats[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.SourceIpVariable.ValueString() != "" || data.StaticNats[ni].SourceIpVariable.ValueString() != "") {
+					if oldItem.SourceIpVariable.ValueString() != data.StaticNats[ni].SourceIpVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.SourceIp.ValueString() != data.StaticNats[ni].SourceIp.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch && (oldItem.TranslateIpVariable.ValueString() != "" || data.StaticNats[ni].TranslateIpVariable.ValueString() != "") {
+					if oldItem.TranslateIpVariable.ValueString() != data.StaticNats[ni].TranslateIpVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.TranslateIp.ValueString() != data.StaticNats[ni].TranslateIp.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.Direction.ValueString() != data.StaticNats[ni].Direction.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch && (oldItem.SourceVpnVariable.ValueString() != "" || data.StaticNats[ni].SourceVpnVariable.ValueString() != "") {
+					if oldItem.SourceVpnVariable.ValueString() != data.StaticNats[ni].SourceVpnVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.SourceVpn.ValueInt64() != data.StaticNats[ni].SourceVpn.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedStaticNats[ni] = true
+					resultStaticNats = append(resultStaticNats, data.StaticNats[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.StaticNats {
+			if !matchedStaticNats[ni] {
+				resultStaticNats = append(resultStaticNats, data.StaticNats[ni])
+			}
+		}
+		data.StaticNats = resultStaticNats
 	}
 	data.Ipv6Nat = types.BoolNull()
 
@@ -2547,6 +2815,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.AclIpv6IngressPolicyId = types.StringValue(va.String())
 		}
 	}
+	oldIpv6Vrrps := data.Ipv6Vrrps
 	if value := res.Get(path + "vrrpIpv6"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6Vrrps = make([]ServiceLANVPNInterfaceEthernetIpv6Vrrps, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -2638,7 +2907,74 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.Ipv6Vrrps = append(data.Ipv6Vrrps, item)
 			return true
 		})
+	} else {
+		data.Ipv6Vrrps = nil
 	}
+	if !fullRead {
+		resultIpv6Vrrps := make([]ServiceLANVPNInterfaceEthernetIpv6Vrrps, 0, len(data.Ipv6Vrrps))
+		matchedIpv6Vrrps := make([]bool, len(data.Ipv6Vrrps))
+		for _, oldItem := range oldIpv6Vrrps {
+			for ni := range data.Ipv6Vrrps {
+				if matchedIpv6Vrrps[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.GroupIdVariable.ValueString() != "" || data.Ipv6Vrrps[ni].GroupIdVariable.ValueString() != "") {
+					if oldItem.GroupIdVariable.ValueString() != data.Ipv6Vrrps[ni].GroupIdVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.GroupId.ValueInt64() != data.Ipv6Vrrps[ni].GroupId.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedIpv6Vrrps[ni] = true
+					{
+						resultC := make([]ServiceLANVPNInterfaceEthernetIpv6VrrpsIpv6Addresses, 0, len(data.Ipv6Vrrps[ni].Ipv6Addresses))
+						matchedC := make([]bool, len(data.Ipv6Vrrps[ni].Ipv6Addresses))
+						for _, oldCItem := range oldItem.Ipv6Addresses {
+							for nci := range data.Ipv6Vrrps[ni].Ipv6Addresses {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC && (oldCItem.LinkLocalAddressVariable.ValueString() != "" || data.Ipv6Vrrps[ni].Ipv6Addresses[nci].LinkLocalAddressVariable.ValueString() != "") {
+									if oldCItem.LinkLocalAddressVariable.ValueString() != data.Ipv6Vrrps[ni].Ipv6Addresses[nci].LinkLocalAddressVariable.ValueString() {
+										keyMatchC = false
+									}
+								} else if keyMatchC {
+									if oldCItem.LinkLocalAddress.ValueString() != data.Ipv6Vrrps[ni].Ipv6Addresses[nci].LinkLocalAddress.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									resultC = append(resultC, data.Ipv6Vrrps[ni].Ipv6Addresses[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.Ipv6Vrrps[ni].Ipv6Addresses {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.Ipv6Vrrps[ni].Ipv6Addresses[nci])
+							}
+						}
+						data.Ipv6Vrrps[ni].Ipv6Addresses = resultC
+					}
+					resultIpv6Vrrps = append(resultIpv6Vrrps, data.Ipv6Vrrps[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Ipv6Vrrps {
+			if !matchedIpv6Vrrps[ni] {
+				resultIpv6Vrrps = append(resultIpv6Vrrps, data.Ipv6Vrrps[ni])
+			}
+		}
+		data.Ipv6Vrrps = resultIpv6Vrrps
+	}
+	oldIpv4Vrrps := data.Ipv4Vrrps
 	if value := res.Get(path + "vrrp"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4Vrrps = make([]ServiceLANVPNInterfaceEthernetIpv4Vrrps, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -2792,7 +3128,102 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.Ipv4Vrrps = append(data.Ipv4Vrrps, item)
 			return true
 		})
+	} else {
+		data.Ipv4Vrrps = nil
 	}
+	if !fullRead {
+		resultIpv4Vrrps := make([]ServiceLANVPNInterfaceEthernetIpv4Vrrps, 0, len(data.Ipv4Vrrps))
+		matchedIpv4Vrrps := make([]bool, len(data.Ipv4Vrrps))
+		for _, oldItem := range oldIpv4Vrrps {
+			for ni := range data.Ipv4Vrrps {
+				if matchedIpv4Vrrps[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.GroupIdVariable.ValueString() != "" || data.Ipv4Vrrps[ni].GroupIdVariable.ValueString() != "") {
+					if oldItem.GroupIdVariable.ValueString() != data.Ipv4Vrrps[ni].GroupIdVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.GroupId.ValueInt64() != data.Ipv4Vrrps[ni].GroupId.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedIpv4Vrrps[ni] = true
+					{
+						resultC := make([]ServiceLANVPNInterfaceEthernetIpv4VrrpsSecondaryAddresses, 0, len(data.Ipv4Vrrps[ni].SecondaryAddresses))
+						matchedC := make([]bool, len(data.Ipv4Vrrps[ni].SecondaryAddresses))
+						for _, oldCItem := range oldItem.SecondaryAddresses {
+							for nci := range data.Ipv4Vrrps[ni].SecondaryAddresses {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC && (oldCItem.AddressVariable.ValueString() != "" || data.Ipv4Vrrps[ni].SecondaryAddresses[nci].AddressVariable.ValueString() != "") {
+									if oldCItem.AddressVariable.ValueString() != data.Ipv4Vrrps[ni].SecondaryAddresses[nci].AddressVariable.ValueString() {
+										keyMatchC = false
+									}
+								} else if keyMatchC {
+									if oldCItem.Address.ValueString() != data.Ipv4Vrrps[ni].SecondaryAddresses[nci].Address.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									resultC = append(resultC, data.Ipv4Vrrps[ni].SecondaryAddresses[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.Ipv4Vrrps[ni].SecondaryAddresses {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.Ipv4Vrrps[ni].SecondaryAddresses[nci])
+							}
+						}
+						data.Ipv4Vrrps[ni].SecondaryAddresses = resultC
+					}
+					{
+						resultC := make([]ServiceLANVPNInterfaceEthernetIpv4VrrpsTrackingObjects, 0, len(data.Ipv4Vrrps[ni].TrackingObjects))
+						matchedC := make([]bool, len(data.Ipv4Vrrps[ni].TrackingObjects))
+						for _, oldCItem := range oldItem.TrackingObjects {
+							for nci := range data.Ipv4Vrrps[ni].TrackingObjects {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC {
+									if oldCItem.TrackerId.ValueString() != data.Ipv4Vrrps[ni].TrackingObjects[nci].TrackerId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									resultC = append(resultC, data.Ipv4Vrrps[ni].TrackingObjects[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.Ipv4Vrrps[ni].TrackingObjects {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.Ipv4Vrrps[ni].TrackingObjects[nci])
+							}
+						}
+						data.Ipv4Vrrps[ni].TrackingObjects = resultC
+					}
+					resultIpv4Vrrps = append(resultIpv4Vrrps, data.Ipv4Vrrps[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Ipv4Vrrps {
+			if !matchedIpv4Vrrps[ni] {
+				resultIpv4Vrrps = append(resultIpv4Vrrps, data.Ipv4Vrrps[ni])
+			}
+		}
+		data.Ipv4Vrrps = resultIpv4Vrrps
+	}
+	oldArps := data.Arps
 	if value := res.Get(path + "arp"); value.Exists() && len(value.Array()) > 0 {
 		data.Arps = make([]ServiceLANVPNInterfaceEthernetArps, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -2820,1497 +3251,49 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.Arps = append(data.Arps, item)
 			return true
 		})
-	}
-	data.TrustsecEnableSgtPropogation = types.BoolNull()
-
-	if t := res.Get(path + "trustsec.enableSGTPropogation.optionType"); t.Exists() {
-		va := res.Get(path + "trustsec.enableSGTPropogation.value")
-		if t.String() == "global" {
-			data.TrustsecEnableSgtPropogation = types.BoolValue(va.Bool())
-		}
-	}
-	data.TrustsecPropogate = types.BoolNull()
-
-	if t := res.Get(path + "trustsec.propogate.optionType"); t.Exists() {
-		va := res.Get(path + "trustsec.propogate.value")
-		if t.String() == "global" {
-			data.TrustsecPropogate = types.BoolValue(va.Bool())
-		}
-	}
-	data.TrustsecSecurityGroupTag = types.Int64Null()
-	data.TrustsecSecurityGroupTagVariable = types.StringNull()
-	if t := res.Get(path + "trustsec.securityGroupTag.optionType"); t.Exists() {
-		va := res.Get(path + "trustsec.securityGroupTag.value")
-		if t.String() == "variable" {
-			data.TrustsecSecurityGroupTagVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TrustsecSecurityGroupTag = types.Int64Value(va.Int())
-		}
-	}
-	data.TrustsecEnableEnforcedPropogation = types.BoolNull()
-
-	if t := res.Get(path + "trustsec.enableEnforcedPropogation.optionType"); t.Exists() {
-		va := res.Get(path + "trustsec.enableEnforcedPropogation.value")
-		if t.String() == "global" {
-			data.TrustsecEnableEnforcedPropogation = types.BoolValue(va.Bool())
-		}
-	}
-	data.TrustsecEnforcedSecurityGroupTag = types.Int64Null()
-	data.TrustsecEnforcedSecurityGroupTagVariable = types.StringNull()
-	if t := res.Get(path + "trustsec.enforcedSecurityGroupTag.optionType"); t.Exists() {
-		va := res.Get(path + "trustsec.enforcedSecurityGroupTag.value")
-		if t.String() == "variable" {
-			data.TrustsecEnforcedSecurityGroupTagVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TrustsecEnforcedSecurityGroupTag = types.Int64Value(va.Int())
-		}
-	}
-	data.Duplex = types.StringNull()
-	data.DuplexVariable = types.StringNull()
-	if t := res.Get(path + "advanced.duplex.optionType"); t.Exists() {
-		va := res.Get(path + "advanced.duplex.value")
-		if t.String() == "variable" {
-			data.DuplexVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Duplex = types.StringValue(va.String())
-		}
-	}
-	data.MacAddress = types.StringNull()
-	data.MacAddressVariable = types.StringNull()
-	if t := res.Get(path + "advanced.macAddress.optionType"); t.Exists() {
-		va := res.Get(path + "advanced.macAddress.value")
-		if t.String() == "variable" {
-			data.MacAddressVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.MacAddress = types.StringValue(va.String())
-		}
-	}
-	data.IpMtu = types.Int64Null()
-	data.IpMtuVariable = types.StringNull()
-	if t := res.Get(path + "advanced.ipMtu.optionType"); t.Exists() {
-		va := res.Get(path + "advanced.ipMtu.value")
-		if t.String() == "variable" {
-			data.IpMtuVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.IpMtu = types.Int64Value(va.Int())
-		}
-	}
-	data.InterfaceMtu = types.Int64Null()
-	data.InterfaceMtuVariable = types.StringNull()
-	if t := res.Get(path + "advanced.intrfMtu.optionType"); t.Exists() {
-		va := res.Get(path + "advanced.intrfMtu.value")
-		if t.String() == "variable" {
-			data.InterfaceMtuVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.InterfaceMtu = types.Int64Value(va.Int())
-		}
-	}
-	data.TcpMss = types.Int64Null()
-	data.TcpMssVariable = types.StringNull()
-	if t := res.Get(path + "advanced.tcpMss.optionType"); t.Exists() {
-		va := res.Get(path + "advanced.tcpMss.value")
-		if t.String() == "variable" {
-			data.TcpMssVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TcpMss = types.Int64Value(va.Int())
-		}
-	}
-	data.Speed = types.StringNull()
-	data.SpeedVariable = types.StringNull()
-	if t := res.Get(path + "advanced.speed.optionType"); t.Exists() {
-		va := res.Get(path + "advanced.speed.value")
-		if t.String() == "variable" {
-			data.SpeedVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Speed = types.StringValue(va.String())
-		}
-	}
-	data.ArpTimeout = types.Int64Null()
-	data.ArpTimeoutVariable = types.StringNull()
-	if t := res.Get(path + "advanced.arpTimeout.optionType"); t.Exists() {
-		va := res.Get(path + "advanced.arpTimeout.value")
-		if t.String() == "variable" {
-			data.ArpTimeoutVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.ArpTimeout = types.Int64Value(va.Int())
-		}
-	}
-	data.Autonegotiate = types.BoolNull()
-	data.AutonegotiateVariable = types.StringNull()
-	if t := res.Get(path + "advanced.autonegotiate.optionType"); t.Exists() {
-		va := res.Get(path + "advanced.autonegotiate.value")
-		if t.String() == "variable" {
-			data.AutonegotiateVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Autonegotiate = types.BoolValue(va.Bool())
-		}
-	}
-	data.MediaType = types.StringNull()
-	data.MediaTypeVariable = types.StringNull()
-	if t := res.Get(path + "advanced.mediaType.optionType"); t.Exists() {
-		va := res.Get(path + "advanced.mediaType.value")
-		if t.String() == "variable" {
-			data.MediaTypeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.MediaType = types.StringValue(va.String())
-		}
-	}
-	data.LoadInterval = types.Int64Null()
-	data.LoadIntervalVariable = types.StringNull()
-	if t := res.Get(path + "advanced.loadInterval.optionType"); t.Exists() {
-		va := res.Get(path + "advanced.loadInterval.value")
-		if t.String() == "variable" {
-			data.LoadIntervalVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.LoadInterval = types.Int64Value(va.Int())
-		}
-	}
-	data.IcmpRedirectDisable = types.BoolNull()
-	data.IcmpRedirectDisableVariable = types.StringNull()
-	if t := res.Get(path + "advanced.icmpRedirectDisable.optionType"); t.Exists() {
-		va := res.Get(path + "advanced.icmpRedirectDisable.value")
-		if t.String() == "variable" {
-			data.IcmpRedirectDisableVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.IcmpRedirectDisable = types.BoolValue(va.Bool())
-		}
-	}
-	data.Xconnect = types.StringNull()
-	data.XconnectVariable = types.StringNull()
-	if t := res.Get(path + "advanced.xconnect.optionType"); t.Exists() {
-		va := res.Get(path + "advanced.xconnect.value")
-		if t.String() == "variable" {
-			data.XconnectVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Xconnect = types.StringValue(va.String())
-		}
-	}
-	data.IpDirectedBroadcast = types.BoolNull()
-	data.IpDirectedBroadcastVariable = types.StringNull()
-	if t := res.Get(path + "advanced.ipDirectedBroadcast.optionType"); t.Exists() {
-		va := res.Get(path + "advanced.ipDirectedBroadcast.value")
-		if t.String() == "variable" {
-			data.IpDirectedBroadcastVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.IpDirectedBroadcast = types.BoolValue(va.Bool())
-		}
-	}
-}
-
-func (data *ServiceLANVPNInterfaceEthernet) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
 	} else {
-		data.Description = types.StringNull()
+		data.Arps = nil
 	}
-	path := "payload.data."
-	data.Shutdown = types.BoolNull()
-	data.ShutdownVariable = types.StringNull()
-	if t := res.Get(path + "shutdown.optionType"); t.Exists() {
-		va := res.Get(path + "shutdown.value")
-		if t.String() == "variable" {
-			data.ShutdownVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Shutdown = types.BoolValue(va.Bool())
-		}
-	}
-	data.InterfaceName = types.StringNull()
-	data.InterfaceNameVariable = types.StringNull()
-	if t := res.Get(path + "interfaceName.optionType"); t.Exists() {
-		va := res.Get(path + "interfaceName.value")
-		if t.String() == "variable" {
-			data.InterfaceNameVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.InterfaceName = types.StringValue(va.String())
-		}
-	}
-	data.InterfaceDescription = types.StringNull()
-	data.InterfaceDescriptionVariable = types.StringNull()
-	if t := res.Get(path + "description.optionType"); t.Exists() {
-		va := res.Get(path + "description.value")
-		if t.String() == "variable" {
-			data.InterfaceDescriptionVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.InterfaceDescription = types.StringValue(va.String())
-		}
-	}
-	data.PortChannelInterface = types.BoolNull()
-
-	if t := res.Get(path + "portChannelInterface.optionType"); t.Exists() {
-		va := res.Get(path + "portChannelInterface.value")
-		if t.String() == "global" {
-			data.PortChannelInterface = types.BoolValue(va.Bool())
-		}
-	}
-	data.PortChannelLacpQosAggregate = types.BoolNull()
-	data.PortChannelLacpQosAggregateVariable = types.StringNull()
-	if t := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.optionType"); t.Exists() {
-		va := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.portChannelQosAggregate.value")
-		if t.String() == "variable" {
-			data.PortChannelLacpQosAggregateVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PortChannelLacpQosAggregate = types.BoolValue(va.Bool())
-		}
-	}
-	data.PortChannelLacpLoadBalance = types.StringNull()
-	data.PortChannelLacpLoadBalanceVariable = types.StringNull()
-	if t := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.loadBalance.optionType"); t.Exists() {
-		va := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.loadBalance.value")
-		if t.String() == "variable" {
-			data.PortChannelLacpLoadBalanceVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PortChannelLacpLoadBalance = types.StringValue(va.String())
-		}
-	}
-	data.PortChannelLacpFastSwitchover = types.BoolNull()
-	data.PortChannelLacpFastSwitchoverVariable = types.StringNull()
-	if t := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.optionType"); t.Exists() {
-		va := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpFastSwitchover.value")
-		if t.String() == "variable" {
-			data.PortChannelLacpFastSwitchoverVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PortChannelLacpFastSwitchover = types.BoolValue(va.Bool())
-		}
-	}
-	data.PortChannelLacpMinBundle = types.Int64Null()
-	data.PortChannelLacpMinBundleVariable = types.StringNull()
-	if t := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.optionType"); t.Exists() {
-		va := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpMinBundle.value")
-		if t.String() == "variable" {
-			data.PortChannelLacpMinBundleVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PortChannelLacpMinBundle = types.Int64Value(va.Int())
-		}
-	}
-	data.PortChannelLacpMaxBundle = types.Int64Null()
-	data.PortChannelLacpMaxBundleVariable = types.StringNull()
-	if t := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.optionType"); t.Exists() {
-		va := res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.lacpMaxBundle.value")
-		if t.String() == "variable" {
-			data.PortChannelLacpMaxBundleVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PortChannelLacpMaxBundle = types.Int64Value(va.Int())
-		}
-	}
-	for i := range data.PortChannelLacpMemberLinks {
-		keys := [...]string{"interface.refId"}
-		keyValues := [...]string{data.PortChannelLacpMemberLinks[i].InterfaceId.ValueString()}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "portChannel.mainInterface.lacpModeMainInterface.portChannelMemberLinks").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
+	if !fullRead {
+		resultArps := make([]ServiceLANVPNInterfaceEthernetArps, 0, len(data.Arps))
+		matchedArps := make([]bool, len(data.Arps))
+		for _, oldItem := range oldArps {
+			for ni := range data.Arps {
+				if matchedArps[ni] {
 					continue
 				}
-				if found {
-					r = v
-					return false
+				keyMatch := true
+				if keyMatch && (oldItem.IpAddressVariable.ValueString() != "" || data.Arps[ni].IpAddressVariable.ValueString() != "") {
+					if oldItem.IpAddressVariable.ValueString() != data.Arps[ni].IpAddressVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.IpAddress.ValueString() != data.Arps[ni].IpAddress.ValueString() {
+						keyMatch = false
+					}
 				}
-				return true
-			},
-		)
-		data.PortChannelLacpMemberLinks[i].InterfaceId = types.StringNull()
-
-		if t := r.Get("interface.refId.optionType"); t.Exists() {
-			va := r.Get("interface.refId.value")
-			if t.String() == "global" {
-				data.PortChannelLacpMemberLinks[i].InterfaceId = types.StringValue(va.String())
-			}
-		}
-		data.PortChannelLacpMemberLinks[i].LacpMode = types.StringNull()
-		data.PortChannelLacpMemberLinks[i].LacpModeVariable = types.StringNull()
-		if t := r.Get("lacpMode.optionType"); t.Exists() {
-			va := r.Get("lacpMode.value")
-			if t.String() == "variable" {
-				data.PortChannelLacpMemberLinks[i].LacpModeVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.PortChannelLacpMemberLinks[i].LacpMode = types.StringValue(va.String())
-			}
-		}
-		data.PortChannelLacpMemberLinks[i].LacpRate = types.StringNull()
-		data.PortChannelLacpMemberLinks[i].LacpRateVariable = types.StringNull()
-		if t := r.Get("lacpRate.optionType"); t.Exists() {
-			va := r.Get("lacpRate.value")
-			if t.String() == "variable" {
-				data.PortChannelLacpMemberLinks[i].LacpRateVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.PortChannelLacpMemberLinks[i].LacpRate = types.StringValue(va.String())
-			}
-		}
-		data.PortChannelLacpMemberLinks[i].LacpPortPriority = types.Int64Null()
-		data.PortChannelLacpMemberLinks[i].LacpPortPriorityVariable = types.StringNull()
-		if t := r.Get("lacpPortPriority.optionType"); t.Exists() {
-			va := r.Get("lacpPortPriority.value")
-			if t.String() == "variable" {
-				data.PortChannelLacpMemberLinks[i].LacpPortPriorityVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.PortChannelLacpMemberLinks[i].LacpPortPriority = types.Int64Value(va.Int())
-			}
-		}
-	}
-	data.PortChannelStaticQosAggregate = types.BoolNull()
-	data.PortChannelStaticQosAggregateVariable = types.StringNull()
-	if t := res.Get(path + "portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.optionType"); t.Exists() {
-		va := res.Get(path + "portChannel.mainInterface.staticModeMainInterface.portChannelQosAggregate.value")
-		if t.String() == "variable" {
-			data.PortChannelStaticQosAggregateVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PortChannelStaticQosAggregate = types.BoolValue(va.Bool())
-		}
-	}
-	data.PortChannelStaticLoadBalance = types.StringNull()
-	data.PortChannelStaticLoadBalanceVariable = types.StringNull()
-	if t := res.Get(path + "portChannel.mainInterface.staticModeMainInterface.loadBalance.optionType"); t.Exists() {
-		va := res.Get(path + "portChannel.mainInterface.staticModeMainInterface.loadBalance.value")
-		if t.String() == "variable" {
-			data.PortChannelStaticLoadBalanceVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PortChannelStaticLoadBalance = types.StringValue(va.String())
-		}
-	}
-	for i := range data.PortChannelStaticMemberLinks {
-		keys := [...]string{"interface.refId"}
-		keyValues := [...]string{data.PortChannelStaticMemberLinks[i].InterfaceId.ValueString()}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "portChannel.mainInterface.staticModeMainInterface.portChannelMemberLinks").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
+				if keyMatch && (oldItem.MacAddressVariable.ValueString() != "" || data.Arps[ni].MacAddressVariable.ValueString() != "") {
+					if oldItem.MacAddressVariable.ValueString() != data.Arps[ni].MacAddressVariable.ValueString() {
+						keyMatch = false
 					}
-					continue
+				} else if keyMatch {
+					if oldItem.MacAddress.ValueString() != data.Arps[ni].MacAddress.ValueString() {
+						keyMatch = false
+					}
 				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.PortChannelStaticMemberLinks[i].InterfaceId = types.StringNull()
-
-		if t := r.Get("interface.refId.optionType"); t.Exists() {
-			va := r.Get("interface.refId.value")
-			if t.String() == "global" {
-				data.PortChannelStaticMemberLinks[i].InterfaceId = types.StringValue(va.String())
-			}
-		}
-	}
-	data.PortChannelSubinterfacePrimaryInterfaceName = types.StringNull()
-	data.PortChannelSubinterfacePrimaryInterfaceNameVariable = types.StringNull()
-	if t := res.Get(path + "portChannel.subInterface.primaryInterfaceName.optionType"); t.Exists() {
-		va := res.Get(path + "portChannel.subInterface.primaryInterfaceName.value")
-		if t.String() == "variable" {
-			data.PortChannelSubinterfacePrimaryInterfaceNameVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PortChannelSubinterfacePrimaryInterfaceName = types.StringValue(va.String())
-		}
-	}
-	data.PortChannelSubinterfaceSecondaryInterfaceName = types.StringNull()
-	data.PortChannelSubinterfaceSecondaryInterfaceNameVariable = types.StringNull()
-	if t := res.Get(path + "portChannel.subInterface.secondaryInterfaceName.optionType"); t.Exists() {
-		va := res.Get(path + "portChannel.subInterface.secondaryInterfaceName.value")
-		if t.String() == "variable" {
-			data.PortChannelSubinterfaceSecondaryInterfaceNameVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PortChannelSubinterfaceSecondaryInterfaceName = types.StringValue(va.String())
-		}
-	}
-	data.PortChannelMemberInterface = types.BoolNull()
-
-	if t := res.Get(path + "portChannelMemberInterface.optionType"); t.Exists() {
-		va := res.Get(path + "portChannelMemberInterface.value")
-		if t.String() == "global" {
-			data.PortChannelMemberInterface = types.BoolValue(va.Bool())
-		}
-	}
-	data.Ipv4AddressType = types.StringNull()
-	data.Ipv4AddressTypeVariable = types.StringNull()
-	if t := res.Get(path + "intfIpAddress.either.addressType.optionType"); t.Exists() {
-		va := res.Get(path + "intfIpAddress.either.addressType.value")
-		if t.String() == "variable" {
-			data.Ipv4AddressTypeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv4AddressType = types.StringValue(va.String())
-		}
-	}
-	data.Ipv4DhcpDistance = types.Int64Null()
-	data.Ipv4DhcpDistanceVariable = types.StringNull()
-	if t := res.Get(path + "intfIpAddress.either.dynamic.dynamicDhcpDistance.optionType"); t.Exists() {
-		va := res.Get(path + "intfIpAddress.either.dynamic.dynamicDhcpDistance.value")
-		if t.String() == "variable" {
-			data.Ipv4DhcpDistanceVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv4DhcpDistance = types.Int64Value(va.Int())
-		}
-	} else if t := res.Get(path + "intfIpAddress.dynamic.dynamicDhcpDistance.optionType"); t.Exists() {
-		// Backward compatibility for < 20.18
-		va := res.Get(path + "intfIpAddress.dynamic.dynamicDhcpDistance.value")
-		if t.String() == "variable" {
-			data.Ipv4DhcpDistanceVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv4DhcpDistance = types.Int64Value(va.Int())
-		}
-		data.Ipv4AddressType = types.StringValue("dynamic")
-	}
-	data.Ipv4Address = types.StringNull()
-	data.Ipv4AddressVariable = types.StringNull()
-	if t := res.Get(path + "intfIpAddress.either.static.staticIpV4AddressPrimary.ipAddress.optionType"); t.Exists() {
-		va := res.Get(path + "intfIpAddress.either.static.staticIpV4AddressPrimary.ipAddress.value")
-		if t.String() == "variable" {
-			data.Ipv4AddressVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv4Address = types.StringValue(va.String())
-		}
-	} else if t := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType"); t.Exists() {
-		// Backward compatibility for < 20.18
-		va := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.value")
-		if t.String() == "variable" {
-			data.Ipv4AddressVariable = types.StringValue(va.String())
-			data.Ipv4AddressType = types.StringValue("static")
-		} else if t.String() == "global" {
-			data.Ipv4Address = types.StringValue(va.String())
-			data.Ipv4AddressType = types.StringValue("static")
-		} else if t.String() == "default" {
-			data.Ipv4AddressType = types.StringValue("static")
-		}
-	}
-	data.Ipv4SubnetMask = types.StringNull()
-	data.Ipv4SubnetMaskVariable = types.StringNull()
-	if t := res.Get(path + "intfIpAddress.either.static.staticIpV4AddressPrimary.subnetMask.optionType"); t.Exists() {
-		va := res.Get(path + "intfIpAddress.either.static.staticIpV4AddressPrimary.subnetMask.value")
-		if t.String() == "variable" {
-			data.Ipv4SubnetMaskVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv4SubnetMask = types.StringValue(va.String())
-		}
-	} else if t := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType"); t.Exists() {
-		// Backward compatibility for < 20.18
-		va := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value")
-		if t.String() == "variable" {
-			data.Ipv4SubnetMaskVariable = types.StringValue(va.String())
-			data.Ipv4AddressType = types.StringValue("static")
-		} else if t.String() == "global" {
-			data.Ipv4SubnetMask = types.StringValue(va.String())
-			data.Ipv4AddressType = types.StringValue("static")
-		} else if t.String() == "default" {
-			data.Ipv4AddressType = types.StringValue("static")
-		}
-	}
-	for i := range data.Ipv4SecondaryAddresses {
-		keys := [...]string{"ipAddress"}
-		keyValues := [...]string{data.Ipv4SecondaryAddresses[i].Address.ValueString()}
-		keyValuesVariables := [...]string{data.Ipv4SecondaryAddresses[i].AddressVariable.ValueString()}
-
-		var r gjson.Result
-		// Start of manually modified section to handle address assignment for <20.18 and =>20.18
-		if eitherVal := res.Get(path + "intfIpAddress.either.static.staticIpV4AddressSecondary"); eitherVal.Exists() {
-			eitherVal.ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						r = v
-						return false
-					}
-					return true
-				},
-			)
-		} else {
-			res.Get(path + "intfIpAddress.static.staticIpV4AddressSecondary").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						r = v
-						return false
-					}
-					return true
-				},
-			)
-		}
-		// End of manually modified section to handle address assignment for <20.18 and =>20.18
-		data.Ipv4SecondaryAddresses[i].Address = types.StringNull()
-		data.Ipv4SecondaryAddresses[i].AddressVariable = types.StringNull()
-		if t := r.Get("ipAddress.optionType"); t.Exists() {
-			va := r.Get("ipAddress.value")
-			if t.String() == "variable" {
-				data.Ipv4SecondaryAddresses[i].AddressVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv4SecondaryAddresses[i].Address = types.StringValue(va.String())
-			}
-		}
-		data.Ipv4SecondaryAddresses[i].SubnetMask = types.StringNull()
-		data.Ipv4SecondaryAddresses[i].SubnetMaskVariable = types.StringNull()
-		if t := r.Get("subnetMask.optionType"); t.Exists() {
-			va := r.Get("subnetMask.value")
-			if t.String() == "variable" {
-				data.Ipv4SecondaryAddresses[i].SubnetMaskVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv4SecondaryAddresses[i].SubnetMask = types.StringValue(va.String())
-			}
-		}
-	}
-	data.Ipv4DhcpHelper = types.SetNull(types.StringType)
-	data.Ipv4DhcpHelperVariable = types.StringNull()
-	if t := res.Get(path + "dhcpHelper.optionType"); t.Exists() {
-		va := res.Get(path + "dhcpHelper.value")
-		if t.String() == "variable" {
-			data.Ipv4DhcpHelperVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv4DhcpHelper = helpers.GetStringSet(va.Array())
-		}
-	}
-	data.Ipv6AddressType = types.StringNull()
-	data.Ipv6AddressTypeVariable = types.StringNull()
-	if t := res.Get(path + "intfIpV6Address.either.addressType.optionType"); t.Exists() {
-		va := res.Get(path + "intfIpV6Address.either.addressType.value")
-		if t.String() == "variable" {
-			data.Ipv6AddressTypeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv6AddressType = types.StringValue(va.String())
-		}
-	}
-	data.EnableDhcpv6 = types.BoolNull()
-
-	if t := res.Get(path + "intfIpV6Address.either.dynamic.dhcpClient.optionType"); t.Exists() {
-		va := res.Get(path + "intfIpV6Address.either.dynamic.dhcpClient.value")
-		if t.String() == "global" {
-			data.EnableDhcpv6 = types.BoolValue(va.Bool())
-		}
-	} else if t := res.Get(path + "intfIpV6Address.dynamic.dhcpClient.optionType"); t.Exists() {
-		// Backward compatibility for < 20.18
-		va := res.Get(path + "intfIpV6Address.dynamic.dhcpClient.value")
-		if t.String() == "global" {
-			data.EnableDhcpv6 = types.BoolValue(va.Bool())
-		}
-		data.Ipv6AddressType = types.StringValue("dynamic")
-	}
-	for i := range data.Ipv6DhcpSecondaryAddresses {
-		keys := [...]string{"address"}
-		keyValues := [...]string{data.Ipv6DhcpSecondaryAddresses[i].Address.ValueString()}
-		keyValuesVariables := [...]string{data.Ipv6DhcpSecondaryAddresses[i].AddressVariable.ValueString()}
-
-		var r gjson.Result
-		// Start of manually modified section to handle address assignment for <20.18 and =>20.18
-		if eitherVal := res.Get(path + "intfIpV6Address.either.dynamic.secondaryIpV6Address"); eitherVal.Exists() {
-			eitherVal.ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						r = v
-						return false
-					}
-					return true
-				},
-			)
-		} else {
-			res.Get(path + "intfIpV6Address.dynamic.secondaryIpV6Address").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						r = v
-						return false
-					}
-					return true
-				},
-			)
-		}
-		// End of manually modified section to handle address assignment for <20.18 and =>20.18
-		data.Ipv6DhcpSecondaryAddresses[i].Address = types.StringNull()
-		data.Ipv6DhcpSecondaryAddresses[i].AddressVariable = types.StringNull()
-		if t := r.Get("address.optionType"); t.Exists() {
-			va := r.Get("address.value")
-			if t.String() == "variable" {
-				data.Ipv6DhcpSecondaryAddresses[i].AddressVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv6DhcpSecondaryAddresses[i].Address = types.StringValue(va.String())
-			}
-		}
-	}
-	data.Ipv6Address = types.StringNull()
-	data.Ipv6AddressVariable = types.StringNull()
-	if t := res.Get(path + "intfIpV6Address.either.static.primaryIpV6Address.address.optionType"); t.Exists() {
-		va := res.Get(path + "intfIpV6Address.either.static.primaryIpV6Address.address.value")
-		if t.String() == "variable" {
-			data.Ipv6AddressVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv6Address = types.StringValue(va.String())
-		}
-	} else if t := res.Get(path + "intfIpV6Address.static.primaryIpV6Address.address.optionType"); t.Exists() {
-		// Backward compatibility for < 20.18
-		va := res.Get(path + "intfIpV6Address.static.primaryIpV6Address.address.value")
-		if t.String() == "variable" {
-			data.Ipv6AddressVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv6Address = types.StringValue(va.String())
-		}
-		data.Ipv6AddressType = types.StringValue("static")
-	}
-	for i := range data.Ipv6SecondaryAddresses {
-		keys := [...]string{"address"}
-		keyValues := [...]string{data.Ipv6SecondaryAddresses[i].Address.ValueString()}
-		keyValuesVariables := [...]string{data.Ipv6SecondaryAddresses[i].AddressVariable.ValueString()}
-
-		var r gjson.Result
-		// Start of manually modified section to handle address assignment for <20.18 and =>20.18
-		if eitherVal := res.Get(path + "intfIpV6Address.either.static.secondaryIpV6Address"); eitherVal.Exists() {
-			eitherVal.ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						r = v
-						return false
-					}
-					return true
-				},
-			)
-		} else {
-			res.Get(path + "intfIpV6Address.static.secondaryIpV6Address").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						r = v
-						return false
-					}
-					return true
-				},
-			)
-		}
-		// End of manually modified section to handle address assignment for <20.18 and =>20.18
-		data.Ipv6SecondaryAddresses[i].Address = types.StringNull()
-		data.Ipv6SecondaryAddresses[i].AddressVariable = types.StringNull()
-		if t := r.Get("address.optionType"); t.Exists() {
-			va := r.Get("address.value")
-			if t.String() == "variable" {
-				data.Ipv6SecondaryAddresses[i].AddressVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv6SecondaryAddresses[i].Address = types.StringValue(va.String())
-			}
-		}
-	}
-	for i := range data.Ipv6DhcpHelpers {
-		keys := [...]string{"ipAddress", "vpn"}
-		keyValues := [...]string{data.Ipv6DhcpHelpers[i].Address.ValueString(), strconv.FormatInt(data.Ipv6DhcpHelpers[i].Dhcpv6HelperVpn.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{data.Ipv6DhcpHelpers[i].AddressVariable.ValueString(), data.Ipv6DhcpHelpers[i].Dhcpv6HelperVpnVariable.ValueString()}
-
-		var r gjson.Result
-		// Start of manually modified section to handle address assignment for <20.18 and =>20.18
-		if eitherVal := res.Get(path + "intfIpV6Address.either.static.dhcpHelperV6"); eitherVal.Exists() {
-			eitherVal.ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						r = v
-						return false
-					}
-					return true
-				},
-			)
-		} else {
-			// Backward compatibility for < 20.18
-			res.Get(path + "intfIpV6Address.static.dhcpHelperV6").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						r = v
-						return false
-					}
-					return true
-				},
-			)
-			data.Ipv6AddressType = types.StringValue("static")
-		}
-		// End of manually modified section to handle address assignment for <20.18 and =>20.18
-		data.Ipv6DhcpHelpers[i].Address = types.StringNull()
-		data.Ipv6DhcpHelpers[i].AddressVariable = types.StringNull()
-		if t := r.Get("ipAddress.optionType"); t.Exists() {
-			va := r.Get("ipAddress.value")
-			if t.String() == "variable" {
-				data.Ipv6DhcpHelpers[i].AddressVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv6DhcpHelpers[i].Address = types.StringValue(va.String())
-			}
-		}
-		data.Ipv6DhcpHelpers[i].Dhcpv6HelperVpn = types.Int64Null()
-		data.Ipv6DhcpHelpers[i].Dhcpv6HelperVpnVariable = types.StringNull()
-		if t := r.Get("vpn.optionType"); t.Exists() {
-			va := r.Get("vpn.value")
-			if t.String() == "variable" {
-				data.Ipv6DhcpHelpers[i].Dhcpv6HelperVpnVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv6DhcpHelpers[i].Dhcpv6HelperVpn = types.Int64Value(va.Int())
-			}
-		}
-	}
-	data.Ipv4Nat = types.BoolNull()
-
-	if t := res.Get(path + "nat.optionType"); t.Exists() {
-		va := res.Get(path + "nat.value")
-		if t.String() == "global" {
-			data.Ipv4Nat = types.BoolValue(va.Bool())
-		}
-	}
-	data.Ipv4NatRangeStart = types.StringNull()
-	data.Ipv4NatRangeStartVariable = types.StringNull()
-	if t := res.Get(path + "natAttributesIpv4.natPool.rangeStart.optionType"); t.Exists() {
-		va := res.Get(path + "natAttributesIpv4.natPool.rangeStart.value")
-		if t.String() == "variable" {
-			data.Ipv4NatRangeStartVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv4NatRangeStart = types.StringValue(va.String())
-		}
-	}
-	data.Ipv4NatRangeEnd = types.StringNull()
-	data.Ipv4NatRangeEndVariable = types.StringNull()
-	if t := res.Get(path + "natAttributesIpv4.natPool.rangeEnd.optionType"); t.Exists() {
-		va := res.Get(path + "natAttributesIpv4.natPool.rangeEnd.value")
-		if t.String() == "variable" {
-			data.Ipv4NatRangeEndVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv4NatRangeEnd = types.StringValue(va.String())
-		}
-	}
-	data.Ipv4NatPrefixLength = types.Int64Null()
-	data.Ipv4NatPrefixLengthVariable = types.StringNull()
-	if t := res.Get(path + "natAttributesIpv4.natPool.prefixLength.optionType"); t.Exists() {
-		va := res.Get(path + "natAttributesIpv4.natPool.prefixLength.value")
-		if t.String() == "variable" {
-			data.Ipv4NatPrefixLengthVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv4NatPrefixLength = types.Int64Value(va.Int())
-		}
-	}
-	data.Ipv4NatOverload = types.BoolNull()
-	data.Ipv4NatOverloadVariable = types.StringNull()
-	if t := res.Get(path + "natAttributesIpv4.natPool.overload.optionType"); t.Exists() {
-		va := res.Get(path + "natAttributesIpv4.natPool.overload.value")
-		if t.String() == "variable" {
-			data.Ipv4NatOverloadVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv4NatOverload = types.BoolValue(va.Bool())
-		}
-	}
-	data.Ipv4NatLoopback = types.StringNull()
-	data.Ipv4NatLoopbackVariable = types.StringNull()
-	if t := res.Get(path + "natAttributesIpv4.natLoopback.optionType"); t.Exists() {
-		va := res.Get(path + "natAttributesIpv4.natLoopback.value")
-		if t.String() == "variable" {
-			data.Ipv4NatLoopbackVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv4NatLoopback = types.StringValue(va.String())
-		}
-	}
-	data.Ipv4NatUdpTimeout = types.Int64Null()
-	data.Ipv4NatUdpTimeoutVariable = types.StringNull()
-	if t := res.Get(path + "natAttributesIpv4.udpTimeout.optionType"); t.Exists() {
-		va := res.Get(path + "natAttributesIpv4.udpTimeout.value")
-		if t.String() == "variable" {
-			data.Ipv4NatUdpTimeoutVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv4NatUdpTimeout = types.Int64Value(va.Int())
-		}
-	}
-	data.Ipv4NatTcpTimeout = types.Int64Null()
-	data.Ipv4NatTcpTimeoutVariable = types.StringNull()
-	if t := res.Get(path + "natAttributesIpv4.tcpTimeout.optionType"); t.Exists() {
-		va := res.Get(path + "natAttributesIpv4.tcpTimeout.value")
-		if t.String() == "variable" {
-			data.Ipv4NatTcpTimeoutVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv4NatTcpTimeout = types.Int64Value(va.Int())
-		}
-	}
-	for i := range data.StaticNats {
-		keys := [...]string{"sourceIp", "translateIp", "staticNatDirection", "sourceVpn"}
-		keyValues := [...]string{data.StaticNats[i].SourceIp.ValueString(), data.StaticNats[i].TranslateIp.ValueString(), data.StaticNats[i].Direction.ValueString(), strconv.FormatInt(data.StaticNats[i].SourceVpn.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{data.StaticNats[i].SourceIpVariable.ValueString(), data.StaticNats[i].TranslateIpVariable.ValueString(), "", data.StaticNats[i].SourceVpnVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "natAttributesIpv4.newStaticNat").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.StaticNats[i].SourceIp = types.StringNull()
-		data.StaticNats[i].SourceIpVariable = types.StringNull()
-		if t := r.Get("sourceIp.optionType"); t.Exists() {
-			va := r.Get("sourceIp.value")
-			if t.String() == "variable" {
-				data.StaticNats[i].SourceIpVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.StaticNats[i].SourceIp = types.StringValue(va.String())
-			}
-		}
-		data.StaticNats[i].TranslateIp = types.StringNull()
-		data.StaticNats[i].TranslateIpVariable = types.StringNull()
-		if t := r.Get("translateIp.optionType"); t.Exists() {
-			va := r.Get("translateIp.value")
-			if t.String() == "variable" {
-				data.StaticNats[i].TranslateIpVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.StaticNats[i].TranslateIp = types.StringValue(va.String())
-			}
-		}
-		data.StaticNats[i].Direction = types.StringNull()
-
-		if t := r.Get("staticNatDirection.optionType"); t.Exists() {
-			va := r.Get("staticNatDirection.value")
-			if t.String() == "global" {
-				data.StaticNats[i].Direction = types.StringValue(va.String())
-			}
-		}
-		data.StaticNats[i].SourceVpn = types.Int64Null()
-		data.StaticNats[i].SourceVpnVariable = types.StringNull()
-		if t := r.Get("sourceVpn.optionType"); t.Exists() {
-			va := r.Get("sourceVpn.value")
-			if t.String() == "variable" {
-				data.StaticNats[i].SourceVpnVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.StaticNats[i].SourceVpn = types.Int64Value(va.Int())
-			}
-		}
-	}
-	data.Ipv6Nat = types.BoolNull()
-
-	if t := res.Get(path + "natIpv6.optionType"); t.Exists() {
-		va := res.Get(path + "natIpv6.value")
-		if t.String() == "global" {
-			data.Ipv6Nat = types.BoolValue(va.Bool())
-		}
-	}
-	data.Nat64 = types.BoolNull()
-
-	if t := res.Get(path + "natAttributesIpv6.nat64.optionType"); t.Exists() {
-		va := res.Get(path + "natAttributesIpv6.nat64.value")
-		if t.String() == "global" {
-			data.Nat64 = types.BoolValue(va.Bool())
-		}
-	}
-	data.AclShapingRate = types.Int64Null()
-	data.AclShapingRateVariable = types.StringNull()
-	if t := res.Get(path + "aclQos.shapingRate.optionType"); t.Exists() {
-		va := res.Get(path + "aclQos.shapingRate.value")
-		if t.String() == "variable" {
-			data.AclShapingRateVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AclShapingRate = types.Int64Value(va.Int())
-		}
-	}
-	data.AclIpv4EgressPolicyId = types.StringNull()
-
-	if t := res.Get(path + "aclQos.ipv4AclEgress.refId.optionType"); t.Exists() {
-		va := res.Get(path + "aclQos.ipv4AclEgress.refId.value")
-		if t.String() == "global" {
-			data.AclIpv4EgressPolicyId = types.StringValue(va.String())
-		}
-	}
-	data.AclIpv4IngressPolicyId = types.StringNull()
-
-	if t := res.Get(path + "aclQos.ipv4AclIngress.refId.optionType"); t.Exists() {
-		va := res.Get(path + "aclQos.ipv4AclIngress.refId.value")
-		if t.String() == "global" {
-			data.AclIpv4IngressPolicyId = types.StringValue(va.String())
-		}
-	}
-	data.AclIpv6EgressPolicyId = types.StringNull()
-
-	if t := res.Get(path + "aclQos.ipv6AclEgress.refId.optionType"); t.Exists() {
-		va := res.Get(path + "aclQos.ipv6AclEgress.refId.value")
-		if t.String() == "global" {
-			data.AclIpv6EgressPolicyId = types.StringValue(va.String())
-		}
-	}
-	data.AclIpv6IngressPolicyId = types.StringNull()
-
-	if t := res.Get(path + "aclQos.ipv6AclIngress.refId.optionType"); t.Exists() {
-		va := res.Get(path + "aclQos.ipv6AclIngress.refId.value")
-		if t.String() == "global" {
-			data.AclIpv6IngressPolicyId = types.StringValue(va.String())
-		}
-	}
-	for i := range data.Ipv6Vrrps {
-		keys := [...]string{"groupId"}
-		keyValues := [...]string{strconv.FormatInt(data.Ipv6Vrrps[i].GroupId.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{data.Ipv6Vrrps[i].GroupIdVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "vrrpIpv6").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Ipv6Vrrps[i].GroupId = types.Int64Null()
-		data.Ipv6Vrrps[i].GroupIdVariable = types.StringNull()
-		if t := r.Get("groupId.optionType"); t.Exists() {
-			va := r.Get("groupId.value")
-			if t.String() == "variable" {
-				data.Ipv6Vrrps[i].GroupIdVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv6Vrrps[i].GroupId = types.Int64Value(va.Int())
-			}
-		}
-		data.Ipv6Vrrps[i].Priority = types.Int64Null()
-		data.Ipv6Vrrps[i].PriorityVariable = types.StringNull()
-		if t := r.Get("priority.optionType"); t.Exists() {
-			va := r.Get("priority.value")
-			if t.String() == "variable" {
-				data.Ipv6Vrrps[i].PriorityVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv6Vrrps[i].Priority = types.Int64Value(va.Int())
-			}
-		}
-		data.Ipv6Vrrps[i].Timer = types.Int64Null()
-		data.Ipv6Vrrps[i].TimerVariable = types.StringNull()
-		if t := r.Get("timer.optionType"); t.Exists() {
-			va := r.Get("timer.value")
-			if t.String() == "variable" {
-				data.Ipv6Vrrps[i].TimerVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv6Vrrps[i].Timer = types.Int64Value(va.Int())
-			}
-		}
-		data.Ipv6Vrrps[i].TrackOmp = types.BoolNull()
-
-		if t := r.Get("trackOmp.optionType"); t.Exists() {
-			va := r.Get("trackOmp.value")
-			if t.String() == "global" {
-				data.Ipv6Vrrps[i].TrackOmp = types.BoolValue(va.Bool())
-			}
-		}
-		for ci := range data.Ipv6Vrrps[i].Ipv6Addresses {
-			keys := [...]string{"ipv6LinkLocal"}
-			keyValues := [...]string{data.Ipv6Vrrps[i].Ipv6Addresses[ci].LinkLocalAddress.ValueString()}
-			keyValuesVariables := [...]string{data.Ipv6Vrrps[i].Ipv6Addresses[ci].LinkLocalAddressVariable.ValueString()}
-
-			var cr gjson.Result
-			r.Get("ipv6").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.Ipv6Vrrps[i].Ipv6Addresses[ci].LinkLocalAddress = types.StringNull()
-			data.Ipv6Vrrps[i].Ipv6Addresses[ci].LinkLocalAddressVariable = types.StringNull()
-			if t := cr.Get("ipv6LinkLocal.optionType"); t.Exists() {
-				va := cr.Get("ipv6LinkLocal.value")
-				if t.String() == "variable" {
-					data.Ipv6Vrrps[i].Ipv6Addresses[ci].LinkLocalAddressVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Ipv6Vrrps[i].Ipv6Addresses[ci].LinkLocalAddress = types.StringValue(va.String())
-				}
-			}
-			data.Ipv6Vrrps[i].Ipv6Addresses[ci].GlobalAddress = types.StringNull()
-			data.Ipv6Vrrps[i].Ipv6Addresses[ci].GlobalAddressVariable = types.StringNull()
-			if t := cr.Get("prefix.optionType"); t.Exists() {
-				va := cr.Get("prefix.value")
-				if t.String() == "variable" {
-					data.Ipv6Vrrps[i].Ipv6Addresses[ci].GlobalAddressVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Ipv6Vrrps[i].Ipv6Addresses[ci].GlobalAddress = types.StringValue(va.String())
+				if keyMatch {
+					matchedArps[ni] = true
+					resultArps = append(resultArps, data.Arps[ni])
+					break
 				}
 			}
 		}
-		data.Ipv6Vrrps[i].FollowDualRouterHighAvailability = types.BoolNull()
-
-		if t := r.Get("followDualRouterHAAvailability.optionType"); t.Exists() {
-			va := r.Get("followDualRouterHAAvailability.value")
-			if t.String() == "global" {
-				data.Ipv6Vrrps[i].FollowDualRouterHighAvailability = types.BoolValue(va.Bool())
+		for ni := range data.Arps {
+			if !matchedArps[ni] {
+				resultArps = append(resultArps, data.Arps[ni])
 			}
 		}
-		data.Ipv6Vrrps[i].MinPreemptDelay = types.Int64Null()
-		data.Ipv6Vrrps[i].MinPreemptDelayVariable = types.StringNull()
-		if t := r.Get("minPreemptDelay.optionType"); t.Exists() {
-			va := r.Get("minPreemptDelay.value")
-			if t.String() == "variable" {
-				data.Ipv6Vrrps[i].MinPreemptDelayVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv6Vrrps[i].MinPreemptDelay = types.Int64Value(va.Int())
-			}
-		}
-	}
-	for i := range data.Ipv4Vrrps {
-		keys := [...]string{"group_id"}
-		keyValues := [...]string{strconv.FormatInt(data.Ipv4Vrrps[i].GroupId.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{data.Ipv4Vrrps[i].GroupIdVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "vrrp").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Ipv4Vrrps[i].GroupId = types.Int64Null()
-		data.Ipv4Vrrps[i].GroupIdVariable = types.StringNull()
-		if t := r.Get("group_id.optionType"); t.Exists() {
-			va := r.Get("group_id.value")
-			if t.String() == "variable" {
-				data.Ipv4Vrrps[i].GroupIdVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv4Vrrps[i].GroupId = types.Int64Value(va.Int())
-			}
-		}
-		data.Ipv4Vrrps[i].Priority = types.Int64Null()
-		data.Ipv4Vrrps[i].PriorityVariable = types.StringNull()
-		if t := r.Get("priority.optionType"); t.Exists() {
-			va := r.Get("priority.value")
-			if t.String() == "variable" {
-				data.Ipv4Vrrps[i].PriorityVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv4Vrrps[i].Priority = types.Int64Value(va.Int())
-			}
-		}
-		data.Ipv4Vrrps[i].Timer = types.Int64Null()
-		data.Ipv4Vrrps[i].TimerVariable = types.StringNull()
-		if t := r.Get("timer.optionType"); t.Exists() {
-			va := r.Get("timer.value")
-			if t.String() == "variable" {
-				data.Ipv4Vrrps[i].TimerVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv4Vrrps[i].Timer = types.Int64Value(va.Int())
-			}
-		}
-		data.Ipv4Vrrps[i].TrackOmp = types.BoolNull()
-
-		if t := r.Get("trackOmp.optionType"); t.Exists() {
-			va := r.Get("trackOmp.value")
-			if t.String() == "global" {
-				data.Ipv4Vrrps[i].TrackOmp = types.BoolValue(va.Bool())
-			}
-		}
-		data.Ipv4Vrrps[i].Address = types.StringNull()
-		data.Ipv4Vrrps[i].AddressVariable = types.StringNull()
-		if t := r.Get("ipAddress.optionType"); t.Exists() {
-			va := r.Get("ipAddress.value")
-			if t.String() == "variable" {
-				data.Ipv4Vrrps[i].AddressVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv4Vrrps[i].Address = types.StringValue(va.String())
-			}
-		}
-		for ci := range data.Ipv4Vrrps[i].SecondaryAddresses {
-			keys := [...]string{"ipAddress"}
-			keyValues := [...]string{data.Ipv4Vrrps[i].SecondaryAddresses[ci].Address.ValueString()}
-			keyValuesVariables := [...]string{data.Ipv4Vrrps[i].SecondaryAddresses[ci].AddressVariable.ValueString()}
-
-			var cr gjson.Result
-			r.Get("ipAddressSecondary").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.Ipv4Vrrps[i].SecondaryAddresses[ci].Address = types.StringNull()
-			data.Ipv4Vrrps[i].SecondaryAddresses[ci].AddressVariable = types.StringNull()
-			if t := cr.Get("ipAddress.optionType"); t.Exists() {
-				va := cr.Get("ipAddress.value")
-				if t.String() == "variable" {
-					data.Ipv4Vrrps[i].SecondaryAddresses[ci].AddressVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Ipv4Vrrps[i].SecondaryAddresses[ci].Address = types.StringValue(va.String())
-				}
-			}
-			data.Ipv4Vrrps[i].SecondaryAddresses[ci].SubnetMask = types.StringNull()
-			data.Ipv4Vrrps[i].SecondaryAddresses[ci].SubnetMaskVariable = types.StringNull()
-			if t := cr.Get("subnetMask.optionType"); t.Exists() {
-				va := cr.Get("subnetMask.value")
-				if t.String() == "variable" {
-					data.Ipv4Vrrps[i].SecondaryAddresses[ci].SubnetMaskVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Ipv4Vrrps[i].SecondaryAddresses[ci].SubnetMask = types.StringValue(va.String())
-				}
-			}
-		}
-		data.Ipv4Vrrps[i].TlocPrefixChange = types.BoolNull()
-
-		if t := r.Get("tlocPrefChange.optionType"); t.Exists() {
-			va := r.Get("tlocPrefChange.value")
-			if t.String() == "global" {
-				data.Ipv4Vrrps[i].TlocPrefixChange = types.BoolValue(va.Bool())
-			}
-		}
-		data.Ipv4Vrrps[i].TlocPrefChangeValue = types.Int64Null()
-
-		if t := r.Get("tlocPrefChangeValue.optionType"); t.Exists() {
-			va := r.Get("tlocPrefChangeValue.value")
-			if t.String() == "global" {
-				data.Ipv4Vrrps[i].TlocPrefChangeValue = types.Int64Value(va.Int())
-			}
-		}
-		for ci := range data.Ipv4Vrrps[i].TrackingObjects {
-			keys := [...]string{"trackerId.refId"}
-			keyValues := [...]string{data.Ipv4Vrrps[i].TrackingObjects[ci].TrackerId.ValueString()}
-			keyValuesVariables := [...]string{""}
-
-			var cr gjson.Result
-			r.Get("trackingObject").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.Ipv4Vrrps[i].TrackingObjects[ci].TrackerId = types.StringNull()
-
-			if t := cr.Get("trackerId.refId.optionType"); t.Exists() {
-				va := cr.Get("trackerId.refId.value")
-				if t.String() == "global" {
-					data.Ipv4Vrrps[i].TrackingObjects[ci].TrackerId = types.StringValue(va.String())
-				}
-			}
-			data.Ipv4Vrrps[i].TrackingObjects[ci].TrackerAction = types.StringNull()
-			data.Ipv4Vrrps[i].TrackingObjects[ci].TrackerActionVariable = types.StringNull()
-			if t := cr.Get("trackerAction.optionType"); t.Exists() {
-				va := cr.Get("trackerAction.value")
-				if t.String() == "variable" {
-					data.Ipv4Vrrps[i].TrackingObjects[ci].TrackerActionVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Ipv4Vrrps[i].TrackingObjects[ci].TrackerAction = types.StringValue(va.String())
-				}
-			}
-			data.Ipv4Vrrps[i].TrackingObjects[ci].DecrementValue = types.Int64Null()
-			data.Ipv4Vrrps[i].TrackingObjects[ci].DecrementValueVariable = types.StringNull()
-			if t := cr.Get("decrementValue.optionType"); t.Exists() {
-				va := cr.Get("decrementValue.value")
-				if t.String() == "variable" {
-					data.Ipv4Vrrps[i].TrackingObjects[ci].DecrementValueVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Ipv4Vrrps[i].TrackingObjects[ci].DecrementValue = types.Int64Value(va.Int())
-				}
-			}
-		}
-		data.Ipv4Vrrps[i].FollowDualRouterHighAvailability = types.BoolNull()
-
-		if t := r.Get("followDualRouterHAAvailability.optionType"); t.Exists() {
-			va := r.Get("followDualRouterHAAvailability.value")
-			if t.String() == "global" {
-				data.Ipv4Vrrps[i].FollowDualRouterHighAvailability = types.BoolValue(va.Bool())
-			}
-		}
-		data.Ipv4Vrrps[i].MinPreemptDelay = types.Int64Null()
-		data.Ipv4Vrrps[i].MinPreemptDelayVariable = types.StringNull()
-		if t := r.Get("minPreemptDelay.optionType"); t.Exists() {
-			va := r.Get("minPreemptDelay.value")
-			if t.String() == "variable" {
-				data.Ipv4Vrrps[i].MinPreemptDelayVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv4Vrrps[i].MinPreemptDelay = types.Int64Value(va.Int())
-			}
-		}
-	}
-	for i := range data.Arps {
-		keys := [...]string{"ipAddress", "macAddress"}
-		keyValues := [...]string{data.Arps[i].IpAddress.ValueString(), data.Arps[i].MacAddress.ValueString()}
-		keyValuesVariables := [...]string{data.Arps[i].IpAddressVariable.ValueString(), data.Arps[i].MacAddressVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "arp").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Arps[i].IpAddress = types.StringNull()
-		data.Arps[i].IpAddressVariable = types.StringNull()
-		if t := r.Get("ipAddress.optionType"); t.Exists() {
-			va := r.Get("ipAddress.value")
-			if t.String() == "variable" {
-				data.Arps[i].IpAddressVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Arps[i].IpAddress = types.StringValue(va.String())
-			}
-		}
-		data.Arps[i].MacAddress = types.StringNull()
-		data.Arps[i].MacAddressVariable = types.StringNull()
-		if t := r.Get("macAddress.optionType"); t.Exists() {
-			va := r.Get("macAddress.value")
-			if t.String() == "variable" {
-				data.Arps[i].MacAddressVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Arps[i].MacAddress = types.StringValue(va.String())
-			}
-		}
+		data.Arps = resultArps
 	}
 	data.TrustsecEnableSgtPropogation = types.BoolNull()
 

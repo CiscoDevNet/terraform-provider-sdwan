@@ -252,7 +252,7 @@ func (d *ServiceDHCPServerProfileParcelDataSource) Read(ctx context.Context, req
 		return
 	}
 
-	config.fromBody(ctx, res)
+	config.fromBody(ctx, res, true)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Name.ValueString()))
 

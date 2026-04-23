@@ -130,7 +130,7 @@ func (data ApplicationPriorityQoS) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ApplicationPriorityQoS) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ApplicationPriorityQoS) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -148,6 +148,7 @@ func (data *ApplicationPriorityQoS) fromBody(ctx context.Context, res gjson.Resu
 			data.TargetInterfaces = helpers.GetStringSet(va.Array())
 		}
 	}
+	oldQosSchedulers := data.QosSchedulers
 	if value := res.Get(path + "qosMap.qosSchedulers"); value.Exists() && len(value.Array()) > 0 {
 		data.QosSchedulers = make([]ApplicationPriorityQoSQosSchedulers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -195,102 +196,37 @@ func (data *ApplicationPriorityQoS) fromBody(ctx context.Context, res gjson.Resu
 			data.QosSchedulers = append(data.QosSchedulers, item)
 			return true
 		})
+	} else {
+		data.QosSchedulers = nil
+	}
+	if !fullRead {
+		resultQosSchedulers := make([]ApplicationPriorityQoSQosSchedulers, 0, len(data.QosSchedulers))
+		matchedQosSchedulers := make([]bool, len(data.QosSchedulers))
+		for _, oldItem := range oldQosSchedulers {
+			for ni := range data.QosSchedulers {
+				if matchedQosSchedulers[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.Queue.ValueString() != data.QosSchedulers[ni].Queue.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedQosSchedulers[ni] = true
+					resultQosSchedulers = append(resultQosSchedulers, data.QosSchedulers[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.QosSchedulers {
+			if !matchedQosSchedulers[ni] {
+				resultQosSchedulers = append(resultQosSchedulers, data.QosSchedulers[ni])
+			}
+		}
+		data.QosSchedulers = resultQosSchedulers
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *ApplicationPriorityQoS) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.TargetInterfaces = types.SetNull(types.StringType)
-	data.TargetInterfacesVariable = types.StringNull()
-	if t := res.Get(path + "target.interfaces.optionType"); t.Exists() {
-		va := res.Get(path + "target.interfaces.value")
-		if t.String() == "variable" {
-			data.TargetInterfacesVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TargetInterfaces = helpers.GetStringSet(va.Array())
-		}
-	}
-	for i := range data.QosSchedulers {
-		keys := [...]string{"queue"}
-		keyValues := [...]string{data.QosSchedulers[i].Queue.ValueString()}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "qosMap.qosSchedulers").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.QosSchedulers[i].ForwardingClassId = types.StringNull()
-
-		if t := r.Get("classMapRef.refId.optionType"); t.Exists() {
-			va := r.Get("classMapRef.refId.value")
-			if t.String() == "global" {
-				data.QosSchedulers[i].ForwardingClassId = types.StringValue(va.String())
-			}
-		}
-		data.QosSchedulers[i].Drops = types.StringNull()
-
-		if t := r.Get("drops.optionType"); t.Exists() {
-			va := r.Get("drops.value")
-			if t.String() == "global" {
-				data.QosSchedulers[i].Drops = types.StringValue(va.String())
-			}
-		}
-		data.QosSchedulers[i].Queue = types.StringNull()
-
-		if t := r.Get("queue.optionType"); t.Exists() {
-			va := r.Get("queue.value")
-			if t.String() == "global" {
-				data.QosSchedulers[i].Queue = types.StringValue(va.String())
-			}
-		}
-		data.QosSchedulers[i].Bandwidth = types.StringNull()
-
-		if t := r.Get("bandwidthPercent.optionType"); t.Exists() {
-			va := r.Get("bandwidthPercent.value")
-			if t.String() == "global" {
-				data.QosSchedulers[i].Bandwidth = types.StringValue(va.String())
-			}
-		}
-		data.QosSchedulers[i].SchedulingType = types.StringNull()
-
-		if t := r.Get("scheduling.optionType"); t.Exists() {
-			va := r.Get("scheduling.value")
-			if t.String() == "global" {
-				data.QosSchedulers[i].SchedulingType = types.StringValue(va.String())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

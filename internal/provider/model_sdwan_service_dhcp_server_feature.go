@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -344,7 +343,7 @@ func (data ServiceDHCPServer) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ServiceDHCPServer) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceDHCPServer) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -442,6 +441,7 @@ func (data *ServiceDHCPServer) fromBody(ctx context.Context, res gjson.Result) {
 			data.TftpServers = helpers.GetStringSet(va.Array())
 		}
 	}
+	oldStaticLeases := data.StaticLeases
 	if value := res.Get(path + "staticLease"); value.Exists() && len(value.Array()) > 0 {
 		data.StaticLeases = make([]ServiceDHCPServerStaticLeases, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -469,7 +469,51 @@ func (data *ServiceDHCPServer) fromBody(ctx context.Context, res gjson.Result) {
 			data.StaticLeases = append(data.StaticLeases, item)
 			return true
 		})
+	} else {
+		data.StaticLeases = nil
 	}
+	if !fullRead {
+		resultStaticLeases := make([]ServiceDHCPServerStaticLeases, 0, len(data.StaticLeases))
+		matchedStaticLeases := make([]bool, len(data.StaticLeases))
+		for _, oldItem := range oldStaticLeases {
+			for ni := range data.StaticLeases {
+				if matchedStaticLeases[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.MacAddressVariable.ValueString() != "" || data.StaticLeases[ni].MacAddressVariable.ValueString() != "") {
+					if oldItem.MacAddressVariable.ValueString() != data.StaticLeases[ni].MacAddressVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.MacAddress.ValueString() != data.StaticLeases[ni].MacAddress.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch && (oldItem.IpAddressVariable.ValueString() != "" || data.StaticLeases[ni].IpAddressVariable.ValueString() != "") {
+					if oldItem.IpAddressVariable.ValueString() != data.StaticLeases[ni].IpAddressVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.IpAddress.ValueString() != data.StaticLeases[ni].IpAddress.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedStaticLeases[ni] = true
+					resultStaticLeases = append(resultStaticLeases, data.StaticLeases[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.StaticLeases {
+			if !matchedStaticLeases[ni] {
+				resultStaticLeases = append(resultStaticLeases, data.StaticLeases[ni])
+			}
+		}
+		data.StaticLeases = resultStaticLeases
+	}
+	oldOptionCodes := data.OptionCodes
 	if value := res.Get(path + "optionCode"); value.Exists() && len(value.Array()) > 0 {
 		data.OptionCodes = make([]ServiceDHCPServerOptionCodes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -517,234 +561,64 @@ func (data *ServiceDHCPServer) fromBody(ctx context.Context, res gjson.Result) {
 			data.OptionCodes = append(data.OptionCodes, item)
 			return true
 		})
+	} else {
+		data.OptionCodes = nil
+	}
+	if !fullRead {
+		resultOptionCodes := make([]ServiceDHCPServerOptionCodes, 0, len(data.OptionCodes))
+		matchedOptionCodes := make([]bool, len(data.OptionCodes))
+		for _, oldItem := range oldOptionCodes {
+			for ni := range data.OptionCodes {
+				if matchedOptionCodes[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.CodeVariable.ValueString() != "" || data.OptionCodes[ni].CodeVariable.ValueString() != "") {
+					if oldItem.CodeVariable.ValueString() != data.OptionCodes[ni].CodeVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.Code.ValueInt64() != data.OptionCodes[ni].Code.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch && (oldItem.AsciiVariable.ValueString() != "" || data.OptionCodes[ni].AsciiVariable.ValueString() != "") {
+					if oldItem.AsciiVariable.ValueString() != data.OptionCodes[ni].AsciiVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.Ascii.ValueString() != data.OptionCodes[ni].Ascii.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch && (oldItem.HexVariable.ValueString() != "" || data.OptionCodes[ni].HexVariable.ValueString() != "") {
+					if oldItem.HexVariable.ValueString() != data.OptionCodes[ni].HexVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.Hex.ValueString() != data.OptionCodes[ni].Hex.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if helpers.GetStringFromSet(oldItem.Ip).ValueString() != helpers.GetStringFromSet(data.OptionCodes[ni].Ip).ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedOptionCodes[ni] = true
+					resultOptionCodes = append(resultOptionCodes, data.OptionCodes[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.OptionCodes {
+			if !matchedOptionCodes[ni] {
+				resultOptionCodes = append(resultOptionCodes, data.OptionCodes[ni])
+			}
+		}
+		data.OptionCodes = resultOptionCodes
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *ServiceDHCPServer) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.NetworkAddress = types.StringNull()
-	data.NetworkAddressVariable = types.StringNull()
-	if t := res.Get(path + "addressPool.networkAddress.optionType"); t.Exists() {
-		va := res.Get(path + "addressPool.networkAddress.value")
-		if t.String() == "variable" {
-			data.NetworkAddressVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.NetworkAddress = types.StringValue(va.String())
-		}
-	}
-	data.SubnetMask = types.StringNull()
-	data.SubnetMaskVariable = types.StringNull()
-	if t := res.Get(path + "addressPool.subnetMask.optionType"); t.Exists() {
-		va := res.Get(path + "addressPool.subnetMask.value")
-		if t.String() == "variable" {
-			data.SubnetMaskVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.SubnetMask = types.StringValue(va.String())
-		}
-	}
-	data.Exclude = types.SetNull(types.StringType)
-	data.ExcludeVariable = types.StringNull()
-	if t := res.Get(path + "exclude.optionType"); t.Exists() {
-		va := res.Get(path + "exclude.value")
-		if t.String() == "variable" {
-			data.ExcludeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Exclude = helpers.GetStringSet(va.Array())
-		}
-	}
-	data.LeaseTime = types.Int64Null()
-	data.LeaseTimeVariable = types.StringNull()
-	if t := res.Get(path + "leaseTime.optionType"); t.Exists() {
-		va := res.Get(path + "leaseTime.value")
-		if t.String() == "variable" {
-			data.LeaseTimeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.LeaseTime = types.Int64Value(va.Int())
-		}
-	}
-	data.InterfaceMtu = types.Int64Null()
-	data.InterfaceMtuVariable = types.StringNull()
-	if t := res.Get(path + "interfaceMtu.optionType"); t.Exists() {
-		va := res.Get(path + "interfaceMtu.value")
-		if t.String() == "variable" {
-			data.InterfaceMtuVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.InterfaceMtu = types.Int64Value(va.Int())
-		}
-	}
-	data.DomainName = types.StringNull()
-	data.DomainNameVariable = types.StringNull()
-	if t := res.Get(path + "domainName.optionType"); t.Exists() {
-		va := res.Get(path + "domainName.value")
-		if t.String() == "variable" {
-			data.DomainNameVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.DomainName = types.StringValue(va.String())
-		}
-	}
-	data.DefaultGateway = types.StringNull()
-	data.DefaultGatewayVariable = types.StringNull()
-	if t := res.Get(path + "defaultGateway.optionType"); t.Exists() {
-		va := res.Get(path + "defaultGateway.value")
-		if t.String() == "variable" {
-			data.DefaultGatewayVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.DefaultGateway = types.StringValue(va.String())
-		}
-	}
-	data.DnsServers = types.SetNull(types.StringType)
-	data.DnsServersVariable = types.StringNull()
-	if t := res.Get(path + "dnsServers.optionType"); t.Exists() {
-		va := res.Get(path + "dnsServers.value")
-		if t.String() == "variable" {
-			data.DnsServersVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.DnsServers = helpers.GetStringSet(va.Array())
-		}
-	}
-	data.TftpServers = types.SetNull(types.StringType)
-	data.TftpServersVariable = types.StringNull()
-	if t := res.Get(path + "tftpServers.optionType"); t.Exists() {
-		va := res.Get(path + "tftpServers.value")
-		if t.String() == "variable" {
-			data.TftpServersVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TftpServers = helpers.GetStringSet(va.Array())
-		}
-	}
-	for i := range data.StaticLeases {
-		keys := [...]string{"macAddress", "ip"}
-		keyValues := [...]string{data.StaticLeases[i].MacAddress.ValueString(), data.StaticLeases[i].IpAddress.ValueString()}
-		keyValuesVariables := [...]string{data.StaticLeases[i].MacAddressVariable.ValueString(), data.StaticLeases[i].IpAddressVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "staticLease").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.StaticLeases[i].MacAddress = types.StringNull()
-		data.StaticLeases[i].MacAddressVariable = types.StringNull()
-		if t := r.Get("macAddress.optionType"); t.Exists() {
-			va := r.Get("macAddress.value")
-			if t.String() == "variable" {
-				data.StaticLeases[i].MacAddressVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.StaticLeases[i].MacAddress = types.StringValue(va.String())
-			}
-		}
-		data.StaticLeases[i].IpAddress = types.StringNull()
-		data.StaticLeases[i].IpAddressVariable = types.StringNull()
-		if t := r.Get("ip.optionType"); t.Exists() {
-			va := r.Get("ip.value")
-			if t.String() == "variable" {
-				data.StaticLeases[i].IpAddressVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.StaticLeases[i].IpAddress = types.StringValue(va.String())
-			}
-		}
-	}
-	for i := range data.OptionCodes {
-		keys := [...]string{"code", "ascii", "hex", "ip"}
-		keyValues := [...]string{strconv.FormatInt(data.OptionCodes[i].Code.ValueInt64(), 10), data.OptionCodes[i].Ascii.ValueString(), data.OptionCodes[i].Hex.ValueString(), helpers.GetStringFromSet(data.OptionCodes[i].Ip).ValueString()}
-		keyValuesVariables := [...]string{data.OptionCodes[i].CodeVariable.ValueString(), data.OptionCodes[i].AsciiVariable.ValueString(), data.OptionCodes[i].HexVariable.ValueString(), data.OptionCodes[i].IpVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "optionCode").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.OptionCodes[i].Code = types.Int64Null()
-		data.OptionCodes[i].CodeVariable = types.StringNull()
-		if t := r.Get("code.optionType"); t.Exists() {
-			va := r.Get("code.value")
-			if t.String() == "variable" {
-				data.OptionCodes[i].CodeVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.OptionCodes[i].Code = types.Int64Value(va.Int())
-			}
-		}
-		data.OptionCodes[i].Ascii = types.StringNull()
-		data.OptionCodes[i].AsciiVariable = types.StringNull()
-		if t := r.Get("ascii.optionType"); t.Exists() {
-			va := r.Get("ascii.value")
-			if t.String() == "variable" {
-				data.OptionCodes[i].AsciiVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.OptionCodes[i].Ascii = types.StringValue(va.String())
-			}
-		}
-		data.OptionCodes[i].Hex = types.StringNull()
-		data.OptionCodes[i].HexVariable = types.StringNull()
-		if t := r.Get("hex.optionType"); t.Exists() {
-			va := r.Get("hex.value")
-			if t.String() == "variable" {
-				data.OptionCodes[i].HexVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.OptionCodes[i].Hex = types.StringValue(va.String())
-			}
-		}
-		data.OptionCodes[i].Ip = types.SetNull(types.StringType)
-		data.OptionCodes[i].IpVariable = types.StringNull()
-		if t := r.Get("ip.optionType"); t.Exists() {
-			va := r.Get("ip.value")
-			if t.String() == "variable" {
-				data.OptionCodes[i].IpVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.OptionCodes[i].Ip = helpers.GetStringSet(va.Array())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

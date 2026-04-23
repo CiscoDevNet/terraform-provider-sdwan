@@ -161,7 +161,7 @@ func (data TransportCellularController) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *TransportCellularController) fromBody(ctx context.Context, res gjson.Result) {
+func (data *TransportCellularController) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -222,66 +222,3 @@ func (data *TransportCellularController) fromBody(ctx context.Context, res gjson
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *TransportCellularController) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.CellularId = types.StringNull()
-	data.CellularIdVariable = types.StringNull()
-	if t := res.Get(path + "controllerConfig.id.optionType"); t.Exists() {
-		va := res.Get(path + "controllerConfig.id.value")
-		if t.String() == "variable" {
-			data.CellularIdVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.CellularId = types.StringValue(va.String())
-		}
-	}
-	data.PrimarySimSlot = types.Int64Null()
-	data.PrimarySimSlotVariable = types.StringNull()
-	if t := res.Get(path + "controllerConfig.slot.optionType"); t.Exists() {
-		va := res.Get(path + "controllerConfig.slot.value")
-		if t.String() == "variable" {
-			data.PrimarySimSlotVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PrimarySimSlot = types.Int64Value(va.Int())
-		}
-	}
-	data.SimFailoverRetries = types.Int64Null()
-	data.SimFailoverRetriesVariable = types.StringNull()
-	if t := res.Get(path + "controllerConfig.maxRetry.optionType"); t.Exists() {
-		va := res.Get(path + "controllerConfig.maxRetry.value")
-		if t.String() == "variable" {
-			data.SimFailoverRetriesVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.SimFailoverRetries = types.Int64Value(va.Int())
-		}
-	}
-	data.SimFailoverTimeout = types.Int64Null()
-	data.SimFailoverTimeoutVariable = types.StringNull()
-	if t := res.Get(path + "controllerConfig.failovertimer.optionType"); t.Exists() {
-		va := res.Get(path + "controllerConfig.failovertimer.value")
-		if t.String() == "variable" {
-			data.SimFailoverTimeoutVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.SimFailoverTimeout = types.Int64Value(va.Int())
-		}
-	}
-	data.FirmwareAutoSim = types.BoolNull()
-	data.FirmwareAutoSimVariable = types.StringNull()
-	if t := res.Get(path + "controllerConfig.autoSim.optionType"); t.Exists() {
-		va := res.Get(path + "controllerConfig.autoSim.value")
-		if t.String() == "variable" {
-			data.FirmwareAutoSimVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.FirmwareAutoSim = types.BoolValue(va.Bool())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

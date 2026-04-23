@@ -245,7 +245,7 @@ func (data OtherUCSE) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *OtherUCSE) fromBody(ctx context.Context, res gjson.Result) {
+func (data *OtherUCSE) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -333,6 +333,7 @@ func (data *OtherUCSE) fromBody(ctx context.Context, res gjson.Result) {
 			data.AssignPriority = types.Int64Value(va.Int())
 		}
 	}
+	oldInterfaces := data.Interfaces
 	if value := res.Get(path + "interface"); value.Exists() && len(value.Array()) > 0 {
 		data.Interfaces = make([]OtherUCSEInterfaces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -370,162 +371,41 @@ func (data *OtherUCSE) fromBody(ctx context.Context, res gjson.Result) {
 			data.Interfaces = append(data.Interfaces, item)
 			return true
 		})
+	} else {
+		data.Interfaces = nil
+	}
+	if !fullRead {
+		resultInterfaces := make([]OtherUCSEInterfaces, 0, len(data.Interfaces))
+		matchedInterfaces := make([]bool, len(data.Interfaces))
+		for _, oldItem := range oldInterfaces {
+			for ni := range data.Interfaces {
+				if matchedInterfaces[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.InterfaceNameVariable.ValueString() != "" || data.Interfaces[ni].InterfaceNameVariable.ValueString() != "") {
+					if oldItem.InterfaceNameVariable.ValueString() != data.Interfaces[ni].InterfaceNameVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.InterfaceName.ValueString() != data.Interfaces[ni].InterfaceName.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedInterfaces[ni] = true
+					resultInterfaces = append(resultInterfaces, data.Interfaces[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Interfaces {
+			if !matchedInterfaces[ni] {
+				resultInterfaces = append(resultInterfaces, data.Interfaces[ni])
+			}
+		}
+		data.Interfaces = resultInterfaces
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *OtherUCSE) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.Bay = types.Int64Null()
-
-	if t := res.Get(path + "bay.optionType"); t.Exists() {
-		va := res.Get(path + "bay.value")
-		if t.String() == "global" {
-			data.Bay = types.Int64Value(va.Int())
-		}
-	}
-	data.Slot = types.Int64Null()
-
-	if t := res.Get(path + "slot.optionType"); t.Exists() {
-		va := res.Get(path + "slot.value")
-		if t.String() == "global" {
-			data.Slot = types.Int64Value(va.Int())
-		}
-	}
-	data.AccessPortDedicated = types.BoolNull()
-
-	if t := res.Get(path + "imc.access-port.dedicated.optionType"); t.Exists() {
-		va := res.Get(path + "imc.access-port.dedicated.value")
-		if t.String() == "global" {
-			data.AccessPortDedicated = types.BoolValue(va.Bool())
-		}
-	}
-	data.AccessPortSharedType = types.StringNull()
-
-	if t := res.Get(path + "imc.access-port.sharedLom.lomType.optionType"); t.Exists() {
-		va := res.Get(path + "imc.access-port.sharedLom.lomType.value")
-		if t.String() == "global" {
-			data.AccessPortSharedType = types.StringValue(va.String())
-		}
-	}
-	data.AccessPortSharedFailoverType = types.StringNull()
-
-	if t := res.Get(path + "imc.access-port.sharedLom.failOverType.optionType"); t.Exists() {
-		va := res.Get(path + "imc.access-port.sharedLom.failOverType.value")
-		if t.String() == "global" {
-			data.AccessPortSharedFailoverType = types.StringValue(va.String())
-		}
-	}
-	data.Ipv4Address = types.StringNull()
-	data.Ipv4AddressVariable = types.StringNull()
-	if t := res.Get(path + "imc.ip.address.optionType"); t.Exists() {
-		va := res.Get(path + "imc.ip.address.value")
-		if t.String() == "variable" {
-			data.Ipv4AddressVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Ipv4Address = types.StringValue(va.String())
-		}
-	}
-	data.DefaultGateway = types.StringNull()
-	data.DefaultGatewayVariable = types.StringNull()
-	if t := res.Get(path + "imc.ip.defaultGateway.optionType"); t.Exists() {
-		va := res.Get(path + "imc.ip.defaultGateway.value")
-		if t.String() == "variable" {
-			data.DefaultGatewayVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.DefaultGateway = types.StringValue(va.String())
-		}
-	}
-	data.VlanId = types.Int64Null()
-	data.VlanIdVariable = types.StringNull()
-	if t := res.Get(path + "imc.vlan.vlanId.optionType"); t.Exists() {
-		va := res.Get(path + "imc.vlan.vlanId.value")
-		if t.String() == "variable" {
-			data.VlanIdVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.VlanId = types.Int64Value(va.Int())
-		}
-	}
-	data.AssignPriority = types.Int64Null()
-	data.AssignPriorityVariable = types.StringNull()
-	if t := res.Get(path + "imc.vlan.priority.optionType"); t.Exists() {
-		va := res.Get(path + "imc.vlan.priority.value")
-		if t.String() == "variable" {
-			data.AssignPriorityVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AssignPriority = types.Int64Value(va.Int())
-		}
-	}
-	for i := range data.Interfaces {
-		keys := [...]string{"ifName"}
-		keyValues := [...]string{data.Interfaces[i].InterfaceName.ValueString()}
-		keyValuesVariables := [...]string{data.Interfaces[i].InterfaceNameVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "interface").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Interfaces[i].InterfaceName = types.StringNull()
-		data.Interfaces[i].InterfaceNameVariable = types.StringNull()
-		if t := r.Get("ifName.optionType"); t.Exists() {
-			va := r.Get("ifName.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].InterfaceNameVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].InterfaceName = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].UcseInterfaceVpn = types.Int64Null()
-		data.Interfaces[i].UcseInterfaceVpnVariable = types.StringNull()
-		if t := r.Get("ucseInterfaceVpn.optionType"); t.Exists() {
-			va := r.Get("ucseInterfaceVpn.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].UcseInterfaceVpnVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].UcseInterfaceVpn = types.Int64Value(va.Int())
-			}
-		}
-		data.Interfaces[i].Ipv4Address = types.StringNull()
-		data.Interfaces[i].Ipv4AddressVariable = types.StringNull()
-		if t := r.Get("address.optionType"); t.Exists() {
-			va := r.Get("address.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].Ipv4AddressVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].Ipv4Address = types.StringValue(va.String())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

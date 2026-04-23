@@ -137,7 +137,7 @@ func (data PolicyObjectUnifiedTLSSSLProfile) toBody(ctx context.Context) string 
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *PolicyObjectUnifiedTLSSSLProfile) fromBody(ctx context.Context, res gjson.Result) {
+func (data *PolicyObjectUnifiedTLSSSLProfile) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -220,88 +220,3 @@ func (data *PolicyObjectUnifiedTLSSSLProfile) fromBody(ctx context.Context, res 
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *PolicyObjectUnifiedTLSSSLProfile) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.DecryptCategories = types.SetNull(types.StringType)
-
-	if t := res.Get(path + "decryptCategories.optionType"); t.Exists() {
-		va := res.Get(path + "decryptCategories.value")
-		if t.String() == "global" {
-			data.DecryptCategories = helpers.GetStringSet(va.Array())
-		}
-	}
-	data.NoDecryptCategories = types.SetNull(types.StringType)
-
-	if t := res.Get(path + "neverDecryptCategories.optionType"); t.Exists() {
-		va := res.Get(path + "neverDecryptCategories.value")
-		if t.String() == "global" {
-			data.NoDecryptCategories = helpers.GetStringSet(va.Array())
-		}
-	}
-	data.PassThroughCategories = types.SetNull(types.StringType)
-
-	if t := res.Get(path + "skipDecryptCategories.optionType"); t.Exists() {
-		va := res.Get(path + "skipDecryptCategories.value")
-		if t.String() == "global" {
-			data.PassThroughCategories = helpers.GetStringSet(va.Array())
-		}
-	}
-	data.Reputation = types.BoolNull()
-
-	if t := res.Get(path + "reputation.optionType"); t.Exists() {
-		va := res.Get(path + "reputation.value")
-		if t.String() == "global" {
-			data.Reputation = types.BoolValue(va.Bool())
-		}
-	}
-	data.DecryptThreshold = types.StringNull()
-
-	if t := res.Get(path + "decryptThreshold.optionType"); t.Exists() {
-		va := res.Get(path + "decryptThreshold.value")
-		if t.String() == "global" {
-			data.DecryptThreshold = types.StringValue(va.String())
-		}
-	}
-	data.ThresholdCategories = types.StringNull()
-
-	if t := res.Get(path + "skipDecryptThreshold.optionType"); t.Exists() {
-		va := res.Get(path + "skipDecryptThreshold.value")
-		if t.String() == "global" {
-			data.ThresholdCategories = types.StringValue(va.String())
-		}
-	}
-	data.FailDecrypt = types.BoolNull()
-
-	if t := res.Get(path + "failDecrypt.optionType"); t.Exists() {
-		va := res.Get(path + "failDecrypt.value")
-		if t.String() == "global" {
-			data.FailDecrypt = types.BoolValue(va.Bool())
-		}
-	}
-	data.UrlAllowListId = types.StringNull()
-
-	if t := res.Get(path + "urlAllowedList.refId.optionType"); t.Exists() {
-		va := res.Get(path + "urlAllowedList.refId.value")
-		if t.String() == "global" {
-			data.UrlAllowListId = types.StringValue(va.String())
-		}
-	}
-	data.UrlBlockListId = types.StringNull()
-
-	if t := res.Get(path + "urlBlockedList.refId.optionType"); t.Exists() {
-		va := res.Get(path + "urlBlockedList.refId.value")
-		if t.String() == "global" {
-			data.UrlBlockListId = types.StringValue(va.String())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

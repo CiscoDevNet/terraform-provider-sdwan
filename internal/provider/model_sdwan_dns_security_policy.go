@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -166,7 +165,7 @@ func (data DNSSecurity) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *DNSSecurity) fromBody(ctx context.Context, res gjson.Result) {
+func (data *DNSSecurity) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -230,6 +229,7 @@ func (data *DNSSecurity) fromBody(ctx context.Context, res gjson.Result) {
 			data.ChildOrgId = types.StringValue(va.String())
 		}
 	}
+	oldTargetVpns := data.TargetVpns
 	if value := res.Get(path + "targetVpns"); value.Exists() && len(value.Array()) > 0 {
 		data.TargetVpns = make([]DNSSecurityTargetVpns, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -277,148 +277,57 @@ func (data *DNSSecurity) fromBody(ctx context.Context, res gjson.Result) {
 			data.TargetVpns = append(data.TargetVpns, item)
 			return true
 		})
+	} else {
+		data.TargetVpns = nil
+	}
+	if !fullRead {
+		resultTargetVpns := make([]DNSSecurityTargetVpns, 0, len(data.TargetVpns))
+		matchedTargetVpns := make([]bool, len(data.TargetVpns))
+		for _, oldItem := range oldTargetVpns {
+			for ni := range data.TargetVpns {
+				if matchedTargetVpns[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if helpers.GetStringFromSet(oldItem.Vpns).ValueString() != helpers.GetStringFromSet(data.TargetVpns[ni].Vpns).ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.UmbrellaDefault.ValueBool() != data.TargetVpns[ni].UmbrellaDefault.ValueBool() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.DnsServerIp.ValueString() != data.TargetVpns[ni].DnsServerIp.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.LocalDomainBypassEnabled.ValueBool() != data.TargetVpns[ni].LocalDomainBypassEnabled.ValueBool() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.Uid.ValueString() != data.TargetVpns[ni].Uid.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedTargetVpns[ni] = true
+					resultTargetVpns = append(resultTargetVpns, data.TargetVpns[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.TargetVpns {
+			if !matchedTargetVpns[ni] {
+				resultTargetVpns = append(resultTargetVpns, data.TargetVpns[ni])
+			}
+		}
+		data.TargetVpns = resultTargetVpns
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *DNSSecurity) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.LocalDomainBypassListId = types.StringNull()
-
-	if t := res.Get(path + "localDomainBypassList.refId.optionType"); t.Exists() {
-		va := res.Get(path + "localDomainBypassList.refId.value")
-		if t.String() == "global" {
-			data.LocalDomainBypassListId = types.StringValue(va.String())
-		}
-	}
-	data.MatchAllVpn = types.BoolNull()
-
-	if t := res.Get(path + "matchAllVpn.optionType"); t.Exists() {
-		va := res.Get(path + "matchAllVpn.value")
-		if t.String() == "global" {
-			data.MatchAllVpn = types.BoolValue(va.Bool())
-		}
-	}
-	data.UmbrellaDefault = types.BoolNull()
-
-	if t := res.Get(path + "umbrellaDefault.optionType"); t.Exists() {
-		va := res.Get(path + "umbrellaDefault.value")
-		if t.String() == "global" {
-			data.UmbrellaDefault = types.BoolValue(va.Bool())
-		}
-	}
-	data.DnsServerIp = types.StringNull()
-
-	if t := res.Get(path + "dnsServerIP.optionType"); t.Exists() {
-		va := res.Get(path + "dnsServerIP.value")
-		if t.String() == "global" {
-			data.DnsServerIp = types.StringValue(va.String())
-		}
-	}
-	data.LocalDomainBypassEnabled = types.BoolNull()
-
-	if t := res.Get(path + "localDomainBypassEnabled.optionType"); t.Exists() {
-		va := res.Get(path + "localDomainBypassEnabled.value")
-		if t.String() == "global" {
-			data.LocalDomainBypassEnabled = types.BoolValue(va.Bool())
-		}
-	}
-	data.DnsCrypt = types.BoolNull()
-
-	if t := res.Get(path + "dnsCrypt.optionType"); t.Exists() {
-		va := res.Get(path + "dnsCrypt.value")
-		if t.String() == "global" {
-			data.DnsCrypt = types.BoolValue(va.Bool())
-		}
-	}
-	data.ChildOrgId = types.StringNull()
-
-	if t := res.Get(path + "childOrgId.optionType"); t.Exists() {
-		va := res.Get(path + "childOrgId.value")
-		if t.String() == "global" {
-			data.ChildOrgId = types.StringValue(va.String())
-		}
-	}
-	for i := range data.TargetVpns {
-		keys := [...]string{"vpns", "umbrellaDefault", "dnsServerIP", "localDomainBypassEnabled", "uid"}
-		keyValues := [...]string{helpers.GetStringFromSet(data.TargetVpns[i].Vpns).ValueString(), strconv.FormatBool(data.TargetVpns[i].UmbrellaDefault.ValueBool()), data.TargetVpns[i].DnsServerIp.ValueString(), strconv.FormatBool(data.TargetVpns[i].LocalDomainBypassEnabled.ValueBool()), data.TargetVpns[i].Uid.ValueString()}
-		keyValuesVariables := [...]string{"", "", "", "", ""}
-
-		var r gjson.Result
-		res.Get(path + "targetVpns").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.TargetVpns[i].Vpns = types.SetNull(types.StringType)
-
-		if t := r.Get("vpns.optionType"); t.Exists() {
-			va := r.Get("vpns.value")
-			if t.String() == "global" {
-				data.TargetVpns[i].Vpns = helpers.GetStringSet(va.Array())
-			}
-		}
-		data.TargetVpns[i].UmbrellaDefault = types.BoolNull()
-
-		if t := r.Get("umbrellaDefault.optionType"); t.Exists() {
-			va := r.Get("umbrellaDefault.value")
-			if t.String() == "global" {
-				data.TargetVpns[i].UmbrellaDefault = types.BoolValue(va.Bool())
-			}
-		}
-		data.TargetVpns[i].DnsServerIp = types.StringNull()
-
-		if t := r.Get("dnsServerIP.optionType"); t.Exists() {
-			va := r.Get("dnsServerIP.value")
-			if t.String() == "global" {
-				data.TargetVpns[i].DnsServerIp = types.StringValue(va.String())
-			}
-		}
-		data.TargetVpns[i].LocalDomainBypassEnabled = types.BoolNull()
-
-		if t := r.Get("localDomainBypassEnabled.optionType"); t.Exists() {
-			va := r.Get("localDomainBypassEnabled.value")
-			if t.String() == "global" {
-				data.TargetVpns[i].LocalDomainBypassEnabled = types.BoolValue(va.Bool())
-			}
-		}
-		data.TargetVpns[i].Uid = types.StringNull()
-
-		if t := r.Get("uid.optionType"); t.Exists() {
-			va := r.Get("uid.value")
-			if t.String() == "global" {
-				data.TargetVpns[i].Uid = types.StringValue(va.String())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

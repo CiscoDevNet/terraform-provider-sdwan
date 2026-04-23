@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -118,7 +117,7 @@ func (data PolicyObjectAppProbeClass) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *PolicyObjectAppProbeClass) fromBody(ctx context.Context, res gjson.Result) {
+func (data *PolicyObjectAppProbeClass) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -126,6 +125,7 @@ func (data *PolicyObjectAppProbeClass) fromBody(ctx context.Context, res gjson.R
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
+	oldEntries := data.Entries
 	if value := res.Get(path + "entries"); value.Exists() && len(value.Array()) > 0 {
 		data.Entries = make([]PolicyObjectAppProbeClassEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -173,116 +173,75 @@ func (data *PolicyObjectAppProbeClass) fromBody(ctx context.Context, res gjson.R
 			data.Entries = append(data.Entries, item)
 			return true
 		})
+	} else {
+		data.Entries = nil
+	}
+	if !fullRead {
+		resultEntries := make([]PolicyObjectAppProbeClassEntries, 0, len(data.Entries))
+		matchedEntries := make([]bool, len(data.Entries))
+		for _, oldItem := range oldEntries {
+			for ni := range data.Entries {
+				if matchedEntries[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.ForwardingClass.ValueString() != data.Entries[ni].ForwardingClass.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.ForwardingClassId.ValueString() != data.Entries[ni].ForwardingClassId.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedEntries[ni] = true
+					{
+						resultC := make([]PolicyObjectAppProbeClassEntriesMap, 0, len(data.Entries[ni].Map))
+						matchedC := make([]bool, len(data.Entries[ni].Map))
+						for _, oldCItem := range oldItem.Map {
+							for nci := range data.Entries[ni].Map {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC {
+									if oldCItem.Color.ValueString() != data.Entries[ni].Map[nci].Color.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.Dscp.ValueInt64() != data.Entries[ni].Map[nci].Dscp.ValueInt64() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									resultC = append(resultC, data.Entries[ni].Map[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.Entries[ni].Map {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.Entries[ni].Map[nci])
+							}
+						}
+						data.Entries[ni].Map = resultC
+					}
+					resultEntries = append(resultEntries, data.Entries[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Entries {
+			if !matchedEntries[ni] {
+				resultEntries = append(resultEntries, data.Entries[ni])
+			}
+		}
+		data.Entries = resultEntries
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *PolicyObjectAppProbeClass) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	for i := range data.Entries {
-		keys := [...]string{"forwardingClass", "forwardingClass.refId"}
-		keyValues := [...]string{data.Entries[i].ForwardingClass.ValueString(), data.Entries[i].ForwardingClassId.ValueString()}
-		keyValuesVariables := [...]string{"", ""}
-
-		var r gjson.Result
-		res.Get(path + "entries").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		for ci := range data.Entries[i].Map {
-			keys := [...]string{"color", "dscp"}
-			keyValues := [...]string{data.Entries[i].Map[ci].Color.ValueString(), strconv.FormatInt(data.Entries[i].Map[ci].Dscp.ValueInt64(), 10)}
-			keyValuesVariables := [...]string{"", ""}
-
-			var cr gjson.Result
-			r.Get("map").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.Entries[i].Map[ci].Color = types.StringNull()
-
-			if t := cr.Get("color.optionType"); t.Exists() {
-				va := cr.Get("color.value")
-				if t.String() == "global" {
-					data.Entries[i].Map[ci].Color = types.StringValue(va.String())
-				}
-			}
-			data.Entries[i].Map[ci].Dscp = types.Int64Null()
-
-			if t := cr.Get("dscp.optionType"); t.Exists() {
-				va := cr.Get("dscp.value")
-				if t.String() == "global" {
-					data.Entries[i].Map[ci].Dscp = types.Int64Value(va.Int())
-				}
-			}
-		}
-		data.Entries[i].ForwardingClass = types.StringNull()
-
-		if t := r.Get("forwardingClass.optionType"); t.Exists() {
-			va := r.Get("forwardingClass.value")
-			if t.String() == "global" {
-				data.Entries[i].ForwardingClass = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].ForwardingClassId = types.StringNull()
-
-		if t := r.Get("forwardingClass.refId.optionType"); t.Exists() {
-			va := r.Get("forwardingClass.refId.value")
-			if t.String() == "global" {
-				data.Entries[i].ForwardingClassId = types.StringValue(va.String())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

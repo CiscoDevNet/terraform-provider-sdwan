@@ -455,13 +455,9 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Read(ctx context.Context, req
 		return
 	}
 
-	if imp {
-		state.fromBody(ctx, res)
-	} else {
-		state.updateFromBody(ctx, res)
-	}
+	state.fromBody(ctx, res, imp)
 	{{- else}}
-	state.fromBody(ctx, res)
+	state.fromBody(ctx, res, true)
 	{{- end}}
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)

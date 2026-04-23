@@ -104,7 +104,7 @@ func (data ServiceTrackerGroup) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ServiceTrackerGroup) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceTrackerGroup) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -112,6 +112,7 @@ func (data *ServiceTrackerGroup) fromBody(ctx context.Context, res gjson.Result)
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
+	oldTrackerElements := data.TrackerElements
 	if value := res.Get(path + "trackerRefs"); value.Exists() && len(value.Array()) > 0 {
 		data.TrackerElements = make([]ServiceTrackerGroupTrackerElements, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -127,6 +128,36 @@ func (data *ServiceTrackerGroup) fromBody(ctx context.Context, res gjson.Result)
 			data.TrackerElements = append(data.TrackerElements, item)
 			return true
 		})
+	} else {
+		data.TrackerElements = nil
+	}
+	if !fullRead {
+		resultTrackerElements := make([]ServiceTrackerGroupTrackerElements, 0, len(data.TrackerElements))
+		matchedTrackerElements := make([]bool, len(data.TrackerElements))
+		for _, oldItem := range oldTrackerElements {
+			for ni := range data.TrackerElements {
+				if matchedTrackerElements[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.TrackerId.ValueString() != data.TrackerElements[ni].TrackerId.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedTrackerElements[ni] = true
+					resultTrackerElements = append(resultTrackerElements, data.TrackerElements[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.TrackerElements {
+			if !matchedTrackerElements[ni] {
+				resultTrackerElements = append(resultTrackerElements, data.TrackerElements[ni])
+			}
+		}
+		data.TrackerElements = resultTrackerElements
 	}
 	data.TrackerBoolean = types.StringNull()
 	data.TrackerBooleanVariable = types.StringNull()
@@ -141,66 +172,3 @@ func (data *ServiceTrackerGroup) fromBody(ctx context.Context, res gjson.Result)
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *ServiceTrackerGroup) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	for i := range data.TrackerElements {
-		keys := [...]string{"trackerRef.refId"}
-		keyValues := [...]string{data.TrackerElements[i].TrackerId.ValueString()}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "trackerRefs").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.TrackerElements[i].TrackerId = types.StringNull()
-
-		if t := r.Get("trackerRef.refId.optionType"); t.Exists() {
-			va := r.Get("trackerRef.refId.value")
-			if t.String() == "global" {
-				data.TrackerElements[i].TrackerId = types.StringValue(va.String())
-			}
-		}
-	}
-	data.TrackerBoolean = types.StringNull()
-	data.TrackerBooleanVariable = types.StringNull()
-	if t := res.Get(path + "combineBoolean.optionType"); t.Exists() {
-		va := res.Get(path + "combineBoolean.value")
-		if t.String() == "variable" {
-			data.TrackerBooleanVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TrackerBoolean = types.StringValue(va.String())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

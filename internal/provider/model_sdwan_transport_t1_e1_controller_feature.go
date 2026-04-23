@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -294,7 +293,7 @@ func (data TransportT1E1Controller) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *TransportT1E1Controller) fromBody(ctx context.Context, res gjson.Result) {
+func (data *TransportT1E1Controller) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -320,6 +319,7 @@ func (data *TransportT1E1Controller) fromBody(ctx context.Context, res gjson.Res
 			data.Slot = types.StringValue(va.String())
 		}
 	}
+	oldEntries := data.Entries
 	if value := res.Get(path + "controllerTxExList"); value.Exists() && len(value.Array()) > 0 {
 		data.Entries = make([]TransportT1E1ControllerEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -467,234 +467,83 @@ func (data *TransportT1E1Controller) fromBody(ctx context.Context, res gjson.Res
 			data.Entries = append(data.Entries, item)
 			return true
 		})
+	} else {
+		data.Entries = nil
+	}
+	if !fullRead {
+		resultEntries := make([]TransportT1E1ControllerEntries, 0, len(data.Entries))
+		matchedEntries := make([]bool, len(data.Entries))
+		for _, oldItem := range oldEntries {
+			for ni := range data.Entries {
+				if matchedEntries[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.T1Description.ValueString() != data.Entries[ni].T1Description.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.E1Description.ValueString() != data.Entries[ni].E1Description.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedEntries[ni] = true
+					{
+						resultC := make([]TransportT1E1ControllerEntriesChannelGroups, 0, len(data.Entries[ni].ChannelGroups))
+						matchedC := make([]bool, len(data.Entries[ni].ChannelGroups))
+						for _, oldCItem := range oldItem.ChannelGroups {
+							for nci := range data.Entries[ni].ChannelGroups {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC && (oldCItem.ChannelGroupVariable.ValueString() != "" || data.Entries[ni].ChannelGroups[nci].ChannelGroupVariable.ValueString() != "") {
+									if oldCItem.ChannelGroupVariable.ValueString() != data.Entries[ni].ChannelGroups[nci].ChannelGroupVariable.ValueString() {
+										keyMatchC = false
+									}
+								} else if keyMatchC {
+									if oldCItem.ChannelGroup.ValueInt64() != data.Entries[ni].ChannelGroups[nci].ChannelGroup.ValueInt64() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC && (oldCItem.TimeSlotVariable.ValueString() != "" || data.Entries[ni].ChannelGroups[nci].TimeSlotVariable.ValueString() != "") {
+									if oldCItem.TimeSlotVariable.ValueString() != data.Entries[ni].ChannelGroups[nci].TimeSlotVariable.ValueString() {
+										keyMatchC = false
+									}
+								} else if keyMatchC {
+									if oldCItem.TimeSlot.ValueString() != data.Entries[ni].ChannelGroups[nci].TimeSlot.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									resultC = append(resultC, data.Entries[ni].ChannelGroups[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.Entries[ni].ChannelGroups {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.Entries[ni].ChannelGroups[nci])
+							}
+						}
+						data.Entries[ni].ChannelGroups = resultC
+					}
+					resultEntries = append(resultEntries, data.Entries[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Entries {
+			if !matchedEntries[ni] {
+				resultEntries = append(resultEntries, data.Entries[ni])
+			}
+		}
+		data.Entries = resultEntries
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *TransportT1E1Controller) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.Type = types.StringNull()
-
-	if t := res.Get(path + "type.optionType"); t.Exists() {
-		va := res.Get(path + "type.value")
-		if t.String() == "global" {
-			data.Type = types.StringValue(va.String())
-		}
-	}
-	data.Slot = types.StringNull()
-	data.SlotVariable = types.StringNull()
-	if t := res.Get(path + "slot.optionType"); t.Exists() {
-		va := res.Get(path + "slot.value")
-		if t.String() == "variable" {
-			data.SlotVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Slot = types.StringValue(va.String())
-		}
-	}
-	for i := range data.Entries {
-		keys := [...]string{"basic.T1.name", "basic.E1.name"}
-		keyValues := [...]string{data.Entries[i].T1Description.ValueString(), data.Entries[i].E1Description.ValueString()}
-		keyValuesVariables := [...]string{"", ""}
-
-		var r gjson.Result
-		res.Get(path + "controllerTxExList").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Entries[i].T1Description = types.StringNull()
-
-		if t := r.Get("basic.T1.name.optionType"); t.Exists() {
-			va := r.Get("basic.T1.name.value")
-			if t.String() == "global" {
-				data.Entries[i].T1Description = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].T1Framing = types.StringNull()
-		data.Entries[i].T1FramingVariable = types.StringNull()
-		if t := r.Get("basic.T1.framing.optionType"); t.Exists() {
-			va := r.Get("basic.T1.framing.value")
-			if t.String() == "variable" {
-				data.Entries[i].T1FramingVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Entries[i].T1Framing = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].T1Linecode = types.StringNull()
-		data.Entries[i].T1LinecodeVariable = types.StringNull()
-		if t := r.Get("basic.T1.linecode.optionType"); t.Exists() {
-			va := r.Get("basic.T1.linecode.value")
-			if t.String() == "variable" {
-				data.Entries[i].T1LinecodeVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Entries[i].T1Linecode = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].E1Description = types.StringNull()
-
-		if t := r.Get("basic.E1.name.optionType"); t.Exists() {
-			va := r.Get("basic.E1.name.value")
-			if t.String() == "global" {
-				data.Entries[i].E1Description = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].E1Framing = types.StringNull()
-		data.Entries[i].E1FramingVariable = types.StringNull()
-		if t := r.Get("basic.E1.framing.optionType"); t.Exists() {
-			va := r.Get("basic.E1.framing.value")
-			if t.String() == "variable" {
-				data.Entries[i].E1FramingVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Entries[i].E1Framing = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].E1Linecode = types.StringNull()
-		data.Entries[i].E1LinecodeVariable = types.StringNull()
-		if t := r.Get("basic.E1.linecode.optionType"); t.Exists() {
-			va := r.Get("basic.E1.linecode.value")
-			if t.String() == "variable" {
-				data.Entries[i].E1LinecodeVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Entries[i].E1Linecode = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].CableLength = types.StringNull()
-
-		if t := r.Get("cable.cableLength.optionType"); t.Exists() {
-			va := r.Get("cable.cableLength.value")
-			if t.String() == "global" {
-				data.Entries[i].CableLength = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].LengthShort = types.StringNull()
-		data.Entries[i].LengthShortVariable = types.StringNull()
-		if t := r.Get("cable.lengthShort.optionType"); t.Exists() {
-			va := r.Get("cable.lengthShort.value")
-			if t.String() == "variable" {
-				data.Entries[i].LengthShortVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Entries[i].LengthShort = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].LengthLong = types.StringNull()
-		data.Entries[i].LengthLongVariable = types.StringNull()
-		if t := r.Get("cable.lengthLong.optionType"); t.Exists() {
-			va := r.Get("cable.lengthLong.value")
-			if t.String() == "variable" {
-				data.Entries[i].LengthLongVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Entries[i].LengthLong = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].ClockSource = types.StringNull()
-
-		if t := r.Get("clockSource.optionType"); t.Exists() {
-			va := r.Get("clockSource.value")
-			if t.String() == "global" {
-				data.Entries[i].ClockSource = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].LineMode = types.StringNull()
-		data.Entries[i].LineModeVariable = types.StringNull()
-		if t := r.Get("lineMode.optionType"); t.Exists() {
-			va := r.Get("lineMode.value")
-			if t.String() == "variable" {
-				data.Entries[i].LineModeVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Entries[i].LineMode = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].Description = types.StringNull()
-		data.Entries[i].DescriptionVariable = types.StringNull()
-		if t := r.Get("description.optionType"); t.Exists() {
-			va := r.Get("description.value")
-			if t.String() == "variable" {
-				data.Entries[i].DescriptionVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Entries[i].Description = types.StringValue(va.String())
-			}
-		}
-		for ci := range data.Entries[i].ChannelGroups {
-			keys := [...]string{"number", "timeslots"}
-			keyValues := [...]string{strconv.FormatInt(data.Entries[i].ChannelGroups[ci].ChannelGroup.ValueInt64(), 10), data.Entries[i].ChannelGroups[ci].TimeSlot.ValueString()}
-			keyValuesVariables := [...]string{data.Entries[i].ChannelGroups[ci].ChannelGroupVariable.ValueString(), data.Entries[i].ChannelGroups[ci].TimeSlotVariable.ValueString()}
-
-			var cr gjson.Result
-			r.Get("channelGroup").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.Entries[i].ChannelGroups[ci].ChannelGroup = types.Int64Null()
-			data.Entries[i].ChannelGroups[ci].ChannelGroupVariable = types.StringNull()
-			if t := cr.Get("number.optionType"); t.Exists() {
-				va := cr.Get("number.value")
-				if t.String() == "variable" {
-					data.Entries[i].ChannelGroups[ci].ChannelGroupVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Entries[i].ChannelGroups[ci].ChannelGroup = types.Int64Value(va.Int())
-				}
-			}
-			data.Entries[i].ChannelGroups[ci].TimeSlot = types.StringNull()
-			data.Entries[i].ChannelGroups[ci].TimeSlotVariable = types.StringNull()
-			if t := cr.Get("timeslots.optionType"); t.Exists() {
-				va := cr.Get("timeslots.value")
-				if t.String() == "variable" {
-					data.Entries[i].ChannelGroups[ci].TimeSlotVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Entries[i].ChannelGroups[ci].TimeSlot = types.StringValue(va.String())
-				}
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

@@ -351,7 +351,7 @@ func (data ServiceIPv6ACL) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ServiceIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceIPv6ACL) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -367,6 +367,7 @@ func (data *ServiceIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
+	oldSequences := data.Sequences
 	if value := res.Get(path + "sequences"); value.Exists() && len(value.Array()) > 0 {
 		data.Sequences = make([]ServiceIPv6ACLSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -612,366 +613,251 @@ func (data *ServiceIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 			data.Sequences = append(data.Sequences, item)
 			return true
 		})
+	} else {
+		data.Sequences = nil
+	}
+	if !fullRead {
+		resultSequences := make([]ServiceIPv6ACLSequences, 0, len(data.Sequences))
+		matchedSequences := make([]bool, len(data.Sequences))
+		for _, oldItem := range oldSequences {
+			for ni := range data.Sequences {
+				if matchedSequences[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.SequenceId.ValueInt64() != data.Sequences[ni].SequenceId.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedSequences[ni] = true
+					{
+						resultC := make([]ServiceIPv6ACLSequencesMatchEntries, 0, len(data.Sequences[ni].MatchEntries))
+						matchedC := make([]bool, len(data.Sequences[ni].MatchEntries))
+						for _, oldCItem := range oldItem.MatchEntries {
+							for nci := range data.Sequences[ni].MatchEntries {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC {
+									if oldCItem.NextHeader.ValueInt64() != data.Sequences[ni].MatchEntries[nci].NextHeader.ValueInt64() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.PacketLength.ValueString() != data.Sequences[ni].MatchEntries[nci].PacketLength.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.SourceDataPrefixListId.ValueString() != data.Sequences[ni].MatchEntries[nci].SourceDataPrefixListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.SourceDataPrefix.ValueString() != data.Sequences[ni].MatchEntries[nci].SourceDataPrefix.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.DestinationDataPrefixListId.ValueString() != data.Sequences[ni].MatchEntries[nci].DestinationDataPrefixListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.DestinationDataPrefix.ValueString() != data.Sequences[ni].MatchEntries[nci].DestinationDataPrefix.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.TcpState.ValueString() != data.Sequences[ni].MatchEntries[nci].TcpState.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.TrafficClass).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].TrafficClass).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.IcmpMessages).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].IcmpMessages).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									{
+										resultCC := make([]ServiceIPv6ACLSequencesMatchEntriesSourcePorts, 0, len(data.Sequences[ni].MatchEntries[nci].SourcePorts))
+										matchedCC := make([]bool, len(data.Sequences[ni].MatchEntries[nci].SourcePorts))
+										for _, oldCCItem := range oldCItem.SourcePorts {
+											for ncci := range data.Sequences[ni].MatchEntries[nci].SourcePorts {
+												if matchedCC[ncci] {
+													continue
+												}
+												keyMatchCC := true
+												if keyMatchCC {
+													if oldCCItem.Port.ValueString() != data.Sequences[ni].MatchEntries[nci].SourcePorts[ncci].Port.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													matchedCC[ncci] = true
+													resultCC = append(resultCC, data.Sequences[ni].MatchEntries[nci].SourcePorts[ncci])
+													break
+												}
+											}
+										}
+										for ncci := range data.Sequences[ni].MatchEntries[nci].SourcePorts {
+											if !matchedCC[ncci] {
+												resultCC = append(resultCC, data.Sequences[ni].MatchEntries[nci].SourcePorts[ncci])
+											}
+										}
+										data.Sequences[ni].MatchEntries[nci].SourcePorts = resultCC
+									}
+									{
+										resultCC := make([]ServiceIPv6ACLSequencesMatchEntriesDestinationPorts, 0, len(data.Sequences[ni].MatchEntries[nci].DestinationPorts))
+										matchedCC := make([]bool, len(data.Sequences[ni].MatchEntries[nci].DestinationPorts))
+										for _, oldCCItem := range oldCItem.DestinationPorts {
+											for ncci := range data.Sequences[ni].MatchEntries[nci].DestinationPorts {
+												if matchedCC[ncci] {
+													continue
+												}
+												keyMatchCC := true
+												if keyMatchCC {
+													if oldCCItem.Port.ValueString() != data.Sequences[ni].MatchEntries[nci].DestinationPorts[ncci].Port.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													matchedCC[ncci] = true
+													resultCC = append(resultCC, data.Sequences[ni].MatchEntries[nci].DestinationPorts[ncci])
+													break
+												}
+											}
+										}
+										for ncci := range data.Sequences[ni].MatchEntries[nci].DestinationPorts {
+											if !matchedCC[ncci] {
+												resultCC = append(resultCC, data.Sequences[ni].MatchEntries[nci].DestinationPorts[ncci])
+											}
+										}
+										data.Sequences[ni].MatchEntries[nci].DestinationPorts = resultCC
+									}
+									resultC = append(resultC, data.Sequences[ni].MatchEntries[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.Sequences[ni].MatchEntries {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.Sequences[ni].MatchEntries[nci])
+							}
+						}
+						data.Sequences[ni].MatchEntries = resultC
+					}
+					{
+						resultC := make([]ServiceIPv6ACLSequencesActions, 0, len(data.Sequences[ni].Actions))
+						matchedC := make([]bool, len(data.Sequences[ni].Actions))
+						for _, oldCItem := range oldItem.Actions {
+							for nci := range data.Sequences[ni].Actions {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC {
+									if oldCItem.AcceptCounterName.ValueString() != data.Sequences[ni].Actions[nci].AcceptCounterName.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.AcceptLog.ValueBool() != data.Sequences[ni].Actions[nci].AcceptLog.ValueBool() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.AcceptSetNextHop.ValueString() != data.Sequences[ni].Actions[nci].AcceptSetNextHop.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC && (oldCItem.AcceptSetServiceChainNameVariable.ValueString() != "" || data.Sequences[ni].Actions[nci].AcceptSetServiceChainNameVariable.ValueString() != "") {
+									if oldCItem.AcceptSetServiceChainNameVariable.ValueString() != data.Sequences[ni].Actions[nci].AcceptSetServiceChainNameVariable.ValueString() {
+										keyMatchC = false
+									}
+								} else if keyMatchC {
+									if oldCItem.AcceptSetServiceChainName.ValueString() != data.Sequences[ni].Actions[nci].AcceptSetServiceChainName.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC && (oldCItem.AcceptSetServiceChainVpnVariable.ValueString() != "" || data.Sequences[ni].Actions[nci].AcceptSetServiceChainVpnVariable.ValueString() != "") {
+									if oldCItem.AcceptSetServiceChainVpnVariable.ValueString() != data.Sequences[ni].Actions[nci].AcceptSetServiceChainVpnVariable.ValueString() {
+										keyMatchC = false
+									}
+								} else if keyMatchC {
+									if oldCItem.AcceptSetServiceChainVpn.ValueInt64() != data.Sequences[ni].Actions[nci].AcceptSetServiceChainVpn.ValueInt64() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC && (oldCItem.AcceptSetServiceChainFallbackVariable.ValueString() != "" || data.Sequences[ni].Actions[nci].AcceptSetServiceChainFallbackVariable.ValueString() != "") {
+									if oldCItem.AcceptSetServiceChainFallbackVariable.ValueString() != data.Sequences[ni].Actions[nci].AcceptSetServiceChainFallbackVariable.ValueString() {
+										keyMatchC = false
+									}
+								} else if keyMatchC {
+									if oldCItem.AcceptSetServiceChainFallback.ValueBool() != data.Sequences[ni].Actions[nci].AcceptSetServiceChainFallback.ValueBool() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.AcceptTrafficClass.ValueInt64() != data.Sequences[ni].Actions[nci].AcceptTrafficClass.ValueInt64() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.AcceptMirrorListId.ValueString() != data.Sequences[ni].Actions[nci].AcceptMirrorListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.AcceptPolicerId.ValueString() != data.Sequences[ni].Actions[nci].AcceptPolicerId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.DropCounterName.ValueString() != data.Sequences[ni].Actions[nci].DropCounterName.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.DropLog.ValueBool() != data.Sequences[ni].Actions[nci].DropLog.ValueBool() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									resultC = append(resultC, data.Sequences[ni].Actions[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.Sequences[ni].Actions {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.Sequences[ni].Actions[nci])
+							}
+						}
+						data.Sequences[ni].Actions = resultC
+					}
+					resultSequences = append(resultSequences, data.Sequences[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Sequences {
+			if !matchedSequences[ni] {
+				resultSequences = append(resultSequences, data.Sequences[ni])
+			}
+		}
+		data.Sequences = resultSequences
 	}
 }
 
 // End of section. //template:end fromBody
-
-func (data *ServiceIPv6ACL) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.DefaultAction = types.StringNull()
-
-	if t := res.Get(path + "defaultAction.optionType"); t.Exists() {
-		va := res.Get(path + "defaultAction.value")
-		if t.String() == "global" {
-			data.DefaultAction = types.StringValue(va.String())
-		}
-	}
-	for i := range data.Sequences {
-		keys := [...]string{"sequenceId"}
-		keyValues := [...]string{strconv.FormatInt(data.Sequences[i].SequenceId.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "sequences").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Sequences[i].SequenceId = types.Int64Null()
-
-		if t := r.Get("sequenceId.optionType"); t.Exists() {
-			va := r.Get("sequenceId.value")
-			if t.String() == "global" {
-				data.Sequences[i].SequenceId = types.Int64Value(va.Int())
-			}
-		}
-		data.Sequences[i].SequenceName = types.StringNull()
-
-		if t := r.Get("sequenceName.optionType"); t.Exists() {
-			va := r.Get("sequenceName.value")
-			if t.String() == "global" {
-				data.Sequences[i].SequenceName = types.StringValue(va.String())
-			}
-		}
-		data.Sequences[i].BaseAction = types.StringNull()
-
-		if t := r.Get("baseAction.optionType"); t.Exists() {
-			va := r.Get("baseAction.value")
-			if t.String() == "global" {
-				data.Sequences[i].BaseAction = types.StringValue(va.String())
-			}
-		}
-		for ci := range data.Sequences[i].MatchEntries {
-			if len(r.Get("matchEntries").Array()) <= 0 {
-				continue
-			}
-			cr := r.Get("matchEntries").Array()[0]
-
-			data.Sequences[i].MatchEntries[ci].NextHeader = types.Int64Null()
-
-			if t := cr.Get("nextHeader.optionType"); t.Exists() {
-				va := cr.Get("nextHeader.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].NextHeader = types.Int64Value(va.Int())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].PacketLength = types.StringNull()
-
-			if t := cr.Get("packetLength.optionType"); t.Exists() {
-				va := cr.Get("packetLength.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].PacketLength = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].SourceDataPrefixListId = types.StringNull()
-
-			if t := cr.Get("sourceDataPrefix.sourceDataPrefixList.refId.optionType"); t.Exists() {
-				va := cr.Get("sourceDataPrefix.sourceDataPrefixList.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].SourceDataPrefixListId = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].SourceDataPrefix = types.StringNull()
-
-			if t := cr.Get("sourceDataPrefix.sourceIpPrefix.optionType"); t.Exists() {
-				va := cr.Get("sourceDataPrefix.sourceIpPrefix.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].SourceDataPrefix = types.StringValue(va.String())
-				}
-			}
-			for cci := range data.Sequences[i].MatchEntries[ci].SourcePorts {
-				keys := [...]string{"sourcePort"}
-				keyValues := [...]string{data.Sequences[i].MatchEntries[ci].SourcePorts[cci].Port.ValueString()}
-				keyValuesVariables := [...]string{""}
-
-				var ccr gjson.Result
-				cr.Get("sourcePorts").ForEach(
-					func(_, v gjson.Result) bool {
-						found := false
-						for ik := range keys {
-							tt := v.Get(keys[ik] + ".optionType")
-							vv := v.Get(keys[ik] + ".value")
-							if tt.Exists() && vv.Exists() {
-								if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-									found = true
-									continue
-								} else if tt.String() == "default" {
-									continue
-								}
-								found = false
-								break
-							}
-							continue
-						}
-						if found {
-							ccr = v
-							return false
-						}
-						return true
-					},
-				)
-				data.Sequences[i].MatchEntries[ci].SourcePorts[cci].Port = types.StringNull()
-
-				if t := ccr.Get("sourcePort.optionType"); t.Exists() {
-					va := ccr.Get("sourcePort.value")
-					if t.String() == "global" {
-						data.Sequences[i].MatchEntries[ci].SourcePorts[cci].Port = types.StringValue(va.String())
-					}
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListId = types.StringNull()
-
-			if t := cr.Get("destinationDataPrefix.destinationDataPrefixList.refId.optionType"); t.Exists() {
-				va := cr.Get("destinationDataPrefix.destinationDataPrefixList.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].DestinationDataPrefixListId = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].DestinationDataPrefix = types.StringNull()
-
-			if t := cr.Get("destinationDataPrefix.destinationIpPrefix.optionType"); t.Exists() {
-				va := cr.Get("destinationDataPrefix.destinationIpPrefix.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].DestinationDataPrefix = types.StringValue(va.String())
-				}
-			}
-			for cci := range data.Sequences[i].MatchEntries[ci].DestinationPorts {
-				keys := [...]string{"destinationPort"}
-				keyValues := [...]string{data.Sequences[i].MatchEntries[ci].DestinationPorts[cci].Port.ValueString()}
-				keyValuesVariables := [...]string{""}
-
-				var ccr gjson.Result
-				cr.Get("destinationPorts").ForEach(
-					func(_, v gjson.Result) bool {
-						found := false
-						for ik := range keys {
-							tt := v.Get(keys[ik] + ".optionType")
-							vv := v.Get(keys[ik] + ".value")
-							if tt.Exists() && vv.Exists() {
-								if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-									found = true
-									continue
-								} else if tt.String() == "default" {
-									continue
-								}
-								found = false
-								break
-							}
-							continue
-						}
-						if found {
-							ccr = v
-							return false
-						}
-						return true
-					},
-				)
-				data.Sequences[i].MatchEntries[ci].DestinationPorts[cci].Port = types.StringNull()
-
-				if t := ccr.Get("destinationPort.optionType"); t.Exists() {
-					va := ccr.Get("destinationPort.value")
-					if t.String() == "global" {
-						data.Sequences[i].MatchEntries[ci].DestinationPorts[cci].Port = types.StringValue(va.String())
-					}
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].TcpState = types.StringNull()
-
-			if t := cr.Get("tcp.optionType"); t.Exists() {
-				va := cr.Get("tcp.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].TcpState = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].TrafficClass = types.SetNull(types.Int64Type)
-
-			if t := cr.Get("trafficClass.optionType"); t.Exists() {
-				va := cr.Get("trafficClass.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].TrafficClass = helpers.GetInt64Set(va.Array())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].IcmpMessages = types.SetNull(types.StringType)
-
-			if t := cr.Get("icmp6Msg.optionType"); t.Exists() {
-				va := cr.Get("icmp6Msg.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].IcmpMessages = helpers.GetStringSet(va.Array())
-				}
-			}
-		}
-		for ci := range data.Sequences[i].Actions {
-			keys := [...]string{"accept.counterName", "accept.log", "accept.setNextHop", "accept.setServiceChain.serviceChainNumber", "accept.setServiceChain.vpn", "accept.setServiceChain.fallback", "accept.setTrafficClass", "accept.mirror.refId", "accept.policer.refId", "drop.counterName", "drop.log"}
-			keyValues := [...]string{data.Sequences[i].Actions[ci].AcceptCounterName.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].AcceptLog.ValueBool()), data.Sequences[i].Actions[ci].AcceptSetNextHop.ValueString(), data.Sequences[i].Actions[ci].AcceptSetServiceChainName.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].AcceptSetServiceChainVpn.ValueInt64(), 10), strconv.FormatBool(data.Sequences[i].Actions[ci].AcceptSetServiceChainFallback.ValueBool()), strconv.FormatInt(data.Sequences[i].Actions[ci].AcceptTrafficClass.ValueInt64(), 10), data.Sequences[i].Actions[ci].AcceptMirrorListId.ValueString(), data.Sequences[i].Actions[ci].AcceptPolicerId.ValueString(), data.Sequences[i].Actions[ci].DropCounterName.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].DropLog.ValueBool())}
-			keyValuesVariables := [...]string{"", "", "", data.Sequences[i].Actions[ci].AcceptSetServiceChainNameVariable.ValueString(), data.Sequences[i].Actions[ci].AcceptSetServiceChainVpnVariable.ValueString(), data.Sequences[i].Actions[ci].AcceptSetServiceChainFallbackVariable.ValueString(), "", "", "", "", ""}
-
-			var cr gjson.Result
-			r.Get("actions").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.Sequences[i].Actions[ci].AcceptCounterName = types.StringNull()
-
-			if t := cr.Get("accept.counterName.optionType"); t.Exists() {
-				va := cr.Get("accept.counterName.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AcceptCounterName = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].Actions[ci].AcceptLog = types.BoolNull()
-
-			if t := cr.Get("accept.log.optionType"); t.Exists() {
-				va := cr.Get("accept.log.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AcceptLog = types.BoolValue(va.Bool())
-				}
-			}
-			data.Sequences[i].Actions[ci].AcceptSetNextHop = types.StringNull()
-
-			if t := cr.Get("accept.setNextHop.optionType"); t.Exists() {
-				va := cr.Get("accept.setNextHop.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AcceptSetNextHop = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].Actions[ci].AcceptSetServiceChainName = types.StringNull()
-			data.Sequences[i].Actions[ci].AcceptSetServiceChainNameVariable = types.StringNull()
-			if t := cr.Get("accept.setServiceChain.serviceChainNumber.optionType"); t.Exists() {
-				va := cr.Get("accept.setServiceChain.serviceChainNumber.value")
-				if t.String() == "variable" {
-					data.Sequences[i].Actions[ci].AcceptSetServiceChainNameVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AcceptSetServiceChainName = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].Actions[ci].AcceptSetServiceChainVpn = types.Int64Null()
-			data.Sequences[i].Actions[ci].AcceptSetServiceChainVpnVariable = types.StringNull()
-			if t := cr.Get("accept.setServiceChain.vpn.optionType"); t.Exists() {
-				va := cr.Get("accept.setServiceChain.vpn.value")
-				if t.String() == "variable" {
-					data.Sequences[i].Actions[ci].AcceptSetServiceChainVpnVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AcceptSetServiceChainVpn = types.Int64Value(va.Int())
-				}
-			}
-			data.Sequences[i].Actions[ci].AcceptSetServiceChainFallback = types.BoolNull()
-			data.Sequences[i].Actions[ci].AcceptSetServiceChainFallbackVariable = types.StringNull()
-			if t := cr.Get("accept.setServiceChain.fallback.optionType"); t.Exists() {
-				va := cr.Get("accept.setServiceChain.fallback.value")
-				if t.String() == "variable" {
-					data.Sequences[i].Actions[ci].AcceptSetServiceChainFallbackVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AcceptSetServiceChainFallback = types.BoolValue(va.Bool())
-				}
-			}
-			data.Sequences[i].Actions[ci].AcceptTrafficClass = types.Int64Null()
-
-			if t := cr.Get("accept.setTrafficClass.optionType"); t.Exists() {
-				va := cr.Get("accept.setTrafficClass.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AcceptTrafficClass = types.Int64Value(va.Int())
-				}
-			}
-			data.Sequences[i].Actions[ci].AcceptMirrorListId = types.StringNull()
-
-			if t := cr.Get("accept.mirror.refId.optionType"); t.Exists() {
-				va := cr.Get("accept.mirror.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AcceptMirrorListId = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].Actions[ci].AcceptPolicerId = types.StringNull()
-
-			if t := cr.Get("accept.policer.refId.optionType"); t.Exists() {
-				va := cr.Get("accept.policer.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AcceptPolicerId = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].Actions[ci].DropCounterName = types.StringNull()
-
-			if t := cr.Get("drop.counterName.optionType"); t.Exists() {
-				va := cr.Get("drop.counterName.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].DropCounterName = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].Actions[ci].DropLog = types.BoolNull()
-
-			if t := cr.Get("drop.log.optionType"); t.Exists() {
-				va := cr.Get("drop.log.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].DropLog = types.BoolValue(va.Bool())
-				}
-			}
-		}
-	}
-}

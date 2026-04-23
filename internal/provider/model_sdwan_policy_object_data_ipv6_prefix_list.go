@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -93,7 +92,7 @@ func (data PolicyObjectDataIPv6PrefixList) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *PolicyObjectDataIPv6PrefixList) fromBody(ctx context.Context, res gjson.Result) {
+func (data *PolicyObjectDataIPv6PrefixList) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -101,6 +100,7 @@ func (data *PolicyObjectDataIPv6PrefixList) fromBody(ctx context.Context, res gj
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
+	oldEntries := data.Entries
 	if value := res.Get(path + "entries"); value.Exists() && len(value.Array()) > 0 {
 		data.Entries = make([]PolicyObjectDataIPv6PrefixListEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -124,68 +124,42 @@ func (data *PolicyObjectDataIPv6PrefixList) fromBody(ctx context.Context, res gj
 			data.Entries = append(data.Entries, item)
 			return true
 		})
+	} else {
+		data.Entries = nil
+	}
+	if !fullRead {
+		resultEntries := make([]PolicyObjectDataIPv6PrefixListEntries, 0, len(data.Entries))
+		matchedEntries := make([]bool, len(data.Entries))
+		for _, oldItem := range oldEntries {
+			for ni := range data.Entries {
+				if matchedEntries[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.Ipv6Address.ValueString() != data.Entries[ni].Ipv6Address.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.Ipv6PrefixLength.ValueInt64() != data.Entries[ni].Ipv6PrefixLength.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedEntries[ni] = true
+					resultEntries = append(resultEntries, data.Entries[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Entries {
+			if !matchedEntries[ni] {
+				resultEntries = append(resultEntries, data.Entries[ni])
+			}
+		}
+		data.Entries = resultEntries
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *PolicyObjectDataIPv6PrefixList) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	for i := range data.Entries {
-		keys := [...]string{"ipv6Address", "ipv6PrefixLength"}
-		keyValues := [...]string{data.Entries[i].Ipv6Address.ValueString(), strconv.FormatInt(data.Entries[i].Ipv6PrefixLength.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{"", ""}
-
-		var r gjson.Result
-		res.Get(path + "entries").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Entries[i].Ipv6Address = types.StringNull()
-
-		if t := r.Get("ipv6Address.optionType"); t.Exists() {
-			va := r.Get("ipv6Address.value")
-			if t.String() == "global" {
-				data.Entries[i].Ipv6Address = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].Ipv6PrefixLength = types.Int64Null()
-
-		if t := r.Get("ipv6PrefixLength.optionType"); t.Exists() {
-			va := r.Get("ipv6PrefixLength.value")
-			if t.String() == "global" {
-				data.Entries[i].Ipv6PrefixLength = types.Int64Value(va.Int())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

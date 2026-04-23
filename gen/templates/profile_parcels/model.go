@@ -388,7 +388,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result) {
+func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -417,7 +417,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 		va := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 		{{if .Variable}}if t.String() == "variable" {
 			data.{{toGoName .TfName}}Variable = types.StringValue(va.String())
-		} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}" || temp{{toGoName .TfName}}.ValueString() == ""){{end}} {
+		} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| (t.String() == "default" && (temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}" || (fullRead && temp{{toGoName .TfName}}.ValueString() == ""))){{end}} {
 			{{- if eq .Type "StringInt64" }}
 			data.{{toGoName .TfName}} = types.StringValue(va.String())
 			{{- else}}
@@ -432,6 +432,8 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 	}
 	{{- end}}
 	{{- else if isNestedListSet .}}
+	{{- $list := (toGoName .TfName)}}
+	old{{$list}} := data.{{toGoName .TfName}}
 	if value := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); value.Exists() && len(value.Array()) > 0 {
 		data.{{toGoName .TfName}} = make([]{{$name}}{{toGoName .TfName}}, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -466,6 +468,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 				{{- end}}
 			}
 			{{- else if isNestedListSet .}}
+			{{- $clist := (toGoName .TfName)}}
 			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.{{toGoName .TfName}} = make([]{{$name}}{{$cname}}{{toGoName .TfName}}, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
@@ -499,6 +502,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 						{{- end}}
 					}
 					{{- else if isNestedListSet .}}
+					{{- $cclist := (toGoName .TfName)}}
 					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); ccValue.Exists() && len(ccValue.Array()) > 0{
 						cItem.{{toGoName .TfName}} = make([]{{$name}}{{$cname}}{{$ccname}}{{toGoName .TfName}}, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
@@ -563,348 +567,224 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 		data.{{toGoName .Name}} = {{if eq .Type "Bool"}}types.BoolValue({{.Value}}){{else}}types.StringValue("{{.Value}}"){{end}}
 		{{- end}}
 		{{- end}}
+	} else {
+		data.{{toGoName .TfName}} = nil
+	}
+	if !fullRead {
+		{{- $noId := not (hasId .Attributes)}}
+		result{{$list}} := make([]{{$name}}{{toGoName .TfName}}, 0, len(data.{{toGoName .TfName}}))
+		matched{{$list}} := make([]bool, len(data.{{toGoName .TfName}}))
+		for _, oldItem := range old{{$list}} {
+			for ni := range data.{{toGoName .TfName}} {
+				if matched{{$list}}[ni] {
+					continue
+				}
+				keyMatch := true
+				{{- range .Attributes}}
+				{{- if or .Id $noId}}
+				{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}
+				{{- if .Variable}}
+				if keyMatch && (oldItem.{{toGoName .TfName}}Variable.ValueString() != "" || data.{{$list}}[ni].{{toGoName .TfName}}Variable.ValueString() != "") {
+					if oldItem.{{toGoName .TfName}}Variable.ValueString() != data.{{$list}}[ni].{{toGoName .TfName}}Variable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+				{{- else}}
+				if keyMatch {
+				{{- end}}
+					{{- if eq .Type "Int64"}}
+					if oldItem.{{toGoName .TfName}}.ValueInt64() != data.{{$list}}[ni].{{toGoName .TfName}}.ValueInt64() {
+					{{- else if eq .Type "Bool"}}
+					if oldItem.{{toGoName .TfName}}.ValueBool() != data.{{$list}}[ni].{{toGoName .TfName}}.ValueBool() {
+					{{- else}}
+					if oldItem.{{toGoName .TfName}}.ValueString() != data.{{$list}}[ni].{{toGoName .TfName}}.ValueString() {
+					{{- end}}
+						keyMatch = false
+					}
+				}
+				{{- else if or (eq .Type "Set") (eq .Type "List")}}
+				{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}
+				if keyMatch {
+					{{- if eq .Type "Set"}}
+					if helpers.GetStringFromSet(oldItem.{{toGoName .TfName}}).ValueString() != helpers.GetStringFromSet(data.{{$list}}[ni].{{toGoName .TfName}}).ValueString() {
+					{{- else}}
+					if helpers.GetStringFromList(oldItem.{{toGoName .TfName}}).ValueString() != helpers.GetStringFromList(data.{{$list}}[ni].{{toGoName .TfName}}).ValueString() {
+					{{- end}}
+						keyMatch = false
+					}
+				}
+				{{- end}}
+				{{- end}}
+				{{- end}}
+				{{- end}}
+				if keyMatch {
+					matched{{$list}}[ni] = true
+					{{- range .Attributes}}
+					{{- if .Encrypted}}
+					data.{{$list}}[ni].{{toGoName .TfName}} = oldItem.{{toGoName .TfName}}
+					{{- if .Variable}}
+					data.{{$list}}[ni].{{toGoName .TfName}}Variable = oldItem.{{toGoName .TfName}}Variable
+					{{- end}}
+					{{- end}}
+					{{- if isNestedListSet .}}
+					{{- $clist := (toGoName .TfName)}}
+					{{- $ccname := toGoName .TfName}}
+					{{- $cnoId := not (hasId .Attributes)}}
+					{
+						resultC := make([]{{$name}}{{$cname}}{{toGoName .TfName}}, 0, len(data.{{$list}}[ni].{{toGoName .TfName}}))
+						matchedC := make([]bool, len(data.{{$list}}[ni].{{toGoName .TfName}}))
+						for _, oldCItem := range oldItem.{{toGoName .TfName}} {
+							for nci := range data.{{$list}}[ni].{{toGoName .TfName}} {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								{{- range .Attributes}}
+								{{- if or .Id $cnoId}}
+								{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}
+								{{- if .Variable}}
+								if keyMatchC && (oldCItem.{{toGoName .TfName}}Variable.ValueString() != "" || data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}}Variable.ValueString() != "") {
+									if oldCItem.{{toGoName .TfName}}Variable.ValueString() != data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}}Variable.ValueString() {
+										keyMatchC = false
+									}
+								} else if keyMatchC {
+								{{- else}}
+								if keyMatchC {
+								{{- end}}
+									{{- if eq .Type "Int64"}}
+									if oldCItem.{{toGoName .TfName}}.ValueInt64() != data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}}.ValueInt64() {
+									{{- else if eq .Type "Bool"}}
+									if oldCItem.{{toGoName .TfName}}.ValueBool() != data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}}.ValueBool() {
+									{{- else}}
+									if oldCItem.{{toGoName .TfName}}.ValueString() != data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}}.ValueString() {
+									{{- end}}
+										keyMatchC = false
+									}
+								}
+								{{- else if or (eq .Type "Set") (eq .Type "List")}}
+								{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}
+								if keyMatchC {
+									{{- if eq .Type "Set"}}
+									if helpers.GetStringFromSet(oldCItem.{{toGoName .TfName}}).ValueString() != helpers.GetStringFromSet(data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}}).ValueString() {
+									{{- else}}
+									if helpers.GetStringFromList(oldCItem.{{toGoName .TfName}}).ValueString() != helpers.GetStringFromList(data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}}).ValueString() {
+									{{- end}}
+										keyMatchC = false
+									}
+								}
+								{{- end}}
+								{{- end}}
+								{{- end}}
+								{{- end}}
+								if keyMatchC {
+									matchedC[nci] = true
+									{{- range .Attributes}}
+									{{- if .Encrypted}}
+									data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}} = oldCItem.{{toGoName .TfName}}
+									{{- if .Variable}}
+									data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}}Variable = oldCItem.{{toGoName .TfName}}Variable
+									{{- end}}
+									{{- end}}
+									{{- if isNestedListSet .}}
+									{{- $cclist := (toGoName .TfName)}}
+									{{- $ccnoId := not (hasId .Attributes)}}
+									{
+										resultCC := make([]{{$name}}{{$cname}}{{$ccname}}{{toGoName .TfName}}, 0, len(data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}}))
+										matchedCC := make([]bool, len(data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}}))
+										for _, oldCCItem := range oldCItem.{{toGoName .TfName}} {
+											for ncci := range data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}} {
+												if matchedCC[ncci] {
+													continue
+												}
+												keyMatchCC := true
+												{{- range .Attributes}}
+												{{- if or .Id $ccnoId}}
+												{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}
+												{{- if .Variable}}
+												if keyMatchCC && (oldCCItem.{{toGoName .TfName}}Variable.ValueString() != "" || data.{{$list}}[ni].{{$clist}}[nci].{{$cclist}}[ncci].{{toGoName .TfName}}Variable.ValueString() != "") {
+													if oldCCItem.{{toGoName .TfName}}Variable.ValueString() != data.{{$list}}[ni].{{$clist}}[nci].{{$cclist}}[ncci].{{toGoName .TfName}}Variable.ValueString() {
+														keyMatchCC = false
+													}
+												} else if keyMatchCC {
+												{{- else}}
+												if keyMatchCC {
+												{{- end}}
+													{{- if eq .Type "Int64"}}
+													if oldCCItem.{{toGoName .TfName}}.ValueInt64() != data.{{$list}}[ni].{{$clist}}[nci].{{$cclist}}[ncci].{{toGoName .TfName}}.ValueInt64() {
+													{{- else if eq .Type "Bool"}}
+													if oldCCItem.{{toGoName .TfName}}.ValueBool() != data.{{$list}}[ni].{{$clist}}[nci].{{$cclist}}[ncci].{{toGoName .TfName}}.ValueBool() {
+													{{- else}}
+													if oldCCItem.{{toGoName .TfName}}.ValueString() != data.{{$list}}[ni].{{$clist}}[nci].{{$cclist}}[ncci].{{toGoName .TfName}}.ValueString() {
+													{{- end}}
+														keyMatchCC = false
+													}
+												}
+												{{- else if or (eq .Type "Set") (eq .Type "List")}}
+												{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}
+												if keyMatchCC {
+													{{- if eq .Type "Set"}}
+													if helpers.GetStringFromSet(oldCCItem.{{toGoName .TfName}}).ValueString() != helpers.GetStringFromSet(data.{{$list}}[ni].{{$clist}}[nci].{{$cclist}}[ncci].{{toGoName .TfName}}).ValueString() {
+													{{- else}}
+													if helpers.GetStringFromList(oldCCItem.{{toGoName .TfName}}).ValueString() != helpers.GetStringFromList(data.{{$list}}[ni].{{$clist}}[nci].{{$cclist}}[ncci].{{toGoName .TfName}}).ValueString() {
+													{{- end}}
+														keyMatchCC = false
+													}
+												}
+												{{- end}}
+												{{- end}}
+												{{- end}}
+												{{- end}}
+												if keyMatchCC {
+													matchedCC[ncci] = true
+													{{- range .Attributes}}
+													{{- if .Encrypted}}
+													data.{{$list}}[ni].{{$clist}}[nci].{{$cclist}}[ncci].{{toGoName .TfName}} = oldCCItem.{{toGoName .TfName}}
+													{{- if .Variable}}
+													data.{{$list}}[ni].{{$clist}}[nci].{{$cclist}}[ncci].{{toGoName .TfName}}Variable = oldCCItem.{{toGoName .TfName}}Variable
+													{{- end}}
+													{{- end}}
+													{{- end}}
+													resultCC = append(resultCC, data.{{$list}}[ni].{{$clist}}[nci].{{$cclist}}[ncci])
+													break
+												}
+											}
+										}
+										for ncci := range data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}} {
+											if !matchedCC[ncci] {
+												resultCC = append(resultCC, data.{{$list}}[ni].{{$clist}}[nci].{{$cclist}}[ncci])
+											}
+										}
+										data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}} = resultCC
+									}
+									{{- end}}
+									{{- end}}
+									resultC = append(resultC, data.{{$list}}[ni].{{$clist}}[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.{{$list}}[ni].{{toGoName .TfName}} {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.{{$list}}[ni].{{$clist}}[nci])
+							}
+						}
+						data.{{$list}}[ni].{{toGoName .TfName}} = resultC
+					}
+					{{- end}}
+					{{- end}}
+					result{{$list}} = append(result{{$list}}, data.{{$list}}[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.{{toGoName .TfName}} {
+			if !matched{{$list}}[ni] {
+				result{{$list}} = append(result{{$list}}, data.{{$list}}[ni])
+			}
+		}
+		data.{{toGoName .TfName}} = result{{$list}}
 	}
 	{{- end}}
 	{{- end}}
 }
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	{{- range .Attributes}}
-	{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .TfOnly) (not .WriteOnly) (not .Encrypted) (not .Value)}}
-	{{- if eq .Type "StringInt64"}}
-	data.{{toGoName .TfName}} = types.StringNull()
-	{{- else}}
-	{{- if .DynamicDefault}}
-	temp{{toGoName .TfName}} := data.{{toGoName .TfName}}
-	{{- end}}
-	data.{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
-	{{- end}}
-	{{ if .Variable}}data.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
-	{{- if .NoOptionType}}
-	if va := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); va.Exists() {
-		data.{{toGoName .TfName}} = types.{{.Type}}Value(va.{{getGjsonType .Type}}())
-	}
-	{{- else}}
-	if t := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType"); t.Exists() {
-		va := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
-		{{if .Variable}}if t.String() == "variable" {
-			data.{{toGoName .TfName}}Variable = types.StringValue(va.String())
-		} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
-			{{- if eq .Type "StringInt64" }}
-			data.{{toGoName .TfName}} = types.StringValue(va.String())
-			{{- else}}
-			data.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
-			{{- end}}
-		}
-	}
-	{{- end}}
-	{{- else if isNestedListSet .}}
-	{{- $list := (toGoName .TfName)}}
-	for i := range data.{{toGoName .TfName}} {
-		keys := [...]string{
-			{{- $noId := not (hasId .Attributes)}}
-			{{- range .Attributes}}
-				{{- if or .Id $noId}}
-					{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",
-					{{- else if or (eq .Type "Set") (eq .Type "List")}}
-						{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",{{- end}}
-					{{- end}}
-				{{- end}}
-			{{- end}}
-		}
-		keyValues := [...]string{
-			{{- $noId := not (hasId .Attributes)}}
-			{{- range .Attributes}}
-				{{- if or .Id $noId}}
-					{{- if eq .Type "Int64"}}strconv.FormatInt(data.{{$list}}[i].{{toGoName .TfName}}.ValueInt64(), 10),
-					{{- else if eq .Type "Bool"}}strconv.FormatBool(data.{{$list}}[i].{{toGoName .TfName}}.ValueBool()),
-					{{- else if or (eq .Type "String") (eq .Type "StringInt64")}}data.{{$list}}[i].{{toGoName .TfName}}.ValueString(),
-					{{- else if (eq .Type "Set")}}
-						{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}helpers.GetStringFromSet(data.{{$list}}[i].{{toGoName .TfName}}).ValueString(),{{- end}}
-					{{- else if (eq .Type "List")}}
-						{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}helpers.GetStringFromList(data.{{$list}}[i].{{toGoName .TfName}}).ValueString(),{{- end}}
-					{{- end}}
-				{{- end}}
-			{{- end}}
-		}
-		keyValuesVariables := [...]string{
-			{{- $noId := not (hasId .Attributes)}}
-			{{- range .Attributes}}
-				{{- if or .Id $noId}}
-					{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64") (eq .Type "Set")}}
-						{{- if .Variable}}data.{{$list}}[i].{{toGoName .TfName}}Variable.ValueString(),
-						{{- else}}"",{{- end}}
-					{{- else if or (eq .Type "Set") (eq .Type "List")}}
-						{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}
-							{{- if .Variable}}data.{{$list}}[i].{{toGoName .TfName}}Variable.ValueString(),
-							{{- else}}"",{{- end}}
-						{{- end}}
-					{{- end}}
-				{{- end}}
-			{{- end}}
-		}
-
-		var r gjson.Result
-		res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue 
-						} else if (tt.String() == "default") {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-
-		{{- range .Attributes}}
-		{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .TfOnly) (not .WriteOnly) (not .Encrypted) (not .Value)}}
-		{{- if eq .Type "StringInt64"}}
-		data.{{$list}}[i].{{toGoName .TfName}} = types.StringNull()
-		{{- else}}
-		{{- if .DynamicDefault}}
-		temp{{toGoName .TfName}} := data.{{$list}}[i].{{toGoName .TfName}}
-		{{- end}}
-		data.{{$list}}[i].{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
-		{{- end}}
-		{{ if .Variable}}data.{{$list}}[i].{{toGoName .TfName}}Variable = types.StringNull(){{end}}
-		if t := r.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType"); t.Exists() {
-			va := r.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
-			{{if .Variable}}if t.String() == "variable" {
-				data.{{$list}}[i].{{toGoName .TfName}}Variable = types.StringValue(va.String())
-			} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
-				{{- if eq .Type "StringInt64" }}
-				data.{{$list}}[i].{{toGoName .TfName}} = types.StringValue(va.String())
-				{{- else}}
-				data.{{$list}}[i].{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
-				{{- end}}
-			}
-		}
-		{{- else if isNestedListSet .}}
-		{{- $clist := (toGoName .TfName)}}
-		for ci := range data.{{$list}}[i].{{toGoName .TfName}} {
-			keys := [...]string{ 
-				{{- $noId := not (hasId .Attributes)}}
-				{{- range .Attributes}}
-					{{- if or .Id $noId}}
-						{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",
-						{{- else if or (eq .Type "Set") (eq .Type "List")}}
-							{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",{{- end}}
-						{{- end}}
-					{{- end}}
-				{{- end}}
-			}
-			keyValues := [...]string{
-				{{- $noId := not (hasId .Attributes)}}
-				{{- range .Attributes}}
-					{{- if or .Id $noId}}
-						{{- if eq .Type "Int64"}}strconv.FormatInt(data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}.ValueInt64(), 10),
-						{{- else if eq .Type "Bool"}}strconv.FormatBool(data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}.ValueBool()),
-						{{- else if or (eq .Type "String") (eq .Type "StringInt64")}}data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}.ValueString(),
-						{{- else if (eq .Type "Set")}}
-							{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}helpers.GetStringFromSet(data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}).ValueString(),{{- end}}
-						{{- else if (eq .Type "List")}}
-							{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}helpers.GetStringFromList(data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}).ValueString(),{{- end}}
-						{{- end}}
-					{{- end}}
-				{{- end}}
-			}
-			keyValuesVariables := [...]string{
-				{{- $noId := not (hasId .Attributes)}}
-				{{- range .Attributes}}
-					{{- if or .Id $noId}}
-						{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}
-							{{- if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}Variable.ValueString(),
-							{{- else}}"",{{- end}}
-						{{- else if or (eq .Type "Set") (eq .Type "List")}}
-							{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}
-								{{- if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}Variable.ValueString(),
-								{{- else}}"",{{- end}}
-							{{- end}}
-						{{- end}}
-					{{- end}}
-				{{- end}}
-			}
-
-			var cr gjson.Result
-			r.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if (tt.String() == "default") {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-
-			{{- range .Attributes}}
-			{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .TfOnly) (not .WriteOnly) (not .Encrypted) (not .Value)}}
-			{{- if eq .Type "StringInt64"}}
-			data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} = types.StringNull()
-			{{- else}}
-			{{- if .DynamicDefault}}
-			temp{{toGoName .TfName}} := data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}
-			{{- end}}
-			data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
-			{{- end}}
-			{{ if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}Variable = types.StringNull(){{end}}
-			if t := cr.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType"); t.Exists() {
-				va := cr.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
-				{{if .Variable}}if t.String() == "variable" {
-					data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}Variable = types.StringValue(va.String())
-				} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
-					{{- if eq .Type "StringInt64" }}
-					data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} = types.StringValue(va.String())
-					{{- else}}
-					data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
-					{{- end}}
-				}
-			}
-			{{- else if isNestedListSet .}}
-			{{- $cclist := (toGoName .TfName)}}
-			for cci := range data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} {
-				keys := [...]string{
-					{{- $noId := not (hasId .Attributes)}}
-					{{- range .Attributes}}
-						{{- if or .Id $noId}}
-							{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",
-							{{- else if or (eq .Type "Set") (eq .Type "List")}}
-								{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}",{{- end}}
-							{{- end}}
-						{{- end}}
-					{{- end}} 
-				}
-				keyValues := [...]string{
-					{{- $noId := not (hasId .Attributes)}}
-					{{- range .Attributes}}
-						{{- if or .Id $noId}}
-							{{- if eq .Type "Int64"}}strconv.FormatInt(data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}.ValueInt64(), 10),
-							{{- else if eq .Type "Bool"}}strconv.FormatBool(data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}.ValueBool()),
-							{{- else if or (eq .Type "String") (eq .Type "StringInt64")}}data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}.ValueString(),
-							{{- else if (eq .Type "Set")}}
-								{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}helpers.GetStringFromSet(data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}).ValueString(),{{- end}}
-							{{- else if (eq .Type "List")}}
-								{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}helpers.GetStringFromList(data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}).ValueString(),{{- end}}
-							{{- end}}
-						{{- end}}
-					{{- end}}
-				}
-				keyValuesVariables := [...]string{
-					{{- $noId := not (hasId .Attributes)}}
-					{{- range .Attributes}}
-						{{- if or .Id $noId}}
-							{{- if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String") (eq .Type "StringInt64")}}
-								{{- if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}Variable.ValueString(),
-								{{- else}}"",{{- end}}
-							{{- else if or (eq .Type "Set") (eq .Type "List")}}
-								{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}
-									{{- if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}Variable.ValueString(),
-									{{- else}}"",{{- end}}
-								{{- end}}
-							{{- end}}
-						{{- end}}
-					{{- end}}
-				}
-
-				var ccr gjson.Result
-				cr.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}").ForEach(
-					func(_, v gjson.Result) bool {
-						found := false
-						for ik := range keys {
-							tt := v.Get(keys[ik] + ".optionType")
-							vv := v.Get(keys[ik] + ".value")
-							if tt.Exists() && vv.Exists() {
-								if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-									found = true
-									continue
-								} else if (tt.String() == "default") {
-									continue
-								}
-								found = false
-								break
-							}
-							continue
-						}
-						if found {
-							ccr = v
-							return false
-						}
-						return true
-					},
-				)
-
-				{{- range .Attributes}}
-				{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .TfOnly) (not .WriteOnly) (not .Encrypted) (not .Value)}}
-				{{- if eq .Type "StringInt64"}}
-				data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}} = types.StringNull()
-				{{- else}}
-				{{- if .DynamicDefault}}
-				temp{{toGoName .TfName}} := data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}
-				{{- end}}
-				data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
-				{{- end}}
-				{{ if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}Variable = types.StringNull(){{end}}
-				if t := ccr.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType"); t.Exists() {
-					va := ccr.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
-					{{if .Variable}}if t.String() == "variable" {
-						data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}Variable = types.StringValue(va.String())
-					} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
-						{{- if eq .Type "StringInt64" }}
-						data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}} = types.StringValue(va.String())
-						{{- else}}
-						data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
-						{{- end}}
-					}
-				}
-				{{- end}}
-				{{- end}}
-			}
-			{{- end}}
-			{{- end}}
-		}
-		{{- end}}
-		{{- end}}
-	}
-	{{- end}}
-	{{- end}}
-}
-// End of section. //template:end updateFromBody

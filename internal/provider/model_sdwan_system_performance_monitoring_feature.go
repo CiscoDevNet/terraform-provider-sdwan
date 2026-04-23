@@ -129,7 +129,7 @@ func (data SystemPerformanceMonitoring) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *SystemPerformanceMonitoring) fromBody(ctx context.Context, res gjson.Result) {
+func (data *SystemPerformanceMonitoring) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -188,64 +188,3 @@ func (data *SystemPerformanceMonitoring) fromBody(ctx context.Context, res gjson
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *SystemPerformanceMonitoring) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.AppPerfMonitorEnabled = types.BoolNull()
-
-	if t := res.Get(path + "appPerfMonitorConfig.enabled.optionType"); t.Exists() {
-		va := res.Get(path + "appPerfMonitorConfig.enabled.value")
-		if t.String() == "global" {
-			data.AppPerfMonitorEnabled = types.BoolValue(va.Bool())
-		}
-	}
-	data.AppPerfMonitorAppGroup = types.SetNull(types.StringType)
-
-	if t := res.Get(path + "appPerfMonitorConfig.policyFilters.appGroups.optionType"); t.Exists() {
-		va := res.Get(path + "appPerfMonitorConfig.policyFilters.appGroups.value")
-		if t.String() == "global" {
-			data.AppPerfMonitorAppGroup = helpers.GetStringSet(va.Array())
-		}
-	}
-	data.MonitoringConfigEnabled = types.BoolNull()
-
-	if t := res.Get(path + "umtsConfig.monitoringConfig.enabled.optionType"); t.Exists() {
-		va := res.Get(path + "umtsConfig.monitoringConfig.enabled.value")
-		if t.String() == "global" {
-			data.MonitoringConfigEnabled = types.BoolValue(va.Bool())
-		}
-	}
-	data.MonitoringConfigInterval = types.StringNull()
-
-	if t := res.Get(path + "umtsConfig.monitoringConfig.interval.optionType"); t.Exists() {
-		va := res.Get(path + "umtsConfig.monitoringConfig.interval.value")
-		if t.String() == "global" {
-			data.MonitoringConfigInterval = types.StringValue(va.String())
-		}
-	}
-	data.EventDrivenConfigEnabled = types.BoolNull()
-
-	if t := res.Get(path + "umtsConfig.eventDrivenConfig.enabled.optionType"); t.Exists() {
-		va := res.Get(path + "umtsConfig.eventDrivenConfig.enabled.value")
-		if t.String() == "global" {
-			data.EventDrivenConfigEnabled = types.BoolValue(va.Bool())
-		}
-	}
-	data.EventDrivenEvents = types.SetNull(types.StringType)
-
-	if t := res.Get(path + "umtsConfig.eventDrivenConfig.events.optionType"); t.Exists() {
-		va := res.Get(path + "umtsConfig.eventDrivenConfig.events.value")
-		if t.String() == "global" {
-			data.EventDrivenEvents = helpers.GetStringSet(va.Array())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

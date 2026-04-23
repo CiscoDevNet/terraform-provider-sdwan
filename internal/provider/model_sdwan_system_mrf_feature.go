@@ -208,7 +208,7 @@ func (data SystemMRF) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *SystemMRF) fromBody(ctx context.Context, res gjson.Result) {
+func (data *SystemMRF) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -295,92 +295,3 @@ func (data *SystemMRF) fromBody(ctx context.Context, res gjson.Result) {
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *SystemMRF) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.SecondaryRegionId = types.Int64Null()
-	data.SecondaryRegionIdVariable = types.StringNull()
-	if t := res.Get(path + "secondaryRegion.optionType"); t.Exists() {
-		va := res.Get(path + "secondaryRegion.value")
-		if t.String() == "variable" {
-			data.SecondaryRegionIdVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.SecondaryRegionId = types.Int64Value(va.Int())
-		}
-	}
-	data.Role = types.StringNull()
-	data.RoleVariable = types.StringNull()
-	if t := res.Get(path + "role.optionType"); t.Exists() {
-		va := res.Get(path + "role.value")
-		if t.String() == "variable" {
-			data.RoleVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Role = types.StringValue(va.String())
-		}
-	}
-	data.EnableMigrationToMrf = types.StringNull()
-
-	if t := res.Get(path + "enableMrfMigration.optionType"); t.Exists() {
-		va := res.Get(path + "enableMrfMigration.value")
-		if t.String() == "global" {
-			data.EnableMigrationToMrf = types.StringValue(va.String())
-		}
-	}
-	data.MigrationBgpCommunity = types.Int64Null()
-
-	if t := res.Get(path + "migrationBgpCommunity.optionType"); t.Exists() {
-		va := res.Get(path + "migrationBgpCommunity.value")
-		if t.String() == "global" {
-			data.MigrationBgpCommunity = types.Int64Value(va.Int())
-		}
-	}
-	data.EnableManagementRegion = types.BoolNull()
-	data.EnableManagementRegionVariable = types.StringNull()
-	if t := res.Get(path + "enableManagementRegion.optionType"); t.Exists() {
-		va := res.Get(path + "enableManagementRegion.value")
-		if t.String() == "variable" {
-			data.EnableManagementRegionVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.EnableManagementRegion = types.BoolValue(va.Bool())
-		}
-	}
-	data.VrfId = types.Int64Null()
-	data.VrfIdVariable = types.StringNull()
-	if t := res.Get(path + "managementRegion.vrfId.optionType"); t.Exists() {
-		va := res.Get(path + "managementRegion.vrfId.value")
-		if t.String() == "variable" {
-			data.VrfIdVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.VrfId = types.Int64Value(va.Int())
-		}
-	}
-	data.GatewayPreference = types.SetNull(types.Int64Type)
-	data.GatewayPreferenceVariable = types.StringNull()
-	if t := res.Get(path + "managementRegion.gatewayPreference.optionType"); t.Exists() {
-		va := res.Get(path + "managementRegion.gatewayPreference.value")
-		if t.String() == "variable" {
-			data.GatewayPreferenceVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.GatewayPreference = helpers.GetInt64Set(va.Array())
-		}
-	}
-	data.ManagementGateway = types.BoolNull()
-	data.ManagementGatewayVariable = types.StringNull()
-	if t := res.Get(path + "managementRegion.managementGateway.optionType"); t.Exists() {
-		va := res.Get(path + "managementRegion.managementGateway.value")
-		if t.String() == "variable" {
-			data.ManagementGatewayVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.ManagementGateway = types.BoolValue(va.Bool())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

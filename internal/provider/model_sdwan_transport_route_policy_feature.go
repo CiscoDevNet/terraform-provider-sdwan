@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -370,7 +369,7 @@ func (data TransportRoutePolicy) toBody(ctx context.Context) string {
 }
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *TransportRoutePolicy) fromBody(ctx context.Context, res gjson.Result) {
+func (data *TransportRoutePolicy) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -383,10 +382,11 @@ func (data *TransportRoutePolicy) fromBody(ctx context.Context, res gjson.Result
 
 	if t := res.Get(path + "defaultAction.optionType"); t.Exists() {
 		va := res.Get(path + "defaultAction.value")
-		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.ValueString() == "reject" || tempDefaultAction.ValueString() == "") {
+		if t.String() == "global" || (t.String() == "default" && (tempDefaultAction.ValueString() == "reject" || (fullRead && tempDefaultAction.ValueString() == ""))) {
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
+	oldSequences := data.Sequences
 	if value := res.Get(path + "sequences"); value.Exists() && len(value.Array()) > 0 {
 		data.Sequences = make([]TransportRoutePolicySequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -652,391 +652,231 @@ func (data *TransportRoutePolicy) fromBody(ctx context.Context, res gjson.Result
 			data.Sequences = append(data.Sequences, item)
 			return true
 		})
+	} else {
+		data.Sequences = nil
+	}
+	if !fullRead {
+		resultSequences := make([]TransportRoutePolicySequences, 0, len(data.Sequences))
+		matchedSequences := make([]bool, len(data.Sequences))
+		for _, oldItem := range oldSequences {
+			for ni := range data.Sequences {
+				if matchedSequences[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.Id.ValueInt64() != data.Sequences[ni].Id.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedSequences[ni] = true
+					{
+						resultC := make([]TransportRoutePolicySequencesMatchEntries, 0, len(data.Sequences[ni].MatchEntries))
+						matchedC := make([]bool, len(data.Sequences[ni].MatchEntries))
+						for _, oldCItem := range oldItem.MatchEntries {
+							for nci := range data.Sequences[ni].MatchEntries {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC {
+									if oldCItem.AsPathListId.ValueString() != data.Sequences[ni].MatchEntries[nci].AsPathListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.StandardCommunityListCriteria.ValueString() != data.Sequences[ni].MatchEntries[nci].StandardCommunityListCriteria.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.ExpandedCommunityListId.ValueString() != data.Sequences[ni].MatchEntries[nci].ExpandedCommunityListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.ExtendedCommunityListId.ValueString() != data.Sequences[ni].MatchEntries[nci].ExtendedCommunityListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.BgpLocalPreference.ValueInt64() != data.Sequences[ni].MatchEntries[nci].BgpLocalPreference.ValueInt64() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.Metric.ValueInt64() != data.Sequences[ni].MatchEntries[nci].Metric.ValueInt64() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.OmpTag.ValueInt64() != data.Sequences[ni].MatchEntries[nci].OmpTag.ValueInt64() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.OspfTag.ValueInt64() != data.Sequences[ni].MatchEntries[nci].OspfTag.ValueInt64() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.Ipv4AddressPrefixListId.ValueString() != data.Sequences[ni].MatchEntries[nci].Ipv4AddressPrefixListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.Ipv4NextHopPrefixListId.ValueString() != data.Sequences[ni].MatchEntries[nci].Ipv4NextHopPrefixListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.Ipv6AddressPrefixListId.ValueString() != data.Sequences[ni].MatchEntries[nci].Ipv6AddressPrefixListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.Ipv6NextHopPrefixListId.ValueString() != data.Sequences[ni].MatchEntries[nci].Ipv6NextHopPrefixListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									{
+										resultCC := make([]TransportRoutePolicySequencesMatchEntriesStandardCommunityLists, 0, len(data.Sequences[ni].MatchEntries[nci].StandardCommunityLists))
+										matchedCC := make([]bool, len(data.Sequences[ni].MatchEntries[nci].StandardCommunityLists))
+										for _, oldCCItem := range oldCItem.StandardCommunityLists {
+											for ncci := range data.Sequences[ni].MatchEntries[nci].StandardCommunityLists {
+												if matchedCC[ncci] {
+													continue
+												}
+												keyMatchCC := true
+												if keyMatchCC {
+													if oldCCItem.Id.ValueString() != data.Sequences[ni].MatchEntries[nci].StandardCommunityLists[ncci].Id.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													matchedCC[ncci] = true
+													resultCC = append(resultCC, data.Sequences[ni].MatchEntries[nci].StandardCommunityLists[ncci])
+													break
+												}
+											}
+										}
+										for ncci := range data.Sequences[ni].MatchEntries[nci].StandardCommunityLists {
+											if !matchedCC[ncci] {
+												resultCC = append(resultCC, data.Sequences[ni].MatchEntries[nci].StandardCommunityLists[ncci])
+											}
+										}
+										data.Sequences[ni].MatchEntries[nci].StandardCommunityLists = resultCC
+									}
+									resultC = append(resultC, data.Sequences[ni].MatchEntries[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.Sequences[ni].MatchEntries {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.Sequences[ni].MatchEntries[nci])
+							}
+						}
+						data.Sequences[ni].MatchEntries = resultC
+					}
+					{
+						resultC := make([]TransportRoutePolicySequencesActions, 0, len(data.Sequences[ni].Actions))
+						matchedC := make([]bool, len(data.Sequences[ni].Actions))
+						for _, oldCItem := range oldItem.Actions {
+							for nci := range data.Sequences[ni].Actions {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC {
+									if helpers.GetStringFromList(oldCItem.AsPathPrepend).ValueString() != helpers.GetStringFromList(data.Sequences[ni].Actions[nci].AsPathPrepend).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.CommunityAdditive.ValueBool() != data.Sequences[ni].Actions[nci].CommunityAdditive.ValueBool() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.Community).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].Actions[nci].Community).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.LocalPreference.ValueInt64() != data.Sequences[ni].Actions[nci].LocalPreference.ValueInt64() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.Metric.ValueInt64() != data.Sequences[ni].Actions[nci].Metric.ValueInt64() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.MetricType.ValueString() != data.Sequences[ni].Actions[nci].MetricType.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.OmpTag.ValueInt64() != data.Sequences[ni].Actions[nci].OmpTag.ValueInt64() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.Origin.ValueString() != data.Sequences[ni].Actions[nci].Origin.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.OspfTag.ValueInt64() != data.Sequences[ni].Actions[nci].OspfTag.ValueInt64() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.Weight.ValueInt64() != data.Sequences[ni].Actions[nci].Weight.ValueInt64() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.Ipv4NextHop.ValueString() != data.Sequences[ni].Actions[nci].Ipv4NextHop.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.Ipv6NextHop.ValueString() != data.Sequences[ni].Actions[nci].Ipv6NextHop.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									resultC = append(resultC, data.Sequences[ni].Actions[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.Sequences[ni].Actions {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.Sequences[ni].Actions[nci])
+							}
+						}
+						data.Sequences[ni].Actions = resultC
+					}
+					resultSequences = append(resultSequences, data.Sequences[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Sequences {
+			if !matchedSequences[ni] {
+				resultSequences = append(resultSequences, data.Sequences[ni])
+			}
+		}
+		data.Sequences = resultSequences
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *TransportRoutePolicy) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	tempDefaultAction := data.DefaultAction
-	data.DefaultAction = types.StringNull()
-
-	if t := res.Get(path + "defaultAction.optionType"); t.Exists() {
-		va := res.Get(path + "defaultAction.value")
-		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.ValueString() == "reject") {
-			data.DefaultAction = types.StringValue(va.String())
-		}
-	}
-	for i := range data.Sequences {
-		keys := [...]string{"sequenceId"}
-		keyValues := [...]string{strconv.FormatInt(data.Sequences[i].Id.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "sequences").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Sequences[i].Id = types.Int64Null()
-
-		if t := r.Get("sequenceId.optionType"); t.Exists() {
-			va := r.Get("sequenceId.value")
-			if t.String() == "global" {
-				data.Sequences[i].Id = types.Int64Value(va.Int())
-			}
-		}
-		data.Sequences[i].Name = types.StringNull()
-
-		if t := r.Get("sequenceName.optionType"); t.Exists() {
-			va := r.Get("sequenceName.value")
-			if t.String() == "global" {
-				data.Sequences[i].Name = types.StringValue(va.String())
-			}
-		}
-		data.Sequences[i].BaseAction = types.StringNull()
-
-		if t := r.Get("baseAction.optionType"); t.Exists() {
-			va := r.Get("baseAction.value")
-			if t.String() == "global" {
-				data.Sequences[i].BaseAction = types.StringValue(va.String())
-			}
-		}
-		data.Sequences[i].Protocol = types.StringNull()
-
-		if t := r.Get("protocol.optionType"); t.Exists() {
-			va := r.Get("protocol.value")
-			if t.String() == "global" {
-				data.Sequences[i].Protocol = types.StringValue(va.String())
-			}
-		}
-		for ci := range data.Sequences[i].MatchEntries {
-			keys := [...]string{"asPathList.refId", "communityList.criteria", "communityList.expandedCommunityList.refId", "extCommunityList.refId", "bgpLocalPreference", "metric", "ompTag", "ospfTag", "ipv4Address.refId", "ipv4NextHop.refId", "ipv6Address.refId", "ipv6NextHop.refId"}
-			keyValues := [...]string{data.Sequences[i].MatchEntries[ci].AsPathListId.ValueString(), data.Sequences[i].MatchEntries[ci].StandardCommunityListCriteria.ValueString(), data.Sequences[i].MatchEntries[ci].ExpandedCommunityListId.ValueString(), data.Sequences[i].MatchEntries[ci].ExtendedCommunityListId.ValueString(), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].BgpLocalPreference.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].Metric.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].OmpTag.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].OspfTag.ValueInt64(), 10), data.Sequences[i].MatchEntries[ci].Ipv4AddressPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].Ipv4NextHopPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].Ipv6AddressPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].Ipv6NextHopPrefixListId.ValueString()}
-			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", ""}
-
-			var cr gjson.Result
-			r.Get("matchEntries").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.Sequences[i].MatchEntries[ci].AsPathListId = types.StringNull()
-
-			if t := cr.Get("asPathList.refId.optionType"); t.Exists() {
-				va := cr.Get("asPathList.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].AsPathListId = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].StandardCommunityListCriteria = types.StringNull()
-
-			if t := cr.Get("communityList.criteria.optionType"); t.Exists() {
-				va := cr.Get("communityList.criteria.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].StandardCommunityListCriteria = types.StringValue(va.String())
-				}
-			}
-			for cci := range data.Sequences[i].MatchEntries[ci].StandardCommunityLists {
-				keys := [...]string{"refId"}
-				keyValues := [...]string{data.Sequences[i].MatchEntries[ci].StandardCommunityLists[cci].Id.ValueString()}
-				keyValuesVariables := [...]string{""}
-
-				var ccr gjson.Result
-				cr.Get("communityList.standardCommunityList").ForEach(
-					func(_, v gjson.Result) bool {
-						found := false
-						for ik := range keys {
-							tt := v.Get(keys[ik] + ".optionType")
-							vv := v.Get(keys[ik] + ".value")
-							if tt.Exists() && vv.Exists() {
-								if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-									found = true
-									continue
-								} else if tt.String() == "default" {
-									continue
-								}
-								found = false
-								break
-							}
-							continue
-						}
-						if found {
-							ccr = v
-							return false
-						}
-						return true
-					},
-				)
-				data.Sequences[i].MatchEntries[ci].StandardCommunityLists[cci].Id = types.StringNull()
-
-				if t := ccr.Get("refId.optionType"); t.Exists() {
-					va := ccr.Get("refId.value")
-					if t.String() == "global" {
-						data.Sequences[i].MatchEntries[ci].StandardCommunityLists[cci].Id = types.StringValue(va.String())
-					}
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].ExpandedCommunityListId = types.StringNull()
-
-			if t := cr.Get("communityList.expandedCommunityList.refId.optionType"); t.Exists() {
-				va := cr.Get("communityList.expandedCommunityList.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].ExpandedCommunityListId = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].ExtendedCommunityListId = types.StringNull()
-
-			if t := cr.Get("extCommunityList.refId.optionType"); t.Exists() {
-				va := cr.Get("extCommunityList.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].ExtendedCommunityListId = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].BgpLocalPreference = types.Int64Null()
-
-			if t := cr.Get("bgpLocalPreference.optionType"); t.Exists() {
-				va := cr.Get("bgpLocalPreference.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].BgpLocalPreference = types.Int64Value(va.Int())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].Metric = types.Int64Null()
-
-			if t := cr.Get("metric.optionType"); t.Exists() {
-				va := cr.Get("metric.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].Metric = types.Int64Value(va.Int())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].OmpTag = types.Int64Null()
-
-			if t := cr.Get("ompTag.optionType"); t.Exists() {
-				va := cr.Get("ompTag.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].OmpTag = types.Int64Value(va.Int())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].OspfTag = types.Int64Null()
-
-			if t := cr.Get("ospfTag.optionType"); t.Exists() {
-				va := cr.Get("ospfTag.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].OspfTag = types.Int64Value(va.Int())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].Ipv4AddressPrefixListId = types.StringNull()
-
-			if t := cr.Get("ipv4Address.refId.optionType"); t.Exists() {
-				va := cr.Get("ipv4Address.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].Ipv4AddressPrefixListId = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].Ipv4NextHopPrefixListId = types.StringNull()
-
-			if t := cr.Get("ipv4NextHop.refId.optionType"); t.Exists() {
-				va := cr.Get("ipv4NextHop.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].Ipv4NextHopPrefixListId = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].Ipv6AddressPrefixListId = types.StringNull()
-
-			if t := cr.Get("ipv6Address.refId.optionType"); t.Exists() {
-				va := cr.Get("ipv6Address.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].Ipv6AddressPrefixListId = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].Ipv6NextHopPrefixListId = types.StringNull()
-
-			if t := cr.Get("ipv6NextHop.refId.optionType"); t.Exists() {
-				va := cr.Get("ipv6NextHop.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].Ipv6NextHopPrefixListId = types.StringValue(va.String())
-				}
-			}
-		}
-		for ci := range data.Sequences[i].Actions {
-			keys := [...]string{"accept.setAsPath.prepend", "accept.setCommunity.additive", "accept.setCommunity.community", "accept.setLocalPreference", "accept.setMetric", "accept.setMetricType", "accept.setOmpTag", "accept.setOrigin", "accept.setOspfTag", "accept.setWeight", "accept.setIpv4NextHop", "accept.setIpv6NextHop"}
-			keyValues := [...]string{helpers.GetStringFromList(data.Sequences[i].Actions[ci].AsPathPrepend).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].CommunityAdditive.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].Community).ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].LocalPreference.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].Actions[ci].Metric.ValueInt64(), 10), data.Sequences[i].Actions[ci].MetricType.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].OmpTag.ValueInt64(), 10), data.Sequences[i].Actions[ci].Origin.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].OspfTag.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].Actions[ci].Weight.ValueInt64(), 10), data.Sequences[i].Actions[ci].Ipv4NextHop.ValueString(), data.Sequences[i].Actions[ci].Ipv6NextHop.ValueString()}
-			keyValuesVariables := [...]string{"", "", data.Sequences[i].Actions[ci].CommunityVariable.ValueString(), "", "", "", "", "", "", "", "", ""}
-
-			var cr gjson.Result
-			r.Get("actions").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.Sequences[i].Actions[ci].AsPathPrepend = types.ListNull(types.StringType)
-
-			if t := cr.Get("accept.setAsPath.prepend.optionType"); t.Exists() {
-				va := cr.Get("accept.setAsPath.prepend.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AsPathPrepend = helpers.GetStringList(va.Array())
-				}
-			}
-			data.Sequences[i].Actions[ci].CommunityAdditive = types.BoolNull()
-
-			if t := cr.Get("accept.setCommunity.additive.optionType"); t.Exists() {
-				va := cr.Get("accept.setCommunity.additive.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].CommunityAdditive = types.BoolValue(va.Bool())
-				}
-			}
-			data.Sequences[i].Actions[ci].Community = types.SetNull(types.StringType)
-			data.Sequences[i].Actions[ci].CommunityVariable = types.StringNull()
-			if t := cr.Get("accept.setCommunity.community.optionType"); t.Exists() {
-				va := cr.Get("accept.setCommunity.community.value")
-				if t.String() == "variable" {
-					data.Sequences[i].Actions[ci].CommunityVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Sequences[i].Actions[ci].Community = helpers.GetStringSet(va.Array())
-				}
-			}
-			data.Sequences[i].Actions[ci].LocalPreference = types.Int64Null()
-
-			if t := cr.Get("accept.setLocalPreference.optionType"); t.Exists() {
-				va := cr.Get("accept.setLocalPreference.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].LocalPreference = types.Int64Value(va.Int())
-				}
-			}
-			data.Sequences[i].Actions[ci].Metric = types.Int64Null()
-
-			if t := cr.Get("accept.setMetric.optionType"); t.Exists() {
-				va := cr.Get("accept.setMetric.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].Metric = types.Int64Value(va.Int())
-				}
-			}
-			data.Sequences[i].Actions[ci].MetricType = types.StringNull()
-
-			if t := cr.Get("accept.setMetricType.optionType"); t.Exists() {
-				va := cr.Get("accept.setMetricType.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].MetricType = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].Actions[ci].OmpTag = types.Int64Null()
-
-			if t := cr.Get("accept.setOmpTag.optionType"); t.Exists() {
-				va := cr.Get("accept.setOmpTag.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].OmpTag = types.Int64Value(va.Int())
-				}
-			}
-			data.Sequences[i].Actions[ci].Origin = types.StringNull()
-
-			if t := cr.Get("accept.setOrigin.optionType"); t.Exists() {
-				va := cr.Get("accept.setOrigin.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].Origin = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].Actions[ci].OspfTag = types.Int64Null()
-
-			if t := cr.Get("accept.setOspfTag.optionType"); t.Exists() {
-				va := cr.Get("accept.setOspfTag.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].OspfTag = types.Int64Value(va.Int())
-				}
-			}
-			data.Sequences[i].Actions[ci].Weight = types.Int64Null()
-
-			if t := cr.Get("accept.setWeight.optionType"); t.Exists() {
-				va := cr.Get("accept.setWeight.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].Weight = types.Int64Value(va.Int())
-				}
-			}
-			data.Sequences[i].Actions[ci].Ipv4NextHop = types.StringNull()
-
-			if t := cr.Get("accept.setIpv4NextHop.optionType"); t.Exists() {
-				va := cr.Get("accept.setIpv4NextHop.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].Ipv4NextHop = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].Actions[ci].Ipv6NextHop = types.StringNull()
-
-			if t := cr.Get("accept.setIpv6NextHop.optionType"); t.Exists() {
-				va := cr.Get("accept.setIpv6NextHop.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].Ipv6NextHop = types.StringValue(va.String())
-				}
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody
