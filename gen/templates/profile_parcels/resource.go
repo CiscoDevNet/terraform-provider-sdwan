@@ -37,6 +37,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	{{- if hasMinVersionCondition .Attributes}}
+	"github.com/hashicorp/go-version"
+	{{- end}}
 )
 // End of section. //template:end imports
 
@@ -406,7 +409,13 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Create(ctx context.Context, r
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
 	// Create object
+	{{- if hasMinVersionCondition .Attributes}}
+
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
+	{{- else}}
 	body := plan.toBody(ctx)
+	{{- end}}
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -494,8 +503,14 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Update(ctx context.Context, r
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
+	{{- if hasMinVersionCondition .Attributes}}
+
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
+	{{- else}}
 
 	body := plan.toBody(ctx)
+	{{- end}}
 	res, err := r.client.Put(plan.getPath() + "/" + url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

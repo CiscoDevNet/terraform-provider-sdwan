@@ -23,4 +23,5 @@ resource "sdwan_service_dhcp_server_feature" "example" {
       ascii = "example"
     }
   ]
+  dhcp_ha_enable = false
 }
