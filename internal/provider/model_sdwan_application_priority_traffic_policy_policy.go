@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -823,7 +822,7 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -855,6 +854,7 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 			data.Direction = types.StringValue(va.String())
 		}
 	}
+	oldSequences := data.Sequences
 	if value := res.Get(path + "sequences"); value.Exists() && len(value.Array()) > 0 {
 		data.Sequences = make([]ApplicationPriorityTrafficPolicySequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -1630,889 +1630,569 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 			data.Sequences = append(data.Sequences, item)
 			return true
 		})
+	} else {
+		data.Sequences = nil
+	}
+	if !fullRead {
+		resultSequences := make([]ApplicationPriorityTrafficPolicySequences, 0, len(data.Sequences))
+		matchedSequences := make([]bool, len(data.Sequences))
+		for _, oldItem := range oldSequences {
+			for ni := range data.Sequences {
+				if matchedSequences[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.SequenceId.ValueInt64() != data.Sequences[ni].SequenceId.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedSequences[ni] = true
+					{
+						resultC := make([]ApplicationPriorityTrafficPolicySequencesMatchEntries, 0, len(data.Sequences[ni].MatchEntries))
+						matchedC := make([]bool, len(data.Sequences[ni].MatchEntries))
+						for _, oldCItem := range oldItem.MatchEntries {
+							for nci := range data.Sequences[ni].MatchEntries {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC {
+									if oldCItem.ApplicationListId.ValueString() != data.Sequences[ni].MatchEntries[nci].ApplicationListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.SaasApplicationListId.ValueString() != data.Sequences[ni].MatchEntries[nci].SaasApplicationListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.ServiceAreas).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].ServiceAreas).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.TrafficCategory.ValueString() != data.Sequences[ni].MatchEntries[nci].TrafficCategory.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.DnsApplicationListId.ValueString() != data.Sequences[ni].MatchEntries[nci].DnsApplicationListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.TrafficClass.ValueString() != data.Sequences[ni].MatchEntries[nci].TrafficClass.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.Dscps).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].Dscps).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.PacketLength.ValueString() != data.Sequences[ni].MatchEntries[nci].PacketLength.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.Protocols).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].Protocols).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.IcmpMessages).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].IcmpMessages).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.Icmp6Messages).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].Icmp6Messages).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.SourceDataIpv4PrefixListId.ValueString() != data.Sequences[ni].MatchEntries[nci].SourceDataIpv4PrefixListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.SourceDataIpv6PrefixListId.ValueString() != data.Sequences[ni].MatchEntries[nci].SourceDataIpv6PrefixListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.SourceIpv4Prefix.ValueString() != data.Sequences[ni].MatchEntries[nci].SourceIpv4Prefix.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.SourceIpv6Prefix.ValueString() != data.Sequences[ni].MatchEntries[nci].SourceIpv6Prefix.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.SourcePorts).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].SourcePorts).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.DestinationDataIpv4PrefixListId.ValueString() != data.Sequences[ni].MatchEntries[nci].DestinationDataIpv4PrefixListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.DestinationDataIpv6PrefixListId.ValueString() != data.Sequences[ni].MatchEntries[nci].DestinationDataIpv6PrefixListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.DestinationIpv4Prefix.ValueString() != data.Sequences[ni].MatchEntries[nci].DestinationIpv4Prefix.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.DestinationIpv6Prefix.ValueString() != data.Sequences[ni].MatchEntries[nci].DestinationIpv6Prefix.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.DestinationPorts).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].DestinationPorts).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.Tcp.ValueString() != data.Sequences[ni].MatchEntries[nci].Tcp.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.DestinationRegion.ValueString() != data.Sequences[ni].MatchEntries[nci].DestinationRegion.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.TrafficTo.ValueString() != data.Sequences[ni].MatchEntries[nci].TrafficTo.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.Dns.ValueString() != data.Sequences[ni].MatchEntries[nci].Dns.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									resultC = append(resultC, data.Sequences[ni].MatchEntries[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.Sequences[ni].MatchEntries {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.Sequences[ni].MatchEntries[nci])
+							}
+						}
+						data.Sequences[ni].MatchEntries = resultC
+					}
+					{
+						resultC := make([]ApplicationPriorityTrafficPolicySequencesActions, 0, len(data.Sequences[ni].Actions))
+						matchedC := make([]bool, len(data.Sequences[ni].Actions))
+						for _, oldCItem := range oldItem.Actions {
+							for nci := range data.Sequences[ni].Actions {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.BackupSlaPreferredColors).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].Actions[nci].BackupSlaPreferredColors).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.RedirectDnsField.ValueString() != data.Sequences[ni].Actions[nci].RedirectDnsField.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.RedirectDnsValue.ValueString() != data.Sequences[ni].Actions[nci].RedirectDnsValue.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.AppqoeTcpOptimization.ValueBool() != data.Sequences[ni].Actions[nci].AppqoeTcpOptimization.ValueBool() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.AppqoeDreOptimization.ValueBool() != data.Sequences[ni].Actions[nci].AppqoeDreOptimization.ValueBool() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.AppqoeServiceNodeGroup.ValueString() != data.Sequences[ni].Actions[nci].AppqoeServiceNodeGroup.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.LossCorrectType.ValueString() != data.Sequences[ni].Actions[nci].LossCorrectType.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.LossCorrectFecThreshold.ValueInt64() != data.Sequences[ni].Actions[nci].LossCorrectFecThreshold.ValueInt64() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.Count.ValueString() != data.Sequences[ni].Actions[nci].Count.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.Log.ValueBool() != data.Sequences[ni].Actions[nci].Log.ValueBool() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.CloudSaas.ValueBool() != data.Sequences[ni].Actions[nci].CloudSaas.ValueBool() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.CloudProbe.ValueBool() != data.Sequences[ni].Actions[nci].CloudProbe.ValueBool() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.Cflowd.ValueBool() != data.Sequences[ni].Actions[nci].Cflowd.ValueBool() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.NatPool.ValueInt64() != data.Sequences[ni].Actions[nci].NatPool.ValueInt64() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.NatVpn.ValueBool() != data.Sequences[ni].Actions[nci].NatVpn.ValueBool() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.NatFallback.ValueBool() != data.Sequences[ni].Actions[nci].NatFallback.ValueBool() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.NatBypass.ValueBool() != data.Sequences[ni].Actions[nci].NatBypass.ValueBool() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.NatDiaPools).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].Actions[nci].NatDiaPools).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.NatDiaInterfaces).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].Actions[nci].NatDiaInterfaces).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.SecureInternetGateway.ValueBool() != data.Sequences[ni].Actions[nci].SecureInternetGateway.ValueBool() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.FallbackToRouting.ValueBool() != data.Sequences[ni].Actions[nci].FallbackToRouting.ValueBool() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.SecureServiceEdge.ValueBool() != data.Sequences[ni].Actions[nci].SecureServiceEdge.ValueBool() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.SecureServiceEdgeInstance.ValueString() != data.Sequences[ni].Actions[nci].SecureServiceEdgeInstance.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									{
+										resultCC := make([]ApplicationPriorityTrafficPolicySequencesActionsSlaClasses, 0, len(data.Sequences[ni].Actions[nci].SlaClasses))
+										matchedCC := make([]bool, len(data.Sequences[ni].Actions[nci].SlaClasses))
+										for _, oldCCItem := range oldCItem.SlaClasses {
+											for ncci := range data.Sequences[ni].Actions[nci].SlaClasses {
+												if matchedCC[ncci] {
+													continue
+												}
+												keyMatchCC := true
+												if keyMatchCC {
+													if oldCCItem.SlaClassListId.ValueString() != data.Sequences[ni].Actions[nci].SlaClasses[ncci].SlaClassListId.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if helpers.GetStringFromSet(oldCCItem.PreferredColors).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].Actions[nci].SlaClasses[ncci].PreferredColors).ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.PreferredColorGroupListId.ValueString() != data.Sequences[ni].Actions[nci].SlaClasses[ncci].PreferredColorGroupListId.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.Strict.ValueBool() != data.Sequences[ni].Actions[nci].SlaClasses[ncci].Strict.ValueBool() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.FallbackToBestPath.ValueBool() != data.Sequences[ni].Actions[nci].SlaClasses[ncci].FallbackToBestPath.ValueBool() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if helpers.GetStringFromSet(oldCCItem.PreferredRemoteColors).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].Actions[nci].SlaClasses[ncci].PreferredRemoteColors).ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.RemoteColorRestrict.ValueBool() != data.Sequences[ni].Actions[nci].SlaClasses[ncci].RemoteColorRestrict.ValueBool() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													matchedCC[ncci] = true
+													resultCC = append(resultCC, data.Sequences[ni].Actions[nci].SlaClasses[ncci])
+													break
+												}
+											}
+										}
+										for ncci := range data.Sequences[ni].Actions[nci].SlaClasses {
+											if !matchedCC[ncci] {
+												resultCC = append(resultCC, data.Sequences[ni].Actions[nci].SlaClasses[ncci])
+											}
+										}
+										data.Sequences[ni].Actions[nci].SlaClasses = resultCC
+									}
+									{
+										resultCC := make([]ApplicationPriorityTrafficPolicySequencesActionsSetParameters, 0, len(data.Sequences[ni].Actions[nci].SetParameters))
+										matchedCC := make([]bool, len(data.Sequences[ni].Actions[nci].SetParameters))
+										for _, oldCCItem := range oldCItem.SetParameters {
+											for ncci := range data.Sequences[ni].Actions[nci].SetParameters {
+												if matchedCC[ncci] {
+													continue
+												}
+												keyMatchCC := true
+												if keyMatchCC {
+													if oldCCItem.Dscp.ValueInt64() != data.Sequences[ni].Actions[nci].SetParameters[ncci].Dscp.ValueInt64() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.PolicerId.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].PolicerId.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.PreferredColorGroupId.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].PreferredColorGroupId.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.ForwardingClassListId.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].ForwardingClassListId.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if helpers.GetStringFromSet(oldCCItem.LocalTlocListColors).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].Actions[nci].SetParameters[ncci].LocalTlocListColors).ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.LocalTlocListRestrict.ValueBool() != data.Sequences[ni].Actions[nci].SetParameters[ncci].LocalTlocListRestrict.ValueBool() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.LocalTlocListEncapsulation.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].LocalTlocListEncapsulation.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if helpers.GetStringFromSet(oldCCItem.PreferredRemoteColors).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].Actions[nci].SetParameters[ncci].PreferredRemoteColors).ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.PreferredRemoteColorRestrict.ValueBool() != data.Sequences[ni].Actions[nci].SetParameters[ncci].PreferredRemoteColorRestrict.ValueBool() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if helpers.GetStringFromSet(oldCCItem.TlocColor).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].Actions[nci].SetParameters[ncci].TlocColor).ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.TlocEncapsulation.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].TlocEncapsulation.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.TlocIp.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].TlocIp.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.TlocListId.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].TlocListId.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if helpers.GetStringFromSet(oldCCItem.ServiceTlocColor).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].Actions[nci].SetParameters[ncci].ServiceTlocColor).ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.ServiceTlocEncapsulation.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].ServiceTlocEncapsulation.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.ServiceTlocIp.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].ServiceTlocIp.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.ServiceVpn.ValueInt64() != data.Sequences[ni].Actions[nci].SetParameters[ncci].ServiceVpn.ValueInt64() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.ServiceType.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].ServiceType.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.ServiceLocal.ValueBool() != data.Sequences[ni].Actions[nci].SetParameters[ncci].ServiceLocal.ValueBool() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.ServiceRestrict.ValueBool() != data.Sequences[ni].Actions[nci].SetParameters[ncci].ServiceRestrict.ValueBool() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.ServiceTlocListId.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].ServiceTlocListId.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.ServiceChainType.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].ServiceChainType.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.ServiceChainVpn.ValueInt64() != data.Sequences[ni].Actions[nci].SetParameters[ncci].ServiceChainVpn.ValueInt64() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.ServiceChainLocal.ValueBool() != data.Sequences[ni].Actions[nci].SetParameters[ncci].ServiceChainLocal.ValueBool() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.ServiceChainFallbackToRouting.ValueBool() != data.Sequences[ni].Actions[nci].SetParameters[ncci].ServiceChainFallbackToRouting.ValueBool() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if helpers.GetStringFromSet(oldCCItem.ServiceChainTlocColor).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].Actions[nci].SetParameters[ncci].ServiceChainTlocColor).ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.ServiceChainTlocEncapsulation.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].ServiceChainTlocEncapsulation.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.ServiceChainTlocIp.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].ServiceChainTlocIp.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.ServiceChainTlocListId.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].ServiceChainTlocListId.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.NextHopIpv4.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].NextHopIpv4.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.NextHopIpv6.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].NextHopIpv6.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.NextHopLoose.ValueBool() != data.Sequences[ni].Actions[nci].SetParameters[ncci].NextHopLoose.ValueBool() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.Vpn.ValueInt64() != data.Sequences[ni].Actions[nci].SetParameters[ncci].Vpn.ValueInt64() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													matchedCC[ncci] = true
+													resultCC = append(resultCC, data.Sequences[ni].Actions[nci].SetParameters[ncci])
+													break
+												}
+											}
+										}
+										for ncci := range data.Sequences[ni].Actions[nci].SetParameters {
+											if !matchedCC[ncci] {
+												resultCC = append(resultCC, data.Sequences[ni].Actions[nci].SetParameters[ncci])
+											}
+										}
+										data.Sequences[ni].Actions[nci].SetParameters = resultCC
+									}
+									resultC = append(resultC, data.Sequences[ni].Actions[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.Sequences[ni].Actions {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.Sequences[ni].Actions[nci])
+							}
+						}
+						data.Sequences[ni].Actions = resultC
+					}
+					resultSequences = append(resultSequences, data.Sequences[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Sequences {
+			if !matchedSequences[ni] {
+				resultSequences = append(resultSequences, data.Sequences[ni])
+			}
+		}
+		data.Sequences = resultSequences
 	}
 }
 
 // End of section. //template:end fromBody
-
-func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.DefaultAction = types.StringNull()
-
-	if t := res.Get(path + "dataDefaultAction.optionType"); t.Exists() {
-		va := res.Get(path + "dataDefaultAction.value")
-		if t.String() == "global" {
-			data.DefaultAction = types.StringValue(va.String())
-		}
-	}
-	data.Vpns = types.SetNull(types.StringType)
-
-	if t := res.Get(path + "target.vpn.optionType"); t.Exists() {
-		va := res.Get(path + "target.vpn.value")
-		if t.String() == "global" {
-			data.Vpns = helpers.GetStringSet(va.Array())
-		}
-	}
-	data.Direction = types.StringNull()
-
-	if t := res.Get(path + "target.direction.optionType"); t.Exists() {
-		va := res.Get(path + "target.direction.value")
-		if t.String() == "global" {
-			data.Direction = types.StringValue(va.String())
-		}
-	}
-	for i := range data.Sequences {
-		keys := [...]string{"sequenceId"}
-		keyValues := [...]string{strconv.FormatInt(data.Sequences[i].SequenceId.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "sequences").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Sequences[i].SequenceId = types.Int64Null()
-
-		if t := r.Get("sequenceId.optionType"); t.Exists() {
-			va := r.Get("sequenceId.value")
-			if t.String() == "global" {
-				data.Sequences[i].SequenceId = types.Int64Value(va.Int())
-			}
-		}
-		data.Sequences[i].SequenceName = types.StringNull()
-
-		if t := r.Get("sequenceName.optionType"); t.Exists() {
-			va := r.Get("sequenceName.value")
-			if t.String() == "global" {
-				data.Sequences[i].SequenceName = types.StringValue(va.String())
-			}
-		}
-		data.Sequences[i].BaseAction = types.StringNull()
-
-		if t := r.Get("baseAction.optionType"); t.Exists() {
-			va := r.Get("baseAction.value")
-			if t.String() == "global" {
-				data.Sequences[i].BaseAction = types.StringValue(va.String())
-			}
-		}
-		data.Sequences[i].Protocol = types.StringNull()
-
-		if t := r.Get("sequenceIpType.optionType"); t.Exists() {
-			va := r.Get("sequenceIpType.value")
-			if t.String() == "global" {
-				data.Sequences[i].Protocol = types.StringValue(va.String())
-			}
-		}
-		for ci := range data.Sequences[i].MatchEntries {
-			keys := [...]string{"appList.refId", "saasAppList.refId", "serviceArea", "trafficCategory", "dnsAppList.refId", "trafficClass", "dscp", "packetLength", "protocol", "icmpMessage", "icmp6Message", "sourceDataPrefixList.refId", "sourceDataIpv6PrefixList.refId", "sourceIp", "sourceIpv6", "sourcePort", "destinationDataPrefixList.refId", "destinationDataIpv6PrefixList.refId", "destinationIp", "destinationIpv6", "destinationPort", "tcp", "destinationRegion", "trafficTo", "dns"}
-			keyValues := [...]string{data.Sequences[i].MatchEntries[ci].ApplicationListId.ValueString(), data.Sequences[i].MatchEntries[ci].SaasApplicationListId.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].ServiceAreas).ValueString(), data.Sequences[i].MatchEntries[ci].TrafficCategory.ValueString(), data.Sequences[i].MatchEntries[ci].DnsApplicationListId.ValueString(), data.Sequences[i].MatchEntries[ci].TrafficClass.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Dscps).ValueString(), data.Sequences[i].MatchEntries[ci].PacketLength.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Protocols).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].IcmpMessages).ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].Icmp6Messages).ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataIpv4PrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceDataIpv6PrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].SourceIpv4Prefix.ValueString(), data.Sequences[i].MatchEntries[ci].SourceIpv6Prefix.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].SourcePorts).ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataIpv4PrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationDataIpv6PrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationIpv4Prefix.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationIpv6Prefix.ValueString(), helpers.GetStringFromSet(data.Sequences[i].MatchEntries[ci].DestinationPorts).ValueString(), data.Sequences[i].MatchEntries[ci].Tcp.ValueString(), data.Sequences[i].MatchEntries[ci].DestinationRegion.ValueString(), data.Sequences[i].MatchEntries[ci].TrafficTo.ValueString(), data.Sequences[i].MatchEntries[ci].Dns.ValueString()}
-			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""}
-
-			var cr gjson.Result
-			r.Get("match.entries").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.Sequences[i].MatchEntries[ci].ApplicationListId = types.StringNull()
-
-			if t := cr.Get("appList.refId.optionType"); t.Exists() {
-				va := cr.Get("appList.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].ApplicationListId = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].SaasApplicationListId = types.StringNull()
-
-			if t := cr.Get("saasAppList.refId.optionType"); t.Exists() {
-				va := cr.Get("saasAppList.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].SaasApplicationListId = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].ServiceAreas = types.SetNull(types.StringType)
-
-			if t := cr.Get("serviceArea.optionType"); t.Exists() {
-				va := cr.Get("serviceArea.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].ServiceAreas = helpers.GetStringSet(va.Array())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].TrafficCategory = types.StringNull()
-
-			if t := cr.Get("trafficCategory.optionType"); t.Exists() {
-				va := cr.Get("trafficCategory.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].TrafficCategory = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].DnsApplicationListId = types.StringNull()
-
-			if t := cr.Get("dnsAppList.refId.optionType"); t.Exists() {
-				va := cr.Get("dnsAppList.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].DnsApplicationListId = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].TrafficClass = types.StringNull()
-
-			if t := cr.Get("trafficClass.optionType"); t.Exists() {
-				va := cr.Get("trafficClass.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].TrafficClass = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].Dscps = types.SetNull(types.Int64Type)
-
-			if t := cr.Get("dscp.optionType"); t.Exists() {
-				va := cr.Get("dscp.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].Dscps = helpers.GetInt64Set(va.Array())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].PacketLength = types.StringNull()
-
-			if t := cr.Get("packetLength.optionType"); t.Exists() {
-				va := cr.Get("packetLength.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].PacketLength = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].Protocols = types.SetNull(types.StringType)
-
-			if t := cr.Get("protocol.optionType"); t.Exists() {
-				va := cr.Get("protocol.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].Protocols = helpers.GetStringSet(va.Array())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].IcmpMessages = types.SetNull(types.StringType)
-
-			if t := cr.Get("icmpMessage.optionType"); t.Exists() {
-				va := cr.Get("icmpMessage.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].IcmpMessages = helpers.GetStringSet(va.Array())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].Icmp6Messages = types.SetNull(types.StringType)
-
-			if t := cr.Get("icmp6Message.optionType"); t.Exists() {
-				va := cr.Get("icmp6Message.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].Icmp6Messages = helpers.GetStringSet(va.Array())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].SourceDataIpv4PrefixListId = types.StringNull()
-
-			if t := cr.Get("sourceDataPrefixList.refId.optionType"); t.Exists() {
-				va := cr.Get("sourceDataPrefixList.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].SourceDataIpv4PrefixListId = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].SourceDataIpv6PrefixListId = types.StringNull()
-
-			if t := cr.Get("sourceDataIpv6PrefixList.refId.optionType"); t.Exists() {
-				va := cr.Get("sourceDataIpv6PrefixList.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].SourceDataIpv6PrefixListId = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].SourceIpv4Prefix = types.StringNull()
-
-			if t := cr.Get("sourceIp.optionType"); t.Exists() {
-				va := cr.Get("sourceIp.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].SourceIpv4Prefix = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].SourceIpv6Prefix = types.StringNull()
-
-			if t := cr.Get("sourceIpv6.optionType"); t.Exists() {
-				va := cr.Get("sourceIpv6.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].SourceIpv6Prefix = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].SourcePorts = types.SetNull(types.StringType)
-
-			if t := cr.Get("sourcePort.optionType"); t.Exists() {
-				va := cr.Get("sourcePort.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].SourcePorts = helpers.GetStringSet(va.Array())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].DestinationDataIpv4PrefixListId = types.StringNull()
-
-			if t := cr.Get("destinationDataPrefixList.refId.optionType"); t.Exists() {
-				va := cr.Get("destinationDataPrefixList.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].DestinationDataIpv4PrefixListId = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].DestinationDataIpv6PrefixListId = types.StringNull()
-
-			if t := cr.Get("destinationDataIpv6PrefixList.refId.optionType"); t.Exists() {
-				va := cr.Get("destinationDataIpv6PrefixList.refId.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].DestinationDataIpv6PrefixListId = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].DestinationIpv4Prefix = types.StringNull()
-
-			if t := cr.Get("destinationIp.optionType"); t.Exists() {
-				va := cr.Get("destinationIp.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].DestinationIpv4Prefix = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].DestinationIpv6Prefix = types.StringNull()
-
-			if t := cr.Get("destinationIpv6.optionType"); t.Exists() {
-				va := cr.Get("destinationIpv6.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].DestinationIpv6Prefix = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].DestinationPorts = types.SetNull(types.StringType)
-
-			if t := cr.Get("destinationPort.optionType"); t.Exists() {
-				va := cr.Get("destinationPort.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].DestinationPorts = helpers.GetStringSet(va.Array())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].Tcp = types.StringNull()
-
-			if t := cr.Get("tcp.optionType"); t.Exists() {
-				va := cr.Get("tcp.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].Tcp = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].DestinationRegion = types.StringNull()
-
-			if t := cr.Get("destinationRegion.optionType"); t.Exists() {
-				va := cr.Get("destinationRegion.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].DestinationRegion = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].TrafficTo = types.StringNull()
-
-			if t := cr.Get("trafficTo.optionType"); t.Exists() {
-				va := cr.Get("trafficTo.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].TrafficTo = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].MatchEntries[ci].Dns = types.StringNull()
-
-			if t := cr.Get("dns.optionType"); t.Exists() {
-				va := cr.Get("dns.value")
-				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].Dns = types.StringValue(va.String())
-				}
-			}
-		}
-		for ci := range data.Sequences[i].Actions {
-			keys := [...]string{"backupSlaPreferredColor", "redirectDns.field", "redirectDns.value", "appqoeOptimization.tcpOptimization", "appqoeOptimization.dreOptimization", "appqoeOptimization.serviceNodeGroup", "lossCorrection.lossCorrectionType", "lossCorrection.lossCorrectFec", "count", "log", "cloudSaas", "cloudProbe", "cflowd", "natPool", "nat.useVpn", "nat.fallback", "nat.bypass", "nat.diaPool", "nat.diaInterface", "sig", "fallbackToRouting", "sse.secureServiceEdge", "sse.secureServiceEdgeInstance"}
-			keyValues := [...]string{helpers.GetStringFromSet(data.Sequences[i].Actions[ci].BackupSlaPreferredColors).ValueString(), data.Sequences[i].Actions[ci].RedirectDnsField.ValueString(), data.Sequences[i].Actions[ci].RedirectDnsValue.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].AppqoeTcpOptimization.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].AppqoeDreOptimization.ValueBool()), data.Sequences[i].Actions[ci].AppqoeServiceNodeGroup.ValueString(), data.Sequences[i].Actions[ci].LossCorrectType.ValueString(), strconv.FormatInt(data.Sequences[i].Actions[ci].LossCorrectFecThreshold.ValueInt64(), 10), data.Sequences[i].Actions[ci].Count.ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].Log.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].CloudSaas.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].CloudProbe.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].Cflowd.ValueBool()), strconv.FormatInt(data.Sequences[i].Actions[ci].NatPool.ValueInt64(), 10), strconv.FormatBool(data.Sequences[i].Actions[ci].NatVpn.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].NatFallback.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].NatBypass.ValueBool()), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].NatDiaPools).ValueString(), helpers.GetStringFromSet(data.Sequences[i].Actions[ci].NatDiaInterfaces).ValueString(), strconv.FormatBool(data.Sequences[i].Actions[ci].SecureInternetGateway.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].FallbackToRouting.ValueBool()), strconv.FormatBool(data.Sequences[i].Actions[ci].SecureServiceEdge.ValueBool()), data.Sequences[i].Actions[ci].SecureServiceEdgeInstance.ValueString()}
-			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""}
-
-			var cr gjson.Result
-			r.Get("actions").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			for cci := range data.Sequences[i].Actions[ci].SlaClasses {
-				if len(cr.Get("slaClass").Array()) <= 0 {
-					continue
-				}
-				ccr := cr.Get("slaClass").Array()[0]
-
-				data.Sequences[i].Actions[ci].SlaClasses[cci].SlaClassListId = types.StringNull()
-
-				if t := ccr.Get("slaName.refId.optionType"); t.Exists() {
-					va := ccr.Get("slaName.refId.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SlaClasses[cci].SlaClassListId = types.StringValue(va.String())
-					}
-				}
-				data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColors = types.SetNull(types.StringType)
-
-				if t := ccr.Get("preferredColor.optionType"); t.Exists() {
-					va := ccr.Get("preferredColor.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColors = helpers.GetStringSet(va.Array())
-					}
-				}
-				data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColorGroupListId = types.StringNull()
-
-				if t := ccr.Get("preferredColorGroup.refId.optionType"); t.Exists() {
-					va := ccr.Get("preferredColorGroup.refId.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredColorGroupListId = types.StringValue(va.String())
-					}
-				}
-				data.Sequences[i].Actions[ci].SlaClasses[cci].Strict = types.BoolNull()
-
-				if t := ccr.Get("strict.optionType"); t.Exists() {
-					va := ccr.Get("strict.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SlaClasses[cci].Strict = types.BoolValue(va.Bool())
-					}
-				}
-				data.Sequences[i].Actions[ci].SlaClasses[cci].FallbackToBestPath = types.BoolNull()
-
-				if t := ccr.Get("fallbackToBestPath.optionType"); t.Exists() {
-					va := ccr.Get("fallbackToBestPath.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SlaClasses[cci].FallbackToBestPath = types.BoolValue(va.Bool())
-					}
-				}
-				data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredRemoteColors = types.SetNull(types.StringType)
-
-				if t := ccr.Get("preferredRemoteColor.optionType"); t.Exists() {
-					va := ccr.Get("preferredRemoteColor.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SlaClasses[cci].PreferredRemoteColors = helpers.GetStringSet(va.Array())
-					}
-				}
-				data.Sequences[i].Actions[ci].SlaClasses[cci].RemoteColorRestrict = types.BoolNull()
-
-				if t := ccr.Get("remoteColorRestrict.optionType"); t.Exists() {
-					va := ccr.Get("remoteColorRestrict.value")
-					if t.String() == "global" {
-						data.Sequences[i].Actions[ci].SlaClasses[cci].RemoteColorRestrict = types.BoolValue(va.Bool())
-					}
-				}
-			}
-			data.Sequences[i].Actions[ci].BackupSlaPreferredColors = types.SetNull(types.StringType)
-
-			if t := cr.Get("backupSlaPreferredColor.optionType"); t.Exists() {
-				va := cr.Get("backupSlaPreferredColor.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].BackupSlaPreferredColors = helpers.GetStringSet(va.Array())
-				}
-			}
-			// Use fromBody approach for set_parameters to avoid matching issues with sparse objects
-			if ccValue := cr.Get("set"); ccValue.Exists() && len(ccValue.Array()) > 0 {
-				data.Sequences[i].Actions[ci].SetParameters = make([]ApplicationPriorityTrafficPolicySequencesActionsSetParameters, 0)
-				ccValue.ForEach(func(cck, ccr gjson.Result) bool {
-					ccItem := ApplicationPriorityTrafficPolicySequencesActionsSetParameters{}
-					ccItem.Dscp = types.Int64Null()
-
-					if t := ccr.Get("dscp.optionType"); t.Exists() {
-						va := ccr.Get("dscp.value")
-						if t.String() == "global" {
-							ccItem.Dscp = types.Int64Value(va.Int())
-						}
-					}
-					ccItem.PolicerId = types.StringNull()
-
-					if t := ccr.Get("policer.refId.optionType"); t.Exists() {
-						va := ccr.Get("policer.refId.value")
-						if t.String() == "global" {
-							ccItem.PolicerId = types.StringValue(va.String())
-						}
-					}
-					ccItem.PreferredColorGroupId = types.StringNull()
-
-					if t := ccr.Get("preferredColorGroup.refId.optionType"); t.Exists() {
-						va := ccr.Get("preferredColorGroup.refId.value")
-						if t.String() == "global" {
-							ccItem.PreferredColorGroupId = types.StringValue(va.String())
-						}
-					}
-					ccItem.ForwardingClassListId = types.StringNull()
-
-					if t := ccr.Get("forwardingClass.refId.optionType"); t.Exists() {
-						va := ccr.Get("forwardingClass.refId.value")
-						if t.String() == "global" {
-							ccItem.ForwardingClassListId = types.StringValue(va.String())
-						}
-					}
-					ccItem.LocalTlocListColors = types.SetNull(types.StringType)
-
-					if t := ccr.Get("localTlocList.color.optionType"); t.Exists() {
-						va := ccr.Get("localTlocList.color.value")
-						if t.String() == "global" {
-							ccItem.LocalTlocListColors = helpers.GetStringSet(va.Array())
-						}
-					}
-					ccItem.LocalTlocListRestrict = types.BoolNull()
-
-					if t := ccr.Get("localTlocList.restrict.optionType"); t.Exists() {
-						va := ccr.Get("localTlocList.restrict.value")
-						if t.String() == "global" {
-							ccItem.LocalTlocListRestrict = types.BoolValue(va.Bool())
-						}
-					}
-					ccItem.LocalTlocListEncapsulation = types.StringNull()
-
-					if t := ccr.Get("localTlocList.encap.optionType"); t.Exists() {
-						va := ccr.Get("localTlocList.encap.value")
-						if t.String() == "global" {
-							ccItem.LocalTlocListEncapsulation = types.StringValue(va.String())
-						}
-					}
-					ccItem.PreferredRemoteColors = types.SetNull(types.StringType)
-
-					if t := ccr.Get("preferredRemoteColor.color.optionType"); t.Exists() {
-						va := ccr.Get("preferredRemoteColor.color.value")
-						if t.String() == "global" {
-							ccItem.PreferredRemoteColors = helpers.GetStringSet(va.Array())
-						}
-					}
-					ccItem.PreferredRemoteColorRestrict = types.BoolNull()
-
-					if t := ccr.Get("preferredRemoteColor.remoteColorRestrict.optionType"); t.Exists() {
-						va := ccr.Get("preferredRemoteColor.remoteColorRestrict.value")
-						if t.String() == "global" {
-							ccItem.PreferredRemoteColorRestrict = types.BoolValue(va.Bool())
-						}
-					}
-					ccItem.TlocColor = types.SetNull(types.StringType)
-
-					if t := ccr.Get("tloc.color.optionType"); t.Exists() {
-						va := ccr.Get("tloc.color.value")
-						if t.String() == "global" {
-							ccItem.TlocColor = helpers.GetStringSet(va.Array())
-						}
-					}
-					ccItem.TlocEncapsulation = types.StringNull()
-
-					if t := ccr.Get("tloc.encap.optionType"); t.Exists() {
-						va := ccr.Get("tloc.encap.value")
-						if t.String() == "global" {
-							ccItem.TlocEncapsulation = types.StringValue(va.String())
-						}
-					}
-					ccItem.TlocIp = types.StringNull()
-
-					if t := ccr.Get("tloc.ip.optionType"); t.Exists() {
-						va := ccr.Get("tloc.ip.value")
-						if t.String() == "global" {
-							ccItem.TlocIp = types.StringValue(va.String())
-						}
-					}
-					ccItem.TlocListId = types.StringNull()
-
-					if t := ccr.Get("tlocList.refId.optionType"); t.Exists() {
-						va := ccr.Get("tlocList.refId.value")
-						if t.String() == "global" {
-							ccItem.TlocListId = types.StringValue(va.String())
-						}
-					}
-					ccItem.ServiceTlocColor = types.SetNull(types.StringType)
-
-					if t := ccr.Get("service.tloc.color.optionType"); t.Exists() {
-						va := ccr.Get("service.tloc.color.value")
-						if t.String() == "global" {
-							ccItem.ServiceTlocColor = helpers.GetStringSet(va.Array())
-						}
-					}
-					ccItem.ServiceTlocEncapsulation = types.StringNull()
-
-					if t := ccr.Get("service.tloc.encap.optionType"); t.Exists() {
-						va := ccr.Get("service.tloc.encap.value")
-						if t.String() == "global" {
-							ccItem.ServiceTlocEncapsulation = types.StringValue(va.String())
-						}
-					}
-					ccItem.ServiceTlocIp = types.StringNull()
-
-					if t := ccr.Get("service.tloc.ip.optionType"); t.Exists() {
-						va := ccr.Get("service.tloc.ip.value")
-						if t.String() == "global" {
-							ccItem.ServiceTlocIp = types.StringValue(va.String())
-						}
-					}
-					ccItem.ServiceVpn = types.Int64Null()
-
-					if t := ccr.Get("service.vpn.optionType"); t.Exists() {
-						va := ccr.Get("service.vpn.value")
-						if t.String() == "global" {
-							ccItem.ServiceVpn = types.Int64Value(va.Int())
-						}
-					}
-					ccItem.ServiceType = types.StringNull()
-
-					if t := ccr.Get("service.type.optionType"); t.Exists() {
-						va := ccr.Get("service.type.value")
-						if t.String() == "global" {
-							ccItem.ServiceType = types.StringValue(va.String())
-						}
-					}
-					ccItem.ServiceLocal = types.BoolNull()
-
-					if t := ccr.Get("service.local.optionType"); t.Exists() {
-						va := ccr.Get("service.local.value")
-						if t.String() == "global" {
-							ccItem.ServiceLocal = types.BoolValue(va.Bool())
-						}
-					}
-					ccItem.ServiceRestrict = types.BoolNull()
-
-					if t := ccr.Get("service.restrict.optionType"); t.Exists() {
-						va := ccr.Get("service.restrict.value")
-						if t.String() == "global" {
-							ccItem.ServiceRestrict = types.BoolValue(va.Bool())
-						}
-					}
-					ccItem.ServiceTlocListId = types.StringNull()
-
-					if t := ccr.Get("service.tlocList.refId.optionType"); t.Exists() {
-						va := ccr.Get("service.tlocList.refId.value")
-						if t.String() == "global" {
-							ccItem.ServiceTlocListId = types.StringValue(va.String())
-						}
-					}
-					ccItem.ServiceChainType = types.StringNull()
-
-					if t := ccr.Get("serviceChain.type.optionType"); t.Exists() {
-						va := ccr.Get("serviceChain.type.value")
-						if t.String() == "global" {
-							ccItem.ServiceChainType = types.StringValue(va.String())
-						}
-					}
-					ccItem.ServiceChainVpn = types.Int64Null()
-
-					if t := ccr.Get("serviceChain.vpn.optionType"); t.Exists() {
-						va := ccr.Get("serviceChain.vpn.value")
-						if t.String() == "global" {
-							ccItem.ServiceChainVpn = types.Int64Value(va.Int())
-						}
-					}
-					ccItem.ServiceChainLocal = types.BoolNull()
-
-					if t := ccr.Get("serviceChain.local.optionType"); t.Exists() {
-						va := ccr.Get("serviceChain.local.value")
-						if t.String() == "global" {
-							ccItem.ServiceChainLocal = types.BoolValue(va.Bool())
-						}
-					}
-					ccItem.ServiceChainFallbackToRouting = types.BoolNull()
-
-					if t := ccr.Get("serviceChain.restrict.optionType"); t.Exists() {
-						va := ccr.Get("serviceChain.restrict.value")
-						if t.String() == "global" {
-							ccItem.ServiceChainFallbackToRouting = types.BoolValue(va.Bool())
-						}
-					}
-					ccItem.ServiceChainTlocColor = types.SetNull(types.StringType)
-
-					if t := ccr.Get("serviceChain.tloc.color.optionType"); t.Exists() {
-						va := ccr.Get("serviceChain.tloc.color.value")
-						if t.String() == "global" {
-							ccItem.ServiceChainTlocColor = helpers.GetStringSet(va.Array())
-						}
-					}
-					ccItem.ServiceChainTlocEncapsulation = types.StringNull()
-
-					if t := ccr.Get("serviceChain.tloc.encap.optionType"); t.Exists() {
-						va := ccr.Get("serviceChain.tloc.encap.value")
-						if t.String() == "global" {
-							ccItem.ServiceChainTlocEncapsulation = types.StringValue(va.String())
-						}
-					}
-					ccItem.ServiceChainTlocIp = types.StringNull()
-
-					if t := ccr.Get("serviceChain.tloc.ip.optionType"); t.Exists() {
-						va := ccr.Get("serviceChain.tloc.ip.value")
-						if t.String() == "global" {
-							ccItem.ServiceChainTlocIp = types.StringValue(va.String())
-						}
-					}
-					ccItem.ServiceChainTlocListId = types.StringNull()
-
-					if t := ccr.Get("serviceChain.tlocList.refId.optionType"); t.Exists() {
-						va := ccr.Get("serviceChain.tlocList.refId.value")
-						if t.String() == "global" {
-							ccItem.ServiceChainTlocListId = types.StringValue(va.String())
-						}
-					}
-					ccItem.NextHopIpv4 = types.StringNull()
-
-					if t := ccr.Get("nextHop.optionType"); t.Exists() {
-						va := ccr.Get("nextHop.value")
-						if t.String() == "global" {
-							ccItem.NextHopIpv4 = types.StringValue(va.String())
-						}
-					}
-					ccItem.NextHopIpv6 = types.StringNull()
-
-					if t := ccr.Get("nextHopIpv6.optionType"); t.Exists() {
-						va := ccr.Get("nextHopIpv6.value")
-						if t.String() == "global" {
-							ccItem.NextHopIpv6 = types.StringValue(va.String())
-						}
-					}
-					ccItem.NextHopLoose = types.BoolNull()
-
-					if t := ccr.Get("nextHopLoose.optionType"); t.Exists() {
-						va := ccr.Get("nextHopLoose.value")
-						if t.String() == "global" {
-							ccItem.NextHopLoose = types.BoolValue(va.Bool())
-						}
-					}
-					ccItem.Vpn = types.Int64Null()
-
-					if t := ccr.Get("vpn.optionType"); t.Exists() {
-						va := ccr.Get("vpn.value")
-						if t.String() == "global" {
-							ccItem.Vpn = types.Int64Value(va.Int())
-						}
-					}
-					data.Sequences[i].Actions[ci].SetParameters = append(data.Sequences[i].Actions[ci].SetParameters, ccItem)
-					return true
-				})
-			}
-			data.Sequences[i].Actions[ci].RedirectDnsField = types.StringNull()
-
-			if t := cr.Get("redirectDns.field.optionType"); t.Exists() {
-				va := cr.Get("redirectDns.field.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].RedirectDnsField = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].Actions[ci].RedirectDnsValue = types.StringNull()
-
-			if t := cr.Get("redirectDns.value.optionType"); t.Exists() {
-				va := cr.Get("redirectDns.value.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].RedirectDnsValue = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].Actions[ci].AppqoeTcpOptimization = types.BoolNull()
-
-			if t := cr.Get("appqoeOptimization.tcpOptimization.optionType"); t.Exists() {
-				va := cr.Get("appqoeOptimization.tcpOptimization.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AppqoeTcpOptimization = types.BoolValue(va.Bool())
-				}
-			}
-			data.Sequences[i].Actions[ci].AppqoeDreOptimization = types.BoolNull()
-
-			if t := cr.Get("appqoeOptimization.dreOptimization.optionType"); t.Exists() {
-				va := cr.Get("appqoeOptimization.dreOptimization.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AppqoeDreOptimization = types.BoolValue(va.Bool())
-				}
-			}
-			data.Sequences[i].Actions[ci].AppqoeServiceNodeGroup = types.StringNull()
-
-			if t := cr.Get("appqoeOptimization.serviceNodeGroup.optionType"); t.Exists() {
-				va := cr.Get("appqoeOptimization.serviceNodeGroup.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AppqoeServiceNodeGroup = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].Actions[ci].LossCorrectType = types.StringNull()
-
-			if t := cr.Get("lossCorrection.lossCorrectionType.optionType"); t.Exists() {
-				va := cr.Get("lossCorrection.lossCorrectionType.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].LossCorrectType = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].Actions[ci].LossCorrectFecThreshold = types.Int64Null()
-
-			if t := cr.Get("lossCorrection.lossCorrectFec.optionType"); t.Exists() {
-				va := cr.Get("lossCorrection.lossCorrectFec.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].LossCorrectFecThreshold = types.Int64Value(va.Int())
-				}
-			}
-			data.Sequences[i].Actions[ci].Count = types.StringNull()
-
-			if t := cr.Get("count.optionType"); t.Exists() {
-				va := cr.Get("count.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].Count = types.StringValue(va.String())
-				}
-			}
-			data.Sequences[i].Actions[ci].Log = types.BoolNull()
-
-			if t := cr.Get("log.optionType"); t.Exists() {
-				va := cr.Get("log.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].Log = types.BoolValue(va.Bool())
-				}
-			}
-			data.Sequences[i].Actions[ci].CloudSaas = types.BoolNull()
-
-			if t := cr.Get("cloudSaas.optionType"); t.Exists() {
-				va := cr.Get("cloudSaas.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].CloudSaas = types.BoolValue(va.Bool())
-				}
-			}
-			data.Sequences[i].Actions[ci].CloudProbe = types.BoolNull()
-
-			if t := cr.Get("cloudProbe.optionType"); t.Exists() {
-				va := cr.Get("cloudProbe.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].CloudProbe = types.BoolValue(va.Bool())
-				}
-			}
-			data.Sequences[i].Actions[ci].Cflowd = types.BoolNull()
-
-			if t := cr.Get("cflowd.optionType"); t.Exists() {
-				va := cr.Get("cflowd.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].Cflowd = types.BoolValue(va.Bool())
-				}
-			}
-			data.Sequences[i].Actions[ci].NatPool = types.Int64Null()
-
-			if t := cr.Get("natPool.optionType"); t.Exists() {
-				va := cr.Get("natPool.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].NatPool = types.Int64Value(va.Int())
-				}
-			}
-			data.Sequences[i].Actions[ci].NatVpn = types.BoolNull()
-
-			if t := cr.Get("nat.useVpn.optionType"); t.Exists() {
-				va := cr.Get("nat.useVpn.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].NatVpn = types.BoolValue(va.Bool())
-				}
-			}
-			data.Sequences[i].Actions[ci].NatFallback = types.BoolNull()
-
-			if t := cr.Get("nat.fallback.optionType"); t.Exists() {
-				va := cr.Get("nat.fallback.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].NatFallback = types.BoolValue(va.Bool())
-				}
-			}
-			data.Sequences[i].Actions[ci].NatBypass = types.BoolNull()
-
-			if t := cr.Get("nat.bypass.optionType"); t.Exists() {
-				va := cr.Get("nat.bypass.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].NatBypass = types.BoolValue(va.Bool())
-				}
-			}
-			data.Sequences[i].Actions[ci].NatDiaPools = types.SetNull(types.Int64Type)
-
-			if t := cr.Get("nat.diaPool.optionType"); t.Exists() {
-				va := cr.Get("nat.diaPool.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].NatDiaPools = helpers.GetInt64Set(va.Array())
-				}
-			}
-			data.Sequences[i].Actions[ci].NatDiaInterfaces = types.SetNull(types.StringType)
-
-			if t := cr.Get("nat.diaInterface.optionType"); t.Exists() {
-				va := cr.Get("nat.diaInterface.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].NatDiaInterfaces = helpers.GetStringSet(va.Array())
-				}
-			}
-			data.Sequences[i].Actions[ci].SecureInternetGateway = types.BoolNull()
-
-			if t := cr.Get("sig.optionType"); t.Exists() {
-				va := cr.Get("sig.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].SecureInternetGateway = types.BoolValue(va.Bool())
-				}
-			}
-			data.Sequences[i].Actions[ci].FallbackToRouting = types.BoolNull()
-
-			if t := cr.Get("fallbackToRouting.optionType"); t.Exists() {
-				va := cr.Get("fallbackToRouting.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].FallbackToRouting = types.BoolValue(va.Bool())
-				}
-			}
-			data.Sequences[i].Actions[ci].SecureServiceEdge = types.BoolNull()
-
-			if t := cr.Get("sse.secureServiceEdge.optionType"); t.Exists() {
-				va := cr.Get("sse.secureServiceEdge.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].SecureServiceEdge = types.BoolValue(va.Bool())
-				}
-			}
-			data.Sequences[i].Actions[ci].SecureServiceEdgeInstance = types.StringNull()
-
-			if t := cr.Get("sse.secureServiceEdgeInstance.optionType"); t.Exists() {
-				va := cr.Get("sse.secureServiceEdgeInstance.value")
-				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].SecureServiceEdgeInstance = types.StringValue(va.String())
-				}
-			}
-		}
-	}
-}

@@ -86,7 +86,7 @@ func (data SystemFlexiblePortSpeed) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *SystemFlexiblePortSpeed) fromBody(ctx context.Context, res gjson.Result) {
+func (data *SystemFlexiblePortSpeed) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -107,26 +107,3 @@ func (data *SystemFlexiblePortSpeed) fromBody(ctx context.Context, res gjson.Res
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *SystemFlexiblePortSpeed) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.PortType = types.StringNull()
-	data.PortTypeVariable = types.StringNull()
-	if t := res.Get(path + "portType.optionType"); t.Exists() {
-		va := res.Get(path + "portType.value")
-		if t.String() == "variable" {
-			data.PortTypeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PortType = types.StringValue(va.String())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

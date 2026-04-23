@@ -92,7 +92,7 @@ func (data PolicyObjectSecurityLocalApplicationList) toBody(ctx context.Context)
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *PolicyObjectSecurityLocalApplicationList) fromBody(ctx context.Context, res gjson.Result) {
+func (data *PolicyObjectSecurityLocalApplicationList) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -100,6 +100,7 @@ func (data *PolicyObjectSecurityLocalApplicationList) fromBody(ctx context.Conte
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
+	oldEntries := data.Entries
 	if value := res.Get(path + "entries"); value.Exists() && len(value.Array()) > 0 {
 		data.Entries = make([]PolicyObjectSecurityLocalApplicationListEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -123,68 +124,42 @@ func (data *PolicyObjectSecurityLocalApplicationList) fromBody(ctx context.Conte
 			data.Entries = append(data.Entries, item)
 			return true
 		})
+	} else {
+		data.Entries = nil
+	}
+	if !fullRead {
+		resultEntries := make([]PolicyObjectSecurityLocalApplicationListEntries, 0, len(data.Entries))
+		matchedEntries := make([]bool, len(data.Entries))
+		for _, oldItem := range oldEntries {
+			for ni := range data.Entries {
+				if matchedEntries[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.App.ValueString() != data.Entries[ni].App.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.AppFamily.ValueString() != data.Entries[ni].AppFamily.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedEntries[ni] = true
+					resultEntries = append(resultEntries, data.Entries[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Entries {
+			if !matchedEntries[ni] {
+				resultEntries = append(resultEntries, data.Entries[ni])
+			}
+		}
+		data.Entries = resultEntries
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *PolicyObjectSecurityLocalApplicationList) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	for i := range data.Entries {
-		keys := [...]string{"app", "appFamily"}
-		keyValues := [...]string{data.Entries[i].App.ValueString(), data.Entries[i].AppFamily.ValueString()}
-		keyValuesVariables := [...]string{"", ""}
-
-		var r gjson.Result
-		res.Get(path + "entries").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Entries[i].App = types.StringNull()
-
-		if t := r.Get("app.optionType"); t.Exists() {
-			va := r.Get("app.value")
-			if t.String() == "global" {
-				data.Entries[i].App = types.StringValue(va.String())
-			}
-		}
-		data.Entries[i].AppFamily = types.StringNull()
-
-		if t := r.Get("appFamily.optionType"); t.Exists() {
-			va := r.Get("appFamily.value")
-			if t.String() == "global" {
-				data.Entries[i].AppFamily = types.StringValue(va.String())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

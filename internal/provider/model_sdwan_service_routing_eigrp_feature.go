@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -391,7 +390,7 @@ func (data ServiceRoutingEIGRP) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -409,6 +408,7 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result)
 			data.AutonomousSystemId = types.Int64Value(va.Int())
 		}
 	}
+	oldRedistributes := data.Redistributes
 	if value := res.Get(path + "addressFamily.redistribute"); value.Exists() && len(value.Array()) > 0 {
 		data.Redistributes = make([]ServiceRoutingEIGRPRedistributes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -434,7 +434,47 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result)
 			data.Redistributes = append(data.Redistributes, item)
 			return true
 		})
+	} else {
+		data.Redistributes = nil
 	}
+	if !fullRead {
+		resultRedistributes := make([]ServiceRoutingEIGRPRedistributes, 0, len(data.Redistributes))
+		matchedRedistributes := make([]bool, len(data.Redistributes))
+		for _, oldItem := range oldRedistributes {
+			for ni := range data.Redistributes {
+				if matchedRedistributes[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.ProtocolVariable.ValueString() != "" || data.Redistributes[ni].ProtocolVariable.ValueString() != "") {
+					if oldItem.ProtocolVariable.ValueString() != data.Redistributes[ni].ProtocolVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.Protocol.ValueString() != data.Redistributes[ni].Protocol.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.RoutePolicyId.ValueString() != data.Redistributes[ni].RoutePolicyId.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedRedistributes[ni] = true
+					resultRedistributes = append(resultRedistributes, data.Redistributes[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Redistributes {
+			if !matchedRedistributes[ni] {
+				resultRedistributes = append(resultRedistributes, data.Redistributes[ni])
+			}
+		}
+		data.Redistributes = resultRedistributes
+	}
+	oldNetworks := data.Networks
 	if value := res.Get(path + "addressFamily.network"); value.Exists() && len(value.Array()) > 0 {
 		data.Networks = make([]ServiceRoutingEIGRPNetworks, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -462,6 +502,49 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result)
 			data.Networks = append(data.Networks, item)
 			return true
 		})
+	} else {
+		data.Networks = nil
+	}
+	if !fullRead {
+		resultNetworks := make([]ServiceRoutingEIGRPNetworks, 0, len(data.Networks))
+		matchedNetworks := make([]bool, len(data.Networks))
+		for _, oldItem := range oldNetworks {
+			for ni := range data.Networks {
+				if matchedNetworks[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.IpAddressVariable.ValueString() != "" || data.Networks[ni].IpAddressVariable.ValueString() != "") {
+					if oldItem.IpAddressVariable.ValueString() != data.Networks[ni].IpAddressVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.IpAddress.ValueString() != data.Networks[ni].IpAddress.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch && (oldItem.MaskVariable.ValueString() != "" || data.Networks[ni].MaskVariable.ValueString() != "") {
+					if oldItem.MaskVariable.ValueString() != data.Networks[ni].MaskVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.Mask.ValueString() != data.Networks[ni].Mask.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedNetworks[ni] = true
+					resultNetworks = append(resultNetworks, data.Networks[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Networks {
+			if !matchedNetworks[ni] {
+				resultNetworks = append(resultNetworks, data.Networks[ni])
+			}
+		}
+		data.Networks = resultNetworks
 	}
 	data.HelloInterval = types.Int64Null()
 	data.HelloIntervalVariable = types.StringNull()
@@ -493,6 +576,7 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result)
 			data.AuthenticationType = types.StringValue(va.String())
 		}
 	}
+	oldMd5Keys := data.Md5Keys
 	if value := res.Get(path + "authentication.key"); value.Exists() && len(value.Array()) > 0 {
 		data.Md5Keys = make([]ServiceRoutingEIGRPMd5Keys, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -510,7 +594,42 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result)
 			data.Md5Keys = append(data.Md5Keys, item)
 			return true
 		})
+	} else {
+		data.Md5Keys = nil
 	}
+	if !fullRead {
+		resultMd5Keys := make([]ServiceRoutingEIGRPMd5Keys, 0, len(data.Md5Keys))
+		matchedMd5Keys := make([]bool, len(data.Md5Keys))
+		for _, oldItem := range oldMd5Keys {
+			for ni := range data.Md5Keys {
+				if matchedMd5Keys[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.KeyIdVariable.ValueString() != "" || data.Md5Keys[ni].KeyIdVariable.ValueString() != "") {
+					if oldItem.KeyIdVariable.ValueString() != data.Md5Keys[ni].KeyIdVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.KeyId.ValueInt64() != data.Md5Keys[ni].KeyId.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedMd5Keys[ni] = true
+					resultMd5Keys = append(resultMd5Keys, data.Md5Keys[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Md5Keys {
+			if !matchedMd5Keys[ni] {
+				resultMd5Keys = append(resultMd5Keys, data.Md5Keys[ni])
+			}
+		}
+		data.Md5Keys = resultMd5Keys
+	}
+	oldInterfaces := data.Interfaces
 	if value := res.Get(path + "afInterface"); value.Exists() && len(value.Array()) > 0 {
 		data.Interfaces = make([]ServiceRoutingEIGRPInterfaces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -566,6 +685,90 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result)
 			data.Interfaces = append(data.Interfaces, item)
 			return true
 		})
+	} else {
+		data.Interfaces = nil
+	}
+	if !fullRead {
+		resultInterfaces := make([]ServiceRoutingEIGRPInterfaces, 0, len(data.Interfaces))
+		matchedInterfaces := make([]bool, len(data.Interfaces))
+		for _, oldItem := range oldInterfaces {
+			for ni := range data.Interfaces {
+				if matchedInterfaces[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.NameVariable.ValueString() != "" || data.Interfaces[ni].NameVariable.ValueString() != "") {
+					if oldItem.NameVariable.ValueString() != data.Interfaces[ni].NameVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.Name.ValueString() != data.Interfaces[ni].Name.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch && (oldItem.ShutdownVariable.ValueString() != "" || data.Interfaces[ni].ShutdownVariable.ValueString() != "") {
+					if oldItem.ShutdownVariable.ValueString() != data.Interfaces[ni].ShutdownVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.Shutdown.ValueBool() != data.Interfaces[ni].Shutdown.ValueBool() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedInterfaces[ni] = true
+					{
+						resultC := make([]ServiceRoutingEIGRPInterfacesSummaryAddresses, 0, len(data.Interfaces[ni].SummaryAddresses))
+						matchedC := make([]bool, len(data.Interfaces[ni].SummaryAddresses))
+						for _, oldCItem := range oldItem.SummaryAddresses {
+							for nci := range data.Interfaces[ni].SummaryAddresses {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC && (oldCItem.AddressVariable.ValueString() != "" || data.Interfaces[ni].SummaryAddresses[nci].AddressVariable.ValueString() != "") {
+									if oldCItem.AddressVariable.ValueString() != data.Interfaces[ni].SummaryAddresses[nci].AddressVariable.ValueString() {
+										keyMatchC = false
+									}
+								} else if keyMatchC {
+									if oldCItem.Address.ValueString() != data.Interfaces[ni].SummaryAddresses[nci].Address.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC && (oldCItem.MaskVariable.ValueString() != "" || data.Interfaces[ni].SummaryAddresses[nci].MaskVariable.ValueString() != "") {
+									if oldCItem.MaskVariable.ValueString() != data.Interfaces[ni].SummaryAddresses[nci].MaskVariable.ValueString() {
+										keyMatchC = false
+									}
+								} else if keyMatchC {
+									if oldCItem.Mask.ValueString() != data.Interfaces[ni].SummaryAddresses[nci].Mask.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									resultC = append(resultC, data.Interfaces[ni].SummaryAddresses[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.Interfaces[ni].SummaryAddresses {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.Interfaces[ni].SummaryAddresses[nci])
+							}
+						}
+						data.Interfaces[ni].SummaryAddresses = resultC
+					}
+					resultInterfaces = append(resultInterfaces, data.Interfaces[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Interfaces {
+			if !matchedInterfaces[ni] {
+				resultInterfaces = append(resultInterfaces, data.Interfaces[ni])
+			}
+		}
+		data.Interfaces = resultInterfaces
 	}
 	data.RoutePolicyId = types.StringNull()
 
@@ -588,322 +791,3 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result)
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *ServiceRoutingEIGRP) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.AutonomousSystemId = types.Int64Null()
-	data.AutonomousSystemIdVariable = types.StringNull()
-	if t := res.Get(path + "asNum.optionType"); t.Exists() {
-		va := res.Get(path + "asNum.value")
-		if t.String() == "variable" {
-			data.AutonomousSystemIdVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AutonomousSystemId = types.Int64Value(va.Int())
-		}
-	}
-	for i := range data.Redistributes {
-		keys := [...]string{"protocol", "routePolicy.refId"}
-		keyValues := [...]string{data.Redistributes[i].Protocol.ValueString(), data.Redistributes[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{data.Redistributes[i].ProtocolVariable.ValueString(), ""}
-
-		var r gjson.Result
-		res.Get(path + "addressFamily.redistribute").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Redistributes[i].Protocol = types.StringNull()
-		data.Redistributes[i].ProtocolVariable = types.StringNull()
-		if t := r.Get("protocol.optionType"); t.Exists() {
-			va := r.Get("protocol.value")
-			if t.String() == "variable" {
-				data.Redistributes[i].ProtocolVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Redistributes[i].Protocol = types.StringValue(va.String())
-			}
-		}
-		data.Redistributes[i].RoutePolicyId = types.StringNull()
-
-		if t := r.Get("routePolicy.refId.optionType"); t.Exists() {
-			va := r.Get("routePolicy.refId.value")
-			if t.String() == "global" {
-				data.Redistributes[i].RoutePolicyId = types.StringValue(va.String())
-			}
-		}
-	}
-	for i := range data.Networks {
-		keys := [...]string{"prefix.address", "prefix.mask"}
-		keyValues := [...]string{data.Networks[i].IpAddress.ValueString(), data.Networks[i].Mask.ValueString()}
-		keyValuesVariables := [...]string{data.Networks[i].IpAddressVariable.ValueString(), data.Networks[i].MaskVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "addressFamily.network").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Networks[i].IpAddress = types.StringNull()
-		data.Networks[i].IpAddressVariable = types.StringNull()
-		if t := r.Get("prefix.address.optionType"); t.Exists() {
-			va := r.Get("prefix.address.value")
-			if t.String() == "variable" {
-				data.Networks[i].IpAddressVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Networks[i].IpAddress = types.StringValue(va.String())
-			}
-		}
-		data.Networks[i].Mask = types.StringNull()
-		data.Networks[i].MaskVariable = types.StringNull()
-		if t := r.Get("prefix.mask.optionType"); t.Exists() {
-			va := r.Get("prefix.mask.value")
-			if t.String() == "variable" {
-				data.Networks[i].MaskVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Networks[i].Mask = types.StringValue(va.String())
-			}
-		}
-	}
-	data.HelloInterval = types.Int64Null()
-	data.HelloIntervalVariable = types.StringNull()
-	if t := res.Get(path + "helloInterval.optionType"); t.Exists() {
-		va := res.Get(path + "helloInterval.value")
-		if t.String() == "variable" {
-			data.HelloIntervalVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.HelloInterval = types.Int64Value(va.Int())
-		}
-	}
-	data.HoldTime = types.Int64Null()
-	data.HoldTimeVariable = types.StringNull()
-	if t := res.Get(path + "holdTime.optionType"); t.Exists() {
-		va := res.Get(path + "holdTime.value")
-		if t.String() == "variable" {
-			data.HoldTimeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.HoldTime = types.Int64Value(va.Int())
-		}
-	}
-	data.AuthenticationType = types.StringNull()
-	data.AuthenticationTypeVariable = types.StringNull()
-	if t := res.Get(path + "authentication.type.optionType"); t.Exists() {
-		va := res.Get(path + "authentication.type.value")
-		if t.String() == "variable" {
-			data.AuthenticationTypeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AuthenticationType = types.StringValue(va.String())
-		}
-	}
-	for i := range data.Md5Keys {
-		keys := [...]string{"keyId"}
-		keyValues := [...]string{strconv.FormatInt(data.Md5Keys[i].KeyId.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{data.Md5Keys[i].KeyIdVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "authentication.key").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Md5Keys[i].KeyId = types.Int64Null()
-		data.Md5Keys[i].KeyIdVariable = types.StringNull()
-		if t := r.Get("keyId.optionType"); t.Exists() {
-			va := r.Get("keyId.value")
-			if t.String() == "variable" {
-				data.Md5Keys[i].KeyIdVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Md5Keys[i].KeyId = types.Int64Value(va.Int())
-			}
-		}
-	}
-	for i := range data.Interfaces {
-		keys := [...]string{"name", "shutdown"}
-		keyValues := [...]string{data.Interfaces[i].Name.ValueString(), strconv.FormatBool(data.Interfaces[i].Shutdown.ValueBool())}
-		keyValuesVariables := [...]string{data.Interfaces[i].NameVariable.ValueString(), data.Interfaces[i].ShutdownVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "afInterface").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Interfaces[i].Name = types.StringNull()
-		data.Interfaces[i].NameVariable = types.StringNull()
-		if t := r.Get("name.optionType"); t.Exists() {
-			va := r.Get("name.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].NameVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].Name = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].Shutdown = types.BoolNull()
-		data.Interfaces[i].ShutdownVariable = types.StringNull()
-		if t := r.Get("shutdown.optionType"); t.Exists() {
-			va := r.Get("shutdown.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].ShutdownVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].Shutdown = types.BoolValue(va.Bool())
-			}
-		}
-		for ci := range data.Interfaces[i].SummaryAddresses {
-			keys := [...]string{"prefix.address", "prefix.mask"}
-			keyValues := [...]string{data.Interfaces[i].SummaryAddresses[ci].Address.ValueString(), data.Interfaces[i].SummaryAddresses[ci].Mask.ValueString()}
-			keyValuesVariables := [...]string{data.Interfaces[i].SummaryAddresses[ci].AddressVariable.ValueString(), data.Interfaces[i].SummaryAddresses[ci].MaskVariable.ValueString()}
-
-			var cr gjson.Result
-			r.Get("summaryAddress").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.Interfaces[i].SummaryAddresses[ci].Address = types.StringNull()
-			data.Interfaces[i].SummaryAddresses[ci].AddressVariable = types.StringNull()
-			if t := cr.Get("prefix.address.optionType"); t.Exists() {
-				va := cr.Get("prefix.address.value")
-				if t.String() == "variable" {
-					data.Interfaces[i].SummaryAddresses[ci].AddressVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Interfaces[i].SummaryAddresses[ci].Address = types.StringValue(va.String())
-				}
-			}
-			data.Interfaces[i].SummaryAddresses[ci].Mask = types.StringNull()
-			data.Interfaces[i].SummaryAddresses[ci].MaskVariable = types.StringNull()
-			if t := cr.Get("prefix.mask.optionType"); t.Exists() {
-				va := cr.Get("prefix.mask.value")
-				if t.String() == "variable" {
-					data.Interfaces[i].SummaryAddresses[ci].MaskVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Interfaces[i].SummaryAddresses[ci].Mask = types.StringValue(va.String())
-				}
-			}
-		}
-	}
-	data.RoutePolicyId = types.StringNull()
-
-	if t := res.Get(path + "tableMap.name.refId.optionType"); t.Exists() {
-		va := res.Get(path + "tableMap.name.refId.value")
-		if t.String() == "global" {
-			data.RoutePolicyId = types.StringValue(va.String())
-		}
-	}
-	data.Filter = types.BoolNull()
-	data.FilterVariable = types.StringNull()
-	if t := res.Get(path + "tableMap.filter.optionType"); t.Exists() {
-		va := res.Get(path + "tableMap.filter.value")
-		if t.String() == "variable" {
-			data.FilterVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Filter = types.BoolValue(va.Bool())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

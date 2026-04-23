@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -180,7 +179,7 @@ func (data SystemIPv4DeviceAccess) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *SystemIPv4DeviceAccess) fromBody(ctx context.Context, res gjson.Result) {
+func (data *SystemIPv4DeviceAccess) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -193,10 +192,11 @@ func (data *SystemIPv4DeviceAccess) fromBody(ctx context.Context, res gjson.Resu
 
 	if t := res.Get(path + "defaultAction.optionType"); t.Exists() {
 		va := res.Get(path + "defaultAction.value")
-		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.ValueString() == "drop" || tempDefaultAction.ValueString() == "") {
+		if t.String() == "global" || (t.String() == "default" && (tempDefaultAction.ValueString() == "drop" || (fullRead && tempDefaultAction.ValueString() == ""))) {
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
+	oldSequences := data.Sequences
 	if value := res.Get(path + "sequences"); value.Exists() && len(value.Array()) > 0 {
 		data.Sequences = make([]SystemIPv4DeviceAccessSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -280,137 +280,37 @@ func (data *SystemIPv4DeviceAccess) fromBody(ctx context.Context, res gjson.Resu
 			data.Sequences = append(data.Sequences, item)
 			return true
 		})
+	} else {
+		data.Sequences = nil
+	}
+	if !fullRead {
+		resultSequences := make([]SystemIPv4DeviceAccessSequences, 0, len(data.Sequences))
+		matchedSequences := make([]bool, len(data.Sequences))
+		for _, oldItem := range oldSequences {
+			for ni := range data.Sequences {
+				if matchedSequences[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.Id.ValueInt64() != data.Sequences[ni].Id.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedSequences[ni] = true
+					resultSequences = append(resultSequences, data.Sequences[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Sequences {
+			if !matchedSequences[ni] {
+				resultSequences = append(resultSequences, data.Sequences[ni])
+			}
+		}
+		data.Sequences = resultSequences
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *SystemIPv4DeviceAccess) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	tempDefaultAction := data.DefaultAction
-	data.DefaultAction = types.StringNull()
-
-	if t := res.Get(path + "defaultAction.optionType"); t.Exists() {
-		va := res.Get(path + "defaultAction.value")
-		if t.String() == "global" || (t.String() == "default" && tempDefaultAction.ValueString() == "drop") {
-			data.DefaultAction = types.StringValue(va.String())
-		}
-	}
-	for i := range data.Sequences {
-		keys := [...]string{"sequenceId"}
-		keyValues := [...]string{strconv.FormatInt(data.Sequences[i].Id.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "sequences").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Sequences[i].Id = types.Int64Null()
-
-		if t := r.Get("sequenceId.optionType"); t.Exists() {
-			va := r.Get("sequenceId.value")
-			if t.String() == "global" {
-				data.Sequences[i].Id = types.Int64Value(va.Int())
-			}
-		}
-		data.Sequences[i].Name = types.StringNull()
-
-		if t := r.Get("sequenceName.optionType"); t.Exists() {
-			va := r.Get("sequenceName.value")
-			if t.String() == "global" {
-				data.Sequences[i].Name = types.StringValue(va.String())
-			}
-		}
-		data.Sequences[i].BaseAction = types.StringNull()
-
-		if t := r.Get("baseAction.optionType"); t.Exists() {
-			va := r.Get("baseAction.value")
-			if t.String() == "global" {
-				data.Sequences[i].BaseAction = types.StringValue(va.String())
-			}
-		}
-		data.Sequences[i].DeviceAccessPort = types.Int64Null()
-
-		if t := r.Get("matchEntries.destinationPort.optionType"); t.Exists() {
-			va := r.Get("matchEntries.destinationPort.value")
-			if t.String() == "global" {
-				data.Sequences[i].DeviceAccessPort = types.Int64Value(va.Int())
-			}
-		}
-		data.Sequences[i].DestinationDataPrefixListId = types.StringNull()
-
-		if t := r.Get("matchEntries.destinationDataPrefix.destinationDataPrefixList.refId.optionType"); t.Exists() {
-			va := r.Get("matchEntries.destinationDataPrefix.destinationDataPrefixList.refId.value")
-			if t.String() == "global" {
-				data.Sequences[i].DestinationDataPrefixListId = types.StringValue(va.String())
-			}
-		}
-		data.Sequences[i].DestinationIpPrefixList = types.SetNull(types.StringType)
-		data.Sequences[i].DestinationIpPrefixListVariable = types.StringNull()
-		if t := r.Get("matchEntries.destinationDataPrefix.destinationIpPrefixList.optionType"); t.Exists() {
-			va := r.Get("matchEntries.destinationDataPrefix.destinationIpPrefixList.value")
-			if t.String() == "variable" {
-				data.Sequences[i].DestinationIpPrefixListVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Sequences[i].DestinationIpPrefixList = helpers.GetStringSet(va.Array())
-			}
-		}
-		data.Sequences[i].SourcePorts = types.SetNull(types.Int64Type)
-
-		if t := r.Get("matchEntries.sourcePorts.optionType"); t.Exists() {
-			va := r.Get("matchEntries.sourcePorts.value")
-			if t.String() == "global" {
-				data.Sequences[i].SourcePorts = helpers.GetInt64Set(va.Array())
-			}
-		}
-		data.Sequences[i].SourceDataPrefixListId = types.StringNull()
-
-		if t := r.Get("matchEntries.sourceDataPrefix.sourceDataPrefixList.refId.optionType"); t.Exists() {
-			va := r.Get("matchEntries.sourceDataPrefix.sourceDataPrefixList.refId.value")
-			if t.String() == "global" {
-				data.Sequences[i].SourceDataPrefixListId = types.StringValue(va.String())
-			}
-		}
-		data.Sequences[i].SourceIpPrefixList = types.SetNull(types.StringType)
-		data.Sequences[i].SourceIpPrefixListVariable = types.StringNull()
-		if t := r.Get("matchEntries.sourceDataPrefix.sourceIpPrefixList.optionType"); t.Exists() {
-			va := r.Get("matchEntries.sourceDataPrefix.sourceIpPrefixList.value")
-			if t.String() == "variable" {
-				data.Sequences[i].SourceIpPrefixListVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Sequences[i].SourceIpPrefixList = helpers.GetStringSet(va.Array())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

@@ -184,7 +184,7 @@ func (data TransportCellularProfile) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *TransportCellularProfile) fromBody(ctx context.Context, res gjson.Result) {
+func (data *TransportCellularProfile) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -268,76 +268,3 @@ func (data *TransportCellularProfile) fromBody(ctx context.Context, res gjson.Re
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *TransportCellularProfile) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.ProfileId = types.Int64Null()
-	data.ProfileIdVariable = types.StringNull()
-	if t := res.Get(path + "profileConfig.id.optionType"); t.Exists() {
-		va := res.Get(path + "profileConfig.id.value")
-		if t.String() == "variable" {
-			data.ProfileIdVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.ProfileId = types.Int64Value(va.Int())
-		}
-	}
-	data.AccessPointName = types.StringNull()
-	data.AccessPointNameVariable = types.StringNull()
-	if t := res.Get(path + "profileConfig.profileInfo.apn.optionType"); t.Exists() {
-		va := res.Get(path + "profileConfig.profileInfo.apn.value")
-		if t.String() == "variable" {
-			data.AccessPointNameVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AccessPointName = types.StringValue(va.String())
-		}
-	}
-	data.AuthenticationType = types.StringNull()
-	data.AuthenticationTypeVariable = types.StringNull()
-	if t := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.type.optionType"); t.Exists() {
-		va := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.type.value")
-		if t.String() == "variable" {
-			data.AuthenticationTypeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AuthenticationType = types.StringValue(va.String())
-		}
-	}
-	data.ProfileUsername = types.StringNull()
-	data.ProfileUsernameVariable = types.StringNull()
-	if t := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.username.optionType"); t.Exists() {
-		va := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.username.value")
-		if t.String() == "variable" {
-			data.ProfileUsernameVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.ProfileUsername = types.StringValue(va.String())
-		}
-	}
-	data.PacketDataNetworkType = types.StringNull()
-	data.PacketDataNetworkTypeVariable = types.StringNull()
-	if t := res.Get(path + "profileConfig.profileInfo.pdnType.optionType"); t.Exists() {
-		va := res.Get(path + "profileConfig.profileInfo.pdnType.value")
-		if t.String() == "variable" {
-			data.PacketDataNetworkTypeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PacketDataNetworkType = types.StringValue(va.String())
-		}
-	}
-	data.NoOverwrite = types.BoolNull()
-	data.NoOverwriteVariable = types.StringNull()
-	if t := res.Get(path + "profileConfig.profileInfo.noOverwrite.optionType"); t.Exists() {
-		va := res.Get(path + "profileConfig.profileInfo.noOverwrite.value")
-		if t.String() == "variable" {
-			data.NoOverwriteVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.NoOverwrite = types.BoolValue(va.Bool())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

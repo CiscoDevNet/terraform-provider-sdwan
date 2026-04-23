@@ -105,7 +105,7 @@ func (data SystemBanner) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *SystemBanner) fromBody(ctx context.Context, res gjson.Result) {
+func (data *SystemBanner) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -136,36 +136,3 @@ func (data *SystemBanner) fromBody(ctx context.Context, res gjson.Result) {
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *SystemBanner) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.Login = types.StringNull()
-	data.LoginVariable = types.StringNull()
-	if t := res.Get(path + "login.optionType"); t.Exists() {
-		va := res.Get(path + "login.value")
-		if t.String() == "variable" {
-			data.LoginVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Login = types.StringValue(va.String())
-		}
-	}
-	data.Motd = types.StringNull()
-	data.MotdVariable = types.StringNull()
-	if t := res.Get(path + "motd.optionType"); t.Exists() {
-		va := res.Get(path + "motd.value")
-		if t.String() == "variable" {
-			data.MotdVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Motd = types.StringValue(va.String())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

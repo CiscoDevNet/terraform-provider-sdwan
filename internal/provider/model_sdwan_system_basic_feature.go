@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -726,7 +725,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
+func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -810,6 +809,7 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 			data.GpsSmsEnable = types.BoolValue(va.Bool())
 		}
 	}
+	oldGpsSmsMobileNumbers := data.GpsSmsMobileNumbers
 	if value := res.Get(path + "gpsLocation.geoFencing.sms.mobileNumber"); value.Exists() && len(value.Array()) > 0 {
 		data.GpsSmsMobileNumbers = make([]SystemBasicGpsSmsMobileNumbers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -827,6 +827,40 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 			data.GpsSmsMobileNumbers = append(data.GpsSmsMobileNumbers, item)
 			return true
 		})
+	} else {
+		data.GpsSmsMobileNumbers = nil
+	}
+	if !fullRead {
+		resultGpsSmsMobileNumbers := make([]SystemBasicGpsSmsMobileNumbers, 0, len(data.GpsSmsMobileNumbers))
+		matchedGpsSmsMobileNumbers := make([]bool, len(data.GpsSmsMobileNumbers))
+		for _, oldItem := range oldGpsSmsMobileNumbers {
+			for ni := range data.GpsSmsMobileNumbers {
+				if matchedGpsSmsMobileNumbers[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.NumberVariable.ValueString() != "" || data.GpsSmsMobileNumbers[ni].NumberVariable.ValueString() != "") {
+					if oldItem.NumberVariable.ValueString() != data.GpsSmsMobileNumbers[ni].NumberVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.Number.ValueString() != data.GpsSmsMobileNumbers[ni].Number.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedGpsSmsMobileNumbers[ni] = true
+					resultGpsSmsMobileNumbers = append(resultGpsSmsMobileNumbers, data.GpsSmsMobileNumbers[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.GpsSmsMobileNumbers {
+			if !matchedGpsSmsMobileNumbers[ni] {
+				resultGpsSmsMobileNumbers = append(resultGpsSmsMobileNumbers, data.GpsSmsMobileNumbers[ni])
+			}
+		}
+		data.GpsSmsMobileNumbers = resultGpsSmsMobileNumbers
 	}
 	data.DeviceGroups = types.SetNull(types.StringType)
 	data.DeviceGroupsVariable = types.StringNull()
@@ -1058,6 +1092,7 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 			data.AffinityPreferenceAuto = types.BoolValue(va.Bool())
 		}
 	}
+	oldAffinityPerVrfs := data.AffinityPerVrfs
 	if value := res.Get(path + "affinityPerVrf"); value.Exists() && len(value.Array()) > 0 {
 		data.AffinityPerVrfs = make([]SystemBasicAffinityPerVrfs, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -1085,420 +1120,41 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 			data.AffinityPerVrfs = append(data.AffinityPerVrfs, item)
 			return true
 		})
+	} else {
+		data.AffinityPerVrfs = nil
+	}
+	if !fullRead {
+		resultAffinityPerVrfs := make([]SystemBasicAffinityPerVrfs, 0, len(data.AffinityPerVrfs))
+		matchedAffinityPerVrfs := make([]bool, len(data.AffinityPerVrfs))
+		for _, oldItem := range oldAffinityPerVrfs {
+			for ni := range data.AffinityPerVrfs {
+				if matchedAffinityPerVrfs[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.AffinityGroupNumberVariable.ValueString() != "" || data.AffinityPerVrfs[ni].AffinityGroupNumberVariable.ValueString() != "") {
+					if oldItem.AffinityGroupNumberVariable.ValueString() != data.AffinityPerVrfs[ni].AffinityGroupNumberVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.AffinityGroupNumber.ValueInt64() != data.AffinityPerVrfs[ni].AffinityGroupNumber.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedAffinityPerVrfs[ni] = true
+					resultAffinityPerVrfs = append(resultAffinityPerVrfs, data.AffinityPerVrfs[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.AffinityPerVrfs {
+			if !matchedAffinityPerVrfs[ni] {
+				resultAffinityPerVrfs = append(resultAffinityPerVrfs, data.AffinityPerVrfs[ni])
+			}
+		}
+		data.AffinityPerVrfs = resultAffinityPerVrfs
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *SystemBasic) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.Timezone = types.StringNull()
-	data.TimezoneVariable = types.StringNull()
-	if t := res.Get(path + "clock.timezone.optionType"); t.Exists() {
-		va := res.Get(path + "clock.timezone.value")
-		if t.String() == "variable" {
-			data.TimezoneVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Timezone = types.StringValue(va.String())
-		}
-	}
-	data.ConfigDescription = types.StringNull()
-	data.ConfigDescriptionVariable = types.StringNull()
-	if t := res.Get(path + "description.optionType"); t.Exists() {
-		va := res.Get(path + "description.value")
-		if t.String() == "variable" {
-			data.ConfigDescriptionVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.ConfigDescription = types.StringValue(va.String())
-		}
-	}
-	data.Location = types.StringNull()
-	data.LocationVariable = types.StringNull()
-	if t := res.Get(path + "location.optionType"); t.Exists() {
-		va := res.Get(path + "location.value")
-		if t.String() == "variable" {
-			data.LocationVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Location = types.StringValue(va.String())
-		}
-	}
-	data.GpsLongitude = types.Float64Null()
-	data.GpsLongitudeVariable = types.StringNull()
-	if t := res.Get(path + "gpsLocation.longitude.optionType"); t.Exists() {
-		va := res.Get(path + "gpsLocation.longitude.value")
-		if t.String() == "variable" {
-			data.GpsLongitudeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.GpsLongitude = types.Float64Value(va.Float())
-		}
-	}
-	data.GpsLatitude = types.Float64Null()
-	data.GpsLatitudeVariable = types.StringNull()
-	if t := res.Get(path + "gpsLocation.latitude.optionType"); t.Exists() {
-		va := res.Get(path + "gpsLocation.latitude.value")
-		if t.String() == "variable" {
-			data.GpsLatitudeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.GpsLatitude = types.Float64Value(va.Float())
-		}
-	}
-	data.GpsGeoFencingEnable = types.BoolNull()
-
-	if t := res.Get(path + "gpsLocation.geoFencing.enable.optionType"); t.Exists() {
-		va := res.Get(path + "gpsLocation.geoFencing.enable.value")
-		if t.String() == "global" {
-			data.GpsGeoFencingEnable = types.BoolValue(va.Bool())
-		}
-	}
-	data.GpsGeoFencingRange = types.Int64Null()
-	data.GpsGeoFencingRangeVariable = types.StringNull()
-	if t := res.Get(path + "gpsLocation.geoFencing.range.optionType"); t.Exists() {
-		va := res.Get(path + "gpsLocation.geoFencing.range.value")
-		if t.String() == "variable" {
-			data.GpsGeoFencingRangeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.GpsGeoFencingRange = types.Int64Value(va.Int())
-		}
-	}
-	data.GpsSmsEnable = types.BoolNull()
-
-	if t := res.Get(path + "gpsLocation.geoFencing.sms.enable.optionType"); t.Exists() {
-		va := res.Get(path + "gpsLocation.geoFencing.sms.enable.value")
-		if t.String() == "global" {
-			data.GpsSmsEnable = types.BoolValue(va.Bool())
-		}
-	}
-	for i := range data.GpsSmsMobileNumbers {
-		keys := [...]string{"number"}
-		keyValues := [...]string{data.GpsSmsMobileNumbers[i].Number.ValueString()}
-		keyValuesVariables := [...]string{data.GpsSmsMobileNumbers[i].NumberVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "gpsLocation.geoFencing.sms.mobileNumber").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.GpsSmsMobileNumbers[i].Number = types.StringNull()
-		data.GpsSmsMobileNumbers[i].NumberVariable = types.StringNull()
-		if t := r.Get("number.optionType"); t.Exists() {
-			va := r.Get("number.value")
-			if t.String() == "variable" {
-				data.GpsSmsMobileNumbers[i].NumberVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.GpsSmsMobileNumbers[i].Number = types.StringValue(va.String())
-			}
-		}
-	}
-	data.DeviceGroups = types.SetNull(types.StringType)
-	data.DeviceGroupsVariable = types.StringNull()
-	if t := res.Get(path + "deviceGroups.optionType"); t.Exists() {
-		va := res.Get(path + "deviceGroups.value")
-		if t.String() == "variable" {
-			data.DeviceGroupsVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.DeviceGroups = helpers.GetStringSet(va.Array())
-		}
-	}
-	data.ControllerGroups = types.SetNull(types.Int64Type)
-	data.ControllerGroupsVariable = types.StringNull()
-	if t := res.Get(path + "controllerGroupList.optionType"); t.Exists() {
-		va := res.Get(path + "controllerGroupList.value")
-		if t.String() == "variable" {
-			data.ControllerGroupsVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.ControllerGroups = helpers.GetInt64Set(va.Array())
-		}
-	}
-	data.OverlayId = types.Int64Null()
-	data.OverlayIdVariable = types.StringNull()
-	if t := res.Get(path + "overlayId.optionType"); t.Exists() {
-		va := res.Get(path + "overlayId.value")
-		if t.String() == "variable" {
-			data.OverlayIdVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.OverlayId = types.Int64Value(va.Int())
-		}
-	}
-	data.PortOffset = types.Int64Null()
-	data.PortOffsetVariable = types.StringNull()
-	if t := res.Get(path + "portOffset.optionType"); t.Exists() {
-		va := res.Get(path + "portOffset.value")
-		if t.String() == "variable" {
-			data.PortOffsetVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PortOffset = types.Int64Value(va.Int())
-		}
-	}
-	data.PortHopping = types.BoolNull()
-	data.PortHoppingVariable = types.StringNull()
-	if t := res.Get(path + "portHop.optionType"); t.Exists() {
-		va := res.Get(path + "portHop.value")
-		if t.String() == "variable" {
-			data.PortHoppingVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PortHopping = types.BoolValue(va.Bool())
-		}
-	}
-	data.ControlSessionPps = types.Int64Null()
-	data.ControlSessionPpsVariable = types.StringNull()
-	if t := res.Get(path + "controlSessionPps.optionType"); t.Exists() {
-		va := res.Get(path + "controlSessionPps.value")
-		if t.String() == "variable" {
-			data.ControlSessionPpsVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.ControlSessionPps = types.Int64Value(va.Int())
-		}
-	}
-	data.TrackTransport = types.BoolNull()
-	data.TrackTransportVariable = types.StringNull()
-	if t := res.Get(path + "trackTransport.optionType"); t.Exists() {
-		va := res.Get(path + "trackTransport.value")
-		if t.String() == "variable" {
-			data.TrackTransportVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TrackTransport = types.BoolValue(va.Bool())
-		}
-	}
-	data.TrackInterfaceTag = types.Int64Null()
-	data.TrackInterfaceTagVariable = types.StringNull()
-	if t := res.Get(path + "trackInterfaceTag.optionType"); t.Exists() {
-		va := res.Get(path + "trackInterfaceTag.value")
-		if t.String() == "variable" {
-			data.TrackInterfaceTagVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TrackInterfaceTag = types.Int64Value(va.Int())
-		}
-	}
-	data.ConsoleBaudRate = types.StringNull()
-	data.ConsoleBaudRateVariable = types.StringNull()
-	if t := res.Get(path + "consoleBaudRate.optionType"); t.Exists() {
-		va := res.Get(path + "consoleBaudRate.value")
-		if t.String() == "variable" {
-			data.ConsoleBaudRateVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.ConsoleBaudRate = types.StringValue(va.String())
-		}
-	}
-	data.MaxOmpSessions = types.Int64Null()
-	data.MaxOmpSessionsVariable = types.StringNull()
-	if t := res.Get(path + "maxOmpSessions.optionType"); t.Exists() {
-		va := res.Get(path + "maxOmpSessions.value")
-		if t.String() == "variable" {
-			data.MaxOmpSessionsVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.MaxOmpSessions = types.Int64Value(va.Int())
-		}
-	}
-	data.MultiTenant = types.BoolNull()
-	data.MultiTenantVariable = types.StringNull()
-	if t := res.Get(path + "multiTenant.optionType"); t.Exists() {
-		va := res.Get(path + "multiTenant.value")
-		if t.String() == "variable" {
-			data.MultiTenantVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.MultiTenant = types.BoolValue(va.Bool())
-		}
-	}
-	data.TrackDefaultGateway = types.BoolNull()
-	data.TrackDefaultGatewayVariable = types.StringNull()
-	if t := res.Get(path + "trackDefaultGateway.optionType"); t.Exists() {
-		va := res.Get(path + "trackDefaultGateway.value")
-		if t.String() == "variable" {
-			data.TrackDefaultGatewayVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TrackDefaultGateway = types.BoolValue(va.Bool())
-		}
-	}
-	data.TrackerDiaStabilizeStatus = types.BoolNull()
-	data.TrackerDiaStabilizeStatusVariable = types.StringNull()
-	if t := res.Get(path + "trackerDiaStabilizeStatus.optionType"); t.Exists() {
-		va := res.Get(path + "trackerDiaStabilizeStatus.value")
-		if t.String() == "variable" {
-			data.TrackerDiaStabilizeStatusVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TrackerDiaStabilizeStatus = types.BoolValue(va.Bool())
-		}
-	}
-	data.AdminTechOnFailure = types.BoolNull()
-	data.AdminTechOnFailureVariable = types.StringNull()
-	if t := res.Get(path + "adminTechOnFailure.optionType"); t.Exists() {
-		va := res.Get(path + "adminTechOnFailure.value")
-		if t.String() == "variable" {
-			data.AdminTechOnFailureVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AdminTechOnFailure = types.BoolValue(va.Bool())
-		}
-	}
-	data.IdleTimeout = types.Int64Null()
-	data.IdleTimeoutVariable = types.StringNull()
-	if t := res.Get(path + "idleTimeout.optionType"); t.Exists() {
-		va := res.Get(path + "idleTimeout.value")
-		if t.String() == "variable" {
-			data.IdleTimeoutVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.IdleTimeout = types.Int64Value(va.Int())
-		}
-	}
-	data.OnDemandEnable = types.BoolNull()
-	data.OnDemandEnableVariable = types.StringNull()
-	if t := res.Get(path + "onDemand.onDemandEnable.optionType"); t.Exists() {
-		va := res.Get(path + "onDemand.onDemandEnable.value")
-		if t.String() == "variable" {
-			data.OnDemandEnableVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.OnDemandEnable = types.BoolValue(va.Bool())
-		}
-	}
-	data.OnDemandIdleTimeout = types.Int64Null()
-	data.OnDemandIdleTimeoutVariable = types.StringNull()
-	if t := res.Get(path + "onDemand.onDemandIdleTimeout.optionType"); t.Exists() {
-		va := res.Get(path + "onDemand.onDemandIdleTimeout.value")
-		if t.String() == "variable" {
-			data.OnDemandIdleTimeoutVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.OnDemandIdleTimeout = types.Int64Value(va.Int())
-		}
-	}
-	data.TransportGateway = types.BoolNull()
-	data.TransportGatewayVariable = types.StringNull()
-	if t := res.Get(path + "transportGateway.optionType"); t.Exists() {
-		va := res.Get(path + "transportGateway.value")
-		if t.String() == "variable" {
-			data.TransportGatewayVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TransportGateway = types.BoolValue(va.Bool())
-		}
-	}
-	data.EnhancedAppAwareRouting = types.StringNull()
-	data.EnhancedAppAwareRoutingVariable = types.StringNull()
-	if t := res.Get(path + "epfr.optionType"); t.Exists() {
-		va := res.Get(path + "epfr.value")
-		if t.String() == "variable" {
-			data.EnhancedAppAwareRoutingVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.EnhancedAppAwareRouting = types.StringValue(va.String())
-		}
-	}
-	data.SiteTypes = types.SetNull(types.StringType)
-	data.SiteTypesVariable = types.StringNull()
-	if t := res.Get(path + "siteType.optionType"); t.Exists() {
-		va := res.Get(path + "siteType.value")
-		if t.String() == "variable" {
-			data.SiteTypesVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.SiteTypes = helpers.GetStringSet(va.Array())
-		}
-	}
-	data.AffinityGroupNumber = types.Int64Null()
-	data.AffinityGroupNumberVariable = types.StringNull()
-	if t := res.Get(path + "affinityGroupNumber.optionType"); t.Exists() {
-		va := res.Get(path + "affinityGroupNumber.value")
-		if t.String() == "variable" {
-			data.AffinityGroupNumberVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AffinityGroupNumber = types.Int64Value(va.Int())
-		}
-	}
-	data.AffinityGroupPreferences = types.SetNull(types.Int64Type)
-	data.AffinityGroupPreferencesVariable = types.StringNull()
-	if t := res.Get(path + "affinityGroupPreference.optionType"); t.Exists() {
-		va := res.Get(path + "affinityGroupPreference.value")
-		if t.String() == "variable" {
-			data.AffinityGroupPreferencesVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AffinityGroupPreferences = helpers.GetInt64Set(va.Array())
-		}
-	}
-	data.AffinityPreferenceAuto = types.BoolNull()
-	data.AffinityPreferenceAutoVariable = types.StringNull()
-	if t := res.Get(path + "affinityPreferenceAuto.optionType"); t.Exists() {
-		va := res.Get(path + "affinityPreferenceAuto.value")
-		if t.String() == "variable" {
-			data.AffinityPreferenceAutoVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AffinityPreferenceAuto = types.BoolValue(va.Bool())
-		}
-	}
-	for i := range data.AffinityPerVrfs {
-		keys := [...]string{"affinityGroupNumber"}
-		keyValues := [...]string{strconv.FormatInt(data.AffinityPerVrfs[i].AffinityGroupNumber.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{data.AffinityPerVrfs[i].AffinityGroupNumberVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "affinityPerVrf").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.AffinityPerVrfs[i].AffinityGroupNumber = types.Int64Null()
-		data.AffinityPerVrfs[i].AffinityGroupNumberVariable = types.StringNull()
-		if t := r.Get("affinityGroupNumber.optionType"); t.Exists() {
-			va := r.Get("affinityGroupNumber.value")
-			if t.String() == "variable" {
-				data.AffinityPerVrfs[i].AffinityGroupNumberVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.AffinityPerVrfs[i].AffinityGroupNumber = types.Int64Value(va.Int())
-			}
-		}
-		data.AffinityPerVrfs[i].VrfRange = types.StringNull()
-		data.AffinityPerVrfs[i].VrfRangeVariable = types.StringNull()
-		if t := r.Get("vrfRange.optionType"); t.Exists() {
-			va := r.Get("vrfRange.value")
-			if t.String() == "variable" {
-				data.AffinityPerVrfs[i].VrfRangeVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.AffinityPerVrfs[i].VrfRange = types.StringValue(va.String())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

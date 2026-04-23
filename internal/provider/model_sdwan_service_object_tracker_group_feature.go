@@ -118,7 +118,7 @@ func (data ServiceObjectTrackerGroup) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ServiceObjectTrackerGroup) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceObjectTrackerGroup) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -136,6 +136,7 @@ func (data *ServiceObjectTrackerGroup) fromBody(ctx context.Context, res gjson.R
 			data.ObjectTrackerId = types.Int64Value(va.Int())
 		}
 	}
+	oldTrackerElements := data.TrackerElements
 	if value := res.Get(path + "trackerRefs"); value.Exists() && len(value.Array()) > 0 {
 		data.TrackerElements = make([]ServiceObjectTrackerGroupTrackerElements, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -151,6 +152,36 @@ func (data *ServiceObjectTrackerGroup) fromBody(ctx context.Context, res gjson.R
 			data.TrackerElements = append(data.TrackerElements, item)
 			return true
 		})
+	} else {
+		data.TrackerElements = nil
+	}
+	if !fullRead {
+		resultTrackerElements := make([]ServiceObjectTrackerGroupTrackerElements, 0, len(data.TrackerElements))
+		matchedTrackerElements := make([]bool, len(data.TrackerElements))
+		for _, oldItem := range oldTrackerElements {
+			for ni := range data.TrackerElements {
+				if matchedTrackerElements[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.ObjectTrackerId.ValueString() != data.TrackerElements[ni].ObjectTrackerId.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedTrackerElements[ni] = true
+					resultTrackerElements = append(resultTrackerElements, data.TrackerElements[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.TrackerElements {
+			if !matchedTrackerElements[ni] {
+				resultTrackerElements = append(resultTrackerElements, data.TrackerElements[ni])
+			}
+		}
+		data.TrackerElements = resultTrackerElements
 	}
 	data.Reachable = types.StringNull()
 	data.ReachableVariable = types.StringNull()
@@ -165,76 +196,3 @@ func (data *ServiceObjectTrackerGroup) fromBody(ctx context.Context, res gjson.R
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *ServiceObjectTrackerGroup) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.ObjectTrackerId = types.Int64Null()
-	data.ObjectTrackerIdVariable = types.StringNull()
-	if t := res.Get(path + "objectId.optionType"); t.Exists() {
-		va := res.Get(path + "objectId.value")
-		if t.String() == "variable" {
-			data.ObjectTrackerIdVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.ObjectTrackerId = types.Int64Value(va.Int())
-		}
-	}
-	for i := range data.TrackerElements {
-		keys := [...]string{"trackerRef.refId"}
-		keyValues := [...]string{data.TrackerElements[i].ObjectTrackerId.ValueString()}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "trackerRefs").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.TrackerElements[i].ObjectTrackerId = types.StringNull()
-
-		if t := r.Get("trackerRef.refId.optionType"); t.Exists() {
-			va := r.Get("trackerRef.refId.value")
-			if t.String() == "global" {
-				data.TrackerElements[i].ObjectTrackerId = types.StringValue(va.String())
-			}
-		}
-	}
-	data.Reachable = types.StringNull()
-	data.ReachableVariable = types.StringNull()
-	if t := res.Get(path + "criteria.optionType"); t.Exists() {
-		va := res.Get(path + "criteria.value")
-		if t.String() == "variable" {
-			data.ReachableVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Reachable = types.StringValue(va.String())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

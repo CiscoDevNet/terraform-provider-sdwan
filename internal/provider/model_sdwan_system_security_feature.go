@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -420,7 +419,7 @@ func (data SystemSecurity) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *SystemSecurity) fromBody(ctx context.Context, res gjson.Result) {
+func (data *SystemSecurity) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -478,6 +477,7 @@ func (data *SystemSecurity) fromBody(ctx context.Context, res gjson.Result) {
 			data.IntegrityType = helpers.GetStringSet(va.Array())
 		}
 	}
+	oldKeychains := data.Keychains
 	if value := res.Get(path + "keychain"); value.Exists() && len(value.Array()) > 0 {
 		data.Keychains = make([]SystemSecurityKeychains, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -501,7 +501,38 @@ func (data *SystemSecurity) fromBody(ctx context.Context, res gjson.Result) {
 			data.Keychains = append(data.Keychains, item)
 			return true
 		})
+	} else {
+		data.Keychains = nil
 	}
+	if !fullRead {
+		resultKeychains := make([]SystemSecurityKeychains, 0, len(data.Keychains))
+		matchedKeychains := make([]bool, len(data.Keychains))
+		for _, oldItem := range oldKeychains {
+			for ni := range data.Keychains {
+				if matchedKeychains[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.KeyId.ValueInt64() != data.Keychains[ni].KeyId.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedKeychains[ni] = true
+					resultKeychains = append(resultKeychains, data.Keychains[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Keychains {
+			if !matchedKeychains[ni] {
+				resultKeychains = append(resultKeychains, data.Keychains[ni])
+			}
+		}
+		data.Keychains = resultKeychains
+	}
+	oldKeys := data.Keys
 	if value := res.Get(path + "key"); value.Exists() && len(value.Array()) > 0 {
 		data.Keys = make([]SystemSecurityKeys, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -675,306 +706,39 @@ func (data *SystemSecurity) fromBody(ctx context.Context, res gjson.Result) {
 			data.Keys = append(data.Keys, item)
 			return true
 		})
+	} else {
+		data.Keys = nil
+	}
+	if !fullRead {
+		resultKeys := make([]SystemSecurityKeys, 0, len(data.Keys))
+		matchedKeys := make([]bool, len(data.Keys))
+		for _, oldItem := range oldKeys {
+			for ni := range data.Keys {
+				if matchedKeys[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.Id.ValueInt64() != data.Keys[ni].Id.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedKeys[ni] = true
+					data.Keys[ni].KeyString = oldItem.KeyString
+					data.Keys[ni].KeyStringVariable = oldItem.KeyStringVariable
+					resultKeys = append(resultKeys, data.Keys[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Keys {
+			if !matchedKeys[ni] {
+				resultKeys = append(resultKeys, data.Keys[ni])
+			}
+		}
+		data.Keys = resultKeys
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *SystemSecurity) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.Rekey = types.Int64Null()
-	data.RekeyVariable = types.StringNull()
-	if t := res.Get(path + "rekey.optionType"); t.Exists() {
-		va := res.Get(path + "rekey.value")
-		if t.String() == "variable" {
-			data.RekeyVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Rekey = types.Int64Value(va.Int())
-		}
-	}
-	data.AntiReplayWindow = types.StringNull()
-	data.AntiReplayWindowVariable = types.StringNull()
-	if t := res.Get(path + "replayWindow.optionType"); t.Exists() {
-		va := res.Get(path + "replayWindow.value")
-		if t.String() == "variable" {
-			data.AntiReplayWindowVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AntiReplayWindow = types.StringValue(va.String())
-		}
-	}
-	data.ExtendedAntiReplayWindow = types.Int64Null()
-	data.ExtendedAntiReplayWindowVariable = types.StringNull()
-	if t := res.Get(path + "extendedArWindow.optionType"); t.Exists() {
-		va := res.Get(path + "extendedArWindow.value")
-		if t.String() == "variable" {
-			data.ExtendedAntiReplayWindowVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.ExtendedAntiReplayWindow = types.Int64Value(va.Int())
-		}
-	}
-	data.IpsecPairwiseKeying = types.BoolNull()
-	data.IpsecPairwiseKeyingVariable = types.StringNull()
-	if t := res.Get(path + "pairwiseKeying.optionType"); t.Exists() {
-		va := res.Get(path + "pairwiseKeying.value")
-		if t.String() == "variable" {
-			data.IpsecPairwiseKeyingVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.IpsecPairwiseKeying = types.BoolValue(va.Bool())
-		}
-	}
-	data.IntegrityType = types.SetNull(types.StringType)
-	data.IntegrityTypeVariable = types.StringNull()
-	if t := res.Get(path + "integrityType.optionType"); t.Exists() {
-		va := res.Get(path + "integrityType.value")
-		if t.String() == "variable" {
-			data.IntegrityTypeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.IntegrityType = helpers.GetStringSet(va.Array())
-		}
-	}
-	for i := range data.Keychains {
-		keys := [...]string{"id"}
-		keyValues := [...]string{strconv.FormatInt(data.Keychains[i].KeyId.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "keychain").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Keychains[i].KeyChainName = types.StringNull()
-
-		if t := r.Get("name.optionType"); t.Exists() {
-			va := r.Get("name.value")
-			if t.String() == "global" {
-				data.Keychains[i].KeyChainName = types.StringValue(va.String())
-			}
-		}
-		data.Keychains[i].KeyId = types.Int64Null()
-
-		if t := r.Get("id.optionType"); t.Exists() {
-			va := r.Get("id.value")
-			if t.String() == "global" {
-				data.Keychains[i].KeyId = types.Int64Value(va.Int())
-			}
-		}
-	}
-	for i := range data.Keys {
-		keys := [...]string{"id"}
-		keyValues := [...]string{strconv.FormatInt(data.Keys[i].Id.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "key").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Keys[i].Id = types.Int64Null()
-
-		if t := r.Get("id.optionType"); t.Exists() {
-			va := r.Get("id.value")
-			if t.String() == "global" {
-				data.Keys[i].Id = types.Int64Value(va.Int())
-			}
-		}
-		data.Keys[i].Name = types.StringNull()
-
-		if t := r.Get("name.optionType"); t.Exists() {
-			va := r.Get("name.value")
-			if t.String() == "global" {
-				data.Keys[i].Name = types.StringValue(va.String())
-			}
-		}
-		data.Keys[i].SendId = types.Int64Null()
-		data.Keys[i].SendIdVariable = types.StringNull()
-		if t := r.Get("sendId.optionType"); t.Exists() {
-			va := r.Get("sendId.value")
-			if t.String() == "variable" {
-				data.Keys[i].SendIdVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Keys[i].SendId = types.Int64Value(va.Int())
-			}
-		}
-		data.Keys[i].ReceiverId = types.Int64Null()
-		data.Keys[i].ReceiverIdVariable = types.StringNull()
-		if t := r.Get("recvId.optionType"); t.Exists() {
-			va := r.Get("recvId.value")
-			if t.String() == "variable" {
-				data.Keys[i].ReceiverIdVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Keys[i].ReceiverId = types.Int64Value(va.Int())
-			}
-		}
-		data.Keys[i].IncludeTcpOptions = types.BoolNull()
-		data.Keys[i].IncludeTcpOptionsVariable = types.StringNull()
-		if t := r.Get("includeTcpOptions.optionType"); t.Exists() {
-			va := r.Get("includeTcpOptions.value")
-			if t.String() == "variable" {
-				data.Keys[i].IncludeTcpOptionsVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Keys[i].IncludeTcpOptions = types.BoolValue(va.Bool())
-			}
-		}
-		data.Keys[i].AcceptAoMismatch = types.BoolNull()
-		data.Keys[i].AcceptAoMismatchVariable = types.StringNull()
-		if t := r.Get("acceptAoMismatch.optionType"); t.Exists() {
-			va := r.Get("acceptAoMismatch.value")
-			if t.String() == "variable" {
-				data.Keys[i].AcceptAoMismatchVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Keys[i].AcceptAoMismatch = types.BoolValue(va.Bool())
-			}
-		}
-		data.Keys[i].CryptoAlgorithm = types.StringNull()
-
-		if t := r.Get("tcp.optionType"); t.Exists() {
-			va := r.Get("tcp.value")
-			if t.String() == "global" {
-				data.Keys[i].CryptoAlgorithm = types.StringValue(va.String())
-			}
-		}
-		data.Keys[i].SendLifeTimeLocal = types.BoolNull()
-		data.Keys[i].SendLifeTimeLocalVariable = types.StringNull()
-		if t := r.Get("sendLifetime.local.optionType"); t.Exists() {
-			va := r.Get("sendLifetime.local.value")
-			if t.String() == "variable" {
-				data.Keys[i].SendLifeTimeLocalVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Keys[i].SendLifeTimeLocal = types.BoolValue(va.Bool())
-			}
-		}
-		data.Keys[i].SendLifeTimeStartEpoch = types.Int64Null()
-
-		if t := r.Get("sendLifetime.startEpoch.optionType"); t.Exists() {
-			va := r.Get("sendLifetime.startEpoch.value")
-			if t.String() == "global" {
-				data.Keys[i].SendLifeTimeStartEpoch = types.Int64Value(va.Int())
-			}
-		}
-		data.Keys[i].SendLifeTimeInfinite = types.BoolNull()
-		data.Keys[i].SendLifeTimeInfiniteVariable = types.StringNull()
-		if t := r.Get("sendLifetime.oneOfendChoice.infinite.optionType"); t.Exists() {
-			va := r.Get("sendLifetime.oneOfendChoice.infinite.value")
-			if t.String() == "variable" {
-				data.Keys[i].SendLifeTimeInfiniteVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Keys[i].SendLifeTimeInfinite = types.BoolValue(va.Bool())
-			}
-		}
-		data.Keys[i].SendLifeTimeDuration = types.Int64Null()
-		data.Keys[i].SendLifeTimeDurationVariable = types.StringNull()
-		if t := r.Get("sendLifetime.oneOfendChoice.duration.optionType"); t.Exists() {
-			va := r.Get("sendLifetime.oneOfendChoice.duration.value")
-			if t.String() == "variable" {
-				data.Keys[i].SendLifeTimeDurationVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Keys[i].SendLifeTimeDuration = types.Int64Value(va.Int())
-			}
-		}
-		data.Keys[i].SendLifeTimeExact = types.Int64Null()
-
-		if t := r.Get("sendLifetime.oneOfendChoice.exact.optionType"); t.Exists() {
-			va := r.Get("sendLifetime.oneOfendChoice.exact.value")
-			if t.String() == "global" {
-				data.Keys[i].SendLifeTimeExact = types.Int64Value(va.Int())
-			}
-		}
-		data.Keys[i].AcceptLifeTimeLocal = types.BoolNull()
-		data.Keys[i].AcceptLifeTimeLocalVariable = types.StringNull()
-		if t := r.Get("acceptLifetime.local.optionType"); t.Exists() {
-			va := r.Get("acceptLifetime.local.value")
-			if t.String() == "variable" {
-				data.Keys[i].AcceptLifeTimeLocalVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Keys[i].AcceptLifeTimeLocal = types.BoolValue(va.Bool())
-			}
-		}
-		data.Keys[i].AcceptLifeTimeStartEpoch = types.Int64Null()
-
-		if t := r.Get("acceptLifetime.startEpoch.optionType"); t.Exists() {
-			va := r.Get("acceptLifetime.startEpoch.value")
-			if t.String() == "global" {
-				data.Keys[i].AcceptLifeTimeStartEpoch = types.Int64Value(va.Int())
-			}
-		}
-		data.Keys[i].AcceptLifeTimeInfinite = types.BoolNull()
-		data.Keys[i].AcceptLifeTimeInfiniteVariable = types.StringNull()
-		if t := r.Get("acceptLifetime.oneOfendChoice.infinite.optionType"); t.Exists() {
-			va := r.Get("acceptLifetime.oneOfendChoice.infinite.value")
-			if t.String() == "variable" {
-				data.Keys[i].AcceptLifeTimeInfiniteVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Keys[i].AcceptLifeTimeInfinite = types.BoolValue(va.Bool())
-			}
-		}
-		data.Keys[i].AcceptLifeTimeDuration = types.Int64Null()
-		data.Keys[i].AcceptLifeTimeDurationVariable = types.StringNull()
-		if t := r.Get("acceptLifetime.oneOfendChoice.duration.optionType"); t.Exists() {
-			va := r.Get("acceptLifetime.oneOfendChoice.duration.value")
-			if t.String() == "variable" {
-				data.Keys[i].AcceptLifeTimeDurationVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Keys[i].AcceptLifeTimeDuration = types.Int64Value(va.Int())
-			}
-		}
-		data.Keys[i].AcceptLifeTimeExact = types.Int64Null()
-
-		if t := r.Get("acceptLifetime.oneOfendChoice.exact.optionType"); t.Exists() {
-			va := r.Get("acceptLifetime.oneOfendChoice.exact.value")
-			if t.String() == "global" {
-				data.Keys[i].AcceptLifeTimeExact = types.Int64Value(va.Int())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

@@ -171,7 +171,7 @@ func (d *SystemIPv6DeviceAccessProfileParcelDataSource) Read(ctx context.Context
 		return
 	}
 
-	config.fromBody(ctx, res)
+	config.fromBody(ctx, res, true)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Name.ValueString()))
 

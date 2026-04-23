@@ -713,7 +713,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
+func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -749,6 +749,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 			data.ServerAuthOrder = helpers.GetStringList(va.Array())
 		}
 	}
+	oldUsers := data.Users
 	if value := res.Get(path + "user"); value.Exists() && len(value.Array()) > 0 {
 		data.Users = make([]SystemAAAUsers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -812,7 +813,76 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 			data.Users = append(data.Users, item)
 			return true
 		})
+	} else {
+		data.Users = nil
 	}
+	if !fullRead {
+		resultUsers := make([]SystemAAAUsers, 0, len(data.Users))
+		matchedUsers := make([]bool, len(data.Users))
+		for _, oldItem := range oldUsers {
+			for ni := range data.Users {
+				if matchedUsers[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.NameVariable.ValueString() != "" || data.Users[ni].NameVariable.ValueString() != "") {
+					if oldItem.NameVariable.ValueString() != data.Users[ni].NameVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.Name.ValueString() != data.Users[ni].Name.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedUsers[ni] = true
+					data.Users[ni].Password = oldItem.Password
+					data.Users[ni].PasswordVariable = oldItem.PasswordVariable
+					{
+						resultC := make([]SystemAAAUsersPublicKeys, 0, len(data.Users[ni].PublicKeys))
+						matchedC := make([]bool, len(data.Users[ni].PublicKeys))
+						for _, oldCItem := range oldItem.PublicKeys {
+							for nci := range data.Users[ni].PublicKeys {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC && (oldCItem.KeyStringVariable.ValueString() != "" || data.Users[ni].PublicKeys[nci].KeyStringVariable.ValueString() != "") {
+									if oldCItem.KeyStringVariable.ValueString() != data.Users[ni].PublicKeys[nci].KeyStringVariable.ValueString() {
+										keyMatchC = false
+									}
+								} else if keyMatchC {
+									if oldCItem.KeyString.ValueString() != data.Users[ni].PublicKeys[nci].KeyString.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									resultC = append(resultC, data.Users[ni].PublicKeys[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.Users[ni].PublicKeys {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.Users[ni].PublicKeys[nci])
+							}
+						}
+						data.Users[ni].PublicKeys = resultC
+					}
+					resultUsers = append(resultUsers, data.Users[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Users {
+			if !matchedUsers[ni] {
+				resultUsers = append(resultUsers, data.Users[ni])
+			}
+		}
+		data.Users = resultUsers
+	}
+	oldRadiusGroups := data.RadiusGroups
 	if value := res.Get(path + "radius"); value.Exists() && len(value.Array()) > 0 {
 		data.RadiusGroups = make([]SystemAAARadiusGroups, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -940,7 +1010,68 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 			data.RadiusGroups = append(data.RadiusGroups, item)
 			return true
 		})
+	} else {
+		data.RadiusGroups = nil
 	}
+	if !fullRead {
+		resultRadiusGroups := make([]SystemAAARadiusGroups, 0, len(data.RadiusGroups))
+		matchedRadiusGroups := make([]bool, len(data.RadiusGroups))
+		for _, oldItem := range oldRadiusGroups {
+			for ni := range data.RadiusGroups {
+				if matchedRadiusGroups[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.GroupName.ValueString() != data.RadiusGroups[ni].GroupName.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedRadiusGroups[ni] = true
+					{
+						resultC := make([]SystemAAARadiusGroupsServers, 0, len(data.RadiusGroups[ni].Servers))
+						matchedC := make([]bool, len(data.RadiusGroups[ni].Servers))
+						for _, oldCItem := range oldItem.Servers {
+							for nci := range data.RadiusGroups[ni].Servers {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC {
+									if oldCItem.Address.ValueString() != data.RadiusGroups[ni].Servers[nci].Address.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									data.RadiusGroups[ni].Servers[nci].Key = oldCItem.Key
+									data.RadiusGroups[ni].Servers[nci].KeyVariable = oldCItem.KeyVariable
+									resultC = append(resultC, data.RadiusGroups[ni].Servers[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.RadiusGroups[ni].Servers {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.RadiusGroups[ni].Servers[nci])
+							}
+						}
+						data.RadiusGroups[ni].Servers = resultC
+					}
+					resultRadiusGroups = append(resultRadiusGroups, data.RadiusGroups[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.RadiusGroups {
+			if !matchedRadiusGroups[ni] {
+				resultRadiusGroups = append(resultRadiusGroups, data.RadiusGroups[ni])
+			}
+		}
+		data.RadiusGroups = resultRadiusGroups
+	}
+	oldTacacsGroups := data.TacacsGroups
 	if value := res.Get(path + "tacacs"); value.Exists() && len(value.Array()) > 0 {
 		data.TacacsGroups = make([]SystemAAATacacsGroups, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -1038,7 +1169,68 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 			data.TacacsGroups = append(data.TacacsGroups, item)
 			return true
 		})
+	} else {
+		data.TacacsGroups = nil
 	}
+	if !fullRead {
+		resultTacacsGroups := make([]SystemAAATacacsGroups, 0, len(data.TacacsGroups))
+		matchedTacacsGroups := make([]bool, len(data.TacacsGroups))
+		for _, oldItem := range oldTacacsGroups {
+			for ni := range data.TacacsGroups {
+				if matchedTacacsGroups[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.GroupName.ValueString() != data.TacacsGroups[ni].GroupName.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedTacacsGroups[ni] = true
+					{
+						resultC := make([]SystemAAATacacsGroupsServers, 0, len(data.TacacsGroups[ni].Servers))
+						matchedC := make([]bool, len(data.TacacsGroups[ni].Servers))
+						for _, oldCItem := range oldItem.Servers {
+							for nci := range data.TacacsGroups[ni].Servers {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC {
+									if oldCItem.Address.ValueString() != data.TacacsGroups[ni].Servers[nci].Address.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									data.TacacsGroups[ni].Servers[nci].Key = oldCItem.Key
+									data.TacacsGroups[ni].Servers[nci].KeyVariable = oldCItem.KeyVariable
+									resultC = append(resultC, data.TacacsGroups[ni].Servers[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.TacacsGroups[ni].Servers {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.TacacsGroups[ni].Servers[nci])
+							}
+						}
+						data.TacacsGroups[ni].Servers = resultC
+					}
+					resultTacacsGroups = append(resultTacacsGroups, data.TacacsGroups[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.TacacsGroups {
+			if !matchedTacacsGroups[ni] {
+				resultTacacsGroups = append(resultTacacsGroups, data.TacacsGroups[ni])
+			}
+		}
+		data.TacacsGroups = resultTacacsGroups
+	}
+	oldAccountingRules := data.AccountingRules
 	if value := res.Get(path + "accountingRule"); value.Exists() && len(value.Array()) > 0 {
 		data.AccountingRules = make([]SystemAAAAccountingRules, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -1088,6 +1280,36 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 			data.AccountingRules = append(data.AccountingRules, item)
 			return true
 		})
+	} else {
+		data.AccountingRules = nil
+	}
+	if !fullRead {
+		resultAccountingRules := make([]SystemAAAAccountingRules, 0, len(data.AccountingRules))
+		matchedAccountingRules := make([]bool, len(data.AccountingRules))
+		for _, oldItem := range oldAccountingRules {
+			for ni := range data.AccountingRules {
+				if matchedAccountingRules[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.RuleId.ValueString() != data.AccountingRules[ni].RuleId.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedAccountingRules[ni] = true
+					resultAccountingRules = append(resultAccountingRules, data.AccountingRules[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.AccountingRules {
+			if !matchedAccountingRules[ni] {
+				resultAccountingRules = append(resultAccountingRules, data.AccountingRules[ni])
+			}
+		}
+		data.AccountingRules = resultAccountingRules
 	}
 	data.AuthorizationConsole = types.BoolNull()
 	data.AuthorizationConsoleVariable = types.StringNull()
@@ -1109,6 +1331,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 			data.AuthorizationConfigCommands = types.BoolValue(va.Bool())
 		}
 	}
+	oldAuthorizationRules := data.AuthorizationRules
 	if value := res.Get(path + "authorizationRule"); value.Exists() && len(value.Array()) > 0 {
 		data.AuthorizationRules = make([]SystemAAAAuthorizationRules, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -1156,618 +1379,37 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 			data.AuthorizationRules = append(data.AuthorizationRules, item)
 			return true
 		})
+	} else {
+		data.AuthorizationRules = nil
+	}
+	if !fullRead {
+		resultAuthorizationRules := make([]SystemAAAAuthorizationRules, 0, len(data.AuthorizationRules))
+		matchedAuthorizationRules := make([]bool, len(data.AuthorizationRules))
+		for _, oldItem := range oldAuthorizationRules {
+			for ni := range data.AuthorizationRules {
+				if matchedAuthorizationRules[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.RuleId.ValueString() != data.AuthorizationRules[ni].RuleId.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedAuthorizationRules[ni] = true
+					resultAuthorizationRules = append(resultAuthorizationRules, data.AuthorizationRules[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.AuthorizationRules {
+			if !matchedAuthorizationRules[ni] {
+				resultAuthorizationRules = append(resultAuthorizationRules, data.AuthorizationRules[ni])
+			}
+		}
+		data.AuthorizationRules = resultAuthorizationRules
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *SystemAAA) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.AuthenticationGroup = types.BoolNull()
-	data.AuthenticationGroupVariable = types.StringNull()
-	if t := res.Get(path + "authenticationGroup.optionType"); t.Exists() {
-		va := res.Get(path + "authenticationGroup.value")
-		if t.String() == "variable" {
-			data.AuthenticationGroupVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AuthenticationGroup = types.BoolValue(va.Bool())
-		}
-	}
-	data.AccountingGroup = types.BoolNull()
-	data.AccountingGroupVariable = types.StringNull()
-	if t := res.Get(path + "accountingGroup.optionType"); t.Exists() {
-		va := res.Get(path + "accountingGroup.value")
-		if t.String() == "variable" {
-			data.AccountingGroupVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AccountingGroup = types.BoolValue(va.Bool())
-		}
-	}
-	data.ServerAuthOrder = types.ListNull(types.StringType)
-
-	if t := res.Get(path + "serverAuthOrder.optionType"); t.Exists() {
-		va := res.Get(path + "serverAuthOrder.value")
-		if t.String() == "global" {
-			data.ServerAuthOrder = helpers.GetStringList(va.Array())
-		}
-	}
-	for i := range data.Users {
-		keys := [...]string{"name"}
-		keyValues := [...]string{data.Users[i].Name.ValueString()}
-		keyValuesVariables := [...]string{data.Users[i].NameVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "user").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Users[i].Name = types.StringNull()
-		data.Users[i].NameVariable = types.StringNull()
-		if t := r.Get("name.optionType"); t.Exists() {
-			va := r.Get("name.value")
-			if t.String() == "variable" {
-				data.Users[i].NameVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Users[i].Name = types.StringValue(va.String())
-			}
-		}
-		data.Users[i].Privilege = types.StringNull()
-		data.Users[i].PrivilegeVariable = types.StringNull()
-		if t := r.Get("privilege.optionType"); t.Exists() {
-			va := r.Get("privilege.value")
-			if t.String() == "variable" {
-				data.Users[i].PrivilegeVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Users[i].Privilege = types.StringValue(va.String())
-			}
-		}
-		for ci := range data.Users[i].PublicKeys {
-			keys := [...]string{"keyString"}
-			keyValues := [...]string{data.Users[i].PublicKeys[ci].KeyString.ValueString()}
-			keyValuesVariables := [...]string{data.Users[i].PublicKeys[ci].KeyStringVariable.ValueString()}
-
-			var cr gjson.Result
-			r.Get("pubkeyChain").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.Users[i].PublicKeys[ci].KeyString = types.StringNull()
-			data.Users[i].PublicKeys[ci].KeyStringVariable = types.StringNull()
-			if t := cr.Get("keyString.optionType"); t.Exists() {
-				va := cr.Get("keyString.value")
-				if t.String() == "variable" {
-					data.Users[i].PublicKeys[ci].KeyStringVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Users[i].PublicKeys[ci].KeyString = types.StringValue(va.String())
-				}
-			}
-			data.Users[i].PublicKeys[ci].KeyType = types.StringNull()
-
-			if t := cr.Get("keyType.optionType"); t.Exists() {
-				va := cr.Get("keyType.value")
-				if t.String() == "global" {
-					data.Users[i].PublicKeys[ci].KeyType = types.StringValue(va.String())
-				}
-			}
-		}
-	}
-	for i := range data.RadiusGroups {
-		keys := [...]string{"groupName"}
-		keyValues := [...]string{data.RadiusGroups[i].GroupName.ValueString()}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "radius").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.RadiusGroups[i].GroupName = types.StringNull()
-
-		if t := r.Get("groupName.optionType"); t.Exists() {
-			va := r.Get("groupName.value")
-			if t.String() == "global" {
-				data.RadiusGroups[i].GroupName = types.StringValue(va.String())
-			}
-		}
-		data.RadiusGroups[i].Vpn = types.Int64Null()
-
-		if t := r.Get("vpn.optionType"); t.Exists() {
-			va := r.Get("vpn.value")
-			if t.String() == "global" {
-				data.RadiusGroups[i].Vpn = types.Int64Value(va.Int())
-			}
-		}
-		data.RadiusGroups[i].SourceInterface = types.StringNull()
-		data.RadiusGroups[i].SourceInterfaceVariable = types.StringNull()
-		if t := r.Get("sourceInterface.optionType"); t.Exists() {
-			va := r.Get("sourceInterface.value")
-			if t.String() == "variable" {
-				data.RadiusGroups[i].SourceInterfaceVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.RadiusGroups[i].SourceInterface = types.StringValue(va.String())
-			}
-		}
-		for ci := range data.RadiusGroups[i].Servers {
-			keys := [...]string{"address"}
-			keyValues := [...]string{data.RadiusGroups[i].Servers[ci].Address.ValueString()}
-			keyValuesVariables := [...]string{""}
-
-			var cr gjson.Result
-			r.Get("server").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.RadiusGroups[i].Servers[ci].Address = types.StringNull()
-
-			if t := cr.Get("address.optionType"); t.Exists() {
-				va := cr.Get("address.value")
-				if t.String() == "global" {
-					data.RadiusGroups[i].Servers[ci].Address = types.StringValue(va.String())
-				}
-			}
-			data.RadiusGroups[i].Servers[ci].AuthPort = types.Int64Null()
-			data.RadiusGroups[i].Servers[ci].AuthPortVariable = types.StringNull()
-			if t := cr.Get("authPort.optionType"); t.Exists() {
-				va := cr.Get("authPort.value")
-				if t.String() == "variable" {
-					data.RadiusGroups[i].Servers[ci].AuthPortVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.RadiusGroups[i].Servers[ci].AuthPort = types.Int64Value(va.Int())
-				}
-			}
-			data.RadiusGroups[i].Servers[ci].AcctPort = types.Int64Null()
-			data.RadiusGroups[i].Servers[ci].AcctPortVariable = types.StringNull()
-			if t := cr.Get("acctPort.optionType"); t.Exists() {
-				va := cr.Get("acctPort.value")
-				if t.String() == "variable" {
-					data.RadiusGroups[i].Servers[ci].AcctPortVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.RadiusGroups[i].Servers[ci].AcctPort = types.Int64Value(va.Int())
-				}
-			}
-			data.RadiusGroups[i].Servers[ci].Timeout = types.Int64Null()
-			data.RadiusGroups[i].Servers[ci].TimeoutVariable = types.StringNull()
-			if t := cr.Get("timeout.optionType"); t.Exists() {
-				va := cr.Get("timeout.value")
-				if t.String() == "variable" {
-					data.RadiusGroups[i].Servers[ci].TimeoutVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.RadiusGroups[i].Servers[ci].Timeout = types.Int64Value(va.Int())
-				}
-			}
-			data.RadiusGroups[i].Servers[ci].Retransmit = types.Int64Null()
-			data.RadiusGroups[i].Servers[ci].RetransmitVariable = types.StringNull()
-			if t := cr.Get("retransmit.optionType"); t.Exists() {
-				va := cr.Get("retransmit.value")
-				if t.String() == "variable" {
-					data.RadiusGroups[i].Servers[ci].RetransmitVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.RadiusGroups[i].Servers[ci].Retransmit = types.Int64Value(va.Int())
-				}
-			}
-			data.RadiusGroups[i].Servers[ci].SecretKey = types.StringNull()
-			data.RadiusGroups[i].Servers[ci].SecretKeyVariable = types.StringNull()
-			if t := cr.Get("secretKey.optionType"); t.Exists() {
-				va := cr.Get("secretKey.value")
-				if t.String() == "variable" {
-					data.RadiusGroups[i].Servers[ci].SecretKeyVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.RadiusGroups[i].Servers[ci].SecretKey = types.StringValue(va.String())
-				}
-			}
-			data.RadiusGroups[i].Servers[ci].KeyEnum = types.StringNull()
-
-			if t := cr.Get("keyEnum.optionType"); t.Exists() {
-				va := cr.Get("keyEnum.value")
-				if t.String() == "global" {
-					data.RadiusGroups[i].Servers[ci].KeyEnum = types.StringValue(va.String())
-				}
-			}
-			data.RadiusGroups[i].Servers[ci].KeyType = types.StringNull()
-			data.RadiusGroups[i].Servers[ci].KeyTypeVariable = types.StringNull()
-			if t := cr.Get("keyType.optionType"); t.Exists() {
-				va := cr.Get("keyType.value")
-				if t.String() == "variable" {
-					data.RadiusGroups[i].Servers[ci].KeyTypeVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.RadiusGroups[i].Servers[ci].KeyType = types.StringValue(va.String())
-				}
-			}
-		}
-	}
-	for i := range data.TacacsGroups {
-		keys := [...]string{"groupName"}
-		keyValues := [...]string{data.TacacsGroups[i].GroupName.ValueString()}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "tacacs").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.TacacsGroups[i].GroupName = types.StringNull()
-
-		if t := r.Get("groupName.optionType"); t.Exists() {
-			va := r.Get("groupName.value")
-			if t.String() == "global" {
-				data.TacacsGroups[i].GroupName = types.StringValue(va.String())
-			}
-		}
-		data.TacacsGroups[i].Vpn = types.Int64Null()
-
-		if t := r.Get("vpn.optionType"); t.Exists() {
-			va := r.Get("vpn.value")
-			if t.String() == "global" {
-				data.TacacsGroups[i].Vpn = types.Int64Value(va.Int())
-			}
-		}
-		data.TacacsGroups[i].SourceInterface = types.StringNull()
-		data.TacacsGroups[i].SourceInterfaceVariable = types.StringNull()
-		if t := r.Get("sourceInterface.optionType"); t.Exists() {
-			va := r.Get("sourceInterface.value")
-			if t.String() == "variable" {
-				data.TacacsGroups[i].SourceInterfaceVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.TacacsGroups[i].SourceInterface = types.StringValue(va.String())
-			}
-		}
-		for ci := range data.TacacsGroups[i].Servers {
-			keys := [...]string{"address"}
-			keyValues := [...]string{data.TacacsGroups[i].Servers[ci].Address.ValueString()}
-			keyValuesVariables := [...]string{""}
-
-			var cr gjson.Result
-			r.Get("server").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.TacacsGroups[i].Servers[ci].Address = types.StringNull()
-
-			if t := cr.Get("address.optionType"); t.Exists() {
-				va := cr.Get("address.value")
-				if t.String() == "global" {
-					data.TacacsGroups[i].Servers[ci].Address = types.StringValue(va.String())
-				}
-			}
-			data.TacacsGroups[i].Servers[ci].Port = types.Int64Null()
-			data.TacacsGroups[i].Servers[ci].PortVariable = types.StringNull()
-			if t := cr.Get("port.optionType"); t.Exists() {
-				va := cr.Get("port.value")
-				if t.String() == "variable" {
-					data.TacacsGroups[i].Servers[ci].PortVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.TacacsGroups[i].Servers[ci].Port = types.Int64Value(va.Int())
-				}
-			}
-			data.TacacsGroups[i].Servers[ci].Timeout = types.Int64Null()
-			data.TacacsGroups[i].Servers[ci].TimeoutVariable = types.StringNull()
-			if t := cr.Get("timeout.optionType"); t.Exists() {
-				va := cr.Get("timeout.value")
-				if t.String() == "variable" {
-					data.TacacsGroups[i].Servers[ci].TimeoutVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.TacacsGroups[i].Servers[ci].Timeout = types.Int64Value(va.Int())
-				}
-			}
-			data.TacacsGroups[i].Servers[ci].SecretKey = types.StringNull()
-			data.TacacsGroups[i].Servers[ci].SecretKeyVariable = types.StringNull()
-			if t := cr.Get("secretKey.optionType"); t.Exists() {
-				va := cr.Get("secretKey.value")
-				if t.String() == "variable" {
-					data.TacacsGroups[i].Servers[ci].SecretKeyVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.TacacsGroups[i].Servers[ci].SecretKey = types.StringValue(va.String())
-				}
-			}
-			data.TacacsGroups[i].Servers[ci].KeyEnum = types.StringNull()
-
-			if t := cr.Get("keyEnum.optionType"); t.Exists() {
-				va := cr.Get("keyEnum.value")
-				if t.String() == "global" {
-					data.TacacsGroups[i].Servers[ci].KeyEnum = types.StringValue(va.String())
-				}
-			}
-		}
-	}
-	for i := range data.AccountingRules {
-		keys := [...]string{"ruleId"}
-		keyValues := [...]string{data.AccountingRules[i].RuleId.ValueString()}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "accountingRule").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.AccountingRules[i].RuleId = types.StringNull()
-
-		if t := r.Get("ruleId.optionType"); t.Exists() {
-			va := r.Get("ruleId.value")
-			if t.String() == "global" {
-				data.AccountingRules[i].RuleId = types.StringValue(va.String())
-			}
-		}
-		data.AccountingRules[i].Method = types.StringNull()
-
-		if t := r.Get("method.optionType"); t.Exists() {
-			va := r.Get("method.value")
-			if t.String() == "global" {
-				data.AccountingRules[i].Method = types.StringValue(va.String())
-			}
-		}
-		data.AccountingRules[i].Level = types.StringNull()
-
-		if t := r.Get("level.optionType"); t.Exists() {
-			va := r.Get("level.value")
-			if t.String() == "global" {
-				data.AccountingRules[i].Level = types.StringValue(va.String())
-			}
-		}
-		data.AccountingRules[i].StartStop = types.BoolNull()
-		data.AccountingRules[i].StartStopVariable = types.StringNull()
-		if t := r.Get("startStop.optionType"); t.Exists() {
-			va := r.Get("startStop.value")
-			if t.String() == "variable" {
-				data.AccountingRules[i].StartStopVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.AccountingRules[i].StartStop = types.BoolValue(va.Bool())
-			}
-		}
-		data.AccountingRules[i].Group = types.ListNull(types.StringType)
-
-		if t := r.Get("group.optionType"); t.Exists() {
-			va := r.Get("group.value")
-			if t.String() == "global" {
-				data.AccountingRules[i].Group = helpers.GetStringList(va.Array())
-			}
-		}
-	}
-	data.AuthorizationConsole = types.BoolNull()
-	data.AuthorizationConsoleVariable = types.StringNull()
-	if t := res.Get(path + "authorizationConsole.optionType"); t.Exists() {
-		va := res.Get(path + "authorizationConsole.value")
-		if t.String() == "variable" {
-			data.AuthorizationConsoleVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AuthorizationConsole = types.BoolValue(va.Bool())
-		}
-	}
-	data.AuthorizationConfigCommands = types.BoolNull()
-	data.AuthorizationConfigCommandsVariable = types.StringNull()
-	if t := res.Get(path + "authorizationConfigCommands.optionType"); t.Exists() {
-		va := res.Get(path + "authorizationConfigCommands.value")
-		if t.String() == "variable" {
-			data.AuthorizationConfigCommandsVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AuthorizationConfigCommands = types.BoolValue(va.Bool())
-		}
-	}
-	for i := range data.AuthorizationRules {
-		keys := [...]string{"ruleId"}
-		keyValues := [...]string{data.AuthorizationRules[i].RuleId.ValueString()}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "authorizationRule").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.AuthorizationRules[i].RuleId = types.StringNull()
-
-		if t := r.Get("ruleId.optionType"); t.Exists() {
-			va := r.Get("ruleId.value")
-			if t.String() == "global" {
-				data.AuthorizationRules[i].RuleId = types.StringValue(va.String())
-			}
-		}
-		data.AuthorizationRules[i].Method = types.StringNull()
-
-		if t := r.Get("method.optionType"); t.Exists() {
-			va := r.Get("method.value")
-			if t.String() == "global" {
-				data.AuthorizationRules[i].Method = types.StringValue(va.String())
-			}
-		}
-		data.AuthorizationRules[i].Level = types.StringNull()
-
-		if t := r.Get("level.optionType"); t.Exists() {
-			va := r.Get("level.value")
-			if t.String() == "global" {
-				data.AuthorizationRules[i].Level = types.StringValue(va.String())
-			}
-		}
-		data.AuthorizationRules[i].Group = types.ListNull(types.StringType)
-
-		if t := r.Get("group.optionType"); t.Exists() {
-			va := r.Get("group.value")
-			if t.String() == "global" {
-				data.AuthorizationRules[i].Group = helpers.GetStringList(va.Array())
-			}
-		}
-		data.AuthorizationRules[i].IfAuthenticated = types.BoolNull()
-
-		if t := r.Get("ifAuthenticated.optionType"); t.Exists() {
-			va := r.Get("ifAuthenticated.value")
-			if t.String() == "global" {
-				data.AuthorizationRules[i].IfAuthenticated = types.BoolValue(va.Bool())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

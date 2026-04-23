@@ -372,7 +372,7 @@ func (data ServiceWirelessLAN) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -400,6 +400,7 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result) 
 			data.Enable5g = types.BoolValue(va.Bool())
 		}
 	}
+	oldSsids := data.Ssids
 	if value := res.Get(path + "ssid"); value.Exists() && len(value.Array()) > 0 {
 		data.Ssids = make([]ServiceWirelessLANSsids, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -503,6 +504,36 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result) 
 			data.Ssids = append(data.Ssids, item)
 			return true
 		})
+	} else {
+		data.Ssids = nil
+	}
+	if !fullRead {
+		resultSsids := make([]ServiceWirelessLANSsids, 0, len(data.Ssids))
+		matchedSsids := make([]bool, len(data.Ssids))
+		for _, oldItem := range oldSsids {
+			for ni := range data.Ssids {
+				if matchedSsids[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.SsidName.ValueString() != data.Ssids[ni].SsidName.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedSsids[ni] = true
+					resultSsids = append(resultSsids, data.Ssids[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Ssids {
+			if !matchedSsids[ni] {
+				resultSsids = append(resultSsids, data.Ssids[ni])
+			}
+		}
+		data.Ssids = resultSsids
 	}
 	data.Country = types.StringNull()
 	data.CountryVariable = types.StringNull()
@@ -565,222 +596,3 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result) 
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *ServiceWirelessLAN) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.Enable24g = types.BoolNull()
-	data.Enable24gVariable = types.StringNull()
-	if t := res.Get(path + "enable24G.optionType"); t.Exists() {
-		va := res.Get(path + "enable24G.value")
-		if t.String() == "variable" {
-			data.Enable24gVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Enable24g = types.BoolValue(va.Bool())
-		}
-	}
-	data.Enable5g = types.BoolNull()
-	data.Enable5gVariable = types.StringNull()
-	if t := res.Get(path + "enable5G.optionType"); t.Exists() {
-		va := res.Get(path + "enable5G.value")
-		if t.String() == "variable" {
-			data.Enable5gVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Enable5g = types.BoolValue(va.Bool())
-		}
-	}
-	for i := range data.Ssids {
-		keys := [...]string{"name"}
-		keyValues := [...]string{data.Ssids[i].SsidName.ValueString()}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "ssid").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Ssids[i].SsidName = types.StringNull()
-
-		if t := r.Get("name.optionType"); t.Exists() {
-			va := r.Get("name.value")
-			if t.String() == "global" {
-				data.Ssids[i].SsidName = types.StringValue(va.String())
-			}
-		}
-		data.Ssids[i].AdminState = types.BoolNull()
-		data.Ssids[i].AdminStateVariable = types.StringNull()
-		if t := r.Get("adminState.optionType"); t.Exists() {
-			va := r.Get("adminState.value")
-			if t.String() == "variable" {
-				data.Ssids[i].AdminStateVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ssids[i].AdminState = types.BoolValue(va.Bool())
-			}
-		}
-		data.Ssids[i].BroadcastSsid = types.BoolNull()
-		data.Ssids[i].BroadcastSsidVariable = types.StringNull()
-		if t := r.Get("broadcastSsid.optionType"); t.Exists() {
-			va := r.Get("broadcastSsid.value")
-			if t.String() == "variable" {
-				data.Ssids[i].BroadcastSsidVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ssids[i].BroadcastSsid = types.BoolValue(va.Bool())
-			}
-		}
-		data.Ssids[i].VlanId = types.Int64Null()
-		data.Ssids[i].VlanIdVariable = types.StringNull()
-		if t := r.Get("vlanId.optionType"); t.Exists() {
-			va := r.Get("vlanId.value")
-			if t.String() == "variable" {
-				data.Ssids[i].VlanIdVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ssids[i].VlanId = types.Int64Value(va.Int())
-			}
-		}
-		data.Ssids[i].RadioType = types.StringNull()
-		data.Ssids[i].RadioTypeVariable = types.StringNull()
-		if t := r.Get("radioType.optionType"); t.Exists() {
-			va := r.Get("radioType.value")
-			if t.String() == "variable" {
-				data.Ssids[i].RadioTypeVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ssids[i].RadioType = types.StringValue(va.String())
-			}
-		}
-		data.Ssids[i].SecurityType = types.StringNull()
-
-		if t := r.Get("securityConfig.securityType.optionType"); t.Exists() {
-			va := r.Get("securityConfig.securityType.value")
-			if t.String() == "global" {
-				data.Ssids[i].SecurityType = types.StringValue(va.String())
-			}
-		}
-		data.Ssids[i].RadiusServerIp = types.StringNull()
-		data.Ssids[i].RadiusServerIpVariable = types.StringNull()
-		if t := r.Get("securityConfig.radiusServerIp.optionType"); t.Exists() {
-			va := r.Get("securityConfig.radiusServerIp.value")
-			if t.String() == "variable" {
-				data.Ssids[i].RadiusServerIpVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ssids[i].RadiusServerIp = types.StringValue(va.String())
-			}
-		}
-		data.Ssids[i].RadiusServerPort = types.Int64Null()
-		data.Ssids[i].RadiusServerPortVariable = types.StringNull()
-		if t := r.Get("securityConfig.radiusServerPort.optionType"); t.Exists() {
-			va := r.Get("securityConfig.radiusServerPort.value")
-			if t.String() == "variable" {
-				data.Ssids[i].RadiusServerPortVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ssids[i].RadiusServerPort = types.Int64Value(va.Int())
-			}
-		}
-		data.Ssids[i].RadiusServerSecret = types.StringNull()
-		data.Ssids[i].RadiusServerSecretVariable = types.StringNull()
-		if t := r.Get("securityConfig.radiusServerSecret.optionType"); t.Exists() {
-			va := r.Get("securityConfig.radiusServerSecret.value")
-			if t.String() == "variable" {
-				data.Ssids[i].RadiusServerSecretVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ssids[i].RadiusServerSecret = types.StringValue(va.String())
-			}
-		}
-		data.Ssids[i].QosProfile = types.StringNull()
-		data.Ssids[i].QosProfileVariable = types.StringNull()
-		if t := r.Get("qosProfile.optionType"); t.Exists() {
-			va := r.Get("qosProfile.value")
-			if t.String() == "variable" {
-				data.Ssids[i].QosProfileVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ssids[i].QosProfile = types.StringValue(va.String())
-			}
-		}
-	}
-	data.Country = types.StringNull()
-	data.CountryVariable = types.StringNull()
-	if t := res.Get(path + "country.optionType"); t.Exists() {
-		va := res.Get(path + "country.value")
-		if t.String() == "variable" {
-			data.CountryVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Country = types.StringValue(va.String())
-		}
-	}
-	data.Username = types.StringNull()
-	data.UsernameVariable = types.StringNull()
-	if t := res.Get(path + "username.optionType"); t.Exists() {
-		va := res.Get(path + "username.value")
-		if t.String() == "variable" {
-			data.UsernameVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Username = types.StringValue(va.String())
-		}
-	}
-	data.MeDynamicIpEnabled = types.BoolNull()
-
-	if t := res.Get(path + "meIpConfig.meDynamicIpEnabled.optionType"); t.Exists() {
-		va := res.Get(path + "meIpConfig.meDynamicIpEnabled.value")
-		if t.String() == "global" {
-			data.MeDynamicIpEnabled = types.BoolValue(va.Bool())
-		}
-	}
-	data.MeIpv4Address = types.StringNull()
-	data.MeIpv4AddressVariable = types.StringNull()
-	if t := res.Get(path + "meIpConfig.meStaticIpCfg.meIpv4Address.optionType"); t.Exists() {
-		va := res.Get(path + "meIpConfig.meStaticIpCfg.meIpv4Address.value")
-		if t.String() == "variable" {
-			data.MeIpv4AddressVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.MeIpv4Address = types.StringValue(va.String())
-		}
-	}
-	data.MeSubnetMask = types.StringNull()
-	data.MeSubnetMaskVariable = types.StringNull()
-	if t := res.Get(path + "meIpConfig.meStaticIpCfg.netmask.optionType"); t.Exists() {
-		va := res.Get(path + "meIpConfig.meStaticIpCfg.netmask.value")
-		if t.String() == "variable" {
-			data.MeSubnetMaskVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.MeSubnetMask = types.StringValue(va.String())
-		}
-	}
-	data.MeDefaultGateway = types.StringNull()
-	data.MeDefaultGatewayVariable = types.StringNull()
-	if t := res.Get(path + "meIpConfig.meStaticIpCfg.defaultGateway.optionType"); t.Exists() {
-		va := res.Get(path + "meIpConfig.meStaticIpCfg.defaultGateway.value")
-		if t.String() == "variable" {
-			data.MeDefaultGatewayVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.MeDefaultGateway = types.StringValue(va.String())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

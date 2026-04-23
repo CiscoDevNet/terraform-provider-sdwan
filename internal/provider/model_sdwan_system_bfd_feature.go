@@ -225,7 +225,7 @@ func (data SystemBFD) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *SystemBFD) fromBody(ctx context.Context, res gjson.Result) {
+func (data *SystemBFD) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -263,6 +263,7 @@ func (data *SystemBFD) fromBody(ctx context.Context, res gjson.Result) {
 			data.DefaultDscp = types.Int64Value(va.Int())
 		}
 	}
+	oldColors := data.Colors
 	if value := res.Get(path + "colors"); value.Exists() && len(value.Array()) > 0 {
 		data.Colors = make([]SystemBFDColors, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -320,132 +321,41 @@ func (data *SystemBFD) fromBody(ctx context.Context, res gjson.Result) {
 			data.Colors = append(data.Colors, item)
 			return true
 		})
+	} else {
+		data.Colors = nil
+	}
+	if !fullRead {
+		resultColors := make([]SystemBFDColors, 0, len(data.Colors))
+		matchedColors := make([]bool, len(data.Colors))
+		for _, oldItem := range oldColors {
+			for ni := range data.Colors {
+				if matchedColors[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.ColorVariable.ValueString() != "" || data.Colors[ni].ColorVariable.ValueString() != "") {
+					if oldItem.ColorVariable.ValueString() != data.Colors[ni].ColorVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.Color.ValueString() != data.Colors[ni].Color.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedColors[ni] = true
+					resultColors = append(resultColors, data.Colors[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Colors {
+			if !matchedColors[ni] {
+				resultColors = append(resultColors, data.Colors[ni])
+			}
+		}
+		data.Colors = resultColors
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *SystemBFD) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.Multiplier = types.Int64Null()
-	data.MultiplierVariable = types.StringNull()
-	if t := res.Get(path + "multiplier.optionType"); t.Exists() {
-		va := res.Get(path + "multiplier.value")
-		if t.String() == "variable" {
-			data.MultiplierVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Multiplier = types.Int64Value(va.Int())
-		}
-	}
-	data.PollInterval = types.Int64Null()
-	data.PollIntervalVariable = types.StringNull()
-	if t := res.Get(path + "pollInterval.optionType"); t.Exists() {
-		va := res.Get(path + "pollInterval.value")
-		if t.String() == "variable" {
-			data.PollIntervalVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PollInterval = types.Int64Value(va.Int())
-		}
-	}
-	data.DefaultDscp = types.Int64Null()
-	data.DefaultDscpVariable = types.StringNull()
-	if t := res.Get(path + "defaultDscp.optionType"); t.Exists() {
-		va := res.Get(path + "defaultDscp.value")
-		if t.String() == "variable" {
-			data.DefaultDscpVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.DefaultDscp = types.Int64Value(va.Int())
-		}
-	}
-	for i := range data.Colors {
-		keys := [...]string{"color"}
-		keyValues := [...]string{data.Colors[i].Color.ValueString()}
-		keyValuesVariables := [...]string{data.Colors[i].ColorVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "colors").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Colors[i].Color = types.StringNull()
-		data.Colors[i].ColorVariable = types.StringNull()
-		if t := r.Get("color.optionType"); t.Exists() {
-			va := r.Get("color.value")
-			if t.String() == "variable" {
-				data.Colors[i].ColorVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Colors[i].Color = types.StringValue(va.String())
-			}
-		}
-		data.Colors[i].HelloInterval = types.Int64Null()
-		data.Colors[i].HelloIntervalVariable = types.StringNull()
-		if t := r.Get("helloInterval.optionType"); t.Exists() {
-			va := r.Get("helloInterval.value")
-			if t.String() == "variable" {
-				data.Colors[i].HelloIntervalVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Colors[i].HelloInterval = types.Int64Value(va.Int())
-			}
-		}
-		data.Colors[i].Multiplier = types.Int64Null()
-		data.Colors[i].MultiplierVariable = types.StringNull()
-		if t := r.Get("multiplier.optionType"); t.Exists() {
-			va := r.Get("multiplier.value")
-			if t.String() == "variable" {
-				data.Colors[i].MultiplierVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Colors[i].Multiplier = types.Int64Value(va.Int())
-			}
-		}
-		data.Colors[i].PmtuDiscovery = types.BoolNull()
-		data.Colors[i].PmtuDiscoveryVariable = types.StringNull()
-		if t := r.Get("pmtuDiscovery.optionType"); t.Exists() {
-			va := r.Get("pmtuDiscovery.value")
-			if t.String() == "variable" {
-				data.Colors[i].PmtuDiscoveryVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Colors[i].PmtuDiscovery = types.BoolValue(va.Bool())
-			}
-		}
-		data.Colors[i].Dscp = types.Int64Null()
-		data.Colors[i].DscpVariable = types.StringNull()
-		if t := r.Get("dscp.optionType"); t.Exists() {
-			va := r.Get("dscp.value")
-			if t.String() == "variable" {
-				data.Colors[i].DscpVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Colors[i].Dscp = types.Int64Value(va.Int())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

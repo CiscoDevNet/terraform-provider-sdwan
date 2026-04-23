@@ -439,7 +439,7 @@ func (d *TransportRoutingOSPFv3IPv4ProfileParcelDataSource) Read(ctx context.Con
 		return
 	}
 
-	config.fromBody(ctx, res)
+	config.fromBody(ctx, res, true)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Name.ValueString()))
 

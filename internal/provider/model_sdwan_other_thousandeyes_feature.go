@@ -240,7 +240,7 @@ func (data OtherThousandEyes) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *OtherThousandEyes) fromBody(ctx context.Context, res gjson.Result) {
+func (data *OtherThousandEyes) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -248,6 +248,7 @@ func (data *OtherThousandEyes) fromBody(ctx context.Context, res gjson.Result) {
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
+	oldVirtualApplication := data.VirtualApplication
 	if value := res.Get(path + "virtualApplication"); value.Exists() && len(value.Array()) > 0 {
 		data.VirtualApplication = make([]OtherThousandEyesVirtualApplication, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -363,160 +364,41 @@ func (data *OtherThousandEyes) fromBody(ctx context.Context, res gjson.Result) {
 			data.VirtualApplication = append(data.VirtualApplication, item)
 			return true
 		})
+	} else {
+		data.VirtualApplication = nil
+	}
+	if !fullRead {
+		resultVirtualApplication := make([]OtherThousandEyesVirtualApplication, 0, len(data.VirtualApplication))
+		matchedVirtualApplication := make([]bool, len(data.VirtualApplication))
+		for _, oldItem := range oldVirtualApplication {
+			for ni := range data.VirtualApplication {
+				if matchedVirtualApplication[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.AccountGroupTokenVariable.ValueString() != "" || data.VirtualApplication[ni].AccountGroupTokenVariable.ValueString() != "") {
+					if oldItem.AccountGroupTokenVariable.ValueString() != data.VirtualApplication[ni].AccountGroupTokenVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.AccountGroupToken.ValueString() != data.VirtualApplication[ni].AccountGroupToken.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedVirtualApplication[ni] = true
+					resultVirtualApplication = append(resultVirtualApplication, data.VirtualApplication[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.VirtualApplication {
+			if !matchedVirtualApplication[ni] {
+				resultVirtualApplication = append(resultVirtualApplication, data.VirtualApplication[ni])
+			}
+		}
+		data.VirtualApplication = resultVirtualApplication
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *OtherThousandEyes) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	for i := range data.VirtualApplication {
-		keys := [...]string{"token"}
-		keyValues := [...]string{data.VirtualApplication[i].AccountGroupToken.ValueString()}
-		keyValuesVariables := [...]string{data.VirtualApplication[i].AccountGroupTokenVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "virtualApplication").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.VirtualApplication[i].AccountGroupToken = types.StringNull()
-		data.VirtualApplication[i].AccountGroupTokenVariable = types.StringNull()
-		if t := r.Get("token.optionType"); t.Exists() {
-			va := r.Get("token.value")
-			if t.String() == "variable" {
-				data.VirtualApplication[i].AccountGroupTokenVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.VirtualApplication[i].AccountGroupToken = types.StringValue(va.String())
-			}
-		}
-		data.VirtualApplication[i].Vpn = types.Int64Null()
-		data.VirtualApplication[i].VpnVariable = types.StringNull()
-		if t := r.Get("vpn.optionType"); t.Exists() {
-			va := r.Get("vpn.value")
-			if t.String() == "variable" {
-				data.VirtualApplication[i].VpnVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.VirtualApplication[i].Vpn = types.Int64Value(va.Int())
-			}
-		}
-		data.VirtualApplication[i].ManagementIp = types.StringNull()
-		data.VirtualApplication[i].ManagementIpVariable = types.StringNull()
-		if t := r.Get("teMgmtIp.optionType"); t.Exists() {
-			va := r.Get("teMgmtIp.value")
-			if t.String() == "variable" {
-				data.VirtualApplication[i].ManagementIpVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.VirtualApplication[i].ManagementIp = types.StringValue(va.String())
-			}
-		}
-		data.VirtualApplication[i].ManagementSubnetMask = types.StringNull()
-		data.VirtualApplication[i].ManagementSubnetMaskVariable = types.StringNull()
-		if t := r.Get("teMgmtSubnetMask.optionType"); t.Exists() {
-			va := r.Get("teMgmtSubnetMask.value")
-			if t.String() == "variable" {
-				data.VirtualApplication[i].ManagementSubnetMaskVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.VirtualApplication[i].ManagementSubnetMask = types.StringValue(va.String())
-			}
-		}
-		data.VirtualApplication[i].AgentDefaultGateway = types.StringNull()
-		data.VirtualApplication[i].AgentDefaultGatewayVariable = types.StringNull()
-		if t := r.Get("teVpgIp.optionType"); t.Exists() {
-			va := r.Get("teVpgIp.value")
-			if t.String() == "variable" {
-				data.VirtualApplication[i].AgentDefaultGatewayVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.VirtualApplication[i].AgentDefaultGateway = types.StringValue(va.String())
-			}
-		}
-		data.VirtualApplication[i].NameServerIp = types.StringNull()
-		data.VirtualApplication[i].NameServerIpVariable = types.StringNull()
-		if t := r.Get("nameServer.optionType"); t.Exists() {
-			va := r.Get("nameServer.value")
-			if t.String() == "variable" {
-				data.VirtualApplication[i].NameServerIpVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.VirtualApplication[i].NameServerIp = types.StringValue(va.String())
-			}
-		}
-		data.VirtualApplication[i].Hostname = types.StringNull()
-		data.VirtualApplication[i].HostnameVariable = types.StringNull()
-		if t := r.Get("hostname.optionType"); t.Exists() {
-			va := r.Get("hostname.value")
-			if t.String() == "variable" {
-				data.VirtualApplication[i].HostnameVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.VirtualApplication[i].Hostname = types.StringValue(va.String())
-			}
-		}
-		data.VirtualApplication[i].ProxyType = types.StringNull()
-
-		if t := r.Get("proxyConfig.proxyType.optionType"); t.Exists() {
-			va := r.Get("proxyConfig.proxyType.value")
-			if t.String() == "global" {
-				data.VirtualApplication[i].ProxyType = types.StringValue(va.String())
-			}
-		}
-		data.VirtualApplication[i].ProxyHost = types.StringNull()
-		data.VirtualApplication[i].ProxyHostVariable = types.StringNull()
-		if t := r.Get("proxyConfig.proxyHost.optionType"); t.Exists() {
-			va := r.Get("proxyConfig.proxyHost.value")
-			if t.String() == "variable" {
-				data.VirtualApplication[i].ProxyHostVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.VirtualApplication[i].ProxyHost = types.StringValue(va.String())
-			}
-		}
-		data.VirtualApplication[i].ProxyPort = types.Int64Null()
-		data.VirtualApplication[i].ProxyPortVariable = types.StringNull()
-		if t := r.Get("proxyConfig.proxyPort.optionType"); t.Exists() {
-			va := r.Get("proxyConfig.proxyPort.value")
-			if t.String() == "variable" {
-				data.VirtualApplication[i].ProxyPortVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.VirtualApplication[i].ProxyPort = types.Int64Value(va.Int())
-			}
-		}
-		data.VirtualApplication[i].PacUrl = types.StringNull()
-		data.VirtualApplication[i].PacUrlVariable = types.StringNull()
-		if t := r.Get("proxyConfig.pacUrl.optionType"); t.Exists() {
-			va := r.Get("proxyConfig.pacUrl.value")
-			if t.String() == "variable" {
-				data.VirtualApplication[i].PacUrlVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.VirtualApplication[i].PacUrl = types.StringValue(va.String())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

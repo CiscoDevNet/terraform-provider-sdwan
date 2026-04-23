@@ -181,7 +181,7 @@ func (data TransportGPS) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *TransportGPS) fromBody(ctx context.Context, res gjson.Result) {
+func (data *TransportGPS) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -252,76 +252,3 @@ func (data *TransportGPS) fromBody(ctx context.Context, res gjson.Result) {
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *TransportGPS) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.GpsEnable = types.BoolNull()
-	data.GpsEnableVariable = types.StringNull()
-	if t := res.Get(path + "enable.optionType"); t.Exists() {
-		va := res.Get(path + "enable.value")
-		if t.String() == "variable" {
-			data.GpsEnableVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.GpsEnable = types.BoolValue(va.Bool())
-		}
-	}
-	data.GpsMode = types.StringNull()
-	data.GpsModeVariable = types.StringNull()
-	if t := res.Get(path + "mode.optionType"); t.Exists() {
-		va := res.Get(path + "mode.value")
-		if t.String() == "variable" {
-			data.GpsModeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.GpsMode = types.StringValue(va.String())
-		}
-	}
-	data.NmeaEnable = types.BoolNull()
-	data.NmeaEnableVariable = types.StringNull()
-	if t := res.Get(path + "nmea.optionType"); t.Exists() {
-		va := res.Get(path + "nmea.value")
-		if t.String() == "variable" {
-			data.NmeaEnableVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.NmeaEnable = types.BoolValue(va.Bool())
-		}
-	}
-	data.NmeaSourceAddress = types.StringNull()
-	data.NmeaSourceAddressVariable = types.StringNull()
-	if t := res.Get(path + "sourceAddress.optionType"); t.Exists() {
-		va := res.Get(path + "sourceAddress.value")
-		if t.String() == "variable" {
-			data.NmeaSourceAddressVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.NmeaSourceAddress = types.StringValue(va.String())
-		}
-	}
-	data.NmeaDestinationAddress = types.StringNull()
-	data.NmeaDestinationAddressVariable = types.StringNull()
-	if t := res.Get(path + "destinationAddress.optionType"); t.Exists() {
-		va := res.Get(path + "destinationAddress.value")
-		if t.String() == "variable" {
-			data.NmeaDestinationAddressVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.NmeaDestinationAddress = types.StringValue(va.String())
-		}
-	}
-	data.NmeaDestinationPort = types.Int64Null()
-	data.NmeaDestinationPortVariable = types.StringNull()
-	if t := res.Get(path + "destinationPort.optionType"); t.Exists() {
-		va := res.Get(path + "destinationPort.value")
-		if t.String() == "variable" {
-			data.NmeaDestinationPortVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.NmeaDestinationPort = types.Int64Value(va.Int())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

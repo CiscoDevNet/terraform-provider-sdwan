@@ -247,7 +247,7 @@ func (data EmbeddedSecurity) toBody(ctx context.Context) string {
 }
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *EmbeddedSecurity) fromBody(ctx context.Context, res gjson.Result) {
+func (data *EmbeddedSecurity) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -255,6 +255,7 @@ func (data *EmbeddedSecurity) fromBody(ctx context.Context, res gjson.Result) {
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
+	oldAssembly := data.Assembly
 	if value := res.Get(path + "assembly"); value.Exists() && len(value.Array()) > 0 {
 		data.Assembly = make([]EmbeddedSecurityAssembly, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -326,6 +327,89 @@ func (data *EmbeddedSecurity) fromBody(ctx context.Context, res gjson.Result) {
 			data.Assembly = append(data.Assembly, item)
 			return true
 		})
+	} else {
+		data.Assembly = nil
+	}
+	if !fullRead {
+		resultAssembly := make([]EmbeddedSecurityAssembly, 0, len(data.Assembly))
+		matchedAssembly := make([]bool, len(data.Assembly))
+		for _, oldItem := range oldAssembly {
+			for ni := range data.Assembly {
+				if matchedAssembly[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.AdvancedInspectionProfilePolicyId.ValueString() != data.Assembly[ni].AdvancedInspectionProfilePolicyId.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.SslDecryptionProfileId.ValueString() != data.Assembly[ni].SslDecryptionProfileId.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.NgfwPolicyId.ValueString() != data.Assembly[ni].NgfwPolicyId.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedAssembly[ni] = true
+					{
+						resultC := make([]EmbeddedSecurityAssemblyEntries, 0, len(data.Assembly[ni].Entries))
+						matchedC := make([]bool, len(data.Assembly[ni].Entries))
+						for _, oldCItem := range oldItem.Entries {
+							for nci := range data.Assembly[ni].Entries {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC {
+									if oldCItem.SourceZone.ValueString() != data.Assembly[ni].Entries[nci].SourceZone.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.SourceZoneListId.ValueString() != data.Assembly[ni].Entries[nci].SourceZoneListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.DestinationZone.ValueString() != data.Assembly[ni].Entries[nci].DestinationZone.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.DestinationZoneListId.ValueString() != data.Assembly[ni].Entries[nci].DestinationZoneListId.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									resultC = append(resultC, data.Assembly[ni].Entries[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.Assembly[ni].Entries {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.Assembly[ni].Entries[nci])
+							}
+						}
+						data.Assembly[ni].Entries = resultC
+					}
+					resultAssembly = append(resultAssembly, data.Assembly[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Assembly {
+			if !matchedAssembly[ni] {
+				resultAssembly = append(resultAssembly, data.Assembly[ni])
+			}
+		}
+		data.Assembly = resultAssembly
 	}
 	data.TcpSynFloodLimit = types.StringNull()
 
@@ -432,238 +516,3 @@ func (data *EmbeddedSecurity) fromBody(ctx context.Context, res gjson.Result) {
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *EmbeddedSecurity) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	for i := range data.Assembly {
-		keys := [...]string{"advancedInspectionProfile.refId", "sslDecryption.refId", "ngfirewall.refId"}
-		keyValues := [...]string{data.Assembly[i].AdvancedInspectionProfilePolicyId.ValueString(), data.Assembly[i].SslDecryptionProfileId.ValueString(), data.Assembly[i].NgfwPolicyId.ValueString()}
-		keyValuesVariables := [...]string{"", "", ""}
-
-		var r gjson.Result
-		res.Get(path + "assembly").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Assembly[i].AdvancedInspectionProfilePolicyId = types.StringNull()
-
-		if t := r.Get("advancedInspectionProfile.refId.optionType"); t.Exists() {
-			va := r.Get("advancedInspectionProfile.refId.value")
-			if t.String() == "global" {
-				data.Assembly[i].AdvancedInspectionProfilePolicyId = types.StringValue(va.String())
-			}
-		}
-		data.Assembly[i].SslDecryptionProfileId = types.StringNull()
-
-		if t := r.Get("sslDecryption.refId.optionType"); t.Exists() {
-			va := r.Get("sslDecryption.refId.value")
-			if t.String() == "global" {
-				data.Assembly[i].SslDecryptionProfileId = types.StringValue(va.String())
-			}
-		}
-		data.Assembly[i].NgfwPolicyId = types.StringNull()
-
-		if t := r.Get("ngfirewall.refId.optionType"); t.Exists() {
-			va := r.Get("ngfirewall.refId.value")
-			if t.String() == "global" {
-				data.Assembly[i].NgfwPolicyId = types.StringValue(va.String())
-			}
-		}
-		for ci := range data.Assembly[i].Entries {
-			keys := [...]string{"srcZone", "srcZone.refId", "dstZone", "dstZone.refId"}
-			keyValues := [...]string{data.Assembly[i].Entries[ci].SourceZone.ValueString(), data.Assembly[i].Entries[ci].SourceZoneListId.ValueString(), data.Assembly[i].Entries[ci].DestinationZone.ValueString(), data.Assembly[i].Entries[ci].DestinationZoneListId.ValueString()}
-			keyValuesVariables := [...]string{"", "", "", ""}
-
-			var cr gjson.Result
-			r.Get("ngfirewall.entries").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.Assembly[i].Entries[ci].SourceZone = types.StringNull()
-
-			if t := cr.Get("srcZone.optionType"); t.Exists() {
-				va := cr.Get("srcZone.value")
-				if t.String() == "global" {
-					data.Assembly[i].Entries[ci].SourceZone = types.StringValue(va.String())
-				}
-			}
-			data.Assembly[i].Entries[ci].SourceZoneListId = types.StringNull()
-
-			if t := cr.Get("srcZone.refId.optionType"); t.Exists() {
-				va := cr.Get("srcZone.refId.value")
-				if t.String() == "global" {
-					data.Assembly[i].Entries[ci].SourceZoneListId = types.StringValue(va.String())
-				}
-			}
-			data.Assembly[i].Entries[ci].DestinationZone = types.StringNull()
-
-			if t := cr.Get("dstZone.optionType"); t.Exists() {
-				va := cr.Get("dstZone.value")
-				if t.String() == "global" {
-					data.Assembly[i].Entries[ci].DestinationZone = types.StringValue(va.String())
-				}
-			}
-			data.Assembly[i].Entries[ci].DestinationZoneListId = types.StringNull()
-
-			if t := cr.Get("dstZone.refId.optionType"); t.Exists() {
-				va := cr.Get("dstZone.refId.value")
-				if t.String() == "global" {
-					data.Assembly[i].Entries[ci].DestinationZoneListId = types.StringValue(va.String())
-				}
-			}
-		}
-	}
-	data.TcpSynFloodLimit = types.StringNull()
-
-	if t := res.Get(path + "settings.tcpSynFloodLimit.optionType"); t.Exists() {
-		va := res.Get(path + "settings.tcpSynFloodLimit.value")
-		if t.String() == "global" {
-			data.TcpSynFloodLimit = types.StringValue(va.String())
-		}
-	}
-	data.MaxIncompleteTcpLimit = types.StringNull()
-
-	if t := res.Get(path + "settings.maxIncompleteTcpLimit.optionType"); t.Exists() {
-		va := res.Get(path + "settings.maxIncompleteTcpLimit.value")
-		if t.String() == "global" {
-			data.MaxIncompleteTcpLimit = types.StringValue(va.String())
-		}
-	}
-	data.MaxIncompleteUdpLimit = types.StringNull()
-
-	if t := res.Get(path + "settings.maxIncompleteUdpLimit.optionType"); t.Exists() {
-		va := res.Get(path + "settings.maxIncompleteUdpLimit.value")
-		if t.String() == "global" {
-			data.MaxIncompleteUdpLimit = types.StringValue(va.String())
-		}
-	}
-	data.MaxIncompleteIcmpLimit = types.StringNull()
-
-	if t := res.Get(path + "settings.maxIncompleteIcmpLimit.optionType"); t.Exists() {
-		va := res.Get(path + "settings.maxIncompleteIcmpLimit.value")
-		if t.String() == "global" {
-			data.MaxIncompleteIcmpLimit = types.StringValue(va.String())
-		}
-	}
-	data.AuditTrail = types.StringNull()
-
-	if t := res.Get(path + "settings.auditTrail.optionType"); t.Exists() {
-		va := res.Get(path + "settings.auditTrail.value")
-		if t.String() == "global" {
-			data.AuditTrail = types.StringValue(va.String())
-		}
-	}
-	data.UnifiedLogging = types.StringNull()
-
-	if t := res.Get(path + "settings.unifiedLogging.optionType"); t.Exists() {
-		va := res.Get(path + "settings.unifiedLogging.value")
-		if t.String() == "global" {
-			data.UnifiedLogging = types.StringValue(va.String())
-		}
-	}
-	data.SessionReclassifyAllow = types.StringNull()
-
-	if t := res.Get(path + "settings.sessionReclassifyAllow.optionType"); t.Exists() {
-		va := res.Get(path + "settings.sessionReclassifyAllow.value")
-		if t.String() == "global" {
-			data.SessionReclassifyAllow = types.StringValue(va.String())
-		}
-	}
-	data.IcmpUnreachableAllow = types.StringNull()
-
-	if t := res.Get(path + "settings.icmpUnreachableAllow.optionType"); t.Exists() {
-		va := res.Get(path + "settings.icmpUnreachableAllow.value")
-		if t.String() == "global" {
-			data.IcmpUnreachableAllow = types.StringValue(va.String())
-		}
-	}
-	data.FailureMode = types.StringNull()
-
-	if t := res.Get(path + "settings.failureMode.optionType"); t.Exists() {
-		va := res.Get(path + "settings.failureMode.value")
-		if t.String() == "global" {
-			data.FailureMode = types.StringValue(va.String())
-		}
-	}
-	data.Nat = types.BoolNull()
-	data.NatVariable = types.StringNull()
-	if t := res.Get(path + "appHosting.nat.optionType"); t.Exists() {
-		va := res.Get(path + "appHosting.nat.value")
-		if t.String() == "variable" {
-			data.NatVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Nat = types.BoolValue(va.Bool())
-		}
-	}
-	data.DownloadUrlDatabaseOnDevice = types.BoolNull()
-	data.DownloadUrlDatabaseOnDeviceVariable = types.StringNull()
-	if t := res.Get(path + "appHosting.databaseUrl.optionType"); t.Exists() {
-		va := res.Get(path + "appHosting.databaseUrl.value")
-		if t.String() == "variable" {
-			data.DownloadUrlDatabaseOnDeviceVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.DownloadUrlDatabaseOnDevice = types.BoolValue(va.Bool())
-		}
-	}
-	data.ResourceProfile = types.StringNull()
-	data.ResourceProfileVariable = types.StringNull()
-	if t := res.Get(path + "appHosting.resourceProfile.optionType"); t.Exists() {
-		va := res.Get(path + "appHosting.resourceProfile.value")
-		if t.String() == "variable" {
-			data.ResourceProfileVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.ResourceProfile = types.StringValue(va.String())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

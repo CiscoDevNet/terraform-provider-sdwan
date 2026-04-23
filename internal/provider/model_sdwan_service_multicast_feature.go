@@ -848,7 +848,7 @@ func (data ServiceMulticast) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -886,6 +886,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			data.LocalReplicatorThreshold = types.Int64Value(va.Int())
 		}
 	}
+	oldIgmpInterfaces := data.IgmpInterfaces
 	if value := res.Get(path + "igmp.interface"); value.Exists() && len(value.Array()) > 0 {
 		data.IgmpInterfaces = make([]ServiceMulticastIgmpInterfaces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -939,6 +940,81 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			data.IgmpInterfaces = append(data.IgmpInterfaces, item)
 			return true
 		})
+	} else {
+		data.IgmpInterfaces = nil
+	}
+	if !fullRead {
+		resultIgmpInterfaces := make([]ServiceMulticastIgmpInterfaces, 0, len(data.IgmpInterfaces))
+		matchedIgmpInterfaces := make([]bool, len(data.IgmpInterfaces))
+		for _, oldItem := range oldIgmpInterfaces {
+			for ni := range data.IgmpInterfaces {
+				if matchedIgmpInterfaces[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.InterfaceNameVariable.ValueString() != "" || data.IgmpInterfaces[ni].InterfaceNameVariable.ValueString() != "") {
+					if oldItem.InterfaceNameVariable.ValueString() != data.IgmpInterfaces[ni].InterfaceNameVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.InterfaceName.ValueString() != data.IgmpInterfaces[ni].InterfaceName.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedIgmpInterfaces[ni] = true
+					{
+						resultC := make([]ServiceMulticastIgmpInterfacesJoinGroups, 0, len(data.IgmpInterfaces[ni].JoinGroups))
+						matchedC := make([]bool, len(data.IgmpInterfaces[ni].JoinGroups))
+						for _, oldCItem := range oldItem.JoinGroups {
+							for nci := range data.IgmpInterfaces[ni].JoinGroups {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC && (oldCItem.GroupAddressVariable.ValueString() != "" || data.IgmpInterfaces[ni].JoinGroups[nci].GroupAddressVariable.ValueString() != "") {
+									if oldCItem.GroupAddressVariable.ValueString() != data.IgmpInterfaces[ni].JoinGroups[nci].GroupAddressVariable.ValueString() {
+										keyMatchC = false
+									}
+								} else if keyMatchC {
+									if oldCItem.GroupAddress.ValueString() != data.IgmpInterfaces[ni].JoinGroups[nci].GroupAddress.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC && (oldCItem.SourceAddressVariable.ValueString() != "" || data.IgmpInterfaces[ni].JoinGroups[nci].SourceAddressVariable.ValueString() != "") {
+									if oldCItem.SourceAddressVariable.ValueString() != data.IgmpInterfaces[ni].JoinGroups[nci].SourceAddressVariable.ValueString() {
+										keyMatchC = false
+									}
+								} else if keyMatchC {
+									if oldCItem.SourceAddress.ValueString() != data.IgmpInterfaces[ni].JoinGroups[nci].SourceAddress.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									resultC = append(resultC, data.IgmpInterfaces[ni].JoinGroups[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.IgmpInterfaces[ni].JoinGroups {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.IgmpInterfaces[ni].JoinGroups[nci])
+							}
+						}
+						data.IgmpInterfaces[ni].JoinGroups = resultC
+					}
+					resultIgmpInterfaces = append(resultIgmpInterfaces, data.IgmpInterfaces[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.IgmpInterfaces {
+			if !matchedIgmpInterfaces[ni] {
+				resultIgmpInterfaces = append(resultIgmpInterfaces, data.IgmpInterfaces[ni])
+			}
+		}
+		data.IgmpInterfaces = resultIgmpInterfaces
 	}
 	data.PimSourceSpecificMulticastEnable = types.BoolNull()
 
@@ -968,6 +1044,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			data.PimSptThreshold = types.StringValue(va.String())
 		}
 	}
+	oldPimInterfaces := data.PimInterfaces
 	if value := res.Get(path + "pim.interface"); value.Exists() && len(value.Array()) > 0 {
 		data.PimInterfaces = make([]ServiceMulticastPimInterfaces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -1005,7 +1082,42 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			data.PimInterfaces = append(data.PimInterfaces, item)
 			return true
 		})
+	} else {
+		data.PimInterfaces = nil
 	}
+	if !fullRead {
+		resultPimInterfaces := make([]ServiceMulticastPimInterfaces, 0, len(data.PimInterfaces))
+		matchedPimInterfaces := make([]bool, len(data.PimInterfaces))
+		for _, oldItem := range oldPimInterfaces {
+			for ni := range data.PimInterfaces {
+				if matchedPimInterfaces[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.InterfaceNameVariable.ValueString() != "" || data.PimInterfaces[ni].InterfaceNameVariable.ValueString() != "") {
+					if oldItem.InterfaceNameVariable.ValueString() != data.PimInterfaces[ni].InterfaceNameVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.InterfaceName.ValueString() != data.PimInterfaces[ni].InterfaceName.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedPimInterfaces[ni] = true
+					resultPimInterfaces = append(resultPimInterfaces, data.PimInterfaces[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.PimInterfaces {
+			if !matchedPimInterfaces[ni] {
+				resultPimInterfaces = append(resultPimInterfaces, data.PimInterfaces[ni])
+			}
+		}
+		data.PimInterfaces = resultPimInterfaces
+	}
+	oldStaticRpAddresses := data.StaticRpAddresses
 	if value := res.Get(path + "pim.rpAddr"); value.Exists() && len(value.Array()) > 0 {
 		data.StaticRpAddresses = make([]ServiceMulticastStaticRpAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -1043,6 +1155,40 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			data.StaticRpAddresses = append(data.StaticRpAddresses, item)
 			return true
 		})
+	} else {
+		data.StaticRpAddresses = nil
+	}
+	if !fullRead {
+		resultStaticRpAddresses := make([]ServiceMulticastStaticRpAddresses, 0, len(data.StaticRpAddresses))
+		matchedStaticRpAddresses := make([]bool, len(data.StaticRpAddresses))
+		for _, oldItem := range oldStaticRpAddresses {
+			for ni := range data.StaticRpAddresses {
+				if matchedStaticRpAddresses[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.IpAddressVariable.ValueString() != "" || data.StaticRpAddresses[ni].IpAddressVariable.ValueString() != "") {
+					if oldItem.IpAddressVariable.ValueString() != data.StaticRpAddresses[ni].IpAddressVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.IpAddress.ValueString() != data.StaticRpAddresses[ni].IpAddress.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedStaticRpAddresses[ni] = true
+					resultStaticRpAddresses = append(resultStaticRpAddresses, data.StaticRpAddresses[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.StaticRpAddresses {
+			if !matchedStaticRpAddresses[ni] {
+				resultStaticRpAddresses = append(resultStaticRpAddresses, data.StaticRpAddresses[ni])
+			}
+		}
+		data.StaticRpAddresses = resultStaticRpAddresses
 	}
 	data.EnableAutoRp = types.BoolNull()
 	data.EnableAutoRpVariable = types.StringNull()
@@ -1054,6 +1200,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			data.EnableAutoRp = types.BoolValue(va.Bool())
 		}
 	}
+	oldAutoRpAnnounces := data.AutoRpAnnounces
 	if value := res.Get(path + "pim.autoRp.sendRpAnnounceList"); value.Exists() && len(value.Array()) > 0 {
 		data.AutoRpAnnounces = make([]ServiceMulticastAutoRpAnnounces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -1081,7 +1228,42 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			data.AutoRpAnnounces = append(data.AutoRpAnnounces, item)
 			return true
 		})
+	} else {
+		data.AutoRpAnnounces = nil
 	}
+	if !fullRead {
+		resultAutoRpAnnounces := make([]ServiceMulticastAutoRpAnnounces, 0, len(data.AutoRpAnnounces))
+		matchedAutoRpAnnounces := make([]bool, len(data.AutoRpAnnounces))
+		for _, oldItem := range oldAutoRpAnnounces {
+			for ni := range data.AutoRpAnnounces {
+				if matchedAutoRpAnnounces[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.InterfaceNameVariable.ValueString() != "" || data.AutoRpAnnounces[ni].InterfaceNameVariable.ValueString() != "") {
+					if oldItem.InterfaceNameVariable.ValueString() != data.AutoRpAnnounces[ni].InterfaceNameVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.InterfaceName.ValueString() != data.AutoRpAnnounces[ni].InterfaceName.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedAutoRpAnnounces[ni] = true
+					resultAutoRpAnnounces = append(resultAutoRpAnnounces, data.AutoRpAnnounces[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.AutoRpAnnounces {
+			if !matchedAutoRpAnnounces[ni] {
+				resultAutoRpAnnounces = append(resultAutoRpAnnounces, data.AutoRpAnnounces[ni])
+			}
+		}
+		data.AutoRpAnnounces = resultAutoRpAnnounces
+	}
+	oldAutoRpDiscoveries := data.AutoRpDiscoveries
 	if value := res.Get(path + "pim.autoRp.sendRpDiscovery"); value.Exists() && len(value.Array()) > 0 {
 		data.AutoRpDiscoveries = make([]ServiceMulticastAutoRpDiscoveries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -1109,7 +1291,42 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			data.AutoRpDiscoveries = append(data.AutoRpDiscoveries, item)
 			return true
 		})
+	} else {
+		data.AutoRpDiscoveries = nil
 	}
+	if !fullRead {
+		resultAutoRpDiscoveries := make([]ServiceMulticastAutoRpDiscoveries, 0, len(data.AutoRpDiscoveries))
+		matchedAutoRpDiscoveries := make([]bool, len(data.AutoRpDiscoveries))
+		for _, oldItem := range oldAutoRpDiscoveries {
+			for ni := range data.AutoRpDiscoveries {
+				if matchedAutoRpDiscoveries[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.InterfaceNameVariable.ValueString() != "" || data.AutoRpDiscoveries[ni].InterfaceNameVariable.ValueString() != "") {
+					if oldItem.InterfaceNameVariable.ValueString() != data.AutoRpDiscoveries[ni].InterfaceNameVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.InterfaceName.ValueString() != data.AutoRpDiscoveries[ni].InterfaceName.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedAutoRpDiscoveries[ni] = true
+					resultAutoRpDiscoveries = append(resultAutoRpDiscoveries, data.AutoRpDiscoveries[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.AutoRpDiscoveries {
+			if !matchedAutoRpDiscoveries[ni] {
+				resultAutoRpDiscoveries = append(resultAutoRpDiscoveries, data.AutoRpDiscoveries[ni])
+			}
+		}
+		data.AutoRpDiscoveries = resultAutoRpDiscoveries
+	}
+	oldPimBsrRpCandidates := data.PimBsrRpCandidates
 	if value := res.Get(path + "pim.pimBsr.rpCandidate"); value.Exists() && len(value.Array()) > 0 {
 		data.PimBsrRpCandidates = make([]ServiceMulticastPimBsrRpCandidates, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -1157,7 +1374,42 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			data.PimBsrRpCandidates = append(data.PimBsrRpCandidates, item)
 			return true
 		})
+	} else {
+		data.PimBsrRpCandidates = nil
 	}
+	if !fullRead {
+		resultPimBsrRpCandidates := make([]ServiceMulticastPimBsrRpCandidates, 0, len(data.PimBsrRpCandidates))
+		matchedPimBsrRpCandidates := make([]bool, len(data.PimBsrRpCandidates))
+		for _, oldItem := range oldPimBsrRpCandidates {
+			for ni := range data.PimBsrRpCandidates {
+				if matchedPimBsrRpCandidates[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.InterfaceNameVariable.ValueString() != "" || data.PimBsrRpCandidates[ni].InterfaceNameVariable.ValueString() != "") {
+					if oldItem.InterfaceNameVariable.ValueString() != data.PimBsrRpCandidates[ni].InterfaceNameVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.InterfaceName.ValueString() != data.PimBsrRpCandidates[ni].InterfaceName.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedPimBsrRpCandidates[ni] = true
+					resultPimBsrRpCandidates = append(resultPimBsrRpCandidates, data.PimBsrRpCandidates[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.PimBsrRpCandidates {
+			if !matchedPimBsrRpCandidates[ni] {
+				resultPimBsrRpCandidates = append(resultPimBsrRpCandidates, data.PimBsrRpCandidates[ni])
+			}
+		}
+		data.PimBsrRpCandidates = resultPimBsrRpCandidates
+	}
+	oldPimBsrCandidates := data.PimBsrCandidates
 	if value := res.Get(path + "pim.pimBsr.bsrCandidate"); value.Exists() && len(value.Array()) > 0 {
 		data.PimBsrCandidates = make([]ServiceMulticastPimBsrCandidates, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -1205,7 +1457,42 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			data.PimBsrCandidates = append(data.PimBsrCandidates, item)
 			return true
 		})
+	} else {
+		data.PimBsrCandidates = nil
 	}
+	if !fullRead {
+		resultPimBsrCandidates := make([]ServiceMulticastPimBsrCandidates, 0, len(data.PimBsrCandidates))
+		matchedPimBsrCandidates := make([]bool, len(data.PimBsrCandidates))
+		for _, oldItem := range oldPimBsrCandidates {
+			for ni := range data.PimBsrCandidates {
+				if matchedPimBsrCandidates[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.InterfaceNameVariable.ValueString() != "" || data.PimBsrCandidates[ni].InterfaceNameVariable.ValueString() != "") {
+					if oldItem.InterfaceNameVariable.ValueString() != data.PimBsrCandidates[ni].InterfaceNameVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.InterfaceName.ValueString() != data.PimBsrCandidates[ni].InterfaceName.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedPimBsrCandidates[ni] = true
+					resultPimBsrCandidates = append(resultPimBsrCandidates, data.PimBsrCandidates[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.PimBsrCandidates {
+			if !matchedPimBsrCandidates[ni] {
+				resultPimBsrCandidates = append(resultPimBsrCandidates, data.PimBsrCandidates[ni])
+			}
+		}
+		data.PimBsrCandidates = resultPimBsrCandidates
+	}
+	oldMsdpGroups := data.MsdpGroups
 	if value := res.Get(path + "msdp.msdpList"); value.Exists() && len(value.Array()) > 0 {
 		data.MsdpGroups = make([]ServiceMulticastMsdpGroups, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -1307,6 +1594,72 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			data.MsdpGroups = append(data.MsdpGroups, item)
 			return true
 		})
+	} else {
+		data.MsdpGroups = nil
+	}
+	if !fullRead {
+		resultMsdpGroups := make([]ServiceMulticastMsdpGroups, 0, len(data.MsdpGroups))
+		matchedMsdpGroups := make([]bool, len(data.MsdpGroups))
+		for _, oldItem := range oldMsdpGroups {
+			for ni := range data.MsdpGroups {
+				if matchedMsdpGroups[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.MeshGroupNameVariable.ValueString() != "" || data.MsdpGroups[ni].MeshGroupNameVariable.ValueString() != "") {
+					if oldItem.MeshGroupNameVariable.ValueString() != data.MsdpGroups[ni].MeshGroupNameVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.MeshGroupName.ValueString() != data.MsdpGroups[ni].MeshGroupName.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedMsdpGroups[ni] = true
+					{
+						resultC := make([]ServiceMulticastMsdpGroupsPeers, 0, len(data.MsdpGroups[ni].Peers))
+						matchedC := make([]bool, len(data.MsdpGroups[ni].Peers))
+						for _, oldCItem := range oldItem.Peers {
+							for nci := range data.MsdpGroups[ni].Peers {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC && (oldCItem.PeerIpVariable.ValueString() != "" || data.MsdpGroups[ni].Peers[nci].PeerIpVariable.ValueString() != "") {
+									if oldCItem.PeerIpVariable.ValueString() != data.MsdpGroups[ni].Peers[nci].PeerIpVariable.ValueString() {
+										keyMatchC = false
+									}
+								} else if keyMatchC {
+									if oldCItem.PeerIp.ValueString() != data.MsdpGroups[ni].Peers[nci].PeerIp.ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									resultC = append(resultC, data.MsdpGroups[ni].Peers[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.MsdpGroups[ni].Peers {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.MsdpGroups[ni].Peers[nci])
+							}
+						}
+						data.MsdpGroups[ni].Peers = resultC
+					}
+					resultMsdpGroups = append(resultMsdpGroups, data.MsdpGroups[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.MsdpGroups {
+			if !matchedMsdpGroups[ni] {
+				resultMsdpGroups = append(resultMsdpGroups, data.MsdpGroups[ni])
+			}
+		}
+		data.MsdpGroups = resultMsdpGroups
 	}
 	data.MsdpOriginatorId = types.StringNull()
 	data.MsdpOriginatorIdVariable = types.StringNull()
@@ -1331,728 +1684,3 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *ServiceMulticast) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.SptOnly = types.BoolNull()
-	data.SptOnlyVariable = types.StringNull()
-	if t := res.Get(path + "basic.sptOnly.optionType"); t.Exists() {
-		va := res.Get(path + "basic.sptOnly.value")
-		if t.String() == "variable" {
-			data.SptOnlyVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.SptOnly = types.BoolValue(va.Bool())
-		}
-	}
-	data.LocalReplicator = types.BoolNull()
-	data.LocalReplicatorVariable = types.StringNull()
-	if t := res.Get(path + "basic.localConfig.local.optionType"); t.Exists() {
-		va := res.Get(path + "basic.localConfig.local.value")
-		if t.String() == "variable" {
-			data.LocalReplicatorVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.LocalReplicator = types.BoolValue(va.Bool())
-		}
-	}
-	data.LocalReplicatorThreshold = types.Int64Null()
-	data.LocalReplicatorThresholdVariable = types.StringNull()
-	if t := res.Get(path + "basic.localConfig.threshold.optionType"); t.Exists() {
-		va := res.Get(path + "basic.localConfig.threshold.value")
-		if t.String() == "variable" {
-			data.LocalReplicatorThresholdVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.LocalReplicatorThreshold = types.Int64Value(va.Int())
-		}
-	}
-	for i := range data.IgmpInterfaces {
-		keys := [...]string{"interfaceName"}
-		keyValues := [...]string{data.IgmpInterfaces[i].InterfaceName.ValueString()}
-		keyValuesVariables := [...]string{data.IgmpInterfaces[i].InterfaceNameVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "igmp.interface").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.IgmpInterfaces[i].InterfaceName = types.StringNull()
-		data.IgmpInterfaces[i].InterfaceNameVariable = types.StringNull()
-		if t := r.Get("interfaceName.optionType"); t.Exists() {
-			va := r.Get("interfaceName.value")
-			if t.String() == "variable" {
-				data.IgmpInterfaces[i].InterfaceNameVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.IgmpInterfaces[i].InterfaceName = types.StringValue(va.String())
-			}
-		}
-		data.IgmpInterfaces[i].Version = types.Int64Null()
-
-		if t := r.Get("version.optionType"); t.Exists() {
-			va := r.Get("version.value")
-			if t.String() == "global" {
-				data.IgmpInterfaces[i].Version = types.Int64Value(va.Int())
-			}
-		}
-		for ci := range data.IgmpInterfaces[i].JoinGroups {
-			keys := [...]string{"groupAddress", "sourceAddress"}
-			keyValues := [...]string{data.IgmpInterfaces[i].JoinGroups[ci].GroupAddress.ValueString(), data.IgmpInterfaces[i].JoinGroups[ci].SourceAddress.ValueString()}
-			keyValuesVariables := [...]string{data.IgmpInterfaces[i].JoinGroups[ci].GroupAddressVariable.ValueString(), data.IgmpInterfaces[i].JoinGroups[ci].SourceAddressVariable.ValueString()}
-
-			var cr gjson.Result
-			r.Get("joinGroup").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.IgmpInterfaces[i].JoinGroups[ci].GroupAddress = types.StringNull()
-			data.IgmpInterfaces[i].JoinGroups[ci].GroupAddressVariable = types.StringNull()
-			if t := cr.Get("groupAddress.optionType"); t.Exists() {
-				va := cr.Get("groupAddress.value")
-				if t.String() == "variable" {
-					data.IgmpInterfaces[i].JoinGroups[ci].GroupAddressVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.IgmpInterfaces[i].JoinGroups[ci].GroupAddress = types.StringValue(va.String())
-				}
-			}
-			data.IgmpInterfaces[i].JoinGroups[ci].SourceAddress = types.StringNull()
-			data.IgmpInterfaces[i].JoinGroups[ci].SourceAddressVariable = types.StringNull()
-			if t := cr.Get("sourceAddress.optionType"); t.Exists() {
-				va := cr.Get("sourceAddress.value")
-				if t.String() == "variable" {
-					data.IgmpInterfaces[i].JoinGroups[ci].SourceAddressVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.IgmpInterfaces[i].JoinGroups[ci].SourceAddress = types.StringValue(va.String())
-				}
-			}
-		}
-	}
-	data.PimSourceSpecificMulticastEnable = types.BoolNull()
-
-	if t := res.Get(path + "pim.ssm.ssmRangeConfig.enableSSMFlag.optionType"); t.Exists() {
-		va := res.Get(path + "pim.ssm.ssmRangeConfig.enableSSMFlag.value")
-		if t.String() == "global" {
-			data.PimSourceSpecificMulticastEnable = types.BoolValue(va.Bool())
-		}
-	}
-	data.PimSourceSpecificMulticastAccessList = types.StringNull()
-	data.PimSourceSpecificMulticastAccessListVariable = types.StringNull()
-	if t := res.Get(path + "pim.ssm.ssmRangeConfig.range.optionType"); t.Exists() {
-		va := res.Get(path + "pim.ssm.ssmRangeConfig.range.value")
-		if t.String() == "variable" {
-			data.PimSourceSpecificMulticastAccessListVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PimSourceSpecificMulticastAccessList = types.StringValue(va.String())
-		}
-	}
-	data.PimSptThreshold = types.StringNull()
-	data.PimSptThresholdVariable = types.StringNull()
-	if t := res.Get(path + "pim.ssm.sptThreshold.optionType"); t.Exists() {
-		va := res.Get(path + "pim.ssm.sptThreshold.value")
-		if t.String() == "variable" {
-			data.PimSptThresholdVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PimSptThreshold = types.StringValue(va.String())
-		}
-	}
-	for i := range data.PimInterfaces {
-		keys := [...]string{"interfaceName"}
-		keyValues := [...]string{data.PimInterfaces[i].InterfaceName.ValueString()}
-		keyValuesVariables := [...]string{data.PimInterfaces[i].InterfaceNameVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "pim.interface").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.PimInterfaces[i].InterfaceName = types.StringNull()
-		data.PimInterfaces[i].InterfaceNameVariable = types.StringNull()
-		if t := r.Get("interfaceName.optionType"); t.Exists() {
-			va := r.Get("interfaceName.value")
-			if t.String() == "variable" {
-				data.PimInterfaces[i].InterfaceNameVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.PimInterfaces[i].InterfaceName = types.StringValue(va.String())
-			}
-		}
-		data.PimInterfaces[i].QueryInterval = types.Int64Null()
-		data.PimInterfaces[i].QueryIntervalVariable = types.StringNull()
-		if t := r.Get("queryInterval.optionType"); t.Exists() {
-			va := r.Get("queryInterval.value")
-			if t.String() == "variable" {
-				data.PimInterfaces[i].QueryIntervalVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.PimInterfaces[i].QueryInterval = types.Int64Value(va.Int())
-			}
-		}
-		data.PimInterfaces[i].JoinPruneInterval = types.Int64Null()
-		data.PimInterfaces[i].JoinPruneIntervalVariable = types.StringNull()
-		if t := r.Get("joinPruneInterval.optionType"); t.Exists() {
-			va := r.Get("joinPruneInterval.value")
-			if t.String() == "variable" {
-				data.PimInterfaces[i].JoinPruneIntervalVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.PimInterfaces[i].JoinPruneInterval = types.Int64Value(va.Int())
-			}
-		}
-	}
-	for i := range data.StaticRpAddresses {
-		keys := [...]string{"address"}
-		keyValues := [...]string{data.StaticRpAddresses[i].IpAddress.ValueString()}
-		keyValuesVariables := [...]string{data.StaticRpAddresses[i].IpAddressVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "pim.rpAddr").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.StaticRpAddresses[i].IpAddress = types.StringNull()
-		data.StaticRpAddresses[i].IpAddressVariable = types.StringNull()
-		if t := r.Get("address.optionType"); t.Exists() {
-			va := r.Get("address.value")
-			if t.String() == "variable" {
-				data.StaticRpAddresses[i].IpAddressVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.StaticRpAddresses[i].IpAddress = types.StringValue(va.String())
-			}
-		}
-		data.StaticRpAddresses[i].AccessList = types.StringNull()
-		data.StaticRpAddresses[i].AccessListVariable = types.StringNull()
-		if t := r.Get("accessList.optionType"); t.Exists() {
-			va := r.Get("accessList.value")
-			if t.String() == "variable" {
-				data.StaticRpAddresses[i].AccessListVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.StaticRpAddresses[i].AccessList = types.StringValue(va.String())
-			}
-		}
-		data.StaticRpAddresses[i].Override = types.BoolNull()
-		data.StaticRpAddresses[i].OverrideVariable = types.StringNull()
-		if t := r.Get("override.optionType"); t.Exists() {
-			va := r.Get("override.value")
-			if t.String() == "variable" {
-				data.StaticRpAddresses[i].OverrideVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.StaticRpAddresses[i].Override = types.BoolValue(va.Bool())
-			}
-		}
-	}
-	data.EnableAutoRp = types.BoolNull()
-	data.EnableAutoRpVariable = types.StringNull()
-	if t := res.Get(path + "pim.autoRp.enableAutoRPFlag.optionType"); t.Exists() {
-		va := res.Get(path + "pim.autoRp.enableAutoRPFlag.value")
-		if t.String() == "variable" {
-			data.EnableAutoRpVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.EnableAutoRp = types.BoolValue(va.Bool())
-		}
-	}
-	for i := range data.AutoRpAnnounces {
-		keys := [...]string{"interfaceName"}
-		keyValues := [...]string{data.AutoRpAnnounces[i].InterfaceName.ValueString()}
-		keyValuesVariables := [...]string{data.AutoRpAnnounces[i].InterfaceNameVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "pim.autoRp.sendRpAnnounceList").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.AutoRpAnnounces[i].InterfaceName = types.StringNull()
-		data.AutoRpAnnounces[i].InterfaceNameVariable = types.StringNull()
-		if t := r.Get("interfaceName.optionType"); t.Exists() {
-			va := r.Get("interfaceName.value")
-			if t.String() == "variable" {
-				data.AutoRpAnnounces[i].InterfaceNameVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.AutoRpAnnounces[i].InterfaceName = types.StringValue(va.String())
-			}
-		}
-		data.AutoRpAnnounces[i].Scope = types.Int64Null()
-		data.AutoRpAnnounces[i].ScopeVariable = types.StringNull()
-		if t := r.Get("scope.optionType"); t.Exists() {
-			va := r.Get("scope.value")
-			if t.String() == "variable" {
-				data.AutoRpAnnounces[i].ScopeVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.AutoRpAnnounces[i].Scope = types.Int64Value(va.Int())
-			}
-		}
-	}
-	for i := range data.AutoRpDiscoveries {
-		keys := [...]string{"interfaceName"}
-		keyValues := [...]string{data.AutoRpDiscoveries[i].InterfaceName.ValueString()}
-		keyValuesVariables := [...]string{data.AutoRpDiscoveries[i].InterfaceNameVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "pim.autoRp.sendRpDiscovery").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.AutoRpDiscoveries[i].InterfaceName = types.StringNull()
-		data.AutoRpDiscoveries[i].InterfaceNameVariable = types.StringNull()
-		if t := r.Get("interfaceName.optionType"); t.Exists() {
-			va := r.Get("interfaceName.value")
-			if t.String() == "variable" {
-				data.AutoRpDiscoveries[i].InterfaceNameVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.AutoRpDiscoveries[i].InterfaceName = types.StringValue(va.String())
-			}
-		}
-		data.AutoRpDiscoveries[i].Scope = types.Int64Null()
-		data.AutoRpDiscoveries[i].ScopeVariable = types.StringNull()
-		if t := r.Get("scope.optionType"); t.Exists() {
-			va := r.Get("scope.value")
-			if t.String() == "variable" {
-				data.AutoRpDiscoveries[i].ScopeVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.AutoRpDiscoveries[i].Scope = types.Int64Value(va.Int())
-			}
-		}
-	}
-	for i := range data.PimBsrRpCandidates {
-		keys := [...]string{"interfaceName"}
-		keyValues := [...]string{data.PimBsrRpCandidates[i].InterfaceName.ValueString()}
-		keyValuesVariables := [...]string{data.PimBsrRpCandidates[i].InterfaceNameVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "pim.pimBsr.rpCandidate").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.PimBsrRpCandidates[i].InterfaceName = types.StringNull()
-		data.PimBsrRpCandidates[i].InterfaceNameVariable = types.StringNull()
-		if t := r.Get("interfaceName.optionType"); t.Exists() {
-			va := r.Get("interfaceName.value")
-			if t.String() == "variable" {
-				data.PimBsrRpCandidates[i].InterfaceNameVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.PimBsrRpCandidates[i].InterfaceName = types.StringValue(va.String())
-			}
-		}
-		data.PimBsrRpCandidates[i].AccessListId = types.StringNull()
-		data.PimBsrRpCandidates[i].AccessListIdVariable = types.StringNull()
-		if t := r.Get("groupList.optionType"); t.Exists() {
-			va := r.Get("groupList.value")
-			if t.String() == "variable" {
-				data.PimBsrRpCandidates[i].AccessListIdVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.PimBsrRpCandidates[i].AccessListId = types.StringValue(va.String())
-			}
-		}
-		data.PimBsrRpCandidates[i].Interval = types.Int64Null()
-		data.PimBsrRpCandidates[i].IntervalVariable = types.StringNull()
-		if t := r.Get("interval.optionType"); t.Exists() {
-			va := r.Get("interval.value")
-			if t.String() == "variable" {
-				data.PimBsrRpCandidates[i].IntervalVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.PimBsrRpCandidates[i].Interval = types.Int64Value(va.Int())
-			}
-		}
-		data.PimBsrRpCandidates[i].Priority = types.Int64Null()
-		data.PimBsrRpCandidates[i].PriorityVariable = types.StringNull()
-		if t := r.Get("priority.optionType"); t.Exists() {
-			va := r.Get("priority.value")
-			if t.String() == "variable" {
-				data.PimBsrRpCandidates[i].PriorityVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.PimBsrRpCandidates[i].Priority = types.Int64Value(va.Int())
-			}
-		}
-	}
-	for i := range data.PimBsrCandidates {
-		keys := [...]string{"interfaceName"}
-		keyValues := [...]string{data.PimBsrCandidates[i].InterfaceName.ValueString()}
-		keyValuesVariables := [...]string{data.PimBsrCandidates[i].InterfaceNameVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "pim.pimBsr.bsrCandidate").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.PimBsrCandidates[i].InterfaceName = types.StringNull()
-		data.PimBsrCandidates[i].InterfaceNameVariable = types.StringNull()
-		if t := r.Get("interfaceName.optionType"); t.Exists() {
-			va := r.Get("interfaceName.value")
-			if t.String() == "variable" {
-				data.PimBsrCandidates[i].InterfaceNameVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.PimBsrCandidates[i].InterfaceName = types.StringValue(va.String())
-			}
-		}
-		data.PimBsrCandidates[i].HashMaskLength = types.Int64Null()
-		data.PimBsrCandidates[i].HashMaskLengthVariable = types.StringNull()
-		if t := r.Get("mask.optionType"); t.Exists() {
-			va := r.Get("mask.value")
-			if t.String() == "variable" {
-				data.PimBsrCandidates[i].HashMaskLengthVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.PimBsrCandidates[i].HashMaskLength = types.Int64Value(va.Int())
-			}
-		}
-		data.PimBsrCandidates[i].Priority = types.Int64Null()
-		data.PimBsrCandidates[i].PriorityVariable = types.StringNull()
-		if t := r.Get("priority.optionType"); t.Exists() {
-			va := r.Get("priority.value")
-			if t.String() == "variable" {
-				data.PimBsrCandidates[i].PriorityVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.PimBsrCandidates[i].Priority = types.Int64Value(va.Int())
-			}
-		}
-		data.PimBsrCandidates[i].AcceptCandidateAccessList = types.StringNull()
-		data.PimBsrCandidates[i].AcceptCandidateAccessListVariable = types.StringNull()
-		if t := r.Get("acceptRpCandidate.optionType"); t.Exists() {
-			va := r.Get("acceptRpCandidate.value")
-			if t.String() == "variable" {
-				data.PimBsrCandidates[i].AcceptCandidateAccessListVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.PimBsrCandidates[i].AcceptCandidateAccessList = types.StringValue(va.String())
-			}
-		}
-	}
-	for i := range data.MsdpGroups {
-		keys := [...]string{"meshGroup"}
-		keyValues := [...]string{data.MsdpGroups[i].MeshGroupName.ValueString()}
-		keyValuesVariables := [...]string{data.MsdpGroups[i].MeshGroupNameVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "msdp.msdpList").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.MsdpGroups[i].MeshGroupName = types.StringNull()
-		data.MsdpGroups[i].MeshGroupNameVariable = types.StringNull()
-		if t := r.Get("meshGroup.optionType"); t.Exists() {
-			va := r.Get("meshGroup.value")
-			if t.String() == "variable" {
-				data.MsdpGroups[i].MeshGroupNameVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.MsdpGroups[i].MeshGroupName = types.StringValue(va.String())
-			}
-		}
-		for ci := range data.MsdpGroups[i].Peers {
-			keys := [...]string{"peerIp"}
-			keyValues := [...]string{data.MsdpGroups[i].Peers[ci].PeerIp.ValueString()}
-			keyValuesVariables := [...]string{data.MsdpGroups[i].Peers[ci].PeerIpVariable.ValueString()}
-
-			var cr gjson.Result
-			r.Get("peer").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.MsdpGroups[i].Peers[ci].PeerIp = types.StringNull()
-			data.MsdpGroups[i].Peers[ci].PeerIpVariable = types.StringNull()
-			if t := cr.Get("peerIp.optionType"); t.Exists() {
-				va := cr.Get("peerIp.value")
-				if t.String() == "variable" {
-					data.MsdpGroups[i].Peers[ci].PeerIpVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.MsdpGroups[i].Peers[ci].PeerIp = types.StringValue(va.String())
-				}
-			}
-			data.MsdpGroups[i].Peers[ci].ConnectionSourceInterface = types.StringNull()
-			data.MsdpGroups[i].Peers[ci].ConnectionSourceInterfaceVariable = types.StringNull()
-			if t := cr.Get("connectSourceIntf.optionType"); t.Exists() {
-				va := cr.Get("connectSourceIntf.value")
-				if t.String() == "variable" {
-					data.MsdpGroups[i].Peers[ci].ConnectionSourceInterfaceVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.MsdpGroups[i].Peers[ci].ConnectionSourceInterface = types.StringValue(va.String())
-				}
-			}
-			data.MsdpGroups[i].Peers[ci].RemoteAs = types.Int64Null()
-			data.MsdpGroups[i].Peers[ci].RemoteAsVariable = types.StringNull()
-			if t := cr.Get("remoteAs.optionType"); t.Exists() {
-				va := cr.Get("remoteAs.value")
-				if t.String() == "variable" {
-					data.MsdpGroups[i].Peers[ci].RemoteAsVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.MsdpGroups[i].Peers[ci].RemoteAs = types.Int64Value(va.Int())
-				}
-			}
-			data.MsdpGroups[i].Peers[ci].KeepaliveInterval = types.Int64Null()
-			data.MsdpGroups[i].Peers[ci].KeepaliveIntervalVariable = types.StringNull()
-			if t := cr.Get("keepaliveInterval.optionType"); t.Exists() {
-				va := cr.Get("keepaliveInterval.value")
-				if t.String() == "variable" {
-					data.MsdpGroups[i].Peers[ci].KeepaliveIntervalVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.MsdpGroups[i].Peers[ci].KeepaliveInterval = types.Int64Value(va.Int())
-				}
-			}
-			data.MsdpGroups[i].Peers[ci].KeepaliveHoldTime = types.Int64Null()
-			data.MsdpGroups[i].Peers[ci].KeepaliveHoldTimeVariable = types.StringNull()
-			if t := cr.Get("keepaliveHoldTime.optionType"); t.Exists() {
-				va := cr.Get("keepaliveHoldTime.value")
-				if t.String() == "variable" {
-					data.MsdpGroups[i].Peers[ci].KeepaliveHoldTimeVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.MsdpGroups[i].Peers[ci].KeepaliveHoldTime = types.Int64Value(va.Int())
-				}
-			}
-			data.MsdpGroups[i].Peers[ci].SaLimit = types.Int64Null()
-			data.MsdpGroups[i].Peers[ci].SaLimitVariable = types.StringNull()
-			if t := cr.Get("saLimit.optionType"); t.Exists() {
-				va := cr.Get("saLimit.value")
-				if t.String() == "variable" {
-					data.MsdpGroups[i].Peers[ci].SaLimitVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.MsdpGroups[i].Peers[ci].SaLimit = types.Int64Value(va.Int())
-				}
-			}
-			data.MsdpGroups[i].Peers[ci].DefaultPeer = types.BoolNull()
-
-			if t := cr.Get("default.defaultPeer.optionType"); t.Exists() {
-				va := cr.Get("default.defaultPeer.value")
-				if t.String() == "global" {
-					data.MsdpGroups[i].Peers[ci].DefaultPeer = types.BoolValue(va.Bool())
-				}
-			}
-			data.MsdpGroups[i].Peers[ci].PrefixListId = types.StringNull()
-
-			if t := cr.Get("default.prefixList.refId.optionType"); t.Exists() {
-				va := cr.Get("default.prefixList.refId.value")
-				if t.String() == "global" {
-					data.MsdpGroups[i].Peers[ci].PrefixListId = types.StringValue(va.String())
-				}
-			}
-		}
-	}
-	data.MsdpOriginatorId = types.StringNull()
-	data.MsdpOriginatorIdVariable = types.StringNull()
-	if t := res.Get(path + "msdp.originatorId.optionType"); t.Exists() {
-		va := res.Get(path + "msdp.originatorId.value")
-		if t.String() == "variable" {
-			data.MsdpOriginatorIdVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.MsdpOriginatorId = types.StringValue(va.String())
-		}
-	}
-	data.MsdpConnectionRetryInterval = types.Int64Null()
-	data.MsdpConnectionRetryIntervalVariable = types.StringNull()
-	if t := res.Get(path + "msdp.refreshTimer.optionType"); t.Exists() {
-		va := res.Get(path + "msdp.refreshTimer.value")
-		if t.String() == "variable" {
-			data.MsdpConnectionRetryIntervalVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.MsdpConnectionRetryInterval = types.Int64Value(va.Int())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

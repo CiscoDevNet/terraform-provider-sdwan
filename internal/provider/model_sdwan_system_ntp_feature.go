@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -306,7 +305,7 @@ func (data SystemNTP) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result) {
+func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -314,6 +313,7 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result) {
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
+	oldServers := data.Servers
 	if value := res.Get(path + "server"); value.Exists() && len(value.Array()) > 0 {
 		data.Servers = make([]SystemNTPServers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -381,7 +381,42 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result) {
 			data.Servers = append(data.Servers, item)
 			return true
 		})
+	} else {
+		data.Servers = nil
 	}
+	if !fullRead {
+		resultServers := make([]SystemNTPServers, 0, len(data.Servers))
+		matchedServers := make([]bool, len(data.Servers))
+		for _, oldItem := range oldServers {
+			for ni := range data.Servers {
+				if matchedServers[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.HostnameIpAddressVariable.ValueString() != "" || data.Servers[ni].HostnameIpAddressVariable.ValueString() != "") {
+					if oldItem.HostnameIpAddressVariable.ValueString() != data.Servers[ni].HostnameIpAddressVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.HostnameIpAddress.ValueString() != data.Servers[ni].HostnameIpAddress.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedServers[ni] = true
+					resultServers = append(resultServers, data.Servers[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Servers {
+			if !matchedServers[ni] {
+				resultServers = append(resultServers, data.Servers[ni])
+			}
+		}
+		data.Servers = resultServers
+	}
+	oldAuthenticationKeys := data.AuthenticationKeys
 	if value := res.Get(path + "authentication.authenticationKeys"); value.Exists() && len(value.Array()) > 0 {
 		data.AuthenticationKeys = make([]SystemNTPAuthenticationKeys, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -409,6 +444,42 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result) {
 			data.AuthenticationKeys = append(data.AuthenticationKeys, item)
 			return true
 		})
+	} else {
+		data.AuthenticationKeys = nil
+	}
+	if !fullRead {
+		resultAuthenticationKeys := make([]SystemNTPAuthenticationKeys, 0, len(data.AuthenticationKeys))
+		matchedAuthenticationKeys := make([]bool, len(data.AuthenticationKeys))
+		for _, oldItem := range oldAuthenticationKeys {
+			for ni := range data.AuthenticationKeys {
+				if matchedAuthenticationKeys[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.KeyIdVariable.ValueString() != "" || data.AuthenticationKeys[ni].KeyIdVariable.ValueString() != "") {
+					if oldItem.KeyIdVariable.ValueString() != data.AuthenticationKeys[ni].KeyIdVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.KeyId.ValueInt64() != data.AuthenticationKeys[ni].KeyId.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedAuthenticationKeys[ni] = true
+					data.AuthenticationKeys[ni].Md5Value = oldItem.Md5Value
+					data.AuthenticationKeys[ni].Md5ValueVariable = oldItem.Md5ValueVariable
+					resultAuthenticationKeys = append(resultAuthenticationKeys, data.AuthenticationKeys[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.AuthenticationKeys {
+			if !matchedAuthenticationKeys[ni] {
+				resultAuthenticationKeys = append(resultAuthenticationKeys, data.AuthenticationKeys[ni])
+			}
+		}
+		data.AuthenticationKeys = resultAuthenticationKeys
 	}
 	data.TrustedKeys = types.SetNull(types.Int64Type)
 	data.TrustedKeysVariable = types.StringNull()
@@ -453,190 +524,3 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result) {
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *SystemNTP) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	for i := range data.Servers {
-		keys := [...]string{"name"}
-		keyValues := [...]string{data.Servers[i].HostnameIpAddress.ValueString()}
-		keyValuesVariables := [...]string{data.Servers[i].HostnameIpAddressVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "server").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Servers[i].HostnameIpAddress = types.StringNull()
-		data.Servers[i].HostnameIpAddressVariable = types.StringNull()
-		if t := r.Get("name.optionType"); t.Exists() {
-			va := r.Get("name.value")
-			if t.String() == "variable" {
-				data.Servers[i].HostnameIpAddressVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Servers[i].HostnameIpAddress = types.StringValue(va.String())
-			}
-		}
-		data.Servers[i].AuthenticationKey = types.Int64Null()
-		data.Servers[i].AuthenticationKeyVariable = types.StringNull()
-		if t := r.Get("key.optionType"); t.Exists() {
-			va := r.Get("key.value")
-			if t.String() == "variable" {
-				data.Servers[i].AuthenticationKeyVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Servers[i].AuthenticationKey = types.Int64Value(va.Int())
-			}
-		}
-		data.Servers[i].Vpn = types.Int64Null()
-		data.Servers[i].VpnVariable = types.StringNull()
-		if t := r.Get("vpn.optionType"); t.Exists() {
-			va := r.Get("vpn.value")
-			if t.String() == "variable" {
-				data.Servers[i].VpnVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Servers[i].Vpn = types.Int64Value(va.Int())
-			}
-		}
-		data.Servers[i].NtpVersion = types.Int64Null()
-		data.Servers[i].NtpVersionVariable = types.StringNull()
-		if t := r.Get("version.optionType"); t.Exists() {
-			va := r.Get("version.value")
-			if t.String() == "variable" {
-				data.Servers[i].NtpVersionVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Servers[i].NtpVersion = types.Int64Value(va.Int())
-			}
-		}
-		data.Servers[i].SourceInterface = types.StringNull()
-		data.Servers[i].SourceInterfaceVariable = types.StringNull()
-		if t := r.Get("sourceInterface.optionType"); t.Exists() {
-			va := r.Get("sourceInterface.value")
-			if t.String() == "variable" {
-				data.Servers[i].SourceInterfaceVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Servers[i].SourceInterface = types.StringValue(va.String())
-			}
-		}
-		data.Servers[i].PreferThisNtpServer = types.BoolNull()
-		data.Servers[i].PreferThisNtpServerVariable = types.StringNull()
-		if t := r.Get("prefer.optionType"); t.Exists() {
-			va := r.Get("prefer.value")
-			if t.String() == "variable" {
-				data.Servers[i].PreferThisNtpServerVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Servers[i].PreferThisNtpServer = types.BoolValue(va.Bool())
-			}
-		}
-	}
-	for i := range data.AuthenticationKeys {
-		keys := [...]string{"keyId"}
-		keyValues := [...]string{strconv.FormatInt(data.AuthenticationKeys[i].KeyId.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{data.AuthenticationKeys[i].KeyIdVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "authentication.authenticationKeys").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.AuthenticationKeys[i].KeyId = types.Int64Null()
-		data.AuthenticationKeys[i].KeyIdVariable = types.StringNull()
-		if t := r.Get("keyId.optionType"); t.Exists() {
-			va := r.Get("keyId.value")
-			if t.String() == "variable" {
-				data.AuthenticationKeys[i].KeyIdVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.AuthenticationKeys[i].KeyId = types.Int64Value(va.Int())
-			}
-		}
-	}
-	data.TrustedKeys = types.SetNull(types.Int64Type)
-	data.TrustedKeysVariable = types.StringNull()
-	if t := res.Get(path + "authentication.trustedKeys.optionType"); t.Exists() {
-		va := res.Get(path + "authentication.trustedKeys.value")
-		if t.String() == "variable" {
-			data.TrustedKeysVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TrustedKeys = helpers.GetInt64Set(va.Array())
-		}
-	}
-	data.AuthoritativeNtpServer = types.BoolNull()
-	data.AuthoritativeNtpServerVariable = types.StringNull()
-	if t := res.Get(path + "leader.enable.optionType"); t.Exists() {
-		va := res.Get(path + "leader.enable.value")
-		if t.String() == "variable" {
-			data.AuthoritativeNtpServerVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AuthoritativeNtpServer = types.BoolValue(va.Bool())
-		}
-	}
-	data.Stratum = types.Int64Null()
-	data.StratumVariable = types.StringNull()
-	if t := res.Get(path + "leader.stratum.optionType"); t.Exists() {
-		va := res.Get(path + "leader.stratum.value")
-		if t.String() == "variable" {
-			data.StratumVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Stratum = types.Int64Value(va.Int())
-		}
-	}
-	data.SourceInterface = types.StringNull()
-	data.SourceInterfaceVariable = types.StringNull()
-	if t := res.Get(path + "leader.source.optionType"); t.Exists() {
-		va := res.Get(path + "leader.source.value")
-		if t.String() == "variable" {
-			data.SourceInterfaceVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.SourceInterface = types.StringValue(va.String())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

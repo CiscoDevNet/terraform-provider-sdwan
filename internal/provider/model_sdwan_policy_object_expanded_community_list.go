@@ -84,7 +84,7 @@ func (data PolicyObjectExpandedCommunityList) toBody(ctx context.Context) string
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *PolicyObjectExpandedCommunityList) fromBody(ctx context.Context, res gjson.Result) {
+func (data *PolicyObjectExpandedCommunityList) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -105,26 +105,3 @@ func (data *PolicyObjectExpandedCommunityList) fromBody(ctx context.Context, res
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *PolicyObjectExpandedCommunityList) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.ExpandedCommunityLists = types.SetNull(types.StringType)
-	data.ExpandedCommunityListsVariable = types.StringNull()
-	if t := res.Get(path + "expandedCommunityList.optionType"); t.Exists() {
-		va := res.Get(path + "expandedCommunityList.value")
-		if t.String() == "variable" {
-			data.ExpandedCommunityListsVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.ExpandedCommunityLists = helpers.GetStringSet(va.Array())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

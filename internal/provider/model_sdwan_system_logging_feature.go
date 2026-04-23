@@ -472,7 +472,7 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *SystemLogging) fromBody(ctx context.Context, res gjson.Result) {
+func (data *SystemLogging) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -510,6 +510,7 @@ func (data *SystemLogging) fromBody(ctx context.Context, res gjson.Result) {
 			data.DiskFileRotate = types.Int64Value(va.Int())
 		}
 	}
+	oldTlsProfiles := data.TlsProfiles
 	if value := res.Get(path + "tlsProfile"); value.Exists() && len(value.Array()) > 0 {
 		data.TlsProfiles = make([]SystemLoggingTlsProfiles, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -547,7 +548,42 @@ func (data *SystemLogging) fromBody(ctx context.Context, res gjson.Result) {
 			data.TlsProfiles = append(data.TlsProfiles, item)
 			return true
 		})
+	} else {
+		data.TlsProfiles = nil
 	}
+	if !fullRead {
+		resultTlsProfiles := make([]SystemLoggingTlsProfiles, 0, len(data.TlsProfiles))
+		matchedTlsProfiles := make([]bool, len(data.TlsProfiles))
+		for _, oldItem := range oldTlsProfiles {
+			for ni := range data.TlsProfiles {
+				if matchedTlsProfiles[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.ProfileVariable.ValueString() != "" || data.TlsProfiles[ni].ProfileVariable.ValueString() != "") {
+					if oldItem.ProfileVariable.ValueString() != data.TlsProfiles[ni].ProfileVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.Profile.ValueString() != data.TlsProfiles[ni].Profile.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedTlsProfiles[ni] = true
+					resultTlsProfiles = append(resultTlsProfiles, data.TlsProfiles[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.TlsProfiles {
+			if !matchedTlsProfiles[ni] {
+				resultTlsProfiles = append(resultTlsProfiles, data.TlsProfiles[ni])
+			}
+		}
+		data.TlsProfiles = resultTlsProfiles
+	}
+	oldIpv4Servers := data.Ipv4Servers
 	if value := res.Get(path + "server"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv4Servers = make([]SystemLoggingIpv4Servers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -625,7 +661,42 @@ func (data *SystemLogging) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv4Servers = append(data.Ipv4Servers, item)
 			return true
 		})
+	} else {
+		data.Ipv4Servers = nil
 	}
+	if !fullRead {
+		resultIpv4Servers := make([]SystemLoggingIpv4Servers, 0, len(data.Ipv4Servers))
+		matchedIpv4Servers := make([]bool, len(data.Ipv4Servers))
+		for _, oldItem := range oldIpv4Servers {
+			for ni := range data.Ipv4Servers {
+				if matchedIpv4Servers[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.HostnameIpVariable.ValueString() != "" || data.Ipv4Servers[ni].HostnameIpVariable.ValueString() != "") {
+					if oldItem.HostnameIpVariable.ValueString() != data.Ipv4Servers[ni].HostnameIpVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.HostnameIp.ValueString() != data.Ipv4Servers[ni].HostnameIp.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedIpv4Servers[ni] = true
+					resultIpv4Servers = append(resultIpv4Servers, data.Ipv4Servers[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Ipv4Servers {
+			if !matchedIpv4Servers[ni] {
+				resultIpv4Servers = append(resultIpv4Servers, data.Ipv4Servers[ni])
+			}
+		}
+		data.Ipv4Servers = resultIpv4Servers
+	}
+	oldIpv6Servers := data.Ipv6Servers
 	if value := res.Get(path + "ipv6Server"); value.Exists() && len(value.Array()) > 0 {
 		data.Ipv6Servers = make([]SystemLoggingIpv6Servers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -703,316 +774,41 @@ func (data *SystemLogging) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv6Servers = append(data.Ipv6Servers, item)
 			return true
 		})
+	} else {
+		data.Ipv6Servers = nil
+	}
+	if !fullRead {
+		resultIpv6Servers := make([]SystemLoggingIpv6Servers, 0, len(data.Ipv6Servers))
+		matchedIpv6Servers := make([]bool, len(data.Ipv6Servers))
+		for _, oldItem := range oldIpv6Servers {
+			for ni := range data.Ipv6Servers {
+				if matchedIpv6Servers[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.HostnameIpVariable.ValueString() != "" || data.Ipv6Servers[ni].HostnameIpVariable.ValueString() != "") {
+					if oldItem.HostnameIpVariable.ValueString() != data.Ipv6Servers[ni].HostnameIpVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.HostnameIp.ValueString() != data.Ipv6Servers[ni].HostnameIp.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedIpv6Servers[ni] = true
+					resultIpv6Servers = append(resultIpv6Servers, data.Ipv6Servers[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Ipv6Servers {
+			if !matchedIpv6Servers[ni] {
+				resultIpv6Servers = append(resultIpv6Servers, data.Ipv6Servers[ni])
+			}
+		}
+		data.Ipv6Servers = resultIpv6Servers
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *SystemLogging) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.DiskEnable = types.BoolNull()
-	data.DiskEnableVariable = types.StringNull()
-	if t := res.Get(path + "disk.diskEnable.optionType"); t.Exists() {
-		va := res.Get(path + "disk.diskEnable.value")
-		if t.String() == "variable" {
-			data.DiskEnableVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.DiskEnable = types.BoolValue(va.Bool())
-		}
-	}
-	data.DiskFileSize = types.Int64Null()
-	data.DiskFileSizeVariable = types.StringNull()
-	if t := res.Get(path + "disk.file.diskFileSize.optionType"); t.Exists() {
-		va := res.Get(path + "disk.file.diskFileSize.value")
-		if t.String() == "variable" {
-			data.DiskFileSizeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.DiskFileSize = types.Int64Value(va.Int())
-		}
-	}
-	data.DiskFileRotate = types.Int64Null()
-	data.DiskFileRotateVariable = types.StringNull()
-	if t := res.Get(path + "disk.file.diskFileRotate.optionType"); t.Exists() {
-		va := res.Get(path + "disk.file.diskFileRotate.value")
-		if t.String() == "variable" {
-			data.DiskFileRotateVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.DiskFileRotate = types.Int64Value(va.Int())
-		}
-	}
-	for i := range data.TlsProfiles {
-		keys := [...]string{"profile"}
-		keyValues := [...]string{data.TlsProfiles[i].Profile.ValueString()}
-		keyValuesVariables := [...]string{data.TlsProfiles[i].ProfileVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "tlsProfile").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.TlsProfiles[i].Profile = types.StringNull()
-		data.TlsProfiles[i].ProfileVariable = types.StringNull()
-		if t := r.Get("profile.optionType"); t.Exists() {
-			va := r.Get("profile.value")
-			if t.String() == "variable" {
-				data.TlsProfiles[i].ProfileVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.TlsProfiles[i].Profile = types.StringValue(va.String())
-			}
-		}
-		data.TlsProfiles[i].TlsVersion = types.StringNull()
-		data.TlsProfiles[i].TlsVersionVariable = types.StringNull()
-		if t := r.Get("tlsVersion.optionType"); t.Exists() {
-			va := r.Get("tlsVersion.value")
-			if t.String() == "variable" {
-				data.TlsProfiles[i].TlsVersionVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.TlsProfiles[i].TlsVersion = types.StringValue(va.String())
-			}
-		}
-		data.TlsProfiles[i].CipherSuites = types.SetNull(types.StringType)
-		data.TlsProfiles[i].CipherSuitesVariable = types.StringNull()
-		if t := r.Get("cipherSuiteList.optionType"); t.Exists() {
-			va := r.Get("cipherSuiteList.value")
-			if t.String() == "variable" {
-				data.TlsProfiles[i].CipherSuitesVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.TlsProfiles[i].CipherSuites = helpers.GetStringSet(va.Array())
-			}
-		}
-	}
-	for i := range data.Ipv4Servers {
-		keys := [...]string{"name"}
-		keyValues := [...]string{data.Ipv4Servers[i].HostnameIp.ValueString()}
-		keyValuesVariables := [...]string{data.Ipv4Servers[i].HostnameIpVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "server").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Ipv4Servers[i].HostnameIp = types.StringNull()
-		data.Ipv4Servers[i].HostnameIpVariable = types.StringNull()
-		if t := r.Get("name.optionType"); t.Exists() {
-			va := r.Get("name.value")
-			if t.String() == "variable" {
-				data.Ipv4Servers[i].HostnameIpVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv4Servers[i].HostnameIp = types.StringValue(va.String())
-			}
-		}
-		data.Ipv4Servers[i].Vpn = types.Int64Null()
-		data.Ipv4Servers[i].VpnVariable = types.StringNull()
-		if t := r.Get("vpn.optionType"); t.Exists() {
-			va := r.Get("vpn.value")
-			if t.String() == "variable" {
-				data.Ipv4Servers[i].VpnVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv4Servers[i].Vpn = types.Int64Value(va.Int())
-			}
-		}
-		data.Ipv4Servers[i].SourceInterface = types.StringNull()
-		data.Ipv4Servers[i].SourceInterfaceVariable = types.StringNull()
-		if t := r.Get("sourceInterface.optionType"); t.Exists() {
-			va := r.Get("sourceInterface.value")
-			if t.String() == "variable" {
-				data.Ipv4Servers[i].SourceInterfaceVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv4Servers[i].SourceInterface = types.StringValue(va.String())
-			}
-		}
-		data.Ipv4Servers[i].Priority = types.StringNull()
-		data.Ipv4Servers[i].PriorityVariable = types.StringNull()
-		if t := r.Get("priority.optionType"); t.Exists() {
-			va := r.Get("priority.value")
-			if t.String() == "variable" {
-				data.Ipv4Servers[i].PriorityVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv4Servers[i].Priority = types.StringValue(va.String())
-			}
-		}
-		data.Ipv4Servers[i].TlsEnable = types.BoolNull()
-		data.Ipv4Servers[i].TlsEnableVariable = types.StringNull()
-		if t := r.Get("tlsEnable.optionType"); t.Exists() {
-			va := r.Get("tlsEnable.value")
-			if t.String() == "variable" {
-				data.Ipv4Servers[i].TlsEnableVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv4Servers[i].TlsEnable = types.BoolValue(va.Bool())
-			}
-		}
-		data.Ipv4Servers[i].TlsPropertiesCustomProfile = types.BoolNull()
-		data.Ipv4Servers[i].TlsPropertiesCustomProfileVariable = types.StringNull()
-		if t := r.Get("tlsPropertiesCustomProfile.optionType"); t.Exists() {
-			va := r.Get("tlsPropertiesCustomProfile.value")
-			if t.String() == "variable" {
-				data.Ipv4Servers[i].TlsPropertiesCustomProfileVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv4Servers[i].TlsPropertiesCustomProfile = types.BoolValue(va.Bool())
-			}
-		}
-		data.Ipv4Servers[i].TlsPropertiesProfile = types.StringNull()
-		data.Ipv4Servers[i].TlsPropertiesProfileVariable = types.StringNull()
-		if t := r.Get("tlsPropertiesProfile.optionType"); t.Exists() {
-			va := r.Get("tlsPropertiesProfile.value")
-			if t.String() == "variable" {
-				data.Ipv4Servers[i].TlsPropertiesProfileVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv4Servers[i].TlsPropertiesProfile = types.StringValue(va.String())
-			}
-		}
-	}
-	for i := range data.Ipv6Servers {
-		keys := [...]string{"name"}
-		keyValues := [...]string{data.Ipv6Servers[i].HostnameIp.ValueString()}
-		keyValuesVariables := [...]string{data.Ipv6Servers[i].HostnameIpVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "ipv6Server").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Ipv6Servers[i].HostnameIp = types.StringNull()
-		data.Ipv6Servers[i].HostnameIpVariable = types.StringNull()
-		if t := r.Get("name.optionType"); t.Exists() {
-			va := r.Get("name.value")
-			if t.String() == "variable" {
-				data.Ipv6Servers[i].HostnameIpVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv6Servers[i].HostnameIp = types.StringValue(va.String())
-			}
-		}
-		data.Ipv6Servers[i].Vpn = types.Int64Null()
-		data.Ipv6Servers[i].VpnVariable = types.StringNull()
-		if t := r.Get("vpn.optionType"); t.Exists() {
-			va := r.Get("vpn.value")
-			if t.String() == "variable" {
-				data.Ipv6Servers[i].VpnVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv6Servers[i].Vpn = types.Int64Value(va.Int())
-			}
-		}
-		data.Ipv6Servers[i].SourceInterface = types.StringNull()
-		data.Ipv6Servers[i].SourceInterfaceVariable = types.StringNull()
-		if t := r.Get("sourceInterface.optionType"); t.Exists() {
-			va := r.Get("sourceInterface.value")
-			if t.String() == "variable" {
-				data.Ipv6Servers[i].SourceInterfaceVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv6Servers[i].SourceInterface = types.StringValue(va.String())
-			}
-		}
-		data.Ipv6Servers[i].Priority = types.StringNull()
-		data.Ipv6Servers[i].PriorityVariable = types.StringNull()
-		if t := r.Get("priority.optionType"); t.Exists() {
-			va := r.Get("priority.value")
-			if t.String() == "variable" {
-				data.Ipv6Servers[i].PriorityVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv6Servers[i].Priority = types.StringValue(va.String())
-			}
-		}
-		data.Ipv6Servers[i].TlsEnable = types.BoolNull()
-		data.Ipv6Servers[i].TlsEnableVariable = types.StringNull()
-		if t := r.Get("tlsEnable.optionType"); t.Exists() {
-			va := r.Get("tlsEnable.value")
-			if t.String() == "variable" {
-				data.Ipv6Servers[i].TlsEnableVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv6Servers[i].TlsEnable = types.BoolValue(va.Bool())
-			}
-		}
-		data.Ipv6Servers[i].TlsPropertiesCustomProfile = types.BoolNull()
-		data.Ipv6Servers[i].TlsPropertiesCustomProfileVariable = types.StringNull()
-		if t := r.Get("tlsPropertiesCustomProfile.optionType"); t.Exists() {
-			va := r.Get("tlsPropertiesCustomProfile.value")
-			if t.String() == "variable" {
-				data.Ipv6Servers[i].TlsPropertiesCustomProfileVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv6Servers[i].TlsPropertiesCustomProfile = types.BoolValue(va.Bool())
-			}
-		}
-		data.Ipv6Servers[i].TlsPropertiesProfile = types.StringNull()
-		data.Ipv6Servers[i].TlsPropertiesProfileVariable = types.StringNull()
-		if t := r.Get("tlsPropertiesProfile.optionType"); t.Exists() {
-			va := r.Get("tlsPropertiesProfile.value")
-			if t.String() == "variable" {
-				data.Ipv6Servers[i].TlsPropertiesProfileVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Ipv6Servers[i].TlsPropertiesProfile = types.StringValue(va.String())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

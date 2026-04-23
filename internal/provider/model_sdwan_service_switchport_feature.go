@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -545,7 +544,7 @@ func (data ServiceSwitchport) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ServiceSwitchport) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceSwitchport) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -553,6 +552,7 @@ func (data *ServiceSwitchport) fromBody(ctx context.Context, res gjson.Result) {
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
+	oldInterfaces := data.Interfaces
 	if value := res.Get(path + "interface"); value.Exists() && len(value.Array()) > 0 {
 		data.Interfaces = make([]ServiceSwitchportInterfaces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -776,6 +776,40 @@ func (data *ServiceSwitchport) fromBody(ctx context.Context, res gjson.Result) {
 			data.Interfaces = append(data.Interfaces, item)
 			return true
 		})
+	} else {
+		data.Interfaces = nil
+	}
+	if !fullRead {
+		resultInterfaces := make([]ServiceSwitchportInterfaces, 0, len(data.Interfaces))
+		matchedInterfaces := make([]bool, len(data.Interfaces))
+		for _, oldItem := range oldInterfaces {
+			for ni := range data.Interfaces {
+				if matchedInterfaces[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.InterfaceNameVariable.ValueString() != "" || data.Interfaces[ni].InterfaceNameVariable.ValueString() != "") {
+					if oldItem.InterfaceNameVariable.ValueString() != data.Interfaces[ni].InterfaceNameVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.InterfaceName.ValueString() != data.Interfaces[ni].InterfaceName.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedInterfaces[ni] = true
+					resultInterfaces = append(resultInterfaces, data.Interfaces[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Interfaces {
+			if !matchedInterfaces[ni] {
+				resultInterfaces = append(resultInterfaces, data.Interfaces[ni])
+			}
+		}
+		data.Interfaces = resultInterfaces
 	}
 	data.AgeOutTime = types.Int64Null()
 	data.AgeOutTimeVariable = types.StringNull()
@@ -787,6 +821,7 @@ func (data *ServiceSwitchport) fromBody(ctx context.Context, res gjson.Result) {
 			data.AgeOutTime = types.Int64Value(va.Int())
 		}
 	}
+	oldStaticMacAddresses := data.StaticMacAddresses
 	if value := res.Get(path + "staticMacAddress"); value.Exists() && len(value.Array()) > 0 {
 		data.StaticMacAddresses = make([]ServiceSwitchportStaticMacAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -824,340 +859,41 @@ func (data *ServiceSwitchport) fromBody(ctx context.Context, res gjson.Result) {
 			data.StaticMacAddresses = append(data.StaticMacAddresses, item)
 			return true
 		})
+	} else {
+		data.StaticMacAddresses = nil
+	}
+	if !fullRead {
+		resultStaticMacAddresses := make([]ServiceSwitchportStaticMacAddresses, 0, len(data.StaticMacAddresses))
+		matchedStaticMacAddresses := make([]bool, len(data.StaticMacAddresses))
+		for _, oldItem := range oldStaticMacAddresses {
+			for ni := range data.StaticMacAddresses {
+				if matchedStaticMacAddresses[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.VlanIdVariable.ValueString() != "" || data.StaticMacAddresses[ni].VlanIdVariable.ValueString() != "") {
+					if oldItem.VlanIdVariable.ValueString() != data.StaticMacAddresses[ni].VlanIdVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.VlanId.ValueInt64() != data.StaticMacAddresses[ni].VlanId.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedStaticMacAddresses[ni] = true
+					resultStaticMacAddresses = append(resultStaticMacAddresses, data.StaticMacAddresses[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.StaticMacAddresses {
+			if !matchedStaticMacAddresses[ni] {
+				resultStaticMacAddresses = append(resultStaticMacAddresses, data.StaticMacAddresses[ni])
+			}
+		}
+		data.StaticMacAddresses = resultStaticMacAddresses
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *ServiceSwitchport) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	for i := range data.Interfaces {
-		keys := [...]string{"ifName"}
-		keyValues := [...]string{data.Interfaces[i].InterfaceName.ValueString()}
-		keyValuesVariables := [...]string{data.Interfaces[i].InterfaceNameVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "interface").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Interfaces[i].InterfaceName = types.StringNull()
-		data.Interfaces[i].InterfaceNameVariable = types.StringNull()
-		if t := r.Get("ifName.optionType"); t.Exists() {
-			va := r.Get("ifName.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].InterfaceNameVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].InterfaceName = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].Mode = types.StringNull()
-
-		if t := r.Get("mode.optionType"); t.Exists() {
-			va := r.Get("mode.value")
-			if t.String() == "global" {
-				data.Interfaces[i].Mode = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].Shutdown = types.BoolNull()
-		data.Interfaces[i].ShutdownVariable = types.StringNull()
-		if t := r.Get("shutdown.optionType"); t.Exists() {
-			va := r.Get("shutdown.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].ShutdownVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].Shutdown = types.BoolValue(va.Bool())
-			}
-		}
-		data.Interfaces[i].Speed = types.StringNull()
-		data.Interfaces[i].SpeedVariable = types.StringNull()
-		if t := r.Get("speed.optionType"); t.Exists() {
-			va := r.Get("speed.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].SpeedVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].Speed = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].Duplex = types.StringNull()
-		data.Interfaces[i].DuplexVariable = types.StringNull()
-		if t := r.Get("duplex.optionType"); t.Exists() {
-			va := r.Get("duplex.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].DuplexVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].Duplex = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].SwitchportAccessVlan = types.Int64Null()
-		data.Interfaces[i].SwitchportAccessVlanVariable = types.StringNull()
-		if t := r.Get("switchportAccessVlan.optionType"); t.Exists() {
-			va := r.Get("switchportAccessVlan.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].SwitchportAccessVlanVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].SwitchportAccessVlan = types.Int64Value(va.Int())
-			}
-		}
-		data.Interfaces[i].SwitchportTrunkAllowedVlans = types.StringNull()
-		data.Interfaces[i].SwitchportTrunkAllowedVlansVariable = types.StringNull()
-		if t := r.Get("switchportTrunkAllowedVlans.optionType"); t.Exists() {
-			va := r.Get("switchportTrunkAllowedVlans.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].SwitchportTrunkAllowedVlansVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].SwitchportTrunkAllowedVlans = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].SwitchportTrunkNativeVlan = types.Int64Null()
-		data.Interfaces[i].SwitchportTrunkNativeVlanVariable = types.StringNull()
-		if t := r.Get("switchportTrunkNativeVlan.optionType"); t.Exists() {
-			va := r.Get("switchportTrunkNativeVlan.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].SwitchportTrunkNativeVlanVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].SwitchportTrunkNativeVlan = types.Int64Value(va.Int())
-			}
-		}
-		data.Interfaces[i].EnableDot1x = types.BoolNull()
-
-		if t := r.Get("enableDot1x.optionType"); t.Exists() {
-			va := r.Get("enableDot1x.value")
-			if t.String() == "global" {
-				data.Interfaces[i].EnableDot1x = types.BoolValue(va.Bool())
-			}
-		}
-		data.Interfaces[i].PortControl = types.StringNull()
-		data.Interfaces[i].PortControlVariable = types.StringNull()
-		if t := r.Get("portControl.optionType"); t.Exists() {
-			va := r.Get("portControl.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].PortControlVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].PortControl = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].VoiceVlan = types.Int64Null()
-		data.Interfaces[i].VoiceVlanVariable = types.StringNull()
-		if t := r.Get("voiceVlan.optionType"); t.Exists() {
-			va := r.Get("voiceVlan.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].VoiceVlanVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].VoiceVlan = types.Int64Value(va.Int())
-			}
-		}
-		data.Interfaces[i].PaeEnable = types.BoolNull()
-		data.Interfaces[i].PaeEnableVariable = types.StringNull()
-		if t := r.Get("paeEnable.optionType"); t.Exists() {
-			va := r.Get("paeEnable.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].PaeEnableVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].PaeEnable = types.BoolValue(va.Bool())
-			}
-		}
-		data.Interfaces[i].MacAuthenticationBypass = types.BoolNull()
-		data.Interfaces[i].MacAuthenticationBypassVariable = types.StringNull()
-		if t := r.Get("macAuthenticationBypass.optionType"); t.Exists() {
-			va := r.Get("macAuthenticationBypass.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].MacAuthenticationBypassVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].MacAuthenticationBypass = types.BoolValue(va.Bool())
-			}
-		}
-		data.Interfaces[i].HostMode = types.StringNull()
-		data.Interfaces[i].HostModeVariable = types.StringNull()
-		if t := r.Get("hostMode.optionType"); t.Exists() {
-			va := r.Get("hostMode.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].HostModeVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].HostMode = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].EnablePeriodicReauth = types.BoolNull()
-		data.Interfaces[i].EnablePeriodicReauthVariable = types.StringNull()
-		if t := r.Get("enablePeriodicReauth.optionType"); t.Exists() {
-			va := r.Get("enablePeriodicReauth.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].EnablePeriodicReauthVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].EnablePeriodicReauth = types.BoolValue(va.Bool())
-			}
-		}
-		data.Interfaces[i].Inactivity = types.Int64Null()
-		data.Interfaces[i].InactivityVariable = types.StringNull()
-		if t := r.Get("inactivity.optionType"); t.Exists() {
-			va := r.Get("inactivity.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].InactivityVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].Inactivity = types.Int64Value(va.Int())
-			}
-		}
-		data.Interfaces[i].Reauthentication = types.Int64Null()
-		data.Interfaces[i].ReauthenticationVariable = types.StringNull()
-		if t := r.Get("reauthentication.optionType"); t.Exists() {
-			va := r.Get("reauthentication.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].ReauthenticationVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].Reauthentication = types.Int64Value(va.Int())
-			}
-		}
-		data.Interfaces[i].ControlDirection = types.StringNull()
-		data.Interfaces[i].ControlDirectionVariable = types.StringNull()
-		if t := r.Get("controlDirection.optionType"); t.Exists() {
-			va := r.Get("controlDirection.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].ControlDirectionVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].ControlDirection = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].RestrictedVlan = types.Int64Null()
-		data.Interfaces[i].RestrictedVlanVariable = types.StringNull()
-		if t := r.Get("restrictedVlan.optionType"); t.Exists() {
-			va := r.Get("restrictedVlan.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].RestrictedVlanVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].RestrictedVlan = types.Int64Value(va.Int())
-			}
-		}
-		data.Interfaces[i].GuestVlan = types.Int64Null()
-		data.Interfaces[i].GuestVlanVariable = types.StringNull()
-		if t := r.Get("guestVlan.optionType"); t.Exists() {
-			va := r.Get("guestVlan.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].GuestVlanVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].GuestVlan = types.Int64Value(va.Int())
-			}
-		}
-		data.Interfaces[i].CriticalVlan = types.Int64Null()
-		data.Interfaces[i].CriticalVlanVariable = types.StringNull()
-		if t := r.Get("criticalVlan.optionType"); t.Exists() {
-			va := r.Get("criticalVlan.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].CriticalVlanVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].CriticalVlan = types.Int64Value(va.Int())
-			}
-		}
-		data.Interfaces[i].EnableVoice = types.BoolNull()
-		data.Interfaces[i].EnableVoiceVariable = types.StringNull()
-		if t := r.Get("enableVoice.optionType"); t.Exists() {
-			va := r.Get("enableVoice.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].EnableVoiceVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].EnableVoice = types.BoolValue(va.Bool())
-			}
-		}
-	}
-	data.AgeOutTime = types.Int64Null()
-	data.AgeOutTimeVariable = types.StringNull()
-	if t := res.Get(path + "ageTime.optionType"); t.Exists() {
-		va := res.Get(path + "ageTime.value")
-		if t.String() == "variable" {
-			data.AgeOutTimeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AgeOutTime = types.Int64Value(va.Int())
-		}
-	}
-	for i := range data.StaticMacAddresses {
-		keys := [...]string{"vlan"}
-		keyValues := [...]string{strconv.FormatInt(data.StaticMacAddresses[i].VlanId.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{data.StaticMacAddresses[i].VlanIdVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "staticMacAddress").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.StaticMacAddresses[i].MacAddress = types.StringNull()
-		data.StaticMacAddresses[i].MacAddressVariable = types.StringNull()
-		if t := r.Get("macaddr.optionType"); t.Exists() {
-			va := r.Get("macaddr.value")
-			if t.String() == "variable" {
-				data.StaticMacAddresses[i].MacAddressVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.StaticMacAddresses[i].MacAddress = types.StringValue(va.String())
-			}
-		}
-		data.StaticMacAddresses[i].VlanId = types.Int64Null()
-		data.StaticMacAddresses[i].VlanIdVariable = types.StringNull()
-		if t := r.Get("vlan.optionType"); t.Exists() {
-			va := r.Get("vlan.value")
-			if t.String() == "variable" {
-				data.StaticMacAddresses[i].VlanIdVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.StaticMacAddresses[i].VlanId = types.Int64Value(va.Int())
-			}
-		}
-		data.StaticMacAddresses[i].InterfaceName = types.StringNull()
-		data.StaticMacAddresses[i].InterfaceNameVariable = types.StringNull()
-		if t := r.Get("ifName.optionType"); t.Exists() {
-			va := r.Get("ifName.value")
-			if t.String() == "variable" {
-				data.StaticMacAddresses[i].InterfaceNameVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.StaticMacAddresses[i].InterfaceName = types.StringValue(va.String())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody
