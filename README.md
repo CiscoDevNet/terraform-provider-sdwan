@@ -47,10 +47,10 @@ To compile the provider, run `go install`. This will build the provider and put 
 
 To generate or update documentation, run `go generate`.
 
-In order to run the full suite of Acceptance tests, run `make testacc`. Make sure the respective environment variables are set (e.g., `SDWAN_USERNAME`, `SDWAN_PASSWORD`, `SDWAN_URL`).
+In order to run the full suite of Acceptance tests, run `make test`. Make sure the respective environment variables are set (e.g., `SDWAN_USERNAME`, `SDWAN_PASSWORD`, `SDWAN_URL`).
 
 Note: Acceptance tests create real resources.
 
 ```shell
-make testacc
+make test
 ```

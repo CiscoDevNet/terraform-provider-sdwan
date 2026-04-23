@@ -1420,6 +1420,11 @@ func renderTemplate(templatePath, outputPath string, config interface{}) {
 }
 
 func main() {
+	resourceName := ""
+	if len(os.Args) == 2 {
+		resourceName = os.Args[1]
+	}
+
 	featureTemplateFiles, _ := os.ReadDir(featureTemplateDefinitionsPath)
 	featureTemplateConfigs := make([]YamlConfig, len(featureTemplateFiles))
 	configs := make(map[string][]YamlConfig)
@@ -1442,6 +1447,10 @@ func main() {
 	for i := range featureTemplateConfigs {
 		// Augment feature template config by model data
 		augmentFeatureTemplateConfig(&featureTemplateConfigs[i])
+
+		if resourceName != "" && featureTemplateConfigs[i].Name != resourceName {
+			continue
+		}
 
 		// Iterate over templates and render files
 		for _, t := range featureTemplateTemplates {
@@ -1471,6 +1480,10 @@ func main() {
 	for i := range profileParcelConfigs {
 		// Augment profile parcel config by model data
 		augmentProfileParcelConfig(&profileParcelConfigs[i])
+
+		if resourceName != "" && profileParcelConfigs[i].Name != resourceName {
+			continue
+		}
 
 		// Iterate over templates and render files
 		for _, t := range profileParcelTemplates {
@@ -1502,6 +1515,10 @@ func main() {
 	for i := range genericConfigs {
 		// Augment generic config
 		augmentGenericConfig(&genericConfigs[i], "")
+
+		if resourceName != "" && genericConfigs[i].Name != resourceName {
+			continue
+		}
 
 		// Iterate over templates and render files
 		for _, t := range genericTemplates {

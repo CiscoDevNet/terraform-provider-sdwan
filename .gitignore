@@ -36,3 +36,9 @@ website/vendor
 
 # SBOM files generated during release
 *_sbom.*.json
+
+# Local environment configuration (see .env.sample)
+.env
+
+# Test output from make test DEBUG=1
+test-output.log
