@@ -33,7 +33,7 @@ data "sdwan_cflowd_policy_definition" "example" {
 - `flow_refresh` (Number) Flow refresh in seconds
 - `inactive_flow_timeout` (Number) Inactive flow timeout in seconds
 - `name` (String) The name of the policy definition
-- `protocol` (String) Protocol, either `ipv4`, `ipv6` or `all`
+- `protocol` (String) Protocol, either `ipv4`, `ipv6` or `both`
 - `remarked_dscp` (Boolean) Collect remarked DSCP
 - `sampling_interval` (Number) Flow sampling interval
 - `tos` (Boolean) Collect TOS record field
