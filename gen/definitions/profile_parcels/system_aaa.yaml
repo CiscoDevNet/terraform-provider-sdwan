@@ -2,7 +2,7 @@
 name: System AAA
 rest_endpoint: /v1/feature-profile/sdwan/system/%v/aaa
 minimum_version: 20.15.0
-test_tags: [SDWAN_2015]
+test_tags: [SDWAN_2015, SDWAN_2018]
 parcel_type: feature
 doc_category: Features - System
 attributes:
@@ -73,6 +73,22 @@ attributes:
             example: "7"
           - model_name: keyType
             example: key
+  - model_name: ctsAuthList
+    tf_name: trustsec_cts_auth_list
+    example: list1
+    test_tags: [SDWAN_2018]
+    conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
+  - model_name: radiusTrustsecGroup
+    tf_name: trustsec_radius_group
+    example: RGROUP1
+    test_tags: [SDWAN_2018]
+    conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
   - model_name: tacacs
     tf_name: tacacs_groups
     attributes:

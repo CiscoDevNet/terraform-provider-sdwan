@@ -165,6 +165,10 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 							MarkdownDescription: "Set VPN in which Radius server is located",
 							Computed:            true,
 						},
+						"vpn_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
 						"source_interface": schema.StringAttribute{
 							MarkdownDescription: "Set interface to use to reach Radius server",
 							Computed:            true,
@@ -248,6 +252,18 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 					},
 				},
 			},
+			"trustsec_cts_auth_list": schema.StringAttribute{
+				MarkdownDescription: "CTS Authorization List",
+				Computed:            true,
+			},
+			"trustsec_cts_auth_list_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"trustsec_radius_group": schema.StringAttribute{
+				MarkdownDescription: "RADIUS group",
+				Computed:            true,
+			},
 			"tacacs_groups": schema.ListNestedAttribute{
 				MarkdownDescription: "Configure the TACACS serverGroup",
 				Computed:            true,
@@ -259,6 +275,10 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 						},
 						"vpn": schema.Int64Attribute{
 							MarkdownDescription: "Set VPN in which TACACS server is located",
+							Computed:            true,
+						},
+						"vpn_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
 						"source_interface": schema.StringAttribute{

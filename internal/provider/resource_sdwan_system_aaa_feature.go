@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -196,6 +197,10 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 								int64validator.AtMost(65530),
 							},
 						},
+						"vpn_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
 						"source_interface": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set interface to use to reach Radius server").String,
 							Optional:            true,
@@ -307,6 +312,24 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 					},
 				},
 			},
+			"trustsec_cts_auth_list": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("CTS Authorization List, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 64),
+				},
+			},
+			"trustsec_cts_auth_list_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+				Optional:            true,
+			},
+			"trustsec_radius_group": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("RADIUS group, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 32),
+				},
+			},
 			"tacacs_groups": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure the TACACS serverGroup").String,
 				Optional:            true,
@@ -325,6 +348,10 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 							Validators: []validator.Int64{
 								int64validator.AtMost(65530),
 							},
+						},
+						"vpn_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
 						},
 						"source_interface": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set interface to use to reach TACACS server").String,
@@ -529,7 +556,9 @@ func (r *SystemAAAProfileParcelResource) Create(ctx context.Context, req resourc
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
 	// Create object
-	body := plan.toBody(ctx)
+
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -616,7 +645,8 @@ func (r *SystemAAAProfileParcelResource) Update(ctx context.Context, req resourc
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
