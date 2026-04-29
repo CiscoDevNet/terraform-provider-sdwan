@@ -219,6 +219,14 @@ func (d *ServiceDHCPServerProfileParcelDataSource) Schema(ctx context.Context, r
 					},
 				},
 			},
+			"dhcp_ha_enable": schema.BoolAttribute{
+				MarkdownDescription: "DHCP sync enable/disable for dual home edges",
+				Computed:            true,
+			},
+			"dhcp_ha_enable_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 		},
 	}
 }

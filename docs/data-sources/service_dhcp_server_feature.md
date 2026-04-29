@@ -32,6 +32,8 @@ data "sdwan_service_dhcp_server_feature" "example" {
 - `default_gateway` (String) Set IP address of default gateway
 - `default_gateway_variable` (String) Variable name
 - `description` (String) The description of the Feature
+- `dhcp_ha_enable` (Boolean) DHCP sync enable/disable for dual home edges
+- `dhcp_ha_enable_variable` (String) Variable name
 - `dns_servers` (Set of String) Configure one or more DNS server IP addresses
 - `dns_servers_variable` (String) Variable name
 - `domain_name` (String) Set domain name client uses to resolve hostnames

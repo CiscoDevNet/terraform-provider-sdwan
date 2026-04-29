@@ -372,16 +372,21 @@ func (r *PolicyGroupResource) Update(ctx context.Context, req resource.UpdateReq
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	// Update policy group
-	body := plan.toBodyPolicyGroup(ctx)
-
-	res, err := r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), body)
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
-		return
+	// Update policy group only if something actually changed, to avoid marking all
+	// devices out-of-date (which triggers a repush to every device) on variable-only updates.
+	var body string
+	planBody := plan.toBodyPolicyGroup(ctx)
+	stateBody := state.toBodyPolicyGroup(ctx)
+	if planBody != stateBody {
+		body = planBody
+		res2, err := r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), body)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res2.String()))
+			return
+		}
 	}
 
-	res, err = r.client.Get(fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.Id.ValueString()))
+	res, err := r.client.Get(fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
 		return

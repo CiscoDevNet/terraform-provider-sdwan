@@ -40,6 +40,7 @@ resource "sdwan_service_dhcp_server_feature" "example" {
       ascii = "example"
     }
   ]
+  dhcp_ha_enable = false
 }
 ```
 
@@ -56,6 +57,9 @@ resource "sdwan_service_dhcp_server_feature" "example" {
 - `default_gateway` (String) Set IP address of default gateway
 - `default_gateway_variable` (String) Variable name
 - `description` (String) The description of the Feature
+- `dhcp_ha_enable` (Boolean) DHCP sync enable/disable for dual home edges, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
+  - Default value: `false`
+- `dhcp_ha_enable_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
 - `dns_servers` (Set of String) Configure one or more DNS server IP addresses
 - `dns_servers_variable` (String) Variable name
 - `domain_name` (String) Set domain name client uses to resolve hostnames
@@ -74,7 +78,7 @@ resource "sdwan_service_dhcp_server_feature" "example" {
 - `option_codes` (Attributes List) Configure Options Code (see [below for nested schema](#nestedatt--option_codes))
 - `static_leases` (Attributes List) Configure static IP addresses (see [below for nested schema](#nestedatt--static_leases))
 - `subnet_mask` (String) Subnet Mask
-  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
+  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.248.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `subnet_mask_variable` (String) Variable name
 - `tftp_servers` (Set of String) Configure TFTP server IP addresses
 - `tftp_servers_variable` (String) Variable name
