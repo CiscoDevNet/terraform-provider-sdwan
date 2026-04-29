@@ -122,10 +122,10 @@ func (r *CflowdPolicyDefinitionResource) Schema(ctx context.Context, req resourc
 				},
 			},
 			"protocol": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Protocol, either `ipv4`, `ipv6` or `all`").AddStringEnumDescription("ipv4", "ipv6", "all").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Protocol, either `ipv4`, `ipv6` or `both`").AddStringEnumDescription("ipv4", "ipv6", "both").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("ipv4", "ipv6", "all"),
+					stringvalidator.OneOf("ipv4", "ipv6", "both"),
 				},
 			},
 			"tos": schema.BoolAttribute{

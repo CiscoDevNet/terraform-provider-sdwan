@@ -95,7 +95,7 @@ func (d *CflowdPolicyDefinitionDataSource) Schema(ctx context.Context, req datas
 				Computed:            true,
 			},
 			"protocol": schema.StringAttribute{
-				MarkdownDescription: "Protocol, either `ipv4`, `ipv6` or `all`",
+				MarkdownDescription: "Protocol, either `ipv4`, `ipv6` or `both`",
 				Computed:            true,
 			},
 			"tos": schema.BoolAttribute{
