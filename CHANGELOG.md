@@ -4,6 +4,7 @@
 - Fix `sdwan_transport_routing_bgp_feature` and `sdwan_service_routing_bgp_feature` resources to correctly handle BGP ASDOT notation for `local_as`, `remote_as` and `as_number` device variables in configuration groups
 - Fix issue where `sdwan_configuration_group` and `sdwan_policy_group` resources trigger a configuration repush to all associated devices when only a single device variable is changed
 - Bump `sdwan_service_dhcp_server_feature` schema to `20.18.0`
+- Add `sdwan_cloud_provider_settings` resource and data source
 
 ## 0.11.1
 
