@@ -315,7 +315,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 	state := *data
 	{{- end}}
 	{{- range .Attributes}}
-	{{- if and (not .TfOnly) (not .Value) (not .Reference)}}
+	{{- if and (not .TfOnly) (not .Value) (not .Reference) (not .WriteOnly)}}
 	{{- $cname := toGoName .TfName}}
 	{{- if eq .Type "String"}}
 	if value := res.Get("{{getResponseModelPath .}}"); value.Exists(){{buildConditionalLogic .ConditionalAttribute "data"}}{{if .AlwaysInclude}} && value.String() != ""{{end}} {
@@ -359,7 +359,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			item := {{$name}}{{toGoName .TfName}}{}
 			{{- range .Attributes}}
 			{{- $ccname := toGoName .TfName}}
-			{{- if and (not .TfOnly) (not .Value) (not .Reference)}}
+			{{- if and (not .TfOnly) (not .Value) (not .Reference) (not .WriteOnly)}}
 			{{- if eq .Type "String"}}
 			if cValue := v.Get("{{getResponseModelPath .}}"); cValue.Exists(){{buildConditionalLogic .ConditionalAttribute "item"}}{{if .AlwaysInclude}} && cValue.String() != ""{{end}} {
 				item.{{toGoName .TfName}} = types.StringValue(cValue.String())
@@ -401,7 +401,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := {{$name}}{{$cname}}{{toGoName .TfName}}{}
 					{{- range .Attributes}}
-					{{- if and (not .TfOnly) (not .Value) (not .Reference)}}
+					{{- if and (not .TfOnly) (not .Value) (not .Reference) (not .WriteOnly)}}
 					{{- if eq .Type "String"}}
 					if ccValue := cv.Get("{{getResponseModelPath .}}"); ccValue.Exists(){{buildConditionalLogic .ConditionalAttribute "cItem"}}{{if .AlwaysInclude}} && ccValue.String() != ""{{end}} {
 						cItem.{{toGoName .TfName}} = types.StringValue(ccValue.String())
@@ -443,7 +443,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := {{$name}}{{$cname}}{{$ccname}}{{toGoName .TfName}}{}
 							{{- range .Attributes}}
-							{{- if and (not .TfOnly) (not .Value) (not .Reference)}}
+							{{- if and (not .TfOnly) (not .Value) (not .Reference) (not .WriteOnly)}}
 							{{- if eq .Type "String"}}
 							if cccValue := ccv.Get("{{getResponseModelPath .}}"); cccValue.Exists(){{buildConditionalLogic .ConditionalAttribute "ccItem"}}{{if .AlwaysInclude}} && cccValue.String() != ""{{end}} {
 								ccItem.{{toGoName .TfName}} = types.StringValue(cccValue.String())

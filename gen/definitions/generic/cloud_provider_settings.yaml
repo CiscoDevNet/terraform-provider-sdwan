@@ -1,0 +1,113 @@
+---
+name: Cloud Provider Settings
+rest_endpoint: /settings/configuration/cloudProviderSetting
+remove_id: true
+no_import: true
+no_delete: true
+doc_category: Settings
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
+attributes:
+  - model_name: umbrellaOrgId
+    tf_name: umbrella_org_id
+    type: String
+    response_data_path: [data, "0"]
+    string_patterns: ["^[0-9]+$"]
+    description: Umbrella Organization ID (numeric string)
+    example: "123456"
+  - model_name: umbrellaAuthKeyV2
+    tf_name: umbrella_auth_key_v2
+    type: String
+    response_data_path: [data, "0"]
+    description: Umbrella Authentication Key (v2)
+    example: aaaaaa
+  - model_name: umbrellaAuthSecretV2
+    tf_name: umbrella_auth_secret_v2
+    type: String
+    encrypted: true
+    response_data_path: [data, "0"]
+    description: Umbrella Authentication Secret (v2)
+    example: $CRYPT_CLUSTER$a8nXr4uYaCN66qTQ1737+A==$gjmYVxnKMqvUEjo3BfIGbg==
+  - model_name: umbrellaSIGAuthKey
+    tf_name: umbrella_sig_auth_key
+    type: String
+    response_data_path: [data, "0"]
+    description: Umbrella SIG Authentication Key
+    example: bbbbbb
+  - model_name: umbrellaSIGAuthSecret
+    tf_name: umbrella_sig_auth_secret
+    type: String
+    write_only: true
+    response_data_path: [data, "0"]
+    description: Umbrella SIG Authentication Secret
+    example: secret456
+  - model_name: umbrellaDNSAuthKey
+    tf_name: umbrella_dns_auth_key
+    type: String
+    response_data_path: [data, "0"]
+    description: Umbrella DNS Authentication Key
+    example: cccccc
+  - model_name: umbrellaDNSAuthSecret
+    tf_name: umbrella_dns_auth_secret
+    type: String
+    write_only: true
+    response_data_path: [data, "0"]
+    description: Umbrella DNS Authentication Secret
+    example: secret789
+  - model_name: zscalerOrganization
+    tf_name: zscaler_organization
+    type: String
+    response_data_path: [data, "0"]
+    description: Zscaler Organization
+    example: z223456
+  - model_name: zscalerPartnerBaseUri
+    tf_name: zscaler_partner_base_uri
+    type: String
+    response_data_path: [data, "0"]
+    description: Zscaler Partner Base URI
+    example: zscaler.net
+  - model_name: zscalerPartnerKey
+    tf_name: zscaler_partner_key
+    type: String
+    response_data_path: [data, "0"]
+    description: Zscaler Partner Key
+    example: secret012
+  - model_name: zscalerUsername
+    tf_name: zscaler_username
+    type: String
+    response_data_path: [data, "0"]
+    description: Zscaler Username
+    example: user1
+  - model_name: zscalerPassword
+    tf_name: zscaler_password
+    type: String
+    write_only: true
+    response_data_path: [data, "0"]
+    description: Zscaler Password
+    example: pass123
+  - model_name: ciscoSSEOrgId
+    tf_name: cisco_sse_org_id
+    type: String
+    response_data_path: [data, "0"]
+    string_patterns: ["^[0-9]+$"]
+    description: Cisco SSE Organization ID (numeric string)
+    example: "323456"
+  - model_name: ciscoSSEAuthKey
+    tf_name: cisco_sse_auth_key
+    type: String
+    response_data_path: [data, "0"]
+    description: Cisco SSE Authentication Key
+    example: "33333444"
+  - model_name: ciscoSSEAuthSecret
+    tf_name: cisco_sse_auth_secret
+    type: String
+    encrypted: true
+    response_data_path: [data, "0"]
+    description: Cisco SSE Authentication Secret
+    example: $CRYPT_CLUSTER$Gg4nVpFdldXga1hLKhdJrA==$hiFPirWJnqNxMq3l/m1ekw==
+  - model_name: ciscoSSEContextSharing
+    tf_name: cisco_sse_context_sharing
+    type: Bool
+    response_data_path: [data, "0"]
+    description: Enable Cisco SSE Context Sharing
+    example: "true"
