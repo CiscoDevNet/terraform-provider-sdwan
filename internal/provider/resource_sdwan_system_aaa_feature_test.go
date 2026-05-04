@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanSystemAAAProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015")
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "authentication_group", "true"))
@@ -50,6 +50,12 @@ func TestAccSdwanSystemAAAProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.secret_key", "cisco123"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.key_enum", "7"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.key_type", "key"))
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "trustsec_cts_auth_list", "list1"))
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "trustsec_radius_group", "RGROUP1"))
+	}
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "tacacs_groups.0.group_name", "TGROUP1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "tacacs_groups.0.vpn", "10"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "tacacs_groups.0.source_interface", "GigabitEthernet0"))
@@ -142,6 +148,12 @@ func testAccSdwanSystemAAAProfileParcelConfig_all() string {
 	config += `		key_type = "key"` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	trustsec_cts_auth_list = "list1"` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	trustsec_radius_group = "RGROUP1"` + "\n"
+	}
 	config += `	tacacs_groups = [{` + "\n"
 	config += `	  group_name = "TGROUP1"` + "\n"
 	config += `	  vpn = 10` + "\n"
