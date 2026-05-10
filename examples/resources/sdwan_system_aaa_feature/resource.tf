@@ -38,6 +38,8 @@ resource "sdwan_system_aaa_feature" "example" {
       ]
     }
   ]
+  trustsec_cts_auth_list = "list1"
+  trustsec_radius_group  = "RGROUP1"
   tacacs_groups = [
     {
       group_name       = "TGROUP1"

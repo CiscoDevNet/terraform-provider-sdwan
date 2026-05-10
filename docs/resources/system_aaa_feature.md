@@ -55,6 +55,8 @@ resource "sdwan_system_aaa_feature" "example" {
       ]
     }
   ]
+  trustsec_cts_auth_list = "list1"
+  trustsec_radius_group  = "RGROUP1"
   tacacs_groups = [
     {
       group_name       = "TGROUP1"
@@ -123,6 +125,9 @@ resource "sdwan_system_aaa_feature" "example" {
 - `description` (String) The description of the Feature
 - `radius_groups` (Attributes List) Configure the Radius serverGroup (see [below for nested schema](#nestedatt--radius_groups))
 - `tacacs_groups` (Attributes List) Configure the TACACS serverGroup (see [below for nested schema](#nestedatt--tacacs_groups))
+- `trustsec_cts_auth_list` (String) CTS Authorization List, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
+- `trustsec_cts_auth_list_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
+- `trustsec_radius_group` (String) RADIUS group, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
 - `users` (Attributes List) Create local login account (see [below for nested schema](#nestedatt--users))
 
 ### Read-Only
@@ -173,6 +178,7 @@ Optional:
 - `vpn` (Number) Set VPN in which Radius server is located
   - Range: `0`-`65530`
   - Default value: `0`
+- `vpn_variable` (String) Variable name
 
 <a id="nestedatt--radius_groups--servers"></a>
 ### Nested Schema for `radius_groups.servers`
@@ -221,6 +227,7 @@ Optional:
 - `vpn` (Number) Set VPN in which TACACS server is located
   - Range: `0`-`65530`
   - Default value: `0`
+- `vpn_variable` (String) Variable name
 
 <a id="nestedatt--tacacs_groups--servers"></a>
 ### Nested Schema for `tacacs_groups.servers`
