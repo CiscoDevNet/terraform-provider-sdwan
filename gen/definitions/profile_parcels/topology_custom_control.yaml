@@ -1,0 +1,545 @@
+---
+name: Topology Custom Control
+rest_endpoint: /v1/feature-profile/sdwan/topology/%v/custom-control
+minimum_version: 20.15.0
+id_attribute: id
+test_tags: [SDWAN_2015]
+skip_minimum_test: true
+parcel_type: feature
+doc_category: Features - Topology
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_topology_feature_profile.test.id
+  - model_name: defaultAction
+    example: reject
+    mandatory: true
+  - model_name: vpn
+    data_path: [target]
+    tf_name: target_vpn
+    type: Set
+    element_type: String
+    description: Target VPN list
+    example: Guest
+    exclude_test: true
+    ignore_mandatory: true
+    optional_null_empty: true
+  - model_name: role
+    data_path: [target]
+    tf_name: target_role
+    type: String
+    description: Target role
+    example: edge-router
+    exclude_test: true
+    ignore_mandatory: true
+  - model_name: level
+    data_path: [target]
+    tf_name: target_level
+    example: SITE
+    exclude_test: true
+  - model_name: inboundSites
+    data_path: [target]
+    tf_name: target_inbound_sites
+    type: Set
+    element_type: String
+    description: Inbound site list
+    example: SITE_100
+    exclude_test: true
+    ignore_mandatory: true
+    optional_null_empty: true
+    conditional_attribute:
+      conditions:
+        - name: target_level
+          value: SITE
+  - model_name: outboundSites
+    data_path: [target]
+    tf_name: target_outbound_sites
+    type: Set
+    element_type: String
+    description: Outbound site list
+    example: SITE_200
+    exclude_test: true
+    ignore_mandatory: true
+    optional_null_empty: true
+    include_empty_value: true
+    conditional_attribute:
+      conditions:
+        - name: target_level
+          value: SITE
+  - model_name: inboundRegions
+    data_path: [target]
+    tf_name: target_inbound_regions
+    type: List
+    description: Inbound regions list
+    exclude_test: true
+    ignore_mandatory: true
+    exclude_null: true
+    conditional_attribute:
+      operator: or
+      conditions:
+        - name: target_level
+          value: REGION
+        - name: target_level
+          value: SUB_REGION
+    attributes:
+      - model_name: region
+        tf_name: region
+        type: String
+        description: Region name
+        example: REGION_1
+      - model_name: subRegion
+        tf_name: sub_regions
+        type: Set
+        element_type: String
+        description: Sub-region list
+        example: SUB_REGION_1
+  - model_name: outboundRegions
+    data_path: [target]
+    tf_name: target_outbound_regions
+    type: List
+    description: Outbound regions list
+    exclude_test: true
+    exclude_null: true
+    conditional_attribute:
+      operator: or
+      conditions:
+        - name: target_level
+          value: REGION
+        - name: target_level
+          value: SUB_REGION
+    attributes:
+      - model_name: region
+        tf_name: region
+        type: String
+        description: Region name
+        example: REGION_1
+      - model_name: subRegion
+        tf_name: sub_regions
+        type: Set
+        element_type: String
+        description: Sub-region list
+        example: SUB_REGION_1
+  - model_name: sequences
+    positional_fallback: true
+    attributes:
+      - model_name: sequenceId
+        tf_name: id
+        id: true
+        example: 1
+      - model_name: sequenceName
+        tf_name: name
+        example: Rule1
+      - model_name: baseAction
+        tf_name: base_action
+        example: accept
+        exclude_null: true
+      - model_name: sequenceType
+        tf_name: type
+        example: route
+      - model_name: sequenceIpType
+        tf_name: ip_type
+        example: ipv4
+      - model_name: entries
+        data_path: [match]
+        tf_name: match_entries
+        positional_fallback: true
+        merge_split_objects: true
+        # type: Set
+        description: List of match entries
+        attributes:
+          - model_name: colorList
+            tf_name: color_list_id
+            no_augment_config: true
+            type: String
+            data_path: [colorList, refId]
+            description: Color list ID
+            example: 0bfee1b7-1ac5-4ee3-bebc-61af04792e7c
+            exclude_test: true
+          - model_name: community
+            tf_name: community_list_id
+            no_augment_config: true
+            type: String
+            data_path: [community, refId]
+            description: Community list ID
+            example: 8bca4de4-78c7-4a44-9a55-5d4f3195cfe9
+            exclude_test: true
+          - model_name: expandedCommunity
+            tf_name: expanded_community_list_id
+            no_augment_config: true
+            type: String
+            data_path: [expandedCommunity, refId]
+            description: Expanded community list ID
+            example: f57a0c33-c6f8-4b07-ac92-d9a22ade9bb8
+            exclude_test: true
+          - model_name: ompTag
+            tf_name: omp_tag
+            no_augment_config: true
+            type: Int64
+            description: OMP tag
+            min_int: 0
+            max_int: 4294967295
+            example: 100
+          - model_name: origin
+            tf_name: origin
+            no_augment_config: true
+            type: String
+            enum_values: [aggregate, bgp, bgp-external, bgp-internal, connected, eigrp, ospf, ospf-inter-area, ospf-intra-area, ospf-external1, ospf-external2, rip, static, eigrp-summary, eigrp-internal, eigrp-external, lisp, nat-dia, natpool, isis, isis-level1, isis-level2]
+            description: Origin
+            example: connected
+            exclude_test: true
+          - model_name: originator
+            tf_name: originator
+            no_augment_config: true
+            type: String
+            description: Originator IP
+            example: 1.2.3.4
+            exclude_test: true
+          - model_name: preference
+            tf_name: preference
+            no_augment_config: true
+            type: Int64
+            description: Preference
+            min_int: 0
+            max_int: 4294967295
+            example: 100
+            exclude_test: true
+          - model_name: site
+            tf_name: site
+            no_augment_config: true
+            type: Set
+            element_type: String
+            description: Site list
+            example: site_100
+            exclude_test: true
+          - model_name: regions
+            tf_name: match_regions
+            no_augment_config: true
+            type: List
+            description: Match regions list
+            exclude_test: true
+            exclude_null: true
+            attributes:
+              - model_name: region
+                tf_name: region
+                type: String
+                description: Region name
+                example: REGION_1
+              - model_name: subRegion
+                tf_name: sub_regions
+                type: Set
+                element_type: String
+                description: Sub-region list
+                example: SUB_REGION_1
+          - model_name: role
+            tf_name: role
+            no_augment_config: true
+            type: String
+            enum_values: [edge-router, border-router]
+            description: Role
+            example: border-router
+            exclude_test: true
+          - model_name: pathType
+            tf_name: path_type
+            no_augment_config: true
+            type: String
+            enum_values: [hierarchical-path, direct-path, transport-gateway-path]
+            description: Path type
+            example: hierarchical-path
+            exclude_test: true
+          - model_name: tlocList
+            tf_name: tloc_list_id
+            no_augment_config: true
+            type: String
+            data_path: [tlocList, refId]
+            description: TLOC list ID
+            example: 8b249706-7c7f-4ab3-af6f-c91951c1a603
+            exclude_test: true
+          - model_name: vpn
+            tf_name: vpn
+            no_augment_config: true
+            type: Set
+            element_type: String
+            description: VPN list
+            example: Guest
+            exclude_test: true
+          - model_name: prefixList
+            tf_name: prefix_list_id
+            no_augment_config: true
+            type: String
+            data_path: [prefixList, refId]
+            description: Prefix list ID
+            example: 3639191a-246a-4023-bbe3-658eec3bf2ab
+            exclude_test: true
+          - model_name: ipv6prefixList
+            tf_name: ipv6_prefix_list_id
+            no_augment_config: true
+            type: String
+            data_path: [ipv6prefixList, refId]
+            description: IPv6 prefix list ID
+            example: 3639191a-246a-4023-bbe3-658eec3bf2ab
+            exclude_test: true
+          - model_name: carrier
+            tf_name: carrier
+            no_augment_config: true
+            type: String
+            enum_values: [default, carrier1, carrier2, carrier3, carrier4, carrier5, carrier6, carrier7, carrier8]
+            description: Carrier
+            example: carrier1
+            exclude_test: true
+          - model_name: domainId
+            tf_name: domain_id
+            no_augment_config: true
+            type: Int64
+            description: Domain ID
+            min_int: 1
+            max_int: 4294967295
+            example: 123
+            exclude_test: true
+          - model_name: groupId
+            tf_name: group_id
+            no_augment_config: true
+            type: Int64
+            description: Group ID
+            min_int: 0
+            max_int: 4294967295
+            example: 1
+            exclude_test: true
+          - model_name: ip
+            data_path: [tloc]
+            tf_name: tloc_ip
+            no_augment_config: true
+            type: String
+            description: TLOC IP address
+            example: 1.2.3.4
+            exclude_test: true
+          - model_name: color
+            data_path: [tloc]
+            tf_name: tloc_color
+            no_augment_config: true
+            type: String
+            description: TLOC color
+            example: bronze
+            exclude_test: true
+          - model_name: encap
+            data_path: [tloc]
+            tf_name: tloc_encapsulation
+            no_augment_config: true
+            type: String
+            enum_values: [ipsec, gre]
+            description: TLOC encapsulation
+            example: ipsec
+            exclude_test: true
+      - model_name: actions
+        tf_name: action_entries
+        positional_fallback: true
+        description: List of action entries
+        attributes:
+          - model_name: exportTo
+            tf_name: export_to_vpn
+            no_augment_config: true
+            type: Set
+            element_type: String
+            description: Export to VPN list
+            example: Guest
+            exclude_test: true
+          - model_name: set
+            tf_name: set_parameters
+            positional_fallback: true
+            exclude_null: true
+            merge_split_objects: true
+            attributes:
+              - model_name: preference
+                tf_name: preference
+                no_augment_config: true
+                type: Int64
+                description: Set preference
+                min_int: 0
+                max_int: 4294967295
+                example: 100
+              - model_name: ompTag
+                tf_name: omp_tag
+                no_augment_config: true
+                type: Int64
+                description: Set OMP tag
+                min_int: 0
+                max_int: 4294967295
+                example: 100
+                exclude_test: true
+              - model_name: community
+                tf_name: community
+                no_augment_config: true
+                type: String
+                description: Set community value, e.g. `1000:10000` or `internet` or `local-AS`
+                example: 1000:10000
+                exclude_test: true
+              - model_name: communityAdditive
+                tf_name: community_additive
+                no_augment_config: true
+                type: Bool
+                description: Set community additive
+                example: true
+                exclude_test: true
+              - model_name: affinity
+                tf_name: affinity
+                no_augment_config: true
+                type: Int64
+                description: Set affinity
+                min_int: 0
+                max_int: 63
+                example: 10
+                exclude_test: true
+              - model_name: type
+                data_path: [service]
+                tf_name: service_type
+                no_augment_config: true
+                type: String
+                enum_values: [FW, IDS, IDP, netsvc1, netsvc2, netsvc3, netsvc4, appqoe]
+                description: Set service type
+                example: IDP
+                exclude_test: true
+              - model_name: vpn
+                data_path: [service]
+                tf_name: service_vpn
+                no_augment_config: true
+                type: Int64
+                description: Set service VPN ID
+                min_int: 0
+                max_int: 65530
+                example: 100
+                exclude_test: true
+              - model_name: ip
+                data_path: [service, tloc]
+                tf_name: service_tloc_ip
+                no_augment_config: true
+                type: String
+                description: Set service TLOC IP address
+                example: 1.2.3.4
+                exclude_test: true
+              - model_name: color
+                data_path: [service, tloc]
+                tf_name: service_tloc_color
+                no_augment_config: true
+                type: String
+                description: Set service TLOC color
+                example: bronze
+                exclude_test: true
+              - model_name: encap
+                data_path: [service, tloc]
+                tf_name: service_tloc_encapsulation
+                no_augment_config: true
+                type: String
+                enum_values: [ipsec, gre]
+                description: Set service TLOC encapsulation
+                example: ipsec
+                exclude_test: true
+              - model_name: refId
+                data_path: [service, tlocList]
+                tf_name: service_tloc_list_id
+                no_augment_config: true
+                type: String
+                description: Set service TLOC list ID
+                example: 8b249706-7c7f-4ab3-af6f-c91951c1a603
+                exclude_test: true
+              - model_name: type
+                data_path: [serviceChain]
+                tf_name: service_chain_type
+                no_augment_config: true
+                type: String
+                enum_values: [SC1, SC2, SC4, SC5, SC6, SC7, SC8, SC9, SC10, SC11, SC12, SC13, SC14, SC15, SC16]
+                description: Set service chain type
+                example: SC1
+                exclude_test: true
+              - model_name: vpn
+                data_path: [serviceChain]
+                tf_name: service_chain_vpn
+                no_augment_config: true
+                type: Int64
+                description: Set service chain VPN ID
+                min_int: 0
+                max_int: 65530
+                example: 100
+                exclude_test: true
+              - model_name: ip
+                data_path: [serviceChain, tloc]
+                tf_name: service_chain_tloc_ip
+                no_augment_config: true
+                type: String
+                description: Set service chain TLOC IP address
+                example: 1.2.3.4
+                exclude_test: true
+              - model_name: color
+                data_path: [serviceChain, tloc]
+                tf_name: service_chain_tloc_color
+                no_augment_config: true
+                type: String
+                description: Set service chain TLOC color
+                example: bronze
+                exclude_test: true
+              - model_name: encap
+                data_path: [serviceChain, tloc]
+                tf_name: service_chain_tloc_encapsulation
+                no_augment_config: true
+                type: String
+                enum_values: [ipsec, gre]
+                description: Set service chain TLOC encapsulation
+                example: ipsec
+                exclude_test: true
+              - model_name: refId
+                data_path: [serviceChain, tlocList]
+                tf_name: service_chain_tloc_list_id
+                no_augment_config: true
+                type: String
+                description: Set service chain TLOC list ID
+                example: 8b249706-7c7f-4ab3-af6f-c91951c1a603
+                exclude_test: true
+              - model_name: ip
+                data_path: [tloc]
+                tf_name: tloc_ip
+                no_augment_config: true
+                type: String
+                description: Set TLOC IP address
+                example: 1.2.3.4
+                exclude_test: true
+              - model_name: color
+                data_path: [tloc]
+                tf_name: tloc_color
+                no_augment_config: true
+                type: String
+                description: Set TLOC color
+                example: bronze
+                exclude_test: true
+              - model_name: encap
+                data_path: [tloc]
+                tf_name: tloc_encapsulation
+                no_augment_config: true
+                type: String
+                enum_values: [ipsec, gre]
+                description: Set TLOC encapsulation
+                example: ipsec
+                exclude_test: true
+              - model_name: refId
+                data_path: [tlocList]
+                tf_name: tloc_list_id
+                no_augment_config: true
+                type: String
+                description: Set TLOC list ID
+                example: 8b249706-7c7f-4ab3-af6f-c91951c1a603
+                exclude_test: true
+              - model_name: tlocAction
+                tf_name: tloc_action
+                no_augment_config: true
+                type: String
+                enum_values: [strict, primary, backup, ecmp]
+                description: Set TLOC action
+                example: strict
+                exclude_test: true
+
+test_prerequisites: |
+  resource "sdwan_topology_feature_profile" "test" {
+    name        = "TF_TEST"
+    description = "Terraform test"
+  }
