@@ -24,6 +24,7 @@ import (
 	"context"
 	"os"
 	"strconv"
+	"strings"
 	"sync"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
@@ -199,6 +200,15 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 		resp.Diagnostics.AddError(
 			"Unable to find url",
 			"URL cannot be an empty string",
+		)
+		return
+	}
+
+	// Validate that the URL is in proper format without a "/" at the end
+	if strings.HasSuffix(url, "/") {
+		resp.Diagnostics.AddError(
+			"Invalid URL format",
+			"URL cannot end with a trailing slash ('/') ",
 		)
 		return
 	}
