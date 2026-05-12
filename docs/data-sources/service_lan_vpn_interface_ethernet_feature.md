@@ -26,8 +26,12 @@ data "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
-- `id` (String) The id of the Feature
 - `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
+
+### Optional
+
+- `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -100,7 +104,6 @@ data "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `mac_address_variable` (String) Variable name
 - `media_type` (String) Media type
 - `media_type_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `nat64` (Boolean) NAT64 on this interface
 - `port_channel_interface` (Boolean) Port-Channel interface on/off
 - `port_channel_lacp_fast_switchover` (Boolean) Eanble lacp fast switchover

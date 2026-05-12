@@ -42,6 +42,10 @@ func TestAccDataSourceSdwanPolicyObjectSecurityZoneProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanPolicyObjectSecurityZonePrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityZoneProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectSecurityZonePrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityZoneProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -79,3 +83,25 @@ func testAccDataSourceSdwanPolicyObjectSecurityZoneProfileParcelConfig() string 
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectSecurityZoneProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_security_zone" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  vpn = "Guest"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_security_zone" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

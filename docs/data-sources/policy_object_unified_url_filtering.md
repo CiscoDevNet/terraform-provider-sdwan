@@ -25,7 +25,11 @@ data "sdwan_policy_object_unified_url_filtering" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Policy_object
+- `name` (String) The name of the Policy_object
 
 ### Read-Only
 
@@ -34,7 +38,6 @@ data "sdwan_policy_object_unified_url_filtering" "example" {
 - `block_page_contents` (String)
 - `description` (String) The description of the Policy_object
 - `enable_alerts` (Boolean)
-- `name` (String) The name of the Policy_object
 - `redirect_url` (String)
 - `url_allow_list_id` (String)
 - `url_block_list_id` (String)

@@ -42,6 +42,10 @@ func TestAccDataSourceSdwanPolicyObjectSecurityPortListProfileParcel(t *testing.
 				Config: testAccDataSourceSdwanPolicyObjectSecurityPortListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityPortListProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectSecurityPortListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityPortListProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -79,3 +83,25 @@ func testAccDataSourceSdwanPolicyObjectSecurityPortListProfileParcelConfig() str
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectSecurityPortListProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_security_port_list" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  port = "100"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_security_port_list" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

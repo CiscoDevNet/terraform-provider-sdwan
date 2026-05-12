@@ -45,6 +45,10 @@ func TestAccDataSourceSdwanSystemIPv4DeviceAccessProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanSystemIPv4DeviceAccessPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemIPv4DeviceAccessProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanSystemIPv4DeviceAccessPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemIPv4DeviceAccessProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -86,3 +90,28 @@ func testAccDataSourceSdwanSystemIPv4DeviceAccessProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanSystemIPv4DeviceAccessProfileParcelByNameConfig() string {
+	config := `resource "sdwan_system_ipv4_device_access_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	sequences = [{` + "\n"
+	config += `	  id = 1` + "\n"
+	config += `	  name = "SEQ_1"` + "\n"
+	config += `	  base_action = "accept"` + "\n"
+	config += `	  device_access_port = 161` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_ipv4_device_access_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

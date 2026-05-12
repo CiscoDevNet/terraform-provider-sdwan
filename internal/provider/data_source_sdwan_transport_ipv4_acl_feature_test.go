@@ -50,6 +50,10 @@ func TestAccDataSourceSdwanTransportIPv4ACLProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanTransportIPv4ACLPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportIPv4ACLProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanTransportIPv4ACLPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportIPv4ACLProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -104,3 +108,41 @@ func testAccDataSourceSdwanTransportIPv4ACLProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanTransportIPv4ACLProfileParcelByNameConfig() string {
+	config := `resource "sdwan_transport_ipv4_acl_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	sequences = [{` + "\n"
+	config += `	  sequence_id = 1` + "\n"
+	config += `	  sequence_name = "AccessControlList1"` + "\n"
+	config += `	  match_entries = [{` + "\n"
+	config += `		dscps = [16]` + "\n"
+	config += `		packet_length = 1500` + "\n"
+	config += `		protocols = [1]` + "\n"
+	config += `      source_ports = [{` + "\n"
+	config += `			port = 8000` + "\n"
+	config += `		}]` + "\n"
+	config += `		tcp_state = "syn"` + "\n"
+	config += `	}]` + "\n"
+	config += `	  actions = [{` + "\n"
+	config += `		accept_set_dscp = 60` + "\n"
+	config += `		accept_counter_name = "COUNTER_1"` + "\n"
+	config += `		accept_log = false` + "\n"
+	config += `		accept_set_next_hop = "1.2.3.4"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_transport_ipv4_acl_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_transport_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

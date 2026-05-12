@@ -67,6 +67,10 @@ func TestAccDataSourceSdwanTransportManagementVPNInterfaceEthernetProfileParcel(
 				Config: testAccDataSourceSdwanTransportManagementVPNInterfaceEthernetPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportManagementVPNInterfaceEthernetProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanTransportManagementVPNInterfaceEthernetPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportManagementVPNInterfaceEthernetProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -139,3 +143,55 @@ func testAccDataSourceSdwanTransportManagementVPNInterfaceEthernetProfileParcelC
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanTransportManagementVPNInterfaceEthernetProfileParcelByNameConfig() string {
+	config := `resource "sdwan_transport_management_vpn_interface_ethernet_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	transport_management_vpn_feature_id = sdwan_transport_management_vpn_feature.test.id` + "\n"
+	config += `	shutdown = true` + "\n"
+	config += `	interface_name = "GigabitEthernet1"` + "\n"
+	config += `	interface_description = "Transport Management VPN Interface Ethernet"` + "\n"
+	config += `	ipv4_address_type = "static"` + "\n"
+	config += `	ipv4_address = "1.2.3.4"` + "\n"
+	config += `	ipv4_subnet_mask = "0.0.0.0"` + "\n"
+	config += `	ipv4_secondary_addresses = [{` + "\n"
+	config += `	  address = "1.2.3.4"` + "\n"
+	config += `	  subnet_mask = "0.0.0.0"` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv4_dhcp_helper = ["1.2.3.4"]` + "\n"
+	config += `	ipv4_iperf_server = "example"` + "\n"
+	config += `	ipv4_auto_detect_bandwidth = false` + "\n"
+	config += `	ipv6_address_type = "static"` + "\n"
+	config += `	ipv6_address = "2001:0:0:1::/64"` + "\n"
+	config += `	arp_entries = [{` + "\n"
+	config += `	  ip_address = "1.2.3.4"` + "\n"
+	config += `	  mac_address = "00-B0-D0-63-C2-26"` + "\n"
+	config += `	}]` + "\n"
+	config += `	duplex = "full"` + "\n"
+	config += `	mac_address = "00-B0-D0-63-C2-26"` + "\n"
+	config += `	ip_mtu = 1500` + "\n"
+	config += `	interface_mtu = 1500` + "\n"
+	config += `	tcp_mss = 505` + "\n"
+	config += `	speed = "2500"` + "\n"
+	config += `	arp_timeout = 1200` + "\n"
+	config += `	autonegotiate = false` + "\n"
+	config += `	media_type = "rj45"` + "\n"
+	config += `	load_interval = 30` + "\n"
+	config += `	icmp_redirect_disable = true` + "\n"
+	config += `	ip_directed_broadcast = false` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_transport_management_vpn_interface_ethernet_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_transport_feature_profile.test.id
+			transport_management_vpn_feature_id = sdwan_transport_management_vpn_feature.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

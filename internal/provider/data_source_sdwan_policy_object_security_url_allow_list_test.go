@@ -42,6 +42,10 @@ func TestAccDataSourceSdwanPolicyObjectSecurityURLAllowListProfileParcel(t *test
 				Config: testAccDataSourceSdwanPolicyObjectSecurityURLAllowListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityURLAllowListProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectSecurityURLAllowListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityURLAllowListProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -79,3 +83,25 @@ func testAccDataSourceSdwanPolicyObjectSecurityURLAllowListProfileParcelConfig()
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectSecurityURLAllowListProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_security_url_allow_list" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  pattern = "www.cisco.com"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_security_url_allow_list" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

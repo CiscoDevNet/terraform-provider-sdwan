@@ -62,6 +62,10 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceIPSECProfileParcel(t *testing
 				Config: testAccDataSourceSdwanTransportWANVPNInterfaceIPSECPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportWANVPNInterfaceIPSECProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanTransportWANVPNInterfaceIPSECPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportWANVPNInterfaceIPSECProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -182,3 +186,52 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceIPSECProfileParcelConfig() st
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanTransportWANVPNInterfaceIPSECProfileParcelByNameConfig() string {
+	config := `resource "sdwan_transport_wan_vpn_interface_ipsec_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id` + "\n"
+	config += `	interface_name = "ipsec987"` + "\n"
+	config += `	shutdown = true` + "\n"
+	config += `	multiplexing = false` + "\n"
+	config += `	tunnel_mode = "ipv4"` + "\n"
+	config += `	interface_description = "ipsec987"` + "\n"
+	config += `	ipv4_address = "9.7.5.4"` + "\n"
+	config += `	ipv4_subnet_mask = "255.255.255.0"` + "\n"
+	config += `	tunnel_source_ipv4_address = "1.3.5.88"` + "\n"
+	config += `	tunnel_destination_ipv4_address = "2.55.67.99"` + "\n"
+	config += `	application_tunnel_type = "none"` + "\n"
+	config += `	ipv4_tcp_mss = 1460` + "\n"
+	config += `	clear_dont_fragment = false` + "\n"
+	config += `	ipv4_mtu = 1500` + "\n"
+	config += `	dpd_interval = 10` + "\n"
+	config += `	dpd_retries = 3` + "\n"
+	config += `	ike_preshared_key = "123"` + "\n"
+	config += `	ike_version = 1` + "\n"
+	config += `	ike_integrity_protocol = "main"` + "\n"
+	config += `	ike_rekey_interval = 14400` + "\n"
+	config += `	ike_ciphersuite = "aes256-cbc-sha1"` + "\n"
+	config += `	ike_diffie_hellman_group = "16"` + "\n"
+	config += `	ike_id_local_end_point = "xxx"` + "\n"
+	config += `	ike_id_remote_end_point = "xxx"` + "\n"
+	config += `	ipsec_rekey_interval = 3600` + "\n"
+	config += `	ipsec_replay_window = 512` + "\n"
+	config += `	ipsec_ciphersuite = "aes256-gcm"` + "\n"
+	config += `	perfect_forward_secrecy = "group-16"` + "\n"
+	config += `	tunnel_route_via = "2222"` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_transport_wan_vpn_interface_ipsec_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_transport_feature_profile.test.id
+			transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

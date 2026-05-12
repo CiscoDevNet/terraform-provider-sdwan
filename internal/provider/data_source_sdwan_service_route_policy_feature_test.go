@@ -54,6 +54,10 @@ func TestAccDataSourceSdwanServiceRoutePolicyProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanServiceRoutePolicyPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceRoutePolicyProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanServiceRoutePolicyPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceRoutePolicyProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -107,3 +111,41 @@ func testAccDataSourceSdwanServiceRoutePolicyProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanServiceRoutePolicyProfileParcelByNameConfig() string {
+	config := `resource "sdwan_service_route_policy_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	sequences = [{` + "\n"
+	config += `	  id = 1` + "\n"
+	config += `	  name = "SEQ_1"` + "\n"
+	config += `	  base_action = "reject"` + "\n"
+	config += `	  protocol = "IPV4"` + "\n"
+	config += `	  actions = [{` + "\n"
+	config += `		as_path_prepend = ["65521"]` + "\n"
+	config += `		community_additive = false` + "\n"
+	config += `		community = ["internet"]` + "\n"
+	config += `		local_preference = 100` + "\n"
+	config += `		metric = 20` + "\n"
+	config += `		metric_type = "type1"` + "\n"
+	config += `		omp_tag = 200` + "\n"
+	config += `		origin = "EGP"` + "\n"
+	config += `		ospf_tag = 1200` + "\n"
+	config += `		weight = 2200` + "\n"
+	config += `		ipv4_next_hop = "10.0.0.1"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_service_route_policy_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_transport_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

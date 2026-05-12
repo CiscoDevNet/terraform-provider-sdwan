@@ -43,6 +43,10 @@ func TestAccDataSourceSdwanPolicyObjectASPathListProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanPolicyObjectASPathListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectASPathListProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectASPathListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectASPathListProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -81,3 +85,26 @@ func testAccDataSourceSdwanPolicyObjectASPathListProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectASPathListProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_as_path_list" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	as_path_list_id = 1` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  as_path_list = "110"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_as_path_list" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

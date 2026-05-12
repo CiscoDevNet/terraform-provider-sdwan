@@ -210,11 +210,20 @@ type YamlConfig struct {
 	NoImport                 bool                  `yaml:"no_import"`
 	NoResource               bool                  `yaml:"no_resource"`
 	NoDataSource             bool                  `yaml:"no_data_source"`
+	NoDataSourceNameQuery    bool                  `yaml:"no_data_source_name_query"`
 	GetBeforeDelete          bool                  `yaml:"get_before_delete"`
 	DeleteMutex              bool                  `yaml:"delete_mutex"`
 	ParcelType               string                `yaml:"parcel_type"`
 	FullUpdate               bool                  `yaml:"full_update"`
 	CreateMutex              bool                  `yaml:"create_mutex"`
+	DataSourceFilters        []DataSourceFilter    `yaml:"data_source_filters"`
+}
+
+type DataSourceFilter struct {
+	TfName        string `yaml:"tf_name"`
+	ModelName     string `yaml:"model_name"`
+	Description   string `yaml:"description"`
+	ListAttribute string `yaml:"list_attribute"`
 }
 
 type YamlConfigAttribute struct {

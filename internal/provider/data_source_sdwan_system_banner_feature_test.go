@@ -43,6 +43,10 @@ func TestAccDataSourceSdwanSystemBannerProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanSystemBannerPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemBannerProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanSystemBannerPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemBannerProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -79,3 +83,24 @@ func testAccDataSourceSdwanSystemBannerProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanSystemBannerProfileParcelByNameConfig() string {
+	config := `resource "sdwan_system_banner_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	login = "My login banner"` + "\n"
+	config += `	motd = "My motd banner"` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_banner_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

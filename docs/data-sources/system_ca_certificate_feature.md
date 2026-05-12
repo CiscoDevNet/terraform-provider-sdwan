@@ -25,13 +25,16 @@ data "sdwan_system_ca_certificate_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
 - `certificates` (Attributes List) Thirdparty CA Certificate List (see [below for nested schema](#nestedatt--certificates))
 - `description` (String) The description of the Feature
-- `name` (String) The name of the Feature
 - `version` (Number) The version of the Feature
 
 <a id="nestedatt--certificates"></a>

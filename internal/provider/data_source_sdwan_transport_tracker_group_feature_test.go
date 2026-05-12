@@ -42,6 +42,10 @@ func TestAccDataSourceSdwanTransportTrackerGroupProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanTransportTrackerGroupPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportTrackerGroupProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanTransportTrackerGroupPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportTrackerGroupProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -112,3 +116,28 @@ func testAccDataSourceSdwanTransportTrackerGroupProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanTransportTrackerGroupProfileParcelByNameConfig() string {
+	config := `resource "sdwan_transport_tracker_group_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	tracker_elements = [{` + "\n"
+	config += `	  tracker_id = sdwan_transport_tracker_feature.test-1.id` + "\n"
+	config += `	}, {` + "\n"
+	config += `	  tracker_id = sdwan_transport_tracker_feature.test-2.id` + "\n"
+	config += `	}]` + "\n"
+	config += `	tracker_boolean = "or"` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_transport_tracker_group_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_transport_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

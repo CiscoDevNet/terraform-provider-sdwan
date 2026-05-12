@@ -82,6 +82,10 @@ func TestAccDataSourceSdwanServiceLANVPNInterfaceSVIProfileParcel(t *testing.T) 
 				Config: testAccDataSourceSdwanServiceLANVPNInterfaceSVIPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceLANVPNInterfaceSVIProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanServiceLANVPNInterfaceSVIPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceLANVPNInterfaceSVIProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -271,3 +275,89 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceSVIProfileParcelConfig() string
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanServiceLANVPNInterfaceSVIProfileParcelByNameConfig() string {
+	config := `resource "sdwan_service_lan_vpn_interface_svi_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
+	config += `	service_lan_vpn_feature_id = sdwan_service_lan_vpn_feature.test.id` + "\n"
+	config += `	shutdown = false` + "\n"
+	config += `	interface_name = "Vlan1"` + "\n"
+	config += `	interface_description = "SVI"` + "\n"
+	config += `	interface_mtu = 1500` + "\n"
+	config += `	ip_mtu = 1500` + "\n"
+	config += `	ipv4_address = "1.2.3.4"` + "\n"
+	config += `	ipv4_subnet_mask = "0.0.0.0"` + "\n"
+	config += `	ipv4_secondary_addresses = [{` + "\n"
+	config += `	  address = "2.3.4.5"` + "\n"
+	config += `	  ipv4_subnet_mask = "0.0.0.0"` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv4_dhcp_helpers = ["4.5.6.7"]` + "\n"
+	config += `	ipv6_address = "2001:0:0:1::0/32"` + "\n"
+	config += `	ipv6_secondary_addresses = [{` + "\n"
+	config += `	  address = "::2/32"` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv6_dhcp_helpers = [{` + "\n"
+	config += `	  address = "2001:0:0:1::0"` + "\n"
+	config += `	  vpn = 1` + "\n"
+	config += `	}]` + "\n"
+	config += `	acl_ipv4_egress_feature_id = sdwan_service_ipv4_acl_feature.test.id` + "\n"
+	config += `	acl_ipv6_ingress_feature_id = sdwan_service_ipv6_acl_feature.test.id` + "\n"
+	config += `	arps = [{` + "\n"
+	config += `	  ip_address = "1.2.3.4"` + "\n"
+	config += `	  mac_address = "00-B0-D0-63-C2-26"` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv4_vrrps = [{` + "\n"
+	config += `	  group_id = 1` + "\n"
+	config += `	  priority = 100` + "\n"
+	config += `	  timer = 1000` + "\n"
+	config += `	  track_omp = false` + "\n"
+	config += `	  prefix_list = "prefix"` + "\n"
+	config += `	  address = "1.2.3.4"` + "\n"
+	config += `	  secondary_addresses = [{` + "\n"
+	config += `		address = "2.3.4.5"` + "\n"
+	config += `	}]` + "\n"
+	config += `	  tloc_prefix_change = true` + "\n"
+	config += `	  tloc_prefix_change_value = 100` + "\n"
+	config += `	  tracking_objects = [{` + "\n"
+	config += `		tracker_id = sdwan_service_tracker_feature.test.id` + "\n"
+	config += `		track_action = "decrement"` + "\n"
+	config += `		decrement_value = 100` + "\n"
+	config += `	}]` + "\n"
+	config += `	  follow_dual_router_high_availability = false` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv6_vrrps = [{` + "\n"
+	config += `	  group_id = 1` + "\n"
+	config += `	  priority = 100` + "\n"
+	config += `	  timer = 1000` + "\n"
+	config += `	  track_omp = false` + "\n"
+	config += `	  track_prefix_list = "1"` + "\n"
+	config += `	  addresses = [{` + "\n"
+	config += `		link_local_address = "1::1"` + "\n"
+	config += `		global_address = "1::1/24"` + "\n"
+	config += `	}]` + "\n"
+	config += `	  secondary_addresses = [{` + "\n"
+	config += `		prefix = "::20/32"` + "\n"
+	config += `	}]` + "\n"
+	config += `	  follow_dual_router_high_availability = false` + "\n"
+	config += `	}]` + "\n"
+	config += `	enable_dhcpv6 = false` + "\n"
+	config += `	tcp_mss = 1024` + "\n"
+	config += `	arp_timeout = 1200` + "\n"
+	config += `	ip_directed_broadcast = false` + "\n"
+	config += `	icmp_redirect_disable = true` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_service_lan_vpn_interface_svi_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_service_feature_profile.test.id
+			service_lan_vpn_feature_id = sdwan_service_lan_vpn_feature.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

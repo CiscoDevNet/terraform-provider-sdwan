@@ -5,6 +5,7 @@ minimum_version: 20.15.0
 id_attribute: id
 test_tags: [SDWAN_2015]
 parcel_type: policy
+no_data_source_name_query: true
 attributes:
   - tf_name: feature_profile_id
     reference: true

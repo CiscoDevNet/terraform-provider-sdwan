@@ -25,7 +25,11 @@ data "sdwan_transport_cellular_profile_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -34,7 +38,6 @@ data "sdwan_transport_cellular_profile_feature" "example" {
 - `authentication_type` (String) Set authentication type
 - `authentication_type_variable` (String) Variable name
 - `description` (String) The description of the Feature
-- `name` (String) The name of the Feature
 - `no_overwrite` (Boolean) No Overwrite
 - `no_overwrite_variable` (String) Variable name
 - `packet_data_network_type` (String) Set packet data network type

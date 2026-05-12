@@ -71,6 +71,10 @@ func TestAccDataSourceSdwanSystemBasicProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanSystemBasicPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemBasicProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanSystemBasicPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemBasicProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -143,3 +147,60 @@ func testAccDataSourceSdwanSystemBasicProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanSystemBasicProfileParcelByNameConfig() string {
+	config := `resource "sdwan_system_basic_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	timezone = "UTC"` + "\n"
+	config += `	config_description = "example"` + "\n"
+	config += `	location = "example"` + "\n"
+	config += `	gps_longitude = -77` + "\n"
+	config += `	gps_latitude = 38` + "\n"
+	config += `	gps_geo_fencing_enable = true` + "\n"
+	config += `	gps_geo_fencing_range = 100` + "\n"
+	config += `	gps_sms_enable = true` + "\n"
+	config += `	gps_sms_mobile_numbers = [{` + "\n"
+	config += `	  number = "+11111233"` + "\n"
+	config += `	}]` + "\n"
+	config += `	device_groups = ["example"]` + "\n"
+	config += `	controller_groups = [1]` + "\n"
+	config += `	overlay_id = 1` + "\n"
+	config += `	port_offset = 19` + "\n"
+	config += `	port_hopping = true` + "\n"
+	config += `	control_session_pps = 300` + "\n"
+	config += `	track_transport = true` + "\n"
+	config += `	track_interface_tag = 2` + "\n"
+	config += `	console_baud_rate = "9600"` + "\n"
+	config += `	max_omp_sessions = 24` + "\n"
+	config += `	multi_tenant = false` + "\n"
+	config += `	track_default_gateway = true` + "\n"
+	config += `	tracker_dia_stabilize_status = false` + "\n"
+	config += `	admin_tech_on_failure = true` + "\n"
+	config += `	idle_timeout = 10` + "\n"
+	config += `	on_demand_enable = true` + "\n"
+	config += `	on_demand_idle_timeout = 10` + "\n"
+	config += `	transport_gateway = false` + "\n"
+	config += `	enhanced_app_aware_routing = "aggressive"` + "\n"
+	config += `	site_types = ["type-1"]` + "\n"
+	config += `	affinity_group_number = 1` + "\n"
+	config += `	affinity_group_preferences = [1]` + "\n"
+	config += `	affinity_preference_auto = false` + "\n"
+	config += `	affinity_per_vrfs = [{` + "\n"
+	config += `	  affinity_group_number = 1` + "\n"
+	config += `	  vrf_range = "123-456"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_basic_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

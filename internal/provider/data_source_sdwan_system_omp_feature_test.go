@@ -70,6 +70,10 @@ func TestAccDataSourceSdwanSystemOMPProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanSystemOMPPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemOMPProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanSystemOMPPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemOMPProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -135,3 +139,53 @@ func testAccDataSourceSdwanSystemOMPProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanSystemOMPProfileParcelByNameConfig() string {
+	config := `resource "sdwan_system_omp_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	graceful_restart = true` + "\n"
+	config += `	overlay_as = 10` + "\n"
+	config += `	paths_advertised_per_prefix = 4` + "\n"
+	config += `	ecmp_limit = 4` + "\n"
+	config += `	shutdown = false` + "\n"
+	config += `	omp_admin_distance_ipv4 = 10` + "\n"
+	config += `	omp_admin_distance_ipv6 = 20` + "\n"
+	config += `	advertisement_interval = 1` + "\n"
+	config += `	graceful_restart_timer = 43200` + "\n"
+	config += `	eor_timer = 300` + "\n"
+	config += `	holdtime = 60` + "\n"
+	config += `	advertise_ipv4_bgp = false` + "\n"
+	config += `	advertise_ipv4_ospf = false` + "\n"
+	config += `	advertise_ipv4_ospf_v3 = false` + "\n"
+	config += `	advertise_ipv4_connected = false` + "\n"
+	config += `	advertise_ipv4_static = false` + "\n"
+	config += `	advertise_ipv4_eigrp = false` + "\n"
+	config += `	advertise_ipv4_lisp = false` + "\n"
+	config += `	advertise_ipv4_isis = false` + "\n"
+	config += `	advertise_ipv6_bgp = true` + "\n"
+	config += `	advertise_ipv6_ospf = true` + "\n"
+	config += `	advertise_ipv6_connected = true` + "\n"
+	config += `	advertise_ipv6_static = true` + "\n"
+	config += `	advertise_ipv6_eigrp = true` + "\n"
+	config += `	advertise_ipv6_lisp = true` + "\n"
+	config += `	advertise_ipv6_isis = true` + "\n"
+	config += `	ignore_region_path_length = false` + "\n"
+	config += `	transport_gateway = "prefer"` + "\n"
+	config += `	site_types = ["type-1"]` + "\n"
+	config += `	site_types_for_transport_gateway = ["type-1"]` + "\n"
+	config += `	aspath_auto_translation = true` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_omp_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

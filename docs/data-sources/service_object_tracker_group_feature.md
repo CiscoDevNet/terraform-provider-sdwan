@@ -25,12 +25,15 @@ data "sdwan_service_object_tracker_group_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
 - `description` (String) The description of the Feature
-- `name` (String) The name of the Feature
 - `object_tracker_id` (Number) Object ID
 - `object_tracker_id_variable` (String) Variable name
 - `reachable` (String) tracker ref list criteria boolean and or

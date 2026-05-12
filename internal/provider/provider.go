@@ -744,6 +744,7 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewPolicerPolicyObjectDataSource,
 		NewPolicyGroupDataSource,
 		NewPolicyObjectFeatureProfileDataSource,
+		NewPolicyObjectFeatureProfileParcelsDataSource,
 		NewPortListPolicyObjectDataSource,
 		NewPreferredColorGroupPolicyObjectDataSource,
 		NewProtocolListPolicyObjectDataSource,

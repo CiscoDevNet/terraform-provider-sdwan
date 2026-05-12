@@ -53,6 +53,10 @@ func TestAccDataSourceSdwanServiceRoutingEIGRPProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanServiceRoutingEIGRPPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceRoutingEIGRPProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanServiceRoutingEIGRPPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceRoutingEIGRPProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -109,3 +113,43 @@ func testAccDataSourceSdwanServiceRoutingEIGRPProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanServiceRoutingEIGRPProfileParcelByNameConfig() string {
+	config := `resource "sdwan_service_routing_eigrp_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
+	config += `	autonomous_system_id = 111` + "\n"
+	config += `	networks = [{` + "\n"
+	config += `	  ip_address = "100.2.2.3"` + "\n"
+	config += `	  mask = "255.255.255.0"` + "\n"
+	config += `	}]` + "\n"
+	config += `	hello_interval = 5` + "\n"
+	config += `	hold_time = 15` + "\n"
+	config += `	authentication_type = "md5"` + "\n"
+	config += `	md5_keys = [{` + "\n"
+	config += `	  key_id = 2` + "\n"
+	config += `	  key_string = "password123"` + "\n"
+	config += `	}]` + "\n"
+	config += `	interfaces = [{` + "\n"
+	config += `	  name = "GigabitEthernet3"` + "\n"
+	config += `	  shutdown = false` + "\n"
+	config += `	  summary_addresses = [{` + "\n"
+	config += `		address = "10.0.0.1"` + "\n"
+	config += `		mask = "255.255.255.0"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	filter = false` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_service_routing_eigrp_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_service_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

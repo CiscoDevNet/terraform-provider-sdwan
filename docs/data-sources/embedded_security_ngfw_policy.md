@@ -25,13 +25,16 @@ data "sdwan_embedded_security_ngfw_policy" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Policy
+- `name` (String) The name of the Policy
 
 ### Read-Only
 
 - `default_action` (String)
 - `description` (String) The description of the Policy
-- `name` (String) The name of the Policy
 - `sequences` (Attributes List) (see [below for nested schema](#nestedatt--sequences))
 - `version` (Number) The version of the Policy
 

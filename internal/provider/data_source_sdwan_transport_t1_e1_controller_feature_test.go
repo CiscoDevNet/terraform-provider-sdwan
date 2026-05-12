@@ -53,6 +53,10 @@ func TestAccDataSourceSdwanTransportT1E1ControllerProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanTransportT1E1ControllerPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportT1E1ControllerProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanTransportT1E1ControllerPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportT1E1ControllerProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -103,3 +107,38 @@ func testAccDataSourceSdwanTransportT1E1ControllerProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanTransportT1E1ControllerProfileParcelByNameConfig() string {
+	config := `resource "sdwan_transport_t1_e1_controller_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	type = "t1"` + "\n"
+	config += `	slot = "11"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  t1_description = "T1"` + "\n"
+	config += `	  t1_framing = "esf"` + "\n"
+	config += `	  t1_linecode = "ami"` + "\n"
+	config += `	  cable_length = "long"` + "\n"
+	config += `	  length_long = "-7.5db"` + "\n"
+	config += `	  clock_source = "line"` + "\n"
+	config += `	  line_mode = "primary"` + "\n"
+	config += `	  description = "desc"` + "\n"
+	config += `	  channel_groups = [{` + "\n"
+	config += `		channel_group = 12` + "\n"
+	config += `		time_slot = "timeslots 15"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_transport_t1_e1_controller_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_transport_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

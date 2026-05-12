@@ -43,6 +43,10 @@ func TestAccDataSourceSdwanPolicyObjectSecurityIPSSignatureProfileParcel(t *test
 				Config: testAccDataSourceSdwanPolicyObjectSecurityIPSSignaturePrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityIPSSignatureProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectSecurityIPSSignaturePrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityIPSSignatureProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -81,3 +85,26 @@ func testAccDataSourceSdwanPolicyObjectSecurityIPSSignatureProfileParcelConfig()
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectSecurityIPSSignatureProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_security_ips_signature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  generator_id = "1234"` + "\n"
+	config += `	  signature_id = "5678"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_security_ips_signature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

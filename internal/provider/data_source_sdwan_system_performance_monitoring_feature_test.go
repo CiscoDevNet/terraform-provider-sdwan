@@ -45,6 +45,10 @@ func TestAccDataSourceSdwanSystemPerformanceMonitoringProfileParcel(t *testing.T
 				Config: testAccDataSourceSdwanSystemPerformanceMonitoringPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemPerformanceMonitoringProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanSystemPerformanceMonitoringPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemPerformanceMonitoringProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -85,3 +89,28 @@ func testAccDataSourceSdwanSystemPerformanceMonitoringProfileParcelConfig() stri
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanSystemPerformanceMonitoringProfileParcelByNameConfig() string {
+	config := `resource "sdwan_system_performance_monitoring_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	app_perf_monitor_enabled = true` + "\n"
+	config += `	app_perf_monitor_app_group = ["amazon-group"]` + "\n"
+	config += `	monitoring_config_enabled = true` + "\n"
+	config += `	monitoring_config_interval = "30"` + "\n"
+	config += `	event_driven_config_enabled = true` + "\n"
+	config += `	event_driven_events = ["SLA_CHANGE"]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_performance_monitoring_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

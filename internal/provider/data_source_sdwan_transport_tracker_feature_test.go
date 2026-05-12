@@ -50,6 +50,10 @@ func TestAccDataSourceSdwanTransportTrackerProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanTransportTrackerPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportTrackerProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanTransportTrackerPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportTrackerProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -93,3 +97,31 @@ func testAccDataSourceSdwanTransportTrackerProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanTransportTrackerProfileParcelByNameConfig() string {
+	config := `resource "sdwan_transport_tracker_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	tracker_name = "TRACKER_1"` + "\n"
+	config += `	endpoint_api_url = "google.com"` + "\n"
+	config += `	endpoint_dns_name = "google.com"` + "\n"
+	config += `	endpoint_ip = "1.2.3.4"` + "\n"
+	config += `	interval = 30` + "\n"
+	config += `	multiplier = 3` + "\n"
+	config += `	threshold = 300` + "\n"
+	config += `	endpoint_tracker_type = "interface"` + "\n"
+	config += `	tracker_type = "endpoint"` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_transport_tracker_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_transport_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

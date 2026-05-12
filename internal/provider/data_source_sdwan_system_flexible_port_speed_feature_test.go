@@ -42,6 +42,10 @@ func TestAccDataSourceSdwanSystemFlexiblePortSpeedProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanSystemFlexiblePortSpeedPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemFlexiblePortSpeedProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanSystemFlexiblePortSpeedPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemFlexiblePortSpeedProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -77,3 +81,23 @@ func testAccDataSourceSdwanSystemFlexiblePortSpeedProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanSystemFlexiblePortSpeedProfileParcelByNameConfig() string {
+	config := `resource "sdwan_system_flexible_port_speed_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	port_type = "12 ports of 1/10GE + 3 ports 40GE"` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_flexible_port_speed_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

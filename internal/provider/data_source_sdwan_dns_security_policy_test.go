@@ -47,6 +47,10 @@ func TestAccDataSourceSdwanDNSSecurityProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanDNSSecurityPrerequisitesProfileParcelConfig + testAccDataSourceSdwanDNSSecurityProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanDNSSecurityPrerequisitesProfileParcelConfig + testAccDataSourceSdwanDNSSecurityProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -105,3 +109,29 @@ func testAccDataSourceSdwanDNSSecurityProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanDNSSecurityProfileParcelByNameConfig() string {
+	config := `resource "sdwan_dns_security_policy" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_dns_security_feature_profile.test.id` + "\n"
+	config += `	local_domain_bypass_list_id = sdwan_policy_object_security_local_domain_list.test.id` + "\n"
+	config += `	match_all_vpn = true` + "\n"
+	config += `	umbrella_default = false` + "\n"
+	config += `	dns_server_ip = "1.2.3.4"` + "\n"
+	config += `	local_domain_bypass_enabled = true` + "\n"
+	config += `	dns_crypt = false` + "\n"
+	config += `	child_org_id = "12334"` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_dns_security_policy" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_dns_security_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

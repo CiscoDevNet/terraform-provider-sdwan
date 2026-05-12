@@ -43,6 +43,10 @@ func TestAccDataSourceSdwanSystemCACertificateProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanSystemCACertificatePrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemCACertificateProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanSystemCACertificatePrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemCACertificateProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -81,3 +85,26 @@ func testAccDataSourceSdwanSystemCACertificateProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanSystemCACertificateProfileParcelByNameConfig() string {
+	config := `resource "sdwan_system_ca_certificate_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	certificates = [{` + "\n"
+	config += `	  trust_point_name = "example"` + "\n"
+	config += `	  ca_certificate_id = "22a2f715-fed8-4031-b693-b5d43451a05e"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_ca_certificate_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

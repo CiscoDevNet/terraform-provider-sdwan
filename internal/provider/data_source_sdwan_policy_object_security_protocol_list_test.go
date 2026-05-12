@@ -42,6 +42,10 @@ func TestAccDataSourceSdwanPolicyObjectSecurityProtocolListProfileParcel(t *test
 				Config: testAccDataSourceSdwanPolicyObjectSecurityProtocolListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityProtocolListProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectSecurityProtocolListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityProtocolListProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -79,3 +83,25 @@ func testAccDataSourceSdwanPolicyObjectSecurityProtocolListProfileParcelConfig()
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectSecurityProtocolListProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_security_protocol_list" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  protocol_name = "snmp"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_security_protocol_list" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

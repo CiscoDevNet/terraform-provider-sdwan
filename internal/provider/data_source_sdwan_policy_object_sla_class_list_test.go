@@ -46,6 +46,10 @@ func TestAccDataSourceSdwanPolicyObjectSLAClassListProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanPolicyObjectSLAClassListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSLAClassListProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectSLAClassListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSLAClassListProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -88,3 +92,29 @@ func testAccDataSourceSdwanPolicyObjectSLAClassListProfileParcelConfig() string 
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectSLAClassListProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_sla_class_list" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  latency = 2` + "\n"
+	config += `	  loss = 1` + "\n"
+	config += `	  jitter = 1` + "\n"
+	config += `	  fallback_best_tunnel_criteria = "loss"` + "\n"
+	config += `	  fallback_best_tunnel_loss_variance = 5` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_sla_class_list" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

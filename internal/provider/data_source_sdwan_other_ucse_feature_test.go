@@ -53,6 +53,10 @@ func TestAccDataSourceSdwanOtherUCSEProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanOtherUCSEPrerequisitesProfileParcelConfig + testAccDataSourceSdwanOtherUCSEProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanOtherUCSEPrerequisitesProfileParcelConfig + testAccDataSourceSdwanOtherUCSEProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -101,3 +105,36 @@ func testAccDataSourceSdwanOtherUCSEProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanOtherUCSEProfileParcelByNameConfig() string {
+	config := `resource "sdwan_other_ucse_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_other_feature_profile.test.id` + "\n"
+	config += `	bay = 2` + "\n"
+	config += `	slot = 0` + "\n"
+	config += `	access_port_dedicated = false` + "\n"
+	config += `	access_port_shared_type = "ge1"` + "\n"
+	config += `	access_port_shared_failover_type = "ge2"` + "\n"
+	config += `	ipv4_address = "2.2.2.2/24"` + "\n"
+	config += `	default_gateway = "2.2.2.2"` + "\n"
+	config += `	vlan_id = 3` + "\n"
+	config += `	assign_priority = 3` + "\n"
+	config += `	interfaces = [{` + "\n"
+	config += `	  interface_name = "ucse2/0"` + "\n"
+	config += `	  ucse_interface_vpn = 2` + "\n"
+	config += `	  ipv4_address = "10.1.15.15/24"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_other_ucse_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_other_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

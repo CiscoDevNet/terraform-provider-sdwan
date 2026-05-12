@@ -57,6 +57,10 @@ func TestAccDataSourceSdwanSystemRemoteAccessProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanSystemRemoteAccessPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemRemoteAccessProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanSystemRemoteAccessPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemRemoteAccessProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -107,3 +111,38 @@ func testAccDataSourceSdwanSystemRemoteAccessProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanSystemRemoteAccessProfileParcelByNameConfig() string {
+	config := `resource "sdwan_system_remote_access_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	connection_type_ssl = false` + "\n"
+	config += `	any_connect_eap_authentication_type = "user"` + "\n"
+	config += `	ipv4_pool_size = 50` + "\n"
+	config += `	ipv6_pool_size = 1024` + "\n"
+	config += `	enable_certificate_list_check = false` + "\n"
+	config += `	psk_authentication_type = "aaa"` + "\n"
+	config += `	radius_group_name = "radius-1"` + "\n"
+	config += `	aaa_derive_name_from_peer_identity = "MyPassword"` + "\n"
+	config += `	aaa_enable_accounting = false` + "\n"
+	config += `	ikev2_local_ike_identity_type = "EMAIL"` + "\n"
+	config += `	ikev2_local_ike_identity_value = "abc@xyz.com"` + "\n"
+	config += `	ikev2_security_association_lifetime = 86400` + "\n"
+	config += `	ikev2_anti_dos_threshold = 99` + "\n"
+	config += `	ipsec_enable_anti_replay = false` + "\n"
+	config += `	ipsec_security_association_lifetime = 3600` + "\n"
+	config += `	ipsec_enable_perfect_foward_secrecy = false` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_remote_access_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

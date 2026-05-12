@@ -25,7 +25,11 @@ data "sdwan_transport_gps_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -34,7 +38,6 @@ data "sdwan_transport_gps_feature" "example" {
 - `gps_enable_variable` (String) Variable name
 - `gps_mode` (String) Select GPS mode
 - `gps_mode_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `nmea_destination_address` (String) Destination address
 - `nmea_destination_address_variable` (String) Variable name
 - `nmea_destination_port` (Number) Destination port

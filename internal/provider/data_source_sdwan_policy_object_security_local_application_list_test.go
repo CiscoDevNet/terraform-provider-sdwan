@@ -42,6 +42,10 @@ func TestAccDataSourceSdwanPolicyObjectSecurityLocalApplicationListProfileParcel
 				Config: testAccDataSourceSdwanPolicyObjectSecurityLocalApplicationListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityLocalApplicationListProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectSecurityLocalApplicationListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityLocalApplicationListProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -79,3 +83,25 @@ func testAccDataSourceSdwanPolicyObjectSecurityLocalApplicationListProfileParcel
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectSecurityLocalApplicationListProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_security_local_application_list" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  app = "audible-com"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_security_local_application_list" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

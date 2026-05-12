@@ -25,14 +25,17 @@ data "sdwan_service_object_tracker_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
 - `description` (String) The description of the Feature
 - `interface` (String) interface name
 - `interface_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `object_tracker_id` (Number) Object tracker ID
 - `object_tracker_id_variable` (String) Variable name
 - `object_tracker_type` (String) objectTrackerType:Interface SIG Route

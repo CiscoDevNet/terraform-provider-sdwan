@@ -25,14 +25,17 @@ data "sdwan_policy_object_as_path_list" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Policy_object
+- `name` (String) The name of the Policy_object
 
 ### Read-Only
 
 - `as_path_list_id` (Number) As path List Number
 - `description` (String) The description of the Policy_object
 - `entries` (Attributes List) AS Path List (see [below for nested schema](#nestedatt--entries))
-- `name` (String) The name of the Policy_object
 - `version` (Number) The version of the Policy_object
 
 <a id="nestedatt--entries"></a>

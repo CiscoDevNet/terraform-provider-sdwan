@@ -44,6 +44,10 @@ func TestAccDataSourceSdwanPolicyObjectPolicerProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanPolicyObjectPolicerPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectPolicerProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectPolicerPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectPolicerProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -84,3 +88,27 @@ func testAccDataSourceSdwanPolicyObjectPolicerProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectPolicerProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_policer" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  burst_bytes = 56500` + "\n"
+	config += `	  exceed_action = "remark"` + "\n"
+	config += `	  rate_bps = 60000` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_policer" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

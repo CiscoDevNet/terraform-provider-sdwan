@@ -42,6 +42,10 @@ func TestAccDataSourceSdwanPolicyObjectSecurityDataIPv4PrefixListProfileParcel(t
 				Config: testAccDataSourceSdwanPolicyObjectSecurityDataIPv4PrefixListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityDataIPv4PrefixListProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectSecurityDataIPv4PrefixListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityDataIPv4PrefixListProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -79,3 +83,25 @@ func testAccDataSourceSdwanPolicyObjectSecurityDataIPv4PrefixListProfileParcelCo
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectSecurityDataIPv4PrefixListProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_security_data_ipv4_prefix_list" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  ip_prefix = "10.0.0.0/12"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_security_data_ipv4_prefix_list" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

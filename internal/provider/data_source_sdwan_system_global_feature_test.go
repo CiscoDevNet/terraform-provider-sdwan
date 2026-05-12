@@ -68,6 +68,10 @@ func TestAccDataSourceSdwanSystemGlobalProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanSystemGlobalPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemGlobalProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanSystemGlobalPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemGlobalProfileParcelByNameConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
 		},
 	})
 }
@@ -129,3 +133,49 @@ func testAccDataSourceSdwanSystemGlobalProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanSystemGlobalProfileParcelByNameConfig() string {
+	config := `resource "sdwan_system_global_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	http_server = false` + "\n"
+	config += `	https_server = false` + "\n"
+	config += `	ftp_passive = false` + "\n"
+	config += `	domain_lookup = false` + "\n"
+	config += `	arp_proxy = false` + "\n"
+	config += `	rsh_rcp = false` + "\n"
+	config += `	line_vty = false` + "\n"
+	config += `	cdp = true` + "\n"
+	config += `	lldp = true` + "\n"
+	config += `	source_interface = "GigabitEthernet0/0/1"` + "\n"
+	config += `	tcp_keepalives_in = true` + "\n"
+	config += `	tcp_keepalives_out = true` + "\n"
+	config += `	tcp_small_servers = false` + "\n"
+	config += `	udp_small_servers = false` + "\n"
+	config += `	console_logging = true` + "\n"
+	config += `	ip_source_routing = false` + "\n"
+	config += `	vty_line_logging = false` + "\n"
+	config += `	snmp_ifindex_persist = true` + "\n"
+	config += `	ignore_bootp = true` + "\n"
+	config += `	nat64_udp_timeout = 300` + "\n"
+	config += `	nat64_tcp_timeout = 3600` + "\n"
+	config += `	http_authentication = "aaa"` + "\n"
+	config += `	ssh_version = "2"` + "\n"
+	config += `	lacp_system_priority = 1234` + "\n"
+	config += `	etherchannel_flow_load_balance = "src-ip"` + "\n"
+	config += `	etherchannel_vlan_load_balance = true` + "\n"
+	config += `	bgp_community_new_format = true` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_global_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig
