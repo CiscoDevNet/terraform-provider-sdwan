@@ -31,7 +31,7 @@ resource "sdwan_cloud_provider_settings" "example" {
   cisco_sse_org_id          = "323456"
   cisco_sse_auth_key        = "33333444"
   cisco_sse_auth_secret     = "$CRYPT_CLUSTER$Gg4nVpFdldXga1hLKhdJrA==$hiFPirWJnqNxMq3l/m1ekw=="
-  cisco_sse_context_sharing = true
+  cisco_sse_context_sharing = false
 }
 ```
 
@@ -43,6 +43,7 @@ resource "sdwan_cloud_provider_settings" "example" {
 - `cisco_sse_auth_key` (String) Cisco SSE Authentication Key
 - `cisco_sse_auth_secret` (String) Cisco SSE Authentication Secret
 - `cisco_sse_context_sharing` (Boolean) Enable Cisco SSE Context Sharing
+  - Default value: `false`
 - `cisco_sse_org_id` (String) Cisco SSE Organization ID (numeric string)
 - `umbrella_auth_key_v2` (String) Umbrella Authentication Key (v2)
 - `umbrella_auth_secret_v2` (String) Umbrella Authentication Secret (v2)

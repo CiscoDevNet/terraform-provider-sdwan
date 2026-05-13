@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -138,8 +139,10 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 			},
 			"cisco_sse_context_sharing": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable Cisco SSE Context Sharing").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable Cisco SSE Context Sharing").AddDefaultValueDescription("false").String,
 				Optional:            true,
+				Computed:            true,
+				Default:             booldefault.StaticBool(false),
 			},
 		},
 	}

@@ -43,7 +43,7 @@ func TestAccDataSourceSdwanCloudProviderSettings(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cloud_provider_settings.test", "zscaler_username", "user1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cloud_provider_settings.test", "cisco_sse_org_id", "323456"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cloud_provider_settings.test", "cisco_sse_auth_key", "33333444"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cloud_provider_settings.test", "cisco_sse_context_sharing", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cloud_provider_settings.test", "cisco_sse_context_sharing", "false"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -80,7 +80,7 @@ func testAccDataSourceSdwanCloudProviderSettingsConfig() string {
 	config += `	cisco_sse_org_id = "323456"` + "\n"
 	config += `	cisco_sse_auth_key = "33333444"` + "\n"
 	config += `	cisco_sse_auth_secret = "$CRYPT_CLUSTER$Gg4nVpFdldXga1hLKhdJrA==$hiFPirWJnqNxMq3l/m1ekw=="` + "\n"
-	config += `	cisco_sse_context_sharing = true` + "\n"
+	config += `	cisco_sse_context_sharing = false` + "\n"
 	config += `}` + "\n"
 
 	config += `

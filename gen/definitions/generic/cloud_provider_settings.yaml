@@ -108,6 +108,7 @@ attributes:
   - model_name: ciscoSSEContextSharing
     tf_name: cisco_sse_context_sharing
     type: Bool
+    default_value: false
     response_data_path: [data, "0"]
     description: Enable Cisco SSE Context Sharing
-    example: "true"
+    example: "false"
