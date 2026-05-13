@@ -22,6 +22,7 @@ remove_id: bool(required=False) # Set to true if default ID attribute should be 
 type_value: str(required=False) # Set to a string which is being provided as a read-only "type" resource and data source attribute (Generic) or add to the body of a request (Profile parcels)
 no_import: bool(required=False) # Set to true if the resource does not support importing
 no_data_source: bool(required=False) # Set to true if no data source should be created
+no_delete: bool(required=False) # Set to true if the resource does not support deleting
 no_resource: bool(required=False) # Set to true if no resource should be created
 get_before_delete: bool(required=False) # This does a GET "all" before doing a DELETE, which is a workaround for an API issue with some endpoints where the reference count is not updated otherwise
 delete_mutex: bool(required=False) # Set to true if DELETE operation is mutually exclusive with other DELETE operations

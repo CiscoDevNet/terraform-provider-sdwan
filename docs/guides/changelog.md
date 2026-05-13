@@ -15,6 +15,7 @@ description: |-
 - Bump `sdwan_service_dhcp_server_feature` schema to `20.18.0`
 - Bump `sdwan_system_aaa_feature` schema to `20.18.0`
 - Fix issue where `sdwan_cflowd_policy_definition` allows  `all` instead of `both` for `protocol` field
+- Add `sdwan_cloud_provider_settings` resource and data source
 
 ## 0.11.1
 
