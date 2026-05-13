@@ -1,3 +1,4 @@
+# Manual resource - Modal updateFromBody is manually configured to support set_parameters and match_entries split objects
 ---
 name: Topology Custom Control
 rest_endpoint: /v1/feature-profile/sdwan/topology/%v/custom-control
@@ -146,10 +147,9 @@ attributes:
       - model_name: entries
         data_path: [match]
         tf_name: match_entries
+        type: Set
         positional_fallback: true
-        merge_split_objects: true
-        # type: Set
-        description: List of match entries
+        description: Set of match entries
         attributes:
           - model_name: colorList
             tf_name: color_list_id
@@ -348,9 +348,9 @@ attributes:
             exclude_test: true
           - model_name: set
             tf_name: set_parameters
+            type: Set
             positional_fallback: true
             exclude_null: true
-            merge_split_objects: true
             attributes:
               - model_name: preference
                 tf_name: preference

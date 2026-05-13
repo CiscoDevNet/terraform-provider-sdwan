@@ -85,7 +85,7 @@ Optional:
   - Range: `1`-`65536`
 - `ip_type` (String) Sequence IP Type
   - Choices: `ipv4`, `ipv6`, `all`
-- `match_entries` (Attributes List) (see [below for nested schema](#nestedatt--sequences--match_entries))
+- `match_entries` (Attributes Set) (see [below for nested schema](#nestedatt--sequences--match_entries))
 - `name` (String) Sequence Name
 - `type` (String) Sequence Type
   - Choices: `route`, `tloc`
@@ -96,7 +96,7 @@ Optional:
 Optional:
 
 - `export_to_vpn` (Set of String) Export to VPN list
-- `set_parameters` (Attributes List) (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
+- `set_parameters` (Attributes Set) (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
 
 <a id="nestedatt--sequences--action_entries--set_parameters"></a>
 ### Nested Schema for `sequences.action_entries.set_parameters`

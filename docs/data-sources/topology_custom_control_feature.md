@@ -51,7 +51,7 @@ Read-Only:
 - `base_action` (String) Base Action
 - `id` (Number) Sequence Id
 - `ip_type` (String) Sequence IP Type
-- `match_entries` (Attributes List) (see [below for nested schema](#nestedatt--sequences--match_entries))
+- `match_entries` (Attributes Set) (see [below for nested schema](#nestedatt--sequences--match_entries))
 - `name` (String) Sequence Name
 - `type` (String) Sequence Type
 
@@ -61,7 +61,7 @@ Read-Only:
 Read-Only:
 
 - `export_to_vpn` (Set of String) Export to VPN list
-- `set_parameters` (Attributes List) (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
+- `set_parameters` (Attributes Set) (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
 
 <a id="nestedatt--sequences--action_entries--set_parameters"></a>
 ### Nested Schema for `sequences.action_entries.set_parameters`

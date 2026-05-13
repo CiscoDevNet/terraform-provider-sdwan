@@ -196,7 +196,7 @@ func (r *TopologyCustomControlProfileParcelResource) Schema(ctx context.Context,
 								stringvalidator.OneOf("ipv4", "ipv6", "all"),
 							},
 						},
-						"match_entries": schema.ListNestedAttribute{
+						"match_entries": schema.SetNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -340,7 +340,7 @@ func (r *TopologyCustomControlProfileParcelResource) Schema(ctx context.Context,
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
-									"set_parameters": schema.ListNestedAttribute{
+									"set_parameters": schema.SetNestedAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
 										NestedObject: schema.NestedAttributeObject{

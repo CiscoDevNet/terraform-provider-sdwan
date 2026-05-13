@@ -16,6 +16,11 @@ description: |-
 - Bump `sdwan_system_aaa_feature` schema to `20.18.0`
 - Fix issue where `sdwan_cflowd_policy_definition` allows  `all` instead of `both` for `protocol` field
 - Add `sdwan_cloud_provider_settings` resource and data source
+- Add `sdwan_topology_group` resource and data source
+- Add `sdwan_topology_feature_profile` resource and data source
+- Add `sdwan_activate_topology_group` resource
+- Add `sdwan_topology_custom_control_feature` resource and data source
+
 
 ## 0.11.1
 

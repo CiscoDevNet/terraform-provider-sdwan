@@ -164,7 +164,7 @@ func (d *TopologyCustomControlProfileParcelDataSource) Schema(ctx context.Contex
 							MarkdownDescription: "Sequence IP Type",
 							Computed:            true,
 						},
-						"match_entries": schema.ListNestedAttribute{
+						"match_entries": schema.SetNestedAttribute{
 							MarkdownDescription: "",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -281,7 +281,7 @@ func (d *TopologyCustomControlProfileParcelDataSource) Schema(ctx context.Contex
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
-									"set_parameters": schema.ListNestedAttribute{
+									"set_parameters": schema.SetNestedAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
 										NestedObject: schema.NestedAttributeObject{
