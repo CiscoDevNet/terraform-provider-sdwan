@@ -53,7 +53,11 @@ func TestAccDataSourceSdwanServiceDHCPServerProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanServiceDHCPServerPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceDHCPServerProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_dhcp_server_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_dhcp_server_feature.test", "id"),
+					)...),
 			},
 		},
 	})

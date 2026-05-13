@@ -64,7 +64,11 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceIPSECProfileParcel(t *testing
 			},
 			{
 				Config: testAccDataSourceSdwanTransportWANVPNInterfaceIPSECPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportWANVPNInterfaceIPSECProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_transport_wan_vpn_interface_ipsec_feature.test", "id"),
+					)...),
 			},
 		},
 	})

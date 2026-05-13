@@ -45,7 +45,11 @@ func TestAccDataSourceSdwanPolicyObjectSecurityScalableGroupTagListProfileParcel
 			},
 			{
 				Config: testAccDataSourceSdwanPolicyObjectSecurityScalableGroupTagListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityScalableGroupTagListProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_security_scalable_group_tag_list.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_security_scalable_group_tag_list.test", "id"),
+					)...),
 			},
 		},
 	})

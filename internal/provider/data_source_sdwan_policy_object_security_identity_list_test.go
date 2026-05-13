@@ -44,7 +44,11 @@ func TestAccDataSourceSdwanPolicyObjectSecurityIdentityListProfileParcel(t *test
 			},
 			{
 				Config: testAccDataSourceSdwanPolicyObjectSecurityIdentityListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityIdentityListProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_security_identity_list.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_security_identity_list.test", "id"),
+					)...),
 			},
 		},
 	})

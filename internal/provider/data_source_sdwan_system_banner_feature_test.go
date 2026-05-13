@@ -45,7 +45,11 @@ func TestAccDataSourceSdwanSystemBannerProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanSystemBannerPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemBannerProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_system_banner_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_system_banner_feature.test", "id"),
+					)...),
 			},
 		},
 	})

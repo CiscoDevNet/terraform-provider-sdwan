@@ -57,7 +57,11 @@ func TestAccDataSourceSdwanTransportManagementVPNProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanTransportManagementVPNPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportManagementVPNProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_transport_management_vpn_feature.test", "id"),
+					)...),
 			},
 		},
 	})

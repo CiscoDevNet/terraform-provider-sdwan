@@ -44,7 +44,11 @@ func TestAccDataSourceSdwanSystemFlexiblePortSpeedProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanSystemFlexiblePortSpeedPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemFlexiblePortSpeedProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_system_flexible_port_speed_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_system_flexible_port_speed_feature.test", "id"),
+					)...),
 			},
 		},
 	})

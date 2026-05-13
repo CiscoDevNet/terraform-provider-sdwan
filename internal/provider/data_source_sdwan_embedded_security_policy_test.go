@@ -57,7 +57,11 @@ func TestAccDataSourceSdwanEmbeddedSecurityProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanEmbeddedSecurityPrerequisitesProfileParcelConfig + testAccDataSourceSdwanEmbeddedSecurityProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_embedded_security_policy.test", "id"),
+					)...),
 			},
 		},
 	})

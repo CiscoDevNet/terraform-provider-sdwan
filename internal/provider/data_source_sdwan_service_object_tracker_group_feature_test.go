@@ -44,7 +44,11 @@ func TestAccDataSourceSdwanServiceObjectTrackerGroupProfileParcel(t *testing.T) 
 			},
 			{
 				Config: testAccDataSourceSdwanServiceObjectTrackerGroupPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceObjectTrackerGroupProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_object_tracker_group_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_object_tracker_group_feature.test", "id"),
+					)...),
 			},
 		},
 	})

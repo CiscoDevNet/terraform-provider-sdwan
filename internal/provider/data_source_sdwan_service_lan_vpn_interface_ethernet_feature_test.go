@@ -103,7 +103,11 @@ func TestAccDataSourceSdwanServiceLANVPNInterfaceEthernetProfileParcel(t *testin
 			},
 			{
 				Config: testAccDataSourceSdwanServiceLANVPNInterfaceEthernetPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceLANVPNInterfaceEthernetProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_lan_vpn_interface_ethernet_feature.test", "id"),
+					)...),
 			},
 		},
 	})

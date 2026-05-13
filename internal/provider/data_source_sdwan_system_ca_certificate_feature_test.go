@@ -45,7 +45,11 @@ func TestAccDataSourceSdwanSystemCACertificateProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanSystemCACertificatePrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemCACertificateProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_system_ca_certificate_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_system_ca_certificate_feature.test", "id"),
+					)...),
 			},
 		},
 	})

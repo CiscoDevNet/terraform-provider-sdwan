@@ -47,7 +47,11 @@ func TestAccDataSourceSdwanSystemPerformanceMonitoringProfileParcel(t *testing.T
 			},
 			{
 				Config: testAccDataSourceSdwanSystemPerformanceMonitoringPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemPerformanceMonitoringProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_system_performance_monitoring_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_system_performance_monitoring_feature.test", "id"),
+					)...),
 			},
 		},
 	})

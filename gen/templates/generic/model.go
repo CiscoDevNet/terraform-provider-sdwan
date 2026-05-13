@@ -811,10 +811,10 @@ func (data *{{camelCase .Name}}) processImport(ctx context.Context) {
 // Section below is generated&owned by "gen/generator.go". //template:begin applyFilters
 {{- if .DataSourceFilters}}
 {{- $name := camelCase .Name}}
+{{- $listAttr := (index .DataSourceFilters 0).ListAttribute}}
 func (data *{{$name}}) applyFilters(ctx context.Context) {
-	{{- /* Find the first List-type attribute to filter */}}
 	{{- range .Attributes}}
-	{{- if isNestedListSet .}}
+	{{- if and (isNestedListSet .) (eq .TfName $listAttr)}}
 	{{- $listField := toGoName .TfName}}
 	filtered := make([]{{$name}}{{toGoName .TfName}}, 0, len(data.{{$listField}}))
 	for _, item := range data.{{$listField}} {
@@ -831,7 +831,6 @@ func (data *{{$name}}) applyFilters(ctx context.Context) {
 		}
 	}
 	data.{{$listField}} = filtered
-	{{- break}}
 	{{- end}}
 	{{- end}}
 }

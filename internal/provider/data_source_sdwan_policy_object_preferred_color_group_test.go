@@ -46,7 +46,11 @@ func TestAccDataSourceSdwanPolicyObjectPreferredColorGroupProfileParcel(t *testi
 			},
 			{
 				Config: testAccDataSourceSdwanPolicyObjectPreferredColorGroupPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectPreferredColorGroupProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_preferred_color_group.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_preferred_color_group.test", "id"),
+					)...),
 			},
 		},
 	})

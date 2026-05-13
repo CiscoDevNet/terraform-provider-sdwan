@@ -44,7 +44,11 @@ func TestAccDataSourceSdwanPolicyObjectVPNGroupProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanPolicyObjectVPNGroupPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectVPNGroupProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_vpn_group.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_vpn_group.test", "id"),
+					)...),
 			},
 		},
 	})

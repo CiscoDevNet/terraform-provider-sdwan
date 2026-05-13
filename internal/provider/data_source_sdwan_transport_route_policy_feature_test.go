@@ -56,7 +56,11 @@ func TestAccDataSourceSdwanTransportRoutePolicyProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanTransportRoutePolicyPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportRoutePolicyProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_transport_route_policy_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_transport_route_policy_feature.test", "id"),
+					)...),
 			},
 		},
 	})

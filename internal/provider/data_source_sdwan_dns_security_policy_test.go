@@ -49,7 +49,11 @@ func TestAccDataSourceSdwanDNSSecurityProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanDNSSecurityPrerequisitesProfileParcelConfig + testAccDataSourceSdwanDNSSecurityProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_dns_security_policy.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_dns_security_policy.test", "id"),
+					)...),
 			},
 		},
 	})

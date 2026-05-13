@@ -45,7 +45,11 @@ func TestAccDataSourceSdwanTransportIPv6TrackerGroupProfileParcel(t *testing.T) 
 			},
 			{
 				Config: testAccDataSourceSdwanTransportIPv6TrackerGroupPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportIPv6TrackerGroupProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_transport_ipv6_tracker_group_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_transport_ipv6_tracker_group_feature.test", "id"),
+					)...),
 			},
 		},
 	})

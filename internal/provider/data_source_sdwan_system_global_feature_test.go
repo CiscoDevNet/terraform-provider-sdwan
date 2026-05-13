@@ -70,7 +70,11 @@ func TestAccDataSourceSdwanSystemGlobalProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanSystemGlobalPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemGlobalProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_system_global_feature.test", "id"),
+					)...),
 			},
 		},
 	})

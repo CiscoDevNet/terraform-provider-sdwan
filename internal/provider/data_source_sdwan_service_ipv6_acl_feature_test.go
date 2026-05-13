@@ -54,7 +54,11 @@ func TestAccDataSourceSdwanServiceIPv6ACLProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanServiceIPv6ACLPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceIPv6ACLProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_ipv6_acl_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_ipv6_acl_feature.test", "id"),
+					)...),
 			},
 		},
 	})

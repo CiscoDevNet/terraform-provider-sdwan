@@ -67,7 +67,11 @@ func TestAccDataSourceSdwanSystemSNMPProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanSystemSNMPPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemSNMPProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_system_snmp_feature.test", "id"),
+					)...),
 			},
 		},
 	})

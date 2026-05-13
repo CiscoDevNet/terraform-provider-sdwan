@@ -44,7 +44,11 @@ func TestAccDataSourceSdwanPolicyObjectUnifiedAdvancedInspectionProfileProfilePa
 			},
 			{
 				Config: testAccDataSourceSdwanPolicyObjectUnifiedAdvancedInspectionProfilePrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectUnifiedAdvancedInspectionProfileProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_unified_advanced_inspection_profile.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_unified_advanced_inspection_profile.test", "id"),
+					)...),
 			},
 		},
 	})

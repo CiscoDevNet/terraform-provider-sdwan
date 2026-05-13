@@ -55,7 +55,11 @@ func TestAccDataSourceSdwanServiceWirelessLANProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanServiceWirelessLANPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceWirelessLANProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_wireless_lan_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_wireless_lan_feature.test", "id"),
+					)...),
 			},
 		},
 	})

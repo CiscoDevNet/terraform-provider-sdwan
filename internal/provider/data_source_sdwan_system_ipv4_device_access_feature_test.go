@@ -47,7 +47,11 @@ func TestAccDataSourceSdwanSystemIPv4DeviceAccessProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanSystemIPv4DeviceAccessPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemIPv4DeviceAccessProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_system_ipv4_device_access_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_system_ipv4_device_access_feature.test", "id"),
+					)...),
 			},
 		},
 	})

@@ -44,7 +44,11 @@ func TestAccDataSourceSdwanPolicyObjectSecurityURLAllowListProfileParcel(t *test
 			},
 			{
 				Config: testAccDataSourceSdwanPolicyObjectSecurityURLAllowListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityURLAllowListProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_security_url_allow_list.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_security_url_allow_list.test", "id"),
+					)...),
 			},
 		},
 	})

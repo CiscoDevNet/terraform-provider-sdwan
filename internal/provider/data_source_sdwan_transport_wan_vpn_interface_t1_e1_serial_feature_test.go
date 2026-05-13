@@ -93,7 +93,11 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcel(t *te
 			},
 			{
 				Config: testAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "id"),
+					)...),
 			},
 		},
 	})

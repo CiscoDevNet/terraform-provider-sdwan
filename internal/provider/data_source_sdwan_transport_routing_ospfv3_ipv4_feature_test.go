@@ -76,7 +76,11 @@ func TestAccDataSourceSdwanTransportRoutingOSPFv3IPv4ProfileParcel(t *testing.T)
 			},
 			{
 				Config: testAccDataSourceSdwanTransportRoutingOSPFv3IPv4PrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportRoutingOSPFv3IPv4ProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv4_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_transport_routing_ospfv3_ipv4_feature.test", "id"),
+					)...),
 			},
 		},
 	})

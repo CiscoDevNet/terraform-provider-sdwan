@@ -72,7 +72,11 @@ func TestAccDataSourceSdwanSystemOMPProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanSystemOMPPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemOMPProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_system_omp_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_system_omp_feature.test", "id"),
+					)...),
 			},
 		},
 	})

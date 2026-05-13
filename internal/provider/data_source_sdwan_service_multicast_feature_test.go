@@ -78,7 +78,11 @@ func TestAccDataSourceSdwanServiceMulticastProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanServiceMulticastPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceMulticastProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_multicast_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_multicast_feature.test", "id"),
+					)...),
 			},
 		},
 	})

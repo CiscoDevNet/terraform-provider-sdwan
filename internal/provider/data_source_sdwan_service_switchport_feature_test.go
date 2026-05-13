@@ -69,7 +69,11 @@ func TestAccDataSourceSdwanServiceSwitchportProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanServiceSwitchportPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceSwitchportProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_switchport_feature.test", "id"),
+					)...),
 			},
 		},
 	})

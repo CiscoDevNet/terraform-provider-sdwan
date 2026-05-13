@@ -46,7 +46,11 @@ func TestAccDataSourceSdwanPolicyObjectAppProbeClassProfileParcel(t *testing.T) 
 			},
 			{
 				Config: testAccDataSourceSdwanPolicyObjectAppProbeClassPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectAppProbeClassProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_app_probe_class.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_app_probe_class.test", "id"),
+					)...),
 			},
 		},
 	})

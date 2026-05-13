@@ -55,7 +55,11 @@ func TestAccDataSourceSdwanOtherUCSEProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanOtherUCSEPrerequisitesProfileParcelConfig + testAccDataSourceSdwanOtherUCSEProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_other_ucse_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_other_ucse_feature.test", "id"),
+					)...),
 			},
 		},
 	})

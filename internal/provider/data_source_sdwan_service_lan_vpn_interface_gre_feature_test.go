@@ -69,7 +69,11 @@ func TestAccDataSourceSdwanServiceLANVPNInterfaceGREProfileParcel(t *testing.T) 
 			},
 			{
 				Config: testAccDataSourceSdwanServiceLANVPNInterfaceGREPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceLANVPNInterfaceGREProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_gre_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_lan_vpn_interface_gre_feature.test", "id"),
+					)...),
 			},
 		},
 	})

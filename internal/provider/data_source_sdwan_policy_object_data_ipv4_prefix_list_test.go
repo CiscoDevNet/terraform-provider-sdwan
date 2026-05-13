@@ -45,7 +45,11 @@ func TestAccDataSourceSdwanPolicyObjectDataIPv4PrefixListProfileParcel(t *testin
 			},
 			{
 				Config: testAccDataSourceSdwanPolicyObjectDataIPv4PrefixListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectDataIPv4PrefixListProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_data_ipv4_prefix_list.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_data_ipv4_prefix_list.test", "id"),
+					)...),
 			},
 		},
 	})

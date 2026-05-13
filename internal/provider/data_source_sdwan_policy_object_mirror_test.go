@@ -45,7 +45,11 @@ func TestAccDataSourceSdwanPolicyObjectMirrorProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanPolicyObjectMirrorPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectMirrorProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_mirror.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_mirror.test", "id"),
+					)...),
 			},
 		},
 	})

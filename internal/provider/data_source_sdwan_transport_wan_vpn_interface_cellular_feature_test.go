@@ -100,7 +100,11 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceCellularProfileParcel(t *test
 			},
 			{
 				Config: testAccDataSourceSdwanTransportWANVPNInterfaceCellularPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportWANVPNInterfaceCellularProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_transport_wan_vpn_interface_cellular_feature.test", "id"),
+					)...),
 			},
 		},
 	})

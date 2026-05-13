@@ -44,7 +44,11 @@ func TestAccDataSourceSdwanPolicyObjectSecurityZoneProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanPolicyObjectSecurityZonePrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityZoneProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_security_zone.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_security_zone.test", "id"),
+					)...),
 			},
 		},
 	})

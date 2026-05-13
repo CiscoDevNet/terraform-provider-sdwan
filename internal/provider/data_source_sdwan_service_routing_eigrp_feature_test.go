@@ -55,7 +55,11 @@ func TestAccDataSourceSdwanServiceRoutingEIGRPProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanServiceRoutingEIGRPPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceRoutingEIGRPProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_routing_eigrp_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_routing_eigrp_feature.test", "id"),
+					)...),
 			},
 		},
 	})

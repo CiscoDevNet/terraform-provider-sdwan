@@ -53,7 +53,11 @@ func TestAccDataSourceSdwanOtherThousandEyesProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanOtherThousandEyesPrerequisitesProfileParcelConfig + testAccDataSourceSdwanOtherThousandEyesProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_other_thousandeyes_feature.test", "id"),
+					)...),
 			},
 		},
 	})

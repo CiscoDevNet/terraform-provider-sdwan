@@ -120,7 +120,11 @@ func TestAccDataSourceSdwan{{camelCase .Name}}ProfileParcel(t *testing.T) {
 {{- if not .NoDataSourceNameQuery}}
 			{
 				Config: {{if .TestPrerequisites}}testAccDataSourceSdwan{{camelCase .Name}}PrerequisitesProfileParcelConfig+{{end}}testAccDataSourceSdwan{{camelCase .Name}}ProfileParcelByNameConfig(),
-				Check: resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_{{getProfileParcelName $config}}.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_{{getProfileParcelName $config}}.test", "id"),
+					)...),
 			},
 {{- end}}
 		},

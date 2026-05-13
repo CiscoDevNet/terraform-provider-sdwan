@@ -52,7 +52,11 @@ func TestAccDataSourceSdwanTransportIPv4ACLProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanTransportIPv4ACLPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportIPv4ACLProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_transport_ipv4_acl_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_transport_ipv4_acl_feature.test", "id"),
+					)...),
 			},
 		},
 	})

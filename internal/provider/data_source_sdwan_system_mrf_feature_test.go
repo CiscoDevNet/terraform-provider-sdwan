@@ -49,7 +49,11 @@ func TestAccDataSourceSdwanSystemMRFProfileParcel(t *testing.T) {
 			},
 			{
 				Config: testAccDataSourceSdwanSystemMRFPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemMRFProfileParcelByNameConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_system_mrf_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_system_mrf_feature.test", "id"),
+					)...),
 			},
 		},
 	})
