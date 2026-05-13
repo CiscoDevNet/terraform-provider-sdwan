@@ -22,6 +22,7 @@ remove_id: bool(required=False) # Set to true if default ID attribute should be 
 type_value: str(required=False) # Set to a string which is being provided as a read-only "type" resource and data source attribute (Generic) or add to the body of a request (Profile parcels)
 no_import: bool(required=False) # Set to true if the resource does not support importing
 no_data_source: bool(required=False) # Set to true if no data source should be created
+no_delete: bool(required=False) # Set to true if the resource does not support deleting
 no_data_source_name_query: bool(required=False) # Set to true if the data source should not support name-based lookup (e.g. singleton parcels with no list endpoint)
 data_source_filters: list(include('data_source_filter'), required=False) # List of filters for generic data sources that filter list results client-side
 no_resource: bool(required=False) # Set to true if no resource should be created
