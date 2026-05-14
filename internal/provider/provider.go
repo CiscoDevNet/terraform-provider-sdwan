@@ -207,7 +207,7 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 	if strings.HasSuffix(url, "/") {
 		resp.Diagnostics.AddError(
 			"Invalid URL format",
-			"URL cannot end with a trailing slash ('/') ",
+			"URL '"+url+"' cannot end with a trailing slash ('/')",
 		)
 		return
 	}
