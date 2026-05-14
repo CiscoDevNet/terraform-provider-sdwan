@@ -42,6 +42,14 @@ func TestAccDataSourceSdwanPolicyObjectClassMapProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanPolicyObjectClassMapPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectClassMapProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectClassMapPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectClassMapProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_class_map.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_class_map.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -80,3 +88,25 @@ func testAccDataSourceSdwanPolicyObjectClassMapProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectClassMapProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_class_map" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  queue = "0"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_class_map" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

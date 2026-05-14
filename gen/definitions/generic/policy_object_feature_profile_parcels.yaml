@@ -1,0 +1,79 @@
+---
+name: Policy Object Feature Profile Parcels
+rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v
+minimum_version: 20.15.0
+remove_id: true
+doc_category: Policy Objects
+test_tags: [SDWAN_2015]
+skip_templates: ["resource.go", "resource_test.go", "resource.tf", "import.sh"]
+ds_description: "This data source can read the parcels of a Policy Object Feature Profile."
+test_prerequisites: |
+  resource "sdwan_policy_object_feature_profile" "test" {
+    name        = "POLICY_OBJECT_FP_1"
+    description = "My policy object feature profile 1"
+  }
+data_source_filters:
+  - tf_name: created_by
+    model_name: createdBy
+    description: Filter by creator (e.g. 'system' for system-created parcels)
+    list_attribute: parcels
+  - tf_name: parcel_type
+    model_name: parcelType
+    description: Filter by parcel type (e.g. 'app-list', 'data-prefix')
+    list_attribute: parcels
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Policy Object Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_policy_object_feature_profile.test.id
+  - model_name: associatedProfileParcels
+    tf_name: parcels
+    type: List
+    description: List of parcels associated with this profile
+    attributes:
+      - model_name: parcelId
+        tf_name: parcel_id
+        type: String
+        id: true
+        description: Parcel identifier
+        example: dd21d5fc-d210-4988-b2b8-01e16ef23830
+        exclude_test: true
+      - model_name: parcelType
+        tf_name: parcel_type
+        type: String
+        description: Parcel type (e.g. app-list, data-prefix, etc.)
+        example: app-list
+        exclude_test: true
+      - model_name: createdBy
+        tf_name: created_by
+        type: String
+        description: User who created the parcel (system for system-created parcels)
+        example: system
+        exclude_test: true
+      - model_name: lastUpdatedBy
+        tf_name: last_updated_by
+        type: String
+        description: User who last updated the parcel
+        example: system
+        exclude_test: true
+      - model_name: payload.name
+        tf_name: parcel_name
+        type: String
+        description: Name of the parcel
+        example: Google_Apps
+        exclude_test: true
+      - model_name: payload.description
+        tf_name: parcel_description
+        type: String
+        description: Description of the parcel
+        example: Google Apps application list
+        exclude_test: true
+      - model_name: referenceCount
+        tf_name: reference_count
+        type: Int64
+        description: Number of references to this parcel
+        example: 0
+        exclude_test: true

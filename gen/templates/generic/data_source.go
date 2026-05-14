@@ -33,6 +33,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	{{- if .DataSourceFilters}}
+	"github.com/tidwall/gjson"
+	{{- end}}
 )
 // End of section. //template:end imports
 
@@ -158,6 +161,12 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 			},
 			{{- end}}
 			{{- end}}
+			{{- range .DataSourceFilters}}
+			"{{.TfName}}": schema.StringAttribute{
+				MarkdownDescription: "{{.Description}}",
+				Optional:            true,
+			},
+			{{- end}}
 		},
 	}
 }
@@ -205,6 +214,11 @@ func (d *{{camelCase .Name}}DataSource) Read(ctx context.Context, req datasource
 	}
 
 	config.fromBody(ctx, res)
+	{{- if .DataSourceFilters}}
+
+	// Apply client-side filters to list results
+	config.applyFilters(ctx)
+	{{- end}}
 	{{- if .TypeValue}}
 	config.Type = types.StringValue("{{.TypeValue}}")
 	{{- end}}

@@ -25,7 +25,11 @@ data "sdwan_system_security_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -40,7 +44,6 @@ data "sdwan_system_security_feature" "example" {
 - `ipsec_pairwise_keying_variable` (String) Variable name
 - `keychains` (Attributes List) Configure a Keychain (see [below for nested schema](#nestedatt--keychains))
 - `keys` (Attributes List) Configure a Key (see [below for nested schema](#nestedatt--keys))
-- `name` (String) The name of the Feature
 - `rekey` (Number) Set how often to change the AES key for DTLS connections
 - `rekey_variable` (String) Variable name
 - `version` (Number) The version of the Feature

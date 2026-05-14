@@ -42,6 +42,14 @@ func TestAccDataSourceSdwanServiceObjectTrackerGroupProfileParcel(t *testing.T) 
 				Config: testAccDataSourceSdwanServiceObjectTrackerGroupPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceObjectTrackerGroupProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanServiceObjectTrackerGroupPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceObjectTrackerGroupProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_object_tracker_group_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_object_tracker_group_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -101,3 +109,29 @@ func testAccDataSourceSdwanServiceObjectTrackerGroupProfileParcelConfig() string
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanServiceObjectTrackerGroupProfileParcelByNameConfig() string {
+	config := `resource "sdwan_service_object_tracker_group_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
+	config += `	object_tracker_id = 10` + "\n"
+	config += `	tracker_elements = [{` + "\n"
+	config += `	  object_tracker_id = sdwan_service_object_tracker_feature.test-1.id` + "\n"
+	config += `	}, {` + "\n"
+	config += `	  object_tracker_id = sdwan_service_object_tracker_feature.test-2.id` + "\n"
+	config += `	}]` + "\n"
+	config += `	reachable = "or"` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_service_object_tracker_group_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_service_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

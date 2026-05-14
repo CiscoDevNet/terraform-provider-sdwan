@@ -25,7 +25,11 @@ data "sdwan_service_routing_eigrp_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -44,7 +48,6 @@ data "sdwan_service_routing_eigrp_feature" "example" {
 - `hold_time_variable` (String) Variable name
 - `interfaces` (Attributes List) Configure IPv4 Static Routes (see [below for nested schema](#nestedatt--interfaces))
 - `md5_keys` (Attributes List) Set keychain details (see [below for nested schema](#nestedatt--md5_keys))
-- `name` (String) The name of the Feature
 - `networks` (Attributes List) Configure the networks for EIGRP to advertise (see [below for nested schema](#nestedatt--networks))
 - `redistributes` (Attributes List) Redistribute routes into EIGRP (see [below for nested schema](#nestedatt--redistributes))
 - `route_policy_id` (String)

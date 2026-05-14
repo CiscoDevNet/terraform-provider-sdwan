@@ -65,6 +65,14 @@ func TestAccDataSourceSdwanSystemSNMPProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanSystemSNMPPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemSNMPProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanSystemSNMPPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemSNMPProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_system_snmp_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -136,3 +144,59 @@ func testAccDataSourceSdwanSystemSNMPProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanSystemSNMPProfileParcelByNameConfig() string {
+	config := `resource "sdwan_system_snmp_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	shutdown = false` + "\n"
+	config += `	contact_person = "wixie.cisco"` + "\n"
+	config += `	location_of_device = "SHANGHAI"` + "\n"
+	config += `	views = [{` + "\n"
+	config += `	  name = "VIEW1"` + "\n"
+	config += `	  oids = [{` + "\n"
+	config += `		id = "1.3.6.1.4.1.9.9.394"` + "\n"
+	config += `		exclude = false` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	communities = [{` + "\n"
+	config += `	  name = "example"` + "\n"
+	config += `	  user_label = "COMMUNITY1"` + "\n"
+	config += `	  view = "VIEW1"` + "\n"
+	config += `	  authorization = "read-only"` + "\n"
+	config += `	}]` + "\n"
+	config += `	groups = [{` + "\n"
+	config += `	  name = "GROUP1"` + "\n"
+	config += `	  security_level = "auth-priv"` + "\n"
+	config += `	  view = "VIEW1"` + "\n"
+	config += `	}]` + "\n"
+	config += `	users = [{` + "\n"
+	config += `	  name = "USER1"` + "\n"
+	config += `	  authentication_protocol = "sha"` + "\n"
+	config += `	  authentication_password = "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="` + "\n"
+	config += `	  privacy_protocol = "aes-256-cfb-128"` + "\n"
+	config += `	  privacy_password = "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="` + "\n"
+	config += `	  group = "GROUP1"` + "\n"
+	config += `	}]` + "\n"
+	config += `	trap_target_servers = [{` + "\n"
+	config += `	  vpn_id = 1` + "\n"
+	config += `	  ip = "10.75.221.156"` + "\n"
+	config += `	  port = 161` + "\n"
+	config += `	  user_label = "TARGET1"` + "\n"
+	config += `	  user = "USER1"` + "\n"
+	config += `	  source_interface = "GigabitEthernet1"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_snmp_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

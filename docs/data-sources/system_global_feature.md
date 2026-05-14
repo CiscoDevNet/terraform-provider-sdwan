@@ -25,7 +25,11 @@ data "sdwan_system_global_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -62,7 +66,6 @@ data "sdwan_system_global_feature" "example" {
 - `line_vty_variable` (String) Variable name
 - `lldp` (Boolean) Configure LLDP
 - `lldp_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `nat64_tcp_timeout` (Number) Set NAT64 TCP session timeout, in seconds
 - `nat64_tcp_timeout_variable` (String) Variable name
 - `nat64_udp_timeout` (Number) Set NAT64 UDP session timeout, in seconds

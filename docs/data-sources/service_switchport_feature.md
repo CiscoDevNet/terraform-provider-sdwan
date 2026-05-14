@@ -25,7 +25,11 @@ data "sdwan_service_switchport_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -33,7 +37,6 @@ data "sdwan_service_switchport_feature" "example" {
 - `age_out_time_variable` (String) Variable name
 - `description` (String) The description of the Feature
 - `interfaces` (Attributes List) Interface name: GigabitEthernet0/<>/<> when present (see [below for nested schema](#nestedatt--interfaces))
-- `name` (String) The name of the Feature
 - `static_mac_addresses` (Attributes List) Add static MAC address entries for interface (see [below for nested schema](#nestedatt--static_mac_addresses))
 - `version` (Number) The version of the Feature
 

@@ -25,7 +25,11 @@ data "sdwan_service_multicast_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -44,7 +48,6 @@ data "sdwan_service_multicast_feature" "example" {
 - `msdp_groups` (Attributes List) multicast MSDP peer (see [below for nested schema](#nestedatt--msdp_groups))
 - `msdp_originator_id` (String) Set MSDP originator ID
 - `msdp_originator_id_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `pim_bsr_candidates` (Attributes List) bsr candidate Attributes (see [below for nested schema](#nestedatt--pim_bsr_candidates))
 - `pim_bsr_rp_candidates` (Attributes List) Set RP Discovery Scope (see [below for nested schema](#nestedatt--pim_bsr_rp_candidates))
 - `pim_interfaces` (Attributes List) Set PIM interface parameters (see [below for nested schema](#nestedatt--pim_interfaces))

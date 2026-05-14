@@ -25,7 +25,11 @@ data "sdwan_system_aaa_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -40,7 +44,6 @@ data "sdwan_system_aaa_feature" "example" {
 - `authorization_console_variable` (String) Variable name
 - `authorization_rules` (Attributes List) Configure the Authorization Rules (see [below for nested schema](#nestedatt--authorization_rules))
 - `description` (String) The description of the Feature
-- `name` (String) The name of the Feature
 - `radius_groups` (Attributes List) Configure the Radius serverGroup (see [below for nested schema](#nestedatt--radius_groups))
 - `server_auth_order` (List of String) ServerGroups priority order
 - `tacacs_groups` (Attributes List) Configure the TACACS serverGroup (see [below for nested schema](#nestedatt--tacacs_groups))

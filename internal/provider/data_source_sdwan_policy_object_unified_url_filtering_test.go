@@ -46,6 +46,14 @@ func TestAccDataSourceSdwanPolicyObjectUnifiedURLFilteringProfileParcel(t *testi
 				Config: testAccDataSourceSdwanPolicyObjectUnifiedURLFilteringPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectUnifiedURLFilteringProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectUnifiedURLFilteringPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectUnifiedURLFilteringProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_unified_url_filtering.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_unified_url_filtering.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -111,3 +119,31 @@ func testAccDataSourceSdwanPolicyObjectUnifiedURLFilteringProfileParcelConfig() 
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectUnifiedURLFilteringProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_unified_url_filtering" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	web_categories_action = "block"` + "\n"
+	config += `	web_categories = ["confirmed-spam-sources"]` + "\n"
+	config += `	web_reputation = "suspicious"` + "\n"
+	config += `	url_allow_list_id = sdwan_policy_object_security_url_allow_list.test.id` + "\n"
+	config += `	url_block_list_id = sdwan_policy_object_security_url_block_list.test.id` + "\n"
+	config += `	block_page_action = "text"` + "\n"
+	config += `	block_page_contents = "Access to the requested page has been denied. Please contact your Network Administrator"` + "\n"
+	config += `	enable_alerts = true` + "\n"
+	config += `	alerts = ["blacklist"]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_unified_url_filtering" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

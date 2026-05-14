@@ -25,7 +25,11 @@ data "sdwan_policy_object_unified_tls_ssl_decryption" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Policy_object
+- `name` (String) The name of the Policy_object
 
 ### Read-Only
 
@@ -39,7 +43,6 @@ data "sdwan_policy_object_unified_tls_ssl_decryption" "example" {
 - `failure_mode` (String)
 - `file_name` (String)
 - `minimal_tls_ver` (String)
-- `name` (String) The name of the Policy_object
 - `rsa_keypair_modules` (String)
 - `unknown_revocation_status` (String) Only required if certificateRevocationStatus is oscp, if value is none then field shouldn't be here
 - `unsupported_cipher_suites` (String)

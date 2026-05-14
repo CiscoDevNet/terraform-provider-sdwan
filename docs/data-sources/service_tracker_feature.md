@@ -25,7 +25,11 @@ data "sdwan_service_tracker_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -42,7 +46,6 @@ data "sdwan_service_tracker_feature" "example" {
 - `interval_variable` (String) Variable name
 - `multiplier` (Number) Multiplier
 - `multiplier_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `port` (Number)
 - `port_variable` (String) Variable name
 - `protocol` (String)

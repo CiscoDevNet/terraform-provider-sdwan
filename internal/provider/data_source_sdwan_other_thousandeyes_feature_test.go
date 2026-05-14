@@ -51,6 +51,14 @@ func TestAccDataSourceSdwanOtherThousandEyesProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanOtherThousandEyesPrerequisitesProfileParcelConfig + testAccDataSourceSdwanOtherThousandEyesProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanOtherThousandEyesPrerequisitesProfileParcelConfig + testAccDataSourceSdwanOtherThousandEyesProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_other_thousandeyes_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -97,3 +105,34 @@ func testAccDataSourceSdwanOtherThousandEyesProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanOtherThousandEyesProfileParcelByNameConfig() string {
+	config := `resource "sdwan_other_thousandeyes_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_other_feature_profile.test.id` + "\n"
+	config += `	virtual_application = [{` + "\n"
+	config += `	  account_group_token = "qwer"` + "\n"
+	config += `	  vpn = 1` + "\n"
+	config += `	  management_ip = "10.0.0.2"` + "\n"
+	config += `	  management_subnet_mask = "255.255.255.0"` + "\n"
+	config += `	  agent_default_gateway = "10.0.0.1"` + "\n"
+	config += `	  name_server_ip = "77.77.77.71"` + "\n"
+	config += `	  hostname = "thousandeyesHost"` + "\n"
+	config += `	  proxy_type = "static"` + "\n"
+	config += `	  proxy_host = "proxy.thousandeyes.com"` + "\n"
+	config += `	  proxy_port = 3128` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_other_thousandeyes_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_other_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

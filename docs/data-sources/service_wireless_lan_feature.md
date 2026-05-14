@@ -25,7 +25,11 @@ data "sdwan_service_wireless_lan_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -43,7 +47,6 @@ data "sdwan_service_wireless_lan_feature" "example" {
 - `me_ipv4_address_variable` (String) Variable name
 - `me_subnet_mask` (String) Set mobile express controller subnet mask
 - `me_subnet_mask_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `password` (String) Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.
 - `password_variable` (String) Variable name
 - `ssids` (Attributes List) Configure Wi-Fi SSID profile (see [below for nested schema](#nestedatt--ssids))

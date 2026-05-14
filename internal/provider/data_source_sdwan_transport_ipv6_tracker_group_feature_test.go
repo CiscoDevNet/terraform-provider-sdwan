@@ -43,6 +43,14 @@ func TestAccDataSourceSdwanTransportIPv6TrackerGroupProfileParcel(t *testing.T) 
 				Config: testAccDataSourceSdwanTransportIPv6TrackerGroupPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportIPv6TrackerGroupProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanTransportIPv6TrackerGroupPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportIPv6TrackerGroupProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_transport_ipv6_tracker_group_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_transport_ipv6_tracker_group_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -114,3 +122,29 @@ func testAccDataSourceSdwanTransportIPv6TrackerGroupProfileParcelConfig() string
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanTransportIPv6TrackerGroupProfileParcelByNameConfig() string {
+	config := `resource "sdwan_transport_ipv6_tracker_group_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	tracker_name = "TRACKER_GROUP_1"` + "\n"
+	config += `	tracker_elements = [{` + "\n"
+	config += `	  tracker_id = sdwan_transport_ipv6_tracker_feature.test-1.id` + "\n"
+	config += `	}, {` + "\n"
+	config += `	  tracker_id = sdwan_transport_ipv6_tracker_feature.test-2.id` + "\n"
+	config += `	}]` + "\n"
+	config += `	tracker_boolean = "or"` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_transport_ipv6_tracker_group_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_transport_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

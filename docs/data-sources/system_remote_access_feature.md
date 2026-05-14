@@ -25,7 +25,11 @@ data "sdwan_system_remote_access_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -64,7 +68,6 @@ data "sdwan_system_remote_access_feature" "example" {
 - `ipv4_pool_size_variable` (String) Variable name
 - `ipv6_pool_size` (Number) IPv6 Pool Size
 - `ipv6_pool_size_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `psk_authentication_pre_shared_key` (String) PSK Pre Shared Key
 - `psk_authentication_pre_shared_key_variable` (String) Variable name
 - `psk_authentication_type` (String) PSK Selection

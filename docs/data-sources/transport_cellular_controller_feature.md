@@ -25,7 +25,11 @@ data "sdwan_transport_cellular_controller_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -34,7 +38,6 @@ data "sdwan_transport_cellular_controller_feature" "example" {
 - `description` (String) The description of the Feature
 - `firmware_auto_sim` (Boolean) Enable/Disable Firmware Auto Sim
 - `firmware_auto_sim_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `primary_sim_slot` (Number) Set primary SIM slot
 - `primary_sim_slot_variable` (String) Variable name
 - `sim_failover_retries` (Number) Set SIM failover retries

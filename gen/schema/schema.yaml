@@ -23,6 +23,8 @@ type_value: str(required=False) # Set to a string which is being provided as a r
 no_import: bool(required=False) # Set to true if the resource does not support importing
 no_data_source: bool(required=False) # Set to true if no data source should be created
 no_delete: bool(required=False) # Set to true if the resource does not support deleting
+no_data_source_name_query: bool(required=False) # Set to true if the data source should not support name-based lookup (e.g. singleton parcels with no list endpoint)
+data_source_filters: list(include('data_source_filter'), required=False) # List of filters for generic data sources that filter list results client-side
 no_resource: bool(required=False) # Set to true if no resource should be created
 get_before_delete: bool(required=False) # This does a GET "all" before doing a DELETE, which is a workaround for an API issue with some endpoints where the reference count is not updated otherwise
 delete_mutex: bool(required=False) # Set to true if DELETE operation is mutually exclusive with other DELETE operations
@@ -103,3 +105,8 @@ condition:
   value: any(str(), bool()) # Attribute value to check
   type: enum('String', 'Bool', 'StringContains', 'MinVersion', required=False) # Attribute value type: String (equality check), Bool (boolean equality), StringContains (substring check), MinVersion (manager version check). Default: String.
   negate: bool(required=False) # If true, condition passes when value does NOT match (default: false)
+data_source_filter:
+  tf_name: str()
+  model_name: str()
+  description: str(required=False)
+  list_attribute: str()

@@ -45,6 +45,14 @@ func TestAccDataSourceSdwanSystemIPv6DeviceAccessProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanSystemIPv6DeviceAccessPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemIPv6DeviceAccessProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanSystemIPv6DeviceAccessPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemIPv6DeviceAccessProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_system_ipv6_device_access_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_system_ipv6_device_access_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -86,3 +94,28 @@ func testAccDataSourceSdwanSystemIPv6DeviceAccessProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanSystemIPv6DeviceAccessProfileParcelByNameConfig() string {
+	config := `resource "sdwan_system_ipv6_device_access_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	sequences = [{` + "\n"
+	config += `	  id = 1` + "\n"
+	config += `	  name = "SEQ_1"` + "\n"
+	config += `	  base_action = "accept"` + "\n"
+	config += `	  device_access_port = 22` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_ipv6_device_access_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

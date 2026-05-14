@@ -44,6 +44,14 @@ func TestAccDataSourceSdwanPolicyObjectAppProbeClassProfileParcel(t *testing.T) 
 				Config: testAccDataSourceSdwanPolicyObjectAppProbeClassPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectAppProbeClassProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectAppProbeClassPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectAppProbeClassProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_app_probe_class.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_app_probe_class.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -85,3 +93,29 @@ func testAccDataSourceSdwanPolicyObjectAppProbeClassProfileParcelConfig() string
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectAppProbeClassProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_app_probe_class" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  map = [{` + "\n"
+	config += `		color = "3g"` + "\n"
+	config += `		dscp = 45` + "\n"
+	config += `	}]` + "\n"
+	config += `	  forwarding_class = "classlist1"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_app_probe_class" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

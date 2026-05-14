@@ -67,6 +67,14 @@ func TestAccDataSourceSdwanServiceSwitchportProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanServiceSwitchportPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceSwitchportProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanServiceSwitchportPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceSwitchportProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_switchport_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -131,3 +139,52 @@ func testAccDataSourceSdwanServiceSwitchportProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanServiceSwitchportProfileParcelByNameConfig() string {
+	config := `resource "sdwan_service_switchport_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
+	config += `	interfaces = [{` + "\n"
+	config += `	  interface_name = "GigabitEthernet"` + "\n"
+	config += `	  mode = "access"` + "\n"
+	config += `	  shutdown = true` + "\n"
+	config += `	  speed = "10"` + "\n"
+	config += `	  duplex = "full"` + "\n"
+	config += `	  switchport_access_vlan = 1` + "\n"
+	config += `	  switchport_trunk_allowed_vlans = "1"` + "\n"
+	config += `	  switchport_trunk_native_vlan = 1` + "\n"
+	config += `	  enable_dot1x = false` + "\n"
+	config += `	  port_control = "auto"` + "\n"
+	config += `	  voice_vlan = 1` + "\n"
+	config += `	  pae_enable = true` + "\n"
+	config += `	  mac_authentication_bypass = false` + "\n"
+	config += `	  host_mode = "single-host"` + "\n"
+	config += `	  enable_periodic_reauth = false` + "\n"
+	config += `	  inactivity = 60` + "\n"
+	config += `	  reauthentication = 1` + "\n"
+	config += `	  control_direction = "both"` + "\n"
+	config += `	  restricted_vlan = 1` + "\n"
+	config += `	  guest_vlan = 1` + "\n"
+	config += `	  critical_vlan = 1` + "\n"
+	config += `	  enable_voice = false` + "\n"
+	config += `	}]` + "\n"
+	config += `	age_out_time = 300` + "\n"
+	config += `	static_mac_addresses = [{` + "\n"
+	config += `	  mac_address = "01:02:03:04:05:06"` + "\n"
+	config += `	  vlan_id = 1` + "\n"
+	config += `	  interface_name = "GigabitEthernet0/0/0"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_service_switchport_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_service_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig
