@@ -49,6 +49,14 @@ func TestAccDataSourceSdwanTopologyCustomControlProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanTopologyCustomControlPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTopologyCustomControlProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanTopologyCustomControlPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTopologyCustomControlProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_topology_custom_control_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_topology_custom_control_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
