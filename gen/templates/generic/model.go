@@ -59,6 +59,9 @@ Type types.String `tfsdk:"type"`
 {{- end}}
 {{- end}}
 {{- end}}
+{{- range .DataSourceFilters}}
+	{{toGoName .TfName}} types.String `tfsdk:"{{.TfName}}"`
+{{- end}}
 }
 
 
@@ -804,3 +807,32 @@ func (data *{{camelCase .Name}}) processImport(ctx context.Context) {
 	{{- end}}
 }
 // End of section. //template:end processImport
+
+// Section below is generated&owned by "gen/generator.go". //template:begin applyFilters
+{{- if .DataSourceFilters}}
+{{- $name := camelCase .Name}}
+{{- $listAttr := (index .DataSourceFilters 0).ListAttribute}}
+func (data *{{$name}}) applyFilters(ctx context.Context) {
+	{{- range .Attributes}}
+	{{- if and (isNestedListSet .) (eq .TfName $listAttr)}}
+	{{- $listField := toGoName .TfName}}
+	filtered := make([]{{$name}}{{toGoName .TfName}}, 0, len(data.{{$listField}}))
+	for _, item := range data.{{$listField}} {
+		match := true
+		{{- range $.DataSourceFilters}}
+		if !data.{{toGoName .TfName}}.IsNull() && !data.{{toGoName .TfName}}.IsUnknown() {
+			if item.{{toGoName .TfName}}.ValueString() != data.{{toGoName .TfName}}.ValueString() {
+				match = false
+			}
+		}
+		{{- end}}
+		if match {
+			filtered = append(filtered, item)
+		}
+	}
+	data.{{$listField}} = filtered
+	{{- end}}
+	{{- end}}
+}
+{{- end}}
+// End of section. //template:end applyFilters

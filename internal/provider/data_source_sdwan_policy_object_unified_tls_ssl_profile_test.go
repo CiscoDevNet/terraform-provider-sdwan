@@ -45,6 +45,14 @@ func TestAccDataSourceSdwanPolicyObjectUnifiedTLSSSLProfileProfileParcel(t *test
 				Config: testAccDataSourceSdwanPolicyObjectUnifiedTLSSSLProfilePrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectUnifiedTLSSSLProfileProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectUnifiedTLSSSLProfilePrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectUnifiedTLSSSLProfileProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_unified_tls_ssl_profile.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_unified_tls_ssl_profile.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -110,3 +118,31 @@ func testAccDataSourceSdwanPolicyObjectUnifiedTLSSSLProfileProfileParcelConfig()
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectUnifiedTLSSSLProfileProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_unified_tls_ssl_profile" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	decrypt_categories = ["alcohol-and-tobacco"]` + "\n"
+	config += `	no_decrypt_categories = ["abortion"]` + "\n"
+	config += `	pass_through_categories = ["auctions"]` + "\n"
+	config += `	reputation = true` + "\n"
+	config += `	decrypt_threshold = "moderate-risk"` + "\n"
+	config += `	threshold_categories = "moderate-risk"` + "\n"
+	config += `	fail_decrypt = true` + "\n"
+	config += `	url_allow_list_id = sdwan_policy_object_security_url_allow_list.test.id` + "\n"
+	config += `	url_block_list_id = sdwan_policy_object_security_url_block_list.test.id` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_unified_tls_ssl_profile" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

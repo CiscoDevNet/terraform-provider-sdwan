@@ -72,6 +72,14 @@ func TestAccDataSourceSdwanTransportRoutingOSPFv3IPv6ProfileParcel(t *testing.T)
 				Config: testAccDataSourceSdwanTransportRoutingOSPFv3IPv6PrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportRoutingOSPFv3IPv6ProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanTransportRoutingOSPFv3IPv6PrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportRoutingOSPFv3IPv6ProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -145,3 +153,61 @@ func testAccDataSourceSdwanTransportRoutingOSPFv3IPv6ProfileParcelConfig() strin
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanTransportRoutingOSPFv3IPv6ProfileParcelByNameConfig() string {
+	config := `resource "sdwan_transport_routing_ospfv3_ipv6_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	router_id = "1.2.3.4"` + "\n"
+	config += `	distance = 110` + "\n"
+	config += `	distance_external = 110` + "\n"
+	config += `	distance_inter_area = 110` + "\n"
+	config += `	distance_intra_area = 110` + "\n"
+	config += `	reference_bandwidth = 101` + "\n"
+	config += `	rfc_1583_compatible = true` + "\n"
+	config += `	default_information_originate = false` + "\n"
+	config += `	default_information_originate_always = false` + "\n"
+	config += `	default_information_originate_metric = 1` + "\n"
+	config += `	default_information_originate_metric_type = "type1"` + "\n"
+	config += `	spf_calculation_delay = 200` + "\n"
+	config += `	spf_initial_hold_time = 1000` + "\n"
+	config += `	spf_maximum_hold_time = 10000` + "\n"
+	config += `	filter = false` + "\n"
+	config += `	redistributes = [{` + "\n"
+	config += `	  protocol = "static"` + "\n"
+	config += `	}]` + "\n"
+	config += `	router_lsa_action = "on-startup"` + "\n"
+	config += `	router_lsa_on_startup_time = 30` + "\n"
+	config += `	areas = [{` + "\n"
+	config += `	  area_number = 1` + "\n"
+	config += `	  area_type = "stub"` + "\n"
+	config += `	  interfaces = [{` + "\n"
+	config += `		name = "GigabitEthernet2"` + "\n"
+	config += `		hello_interval = 10` + "\n"
+	config += `		dead_interval = 40` + "\n"
+	config += `		lsa_retransmit_interval = 5` + "\n"
+	config += `		cost = 10` + "\n"
+	config += `		network_type = "broadcast"` + "\n"
+	config += `		passive_interface = false` + "\n"
+	config += `		authentication_type = "no-auth"` + "\n"
+	config += `	}]` + "\n"
+	config += `	  ranges = [{` + "\n"
+	config += `		prefix = "3002::/96"` + "\n"
+	config += `		cost = 1` + "\n"
+	config += `		no_advertise = false` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_transport_routing_ospfv3_ipv6_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_transport_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

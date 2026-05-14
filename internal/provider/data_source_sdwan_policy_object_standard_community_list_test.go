@@ -42,6 +42,14 @@ func TestAccDataSourceSdwanPolicyObjectStandardCommunityListProfileParcel(t *tes
 				Config: testAccDataSourceSdwanPolicyObjectStandardCommunityListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectStandardCommunityListProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectStandardCommunityListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectStandardCommunityListProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_standard_community_list.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_standard_community_list.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -79,3 +87,25 @@ func testAccDataSourceSdwanPolicyObjectStandardCommunityListProfileParcelConfig(
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectStandardCommunityListProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_standard_community_list" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  standard_community = "1000:10000"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_standard_community_list" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

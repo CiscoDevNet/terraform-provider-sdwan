@@ -25,7 +25,11 @@ data "sdwan_system_basic_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -68,7 +72,6 @@ data "sdwan_system_basic_feature" "example" {
 - `max_omp_sessions_variable` (String) Variable name
 - `multi_tenant` (Boolean) Device is multi-tenant
 - `multi_tenant_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `on_demand_enable` (Boolean) Enable or disable On-demand Tunnel
 - `on_demand_enable_variable` (String) Variable name
 - `on_demand_idle_timeout` (Number) Set the idle timeout for on-demand tunnels

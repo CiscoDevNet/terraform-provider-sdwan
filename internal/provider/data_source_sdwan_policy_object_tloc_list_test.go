@@ -45,6 +45,14 @@ func TestAccDataSourceSdwanPolicyObjectTLOCListProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanPolicyObjectTLOCListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectTLOCListProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectTLOCListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectTLOCListProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_tloc_list.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_tloc_list.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -86,3 +94,28 @@ func testAccDataSourceSdwanPolicyObjectTLOCListProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectTLOCListProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_tloc_list" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  tloc_ip = "10.0.0.0"` + "\n"
+	config += `	  color = "3g"` + "\n"
+	config += `	  encapsulation = "gre"` + "\n"
+	config += `	  preference = "33"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_tloc_list" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

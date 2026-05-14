@@ -25,7 +25,11 @@ data "sdwan_system_omp_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -76,7 +80,6 @@ data "sdwan_system_omp_feature" "example" {
 - `holdtime_variable` (String) Variable name
 - `ignore_region_path_length` (Boolean) Treat hierarchical and direct (secondary region) paths equally
 - `ignore_region_path_length_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `omp_admin_distance_ipv4` (Number) OMP Admin Distance IPv4
 - `omp_admin_distance_ipv4_variable` (String) Variable name
 - `omp_admin_distance_ipv6` (Number) OMP Admin Distance IPv6

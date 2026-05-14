@@ -26,8 +26,12 @@ data "sdwan_service_lan_vpn_interface_svi_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
-- `id` (String) The id of the Feature
 - `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
+
+### Optional
+
+- `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -66,7 +70,6 @@ data "sdwan_service_lan_vpn_interface_svi_feature" "example" {
 - `ipv6_dhcp_helpers` (Attributes List) DHCPv6 Helper (see [below for nested schema](#nestedatt--ipv6_dhcp_helpers))
 - `ipv6_secondary_addresses` (Attributes List) Assign secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_secondary_addresses))
 - `ipv6_vrrps` (Attributes List) Enable ipv6 VRRP (see [below for nested schema](#nestedatt--ipv6_vrrps))
-- `name` (String) The name of the Feature
 - `shutdown` (Boolean) Administrative state
 - `shutdown_variable` (String) Variable name
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes

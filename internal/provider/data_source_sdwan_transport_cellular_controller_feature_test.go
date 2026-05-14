@@ -46,6 +46,14 @@ func TestAccDataSourceSdwanTransportCellularControllerProfileParcel(t *testing.T
 				Config: testAccDataSourceSdwanTransportCellularControllerPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportCellularControllerProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanTransportCellularControllerPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportCellularControllerProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_transport_cellular_controller_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_transport_cellular_controller_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -85,3 +93,27 @@ func testAccDataSourceSdwanTransportCellularControllerProfileParcelConfig() stri
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanTransportCellularControllerProfileParcelByNameConfig() string {
+	config := `resource "sdwan_transport_cellular_controller_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	cellular_id = "0/3/0"` + "\n"
+	config += `	primary_sim_slot = 0` + "\n"
+	config += `	sim_failover_retries = 5` + "\n"
+	config += `	sim_failover_timeout = 3` + "\n"
+	config += `	firmware_auto_sim = true` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_transport_cellular_controller_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_transport_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

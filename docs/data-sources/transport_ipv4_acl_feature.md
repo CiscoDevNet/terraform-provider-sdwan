@@ -25,13 +25,16 @@ data "sdwan_transport_ipv4_acl_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
 - `default_action` (String) Default Action
 - `description` (String) The description of the Feature
-- `name` (String) The name of the Feature
 - `sequences` (Attributes List) Access Control List (see [below for nested schema](#nestedatt--sequences))
 - `version` (Number) The version of the Feature
 

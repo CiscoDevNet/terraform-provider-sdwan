@@ -25,14 +25,17 @@ data "sdwan_policy_object_unified_advanced_inspection_profile" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Policy_object
+- `name` (String) The name of the Policy_object
 
 ### Read-Only
 
 - `advanced_malware_protection_list_id` (String)
 - `description` (String) The description of the Policy_object
 - `intrusion_prevention_list_id` (String)
-- `name` (String) The name of the Policy_object
 - `tls_decryption_action` (String)
 - `tls_ssl_profile_list_id` (String)
 - `url_filtering_list_id` (String)

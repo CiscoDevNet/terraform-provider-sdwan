@@ -26,8 +26,12 @@ data "sdwan_transport_wan_vpn_interface_gre_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
-- `id` (String) The id of the Feature
 - `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
+
+### Optional
+
+- `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -79,7 +83,6 @@ data "sdwan_transport_wan_vpn_interface_gre_feature" "example" {
 - `ipv6_tcp_mss_variable` (String) Variable name
 - `multiplexing` (Boolean) Tunnel multiplexing state
 - `multiplexing_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `perfect_forward_secrecy` (String) IPsec perfect forward secrecy settings
 - `perfect_forward_secrecy_variable` (String) Variable name
 - `pre_shared_secret` (String) Use preshared key to authenticate IKE peer

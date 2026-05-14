@@ -76,6 +76,14 @@ func TestAccDataSourceSdwanServiceRoutingOSPFProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanServiceRoutingOSPFPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceRoutingOSPFProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanServiceRoutingOSPFPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceRoutingOSPFProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_routing_ospf_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_routing_ospf_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -156,3 +164,68 @@ func testAccDataSourceSdwanServiceRoutingOSPFProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanServiceRoutingOSPFProfileParcelByNameConfig() string {
+	config := `resource "sdwan_service_routing_ospf_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
+	config += `	router_id = "1.2.3.4"` + "\n"
+	config += `	reference_bandwidth = 101` + "\n"
+	config += `	rfc_1583_compatible = true` + "\n"
+	config += `	default_information_originate = false` + "\n"
+	config += `	default_information_originate_always = false` + "\n"
+	config += `	default_information_originate_metric = 1` + "\n"
+	config += `	default_information_originate_metric_type = "type1"` + "\n"
+	config += `	distance_external = 110` + "\n"
+	config += `	distance_inter_area = 110` + "\n"
+	config += `	distance_intra_area = 110` + "\n"
+	config += `	spf_calculation_delay = 200` + "\n"
+	config += `	spf_initial_hold_time = 1000` + "\n"
+	config += `	spf_maximum_hold_time = 10000` + "\n"
+	config += `	redistributes = [{` + "\n"
+	config += `	  protocol = "omp"` + "\n"
+	config += `	  nat_dia = true` + "\n"
+	config += `	  translate_rib_metric = false` + "\n"
+	config += `	}]` + "\n"
+	config += `	router_lsas = [{` + "\n"
+	config += `	  type = "on-startup"` + "\n"
+	config += `	  time = 5` + "\n"
+	config += `	}]` + "\n"
+	config += `	areas = [{` + "\n"
+	config += `	  area_number = 1` + "\n"
+	config += `	  area_type = "stub"` + "\n"
+	config += `	  no_summary = false` + "\n"
+	config += `	  interfaces = [{` + "\n"
+	config += `		name = "GigabitEthernet2"` + "\n"
+	config += `		hello_interval = 10` + "\n"
+	config += `		dead_interval = 40` + "\n"
+	config += `		lsa_retransmit_interval = 5` + "\n"
+	config += `		cost = 10` + "\n"
+	config += `		designated_router_priority = 1` + "\n"
+	config += `		network_type = "broadcast"` + "\n"
+	config += `		passive_interface = false` + "\n"
+	config += `		authentication_type = "message-digest"` + "\n"
+	config += `		message_digest_key_id = 7` + "\n"
+	config += `		message_digest_key = "sdjfhsghbjdjr"` + "\n"
+	config += `	}]` + "\n"
+	config += `	  ranges = [{` + "\n"
+	config += `		ip_address = "10.1.1.0"` + "\n"
+	config += `		subnet_mask = "255.255.255.0"` + "\n"
+	config += `		cost = 1` + "\n"
+	config += `		no_advertise = false` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_service_routing_ospf_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_service_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

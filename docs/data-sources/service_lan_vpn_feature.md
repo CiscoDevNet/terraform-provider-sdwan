@@ -25,7 +25,11 @@ data "sdwan_service_lan_vpn_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -44,7 +48,6 @@ data "sdwan_service_lan_vpn_feature" "example" {
 - `ipv6_export_route_targets` (Attributes List) (see [below for nested schema](#nestedatt--ipv6_export_route_targets))
 - `ipv6_import_route_targets` (Attributes List) (see [below for nested schema](#nestedatt--ipv6_import_route_targets))
 - `ipv6_static_routes` (Attributes List) IPv6 Static Route (see [below for nested schema](#nestedatt--ipv6_static_routes))
-- `name` (String) The name of the Feature
 - `nat_64_v4_pools` (Attributes List) NAT64 V4 Pool (see [below for nested schema](#nestedatt--nat_64_v4_pools))
 - `nat_pools` (Attributes List) NAT Pool (see [below for nested schema](#nestedatt--nat_pools))
 - `nat_port_forwards` (Attributes List) NAT Port Forward (see [below for nested schema](#nestedatt--nat_port_forwards))

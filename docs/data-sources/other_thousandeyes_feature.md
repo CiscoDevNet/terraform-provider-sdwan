@@ -25,12 +25,15 @@ data "sdwan_other_thousandeyes_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
 - `description` (String) The description of the Feature
-- `name` (String) The name of the Feature
 - `version` (Number) The version of the Feature
 - `virtual_application` (Attributes List) Virtual application Instance (see [below for nested schema](#nestedatt--virtual_application))
 

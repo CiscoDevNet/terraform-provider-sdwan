@@ -25,7 +25,11 @@ data "sdwan_system_bfd_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -35,7 +39,6 @@ data "sdwan_system_bfd_feature" "example" {
 - `description` (String) The description of the Feature
 - `multiplier` (Number)
 - `multiplier_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `poll_interval` (Number)
 - `poll_interval_variable` (String) Variable name
 - `version` (Number) The version of the Feature

@@ -42,6 +42,14 @@ func TestAccDataSourceSdwanPolicyObjectExtendedCommunityListProfileParcel(t *tes
 				Config: testAccDataSourceSdwanPolicyObjectExtendedCommunityListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectExtendedCommunityListProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectExtendedCommunityListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectExtendedCommunityListProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_extended_community_list.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_extended_community_list.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -80,3 +88,25 @@ func testAccDataSourceSdwanPolicyObjectExtendedCommunityListProfileParcelConfig(
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectExtendedCommunityListProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_extended_community_list" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  extended_community = "soo 10.0.0.1:30"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_extended_community_list" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

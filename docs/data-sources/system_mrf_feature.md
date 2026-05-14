@@ -25,7 +25,11 @@ data "sdwan_system_mrf_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -38,7 +42,6 @@ data "sdwan_system_mrf_feature" "example" {
 - `management_gateway` (Boolean) Enable management gateway
 - `management_gateway_variable` (String) Variable name
 - `migration_bgp_community` (Number) Set BGP community during migration from BGP-core based network
-- `name` (String) The name of the Feature
 - `role` (String) Set the role for router
 - `role_variable` (String) Variable name
 - `secondary_region_id` (Number) Set secondary region ID

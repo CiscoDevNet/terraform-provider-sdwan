@@ -47,6 +47,14 @@ func TestAccDataSourceSdwanSystemMRFProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanSystemMRFPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemMRFProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanSystemMRFPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemMRFProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_system_mrf_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_system_mrf_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -88,3 +96,29 @@ func testAccDataSourceSdwanSystemMRFProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanSystemMRFProfileParcelByNameConfig() string {
+	config := `resource "sdwan_system_mrf_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	role = "edge-router"` + "\n"
+	config += `	enable_migration_to_mrf = "enabled"` + "\n"
+	config += `	migration_bgp_community = 100` + "\n"
+	config += `	enable_management_region = true` + "\n"
+	config += `	vrf_id = 1` + "\n"
+	config += `	gateway_preference = [1]` + "\n"
+	config += `	management_gateway = false` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_mrf_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

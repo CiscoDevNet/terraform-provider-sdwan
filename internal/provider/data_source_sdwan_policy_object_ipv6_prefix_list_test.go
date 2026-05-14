@@ -45,6 +45,14 @@ func TestAccDataSourceSdwanPolicyObjectIPv6PrefixListProfileParcel(t *testing.T)
 				Config: testAccDataSourceSdwanPolicyObjectIPv6PrefixListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectIPv6PrefixListProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectIPv6PrefixListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectIPv6PrefixListProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_ipv6_prefix_list.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_ipv6_prefix_list.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -86,3 +94,28 @@ func testAccDataSourceSdwanPolicyObjectIPv6PrefixListProfileParcelConfig() strin
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectIPv6PrefixListProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_ipv6_prefix_list" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  ipv6_address = "2001:db8:85a3::8a2e:370:7334"` + "\n"
+	config += `	  ipv6_prefix_length = 64` + "\n"
+	config += `	  le = 100` + "\n"
+	config += `	  ge = 70` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_ipv6_prefix_list" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

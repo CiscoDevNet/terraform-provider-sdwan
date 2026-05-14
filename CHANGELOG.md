@@ -11,7 +11,9 @@
 - Add `sdwan_topology_feature_profile` resource and data source
 - Add `sdwan_activate_topology_group` resource
 - Add `sdwan_topology_custom_control_feature` resource and data source
-
+- Add validation to ensure that the SDWAN_URL is in proper format without a `/` at the end
+- Add name-based lookup to profile parcel data sources
+- Add `sdwan_policy_object_feature_profile_parcels` data source with `created_by` and `parcel_type` filters
 
 ## 0.11.1
 

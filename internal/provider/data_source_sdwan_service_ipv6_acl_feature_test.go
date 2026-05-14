@@ -52,6 +52,14 @@ func TestAccDataSourceSdwanServiceIPv6ACLProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanServiceIPv6ACLPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceIPv6ACLProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanServiceIPv6ACLPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceIPv6ACLProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_ipv6_acl_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_ipv6_acl_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -107,3 +115,42 @@ func testAccDataSourceSdwanServiceIPv6ACLProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanServiceIPv6ACLProfileParcelByNameConfig() string {
+	config := `resource "sdwan_service_ipv6_acl_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
+	config += `	default_action = "drop"` + "\n"
+	config += `	sequences = [{` + "\n"
+	config += `	  sequence_id = 1` + "\n"
+	config += `	  sequence_name = "AccessControlList1"` + "\n"
+	config += `	  match_entries = [{` + "\n"
+	config += `		next_header = 10` + "\n"
+	config += `		packet_length = 1500` + "\n"
+	config += `      source_ports = [{` + "\n"
+	config += `			port = 8000` + "\n"
+	config += `		}]` + "\n"
+	config += `		tcp_state = "syn"` + "\n"
+	config += `		traffic_class = [10]` + "\n"
+	config += `	}]` + "\n"
+	config += `	  actions = [{` + "\n"
+	config += `		accept_counter_name = "COUNTER_1"` + "\n"
+	config += `		accept_log = false` + "\n"
+	config += `		accept_set_next_hop = "2001:0db8:85a3:0000:0000:8a2e:0370:7334"` + "\n"
+	config += `		accept_traffic_class = 10` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_service_ipv6_acl_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_service_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

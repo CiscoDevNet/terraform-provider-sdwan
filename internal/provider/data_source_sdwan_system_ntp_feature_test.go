@@ -51,6 +51,14 @@ func TestAccDataSourceSdwanSystemNTPProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanSystemNTPPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemNTPProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanSystemNTPPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemNTPProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_system_ntp_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_system_ntp_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -101,3 +109,38 @@ func testAccDataSourceSdwanSystemNTPProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanSystemNTPProfileParcelByNameConfig() string {
+	config := `resource "sdwan_system_ntp_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	servers = [{` + "\n"
+	config += `	  hostname_ip_address = "1.1.1.1"` + "\n"
+	config += `	  authentication_key = 41673` + "\n"
+	config += `	  vpn = 1` + "\n"
+	config += `	  ntp_version = 4` + "\n"
+	config += `	  source_interface = "Ethernet"` + "\n"
+	config += `	  prefer_this_ntp_server = false` + "\n"
+	config += `	}]` + "\n"
+	config += `	authentication_keys = [{` + "\n"
+	config += `	  key_id = 49737` + "\n"
+	config += `	  md5_value = "$CRYPT_CLUSTER"` + "\n"
+	config += `	}]` + "\n"
+	config += `	trusted_keys = [49737]` + "\n"
+	config += `	authoritative_ntp_server = false` + "\n"
+	config += `	stratum = 1` + "\n"
+	config += `	source_interface = "ATM"` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_ntp_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

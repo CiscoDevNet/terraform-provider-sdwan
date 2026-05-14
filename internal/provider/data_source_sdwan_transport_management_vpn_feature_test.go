@@ -55,6 +55,14 @@ func TestAccDataSourceSdwanTransportManagementVPNProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanTransportManagementVPNPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportManagementVPNProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanTransportManagementVPNPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportManagementVPNProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_transport_management_vpn_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -116,3 +124,48 @@ func testAccDataSourceSdwanTransportManagementVPNProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanTransportManagementVPNProfileParcelByNameConfig() string {
+	config := `resource "sdwan_transport_management_vpn_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	vpn_description = "example"` + "\n"
+	config += `	primary_dns_address_ipv4 = "1.2.3.4"` + "\n"
+	config += `	secondary_dns_address_ipv4 = "2.3.4.5"` + "\n"
+	config += `	primary_dns_address_ipv6 = "2001:0:0:1::0"` + "\n"
+	config += `	secondary_dns_address_ipv6 = "2001:0:0:2::0"` + "\n"
+	config += `	new_host_mappings = [{` + "\n"
+	config += `	  host_name = "example"` + "\n"
+	config += `	  list_of_ip_addresses = ["1.2.3.4"]` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv4_static_routes = [{` + "\n"
+	config += `	  network_address = "1.2.3.4"` + "\n"
+	config += `	  subnet_mask = "0.0.0.0"` + "\n"
+	config += `	  gateway = "nextHop"` + "\n"
+	config += `	  next_hops = [{` + "\n"
+	config += `		address = "1.2.3.4"` + "\n"
+	config += `		administrative_distance = 1` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv6_static_routes = [{` + "\n"
+	config += `	  prefix = "2002::/16"` + "\n"
+	config += `	  gateway = "nextHop"` + "\n"
+	config += `	  next_hops = [{` + "\n"
+	config += `		address = "2001:0:0:1::1"` + "\n"
+	config += `		administrative_distance = 1` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_transport_management_vpn_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_transport_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

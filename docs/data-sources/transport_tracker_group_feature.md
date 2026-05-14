@@ -25,12 +25,15 @@ data "sdwan_transport_tracker_group_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
 - `description` (String) The description of the Feature
-- `name` (String) The name of the Feature
 - `tracker_boolean` (String) tracker ref list combine boolean and or
 - `tracker_boolean_variable` (String) Variable name
 - `tracker_elements` (Attributes List) tracker parcel ref list (see [below for nested schema](#nestedatt--tracker_elements))
