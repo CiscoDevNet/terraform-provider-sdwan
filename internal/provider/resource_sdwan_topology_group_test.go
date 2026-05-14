@@ -52,8 +52,8 @@ func TestAccSdwanTopologyGroup(t *testing.T) {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccSdwanTopologyGroupPrerequisitesConfig = `
-resource "sdwan_policy_object_feature_profile" "test" {
-  name        = "POLICY_OBJECT_TF"
+resource "sdwan_topology_feature_profile" "test" {
+  name        = "TOPOLOGY_FP_TF"
   description = "Terraform test"
 }
 
