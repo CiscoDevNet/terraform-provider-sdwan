@@ -7,6 +7,7 @@
 - Bump `sdwan_system_aaa_feature` schema to `20.18.0`
 - Fix issue where `sdwan_cflowd_policy_definition` allows  `all` instead of `both` for `protocol` field
 - Add `sdwan_cloud_provider_settings` resource and data source
+- Add validation to ensure that the SDWAN_URL is in proper format without a `/` at the end
 
 ## 0.11.1
 
