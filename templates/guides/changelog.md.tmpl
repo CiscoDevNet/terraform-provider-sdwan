@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## 0.11.2 (unreleased)
+## 0.11.2
 
 - Fix issue where `sdwan_policy_group` and `sdwan_configuration_group` resources produce unexpected diffs after import
 - Fix `sdwan_transport_routing_bgp_feature` and `sdwan_service_routing_bgp_feature` resources to correctly handle BGP ASDOT notation for `local_as`, `remote_as` and `as_number` device variables in configuration groups
