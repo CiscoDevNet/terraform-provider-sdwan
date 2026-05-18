@@ -19,6 +19,7 @@ description: |-
 - Add validation to ensure that the SDWAN_URL is in proper format without a `/` at the end
 - Add name-based lookup to profile parcel data sources
 - Add `sdwan_policy_object_feature_profile_parcels` data source with `created_by` and `parcel_type` filters
+- Added support for multiple high-speed logging entries in the `sdwan_security_policy` resource 
 
 ## 0.11.1
 

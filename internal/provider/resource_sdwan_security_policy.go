@@ -180,20 +180,40 @@ func (r *SecurityPolicyResource) Schema(ctx context.Context, req resource.Schema
 				},
 			},
 			"high_speed_logging_server_ip": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging Server IP").String,
+				MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging Server IP, Attribute conditional on `mode` equal to `security`").String,
 				Optional:            true,
 			},
 			"high_speed_logging_vpn": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging VPN").String,
+				MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging VPN, Attribute conditional on `mode` equal to `security`").String,
 				Optional:            true,
 			},
 			"high_speed_logging_server_port": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging Port").String,
+				MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging Port, Attribute conditional on `mode` equal to `security`").String,
 				Optional:            true,
 			},
-			"high_speed_logging_server_source_interface": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging Source Interface").String,
+			"high_speed_logging_entries": schema.SetNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging entries for Unified Security Policy (supports multiple HSL servers), Attribute conditional on `mode` equal to `unified`").String,
 				Optional:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"server_ip": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging Server IP").String,
+							Required:            true,
+						},
+						"vpn": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging VPN").String,
+							Required:            true,
+						},
+						"port": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging Port").String,
+							Required:            true,
+						},
+						"source_interface": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging Source Interface").String,
+							Optional:            true,
+						},
+					},
+				},
 			},
 			"max_incomplete_icmp_limit": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Max Incomplete ICMP Limit").String,
