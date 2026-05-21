@@ -240,10 +240,10 @@ attributes:
     example: false
     exclude_test: true
     conditional_attribute:
-        conditions:
-          - name: auth_required
-            value: true
-            type: Bool
+      conditions:
+        - name: auth_required
+          value: true
+          type: Bool
   - model_name: idleTime
     tf_name: idle_time
     data_path: [service]
@@ -251,10 +251,10 @@ attributes:
     example: 1
     exclude_test: true
     conditional_attribute:
-        conditions:
-          - name: surrogate_ip
-            value: true
-            type: Bool
+      conditions:
+        - name: surrogate_ip
+          value: true
+          type: Bool
   - model_name: displayTimeUnit
     tf_name: display_time_unit
     data_path: [service]
@@ -262,10 +262,10 @@ attributes:
     example: MINUTE
     exclude_test: true
     conditional_attribute:
-        conditions:
-          - name: surrogate_ip
-            value: true
-            type: Bool
+      conditions:
+        - name: surrogate_ip
+          value: true
+          type: Bool
   - model_name: ipEnforcedForKnownBrowsers
     tf_name: ip_enforced_for_known_browsers
     data_path: [service]
@@ -295,10 +295,10 @@ attributes:
     example: false
     exclude_test: true
     conditional_attribute:
-        conditions:
-          - name: aup_enabled
-            value: true
-            type: Bool
+      conditions:
+        - name: aup_enabled
+          value: true
+          type: Bool
   - model_name: forceSslInspection
     tf_name: force_ssl_inspection
     data_path: [service]
@@ -306,10 +306,10 @@ attributes:
     example: false
     exclude_test: true
     conditional_attribute:
-        conditions:
-          - name: aup_enabled
-            value: true
-            type: Bool
+      conditions:
+        - name: aup_enabled
+          value: true
+          type: Bool
   - model_name: timeout
     tf_name: aup_timeout
     data_path: [service]
@@ -317,10 +317,10 @@ attributes:
     example: 1
     exclude_test: true
     conditional_attribute:
-        conditions:
-          - name: aup_enabled
-            value: true
-            type: Bool
+      conditions:
+        - name: aup_enabled
+          value: true
+          type: Bool
   - model_name: locationName
     tf_name: location_name
     data_path: [service]
@@ -344,20 +344,20 @@ attributes:
     description: Download Bandwidth in Mbps
     example: 0.1
     conditional_attribute:
-        conditions:
-          - name: enforce_bandwidth_control
-            value: true
-            type: Bool
+      conditions:
+        - name: enforce_bandwidth_control
+          value: true
+          type: Bool
   - model_name: upBandwidth
     tf_name: up_bandwidth
     data_path: [service]
     description: Upload Bandwidth in Mbps
     example: 0.1
     conditional_attribute:
-        conditions:
-          - name: enforce_bandwidth_control
-            value: true
-            type: Bool
+      conditions:
+        - name: enforce_bandwidth_control
+          value: true
+          type: Bool
   - model_name: subLocations
     tf_name: sub_locations
     data_path: [service]
