@@ -291,6 +291,7 @@ type YamlConfigAttribute struct {
 	IncludeVariableCheck    bool                           `yaml:"include_variable_check"`
 	ResetContainerIfIgnore  bool                           `yaml:"reset_container_if_ignore"`
 	NoOptionType            bool                           `yaml:"no_option_type"`
+	WriteAsDefault          bool                           `yaml:"write_as_default"`
 }
 
 type YamlConfigConditionalAttribute struct {
@@ -514,6 +515,48 @@ func HasMinVersionCondition(attributes []YamlConfigAttribute) bool {
 			}
 		}
 		if len(attr.Attributes) > 0 && HasMinVersionCondition(attr.Attributes) {
+			return true
+		}
+	}
+	return false
+}
+
+// HasStringValidator recursively checks if any attribute needs the stringvalidator package.
+func HasStringValidator(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if (len(attr.EnumValues) > 0 && !attr.IgnoreEnum) ||
+			len(attr.StringPatterns) > 0 ||
+			attr.StringMinLength != 0 ||
+			attr.StringMaxLength != 0 {
+			return true
+		}
+		if len(attr.Attributes) > 0 && HasStringValidator(attr.Attributes) {
+			return true
+		}
+	}
+	return false
+}
+
+// HasRegexpValidator recursively checks if any attribute needs the regexp package.
+func HasRegexpValidator(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if len(attr.StringPatterns) > 0 {
+			return true
+		}
+		if len(attr.Attributes) > 0 && HasRegexpValidator(attr.Attributes) {
+			return true
+		}
+	}
+	return false
+}
+
+// HasFloat64Validator recursively checks if any attribute needs the float64validator package.
+func HasFloat64Validator(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.MinFloat != 0.0 || attr.MaxFloat != 0.0 {
+			return true
+		}
+		if len(attr.Attributes) > 0 && HasFloat64Validator(attr.Attributes) {
 			return true
 		}
 	}
@@ -845,6 +888,9 @@ var functions = template.FuncMap{
 	"buildConditionalLogic":       BuildConditionalLogic,
 	"buildConditionalDescription": BuildConditionalDescription,
 	"hasMinVersionCondition":      HasMinVersionCondition,
+	"hasStringValidator":          HasStringValidator,
+	"hasRegexpValidator":          HasRegexpValidator,
+	"hasFloat64Validator":         HasFloat64Validator,
 }
 
 func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result) {
@@ -1231,7 +1277,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				if value.String() == "" {
 					attr.DefaultValueEmptyString = true
 				} else {
-					if noGlobal {
+					if noGlobal && !attr.WriteAsDefault {
 						attr.Value = value.String()
 					} else {
 						attr.DefaultValue = value.String()
@@ -1241,14 +1287,14 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				if value.String() == "" {
 					attr.DefaultValueEmptyString = true
 				} else {
-					if noGlobal {
+					if noGlobal && !attr.WriteAsDefault {
 						attr.Value = value.String()
 					} else {
 						attr.DefaultValue = value.String()
 					}
 				}
 			} else if value := d.Get("properties.value.minimum"); value.Exists() {
-				if noGlobal {
+				if noGlobal && !attr.WriteAsDefault {
 					attr.Value = value.String()
 				} else {
 					attr.DefaultValue = value.String()

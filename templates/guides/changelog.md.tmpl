@@ -7,6 +7,12 @@ description: |-
 
 # Changelog
 
+## 0.11.3 (unreleased)
+
+- Add `sdwan_sse_feature_profile` resource and data source
+- Add `sdwan_sse_cisco_feature` resource and data source
+- Add `sdwan_sse_zscaler_feature` resource and data source
+
 ## 0.11.2
 
 - Fix issue where `sdwan_policy_group` and `sdwan_configuration_group` resources produce unexpected diffs after import

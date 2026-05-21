@@ -23,10 +23,19 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	{{- if hasRegexpValidator .Attributes}}
+	"regexp"
+	{{- end}}
 	"strings"
 	"sync"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	{{- if hasFloat64Validator .Attributes}}
+	"github.com/hashicorp/terraform-plugin-framework-validators/float64validator"
+	{{- end}}
+	{{- if hasStringValidator .Attributes}}
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	{{- end}}
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
