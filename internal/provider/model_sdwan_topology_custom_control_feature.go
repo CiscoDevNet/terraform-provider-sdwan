@@ -279,20 +279,20 @@ func (data TopologyCustomControl) toBody(ctx context.Context) string {
 					itemChildBody := ""
 					if !childItem.ColorListId.IsNull() {
 						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "colorList.refId.colorList.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "colorList.refId.colorList.value", childItem.ColorListId.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "colorList.refId.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "colorList.refId.value", childItem.ColorListId.ValueString())
 						}
 					}
 					if !childItem.CommunityListId.IsNull() {
 						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "community.refId.community.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "community.refId.community.value", childItem.CommunityListId.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "community.refId.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "community.refId.value", childItem.CommunityListId.ValueString())
 						}
 					}
 					if !childItem.ExpandedCommunityListId.IsNull() {
 						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "expandedCommunity.refId.expandedCommunity.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "expandedCommunity.refId.expandedCommunity.value", childItem.ExpandedCommunityListId.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "expandedCommunity.refId.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "expandedCommunity.refId.value", childItem.ExpandedCommunityListId.ValueString())
 						}
 					}
 					if !childItem.OmpTag.IsNull() {
@@ -362,8 +362,8 @@ func (data TopologyCustomControl) toBody(ctx context.Context) string {
 					}
 					if !childItem.TlocListId.IsNull() {
 						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "tlocList.refId.tlocList.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "tlocList.refId.tlocList.value", childItem.TlocListId.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "tlocList.refId.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "tlocList.refId.value", childItem.TlocListId.ValueString())
 						}
 					}
 					if !childItem.Vpn.IsNull() {
@@ -376,14 +376,14 @@ func (data TopologyCustomControl) toBody(ctx context.Context) string {
 					}
 					if !childItem.PrefixListId.IsNull() {
 						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "prefixList.refId.prefixList.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "prefixList.refId.prefixList.value", childItem.PrefixListId.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "prefixList.refId.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "prefixList.refId.value", childItem.PrefixListId.ValueString())
 						}
 					}
 					if !childItem.Ipv6PrefixListId.IsNull() {
 						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "ipv6prefixList.refId.ipv6prefixList.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "ipv6prefixList.refId.ipv6prefixList.value", childItem.Ipv6PrefixListId.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "ipv6prefixList.refId.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "ipv6prefixList.refId.value", childItem.Ipv6PrefixListId.ValueString())
 						}
 					}
 					if !childItem.Carrier.IsNull() {
@@ -742,24 +742,24 @@ func (data *TopologyCustomControl) fromBody(ctx context.Context, res gjson.Resul
 					cItem := TopologyCustomControlSequencesMatchEntries{}
 					cItem.ColorListId = types.StringNull()
 
-					if t := cv.Get("colorList.refId.colorList.optionType"); t.Exists() {
-						va := cv.Get("colorList.refId.colorList.value")
+					if t := cv.Get("colorList.refId.optionType"); t.Exists() {
+						va := cv.Get("colorList.refId.value")
 						if t.String() == "global" {
 							cItem.ColorListId = types.StringValue(va.String())
 						}
 					}
 					cItem.CommunityListId = types.StringNull()
 
-					if t := cv.Get("community.refId.community.optionType"); t.Exists() {
-						va := cv.Get("community.refId.community.value")
+					if t := cv.Get("community.refId.optionType"); t.Exists() {
+						va := cv.Get("community.refId.value")
 						if t.String() == "global" {
 							cItem.CommunityListId = types.StringValue(va.String())
 						}
 					}
 					cItem.ExpandedCommunityListId = types.StringNull()
 
-					if t := cv.Get("expandedCommunity.refId.expandedCommunity.optionType"); t.Exists() {
-						va := cv.Get("expandedCommunity.refId.expandedCommunity.value")
+					if t := cv.Get("expandedCommunity.refId.optionType"); t.Exists() {
+						va := cv.Get("expandedCommunity.refId.value")
 						if t.String() == "global" {
 							cItem.ExpandedCommunityListId = types.StringValue(va.String())
 						}
@@ -846,8 +846,8 @@ func (data *TopologyCustomControl) fromBody(ctx context.Context, res gjson.Resul
 					}
 					cItem.TlocListId = types.StringNull()
 
-					if t := cv.Get("tlocList.refId.tlocList.optionType"); t.Exists() {
-						va := cv.Get("tlocList.refId.tlocList.value")
+					if t := cv.Get("tlocList.refId.optionType"); t.Exists() {
+						va := cv.Get("tlocList.refId.value")
 						if t.String() == "global" {
 							cItem.TlocListId = types.StringValue(va.String())
 						}
@@ -862,16 +862,16 @@ func (data *TopologyCustomControl) fromBody(ctx context.Context, res gjson.Resul
 					}
 					cItem.PrefixListId = types.StringNull()
 
-					if t := cv.Get("prefixList.refId.prefixList.optionType"); t.Exists() {
-						va := cv.Get("prefixList.refId.prefixList.value")
+					if t := cv.Get("prefixList.refId.optionType"); t.Exists() {
+						va := cv.Get("prefixList.refId.value")
 						if t.String() == "global" {
 							cItem.PrefixListId = types.StringValue(va.String())
 						}
 					}
 					cItem.Ipv6PrefixListId = types.StringNull()
 
-					if t := cv.Get("ipv6prefixList.refId.ipv6prefixList.optionType"); t.Exists() {
-						va := cv.Get("ipv6prefixList.refId.ipv6prefixList.value")
+					if t := cv.Get("ipv6prefixList.refId.optionType"); t.Exists() {
+						va := cv.Get("ipv6prefixList.refId.value")
 						if t.String() == "global" {
 							cItem.Ipv6PrefixListId = types.StringValue(va.String())
 						}
@@ -1183,9 +1183,7 @@ func (data *TopologyCustomControl) updateFromBody(ctx context.Context, res gjson
 	if t := res.Get(path + "target.inboundSites.optionType"); t.Exists() {
 		va := res.Get(path + "target.inboundSites.value")
 		if t.String() == "global" {
-			if len(va.Array()) > 0 {
-				data.TargetInboundSites = helpers.GetStringSet(va.Array())
-			}
+			data.TargetInboundSites = helpers.GetStringSet(va.Array())
 		}
 	}
 	data.TargetOutboundSites = types.SetNull(types.StringType)
@@ -1193,9 +1191,7 @@ func (data *TopologyCustomControl) updateFromBody(ctx context.Context, res gjson
 	if t := res.Get(path + "target.outboundSites.optionType"); t.Exists() {
 		va := res.Get(path + "target.outboundSites.value")
 		if t.String() == "global" {
-			if len(va.Array()) > 0 {
-				data.TargetOutboundSites = helpers.GetStringSet(va.Array())
-			}
+			data.TargetOutboundSites = helpers.GetStringSet(va.Array())
 		}
 	}
 	for i := range data.TargetInboundRegions {
@@ -1503,14 +1499,14 @@ func (data *TopologyCustomControl) updateFromBody(ctx context.Context, res gjson
 			data.Sequences[i].MatchEntries[ci].TlocIp = types.StringNull()
 			data.Sequences[i].MatchEntries[ci].TlocColor = types.StringNull()
 			data.Sequences[i].MatchEntries[ci].TlocEncapsulation = types.StringNull()
-			if t := cr.Get("colorList.refId.colorList.optionType"); t.Exists() && t.String() == "global" {
-				data.Sequences[i].MatchEntries[ci].ColorListId = types.StringValue(cr.Get("colorList.refId.colorList.value").String())
+			if t := cr.Get("colorList.refId.optionType"); t.Exists() && t.String() == "global" {
+				data.Sequences[i].MatchEntries[ci].ColorListId = types.StringValue(cr.Get("colorList.refId.value").String())
 			}
-			if t := cr.Get("community.refId.community.optionType"); t.Exists() && t.String() == "global" {
-				data.Sequences[i].MatchEntries[ci].CommunityListId = types.StringValue(cr.Get("community.refId.community.value").String())
+			if t := cr.Get("community.refId.optionType"); t.Exists() && t.String() == "global" {
+				data.Sequences[i].MatchEntries[ci].CommunityListId = types.StringValue(cr.Get("community.refId.value").String())
 			}
-			if t := cr.Get("expandedCommunity.refId.expandedCommunity.optionType"); t.Exists() && t.String() == "global" {
-				data.Sequences[i].MatchEntries[ci].ExpandedCommunityListId = types.StringValue(cr.Get("expandedCommunity.refId.expandedCommunity.value").String())
+			if t := cr.Get("expandedCommunity.refId.optionType"); t.Exists() && t.String() == "global" {
+				data.Sequences[i].MatchEntries[ci].ExpandedCommunityListId = types.StringValue(cr.Get("expandedCommunity.refId.value").String())
 			}
 			if t := cr.Get("ompTag.optionType"); t.Exists() && t.String() == "global" {
 				data.Sequences[i].MatchEntries[ci].OmpTag = types.Int64Value(cr.Get("ompTag.value").Int())
@@ -1572,17 +1568,17 @@ func (data *TopologyCustomControl) updateFromBody(ctx context.Context, res gjson
 			if t := cr.Get("pathType.optionType"); t.Exists() && t.String() == "global" {
 				data.Sequences[i].MatchEntries[ci].PathType = types.StringValue(cr.Get("pathType.value").String())
 			}
-			if t := cr.Get("tlocList.refId.tlocList.optionType"); t.Exists() && t.String() == "global" {
-				data.Sequences[i].MatchEntries[ci].TlocListId = types.StringValue(cr.Get("tlocList.refId.tlocList.value").String())
+			if t := cr.Get("tlocList.refId.optionType"); t.Exists() && t.String() == "global" {
+				data.Sequences[i].MatchEntries[ci].TlocListId = types.StringValue(cr.Get("tlocList.refId.value").String())
 			}
 			if t := cr.Get("vpn.optionType"); t.Exists() && t.String() == "global" {
 				data.Sequences[i].MatchEntries[ci].Vpn = helpers.GetStringSet(cr.Get("vpn.value").Array())
 			}
-			if t := cr.Get("prefixList.refId.prefixList.optionType"); t.Exists() && t.String() == "global" {
-				data.Sequences[i].MatchEntries[ci].PrefixListId = types.StringValue(cr.Get("prefixList.refId.prefixList.value").String())
+			if t := cr.Get("prefixList.refId.optionType"); t.Exists() && t.String() == "global" {
+				data.Sequences[i].MatchEntries[ci].PrefixListId = types.StringValue(cr.Get("prefixList.refId.value").String())
 			}
-			if t := cr.Get("ipv6prefixList.refId.ipv6prefixList.optionType"); t.Exists() && t.String() == "global" {
-				data.Sequences[i].MatchEntries[ci].Ipv6PrefixListId = types.StringValue(cr.Get("ipv6prefixList.refId.ipv6prefixList.value").String())
+			if t := cr.Get("ipv6prefixList.refId.optionType"); t.Exists() && t.String() == "global" {
+				data.Sequences[i].MatchEntries[ci].Ipv6PrefixListId = types.StringValue(cr.Get("ipv6prefixList.refId.value").String())
 			}
 			if t := cr.Get("carrier.optionType"); t.Exists() && t.String() == "global" {
 				data.Sequences[i].MatchEntries[ci].Carrier = types.StringValue(cr.Get("carrier.value").String())

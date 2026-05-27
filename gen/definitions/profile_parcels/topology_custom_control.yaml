@@ -151,27 +151,27 @@ attributes:
         positional_fallback: true
         description: Set of match entries
         attributes:
-          - model_name: colorList
+          - model_name: refId
             tf_name: color_list_id
             no_augment_config: true
             type: String
-            data_path: [colorList, refId]
+            data_path: [colorList]
             description: Color list ID
             example: 0bfee1b7-1ac5-4ee3-bebc-61af04792e7c
             exclude_test: true
-          - model_name: community
+          - model_name: refId
             tf_name: community_list_id
             no_augment_config: true
             type: String
-            data_path: [community, refId]
+            data_path: [community]
             description: Community list ID
             example: 8bca4de4-78c7-4a44-9a55-5d4f3195cfe9
             exclude_test: true
-          - model_name: expandedCommunity
+          - model_name: refId
             tf_name: expanded_community_list_id
             no_augment_config: true
             type: String
-            data_path: [expandedCommunity, refId]
+            data_path: [expandedCommunity]
             description: Expanded community list ID
             example: f57a0c33-c6f8-4b07-ac92-d9a22ade9bb8
             exclude_test: true
@@ -250,11 +250,11 @@ attributes:
             description: Path type
             example: hierarchical-path
             exclude_test: true
-          - model_name: tlocList
+          - model_name: refId
             tf_name: tloc_list_id
             no_augment_config: true
             type: String
-            data_path: [tlocList, refId]
+            data_path: [tlocList]
             description: TLOC list ID
             example: 8b249706-7c7f-4ab3-af6f-c91951c1a603
             exclude_test: true
@@ -266,19 +266,19 @@ attributes:
             description: VPN list
             example: Guest
             exclude_test: true
-          - model_name: prefixList
+          - model_name: refId
             tf_name: prefix_list_id
             no_augment_config: true
             type: String
-            data_path: [prefixList, refId]
+            data_path: [prefixList]
             description: Prefix list ID
             example: 3639191a-246a-4023-bbe3-658eec3bf2ab
             exclude_test: true
-          - model_name: ipv6prefixList
+          - model_name: refId
             tf_name: ipv6_prefix_list_id
             no_augment_config: true
             type: String
-            data_path: [ipv6prefixList, refId]
+            data_path: [ipv6prefixList]
             description: IPv6 prefix list ID
             example: 3639191a-246a-4023-bbe3-658eec3bf2ab
             exclude_test: true
