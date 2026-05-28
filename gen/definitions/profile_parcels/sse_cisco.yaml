@@ -59,6 +59,7 @@ attributes:
       exclude_test: true
     - model_name: mtu
       description: Interface MTU, in bytes
+      mandatory: true
       example: 1400
     - model_name: dpdInterval
       tf_name: dpd_interval

@@ -86,6 +86,7 @@ func testAccSdwanSSECiscoProfileParcelConfig_minimum() string {
 	config += `	interfaces = [{` + "\n"
 	config += `	  interface_name = "ipsec1"` + "\n"
 	config += `	  tunnel_dc_preference = "primary-dc"` + "\n"
+	config += `	  mtu = 1400` + "\n"
 	config += `	}]` + "\n"
 	config += `	interface_pairs = [{` + "\n"
 	config += `	  active_interface = "ipsec1"` + "\n"
