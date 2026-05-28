@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.11.3 (unreleased)
+
+- Fix issue where deleting a single device with tag removes this tag across all devices
+
 ## 0.11.2
 
 - Fix issue where `sdwan_policy_group` and `sdwan_configuration_group` resources produce unexpected diffs after import
@@ -19,7 +23,6 @@ description: |-
 - Add validation to ensure that the SDWAN_URL is in proper format without a `/` at the end
 - Add name-based lookup to profile parcel data sources
 - Add `sdwan_policy_object_feature_profile_parcels` data source with `created_by` and `parcel_type` filters
-- Fix issue where deleting a single site removes all associated tags across all sites
 
 ## 0.11.1
 
