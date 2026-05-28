@@ -23,21 +23,10 @@ resource "sdwan_sse_cisco_feature" "example" {
   context_sharing_for_sgt = false
   interfaces = [
     {
-      interface_name          = "ipsec1"
-      shutdown                = false
-      tunnel_dc_preference    = "primary-dc"
-      mtu                     = 1400
-      dpd_interval            = 10
-      dpd_retries             = 3
-      ike_version             = 2
-      ike_rekey_interval      = 14400
-      ike_ciphersuite         = "aes256-cbc-sha1"
-      ike_group               = "16"
-      ipsec_rekey_interval    = 3600
-      ipsec_replay_window     = 512
-      ipsec_ciphersuite       = "aes256-cbc-sha512"
-      perfect_forward_secrecy = "group-16"
-      track_enable            = true
+      interface_name       = "ipsec1"
+      tunnel_dc_preference = "primary-dc"
+      mtu                  = 1400
+      ike_version          = 2
     }
   ]
   interface_pairs = [

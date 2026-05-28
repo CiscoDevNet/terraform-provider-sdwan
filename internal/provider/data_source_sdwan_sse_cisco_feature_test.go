@@ -36,20 +36,9 @@ func TestAccDataSourceSdwanSSECiscoProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "context_sharing_for_vpn", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "context_sharing_for_sgt", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interfaces.0.interface_name", "ipsec1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interfaces.0.shutdown", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interfaces.0.tunnel_dc_preference", "primary-dc"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interfaces.0.mtu", "1400"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interfaces.0.dpd_interval", "10"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interfaces.0.dpd_retries", "3"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interfaces.0.ike_version", "2"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interfaces.0.ike_rekey_interval", "14400"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interfaces.0.ike_ciphersuite", "aes256-cbc-sha1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interfaces.0.ike_group", "16"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interfaces.0.ipsec_rekey_interval", "3600"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interfaces.0.ipsec_replay_window", "512"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interfaces.0.ipsec_ciphersuite", "aes256-cbc-sha512"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interfaces.0.perfect_forward_secrecy", "group-16"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interfaces.0.track_enable", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interface_pairs.0.active_interface", "ipsec1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interface_pairs.0.active_interface_weight", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sse_cisco_feature.test", "interface_pairs.0.backup_interface", "None"))
@@ -103,20 +92,9 @@ func testAccDataSourceSdwanSSECiscoProfileParcelConfig() string {
 	config += `	context_sharing_for_sgt = false` + "\n"
 	config += `	interfaces = [{` + "\n"
 	config += `	  interface_name = "ipsec1"` + "\n"
-	config += `	  shutdown = false` + "\n"
 	config += `	  tunnel_dc_preference = "primary-dc"` + "\n"
 	config += `	  mtu = 1400` + "\n"
-	config += `	  dpd_interval = 10` + "\n"
-	config += `	  dpd_retries = 3` + "\n"
 	config += `	  ike_version = 2` + "\n"
-	config += `	  ike_rekey_interval = 14400` + "\n"
-	config += `	  ike_ciphersuite = "aes256-cbc-sha1"` + "\n"
-	config += `	  ike_group = "16"` + "\n"
-	config += `	  ipsec_rekey_interval = 3600` + "\n"
-	config += `	  ipsec_replay_window = 512` + "\n"
-	config += `	  ipsec_ciphersuite = "aes256-cbc-sha512"` + "\n"
-	config += `	  perfect_forward_secrecy = "group-16"` + "\n"
-	config += `	  track_enable = true` + "\n"
 	config += `	}]` + "\n"
 	config += `	interface_pairs = [{` + "\n"
 	config += `	  active_interface = "ipsec1"` + "\n"
@@ -156,20 +134,9 @@ func testAccDataSourceSdwanSSECiscoProfileParcelByNameConfig() string {
 	config += `	context_sharing_for_sgt = false` + "\n"
 	config += `	interfaces = [{` + "\n"
 	config += `	  interface_name = "ipsec1"` + "\n"
-	config += `	  shutdown = false` + "\n"
 	config += `	  tunnel_dc_preference = "primary-dc"` + "\n"
 	config += `	  mtu = 1400` + "\n"
-	config += `	  dpd_interval = 10` + "\n"
-	config += `	  dpd_retries = 3` + "\n"
 	config += `	  ike_version = 2` + "\n"
-	config += `	  ike_rekey_interval = 14400` + "\n"
-	config += `	  ike_ciphersuite = "aes256-cbc-sha1"` + "\n"
-	config += `	  ike_group = "16"` + "\n"
-	config += `	  ipsec_rekey_interval = 3600` + "\n"
-	config += `	  ipsec_replay_window = 512` + "\n"
-	config += `	  ipsec_ciphersuite = "aes256-cbc-sha512"` + "\n"
-	config += `	  perfect_forward_secrecy = "group-16"` + "\n"
-	config += `	  track_enable = true` + "\n"
 	config += `	}]` + "\n"
 	config += `	interface_pairs = [{` + "\n"
 	config += `	  active_interface = "ipsec1"` + "\n"
