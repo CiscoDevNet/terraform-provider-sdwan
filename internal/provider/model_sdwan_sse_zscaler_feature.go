@@ -39,7 +39,6 @@ type SSEZscaler struct {
 	Name                               types.String               `tfsdk:"name"`
 	Description                        types.String               `tfsdk:"description"`
 	FeatureProfileId                   types.String               `tfsdk:"feature_profile_id"`
-	SseProvider                        types.String               `tfsdk:"sse_provider"`
 	SrcVpn                             types.Bool                 `tfsdk:"src_vpn"`
 	Interfaces                         []SSEZscalerInterfaces     `tfsdk:"interfaces"`
 	InterfacePairs                     []SSEZscalerInterfacePairs `tfsdk:"interface_pairs"`
@@ -238,12 +237,6 @@ func (data SSEZscaler) toBody(ctx context.Context) string {
 	if true {
 		body, _ = sjson.Set(body, path+"sse_instance.optionType", "default")
 		body, _ = sjson.Set(body, path+"sse_instance.value", "zScaler")
-	}
-	if !data.SseProvider.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"sseProvider.optionType", "global")
-			body, _ = sjson.Set(body, path+"sseProvider.value", data.SseProvider.ValueString())
-		}
 	}
 	if data.SrcVpn.IsNull() {
 		if true {
@@ -527,7 +520,7 @@ func (data SSEZscaler) toBody(ctx context.Context) string {
 			} else if item.IkeGroup.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "ikeGroup.optionType", "default")
-					itemBody, _ = sjson.Set(itemBody, "ikeGroup.value", "2")
+					itemBody, _ = sjson.Set(itemBody, "ikeGroup.value", "16")
 				}
 			} else {
 				if true {
@@ -618,7 +611,7 @@ func (data SSEZscaler) toBody(ctx context.Context) string {
 			} else if item.IpsecCiphersuite.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "ipsecCiphersuite.optionType", "default")
-					itemBody, _ = sjson.Set(itemBody, "ipsecCiphersuite.value", "aes256-cbc-sha1")
+					itemBody, _ = sjson.Set(itemBody, "ipsecCiphersuite.value", "aes256-cbc-sha512")
 				}
 			} else {
 				if true {
@@ -635,7 +628,7 @@ func (data SSEZscaler) toBody(ctx context.Context) string {
 			} else if item.PerfectForwardSecrecy.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "perfectForwardSecrecy.optionType", "default")
-					itemBody, _ = sjson.Set(itemBody, "perfectForwardSecrecy.value", "group-2")
+					itemBody, _ = sjson.Set(itemBody, "perfectForwardSecrecy.value", "none")
 				}
 			} else {
 				if true {
@@ -1486,14 +1479,6 @@ func (data *SSEZscaler) fromBody(ctx context.Context, res gjson.Result) {
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	data.SseProvider = types.StringNull()
-
-	if t := res.Get(path + "sseProvider.optionType"); t.Exists() {
-		va := res.Get(path + "sseProvider.value")
-		if t.String() == "global" {
-			data.SseProvider = types.StringValue(va.String())
-		}
-	}
 	data.SrcVpn = types.BoolNull()
 
 	if t := res.Get(path + "interfaceMetadataSharing.srcVpn.optionType"); t.Exists() {
@@ -2347,14 +2332,6 @@ func (data *SSEZscaler) updateFromBody(ctx context.Context, res gjson.Result) {
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	data.SseProvider = types.StringNull()
-
-	if t := res.Get(path + "sseProvider.optionType"); t.Exists() {
-		va := res.Get(path + "sseProvider.value")
-		if t.String() == "global" {
-			data.SseProvider = types.StringValue(va.String())
-		}
-	}
 	data.SrcVpn = types.BoolNull()
 
 	if t := res.Get(path + "interfaceMetadataSharing.srcVpn.optionType"); t.Exists() {

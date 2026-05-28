@@ -227,7 +227,7 @@ func (r *SSECiscoProfileParcelResource) Schema(ctx context.Context, req resource
 							Optional:            true,
 						},
 						"ike_group": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IKE Diffie Hellman Groups").AddStringEnumDescription("2", "5", "14", "15", "16", "19", "20", "21").AddDefaultValueDescription("2").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IKE Diffie Hellman Groups").AddStringEnumDescription("2", "5", "14", "15", "16", "19", "20", "21").AddDefaultValueDescription("16").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("2", "5", "14", "15", "16", "19", "20", "21"),
@@ -260,7 +260,7 @@ func (r *SSECiscoProfileParcelResource) Schema(ctx context.Context, req resource
 							Optional:            true,
 						},
 						"ipsec_ciphersuite": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPsec(ESP) encryption and integrity protocol").AddStringEnumDescription("aes256-cbc-sha1", "aes256-cbc-sha384", "aes256-cbc-sha256", "aes256-cbc-sha512", "aes256-gcm").AddDefaultValueDescription("aes256-cbc-sha1").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPsec(ESP) encryption and integrity protocol").AddStringEnumDescription("aes256-cbc-sha1", "aes256-cbc-sha384", "aes256-cbc-sha256", "aes256-cbc-sha512", "aes256-gcm").AddDefaultValueDescription("aes256-cbc-sha512").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("aes256-cbc-sha1", "aes256-cbc-sha384", "aes256-cbc-sha256", "aes256-cbc-sha512", "aes256-gcm"),
@@ -271,7 +271,7 @@ func (r *SSECiscoProfileParcelResource) Schema(ctx context.Context, req resource
 							Optional:            true,
 						},
 						"perfect_forward_secrecy": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPsec perfect forward secrecy settings").AddStringEnumDescription("group-2", "group-5", "group-14", "group-15", "group-16", "group-19", "group-20", "group-21", "none").AddDefaultValueDescription("group-2").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPsec perfect forward secrecy settings").AddStringEnumDescription("group-2", "group-5", "group-14", "group-15", "group-16", "group-19", "group-20", "group-21", "none").AddDefaultValueDescription("group-16").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("group-2", "group-5", "group-14", "group-15", "group-16", "group-19", "group-20", "group-21", "none"),

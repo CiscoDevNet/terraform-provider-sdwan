@@ -91,13 +91,6 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
 				Required:            true,
 			},
-			"sse_provider": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Zscaler SSE Provider").AddStringEnumDescription("Umbrella", "Zscaler", "Generic").String,
-				Required:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("Umbrella", "Zscaler", "Generic"),
-				},
-			},
 			"src_vpn": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Share Source VPN").AddDefaultValueDescription("false").String,
 				Optional:            true,
@@ -288,7 +281,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 						},
 						"ike_group": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IKE Diffie Hellman Groups").AddStringEnumDescription("2", "5", "14", "15", "16", "19", "20", "21").AddDefaultValueDescription("2").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IKE Diffie Hellman Groups").AddStringEnumDescription("2", "5", "14", "15", "16", "19", "20", "21").AddDefaultValueDescription("16").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("2", "5", "14", "15", "16", "19", "20", "21"),
@@ -344,7 +337,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 						},
 						"ipsec_ciphersuite": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPsec(ESP) encryption and integrity protocol").AddStringEnumDescription("aes256-cbc-sha1", "aes256-cbc-sha384", "aes256-cbc-sha256", "aes256-cbc-sha512", "aes256-gcm").AddDefaultValueDescription("aes256-cbc-sha1").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPsec(ESP) encryption and integrity protocol").AddStringEnumDescription("aes256-cbc-sha1", "aes256-cbc-sha384", "aes256-cbc-sha256", "aes256-cbc-sha512", "aes256-gcm").AddDefaultValueDescription("aes256-cbc-sha512").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("aes256-cbc-sha1", "aes256-cbc-sha384", "aes256-cbc-sha256", "aes256-cbc-sha512", "aes256-gcm"),
@@ -355,7 +348,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 						},
 						"perfect_forward_secrecy": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPsec perfect forward secrecy settings").AddStringEnumDescription("group-2", "group-5", "group-14", "group-15", "group-16", "group-19", "group-20", "group-21", "none").AddDefaultValueDescription("group-2").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPsec perfect forward secrecy settings").AddStringEnumDescription("group-2", "group-5", "group-14", "group-15", "group-16", "group-19", "group-20", "group-21", "none").AddDefaultValueDescription("none").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("group-2", "group-5", "group-14", "group-15", "group-16", "group-19", "group-20", "group-21", "none"),
@@ -416,7 +409,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 			},
 			"auth_required": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enforce Authentication").AddDefaultValueDescription("false").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"auth_required_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -424,7 +417,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 			},
 			"xff_forward_enabled": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("XFF forwarding enabled").AddDefaultValueDescription("false").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"xff_forward_enabled_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -432,7 +425,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 			},
 			"ofw_enabled": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Firewall enabled").AddDefaultValueDescription("false").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"ofw_enabled_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -440,7 +433,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 			},
 			"ips_control": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable IPS Control").AddDefaultValueDescription("false").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"ips_control_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -448,7 +441,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 			},
 			"caution_enabled": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable Caution").AddDefaultValueDescription("false").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"caution_enabled_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -479,8 +472,11 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 				Optional:            true,
 			},
 			"idle_time": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Idle time to disassociation, Attribute conditional on `surrogate_ip` equal to `true`").AddIntegerRangeDescription(1, 0).AddDefaultValueDescription("1").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Idle time to disassociation, Attribute conditional on `surrogate_ip` equal to `true`").AddIntegerAtLeastDescription(1).AddDefaultValueDescription("1").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtLeast(1),
+				},
 			},
 			"idle_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `surrogate_ip` equal to `true`").String,
@@ -506,8 +502,11 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 				Optional:            true,
 			},
 			"refresh_time": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Refresh time for re-validation of surrogacy in minutes").AddIntegerRangeDescription(1, 0).AddDefaultValueDescription("1").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Refresh time for re-validation of surrogacy in minutes").AddIntegerAtLeastDescription(1).AddDefaultValueDescription("1").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtLeast(1),
+				},
 			},
 			"refresh_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -526,7 +525,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 			},
 			"aup_enabled": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable Acceptable User Policy").AddDefaultValueDescription("false").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"aup_enabled_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -569,7 +568,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 			},
 			"country": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddDefaultValueDescription("false").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"country_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -639,7 +638,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 						},
 						"idle_time": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Idle time to disassociation. How long after a completed transaction the service retains the IP address to user mapping., Attribute conditional on `surrogate_ip` equal to `true`").AddIntegerRangeDescription(1, 0).AddDefaultValueDescription("1").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Idle time to disassociation. How long after a completed transaction the service retains the IP address to user mapping., Attribute conditional on `surrogate_ip` equal to `true`").AddIntegerAtLeastDescription(1).AddDefaultValueDescription("1").String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.AtLeast(1),
@@ -669,7 +668,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 						},
 						"refresh_time": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Length of time that surrogate user identity can be used for traffic from known browsers before it must refresh and re-validate the surrogate user identity, Attribute conditional on `ip_enforced_for_known_browsers` equal to `true`").AddIntegerRangeDescription(1, 0).AddDefaultValueDescription("1").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Length of time that surrogate user identity can be used for traffic from known browsers before it must refresh and re-validate the surrogate user identity, Attribute conditional on `ip_enforced_for_known_browsers` equal to `true`").AddIntegerAtLeastDescription(1).AddDefaultValueDescription("1").String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.AtLeast(1),

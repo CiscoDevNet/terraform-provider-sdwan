@@ -33,49 +33,26 @@ func TestAccSdwanSSEZscalerProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "sse_provider", "Zscaler"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.interface_name", "ipsec1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.auto", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.shutdown", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.tunnel_source_interface", "GigabitEthernet8"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.tunnel_set", "secure-internet-gateway-zscaler"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.tunnel_dc_preference", "primary-dc"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.mtu", "1400"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.dpd_interval", "10"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.dpd_retries", "3"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.ike_version", "2"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.ike_rekey_interval", "14400"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.ike_ciphersuite", "aes256-cbc-sha1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.ike_group", "16"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.ipsec_rekey_interval", "3600"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.ipsec_replay_window", "512"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.ipsec_ciphersuite", "aes256-gcm"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.perfect_forward_secrecy", "none"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.track_enable", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interfaces.0.pre_shared_key_dynamic", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interface_pairs.0.active_interface", "ipsec1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interface_pairs.0.active_interface_weight", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interface_pairs.0.backup_interface", "None"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "interface_pairs.0.backup_interface_weight", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "auth_required", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "xff_forward_enabled", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "ofw_enabled", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "ips_control", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "caution_enabled", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "refresh_time", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "refresh_time_unit", "MINUTE"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "aup_enabled", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "location_name", "Auto"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "country", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "enforce_bandwidth_control", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "dn_bandwidth", "0.1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "up_bandwidth", "0.1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "sub_locations.0.name", "zscaler_sub1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "sub_locations.0.auth_required", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "sub_locations.0.ofw_enabled", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "sub_locations.0.caution_enabled", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "sub_locations.0.internal_ip.0.internal_ip_value", "172.16.2.1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "sub_locations.0.aup_enabled", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "sub_locations.0.enforce_bandwidth_control", "location-bandwidth"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "sub_locations.0.enforce_bandwidth_control", "disabled"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "tracker_source_ip", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "trackers.0.name", "tracker1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_zscaler_feature.test", "trackers.0.endpoint_api_url", "http://cisco.com"))
@@ -116,15 +93,11 @@ func testAccSdwanSSEZscalerProfileParcelConfig_minimum() string {
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_sse_feature_profile.test.id` + "\n"
-	config += `	sse_provider = "Zscaler"` + "\n"
 	config += `	interfaces = [{` + "\n"
 	config += `	  interface_name = "ipsec1"` + "\n"
-	config += `	  auto = true` + "\n"
-	config += `	  unnumbered = false` + "\n"
 	config += `	  tunnel_source_interface = "GigabitEthernet8"` + "\n"
-	config += `	  tunnel_set = "secure-internet-gateway-zscaler"` + "\n"
 	config += `	  tunnel_dc_preference = "primary-dc"` + "\n"
-	config += `	  pre_shared_key_dynamic = true` + "\n"
+	config += `	  mtu = 1400` + "\n"
 	config += `	}]` + "\n"
 	config += `	interface_pairs = [{` + "\n"
 	config += `	  active_interface = "ipsec1"` + "\n"
@@ -132,13 +105,6 @@ func testAccSdwanSSEZscalerProfileParcelConfig_minimum() string {
 	config += `	  backup_interface = "None"` + "\n"
 	config += `	  backup_interface_weight = 1` + "\n"
 	config += `	}]` + "\n"
-	config += `	auth_required = false` + "\n"
-	config += `	xff_forward_enabled = false` + "\n"
-	config += `	ofw_enabled = false` + "\n"
-	config += `	ips_control = false` + "\n"
-	config += `	caution_enabled = false` + "\n"
-	config += `	aup_enabled = false` + "\n"
-	config += `	country = false` + "\n"
 	config += `	tracker_source_ip = "1.2.3.4"` + "\n"
 	config += `}` + "\n"
 	return config
@@ -152,26 +118,15 @@ func testAccSdwanSSEZscalerProfileParcelConfig_all() string {
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_sse_feature_profile.test.id` + "\n"
-	config += `	sse_provider = "Zscaler"` + "\n"
 	config += `	interfaces = [{` + "\n"
 	config += `	  interface_name = "ipsec1"` + "\n"
 	config += `	  auto = true` + "\n"
-	config += `	  shutdown = false` + "\n"
 	config += `	  tunnel_source_interface = "GigabitEthernet8"` + "\n"
 	config += `	  tunnel_set = "secure-internet-gateway-zscaler"` + "\n"
 	config += `	  tunnel_dc_preference = "primary-dc"` + "\n"
 	config += `	  mtu = 1400` + "\n"
-	config += `	  dpd_interval = 10` + "\n"
-	config += `	  dpd_retries = 3` + "\n"
 	config += `	  ike_version = 2` + "\n"
-	config += `	  ike_rekey_interval = 14400` + "\n"
-	config += `	  ike_ciphersuite = "aes256-cbc-sha1"` + "\n"
-	config += `	  ike_group = "16"` + "\n"
-	config += `	  ipsec_rekey_interval = 3600` + "\n"
-	config += `	  ipsec_replay_window = 512` + "\n"
-	config += `	  ipsec_ciphersuite = "aes256-gcm"` + "\n"
-	config += `	  perfect_forward_secrecy = "none"` + "\n"
-	config += `	  track_enable = true` + "\n"
+	config += `	  pre_shared_key_dynamic = true` + "\n"
 	config += `	}]` + "\n"
 	config += `	interface_pairs = [{` + "\n"
 	config += `	  active_interface = "ipsec1"` + "\n"
@@ -179,22 +134,10 @@ func testAccSdwanSSEZscalerProfileParcelConfig_all() string {
 	config += `	  backup_interface = "None"` + "\n"
 	config += `	  backup_interface_weight = 1` + "\n"
 	config += `	}]` + "\n"
-	config += `	auth_required = false` + "\n"
-	config += `	xff_forward_enabled = false` + "\n"
-	config += `	ofw_enabled = false` + "\n"
-	config += `	ips_control = false` + "\n"
-	config += `	caution_enabled = false` + "\n"
 	config += `	refresh_time = 1` + "\n"
 	config += `	refresh_time_unit = "MINUTE"` + "\n"
-	config += `	aup_enabled = false` + "\n"
-	config += `	location_name = "Auto"` + "\n"
-	config += `	country = false` + "\n"
-	config += `	enforce_bandwidth_control = true` + "\n"
-	config += `	dn_bandwidth = 0.1` + "\n"
-	config += `	up_bandwidth = 0.1` + "\n"
 	config += `	sub_locations = [{` + "\n"
 	config += `	  name = "zscaler_sub1"` + "\n"
-	config += `	  auth_required = false` + "\n"
 	config += `	  ofw_enabled = false` + "\n"
 	config += `	  caution_enabled = false` + "\n"
 	config += `	  service_vpn = ["service_lan_vpn1,service_lan_vpn2"]` + "\n"
@@ -202,7 +145,7 @@ func testAccSdwanSSEZscalerProfileParcelConfig_all() string {
 	config += `		internal_ip_value = "172.16.2.1"` + "\n"
 	config += `	}]` + "\n"
 	config += `	  aup_enabled = false` + "\n"
-	config += `	  enforce_bandwidth_control = "location-bandwidth"` + "\n"
+	config += `	  enforce_bandwidth_control = "disabled"` + "\n"
 	config += `	}]` + "\n"
 	config += `	tracker_source_ip = "1.2.3.4"` + "\n"
 	config += `	trackers = [{` + "\n"

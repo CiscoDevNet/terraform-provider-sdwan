@@ -123,7 +123,7 @@ Optional:
 - `ike_ciphersuite_variable` (String) Variable name
 - `ike_group` (String) IKE Diffie Hellman Groups
   - Choices: `2`, `5`, `14`, `15`, `16`, `19`, `20`, `21`
-  - Default value: `2`
+  - Default value: `16`
 - `ike_group_variable` (String) Variable name
 - `ike_rekey_interval` (Number) IKE rekey interval <300..1209600> seconds
   - Range: `300`-`1209600`
@@ -136,7 +136,7 @@ Optional:
 - `interface_name` (String) Interface name: ipsec(1..255)
 - `ipsec_ciphersuite` (String) IPsec(ESP) encryption and integrity protocol
   - Choices: `aes256-cbc-sha1`, `aes256-cbc-sha384`, `aes256-cbc-sha256`, `aes256-cbc-sha512`, `aes256-gcm`
-  - Default value: `aes256-cbc-sha1`
+  - Default value: `aes256-cbc-sha512`
 - `ipsec_ciphersuite_variable` (String) Variable name
 - `ipsec_rekey_interval` (Number) IPsec rekey interval <300..1209600> seconds
   - Range: `300`-`1209600`
@@ -151,7 +151,7 @@ Optional:
 - `mtu_variable` (String) Variable name
 - `perfect_forward_secrecy` (String) IPsec perfect forward secrecy settings
   - Choices: `group-2`, `group-5`, `group-14`, `group-15`, `group-16`, `group-19`, `group-20`, `group-21`, `none`
-  - Default value: `group-2`
+  - Default value: `group-16`
 - `perfect_forward_secrecy_variable` (String) Variable name
 - `shutdown` (Boolean) Administrative state
   - Default value: `false`

@@ -334,7 +334,7 @@ func (data SSECisco) toBody(ctx context.Context) string {
 			} else if item.IkeGroup.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "ikeGroup.optionType", "default")
-					itemBody, _ = sjson.Set(itemBody, "ikeGroup.value", "2")
+					itemBody, _ = sjson.Set(itemBody, "ikeGroup.value", "16")
 				}
 			} else {
 				if true {
@@ -385,7 +385,7 @@ func (data SSECisco) toBody(ctx context.Context) string {
 			} else if item.IpsecCiphersuite.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "ipsecCiphersuite.optionType", "default")
-					itemBody, _ = sjson.Set(itemBody, "ipsecCiphersuite.value", "aes256-cbc-sha1")
+					itemBody, _ = sjson.Set(itemBody, "ipsecCiphersuite.value", "aes256-cbc-sha512")
 				}
 			} else {
 				if true {
@@ -402,7 +402,7 @@ func (data SSECisco) toBody(ctx context.Context) string {
 			} else if item.PerfectForwardSecrecy.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "perfectForwardSecrecy.optionType", "default")
-					itemBody, _ = sjson.Set(itemBody, "perfectForwardSecrecy.value", "group-2")
+					itemBody, _ = sjson.Set(itemBody, "perfectForwardSecrecy.value", "group-16")
 				}
 			} else {
 				if true {

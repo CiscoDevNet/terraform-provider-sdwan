@@ -19,27 +19,16 @@ resource "sdwan_sse_zscaler_feature" "example" {
   name               = "Example"
   description        = "My Example"
   feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  sse_provider       = "Zscaler"
   interfaces = [
     {
       interface_name          = "ipsec1"
       auto                    = true
-      shutdown                = false
       tunnel_source_interface = "GigabitEthernet8"
       tunnel_set              = "secure-internet-gateway-zscaler"
       tunnel_dc_preference    = "primary-dc"
       mtu                     = 1400
-      dpd_interval            = 10
-      dpd_retries             = 3
       ike_version             = 2
-      ike_rekey_interval      = 14400
-      ike_ciphersuite         = "aes256-cbc-sha1"
-      ike_group               = "16"
-      ipsec_rekey_interval    = 3600
-      ipsec_replay_window     = 512
-      ipsec_ciphersuite       = "aes256-gcm"
-      perfect_forward_secrecy = "none"
-      track_enable            = true
+      pre_shared_key_dynamic  = true
     }
   ]
   interface_pairs = [
@@ -50,23 +39,11 @@ resource "sdwan_sse_zscaler_feature" "example" {
       backup_interface_weight = 1
     }
   ]
-  auth_required             = false
-  xff_forward_enabled       = false
-  ofw_enabled               = false
-  ips_control               = false
-  caution_enabled           = false
-  refresh_time              = 1
-  refresh_time_unit         = "MINUTE"
-  aup_enabled               = false
-  location_name             = "Auto"
-  country                   = false
-  enforce_bandwidth_control = true
-  dn_bandwidth              = 0.1
-  up_bandwidth              = 0.1
+  refresh_time      = 1
+  refresh_time_unit = "MINUTE"
   sub_locations = [
     {
       name            = "zscaler_sub1"
-      auth_required   = false
       ofw_enabled     = false
       caution_enabled = false
       service_vpn     = ["service_lan_vpn1,service_lan_vpn2"]
@@ -76,7 +53,7 @@ resource "sdwan_sse_zscaler_feature" "example" {
         }
       ]
       aup_enabled               = false
-      enforce_bandwidth_control = "location-bandwidth"
+      enforce_bandwidth_control = "disabled"
     }
   ]
   tracker_source_ip = "1.2.3.4"
@@ -97,39 +74,31 @@ resource "sdwan_sse_zscaler_feature" "example" {
 
 ### Required
 
-- `aup_enabled` (Boolean) Enable Acceptable User Policy
-  - Default value: `false`
-- `auth_required` (Boolean) Enforce Authentication
-  - Default value: `false`
-- `caution_enabled` (Boolean) Enable Caution
-  - Default value: `false`
-- `country` (Boolean) - Default value: `false`
 - `feature_profile_id` (String) Feature Profile ID
 - `interface_pairs` (Attributes List) Interface Pair for active and backup (see [below for nested schema](#nestedatt--interface_pairs))
 - `interfaces` (Attributes List) Interface name: IPsec when present (see [below for nested schema](#nestedatt--interfaces))
-- `ips_control` (Boolean) Enable IPS Control
-  - Default value: `false`
 - `name` (String) The name of the Feature
-- `ofw_enabled` (Boolean) Firewall enabled
-  - Default value: `false`
-- `sse_provider` (String) Zscaler SSE Provider
-  - Choices: `Umbrella`, `Zscaler`, `Generic`
 - `tracker_source_ip` (String) Source IP address for Tracker
-- `xff_forward_enabled` (Boolean) XFF forwarding enabled
-  - Default value: `false`
 
 ### Optional
 
+- `aup_enabled` (Boolean) Enable Acceptable User Policy
+  - Default value: `false`
 - `aup_enabled_variable` (String) Variable name
 - `aup_timeout` (Number) Custom Acceptable User Policy frequency in days, Attribute conditional on `aup_enabled` equal to `true`
   - Range: `1`-`180`
   - Default value: `1`
 - `aup_timeout_variable` (String) Variable name, Attribute conditional on `aup_enabled` equal to `true`
+- `auth_required` (Boolean) Enforce Authentication
+  - Default value: `false`
 - `auth_required_variable` (String) Variable name
 - `block_internet_until_accepted` (Boolean) For first-time Acceptable User Policy behavior, block Internet access, Attribute conditional on `aup_enabled` equal to `true`
   - Default value: `false`
 - `block_internet_until_accepted_variable` (String) Variable name, Attribute conditional on `aup_enabled` equal to `true`
+- `caution_enabled` (Boolean) Enable Caution
+  - Default value: `false`
 - `caution_enabled_variable` (String) Variable name
+- `country` (Boolean) - Default value: `false`
 - `country_variable` (String) Variable name
 - `description` (String) The description of the Feature
 - `display_time_unit` (String) Display time unit, Attribute conditional on `surrogate_ip` equal to `true`
@@ -145,22 +114,26 @@ resource "sdwan_sse_zscaler_feature" "example" {
   - Default value: `false`
 - `force_ssl_inspection_variable` (String) Variable name, Attribute conditional on `aup_enabled` equal to `true`
 - `idle_time` (Number) Idle time to disassociation, Attribute conditional on `surrogate_ip` equal to `true`
-  - Range: `1`-`0`
+  - At Least: `1`
   - Default value: `1`
 - `idle_time_variable` (String) Variable name, Attribute conditional on `surrogate_ip` equal to `true`
 - `ip_enforced_for_known_browsers` (Boolean) Enforce Surrogate IP for known browsers
   - Default value: `false`
 - `ip_enforced_for_known_browsers_variable` (String) Variable name
+- `ips_control` (Boolean) Enable IPS Control
+  - Default value: `false`
 - `ips_control_variable` (String) Variable name
 - `location_name` (String) Zscaler location name (optional)
   - Default value: `Auto`
 - `location_name_variable` (String) Variable name
+- `ofw_enabled` (Boolean) Firewall enabled
+  - Default value: `false`
 - `ofw_enabled_variable` (String) Variable name
 - `primary_data_center` (String) Custom Primary Datacenter
   - Default value: `Auto`
 - `primary_data_center_variable` (String) Variable name
 - `refresh_time` (Number) Refresh time for re-validation of surrogacy in minutes
-  - Range: `1`-`0`
+  - At Least: `1`
   - Default value: `1`
 - `refresh_time_unit` (String) Refresh Time unit
   - Choices: `MINUTE`, `HOUR`, `DAY`
@@ -181,6 +154,8 @@ resource "sdwan_sse_zscaler_feature" "example" {
 - `up_bandwidth` (Number) , Attribute conditional on `enforce_bandwidth_control` equal to `true`
   - Range: `0.1`-`99999`
 - `up_bandwidth_variable` (String) Variable name, Attribute conditional on `enforce_bandwidth_control` equal to `true`
+- `xff_forward_enabled` (Boolean) XFF forwarding enabled
+  - Default value: `false`
 - `xff_forward_enabled_variable` (String) Variable name
 
 ### Read-Only
@@ -221,7 +196,7 @@ Optional:
 - `ike_ciphersuite_variable` (String) Variable name
 - `ike_group` (String) IKE Diffie Hellman Groups
   - Choices: `2`, `5`, `14`, `15`, `16`, `19`, `20`, `21`
-  - Default value: `2`
+  - Default value: `16`
 - `ike_group_variable` (String) Variable name
 - `ike_local_id` (String) IKE ID for the local endpoint. Input IPv4 address, domain name, or email address
 - `ike_local_id_variable` (String) Variable name
@@ -240,7 +215,7 @@ Optional:
 - `interface_name` (String) Interface name: IPsec when present
 - `ipsec_ciphersuite` (String) IPsec(ESP) encryption and integrity protocol
   - Choices: `aes256-cbc-sha1`, `aes256-cbc-sha384`, `aes256-cbc-sha256`, `aes256-cbc-sha512`, `aes256-gcm`
-  - Default value: `aes256-cbc-sha1`
+  - Default value: `aes256-cbc-sha512`
 - `ipsec_ciphersuite_variable` (String) Variable name
 - `ipsec_rekey_interval` (Number) IPsec rekey interval <300..1209600> seconds
   - Range: `300`-`1209600`
@@ -256,7 +231,7 @@ Optional:
 - `mtu_variable` (String) Variable name
 - `perfect_forward_secrecy` (String) IPsec perfect forward secrecy settings
   - Choices: `group-2`, `group-5`, `group-14`, `group-15`, `group-16`, `group-19`, `group-20`, `group-21`, `none`
-  - Default value: `group-2`
+  - Default value: `none`
 - `perfect_forward_secrecy_variable` (String) Variable name
 - `pre_shared_key_dynamic` (Boolean) Use preshared key to authenticate IKE peer
 - `pre_shared_secret` (String) Use preshared key to authenticate IKE peer
@@ -324,7 +299,7 @@ Optional:
   - Default value: `false`
 - `force_ssl_inspection_variable` (String) Variable name, Attribute conditional on `aup_enabled` equal to `true`
 - `idle_time` (Number) Idle time to disassociation. How long after a completed transaction the service retains the IP address to user mapping., Attribute conditional on `surrogate_ip` equal to `true`
-  - Range: `1`-`0`
+  - At Least: `1`
   - Default value: `1`
 - `idle_time_variable` (String) Variable name, Attribute conditional on `surrogate_ip` equal to `true`
 - `internal_ip` (Attributes List) (see [below for nested schema](#nestedatt--sub_locations--internal_ip))
@@ -337,7 +312,7 @@ Optional:
   - Default value: `false`
 - `ofw_enabled_variable` (String) Variable name
 - `refresh_time` (Number) Length of time that surrogate user identity can be used for traffic from known browsers before it must refresh and re-validate the surrogate user identity, Attribute conditional on `ip_enforced_for_known_browsers` equal to `true`
-  - Range: `1`-`0`
+  - At Least: `1`
   - Default value: `1`
 - `refresh_time_unit` (String) Refresh Time display unit, Attribute conditional on `ip_enforced_for_known_browsers` equal to `true`
   - Choices: `MINUTE`, `HOUR`, `DAY`

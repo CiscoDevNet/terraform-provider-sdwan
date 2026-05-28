@@ -75,7 +75,6 @@ data "sdwan_sse_zscaler_feature" "example" {
 - `secondary_data_center` (String) Custom Secondary Datacenter
 - `secondary_data_center_variable` (String) Variable name
 - `src_vpn` (Boolean) Share Source VPN
-- `sse_provider` (String) Zscaler SSE Provider
 - `sub_locations` (Attributes List) (see [below for nested schema](#nestedatt--sub_locations))
 - `surrogate_ip` (Boolean) Enable Surrogate IP
 - `surrogate_ip_variable` (String) Variable name

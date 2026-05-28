@@ -85,10 +85,6 @@ func (d *SSEZscalerProfileParcelDataSource) Schema(ctx context.Context, req data
 				MarkdownDescription: "Feature Profile ID",
 				Required:            true,
 			},
-			"sse_provider": schema.StringAttribute{
-				MarkdownDescription: "Zscaler SSE Provider",
-				Computed:            true,
-			},
 			"src_vpn": schema.BoolAttribute{
 				MarkdownDescription: "Share Source VPN",
 				Computed:            true,

@@ -1273,7 +1273,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		}
 		if d.Exists() && (!isOneOfAttribute || attr.DefaultValuePresent == true) {
 			attr.DefaultValuePresent = true
-			if value := d.Get("properties.value.enum.0"); value.Exists() {
+			if value := d.Get("properties.value.default"); value.Exists() {
 				if value.String() == "" {
 					attr.DefaultValueEmptyString = true
 				} else {
@@ -1283,7 +1283,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 						attr.DefaultValue = value.String()
 					}
 				}
-			} else if value := d.Get("properties.value.default"); value.Exists() {
+			} else if value := d.Get("properties.value.enum.0"); value.Exists() {
 				if value.String() == "" {
 					attr.DefaultValueEmptyString = true
 				} else {
