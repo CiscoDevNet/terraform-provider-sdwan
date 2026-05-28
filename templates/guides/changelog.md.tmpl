@@ -9,6 +9,7 @@ description: |-
 
 ## 0.11.3 (unreleased)
 
+- Fix issue where deleting a single device with tag removes this tag across all devices
 - Add `sdwan_sse_feature_profile` resource and data source
 - Add `sdwan_sse_cisco_feature` resource and data source
 - Add `sdwan_sse_zscaler_feature` resource and data source
