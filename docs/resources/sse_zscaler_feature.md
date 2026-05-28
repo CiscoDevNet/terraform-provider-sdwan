@@ -228,6 +228,7 @@ Optional:
 - `ipv4_address_variable` (String) Variable name
 - `mtu` (Number) Interface MTU <576..2000>, in bytes
   - Range: `576`-`2000`
+  - Default value: `1400`
 - `mtu_variable` (String) Variable name
 - `perfect_forward_secrecy` (String) IPsec perfect forward secrecy settings
   - Choices: `group-2`, `group-5`, `group-14`, `group-15`, `group-16`, `group-19`, `group-20`, `group-21`, `none`

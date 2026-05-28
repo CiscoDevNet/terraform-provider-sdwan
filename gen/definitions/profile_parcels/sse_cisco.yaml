@@ -60,6 +60,7 @@ attributes:
     - model_name: mtu
       description: Interface MTU, in bytes
       mandatory: true
+      default_value: 1400
       example: 1400
     - model_name: dpdInterval
       tf_name: dpd_interval

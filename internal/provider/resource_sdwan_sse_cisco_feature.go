@@ -161,7 +161,7 @@ func (r *SSECiscoProfileParcelResource) Schema(ctx context.Context, req resource
 							Optional:            true,
 						},
 						"mtu": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Interface MTU <576..2000>, in bytes").AddIntegerRangeDescription(576, 2000).String,
+							MarkdownDescription: helpers.NewAttributeDescription("Interface MTU <576..2000>, in bytes").AddIntegerRangeDescription(576, 2000).AddDefaultValueDescription("1400").String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.Between(576, 2000),
