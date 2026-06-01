@@ -21,6 +21,7 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -42,6 +43,7 @@ func NewActivateTopologyGroupResource() resource.Resource {
 
 type ActivateTopologyGroupResource struct {
 	client      *sdwan.Client
+	updateMutex *sync.Mutex
 	taskTimeout *int64
 }
 
@@ -75,6 +77,7 @@ func (r *ActivateTopologyGroupResource) Configure(_ context.Context, req resourc
 	}
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
+	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
 }
 
@@ -89,7 +92,9 @@ func (r *ActivateTopologyGroupResource) Create(ctx context.Context, req resource
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Id.ValueString()))
 
+	r.updateMutex.Lock()
 	err := plan.activateTopologyGroup(ctx, r.client, r.taskTimeout)
+	r.updateMutex.Unlock()
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to activate topology group, got error: %s", err))
 		return
@@ -167,7 +172,9 @@ func (r *ActivateTopologyGroupResource) Update(ctx context.Context, req resource
 		tflog.Debug(ctx, fmt.Sprintf("%s: Topology group ID changed, activating new topology group", plan.Id.ValueString()))
 	}
 
+	r.updateMutex.Lock()
 	err := plan.activateTopologyGroup(ctx, r.client, r.taskTimeout)
+	r.updateMutex.Unlock()
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to activate topology group, got error: %s", err))
 		return
@@ -191,7 +198,9 @@ func (r *ActivateTopologyGroupResource) Delete(ctx context.Context, req resource
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Id.ValueString()))
 
 	if state.Id.ValueString() != "" {
+		r.updateMutex.Lock()
 		err := state.deactivateTopologyGroup(ctx, r.client, r.taskTimeout)
+		r.updateMutex.Unlock()
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to deactivate topology group, got error: %s", err))
 			return
