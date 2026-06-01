@@ -1,0 +1,38 @@
+---
+name: Topology Mesh
+rest_endpoint: /v1/feature-profile/sdwan/topology/%v/mesh
+minimum_version: 20.15.0
+id_attribute: id
+test_tags: [SDWAN_2015]
+skip_minimum_test: true
+parcel_type: feature
+doc_category: Features - Topology
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_topology_feature_profile.test.id
+  - model_name: vpn
+    data_path: [target]
+    tf_name: target_vpns
+    type: Set
+    element_type: String
+    mandatory: true
+    description: Target VPN list
+    example: service_lan_vpn1
+  - model_name: sites
+    tf_name: sites
+    type: Set
+    element_type: String
+    mandatory: true
+    description: Site list
+    example: SITE_100
+
+test_prerequisites: |
+  resource "sdwan_topology_feature_profile" "test" {
+    name        = "TF_TEST"
+    description = "Terraform test"
+  }

@@ -10,6 +10,8 @@ description: |-
 ## 0.11.3 (unreleased)
 
 - Fix issue where deleting a single device with tag removes this tag across all devices
+- Add `sdwan_topology_mesh_feature` resource and data source
+- Add `sdwan_topology_hub_spoke_feature` resource and data source
 
 ## 0.11.2
 
