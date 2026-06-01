@@ -226,7 +226,7 @@ func (r *TagResource) Update(ctx context.Context, req resource.UpdateRequest, re
 			if id := item.Get("id"); id.Exists() {
 				existsInPlan := false
 				for _, planId := range plan.Devices.Elements() {
-					if id.String() == planId.String() {
+					if id.String() == planId.(types.String).ValueString() {
 						existsInPlan = true
 					}
 				}

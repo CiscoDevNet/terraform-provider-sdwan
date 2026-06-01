@@ -1,3 +1,7 @@
+## 0.11.3 (unreleased)
+
+- Fix issue where deleting a single device with tag removes this tag across all devices
+
 ## 0.11.2
 
 - Fix issue where `sdwan_policy_group` and `sdwan_configuration_group` resources produce unexpected diffs after import
