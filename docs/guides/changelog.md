@@ -10,6 +10,10 @@ description: |-
 ## 0.11.3 (unreleased)
 
 - Fix issue where deleting a single device with tag removes this tag across all devices
+- Add `sdwan_topology_group` resource and data source
+- Add `sdwan_topology_feature_profile` resource and data source
+- Add `sdwan_activate_topology_group` resource
+- Add `sdwan_topology_custom_control_feature` resource and data source
 
 ## 0.11.2
 
@@ -20,10 +24,6 @@ description: |-
 - Bump `sdwan_system_aaa_feature` schema to `20.18.0`
 - Fix issue where `sdwan_cflowd_policy_definition` allows  `all` instead of `both` for `protocol` field
 - Add `sdwan_cloud_provider_settings` resource and data source
-- Add `sdwan_topology_group` resource and data source
-- Add `sdwan_topology_feature_profile` resource and data source
-- Add `sdwan_activate_topology_group` resource
-- Add `sdwan_topology_custom_control_feature` resource and data source
 - Add validation to ensure that the SDWAN_URL is in proper format without a `/` at the end
 - Add name-based lookup to profile parcel data sources
 - Add `sdwan_policy_object_feature_profile_parcels` data source with `created_by` and `parcel_type` filters
