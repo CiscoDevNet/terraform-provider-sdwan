@@ -1,0 +1,82 @@
+---
+name: Custom Application
+rest_endpoint: /template/policy/customapp/
+has_version: true
+id_attribute: appId
+doc_category: Custom Applications
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
+attributes:
+  - model_name: appName
+    tf_name: app_name
+    type: String
+    response_data_path: [data]
+    mandatory: true
+    description: Application Name
+    example: Example
+  - model_name: serverNames
+    tf_name: server_names
+    type: Set
+    element_type: String
+    response_data_path: [data]
+    description: Server Names (Fully Qualified Domain names or Regex starting with `*` but not ending with `*` or both separated by commas.)
+    string_patterns: ["^(\\*?[^*,\\s]+)(\\s*,\\s*\\*?[^*,\\s]+)*$"]
+    example: "*customapp.com"
+    test_value: '["*customapp.com", "customapptest.com", "*appcustom"]'
+  - model_name: L3L4
+    tf_name: l3l4
+    type: List
+    response_data_path: [data]
+    description: L3/L4 Attributes
+    attributes:
+      - model_name: ipAddresses
+        tf_name: ip_addresses
+        type: Set
+        element_type: String
+        description: IPv4 Address (10.X.X.X, 20.0.0.0/24 separated by commas, subnet prefix length 24 to 32.)
+        string_patterns: ["^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/(2[4-9]|3[0-2]))?$"]
+        example: 192.168.1.0/24
+        test_value: '["10.2.2.25", "192.168.1.0/24"]'
+      - model_name: l4Protocol
+        tf_name: l4_protocol
+        type: String
+        enum_values: [TCP, UDP, TCP-UDP]
+        description: L4 Protocol
+        example: TCP
+      - model_name: ports
+        tf_name: ports
+        type: String
+        description: Ports (Space separated ports or range or both.)
+        example: "1 10-20"
+  - model_name: application-family
+    tf_name: application_family
+    type: String
+    response_data_path: [data, attributes]
+    data_path: [attributes]
+    description: Application Family
+    enum_values: [instant-messaging, game, mail, routing, database, web, behavioral, audio-video, file-server, network-service, middleware, authentication, erp, printer, tunneling, thin-client, terminal, peer-to-peer, forum, application-service, encrypted, microsoft-office, security-service, network-management, file-transfer, webmail]
+    example: routing
+  - model_name: application-group
+    tf_name: application_group
+    type: String
+    response_data_path: [data, attributes]
+    data_path: [attributes]
+    description: Application Group
+    enum_values: [adp-group, amazon-group, aol-group, apple-group, apple-talk-group, atlassian-group, banyan-group, bittorrent-group, box-group, capwap-group, cisco-jabber-group, cisco-phone-group, concur-group, corba-group, dameware-group, demandware-group, dropbox-group, edonkey-emule-group, espn-group, fasttrack-group, flash-group, fring-group, ftp-group, gnutella-group, google-group, gotomeeting-group, hubspot-group, icq-group, imap-group, intuit-group, ipsec-group, irc-group, jive-group, kakao-group, kerberos-group, ldap-group, marketo-group, ms-cloud-group, msn-messenger-group, netbios-group, netsuite-group, nntp-group, npmp-group, oracle-group, pop3-group, prm-group, qq-group, ringcentral-group, salesforce-group, sap-group, servicenow-group, smtp-group, snmp-group, sqlsvr-group, stun-group, sugar-crm-group, telepresence-group, tftp-group, tiktok-group, vmware-group, vnc-group, wap-group, webex-group, workday-group, xns-xerox-group, xunlei-group, yahoo-group, yahoo-messenger-group, zendesk-group, zoho-crm-group, other]
+    example: ipsec-group
+  - model_name: traffic-class
+    tf_name: traffic_class
+    type: String
+    response_data_path: [data, attributes]
+    data_path: [attributes]
+    description: Traffic Class
+    enum_values: [multimedia-conferencing, network-control, signaling, voip-telephony, ops-admin-mgmt, multimedia-streaming, real-time-interactive, bulk-data, transactional-data, broadcast-video]
+    example: signaling
+  - model_name: business-relevance
+    tf_name: business_relevance
+    type: String
+    response_data_path: [data, attributes]
+    data_path: [attributes]
+    description: Business Relevance
+    enum_values: [business-relevant, business-irrelevant, default]
+    example: business-relevant

@@ -1,6 +1,7 @@
 ## 0.11.3 (unreleased)
 
 - Fix issue where deleting a single device with tag removes this tag across all devices
+- Add `sdwan_custom_application` resource and data source
 
 ## 0.11.2
 
