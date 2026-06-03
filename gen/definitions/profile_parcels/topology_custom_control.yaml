@@ -41,7 +41,7 @@ attributes:
     data_path: [target]
     tf_name: target_level
     example: SITE
-    exclude_test: true
+    mandatory: true
   - model_name: inboundSites
     data_path: [target]
     tf_name: target_inbound_sites
@@ -49,9 +49,9 @@ attributes:
     element_type: String
     description: Inbound site list
     example: SITE_100
-    exclude_test: true
     ignore_mandatory: true
     optional_null_empty: true
+    include_empty_value: true
     conditional_attribute:
       conditions:
         - name: target_level
@@ -63,7 +63,6 @@ attributes:
     element_type: String
     description: Outbound site list
     example: SITE_200
-    exclude_test: true
     ignore_mandatory: true
     optional_null_empty: true
     include_empty_value: true
@@ -190,14 +189,12 @@ attributes:
             enum_values: [aggregate, bgp, bgp-external, bgp-internal, connected, eigrp, ospf, ospf-inter-area, ospf-intra-area, ospf-external1, ospf-external2, rip, static, eigrp-summary, eigrp-internal, eigrp-external, lisp, nat-dia, natpool, isis, isis-level1, isis-level2]
             description: Origin
             example: connected
-            exclude_test: true
           - model_name: originator
             tf_name: originator
             no_augment_config: true
             type: String
             description: Originator IP
             example: 1.2.3.4
-            exclude_test: true
           - model_name: preference
             tf_name: preference
             no_augment_config: true
@@ -315,7 +312,6 @@ attributes:
             type: String
             description: TLOC IP address
             example: 1.2.3.4
-            exclude_test: true
           - model_name: color
             data_path: [tloc]
             tf_name: tloc_color
@@ -323,7 +319,6 @@ attributes:
             type: String
             description: TLOC color
             example: bronze
-            exclude_test: true
           - model_name: encap
             data_path: [tloc]
             tf_name: tloc_encapsulation
@@ -332,7 +327,6 @@ attributes:
             enum_values: [ipsec, gre]
             description: TLOC encapsulation
             example: ipsec
-            exclude_test: true
       - model_name: actions
         tf_name: action_entries
         positional_fallback: true
@@ -368,7 +362,6 @@ attributes:
                 min_int: 0
                 max_int: 4294967295
                 example: 100
-                exclude_test: true
               - model_name: community
                 tf_name: community
                 no_augment_config: true

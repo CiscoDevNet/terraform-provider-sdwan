@@ -34,13 +34,20 @@ func TestAccSdwanTopologyCustomControlProfileParcel(t *testing.T) {
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "default_action", "reject"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "target_level", "SITE"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.name", "Rule1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.base_action", "accept"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.type", "route"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.ip_type", "ipv4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.match_entries.0.omp_tag", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.match_entries.0.origin", "connected"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.match_entries.0.originator", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.match_entries.0.tloc_ip", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.match_entries.0.tloc_color", "bronze"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.match_entries.0.tloc_encapsulation", "ipsec"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.action_entries.0.set_parameters.0.preference", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.action_entries.0.set_parameters.0.omp_tag", "100"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -78,6 +85,9 @@ func testAccSdwanTopologyCustomControlProfileParcelConfig_all() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_topology_feature_profile.test.id` + "\n"
 	config += `	default_action = "reject"` + "\n"
+	config += `	target_level = "SITE"` + "\n"
+	config += `	target_inbound_sites = ["SITE_100"]` + "\n"
+	config += `	target_outbound_sites = ["SITE_200"]` + "\n"
 	config += `	sequences = [{` + "\n"
 	config += `	  id = 1` + "\n"
 	config += `	  name = "Rule1"` + "\n"
@@ -86,10 +96,16 @@ func testAccSdwanTopologyCustomControlProfileParcelConfig_all() string {
 	config += `	  ip_type = "ipv4"` + "\n"
 	config += `	  match_entries = [{` + "\n"
 	config += `		omp_tag = 100` + "\n"
+	config += `		origin = "connected"` + "\n"
+	config += `		originator = "1.2.3.4"` + "\n"
+	config += `		tloc_ip = "1.2.3.4"` + "\n"
+	config += `		tloc_color = "bronze"` + "\n"
+	config += `		tloc_encapsulation = "ipsec"` + "\n"
 	config += `	}]` + "\n"
 	config += `	  action_entries = [{` + "\n"
 	config += `      set_parameters = [{` + "\n"
 	config += `			preference = 100` + "\n"
+	config += `			omp_tag = 100` + "\n"
 	config += `		}]` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
@@ -98,3 +114,103 @@ func testAccSdwanTopologyCustomControlProfileParcelConfig_all() string {
 }
 
 // End of section. //template:end testAccConfigAll
+
+func TestAccSdwanTopologyCustomControlProfileParcelMultiSequence(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
+	}
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "default_action", "reject"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "target_level", "SITE"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.#", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.name", "Rule1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.base_action", "accept"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.type", "route"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.ip_type", "ipv4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.match_entries.0.omp_tag", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.match_entries.0.origin", "connected"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.match_entries.0.originator", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.match_entries.0.tloc_ip", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.match_entries.0.tloc_color", "bronze"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.match_entries.0.tloc_encapsulation", "ipsec"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.0.action_entries.0.set_parameters.0.preference", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.1.id", "2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.1.name", "Rule2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.1.base_action", "reject"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.1.type", "tloc"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.1.ip_type", "ipv4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.1.match_entries.0.omp_tag", "200"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.2.id", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.2.name", "Rule3"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.2.base_action", "accept"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.2.type", "route"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.2.ip_type", "ipv6"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "sequences.2.action_entries.0.set_parameters.0.omp_tag", "300"))
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccSdwanTopologyCustomControlPrerequisitesProfileParcelConfig + testAccSdwanTopologyCustomControlProfileParcelConfig_multiSequence(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
+		},
+	})
+}
+
+func testAccSdwanTopologyCustomControlProfileParcelConfig_multiSequence() string {
+	config := `resource "sdwan_topology_custom_control_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST_MULTI"` + "\n"
+	config += ` description = "Terraform integration test with multiple sequences"` + "\n"
+	config += `	feature_profile_id = sdwan_topology_feature_profile.test.id` + "\n"
+	config += `	default_action = "reject"` + "\n"
+	config += `	target_level = "SITE"` + "\n"
+	config += `	target_outbound_sites = ["SITE_100"]` + "\n"
+	config += `	sequences = [` + "\n"
+	config += `	  {` + "\n"
+	config += `	    id = 1` + "\n"
+	config += `	    name = "Rule1"` + "\n"
+	config += `	    base_action = "accept"` + "\n"
+	config += `	    type = "route"` + "\n"
+	config += `	    ip_type = "ipv4"` + "\n"
+	config += `	    match_entries = [{` + "\n"
+	config += `		  omp_tag = 100` + "\n"
+	config += `		  origin = "connected"` + "\n"
+	config += `		  originator = "1.2.3.4"` + "\n"
+	config += `		  tloc_ip = "1.2.3.4"` + "\n"
+	config += `		  tloc_color = "bronze"` + "\n"
+	config += `		  tloc_encapsulation = "ipsec"` + "\n"
+	config += `	    }]` + "\n"
+	config += `	    action_entries = [{` + "\n"
+	config += `        set_parameters = [{` + "\n"
+	config += `		    preference = 100` + "\n"
+	config += `		  }]` + "\n"
+	config += `	    }]` + "\n"
+	config += `	  },` + "\n"
+	config += `	  {` + "\n"
+	config += `	    id = 2` + "\n"
+	config += `	    name = "Rule2"` + "\n"
+	config += `	    base_action = "reject"` + "\n"
+	config += `	    type = "tloc"` + "\n"
+	config += `	    ip_type = "ipv4"` + "\n"
+	config += `	    match_entries = [{` + "\n"
+	config += `		  omp_tag = 200` + "\n"
+	config += `	    }]` + "\n"
+	config += `	  },` + "\n"
+	config += `	  {` + "\n"
+	config += `	    id = 3` + "\n"
+	config += `	    name = "Rule3"` + "\n"
+	config += `	    base_action = "accept"` + "\n"
+	config += `	    type = "route"` + "\n"
+	config += `	    ip_type = "ipv6"` + "\n"
+	config += `	    action_entries = [{` + "\n"
+	config += `        set_parameters = [{` + "\n"
+	config += `		    omp_tag = 300` + "\n"
+	config += `		  }]` + "\n"
+	config += `	    }]` + "\n"
+	config += `	  }` + "\n"
+	config += `	]` + "\n"
+	config += `}` + "\n"
+	return config
+}

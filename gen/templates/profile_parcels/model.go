@@ -444,7 +444,13 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			{{- if eq .Type "StringInt64" }}
 			data.{{toGoName .TfName}} = types.StringValue(va.String())
 			{{- else}}
+			{{- if and (isListSet .) .OptionalNullEmpty}}
+			if len(va.Array()) > 0 {
+				data.{{toGoName .TfName}} = helpers.Get{{.ElementType}}{{.Type}}(va.Array())
+			}
+			{{- else}}
 			data.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
+			{{- end}}
 			{{- end}}
 		}
 		{{- if hasTfOnlyConditional .ConditionalAttribute}}

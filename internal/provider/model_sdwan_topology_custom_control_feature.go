@@ -176,7 +176,12 @@ func (data TopologyCustomControl) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"target.level.value", data.TargetLevel.ValueString())
 		}
 	}
-	if !data.TargetInboundSites.IsNull() {
+	if data.TargetInboundSites.IsNull() {
+		if true && data.TargetLevel.ValueString() == "SITE" {
+			body, _ = sjson.Set(body, path+"target.inboundSites.optionType", "global")
+			body, _ = sjson.Set(body, path+"target.inboundSites.value", []interface{}{})
+		}
+	} else {
 		if true && data.TargetLevel.ValueString() == "SITE" {
 			body, _ = sjson.Set(body, path+"target.inboundSites.optionType", "global")
 			var values []string
@@ -609,7 +614,9 @@ func (data *TopologyCustomControl) fromBody(ctx context.Context, res gjson.Resul
 	if t := res.Get(path + "target.vpn.optionType"); t.Exists() {
 		va := res.Get(path + "target.vpn.value")
 		if t.String() == "global" {
-			data.TargetVpn = helpers.GetStringSet(va.Array())
+			if len(va.Array()) > 0 {
+				data.TargetVpn = helpers.GetStringSet(va.Array())
+			}
 		}
 	}
 	data.TargetRole = types.StringNull()
@@ -633,7 +640,9 @@ func (data *TopologyCustomControl) fromBody(ctx context.Context, res gjson.Resul
 	if t := res.Get(path + "target.inboundSites.optionType"); t.Exists() {
 		va := res.Get(path + "target.inboundSites.value")
 		if t.String() == "global" {
-			data.TargetInboundSites = helpers.GetStringSet(va.Array())
+			if len(va.Array()) > 0 {
+				data.TargetInboundSites = helpers.GetStringSet(va.Array())
+			}
 		}
 	}
 	data.TargetOutboundSites = types.SetNull(types.StringType)
@@ -641,7 +650,9 @@ func (data *TopologyCustomControl) fromBody(ctx context.Context, res gjson.Resul
 	if t := res.Get(path + "target.outboundSites.optionType"); t.Exists() {
 		va := res.Get(path + "target.outboundSites.value")
 		if t.String() == "global" {
-			data.TargetOutboundSites = helpers.GetStringSet(va.Array())
+			if len(va.Array()) > 0 {
+				data.TargetOutboundSites = helpers.GetStringSet(va.Array())
+			}
 		}
 	}
 	if value := res.Get(path + "target.inboundRegions"); value.Exists() && len(value.Array()) > 0 {
@@ -1183,7 +1194,9 @@ func (data *TopologyCustomControl) updateFromBody(ctx context.Context, res gjson
 	if t := res.Get(path + "target.inboundSites.optionType"); t.Exists() {
 		va := res.Get(path + "target.inboundSites.value")
 		if t.String() == "global" {
-			data.TargetInboundSites = helpers.GetStringSet(va.Array())
+			if len(va.Array()) > 0 {
+				data.TargetInboundSites = helpers.GetStringSet(va.Array())
+			}
 		}
 	}
 	data.TargetOutboundSites = types.SetNull(types.StringType)
@@ -1191,7 +1204,9 @@ func (data *TopologyCustomControl) updateFromBody(ctx context.Context, res gjson
 	if t := res.Get(path + "target.outboundSites.optionType"); t.Exists() {
 		va := res.Get(path + "target.outboundSites.value")
 		if t.String() == "global" {
-			data.TargetOutboundSites = helpers.GetStringSet(va.Array())
+			if len(va.Array()) > 0 {
+				data.TargetOutboundSites = helpers.GetStringSet(va.Array())
+			}
 		}
 	}
 	for i := range data.TargetInboundRegions {
@@ -1602,8 +1617,6 @@ func (data *TopologyCustomControl) updateFromBody(ctx context.Context, res gjson
 		// API returns split objects in actions array: [{set:[...]}, {exportTo:{...}}]
 		// Build a map from top-level key to the API element containing it
 		actionEntriesArray := r.Get("actions").Array()
-		fmt.Printf("DEBUG updateFromBody: API actions = %s\n", r.Get("actions").String())
-		fmt.Printf("DEBUG updateFromBody: TF ActionEntries count = %d\n", len(data.Sequences[i].ActionEntries))
 		actionEntriesByKey := make(map[string]gjson.Result)
 		for _, elem := range actionEntriesArray {
 			elem.ForEach(func(key, value gjson.Result) bool {
