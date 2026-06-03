@@ -31,7 +31,7 @@ data "sdwan_custom_application" "example" {
 - `application_family` (String) Application Family
 - `application_group` (String) Application Group
 - `business_relevance` (String) Business Relevance
-- `l3l4` (Attributes List) L3/L4 Attributes (see [below for nested schema](#nestedatt--l3l4))
+- `l3l4` (Attributes Set) L3/L4 Attributes (see [below for nested schema](#nestedatt--l3l4))
 - `server_names` (Set of String) Server Names (Fully Qualified Domain names or Regex starting with `*` but not ending with `*` or both separated by commas.)
 - `traffic_class` (String) Traffic Class
 - `version` (Number) The version of the object

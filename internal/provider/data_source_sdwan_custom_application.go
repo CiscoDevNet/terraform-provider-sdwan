@@ -75,7 +75,7 @@ func (d *CustomApplicationDataSource) Schema(ctx context.Context, req datasource
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
-			"l3l4": schema.ListNestedAttribute{
+			"l3l4": schema.SetNestedAttribute{
 				MarkdownDescription: "L3/L4 Attributes",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{

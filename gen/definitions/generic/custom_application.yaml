@@ -25,7 +25,7 @@ attributes:
     test_value: '["*customapp.com", "customapptest.com", "*appcustom"]'
   - model_name: L3L4
     tf_name: l3l4
-    type: List
+    type: Set
     response_data_path: [data]
     description: L3/L4 Attributes
     attributes:

@@ -93,7 +93,7 @@ func (r *CustomApplicationResource) Schema(ctx context.Context, req resource.Sch
 					),
 				},
 			},
-			"l3l4": schema.ListNestedAttribute{
+			"l3l4": schema.SetNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("L3/L4 Attributes").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
