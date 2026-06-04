@@ -6,6 +6,7 @@ minimum_version: 20.15.0
 id_attribute: id
 test_tags: [SDWAN_2015]
 skip_minimum_test: true
+no_data_source_name_query: true
 parcel_type: feature
 doc_category: Features - Topology
 attributes:

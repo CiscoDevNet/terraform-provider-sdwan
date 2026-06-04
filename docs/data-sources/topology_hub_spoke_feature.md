@@ -25,15 +25,12 @@ data "sdwan_topology_hub_spoke_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
-
-### Optional
-
 - `id` (String) The id of the Feature
-- `name` (String) The name of the Feature
 
 ### Read-Only
 
 - `description` (String) The description of the Feature
+- `name` (String) The name of the Feature
 - `selected_hubs` (Set of String)
 - `spokes` (Attributes List) Spokes (see [below for nested schema](#nestedatt--spokes))
 - `target_vpns` (Set of String)

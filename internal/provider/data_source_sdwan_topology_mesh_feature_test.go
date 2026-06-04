@@ -41,14 +41,6 @@ func TestAccDataSourceSdwanTopologyMeshProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanTopologyMeshPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTopologyMeshProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
-			{
-				Config: testAccDataSourceSdwanTopologyMeshPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTopologyMeshProfileParcelByNameConfig(),
-				Check: resource.ComposeTestCheckFunc(
-					append(checks,
-						resource.TestCheckResourceAttr("data.sdwan_topology_mesh_feature.test", "name", "TF_TEST"),
-						resource.TestCheckResourceAttrSet("data.sdwan_topology_mesh_feature.test", "id"),
-					)...),
-			},
 		},
 	})
 }
@@ -88,22 +80,4 @@ func testAccDataSourceSdwanTopologyMeshProfileParcelConfig() string {
 // End of section. //template:end testAccDataSourceConfig
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
-func testAccDataSourceSdwanTopologyMeshProfileParcelByNameConfig() string {
-	config := `resource "sdwan_topology_mesh_feature" "test" {` + "\n"
-	config += ` name = "TF_TEST"` + "\n"
-	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = sdwan_topology_feature_profile.test.id` + "\n"
-	config += `	target_vpns = ["service_lan_vpn1"]` + "\n"
-	config += `	sites = ["SITE_100"]` + "\n"
-	config += `}` + "\n"
-
-	config += `
-		data "sdwan_topology_mesh_feature" "test" {
-			name = "TF_TEST"
-			feature_profile_id = sdwan_topology_feature_profile.test.id
-		}
-	`
-	return config
-}
-
 // End of section. //template:end testAccDataSourceByNameConfig

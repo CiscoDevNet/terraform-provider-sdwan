@@ -25,15 +25,12 @@ data "sdwan_topology_mesh_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
-
-### Optional
-
 - `id` (String) The id of the Feature
-- `name` (String) The name of the Feature
 
 ### Read-Only
 
 - `description` (String) The description of the Feature
+- `name` (String) The name of the Feature
 - `sites` (Set of String)
 - `target_vpns` (Set of String)
 - `version` (Number) The version of the Feature

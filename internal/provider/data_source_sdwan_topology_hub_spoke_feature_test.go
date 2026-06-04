@@ -43,14 +43,6 @@ func TestAccDataSourceSdwanTopologyHubSpokeProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanTopologyHubSpokePrerequisitesProfileParcelConfig + testAccDataSourceSdwanTopologyHubSpokeProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
-			{
-				Config: testAccDataSourceSdwanTopologyHubSpokePrerequisitesProfileParcelConfig + testAccDataSourceSdwanTopologyHubSpokeProfileParcelByNameConfig(),
-				Check: resource.ComposeTestCheckFunc(
-					append(checks,
-						resource.TestCheckResourceAttr("data.sdwan_topology_hub_spoke_feature.test", "name", "TF_TEST"),
-						resource.TestCheckResourceAttrSet("data.sdwan_topology_hub_spoke_feature.test", "id"),
-					)...),
-			},
 		},
 	})
 }
@@ -98,30 +90,4 @@ func testAccDataSourceSdwanTopologyHubSpokeProfileParcelConfig() string {
 // End of section. //template:end testAccDataSourceConfig
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
-func testAccDataSourceSdwanTopologyHubSpokeProfileParcelByNameConfig() string {
-	config := `resource "sdwan_topology_hub_spoke_feature" "test" {` + "\n"
-	config += ` name = "TF_TEST"` + "\n"
-	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = sdwan_topology_feature_profile.test.id` + "\n"
-	config += `	target_vpns = ["service_lan_vpn1"]` + "\n"
-	config += `	selected_hubs = ["SITE_100"]` + "\n"
-	config += `	spokes = [{` + "\n"
-	config += `	  name = "spoke1"` + "\n"
-	config += `	  spoke_sites = ["SITE_200"]` + "\n"
-	config += `	  hub_sites = [{` + "\n"
-	config += `		sites = ["SITE_100"]` + "\n"
-	config += `		preference = 1` + "\n"
-	config += `	}]` + "\n"
-	config += `	}]` + "\n"
-	config += `}` + "\n"
-
-	config += `
-		data "sdwan_topology_hub_spoke_feature" "test" {
-			name = "TF_TEST"
-			feature_profile_id = sdwan_topology_feature_profile.test.id
-		}
-	`
-	return config
-}
-
 // End of section. //template:end testAccDataSourceByNameConfig
