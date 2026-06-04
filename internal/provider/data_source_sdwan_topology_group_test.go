@@ -61,12 +61,14 @@ resource "sdwan_topology_feature_profile" "test" {
 
 // End of section. //template:end testPrerequisites
 
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanTopologyGroupConfig() string {
-	config := `resource "sdwan_topology_group" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_topology_group" "test" {` + "\n"
 	config += `	name = "TG_1"` + "\n"
 	config += `	description = "My topology group 1"` + "\n"
 	config += `	solution = "sdwan"` + "\n"
-	config += `	feature_profile_ids = [sdwan_policy_object_feature_profile.test.id]` + "\n"
+	config += `	feature_profile_ids = [sdwan_topology_feature_profile.test.id]` + "\n"
 	config += `}` + "\n"
 
 	config += `
@@ -76,3 +78,5 @@ func testAccDataSourceSdwanTopologyGroupConfig() string {
 	`
 	return config
 }
+
+// End of section. //template:end testAccDataSourceConfig

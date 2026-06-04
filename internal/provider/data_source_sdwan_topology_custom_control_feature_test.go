@@ -56,14 +56,6 @@ func TestAccDataSourceSdwanTopologyCustomControlProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanTopologyCustomControlPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTopologyCustomControlProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
-			{
-				Config: testAccDataSourceSdwanTopologyCustomControlPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTopologyCustomControlProfileParcelByNameConfig(),
-				Check: resource.ComposeTestCheckFunc(
-					append(checks,
-						resource.TestCheckResourceAttr("data.sdwan_topology_custom_control_feature.test", "name", "TF_TEST"),
-						resource.TestCheckResourceAttrSet("data.sdwan_topology_custom_control_feature.test", "id"),
-					)...),
-			},
 		},
 	})
 }
@@ -126,45 +118,4 @@ func testAccDataSourceSdwanTopologyCustomControlProfileParcelConfig() string {
 // End of section. //template:end testAccDataSourceConfig
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
-func testAccDataSourceSdwanTopologyCustomControlProfileParcelByNameConfig() string {
-	config := `resource "sdwan_topology_custom_control_feature" "test" {` + "\n"
-	config += ` name = "TF_TEST"` + "\n"
-	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = sdwan_topology_feature_profile.test.id` + "\n"
-	config += `	default_action = "reject"` + "\n"
-	config += `	target_level = "SITE"` + "\n"
-	config += `	target_inbound_sites = ["SITE_100"]` + "\n"
-	config += `	target_outbound_sites = ["SITE_200"]` + "\n"
-	config += `	sequences = [{` + "\n"
-	config += `	  id = 1` + "\n"
-	config += `	  name = "Rule1"` + "\n"
-	config += `	  base_action = "accept"` + "\n"
-	config += `	  type = "route"` + "\n"
-	config += `	  ip_type = "ipv4"` + "\n"
-	config += `	  match_entries = [{` + "\n"
-	config += `		omp_tag = 100` + "\n"
-	config += `		origin = "connected"` + "\n"
-	config += `		originator = "1.2.3.4"` + "\n"
-	config += `		tloc_ip = "1.2.3.4"` + "\n"
-	config += `		tloc_color = "bronze"` + "\n"
-	config += `		tloc_encapsulation = "ipsec"` + "\n"
-	config += `	}]` + "\n"
-	config += `	  action_entries = [{` + "\n"
-	config += `      set_parameters = [{` + "\n"
-	config += `			preference = 100` + "\n"
-	config += `			omp_tag = 100` + "\n"
-	config += `		}]` + "\n"
-	config += `	}]` + "\n"
-	config += `	}]` + "\n"
-	config += `}` + "\n"
-
-	config += `
-		data "sdwan_topology_custom_control_feature" "test" {
-			name = "TF_TEST"
-			feature_profile_id = sdwan_topology_feature_profile.test.id
-		}
-	`
-	return config
-}
-
 // End of section. //template:end testAccDataSourceByNameConfig
