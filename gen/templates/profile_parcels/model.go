@@ -208,6 +208,11 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 		}
 	} else {{else if .AlwaysIncludeParent }}if data.{{toGoName .TfName}}.IsNull() {
 			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}optionType", "default")
+	} else {{else if .IncludeEmptyValue }}if data.{{toGoName .TfName}}.IsNull() {
+		if true{{buildConditionalLogic .ConditionalAttribute $.Attributes "data"}} {
+		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
+		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", []interface{}{})
+		}
 	} else {{else}}if !data.{{toGoName .TfName}}.IsNull(){{end}} {
 		if true{{buildConditionalLogic .ConditionalAttribute $.Attributes "data"}} {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
@@ -256,6 +261,11 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 			} else {{else if .AlwaysIncludeParent}}if data.{{toGoName .TfName}}.IsNull() {
 				body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}optionType", "default")
+			} else {{else if .IncludeEmptyValue}}if item.{{toGoName .TfName}}.IsNull() {
+				if true{{buildConditionalLogic .ConditionalAttribute "item"}} {
+				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", []interface{}{})
+				}
 			} else {{else}}if !item.{{toGoName .TfName}}.IsNull(){{end}} {
 				if true{{buildConditionalLogic .ConditionalAttribute "item"}} {
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
@@ -303,6 +313,11 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 					} else {{else if .AlwaysIncludeParent }}if data.{{toGoName .TfName}}.IsNull() {
 						body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}optionType", "default")
+					} else {{else if .IncludeEmptyValue}}if childItem.{{toGoName .TfName}}.IsNull() {
+						if true{{buildConditionalLogic .ConditionalAttribute "childItem"}} {
+						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
+						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", []interface{}{})
+						}
 					} else {{else}}if !childItem.{{toGoName .TfName}}.IsNull(){{end}} {
 						if true{{buildConditionalLogic .ConditionalAttribute "childItem"}} {
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
@@ -349,6 +364,11 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 							} else {{else if .AlwaysIncludeParent }}if data.{{toGoName .TfName}}.IsNull() {
 								body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}optionType", "default")
+							} else {{else if .IncludeEmptyValue}}if childChildItem.{{toGoName .TfName}}.IsNull() {
+								if true{{buildConditionalLogic .ConditionalAttribute "childChildItem"}} {
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", []interface{}{})
+								}
 							} else {{else}}if !childChildItem.{{toGoName .TfName}}.IsNull(){{end}} {
 								if true{{buildConditionalLogic .ConditionalAttribute "childChildItem"}} {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
@@ -424,7 +444,13 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			{{- if eq .Type "StringInt64" }}
 			data.{{toGoName .TfName}} = types.StringValue(va.String())
 			{{- else}}
+			{{- if and (isListSet .) .OptionalNullEmpty}}
+			if len(va.Array()) > 0 {
+				data.{{toGoName .TfName}} = helpers.Get{{.ElementType}}{{.Type}}(va.Array())
+			}
+			{{- else}}
 			data.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
+			{{- end}}
 			{{- end}}
 		}
 		{{- if hasTfOnlyConditional .ConditionalAttribute}}
@@ -605,7 +631,13 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 			{{- if eq .Type "StringInt64" }}
 			data.{{toGoName .TfName}} = types.StringValue(va.String())
 			{{- else}}
+			{{- if and (isListSet .) .OptionalNullEmpty}}
+			if len(va.Array()) > 0 {
+				data.{{toGoName .TfName}} = helpers.Get{{.ElementType}}{{.Type}}(va.Array())
+			}
+			{{- else}}
 			data.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
+			{{- end}}
 			{{- end}}
 		}
 	}
@@ -682,6 +714,14 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 				return true
 			},
 		)
+		{{- if .PositionalFallback}}
+		if !r.Exists() {
+			arr := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}").Array()
+			if i < len(arr) {
+				r = arr[i]
+			}
+		}
+		{{- end}}
 
 		{{- range .Attributes}}
 		{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .TfOnly) (not .WriteOnly) (not .Encrypted) (not .Value)}}
@@ -702,7 +742,13 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 				{{- if eq .Type "StringInt64" }}
 				data.{{$list}}[i].{{toGoName .TfName}} = types.StringValue(va.String())
 				{{- else}}
+				{{- if and (isListSet .) .OptionalNullEmpty}}
+				if len(va.Array()) > 0 {
+					data.{{$list}}[i].{{toGoName .TfName}} = helpers.Get{{.ElementType}}{{.Type}}(va.Array())
+				}
+				{{- else}}
 				data.{{$list}}[i].{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
+				{{- end}}
 				{{- end}}
 			}
 		}
@@ -778,6 +824,14 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 					return true
 				},
 			)
+			{{- if .PositionalFallback}}
+			if !cr.Exists() {
+				arr := r.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}").Array()
+				if ci < len(arr) {
+					cr = arr[ci]
+				}
+			}
+			{{- end}}
 
 			{{- range .Attributes}}
 			{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .TfOnly) (not .WriteOnly) (not .Encrypted) (not .Value)}}
@@ -798,7 +852,13 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 					{{- if eq .Type "StringInt64" }}
 					data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} = types.StringValue(va.String())
 					{{- else}}
+					{{- if and (isListSet .) .OptionalNullEmpty}}
+					if len(va.Array()) > 0 {
+						data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} = helpers.Get{{.ElementType}}{{.Type}}(va.Array())
+					}
+					{{- else}}
 					data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
+					{{- end}}
 					{{- end}}
 				}
 			}
@@ -874,6 +934,14 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 						return true
 					},
 				)
+				{{- if .PositionalFallback}}
+				if !ccr.Exists() {
+					arr := cr.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}").Array()
+					if cci < len(arr) {
+						ccr = arr[cci]
+					}
+				}
+				{{- end}}
 
 				{{- range .Attributes}}
 				{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .TfOnly) (not .WriteOnly) (not .Encrypted) (not .Value)}}
@@ -894,7 +962,13 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 						{{- if eq .Type "StringInt64" }}
 						data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}} = types.StringValue(va.String())
 						{{- else}}
+						{{- if and (isListSet .) .OptionalNullEmpty}}
+						if len(va.Array()) > 0 {
+							data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}} = helpers.Get{{.ElementType}}{{.Type}}(va.Array())
+						}
+						{{- else}}
 						data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
+						{{- end}}
 						{{- end}}
 					}
 				}
