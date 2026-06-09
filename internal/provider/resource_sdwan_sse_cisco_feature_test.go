@@ -36,6 +36,7 @@ func TestAccSdwanSSECiscoProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_cisco_feature.test", "context_sharing_for_vpn", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_cisco_feature.test", "context_sharing_for_sgt", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_cisco_feature.test", "interfaces.0.interface_name", "ipsec1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_cisco_feature.test", "interfaces.0.tunnel_source_interface", "GigabitEthernet8"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_cisco_feature.test", "interfaces.0.tunnel_dc_preference", "primary-dc"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_cisco_feature.test", "interfaces.0.mtu", "1400"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sse_cisco_feature.test", "interfaces.0.ike_version", "2"))
@@ -85,6 +86,7 @@ func testAccSdwanSSECiscoProfileParcelConfig_minimum() string {
 	config += `	feature_profile_id = sdwan_sse_feature_profile.test.id` + "\n"
 	config += `	interfaces = [{` + "\n"
 	config += `	  interface_name = "ipsec1"` + "\n"
+	config += `	  tunnel_source_interface = "GigabitEthernet8"` + "\n"
 	config += `	  tunnel_dc_preference = "primary-dc"` + "\n"
 	config += `	  mtu = 1400` + "\n"
 	config += `	}]` + "\n"
@@ -112,6 +114,7 @@ func testAccSdwanSSECiscoProfileParcelConfig_all() string {
 	config += `	context_sharing_for_sgt = false` + "\n"
 	config += `	interfaces = [{` + "\n"
 	config += `	  interface_name = "ipsec1"` + "\n"
+	config += `	  tunnel_source_interface = "GigabitEthernet8"` + "\n"
 	config += `	  tunnel_dc_preference = "primary-dc"` + "\n"
 	config += `	  mtu = 1400` + "\n"
 	config += `	  ike_version = 2` + "\n"

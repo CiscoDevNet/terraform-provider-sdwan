@@ -23,10 +23,11 @@ resource "sdwan_sse_cisco_feature" "example" {
   context_sharing_for_sgt = false
   interfaces = [
     {
-      interface_name       = "ipsec1"
-      tunnel_dc_preference = "primary-dc"
-      mtu                  = 1400
-      ike_version          = 2
+      interface_name          = "ipsec1"
+      tunnel_source_interface = "GigabitEthernet8"
+      tunnel_dc_preference    = "primary-dc"
+      mtu                     = 1400
+      ike_version             = 2
     }
   ]
   interface_pairs = [

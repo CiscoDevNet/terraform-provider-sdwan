@@ -40,9 +40,9 @@ attributes:
       exclude_test: true
     - model_name: tunnelSourceInterface
       tf_name: tunnel_source_interface
+      mandatory: true
       description: Interface name for tunnel source
       example: GigabitEthernet8
-      exclude_test: true
     - model_name: tunnelRouteVia
       tf_name: tunnel_route_via
       description: Interface name for tunnel route
@@ -50,6 +50,7 @@ attributes:
       exclude_test: true
     - model_name: tunnelDcPreference
       tf_name: tunnel_dc_preference
+      mandatory: true
       description: SSE Tunnel Data Center
       example: primary-dc
     - model_name: tcpMssAdjust
@@ -132,6 +133,7 @@ attributes:
       example: ipsec1
     - model_name: activeInterfaceWeight
       tf_name: active_interface_weight
+      mandatory: true
       description: Active Tunnel Interface Weight
       example: 1
     - model_name: backupInterface
@@ -141,6 +143,7 @@ attributes:
       example: None
     - model_name: backupInterfaceWeight
       tf_name: backup_interface_weight
+      mandatory: true
       description: Backup Tunnel Interface Weight
       example: 1
   - model_name: region
