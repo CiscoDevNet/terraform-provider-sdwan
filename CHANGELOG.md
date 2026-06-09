@@ -8,6 +8,8 @@
 - Add `sdwan_sse_feature_profile` resource and data source
 - Add `sdwan_sse_cisco_feature` resource and data source
 - Add `sdwan_sse_zscaler_feature` resource and data source
+- Fix issue where int validator is missing for `AddIntegerRangeDescription` especially when MaxInt is `0` or MinInt is `0`
+- Fix issue where default value extracting issue when the field type is `enum` (warning that any apply touching `sdwan_system_omp_feature` after upgrading will silently change `holdtime` from `60s` to `300s` on all affected devices — which is a `network convergence behavior change`)
 
 ## 0.11.2
 
