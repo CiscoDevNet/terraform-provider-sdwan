@@ -434,6 +434,7 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewSystemRemoteAccessProfileParcelResource,
 		NewSystemSecurityProfileParcelResource,
 		NewSystemSNMPProfileParcelResource,
+		NewTopologyCustomControlProfileParcelResource,
 		NewTransportCellularControllerProfileParcelResource,
 		NewTransportCellularProfileProfileParcelResource,
 		NewTransportGPSProfileParcelResource,
@@ -536,6 +537,8 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewTLOCListPolicyObjectResource,
 		NewTLSSSLDecryptionPolicyDefinitionResource,
 		NewTLSSSLProfilePolicyDefinitionResource,
+		NewTopologyFeatureProfileResource,
+		NewTopologyGroupResource,
 		NewTrafficDataPolicyDefinitionResource,
 		NewTransportFeatureProfileResource,
 		NewTransportWANVPNFeatureAssociateRoutingBGPFeatureResource,
@@ -557,6 +560,7 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewZoneListPolicyObjectResource,
 		NewAttachFeatureDeviceTemplateResource,
 		NewActivateCentralizedPolicyResource,
+		NewActivateTopologyGroupResource,
 	}
 }
 
@@ -689,6 +693,7 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewSystemRemoteAccessProfileParcelDataSource,
 		NewSystemSecurityProfileParcelDataSource,
 		NewSystemSNMPProfileParcelDataSource,
+		NewTopologyCustomControlProfileParcelDataSource,
 		NewTransportCellularControllerProfileParcelDataSource,
 		NewTransportCellularProfileProfileParcelDataSource,
 		NewTransportGPSProfileParcelDataSource,
@@ -793,6 +798,8 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewTLOCListPolicyObjectDataSource,
 		NewTLSSSLDecryptionPolicyDefinitionDataSource,
 		NewTLSSSLProfilePolicyDefinitionDataSource,
+		NewTopologyFeatureProfileDataSource,
+		NewTopologyGroupDataSource,
 		NewTrafficDataPolicyDefinitionDataSource,
 		NewTransportFeatureProfileDataSource,
 		NewTransportWANVPNFeatureAssociateRoutingBGPFeatureDataSource,

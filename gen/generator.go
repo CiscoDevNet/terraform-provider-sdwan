@@ -291,6 +291,9 @@ type YamlConfigAttribute struct {
 	IncludeVariableCheck    bool                           `yaml:"include_variable_check"`
 	ResetContainerIfIgnore  bool                           `yaml:"reset_container_if_ignore"`
 	NoOptionType            bool                           `yaml:"no_option_type"`
+	PositionalFallback      bool                           `yaml:"positional_fallback"`
+	OptionalNullEmpty       bool                           `yaml:"optional_null_empty"`
+	IncludeEmptyValue       bool                           `yaml:"include_empty_value"`
 	WriteAsDefault          bool                           `yaml:"write_as_default"`
 }
 
@@ -1166,7 +1169,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	}
 
 	if r.Get("oneOf.0.type").String() == "array" && len(attr.Attributes) > 0 {
-		attr.Type = "List"
+		if attr.Type != "Set" {
+			attr.Type = "List"
+		}
 		if r.Get("minItems").Exists() {
 			attr.MinList = r.Get("minItems").Int()
 		}
@@ -1308,7 +1313,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 			}
 		}
 	} else if r.Get("type").String() == "array" && r.Get("items.type").String() == "object" || r.Get("items.oneOf.0.type").String() == "object" && len(attr.Attributes) > 0 {
-		attr.Type = "List"
+		if attr.Type != "Set" {
+			attr.Type = "List"
+		}
 		if r.Get("minItems").Exists() {
 			attr.MinList = r.Get("minItems").Int()
 		}
