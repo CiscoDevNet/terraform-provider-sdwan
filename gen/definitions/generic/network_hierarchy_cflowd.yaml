@@ -1,0 +1,135 @@
+# Model and Resource files are created manually since there are some custom logic involved in handling the DELETE uses PUT with empty body {"data":{}}.
+---
+name: Network Hierarchy Cflowd
+rest_endpoint: /v1/network-hierarchy/%s/network-settings/cflowd
+id_attribute: id
+doc_category: Network Hierarchy
+minimum_version: "20.15"
+res_description: This resource can manage Network Hierarchy Cflowd settings on a network hierarchy node.
+ds_description: This data source can read Network Hierarchy Cflowd settings on a network hierarchy node.
+skip_templates: ["model.go", "resource.go"]
+attributes:
+  - model_name: nodeId
+    tf_name: node_id
+    type: String
+    reference: true
+    id: true
+    mandatory: true
+    description: The UUID of the network hierarchy node
+    example: 5333c142-394b-47a7-afa6-760c44ca3cb5
+  - model_name: flowActiveTimeout
+    data_path: [data]
+    tf_name: flow_active_timeout
+    type: Int64
+    description: Active flow timeout in seconds
+    min_int: 30
+    max_int: 3600
+    default_value: "600"
+    example: 600
+  - model_name: flowInactiveTimeout
+    data_path: [data]
+    tf_name: flow_inactive_timeout
+    type: Int64
+    description: Inactive flow timeout in seconds
+    min_int: 1
+    max_int: 3600
+    default_value: "60"
+    example: 60
+  - model_name: flowRefreshTime
+    data_path: [data]
+    tf_name: flow_refresh_time
+    type: Int64
+    description: Flow refresh time in seconds
+    min_int: 60
+    max_int: 86400
+    default_value: "600"
+    example: 600
+  - model_name: flowSamplingInterval
+    data_path: [data]
+    tf_name: flow_sampling_interval
+    type: Int64
+    description: Flow sampling interval
+    min_int: 1
+    max_int: 65536
+    default_value: "1"
+    example: 1
+  - model_name: collectTlocLoopback
+    data_path: [data]
+    tf_name: collect_tloc_loopback
+    type: Bool
+    description: Collect SDWAN TLOC loopback interface name instead of physical
+    default_value: "false"
+    example: true
+  - model_name: protocol
+    data_path: [data]
+    tf_name: protocol
+    type: String
+    enum_values: [ipv4, ipv6, both]
+    description: FNF Protocol
+    default_value: "ipv4"
+    example: ipv4
+  - model_name: collectTos
+    data_path: [data, customizedIpv4RecordFields]
+    tf_name: collect_tos
+    type: Bool
+    description: Collect TOS record field
+    default_value: "false"
+    example: true
+  - model_name: collectDscpOutput
+    data_path: [data, customizedIpv4RecordFields]
+    tf_name: collect_dscp_output
+    type: Bool
+    description: Collect remarked DSCP
+    default_value: "false"
+    example: true
+  - model_name: collectors
+    data_path: [data]
+    tf_name: collectors
+    type: Set
+    max_list: 4
+    description: List of collectors
+    attributes:
+      - model_name: vpnId
+        tf_name: vpn_id
+        type: Int64
+        mandatory: true
+        description: VPN ID
+        min_int: 0
+        max_int: 65530
+        example: 1
+      - model_name: address
+        tf_name: address
+        type: String
+        mandatory: true
+        description: Collector IPv4 or IPv6 address
+        example: "10.0.0.1"
+      - model_name: udpPort
+        tf_name: udp_port
+        type: Int64
+        mandatory: true
+        description: Collector UDP port number
+        min_int: 1024
+        max_int: 65535
+        default_value: "4739"
+        example: 4739
+      - model_name: exportSpread
+        tf_name: export_spread
+        type: Bool
+        description: Enable export spreading
+        default_value: "false"
+        example: true
+      - model_name: bfdMetricsExport
+        tf_name: bfd_metrics_export
+        type: Bool
+        description: Enable BFD metrics exporting
+        default_value: "false"
+        example: true
+      - model_name: exportInterval
+        tf_name: export_interval
+        type: Int64
+        description: BFD export interval in seconds
+        min_int: 1
+        max_int: 86400
+        default_value: "600"
+        example: 600
+test_prerequisites: ""

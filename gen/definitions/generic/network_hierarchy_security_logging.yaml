@@ -1,0 +1,66 @@
+# Model and Resource files are created manually since there are some custom logic involved in handling the collectors list attribute. The templates are skipped for this definition.
+---
+name: Network Hierarchy Security Logging
+rest_endpoint: /v1/network-hierarchy/%s/network-settings/security-logging
+id_attribute: id
+doc_category: Network Hierarchy
+minimum_version: "20.15"
+res_description: This resource can manage Network Hierarchy Security Logging settings on a network hierarchy node.
+ds_description: This data source can read Network Hierarchy Security Logging settings on a network hierarchy node.
+skip_templates: ["model.go", "resource.go"]
+attributes:
+  - model_name: nodeId
+    tf_name: node_id
+    type: String
+    reference: true
+    id: true
+    mandatory: true
+    description: The UUID of the network hierarchy node
+    example: 5333c142-394b-47a7-afa6-760c44ca3cb5
+  - model_name: highSpeedLogging
+    data_path: [data]
+    tf_name: high_speed_logging
+    type: Set
+    max_list: 4
+    description: High speed logging configuration
+    attributes:
+      - model_name: vrf
+        tf_name: vrf
+        type: String
+        mandatory: true
+        description: VRF name or ID
+        example: "1"
+      - model_name: serverIp
+        tf_name: server_ip
+        type: String
+        mandatory: true
+        description: Server IPv4 or IPv6 address
+        example: "10.1.2.1"
+      - model_name: port
+        tf_name: port
+        type: Int64
+        mandatory: true
+        description: Server port number
+        min_int: 1
+        max_int: 65535
+        example: 2055
+  - model_name: utdSyslog
+    data_path: [data]
+    tf_name: utd_syslog
+    type: List
+    max_list: 1
+    description: UTD syslog configuration
+    attributes:
+      - model_name: vpn
+        tf_name: vpn
+        type: String
+        mandatory: true
+        description: VPN name or ID
+        example: "service_lan_vpn1"
+      - model_name: serverIp
+        tf_name: server_ip
+        type: String
+        mandatory: true
+        description: Server IPv4 address
+        example: "10.1.1.2"
+test_prerequisites: ""
