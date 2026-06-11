@@ -28,20 +28,24 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
-func TestAccDataSourceSdwanTopologyGroup(t *testing.T) {
+func TestAccDataSourceSdwanCustomApplication(t *testing.T) {
 	if os.Getenv("SDWAN_2015") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_topology_group.test", "name", "TG_1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_topology_group.test", "description", "My topology group 1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_topology_group.test", "solution", "sdwan"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "app_name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "l3l4.0.l4_protocol", "TCP"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "l3l4.0.ports", "1 10-20"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "application_family", "routing"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "application_group", "ipsec-group"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "traffic_class", "signaling"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "business_relevance", "business-relevant"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanTopologyGroupPrerequisitesConfig + testAccDataSourceSdwanTopologyGroupConfig(),
+				Config: testAccDataSourceSdwanCustomApplicationConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -51,29 +55,28 @@ func TestAccDataSourceSdwanTopologyGroup(t *testing.T) {
 // End of section. //template:end testAccDataSource
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-const testAccDataSourceSdwanTopologyGroupPrerequisitesConfig = `
-resource "sdwan_topology_feature_profile" "test" {
-  name        = "TOPOLOGY_FP_TF"
-  description = "Terraform test"
-}
-
-`
-
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
-func testAccDataSourceSdwanTopologyGroupConfig() string {
+func testAccDataSourceSdwanCustomApplicationConfig() string {
 	config := ""
-	config += `resource "sdwan_topology_group" "test" {` + "\n"
-	config += `	name = "TG_1"` + "\n"
-	config += `	description = "My topology group 1"` + "\n"
-	config += `	solution = "sdwan"` + "\n"
-	config += `	feature_profile_ids = [sdwan_topology_feature_profile.test.id]` + "\n"
+	config += `resource "sdwan_custom_application" "test" {` + "\n"
+	config += `	app_name = "Example"` + "\n"
+	config += `	server_names = ["*customapp.com", "customapptest.com", "*appcustom"]` + "\n"
+	config += `	l3l4 = [{` + "\n"
+	config += `	  ip_addresses = ["10.2.2.25", "192.168.1.0/24"]` + "\n"
+	config += `	  l4_protocol = "TCP"` + "\n"
+	config += `	  ports = "1 10-20"` + "\n"
+	config += `	}]` + "\n"
+	config += `	application_family = "routing"` + "\n"
+	config += `	application_group = "ipsec-group"` + "\n"
+	config += `	traffic_class = "signaling"` + "\n"
+	config += `	business_relevance = "business-relevant"` + "\n"
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_topology_group" "test" {
-			id = sdwan_topology_group.test.id
+		data "sdwan_custom_application" "test" {
+			id = sdwan_custom_application.test.id
 		}
 	`
 	return config

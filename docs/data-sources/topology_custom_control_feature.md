@@ -25,16 +25,13 @@ data "sdwan_topology_custom_control_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
-
-### Optional
-
 - `id` (String) The id of the Feature
-- `name` (String) The name of the Feature
 
 ### Read-Only
 
 - `default_action` (String) Default Action
 - `description` (String) The description of the Feature
+- `name` (String) The name of the Feature
 - `sequences` (Attributes List) Sequence list (see [below for nested schema](#nestedatt--sequences))
 - `target_inbound_regions` (Attributes List) (see [below for nested schema](#nestedatt--target_inbound_regions))
 - `target_inbound_sites` (Set of String)

@@ -111,4 +111,4 @@ attributes:
     default_value: false
     response_data_path: [data, "0"]
     description: Enable Cisco SSE Context Sharing
-    example: "false"
+    example: "true"

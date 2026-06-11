@@ -127,10 +127,30 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 				Computed:            true,
 				{{- end}}
 				{{- if and (len .EnumValues) (not .IgnoreEnum)}}
+				{{- if isSet .}}
+				Validators: []validator.Set{
+					setvalidator.ValueStringsAre(
+						stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
+					),
+				},
+				{{- else}}
 				Validators: []validator.String{
 					stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 				},
+				{{- end}}
 				{{- else if or (len .StringPatterns) (ne .StringMinLength 0) (ne .StringMaxLength 0) }}
+				{{- if isSet .}}
+				Validators: []validator.Set{
+					setvalidator.ValueStringsAre(
+						{{- if or (ne .StringMinLength 0) (ne .StringMaxLength 0)}}
+						stringvalidator.LengthBetween({{.StringMinLength}}, {{.StringMaxLength}}),
+						{{- end}}
+						{{- range .StringPatterns}}
+						stringvalidator.RegexMatches(regexp.MustCompile(`{{.}}`), ""),
+						{{- end}}
+					),
+				},
+				{{- else}}
 				Validators: []validator.String{
 					{{- if or (ne .StringMinLength 0) (ne .StringMaxLength 0)}}
 					stringvalidator.LengthBetween({{.StringMinLength}}, {{.StringMaxLength}}),
@@ -139,6 +159,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 					stringvalidator.RegexMatches(regexp.MustCompile(`{{.}}`), ""),
 					{{- end}}
 				},
+				{{- end}}
 				{{- else if or (ne .MinInt 0) (ne .MaxInt 0)}}
 				Validators: []validator.Int64{
 					int64validator.Between({{.MinInt}}, {{.MaxInt}}),
@@ -194,10 +215,30 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 							Computed:            true,
 							{{- end}}
 							{{- if and (len .EnumValues) (not .IgnoreEnum)}}
+							{{- if isSet .}}
+							Validators: []validator.Set{
+								setvalidator.ValueStringsAre(
+									stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
+								),
+							},
+							{{- else}}
 							Validators: []validator.String{
 								stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 							},
+							{{- end}}
 							{{- else if or (len .StringPatterns) (ne .StringMinLength 0) (ne .StringMaxLength 0) }}
+							{{- if isSet .}}
+							Validators: []validator.Set{
+								setvalidator.ValueStringsAre(
+									{{- if or (ne .StringMinLength 0) (ne .StringMaxLength 0)}}
+									stringvalidator.LengthBetween({{.StringMinLength}}, {{.StringMaxLength}}),
+									{{- end}}
+									{{- range .StringPatterns}}
+									stringvalidator.RegexMatches(regexp.MustCompile(`{{.}}`), ""),
+									{{- end}}
+								),
+							},
+							{{- else}}
 							Validators: []validator.String{
 								{{- if or (ne .StringMinLength 0) (ne .StringMaxLength 0)}}
 								stringvalidator.LengthBetween({{.StringMinLength}}, {{.StringMaxLength}}),
@@ -206,6 +247,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 								stringvalidator.RegexMatches(regexp.MustCompile(`{{.}}`), ""),
 								{{- end}}
 							},
+							{{- end}}
 							{{- else if or (ne .MinInt 0) (ne .MaxInt 0)}}
 							Validators: []validator.Int64{
 								int64validator.Between({{.MinInt}}, {{.MaxInt}}),
@@ -261,10 +303,30 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 										Computed:            true,
 										{{- end}}
 										{{- if and (len .EnumValues) (not .IgnoreEnum)}}
+										{{- if isSet .}}
+										Validators: []validator.Set{
+											setvalidator.ValueStringsAre(
+												stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
+											),
+										},
+										{{- else}}
 										Validators: []validator.String{
 											stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 										},
+										{{- end}}
 										{{- else if or (len .StringPatterns) (ne .StringMinLength 0) (ne .StringMaxLength 0) }}
+										{{- if isSet .}}
+										Validators: []validator.Set{
+											setvalidator.ValueStringsAre(
+												{{- if or (ne .StringMinLength 0) (ne .StringMaxLength 0)}}
+												stringvalidator.LengthBetween({{.StringMinLength}}, {{.StringMaxLength}}),
+												{{- end}}
+												{{- range .StringPatterns}}
+												stringvalidator.RegexMatches(regexp.MustCompile(`{{.}}`), ""),
+												{{- end}}
+											),
+										},
+										{{- else}}
 										Validators: []validator.String{
 											{{- if or (ne .StringMinLength 0) (ne .StringMaxLength 0)}}
 											stringvalidator.LengthBetween({{.StringMinLength}}, {{.StringMaxLength}}),
@@ -273,6 +335,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 											stringvalidator.RegexMatches(regexp.MustCompile(`{{.}}`), ""),
 											{{- end}}
 										},
+										{{- end}}
 										{{- else if or (ne .MinInt 0) (ne .MaxInt 0)}}
 										Validators: []validator.Int64{
 											int64validator.Between({{.MinInt}}, {{.MaxInt}}),
@@ -328,10 +391,30 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 													Computed:            true,
 													{{- end}}
 													{{- if and (len .EnumValues) (not .IgnoreEnum)}}
+													{{- if isSet .}}
+													Validators: []validator.Set{
+														setvalidator.ValueStringsAre(
+															stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
+														),
+													},
+													{{- else}}
 													Validators: []validator.String{
 														stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 													},
+													{{- end}}
 													{{- else if or (len .StringPatterns) (ne .StringMinLength 0) (ne .StringMaxLength 0) }}
+													{{- if isSet .}}
+													Validators: []validator.Set{
+														setvalidator.ValueStringsAre(
+															{{- if or (ne .StringMinLength 0) (ne .StringMaxLength 0)}}
+															stringvalidator.LengthBetween({{.StringMinLength}}, {{.StringMaxLength}}),
+															{{- end}}
+															{{- range .StringPatterns}}
+															stringvalidator.RegexMatches(regexp.MustCompile(`{{.}}`), ""),
+															{{- end}}
+														),
+													},
+													{{- else}}
 													Validators: []validator.String{
 														{{- if or (ne .StringMinLength 0) (ne .StringMaxLength 0)}}
 														stringvalidator.LengthBetween({{.StringMinLength}}, {{.StringMaxLength}}),
@@ -340,6 +423,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 														stringvalidator.RegexMatches(regexp.MustCompile(`{{.}}`), ""),
 														{{- end}}
 													},
+													{{- end}}
 													{{- else if or (ne .MinInt 0) (ne .MaxInt 0)}}
 													Validators: []validator.Int64{
 														int64validator.Between({{.MinInt}}, {{.MaxInt}}),

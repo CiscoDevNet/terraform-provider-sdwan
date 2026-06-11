@@ -31,7 +31,7 @@ resource "sdwan_cloud_provider_settings" "example" {
   cisco_sse_org_id          = "323456"
   cisco_sse_auth_key        = "33333444"
   cisco_sse_auth_secret     = "$CRYPT_CLUSTER$Gg4nVpFdldXga1hLKhdJrA==$hiFPirWJnqNxMq3l/m1ekw=="
-  cisco_sse_context_sharing = false
+  cisco_sse_context_sharing = true
 }
 ```
 

@@ -7,6 +7,7 @@
 - Add `sdwan_topology_custom_control_feature` resource and data source
 - Add `sdwan_topology_mesh_feature` resource and data source
 - Add `sdwan_topology_hub_spoke_feature` resource and data source
+- Add `sdwan_custom_application` resource and data source
 
 ## 0.11.2
 
