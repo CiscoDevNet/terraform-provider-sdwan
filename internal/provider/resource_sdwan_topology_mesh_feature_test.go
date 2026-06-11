@@ -76,3 +76,24 @@ func testAccSdwanTopologyMeshProfileParcelConfig_all() string {
 }
 
 // End of section. //template:end testAccConfigAll
+
+func TestAccSdwanTopologyMeshProfileParcel_WithChecks(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
+	}
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_mesh_feature.test", "name", "TF_TEST_ALL"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_mesh_feature.test", "description", "Terraform integration test"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_mesh_feature.test", "target_vpns.#", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_mesh_feature.test", "sites.#", "1"))
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccSdwanTopologyMeshPrerequisitesProfileParcelConfig + testAccSdwanTopologyMeshProfileParcelConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
+		},
+	})
+}
