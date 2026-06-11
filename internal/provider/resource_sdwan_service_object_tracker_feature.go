@@ -145,6 +145,9 @@ func (r *ServiceObjectTrackerProfileParcelResource) Schema(ctx context.Context, 
 			"vpn": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("VPN").AddIntegerRangeDescription(0, 65530).String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(65530),
+				},
 			},
 			"vpn_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

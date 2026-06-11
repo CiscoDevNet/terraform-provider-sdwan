@@ -109,6 +109,9 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 			"local_replicator_threshold": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set number of joins per group the router supports").AddIntegerRangeDescription(0, 131072).String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(131072),
+				},
 			},
 			"local_replicator_threshold_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

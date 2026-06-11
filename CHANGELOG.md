@@ -6,6 +6,11 @@
 - Add `sdwan_activate_topology_group` resource
 - Add `sdwan_topology_custom_control_feature` resource and data source
 - Add `sdwan_custom_application` resource and data source
+- Add `sdwan_sse_feature_profile` resource and data source
+- Add `sdwan_sse_cisco_feature` resource and data source
+- Add `sdwan_sse_zscaler_feature` resource and data source
+- Fix integer validator generation for attributes with only a minimum or maximum bound, including schemas where one side of the bound is 0
+- Fix profile parcel default generation to prefer explicit JSON schema defaults over the first enum value. (Note - this impacts the generated default of `sdwan_system_omp_feature.holdtime from 60 to 300` which will be pushed, once changing the sdwan_system_omp_feature configuration after provider upgrade.)
 
 ## 0.11.2
 

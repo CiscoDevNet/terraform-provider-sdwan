@@ -1,0 +1,1641 @@
+{
+  "request": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/sse/cisco-sse/post/request_schema.json",
+    "title": "Cisco-SSE Schema",
+    "description": "Cisco-SSE schema for POST request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "description": { "type": "string" },
+      "data": {
+        "type": "object",
+        "properties": {
+          "sse_instance": {
+            "description": "Cisco SSE instance name",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": { "type": "string", "enum": ["global"] },
+                  "value": {
+                    "default": "Cisco-Secure-Access",
+                    "enum": ["Cisco-Secure-Access"],
+                    "type": "string"
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "contextSharingForVpn": {
+            "description": "Enable/disable Cisco SSE context sharing for vpn",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": { "type": "string", "enum": ["global"] },
+                  "value": { "type": "boolean" }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": { "type": "string", "enum": ["default"] },
+                  "value": { "type": "boolean", "enum": [false] }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "contextSharingForSgt": {
+            "description": "Enable/disable Cisco SSE context sharing for sgt",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": { "type": "string", "enum": ["global"] },
+                  "value": { "type": "boolean" }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": { "type": "string", "enum": ["default"] },
+                  "value": { "type": "boolean", "enum": [false] }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "interface": {
+            "description": "Interface name: IPsec when present",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "ifName": {
+                  "description": "Interface name: ipsec(1..255)",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "minLength": 5,
+                          "type": "string",
+                          "pattern": "^ipsec(?:1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)$",
+                          "maxLength": 8
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "shutdown": {
+                  "description": "Administrative state",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": { "type": "boolean" },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": { "type": "boolean" }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["default"] },
+                        "value": { "type": "boolean", "enum": [false] }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "tunnelSourceInterface": {
+                  "description": "<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "type": "string",
+                          "pattern": "(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                          "minLength": 3,
+                          "maxLength": 32
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "type": "string",
+                          "pattern": "(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                          "minLength": 3,
+                          "maxLength": 32
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "tunnelRouteVia": {
+                  "description": "<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 32
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 32
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "tunnelDcPreference": {
+                  "description": "SSE Tunnel Data Center",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": "primary-dc",
+                          "enum": ["primary-dc", "secondary-dc"],
+                          "type": "string"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "tcpMssAdjust": {
+                  "description": "TCP MSS on SYN packets, in bytes",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "minimum": 500,
+                          "maximum": 1460,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "minimum": 500,
+                          "maximum": 1460,
+                          "type": "integer"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["default"] }
+                      },
+                      "required": ["optionType"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "mtu": {
+                  "description": "Interface MTU <576..2000>, in bytes",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": 1400,
+                          "minimum": 576,
+                          "maximum": 2000,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "default": 1400,
+                          "minimum": 576,
+                          "maximum": 2000,
+                          "type": "integer"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "dpdInterval": {
+                  "description": "IKE keepalive interval (seconds)",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": 10,
+                          "minimum": 0,
+                          "maximum": 65535,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "default": 10,
+                          "minimum": 0,
+                          "maximum": 65535,
+                          "type": "integer"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["default"] },
+                        "value": {
+                          "type": "integer",
+                          "minimum": 10,
+                          "maximum": 10
+                        },
+                        "required": ["optionType", "value"]
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "dpdRetries": {
+                  "description": "IKE keepalive retries",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": 3,
+                          "minimum": 0,
+                          "maximum": 255,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "default": 3,
+                          "minimum": 0,
+                          "maximum": 255,
+                          "type": "integer"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["default"] },
+                        "value": {
+                          "type": "integer",
+                          "minimum": 3,
+                          "maximum": 3
+                        },
+                        "required": ["optionType", "value"]
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "ikeVersion": {
+                  "description": "IKE Version <1..2>",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": 2,
+                          "minimum": 1,
+                          "maximum": 2,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "default": 2,
+                          "minimum": 1,
+                          "maximum": 2,
+                          "type": "integer"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["default"] },
+                        "value": {
+                          "type": "integer",
+                          "minimum": 2,
+                          "maximum": 2
+                        },
+                        "required": ["optionType", "value"]
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "ikeRekeyInterval": {
+                  "description": "IKE rekey interval <300..1209600> seconds",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": 14400,
+                          "minimum": 300,
+                          "maximum": 1209600,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "default": 14400,
+                          "minimum": 300,
+                          "maximum": 1209600,
+                          "type": "integer"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["default"] },
+                        "value": {
+                          "type": "integer",
+                          "minimum": 14400,
+                          "maximum": 14400
+                        },
+                        "required": ["optionType", "value"]
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "ikeCiphersuite": {
+                  "description": "IKE identity the IKE preshared secret belongs to",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": "aes256-cbc-sha1",
+                          "enum": [
+                            "aes256-cbc-sha1",
+                            "aes256-cbc-sha2",
+                            "aes128-cbc-sha1",
+                            "aes128-cbc-sha2"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "default": "aes256-cbc-sha1",
+                          "enum": [
+                            "aes256-cbc-sha1",
+                            "aes256-cbc-sha2",
+                            "aes128-cbc-sha1",
+                            "aes128-cbc-sha2"
+                          ],
+                          "type": "string"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["default"] },
+                        "value": {
+                          "type": "string",
+                          "enum": ["aes256-cbc-sha1"]
+                        },
+                        "required": ["optionType", "value"]
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "ikeGroup": {
+                  "description": "IKE Diffie Hellman Groups",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": "16",
+                          "enum": [
+                            "2",
+                            "5",
+                            "14",
+                            "15",
+                            "16",
+                            "19",
+                            "20",
+                            "21"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "default": "16",
+                          "enum": [
+                            "2",
+                            "5",
+                            "14",
+                            "15",
+                            "16",
+                            "19",
+                            "20",
+                            "21"
+                          ],
+                          "type": "string"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["default"] },
+                        "value": {
+                          "default": "16",
+                          "enum": [
+                            "2",
+                            "5",
+                            "14",
+                            "15",
+                            "16",
+                            "19",
+                            "20",
+                            "21"
+                          ],
+                          "type": "string"
+                        },
+                        "required": ["optionType", "value"]
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "ipsecRekeyInterval": {
+                  "description": "IPsec rekey interval <300..1209600> seconds",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": 3600,
+                          "minimum": 300,
+                          "maximum": 1209600,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "default": 3600,
+                          "minimum": 300,
+                          "maximum": 1209600,
+                          "type": "integer"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["default"] },
+                        "value": {
+                          "type": "integer",
+                          "minimum": 3600,
+                          "maximum": 3600
+                        },
+                        "required": ["optionType", "value"]
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "ipsecReplayWindow": {
+                  "description": "Replay window size 32..8192 (must be a power of 2)",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": 512,
+                          "minimum": 64,
+                          "maximum": 4096,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "default": 512,
+                          "minimum": 64,
+                          "maximum": 4096,
+                          "type": "integer"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["default"] },
+                        "value": {
+                          "type": "integer",
+                          "minimum": 512,
+                          "maximum": 512
+                        },
+                        "required": ["optionType", "value"]
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "ipsecCiphersuite": {
+                  "description": "IPsec(ESP) encryption and integrity protocol",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": "aes256-cbc-sha512",
+                          "enum": [
+                            "aes256-cbc-sha1",
+                            "aes256-cbc-sha384",
+                            "aes256-cbc-sha256",
+                            "aes256-cbc-sha512",
+                            "aes256-gcm"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "default": "aes256-cbc-sha512",
+                          "enum": [
+                            "aes256-cbc-sha1",
+                            "aes256-cbc-sha384",
+                            "aes256-cbc-sha256",
+                            "aes256-cbc-sha512",
+                            "aes256-gcm"
+                          ],
+                          "type": "string"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["default"] },
+                        "value": {
+                          "default": "aes256-cbc-sha512",
+                          "enum": [
+                            "aes256-cbc-sha1",
+                            "aes256-cbc-sha384",
+                            "aes256-cbc-sha256",
+                            "aes256-cbc-sha512",
+                            "aes256-gcm"
+                          ],
+                          "type": "string"
+                        },
+                        "required": ["optionType", "value"]
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "perfectForwardSecrecy": {
+                  "description": "IPsec perfect forward secrecy settings",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": "group-16",
+                          "enum": [
+                            "group-2",
+                            "group-5",
+                            "group-14",
+                            "group-15",
+                            "group-16",
+                            "group-19",
+                            "group-20",
+                            "group-21",
+                            "none"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "default": "group-16",
+                          "enum": [
+                            "group-2",
+                            "group-5",
+                            "group-14",
+                            "group-15",
+                            "group-16",
+                            "group-19",
+                            "group-20",
+                            "group-21",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["default"] },
+                        "value": {
+                          "default": "group-16",
+                          "enum": [
+                            "group-2",
+                            "group-5",
+                            "group-14",
+                            "group-15",
+                            "group-16",
+                            "group-19",
+                            "group-20",
+                            "group-21",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "required": ["optionType", "value"]
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "tracker": {
+                  "description": "Enable tracker for this interface",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": { "type": "string" }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["default"] },
+                        "value": {
+                          "type": "string",
+                          "enum": ["DefaultTracker"]
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "trackEnable": {
+                  "description": "Enable/disable Cisco SSE tracking",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": { "type": "boolean" },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": { "type": "boolean" }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["default"] },
+                        "value": { "type": "boolean", "enum": [true] }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "required": ["ifName"],
+              "additionalProperties": false
+            }
+          },
+          "interfacePair": {
+            "description": "Interface Pair for active and backup",
+            "type": "array",
+            "maxItems": 8,
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "activeInterface": {
+                  "description": "Active Tunnel Interface for SSE",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "minLength": 5,
+                          "type": "string",
+                          "pattern": "^ipsec(?:1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)$",
+                          "maxLength": 8
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "activeInterfaceWeight": {
+                  "description": "Active Tunnel Interface Weight",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": 1,
+                          "minimum": 1,
+                          "maximum": 255,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "backupInterface": {
+                  "description": "Backup Tunnel Interface for Cisco SSE",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "minLength": 4,
+                          "type": "string",
+                          "pattern": "^(None|ipsec(?:1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d))$",
+                          "maxLength": 8
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "backupInterfaceWeight": {
+                  "description": "Backup Tunnel Interface Weight",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": 1,
+                          "minimum": 1,
+                          "maximum": 255,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "required": ["activeInterface", "backupInterface"],
+              "additionalProperties": false
+            }
+          },
+          "region": {
+            "description": "Region for Primary and Secondary Datacenter",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": { "type": "string", "enum": ["global"] },
+                  "value": { "minLength": 1, "type": "string" }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": { "type": "string", "enum": ["variable"] },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "default": { "minLength": 1, "type": "string" },
+                  "description": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 128
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": { "type": "string", "enum": ["default"] },
+                  "value": { "type": "string", "enum": ["auto"] },
+                  "required": ["optionType", "value"]
+                },
+                "additionalProperties": false
+              }
+            ]
+          },
+          "trackerSrcIp": {
+            "description": "Source IP address for Tracker",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": { "type": "string", "enum": ["variable"] },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "default": {
+                    "type": "string",
+                    "pattern": "^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)$"
+                  },
+                  "description": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 128
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": { "type": "string", "enum": ["global"] },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)$"
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "tracker": {
+            "description": "Tracker configuration",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "description": "Tracker name",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "endpointApiUrl": {
+                  "description": "API url of endpoint",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "pattern": "^http\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\'\\/\\\\\\+&%\\$#_]*)?$",
+                          "minLength": 0,
+                          "type": "string",
+                          "maxLength": 512
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "pattern": "^http\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\'\\/\\\\\\+&%\\$#_]*)?$",
+                          "minLength": 0,
+                          "type": "string",
+                          "maxLength": 512
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "threshold": {
+                  "description": "Probe Timeout threshold <100..1000> milliseconds",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": 300,
+                          "minimum": 100,
+                          "maximum": 1000,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "default": 300,
+                          "minimum": 100,
+                          "maximum": 1000,
+                          "type": "integer"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["default"] },
+                        "value": {
+                          "type": "integer",
+                          "minimum": 1000,
+                          "maximum": 1000
+                        },
+                        "required": ["optionType", "value"]
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "interval": {
+                  "description": "Probe interval <10..600> seconds",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": 60,
+                          "minimum": 20,
+                          "maximum": 600,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "default": 60,
+                          "minimum": 20,
+                          "maximum": 600,
+                          "type": "integer"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["default"] },
+                        "value": {
+                          "type": "integer",
+                          "minimum": 30,
+                          "maximum": 30
+                        },
+                        "required": ["optionType", "value"]
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "multiplier": {
+                  "description": "Probe failure multiplier <1..10> failed attempts",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": 3,
+                          "minimum": 1,
+                          "maximum": 10,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["variable"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "default": {
+                          "default": 3,
+                          "minimum": 1,
+                          "maximum": 10,
+                          "type": "integer"
+                        },
+                        "description": {
+                          "minLength": 1,
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["default"] },
+                        "value": {
+                          "type": "integer",
+                          "minimum": 2,
+                          "maximum": 2
+                        },
+                        "required": ["optionType", "value"]
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "trackerType": {
+                  "description": "tracker type",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": { "type": "string", "enum": ["global"] },
+                        "value": {
+                          "default": "cisco-sse",
+                          "enum": ["cisco-sse"],
+                          "type": "string"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "required": ["trackerType", "name", "endpointApiUrl"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "interface",
+          "interfacePair",
+          "trackerSrcIp",
+          "sse_instance",
+          "region"
+        ],
+        "additionalProperties": false
+      },
+      "documentation": {
+        "description": "This is the documentation for POST request schema for Cisco SSE profile feature",
+        "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+        "details-2": "variable name should not be present if optionType value is NOT variable",
+        "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+        "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+        "examples": [
+          {
+            "data": {
+              "sse_instance": {
+                "optionType": "default",
+                "value": "Cisco-Secure-Access"
+              },
+              "contextSharingForVpn": {
+                "optionType": "default",
+                "value": false
+              },
+              "contextSharingForSgt": {
+                "optionType": "default",
+                "value": false
+              },
+              "interface": [
+                {
+                  "ifName": { "optionType": "global", "value": "xxx" },
+                  "shutdown": { "optionType": "default", "value": false },
+                  "description": { "optionType": "global", "value": "xxx" },
+                  "tunnelSourceInterface": {
+                    "optionType": "global",
+                    "value": "xxx"
+                  },
+                  "tunnelDcPreference": {
+                    "optionType": "default",
+                    "value": "primary-dc"
+                  },
+                  "tcpMssAdjust": { "optionType": "global", "value": "xxx" },
+                  "mtu": { "optionType": "default", "value": 1400 },
+                  "dpdInterval": { "optionType": "default", "value": 10 },
+                  "dpdRetries": { "optionType": "default", "value": 3 },
+                  "ikeVersion": { "optionType": "default", "value": 2 },
+                  "ikeRekeyInterval": {
+                    "optionType": "default",
+                    "value": 14400
+                  },
+                  "ikeCiphersuite": {
+                    "optionType": "default",
+                    "value": "aes256-cbc-sha1"
+                  },
+                  "ikeGroup": { "optionType": "default", "value": "14" },
+                  "ipsecRekeyInterval": {
+                    "optionType": "default",
+                    "value": 3600
+                  },
+                  "ipsecReplayWindow": {
+                    "optionType": "default",
+                    "value": 512
+                  },
+                  "ipsecCiphersuite": {
+                    "optionType": "default",
+                    "value": "aes256-gcm"
+                  },
+                  "perfectForwardSecrecy": {
+                    "optionType": "default",
+                    "value": "none"
+                  },
+                  "tracker": { "optionType": "global", "value": "xxx" },
+                  "trackEnable": { "optionType": "default", "value": true }
+                }
+              ],
+              "interfacePair": [
+                {
+                  "activeInterface": { "optionType": "global", "value": "xxx" },
+                  "activeInterfaceWeight": {
+                    "optionType": "default",
+                    "value": 1
+                  },
+                  "backupInterface": { "optionType": "global", "value": "xxx" },
+                  "backupInterfaceWeight": {
+                    "optionType": "default",
+                    "value": 1
+                  }
+                }
+              ],
+              "region": { "optionType": "global", "value": "xxx" },
+              "trackerSrcIp": { "optionType": "global", "value": "xxx" },
+              "tracker": [
+                {
+                  "name": { "optionType": "global", "value": "aaa" },
+                  "endpointApiUrl": { "optionType": "global", "value": "xxx" },
+                  "threshold": { "optionType": "default", "value": 300 },
+                  "interval": { "optionType": "default", "value": 60 },
+                  "multiplier": { "optionType": "default", "value": 3 },
+                  "trackerType": {
+                    "optionType": "default",
+                    "value": "cisco-sse"
+                  }
+                }
+              ]
+            },
+            "name": "Cisco-SSE"
+          }
+        ]
+      },
+      "metadata": { "minVManageVersion": "20.15.1" }
+    },
+    "required": ["data"],
+    "not": { "required": ["documentation", "metadata"] },
+    "additionalProperties": false
+  }
+}
