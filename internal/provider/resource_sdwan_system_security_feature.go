@@ -90,10 +90,10 @@ func (r *SystemSecurityProfileParcelResource) Schema(ctx context.Context, req re
 				Required:            true,
 			},
 			"rekey": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set how often to change the AES key for DTLS connections").AddIntegerRangeDescription(10, 1209600).AddDefaultValueDescription("86400").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set how often to change the AES key for DTLS connections").AddIntegerRangeDescription(10, 63113904).AddDefaultValueDescription("86400").String,
 				Optional:            true,
 				Validators: []validator.Int64{
-					int64validator.Between(10, 1209600),
+					int64validator.Between(10, 63113904),
 				},
 			},
 			"rekey_variable": schema.StringAttribute{

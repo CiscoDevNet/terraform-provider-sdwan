@@ -15,6 +15,17 @@ description: |-
 - Add `sdwan_activate_topology_group` resource
 - Add `sdwan_topology_custom_control_feature` resource and data source
 - Add `sdwan_custom_application` resource and data source
+- Bump `sdwan_system_banner_feature` schema to `20.18.0`
+- Bump `sdwan_system_basic_feature` schema to `20.18.0`
+- Bump `sdwan_system_bfd_feature` schema to `20.18.0`
+- Bump `sdwan_system_global_feature` schema to `20.18.0`
+- Bump `sdwan_system_ipv4_device_access_feature` schema to `20.18.0`
+- Bump `sdwan_system_logging_feature` schema to `20.18.0`
+- Bump `sdwan_system_mrf_feature` schema to `20.18.0`
+- Bump `sdwan_system_ntp_feature` schema to `20.18.0`
+- Bump `sdwan_system_omp_feature` schema to `20.18.0`
+- Bump `sdwan_system_security_feature` schema to `20.18.0`
+- Bump `sdwan_system_snmp_feature` schema to `20.18.0`
 
 ## 0.11.2
 

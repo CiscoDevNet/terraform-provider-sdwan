@@ -255,10 +255,10 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 							},
 						},
 						"authentication_protocol": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Configure authentication protocol").AddStringEnumDescription("sha").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Configure authentication protocol").AddStringEnumDescription("sha", "sha256").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.OneOf("sha"),
+								stringvalidator.OneOf("sha", "sha256"),
 							},
 						},
 						"authentication_protocol_variable": schema.StringAttribute{
