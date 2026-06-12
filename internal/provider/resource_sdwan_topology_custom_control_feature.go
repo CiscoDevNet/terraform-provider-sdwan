@@ -1,0 +1,656 @@
+// Copyright © 2023 Cisco Systems, Inc. and its affiliates.
+// All rights reserved.
+//
+// Licensed under the Mozilla Public License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://mozilla.org/MPL/2.0/
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+// SPDX-License-Identifier: MPL-2.0
+
+package provider
+
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
+import (
+	"context"
+	"fmt"
+	"net/url"
+	"strings"
+	"sync"
+
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
+	"github.com/hashicorp/terraform-plugin-framework/resource"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
+	"github.com/netascode/go-sdwan"
+)
+
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin model
+
+// Ensure provider defined types fully satisfy framework interfaces
+var _ resource.Resource = &TopologyCustomControlProfileParcelResource{}
+var _ resource.ResourceWithImportState = &TopologyCustomControlProfileParcelResource{}
+
+func NewTopologyCustomControlProfileParcelResource() resource.Resource {
+	return &TopologyCustomControlProfileParcelResource{}
+}
+
+type TopologyCustomControlProfileParcelResource struct {
+	client      *sdwan.Client
+	updateMutex *sync.Mutex
+}
+
+func (r *TopologyCustomControlProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_topology_custom_control_feature"
+}
+
+func (r *TopologyCustomControlProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+	resp.Schema = schema.Schema{
+		// This description is used by the documentation generator and the language server.
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Topology Custom Control Feature.").AddMinimumVersionDescription("20.15.0").String,
+
+		Attributes: map[string]schema.Attribute{
+			"id": schema.StringAttribute{
+				MarkdownDescription: "The id of the Feature",
+				Computed:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
+			},
+			"version": schema.Int64Attribute{
+				MarkdownDescription: "The version of the Feature",
+				Computed:            true,
+			},
+			"name": schema.StringAttribute{
+				MarkdownDescription: "The name of the Feature",
+				Required:            true,
+			},
+			"description": schema.StringAttribute{
+				MarkdownDescription: "The description of the Feature",
+				Optional:            true,
+			},
+			"feature_profile_id": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
+				Required:            true,
+			},
+			"default_action": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Default Action").AddStringEnumDescription("reject", "accept").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("reject", "accept"),
+				},
+			},
+			"target_vpn": schema.SetAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				ElementType:         types.StringType,
+				Optional:            true,
+			},
+			"target_role": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("edge-router", "border-router").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("edge-router", "border-router"),
+				},
+			},
+			"target_level": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("SITE", "REGION", "SUB_REGION").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("SITE", "REGION", "SUB_REGION"),
+				},
+			},
+			"target_inbound_sites": schema.SetAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `target_level` equal to `SITE`").String,
+				ElementType:         types.StringType,
+				Optional:            true,
+			},
+			"target_outbound_sites": schema.SetAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `target_level` equal to `SITE`").String,
+				ElementType:         types.StringType,
+				Optional:            true,
+			},
+			"target_inbound_regions": schema.ListNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `target_level` equal to `REGION` or `target_level` equal to `SUB_REGION`").String,
+				Optional:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"region": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Region name").String,
+							Optional:            true,
+						},
+						"sub_regions": schema.SetAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Sub-region list").String,
+							ElementType:         types.StringType,
+							Optional:            true,
+						},
+					},
+				},
+			},
+			"target_outbound_regions": schema.ListNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `target_level` equal to `REGION` or `target_level` equal to `SUB_REGION`").String,
+				Optional:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"region": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Region name").String,
+							Optional:            true,
+						},
+						"sub_regions": schema.SetAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Sub-region list").String,
+							ElementType:         types.StringType,
+							Optional:            true,
+						},
+					},
+				},
+			},
+			"sequences": schema.ListNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Sequence list").String,
+				Optional:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"id": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Sequence Id").AddIntegerRangeDescription(1, 65536).String,
+							Optional:            true,
+							Validators: []validator.Int64{
+								int64validator.Between(1, 65536),
+							},
+						},
+						"name": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Sequence Name").String,
+							Optional:            true,
+						},
+						"base_action": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Base Action").AddStringEnumDescription("reject", "accept").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("reject", "accept"),
+							},
+						},
+						"type": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Sequence Type").AddStringEnumDescription("route", "tloc").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("route", "tloc"),
+							},
+						},
+						"ip_type": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Sequence IP Type").AddStringEnumDescription("ipv4", "ipv6", "all").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("ipv4", "ipv6", "all"),
+							},
+						},
+						"match_entries": schema.SetNestedAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							Optional:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"color_list_id": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Color list ID").String,
+										Optional:            true,
+									},
+									"community_list_id": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Community list ID").String,
+										Optional:            true,
+									},
+									"expanded_community_list_id": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Expanded community list ID").String,
+										Optional:            true,
+									},
+									"omp_tag": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("OMP tag").AddIntegerRangeDescription(0, 4294967295).String,
+										Optional:            true,
+										Validators: []validator.Int64{
+											int64validator.AtMost(4294967295),
+										},
+									},
+									"origin": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Origin").AddStringEnumDescription("aggregate", "bgp", "bgp-external", "bgp-internal", "connected", "eigrp", "ospf", "ospf-inter-area", "ospf-intra-area", "ospf-external1", "ospf-external2", "rip", "static", "eigrp-summary", "eigrp-internal", "eigrp-external", "lisp", "nat-dia", "natpool", "isis", "isis-level1", "isis-level2").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("aggregate", "bgp", "bgp-external", "bgp-internal", "connected", "eigrp", "ospf", "ospf-inter-area", "ospf-intra-area", "ospf-external1", "ospf-external2", "rip", "static", "eigrp-summary", "eigrp-internal", "eigrp-external", "lisp", "nat-dia", "natpool", "isis", "isis-level1", "isis-level2"),
+										},
+									},
+									"originator": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Originator IP").String,
+										Optional:            true,
+									},
+									"preference": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Preference").AddIntegerRangeDescription(0, 4294967295).String,
+										Optional:            true,
+										Validators: []validator.Int64{
+											int64validator.AtMost(4294967295),
+										},
+									},
+									"site": schema.SetAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Site list").String,
+										ElementType:         types.StringType,
+										Optional:            true,
+									},
+									"match_regions": schema.ListNestedAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Match regions list").String,
+										Optional:            true,
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												"region": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Region name").String,
+													Optional:            true,
+												},
+												"sub_regions": schema.SetAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Sub-region list").String,
+													ElementType:         types.StringType,
+													Optional:            true,
+												},
+											},
+										},
+									},
+									"role": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Role").AddStringEnumDescription("edge-router", "border-router").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("edge-router", "border-router"),
+										},
+									},
+									"path_type": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Path type").AddStringEnumDescription("hierarchical-path", "direct-path", "transport-gateway-path").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("hierarchical-path", "direct-path", "transport-gateway-path"),
+										},
+									},
+									"tloc_list_id": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("TLOC list ID").String,
+										Optional:            true,
+									},
+									"vpn": schema.SetAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("VPN list").String,
+										ElementType:         types.StringType,
+										Optional:            true,
+									},
+									"prefix_list_id": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Prefix list ID").String,
+										Optional:            true,
+									},
+									"ipv6_prefix_list_id": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("IPv6 prefix list ID").String,
+										Optional:            true,
+									},
+									"carrier": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Carrier").AddStringEnumDescription("default", "carrier1", "carrier2", "carrier3", "carrier4", "carrier5", "carrier6", "carrier7", "carrier8").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("default", "carrier1", "carrier2", "carrier3", "carrier4", "carrier5", "carrier6", "carrier7", "carrier8"),
+										},
+									},
+									"domain_id": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Domain ID").AddIntegerRangeDescription(1, 4294967295).String,
+										Optional:            true,
+										Validators: []validator.Int64{
+											int64validator.Between(1, 4294967295),
+										},
+									},
+									"group_id": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Group ID").AddIntegerRangeDescription(0, 4294967295).String,
+										Optional:            true,
+										Validators: []validator.Int64{
+											int64validator.AtMost(4294967295),
+										},
+									},
+									"tloc_ip": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("TLOC IP address").String,
+										Optional:            true,
+									},
+									"tloc_color": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("TLOC color").String,
+										Optional:            true,
+									},
+									"tloc_encapsulation": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("TLOC encapsulation").AddStringEnumDescription("ipsec", "gre").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("ipsec", "gre"),
+										},
+									},
+								},
+							},
+						},
+						"action_entries": schema.ListNestedAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							Optional:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"export_to_vpn": schema.SetAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Export to VPN list").String,
+										ElementType:         types.StringType,
+										Optional:            true,
+									},
+									"set_parameters": schema.SetNestedAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").String,
+										Optional:            true,
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												"preference": schema.Int64Attribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set preference").AddIntegerRangeDescription(0, 4294967295).String,
+													Optional:            true,
+													Validators: []validator.Int64{
+														int64validator.AtMost(4294967295),
+													},
+												},
+												"omp_tag": schema.Int64Attribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set OMP tag").AddIntegerRangeDescription(0, 4294967295).String,
+													Optional:            true,
+													Validators: []validator.Int64{
+														int64validator.AtMost(4294967295),
+													},
+												},
+												"community": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set community value, e.g. `1000:10000` or `internet` or `local-AS`").String,
+													Optional:            true,
+												},
+												"community_additive": schema.BoolAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set community additive").String,
+													Optional:            true,
+												},
+												"affinity": schema.Int64Attribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set affinity").AddIntegerRangeDescription(0, 63).String,
+													Optional:            true,
+													Validators: []validator.Int64{
+														int64validator.AtMost(63),
+													},
+												},
+												"service_type": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set service type").AddStringEnumDescription("FW", "IDS", "IDP", "netsvc1", "netsvc2", "netsvc3", "netsvc4", "appqoe").String,
+													Optional:            true,
+													Validators: []validator.String{
+														stringvalidator.OneOf("FW", "IDS", "IDP", "netsvc1", "netsvc2", "netsvc3", "netsvc4", "appqoe"),
+													},
+												},
+												"service_vpn": schema.Int64Attribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set service VPN ID").AddIntegerRangeDescription(0, 65530).String,
+													Optional:            true,
+													Validators: []validator.Int64{
+														int64validator.AtMost(65530),
+													},
+												},
+												"service_tloc_ip": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set service TLOC IP address").String,
+													Optional:            true,
+												},
+												"service_tloc_color": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set service TLOC color").String,
+													Optional:            true,
+												},
+												"service_tloc_encapsulation": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set service TLOC encapsulation").AddStringEnumDescription("ipsec", "gre").String,
+													Optional:            true,
+													Validators: []validator.String{
+														stringvalidator.OneOf("ipsec", "gre"),
+													},
+												},
+												"service_tloc_list_id": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set service TLOC list ID").String,
+													Optional:            true,
+												},
+												"service_chain_type": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set service chain type").AddStringEnumDescription("SC1", "SC2", "SC4", "SC5", "SC6", "SC7", "SC8", "SC9", "SC10", "SC11", "SC12", "SC13", "SC14", "SC15", "SC16").String,
+													Optional:            true,
+													Validators: []validator.String{
+														stringvalidator.OneOf("SC1", "SC2", "SC4", "SC5", "SC6", "SC7", "SC8", "SC9", "SC10", "SC11", "SC12", "SC13", "SC14", "SC15", "SC16"),
+													},
+												},
+												"service_chain_vpn": schema.Int64Attribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set service chain VPN ID").AddIntegerRangeDescription(0, 65530).String,
+													Optional:            true,
+													Validators: []validator.Int64{
+														int64validator.AtMost(65530),
+													},
+												},
+												"service_chain_tloc_ip": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set service chain TLOC IP address").String,
+													Optional:            true,
+												},
+												"service_chain_tloc_color": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set service chain TLOC color").String,
+													Optional:            true,
+												},
+												"service_chain_tloc_encapsulation": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set service chain TLOC encapsulation").AddStringEnumDescription("ipsec", "gre").String,
+													Optional:            true,
+													Validators: []validator.String{
+														stringvalidator.OneOf("ipsec", "gre"),
+													},
+												},
+												"service_chain_tloc_list_id": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set service chain TLOC list ID").String,
+													Optional:            true,
+												},
+												"tloc_ip": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set TLOC IP address").String,
+													Optional:            true,
+												},
+												"tloc_color": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set TLOC color").String,
+													Optional:            true,
+												},
+												"tloc_encapsulation": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set TLOC encapsulation").AddStringEnumDescription("ipsec", "gre").String,
+													Optional:            true,
+													Validators: []validator.String{
+														stringvalidator.OneOf("ipsec", "gre"),
+													},
+												},
+												"tloc_list_id": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set TLOC list ID").String,
+													Optional:            true,
+												},
+												"tloc_action": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Set TLOC action").AddStringEnumDescription("strict", "primary", "backup", "ecmp").String,
+													Optional:            true,
+													Validators: []validator.String{
+														stringvalidator.OneOf("strict", "primary", "backup", "ecmp"),
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+}
+
+func (r *TopologyCustomControlProfileParcelResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+	if req.ProviderData == nil {
+		return
+	}
+
+	r.client = req.ProviderData.(*SdwanProviderData).Client
+	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
+}
+
+// End of section. //template:end model
+
+// Section below is generated&owned by "gen/generator.go". //template:begin create
+func (r *TopologyCustomControlProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var plan TopologyCustomControl
+
+	// Read plan
+	diags := req.Plan.Get(ctx, &plan)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
+
+	// Create object
+	body := plan.toBody(ctx)
+
+	res, err := r.client.Post(plan.getPath(), body)
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
+		return
+	}
+
+	plan.Id = types.StringValue(res.Get("id").String())
+	plan.Version = types.Int64Value(0)
+
+	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
+
+	diags = resp.State.Set(ctx, &plan)
+	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
+}
+
+// End of section. //template:end create
+
+// Section below is generated&owned by "gen/generator.go". //template:begin read
+func (r *TopologyCustomControlProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var state TopologyCustomControl
+
+	// Read state
+	diags := req.State.Get(ctx, &state)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
+
+	res, err := r.client.Get(state.getPath() + "/" + url.QueryEscape(state.Id.ValueString()))
+	if res.Get("error.message").String() == "Invalid feature Id" {
+		resp.State.RemoveResource(ctx)
+		return
+	} else if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+		return
+	}
+
+	// If every attribute is set to null we are dealing with an import operation and therefore reading all attributes
+	imp, diags := helpers.IsFlagImporting(ctx, req)
+	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
+		return
+	}
+
+	if imp {
+		state.fromBody(ctx, res)
+	} else {
+		state.updateFromBody(ctx, res)
+	}
+	if state.Version.IsNull() {
+		state.Version = types.Int64Value(0)
+	}
+
+	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
+
+	diags = resp.State.Set(ctx, &state)
+	resp.Diagnostics.Append(diags...)
+
+	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
+}
+
+// End of section. //template:end read
+
+// Section below is generated&owned by "gen/generator.go". //template:begin update
+func (r *TopologyCustomControlProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, state TopologyCustomControl
+
+	// Read plan
+	diags := req.Plan.Get(ctx, &plan)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	// Read state
+	diags = req.State.Get(ctx, &state)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
+
+	body := plan.toBody(ctx)
+	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
+		return
+	}
+
+	plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
+
+	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
+
+	diags = resp.State.Set(ctx, &plan)
+	resp.Diagnostics.Append(diags...)
+}
+
+// End of section. //template:end update
+
+// Section below is generated&owned by "gen/generator.go". //template:begin delete
+func (r *TopologyCustomControlProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state TopologyCustomControl
+
+	// Read state
+	diags := req.State.Get(ctx, &state)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
+
+	res, err := r.client.Delete(state.getPath() + "/" + url.QueryEscape(state.Id.ValueString()))
+	if err != nil && res.Get("error.message").String() != "Invalid Template Id" {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
+		return
+	}
+
+	tflog.Debug(ctx, fmt.Sprintf("%s: Delete finished successfully", state.Name.ValueString()))
+
+	resp.State.RemoveResource(ctx)
+}
+
+// End of section. //template:end delete
+
+// Section below is generated&owned by "gen/generator.go". //template:begin import
+func (r *TopologyCustomControlProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	count := 1
+	parts := strings.SplitN(req.ID, ",", (count + 1))
+
+	pattern := "topology_custom_control_feature_id" + ",feature_profile_id"
+	if len(parts) != (count + 1) {
+		resp.Diagnostics.AddError(
+			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q", pattern, req.ID),
+		)
+		return
+	}
+
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), parts[0])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("feature_profile_id"), parts[1])...)
+
+	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
+}
+
+// End of section. //template:end import
