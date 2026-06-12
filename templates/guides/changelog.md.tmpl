@@ -14,6 +14,8 @@ description: |-
 - Add `sdwan_topology_feature_profile` resource and data source
 - Add `sdwan_activate_topology_group` resource
 - Add `sdwan_topology_custom_control_feature` resource and data source
+- Add `sdwan_topology_mesh_feature` resource and data source
+- Add `sdwan_topology_hub_spoke_feature` resource and data source
 - Add `sdwan_custom_application` resource and data source
 - Add `sdwan_sse_feature_profile` resource and data source
 - Add `sdwan_sse_cisco_feature` resource and data source
