@@ -1983,7 +1983,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 	} else {
 		data.PortChannelLacpMemberLinks = nil
 	}
-	if !fullRead {
+	if !fullRead && data.PortChannelLacpMemberLinks != nil {
 		resultPortChannelLacpMemberLinks := make([]ServiceLANVPNInterfaceEthernetPortChannelLacpMemberLinks, 0, len(data.PortChannelLacpMemberLinks))
 		matchedPortChannelLacpMemberLinks := make([]bool, len(data.PortChannelLacpMemberLinks))
 		for _, oldItem := range oldPortChannelLacpMemberLinks {
@@ -2053,7 +2053,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 	} else {
 		data.PortChannelStaticMemberLinks = nil
 	}
-	if !fullRead {
+	if !fullRead && data.PortChannelStaticMemberLinks != nil {
 		resultPortChannelStaticMemberLinks := make([]ServiceLANVPNInterfaceEthernetPortChannelStaticMemberLinks, 0, len(data.PortChannelStaticMemberLinks))
 		matchedPortChannelStaticMemberLinks := make([]bool, len(data.PortChannelStaticMemberLinks))
 		for _, oldItem := range oldPortChannelStaticMemberLinks {
@@ -2244,7 +2244,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 	} else {
 		data.Ipv4SecondaryAddresses = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv4SecondaryAddresses != nil {
 		resultIpv4SecondaryAddresses := make([]ServiceLANVPNInterfaceEthernetIpv4SecondaryAddresses, 0, len(data.Ipv4SecondaryAddresses))
 		matchedIpv4SecondaryAddresses := make([]bool, len(data.Ipv4SecondaryAddresses))
 		for _, oldItem := range oldIpv4SecondaryAddresses {
@@ -2351,7 +2351,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 	} else {
 		data.Ipv6DhcpSecondaryAddresses = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv6DhcpSecondaryAddresses != nil {
 		resultIpv6DhcpSecondaryAddresses := make([]ServiceLANVPNInterfaceEthernetIpv6DhcpSecondaryAddresses, 0, len(data.Ipv6DhcpSecondaryAddresses))
 		matchedIpv6DhcpSecondaryAddresses := make([]bool, len(data.Ipv6DhcpSecondaryAddresses))
 		for _, oldItem := range oldIpv6DhcpSecondaryAddresses {
@@ -2442,7 +2442,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 	} else {
 		data.Ipv6SecondaryAddresses = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv6SecondaryAddresses != nil {
 		resultIpv6SecondaryAddresses := make([]ServiceLANVPNInterfaceEthernetIpv6SecondaryAddresses, 0, len(data.Ipv6SecondaryAddresses))
 		matchedIpv6SecondaryAddresses := make([]bool, len(data.Ipv6SecondaryAddresses))
 		for _, oldItem := range oldIpv6SecondaryAddresses {
@@ -2534,7 +2534,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 	} else {
 		data.Ipv6DhcpHelpers = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv6DhcpHelpers != nil {
 		resultIpv6DhcpHelpers := make([]ServiceLANVPNInterfaceEthernetIpv6DhcpHelpers, 0, len(data.Ipv6DhcpHelpers))
 		matchedIpv6DhcpHelpers := make([]bool, len(data.Ipv6DhcpHelpers))
 		for _, oldItem := range oldIpv6DhcpHelpers {
@@ -2702,7 +2702,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 	} else {
 		data.StaticNats = nil
 	}
-	if !fullRead {
+	if !fullRead && data.StaticNats != nil {
 		resultStaticNats := make([]ServiceLANVPNInterfaceEthernetStaticNats, 0, len(data.StaticNats))
 		matchedStaticNats := make([]bool, len(data.StaticNats))
 		for _, oldItem := range oldStaticNats {
@@ -2910,7 +2910,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 	} else {
 		data.Ipv6Vrrps = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv6Vrrps != nil {
 		resultIpv6Vrrps := make([]ServiceLANVPNInterfaceEthernetIpv6Vrrps, 0, len(data.Ipv6Vrrps))
 		matchedIpv6Vrrps := make([]bool, len(data.Ipv6Vrrps))
 		for _, oldItem := range oldIpv6Vrrps {
@@ -2930,7 +2930,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 				}
 				if keyMatch {
 					matchedIpv6Vrrps[ni] = true
-					{
+					if data.Ipv6Vrrps[ni].Ipv6Addresses != nil {
 						resultC := make([]ServiceLANVPNInterfaceEthernetIpv6VrrpsIpv6Addresses, 0, len(data.Ipv6Vrrps[ni].Ipv6Addresses))
 						matchedC := make([]bool, len(data.Ipv6Vrrps[ni].Ipv6Addresses))
 						for _, oldCItem := range oldItem.Ipv6Addresses {
@@ -3131,7 +3131,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 	} else {
 		data.Ipv4Vrrps = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv4Vrrps != nil {
 		resultIpv4Vrrps := make([]ServiceLANVPNInterfaceEthernetIpv4Vrrps, 0, len(data.Ipv4Vrrps))
 		matchedIpv4Vrrps := make([]bool, len(data.Ipv4Vrrps))
 		for _, oldItem := range oldIpv4Vrrps {
@@ -3151,7 +3151,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 				}
 				if keyMatch {
 					matchedIpv4Vrrps[ni] = true
-					{
+					if data.Ipv4Vrrps[ni].SecondaryAddresses != nil {
 						resultC := make([]ServiceLANVPNInterfaceEthernetIpv4VrrpsSecondaryAddresses, 0, len(data.Ipv4Vrrps[ni].SecondaryAddresses))
 						matchedC := make([]bool, len(data.Ipv4Vrrps[ni].SecondaryAddresses))
 						for _, oldCItem := range oldItem.SecondaryAddresses {
@@ -3183,7 +3183,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 						}
 						data.Ipv4Vrrps[ni].SecondaryAddresses = resultC
 					}
-					{
+					if data.Ipv4Vrrps[ni].TrackingObjects != nil {
 						resultC := make([]ServiceLANVPNInterfaceEthernetIpv4VrrpsTrackingObjects, 0, len(data.Ipv4Vrrps[ni].TrackingObjects))
 						matchedC := make([]bool, len(data.Ipv4Vrrps[ni].TrackingObjects))
 						for _, oldCItem := range oldItem.TrackingObjects {
@@ -3254,7 +3254,7 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 	} else {
 		data.Arps = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Arps != nil {
 		resultArps := make([]ServiceLANVPNInterfaceEthernetArps, 0, len(data.Arps))
 		matchedArps := make([]bool, len(data.Arps))
 		for _, oldItem := range oldArps {

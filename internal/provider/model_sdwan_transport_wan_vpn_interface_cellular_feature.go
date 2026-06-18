@@ -1799,7 +1799,7 @@ func (data *TransportWANVPNInterfaceCellular) fromBody(ctx context.Context, res 
 	} else {
 		data.TunnelInterfaceEncapsulations = nil
 	}
-	if !fullRead {
+	if !fullRead && data.TunnelInterfaceEncapsulations != nil {
 		resultTunnelInterfaceEncapsulations := make([]TransportWANVPNInterfaceCellularTunnelInterfaceEncapsulations, 0, len(data.TunnelInterfaceEncapsulations))
 		matchedTunnelInterfaceEncapsulations := make([]bool, len(data.TunnelInterfaceEncapsulations))
 		for _, oldItem := range oldTunnelInterfaceEncapsulations {
@@ -2040,7 +2040,7 @@ func (data *TransportWANVPNInterfaceCellular) fromBody(ctx context.Context, res 
 	} else {
 		data.Arps = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Arps != nil {
 		resultArps := make([]TransportWANVPNInterfaceCellularArps, 0, len(data.Arps))
 		matchedArps := make([]bool, len(data.Arps))
 		for _, oldItem := range oldArps {

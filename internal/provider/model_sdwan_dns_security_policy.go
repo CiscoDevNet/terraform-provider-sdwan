@@ -280,7 +280,7 @@ func (data *DNSSecurity) fromBody(ctx context.Context, res gjson.Result, fullRea
 	} else {
 		data.TargetVpns = nil
 	}
-	if !fullRead {
+	if !fullRead && data.TargetVpns != nil {
 		resultTargetVpns := make([]DNSSecurityTargetVpns, 0, len(data.TargetVpns))
 		matchedTargetVpns := make([]bool, len(data.TargetVpns))
 		for _, oldItem := range oldTargetVpns {

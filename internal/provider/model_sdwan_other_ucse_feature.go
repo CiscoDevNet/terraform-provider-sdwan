@@ -374,7 +374,7 @@ func (data *OtherUCSE) fromBody(ctx context.Context, res gjson.Result, fullRead 
 	} else {
 		data.Interfaces = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Interfaces != nil {
 		resultInterfaces := make([]OtherUCSEInterfaces, 0, len(data.Interfaces))
 		matchedInterfaces := make([]bool, len(data.Interfaces))
 		for _, oldItem := range oldInterfaces {

@@ -472,7 +472,7 @@ func (data *ServiceDHCPServer) fromBody(ctx context.Context, res gjson.Result, f
 	} else {
 		data.StaticLeases = nil
 	}
-	if !fullRead {
+	if !fullRead && data.StaticLeases != nil {
 		resultStaticLeases := make([]ServiceDHCPServerStaticLeases, 0, len(data.StaticLeases))
 		matchedStaticLeases := make([]bool, len(data.StaticLeases))
 		for _, oldItem := range oldStaticLeases {
@@ -564,7 +564,7 @@ func (data *ServiceDHCPServer) fromBody(ctx context.Context, res gjson.Result, f
 	} else {
 		data.OptionCodes = nil
 	}
-	if !fullRead {
+	if !fullRead && data.OptionCodes != nil {
 		resultOptionCodes := make([]ServiceDHCPServerOptionCodes, 0, len(data.OptionCodes))
 		matchedOptionCodes := make([]bool, len(data.OptionCodes))
 		for _, oldItem := range oldOptionCodes {

@@ -617,7 +617,7 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result, fu
 	} else {
 		data.Sequences = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Sequences != nil {
 		resultSequences := make([]TransportIPv6ACLSequences, 0, len(data.Sequences))
 		matchedSequences := make([]bool, len(data.Sequences))
 		for _, oldItem := range oldSequences {
@@ -633,7 +633,7 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result, fu
 				}
 				if keyMatch {
 					matchedSequences[ni] = true
-					{
+					if data.Sequences[ni].MatchEntries != nil {
 						resultC := make([]TransportIPv6ACLSequencesMatchEntries, 0, len(data.Sequences[ni].MatchEntries))
 						matchedC := make([]bool, len(data.Sequences[ni].MatchEntries))
 						for _, oldCItem := range oldItem.MatchEntries {
@@ -689,7 +689,7 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result, fu
 								}
 								if keyMatchC {
 									matchedC[nci] = true
-									{
+									if data.Sequences[ni].MatchEntries[nci].SourcePorts != nil {
 										resultCC := make([]TransportIPv6ACLSequencesMatchEntriesSourcePorts, 0, len(data.Sequences[ni].MatchEntries[nci].SourcePorts))
 										matchedCC := make([]bool, len(data.Sequences[ni].MatchEntries[nci].SourcePorts))
 										for _, oldCCItem := range oldCItem.SourcePorts {
@@ -717,7 +717,7 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result, fu
 										}
 										data.Sequences[ni].MatchEntries[nci].SourcePorts = resultCC
 									}
-									{
+									if data.Sequences[ni].MatchEntries[nci].DestinationPorts != nil {
 										resultCC := make([]TransportIPv6ACLSequencesMatchEntriesDestinationPorts, 0, len(data.Sequences[ni].MatchEntries[nci].DestinationPorts))
 										matchedCC := make([]bool, len(data.Sequences[ni].MatchEntries[nci].DestinationPorts))
 										for _, oldCCItem := range oldCItem.DestinationPorts {
@@ -757,7 +757,7 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result, fu
 						}
 						data.Sequences[ni].MatchEntries = resultC
 					}
-					{
+					if data.Sequences[ni].Actions != nil {
 						resultC := make([]TransportIPv6ACLSequencesActions, 0, len(data.Sequences[ni].Actions))
 						matchedC := make([]bool, len(data.Sequences[ni].Actions))
 						for _, oldCItem := range oldItem.Actions {

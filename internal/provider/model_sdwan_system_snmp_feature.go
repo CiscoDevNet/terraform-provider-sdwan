@@ -566,7 +566,7 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 	} else {
 		data.Views = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Views != nil {
 		resultViews := make([]SystemSNMPViews, 0, len(data.Views))
 		matchedViews := make([]bool, len(data.Views))
 		for _, oldItem := range oldViews {
@@ -582,7 +582,7 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 				}
 				if keyMatch {
 					matchedViews[ni] = true
-					{
+					if data.Views[ni].Oids != nil {
 						resultC := make([]SystemSNMPViewsOids, 0, len(data.Views[ni].Oids))
 						matchedC := make([]bool, len(data.Views[ni].Oids))
 						for _, oldCItem := range oldItem.Oids {
@@ -675,7 +675,7 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 	} else {
 		data.Communities = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Communities != nil {
 		resultCommunities := make([]SystemSNMPCommunities, 0, len(data.Communities))
 		matchedCommunities := make([]bool, len(data.Communities))
 		for _, oldItem := range oldCommunities {
@@ -742,7 +742,7 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 	} else {
 		data.Groups = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Groups != nil {
 		resultGroups := make([]SystemSNMPGroups, 0, len(data.Groups))
 		matchedGroups := make([]bool, len(data.Groups))
 		for _, oldItem := range oldGroups {
@@ -839,7 +839,7 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 	} else {
 		data.Users = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Users != nil {
 		resultUsers := make([]SystemSNMPUsers, 0, len(data.Users))
 		matchedUsers := make([]bool, len(data.Users))
 		for _, oldItem := range oldUsers {
@@ -936,7 +936,7 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 	} else {
 		data.TrapTargetServers = nil
 	}
-	if !fullRead {
+	if !fullRead && data.TrapTargetServers != nil {
 		resultTrapTargetServers := make([]SystemSNMPTrapTargetServers, 0, len(data.TrapTargetServers))
 		matchedTrapTargetServers := make([]bool, len(data.TrapTargetServers))
 		for _, oldItem := range oldTrapTargetServers {

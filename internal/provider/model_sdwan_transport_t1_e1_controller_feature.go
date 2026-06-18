@@ -470,7 +470,7 @@ func (data *TransportT1E1Controller) fromBody(ctx context.Context, res gjson.Res
 	} else {
 		data.Entries = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Entries != nil {
 		resultEntries := make([]TransportT1E1ControllerEntries, 0, len(data.Entries))
 		matchedEntries := make([]bool, len(data.Entries))
 		for _, oldItem := range oldEntries {
@@ -491,7 +491,7 @@ func (data *TransportT1E1Controller) fromBody(ctx context.Context, res gjson.Res
 				}
 				if keyMatch {
 					matchedEntries[ni] = true
-					{
+					if data.Entries[ni].ChannelGroups != nil {
 						resultC := make([]TransportT1E1ControllerEntriesChannelGroups, 0, len(data.Entries[ni].ChannelGroups))
 						matchedC := make([]bool, len(data.Entries[ni].ChannelGroups))
 						for _, oldCItem := range oldItem.ChannelGroups {

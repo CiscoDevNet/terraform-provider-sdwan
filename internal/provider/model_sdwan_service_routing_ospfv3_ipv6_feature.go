@@ -903,7 +903,7 @@ func (data *ServiceRoutingOSPFv3IPv6) fromBody(ctx context.Context, res gjson.Re
 	} else {
 		data.Redistributes = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Redistributes != nil {
 		resultRedistributes := make([]ServiceRoutingOSPFv3IPv6Redistributes, 0, len(data.Redistributes))
 		matchedRedistributes := make([]bool, len(data.Redistributes))
 		for _, oldItem := range oldRedistributes {
@@ -1146,7 +1146,7 @@ func (data *ServiceRoutingOSPFv3IPv6) fromBody(ctx context.Context, res gjson.Re
 	} else {
 		data.Areas = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Areas != nil {
 		resultAreas := make([]ServiceRoutingOSPFv3IPv6Areas, 0, len(data.Areas))
 		matchedAreas := make([]bool, len(data.Areas))
 		for _, oldItem := range oldAreas {
@@ -1166,7 +1166,7 @@ func (data *ServiceRoutingOSPFv3IPv6) fromBody(ctx context.Context, res gjson.Re
 				}
 				if keyMatch {
 					matchedAreas[ni] = true
-					{
+					if data.Areas[ni].Interfaces != nil {
 						resultC := make([]ServiceRoutingOSPFv3IPv6AreasInterfaces, 0, len(data.Areas[ni].Interfaces))
 						matchedC := make([]bool, len(data.Areas[ni].Interfaces))
 						for _, oldCItem := range oldItem.Interfaces {
@@ -1198,7 +1198,7 @@ func (data *ServiceRoutingOSPFv3IPv6) fromBody(ctx context.Context, res gjson.Re
 						}
 						data.Areas[ni].Interfaces = resultC
 					}
-					{
+					if data.Areas[ni].Ranges != nil {
 						resultC := make([]ServiceRoutingOSPFv3IPv6AreasRanges, 0, len(data.Areas[ni].Ranges))
 						matchedC := make([]bool, len(data.Areas[ni].Ranges))
 						for _, oldCItem := range oldItem.Ranges {

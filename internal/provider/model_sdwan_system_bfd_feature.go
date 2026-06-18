@@ -324,7 +324,7 @@ func (data *SystemBFD) fromBody(ctx context.Context, res gjson.Result, fullRead 
 	} else {
 		data.Colors = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Colors != nil {
 		resultColors := make([]SystemBFDColors, 0, len(data.Colors))
 		matchedColors := make([]bool, len(data.Colors))
 		for _, oldItem := range oldColors {

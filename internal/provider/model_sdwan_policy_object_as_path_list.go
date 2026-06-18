@@ -127,7 +127,7 @@ func (data *PolicyObjectASPathList) fromBody(ctx context.Context, res gjson.Resu
 	} else {
 		data.Entries = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Entries != nil {
 		resultEntries := make([]PolicyObjectASPathListEntries, 0, len(data.Entries))
 		matchedEntries := make([]bool, len(data.Entries))
 		for _, oldItem := range oldEntries {

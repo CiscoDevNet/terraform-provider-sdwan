@@ -79,6 +79,7 @@ attributes:
     - model_name: keystring
       tf_name: key_string
       write_only: true
+      encrypted: true
       example: password123
   - model_name: afInterface
     tf_name: interfaces

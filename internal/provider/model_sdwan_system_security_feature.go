@@ -504,7 +504,7 @@ func (data *SystemSecurity) fromBody(ctx context.Context, res gjson.Result, full
 	} else {
 		data.Keychains = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Keychains != nil {
 		resultKeychains := make([]SystemSecurityKeychains, 0, len(data.Keychains))
 		matchedKeychains := make([]bool, len(data.Keychains))
 		for _, oldItem := range oldKeychains {
@@ -709,7 +709,7 @@ func (data *SystemSecurity) fromBody(ctx context.Context, res gjson.Result, full
 	} else {
 		data.Keys = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Keys != nil {
 		resultKeys := make([]SystemSecurityKeys, 0, len(data.Keys))
 		matchedKeys := make([]bool, len(data.Keys))
 		for _, oldItem := range oldKeys {

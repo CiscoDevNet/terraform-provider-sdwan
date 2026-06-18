@@ -127,7 +127,7 @@ func (data *SystemCACertificate) fromBody(ctx context.Context, res gjson.Result,
 	} else {
 		data.Certificates = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Certificates != nil {
 		resultCertificates := make([]SystemCACertificateCertificates, 0, len(data.Certificates))
 		matchedCertificates := make([]bool, len(data.Certificates))
 		for _, oldItem := range oldCertificates {

@@ -1015,7 +1015,7 @@ func (data *ServiceLANVPNInterfaceSVI) fromBody(ctx context.Context, res gjson.R
 	} else {
 		data.Ipv4SecondaryAddresses = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv4SecondaryAddresses != nil {
 		resultIpv4SecondaryAddresses := make([]ServiceLANVPNInterfaceSVIIpv4SecondaryAddresses, 0, len(data.Ipv4SecondaryAddresses))
 		matchedIpv4SecondaryAddresses := make([]bool, len(data.Ipv4SecondaryAddresses))
 		for _, oldItem := range oldIpv4SecondaryAddresses {
@@ -1088,7 +1088,7 @@ func (data *ServiceLANVPNInterfaceSVI) fromBody(ctx context.Context, res gjson.R
 	} else {
 		data.Ipv6SecondaryAddresses = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv6SecondaryAddresses != nil {
 		resultIpv6SecondaryAddresses := make([]ServiceLANVPNInterfaceSVIIpv6SecondaryAddresses, 0, len(data.Ipv6SecondaryAddresses))
 		matchedIpv6SecondaryAddresses := make([]bool, len(data.Ipv6SecondaryAddresses))
 		for _, oldItem := range oldIpv6SecondaryAddresses {
@@ -1151,7 +1151,7 @@ func (data *ServiceLANVPNInterfaceSVI) fromBody(ctx context.Context, res gjson.R
 	} else {
 		data.Ipv6DhcpHelpers = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv6DhcpHelpers != nil {
 		resultIpv6DhcpHelpers := make([]ServiceLANVPNInterfaceSVIIpv6DhcpHelpers, 0, len(data.Ipv6DhcpHelpers))
 		matchedIpv6DhcpHelpers := make([]bool, len(data.Ipv6DhcpHelpers))
 		for _, oldItem := range oldIpv6DhcpHelpers {
@@ -1246,7 +1246,7 @@ func (data *ServiceLANVPNInterfaceSVI) fromBody(ctx context.Context, res gjson.R
 	} else {
 		data.Arps = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Arps != nil {
 		resultArps := make([]ServiceLANVPNInterfaceSVIArps, 0, len(data.Arps))
 		matchedArps := make([]bool, len(data.Arps))
 		for _, oldItem := range oldArps {
@@ -1438,7 +1438,7 @@ func (data *ServiceLANVPNInterfaceSVI) fromBody(ctx context.Context, res gjson.R
 	} else {
 		data.Ipv4Vrrps = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv4Vrrps != nil {
 		resultIpv4Vrrps := make([]ServiceLANVPNInterfaceSVIIpv4Vrrps, 0, len(data.Ipv4Vrrps))
 		matchedIpv4Vrrps := make([]bool, len(data.Ipv4Vrrps))
 		for _, oldItem := range oldIpv4Vrrps {
@@ -1458,7 +1458,7 @@ func (data *ServiceLANVPNInterfaceSVI) fromBody(ctx context.Context, res gjson.R
 				}
 				if keyMatch {
 					matchedIpv4Vrrps[ni] = true
-					{
+					if data.Ipv4Vrrps[ni].SecondaryAddresses != nil {
 						resultC := make([]ServiceLANVPNInterfaceSVIIpv4VrrpsSecondaryAddresses, 0, len(data.Ipv4Vrrps[ni].SecondaryAddresses))
 						matchedC := make([]bool, len(data.Ipv4Vrrps[ni].SecondaryAddresses))
 						for _, oldCItem := range oldItem.SecondaryAddresses {
@@ -1490,7 +1490,7 @@ func (data *ServiceLANVPNInterfaceSVI) fromBody(ctx context.Context, res gjson.R
 						}
 						data.Ipv4Vrrps[ni].SecondaryAddresses = resultC
 					}
-					{
+					if data.Ipv4Vrrps[ni].TrackingObjects != nil {
 						resultC := make([]ServiceLANVPNInterfaceSVIIpv4VrrpsTrackingObjects, 0, len(data.Ipv4Vrrps[ni].TrackingObjects))
 						matchedC := make([]bool, len(data.Ipv4Vrrps[ni].TrackingObjects))
 						for _, oldCItem := range oldItem.TrackingObjects {
@@ -1645,7 +1645,7 @@ func (data *ServiceLANVPNInterfaceSVI) fromBody(ctx context.Context, res gjson.R
 	} else {
 		data.Ipv6Vrrps = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv6Vrrps != nil {
 		resultIpv6Vrrps := make([]ServiceLANVPNInterfaceSVIIpv6Vrrps, 0, len(data.Ipv6Vrrps))
 		matchedIpv6Vrrps := make([]bool, len(data.Ipv6Vrrps))
 		for _, oldItem := range oldIpv6Vrrps {
@@ -1665,7 +1665,7 @@ func (data *ServiceLANVPNInterfaceSVI) fromBody(ctx context.Context, res gjson.R
 				}
 				if keyMatch {
 					matchedIpv6Vrrps[ni] = true
-					{
+					if data.Ipv6Vrrps[ni].Addresses != nil {
 						resultC := make([]ServiceLANVPNInterfaceSVIIpv6VrrpsAddresses, 0, len(data.Ipv6Vrrps[ni].Addresses))
 						matchedC := make([]bool, len(data.Ipv6Vrrps[ni].Addresses))
 						for _, oldCItem := range oldItem.Addresses {
@@ -1697,7 +1697,7 @@ func (data *ServiceLANVPNInterfaceSVI) fromBody(ctx context.Context, res gjson.R
 						}
 						data.Ipv6Vrrps[ni].Addresses = resultC
 					}
-					{
+					if data.Ipv6Vrrps[ni].SecondaryAddresses != nil {
 						resultC := make([]ServiceLANVPNInterfaceSVIIpv6VrrpsSecondaryAddresses, 0, len(data.Ipv6Vrrps[ni].SecondaryAddresses))
 						matchedC := make([]bool, len(data.Ipv6Vrrps[ni].SecondaryAddresses))
 						for _, oldCItem := range oldItem.SecondaryAddresses {

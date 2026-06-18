@@ -39,6 +39,7 @@ func TestAccDataSourceSdwanApplicationPriorityTrafficPolicyProfileParcel(t *test
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_priority_traffic_policy_policy.test", "sequences.0.sequence_name", "traffic"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_priority_traffic_policy_policy.test", "sequences.0.base_action", "accept"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_priority_traffic_policy_policy.test", "sequences.0.protocol", "ipv4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_priority_traffic_policy_policy.test", "sequences.0.actions.0.set_parameters.0.dscp", "18"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -100,6 +101,7 @@ func testAccDataSourceSdwanApplicationPriorityTrafficPolicyProfileParcelConfig()
 	config += `	}]` + "\n"
 	config += `	  actions = [{` + "\n"
 	config += `      set_parameters = [{` + "\n"
+	config += `			dscp = 18` + "\n"
 	config += `		}]` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"

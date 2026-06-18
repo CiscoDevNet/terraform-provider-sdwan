@@ -155,7 +155,7 @@ func (data *TransportIPv6TrackerGroup) fromBody(ctx context.Context, res gjson.R
 	} else {
 		data.TrackerElements = nil
 	}
-	if !fullRead {
+	if !fullRead && data.TrackerElements != nil {
 		resultTrackerElements := make([]TransportIPv6TrackerGroupTrackerElements, 0, len(data.TrackerElements))
 		matchedTrackerElements := make([]bool, len(data.TrackerElements))
 		for _, oldItem := range oldTrackerElements {

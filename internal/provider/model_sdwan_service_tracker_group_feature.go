@@ -131,7 +131,7 @@ func (data *ServiceTrackerGroup) fromBody(ctx context.Context, res gjson.Result,
 	} else {
 		data.TrackerElements = nil
 	}
-	if !fullRead {
+	if !fullRead && data.TrackerElements != nil {
 		resultTrackerElements := make([]ServiceTrackerGroupTrackerElements, 0, len(data.TrackerElements))
 		matchedTrackerElements := make([]bool, len(data.TrackerElements))
 		for _, oldItem := range oldTrackerElements {

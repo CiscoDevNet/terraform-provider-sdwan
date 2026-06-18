@@ -2945,7 +2945,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 	} else {
 		data.PortChannelLacpMemberLinks = nil
 	}
-	if !fullRead {
+	if !fullRead && data.PortChannelLacpMemberLinks != nil {
 		resultPortChannelLacpMemberLinks := make([]TransportWANVPNInterfaceEthernetPortChannelLacpMemberLinks, 0, len(data.PortChannelLacpMemberLinks))
 		matchedPortChannelLacpMemberLinks := make([]bool, len(data.PortChannelLacpMemberLinks))
 		for _, oldItem := range oldPortChannelLacpMemberLinks {
@@ -3015,7 +3015,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 	} else {
 		data.PortChannelStaticMemberLinks = nil
 	}
-	if !fullRead {
+	if !fullRead && data.PortChannelStaticMemberLinks != nil {
 		resultPortChannelStaticMemberLinks := make([]TransportWANVPNInterfaceEthernetPortChannelStaticMemberLinks, 0, len(data.PortChannelStaticMemberLinks))
 		matchedPortChannelStaticMemberLinks := make([]bool, len(data.PortChannelStaticMemberLinks))
 		for _, oldItem := range oldPortChannelStaticMemberLinks {
@@ -3189,7 +3189,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 	} else {
 		data.Ipv4SecondaryAddresses = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv4SecondaryAddresses != nil {
 		resultIpv4SecondaryAddresses := make([]TransportWANVPNInterfaceEthernetIpv4SecondaryAddresses, 0, len(data.Ipv4SecondaryAddresses))
 		matchedIpv4SecondaryAddresses := make([]bool, len(data.Ipv4SecondaryAddresses))
 		for _, oldItem := range oldIpv4SecondaryAddresses {
@@ -3296,7 +3296,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 	} else {
 		data.Ipv6DhcpSecondaryAddress = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv6DhcpSecondaryAddress != nil {
 		resultIpv6DhcpSecondaryAddress := make([]TransportWANVPNInterfaceEthernetIpv6DhcpSecondaryAddress, 0, len(data.Ipv6DhcpSecondaryAddress))
 		matchedIpv6DhcpSecondaryAddress := make([]bool, len(data.Ipv6DhcpSecondaryAddress))
 		for _, oldItem := range oldIpv6DhcpSecondaryAddress {
@@ -3387,7 +3387,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 	} else {
 		data.Ipv6SecondaryAddresses = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv6SecondaryAddresses != nil {
 		resultIpv6SecondaryAddresses := make([]TransportWANVPNInterfaceEthernetIpv6SecondaryAddresses, 0, len(data.Ipv6SecondaryAddresses))
 		matchedIpv6SecondaryAddresses := make([]bool, len(data.Ipv6SecondaryAddresses))
 		for _, oldItem := range oldIpv6SecondaryAddresses {
@@ -3916,7 +3916,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 	} else {
 		data.TunnelInterfaceEncapsulations = nil
 	}
-	if !fullRead {
+	if !fullRead && data.TunnelInterfaceEncapsulations != nil {
 		resultTunnelInterfaceEncapsulations := make([]TransportWANVPNInterfaceEthernetTunnelInterfaceEncapsulations, 0, len(data.TunnelInterfaceEncapsulations))
 		matchedTunnelInterfaceEncapsulations := make([]bool, len(data.TunnelInterfaceEncapsulations))
 		for _, oldItem := range oldTunnelInterfaceEncapsulations {
@@ -4123,7 +4123,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 	} else {
 		data.NatIpv4Pools = nil
 	}
-	if !fullRead {
+	if !fullRead && data.NatIpv4Pools != nil {
 		resultNatIpv4Pools := make([]TransportWANVPNInterfaceEthernetNatIpv4Pools, 0, len(data.NatIpv4Pools))
 		matchedNatIpv4Pools := make([]bool, len(data.NatIpv4Pools))
 		for _, oldItem := range oldNatIpv4Pools {
@@ -4176,7 +4176,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 	} else {
 		data.NatIpv4Loopbacks = nil
 	}
-	if !fullRead {
+	if !fullRead && data.NatIpv4Loopbacks != nil {
 		resultNatIpv4Loopbacks := make([]TransportWANVPNInterfaceEthernetNatIpv4Loopbacks, 0, len(data.NatIpv4Loopbacks))
 		matchedNatIpv4Loopbacks := make([]bool, len(data.NatIpv4Loopbacks))
 		for _, oldItem := range oldNatIpv4Loopbacks {
@@ -4285,7 +4285,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 	} else {
 		data.NewStaticNats = nil
 	}
-	if !fullRead {
+	if !fullRead && data.NewStaticNats != nil {
 		resultNewStaticNats := make([]TransportWANVPNInterfaceEthernetNewStaticNats, 0, len(data.NewStaticNats))
 		matchedNewStaticNats := make([]bool, len(data.NewStaticNats))
 		for _, oldItem := range oldNewStaticNats {
@@ -4413,7 +4413,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 	} else {
 		data.StaticPortForwards = nil
 	}
-	if !fullRead {
+	if !fullRead && data.StaticPortForwards != nil {
 		resultStaticPortForwards := make([]TransportWANVPNInterfaceEthernetStaticPortForwards, 0, len(data.StaticPortForwards))
 		matchedStaticPortForwards := make([]bool, len(data.StaticPortForwards))
 		for _, oldItem := range oldStaticPortForwards {
@@ -4549,7 +4549,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 	} else {
 		data.StaticNat66 = nil
 	}
-	if !fullRead {
+	if !fullRead && data.StaticNat66 != nil {
 		resultStaticNat66 := make([]TransportWANVPNInterfaceEthernetStaticNat66, 0, len(data.StaticNat66))
 		matchedStaticNat66 := make([]bool, len(data.StaticNat66))
 		for _, oldItem := range oldStaticNat66 {
@@ -4757,7 +4757,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 	} else {
 		data.Arps = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Arps != nil {
 		resultArps := make([]TransportWANVPNInterfaceEthernetArps, 0, len(data.Arps))
 		matchedArps := make([]bool, len(data.Arps))
 		for _, oldItem := range oldArps {

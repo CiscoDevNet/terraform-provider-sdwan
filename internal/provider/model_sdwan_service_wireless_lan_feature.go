@@ -507,7 +507,7 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result, 
 	} else {
 		data.Ssids = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ssids != nil {
 		resultSsids := make([]ServiceWirelessLANSsids, 0, len(data.Ssids))
 		matchedSsids := make([]bool, len(data.Ssids))
 		for _, oldItem := range oldSsids {
@@ -523,6 +523,8 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result, 
 				}
 				if keyMatch {
 					matchedSsids[ni] = true
+					data.Ssids[ni].Passphrase = oldItem.Passphrase
+					data.Ssids[ni].PassphraseVariable = oldItem.PassphraseVariable
 					resultSsids = append(resultSsids, data.Ssids[ni])
 					break
 				}

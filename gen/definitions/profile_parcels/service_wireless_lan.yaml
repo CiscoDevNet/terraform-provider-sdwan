@@ -74,6 +74,7 @@ attributes:
     - model_name: passphrase
       data_path: [securityConfig]
       write_only: true
+      encrypted: true
       conditional_attribute:
         conditions:
           - name: securityType

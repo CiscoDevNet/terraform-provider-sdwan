@@ -885,7 +885,7 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 	} else {
 		data.Ipv4SecondaryAddresses = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv4SecondaryAddresses != nil {
 		resultIpv4SecondaryAddresses := make([]TransportManagementVPNInterfaceEthernetIpv4SecondaryAddresses, 0, len(data.Ipv4SecondaryAddresses))
 		matchedIpv4SecondaryAddresses := make([]bool, len(data.Ipv4SecondaryAddresses))
 		for _, oldItem := range oldIpv4SecondaryAddresses {
@@ -1022,7 +1022,7 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 	} else {
 		data.ArpEntries = nil
 	}
-	if !fullRead {
+	if !fullRead && data.ArpEntries != nil {
 		resultArpEntries := make([]TransportManagementVPNInterfaceEthernetArpEntries, 0, len(data.ArpEntries))
 		matchedArpEntries := make([]bool, len(data.ArpEntries))
 		for _, oldItem := range oldArpEntries {

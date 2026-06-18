@@ -588,7 +588,7 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result, ful
 	} else {
 		data.NewHostMappings = nil
 	}
-	if !fullRead {
+	if !fullRead && data.NewHostMappings != nil {
 		resultNewHostMappings := make([]TransportWANVPNNewHostMappings, 0, len(data.NewHostMappings))
 		matchedNewHostMappings := make([]bool, len(data.NewHostMappings))
 		for _, oldItem := range oldNewHostMappings {
@@ -697,7 +697,7 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result, ful
 	} else {
 		data.Ipv4StaticRoutes = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv4StaticRoutes != nil {
 		resultIpv4StaticRoutes := make([]TransportWANVPNIpv4StaticRoutes, 0, len(data.Ipv4StaticRoutes))
 		matchedIpv4StaticRoutes := make([]bool, len(data.Ipv4StaticRoutes))
 		for _, oldItem := range oldIpv4StaticRoutes {
@@ -731,7 +731,7 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result, ful
 				}
 				if keyMatch {
 					matchedIpv4StaticRoutes[ni] = true
-					{
+					if data.Ipv4StaticRoutes[ni].NextHops != nil {
 						resultC := make([]TransportWANVPNIpv4StaticRoutesNextHops, 0, len(data.Ipv4StaticRoutes[ni].NextHops))
 						matchedC := make([]bool, len(data.Ipv4StaticRoutes[ni].NextHops))
 						for _, oldCItem := range oldItem.NextHops {
@@ -845,7 +845,7 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result, ful
 	} else {
 		data.Ipv6StaticRoutes = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv6StaticRoutes != nil {
 		resultIpv6StaticRoutes := make([]TransportWANVPNIpv6StaticRoutes, 0, len(data.Ipv6StaticRoutes))
 		matchedIpv6StaticRoutes := make([]bool, len(data.Ipv6StaticRoutes))
 		for _, oldItem := range oldIpv6StaticRoutes {
@@ -865,7 +865,7 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result, ful
 				}
 				if keyMatch {
 					matchedIpv6StaticRoutes[ni] = true
-					{
+					if data.Ipv6StaticRoutes[ni].NextHops != nil {
 						resultC := make([]TransportWANVPNIpv6StaticRoutesNextHops, 0, len(data.Ipv6StaticRoutes[ni].NextHops))
 						matchedC := make([]bool, len(data.Ipv6StaticRoutes[ni].NextHops))
 						for _, oldCItem := range oldItem.NextHops {
@@ -928,7 +928,7 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result, ful
 	} else {
 		data.Services = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Services != nil {
 		resultServices := make([]TransportWANVPNServices, 0, len(data.Services))
 		matchedServices := make([]bool, len(data.Services))
 		for _, oldItem := range oldServices {
@@ -1007,7 +1007,7 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result, ful
 	} else {
 		data.Nat64V4Pools = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Nat64V4Pools != nil {
 		resultNat64V4Pools := make([]TransportWANVPNNat64V4Pools, 0, len(data.Nat64V4Pools))
 		matchedNat64V4Pools := make([]bool, len(data.Nat64V4Pools))
 		for _, oldItem := range oldNat64V4Pools {

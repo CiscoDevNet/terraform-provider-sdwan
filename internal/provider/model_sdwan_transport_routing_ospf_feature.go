@@ -919,7 +919,7 @@ func (data *TransportRoutingOSPF) fromBody(ctx context.Context, res gjson.Result
 	} else {
 		data.Redistributes = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Redistributes != nil {
 		resultRedistributes := make([]TransportRoutingOSPFRedistributes, 0, len(data.Redistributes))
 		matchedRedistributes := make([]bool, len(data.Redistributes))
 		for _, oldItem := range oldRedistributes {
@@ -980,7 +980,7 @@ func (data *TransportRoutingOSPF) fromBody(ctx context.Context, res gjson.Result
 	} else {
 		data.RouterLsas = nil
 	}
-	if !fullRead {
+	if !fullRead && data.RouterLsas != nil {
 		resultRouterLsas := make([]TransportRoutingOSPFRouterLsas, 0, len(data.RouterLsas))
 		matchedRouterLsas := make([]bool, len(data.RouterLsas))
 		for _, oldItem := range oldRouterLsas {
@@ -1211,7 +1211,7 @@ func (data *TransportRoutingOSPF) fromBody(ctx context.Context, res gjson.Result
 	} else {
 		data.Areas = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Areas != nil {
 		resultAreas := make([]TransportRoutingOSPFAreas, 0, len(data.Areas))
 		matchedAreas := make([]bool, len(data.Areas))
 		for _, oldItem := range oldAreas {
@@ -1231,7 +1231,7 @@ func (data *TransportRoutingOSPF) fromBody(ctx context.Context, res gjson.Result
 				}
 				if keyMatch {
 					matchedAreas[ni] = true
-					{
+					if data.Areas[ni].Interfaces != nil {
 						resultC := make([]TransportRoutingOSPFAreasInterfaces, 0, len(data.Areas[ni].Interfaces))
 						matchedC := make([]bool, len(data.Areas[ni].Interfaces))
 						for _, oldCItem := range oldItem.Interfaces {
@@ -1251,6 +1251,8 @@ func (data *TransportRoutingOSPF) fromBody(ctx context.Context, res gjson.Result
 								}
 								if keyMatchC {
 									matchedC[nci] = true
+									data.Areas[ni].Interfaces[nci].MessageDigestKey = oldCItem.MessageDigestKey
+									data.Areas[ni].Interfaces[nci].MessageDigestKeyVariable = oldCItem.MessageDigestKeyVariable
 									resultC = append(resultC, data.Areas[ni].Interfaces[nci])
 									break
 								}
@@ -1263,7 +1265,7 @@ func (data *TransportRoutingOSPF) fromBody(ctx context.Context, res gjson.Result
 						}
 						data.Areas[ni].Interfaces = resultC
 					}
-					{
+					if data.Areas[ni].Ranges != nil {
 						resultC := make([]TransportRoutingOSPFAreasRanges, 0, len(data.Areas[ni].Ranges))
 						matchedC := make([]bool, len(data.Areas[ni].Ranges))
 						for _, oldCItem := range oldItem.Ranges {

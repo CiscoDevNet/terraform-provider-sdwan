@@ -830,7 +830,7 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result, fullRea
 	} else {
 		data.GpsSmsMobileNumbers = nil
 	}
-	if !fullRead {
+	if !fullRead && data.GpsSmsMobileNumbers != nil {
 		resultGpsSmsMobileNumbers := make([]SystemBasicGpsSmsMobileNumbers, 0, len(data.GpsSmsMobileNumbers))
 		matchedGpsSmsMobileNumbers := make([]bool, len(data.GpsSmsMobileNumbers))
 		for _, oldItem := range oldGpsSmsMobileNumbers {
@@ -1123,7 +1123,7 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result, fullRea
 	} else {
 		data.AffinityPerVrfs = nil
 	}
-	if !fullRead {
+	if !fullRead && data.AffinityPerVrfs != nil {
 		resultAffinityPerVrfs := make([]SystemBasicAffinityPerVrfs, 0, len(data.AffinityPerVrfs))
 		matchedAffinityPerVrfs := make([]bool, len(data.AffinityPerVrfs))
 		for _, oldItem := range oldAffinityPerVrfs {

@@ -642,7 +642,7 @@ func (data *ServiceRoutePolicy) fromBody(ctx context.Context, res gjson.Result, 
 	} else {
 		data.Sequences = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Sequences != nil {
 		resultSequences := make([]ServiceRoutePolicySequences, 0, len(data.Sequences))
 		matchedSequences := make([]bool, len(data.Sequences))
 		for _, oldItem := range oldSequences {
@@ -658,7 +658,7 @@ func (data *ServiceRoutePolicy) fromBody(ctx context.Context, res gjson.Result, 
 				}
 				if keyMatch {
 					matchedSequences[ni] = true
-					{
+					if data.Sequences[ni].MatchEntries != nil {
 						resultC := make([]ServiceRoutePolicySequencesMatchEntries, 0, len(data.Sequences[ni].MatchEntries))
 						matchedC := make([]bool, len(data.Sequences[ni].MatchEntries))
 						for _, oldCItem := range oldItem.MatchEntries {
@@ -729,7 +729,7 @@ func (data *ServiceRoutePolicy) fromBody(ctx context.Context, res gjson.Result, 
 								}
 								if keyMatchC {
 									matchedC[nci] = true
-									{
+									if data.Sequences[ni].MatchEntries[nci].StandardCommunityLists != nil {
 										resultCC := make([]ServiceRoutePolicySequencesMatchEntriesStandardCommunityLists, 0, len(data.Sequences[ni].MatchEntries[nci].StandardCommunityLists))
 										matchedCC := make([]bool, len(data.Sequences[ni].MatchEntries[nci].StandardCommunityLists))
 										for _, oldCCItem := range oldCItem.StandardCommunityLists {
@@ -769,7 +769,7 @@ func (data *ServiceRoutePolicy) fromBody(ctx context.Context, res gjson.Result, 
 						}
 						data.Sequences[ni].MatchEntries = resultC
 					}
-					{
+					if data.Sequences[ni].Actions != nil {
 						resultC := make([]ServiceRoutePolicySequencesActions, 0, len(data.Sequences[ni].Actions))
 						matchedC := make([]bool, len(data.Sequences[ni].Actions))
 						for _, oldCItem := range oldItem.Actions {

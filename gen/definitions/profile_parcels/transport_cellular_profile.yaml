@@ -70,6 +70,7 @@ attributes:
     data_path: [profileConfig, profileInfo, authentication, needAuthentication]
     type: String
     encrypted: true
+    write_only: true
     example: example123!
     conditional_attribute:
       conditions:

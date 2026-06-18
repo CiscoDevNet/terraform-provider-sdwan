@@ -570,7 +570,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 	} else {
 		data.{{toGoName .TfName}} = nil
 	}
-	if !fullRead {
+	if !fullRead && data.{{toGoName .TfName}} != nil {
 		{{- $noId := not (hasId .Attributes)}}
 		result{{$list}} := make([]{{$name}}{{toGoName .TfName}}, 0, len(data.{{toGoName .TfName}}))
 		matched{{$list}} := make([]bool, len(data.{{toGoName .TfName}}))
@@ -630,7 +630,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 					{{- $clist := (toGoName .TfName)}}
 					{{- $ccname := toGoName .TfName}}
 					{{- $cnoId := not (hasId .Attributes)}}
-					{
+					if data.{{$list}}[ni].{{toGoName .TfName}} != nil {
 						resultC := make([]{{$name}}{{$cname}}{{toGoName .TfName}}, 0, len(data.{{$list}}[ni].{{toGoName .TfName}}))
 						matchedC := make([]bool, len(data.{{$list}}[ni].{{toGoName .TfName}}))
 						for _, oldCItem := range oldItem.{{toGoName .TfName}} {
@@ -688,7 +688,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 									{{- if isNestedListSet .}}
 									{{- $cclist := (toGoName .TfName)}}
 									{{- $ccnoId := not (hasId .Attributes)}}
-									{
+									if data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}} != nil {
 										resultCC := make([]{{$name}}{{$cname}}{{$ccname}}{{toGoName .TfName}}, 0, len(data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}}))
 										matchedCC := make([]bool, len(data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}}))
 										for _, oldCCItem := range oldCItem.{{toGoName .TfName}} {

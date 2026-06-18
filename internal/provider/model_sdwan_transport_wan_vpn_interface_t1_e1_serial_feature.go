@@ -1592,7 +1592,7 @@ func (data *TransportWANVPNInterfaceT1E1Serial) fromBody(ctx context.Context, re
 	} else {
 		data.TunnelInterfaceEncapsulations = nil
 	}
-	if !fullRead {
+	if !fullRead && data.TunnelInterfaceEncapsulations != nil {
 		resultTunnelInterfaceEncapsulations := make([]TransportWANVPNInterfaceT1E1SerialTunnelInterfaceEncapsulations, 0, len(data.TunnelInterfaceEncapsulations))
 		matchedTunnelInterfaceEncapsulations := make([]bool, len(data.TunnelInterfaceEncapsulations))
 		for _, oldItem := range oldTunnelInterfaceEncapsulations {

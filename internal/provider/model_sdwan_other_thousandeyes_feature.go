@@ -367,7 +367,7 @@ func (data *OtherThousandEyes) fromBody(ctx context.Context, res gjson.Result, f
 	} else {
 		data.VirtualApplication = nil
 	}
-	if !fullRead {
+	if !fullRead && data.VirtualApplication != nil {
 		resultVirtualApplication := make([]OtherThousandEyesVirtualApplication, 0, len(data.VirtualApplication))
 		matchedVirtualApplication := make([]bool, len(data.VirtualApplication))
 		for _, oldItem := range oldVirtualApplication {

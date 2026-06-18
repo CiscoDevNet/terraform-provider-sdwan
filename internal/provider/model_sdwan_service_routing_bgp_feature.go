@@ -2202,7 +2202,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 	} else {
 		data.Ipv4Neighbors = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv4Neighbors != nil {
 		resultIpv4Neighbors := make([]ServiceRoutingBGPIpv4Neighbors, 0, len(data.Ipv4Neighbors))
 		matchedIpv4Neighbors := make([]bool, len(data.Ipv4Neighbors))
 		for _, oldItem := range oldIpv4Neighbors {
@@ -2222,7 +2222,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 				}
 				if keyMatch {
 					matchedIpv4Neighbors[ni] = true
-					{
+					if data.Ipv4Neighbors[ni].AddressFamilies != nil {
 						resultC := make([]ServiceRoutingBGPIpv4NeighborsAddressFamilies, 0, len(data.Ipv4Neighbors[ni].AddressFamilies))
 						matchedC := make([]bool, len(data.Ipv4Neighbors[ni].AddressFamilies))
 						for _, oldCItem := range oldItem.AddressFamilies {
@@ -2250,6 +2250,9 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 						}
 						data.Ipv4Neighbors[ni].AddressFamilies = resultC
 					}
+					// Preserve write-only sensitive fields the Manager redacts on GET
+					data.Ipv4Neighbors[ni].Password = oldItem.Password
+					data.Ipv4Neighbors[ni].PasswordVariable = oldItem.PasswordVariable
 					resultIpv4Neighbors = append(resultIpv4Neighbors, data.Ipv4Neighbors[ni])
 					break
 				}
@@ -2544,7 +2547,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 	} else {
 		data.Ipv6Neighbors = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv6Neighbors != nil {
 		resultIpv6Neighbors := make([]ServiceRoutingBGPIpv6Neighbors, 0, len(data.Ipv6Neighbors))
 		matchedIpv6Neighbors := make([]bool, len(data.Ipv6Neighbors))
 		for _, oldItem := range oldIpv6Neighbors {
@@ -2564,7 +2567,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 				}
 				if keyMatch {
 					matchedIpv6Neighbors[ni] = true
-					{
+					if data.Ipv6Neighbors[ni].AddressFamilies != nil {
 						resultC := make([]ServiceRoutingBGPIpv6NeighborsAddressFamilies, 0, len(data.Ipv6Neighbors[ni].AddressFamilies))
 						matchedC := make([]bool, len(data.Ipv6Neighbors[ni].AddressFamilies))
 						for _, oldCItem := range oldItem.AddressFamilies {
@@ -2592,6 +2595,9 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 						}
 						data.Ipv6Neighbors[ni].AddressFamilies = resultC
 					}
+					// Preserve write-only sensitive fields the Manager redacts on GET
+					data.Ipv6Neighbors[ni].Password = oldItem.Password
+					data.Ipv6Neighbors[ni].PasswordVariable = oldItem.PasswordVariable
 					resultIpv6Neighbors = append(resultIpv6Neighbors, data.Ipv6Neighbors[ni])
 					break
 				}
@@ -2655,7 +2661,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 	} else {
 		data.Ipv4AggregateAddresses = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv4AggregateAddresses != nil {
 		resultIpv4AggregateAddresses := make([]ServiceRoutingBGPIpv4AggregateAddresses, 0, len(data.Ipv4AggregateAddresses))
 		matchedIpv4AggregateAddresses := make([]bool, len(data.Ipv4AggregateAddresses))
 		for _, oldItem := range oldIpv4AggregateAddresses {
@@ -2718,7 +2724,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 	} else {
 		data.Ipv4Networks = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv4Networks != nil {
 		resultIpv4Networks := make([]ServiceRoutingBGPIpv4Networks, 0, len(data.Ipv4Networks))
 		matchedIpv4Networks := make([]bool, len(data.Ipv4Networks))
 		for _, oldItem := range oldIpv4Networks {
@@ -2849,7 +2855,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 	} else {
 		data.Ipv4Redistributes = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv4Redistributes != nil {
 		resultIpv4Redistributes := make([]ServiceRoutingBGPIpv4Redistributes, 0, len(data.Ipv4Redistributes))
 		matchedIpv4Redistributes := make([]bool, len(data.Ipv4Redistributes))
 		for _, oldItem := range oldIpv4Redistributes {
@@ -2922,7 +2928,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 	} else {
 		data.Ipv6AggregateAddresses = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv6AggregateAddresses != nil {
 		resultIpv6AggregateAddresses := make([]ServiceRoutingBGPIpv6AggregateAddresses, 0, len(data.Ipv6AggregateAddresses))
 		matchedIpv6AggregateAddresses := make([]bool, len(data.Ipv6AggregateAddresses))
 		for _, oldItem := range oldIpv6AggregateAddresses {
@@ -2975,7 +2981,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 	} else {
 		data.Ipv6Networks = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv6Networks != nil {
 		resultIpv6Networks := make([]ServiceRoutingBGPIpv6Networks, 0, len(data.Ipv6Networks))
 		matchedIpv6Networks := make([]bool, len(data.Ipv6Networks))
 		for _, oldItem := range oldIpv6Networks {
@@ -3107,7 +3113,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 	} else {
 		data.Ipv6Redistributes = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv6Redistributes != nil {
 		resultIpv6Redistributes := make([]ServiceRoutingBGPIpv6Redistributes, 0, len(data.Ipv6Redistributes))
 		matchedIpv6Redistributes := make([]bool, len(data.Ipv6Redistributes))
 		for _, oldItem := range oldIpv6Redistributes {

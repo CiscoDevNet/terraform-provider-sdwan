@@ -127,7 +127,7 @@ func (data *PolicyObjectApplicationList) fromBody(ctx context.Context, res gjson
 	} else {
 		data.Entries = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Entries != nil {
 		resultEntries := make([]PolicyObjectApplicationListEntries, 0, len(data.Entries))
 		matchedEntries := make([]bool, len(data.Entries))
 		for _, oldItem := range oldEntries {

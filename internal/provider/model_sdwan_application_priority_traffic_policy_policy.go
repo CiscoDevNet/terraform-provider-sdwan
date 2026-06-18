@@ -1633,7 +1633,7 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 	} else {
 		data.Sequences = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Sequences != nil {
 		resultSequences := make([]ApplicationPriorityTrafficPolicySequences, 0, len(data.Sequences))
 		matchedSequences := make([]bool, len(data.Sequences))
 		for _, oldItem := range oldSequences {
@@ -1649,7 +1649,7 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 				}
 				if keyMatch {
 					matchedSequences[ni] = true
-					{
+					if data.Sequences[ni].MatchEntries != nil {
 						resultC := make([]ApplicationPriorityTrafficPolicySequencesMatchEntries, 0, len(data.Sequences[ni].MatchEntries))
 						matchedC := make([]bool, len(data.Sequences[ni].MatchEntries))
 						for _, oldCItem := range oldItem.MatchEntries {
@@ -1797,7 +1797,7 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 						}
 						data.Sequences[ni].MatchEntries = resultC
 					}
-					{
+					if data.Sequences[ni].Actions != nil {
 						resultC := make([]ApplicationPriorityTrafficPolicySequencesActions, 0, len(data.Sequences[ni].Actions))
 						matchedC := make([]bool, len(data.Sequences[ni].Actions))
 						for _, oldCItem := range oldItem.Actions {
@@ -1923,7 +1923,7 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 								}
 								if keyMatchC {
 									matchedC[nci] = true
-									{
+									if data.Sequences[ni].Actions[nci].SlaClasses != nil {
 										resultCC := make([]ApplicationPriorityTrafficPolicySequencesActionsSlaClasses, 0, len(data.Sequences[ni].Actions[nci].SlaClasses))
 										matchedCC := make([]bool, len(data.Sequences[ni].Actions[nci].SlaClasses))
 										for _, oldCCItem := range oldCItem.SlaClasses {
@@ -1981,7 +1981,7 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 										}
 										data.Sequences[ni].Actions[nci].SlaClasses = resultCC
 									}
-									{
+									if data.Sequences[ni].Actions[nci].SetParameters != nil {
 										resultCC := make([]ApplicationPriorityTrafficPolicySequencesActionsSetParameters, 0, len(data.Sequences[ni].Actions[nci].SetParameters))
 										matchedCC := make([]bool, len(data.Sequences[ni].Actions[nci].SetParameters))
 										for _, oldCCItem := range oldCItem.SetParameters {

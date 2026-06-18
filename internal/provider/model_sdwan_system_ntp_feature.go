@@ -384,7 +384,7 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result, fullRead 
 	} else {
 		data.Servers = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Servers != nil {
 		resultServers := make([]SystemNTPServers, 0, len(data.Servers))
 		matchedServers := make([]bool, len(data.Servers))
 		for _, oldItem := range oldServers {
@@ -447,7 +447,7 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result, fullRead 
 	} else {
 		data.AuthenticationKeys = nil
 	}
-	if !fullRead {
+	if !fullRead && data.AuthenticationKeys != nil {
 		resultAuthenticationKeys := make([]SystemNTPAuthenticationKeys, 0, len(data.AuthenticationKeys))
 		matchedAuthenticationKeys := make([]bool, len(data.AuthenticationKeys))
 		for _, oldItem := range oldAuthenticationKeys {

@@ -283,7 +283,7 @@ func (data *SystemIPv4DeviceAccess) fromBody(ctx context.Context, res gjson.Resu
 	} else {
 		data.Sequences = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Sequences != nil {
 		resultSequences := make([]SystemIPv4DeviceAccessSequences, 0, len(data.Sequences))
 		matchedSequences := make([]bool, len(data.Sequences))
 		for _, oldItem := range oldSequences {

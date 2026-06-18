@@ -779,7 +779,7 @@ func (data *ServiceSwitchport) fromBody(ctx context.Context, res gjson.Result, f
 	} else {
 		data.Interfaces = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Interfaces != nil {
 		resultInterfaces := make([]ServiceSwitchportInterfaces, 0, len(data.Interfaces))
 		matchedInterfaces := make([]bool, len(data.Interfaces))
 		for _, oldItem := range oldInterfaces {
@@ -862,7 +862,7 @@ func (data *ServiceSwitchport) fromBody(ctx context.Context, res gjson.Result, f
 	} else {
 		data.StaticMacAddresses = nil
 	}
-	if !fullRead {
+	if !fullRead && data.StaticMacAddresses != nil {
 		resultStaticMacAddresses := make([]ServiceSwitchportStaticMacAddresses, 0, len(data.StaticMacAddresses))
 		matchedStaticMacAddresses := make([]bool, len(data.StaticMacAddresses))
 		for _, oldItem := range oldStaticMacAddresses {

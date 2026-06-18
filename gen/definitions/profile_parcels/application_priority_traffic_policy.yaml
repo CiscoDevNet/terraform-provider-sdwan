@@ -196,7 +196,6 @@ attributes:
         exclude_null: true
         attributes:
         - model_name: dscp
-          exclude_test: true
           example: 18
         - model_name: refId
           tf_name: policer_id

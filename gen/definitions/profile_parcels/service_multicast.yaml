@@ -153,6 +153,7 @@ attributes:
       - model_name: password
         tf_name: peer_authentication_password
         write_only: true
+        encrypted: true
         example: Password123!
       - model_name: keepaliveInterval
         example: 15

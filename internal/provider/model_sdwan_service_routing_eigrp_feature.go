@@ -437,7 +437,7 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result,
 	} else {
 		data.Redistributes = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Redistributes != nil {
 		resultRedistributes := make([]ServiceRoutingEIGRPRedistributes, 0, len(data.Redistributes))
 		matchedRedistributes := make([]bool, len(data.Redistributes))
 		for _, oldItem := range oldRedistributes {
@@ -505,7 +505,7 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result,
 	} else {
 		data.Networks = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Networks != nil {
 		resultNetworks := make([]ServiceRoutingEIGRPNetworks, 0, len(data.Networks))
 		matchedNetworks := make([]bool, len(data.Networks))
 		for _, oldItem := range oldNetworks {
@@ -597,7 +597,7 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result,
 	} else {
 		data.Md5Keys = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Md5Keys != nil {
 		resultMd5Keys := make([]ServiceRoutingEIGRPMd5Keys, 0, len(data.Md5Keys))
 		matchedMd5Keys := make([]bool, len(data.Md5Keys))
 		for _, oldItem := range oldMd5Keys {
@@ -617,6 +617,8 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result,
 				}
 				if keyMatch {
 					matchedMd5Keys[ni] = true
+					data.Md5Keys[ni].KeyString = oldItem.KeyString
+					data.Md5Keys[ni].KeyStringVariable = oldItem.KeyStringVariable
 					resultMd5Keys = append(resultMd5Keys, data.Md5Keys[ni])
 					break
 				}
@@ -688,7 +690,7 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result,
 	} else {
 		data.Interfaces = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Interfaces != nil {
 		resultInterfaces := make([]ServiceRoutingEIGRPInterfaces, 0, len(data.Interfaces))
 		matchedInterfaces := make([]bool, len(data.Interfaces))
 		for _, oldItem := range oldInterfaces {
@@ -717,7 +719,7 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result,
 				}
 				if keyMatch {
 					matchedInterfaces[ni] = true
-					{
+					if data.Interfaces[ni].SummaryAddresses != nil {
 						resultC := make([]ServiceRoutingEIGRPInterfacesSummaryAddresses, 0, len(data.Interfaces[ni].SummaryAddresses))
 						matchedC := make([]bool, len(data.Interfaces[ni].SummaryAddresses))
 						for _, oldCItem := range oldItem.SummaryAddresses {

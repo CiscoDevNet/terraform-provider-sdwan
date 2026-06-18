@@ -816,7 +816,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 	} else {
 		data.Users = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Users != nil {
 		resultUsers := make([]SystemAAAUsers, 0, len(data.Users))
 		matchedUsers := make([]bool, len(data.Users))
 		for _, oldItem := range oldUsers {
@@ -838,7 +838,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 					matchedUsers[ni] = true
 					data.Users[ni].Password = oldItem.Password
 					data.Users[ni].PasswordVariable = oldItem.PasswordVariable
-					{
+					if data.Users[ni].PublicKeys != nil {
 						resultC := make([]SystemAAAUsersPublicKeys, 0, len(data.Users[ni].PublicKeys))
 						matchedC := make([]bool, len(data.Users[ni].PublicKeys))
 						for _, oldCItem := range oldItem.PublicKeys {
@@ -1013,7 +1013,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 	} else {
 		data.RadiusGroups = nil
 	}
-	if !fullRead {
+	if !fullRead && data.RadiusGroups != nil {
 		resultRadiusGroups := make([]SystemAAARadiusGroups, 0, len(data.RadiusGroups))
 		matchedRadiusGroups := make([]bool, len(data.RadiusGroups))
 		for _, oldItem := range oldRadiusGroups {
@@ -1029,7 +1029,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 				}
 				if keyMatch {
 					matchedRadiusGroups[ni] = true
-					{
+					if data.RadiusGroups[ni].Servers != nil {
 						resultC := make([]SystemAAARadiusGroupsServers, 0, len(data.RadiusGroups[ni].Servers))
 						matchedC := make([]bool, len(data.RadiusGroups[ni].Servers))
 						for _, oldCItem := range oldItem.Servers {
@@ -1172,7 +1172,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 	} else {
 		data.TacacsGroups = nil
 	}
-	if !fullRead {
+	if !fullRead && data.TacacsGroups != nil {
 		resultTacacsGroups := make([]SystemAAATacacsGroups, 0, len(data.TacacsGroups))
 		matchedTacacsGroups := make([]bool, len(data.TacacsGroups))
 		for _, oldItem := range oldTacacsGroups {
@@ -1188,7 +1188,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 				}
 				if keyMatch {
 					matchedTacacsGroups[ni] = true
-					{
+					if data.TacacsGroups[ni].Servers != nil {
 						resultC := make([]SystemAAATacacsGroupsServers, 0, len(data.TacacsGroups[ni].Servers))
 						matchedC := make([]bool, len(data.TacacsGroups[ni].Servers))
 						for _, oldCItem := range oldItem.Servers {
@@ -1283,7 +1283,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 	} else {
 		data.AccountingRules = nil
 	}
-	if !fullRead {
+	if !fullRead && data.AccountingRules != nil {
 		resultAccountingRules := make([]SystemAAAAccountingRules, 0, len(data.AccountingRules))
 		matchedAccountingRules := make([]bool, len(data.AccountingRules))
 		for _, oldItem := range oldAccountingRules {
@@ -1382,7 +1382,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 	} else {
 		data.AuthorizationRules = nil
 	}
-	if !fullRead {
+	if !fullRead && data.AuthorizationRules != nil {
 		resultAuthorizationRules := make([]SystemAAAAuthorizationRules, 0, len(data.AuthorizationRules))
 		matchedAuthorizationRules := make([]bool, len(data.AuthorizationRules))
 		for _, oldItem := range oldAuthorizationRules {

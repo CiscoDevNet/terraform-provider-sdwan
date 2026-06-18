@@ -127,7 +127,7 @@ func (data *PolicyObjectDataIPv6PrefixList) fromBody(ctx context.Context, res gj
 	} else {
 		data.Entries = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Entries != nil {
 		resultEntries := make([]PolicyObjectDataIPv6PrefixListEntries, 0, len(data.Entries))
 		matchedEntries := make([]bool, len(data.Entries))
 		for _, oldItem := range oldEntries {

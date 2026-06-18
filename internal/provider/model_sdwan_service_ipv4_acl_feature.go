@@ -636,7 +636,7 @@ func (data *ServiceIPv4ACL) fromBody(ctx context.Context, res gjson.Result, full
 	} else {
 		data.Sequences = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Sequences != nil {
 		resultSequences := make([]ServiceIPv4ACLSequences, 0, len(data.Sequences))
 		matchedSequences := make([]bool, len(data.Sequences))
 		for _, oldItem := range oldSequences {
@@ -652,7 +652,7 @@ func (data *ServiceIPv4ACL) fromBody(ctx context.Context, res gjson.Result, full
 				}
 				if keyMatch {
 					matchedSequences[ni] = true
-					{
+					if data.Sequences[ni].MatchEntries != nil {
 						resultC := make([]ServiceIPv4ACLSequencesMatchEntries, 0, len(data.Sequences[ni].MatchEntries))
 						matchedC := make([]bool, len(data.Sequences[ni].MatchEntries))
 						for _, oldCItem := range oldItem.MatchEntries {
@@ -716,7 +716,7 @@ func (data *ServiceIPv4ACL) fromBody(ctx context.Context, res gjson.Result, full
 								}
 								if keyMatchC {
 									matchedC[nci] = true
-									{
+									if data.Sequences[ni].MatchEntries[nci].SourcePorts != nil {
 										resultCC := make([]ServiceIPv4ACLSequencesMatchEntriesSourcePorts, 0, len(data.Sequences[ni].MatchEntries[nci].SourcePorts))
 										matchedCC := make([]bool, len(data.Sequences[ni].MatchEntries[nci].SourcePorts))
 										for _, oldCCItem := range oldCItem.SourcePorts {
@@ -744,7 +744,7 @@ func (data *ServiceIPv4ACL) fromBody(ctx context.Context, res gjson.Result, full
 										}
 										data.Sequences[ni].MatchEntries[nci].SourcePorts = resultCC
 									}
-									{
+									if data.Sequences[ni].MatchEntries[nci].DestinationPorts != nil {
 										resultCC := make([]ServiceIPv4ACLSequencesMatchEntriesDestinationPorts, 0, len(data.Sequences[ni].MatchEntries[nci].DestinationPorts))
 										matchedCC := make([]bool, len(data.Sequences[ni].MatchEntries[nci].DestinationPorts))
 										for _, oldCCItem := range oldCItem.DestinationPorts {
@@ -784,7 +784,7 @@ func (data *ServiceIPv4ACL) fromBody(ctx context.Context, res gjson.Result, full
 						}
 						data.Sequences[ni].MatchEntries = resultC
 					}
-					{
+					if data.Sequences[ni].Actions != nil {
 						resultC := make([]ServiceIPv4ACLSequencesActions, 0, len(data.Sequences[ni].Actions))
 						matchedC := make([]bool, len(data.Sequences[ni].Actions))
 						for _, oldCItem := range oldItem.Actions {

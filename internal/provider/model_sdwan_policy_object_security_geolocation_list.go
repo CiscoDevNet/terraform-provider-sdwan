@@ -127,7 +127,7 @@ func (data *PolicyObjectSecurityGeolocationList) fromBody(ctx context.Context, r
 	} else {
 		data.Entries = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Entries != nil {
 		resultEntries := make([]PolicyObjectSecurityGeolocationListEntries, 0, len(data.Entries))
 		matchedEntries := make([]bool, len(data.Entries))
 		for _, oldItem := range oldEntries {

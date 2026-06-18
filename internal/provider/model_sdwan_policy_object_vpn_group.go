@@ -112,7 +112,7 @@ func (data *PolicyObjectVPNGroup) fromBody(ctx context.Context, res gjson.Result
 	} else {
 		data.Entries = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Entries != nil {
 		resultEntries := make([]PolicyObjectVPNGroupEntries, 0, len(data.Entries))
 		matchedEntries := make([]bool, len(data.Entries))
 		for _, oldItem := range oldEntries {

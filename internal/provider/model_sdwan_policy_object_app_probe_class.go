@@ -176,7 +176,7 @@ func (data *PolicyObjectAppProbeClass) fromBody(ctx context.Context, res gjson.R
 	} else {
 		data.Entries = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Entries != nil {
 		resultEntries := make([]PolicyObjectAppProbeClassEntries, 0, len(data.Entries))
 		matchedEntries := make([]bool, len(data.Entries))
 		for _, oldItem := range oldEntries {
@@ -197,7 +197,7 @@ func (data *PolicyObjectAppProbeClass) fromBody(ctx context.Context, res gjson.R
 				}
 				if keyMatch {
 					matchedEntries[ni] = true
-					{
+					if data.Entries[ni].Map != nil {
 						resultC := make([]PolicyObjectAppProbeClassEntriesMap, 0, len(data.Entries[ni].Map))
 						matchedC := make([]bool, len(data.Entries[ni].Map))
 						for _, oldCItem := range oldItem.Map {

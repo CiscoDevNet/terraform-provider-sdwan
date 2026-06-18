@@ -502,7 +502,7 @@ func (data *TransportManagementVPN) fromBody(ctx context.Context, res gjson.Resu
 	} else {
 		data.NewHostMappings = nil
 	}
-	if !fullRead {
+	if !fullRead && data.NewHostMappings != nil {
 		resultNewHostMappings := make([]TransportManagementVPNNewHostMappings, 0, len(data.NewHostMappings))
 		matchedNewHostMappings := make([]bool, len(data.NewHostMappings))
 		for _, oldItem := range oldNewHostMappings {
@@ -611,7 +611,7 @@ func (data *TransportManagementVPN) fromBody(ctx context.Context, res gjson.Resu
 	} else {
 		data.Ipv4StaticRoutes = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv4StaticRoutes != nil {
 		resultIpv4StaticRoutes := make([]TransportManagementVPNIpv4StaticRoutes, 0, len(data.Ipv4StaticRoutes))
 		matchedIpv4StaticRoutes := make([]bool, len(data.Ipv4StaticRoutes))
 		for _, oldItem := range oldIpv4StaticRoutes {
@@ -645,7 +645,7 @@ func (data *TransportManagementVPN) fromBody(ctx context.Context, res gjson.Resu
 				}
 				if keyMatch {
 					matchedIpv4StaticRoutes[ni] = true
-					{
+					if data.Ipv4StaticRoutes[ni].NextHops != nil {
 						resultC := make([]TransportManagementVPNIpv4StaticRoutesNextHops, 0, len(data.Ipv4StaticRoutes[ni].NextHops))
 						matchedC := make([]bool, len(data.Ipv4StaticRoutes[ni].NextHops))
 						for _, oldCItem := range oldItem.NextHops {
@@ -759,7 +759,7 @@ func (data *TransportManagementVPN) fromBody(ctx context.Context, res gjson.Resu
 	} else {
 		data.Ipv6StaticRoutes = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv6StaticRoutes != nil {
 		resultIpv6StaticRoutes := make([]TransportManagementVPNIpv6StaticRoutes, 0, len(data.Ipv6StaticRoutes))
 		matchedIpv6StaticRoutes := make([]bool, len(data.Ipv6StaticRoutes))
 		for _, oldItem := range oldIpv6StaticRoutes {
@@ -779,7 +779,7 @@ func (data *TransportManagementVPN) fromBody(ctx context.Context, res gjson.Resu
 				}
 				if keyMatch {
 					matchedIpv6StaticRoutes[ni] = true
-					{
+					if data.Ipv6StaticRoutes[ni].NextHops != nil {
 						resultC := make([]TransportManagementVPNIpv6StaticRoutesNextHops, 0, len(data.Ipv6StaticRoutes[ni].NextHops))
 						matchedC := make([]bool, len(data.Ipv6StaticRoutes[ni].NextHops))
 						for _, oldCItem := range oldItem.NextHops {

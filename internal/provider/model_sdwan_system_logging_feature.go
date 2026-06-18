@@ -551,7 +551,7 @@ func (data *SystemLogging) fromBody(ctx context.Context, res gjson.Result, fullR
 	} else {
 		data.TlsProfiles = nil
 	}
-	if !fullRead {
+	if !fullRead && data.TlsProfiles != nil {
 		resultTlsProfiles := make([]SystemLoggingTlsProfiles, 0, len(data.TlsProfiles))
 		matchedTlsProfiles := make([]bool, len(data.TlsProfiles))
 		for _, oldItem := range oldTlsProfiles {
@@ -664,7 +664,7 @@ func (data *SystemLogging) fromBody(ctx context.Context, res gjson.Result, fullR
 	} else {
 		data.Ipv4Servers = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv4Servers != nil {
 		resultIpv4Servers := make([]SystemLoggingIpv4Servers, 0, len(data.Ipv4Servers))
 		matchedIpv4Servers := make([]bool, len(data.Ipv4Servers))
 		for _, oldItem := range oldIpv4Servers {
@@ -777,7 +777,7 @@ func (data *SystemLogging) fromBody(ctx context.Context, res gjson.Result, fullR
 	} else {
 		data.Ipv6Servers = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Ipv6Servers != nil {
 		resultIpv6Servers := make([]SystemLoggingIpv6Servers, 0, len(data.Ipv6Servers))
 		matchedIpv6Servers := make([]bool, len(data.Ipv6Servers))
 		for _, oldItem := range oldIpv6Servers {

@@ -330,7 +330,7 @@ func (data *EmbeddedSecurity) fromBody(ctx context.Context, res gjson.Result, fu
 	} else {
 		data.Assembly = nil
 	}
-	if !fullRead {
+	if !fullRead && data.Assembly != nil {
 		resultAssembly := make([]EmbeddedSecurityAssembly, 0, len(data.Assembly))
 		matchedAssembly := make([]bool, len(data.Assembly))
 		for _, oldItem := range oldAssembly {
@@ -356,7 +356,7 @@ func (data *EmbeddedSecurity) fromBody(ctx context.Context, res gjson.Result, fu
 				}
 				if keyMatch {
 					matchedAssembly[ni] = true
-					{
+					if data.Assembly[ni].Entries != nil {
 						resultC := make([]EmbeddedSecurityAssemblyEntries, 0, len(data.Assembly[ni].Entries))
 						matchedC := make([]bool, len(data.Assembly[ni].Entries))
 						for _, oldCItem := range oldItem.Entries {

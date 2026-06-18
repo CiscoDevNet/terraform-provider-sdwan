@@ -199,7 +199,7 @@ func (data *ApplicationPriorityQoS) fromBody(ctx context.Context, res gjson.Resu
 	} else {
 		data.QosSchedulers = nil
 	}
-	if !fullRead {
+	if !fullRead && data.QosSchedulers != nil {
 		resultQosSchedulers := make([]ApplicationPriorityQoSQosSchedulers, 0, len(data.QosSchedulers))
 		matchedQosSchedulers := make([]bool, len(data.QosSchedulers))
 		for _, oldItem := range oldQosSchedulers {

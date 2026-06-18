@@ -943,7 +943,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result, fu
 	} else {
 		data.IgmpInterfaces = nil
 	}
-	if !fullRead {
+	if !fullRead && data.IgmpInterfaces != nil {
 		resultIgmpInterfaces := make([]ServiceMulticastIgmpInterfaces, 0, len(data.IgmpInterfaces))
 		matchedIgmpInterfaces := make([]bool, len(data.IgmpInterfaces))
 		for _, oldItem := range oldIgmpInterfaces {
@@ -963,7 +963,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result, fu
 				}
 				if keyMatch {
 					matchedIgmpInterfaces[ni] = true
-					{
+					if data.IgmpInterfaces[ni].JoinGroups != nil {
 						resultC := make([]ServiceMulticastIgmpInterfacesJoinGroups, 0, len(data.IgmpInterfaces[ni].JoinGroups))
 						matchedC := make([]bool, len(data.IgmpInterfaces[ni].JoinGroups))
 						for _, oldCItem := range oldItem.JoinGroups {
@@ -1085,7 +1085,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result, fu
 	} else {
 		data.PimInterfaces = nil
 	}
-	if !fullRead {
+	if !fullRead && data.PimInterfaces != nil {
 		resultPimInterfaces := make([]ServiceMulticastPimInterfaces, 0, len(data.PimInterfaces))
 		matchedPimInterfaces := make([]bool, len(data.PimInterfaces))
 		for _, oldItem := range oldPimInterfaces {
@@ -1158,7 +1158,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result, fu
 	} else {
 		data.StaticRpAddresses = nil
 	}
-	if !fullRead {
+	if !fullRead && data.StaticRpAddresses != nil {
 		resultStaticRpAddresses := make([]ServiceMulticastStaticRpAddresses, 0, len(data.StaticRpAddresses))
 		matchedStaticRpAddresses := make([]bool, len(data.StaticRpAddresses))
 		for _, oldItem := range oldStaticRpAddresses {
@@ -1231,7 +1231,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result, fu
 	} else {
 		data.AutoRpAnnounces = nil
 	}
-	if !fullRead {
+	if !fullRead && data.AutoRpAnnounces != nil {
 		resultAutoRpAnnounces := make([]ServiceMulticastAutoRpAnnounces, 0, len(data.AutoRpAnnounces))
 		matchedAutoRpAnnounces := make([]bool, len(data.AutoRpAnnounces))
 		for _, oldItem := range oldAutoRpAnnounces {
@@ -1294,7 +1294,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result, fu
 	} else {
 		data.AutoRpDiscoveries = nil
 	}
-	if !fullRead {
+	if !fullRead && data.AutoRpDiscoveries != nil {
 		resultAutoRpDiscoveries := make([]ServiceMulticastAutoRpDiscoveries, 0, len(data.AutoRpDiscoveries))
 		matchedAutoRpDiscoveries := make([]bool, len(data.AutoRpDiscoveries))
 		for _, oldItem := range oldAutoRpDiscoveries {
@@ -1377,7 +1377,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result, fu
 	} else {
 		data.PimBsrRpCandidates = nil
 	}
-	if !fullRead {
+	if !fullRead && data.PimBsrRpCandidates != nil {
 		resultPimBsrRpCandidates := make([]ServiceMulticastPimBsrRpCandidates, 0, len(data.PimBsrRpCandidates))
 		matchedPimBsrRpCandidates := make([]bool, len(data.PimBsrRpCandidates))
 		for _, oldItem := range oldPimBsrRpCandidates {
@@ -1460,7 +1460,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result, fu
 	} else {
 		data.PimBsrCandidates = nil
 	}
-	if !fullRead {
+	if !fullRead && data.PimBsrCandidates != nil {
 		resultPimBsrCandidates := make([]ServiceMulticastPimBsrCandidates, 0, len(data.PimBsrCandidates))
 		matchedPimBsrCandidates := make([]bool, len(data.PimBsrCandidates))
 		for _, oldItem := range oldPimBsrCandidates {
@@ -1597,7 +1597,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result, fu
 	} else {
 		data.MsdpGroups = nil
 	}
-	if !fullRead {
+	if !fullRead && data.MsdpGroups != nil {
 		resultMsdpGroups := make([]ServiceMulticastMsdpGroups, 0, len(data.MsdpGroups))
 		matchedMsdpGroups := make([]bool, len(data.MsdpGroups))
 		for _, oldItem := range oldMsdpGroups {
@@ -1617,7 +1617,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result, fu
 				}
 				if keyMatch {
 					matchedMsdpGroups[ni] = true
-					{
+					if data.MsdpGroups[ni].Peers != nil {
 						resultC := make([]ServiceMulticastMsdpGroupsPeers, 0, len(data.MsdpGroups[ni].Peers))
 						matchedC := make([]bool, len(data.MsdpGroups[ni].Peers))
 						for _, oldCItem := range oldItem.Peers {
@@ -1637,6 +1637,8 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result, fu
 								}
 								if keyMatchC {
 									matchedC[nci] = true
+									data.MsdpGroups[ni].Peers[nci].PeerAuthenticationPassword = oldCItem.PeerAuthenticationPassword
+									data.MsdpGroups[ni].Peers[nci].PeerAuthenticationPasswordVariable = oldCItem.PeerAuthenticationPasswordVariable
 									resultC = append(resultC, data.MsdpGroups[ni].Peers[nci])
 									break
 								}
