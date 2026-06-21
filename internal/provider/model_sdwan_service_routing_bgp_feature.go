@@ -2035,6 +2035,16 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 					item.EbgpMultihop = types.Int64Value(va.Int())
 				}
 			}
+			item.Password = types.StringNull()
+			item.PasswordVariable = types.StringNull()
+			if t := v.Get("password.optionType"); t.Exists() {
+				va := v.Get("password.value")
+				if t.String() == "variable" {
+					item.PasswordVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.Password = types.StringValue(va.String())
+				}
+			}
 			item.SendLabel = types.BoolNull()
 			item.SendLabelVariable = types.StringNull()
 			if t := v.Get("sendLabel.optionType"); t.Exists() {
@@ -2388,6 +2398,16 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 					item.EbgpMultihopVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
 					item.EbgpMultihop = types.Int64Value(va.Int())
+				}
+			}
+			item.Password = types.StringNull()
+			item.PasswordVariable = types.StringNull()
+			if t := v.Get("password.optionType"); t.Exists() {
+				va := v.Get("password.value")
+				if t.String() == "variable" {
+					item.PasswordVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.Password = types.StringValue(va.String())
 				}
 			}
 			item.AsOverride = types.BoolNull()

@@ -90,7 +90,7 @@ attributes:
     - model_name: ebgpMultihop
       example: 1
     - model_name: password
-      write_only: true
+      encrypted: true
       example: myPassword
     - model_name: sendLabel
       example: true
@@ -220,7 +220,7 @@ attributes:
     - model_name: ebgpMultihop
       example: 3
     - model_name: password
-      write_only: true
+      encrypted: true
       example: myPassword
     - model_name: asOverride
       example: true

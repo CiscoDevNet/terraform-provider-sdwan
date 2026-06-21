@@ -491,6 +491,16 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result, 
 					item.RadiusServerSecret = types.StringValue(va.String())
 				}
 			}
+			item.Passphrase = types.StringNull()
+			item.PassphraseVariable = types.StringNull()
+			if t := v.Get("securityConfig.passphrase.optionType"); t.Exists() {
+				va := v.Get("securityConfig.passphrase.value")
+				if t.String() == "variable" {
+					item.PassphraseVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.Passphrase = types.StringValue(va.String())
+				}
+			}
 			item.QosProfile = types.StringNull()
 			item.QosProfileVariable = types.StringNull()
 			if t := v.Get("qosProfile.optionType"); t.Exists() {

@@ -1541,6 +1541,16 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result, fu
 							cItem.RemoteAs = types.Int64Value(va.Int())
 						}
 					}
+					cItem.PeerAuthenticationPassword = types.StringNull()
+					cItem.PeerAuthenticationPasswordVariable = types.StringNull()
+					if t := cv.Get("password.optionType"); t.Exists() {
+						va := cv.Get("password.value")
+						if t.String() == "variable" {
+							cItem.PeerAuthenticationPasswordVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
+							cItem.PeerAuthenticationPassword = types.StringValue(va.String())
+						}
+					}
 					cItem.KeepaliveInterval = types.Int64Null()
 					cItem.KeepaliveIntervalVariable = types.StringNull()
 					if t := cv.Get("keepaliveInterval.optionType"); t.Exists() {

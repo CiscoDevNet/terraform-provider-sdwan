@@ -1182,6 +1182,16 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result, 
 							cItem.MessageDigestKeyId = types.Int64Value(va.Int())
 						}
 					}
+					cItem.MessageDigestKey = types.StringNull()
+					cItem.MessageDigestKeyVariable = types.StringNull()
+					if t := cv.Get("md5.optionType"); t.Exists() {
+						va := cv.Get("md5.value")
+						if t.String() == "variable" {
+							cItem.MessageDigestKeyVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
+							cItem.MessageDigestKey = types.StringValue(va.String())
+						}
+					}
 					item.Interfaces = append(item.Interfaces, cItem)
 					return true
 				})

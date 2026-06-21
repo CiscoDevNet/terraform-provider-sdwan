@@ -399,6 +399,10 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 	{{- range .Attributes}}
 	{{- $cname := toGoName .TfName}}
 	{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .TfOnly) (not .WriteOnly) (not .Value)}}
+	{{- if .Encrypted}}
+	// Encrypted top-level attribute: read only on full read (import); on refresh the prior state value is preserved.
+	if fullRead {
+	{{- end}}
 	{{- if eq .Type "StringInt64"}}
 	data.{{toGoName .TfName}} = types.StringNull()
 	{{- else}}
@@ -429,6 +433,9 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 		data.{{toGoName .Name}} = {{if eq .Type "Bool"}}types.BoolValue({{.Value}}){{else}}types.StringValue("{{.Value}}"){{end}}
 		{{- end}}
 		{{- end}}
+	}
+	{{- end}}
+	{{- if .Encrypted}}
 	}
 	{{- end}}
 	{{- else if isNestedListSet .}}

@@ -591,6 +591,16 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result,
 					item.KeyId = types.Int64Value(va.Int())
 				}
 			}
+			item.KeyString = types.StringNull()
+			item.KeyStringVariable = types.StringNull()
+			if t := v.Get("keystring.optionType"); t.Exists() {
+				va := v.Get("keystring.value")
+				if t.String() == "variable" {
+					item.KeyStringVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.KeyString = types.StringValue(va.String())
+				}
+			}
 			data.Md5Keys = append(data.Md5Keys, item)
 			return true
 		})
