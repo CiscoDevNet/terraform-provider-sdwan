@@ -25,7 +25,11 @@ data "sdwan_transport_routing_ospfv3_ipv4_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -48,7 +52,6 @@ data "sdwan_transport_routing_ospfv3_ipv4_feature" "example" {
 - `distance_variable` (String) Variable name
 - `filter` (Boolean) Table map filtered or not
 - `filter_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `redistributes` (Attributes List) Redistribute routes (see [below for nested schema](#nestedatt--redistributes))
 - `reference_bandwidth` (Number) Set reference bandwidth method to assign OSPF cost
 - `reference_bandwidth_variable` (String) Variable name

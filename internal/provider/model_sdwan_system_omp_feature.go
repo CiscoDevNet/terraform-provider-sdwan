@@ -303,7 +303,7 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 	} else if data.Holdtime.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"holdtime.optionType", "default")
-			body, _ = sjson.Set(body, path+"holdtime.value", 60)
+			body, _ = sjson.Set(body, path+"holdtime.value", 300)
 		}
 	} else {
 		if true {

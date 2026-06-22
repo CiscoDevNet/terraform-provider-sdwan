@@ -42,6 +42,14 @@ func TestAccDataSourceSdwanPolicyObjectColorListProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanPolicyObjectColorListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectColorListProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectColorListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectColorListProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_color_list.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_color_list.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -80,3 +88,25 @@ func testAccDataSourceSdwanPolicyObjectColorListProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectColorListProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_color_list" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  color = "blue"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_color_list" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

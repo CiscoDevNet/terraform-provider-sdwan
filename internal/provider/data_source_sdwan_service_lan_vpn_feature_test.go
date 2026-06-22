@@ -98,6 +98,14 @@ func TestAccDataSourceSdwanServiceLANVPNProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanServiceLANVPNPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceLANVPNProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanServiceLANVPNPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceLANVPNProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_lan_vpn_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -231,3 +239,121 @@ func testAccDataSourceSdwanServiceLANVPNProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanServiceLANVPNProfileParcelByNameConfig() string {
+	config := `resource "sdwan_service_lan_vpn_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
+	config += `	vpn = 1` + "\n"
+	config += `	config_description = "VPN1"` + "\n"
+	config += `	omp_admin_distance_ipv4 = 1` + "\n"
+	config += `	omp_admin_distance_ipv6 = 1` + "\n"
+	config += `	enable_sdwan_remote_access = false` + "\n"
+	config += `	primary_dns_address_ipv4 = "1.2.3.4"` + "\n"
+	config += `	secondary_dns_address_ipv4 = "2.3.4.5"` + "\n"
+	config += `	primary_dns_address_ipv6 = "2001:0:0:1::0"` + "\n"
+	config += `	secondary_dns_address_ipv6 = "2001:0:0:2::0"` + "\n"
+	config += `	host_mappings = [{` + "\n"
+	config += `	  host_name = "HOSTMAPPING1"` + "\n"
+	config += `	  list_of_ips = ["1.2.3.4"]` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv4_static_routes = [{` + "\n"
+	config += `	  network_address = "1.2.3.4"` + "\n"
+	config += `	  subnet_mask = "0.0.0.0"` + "\n"
+	config += `	  gateway = "nextHop"` + "\n"
+	config += `	  next_hops = [{` + "\n"
+	config += `		address = "1.2.3.4"` + "\n"
+	config += `		administrative_distance = 1` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv6_static_routes = [{` + "\n"
+	config += `	  prefix = "2001:0:0:1::0/12"` + "\n"
+	config += `	  gateway = "nextHop"` + "\n"
+	config += `	  next_hops = [{` + "\n"
+	config += `		address = "2001:0:0:1::0"` + "\n"
+	config += `		administrative_distance = 1` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	services = [{` + "\n"
+	config += `	  service_type = "FW"` + "\n"
+	config += `	  ipv4_addresses = ["1.2.3.4"]` + "\n"
+	config += `	  tracking = true` + "\n"
+	config += `	}]` + "\n"
+	config += `	service_routes = [{` + "\n"
+	config += `	  network_address = "1.2.3.4"` + "\n"
+	config += `	  subnet_mask = "0.0.0.0"` + "\n"
+	config += `	  service = "SIG"` + "\n"
+	config += `	  vpn = 0` + "\n"
+	config += `	  sse_instance = "1"` + "\n"
+	config += `	}]` + "\n"
+	config += `	gre_routes = [{` + "\n"
+	config += `	  network_address = "1.2.3.4"` + "\n"
+	config += `	  subnet_mask = "0.0.0.0"` + "\n"
+	config += `	  interface = ["gre01"]` + "\n"
+	config += `	  vpn = 0` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipsec_routes = [{` + "\n"
+	config += `	  network_address = "1.2.3.4"` + "\n"
+	config += `	  subnet_mask = "0.0.0.0"` + "\n"
+	config += `	  interface = ["ipsec01"]` + "\n"
+	config += `	}]` + "\n"
+	config += `	nat_pools = [{` + "\n"
+	config += `	  nat_pool_name = 1` + "\n"
+	config += `	  prefix_length = 3` + "\n"
+	config += `	  range_start = "1.2.3.4"` + "\n"
+	config += `	  range_end = "2.3.4.5"` + "\n"
+	config += `	  overload = true` + "\n"
+	config += `	  direction = "inside"` + "\n"
+	config += `	}]` + "\n"
+	config += `	nat_port_forwards = [{` + "\n"
+	config += `	  nat_pool_name = 2` + "\n"
+	config += `	  source_port = 122` + "\n"
+	config += `	  translate_port = 330` + "\n"
+	config += `	  source_ip = "1.2.3.4"` + "\n"
+	config += `	  translated_source_ip = "2.3.4.5"` + "\n"
+	config += `	  protocol = "TCP"` + "\n"
+	config += `	}]` + "\n"
+	config += `	static_nats = [{` + "\n"
+	config += `	  nat_pool_name = 3` + "\n"
+	config += `	  source_ip = "1.2.3.4"` + "\n"
+	config += `	  translated_source_ip = "2.3.4.5"` + "\n"
+	config += `	  static_nat_direction = "inside"` + "\n"
+	config += `	}]` + "\n"
+	config += `	static_nat_subnets = [{` + "\n"
+	config += `	  source_ip_subnet = "1.2.3.4"` + "\n"
+	config += `	  translated_source_ip_subnet = "2.3.4.5"` + "\n"
+	config += `	  prefix_length = 6` + "\n"
+	config += `	  static_nat_direction = "inside"` + "\n"
+	config += `	}]` + "\n"
+	config += `	nat_64_v4_pools = [{` + "\n"
+	config += `	  name = "NATPOOL1"` + "\n"
+	config += `	  range_start = "1.2.3.4"` + "\n"
+	config += `	  range_end = "2.3.4.5"` + "\n"
+	config += `	  overload = false` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv4_import_route_targets = [{` + "\n"
+	config += `	  route_target = "1.1.1.3:200"` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv4_export_route_targets = [{` + "\n"
+	config += `	  route_target = "1.1.1.3:200"` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv6_import_route_targets = [{` + "\n"
+	config += `	  route_target = "1.1.1.3:200"` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv6_export_route_targets = [{` + "\n"
+	config += `	  route_target = "1.1.1.3:200"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_service_lan_vpn_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_service_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

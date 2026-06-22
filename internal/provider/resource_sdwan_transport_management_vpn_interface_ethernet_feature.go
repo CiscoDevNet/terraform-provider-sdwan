@@ -341,6 +341,9 @@ func (r *TransportManagementVPNInterfaceEthernetProfileParcelResource) Schema(ct
 			"arp_timeout": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Timeout value for dynamically learned ARP entries, <0..2678400> seconds").AddIntegerRangeDescription(0, 2147483).AddDefaultValueDescription("1200").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(2147483),
+				},
 			},
 			"arp_timeout_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

@@ -55,6 +55,14 @@ func TestAccDataSourceSdwanEmbeddedSecurityProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanEmbeddedSecurityPrerequisitesProfileParcelConfig + testAccDataSourceSdwanEmbeddedSecurityProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanEmbeddedSecurityPrerequisitesProfileParcelConfig + testAccDataSourceSdwanEmbeddedSecurityProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_embedded_security_policy.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -135,3 +143,41 @@ func testAccDataSourceSdwanEmbeddedSecurityProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanEmbeddedSecurityProfileParcelByNameConfig() string {
+	config := `resource "sdwan_embedded_security_policy" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_embedded_security_feature_profile.test.id` + "\n"
+	config += `	assembly = [{` + "\n"
+	config += `	  ngfw_policy_id = sdwan_embedded_security_ngfw_policy.test.id` + "\n"
+	config += `	  entries = [{` + "\n"
+	config += `		source_zone = "untrusted"` + "\n"
+	config += `		destination_zone = "untrusted"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	tcp_syn_flood_limit = "432"` + "\n"
+	config += `	max_incomplete_tcp_limit = "12345"` + "\n"
+	config += `	max_incomplete_udp_limit = "12345"` + "\n"
+	config += `	max_incomplete_icmp_limit = "12345"` + "\n"
+	config += `	audit_trail = "on"` + "\n"
+	config += `	unified_logging = "on"` + "\n"
+	config += `	session_reclassify_allow = "on"` + "\n"
+	config += `	icmp_unreachable_allow = "on"` + "\n"
+	config += `	failure_mode = "close"` + "\n"
+	config += `	nat = true` + "\n"
+	config += `	download_url_database_on_device = false` + "\n"
+	config += `	resource_profile = "low"` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_embedded_security_policy" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_embedded_security_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

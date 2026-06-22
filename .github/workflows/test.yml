@@ -63,6 +63,7 @@ jobs:
         terraform:
           - "1.0.*"
           - "1.5.*"
+          - "1.10.*"
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-go@v6

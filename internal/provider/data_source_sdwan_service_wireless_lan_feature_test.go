@@ -53,6 +53,14 @@ func TestAccDataSourceSdwanServiceWirelessLANProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanServiceWirelessLANPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceWirelessLANProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanServiceWirelessLANPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceWirelessLANProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_wireless_lan_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_wireless_lan_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -103,3 +111,38 @@ func testAccDataSourceSdwanServiceWirelessLANProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanServiceWirelessLANProfileParcelByNameConfig() string {
+	config := `resource "sdwan_service_wireless_lan_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
+	config += `	enable_24g = true` + "\n"
+	config += `	enable_5g = true` + "\n"
+	config += `	ssids = [{` + "\n"
+	config += `	  ssid_name = "SSID_1"` + "\n"
+	config += `	  admin_state = true` + "\n"
+	config += `	  broadcast_ssid = true` + "\n"
+	config += `	  vlan_id = 1` + "\n"
+	config += `	  radio_type = "all"` + "\n"
+	config += `	  security_type = "personal"` + "\n"
+	config += `	  passphrase = "MyPassword123"` + "\n"
+	config += `	  qos_profile = "silver"` + "\n"
+	config += `	}]` + "\n"
+	config += `	country = "GB"` + "\n"
+	config += `	username = "user1"` + "\n"
+	config += `	password = "Test@316s13"` + "\n"
+	config += `	me_dynamic_ip_enabled = true` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_service_wireless_lan_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_service_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

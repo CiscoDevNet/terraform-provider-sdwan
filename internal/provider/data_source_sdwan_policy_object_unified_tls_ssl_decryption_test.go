@@ -52,6 +52,14 @@ func TestAccDataSourceSdwanPolicyObjectUnifiedTLSSSLDecryptionProfileParcel(t *t
 				Config: testAccDataSourceSdwanPolicyObjectUnifiedTLSSSLDecryptionPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectUnifiedTLSSSLDecryptionProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectUnifiedTLSSSLDecryptionPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectUnifiedTLSSSLDecryptionProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_unified_tls_ssl_decryption.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_unified_tls_ssl_decryption.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -97,3 +105,33 @@ func testAccDataSourceSdwanPolicyObjectUnifiedTLSSSLDecryptionProfileParcelConfi
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectUnifiedTLSSSLDecryptionProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_unified_tls_ssl_decryption" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	expired_certificate = "drop"` + "\n"
+	config += `	untrusted_certificate = "drop"` + "\n"
+	config += `	certificate_revocation_status = "none"` + "\n"
+	config += `	unsupported_protocol_versions = "drop"` + "\n"
+	config += `	unsupported_cipher_suites = "drop"` + "\n"
+	config += `	failure_mode = "close"` + "\n"
+	config += `	default_ca_certificate_bundle = true` + "\n"
+	config += `	rsa_keypair_modules = "2048"` + "\n"
+	config += `	ec_key_type = "P256"` + "\n"
+	config += `	certificate_lifetime = "1"` + "\n"
+	config += `	minimal_tls_ver = "TLSv1"` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_unified_tls_ssl_decryption" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

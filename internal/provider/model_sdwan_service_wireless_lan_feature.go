@@ -567,6 +567,19 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result, 
 			data.Username = types.StringValue(va.String())
 		}
 	}
+	// Encrypted top-level attribute: read only on full read (import); on refresh the prior state value is preserved.
+	if fullRead {
+		data.Password = types.StringNull()
+		data.PasswordVariable = types.StringNull()
+		if t := res.Get(path + "password.optionType"); t.Exists() {
+			va := res.Get(path + "password.value")
+			if t.String() == "variable" {
+				data.PasswordVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				data.Password = types.StringValue(va.String())
+			}
+		}
+	}
 	data.MeDynamicIpEnabled = types.BoolNull()
 
 	if t := res.Get(path + "meIpConfig.meDynamicIpEnabled.optionType"); t.Exists() {

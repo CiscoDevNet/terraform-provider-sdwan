@@ -114,6 +114,9 @@ func (r *SystemBFDProfileParcelResource) Schema(ctx context.Context, req resourc
 			"default_dscp": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddIntegerRangeDescription(0, 63).AddDefaultValueDescription("48").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(63),
+				},
 			},
 			"default_dscp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

@@ -576,6 +576,19 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result,
 			data.AuthenticationType = types.StringValue(va.String())
 		}
 	}
+	// Encrypted top-level attribute: read only on full read (import); on refresh the prior state value is preserved.
+	if fullRead {
+		data.HmacAuthenticationKey = types.StringNull()
+		data.HmacAuthenticationKeyVariable = types.StringNull()
+		if t := res.Get(path + "authentication.authKey.optionType"); t.Exists() {
+			va := res.Get(path + "authentication.authKey.value")
+			if t.String() == "variable" {
+				data.HmacAuthenticationKeyVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				data.HmacAuthenticationKey = types.StringValue(va.String())
+			}
+		}
+	}
 	oldMd5Keys := data.Md5Keys
 	if value := res.Get(path + "authentication.key"); value.Exists() && len(value.Array()) > 0 {
 		data.Md5Keys = make([]ServiceRoutingEIGRPMd5Keys, 0)

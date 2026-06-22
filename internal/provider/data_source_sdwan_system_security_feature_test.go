@@ -60,6 +60,14 @@ func TestAccDataSourceSdwanSystemSecurityProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanSystemSecurityPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemSecurityProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanSystemSecurityPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemSecurityProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_system_security_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_system_security_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -119,3 +127,47 @@ func testAccDataSourceSdwanSystemSecurityProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanSystemSecurityProfileParcelByNameConfig() string {
+	config := `resource "sdwan_system_security_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	rekey = 86400` + "\n"
+	config += `	anti_replay_window = "512"` + "\n"
+	config += `	extended_anti_replay_window = 256` + "\n"
+	config += `	ipsec_pairwise_keying = false` + "\n"
+	config += `	integrity_type = ["esp"]` + "\n"
+	config += `	keychains = [{` + "\n"
+	config += `	  key_chain_name = "aaa"` + "\n"
+	config += `	  key_id = 1` + "\n"
+	config += `	}]` + "\n"
+	config += `	keys = [{` + "\n"
+	config += `	  id = 0` + "\n"
+	config += `	  name = "aaa"` + "\n"
+	config += `	  send_id = 1` + "\n"
+	config += `	  receiver_id = 2` + "\n"
+	config += `	  include_tcp_options = false` + "\n"
+	config += `	  accept_ao_mismatch = false` + "\n"
+	config += `	  crypto_algorithm = "aes-128-cmac"` + "\n"
+	config += `	  key_string = "abcabc"` + "\n"
+	config += `	  send_life_time_local = true` + "\n"
+	config += `	  send_life_time_start_epoch = 1659284400` + "\n"
+	config += `	  send_life_time_infinite = true` + "\n"
+	config += `	  accept_life_time_local = true` + "\n"
+	config += `	  accept_life_time_start_epoch = 1659284400` + "\n"
+	config += `	  accept_life_time_infinite = true` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_security_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

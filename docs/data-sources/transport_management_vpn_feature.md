@@ -25,14 +25,17 @@ data "sdwan_transport_management_vpn_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
 - `description` (String) The description of the Feature
 - `ipv4_static_routes` (Attributes List) IPv4 Static Route (see [below for nested schema](#nestedatt--ipv4_static_routes))
 - `ipv6_static_routes` (Attributes List) IPv6 Static Route (see [below for nested schema](#nestedatt--ipv6_static_routes))
-- `name` (String) The name of the Feature
 - `new_host_mappings` (Attributes List) (see [below for nested schema](#nestedatt--new_host_mappings))
 - `primary_dns_address_ipv4` (String) Primary DNS Address (IPv4)
 - `primary_dns_address_ipv4_variable` (String) Variable name

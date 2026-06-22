@@ -25,7 +25,11 @@ data "sdwan_system_logging_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -38,7 +42,6 @@ data "sdwan_system_logging_feature" "example" {
 - `disk_file_size_variable` (String) Variable name
 - `ipv4_servers` (Attributes List) Enable logging to remote server (see [below for nested schema](#nestedatt--ipv4_servers))
 - `ipv6_servers` (Attributes List) Enable logging to remote ipv6 server (see [below for nested schema](#nestedatt--ipv6_servers))
-- `name` (String) The name of the Feature
 - `tls_profiles` (Attributes List) Configure a TLS profile (see [below for nested schema](#nestedatt--tls_profiles))
 - `version` (Number) The version of the Feature
 

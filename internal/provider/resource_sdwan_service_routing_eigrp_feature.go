@@ -160,6 +160,9 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 			"hello_interval": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set EIGRP hello interval").AddIntegerRangeDescription(0, 65535).AddDefaultValueDescription("5").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(65535),
+				},
 			},
 			"hello_interval_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -168,6 +171,9 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 			"hold_time": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set EIGRP hold time").AddIntegerRangeDescription(0, 65535).AddDefaultValueDescription("15").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(65535),
+				},
 			},
 			"hold_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

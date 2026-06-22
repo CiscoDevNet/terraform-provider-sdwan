@@ -2,7 +2,7 @@
 name: Service DHCP Server
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/dhcp-server
 minimum_version: 20.15.0
-test_tags: [SDWAN_2015]
+test_tags: [SDWAN_2015, SDWAN_2018]
 parcel_type: feature
 doc_category: Features - Service
 attributes:
@@ -59,6 +59,13 @@ attributes:
     - model_name: ip
       exclude_test: true
       example: 192.168.1.4
+  - model_name: dhcpHaEnable
+    example: false
+    test_tags: [SDWAN_2018]
+    conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
 
 test_prerequisites: |
   resource "sdwan_service_feature_profile" "test" {

@@ -25,12 +25,15 @@ data "sdwan_policy_object_expanded_community_list" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Policy_object
+- `name` (String) The name of the Policy_object
 
 ### Read-Only
 
 - `description` (String) The description of the Policy_object
 - `expanded_community_lists` (Set of String) Expanded Community List
 - `expanded_community_lists_variable` (String) Variable name
-- `name` (String) The name of the Policy_object
 - `version` (Number) The version of the Policy_object

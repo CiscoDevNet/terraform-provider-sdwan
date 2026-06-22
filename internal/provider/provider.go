@@ -23,6 +23,7 @@ import (
 	"log/slog"
 	"os"
 	"strconv"
+	"strings"
 	"sync"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
@@ -48,6 +49,7 @@ type SdwanProviderModel struct {
 	Username    types.String `tfsdk:"username"`
 	Password    types.String `tfsdk:"password"`
 	URL         types.String `tfsdk:"url"`
+	APIToken    types.String `tfsdk:"api_token"`
 	Insecure    types.Bool   `tfsdk:"insecure"`
 	Retries     types.Int64  `tfsdk:"retries"`
 	TaskTimeout types.Int64  `tfsdk:"task_timeout"`
@@ -82,6 +84,11 @@ func (p *SdwanProvider) Schema(ctx context.Context, req provider.SchemaRequest, 
 				MarkdownDescription: "URL of the Cisco SD-WAN Manager device. This can also be set as the `SDWAN_URL` environment variable.",
 				Optional:            true,
 			},
+			"api_token": schema.StringAttribute{
+				MarkdownDescription: "API Token for the SD-WAN Manager. Can be used instead of username and password. This can also be set as the `SDWAN_API_TOKEN` environment variable.",
+				Optional:            true,
+				Sensitive:           true,
+			},
 			"insecure": schema.BoolAttribute{
 				MarkdownDescription: "Allow insecure HTTPS client. This can also be set as the `SDWAN_INSECURE` environment variable. Defaults to `true`.",
 				Optional:            true,
@@ -113,10 +120,25 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 		return
 	}
 
-	// User must provide a username to the provider
+	// Resolve API token
+	var apiToken string
+	if config.APIToken.IsUnknown() {
+		resp.Diagnostics.AddWarning(
+			"Unable to create client",
+			"Cannot use unknown value as api_token",
+		)
+		return
+	}
+
+	if config.APIToken.IsNull() {
+		apiToken = os.Getenv("SDWAN_API_TOKEN")
+	} else {
+		apiToken = config.APIToken.ValueString()
+	}
+
+	// Resolve username
 	var username string
 	if config.Username.IsUnknown() {
-		// Cannot connect to client with an unknown value
 		resp.Diagnostics.AddWarning(
 			"Unable to create client",
 			"Cannot use unknown value as username",
@@ -130,19 +152,9 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 		username = config.Username.ValueString()
 	}
 
-	if username == "" {
-		// Error vs warning - empty value must stop execution
-		resp.Diagnostics.AddError(
-			"Unable to find username",
-			"Username cannot be an empty string",
-		)
-		return
-	}
-
-	// User must provide a password to the provider
+	// Resolve password
 	var password string
 	if config.Password.IsUnknown() {
-		// Cannot connect to client with an unknown value
 		resp.Diagnostics.AddWarning(
 			"Unable to create client",
 			"Cannot use unknown value as password",
@@ -156,16 +168,16 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 		password = config.Password.ValueString()
 	}
 
-	if password == "" {
-		// Error vs warning - empty value must stop execution
+	// Validate that either api_token or username+password is provided
+	if apiToken == "" && (username == "" || password == "") {
 		resp.Diagnostics.AddError(
-			"Unable to find password",
-			"Password cannot be an empty string",
+			"Unable to create client",
+			"Either 'api_token' or both 'username' and 'password' must be provided.",
 		)
 		return
 	}
 
-	// User must provide a username to the provider
+	// User must provide a URL to the provider
 	var url string
 	if config.URL.IsUnknown() {
 		// Cannot connect to client with an unknown value
@@ -187,6 +199,15 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 		resp.Diagnostics.AddError(
 			"Unable to find url",
 			"URL cannot be an empty string",
+		)
+		return
+	}
+
+	// Validate that the URL is in proper format without a "/" at the end
+	if strings.HasSuffix(url, "/") {
+		resp.Diagnostics.AddError(
+			"Invalid URL format",
+			"URL '"+url+"' cannot end with a trailing slash ('/')",
 		)
 		return
 	}
@@ -255,7 +276,13 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 	}
 
 	// Create a new SDWAN client and set it to the provider client
-	c, err := sdwan.NewClient(url, username, password, insecure, sdwan.MaxRetries(int(retries)))
+	var authMod func(*sdwan.Client)
+	if apiToken != "" {
+		authMod = sdwan.WithToken(apiToken)
+	} else {
+		authMod = sdwan.WithLogin(username, password)
+	}
+	c, err := sdwan.NewClient(url, insecure, authMod, sdwan.MaxRetries(int(retries)))
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to create client",
@@ -388,6 +415,8 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewServiceTrackerProfileParcelResource,
 		NewServiceTrackerGroupProfileParcelResource,
 		NewServiceWirelessLANProfileParcelResource,
+		NewSSECiscoProfileParcelResource,
+		NewSSEZscalerProfileParcelResource,
 		NewSystemAAAProfileParcelResource,
 		NewSystemBannerProfileParcelResource,
 		NewSystemBasicProfileParcelResource,
@@ -405,6 +434,9 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewSystemRemoteAccessProfileParcelResource,
 		NewSystemSecurityProfileParcelResource,
 		NewSystemSNMPProfileParcelResource,
+		NewTopologyCustomControlProfileParcelResource,
+		NewTopologyHubSpokeProfileParcelResource,
+		NewTopologyMeshProfileParcelResource,
 		NewTransportCellularControllerProfileParcelResource,
 		NewTransportCellularProfileProfileParcelResource,
 		NewTransportGPSProfileParcelResource,
@@ -443,8 +475,10 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewCLIConfigFeatureResource,
 		NewCLIDeviceTemplateResource,
 		NewCLIFeatureProfileResource,
+		NewCloudProviderSettingsResource,
 		NewColorListPolicyObjectResource,
 		NewConfigurationGroupResource,
+		NewCustomApplicationResource,
 		NewCustomControlTopologyPolicyDefinitionResource,
 		NewDataFQDNPrefixListPolicyObjectResource,
 		NewDataIPv4PrefixListPolicyObjectResource,
@@ -499,12 +533,15 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewSIGSecurityFeatureProfileResource,
 		NewSiteListPolicyObjectResource,
 		NewSLAClassPolicyObjectResource,
+		NewSSEFeatureProfileResource,
 		NewStandardCommunityListPolicyObjectResource,
 		NewSystemFeatureProfileResource,
 		NewTagResource,
 		NewTLOCListPolicyObjectResource,
 		NewTLSSSLDecryptionPolicyDefinitionResource,
 		NewTLSSSLProfilePolicyDefinitionResource,
+		NewTopologyFeatureProfileResource,
+		NewTopologyGroupResource,
 		NewTrafficDataPolicyDefinitionResource,
 		NewTransportFeatureProfileResource,
 		NewTransportWANVPNFeatureAssociateRoutingBGPFeatureResource,
@@ -526,6 +563,7 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewZoneListPolicyObjectResource,
 		NewAttachFeatureDeviceTemplateResource,
 		NewActivateCentralizedPolicyResource,
+		NewActivateTopologyGroupResource,
 	}
 }
 
@@ -639,6 +677,8 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewServiceTrackerProfileParcelDataSource,
 		NewServiceTrackerGroupProfileParcelDataSource,
 		NewServiceWirelessLANProfileParcelDataSource,
+		NewSSECiscoProfileParcelDataSource,
+		NewSSEZscalerProfileParcelDataSource,
 		NewSystemAAAProfileParcelDataSource,
 		NewSystemBannerProfileParcelDataSource,
 		NewSystemBasicProfileParcelDataSource,
@@ -656,6 +696,9 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewSystemRemoteAccessProfileParcelDataSource,
 		NewSystemSecurityProfileParcelDataSource,
 		NewSystemSNMPProfileParcelDataSource,
+		NewTopologyCustomControlProfileParcelDataSource,
+		NewTopologyHubSpokeProfileParcelDataSource,
+		NewTopologyMeshProfileParcelDataSource,
 		NewTransportCellularControllerProfileParcelDataSource,
 		NewTransportCellularProfileProfileParcelDataSource,
 		NewTransportGPSProfileParcelDataSource,
@@ -694,8 +737,10 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewCLIConfigFeatureDataSource,
 		NewCLIDeviceTemplateDataSource,
 		NewCLIFeatureProfileDataSource,
+		NewCloudProviderSettingsDataSource,
 		NewColorListPolicyObjectDataSource,
 		NewConfigurationGroupDataSource,
+		NewCustomApplicationDataSource,
 		NewCustomControlTopologyPolicyDefinitionDataSource,
 		NewDataFQDNPrefixListPolicyObjectDataSource,
 		NewDataIPv4PrefixListPolicyObjectDataSource,
@@ -727,6 +772,7 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewPolicerPolicyObjectDataSource,
 		NewPolicyGroupDataSource,
 		NewPolicyObjectFeatureProfileDataSource,
+		NewPolicyObjectFeatureProfileParcelsDataSource,
 		NewPortListPolicyObjectDataSource,
 		NewPreferredColorGroupPolicyObjectDataSource,
 		NewProtocolListPolicyObjectDataSource,
@@ -751,12 +797,15 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewSIGSecurityFeatureProfileDataSource,
 		NewSiteListPolicyObjectDataSource,
 		NewSLAClassPolicyObjectDataSource,
+		NewSSEFeatureProfileDataSource,
 		NewStandardCommunityListPolicyObjectDataSource,
 		NewSystemFeatureProfileDataSource,
 		NewTagDataSource,
 		NewTLOCListPolicyObjectDataSource,
 		NewTLSSSLDecryptionPolicyDefinitionDataSource,
 		NewTLSSSLProfilePolicyDefinitionDataSource,
+		NewTopologyFeatureProfileDataSource,
+		NewTopologyGroupDataSource,
 		NewTrafficDataPolicyDefinitionDataSource,
 		NewTransportFeatureProfileDataSource,
 		NewTransportWANVPNFeatureAssociateRoutingBGPFeatureDataSource,

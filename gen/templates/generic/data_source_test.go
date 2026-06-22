@@ -224,6 +224,8 @@ func testAccDataSourceSdwan{{camelCase .Name}}Config() string {
 			{{- end}}
 			{{- if not .RemoveId}}
 			id = sdwan_{{snakeCase $name}}.test.id
+			{{- else if and (not .NoResource) (not (contains .SkipTemplates "resource.go"))}}
+			depends_on = [sdwan_{{snakeCase $name}}.test]
 			{{- end}}
 		}
 	`

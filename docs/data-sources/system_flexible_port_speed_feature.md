@@ -25,12 +25,15 @@ data "sdwan_system_flexible_port_speed_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
 - `description` (String) The description of the Feature
-- `name` (String) The name of the Feature
 - `port_type` (String) port Type
 - `port_type_variable` (String) Variable name
 - `version` (Number) The version of the Feature

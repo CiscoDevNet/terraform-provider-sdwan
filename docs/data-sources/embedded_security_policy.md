@@ -25,7 +25,11 @@ data "sdwan_embedded_security_policy" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Policy
+- `name` (String) The name of the Policy
 
 ### Read-Only
 
@@ -39,7 +43,6 @@ data "sdwan_embedded_security_policy" "example" {
 - `max_incomplete_icmp_limit` (String)
 - `max_incomplete_tcp_limit` (String)
 - `max_incomplete_udp_limit` (String)
-- `name` (String) The name of the Policy
 - `nat` (Boolean)
 - `nat_variable` (String) Variable name
 - `resource_profile` (String)

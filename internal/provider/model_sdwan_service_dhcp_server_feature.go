@@ -24,6 +24,7 @@ import (
 	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -58,6 +59,8 @@ type ServiceDHCPServer struct {
 	TftpServersVariable    types.String                    `tfsdk:"tftp_servers_variable"`
 	StaticLeases           []ServiceDHCPServerStaticLeases `tfsdk:"static_leases"`
 	OptionCodes            []ServiceDHCPServerOptionCodes  `tfsdk:"option_codes"`
+	DhcpHaEnable           types.Bool                      `tfsdk:"dhcp_ha_enable"`
+	DhcpHaEnableVariable   types.String                    `tfsdk:"dhcp_ha_enable_variable"`
 }
 
 type ServiceDHCPServerStaticLeases struct {
@@ -95,7 +98,7 @@ func (data ServiceDHCPServer) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data ServiceDHCPServer) toBody(ctx context.Context) string {
+func (data ServiceDHCPServer) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -335,6 +338,23 @@ func (data ServiceDHCPServer) toBody(ctx context.Context) string {
 				}
 			}
 			body, _ = sjson.SetRaw(body, path+"optionCode.-1", itemBody)
+		}
+	}
+
+	if !data.DhcpHaEnableVariable.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"dhcpHaEnable.optionType", "variable")
+			body, _ = sjson.Set(body, path+"dhcpHaEnable.value", data.DhcpHaEnableVariable.ValueString())
+		}
+	} else if data.DhcpHaEnable.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"dhcpHaEnable.optionType", "default")
+			body, _ = sjson.Set(body, path+"dhcpHaEnable.value", false)
+		}
+	} else {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"dhcpHaEnable.optionType", "global")
+			body, _ = sjson.Set(body, path+"dhcpHaEnable.value", data.DhcpHaEnable.ValueBool())
 		}
 	}
 	return body
@@ -618,6 +638,16 @@ func (data *ServiceDHCPServer) fromBody(ctx context.Context, res gjson.Result, f
 			}
 		}
 		data.OptionCodes = resultOptionCodes
+	}
+	data.DhcpHaEnable = types.BoolNull()
+	data.DhcpHaEnableVariable = types.StringNull()
+	if t := res.Get(path + "dhcpHaEnable.optionType"); t.Exists() {
+		va := res.Get(path + "dhcpHaEnable.value")
+		if t.String() == "variable" {
+			data.DhcpHaEnableVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.DhcpHaEnable = types.BoolValue(va.Bool())
+		}
 	}
 }
 

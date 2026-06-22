@@ -25,7 +25,11 @@ data "sdwan_transport_routing_bgp_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -75,7 +79,6 @@ data "sdwan_transport_routing_bgp_feature" "example" {
 - `mpls_interfaces` (Attributes List) MPLS BGP Interface (see [below for nested schema](#nestedatt--mpls_interfaces))
 - `multipath_relax` (Boolean) Ignore AS for multipath selection
 - `multipath_relax_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `propagate_as_path` (Boolean) Propagate AS Path
 - `propagate_as_path_variable` (String) Variable name
 - `propagate_community` (Boolean) Propagate Community

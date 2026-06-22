@@ -49,6 +49,14 @@ func TestAccDataSourceSdwanSystemBFDProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanSystemBFDPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemBFDProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanSystemBFDPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemBFDProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_system_bfd_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_system_bfd_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -93,3 +101,32 @@ func testAccDataSourceSdwanSystemBFDProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanSystemBFDProfileParcelByNameConfig() string {
+	config := `resource "sdwan_system_bfd_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	multiplier = 3` + "\n"
+	config += `	poll_interval = 100` + "\n"
+	config += `	default_dscp = 8` + "\n"
+	config += `	colors = [{` + "\n"
+	config += `	  color = "3g"` + "\n"
+	config += `	  hello_interval = 200` + "\n"
+	config += `	  multiplier = 3` + "\n"
+	config += `	  pmtu_discovery = true` + "\n"
+	config += `	  dscp = 16` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_bfd_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

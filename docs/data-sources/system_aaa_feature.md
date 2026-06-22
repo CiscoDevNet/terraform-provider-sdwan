@@ -25,7 +25,11 @@ data "sdwan_system_aaa_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -40,10 +44,12 @@ data "sdwan_system_aaa_feature" "example" {
 - `authorization_console_variable` (String) Variable name
 - `authorization_rules` (Attributes List) Configure the Authorization Rules (see [below for nested schema](#nestedatt--authorization_rules))
 - `description` (String) The description of the Feature
-- `name` (String) The name of the Feature
 - `radius_groups` (Attributes List) Configure the Radius serverGroup (see [below for nested schema](#nestedatt--radius_groups))
 - `server_auth_order` (List of String) ServerGroups priority order
 - `tacacs_groups` (Attributes List) Configure the TACACS serverGroup (see [below for nested schema](#nestedatt--tacacs_groups))
+- `trustsec_cts_auth_list` (String) CTS Authorization List
+- `trustsec_cts_auth_list_variable` (String) Variable name
+- `trustsec_radius_group` (String) RADIUS group
 - `users` (Attributes List) Create local login account (see [below for nested schema](#nestedatt--users))
 - `version` (Number) The version of the Feature
 
@@ -82,6 +88,7 @@ Read-Only:
 - `source_interface` (String) Set interface to use to reach Radius server
 - `source_interface_variable` (String) Variable name
 - `vpn` (Number) Set VPN in which Radius server is located
+- `vpn_variable` (String) Variable name
 
 <a id="nestedatt--radius_groups--servers"></a>
 ### Nested Schema for `radius_groups.servers`
@@ -117,6 +124,7 @@ Read-Only:
 - `source_interface` (String) Set interface to use to reach TACACS server
 - `source_interface_variable` (String) Variable name
 - `vpn` (Number) Set VPN in which TACACS server is located
+- `vpn_variable` (String) Variable name
 
 <a id="nestedatt--tacacs_groups--servers"></a>
 ### Nested Schema for `tacacs_groups.servers`

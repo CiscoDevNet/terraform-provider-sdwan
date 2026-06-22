@@ -158,6 +158,9 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 			"keepalive_time": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Interval (seconds) of keepalive messages sent to its BGP peer").AddIntegerRangeDescription(0, 65535).AddDefaultValueDescription("60").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(65535),
+				},
 			},
 			"keepalive_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -166,6 +169,9 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 			"hold_time": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Interval (seconds) not receiving a keepalive message declares a BGP peer down").AddIntegerRangeDescription(0, 65535).AddDefaultValueDescription("180").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(65535),
+				},
 			},
 			"hold_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

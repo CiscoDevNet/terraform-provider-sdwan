@@ -45,6 +45,14 @@ func TestAccDataSourceSdwanPolicyObjectUnifiedIntrusionPreventionProfileParcel(t
 				Config: testAccDataSourceSdwanPolicyObjectUnifiedIntrusionPreventionPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectUnifiedIntrusionPreventionProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectUnifiedIntrusionPreventionPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectUnifiedIntrusionPreventionProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_unified_intrusion_prevention.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_unified_intrusion_prevention.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -97,3 +105,27 @@ func testAccDataSourceSdwanPolicyObjectUnifiedIntrusionPreventionProfileParcelCo
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectUnifiedIntrusionPreventionProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_unified_intrusion_prevention" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	signature_set = "balanced"` + "\n"
+	config += `	inspection_mode = "detection"` + "\n"
+	config += `	ips_signature_allow_list_id = sdwan_policy_object_security_ips_signature.test.id` + "\n"
+	config += `	log_level = "error"` + "\n"
+	config += `	custom_signature = false` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_unified_intrusion_prevention" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

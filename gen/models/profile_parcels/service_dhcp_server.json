@@ -117,6 +117,7 @@
                           "255.255.0.0",
                           "255.254.0.0",
                           "255.252.0.0",
+                          "255.248.0.0",
                           "255.240.0.0",
                           "255.224.0.0",
                           "255.192.0.0",
@@ -174,6 +175,7 @@
                           "255.255.0.0",
                           "255.254.0.0",
                           "255.252.0.0",
+                          "255.248.0.0",
                           "255.240.0.0",
                           "255.224.0.0",
                           "255.192.0.0",
@@ -367,12 +369,12 @@
                     "type": "integer",
                     "minimum": 86400,
                     "maximum": 86400
-                  },
-                  "required": [
-                    "optionType",
-                    "value"
-                  ]
+                  }
                 },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               }
             ]
@@ -827,7 +829,7 @@
                   ]
                 },
                 "ip": {
-                  "description": "Set client’s static IP address",
+                  "description": "Set client\u2019s static IP address",
                   "type": "object",
                   "oneOf": [
                     {
@@ -882,9 +884,53 @@
                   ]
                 }
               },
-              "required": [
-                "macAddress",
-                "ip"
+              "allOf": [
+                {
+                  "if": {
+                    "anyOf": [
+                      {
+                        "properties": {
+                          "macAddress": {
+                            "properties": {
+                              "optionType": {
+                                "const": "global"
+                              }
+                            },
+                            "required": [
+                              "optionType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "macAddress"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "ip": {
+                            "properties": {
+                              "optionType": {
+                                "const": "global"
+                              }
+                            },
+                            "required": [
+                              "optionType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "ip"
+                        ]
+                      }
+                    ]
+                  },
+                  "then": {
+                    "required": [
+                      "ip",
+                      "macAddress"
+                    ]
+                  }
+                }
               ],
               "additionalProperties": false
             }
@@ -1281,6 +1327,80 @@
                 }
               ]
             }
+          },
+          "dhcpHaEnable": {
+            "description": "DHCP sync enable/disable for dual home edges",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "variable"
+                    ]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "default": {
+                    "type": "boolean"
+                  },
+                  "description": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 128
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "default"
+                    ]
+                  },
+                  "value": {
+                    "type": "boolean",
+                    "enum": [
+                      false
+                    ]
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
           }
         },
         "required": [
@@ -1300,7 +1420,7 @@
           "ISRv",
           "ir1101"
         ],
-        "minVManageVersion": "20.15.1"
+        "minVManageVersion": "20.18.2"
       },
       "documentation": {
         "description": "This is the documentation for POST request schema for LAN VPN DHCP Server profile parcel",
@@ -1414,7 +1534,11 @@
                     ]
                   }
                 }
-              ]
+              ],
+              "dhcpHaEnable": {
+                "optionType": "default",
+                "value": false
+              }
             },
             "name": "Default_DHCP_Server_Parcel"
           }

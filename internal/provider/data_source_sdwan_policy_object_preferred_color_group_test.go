@@ -44,6 +44,14 @@ func TestAccDataSourceSdwanPolicyObjectPreferredColorGroupProfileParcel(t *testi
 				Config: testAccDataSourceSdwanPolicyObjectPreferredColorGroupPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectPreferredColorGroupProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectPreferredColorGroupPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectPreferredColorGroupProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_preferred_color_group.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_preferred_color_group.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -86,3 +94,30 @@ func testAccDataSourceSdwanPolicyObjectPreferredColorGroupProfileParcelConfig() 
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectPreferredColorGroupProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_preferred_color_group" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  primary_color_preference = ["default"]` + "\n"
+	config += `	  primary_path_preference = "direct-path"` + "\n"
+	config += `	  secondary_color_preference = ["bronze"]` + "\n"
+	config += `	  secondary_path_preference = "all-paths"` + "\n"
+	config += `	  tertiary_color_preference = ["blue"]` + "\n"
+	config += `	  tertiary_path_preference = "all-paths"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_preferred_color_group" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

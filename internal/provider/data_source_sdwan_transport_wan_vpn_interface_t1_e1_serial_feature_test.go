@@ -91,6 +91,14 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcel(t *te
 				Config: testAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -307,3 +315,80 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelConfig
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelByNameConfig() string {
+	config := `resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id` + "\n"
+	config += `	shutdown = true` + "\n"
+	config += `	interface_name = "Serial0"` + "\n"
+	config += `	ipv4_address = "1.2.3.4"` + "\n"
+	config += `	ipv4_subnet_mask = "0.0.0.0"` + "\n"
+	config += `	ipv6_address = "2001:0:0:1::/64"` + "\n"
+	config += `	bandwidth = 123456` + "\n"
+	config += `	bandwidth_downstream = 123456` + "\n"
+	config += `	clock_rate = "1200"` + "\n"
+	config += `	encapsulation = "ppp"` + "\n"
+	config += `	tunnel_interface = true` + "\n"
+	config += `	per_tunnel_qos = true` + "\n"
+	config += `	per_tunnel_qos_aggregator = false` + "\n"
+	config += `	tunnel_qos_mode = "spoke"` + "\n"
+	config += `	tunnel_interface_color = "mpls"` + "\n"
+	config += `	tunnel_interface_restrict = true` + "\n"
+	config += `	tunnel_interface_groups = 42949672` + "\n"
+	config += `	tunnel_interface_border = false` + "\n"
+	config += `	tunnel_interface_max_control_connections = 62` + "\n"
+	config += `	tunnel_interface_vbond_as_stun_server = false` + "\n"
+	config += `	tunnel_interface_exclude_controller_group_list = [2]` + "\n"
+	config += `	tunnel_interface_vmanage_connection_preference = 8` + "\n"
+	config += `	tunnel_interface_port_hop = true` + "\n"
+	config += `	tunnel_interface_low_bandwidth_link = false` + "\n"
+	config += `	tunnel_interface_tunnel_tcp_mss = 1460` + "\n"
+	config += `	tunnel_interface_clear_dont_fragment = false` + "\n"
+	config += `	tunnel_interface_clear_network_broadcast = false` + "\n"
+	config += `	tunnel_interface_carrier = "default"` + "\n"
+	config += `	tunnel_interface_bind_loopback_tunnel = "example"` + "\n"
+	config += `	tunnel_interface_last_resort_circuit = false` + "\n"
+	config += `	tunnel_interface_nat_refresh_interval = 5` + "\n"
+	config += `	tunnel_interface_hello_interval = 1000` + "\n"
+	config += `	tunnel_interface_hello_tolerance = 12` + "\n"
+	config += `	tunnel_interface_allow_all = false` + "\n"
+	config += `	tunnel_interface_allow_bgp = false` + "\n"
+	config += `	tunnel_interface_allow_dhcp = true` + "\n"
+	config += `	tunnel_interface_allow_dns = true` + "\n"
+	config += `	tunnel_interface_allow_icmp = true` + "\n"
+	config += `	tunnel_interface_allow_netconf = false` + "\n"
+	config += `	tunnel_interface_allow_ntp = false` + "\n"
+	config += `	tunnel_interface_allow_ospf = false` + "\n"
+	config += `	tunnel_interface_allow_ssh = false` + "\n"
+	config += `	tunnel_interface_allow_stun = false` + "\n"
+	config += `	tunnel_interface_allow_https = true` + "\n"
+	config += `	tunnel_interface_allow_snmp = false` + "\n"
+	config += `	tunnel_interface_allow_bfd = false` + "\n"
+	config += `	tunnel_interface_encapsulations = [{` + "\n"
+	config += `	  encapsulation = "gre"` + "\n"
+	config += `	  preference = 4294967` + "\n"
+	config += `	  weight = 250` + "\n"
+	config += `	}]` + "\n"
+	config += `	acl_ipv4_egress_feature_id = sdwan_transport_ipv4_acl_feature.test.id` + "\n"
+	config += `	acl_ipv6_ingress_feature_id = sdwan_transport_ipv6_acl_feature.test.id` + "\n"
+	config += `	tcp_mss = 1460` + "\n"
+	config += `	mtu = 1500` + "\n"
+	config += `	ip_mtu = 1500` + "\n"
+	config += `	tloc_extension = "tloc"` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_transport_feature_profile.test.id
+			transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

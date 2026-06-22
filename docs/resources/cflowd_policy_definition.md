@@ -55,8 +55,8 @@ resource "sdwan_cflowd_policy_definition" "example" {
   - Range: `60`-`86400`
 - `inactive_flow_timeout` (Number) Inactive flow timeout in seconds
   - Range: `1`-`3600`
-- `protocol` (String) Protocol, either `ipv4`, `ipv6` or `all`
-  - Choices: `ipv4`, `ipv6`, `all`
+- `protocol` (String) Protocol, either `ipv4`, `ipv6` or `both`
+  - Choices: `ipv4`, `ipv6`, `both`
 - `remarked_dscp` (Boolean) Collect remarked DSCP
 - `sampling_interval` (Number) Flow sampling interval
   - Range: `1`-`65536`

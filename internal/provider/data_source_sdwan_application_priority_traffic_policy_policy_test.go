@@ -117,3 +117,6 @@ func testAccDataSourceSdwanApplicationPriorityTrafficPolicyProfileParcelConfig()
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+// End of section. //template:end testAccDataSourceByNameConfig

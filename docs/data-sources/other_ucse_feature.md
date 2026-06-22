@@ -25,7 +25,11 @@ data "sdwan_other_ucse_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -41,7 +45,6 @@ data "sdwan_other_ucse_feature" "example" {
 - `interfaces` (Attributes List) Interface name: GigabitEthernet0/<>/<> when present (see [below for nested schema](#nestedatt--interfaces))
 - `ipv4_address` (String) Assign IPv4 address
 - `ipv4_address_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `slot` (Number) Slot
 - `version` (Number) The version of the Feature
 - `vlan_id` (Number) Assign Vlan Id

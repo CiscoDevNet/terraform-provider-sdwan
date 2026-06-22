@@ -25,13 +25,19 @@ data "sdwan_service_dhcp_server_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
 - `default_gateway` (String) Set IP address of default gateway
 - `default_gateway_variable` (String) Variable name
 - `description` (String) The description of the Feature
+- `dhcp_ha_enable` (Boolean) DHCP sync enable/disable for dual home edges
+- `dhcp_ha_enable_variable` (String) Variable name
 - `dns_servers` (Set of String) Configure one or more DNS server IP addresses
 - `dns_servers_variable` (String) Variable name
 - `domain_name` (String) Set domain name client uses to resolve hostnames
@@ -42,7 +48,6 @@ data "sdwan_service_dhcp_server_feature" "example" {
 - `interface_mtu_variable` (String) Variable name
 - `lease_time` (Number) Configure how long a DHCP-assigned IP address is valid
 - `lease_time_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `network_address` (String) Network Address
 - `network_address_variable` (String) Variable name
 - `option_codes` (Attributes List) Configure Options Code (see [below for nested schema](#nestedatt--option_codes))

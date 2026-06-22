@@ -26,8 +26,12 @@ data "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
-- `id` (String) The id of the Feature
 - `transport_management_vpn_feature_id` (String) Transport Management VPN Feature ID
+
+### Optional
+
+- `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -77,7 +81,6 @@ data "sdwan_transport_management_vpn_interface_ethernet_feature" "example" {
 - `mac_address_variable` (String) Variable name
 - `media_type` (String) Media type
 - `media_type_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `shutdown` (Boolean)
 - `shutdown_variable` (String) Variable name
 - `speed` (String) Set interface speed

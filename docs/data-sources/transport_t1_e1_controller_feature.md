@@ -25,13 +25,16 @@ data "sdwan_transport_t1_e1_controller_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
 - `description` (String) The description of the Feature
 - `entries` (Attributes List) Controller tx-ex List (see [below for nested schema](#nestedatt--entries))
-- `name` (String) The name of the Feature
 - `slot` (String) Slot number
 - `slot_variable` (String) Variable name
 - `type` (String) Card Type

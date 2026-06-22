@@ -287,6 +287,9 @@ func (r *TransportWANVPNInterfaceCellularProfileParcelResource) Schema(ctx conte
 			"tunnel_interface_max_control_connections": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Maximum Control Connections").AddIntegerRangeDescription(0, 100).String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(100),
+				},
 			},
 			"tunnel_interface_max_control_connections_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -323,6 +326,9 @@ func (r *TransportWANVPNInterfaceCellularProfileParcelResource) Schema(ctx conte
 			"tunnel_interface_vmanage_connection_preference": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set interface preference for control connection to vManage <0..8>").AddIntegerRangeDescription(0, 8).AddDefaultValueDescription("5").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(8),
+				},
 			},
 			"tunnel_interface_vmanage_connection_preference_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

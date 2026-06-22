@@ -51,6 +51,14 @@ func TestAccDataSourceSdwanServiceIPv4ACLProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanServiceIPv4ACLPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceIPv4ACLProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanServiceIPv4ACLPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceIPv4ACLProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_ipv4_acl_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_ipv4_acl_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -106,3 +114,42 @@ func testAccDataSourceSdwanServiceIPv4ACLProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanServiceIPv4ACLProfileParcelByNameConfig() string {
+	config := `resource "sdwan_service_ipv4_acl_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
+	config += `	default_action = "drop"` + "\n"
+	config += `	sequences = [{` + "\n"
+	config += `	  sequence_id = 1` + "\n"
+	config += `	  sequence_name = "AccessControlList1"` + "\n"
+	config += `	  match_entries = [{` + "\n"
+	config += `		dscps = [16]` + "\n"
+	config += `		packet_length = 1500` + "\n"
+	config += `		protocols = [1]` + "\n"
+	config += `      source_ports = [{` + "\n"
+	config += `			port = 8000` + "\n"
+	config += `		}]` + "\n"
+	config += `		tcp_state = "syn"` + "\n"
+	config += `	}]` + "\n"
+	config += `	  actions = [{` + "\n"
+	config += `		accept_set_dscp = 60` + "\n"
+	config += `		accept_counter_name = "COUNTER_1"` + "\n"
+	config += `		accept_log = false` + "\n"
+	config += `		accept_set_next_hop = "1.2.3.4"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_service_ipv4_acl_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_service_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

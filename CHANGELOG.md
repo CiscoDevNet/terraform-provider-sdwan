@@ -1,14 +1,38 @@
-## 0.11.2 (unreleased)
+## 0.11.3 (unreleased)
+
+- Fix issue where deleting a single device with tag removes this tag across all devices
+- Add `sdwan_topology_group` resource and data source
+- Add `sdwan_topology_feature_profile` resource and data source
+- Add `sdwan_activate_topology_group` resource
+- Add `sdwan_topology_custom_control_feature` resource and data source
+- Add `sdwan_topology_mesh_feature` resource and data source
+- Add `sdwan_topology_hub_spoke_feature` resource and data source
+- Add `sdwan_custom_application` resource and data source
+- Add `sdwan_sse_feature_profile` resource and data source
+- Add `sdwan_sse_cisco_feature` resource and data source
+- Add `sdwan_sse_zscaler_feature` resource and data source
+- Fix integer validator generation for attributes with only a minimum or maximum bound, including schemas where one side of the bound is 0
+- Fix profile parcel default generation to prefer explicit JSON schema defaults over the first enum value. (Note - this impacts the generated default of `sdwan_system_omp_feature.holdtime from 60 to 300` which will be pushed, once changing the sdwan_system_omp_feature configuration after provider upgrade.)
+
+## 0.11.2
 
 - Fix issue where `sdwan_policy_group` and `sdwan_configuration_group` resources produce unexpected diffs after import
 - Fix `sdwan_transport_routing_bgp_feature` and `sdwan_service_routing_bgp_feature` resources to correctly handle BGP ASDOT notation for `local_as`, `remote_as` and `as_number` device variables in configuration groups
 - Fix issue where `sdwan_configuration_group` and `sdwan_policy_group` resources trigger a configuration repush to all associated devices when only a single device variable is changed
+- Bump `sdwan_service_dhcp_server_feature` schema to `20.18.0`
+- Bump `sdwan_system_aaa_feature` schema to `20.18.0`
+- Fix issue where `sdwan_cflowd_policy_definition` allows  `all` instead of `both` for `protocol` field
+- Add `sdwan_cloud_provider_settings` resource and data source
+- Add validation to ensure that the SDWAN_URL is in proper format without a `/` at the end
+- Add name-based lookup to profile parcel data sources
+- Add `sdwan_policy_object_feature_profile_parcels` data source with `created_by` and `parcel_type` filters
 
 ## 0.11.1
 
 - Fix issue where `sdwan_transport_cellular_profile_feature`, `sdwan_system_aaa_feature`, `sdwan_system_ntp_feature`, `sdwan_system_security_feature` and `sdwan_system_snmp_feature` resource produces unexpected changes for the encrypted attributes after the import.
 - Fix issue where `per_tunnel_qos_mode` attribute set to spoke in `sdwan_transport_wan_vpn_interface_ethernet_feature` resource fails.
 - Fix issue where `sdwan_service_lan_vpn_interface_ethernet_feature` fails to be configured if `port_channel_member_interface` is set to `true`
+- Add support for API token authentication
 
 ## 0.11.0
 

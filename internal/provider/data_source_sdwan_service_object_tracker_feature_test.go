@@ -43,6 +43,14 @@ func TestAccDataSourceSdwanServiceObjectTrackerProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanServiceObjectTrackerPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceObjectTrackerProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanServiceObjectTrackerPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceObjectTrackerProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_object_tracker_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_object_tracker_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -81,3 +89,25 @@ func testAccDataSourceSdwanServiceObjectTrackerProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanServiceObjectTrackerProfileParcelByNameConfig() string {
+	config := `resource "sdwan_service_object_tracker_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
+	config += `	object_tracker_id = 10` + "\n"
+	config += `	object_tracker_type = "Interface"` + "\n"
+	config += `	interface = "GigabitEthernet1"` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_service_object_tracker_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_service_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

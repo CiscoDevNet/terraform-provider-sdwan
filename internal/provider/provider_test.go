@@ -37,13 +37,13 @@ func testAccPreCheck(t *testing.T) {
 	// You can add code here to run prior to any test case execution, for example assertions
 	// about the appropriate environment variables being set are common to see in a pre-check
 	// function.
-	if v := os.Getenv("SDWAN_USERNAME"); v == "" {
-		t.Fatal("SDWAN_USERNAME env variable must be set for acceptance tests")
-	}
-	if v := os.Getenv("SDWAN_PASSWORD"); v == "" {
-		t.Fatal("SDWAN_PASSWORD env variable must be set for acceptance tests")
-	}
 	if v := os.Getenv("SDWAN_URL"); v == "" {
 		t.Fatal("SDWAN_URL env variable must be set for acceptance tests")
+	}
+	apiToken := os.Getenv("SDWAN_API_TOKEN")
+	username := os.Getenv("SDWAN_USERNAME")
+	password := os.Getenv("SDWAN_PASSWORD")
+	if apiToken == "" && (username == "" || password == "") {
+		t.Fatal("Either SDWAN_API_TOKEN or both SDWAN_USERNAME and SDWAN_PASSWORD must be set for acceptance tests")
 	}
 }

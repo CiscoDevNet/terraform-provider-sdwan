@@ -179,6 +179,9 @@ func (r *ServiceRoutingOSPFv3IPv4ProfileParcelResource) Schema(ctx context.Conte
 			"default_information_originate_metric": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set metric used to generate default route <0..16777214>").AddIntegerRangeDescription(0, 16777214).String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(16777214),
+				},
 			},
 			"default_information_originate_metric_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

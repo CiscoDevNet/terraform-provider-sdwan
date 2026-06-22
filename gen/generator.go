@@ -210,11 +210,21 @@ type YamlConfig struct {
 	NoImport                 bool                  `yaml:"no_import"`
 	NoResource               bool                  `yaml:"no_resource"`
 	NoDataSource             bool                  `yaml:"no_data_source"`
+	NoDelete                 bool                  `yaml:"no_delete"`
+	NoDataSourceNameQuery    bool                  `yaml:"no_data_source_name_query"`
 	GetBeforeDelete          bool                  `yaml:"get_before_delete"`
 	DeleteMutex              bool                  `yaml:"delete_mutex"`
 	ParcelType               string                `yaml:"parcel_type"`
 	FullUpdate               bool                  `yaml:"full_update"`
 	CreateMutex              bool                  `yaml:"create_mutex"`
+	DataSourceFilters        []DataSourceFilter    `yaml:"data_source_filters"`
+}
+
+type DataSourceFilter struct {
+	TfName        string `yaml:"tf_name"`
+	ModelName     string `yaml:"model_name"`
+	Description   string `yaml:"description"`
+	ListAttribute string `yaml:"list_attribute"`
 }
 
 type YamlConfigAttribute struct {
@@ -281,6 +291,10 @@ type YamlConfigAttribute struct {
 	IncludeVariableCheck    bool                           `yaml:"include_variable_check"`
 	ResetContainerIfIgnore  bool                           `yaml:"reset_container_if_ignore"`
 	NoOptionType            bool                           `yaml:"no_option_type"`
+	PositionalFallback      bool                           `yaml:"positional_fallback"`
+	OptionalNullEmpty       bool                           `yaml:"optional_null_empty"`
+	IncludeEmptyValue       bool                           `yaml:"include_empty_value"`
+	WriteAsDefault          bool                           `yaml:"write_as_default"`
 }
 
 type YamlConfigConditionalAttribute struct {
@@ -494,26 +508,91 @@ func resolveConditionTfOnly(attributes []YamlConfigAttribute) {
 	}
 }
 
+// HasMinVersionCondition recursively checks if any attribute in the list (or nested attributes)
+// has a conditional_attribute with a condition of type "MinVersion".
+func HasMinVersionCondition(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		for _, cond := range attr.ConditionalAttribute.Conditions {
+			if cond.Type == "MinVersion" {
+				return true
+			}
+		}
+		if len(attr.Attributes) > 0 && HasMinVersionCondition(attr.Attributes) {
+			return true
+		}
+	}
+	return false
+}
+
+// HasStringValidator recursively checks if any attribute needs the stringvalidator package.
+func HasStringValidator(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if (len(attr.EnumValues) > 0 && !attr.IgnoreEnum) ||
+			len(attr.StringPatterns) > 0 ||
+			attr.StringMinLength != 0 ||
+			attr.StringMaxLength != 0 {
+			return true
+		}
+		if len(attr.Attributes) > 0 && HasStringValidator(attr.Attributes) {
+			return true
+		}
+	}
+	return false
+}
+
+// HasRegexpValidator recursively checks if any attribute needs the regexp package.
+func HasRegexpValidator(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if len(attr.StringPatterns) > 0 {
+			return true
+		}
+		if len(attr.Attributes) > 0 && HasRegexpValidator(attr.Attributes) {
+			return true
+		}
+	}
+	return false
+}
+
+// HasFloat64Validator recursively checks if any attribute needs the float64validator package.
+func HasFloat64Validator(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.MinFloat != 0.0 || attr.MaxFloat != 0.0 {
+			return true
+		}
+		if len(attr.Attributes) > 0 && HasFloat64Validator(attr.Attributes) {
+			return true
+		}
+	}
+	return false
+}
+
 // Templating helper function to build conditional logic check for a single condition
 func BuildConditionCheck(cond YamlConfigCondition, context string) string {
-	varName := ToGoName(cond.Name)
 	var check string
 
-	if cond.Value == "" {
-		// Empty/null value means "check if attribute is null"
-		// Use negate: true to check if attribute is NOT null
-		check = fmt.Sprintf("%s.%s.IsNull()", context, varName)
-	} else if cond.Type == "Bool" {
-		check = fmt.Sprintf("%s.%s.ValueBool() == %s", context, varName, cond.Value)
-	} else if cond.Type == "StringContains" {
-		check = fmt.Sprintf("strings.Contains(%s.%s.ValueString(), \"%s\")", context, varName, cond.Value)
+	if cond.Type == "MinVersion" {
+		// MinVersion: check if the connected manager version is >= cond.Value
+		// ver is passed as a parameter to toBody when any MinVersion condition exists
+		check = fmt.Sprintf("ver.GreaterThanOrEqual(version.Must(version.NewVersion(\"%s\")))", cond.Value)
 	} else {
-		// For string conditions, also accept null if the attribute has a matching default value
-		// This is stored in cond.DefaultValue field, populated during template execution
-		if cond.DefaultValue != "" && cond.DefaultValue == cond.Value {
-			check = fmt.Sprintf("(%s.%s.ValueString() == \"%s\" || %s.%s.IsNull())", context, varName, cond.Value, context, varName)
+		varName := ToGoName(cond.Name)
+
+		if cond.Value == "" {
+			// Empty/null value means "check if attribute is null"
+			// Use negate: true to check if attribute is NOT null
+			check = fmt.Sprintf("%s.%s.IsNull()", context, varName)
+		} else if cond.Type == "Bool" {
+			check = fmt.Sprintf("%s.%s.ValueBool() == %s", context, varName, cond.Value)
+		} else if cond.Type == "StringContains" {
+			check = fmt.Sprintf("strings.Contains(%s.%s.ValueString(), \"%s\")", context, varName, cond.Value)
 		} else {
-			check = fmt.Sprintf("%s.%s.ValueString() == \"%s\"", context, varName, cond.Value)
+			// For string conditions, also accept null if the attribute has a matching default value
+			// This is stored in cond.DefaultValue field, populated during template execution
+			if cond.DefaultValue != "" && cond.DefaultValue == cond.Value {
+				check = fmt.Sprintf("(%s.%s.ValueString() == \"%s\" || %s.%s.IsNull())", context, varName, cond.Value, context, varName)
+			} else {
+				check = fmt.Sprintf("%s.%s.ValueString() == \"%s\"", context, varName, cond.Value)
+			}
 		}
 	}
 
@@ -598,7 +677,13 @@ func BuildConditionalDescription(attr YamlConfigConditionalAttribute) string {
 	var parts []string
 	for _, cond := range attr.Conditions {
 		var part string
-		if cond.Type == "StringContains" {
+		if cond.Type == "MinVersion" {
+			if cond.Negate {
+				part = fmt.Sprintf("SD-WAN Manager version lower than `%s`", cond.Value)
+			} else {
+				part = fmt.Sprintf("SD-WAN Manager version `%s` or higher", cond.Value)
+			}
+		} else if cond.Type == "StringContains" {
 			if cond.Negate {
 				part = fmt.Sprintf("`%s` not containing `%s`", cond.Name, cond.Value)
 			} else {
@@ -805,6 +890,10 @@ var functions = template.FuncMap{
 	"filterTfOnlyConditions":      FilterTfOnlyConditions,
 	"buildConditionalLogic":       BuildConditionalLogic,
 	"buildConditionalDescription": BuildConditionalDescription,
+	"hasMinVersionCondition":      HasMinVersionCondition,
+	"hasStringValidator":          HasStringValidator,
+	"hasRegexpValidator":          HasRegexpValidator,
+	"hasFloat64Validator":         HasFloat64Validator,
 }
 
 func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result) {
@@ -1080,7 +1169,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	}
 
 	if r.Get("oneOf.0.type").String() == "array" && len(attr.Attributes) > 0 {
-		attr.Type = "List"
+		if attr.Type != "Set" {
+			attr.Type = "List"
+		}
 		if r.Get("minItems").Exists() {
 			attr.MinList = r.Get("minItems").Int()
 		}
@@ -1187,28 +1278,28 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		}
 		if d.Exists() && (!isOneOfAttribute || attr.DefaultValuePresent == true) {
 			attr.DefaultValuePresent = true
-			if value := d.Get("properties.value.enum.0"); value.Exists() {
+			if value := d.Get("properties.value.default"); value.Exists() {
 				if value.String() == "" {
 					attr.DefaultValueEmptyString = true
 				} else {
-					if noGlobal {
+					if noGlobal && !attr.WriteAsDefault {
 						attr.Value = value.String()
 					} else {
 						attr.DefaultValue = value.String()
 					}
 				}
-			} else if value := d.Get("properties.value.default"); value.Exists() {
+			} else if value := d.Get("properties.value.enum.0"); value.Exists() {
 				if value.String() == "" {
 					attr.DefaultValueEmptyString = true
 				} else {
-					if noGlobal {
+					if noGlobal && !attr.WriteAsDefault {
 						attr.Value = value.String()
 					} else {
 						attr.DefaultValue = value.String()
 					}
 				}
 			} else if value := d.Get("properties.value.minimum"); value.Exists() {
-				if noGlobal {
+				if noGlobal && !attr.WriteAsDefault {
 					attr.Value = value.String()
 				} else {
 					attr.DefaultValue = value.String()
@@ -1222,7 +1313,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 			}
 		}
 	} else if r.Get("type").String() == "array" && r.Get("items.type").String() == "object" || r.Get("items.oneOf.0.type").String() == "object" && len(attr.Attributes) > 0 {
-		attr.Type = "List"
+		if attr.Type != "Set" {
+			attr.Type = "List"
+		}
 		if r.Get("minItems").Exists() {
 			attr.MinList = r.Get("minItems").Int()
 		}
@@ -1390,6 +1483,11 @@ func renderTemplate(templatePath, outputPath string, config interface{}) {
 }
 
 func main() {
+	resourceName := ""
+	if len(os.Args) == 2 {
+		resourceName = os.Args[1]
+	}
+
 	featureTemplateFiles, _ := os.ReadDir(featureTemplateDefinitionsPath)
 	featureTemplateConfigs := make([]YamlConfig, len(featureTemplateFiles))
 	configs := make(map[string][]YamlConfig)
@@ -1412,6 +1510,10 @@ func main() {
 	for i := range featureTemplateConfigs {
 		// Augment feature template config by model data
 		augmentFeatureTemplateConfig(&featureTemplateConfigs[i])
+
+		if resourceName != "" && featureTemplateConfigs[i].Name != resourceName {
+			continue
+		}
 
 		// Iterate over templates and render files
 		for _, t := range featureTemplateTemplates {
@@ -1441,6 +1543,10 @@ func main() {
 	for i := range profileParcelConfigs {
 		// Augment profile parcel config by model data
 		augmentProfileParcelConfig(&profileParcelConfigs[i])
+
+		if resourceName != "" && profileParcelConfigs[i].Name != resourceName {
+			continue
+		}
 
 		// Iterate over templates and render files
 		for _, t := range profileParcelTemplates {
@@ -1472,6 +1578,10 @@ func main() {
 	for i := range genericConfigs {
 		// Augment generic config
 		augmentGenericConfig(&genericConfigs[i], "")
+
+		if resourceName != "" && genericConfigs[i].Name != resourceName {
+			continue
+		}
 
 		// Iterate over templates and render files
 		for _, t := range genericTemplates {
