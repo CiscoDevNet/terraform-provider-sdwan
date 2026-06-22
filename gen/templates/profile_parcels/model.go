@@ -215,7 +215,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 		}
 	} else {{else}}if !data.{{toGoName .TfName}}.IsNull(){{end}} {
 		if true{{buildConditionalLogic .ConditionalAttribute $.Attributes "data"}} {
-		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
+		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", {{if .WriteAsDefault}}"default"{{else}}"global"{{end}})
 		{{- if isListSet .}}
 		var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int64{{end}}
 		data.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
@@ -268,7 +268,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 				}
 			} else {{else}}if !item.{{toGoName .TfName}}.IsNull(){{end}} {
 				if true{{buildConditionalLogic .ConditionalAttribute "item"}} {
-				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", {{if .WriteAsDefault}}"default"{{else}}"global"{{end}})
 				{{- if isListSet .}}
 				var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int64{{end}}
 				item.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
@@ -320,7 +320,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 						}
 					} else {{else}}if !childItem.{{toGoName .TfName}}.IsNull(){{end}} {
 						if true{{buildConditionalLogic .ConditionalAttribute "childItem"}} {
-						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
+						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", {{if .WriteAsDefault}}"default"{{else}}"global"{{end}})
 						{{- if isListSet .}}
 						var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int64{{end}}
 						childItem.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
@@ -371,7 +371,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 								}
 							} else {{else}}if !childChildItem.{{toGoName .TfName}}.IsNull(){{end}} {
 								if true{{buildConditionalLogic .ConditionalAttribute "childChildItem"}} {
-								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", {{if .WriteAsDefault}}"default"{{else}}"global"{{end}})
 								{{- if isListSet .}}
 								var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int64{{end}}
 								childChildItem.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
@@ -440,7 +440,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 		va := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 		{{if .Variable}}if t.String() == "variable" {
 			data.{{toGoName .TfName}}Variable = types.StringValue(va.String())
-		} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}" || temp{{toGoName .TfName}}.ValueString() == ""){{end}} {
+		} else{{end}} if t.String() == "global" {{if .WriteAsDefault}}|| t.String() == "default"{{end}} {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}" || temp{{toGoName .TfName}}.ValueString() == ""){{end}} {
 			{{- if eq .Type "StringInt64" }}
 			data.{{toGoName .TfName}} = types.StringValue(va.String())
 			{{- else}}
@@ -481,7 +481,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 				va := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 				{{if .Variable}}if t.String() == "variable" {
 					item.{{toGoName .TfName}}Variable = types.StringValue(va.String())
-				} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
+				} else{{end}} if t.String() == "global" {{if .WriteAsDefault}}|| t.String() == "default"{{end}} {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
 					{{- if eq .Type "StringInt64" }}
 					item.{{toGoName .TfName}} = types.StringValue(va.String())
 					{{- else}}
@@ -514,7 +514,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 						va := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 						{{if .Variable}}if t.String() == "variable" {
 							cItem.{{toGoName .TfName}}Variable = types.StringValue(va.String())
-						} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
+						} else{{end}} if t.String() == "global" {{if .WriteAsDefault}}|| t.String() == "default"{{end}} {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
 							{{- if eq .Type "StringInt64" }}
 							cItem.{{toGoName .TfName}} = types.StringValue(va.String())
 							{{- else}}
@@ -547,7 +547,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 								va := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 								{{if .Variable}}if t.String() == "variable" {
 									ccItem.{{toGoName .TfName}}Variable = types.StringValue(va.String())
-								} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
+								} else{{end}} if t.String() == "global" {{if .WriteAsDefault}}|| t.String() == "default"{{end}} {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
 									{{- if eq .Type "StringInt64" }}
 									ccItem.{{toGoName .TfName}} = types.StringValue(va.String())
 									{{- else}}
@@ -612,7 +612,7 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 	{{- if eq .Type "StringInt64"}}
 	data.{{toGoName .TfName}} = types.StringNull()
 	{{- else}}
-	{{- if .DynamicDefault}}
+	{{- if or .DynamicDefault .WriteAsDefault}}
 	temp{{toGoName .TfName}} := data.{{toGoName .TfName}}
 	{{- end}}
 	data.{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
@@ -627,7 +627,7 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 		va := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 		{{if .Variable}}if t.String() == "variable" {
 			data.{{toGoName .TfName}}Variable = types.StringValue(va.String())
-		} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
+		} else{{end}} if t.String() == "global" {{if .WriteAsDefault}}|| (t.String() == "default" && !temp{{toGoName .TfName}}.IsNull()){{end}} {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
 			{{- if eq .Type "StringInt64" }}
 			data.{{toGoName .TfName}} = types.StringValue(va.String())
 			{{- else}}
@@ -728,7 +728,7 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 		{{- if eq .Type "StringInt64"}}
 		data.{{$list}}[i].{{toGoName .TfName}} = types.StringNull()
 		{{- else}}
-		{{- if .DynamicDefault}}
+		{{- if or .DynamicDefault .WriteAsDefault}}
 		temp{{toGoName .TfName}} := data.{{$list}}[i].{{toGoName .TfName}}
 		{{- end}}
 		data.{{$list}}[i].{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
@@ -738,7 +738,7 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 			va := r.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 			{{if .Variable}}if t.String() == "variable" {
 				data.{{$list}}[i].{{toGoName .TfName}}Variable = types.StringValue(va.String())
-			} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
+			} else{{end}} if t.String() == "global" {{if .WriteAsDefault}}|| (t.String() == "default" && !temp{{toGoName .TfName}}.IsNull()){{end}} {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
 				{{- if eq .Type "StringInt64" }}
 				data.{{$list}}[i].{{toGoName .TfName}} = types.StringValue(va.String())
 				{{- else}}
@@ -838,7 +838,7 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 			{{- if eq .Type "StringInt64"}}
 			data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} = types.StringNull()
 			{{- else}}
-			{{- if .DynamicDefault}}
+			{{- if or .DynamicDefault .WriteAsDefault}}
 			temp{{toGoName .TfName}} := data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}
 			{{- end}}
 			data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
@@ -848,7 +848,7 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 				va := cr.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 				{{if .Variable}}if t.String() == "variable" {
 					data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}Variable = types.StringValue(va.String())
-				} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
+				} else{{end}} if t.String() == "global" {{if .WriteAsDefault}}|| (t.String() == "default" && !temp{{toGoName .TfName}}.IsNull()){{end}} {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
 					{{- if eq .Type "StringInt64" }}
 					data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} = types.StringValue(va.String())
 					{{- else}}
@@ -948,7 +948,7 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 				{{- if eq .Type "StringInt64"}}
 				data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}} = types.StringNull()
 				{{- else}}
-				{{- if .DynamicDefault}}
+				{{- if or .DynamicDefault .WriteAsDefault}}
 				temp{{toGoName .TfName}} := data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}
 				{{- end}}
 				data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
@@ -958,7 +958,7 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 					va := ccr.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 					{{if .Variable}}if t.String() == "variable" {
 						data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}Variable = types.StringValue(va.String())
-					} else{{end}} if t.String() == "global" {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
+					} else{{end}} if t.String() == "global" {{if .WriteAsDefault}}|| (t.String() == "default" && !temp{{toGoName .TfName}}.IsNull()){{end}} {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
 						{{- if eq .Type "StringInt64" }}
 						data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}} = types.StringValue(va.String())
 						{{- else}}

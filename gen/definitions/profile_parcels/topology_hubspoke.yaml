@@ -1,0 +1,81 @@
+---
+name: Topology Hub Spoke
+model: topology_hubspoke
+rest_endpoint: /v1/feature-profile/sdwan/topology/%v/hubspoke
+minimum_version: 20.15.0
+id_attribute: id
+test_tags: [SDWAN_2015]
+skip_minimum_test: true
+no_data_source_name_query: true
+parcel_type: feature
+doc_category: Features - Topology
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_topology_feature_profile.test.id
+  - model_name: vpn
+    data_path: [target]
+    tf_name: target_vpns
+    type: Set
+    element_type: String
+    mandatory: true
+    description: Target VPN list
+    example: service_lan_vpn1
+  - model_name: selectedHubs
+    tf_name: selected_hubs
+    type: Set
+    element_type: String
+    mandatory: true
+    description: Selected hub sites
+    example: SITE_100
+  - model_name: spokes
+    tf_name: spokes
+    type: List
+    mandatory: true
+    description: Spoke configurations
+    attributes:
+      - model_name: name
+        tf_name: name
+        type: String
+        id: true
+        mandatory: true
+        description: Spoke name
+        example: spoke1
+      - model_name: spokeSites
+        tf_name: spoke_sites
+        type: Set
+        element_type: String
+        mandatory: true
+        description: Spoke site list
+        example: SITE_200
+      - model_name: hubSites
+        tf_name: hub_sites
+        type: List
+        description: Hub site preferences
+        exclude_null: true
+        attributes:
+          - model_name: sites
+            tf_name: sites
+            type: Set
+            element_type: String
+            mandatory: true
+            description: Hub sites
+            example: SITE_100
+          - model_name: preference
+            tf_name: preference
+            type: Int64
+            mandatory: true
+            min_int: 1
+            max_int: 255
+            description: Hub preference value
+            example: 1
+
+test_prerequisites: |
+  resource "sdwan_topology_feature_profile" "test" {
+    name        = "TF_TEST"
+    description = "Terraform test"
+  }

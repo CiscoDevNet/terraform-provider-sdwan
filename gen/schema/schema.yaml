@@ -60,7 +60,7 @@ attribute:
   exclude_null: bool(required=False) # If true the object will not be included in the payload if value not set (null)
   node_only_container: bool(required=False) # Some node-only attributes are at the same time a container for other attributes, in this case set to "true"
   description: str(required=False) # Attribute description
-  example: any(str(), int(), bool(), required=False) # Example value for documentation, also used for acceptance test
+  example: any(str(), int(), bool(), num(), required=False) # Example value for documentation, also used for acceptance test
   enum_values: list(str(), required=False) # List of enum values, only relevant if type is "String"
   ignore_enum: bool(required=False) # Set to true if enum is not an exhaustive list of possible values
   min_list: int(required=False) # Minimum number of elements in a list, only relevant if type is "List" or "Set"
@@ -99,6 +99,7 @@ attribute:
   positional_fallback: bool(required=False) # If true, when key-matching fails in updateFromBody, fall back to matching by array index position. Use for nested lists where the identifying keys may not be present in API responses (e.g., action_entries without export_to_vpn).
   optional_null_empty: bool(required=False) # If true, in updateFromBody only update the attribute if API returns a non-empty array. Use for optional Set/List attributes where null (user did not specify) and empty array (API default) should be treated as equivalent to prevent perpetual diffs.
   include_empty_value: bool(required=False) # If true, in toBody always include the attribute with empty array value when null. Use for Set/List attributes that the API expects to be present even when empty.
+  write_as_default: bool(required=False) # If true, the attribute has no "global" optionType in the JSON schema (only "default" and "variable")
 conditional_attribute:
   operator: enum('and', 'or', required=False) # Logical operator between conditions (default: 'and')
   conditions: list(include('condition')) # List of conditions (single or multiple)

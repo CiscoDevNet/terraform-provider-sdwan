@@ -54,6 +54,11 @@ func (d *AttributeDescription) AddIntegerRangeDescription(min, max int64) *Attri
 	return d
 }
 
+func (d *AttributeDescription) AddIntegerAtLeastDescription(min int64) *AttributeDescription {
+	d.String = fmt.Sprintf("%s\n  - At Least: `%v`", d.String, min)
+	return d
+}
+
 func (d *AttributeDescription) AddFloatRangeDescription(min, max float64) *AttributeDescription {
 	d.String = fmt.Sprintf("%s\n  - Range: `%v`-`%v`", d.String, min, max)
 	return d
