@@ -55,6 +55,7 @@ func testAccDataSourceSdwanTagConfig() string {
 	config += `resource "sdwan_tag" "test" {` + "\n"
 	config += `	name = "TAG_1"` + "\n"
 	config += `	description = "My tag"` + "\n"
+	config += `	devices = ["C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B", "C8K-E94D7B88-4B9E-3323-C6C3-F29079FAAC3B"]` + "\n"
 	config += `}` + "\n"
 
 	config += `
