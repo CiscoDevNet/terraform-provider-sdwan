@@ -16,53 +16,38 @@ attributes:
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_other_feature_profile.test.id
   - model_name: deviceId
-    tf_name: device_id
     example: trustsecDevice
   - model_name: devicePassword
-    tf_name: device_password
     write_only: true
     example: Cisco123
     exclude_test: true
   - model_name: deviceSgt
-    tf_name: device_sgt
     example: 100
   - model_name: enableEnforcement
-    tf_name: enable_enforcement
     example: true
   - model_name: enableSxp
-    tf_name: enable_sxp
     example: true
   - model_name: listenerHoldTimeMin
-    tf_name: listener_hold_time_min
     example: 90
   - model_name: listenerHoldTimeMax
-    tf_name: listener_hold_time_max
     example: 180
   - model_name: speakerHoldTime
-    tf_name: speaker_hold_time
     example: 120
   - model_name: sxpDefaultPassword
-    tf_name: sxp_default_password
     write_only: true
     example: Cisco123
     exclude_test: true
   - model_name: sxpKeyChain
-    tf_name: sxp_key_chain
     example: keychain1
   - model_name: sxpLogBindingChanges
-    tf_name: sxp_log_binding_changes
     example: true
   - model_name: sxpReconciliationPeriod
-    tf_name: sxp_reconciliation_period
     example: 120
   - model_name: sxpRetryPeriod
-    tf_name: sxp_retry_period
     example: 120
   - model_name: sxpSourceIp
-    tf_name: sxp_source_ip
     example: 10.0.0.1
   - model_name: sxpNodeId
-    tf_name: sxp_node_id
     value: '"System IP"'
     value_type: default
   - model_name: sxpConnectionList
