@@ -416,12 +416,17 @@ func (data OtherTrustSec) toBody(ctx context.Context) string {
 			}
 
 			if !item.MinHoldTimeVariable.IsNull() {
-				if true {
+				if true && !(item.ModeType.ValueString() == "both") {
 					itemBody, _ = sjson.Set(itemBody, "connectionMinHoldTime.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "connectionMinHoldTime.value", item.MinHoldTimeVariable.ValueString())
 				}
-			} else if !item.MinHoldTime.IsNull() {
-				if true {
+			} else if item.MinHoldTime.IsNull() {
+				if true && !(item.ModeType.ValueString() == "both") {
+					itemBody, _ = sjson.Set(itemBody, "connectionMinHoldTime.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "connectionMinHoldTime.value", 0)
+				}
+			} else {
+				if true && !(item.ModeType.ValueString() == "both") {
 					itemBody, _ = sjson.Set(itemBody, "connectionMinHoldTime.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "connectionMinHoldTime.value", item.MinHoldTime.ValueInt64())
 				}

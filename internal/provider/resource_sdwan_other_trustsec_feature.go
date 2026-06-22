@@ -291,14 +291,14 @@ func (r *OtherTrustSecProfileParcelResource) Schema(ctx context.Context, req res
 							Optional:            true,
 						},
 						"min_hold_time": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Configure Connection Minimum hold time <0..65535>").AddIntegerRangeDescription(0, 65535).AddDefaultValueDescription("0").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Configure Connection Minimum hold time <0..65535>, Attribute conditional on `mode_type` not equal to `both`").AddIntegerRangeDescription(0, 65535).AddDefaultValueDescription("0").String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.AtMost(65535),
 							},
 						},
 						"min_hold_time_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `mode_type` not equal to `both`").String,
 							Optional:            true,
 						},
 						"max_hold_time": schema.Int64Attribute{

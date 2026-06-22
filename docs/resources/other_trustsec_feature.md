@@ -114,10 +114,10 @@ Optional:
   - Range: `0`-`65535`
   - Default value: `0`
 - `max_hold_time_variable` (String) Variable name
-- `min_hold_time` (Number) Configure Connection Minimum hold time <0..65535>
+- `min_hold_time` (Number) Configure Connection Minimum hold time <0..65535>, Attribute conditional on `mode_type` not equal to `both`
   - Range: `0`-`65535`
   - Default value: `0`
-- `min_hold_time_variable` (String) Variable name
+- `min_hold_time_variable` (String) Variable name, Attribute conditional on `mode_type` not equal to `both`
 - `mode` (String) Define Mode of connection
   - Choices: `local`, `peer`
   - Default value: `local`

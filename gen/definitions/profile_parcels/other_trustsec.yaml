@@ -81,7 +81,14 @@ attributes:
     - model_name: connectionMinHoldTime
       tf_name: min_hold_time
       optional: true
-      exclude_null: true
+      conditional_attribute:
+        conditions:
+          - name: mode_type
+            value: both
+            type: String
+            negate: true
+      default_value_present: true
+      default_value: 0
       example: 90
     - model_name: connectionMaxHoldTime
       tf_name: max_hold_time
