@@ -302,14 +302,14 @@ func (r *OtherTrustSecProfileParcelResource) Schema(ctx context.Context, req res
 							Optional:            true,
 						},
 						"max_hold_time": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Configure Connection Maximum hold time <0..65535>").AddIntegerRangeDescription(0, 65535).AddDefaultValueDescription("0").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Configure Connection Maximum hold time <0..65535>, Attribute conditional on (`mode` equal to `peer` and `mode_type` equal to `speaker`) or (`mode` equal to `local` and `mode_type` equal to `listener`)").AddIntegerRangeDescription(0, 65535).AddDefaultValueDescription("0").String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.AtMost(65535),
 							},
 						},
 						"max_hold_time_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on (`mode` equal to `peer` and `mode_type` equal to `speaker`) or (`mode` equal to `local` and `mode_type` equal to `listener`)").String,
 							Optional:            true,
 						},
 					},

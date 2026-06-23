@@ -92,7 +92,23 @@ attributes:
     - model_name: connectionMaxHoldTime
       tf_name: max_hold_time
       optional: true
-      exclude_null: true
+      conditional_attribute:
+        operator: or(and)
+        groups:
+          - conditions:
+              - name: mode
+                value: peer
+                type: String
+              - name: mode_type
+                value: speaker
+                type: String
+          - conditions:
+              - name: mode
+                value: local
+                type: String
+              - name: mode_type
+                value: listener
+                type: String
       example: 120
 
 test_prerequisites: |

@@ -437,12 +437,17 @@ func (data OtherTrustSec) toBody(ctx context.Context) string {
 			}
 
 			if !item.MaxHoldTimeVariable.IsNull() {
-				if true {
+				if true && ((item.Mode.ValueString() == "peer" && item.ModeType.ValueString() == "speaker") || (item.Mode.ValueString() == "local" && item.ModeType.ValueString() == "listener")) {
 					itemBody, _ = sjson.Set(itemBody, "connectionMaxHoldTime.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "connectionMaxHoldTime.value", item.MaxHoldTimeVariable.ValueString())
 				}
-			} else if !item.MaxHoldTime.IsNull() {
-				if true {
+			} else if item.MaxHoldTime.IsNull() {
+				if true && ((item.Mode.ValueString() == "peer" && item.ModeType.ValueString() == "speaker") || (item.Mode.ValueString() == "local" && item.ModeType.ValueString() == "listener")) {
+					itemBody, _ = sjson.Set(itemBody, "connectionMaxHoldTime.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "connectionMaxHoldTime.value", 0)
+				}
+			} else {
+				if true && ((item.Mode.ValueString() == "peer" && item.ModeType.ValueString() == "speaker") || (item.Mode.ValueString() == "local" && item.ModeType.ValueString() == "listener")) {
 					itemBody, _ = sjson.Set(itemBody, "connectionMaxHoldTime.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "connectionMaxHoldTime.value", item.MaxHoldTime.ValueInt64())
 				}

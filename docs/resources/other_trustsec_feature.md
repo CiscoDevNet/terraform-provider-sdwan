@@ -110,10 +110,10 @@ resource "sdwan_other_trustsec_feature" "example" {
 
 Optional:
 
-- `max_hold_time` (Number) Configure Connection Maximum hold time <0..65535>
+- `max_hold_time` (Number) Configure Connection Maximum hold time <0..65535>, Attribute conditional on (`mode` equal to `peer` and `mode_type` equal to `speaker`) or (`mode` equal to `local` and `mode_type` equal to `listener`)
   - Range: `0`-`65535`
   - Default value: `0`
-- `max_hold_time_variable` (String) Variable name
+- `max_hold_time_variable` (String) Variable name, Attribute conditional on (`mode` equal to `peer` and `mode_type` equal to `speaker`) or (`mode` equal to `local` and `mode_type` equal to `listener`)
 - `min_hold_time` (Number) Configure Connection Minimum hold time <0..65535>, Attribute conditional on `mode_type` not equal to `both`
   - Range: `0`-`65535`
   - Default value: `0`
