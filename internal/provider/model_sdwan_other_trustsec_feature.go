@@ -145,7 +145,11 @@ func (data OtherTrustSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"deviceSgt.optionType", "variable")
 			body, _ = sjson.Set(body, path+"deviceSgt.value", data.DeviceSgtVariable.ValueString())
 		}
-	} else if !data.DeviceSgt.IsNull() {
+	} else if data.DeviceSgt.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"deviceSgt.optionType", "global")
+		}
+	} else {
 		if true {
 			body, _ = sjson.Set(body, path+"deviceSgt.optionType", "global")
 			body, _ = sjson.Set(body, path+"deviceSgt.value", data.DeviceSgt.ValueInt64())
@@ -477,7 +481,9 @@ func (data *OtherTrustSec) fromBody(ctx context.Context, res gjson.Result) {
 		if t.String() == "variable" {
 			data.DeviceSgtVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DeviceSgt = types.Int64Value(va.Int())
+			if va.Exists() {
+				data.DeviceSgt = types.Int64Value(va.Int())
+			}
 		}
 	}
 	data.EnableEnforcement = types.BoolNull()
@@ -690,7 +696,9 @@ func (data *OtherTrustSec) updateFromBody(ctx context.Context, res gjson.Result)
 		if t.String() == "variable" {
 			data.DeviceSgtVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DeviceSgt = types.Int64Value(va.Int())
+			if va.Exists() {
+				data.DeviceSgt = types.Int64Value(va.Int())
+			}
 		}
 	}
 	data.EnableEnforcement = types.BoolNull()
