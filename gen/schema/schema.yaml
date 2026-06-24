@@ -101,9 +101,11 @@ attribute:
   include_empty_value: bool(required=False) # If true, in toBody always include the attribute with empty array value when null. Use for Set/List attributes that the API expects to be present even when empty.
   write_as_default: bool(required=False) # If true, the attribute has no "global" optionType in the JSON schema (only "default" and "variable")
 conditional_attribute:
-  operator: enum('and', 'or', required=False) # Logical operator between conditions (default: 'and')
-  conditions: list(include('condition')) # List of conditions (single or multiple)
-
+  operator: regex('^(and([(]or[)])?|or([(]and[)])?)$', name='conditional operator', required=False) # Logical operator. Flat form: 'and'/'or' (default: 'and'). Compound (groups) form: self-documenting 'or(and)' (DNF, default) / 'and(or)' (CNF); inner operator is always the inverse of the outer one.
+  conditions: list(include('condition'), required=False) # Flat list of conditions (single or multiple). Mutually exclusive with 'groups'.
+  groups: list(include('condition_group'), required=False) # Compound (2-level) conditional: list of condition groups joined by the outer operator. Mutually exclusive with 'conditions'.
+condition_group:
+  conditions: list(include('condition')) # Conditions in this group, joined by the inner (inverse) operator.
 condition:
   name: str(required=False) # Reference to other attribute (not used for MinVersion conditions)
   value: any(str(), bool()) # Attribute value to check
