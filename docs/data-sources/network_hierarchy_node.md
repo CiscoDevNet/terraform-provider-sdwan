@@ -14,8 +14,7 @@ This data source can read a Network Hierarchy Node.
 
 ```terraform
 data "sdwan_network_hierarchy_node" "example" {
-  parent_id = "9cdc05d1-5306-41ef-8487-85829a4cfbe6"
-  id        = "f6b2c44c-693c-4763-b010-895aa3d236bd"
+  id = "f6b2c44c-693c-4763-b010-895aa3d236bd"
 }
 ```
 
@@ -29,10 +28,11 @@ data "sdwan_network_hierarchy_node" "example" {
 ### Read-Only
 
 - `address` (Attributes) The address of the site (only for site type nodes) (see [below for nested schema](#nestedatt--address))
+- `controllers` (Set of String) List of controller UUIDs assigned to this region (only applicable for region type nodes)
 - `description` (String) The description of the node
 - `is_secondary` (Boolean) Whether this is a secondary region (only for region type nodes)
 - `name` (String) The name of the node
-- `parent_id` (String) The UUID of the parent node
+- `parent_group` (String) The name of the parent group
 - `site_id` (Number) The site ID (only for site type nodes)
 - `type` (String) The type of node (group, region, or site)
 

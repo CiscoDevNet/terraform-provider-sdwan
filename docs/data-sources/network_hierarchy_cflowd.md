@@ -14,8 +14,7 @@ This data source can read Network Hierarchy Cflowd settings.
 
 ```terraform
 data "sdwan_network_hierarchy_cflowd" "example" {
-  node_id = "5333c142-394b-47a7-afa6-760c44ca3cb5"
-  id      = "f6b2c44c-693c-4763-b010-895aa3d236bd"
+  id = "f6b2c44c-693c-4763-b010-895aa3d236bd"
 }
 ```
 
@@ -25,7 +24,6 @@ data "sdwan_network_hierarchy_cflowd" "example" {
 ### Required
 
 - `id` (String) The id of the object
-- `node_id` (String) The UUID of the network hierarchy node
 
 ### Read-Only
 
@@ -37,6 +35,7 @@ data "sdwan_network_hierarchy_cflowd" "example" {
 - `flow_inactive_timeout` (Number) Inactive flow timeout in seconds
 - `flow_refresh_time` (Number) Flow refresh time in seconds
 - `flow_sampling_interval` (Number) Flow sampling interval
+- `node_id` (String) The UUID of the Global network hierarchy node. This is automatically fetched from the SD-WAN Manager.
 - `protocol` (String) FNF Protocol
 
 <a id="nestedatt--collectors"></a>

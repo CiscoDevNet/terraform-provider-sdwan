@@ -14,10 +14,10 @@ This resource can manage a Network Hierarchy Node (group, region, or site).
 
 ```terraform
 resource "sdwan_network_hierarchy_node" "example" {
-  parent_id   = "9cdc05d1-5306-41ef-8487-85829a4cfbe6"
-  name        = "EMEA-Group"
-  description = "EMEA group"
-  type        = "group"
+  parent_group = "Global"
+  name         = "EMEA-Group"
+  description  = "EMEA group"
+  type         = "group"
 }
 ```
 
@@ -27,13 +27,14 @@ resource "sdwan_network_hierarchy_node" "example" {
 ### Required
 
 - `name` (String) The name of the node
-- `parent_id` (String) The UUID of the parent node. Use the Global node UUID for top-level nodes.
+- `parent_group` (String) The name of the parent group. Use 'Global' for top-level nodes.
 - `type` (String) The type of node
   - Choices: `group`, `region`, `site`
 
 ### Optional
 
 - `address` (Attributes) The address of the site (only for site type nodes) (see [below for nested schema](#nestedatt--address))
+- `controllers` (Set of String) List of controller UUIDs to assign to this region (only applicable for region type nodes)
 - `description` (String) The description of the node
 - `is_secondary` (Boolean) Whether this is a secondary region (only for region type nodes)
 - `site_id` (Number) The site ID (only for site type nodes)
@@ -61,6 +62,5 @@ Import is supported using the following syntax:
 The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
 
 ```shell
-# Expected import identifier with the format: "network_hierarchy_node_id,parent_id"
-terraform import sdwan_network_hierarchy_node.example "f6b2c44c-693c-4763-b010-895aa3d236bd,9cdc05d1-5306-41ef-8487-85829a4cfbe6"
+terraform import sdwan_network_hierarchy_node.example "f6b2c44c-693c-4763-b010-895aa3d236bd"
 ```

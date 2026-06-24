@@ -24,6 +24,7 @@ import (
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
@@ -52,8 +53,8 @@ func (d *NetworkHierarchySecurityLoggingDataSource) Schema(ctx context.Context, 
 				Required:            true,
 			},
 			"node_id": schema.StringAttribute{
-				MarkdownDescription: "The UUID of the network hierarchy node",
-				Required:            true,
+				MarkdownDescription: "The UUID of the Global network hierarchy node. This is automatically fetched from the SD-WAN Manager.",
+				Computed:            true,
 			},
 			"high_speed_logging": schema.SetNestedAttribute{
 				MarkdownDescription: "High speed logging configuration",
@@ -113,6 +114,19 @@ func (d *NetworkHierarchySecurityLoggingDataSource) Read(ctx context.Context, re
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
+
+	hierarchyRes, err := d.client.Get(config.getNetworkHierarchyListPath())
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve network hierarchy, got error: %s", err))
+		return
+	}
+
+	globalNodeId, err := config.getGlobalNodeId(hierarchyRes)
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to get Global node ID: %s", err))
+		return
+	}
+	config.NodeId = types.StringValue(globalNodeId)
 
 	res, err := d.client.Get(config.getPathWithId())
 	if err != nil {

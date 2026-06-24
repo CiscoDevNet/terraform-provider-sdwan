@@ -14,8 +14,7 @@ This data source can read Network Hierarchy Security Logging settings.
 
 ```terraform
 data "sdwan_network_hierarchy_security_logging" "example" {
-  node_id = "5333c142-394b-47a7-afa6-760c44ca3cb5"
-  id      = "f6b2c44c-693c-4763-b010-895aa3d236bd"
+  id = "f6b2c44c-693c-4763-b010-895aa3d236bd"
 }
 ```
 
@@ -25,11 +24,11 @@ data "sdwan_network_hierarchy_security_logging" "example" {
 ### Required
 
 - `id` (String) The id of the object
-- `node_id` (String) The UUID of the network hierarchy node
 
 ### Read-Only
 
 - `high_speed_logging` (Attributes Set) High speed logging configuration (see [below for nested schema](#nestedatt--high_speed_logging))
+- `node_id` (String) The UUID of the Global network hierarchy node. This is automatically fetched from the SD-WAN Manager.
 - `utd_syslog` (Attributes List) UTD syslog configuration (see [below for nested schema](#nestedatt--utd_syslog))
 
 <a id="nestedatt--high_speed_logging"></a>

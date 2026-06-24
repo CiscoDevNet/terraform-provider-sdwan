@@ -29,7 +29,7 @@ import (
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanNetworkHierarchyNode(t *testing.T) {
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "parent_id", "9cdc05d1-5306-41ef-8487-85829a4cfbe6"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "parent_group", "Global"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "name", "EMEA-Group"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "description", "EMEA group"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "type", "group"))
@@ -55,7 +55,7 @@ func TestAccSdwanNetworkHierarchyNode(t *testing.T) {
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanNetworkHierarchyNodeConfig_all() string {
 	config := `resource "sdwan_network_hierarchy_node" "test" {` + "\n"
-	config += `	parent_id = "9cdc05d1-5306-41ef-8487-85829a4cfbe6"` + "\n"
+	config += `	parent_group = "Global"` + "\n"
 	config += `	name = "EMEA-Group"` + "\n"
 	config += `	description = "EMEA group"` + "\n"
 	config += `	type = "group"` + "\n"
@@ -66,3 +66,181 @@ func testAccSdwanNetworkHierarchyNodeConfig_all() string {
 }
 
 // End of section. //template:end testAccConfigAll
+
+// Custom tests for comprehensive coverage - these persist through code generation
+
+// TestAccSdwanNetworkHierarchyNodeSiteType tests creating a site node with full address details
+func TestAccSdwanNetworkHierarchyNodeSiteType(t *testing.T) {
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccSdwanNetworkHierarchyNodeConfig_siteType(),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttrSet("sdwan_network_hierarchy_node.test", "id"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "name", "EMEA-Site-001"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "type", "site"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "site_id", "1001"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "is_secondary", "false"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "address.0.street", "100 Technology Park"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "address.0.city", "London"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "address.0.state", "England"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "address.0.country", "United Kingdom"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "address.0.zipcode", "EC1A 1BB"),
+				),
+			},
+		},
+	})
+}
+
+func testAccSdwanNetworkHierarchyNodeConfig_siteType() string {
+	config := `resource "sdwan_network_hierarchy_node" "test" {` + "\n"
+	config += `	parent_group = "Global"` + "\n"
+	config += `	name = "EMEA-Site-001"` + "\n"
+	config += `	description = "Primary EMEA datacenter site"` + "\n"
+	config += `	type = "site"` + "\n"
+	config += `	site_id = 1001` + "\n"
+	config += `	is_secondary = false` + "\n"
+	config += `	address = [{` + "\n"
+	config += `	  street = "100 Technology Park"` + "\n"
+	config += `	  city = "London"` + "\n"
+	config += `	  state = "England"` + "\n"
+	config += `	  country = "United Kingdom"` + "\n"
+	config += `	  zipcode = "EC1A 1BB"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
+}
+
+// TestAccSdwanNetworkHierarchyNodeRegionType tests creating a region node with multiple controllers
+func TestAccSdwanNetworkHierarchyNodeRegionType(t *testing.T) {
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccSdwanNetworkHierarchyNodeConfig_regionType(),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttrSet("sdwan_network_hierarchy_node.test", "id"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "name", "APAC-Region"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "type", "region"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "controllers.#", "3"),
+				),
+			},
+		},
+	})
+}
+
+func testAccSdwanNetworkHierarchyNodeConfig_regionType() string {
+	config := `resource "sdwan_network_hierarchy_node" "test" {` + "\n"
+	config += `	parent_group = "Global"` + "\n"
+	config += `	name = "APAC-Region"` + "\n"
+	config += `	description = "Asia-Pacific region with multiple controllers"` + "\n"
+	config += `	type = "region"` + "\n"
+	config += `	controllers = ["550e8400-e29b-41d4-a716-446655440001", "550e8400-e29b-41d4-a716-446655440002", "550e8400-e29b-41d4-a716-446655440003"]` + "\n"
+	config += `}` + "\n"
+	return config
+}
+
+// TestAccSdwanNetworkHierarchyNodeNestedHierarchy tests creating nested parent-child nodes
+func TestAccSdwanNetworkHierarchyNodeNestedHierarchy(t *testing.T) {
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccSdwanNetworkHierarchyNodeConfig_nestedHierarchy(),
+				Check: resource.ComposeTestCheckFunc(
+					// Check parent group
+					resource.TestCheckResourceAttrSet("sdwan_network_hierarchy_node.parent_group", "id"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.parent_group", "name", "Americas-Group"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.parent_group", "type", "group"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.parent_group", "parent_group", "Global"),
+					// Check child region
+					resource.TestCheckResourceAttrSet("sdwan_network_hierarchy_node.child_region", "id"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.child_region", "name", "US-East-Region"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.child_region", "type", "region"),
+					// Check grandchild site
+					resource.TestCheckResourceAttrSet("sdwan_network_hierarchy_node.child_site", "id"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.child_site", "name", "NYC-Site-001"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.child_site", "type", "site"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.child_site", "site_id", "2001"),
+				),
+			},
+		},
+	})
+}
+
+func testAccSdwanNetworkHierarchyNodeConfig_nestedHierarchy() string {
+	config := `resource "sdwan_network_hierarchy_node" "parent_group" {` + "\n"
+	config += `	parent_group = "Global"` + "\n"
+	config += `	name = "Americas-Group"` + "\n"
+	config += `	description = "Americas organizational group"` + "\n"
+	config += `	type = "group"` + "\n"
+	config += `}` + "\n"
+	config += "\n"
+	config += `resource "sdwan_network_hierarchy_node" "child_region" {` + "\n"
+	config += `	parent_group = sdwan_network_hierarchy_node.parent_group.name` + "\n"
+	config += `	name = "US-East-Region"` + "\n"
+	config += `	description = "US East Coast region"` + "\n"
+	config += `	type = "region"` + "\n"
+	config += `	controllers = ["550e8400-e29b-41d4-a716-446655440010", "550e8400-e29b-41d4-a716-446655440011"]` + "\n"
+	config += `}` + "\n"
+	config += "\n"
+	config += `resource "sdwan_network_hierarchy_node" "child_site" {` + "\n"
+	config += `	parent_group = sdwan_network_hierarchy_node.parent_group.name` + "\n"
+	config += `	name = "NYC-Site-001"` + "\n"
+	config += `	description = "New York City primary site"` + "\n"
+	config += `	type = "site"` + "\n"
+	config += `	site_id = 2001` + "\n"
+	config += `	is_secondary = false` + "\n"
+	config += `	address = [{` + "\n"
+	config += `	  street = "350 Fifth Avenue"` + "\n"
+	config += `	  city = "New York"` + "\n"
+	config += `	  state = "NY"` + "\n"
+	config += `	  country = "USA"` + "\n"
+	config += `	  zipcode = "10118"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
+}
+
+// TestAccSdwanNetworkHierarchyNodeSecondary tests creating a secondary site node
+func TestAccSdwanNetworkHierarchyNodeSecondary(t *testing.T) {
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccSdwanNetworkHierarchyNodeConfig_secondary(),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttrSet("sdwan_network_hierarchy_node.test", "id"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "name", "DR-Site-001"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "type", "site"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "is_secondary", "true"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "site_id", "9001"),
+				),
+			},
+		},
+	})
+}
+
+func testAccSdwanNetworkHierarchyNodeConfig_secondary() string {
+	config := `resource "sdwan_network_hierarchy_node" "test" {` + "\n"
+	config += `	parent_group = "Global"` + "\n"
+	config += `	name = "DR-Site-001"` + "\n"
+	config += `	description = "Disaster recovery secondary site"` + "\n"
+	config += `	type = "site"` + "\n"
+	config += `	site_id = 9001` + "\n"
+	config += `	is_secondary = true` + "\n"
+	config += `	address = [{` + "\n"
+	config += `	  street = "1 Backup Drive"` + "\n"
+	config += `	  city = "Phoenix"` + "\n"
+	config += `	  state = "AZ"` + "\n"
+	config += `	  country = "USA"` + "\n"
+	config += `	  zipcode = "85001"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
+}

@@ -10,13 +10,12 @@ ds_description: This data source can read a Network Hierarchy Node (group, regio
 skip_templates: ["model.go", "resource.go"]
 attributes:
   - model_name: parentUuid
-    tf_name: parent_id
+    tf_name: parent_group
     type: String
-    reference: true
     id: true
     mandatory: true
-    description: The UUID of the parent node. Use the Global node UUID for top-level nodes.
-    example: 9cdc05d1-5306-41ef-8487-85829a4cfbe6
+    description: The name of the parent group. Use 'Global' for top-level nodes.
+    example: Global
   - model_name: name
     tf_name: name
     type: String
@@ -90,4 +89,12 @@ attributes:
         description: Zip or postal code
         example: "10001"
         mandatory: true
+  - model_name: controllers
+    data_path: [data]
+    tf_name: controllers
+    type: Set
+    element_type: String
+    description: List of controller UUIDs (only for region type nodes)
+    exclude_example: true
+    exclude_test: true
 test_prerequisites: ""

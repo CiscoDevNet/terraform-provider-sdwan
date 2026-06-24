@@ -29,7 +29,7 @@ import (
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanNetworkHierarchyNode(t *testing.T) {
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test", "parent_id", "9cdc05d1-5306-41ef-8487-85829a4cfbe6"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test", "parent_group", "Global"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test", "name", "EMEA-Group"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test", "description", "EMEA group"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test", "type", "group"))
@@ -58,7 +58,6 @@ func testAccDataSourceSdwanNetworkHierarchyNodeConfig() string {
 
 	config += `
 		data "sdwan_network_hierarchy_node" "test" {
-			parent_id = "9cdc05d1-5306-41ef-8487-85829a4cfbe6"
 			id = sdwan_network_hierarchy_node.test.id
 		}
 	`
@@ -66,3 +65,53 @@ func testAccDataSourceSdwanNetworkHierarchyNodeConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Custom data source test - creates resource first, then reads via data source
+
+func TestAccDataSourceSdwanNetworkHierarchyNodeWithResource(t *testing.T) {
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccDataSourceSdwanNetworkHierarchyNodeConfig_withResource(),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttrSet("data.sdwan_network_hierarchy_node.test", "id"),
+					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test", "parent_group", "Global"),
+					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test", "name", "EMEA-Group"),
+					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test", "description", "EMEA group"),
+					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test", "type", "group"),
+					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test", "is_secondary", "false"),
+					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test", "site_id", "101"),
+					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test", "address.0.street", "123 Main St"),
+					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test", "address.0.city", "New York"),
+					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test", "controllers.#", "2"),
+				),
+			},
+		},
+	})
+}
+
+func testAccDataSourceSdwanNetworkHierarchyNodeConfig_withResource() string {
+	config := `resource "sdwan_network_hierarchy_node" "test" {` + "\n"
+	config += `	parent_group = "Global"` + "\n"
+	config += `	name = "EMEA-Group"` + "\n"
+	config += `	description = "EMEA group"` + "\n"
+	config += `	type = "group"` + "\n"
+	config += `	is_secondary = false` + "\n"
+	config += `	site_id = 101` + "\n"
+	config += `	address = [{` + "\n"
+	config += `	  street = "123 Main St"` + "\n"
+	config += `	  city = "New York"` + "\n"
+	config += `	  state = "NY"` + "\n"
+	config += `	  country = "USA"` + "\n"
+	config += `	  zipcode = "10001"` + "\n"
+	config += `	}]` + "\n"
+	config += `	controllers = ["controller-uuid-1", "controller-uuid-2"]` + "\n"
+	config += `}` + "\n"
+	config += "\n"
+	config += `data "sdwan_network_hierarchy_node" "test" {` + "\n"
+	config += `	id = sdwan_network_hierarchy_node.test.id` + "\n"
+	config += `}` + "\n"
+	return config
+}

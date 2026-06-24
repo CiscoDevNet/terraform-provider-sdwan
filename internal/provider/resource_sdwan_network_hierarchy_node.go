@@ -36,6 +36,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
+	"github.com/tidwall/gjson"
 )
 
 var _ resource.Resource = &NetworkHierarchyNodeResource{}
@@ -74,8 +75,8 @@ func (r *NetworkHierarchyNodeResource) Schema(ctx context.Context, req resource.
 				MarkdownDescription: helpers.NewAttributeDescription("The description of the node").String,
 				Optional:            true,
 			},
-			"parent_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("The UUID of the parent node. Use the Global node UUID for top-level nodes.").String,
+			"parent_group": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("The name of the parent group. Use 'Global' for top-level nodes.").String,
 				Required:            true,
 			},
 			"type": schema.StringAttribute{
@@ -125,6 +126,11 @@ func (r *NetworkHierarchyNodeResource) Schema(ctx context.Context, req resource.
 					},
 				},
 			},
+			"controllers": schema.SetAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("List of controller UUIDs to assign to this region (only applicable for region type nodes)").String,
+				ElementType:         types.StringType,
+				Optional:            true,
+			},
 		},
 	}
 }
@@ -149,7 +155,19 @@ func (r *NetworkHierarchyNodeResource) Create(ctx context.Context, req resource.
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	hierarchyRes, err := r.client.Get(plan.getHierarchyListPath())
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve network hierarchy (GET), got error: %s, %s", err, hierarchyRes.String()))
+		return
+	}
+
+	parentId, errMsg := plan.resolveParentGroupToId(hierarchyRes)
+	if errMsg != "" {
+		resp.Diagnostics.AddError("Configuration Error", errMsg)
+		return
+	}
+
+	body := plan.toBody(ctx, parentId)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -162,6 +180,29 @@ func (r *NetworkHierarchyNodeResource) Create(ctx context.Context, req resource.
 	} else {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to get UUID from response: %s", res.String()))
 		return
+	}
+
+	// Add controller assignment for regions
+	if plan.Type.ValueString() == "region" && !plan.Controllers.IsNull() && !plan.Controllers.IsUnknown() {
+		nodeRes, err := r.client.Get(plan.getPath() + url.QueryEscape(plan.Id.ValueString()))
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve node for regionId (GET), got error: %s, %s", err, nodeRes.String()))
+			return
+		}
+
+		regionId := nodeRes.Get("data.hierarchyId.regionId").Int()
+		if regionId == 0 {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to get regionId from node response: %s", nodeRes.String()))
+			return
+		}
+
+		wfBody := plan.toWorkflowBody(ctx, regionId)
+		wfRes, err := r.client.Post("/workflow/execute", wfBody)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to assign controllers (POST workflow/execute), got error: %s, %s", err, wfRes.String()))
+			return
+		}
+		resp.Diagnostics.AddWarning("Controller Assignment", "vSmart controller assignment to region submitted successfully. Changes may take a few seconds to reflect in the system.")
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
@@ -190,7 +231,32 @@ func (r *NetworkHierarchyNodeResource) Read(ctx context.Context, req resource.Re
 		return
 	}
 
-	state.fromBody(ctx, res)
+	parentUuid := state.fromBody(ctx, res)
+
+	hierarchyRes, err := r.client.Get(state.getHierarchyListPath())
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve network hierarchy (GET), got error: %s, %s", err, hierarchyRes.String()))
+		return
+	}
+
+	parentGroupName := state.resolveParentIdToGroup(hierarchyRes, parentUuid)
+	if parentGroupName != "" {
+		state.ParentGroup = types.StringValue(parentGroupName)
+	} else {
+		state.ParentGroup = types.StringNull()
+	}
+
+	if state.Type.ValueString() == "region" {
+		regionId := res.Get("data.hierarchyId.regionId").Int()
+		if regionId > 0 {
+			controllersRes, err := r.client.Get(state.getControllersPath())
+			if err != nil {
+				resp.Diagnostics.AddWarning("Client Warning", fmt.Sprintf("Failed to retrieve controllers (GET), got error: %s", err))
+			} else {
+				state.readControllersFromResponse(ctx, controllersRes, regionId)
+			}
+		}
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 
@@ -215,8 +281,32 @@ func (r *NetworkHierarchyNodeResource) Update(ctx context.Context, req resource.
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	if plan.hasChanges(ctx, &state) {
-		body := plan.toBody(ctx)
+	hierarchyRes, err := r.client.Get(plan.getHierarchyListPath())
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve network hierarchy (GET), got error: %s, %s", err, hierarchyRes.String()))
+		return
+	}
+
+	parentId, errMsg := plan.resolveParentGroupToId(hierarchyRes)
+	if errMsg != "" {
+		resp.Diagnostics.AddError("Configuration Error", errMsg)
+		return
+	}
+
+	var currentNodeRes gjson.Result
+	nodeNeedsUpdate := plan.hasChanges(ctx, &state)
+	controllerNeedsUpdate := plan.Type.ValueString() == "region" && !plan.Controllers.Equal(state.Controllers)
+
+	if nodeNeedsUpdate || controllerNeedsUpdate {
+		currentNodeRes, err = r.client.Get(plan.getPath() + url.QueryEscape(plan.Id.ValueString()))
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve current node (GET), got error: %s, %s", err, currentNodeRes.String()))
+			return
+		}
+	}
+
+	if nodeNeedsUpdate {
+		body := plan.toUpdateBody(ctx, currentNodeRes, parentId)
 		r.updateMutex.Lock()
 		res, err := r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), body)
 		r.updateMutex.Unlock()
@@ -226,6 +316,24 @@ func (r *NetworkHierarchyNodeResource) Update(ctx context.Context, req resource.
 		}
 	} else {
 		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Name.ValueString()))
+	}
+
+	if controllerNeedsUpdate {
+		regionId := currentNodeRes.Get("data.hierarchyId.regionId").Int()
+		if regionId == 0 {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to get regionId from node response: %s", currentNodeRes.String()))
+			return
+		}
+
+		wfBody := plan.toWorkflowBody(ctx, regionId)
+		r.updateMutex.Lock()
+		wfRes, err := r.client.Post("/workflow/execute", wfBody)
+		r.updateMutex.Unlock()
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update controllers (POST workflow/execute), got error: %s, %s", err, wfRes.String()))
+			return
+		}
+		resp.Diagnostics.AddWarning("Controller Assignment", "vSmart controller assignment to region submitted successfully. Changes may take a few seconds to reflect in the system.")
 	}
 
 	plan.Id = state.Id

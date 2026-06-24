@@ -55,6 +55,30 @@ func (data NetworkHierarchyCflowd) getPath() string {
 	return fmt.Sprintf("/v1/network-hierarchy/%s/network-settings/cflowd", data.NodeId.ValueString())
 }
 
+func (data NetworkHierarchyCflowd) getNetworkHierarchyListPath() string {
+	return "/v1/network-hierarchy?offset=0&limit=1500"
+}
+
+// getGlobalNodeId retrieves the Global node ID from the network hierarchy.
+// The Global node is identified by having data.label = "GLOBAL".
+func (data NetworkHierarchyCflowd) getGlobalNodeId(hierarchyRes gjson.Result) (string, error) {
+	var globalNodeId string
+
+	hierarchyRes.ForEach(func(key, value gjson.Result) bool {
+		if value.Get("data.label").String() == "GLOBAL" {
+			globalNodeId = value.Get("id").String()
+			return false // stop iteration
+		}
+		return true
+	})
+
+	if globalNodeId == "" {
+		return "", fmt.Errorf("Global node not found in network hierarchy")
+	}
+
+	return globalNodeId, nil
+}
+
 func (data NetworkHierarchyCflowd) getPathWithId() string {
 	return fmt.Sprintf("/v1/network-hierarchy/%s/network-settings/cflowd/%s", data.NodeId.ValueString(), data.Id.ValueString())
 }

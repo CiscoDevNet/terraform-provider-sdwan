@@ -12,11 +12,10 @@ attributes:
   - model_name: nodeId
     tf_name: node_id
     type: String
-    reference: true
     id: true
-    mandatory: true
-    description: The UUID of the network hierarchy node
-    example: 5333c142-394b-47a7-afa6-760c44ca3cb5
+    computed: true
+    exclude_example: true
+    description: The UUID of the network hierarchy node (auto-fetched from Global node)
   - model_name: highSpeedLogging
     data_path: [data]
     tf_name: high_speed_logging

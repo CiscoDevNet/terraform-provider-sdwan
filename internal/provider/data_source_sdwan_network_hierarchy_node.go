@@ -25,6 +25,7 @@ import (
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
@@ -60,8 +61,8 @@ func (d *NetworkHierarchyNodeDataSource) Schema(ctx context.Context, req datasou
 				MarkdownDescription: "The description of the node",
 				Computed:            true,
 			},
-			"parent_id": schema.StringAttribute{
-				MarkdownDescription: "The UUID of the parent node",
+			"parent_group": schema.StringAttribute{
+				MarkdownDescription: "The name of the parent group",
 				Computed:            true,
 			},
 			"type": schema.StringAttribute{
@@ -102,6 +103,11 @@ func (d *NetworkHierarchyNodeDataSource) Schema(ctx context.Context, req datasou
 					},
 				},
 			},
+			"controllers": schema.SetAttribute{
+				MarkdownDescription: "List of controller UUIDs assigned to this region (only applicable for region type nodes)",
+				ElementType:         types.StringType,
+				Computed:            true,
+			},
 		},
 	}
 }
@@ -131,7 +137,32 @@ func (d *NetworkHierarchyNodeDataSource) Read(ctx context.Context, req datasourc
 		return
 	}
 
-	config.fromBody(ctx, res)
+	parentUuid := config.fromBody(ctx, res)
+
+	hierarchyRes, err := d.client.Get(config.getHierarchyListPath())
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve network hierarchy (GET), got error: %s, %s", err, hierarchyRes.String()))
+		return
+	}
+
+	parentGroupName := config.resolveParentIdToGroup(hierarchyRes, parentUuid)
+	if parentGroupName != "" {
+		config.ParentGroup = types.StringValue(parentGroupName)
+	} else {
+		config.ParentGroup = types.StringNull()
+	}
+
+	if config.Type.ValueString() == "region" {
+		regionId := res.Get("data.hierarchyId.regionId").Int()
+		if regionId > 0 {
+			controllersRes, err := d.client.Get(config.getControllersPath())
+			if err != nil {
+				resp.Diagnostics.AddWarning("Client Warning", fmt.Sprintf("Failed to retrieve controllers (GET), got error: %s", err))
+			} else {
+				config.readControllersFromResponse(ctx, controllersRes, regionId)
+			}
+		}
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.String()))
 

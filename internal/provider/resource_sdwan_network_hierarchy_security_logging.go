@@ -65,10 +65,10 @@ func (r *NetworkHierarchySecurityLoggingResource) Schema(ctx context.Context, re
 				},
 			},
 			"node_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("The UUID of the network hierarchy node").String,
-				Required:            true,
+				MarkdownDescription: helpers.NewAttributeDescription("The UUID of the Global network hierarchy node. This is automatically fetched from the SD-WAN Manager.").String,
+				Computed:            true,
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"high_speed_logging": schema.SetNestedAttribute{
@@ -132,7 +132,22 @@ func (r *NetworkHierarchySecurityLoggingResource) Create(ctx context.Context, re
 		return
 	}
 
-	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.NodeId.ValueString()))
+	tflog.Debug(ctx, "NetworkHierarchySecurityLogging: Beginning Create")
+
+	hierarchyRes, err := r.client.Get(plan.getNetworkHierarchyListPath())
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve network hierarchy, got error: %s", err))
+		return
+	}
+
+	globalNodeId, err := plan.getGlobalNodeId(hierarchyRes)
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to get Global node ID: %s", err))
+		return
+	}
+	plan.NodeId = types.StringValue(globalNodeId)
+
+	tflog.Debug(ctx, fmt.Sprintf("%s: Using Global node ID", plan.NodeId.ValueString()))
 
 	// Check if security-logging already exists for this node (only 1 allowed per node)
 	// GET returns {"data":[{"id":"..."}]} - array format
@@ -179,7 +194,22 @@ func (r *NetworkHierarchySecurityLoggingResource) Read(ctx context.Context, req 
 		return
 	}
 
-	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.NodeId.ValueString()))
+	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Id.ValueString()))
+
+	if state.NodeId.IsNull() || state.NodeId.ValueString() == "" {
+		hierarchyRes, err := r.client.Get(state.getNetworkHierarchyListPath())
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve network hierarchy, got error: %s", err))
+			return
+		}
+
+		globalNodeId, err := state.getGlobalNodeId(hierarchyRes)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to get Global node ID: %s", err))
+			return
+		}
+		state.NodeId = types.StringValue(globalNodeId)
+	}
 
 	res, err := r.client.Get(state.getPathWithId())
 	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") {
@@ -260,16 +290,5 @@ func (r *NetworkHierarchySecurityLoggingResource) Delete(ctx context.Context, re
 }
 
 func (r *NetworkHierarchySecurityLoggingResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	idParts := strings.Split(req.ID, ",")
-
-	if len(idParts) != 2 || idParts[0] == "" || idParts[1] == "" {
-		resp.Diagnostics.AddError(
-			"Unexpected Import Identifier",
-			fmt.Sprintf("Expected import identifier with format: security_logging_id,node_id. Got: %q", req.ID),
-		)
-		return
-	}
-
-	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), idParts[0])...)
-	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("node_id"), idParts[1])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), req.ID)...)
 }
