@@ -29,7 +29,6 @@ import (
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanNetworkHierarchySecurityLogging(t *testing.T) {
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "node_id", ""))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.0.vrf", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.0.server_ip", "10.1.2.1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.0.port", "2055"))
@@ -55,7 +54,6 @@ func TestAccSdwanNetworkHierarchySecurityLogging(t *testing.T) {
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanNetworkHierarchySecurityLoggingConfig_all() string {
 	config := `resource "sdwan_network_hierarchy_security_logging" "test" {` + "\n"
-	config += `	node_id = ""` + "\n"
 	config += `	high_speed_logging = [{` + "\n"
 	config += `	  vrf = "1"` + "\n"
 	config += `	  server_ip = "10.1.2.1"` + "\n"

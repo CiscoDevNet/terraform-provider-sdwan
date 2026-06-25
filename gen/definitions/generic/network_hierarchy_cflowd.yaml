@@ -7,7 +7,7 @@ doc_category: Network Hierarchy
 minimum_version: "20.15"
 res_description: This resource can manage Network Hierarchy Cflowd settings on a network hierarchy node.
 ds_description: This data source can read Network Hierarchy Cflowd settings on a network hierarchy node.
-skip_templates: ["model.go", "resource.go"]
+skip_templates: ["model.go", "resource.go", "data_source_test.go"]
 attributes:
   - model_name: nodeId
     tf_name: node_id
@@ -132,4 +132,3 @@ attributes:
         max_int: 86400
         default_value: "600"
         example: 600
-test_prerequisites: ""

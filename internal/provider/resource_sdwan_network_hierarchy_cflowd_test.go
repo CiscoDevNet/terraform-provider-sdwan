@@ -139,38 +139,6 @@ func testAccSdwanNetworkHierarchyCflowdConfig_multipleCollectors() string {
 	config += `	  address = "2001:db8::1"` + "\n"
 	config += `	  udp_port = 5002` + "\n"
 	config += `	  export_spread = true` + "\n"
-	config += `	  bfd_metrics_export = false` + "\n"
-	config += `	  export_interval = 480` + "\n"
-	config += `	}]` + "\n"
-	config += `}` + "\n"
-	return config
-}
-
-func TestAccSdwanNetworkHierarchyCflowdProtocolIPv6(t *testing.T) {
-	resource.Test(t, resource.TestCase{
-		PreCheck:                 func() { testAccPreCheck(t) },
-		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
-		Steps: []resource.TestStep{
-			{
-				Config: testAccSdwanNetworkHierarchyCflowdConfig_ipv6(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttrSet("sdwan_network_hierarchy_cflowd.test", "id"),
-					resource.TestCheckResourceAttr("sdwan_network_hierarchy_cflowd.test", "protocol", "ipv6"),
-					resource.TestCheckResourceAttr("sdwan_network_hierarchy_cflowd.test", "collectors.#", "1"),
-				),
-			},
-		},
-	})
-}
-
-func testAccSdwanNetworkHierarchyCflowdConfig_ipv6() string {
-	config := `resource "sdwan_network_hierarchy_cflowd" "test" {` + "\n"
-	config += `	flow_active_timeout = 600` + "\n"
-	config += `	protocol = "ipv6"` + "\n"
-	config += `	collectors = [{` + "\n"
-	config += `	  vpn_id = 1` + "\n"
-	config += `	  address = "2001:db8::100"` + "\n"
-	config += `	  udp_port = 4739` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 	return config

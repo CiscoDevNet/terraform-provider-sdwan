@@ -17,58 +17,13 @@
 
 package provider
 
-// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
-// End of section. //template:end imports
-
-// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanNetworkHierarchySecurityLogging(t *testing.T) {
-	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_security_logging.test", "node_id", ""))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_security_logging.test", "high_speed_logging.0.vrf", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_security_logging.test", "high_speed_logging.0.server_ip", "10.1.2.1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_security_logging.test", "high_speed_logging.0.port", "2055"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_security_logging.test", "utd_syslog.0.vpn", "service_lan_vpn1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_security_logging.test", "utd_syslog.0.server_ip", "10.1.1.2"))
-	resource.Test(t, resource.TestCase{
-		PreCheck:                 func() { testAccPreCheck(t) },
-		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
-		Steps: []resource.TestStep{
-			{
-				Config: testAccDataSourceSdwanNetworkHierarchySecurityLoggingConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
-			},
-		},
-	})
-}
-
-// End of section. //template:end testAccDataSource
-
-// Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-// End of section. //template:end testPrerequisites
-
-// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
-func testAccDataSourceSdwanNetworkHierarchySecurityLoggingConfig() string {
-	config := ""
-
-	config += `
-		data "sdwan_network_hierarchy_security_logging" "test" {
-			id = sdwan_network_hierarchy_security_logging.test.id
-		}
-	`
-	return config
-}
-
-// End of section. //template:end testAccDataSourceConfig
-
-// Custom data source test - creates resource first, then reads via data source
-
-func TestAccDataSourceSdwanNetworkHierarchySecurityLoggingWithResource(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,

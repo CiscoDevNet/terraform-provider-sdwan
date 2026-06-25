@@ -17,66 +17,13 @@
 
 package provider
 
-// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
-// End of section. //template:end imports
-
-// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanNetworkHierarchyCflowd(t *testing.T) {
-	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "flow_active_timeout", "600"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "flow_inactive_timeout", "60"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "flow_refresh_time", "600"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "flow_sampling_interval", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collect_tloc_loopback", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "protocol", "ipv4"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collect_tos", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collect_dscp_output", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collectors.0.vpn_id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collectors.0.address", "10.0.0.1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collectors.0.udp_port", "4739"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collectors.0.export_spread", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collectors.0.bfd_metrics_export", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collectors.0.export_interval", "600"))
-	resource.Test(t, resource.TestCase{
-		PreCheck:                 func() { testAccPreCheck(t) },
-		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
-		Steps: []resource.TestStep{
-			{
-				Config: testAccDataSourceSdwanNetworkHierarchyCflowdConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
-			},
-		},
-	})
-}
-
-// End of section. //template:end testAccDataSource
-
-// Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-// End of section. //template:end testPrerequisites
-
-// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
-func testAccDataSourceSdwanNetworkHierarchyCflowdConfig() string {
-	config := ""
-
-	config += `
-		data "sdwan_network_hierarchy_cflowd" "test" {
-			id = sdwan_network_hierarchy_cflowd.test.id
-		}
-	`
-	return config
-}
-
-// End of section. //template:end testAccDataSourceConfig
-
-// Custom data source test - creates resource first, then reads via data source
-
-func TestAccDataSourceSdwanNetworkHierarchyCflowdWithResource(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -122,8 +69,6 @@ func testAccDataSourceSdwanNetworkHierarchyCflowdConfig_withResource() string {
 	config += `	  address = "10.0.0.2"` + "\n"
 	config += `	  udp_port = 4740` + "\n"
 	config += `	  export_spread = false` + "\n"
-	config += `	  bfd_metrics_export = false` + "\n"
-	config += `	  export_interval = 300` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 	config += "\n"

@@ -7,7 +7,7 @@ doc_category: Network Hierarchy
 minimum_version: "20.15"
 res_description: This resource can manage a Network Hierarchy Node (group, region, or site).
 ds_description: This data source can read a Network Hierarchy Node (group, region, or site).
-skip_templates: ["model.go", "resource.go"]
+skip_templates: ["model.go", "resource.go", "data_source_test.go"]
 attributes:
   - model_name: parentUuid
     tf_name: parent_group
@@ -41,6 +41,7 @@ attributes:
     description: Whether this is a secondary region (only for region type nodes)
     example: false
     exclude_example: true
+    exclude_test: true
   - model_name: siteId
     data_path: [data, hierarchyId]
     tf_name: site_id
@@ -50,6 +51,7 @@ attributes:
     max_int: 4294967295
     example: 101
     exclude_example: true
+    exclude_test: true
   - model_name: address
     data_path: [data]
     tf_name: address
@@ -97,4 +99,3 @@ attributes:
     description: List of controller UUIDs (only for region type nodes)
     exclude_example: true
     exclude_test: true
-test_prerequisites: ""

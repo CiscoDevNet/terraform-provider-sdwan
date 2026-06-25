@@ -7,7 +7,7 @@ doc_category: Network Hierarchy
 minimum_version: "20.15"
 res_description: This resource can manage Network Hierarchy Security Logging settings on a network hierarchy node.
 ds_description: This data source can read Network Hierarchy Security Logging settings on a network hierarchy node.
-skip_templates: ["model.go", "resource.go"]
+skip_templates: ["model.go", "resource.go", "data_source_test.go"]
 attributes:
   - model_name: nodeId
     tf_name: node_id
@@ -15,6 +15,7 @@ attributes:
     id: true
     computed: true
     exclude_example: true
+    exclude_test: true
     description: The UUID of the network hierarchy node (auto-fetched from Global node)
   - model_name: highSpeedLogging
     data_path: [data]
@@ -62,4 +63,3 @@ attributes:
         mandatory: true
         description: Server IPv4 address
         example: "10.1.1.2"
-test_prerequisites: ""
