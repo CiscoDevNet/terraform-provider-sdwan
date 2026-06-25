@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## 0.11.3 (unreleased)
+## 0.11.3
 
 - Fix issue where deleting a single device with tag removes this tag across all devices
 - Add `sdwan_topology_group` resource and data source
