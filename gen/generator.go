@@ -298,7 +298,15 @@ type YamlConfigAttribute struct {
 }
 
 type YamlConfigConditionalAttribute struct {
-	Operator   string                `yaml:"operator"`
+	Operator   string                     `yaml:"operator"`
+	Conditions []YamlConfigCondition      `yaml:"conditions"`
+	Groups     []YamlConfigConditionGroup `yaml:"groups"`
+}
+
+// YamlConfigConditionGroup represents one group of conditions in a compound
+// (2-level) conditional. Groups carry no operator of their own: the intra-group
+// operator is always the inverse of the top-level operator (DNF/CNF alternation).
+type YamlConfigConditionGroup struct {
 	Conditions []YamlConfigCondition `yaml:"conditions"`
 }
 
@@ -459,7 +467,44 @@ func Add(x, y int) int {
 
 // Templating helper function to check if conditional attribute has conditions
 func HasConditional(attr YamlConfigConditionalAttribute) bool {
-	return len(attr.Conditions) > 0
+	return len(attr.Conditions) > 0 || len(attr.Groups) > 0
+}
+
+// parseGroupOperator parses a top-level operator value into its outer and inner
+// operators. It accepts the self-documenting parenthetical form `or(and)` /
+// `and(or)` as well as the plain shorthand `or` / `and`. The inner operator is
+// always the inverse of the outer one (DNF/CNF alternation); when a parenthetical
+// inner is supplied it must match the inferred inverse, otherwise generation fails.
+// An empty operator defaults to `or(and)` (DNF).
+func parseGroupOperator(op string) (outer string, inner string) {
+	op = strings.TrimSpace(op)
+	if op == "" {
+		return "or", "and"
+	}
+
+	var declaredInner string
+	if idx := strings.Index(op, "("); idx >= 0 {
+		outer = strings.TrimSpace(op[:idx])
+		declaredInner = strings.TrimSpace(strings.TrimSuffix(op[idx+1:], ")"))
+	} else {
+		outer = op
+	}
+
+	if outer != "and" && outer != "or" {
+		panic(fmt.Sprintf("invalid conditional operator %q: outer operator must be 'and' or 'or'", op))
+	}
+
+	if outer == "and" {
+		inner = "or"
+	} else {
+		inner = "and"
+	}
+
+	if declaredInner != "" && declaredInner != inner {
+		panic(fmt.Sprintf("invalid conditional operator %q: inner operator must be %q (the inverse of %q)", op, inner, outer))
+	}
+
+	return outer, inner
 }
 
 // HasTfOnlyConditional checks if the conditional attribute has any conditions
@@ -501,6 +546,13 @@ func resolveConditionTfOnly(attributes []YamlConfigAttribute) {
 				attributes[i].ConditionalAttribute.Conditions[j].TfOnly = true
 			}
 		}
+		for g := range attributes[i].ConditionalAttribute.Groups {
+			for j := range attributes[i].ConditionalAttribute.Groups[g].Conditions {
+				if tfOnlyMap[attributes[i].ConditionalAttribute.Groups[g].Conditions[j].Name] {
+					attributes[i].ConditionalAttribute.Groups[g].Conditions[j].TfOnly = true
+				}
+			}
+		}
 		// Recurse into nested attributes
 		if len(attributes[i].Attributes) > 0 {
 			resolveConditionTfOnly(attributes[i].Attributes)
@@ -515,6 +567,13 @@ func HasMinVersionCondition(attributes []YamlConfigAttribute) bool {
 		for _, cond := range attr.ConditionalAttribute.Conditions {
 			if cond.Type == "MinVersion" {
 				return true
+			}
+		}
+		for _, group := range attr.ConditionalAttribute.Groups {
+			for _, cond := range group.Conditions {
+				if cond.Type == "MinVersion" {
+					return true
+				}
 			}
 		}
 		if len(attr.Attributes) > 0 && HasMinVersionCondition(attr.Attributes) {
@@ -634,6 +693,40 @@ func BuildConditionalLogic(attr YamlConfigConditionalAttribute, attributesOrCont
 		}
 	}
 
+	// Compound (2-level) conditional: groups joined by the outer operator,
+	// conditions inside each group joined by the inner (inverse) operator.
+	if len(attr.Groups) > 0 {
+		outer, inner := parseGroupOperator(attr.Operator)
+		innerJoin := " && "
+		if inner == "or" {
+			innerJoin = " || "
+		}
+		outerJoin := " || "
+		if outer == "and" {
+			outerJoin = " && "
+		}
+
+		var groupChecks []string
+		for _, group := range attr.Groups {
+			var checks []string
+			for _, cond := range group.Conditions {
+				if defaultVal, exists := defaultValueMap[cond.Name]; exists {
+					cond.DefaultValue = defaultVal
+				}
+				checks = append(checks, BuildConditionCheck(cond, context))
+			}
+			if len(checks) == 0 {
+				continue
+			}
+			groupChecks = append(groupChecks, "("+strings.Join(checks, innerJoin)+")")
+		}
+
+		if len(groupChecks) == 0 {
+			return ""
+		}
+		return " && (" + strings.Join(groupChecks, outerJoin) + ")"
+	}
+
 	operator := attr.Operator
 	if operator == "" {
 		operator = "and"
@@ -669,6 +762,36 @@ func BuildConditionalDescription(attr YamlConfigConditionalAttribute) string {
 		return ""
 	}
 
+	// Compound (2-level) conditional description.
+	if len(attr.Groups) > 0 {
+		outer, inner := parseGroupOperator(attr.Operator)
+		innerJoiner := " and "
+		if inner == "or" {
+			innerJoiner = " or "
+		}
+		outerJoiner := " or "
+		if outer == "and" {
+			outerJoiner = " and "
+		}
+
+		var groupParts []string
+		for _, group := range attr.Groups {
+			var parts []string
+			for _, cond := range group.Conditions {
+				parts = append(parts, buildConditionDescriptionPart(cond))
+			}
+			if len(parts) == 0 {
+				continue
+			}
+			groupParts = append(groupParts, "("+strings.Join(parts, innerJoiner)+")")
+		}
+
+		if len(groupParts) == 0 {
+			return ""
+		}
+		return ", Attribute conditional on " + strings.Join(groupParts, outerJoiner)
+	}
+
 	operator := attr.Operator
 	if operator == "" {
 		operator = "and"
@@ -676,34 +799,7 @@ func BuildConditionalDescription(attr YamlConfigConditionalAttribute) string {
 
 	var parts []string
 	for _, cond := range attr.Conditions {
-		var part string
-		if cond.Type == "MinVersion" {
-			if cond.Negate {
-				part = fmt.Sprintf("SD-WAN Manager version lower than `%s`", cond.Value)
-			} else {
-				part = fmt.Sprintf("SD-WAN Manager version `%s` or higher", cond.Value)
-			}
-		} else if cond.Type == "StringContains" {
-			if cond.Negate {
-				part = fmt.Sprintf("`%s` not containing `%s`", cond.Name, cond.Value)
-			} else {
-				part = fmt.Sprintf("`%s` containing `%s`", cond.Name, cond.Value)
-			}
-		} else if cond.Value == "" {
-			// Special handling for empty string checks to make description more readable
-			if cond.Negate {
-				part = fmt.Sprintf("`%s` being set", cond.Name)
-			} else {
-				part = fmt.Sprintf("`%s` not being set", cond.Name)
-			}
-		} else {
-			negation := ""
-			if cond.Negate {
-				negation = "not "
-			}
-			part = fmt.Sprintf("`%s` %sequal to `%s`", cond.Name, negation, cond.Value)
-		}
-		parts = append(parts, part)
+		parts = append(parts, buildConditionDescriptionPart(cond))
 	}
 
 	if len(parts) == 0 {
@@ -720,6 +816,38 @@ func BuildConditionalDescription(attr YamlConfigConditionalAttribute) string {
 	}
 
 	return ", Attribute conditional on " + strings.Join(parts, joiner)
+}
+
+// buildConditionDescriptionPart returns the human-readable phrase for a single condition.
+func buildConditionDescriptionPart(cond YamlConfigCondition) string {
+	var part string
+	if cond.Type == "MinVersion" {
+		if cond.Negate {
+			part = fmt.Sprintf("SD-WAN Manager version lower than `%s`", cond.Value)
+		} else {
+			part = fmt.Sprintf("SD-WAN Manager version `%s` or higher", cond.Value)
+		}
+	} else if cond.Type == "StringContains" {
+		if cond.Negate {
+			part = fmt.Sprintf("`%s` not containing `%s`", cond.Name, cond.Value)
+		} else {
+			part = fmt.Sprintf("`%s` containing `%s`", cond.Name, cond.Value)
+		}
+	} else if cond.Value == "" {
+		// Special handling for empty string checks to make description more readable
+		if cond.Negate {
+			part = fmt.Sprintf("`%s` being set", cond.Name)
+		} else {
+			part = fmt.Sprintf("`%s` not being set", cond.Name)
+		}
+	} else {
+		negation := ""
+		if cond.Negate {
+			negation = "not "
+		}
+		part = fmt.Sprintf("`%s` %sequal to `%s`", cond.Name, negation, cond.Value)
+	}
+	return part
 }
 
 // Templating helper function to return GJSON type
