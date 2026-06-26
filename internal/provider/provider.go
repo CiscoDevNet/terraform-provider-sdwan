@@ -564,6 +564,9 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewAttachFeatureDeviceTemplateResource,
 		NewActivateCentralizedPolicyResource,
 		NewActivateTopologyGroupResource,
+		NewNetworkHierarchyNodeResource,
+		NewNetworkHierarchyCflowdResource,
+		NewNetworkHierarchySecurityLoggingResource,
 	}
 }
 
@@ -767,6 +770,9 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewLocalizedPolicyDataSource,
 		NewMeshTopologyPolicyDefinitionDataSource,
 		NewMirrorPolicyObjectDataSource,
+		NewNetworkHierarchyCflowdDataSource,
+		NewNetworkHierarchyNodeDataSource,
+		NewNetworkHierarchySecurityLoggingDataSource,
 		NewObjectGroupPolicyDefinitionDataSource,
 		NewOtherFeatureProfileDataSource,
 		NewPolicerPolicyObjectDataSource,
