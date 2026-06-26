@@ -294,6 +294,8 @@ func (r *NetworkHierarchyCflowdResource) Update(ctx context.Context, req resourc
 		return
 	}
 
+	plan.NodeId = state.NodeId
+
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.NodeId.ValueString()))
 
 	if plan.hasChanges(ctx, &state) {
