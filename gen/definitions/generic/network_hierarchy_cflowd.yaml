@@ -13,7 +13,6 @@ attributes:
     tf_name: node_id
     type: String
     id: true
-    computed: true
     exclude_example: true
     exclude_test: true
     description: The UUID of the network hierarchy node (auto-fetched from Global node)
