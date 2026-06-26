@@ -29,7 +29,7 @@ attributes:
         type: String
         mandatory: true
         description: VRF name or ID
-        example: "1"
+        example: "service_lan_vpn1"
       - model_name: serverIp
         tf_name: server_ip
         type: String

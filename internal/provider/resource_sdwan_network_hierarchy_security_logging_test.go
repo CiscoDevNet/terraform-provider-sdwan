@@ -29,7 +29,7 @@ import (
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanNetworkHierarchySecurityLogging(t *testing.T) {
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.0.vrf", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.0.vrf", "service_lan_vpn1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.0.server_ip", "10.1.2.1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.0.port", "2055"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "utd_syslog.0.vpn", "service_lan_vpn1"))
@@ -55,7 +55,7 @@ func TestAccSdwanNetworkHierarchySecurityLogging(t *testing.T) {
 func testAccSdwanNetworkHierarchySecurityLoggingConfig_all() string {
 	config := `resource "sdwan_network_hierarchy_security_logging" "test" {` + "\n"
 	config += `	high_speed_logging = [{` + "\n"
-	config += `	  vrf = "1"` + "\n"
+	config += `	  vrf = "service_lan_vpn1"` + "\n"
 	config += `	  server_ip = "10.1.2.1"` + "\n"
 	config += `	  port = 2055` + "\n"
 	config += `	}]` + "\n"
@@ -90,19 +90,19 @@ func TestAccSdwanNetworkHierarchySecurityLoggingMultipleHSL(t *testing.T) {
 func testAccSdwanNetworkHierarchySecurityLoggingConfig_multipleHSL() string {
 	config := `resource "sdwan_network_hierarchy_security_logging" "test" {` + "\n"
 	config += `	high_speed_logging = [{` + "\n"
-	config += `	  vrf = "1"` + "\n"
+	config += `	  vrf = "service_lan_vpn1"` + "\n"
 	config += `	  server_ip = "10.1.1.1"` + "\n"
 	config += `	  port = 2055` + "\n"
 	config += `	}, {` + "\n"
-	config += `	  vrf = "2"` + "\n"
+	config += `	  vrf = "service_lan_vpn2"` + "\n"
 	config += `	  server_ip = "10.1.1.2"` + "\n"
 	config += `	  port = 2056` + "\n"
 	config += `	}, {` + "\n"
-	config += `	  vrf = "3"` + "\n"
+	config += `	  vrf = "service_lan_vpn3"` + "\n"
 	config += `	  server_ip = "10.1.1.3"` + "\n"
 	config += `	  port = 2057` + "\n"
 	config += `	}, {` + "\n"
-	config += `	  vrf = "4"` + "\n"
+	config += `	  vrf = "service_lan_vpn4"` + "\n"
 	config += `	  server_ip = "10.1.1.4"` + "\n"
 	config += `	  port = 2058` + "\n"
 	config += `	}]` + "\n"
@@ -120,7 +120,7 @@ func TestAccSdwanNetworkHierarchySecurityLoggingHSLOnly(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet("sdwan_network_hierarchy_security_logging.test", "id"),
 					resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.#", "2"),
-					resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.0.vrf", "10"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.0.vrf", "service_lan_vpn1"),
 					resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.0.server_ip", "192.168.1.100"),
 					resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.0.port", "3000"),
 					resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "utd_syslog.#", "0"),
@@ -133,11 +133,11 @@ func TestAccSdwanNetworkHierarchySecurityLoggingHSLOnly(t *testing.T) {
 func testAccSdwanNetworkHierarchySecurityLoggingConfig_hslOnly() string {
 	config := `resource "sdwan_network_hierarchy_security_logging" "test" {` + "\n"
 	config += `	high_speed_logging = [{` + "\n"
-	config += `	  vrf = "10"` + "\n"
+	config += `	  vrf = "service_lan_vpn1"` + "\n"
 	config += `	  server_ip = "192.168.1.100"` + "\n"
 	config += `	  port = 3000` + "\n"
 	config += `	}, {` + "\n"
-	config += `	  vrf = "20"` + "\n"
+	config += `	  vrf = "service_lan_vpn2"` + "\n"
 	config += `	  server_ip = "192.168.1.101"` + "\n"
 	config += `	  port = 3001` + "\n"
 	config += `	}]` + "\n"
@@ -196,11 +196,11 @@ func TestAccSdwanNetworkHierarchySecurityLoggingBothTypes(t *testing.T) {
 func testAccSdwanNetworkHierarchySecurityLoggingConfig_bothTypes() string {
 	config := `resource "sdwan_network_hierarchy_security_logging" "test" {` + "\n"
 	config += `	high_speed_logging = [{` + "\n"
-	config += `	  vrf = "100"` + "\n"
+	config += `	  vrf = "service_lan_vpn1"` + "\n"
 	config += `	  server_ip = "10.200.1.1"` + "\n"
 	config += `	  port = 4000` + "\n"
 	config += `	}, {` + "\n"
-	config += `	  vrf = "200"` + "\n"
+	config += `	  vrf = "service_lan_vpn2"` + "\n"
 	config += `	  server_ip = "10.200.1.2"` + "\n"
 	config += `	  port = 4001` + "\n"
 	config += `	}]` + "\n"

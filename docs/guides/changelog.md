@@ -7,6 +7,13 @@ description: |-
 
 # Changelog
 
+## 0.12.0 (unreleased)
+
+- Add `sdwan_network_hierarchy_node` resource and data source
+- Add `sdwan_network_hierarchy_cflowd` resource and data source
+- Add `sdwan_network_hierarchy_security_logging` resource and data source
+
+
 ## 0.11.3
 
 - Fix issue where deleting a single device with tag removes this tag across all devices
