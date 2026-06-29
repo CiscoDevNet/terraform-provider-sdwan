@@ -1,3 +1,7 @@
+## 0.11.4 (unreleased)
+
+- Fix profile parcel resources reporting phantom/stale nested list entries by rebuilding lists from the SD-WAN Manager API response on every read, making the controller the authoritative source for list membership
+
 ## 0.11.3
 
 - Fix issue where deleting a single device with tag removes this tag across all devices
