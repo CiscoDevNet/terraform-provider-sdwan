@@ -213,10 +213,6 @@ attributes:
     example: aes256-gcm
   - model_name: perfectForwardSecrecy
     example: group-16
-  - model_name: tracker
-    tf_name: tracker_id
-    exclude_test: true
-    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
   - model_name: tunnelRouteVia
     example: 2222
 
@@ -229,4 +225,19 @@ test_prerequisites: |
   resource "sdwan_service_lan_vpn_feature" "test" {
     name = "TF_TEST_SLAN"
     feature_profile_id = sdwan_service_feature_profile.test.id
+  }
+
+  resource "sdwan_service_tracker_feature" "test" {
+    name                  = "TF_TEST_TRACKER"
+    description           = "Terraform test"
+    feature_profile_id    = sdwan_service_feature_profile.test.id
+    tracker_name          = "TRACKER_1"
+    endpoint_api_url      = "google.com"
+    endpoint_dns_name     = "google.com"
+    endpoint_ip           = "1.2.3.4"
+    interval              = 30
+    multiplier            = 3
+    threshold             = 300
+    endpoint_tracker_type = "static-route"
+    tracker_type          = "endpoint"
   }

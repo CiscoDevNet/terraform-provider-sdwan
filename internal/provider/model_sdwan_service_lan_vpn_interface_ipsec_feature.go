@@ -100,8 +100,6 @@ type ServiceLANVPNInterfaceIPSec struct {
 	IpsecCiphersuiteVariable             types.String `tfsdk:"ipsec_ciphersuite_variable"`
 	PerfectForwardSecrecy                types.String `tfsdk:"perfect_forward_secrecy"`
 	PerfectForwardSecrecyVariable        types.String `tfsdk:"perfect_forward_secrecy_variable"`
-	TrackerId                            types.String `tfsdk:"tracker_id"`
-	TrackerIdVariable                    types.String `tfsdk:"tracker_id_variable"`
 	TunnelRouteVia                       types.String `tfsdk:"tunnel_route_via"`
 	TunnelRouteViaVariable               types.String `tfsdk:"tunnel_route_via_variable"`
 }
@@ -614,23 +612,6 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 		}
 	}
 
-	if !data.TrackerIdVariable.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"tracker.optionType", "variable")
-			body, _ = sjson.Set(body, path+"tracker.value", data.TrackerIdVariable.ValueString())
-		}
-	} else if data.TrackerId.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"tracker.optionType", "default")
-
-		}
-	} else {
-		if true {
-			body, _ = sjson.Set(body, path+"tracker.optionType", "global")
-			body, _ = sjson.Set(body, path+"tracker.value", data.TrackerId.ValueString())
-		}
-	}
-
 	if !data.TunnelRouteViaVariable.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"tunnelRouteVia.optionType", "variable")
@@ -977,16 +958,6 @@ func (data *ServiceLANVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson
 			data.PerfectForwardSecrecy = types.StringValue(va.String())
 		}
 	}
-	data.TrackerId = types.StringNull()
-	data.TrackerIdVariable = types.StringNull()
-	if t := res.Get(path + "tracker.optionType"); t.Exists() {
-		va := res.Get(path + "tracker.value")
-		if t.String() == "variable" {
-			data.TrackerIdVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TrackerId = types.StringValue(va.String())
-		}
-	}
 	data.TunnelRouteVia = types.StringNull()
 	data.TunnelRouteViaVariable = types.StringNull()
 	if t := res.Get(path + "tunnelRouteVia.optionType"); t.Exists() {
@@ -1324,16 +1295,6 @@ func (data *ServiceLANVPNInterfaceIPSec) updateFromBody(ctx context.Context, res
 			data.PerfectForwardSecrecyVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.PerfectForwardSecrecy = types.StringValue(va.String())
-		}
-	}
-	data.TrackerId = types.StringNull()
-	data.TrackerIdVariable = types.StringNull()
-	if t := res.Get(path + "tracker.optionType"); t.Exists() {
-		va := res.Get(path + "tracker.value")
-		if t.String() == "variable" {
-			data.TrackerIdVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TrackerId = types.StringValue(va.String())
 		}
 	}
 	data.TunnelRouteVia = types.StringNull()
