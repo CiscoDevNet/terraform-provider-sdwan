@@ -100,13 +100,13 @@ func (d *TagDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
 
-	res, err := d.client.Get(config.getPath())
+	res, err := d.client.Get(config.getPathById(config.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return
 	}
 
-	config.fromBody(ctx, res.Get("#(id==\""+config.Id.ValueString()+"\")"))
+	config.fromBody(ctx, res)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 
