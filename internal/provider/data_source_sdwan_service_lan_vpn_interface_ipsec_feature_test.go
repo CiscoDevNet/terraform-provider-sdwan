@@ -108,7 +108,6 @@ resource "sdwan_service_tracker_feature" "test" {
   endpoint_tracker_type = "static-route"
   tracker_type          = "endpoint"
 }
-
 `
 
 // End of section. //template:end testPrerequisites
