@@ -29,6 +29,10 @@ import (
 
 // End of section. //template:end imports
 
+import (
+	"github.com/netascode/go-sdwan"
+)
+
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type SecurityPolicy struct {
 	Id                         types.String                            `tfsdk:"id"`
@@ -570,3 +574,28 @@ func (data *SecurityPolicy) processImport(ctx context.Context) {
 }
 
 // End of section. //template:end processImport
+
+// Section below is manually maintained - not generated
+// getStagingPath returns the staging path for updates when policy is attached to devices
+func (data SecurityPolicy) getStagingPath() string {
+	return "/template/policy/security/staging/"
+}
+
+// isAttached checks if the policy is attached to any devices by querying the list endpoint
+func (data SecurityPolicy) isAttached(client *sdwan.Client) (bool, error) {
+	res, err := client.Get("/template/policy/security/")
+	if err != nil {
+		return false, err
+	}
+
+	if res.Get("data").Exists() {
+		for _, item := range res.Get("data").Array() {
+			if item.Get("policyId").String() == data.Id.ValueString() {
+				return item.Get("devicesAttached").Int() > 0, nil
+			}
+		}
+	}
+	return false, nil
+}
+
+// End of manually maintained section

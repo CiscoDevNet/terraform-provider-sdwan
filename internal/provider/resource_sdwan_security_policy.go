@@ -367,7 +367,7 @@ func (r *SecurityPolicyResource) Read(ctx context.Context, req resource.ReadRequ
 
 // End of section. //template:end read
 
-// Section below is generated&owned by "gen/generator.go". //template:begin update
+// MODIFIED: Added staging endpoint logic for attached policies - This function should be maintained manually
 func (r *SecurityPolicyResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var plan, state SecurityPolicy
 
@@ -388,8 +388,23 @@ func (r *SecurityPolicyResource) Update(ctx context.Context, req resource.Update
 
 	if plan.hasChanges(ctx, &state) {
 		body := plan.toBody(ctx)
+
+		attached, err := plan.isAttached(r.client)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to check policy attachment status, got error: %s", err))
+			return
+		}
+
+		var updatePath string
+		if attached {
+			tflog.Debug(ctx, fmt.Sprintf("%s: Policy is attached to devices, using staging endpoint", plan.Name.ValueString()))
+			updatePath = plan.getStagingPath() + url.QueryEscape(plan.Id.ValueString())
+		} else {
+			updatePath = plan.getPath() + url.QueryEscape(plan.Id.ValueString())
+		}
+
 		r.updateMutex.Lock()
-		res, err := r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), body)
+		res, err := r.client.Put(updatePath, body)
 		r.updateMutex.Unlock()
 		if err != nil {
 			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
@@ -411,8 +426,6 @@ func (r *SecurityPolicyResource) Update(ctx context.Context, req resource.Update
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 }
-
-// End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
 func (r *SecurityPolicyResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
