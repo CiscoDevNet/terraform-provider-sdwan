@@ -24,6 +24,7 @@ import (
 	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -45,6 +46,9 @@ type SystemAAA struct {
 	ServerAuthOrder                     types.List                    `tfsdk:"server_auth_order"`
 	Users                               []SystemAAAUsers              `tfsdk:"users"`
 	RadiusGroups                        []SystemAAARadiusGroups       `tfsdk:"radius_groups"`
+	TrustsecCtsAuthList                 types.String                  `tfsdk:"trustsec_cts_auth_list"`
+	TrustsecCtsAuthListVariable         types.String                  `tfsdk:"trustsec_cts_auth_list_variable"`
+	TrustsecRadiusGroup                 types.String                  `tfsdk:"trustsec_radius_group"`
 	TacacsGroups                        []SystemAAATacacsGroups       `tfsdk:"tacacs_groups"`
 	AccountingRules                     []SystemAAAAccountingRules    `tfsdk:"accounting_rules"`
 	AuthorizationConsole                types.Bool                    `tfsdk:"authorization_console"`
@@ -67,6 +71,7 @@ type SystemAAAUsers struct {
 type SystemAAARadiusGroups struct {
 	GroupName               types.String                   `tfsdk:"group_name"`
 	Vpn                     types.Int64                    `tfsdk:"vpn"`
+	VpnVariable             types.String                   `tfsdk:"vpn_variable"`
 	SourceInterface         types.String                   `tfsdk:"source_interface"`
 	SourceInterfaceVariable types.String                   `tfsdk:"source_interface_variable"`
 	Servers                 []SystemAAARadiusGroupsServers `tfsdk:"servers"`
@@ -75,6 +80,7 @@ type SystemAAARadiusGroups struct {
 type SystemAAATacacsGroups struct {
 	GroupName               types.String                   `tfsdk:"group_name"`
 	Vpn                     types.Int64                    `tfsdk:"vpn"`
+	VpnVariable             types.String                   `tfsdk:"vpn_variable"`
 	SourceInterface         types.String                   `tfsdk:"source_interface"`
 	SourceInterfaceVariable types.String                   `tfsdk:"source_interface_variable"`
 	Servers                 []SystemAAATacacsGroupsServers `tfsdk:"servers"`
@@ -152,7 +158,7 @@ func (data SystemAAA) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data SystemAAA) toBody(ctx context.Context) string {
+func (data SystemAAA) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -282,7 +288,13 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "groupName.value", item.GroupName.ValueString())
 				}
 			}
-			if item.Vpn.IsNull() {
+
+			if !item.VpnVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "vpn.value", item.VpnVariable.ValueString())
+				}
+			} else if item.Vpn.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "default")
 					itemBody, _ = sjson.Set(itemBody, "vpn.value", 0)
@@ -451,6 +463,34 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			body, _ = sjson.SetRaw(body, path+"radius.-1", itemBody)
 		}
 	}
+
+	if !data.TrustsecCtsAuthListVariable.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"ctsAuthList.optionType", "variable")
+			body, _ = sjson.Set(body, path+"ctsAuthList.value", data.TrustsecCtsAuthListVariable.ValueString())
+		}
+	} else if data.TrustsecCtsAuthList.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"ctsAuthList.optionType", "default")
+			body, _ = sjson.Set(body, path+"ctsAuthList.value", "")
+		}
+	} else {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"ctsAuthList.optionType", "global")
+			body, _ = sjson.Set(body, path+"ctsAuthList.value", data.TrustsecCtsAuthList.ValueString())
+		}
+	}
+	if data.TrustsecRadiusGroup.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"radiusTrustsecGroup.optionType", "default")
+			body, _ = sjson.Set(body, path+"radiusTrustsecGroup.value", "")
+		}
+	} else {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"radiusTrustsecGroup.optionType", "global")
+			body, _ = sjson.Set(body, path+"radiusTrustsecGroup.value", data.TrustsecRadiusGroup.ValueString())
+		}
+	}
 	if true {
 		body, _ = sjson.Set(body, path+"tacacs", []interface{}{})
 		for _, item := range data.TacacsGroups {
@@ -461,7 +501,13 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "groupName.value", item.GroupName.ValueString())
 				}
 			}
-			if item.Vpn.IsNull() {
+
+			if !item.VpnVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "vpn.value", item.VpnVariable.ValueString())
+				}
+			} else if item.Vpn.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "default")
 					itemBody, _ = sjson.Set(itemBody, "vpn.value", 0)
@@ -826,10 +872,12 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 				}
 			}
 			item.Vpn = types.Int64Null()
-
+			item.VpnVariable = types.StringNull()
 			if t := v.Get("vpn.optionType"); t.Exists() {
 				va := v.Get("vpn.value")
-				if t.String() == "global" {
+				if t.String() == "variable" {
+					item.VpnVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
 					item.Vpn = types.Int64Value(va.Int())
 				}
 			}
@@ -941,6 +989,24 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
+	data.TrustsecCtsAuthList = types.StringNull()
+	data.TrustsecCtsAuthListVariable = types.StringNull()
+	if t := res.Get(path + "ctsAuthList.optionType"); t.Exists() {
+		va := res.Get(path + "ctsAuthList.value")
+		if t.String() == "variable" {
+			data.TrustsecCtsAuthListVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TrustsecCtsAuthList = types.StringValue(va.String())
+		}
+	}
+	data.TrustsecRadiusGroup = types.StringNull()
+
+	if t := res.Get(path + "radiusTrustsecGroup.optionType"); t.Exists() {
+		va := res.Get(path + "radiusTrustsecGroup.value")
+		if t.String() == "global" {
+			data.TrustsecRadiusGroup = types.StringValue(va.String())
+		}
+	}
 	if value := res.Get(path + "tacacs"); value.Exists() && len(value.Array()) > 0 {
 		data.TacacsGroups = make([]SystemAAATacacsGroups, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -954,10 +1020,12 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 				}
 			}
 			item.Vpn = types.Int64Null()
-
+			item.VpnVariable = types.StringNull()
 			if t := v.Get("vpn.optionType"); t.Exists() {
 				va := v.Get("vpn.value")
-				if t.String() == "global" {
+				if t.String() == "variable" {
+					item.VpnVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
 					item.Vpn = types.Int64Value(va.Int())
 				}
 			}
@@ -1340,10 +1408,12 @@ func (data *SystemAAA) updateFromBody(ctx context.Context, res gjson.Result) {
 			}
 		}
 		data.RadiusGroups[i].Vpn = types.Int64Null()
-
+		data.RadiusGroups[i].VpnVariable = types.StringNull()
 		if t := r.Get("vpn.optionType"); t.Exists() {
 			va := r.Get("vpn.value")
-			if t.String() == "global" {
+			if t.String() == "variable" {
+				data.RadiusGroups[i].VpnVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
 				data.RadiusGroups[i].Vpn = types.Int64Value(va.Int())
 			}
 		}
@@ -1466,6 +1536,24 @@ func (data *SystemAAA) updateFromBody(ctx context.Context, res gjson.Result) {
 			}
 		}
 	}
+	data.TrustsecCtsAuthList = types.StringNull()
+	data.TrustsecCtsAuthListVariable = types.StringNull()
+	if t := res.Get(path + "ctsAuthList.optionType"); t.Exists() {
+		va := res.Get(path + "ctsAuthList.value")
+		if t.String() == "variable" {
+			data.TrustsecCtsAuthListVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TrustsecCtsAuthList = types.StringValue(va.String())
+		}
+	}
+	data.TrustsecRadiusGroup = types.StringNull()
+
+	if t := res.Get(path + "radiusTrustsecGroup.optionType"); t.Exists() {
+		va := res.Get(path + "radiusTrustsecGroup.value")
+		if t.String() == "global" {
+			data.TrustsecRadiusGroup = types.StringValue(va.String())
+		}
+	}
 	for i := range data.TacacsGroups {
 		keys := [...]string{"groupName"}
 		keyValues := [...]string{data.TacacsGroups[i].GroupName.ValueString()}
@@ -1506,10 +1594,12 @@ func (data *SystemAAA) updateFromBody(ctx context.Context, res gjson.Result) {
 			}
 		}
 		data.TacacsGroups[i].Vpn = types.Int64Null()
-
+		data.TacacsGroups[i].VpnVariable = types.StringNull()
 		if t := r.Get("vpn.optionType"); t.Exists() {
 			va := r.Get("vpn.value")
-			if t.String() == "global" {
+			if t.String() == "variable" {
+				data.TacacsGroups[i].VpnVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
 				data.TacacsGroups[i].Vpn = types.Int64Value(va.Int())
 			}
 		}

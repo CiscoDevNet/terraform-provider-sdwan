@@ -24,11 +24,14 @@ import (
 	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework-validators/datasourcevalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
+	"github.com/tidwall/gjson"
 )
 
 // End of section. //template:end imports
@@ -37,8 +40,9 @@ import (
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
-	_ datasource.DataSource              = &SystemAAAProfileParcelDataSource{}
-	_ datasource.DataSourceWithConfigure = &SystemAAAProfileParcelDataSource{}
+	_ datasource.DataSource                     = &SystemAAAProfileParcelDataSource{}
+	_ datasource.DataSourceWithConfigure        = &SystemAAAProfileParcelDataSource{}
+	_ datasource.DataSourceWithConfigValidators = &SystemAAAProfileParcelDataSource{}
 )
 
 func NewSystemAAAProfileParcelDataSource() datasource.DataSource {
@@ -61,7 +65,8 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The id of the Feature",
-				Required:            true,
+				Optional:            true,
+				Computed:            true,
 			},
 			"version": schema.Int64Attribute{
 				MarkdownDescription: "The version of the Feature",
@@ -69,6 +74,7 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the Feature",
+				Optional:            true,
 				Computed:            true,
 			},
 			"description": schema.StringAttribute{
@@ -165,6 +171,10 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 							MarkdownDescription: "Set VPN in which Radius server is located",
 							Computed:            true,
 						},
+						"vpn_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
 						"source_interface": schema.StringAttribute{
 							MarkdownDescription: "Set interface to use to reach Radius server",
 							Computed:            true,
@@ -248,6 +258,18 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 					},
 				},
 			},
+			"trustsec_cts_auth_list": schema.StringAttribute{
+				MarkdownDescription: "CTS Authorization List",
+				Computed:            true,
+			},
+			"trustsec_cts_auth_list_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"trustsec_radius_group": schema.StringAttribute{
+				MarkdownDescription: "RADIUS group",
+				Computed:            true,
+			},
 			"tacacs_groups": schema.ListNestedAttribute{
 				MarkdownDescription: "Configure the TACACS serverGroup",
 				Computed:            true,
@@ -259,6 +281,10 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 						},
 						"vpn": schema.Int64Attribute{
 							MarkdownDescription: "Set VPN in which TACACS server is located",
+							Computed:            true,
+						},
+						"vpn_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
 						"source_interface": schema.StringAttribute{
@@ -402,6 +428,15 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 	}
 }
 
+func (d *SystemAAAProfileParcelDataSource) ConfigValidators(_ context.Context) []datasource.ConfigValidator {
+	return []datasource.ConfigValidator{
+		datasourcevalidator.ExactlyOneOf(
+			path.MatchRoot("id"),
+			path.MatchRoot("name"),
+		),
+	}
+}
+
 func (d *SystemAAAProfileParcelDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
@@ -424,6 +459,27 @@ func (d *SystemAAAProfileParcelDataSource) Read(ctx context.Context, req datasou
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
+	if config.Id.IsNull() && !config.Name.IsNull() {
+		// Look up parcel ID by name
+		res, err := d.client.Get(config.getPath())
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve parcels, got error: %s", err))
+			return
+		}
+		found := false
+		res.Get("data").ForEach(func(_, v gjson.Result) bool {
+			if v.Get("payload.name").String() == config.Name.ValueString() {
+				config.Id = types.StringValue(v.Get("parcelId").String())
+				found = true
+				return false
+			}
+			return true
+		})
+		if !found {
+			resp.Diagnostics.AddError("Not Found", fmt.Sprintf("No parcel found with name: %s", config.Name.ValueString()))
+			return
+		}
+	}
 
 	res, err := d.client.Get(config.getPath() + "/" + url.QueryEscape(config.Id.ValueString()))
 	if err != nil {

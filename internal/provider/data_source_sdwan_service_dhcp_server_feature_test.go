@@ -51,6 +51,14 @@ func TestAccDataSourceSdwanServiceDHCPServerProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanServiceDHCPServerPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceDHCPServerProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanServiceDHCPServerPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceDHCPServerProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_dhcp_server_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_dhcp_server_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -106,3 +114,42 @@ func testAccDataSourceSdwanServiceDHCPServerProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanServiceDHCPServerProfileParcelByNameConfig() string {
+	config := `resource "sdwan_service_dhcp_server_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
+	config += `	network_address = "1.2.3.4"` + "\n"
+	config += `	subnet_mask = "255.255.255.0"` + "\n"
+	config += `	exclude = ["192.168.1.1"]` + "\n"
+	config += `	lease_time = 86400` + "\n"
+	config += `	interface_mtu = 65535` + "\n"
+	config += `	domain_name = "example.com"` + "\n"
+	config += `	default_gateway = "1.2.3.4"` + "\n"
+	config += `	dns_servers = ["8.8.8.8"]` + "\n"
+	config += `	tftp_servers = ["1.1.1.1"]` + "\n"
+	config += `	static_leases = [{` + "\n"
+	config += `	  mac_address = "01:02:03:04:05:06"` + "\n"
+	config += `	  ip_address = "1.2.3.4"` + "\n"
+	config += `	}]` + "\n"
+	config += `	option_codes = [{` + "\n"
+	config += `	  code = 250` + "\n"
+	config += `	  ascii = "example"` + "\n"
+	config += `	}]` + "\n"
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	dhcp_ha_enable = false` + "\n"
+	}
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_service_dhcp_server_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_service_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

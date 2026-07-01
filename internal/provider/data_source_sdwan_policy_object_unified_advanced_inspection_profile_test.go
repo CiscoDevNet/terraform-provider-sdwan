@@ -42,6 +42,14 @@ func TestAccDataSourceSdwanPolicyObjectUnifiedAdvancedInspectionProfileProfilePa
 				Config: testAccDataSourceSdwanPolicyObjectUnifiedAdvancedInspectionProfilePrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectUnifiedAdvancedInspectionProfileProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanPolicyObjectUnifiedAdvancedInspectionProfilePrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectUnifiedAdvancedInspectionProfileProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_policy_object_unified_advanced_inspection_profile.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_policy_object_unified_advanced_inspection_profile.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -167,3 +175,27 @@ func testAccDataSourceSdwanPolicyObjectUnifiedAdvancedInspectionProfileProfilePa
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanPolicyObjectUnifiedAdvancedInspectionProfileProfileParcelByNameConfig() string {
+	config := `resource "sdwan_policy_object_unified_advanced_inspection_profile" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	tls_decryption_action = "decrypt"` + "\n"
+	config += `	intrusion_prevention_list_id = sdwan_policy_object_unified_intrusion_prevention.test.id` + "\n"
+	config += `	url_filtering_list_id = sdwan_policy_object_security_url_allow_list.test.id` + "\n"
+	config += `	advanced_malware_protection_list_id = sdwan_policy_object_unified_advanced_malware_protection.test.id` + "\n"
+	config += `	tls_ssl_profile_list_id = sdwan_policy_object_unified_tls_ssl_profile.test.id` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_policy_object_unified_advanced_inspection_profile" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

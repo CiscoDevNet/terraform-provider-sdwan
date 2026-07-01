@@ -25,7 +25,11 @@ data "sdwan_transport_wan_vpn_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -34,7 +38,6 @@ data "sdwan_transport_wan_vpn_feature" "example" {
 - `enhance_ecmp_keying_variable` (String) Variable name
 - `ipv4_static_routes` (Attributes List) IPv4 Static Route (see [below for nested schema](#nestedatt--ipv4_static_routes))
 - `ipv6_static_routes` (Attributes List) IPv6 Static Route (see [below for nested schema](#nestedatt--ipv6_static_routes))
-- `name` (String) The name of the Feature
 - `nat_64_v4_pools` (Attributes List) NAT64 V4 Pool (see [below for nested schema](#nestedatt--nat_64_v4_pools))
 - `new_host_mappings` (Attributes List) (see [below for nested schema](#nestedatt--new_host_mappings))
 - `primary_dns_address_ipv4` (String) Primary DNS Address (IPv4)

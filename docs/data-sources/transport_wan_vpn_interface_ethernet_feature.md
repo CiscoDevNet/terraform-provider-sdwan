@@ -26,8 +26,12 @@ data "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
-- `id` (String) The id of the Feature
 - `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
+
+### Optional
+
+- `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -95,7 +99,6 @@ data "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `mrf_enable_core_region` (Boolean) Enable Core Region
 - `mrf_enable_secondary_region` (Boolean) Enable Secondary Region
 - `mrf_secondary_region_type` (String) Enable secondary region
-- `name` (String) The name of the Feature
 - `nat64` (Boolean) NAT64 on this interface
 - `nat66` (Boolean) NAT66 on this interface
 - `nat_ipv4` (Boolean) enable Network Address Translation on this interface

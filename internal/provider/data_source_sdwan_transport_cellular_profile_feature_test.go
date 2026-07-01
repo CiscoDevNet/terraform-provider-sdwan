@@ -47,6 +47,14 @@ func TestAccDataSourceSdwanTransportCellularProfileProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanTransportCellularProfilePrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportCellularProfileProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanTransportCellularProfilePrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportCellularProfileProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_transport_cellular_profile_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_transport_cellular_profile_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -89,3 +97,30 @@ func testAccDataSourceSdwanTransportCellularProfileProfileParcelConfig() string 
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanTransportCellularProfileProfileParcelByNameConfig() string {
+	config := `resource "sdwan_transport_cellular_profile_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	profile_id = 1` + "\n"
+	config += `	access_point_name = "apn1"` + "\n"
+	config += `	requires_authentication = true` + "\n"
+	config += `	authentication_type = "pap"` + "\n"
+	config += `	profile_username = "example"` + "\n"
+	config += `	profile_password = "example123!"` + "\n"
+	config += `	packet_data_network_type = "ipv4"` + "\n"
+	config += `	no_overwrite = false` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_transport_cellular_profile_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_transport_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

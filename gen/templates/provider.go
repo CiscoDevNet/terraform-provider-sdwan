@@ -24,6 +24,7 @@ import (
 	"context"
 	"os"
 	"strconv"
+	"strings"
 	"sync"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
@@ -203,6 +204,15 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 		return
 	}
 
+	// Validate that the URL is in proper format without a "/" at the end
+	if strings.HasSuffix(url, "/") {
+		resp.Diagnostics.AddError(
+			"Invalid URL format",
+			"URL '" + url + "' cannot end with a trailing slash ('/')",
+		)
+		return
+	}
+
 	var insecure bool
 	if config.Insecure.IsUnknown() {
 		// Cannot connect to client with an unknown value
@@ -313,6 +323,7 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		{{- end}}
 		NewAttachFeatureDeviceTemplateResource,
 		NewActivateCentralizedPolicyResource,
+		NewActivateTopologyGroupResource,
 	}
 }
 

@@ -210,11 +210,21 @@ type YamlConfig struct {
 	NoImport                 bool                  `yaml:"no_import"`
 	NoResource               bool                  `yaml:"no_resource"`
 	NoDataSource             bool                  `yaml:"no_data_source"`
+	NoDelete                 bool                  `yaml:"no_delete"`
+	NoDataSourceNameQuery    bool                  `yaml:"no_data_source_name_query"`
 	GetBeforeDelete          bool                  `yaml:"get_before_delete"`
 	DeleteMutex              bool                  `yaml:"delete_mutex"`
 	ParcelType               string                `yaml:"parcel_type"`
 	FullUpdate               bool                  `yaml:"full_update"`
 	CreateMutex              bool                  `yaml:"create_mutex"`
+	DataSourceFilters        []DataSourceFilter    `yaml:"data_source_filters"`
+}
+
+type DataSourceFilter struct {
+	TfName        string `yaml:"tf_name"`
+	ModelName     string `yaml:"model_name"`
+	Description   string `yaml:"description"`
+	ListAttribute string `yaml:"list_attribute"`
 }
 
 type YamlConfigAttribute struct {
@@ -281,6 +291,10 @@ type YamlConfigAttribute struct {
 	IncludeVariableCheck    bool                           `yaml:"include_variable_check"`
 	ResetContainerIfIgnore  bool                           `yaml:"reset_container_if_ignore"`
 	NoOptionType            bool                           `yaml:"no_option_type"`
+	PositionalFallback      bool                           `yaml:"positional_fallback"`
+	OptionalNullEmpty       bool                           `yaml:"optional_null_empty"`
+	IncludeEmptyValue       bool                           `yaml:"include_empty_value"`
+	WriteAsDefault          bool                           `yaml:"write_as_default"`
 }
 
 type YamlConfigConditionalAttribute struct {
@@ -504,6 +518,48 @@ func HasMinVersionCondition(attributes []YamlConfigAttribute) bool {
 			}
 		}
 		if len(attr.Attributes) > 0 && HasMinVersionCondition(attr.Attributes) {
+			return true
+		}
+	}
+	return false
+}
+
+// HasStringValidator recursively checks if any attribute needs the stringvalidator package.
+func HasStringValidator(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if (len(attr.EnumValues) > 0 && !attr.IgnoreEnum) ||
+			len(attr.StringPatterns) > 0 ||
+			attr.StringMinLength != 0 ||
+			attr.StringMaxLength != 0 {
+			return true
+		}
+		if len(attr.Attributes) > 0 && HasStringValidator(attr.Attributes) {
+			return true
+		}
+	}
+	return false
+}
+
+// HasRegexpValidator recursively checks if any attribute needs the regexp package.
+func HasRegexpValidator(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if len(attr.StringPatterns) > 0 {
+			return true
+		}
+		if len(attr.Attributes) > 0 && HasRegexpValidator(attr.Attributes) {
+			return true
+		}
+	}
+	return false
+}
+
+// HasFloat64Validator recursively checks if any attribute needs the float64validator package.
+func HasFloat64Validator(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.MinFloat != 0.0 || attr.MaxFloat != 0.0 {
+			return true
+		}
+		if len(attr.Attributes) > 0 && HasFloat64Validator(attr.Attributes) {
 			return true
 		}
 	}
@@ -835,6 +891,9 @@ var functions = template.FuncMap{
 	"buildConditionalLogic":       BuildConditionalLogic,
 	"buildConditionalDescription": BuildConditionalDescription,
 	"hasMinVersionCondition":      HasMinVersionCondition,
+	"hasStringValidator":          HasStringValidator,
+	"hasRegexpValidator":          HasRegexpValidator,
+	"hasFloat64Validator":         HasFloat64Validator,
 }
 
 func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result) {
@@ -1110,7 +1169,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	}
 
 	if r.Get("oneOf.0.type").String() == "array" && len(attr.Attributes) > 0 {
-		attr.Type = "List"
+		if attr.Type != "Set" {
+			attr.Type = "List"
+		}
 		if r.Get("minItems").Exists() {
 			attr.MinList = r.Get("minItems").Int()
 		}
@@ -1217,28 +1278,28 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		}
 		if d.Exists() && (!isOneOfAttribute || attr.DefaultValuePresent == true) {
 			attr.DefaultValuePresent = true
-			if value := d.Get("properties.value.enum.0"); value.Exists() {
+			if value := d.Get("properties.value.default"); value.Exists() {
 				if value.String() == "" {
 					attr.DefaultValueEmptyString = true
 				} else {
-					if noGlobal {
+					if noGlobal && !attr.WriteAsDefault {
 						attr.Value = value.String()
 					} else {
 						attr.DefaultValue = value.String()
 					}
 				}
-			} else if value := d.Get("properties.value.default"); value.Exists() {
+			} else if value := d.Get("properties.value.enum.0"); value.Exists() {
 				if value.String() == "" {
 					attr.DefaultValueEmptyString = true
 				} else {
-					if noGlobal {
+					if noGlobal && !attr.WriteAsDefault {
 						attr.Value = value.String()
 					} else {
 						attr.DefaultValue = value.String()
 					}
 				}
 			} else if value := d.Get("properties.value.minimum"); value.Exists() {
-				if noGlobal {
+				if noGlobal && !attr.WriteAsDefault {
 					attr.Value = value.String()
 				} else {
 					attr.DefaultValue = value.String()
@@ -1252,7 +1313,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 			}
 		}
 	} else if r.Get("type").String() == "array" && r.Get("items.type").String() == "object" || r.Get("items.oneOf.0.type").String() == "object" && len(attr.Attributes) > 0 {
-		attr.Type = "List"
+		if attr.Type != "Set" {
+			attr.Type = "List"
+		}
 		if r.Get("minItems").Exists() {
 			attr.MinList = r.Get("minItems").Int()
 		}

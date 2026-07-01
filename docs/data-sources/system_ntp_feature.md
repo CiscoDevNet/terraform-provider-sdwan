@@ -25,7 +25,11 @@ data "sdwan_system_ntp_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -33,7 +37,6 @@ data "sdwan_system_ntp_feature" "example" {
 - `authoritative_ntp_server` (Boolean) Enable device as NTP Leader
 - `authoritative_ntp_server_variable` (String) Variable name
 - `description` (String) The description of the Feature
-- `name` (String) The name of the Feature
 - `servers` (Attributes List) Configure NTP servers (see [below for nested schema](#nestedatt--servers))
 - `source_interface` (String) Enable device as NTP Leader
 - `source_interface_variable` (String) Variable name

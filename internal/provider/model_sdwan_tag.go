@@ -47,6 +47,10 @@ func (data Tag) getPath() string {
 
 // End of section. //template:end getPath
 
+func (data Tag) getPathById(id string) string {
+	return "/v1/tags/" + id
+}
+
 func (data Tag) toBody(ctx context.Context) string {
 	body := ""
 	if true {

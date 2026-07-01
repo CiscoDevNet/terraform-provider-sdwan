@@ -25,7 +25,11 @@ data "sdwan_policy_object_unified_tls_ssl_profile" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Policy_object
+- `name` (String) The name of the Policy_object
 
 ### Read-Only
 
@@ -33,7 +37,6 @@ data "sdwan_policy_object_unified_tls_ssl_profile" "example" {
 - `decrypt_threshold` (String)
 - `description` (String) The description of the Policy_object
 - `fail_decrypt` (Boolean)
-- `name` (String) The name of the Policy_object
 - `no_decrypt_categories` (Set of String)
 - `pass_through_categories` (Set of String)
 - `reputation` (Boolean)

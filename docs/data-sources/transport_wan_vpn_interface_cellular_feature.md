@@ -26,8 +26,12 @@ data "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
-- `id` (String) The id of the Feature
 - `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
+
+### Optional
+
+- `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -57,7 +61,6 @@ data "sdwan_transport_wan_vpn_interface_cellular_feature" "example" {
 - `ipv4_dhcp_helper_variable` (String) Variable name
 - `mrf_core_region_type` (String) Core Region
 - `mrf_enable_core_region` (Boolean) Enable Core Region
-- `name` (String) The name of the Feature
 - `nat_ipv4` (Boolean) Network Address Translation on this interface
 - `nat_ipv4_variable` (String) Variable name
 - `nat_tcp_timeout` (Number) Set NAT TCP session timeout, in minutes

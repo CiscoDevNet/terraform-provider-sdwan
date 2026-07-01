@@ -167,7 +167,7 @@ func (r *TagResource) Read(ctx context.Context, req resource.ReadRequest, resp *
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.ValueString()))
 
-	res, err := r.client.Get(state.getPath())
+	res, err := r.client.Get(state.getPathById(state.Id.ValueString()))
 	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") || strings.Contains(res.Get("error.message").String(), "Invalid Profile Id") || strings.Contains(res.Get("error.message").String(), "Invalid feature Id") || strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
 		resp.State.RemoveResource(ctx)
 		return
@@ -176,7 +176,7 @@ func (r *TagResource) Read(ctx context.Context, req resource.ReadRequest, resp *
 		return
 	}
 
-	state.fromBody(ctx, res.Get("#(id==\""+state.Id.ValueString()+"\")"))
+	state.fromBody(ctx, res)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 
@@ -207,7 +207,7 @@ func (r *TagResource) Update(ctx context.Context, req resource.UpdateRequest, re
 	}
 
 	// Get all associate devices
-	res, err := r.client.Get(plan.getPath())
+	res, err := r.client.Get(plan.getPathById(plan.Id.ValueString()))
 	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") || strings.Contains(res.Get("error.message").String(), "Invalid Profile Id") || strings.Contains(res.Get("error.message").String(), "Invalid feature Id") || strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
 		resp.State.RemoveResource(ctx)
 		return
@@ -217,7 +217,7 @@ func (r *TagResource) Update(ctx context.Context, req resource.UpdateRequest, re
 	}
 
 	// Remove all associate devices that are not if plan
-	if value := res.Get("#(id==\"" + plan.Id.ValueString() + "\")"); value.Exists() {
+	if value := res; value.Exists() {
 		body, _ := sjson.Set("", "data", []interface{}{})
 		itemBody, _ := sjson.Set("", "tagId", plan.Id.ValueString())
 		itemBody, _ = sjson.Set(itemBody, "objects", []interface{}{})
@@ -226,7 +226,7 @@ func (r *TagResource) Update(ctx context.Context, req resource.UpdateRequest, re
 			if id := item.Get("id"); id.Exists() {
 				existsInPlan := false
 				for _, planId := range plan.Devices.Elements() {
-					if id.String() == planId.String() {
+					if id.String() == planId.(types.String).ValueString() {
 						existsInPlan = true
 					}
 				}

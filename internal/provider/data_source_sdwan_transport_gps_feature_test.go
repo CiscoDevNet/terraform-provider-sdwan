@@ -47,6 +47,14 @@ func TestAccDataSourceSdwanTransportGPSProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanTransportGPSPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportGPSProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanTransportGPSPrerequisitesProfileParcelConfig + testAccDataSourceSdwanTransportGPSProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_transport_gps_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_transport_gps_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -87,3 +95,28 @@ func testAccDataSourceSdwanTransportGPSProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanTransportGPSProfileParcelByNameConfig() string {
+	config := `resource "sdwan_transport_gps_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	gps_enable = false` + "\n"
+	config += `	gps_mode = "ms-based"` + "\n"
+	config += `	nmea_enable = false` + "\n"
+	config += `	nmea_source_address = "1.2.3.4"` + "\n"
+	config += `	nmea_destination_address = "2.3.4.5"` + "\n"
+	config += `	nmea_destination_port = 22` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_transport_gps_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_transport_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

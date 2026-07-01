@@ -103,6 +103,9 @@ func (r *TransportCellularControllerProfileParcelResource) Schema(ctx context.Co
 			"primary_sim_slot": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set primary SIM slot").AddIntegerRangeDescription(0, 1).String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(1),
+				},
 			},
 			"primary_sim_slot_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -111,6 +114,9 @@ func (r *TransportCellularControllerProfileParcelResource) Schema(ctx context.Co
 			"sim_failover_retries": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set SIM failover retries").AddIntegerRangeDescription(0, 65535).String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(65535),
+				},
 			},
 			"sim_failover_retries_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

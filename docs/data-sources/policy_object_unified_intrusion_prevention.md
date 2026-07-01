@@ -25,7 +25,11 @@ data "sdwan_policy_object_unified_intrusion_prevention" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Policy_object
+- `name` (String) The name of the Policy_object
 
 ### Read-Only
 
@@ -34,6 +38,5 @@ data "sdwan_policy_object_unified_intrusion_prevention" "example" {
 - `inspection_mode` (String) Can be one of the enum value
 - `ips_signature_allow_list_id` (String)
 - `log_level` (String) Can be one of the enum value
-- `name` (String) The name of the Policy_object
 - `signature_set` (String) Can be one of the enum value
 - `version` (Number) The version of the Policy_object

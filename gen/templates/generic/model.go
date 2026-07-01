@@ -59,6 +59,9 @@ Type types.String `tfsdk:"type"`
 {{- end}}
 {{- end}}
 {{- end}}
+{{- range .DataSourceFilters}}
+	{{toGoName .TfName}} types.String `tfsdk:"{{.TfName}}"`
+{{- end}}
 }
 
 
@@ -315,7 +318,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 	state := *data
 	{{- end}}
 	{{- range .Attributes}}
-	{{- if and (not .TfOnly) (not .Value) (not .Reference)}}
+	{{- if and (not .TfOnly) (not .Value) (not .Reference) (not .WriteOnly)}}
 	{{- $cname := toGoName .TfName}}
 	{{- if eq .Type "String"}}
 	if value := res.Get("{{getResponseModelPath .}}"); value.Exists(){{buildConditionalLogic .ConditionalAttribute "data"}}{{if .AlwaysInclude}} && value.String() != ""{{end}} {
@@ -359,7 +362,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			item := {{$name}}{{toGoName .TfName}}{}
 			{{- range .Attributes}}
 			{{- $ccname := toGoName .TfName}}
-			{{- if and (not .TfOnly) (not .Value) (not .Reference)}}
+			{{- if and (not .TfOnly) (not .Value) (not .Reference) (not .WriteOnly)}}
 			{{- if eq .Type "String"}}
 			if cValue := v.Get("{{getResponseModelPath .}}"); cValue.Exists(){{buildConditionalLogic .ConditionalAttribute "item"}}{{if .AlwaysInclude}} && cValue.String() != ""{{end}} {
 				item.{{toGoName .TfName}} = types.StringValue(cValue.String())
@@ -401,7 +404,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := {{$name}}{{$cname}}{{toGoName .TfName}}{}
 					{{- range .Attributes}}
-					{{- if and (not .TfOnly) (not .Value) (not .Reference)}}
+					{{- if and (not .TfOnly) (not .Value) (not .Reference) (not .WriteOnly)}}
 					{{- if eq .Type "String"}}
 					if ccValue := cv.Get("{{getResponseModelPath .}}"); ccValue.Exists(){{buildConditionalLogic .ConditionalAttribute "cItem"}}{{if .AlwaysInclude}} && ccValue.String() != ""{{end}} {
 						cItem.{{toGoName .TfName}} = types.StringValue(ccValue.String())
@@ -443,7 +446,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := {{$name}}{{$cname}}{{$ccname}}{{toGoName .TfName}}{}
 							{{- range .Attributes}}
-							{{- if and (not .TfOnly) (not .Value) (not .Reference)}}
+							{{- if and (not .TfOnly) (not .Value) (not .Reference) (not .WriteOnly)}}
 							{{- if eq .Type "String"}}
 							if cccValue := ccv.Get("{{getResponseModelPath .}}"); cccValue.Exists(){{buildConditionalLogic .ConditionalAttribute "ccItem"}}{{if .AlwaysInclude}} && cccValue.String() != ""{{end}} {
 								ccItem.{{toGoName .TfName}} = types.StringValue(cccValue.String())
@@ -804,3 +807,32 @@ func (data *{{camelCase .Name}}) processImport(ctx context.Context) {
 	{{- end}}
 }
 // End of section. //template:end processImport
+
+// Section below is generated&owned by "gen/generator.go". //template:begin applyFilters
+{{- if .DataSourceFilters}}
+{{- $name := camelCase .Name}}
+{{- $listAttr := (index .DataSourceFilters 0).ListAttribute}}
+func (data *{{$name}}) applyFilters(ctx context.Context) {
+	{{- range .Attributes}}
+	{{- if and (isNestedListSet .) (eq .TfName $listAttr)}}
+	{{- $listField := toGoName .TfName}}
+	filtered := make([]{{$name}}{{toGoName .TfName}}, 0, len(data.{{$listField}}))
+	for _, item := range data.{{$listField}} {
+		match := true
+		{{- range $.DataSourceFilters}}
+		if !data.{{toGoName .TfName}}.IsNull() && !data.{{toGoName .TfName}}.IsUnknown() {
+			if item.{{toGoName .TfName}}.ValueString() != data.{{toGoName .TfName}}.ValueString() {
+				match = false
+			}
+		}
+		{{- end}}
+		if match {
+			filtered = append(filtered, item)
+		}
+	}
+	data.{{$listField}} = filtered
+	{{- end}}
+	{{- end}}
+}
+{{- end}}
+// End of section. //template:end applyFilters

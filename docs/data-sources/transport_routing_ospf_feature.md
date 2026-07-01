@@ -25,7 +25,11 @@ data "sdwan_transport_routing_ospf_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -44,7 +48,6 @@ data "sdwan_transport_routing_ospf_feature" "example" {
 - `distance_inter_area_variable` (String) Variable name
 - `distance_intra_area` (Number) Set distance for intra-area routes
 - `distance_intra_area_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `redistributes` (Attributes List) Redistribute routes (see [below for nested schema](#nestedatt--redistributes))
 - `reference_bandwidth` (Number) Set reference bandwidth method to assign OSPF cost
 - `reference_bandwidth_variable` (String) Variable name

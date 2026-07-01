@@ -23,10 +23,19 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	{{- if hasRegexpValidator .Attributes}}
+	"regexp"
+	{{- end}}
 	"strings"
 	"sync"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	{{- if hasFloat64Validator .Attributes}}
+	"github.com/hashicorp/terraform-plugin-framework-validators/float64validator"
+	{{- end}}
+	{{- if hasStringValidator .Attributes}}
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	{{- end}}
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -94,7 +103,11 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 					{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 					.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 					{{- end -}}
-					{{- if or (ne .MinInt 0) (ne .MaxInt 0) -}}
+					{{- if and (ne .MinInt 0) (ne .MaxInt 0) -}}
+					.AddIntegerRangeDescription({{.MinInt}}, {{.MaxInt}})
+					{{- else if and (ne .MinInt 0) (eq .MaxInt 0) -}}
+					.AddIntegerAtLeastDescription({{.MinInt}})
+					{{- else if and (eq .MinInt 0) (ne .MaxInt 0) -}}
 					.AddIntegerRangeDescription({{.MinInt}}, {{.MaxInt}})
 					{{- end -}}
 					{{- if and (ne .MinFloat 0.0) (ne .MaxFloat 0.0) -}}
@@ -129,7 +142,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 					stringvalidator.RegexMatches(regexp.MustCompile(`{{.}}`), ""),
 					{{- end}}
 				},
-				{{- else if and (ne .MinInt 0) (ne .MaxInt 0)}}
+				{{- else if or (ne .MinInt 0) (ne .MaxInt 0)}}
 				Validators: []validator.Int64{
 					{{- if and (ne .MinInt 0) (ne .MaxInt 0)}}
 					int64validator.Between({{.MinInt}}, {{.MaxInt}}),
@@ -160,7 +173,11 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 								{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 								.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 								{{- end -}}
-								{{- if or (ne .MinInt 0) (ne .MaxInt 0) -}}
+								{{- if and (ne .MinInt 0) (ne .MaxInt 0) -}}
+								.AddIntegerRangeDescription({{.MinInt}}, {{.MaxInt}})
+								{{- else if and (ne .MinInt 0) (eq .MaxInt 0) -}}
+								.AddIntegerAtLeastDescription({{.MinInt}})
+								{{- else if and (eq .MinInt 0) (ne .MaxInt 0) -}}
 								.AddIntegerRangeDescription({{.MinInt}}, {{.MaxInt}})
 								{{- end -}}
 								{{- if and (ne .MinFloat 0.0) (ne .MaxFloat 0.0) -}}
@@ -222,7 +239,11 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 											{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 											.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 											{{- end -}}
-											{{- if or (ne .MinInt 0) (ne .MaxInt 0) -}}
+											{{- if and (ne .MinInt 0) (ne .MaxInt 0) -}}
+											.AddIntegerRangeDescription({{.MinInt}}, {{.MaxInt}})
+											{{- else if and (ne .MinInt 0) (eq .MaxInt 0) -}}
+											.AddIntegerAtLeastDescription({{.MinInt}})
+											{{- else if and (eq .MinInt 0) (ne .MaxInt 0) -}}
 											.AddIntegerRangeDescription({{.MinInt}}, {{.MaxInt}})
 											{{- end -}}
 											{{- if and (ne .MinFloat 0.0) (ne .MaxFloat 0.0) -}}
@@ -284,7 +305,11 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 														{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 														.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 														{{- end -}}
-														{{- if or (ne .MinInt 0) (ne .MaxInt 0) -}}
+														{{- if and (ne .MinInt 0) (ne .MaxInt 0) -}}
+														.AddIntegerRangeDescription({{.MinInt}}, {{.MaxInt}})
+														{{- else if and (ne .MinInt 0) (eq .MaxInt 0) -}}
+														.AddIntegerAtLeastDescription({{.MinInt}})
+														{{- else if and (eq .MinInt 0) (ne .MaxInt 0) -}}
 														.AddIntegerRangeDescription({{.MinInt}}, {{.MaxInt}})
 														{{- end -}}
 														{{- if and (ne .MinFloat 0.0) (ne .MaxFloat 0.0) -}}

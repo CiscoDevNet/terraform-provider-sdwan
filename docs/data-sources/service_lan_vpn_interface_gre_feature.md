@@ -26,8 +26,12 @@ data "sdwan_service_lan_vpn_interface_gre_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
-- `id` (String) The id of the Feature
 - `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
+
+### Optional
+
+- `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -77,7 +81,6 @@ data "sdwan_service_lan_vpn_interface_gre_feature" "example" {
 - `ipv6_mtu_variable` (String) Variable name
 - `ipv6_tcp_mss` (Number) IPv6 TCP MSS on SYN packets, in bytes
 - `ipv6_tcp_mss_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `perfect_forward_secrecy` (String) IPsec perfect forward secrecy settings
 - `perfect_forward_secrecy_variable` (String) Variable name
 - `pre_shared_secret` (String) Use preshared key to authenticate IKE peer

@@ -57,8 +57,8 @@ attributes:
     data_path: [definition]
     tf_name: protocol
     type: String
-    enum_values: [ipv4, ipv6, all]
-    description: Protocol, either `ipv4`, `ipv6` or `all`
+    enum_values: [ipv4, ipv6, both]
+    description: Protocol, either `ipv4`, `ipv6` or `both`
     example: ipv4
   - model_name: collectTos
     data_path: [definition, customizedIpv4RecordFields]

@@ -76,6 +76,14 @@ func TestAccDataSourceSdwanServiceMulticastProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanServiceMulticastPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceMulticastProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanServiceMulticastPrerequisitesProfileParcelConfig + testAccDataSourceSdwanServiceMulticastProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_service_multicast_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_service_multicast_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -162,3 +170,74 @@ func testAccDataSourceSdwanServiceMulticastProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanServiceMulticastProfileParcelByNameConfig() string {
+	config := `resource "sdwan_service_multicast_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
+	config += `	spt_only = false` + "\n"
+	config += `	local_replicator = false` + "\n"
+	config += `	local_replicator_threshold = 10` + "\n"
+	config += `	igmp_interfaces = [{` + "\n"
+	config += `	  interface_name = "GigabitEthernet1"` + "\n"
+	config += `	  version = 2` + "\n"
+	config += `	  join_groups = [{` + "\n"
+	config += `		group_address = "224.0.0.0"` + "\n"
+	config += `		source_address = "1.2.3.4"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	pim_source_specific_multicast_enable = true` + "\n"
+	config += `	pim_source_specific_multicast_access_list = "1"` + "\n"
+	config += `	pim_spt_threshold = "0"` + "\n"
+	config += `	pim_interfaces = [{` + "\n"
+	config += `	  interface_name = "GigabitEthernet1"` + "\n"
+	config += `	  query_interval = 30` + "\n"
+	config += `	  join_prune_interval = 60` + "\n"
+	config += `	}]` + "\n"
+	config += `	static_rp_addresses = [{` + "\n"
+	config += `	  ip_address = "1.2.3.4"` + "\n"
+	config += `	  access_list = "1"` + "\n"
+	config += `	  override = false` + "\n"
+	config += `	}]` + "\n"
+	config += `	enable_auto_rp = false` + "\n"
+	config += `	pim_bsr_rp_candidates = [{` + "\n"
+	config += `	  interface_name = "GigabitEthernet1"` + "\n"
+	config += `	  access_list_id = "2"` + "\n"
+	config += `	  interval = 30` + "\n"
+	config += `	  priority = 1` + "\n"
+	config += `	}]` + "\n"
+	config += `	pim_bsr_candidates = [{` + "\n"
+	config += `	  interface_name = "GigabitEthernet1"` + "\n"
+	config += `	  hash_mask_length = 30` + "\n"
+	config += `	  priority = 120` + "\n"
+	config += `	  accept_candidate_access_list = "test"` + "\n"
+	config += `	}]` + "\n"
+	config += `	msdp_groups = [{` + "\n"
+	config += `	  mesh_group_name = "Example"` + "\n"
+	config += `	  peers = [{` + "\n"
+	config += `		peer_ip = "1.2.3.4"` + "\n"
+	config += `		connection_source_interface = "GigabitEthernet1"` + "\n"
+	config += `		remote_as = 1` + "\n"
+	config += `		peer_authentication_password = "Password123!"` + "\n"
+	config += `		keepalive_interval = 15` + "\n"
+	config += `		keepalive_hold_time = 30` + "\n"
+	config += `		sa_limit = 1` + "\n"
+	config += `		default_peer = false` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	msdp_originator_id = "GigabitEthernet1"` + "\n"
+	config += `	msdp_connection_retry_interval = 30` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_service_multicast_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_service_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

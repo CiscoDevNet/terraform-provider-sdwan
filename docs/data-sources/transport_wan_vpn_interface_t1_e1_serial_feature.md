@@ -26,8 +26,12 @@ data "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
-- `id` (String) The id of the Feature
 - `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
+
+### Optional
+
+- `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -58,7 +62,6 @@ data "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
 - `mrf_enable_core_region` (Boolean) Enable Core Region
 - `mtu` (Number) Interface MTU <68...2000>, in bytes
 - `mtu_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `per_tunnel_qos` (Boolean) Per-tunnel Qos
 - `per_tunnel_qos_aggregator` (Boolean) Per-tunnel QoS Aggregator
 - `per_tunnel_qos_aggregator_variable` (String) Variable name

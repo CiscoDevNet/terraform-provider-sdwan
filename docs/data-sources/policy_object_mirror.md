@@ -25,13 +25,16 @@ data "sdwan_policy_object_mirror" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Policy_object
+- `name` (String) The name of the Policy_object
 
 ### Read-Only
 
 - `description` (String) The description of the Policy_object
 - `entries` (Attributes List) Mirror List (see [below for nested schema](#nestedatt--entries))
-- `name` (String) The name of the Policy_object
 - `version` (Number) The version of the Policy_object
 
 <a id="nestedatt--entries"></a>

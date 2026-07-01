@@ -60,6 +60,14 @@ func TestAccDataSourceSdwanSystemLoggingProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanSystemLoggingPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemLoggingProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanSystemLoggingPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemLoggingProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_system_logging_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_system_logging_feature.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -121,3 +129,48 @@ func testAccDataSourceSdwanSystemLoggingProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanSystemLoggingProfileParcelByNameConfig() string {
+	config := `resource "sdwan_system_logging_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	disk_enable = true` + "\n"
+	config += `	disk_file_size = 9` + "\n"
+	config += `	disk_file_rotate = 10` + "\n"
+	config += `	tls_profiles = [{` + "\n"
+	config += `	  profile = "test"` + "\n"
+	config += `	  tls_version = "TLSv1.1"` + "\n"
+	config += `	  cipher_suites = ["aes-128-cbc-sha"]` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv4_servers = [{` + "\n"
+	config += `	  hostname_ip = "1.1.1.1"` + "\n"
+	config += `	  vpn = 512` + "\n"
+	config += `	  source_interface = "GigabitEthernet1"` + "\n"
+	config += `	  priority = "informational"` + "\n"
+	config += `	  tls_enable = true` + "\n"
+	config += `	  tls_properties_custom_profile = true` + "\n"
+	config += `	  tls_properties_profile = "test"` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv6_servers = [{` + "\n"
+	config += `	  hostname_ip = "2001:0:0:1::0"` + "\n"
+	config += `	  vpn = 512` + "\n"
+	config += `	  source_interface = "GigabitEthernet1"` + "\n"
+	config += `	  priority = "informational"` + "\n"
+	config += `	  tls_enable = true` + "\n"
+	config += `	  tls_properties_custom_profile = true` + "\n"
+	config += `	  tls_properties_profile = "test"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_logging_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

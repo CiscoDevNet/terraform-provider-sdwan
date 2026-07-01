@@ -23,6 +23,7 @@ import (
 	"log/slog"
 	"os"
 	"strconv"
+	"strings"
 	"sync"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
@@ -198,6 +199,15 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 		resp.Diagnostics.AddError(
 			"Unable to find url",
 			"URL cannot be an empty string",
+		)
+		return
+	}
+
+	// Validate that the URL is in proper format without a "/" at the end
+	if strings.HasSuffix(url, "/") {
+		resp.Diagnostics.AddError(
+			"Invalid URL format",
+			"URL '"+url+"' cannot end with a trailing slash ('/')",
 		)
 		return
 	}
@@ -405,6 +415,8 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewServiceTrackerProfileParcelResource,
 		NewServiceTrackerGroupProfileParcelResource,
 		NewServiceWirelessLANProfileParcelResource,
+		NewSSECiscoProfileParcelResource,
+		NewSSEZscalerProfileParcelResource,
 		NewSystemAAAProfileParcelResource,
 		NewSystemBannerProfileParcelResource,
 		NewSystemBasicProfileParcelResource,
@@ -422,6 +434,9 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewSystemRemoteAccessProfileParcelResource,
 		NewSystemSecurityProfileParcelResource,
 		NewSystemSNMPProfileParcelResource,
+		NewTopologyCustomControlProfileParcelResource,
+		NewTopologyHubSpokeProfileParcelResource,
+		NewTopologyMeshProfileParcelResource,
 		NewTransportCellularControllerProfileParcelResource,
 		NewTransportCellularProfileProfileParcelResource,
 		NewTransportGPSProfileParcelResource,
@@ -460,8 +475,10 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewCLIConfigFeatureResource,
 		NewCLIDeviceTemplateResource,
 		NewCLIFeatureProfileResource,
+		NewCloudProviderSettingsResource,
 		NewColorListPolicyObjectResource,
 		NewConfigurationGroupResource,
+		NewCustomApplicationResource,
 		NewCustomControlTopologyPolicyDefinitionResource,
 		NewDataFQDNPrefixListPolicyObjectResource,
 		NewDataIPv4PrefixListPolicyObjectResource,
@@ -516,12 +533,15 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewSIGSecurityFeatureProfileResource,
 		NewSiteListPolicyObjectResource,
 		NewSLAClassPolicyObjectResource,
+		NewSSEFeatureProfileResource,
 		NewStandardCommunityListPolicyObjectResource,
 		NewSystemFeatureProfileResource,
 		NewTagResource,
 		NewTLOCListPolicyObjectResource,
 		NewTLSSSLDecryptionPolicyDefinitionResource,
 		NewTLSSSLProfilePolicyDefinitionResource,
+		NewTopologyFeatureProfileResource,
+		NewTopologyGroupResource,
 		NewTrafficDataPolicyDefinitionResource,
 		NewTransportFeatureProfileResource,
 		NewTransportWANVPNFeatureAssociateRoutingBGPFeatureResource,
@@ -543,6 +563,7 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewZoneListPolicyObjectResource,
 		NewAttachFeatureDeviceTemplateResource,
 		NewActivateCentralizedPolicyResource,
+		NewActivateTopologyGroupResource,
 	}
 }
 
@@ -656,6 +677,8 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewServiceTrackerProfileParcelDataSource,
 		NewServiceTrackerGroupProfileParcelDataSource,
 		NewServiceWirelessLANProfileParcelDataSource,
+		NewSSECiscoProfileParcelDataSource,
+		NewSSEZscalerProfileParcelDataSource,
 		NewSystemAAAProfileParcelDataSource,
 		NewSystemBannerProfileParcelDataSource,
 		NewSystemBasicProfileParcelDataSource,
@@ -673,6 +696,9 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewSystemRemoteAccessProfileParcelDataSource,
 		NewSystemSecurityProfileParcelDataSource,
 		NewSystemSNMPProfileParcelDataSource,
+		NewTopologyCustomControlProfileParcelDataSource,
+		NewTopologyHubSpokeProfileParcelDataSource,
+		NewTopologyMeshProfileParcelDataSource,
 		NewTransportCellularControllerProfileParcelDataSource,
 		NewTransportCellularProfileProfileParcelDataSource,
 		NewTransportGPSProfileParcelDataSource,
@@ -711,8 +737,10 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewCLIConfigFeatureDataSource,
 		NewCLIDeviceTemplateDataSource,
 		NewCLIFeatureProfileDataSource,
+		NewCloudProviderSettingsDataSource,
 		NewColorListPolicyObjectDataSource,
 		NewConfigurationGroupDataSource,
+		NewCustomApplicationDataSource,
 		NewCustomControlTopologyPolicyDefinitionDataSource,
 		NewDataFQDNPrefixListPolicyObjectDataSource,
 		NewDataIPv4PrefixListPolicyObjectDataSource,
@@ -744,6 +772,7 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewPolicerPolicyObjectDataSource,
 		NewPolicyGroupDataSource,
 		NewPolicyObjectFeatureProfileDataSource,
+		NewPolicyObjectFeatureProfileParcelsDataSource,
 		NewPortListPolicyObjectDataSource,
 		NewPreferredColorGroupPolicyObjectDataSource,
 		NewProtocolListPolicyObjectDataSource,
@@ -768,12 +797,15 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewSIGSecurityFeatureProfileDataSource,
 		NewSiteListPolicyObjectDataSource,
 		NewSLAClassPolicyObjectDataSource,
+		NewSSEFeatureProfileDataSource,
 		NewStandardCommunityListPolicyObjectDataSource,
 		NewSystemFeatureProfileDataSource,
 		NewTagDataSource,
 		NewTLOCListPolicyObjectDataSource,
 		NewTLSSSLDecryptionPolicyDefinitionDataSource,
 		NewTLSSSLProfilePolicyDefinitionDataSource,
+		NewTopologyFeatureProfileDataSource,
+		NewTopologyGroupDataSource,
 		NewTrafficDataPolicyDefinitionDataSource,
 		NewTransportFeatureProfileDataSource,
 		NewTransportWANVPNFeatureAssociateRoutingBGPFeatureDataSource,

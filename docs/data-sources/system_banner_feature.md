@@ -25,7 +25,11 @@ data "sdwan_system_banner_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -34,5 +38,4 @@ data "sdwan_system_banner_feature" "example" {
 - `login_variable` (String) Variable name
 - `motd` (String)
 - `motd_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `version` (Number) The version of the Feature

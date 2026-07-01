@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanSystemAAAProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015")
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "authentication_group", "true"))
@@ -50,6 +50,12 @@ func TestAccDataSourceSdwanSystemAAAProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.secret_key", "cisco123"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.key_enum", "7"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.key_type", "key"))
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "trustsec_cts_auth_list", "list1"))
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "trustsec_radius_group", "RGROUP1"))
+	}
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "tacacs_groups.0.group_name", "TGROUP1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "tacacs_groups.0.vpn", "10"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "tacacs_groups.0.source_interface", "GigabitEthernet0"))
@@ -75,6 +81,14 @@ func TestAccDataSourceSdwanSystemAAAProfileParcel(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanSystemAAAPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemAAAProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
+			{
+				Config: testAccDataSourceSdwanSystemAAAPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemAAAProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_system_aaa_feature.test", "id"),
+					)...),
 			},
 		},
 	})
@@ -126,6 +140,12 @@ func testAccDataSourceSdwanSystemAAAProfileParcelConfig() string {
 	config += `		key_type = "key"` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	trustsec_cts_auth_list = "list1"` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	trustsec_radius_group = "RGROUP1"` + "\n"
+	}
 	config += `	tacacs_groups = [{` + "\n"
 	config += `	  group_name = "TGROUP1"` + "\n"
 	config += `	  vpn = 10` + "\n"
@@ -167,3 +187,85 @@ func testAccDataSourceSdwanSystemAAAProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanSystemAAAProfileParcelByNameConfig() string {
+	config := `resource "sdwan_system_aaa_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	authentication_group = true` + "\n"
+	config += `	accounting_group = true` + "\n"
+	config += `	server_auth_order = ["local"]` + "\n"
+	config += `	users = [{` + "\n"
+	config += `	  name = "User1"` + "\n"
+	config += `	  password = "cisco123"` + "\n"
+	config += `	  privilege = "15"` + "\n"
+	config += `	  public_keys = [{` + "\n"
+	config += `		key_string = "AAAAB3NzaC1yc2"` + "\n"
+	config += `		key_type = "ssh-rsa"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	radius_groups = [{` + "\n"
+	config += `	  group_name = "RGROUP1"` + "\n"
+	config += `	  vpn = 10` + "\n"
+	config += `	  source_interface = "GigabitEthernet0"` + "\n"
+	config += `	  servers = [{` + "\n"
+	config += `		address = "1.2.3.4"` + "\n"
+	config += `		auth_port = 1812` + "\n"
+	config += `		acct_port = 1813` + "\n"
+	config += `		timeout = 5` + "\n"
+	config += `		retransmit = 3` + "\n"
+	config += `		key = "cisco123"` + "\n"
+	config += `		secret_key = "cisco123"` + "\n"
+	config += `		key_enum = "7"` + "\n"
+	config += `		key_type = "key"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	trustsec_cts_auth_list = "list1"` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	trustsec_radius_group = "RGROUP1"` + "\n"
+	}
+	config += `	tacacs_groups = [{` + "\n"
+	config += `	  group_name = "TGROUP1"` + "\n"
+	config += `	  vpn = 10` + "\n"
+	config += `	  source_interface = "GigabitEthernet0"` + "\n"
+	config += `	  servers = [{` + "\n"
+	config += `		address = "1.2.3.4"` + "\n"
+	config += `		port = 49` + "\n"
+	config += `		timeout = 5` + "\n"
+	config += `		key = "cisco123"` + "\n"
+	config += `		secret_key = "cisco123"` + "\n"
+	config += `		key_enum = "7"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	accounting_rules = [{` + "\n"
+	config += `	  rule_id = "1"` + "\n"
+	config += `	  method = "commands"` + "\n"
+	config += `	  level = "15"` + "\n"
+	config += `	  start_stop = true` + "\n"
+	config += `	  group = ["RGROUP1"]` + "\n"
+	config += `	}]` + "\n"
+	config += `	authorization_console = true` + "\n"
+	config += `	authorization_config_commands = true` + "\n"
+	config += `	authorization_rules = [{` + "\n"
+	config += `	  rule_id = "1"` + "\n"
+	config += `	  method = "commands"` + "\n"
+	config += `	  level = "15"` + "\n"
+	config += `	  group = ["RGROUP1"]` + "\n"
+	config += `	  if_authenticated = true` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_aaa_feature" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig

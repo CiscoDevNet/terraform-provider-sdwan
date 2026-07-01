@@ -25,7 +25,11 @@ data "sdwan_system_snmp_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Feature
+- `name` (String) The name of the Feature
 
 ### Read-Only
 
@@ -36,7 +40,6 @@ data "sdwan_system_snmp_feature" "example" {
 - `groups` (Attributes List) Configure an SNMP group (see [below for nested schema](#nestedatt--groups))
 - `location_of_device` (String) Set the physical location of this managed node
 - `location_of_device_variable` (String) Variable name
-- `name` (String) The name of the Feature
 - `shutdown` (Boolean) Enable or disable SNMP
 - `shutdown_variable` (String) Variable name
 - `trap_target_servers` (Attributes List) Configure SNMP server to receive SNMP traps (see [below for nested schema](#nestedatt--trap_target_servers))

@@ -25,7 +25,11 @@ data "sdwan_dns_security_policy" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
+
+### Optional
+
 - `id` (String) The id of the Policy
+- `name` (String) The name of the Policy
 
 ### Read-Only
 
@@ -36,7 +40,6 @@ data "sdwan_dns_security_policy" "example" {
 - `local_domain_bypass_enabled` (Boolean) Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry
 - `local_domain_bypass_list_id` (String)
 - `match_all_vpn` (Boolean) If this is true, there shouldn't be a targetVpns field, if false then targetVpns field should be there
-- `name` (String) The name of the Policy
 - `target_vpns` (Attributes List) Will be under data field only if matchAllVpn is false, if matchAllVpn is true field should not be in payload (see [below for nested schema](#nestedatt--target_vpns))
 - `umbrella_default` (Boolean) Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry
 - `version` (Number) The version of the Policy

@@ -49,6 +49,14 @@ func TestAccDataSourceSdwanEmbeddedSecurityNGFWProfileParcel(t *testing.T) {
 				Config: testAccDataSourceSdwanEmbeddedSecurityNGFWPrerequisitesProfileParcelConfig + testAccDataSourceSdwanEmbeddedSecurityNGFWProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
+			{
+				Config: testAccDataSourceSdwanEmbeddedSecurityNGFWPrerequisitesProfileParcelConfig + testAccDataSourceSdwanEmbeddedSecurityNGFWProfileParcelByNameConfig(),
+				Check: resource.ComposeTestCheckFunc(
+					append(checks,
+						resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_embedded_security_ngfw_policy.test", "id"),
+					)...),
+			},
 		},
 	})
 }
@@ -98,3 +106,37 @@ func testAccDataSourceSdwanEmbeddedSecurityNGFWProfileParcelConfig() string {
 }
 
 // End of section. //template:end testAccDataSourceConfig
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+func testAccDataSourceSdwanEmbeddedSecurityNGFWProfileParcelByNameConfig() string {
+	config := `resource "sdwan_embedded_security_ngfw_policy" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_embedded_security_feature_profile.test.id` + "\n"
+	config += `	default_action = "pass"` + "\n"
+	config += `	sequences = [{` + "\n"
+	config += `	  sequence_id = "1"` + "\n"
+	config += `	  sequence_name = "security"` + "\n"
+	config += `	  base_action = "drop"` + "\n"
+	config += `	  sequence_type = "ngfirewall"` + "\n"
+	config += `	  disable_sequence = false` + "\n"
+	config += `	  match_entries = [{` + "\n"
+	config += `		source_ports = ["123"]` + "\n"
+	config += `	}]` + "\n"
+	config += `	  actions = [{` + "\n"
+	config += `		type = "log"` + "\n"
+	config += `		parameter = "true"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_embedded_security_ngfw_policy" "test" {
+			name = "TF_TEST"
+			feature_profile_id = sdwan_embedded_security_feature_profile.test.id
+		}
+	`
+	return config
+}
+
+// End of section. //template:end testAccDataSourceByNameConfig
