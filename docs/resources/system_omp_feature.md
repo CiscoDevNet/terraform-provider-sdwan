@@ -117,7 +117,7 @@ resource "sdwan_system_omp_feature" "example" {
 - `aspath_auto_translation_variable` (String) Variable name
 - `description` (String) The description of the Feature
 - `ecmp_limit` (Number) Set maximum number of OMP paths to install in cEdge route table
-  - At Least: `1`
+  - Range: `1`-`16`
   - Default value: `4`
 - `ecmp_limit_variable` (String) Variable name
 - `eor_timer` (Number) EOR Timer

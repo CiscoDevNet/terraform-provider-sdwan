@@ -21,7 +21,12 @@ description: |-
 - Add `sdwan_topology_mesh_feature` resource and data source
 - Add `sdwan_topology_hub_spoke_feature` resource and data source
 - Add `sdwan_custom_application` resource and data source
-<<<<<<< HEAD
+- Add `sdwan_sse_feature_profile` resource and data source
+- Add `sdwan_sse_cisco_feature` resource and data source
+- Add `sdwan_sse_zscaler_feature` resource and data source
+- Fix integer validator generation for attributes with only a minimum or maximum bound, including schemas where one side of the bound is 0
+- Fix profile parcel default generation to prefer explicit JSON schema defaults over the first enum value. (Note - this impacts the generated default of `sdwan_system_omp_feature.holdtime from 60 to 300` which will be pushed, once changing the sdwan_system_omp_feature configuration after provider upgrade.)
+- Fix `sdwan_tag` resource perpetual drift on SD-WAN Manager 20.18 by using individual tag endpoint instead of list endpoint for Read and Update operations.
 - Bump `sdwan_system_banner_feature` schema to `20.18.0`
 - Bump `sdwan_system_basic_feature` schema to `20.18.0`
 - Bump `sdwan_system_bfd_feature` schema to `20.18.0`
@@ -33,14 +38,6 @@ description: |-
 - Bump `sdwan_system_omp_feature` schema to `20.18.0`
 - Bump `sdwan_system_security_feature` schema to `20.18.0`
 - Bump `sdwan_system_snmp_feature` schema to `20.18.0`
-=======
-- Add `sdwan_sse_feature_profile` resource and data source
-- Add `sdwan_sse_cisco_feature` resource and data source
-- Add `sdwan_sse_zscaler_feature` resource and data source
-- Fix integer validator generation for attributes with only a minimum or maximum bound, including schemas where one side of the bound is 0
-- Fix profile parcel default generation to prefer explicit JSON schema defaults over the first enum value. (Note - this impacts the generated default of `sdwan_system_omp_feature.holdtime from 60 to 300` which will be pushed, once changing the sdwan_system_omp_feature configuration after provider upgrade.)
-- Fix `sdwan_tag` resource perpetual drift on SD-WAN Manager 20.18 by using individual tag endpoint instead of list endpoint for Read and Update operations.
->>>>>>> main
 
 ## 0.11.2
 

@@ -120,10 +120,10 @@ func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"ecmp_limit": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set maximum number of OMP paths to install in cEdge route table").AddIntegerAtLeastDescription(1).AddDefaultValueDescription("4").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set maximum number of OMP paths to install in cEdge route table").AddIntegerRangeDescription(1, 16).AddDefaultValueDescription("4").String,
 				Optional:            true,
 				Validators: []validator.Int64{
-					int64validator.AtLeast(1),
+					int64validator.Between(1, 16),
 				},
 			},
 			"ecmp_limit_variable": schema.StringAttribute{
