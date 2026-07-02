@@ -1,5 +1,9 @@
 ## 0.11.4 (unreleased)
 
+- Fix profile parcel resources reporting phantom/stale nested list entries by rebuilding lists from the SD-WAN Manager API response on every read, making the controller the authoritative source for list membership
+
+## 0.11.4 (unreleased)
+
 - Add `deploy_on_out_of_date` provider attribute (env: `SDWAN_DEPLOY_ON_OUT_OF_DATE`, default: `true`) to automatically detect and re-deploy out-of-date devices in `sdwan_configuration_group` and `sdwan_policy_group` resources during refresh
 
 ## 0.11.3

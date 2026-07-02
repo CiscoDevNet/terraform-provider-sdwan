@@ -424,7 +424,7 @@ func (d *TransportWANVPNInterfaceIPSECProfileParcelDataSource) Read(ctx context.
 		return
 	}
 
-	config.fromBody(ctx, res)
+	config.fromBody(ctx, res, true)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Name.ValueString()))
 
