@@ -192,7 +192,7 @@ func (d *SystemBasicProfileParcelDataSource) Schema(ctx context.Context, req dat
 				Computed:            true,
 			},
 			"port_hopping": schema.BoolAttribute{
-				MarkdownDescription: "Enable port hopping",
+				MarkdownDescription: "The port hop functionality is deprecated for devices 17.18 and higher. Use the full-port-hop field instead on interfaces.",
 				Computed:            true,
 			},
 			"port_hopping_variable": schema.StringAttribute{

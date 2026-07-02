@@ -104,7 +104,12 @@ func (data SystemNTP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "name.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIpAddressVariable.ValueString())
 				}
-			} else if !item.HostnameIpAddress.IsNull() {
+			} else if item.HostnameIpAddress.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "name.optionType", "default")
+
+				}
+			} else {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIpAddress.ValueString())

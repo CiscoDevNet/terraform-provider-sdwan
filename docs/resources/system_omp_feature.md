@@ -117,7 +117,7 @@ resource "sdwan_system_omp_feature" "example" {
 - `aspath_auto_translation_variable` (String) Variable name
 - `description` (String) The description of the Feature
 - `ecmp_limit` (Number) Set maximum number of OMP paths to install in cEdge route table
-  - At Least: `1`
+  - Range: `1`-`16`
   - Default value: `4`
 - `ecmp_limit_variable` (String) Variable name
 - `eor_timer` (Number) EOR Timer
@@ -127,7 +127,7 @@ resource "sdwan_system_omp_feature" "example" {
 - `graceful_restart` (Boolean) Graceful Restart for OMP
   - Default value: `true`
 - `graceful_restart_timer` (Number) Graceful Restart Timer (seconds)
-  - Range: `1`-`604800`
+  - Range: `1`-`31556952`
   - Default value: `43200`
 - `graceful_restart_timer_variable` (String) Variable name
 - `graceful_restart_variable` (String) Variable name
