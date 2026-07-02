@@ -10,6 +10,7 @@ description: |-
 ## 0.11.3
 
 - Fix issue where deleting a single device with tag removes this tag across all devices
+- Added support for multiple high-speed logging entries in the `sdwan_security_policy` resource 
 - Add `sdwan_topology_group` resource and data source
 - Add `sdwan_topology_feature_profile` resource and data source
 - Add `sdwan_activate_topology_group` resource
