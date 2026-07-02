@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.11.4 (unreleased)
+
+- Add `deploy_on_out_of_date` provider attribute (env: `SDWAN_DEPLOY_ON_OUT_OF_DATE`, default: `true`) to automatically detect and re-deploy out-of-date devices in `sdwan_configuration_group` and `sdwan_policy_group` resources during refresh
+
 ## 0.11.3
 
 - Fix issue where deleting a single device with tag removes this tag across all devices
