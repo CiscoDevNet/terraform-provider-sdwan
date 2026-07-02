@@ -114,6 +114,9 @@ func (r *SystemBFDProfileParcelResource) Schema(ctx context.Context, req resourc
 			"default_dscp": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddIntegerRangeDescription(0, 63).AddDefaultValueDescription("48").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(63),
+				},
 			},
 			"default_dscp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -257,11 +260,7 @@ func (r *SystemBFDProfileParcelResource) Read(ctx context.Context, req resource.
 		return
 	}
 
-	if imp {
-		state.fromBody(ctx, res)
-	} else {
-		state.updateFromBody(ctx, res)
-	}
+	state.fromBody(ctx, res, imp)
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

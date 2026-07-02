@@ -93,10 +93,16 @@ func (r *OtherUCSEProfileParcelResource) Schema(ctx context.Context, req resourc
 			"bay": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Bay").AddIntegerRangeDescription(0, 2).String,
 				Required:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(2),
+				},
 			},
 			"slot": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Slot").AddIntegerRangeDescription(0, 3).String,
 				Required:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(3),
+				},
 			},
 			"access_port_dedicated": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Dedicated").AddDefaultValueDescription("true").String,
@@ -152,6 +158,9 @@ func (r *OtherUCSEProfileParcelResource) Schema(ctx context.Context, req resourc
 			"assign_priority": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Assign priority").AddIntegerRangeDescription(0, 7).String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(7),
+				},
 			},
 			"assign_priority_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -277,11 +286,7 @@ func (r *OtherUCSEProfileParcelResource) Read(ctx context.Context, req resource.
 		return
 	}
 
-	if imp {
-		state.fromBody(ctx, res)
-	} else {
-		state.updateFromBody(ctx, res)
-	}
+	state.fromBody(ctx, res, imp)
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

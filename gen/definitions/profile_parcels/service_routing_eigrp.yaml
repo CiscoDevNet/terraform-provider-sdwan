@@ -62,7 +62,7 @@ attributes:
         - name: authentication_type
           value: hmac-sha-256
     exclude_test: true
-    write_only: true
+    encrypted: true
     example: password123
   - model_name: key
     tf_name: md5_keys
@@ -78,7 +78,7 @@ attributes:
       example: 2
     - model_name: keystring
       tf_name: key_string
-      write_only: true
+      encrypted: true
       example: password123
   - model_name: afInterface
     tf_name: interfaces

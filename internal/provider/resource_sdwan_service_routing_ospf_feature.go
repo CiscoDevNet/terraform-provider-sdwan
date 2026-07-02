@@ -132,6 +132,9 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Schema(ctx context.Context, re
 			"default_information_originate_metric": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set metric used to generate default route <0..16777214>").AddIntegerRangeDescription(0, 16777214).String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(16777214),
+				},
 			},
 			"default_information_originate_metric_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -574,11 +577,7 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Read(ctx context.Context, req 
 		return
 	}
 
-	if imp {
-		state.fromBody(ctx, res)
-	} else {
-		state.updateFromBody(ctx, res)
-	}
+	state.fromBody(ctx, res, imp)
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

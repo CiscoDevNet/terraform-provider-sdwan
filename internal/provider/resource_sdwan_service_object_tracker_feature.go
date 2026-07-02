@@ -145,6 +145,9 @@ func (r *ServiceObjectTrackerProfileParcelResource) Schema(ctx context.Context, 
 			"vpn": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("VPN").AddIntegerRangeDescription(0, 65530).String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(65530),
+				},
 			},
 			"vpn_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -228,11 +231,7 @@ func (r *ServiceObjectTrackerProfileParcelResource) Read(ctx context.Context, re
 		return
 	}
 
-	if imp {
-		state.fromBody(ctx, res)
-	} else {
-		state.updateFromBody(ctx, res)
-	}
+	state.fromBody(ctx, res, imp)
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

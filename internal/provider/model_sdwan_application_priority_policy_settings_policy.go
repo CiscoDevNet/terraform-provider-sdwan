@@ -117,7 +117,7 @@ func (data ApplicationPriorityPolicySettings) toBody(ctx context.Context) string
 }
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ApplicationPriorityPolicySettings) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ApplicationPriorityPolicySettings) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -160,48 +160,3 @@ func (data *ApplicationPriorityPolicySettings) fromBody(ctx context.Context, res
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *ApplicationPriorityPolicySettings) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.Ipv4ApplicationVisibility = types.BoolNull()
-
-	if t := res.Get(path + "appVisibility.optionType"); t.Exists() {
-		va := res.Get(path + "appVisibility.value")
-		if t.String() == "global" {
-			data.Ipv4ApplicationVisibility = types.BoolValue(va.Bool())
-		}
-	}
-	data.Ipv6ApplicationVisibility = types.BoolNull()
-
-	if t := res.Get(path + "appVisibilityIPv6.optionType"); t.Exists() {
-		va := res.Get(path + "appVisibilityIPv6.value")
-		if t.String() == "global" {
-			data.Ipv6ApplicationVisibility = types.BoolValue(va.Bool())
-		}
-	}
-	data.Ipv4FlowVisibility = types.BoolNull()
-
-	if t := res.Get(path + "flowVisibility.optionType"); t.Exists() {
-		va := res.Get(path + "flowVisibility.value")
-		if t.String() == "global" {
-			data.Ipv4FlowVisibility = types.BoolValue(va.Bool())
-		}
-	}
-	data.Ipv6FlowVisibility = types.BoolNull()
-
-	if t := res.Get(path + "flowVisibilityIPv6.optionType"); t.Exists() {
-		va := res.Get(path + "flowVisibilityIPv6.value")
-		if t.String() == "global" {
-			data.Ipv6FlowVisibility = types.BoolValue(va.Bool())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

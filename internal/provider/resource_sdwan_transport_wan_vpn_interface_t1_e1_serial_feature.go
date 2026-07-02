@@ -263,6 +263,9 @@ func (r *TransportWANVPNInterfaceT1E1SerialProfileParcelResource) Schema(ctx con
 			"tunnel_interface_max_control_connections": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set the maximum number of control connections for this TLOC").AddIntegerRangeDescription(0, 100).String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(100),
+				},
 			},
 			"tunnel_interface_max_control_connections_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -288,6 +291,9 @@ func (r *TransportWANVPNInterfaceT1E1SerialProfileParcelResource) Schema(ctx con
 			"tunnel_interface_vmanage_connection_preference": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set interface preference for control connection to vManage <0..8>").AddIntegerRangeDescription(0, 8).AddDefaultValueDescription("5").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(8),
+				},
 			},
 			"tunnel_interface_vmanage_connection_preference_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -712,11 +718,7 @@ func (r *TransportWANVPNInterfaceT1E1SerialProfileParcelResource) Read(ctx conte
 		return
 	}
 
-	if imp {
-		state.fromBody(ctx, res)
-	} else {
-		state.updateFromBody(ctx, res)
-	}
+	state.fromBody(ctx, res, imp)
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

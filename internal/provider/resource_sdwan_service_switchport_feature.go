@@ -314,6 +314,9 @@ func (r *ServiceSwitchportProfileParcelResource) Schema(ctx context.Context, req
 			"age_out_time": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set when a MAC table entry ages out (0 to disable, 10-1000000 otherwise)").AddIntegerRangeDescription(0, 1000000).AddDefaultValueDescription("300").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(1000000),
+				},
 			},
 			"age_out_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -435,11 +438,7 @@ func (r *ServiceSwitchportProfileParcelResource) Read(ctx context.Context, req r
 		return
 	}
 
-	if imp {
-		state.fromBody(ctx, res)
-	} else {
-		state.updateFromBody(ctx, res)
-	}
+	state.fromBody(ctx, res, imp)
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

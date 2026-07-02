@@ -120,10 +120,10 @@ func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"ecmp_limit": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set maximum number of OMP paths to install in cEdge route table").AddIntegerRangeDescription(1, 16).AddDefaultValueDescription("4").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set maximum number of OMP paths to install in cEdge route table").AddIntegerAtLeastDescription(1).AddDefaultValueDescription("4").String,
 				Optional:            true,
 				Validators: []validator.Int64{
-					int64validator.Between(1, 16),
+					int64validator.AtLeast(1),
 				},
 			},
 			"ecmp_limit_variable": schema.StringAttribute{
@@ -163,6 +163,9 @@ func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resourc
 			"advertisement_interval": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Advertisement Interval (seconds)").AddIntegerRangeDescription(0, 65535).AddDefaultValueDescription("1").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(65535),
+				},
 			},
 			"advertisement_interval_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -191,7 +194,7 @@ func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"holdtime": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Hold Time (seconds)").AddDefaultValueDescription("60").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Hold Time (seconds)").AddDefaultValueDescription("300").String,
 				Optional:            true,
 			},
 			"holdtime_variable": schema.StringAttribute{
@@ -441,11 +444,7 @@ func (r *SystemOMPProfileParcelResource) Read(ctx context.Context, req resource.
 		return
 	}
 
-	if imp {
-		state.fromBody(ctx, res)
-	} else {
-		state.updateFromBody(ctx, res)
-	}
+	state.fromBody(ctx, res, imp)
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

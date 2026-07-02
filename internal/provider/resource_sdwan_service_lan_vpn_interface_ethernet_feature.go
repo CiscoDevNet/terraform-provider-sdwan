@@ -992,6 +992,9 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 			"arp_timeout": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Timeout value for dynamically learned ARP entries, <0..2678400> seconds, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddIntegerRangeDescription(0, 2147483).AddDefaultValueDescription("1200").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(2147483),
+				},
 			},
 			"arp_timeout_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
@@ -1127,11 +1130,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Read(ctx context.C
 		return
 	}
 
-	if imp {
-		state.fromBody(ctx, res)
-	} else {
-		state.updateFromBody(ctx, res)
-	}
+	state.fromBody(ctx, res, imp)
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

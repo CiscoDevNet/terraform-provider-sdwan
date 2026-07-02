@@ -142,7 +142,7 @@ func (data PolicyObjectUnifiedURLFiltering) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *PolicyObjectUnifiedURLFiltering) fromBody(ctx context.Context, res gjson.Result) {
+func (data *PolicyObjectUnifiedURLFiltering) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -233,96 +233,3 @@ func (data *PolicyObjectUnifiedURLFiltering) fromBody(ctx context.Context, res g
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *PolicyObjectUnifiedURLFiltering) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.WebCategoriesAction = types.StringNull()
-
-	if t := res.Get(path + "webCategoriesAction.optionType"); t.Exists() {
-		va := res.Get(path + "webCategoriesAction.value")
-		if t.String() == "global" {
-			data.WebCategoriesAction = types.StringValue(va.String())
-		}
-	}
-	data.WebCategories = types.SetNull(types.StringType)
-
-	if t := res.Get(path + "webCategories.optionType"); t.Exists() {
-		va := res.Get(path + "webCategories.value")
-		if t.String() == "global" {
-			data.WebCategories = helpers.GetStringSet(va.Array())
-		}
-	}
-	data.WebReputation = types.StringNull()
-
-	if t := res.Get(path + "webReputation.optionType"); t.Exists() {
-		va := res.Get(path + "webReputation.value")
-		if t.String() == "global" {
-			data.WebReputation = types.StringValue(va.String())
-		}
-	}
-	data.UrlAllowListId = types.StringNull()
-
-	if t := res.Get(path + "urlAllowedList.refId.optionType"); t.Exists() {
-		va := res.Get(path + "urlAllowedList.refId.value")
-		if t.String() == "global" {
-			data.UrlAllowListId = types.StringValue(va.String())
-		}
-	}
-	data.UrlBlockListId = types.StringNull()
-
-	if t := res.Get(path + "urlBlockedList.refId.optionType"); t.Exists() {
-		va := res.Get(path + "urlBlockedList.refId.value")
-		if t.String() == "global" {
-			data.UrlBlockListId = types.StringValue(va.String())
-		}
-	}
-	data.BlockPageAction = types.StringNull()
-
-	if t := res.Get(path + "blockPageAction.optionType"); t.Exists() {
-		va := res.Get(path + "blockPageAction.value")
-		if t.String() == "global" {
-			data.BlockPageAction = types.StringValue(va.String())
-		}
-	}
-	data.BlockPageContents = types.StringNull()
-
-	if t := res.Get(path + "blockPageContents.optionType"); t.Exists() {
-		va := res.Get(path + "blockPageContents.value")
-		if t.String() == "global" {
-			data.BlockPageContents = types.StringValue(va.String())
-		}
-	}
-	data.RedirectUrl = types.StringNull()
-
-	if t := res.Get(path + "redirectUrl.optionType"); t.Exists() {
-		va := res.Get(path + "redirectUrl.value")
-		if t.String() == "global" {
-			data.RedirectUrl = types.StringValue(va.String())
-		}
-	}
-	data.EnableAlerts = types.BoolNull()
-
-	if t := res.Get(path + "enableAlerts.optionType"); t.Exists() {
-		va := res.Get(path + "enableAlerts.value")
-		if t.String() == "global" {
-			data.EnableAlerts = types.BoolValue(va.Bool())
-		}
-	}
-	data.Alerts = types.SetNull(types.StringType)
-
-	if t := res.Get(path + "alerts.optionType"); t.Exists() {
-		va := res.Get(path + "alerts.value")
-		if t.String() == "global" {
-			data.Alerts = helpers.GetStringSet(va.Array())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

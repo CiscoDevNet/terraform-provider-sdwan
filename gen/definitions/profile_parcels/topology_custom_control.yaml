@@ -1,4 +1,3 @@
-# Manual resource - Modal updateFromBody is manually configured to support set_parameters and match_entries split objects
 ---
 name: Topology Custom Control
 rest_endpoint: /v1/feature-profile/sdwan/topology/%v/custom-control

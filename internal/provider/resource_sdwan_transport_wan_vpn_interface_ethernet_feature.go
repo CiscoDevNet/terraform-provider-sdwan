@@ -609,6 +609,9 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 			"tunnel_interface_max_control_connections": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Maximum Control Connections, Attribute conditional on `tunnel_interface` equal to `true`").AddIntegerRangeDescription(0, 100).String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(100),
+				},
 			},
 			"tunnel_interface_max_control_connections_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
@@ -645,6 +648,9 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 			"tunnel_interface_vmanage_connection_preference": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set interface preference for control connection to vManage <0..8>, Attribute conditional on `tunnel_interface` equal to `true`").AddIntegerRangeDescription(0, 8).AddDefaultValueDescription("5").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(8),
+				},
 			},
 			"tunnel_interface_vmanage_connection_preference_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
@@ -1466,6 +1472,9 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 			"arp_timeout": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Timeout value for dynamically learned ARP entries, <0..2678400> seconds, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddIntegerRangeDescription(0, 2147483).AddDefaultValueDescription("1200").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(2147483),
+				},
 			},
 			"arp_timeout_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
@@ -1618,11 +1627,7 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Read(ctx context
 		return
 	}
 
-	if imp {
-		state.fromBody(ctx, res)
-	} else {
-		state.updateFromBody(ctx, res)
-	}
+	state.fromBody(ctx, res, imp)
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

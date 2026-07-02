@@ -217,6 +217,9 @@ func (r *SystemBasicProfileParcelResource) Schema(ctx context.Context, req resou
 			"port_offset": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set the TLOC port offset when multiple devices are behind a NAT").AddIntegerRangeDescription(0, 19).AddDefaultValueDescription("0").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(19),
+				},
 			},
 			"port_offset_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -317,6 +320,9 @@ func (r *SystemBasicProfileParcelResource) Schema(ctx context.Context, req resou
 			"idle_timeout": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Idle CLI timeout in minutes").AddIntegerRangeDescription(0, 300).String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(300),
+				},
 			},
 			"idle_timeout_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -505,11 +511,7 @@ func (r *SystemBasicProfileParcelResource) Read(ctx context.Context, req resourc
 		return
 	}
 
-	if imp {
-		state.fromBody(ctx, res)
-	} else {
-		state.updateFromBody(ctx, res)
-	}
+	state.fromBody(ctx, res, imp)
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}
