@@ -23,15 +23,12 @@ import (
 	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/netascode/go-sdwan"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 // End of section. //template:end imports
-
-import (
-	"github.com/netascode/go-sdwan"
-)
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type SecurityPolicy struct {
