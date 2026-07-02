@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -141,7 +140,7 @@ func (data TopologyHubSpoke) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *TopologyHubSpoke) fromBody(ctx context.Context, res gjson.Result) {
+func (data *TopologyHubSpoke) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -165,6 +164,7 @@ func (data *TopologyHubSpoke) fromBody(ctx context.Context, res gjson.Result) {
 			data.SelectedHubs = helpers.GetStringSet(va.Array())
 		}
 	}
+	oldSpokes := data.Spokes
 	if value := res.Get(path + "spokes"); value.Exists() && len(value.Array()) > 0 {
 		data.Spokes = make([]TopologyHubSpokeSpokes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -212,132 +212,70 @@ func (data *TopologyHubSpoke) fromBody(ctx context.Context, res gjson.Result) {
 			data.Spokes = append(data.Spokes, item)
 			return true
 		})
+	} else {
+		data.Spokes = nil
+	}
+	if !fullRead && data.Spokes != nil {
+		resultSpokes := make([]TopologyHubSpokeSpokes, 0, len(data.Spokes))
+		matchedSpokes := make([]bool, len(data.Spokes))
+		for _, oldItem := range oldSpokes {
+			for ni := range data.Spokes {
+				if matchedSpokes[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.Name.ValueString() != data.Spokes[ni].Name.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedSpokes[ni] = true
+					if data.Spokes[ni].HubSites != nil {
+						resultC := make([]TopologyHubSpokeSpokesHubSites, 0, len(data.Spokes[ni].HubSites))
+						matchedC := make([]bool, len(data.Spokes[ni].HubSites))
+						for _, oldCItem := range oldItem.HubSites {
+							for nci := range data.Spokes[ni].HubSites {
+								if matchedC[nci] {
+									continue
+								}
+								keyMatchC := true
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.Sites).ValueString() != helpers.GetStringFromSet(data.Spokes[ni].HubSites[nci].Sites).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if oldCItem.Preference.ValueInt64() != data.Spokes[ni].HubSites[nci].Preference.ValueInt64() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									matchedC[nci] = true
+									resultC = append(resultC, data.Spokes[ni].HubSites[nci])
+									break
+								}
+							}
+						}
+						for nci := range data.Spokes[ni].HubSites {
+							if !matchedC[nci] {
+								resultC = append(resultC, data.Spokes[ni].HubSites[nci])
+							}
+						}
+						data.Spokes[ni].HubSites = resultC
+					}
+					resultSpokes = append(resultSpokes, data.Spokes[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Spokes {
+			if !matchedSpokes[ni] {
+				resultSpokes = append(resultSpokes, data.Spokes[ni])
+			}
+		}
+		data.Spokes = resultSpokes
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *TopologyHubSpoke) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.TargetVpns = types.SetNull(types.StringType)
-
-	if t := res.Get(path + "target.vpn.optionType"); t.Exists() {
-		va := res.Get(path + "target.vpn.value")
-		if t.String() == "global" {
-			data.TargetVpns = helpers.GetStringSet(va.Array())
-		}
-	}
-	data.SelectedHubs = types.SetNull(types.StringType)
-
-	if t := res.Get(path + "selectedHubs.optionType"); t.Exists() {
-		va := res.Get(path + "selectedHubs.value")
-		if t.String() == "global" {
-			data.SelectedHubs = helpers.GetStringSet(va.Array())
-		}
-	}
-	for i := range data.Spokes {
-		keys := [...]string{"name"}
-		keyValues := [...]string{data.Spokes[i].Name.ValueString()}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "spokes").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Spokes[i].Name = types.StringNull()
-
-		if t := r.Get("name.optionType"); t.Exists() {
-			va := r.Get("name.value")
-			if t.String() == "global" {
-				data.Spokes[i].Name = types.StringValue(va.String())
-			}
-		}
-		data.Spokes[i].SpokeSites = types.SetNull(types.StringType)
-
-		if t := r.Get("spokeSites.optionType"); t.Exists() {
-			va := r.Get("spokeSites.value")
-			if t.String() == "global" {
-				data.Spokes[i].SpokeSites = helpers.GetStringSet(va.Array())
-			}
-		}
-		for ci := range data.Spokes[i].HubSites {
-			keys := [...]string{"sites", "preference"}
-			keyValues := [...]string{helpers.GetStringFromSet(data.Spokes[i].HubSites[ci].Sites).ValueString(), strconv.FormatInt(data.Spokes[i].HubSites[ci].Preference.ValueInt64(), 10)}
-			keyValuesVariables := [...]string{"", ""}
-
-			var cr gjson.Result
-			r.Get("hubSites").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType")
-						vv := v.Get(keys[ik] + ".value")
-						if tt.Exists() && vv.Exists() {
-							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-								found = true
-								continue
-							} else if tt.String() == "default" {
-								continue
-							}
-							found = false
-							break
-						}
-						continue
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.Spokes[i].HubSites[ci].Sites = types.SetNull(types.StringType)
-
-			if t := cr.Get("sites.optionType"); t.Exists() {
-				va := cr.Get("sites.value")
-				if t.String() == "global" {
-					data.Spokes[i].HubSites[ci].Sites = helpers.GetStringSet(va.Array())
-				}
-			}
-			data.Spokes[i].HubSites[ci].Preference = types.Int64Null()
-
-			if t := cr.Get("preference.optionType"); t.Exists() {
-				va := cr.Get("preference.value")
-				if t.String() == "global" {
-					data.Spokes[i].HubSites[ci].Preference = types.Int64Value(va.Int())
-				}
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody
