@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -587,7 +586,7 @@ func (data SSECisco) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *SSECisco) fromBody(ctx context.Context, res gjson.Result) {
+func (data *SSECisco) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -611,6 +610,7 @@ func (data *SSECisco) fromBody(ctx context.Context, res gjson.Result) {
 			data.ContextSharingForSgt = types.BoolValue(va.Bool())
 		}
 	}
+	oldInterfaces := data.Interfaces
 	if value := res.Get(path + "interface"); value.Exists() && len(value.Array()) > 0 {
 		data.Interfaces = make([]SSECiscoInterfaces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -802,7 +802,38 @@ func (data *SSECisco) fromBody(ctx context.Context, res gjson.Result) {
 			data.Interfaces = append(data.Interfaces, item)
 			return true
 		})
+	} else {
+		data.Interfaces = nil
 	}
+	if !fullRead && data.Interfaces != nil {
+		resultInterfaces := make([]SSECiscoInterfaces, 0, len(data.Interfaces))
+		matchedInterfaces := make([]bool, len(data.Interfaces))
+		for _, oldItem := range oldInterfaces {
+			for ni := range data.Interfaces {
+				if matchedInterfaces[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.InterfaceName.ValueString() != data.Interfaces[ni].InterfaceName.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedInterfaces[ni] = true
+					resultInterfaces = append(resultInterfaces, data.Interfaces[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Interfaces {
+			if !matchedInterfaces[ni] {
+				resultInterfaces = append(resultInterfaces, data.Interfaces[ni])
+			}
+		}
+		data.Interfaces = resultInterfaces
+	}
+	oldInterfacePairs := data.InterfacePairs
 	if value := res.Get(path + "interfacePair"); value.Exists() && len(value.Array()) > 0 {
 		data.InterfacePairs = make([]SSECiscoInterfacePairs, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -842,6 +873,51 @@ func (data *SSECisco) fromBody(ctx context.Context, res gjson.Result) {
 			data.InterfacePairs = append(data.InterfacePairs, item)
 			return true
 		})
+	} else {
+		data.InterfacePairs = nil
+	}
+	if !fullRead && data.InterfacePairs != nil {
+		resultInterfacePairs := make([]SSECiscoInterfacePairs, 0, len(data.InterfacePairs))
+		matchedInterfacePairs := make([]bool, len(data.InterfacePairs))
+		for _, oldItem := range oldInterfacePairs {
+			for ni := range data.InterfacePairs {
+				if matchedInterfacePairs[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.ActiveInterface.ValueString() != data.InterfacePairs[ni].ActiveInterface.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.ActiveInterfaceWeight.ValueInt64() != data.InterfacePairs[ni].ActiveInterfaceWeight.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.BackupInterface.ValueString() != data.InterfacePairs[ni].BackupInterface.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.BackupInterfaceWeight.ValueInt64() != data.InterfacePairs[ni].BackupInterfaceWeight.ValueInt64() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedInterfacePairs[ni] = true
+					resultInterfacePairs = append(resultInterfacePairs, data.InterfacePairs[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.InterfacePairs {
+			if !matchedInterfacePairs[ni] {
+				resultInterfacePairs = append(resultInterfacePairs, data.InterfacePairs[ni])
+			}
+		}
+		data.InterfacePairs = resultInterfacePairs
 	}
 	data.Region = types.StringNull()
 	data.RegionVariable = types.StringNull()
@@ -863,6 +939,7 @@ func (data *SSECisco) fromBody(ctx context.Context, res gjson.Result) {
 			data.TrackerSourceIp = types.StringValue(va.String())
 		}
 	}
+	oldTrackers := data.Trackers
 	if value := res.Get(path + "tracker"); value.Exists() && len(value.Array()) > 0 {
 		data.Trackers = make([]SSECiscoTrackers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -918,416 +995,37 @@ func (data *SSECisco) fromBody(ctx context.Context, res gjson.Result) {
 			data.Trackers = append(data.Trackers, item)
 			return true
 		})
+	} else {
+		data.Trackers = nil
+	}
+	if !fullRead && data.Trackers != nil {
+		resultTrackers := make([]SSECiscoTrackers, 0, len(data.Trackers))
+		matchedTrackers := make([]bool, len(data.Trackers))
+		for _, oldItem := range oldTrackers {
+			for ni := range data.Trackers {
+				if matchedTrackers[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.Name.ValueString() != data.Trackers[ni].Name.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedTrackers[ni] = true
+					resultTrackers = append(resultTrackers, data.Trackers[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.Trackers {
+			if !matchedTrackers[ni] {
+				resultTrackers = append(resultTrackers, data.Trackers[ni])
+			}
+		}
+		data.Trackers = resultTrackers
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *SSECisco) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.ContextSharingForVpn = types.BoolNull()
-
-	if t := res.Get(path + "contextSharingForVpn.optionType"); t.Exists() {
-		va := res.Get(path + "contextSharingForVpn.value")
-		if t.String() == "global" {
-			data.ContextSharingForVpn = types.BoolValue(va.Bool())
-		}
-	}
-	data.ContextSharingForSgt = types.BoolNull()
-
-	if t := res.Get(path + "contextSharingForSgt.optionType"); t.Exists() {
-		va := res.Get(path + "contextSharingForSgt.value")
-		if t.String() == "global" {
-			data.ContextSharingForSgt = types.BoolValue(va.Bool())
-		}
-	}
-	for i := range data.Interfaces {
-		keys := [...]string{"ifName"}
-		keyValues := [...]string{data.Interfaces[i].InterfaceName.ValueString()}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "interface").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Interfaces[i].InterfaceName = types.StringNull()
-
-		if t := r.Get("ifName.optionType"); t.Exists() {
-			va := r.Get("ifName.value")
-			if t.String() == "global" {
-				data.Interfaces[i].InterfaceName = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].Shutdown = types.BoolNull()
-		data.Interfaces[i].ShutdownVariable = types.StringNull()
-		if t := r.Get("shutdown.optionType"); t.Exists() {
-			va := r.Get("shutdown.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].ShutdownVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].Shutdown = types.BoolValue(va.Bool())
-			}
-		}
-		data.Interfaces[i].TunnelSourceInterface = types.StringNull()
-		data.Interfaces[i].TunnelSourceInterfaceVariable = types.StringNull()
-		if t := r.Get("tunnelSourceInterface.optionType"); t.Exists() {
-			va := r.Get("tunnelSourceInterface.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].TunnelSourceInterfaceVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].TunnelSourceInterface = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].TunnelRouteVia = types.StringNull()
-		data.Interfaces[i].TunnelRouteViaVariable = types.StringNull()
-		if t := r.Get("tunnelRouteVia.optionType"); t.Exists() {
-			va := r.Get("tunnelRouteVia.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].TunnelRouteViaVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].TunnelRouteVia = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].TunnelDcPreference = types.StringNull()
-
-		if t := r.Get("tunnelDcPreference.optionType"); t.Exists() {
-			va := r.Get("tunnelDcPreference.value")
-			if t.String() == "global" {
-				data.Interfaces[i].TunnelDcPreference = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].TcpMssAdjust = types.Int64Null()
-		data.Interfaces[i].TcpMssAdjustVariable = types.StringNull()
-		if t := r.Get("tcpMssAdjust.optionType"); t.Exists() {
-			va := r.Get("tcpMssAdjust.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].TcpMssAdjustVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].TcpMssAdjust = types.Int64Value(va.Int())
-			}
-		}
-		data.Interfaces[i].Mtu = types.Int64Null()
-		data.Interfaces[i].MtuVariable = types.StringNull()
-		if t := r.Get("mtu.optionType"); t.Exists() {
-			va := r.Get("mtu.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].MtuVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].Mtu = types.Int64Value(va.Int())
-			}
-		}
-		data.Interfaces[i].DpdInterval = types.Int64Null()
-		data.Interfaces[i].DpdIntervalVariable = types.StringNull()
-		if t := r.Get("dpdInterval.optionType"); t.Exists() {
-			va := r.Get("dpdInterval.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].DpdIntervalVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].DpdInterval = types.Int64Value(va.Int())
-			}
-		}
-		data.Interfaces[i].DpdRetries = types.Int64Null()
-		data.Interfaces[i].DpdRetriesVariable = types.StringNull()
-		if t := r.Get("dpdRetries.optionType"); t.Exists() {
-			va := r.Get("dpdRetries.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].DpdRetriesVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].DpdRetries = types.Int64Value(va.Int())
-			}
-		}
-		data.Interfaces[i].IkeVersion = types.Int64Null()
-		data.Interfaces[i].IkeVersionVariable = types.StringNull()
-		if t := r.Get("ikeVersion.optionType"); t.Exists() {
-			va := r.Get("ikeVersion.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].IkeVersionVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].IkeVersion = types.Int64Value(va.Int())
-			}
-		}
-		data.Interfaces[i].IkeRekeyInterval = types.Int64Null()
-		data.Interfaces[i].IkeRekeyIntervalVariable = types.StringNull()
-		if t := r.Get("ikeRekeyInterval.optionType"); t.Exists() {
-			va := r.Get("ikeRekeyInterval.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].IkeRekeyIntervalVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].IkeRekeyInterval = types.Int64Value(va.Int())
-			}
-		}
-		data.Interfaces[i].IkeCiphersuite = types.StringNull()
-		data.Interfaces[i].IkeCiphersuiteVariable = types.StringNull()
-		if t := r.Get("ikeCiphersuite.optionType"); t.Exists() {
-			va := r.Get("ikeCiphersuite.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].IkeCiphersuiteVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].IkeCiphersuite = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].IkeGroup = types.StringNull()
-		data.Interfaces[i].IkeGroupVariable = types.StringNull()
-		if t := r.Get("ikeGroup.optionType"); t.Exists() {
-			va := r.Get("ikeGroup.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].IkeGroupVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].IkeGroup = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].IpsecRekeyInterval = types.Int64Null()
-		data.Interfaces[i].IpsecRekeyIntervalVariable = types.StringNull()
-		if t := r.Get("ipsecRekeyInterval.optionType"); t.Exists() {
-			va := r.Get("ipsecRekeyInterval.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].IpsecRekeyIntervalVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].IpsecRekeyInterval = types.Int64Value(va.Int())
-			}
-		}
-		data.Interfaces[i].IpsecReplayWindow = types.Int64Null()
-		data.Interfaces[i].IpsecReplayWindowVariable = types.StringNull()
-		if t := r.Get("ipsecReplayWindow.optionType"); t.Exists() {
-			va := r.Get("ipsecReplayWindow.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].IpsecReplayWindowVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].IpsecReplayWindow = types.Int64Value(va.Int())
-			}
-		}
-		data.Interfaces[i].IpsecCiphersuite = types.StringNull()
-		data.Interfaces[i].IpsecCiphersuiteVariable = types.StringNull()
-		if t := r.Get("ipsecCiphersuite.optionType"); t.Exists() {
-			va := r.Get("ipsecCiphersuite.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].IpsecCiphersuiteVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].IpsecCiphersuite = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].PerfectForwardSecrecy = types.StringNull()
-		data.Interfaces[i].PerfectForwardSecrecyVariable = types.StringNull()
-		if t := r.Get("perfectForwardSecrecy.optionType"); t.Exists() {
-			va := r.Get("perfectForwardSecrecy.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].PerfectForwardSecrecyVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].PerfectForwardSecrecy = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].Tracker = types.StringNull()
-
-		if t := r.Get("tracker.optionType"); t.Exists() {
-			va := r.Get("tracker.value")
-			if t.String() == "global" {
-				data.Interfaces[i].Tracker = types.StringValue(va.String())
-			}
-		}
-		data.Interfaces[i].TrackEnable = types.BoolNull()
-		data.Interfaces[i].TrackEnableVariable = types.StringNull()
-		if t := r.Get("trackEnable.optionType"); t.Exists() {
-			va := r.Get("trackEnable.value")
-			if t.String() == "variable" {
-				data.Interfaces[i].TrackEnableVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Interfaces[i].TrackEnable = types.BoolValue(va.Bool())
-			}
-		}
-	}
-	for i := range data.InterfacePairs {
-		keys := [...]string{"activeInterface", "activeInterfaceWeight", "backupInterface", "backupInterfaceWeight"}
-		keyValues := [...]string{data.InterfacePairs[i].ActiveInterface.ValueString(), strconv.FormatInt(data.InterfacePairs[i].ActiveInterfaceWeight.ValueInt64(), 10), data.InterfacePairs[i].BackupInterface.ValueString(), strconv.FormatInt(data.InterfacePairs[i].BackupInterfaceWeight.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{"", "", "", ""}
-
-		var r gjson.Result
-		res.Get(path + "interfacePair").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.InterfacePairs[i].ActiveInterface = types.StringNull()
-
-		if t := r.Get("activeInterface.optionType"); t.Exists() {
-			va := r.Get("activeInterface.value")
-			if t.String() == "global" {
-				data.InterfacePairs[i].ActiveInterface = types.StringValue(va.String())
-			}
-		}
-		data.InterfacePairs[i].ActiveInterfaceWeight = types.Int64Null()
-
-		if t := r.Get("activeInterfaceWeight.optionType"); t.Exists() {
-			va := r.Get("activeInterfaceWeight.value")
-			if t.String() == "global" {
-				data.InterfacePairs[i].ActiveInterfaceWeight = types.Int64Value(va.Int())
-			}
-		}
-		data.InterfacePairs[i].BackupInterface = types.StringNull()
-
-		if t := r.Get("backupInterface.optionType"); t.Exists() {
-			va := r.Get("backupInterface.value")
-			if t.String() == "global" {
-				data.InterfacePairs[i].BackupInterface = types.StringValue(va.String())
-			}
-		}
-		data.InterfacePairs[i].BackupInterfaceWeight = types.Int64Null()
-
-		if t := r.Get("backupInterfaceWeight.optionType"); t.Exists() {
-			va := r.Get("backupInterfaceWeight.value")
-			if t.String() == "global" {
-				data.InterfacePairs[i].BackupInterfaceWeight = types.Int64Value(va.Int())
-			}
-		}
-	}
-	data.Region = types.StringNull()
-	data.RegionVariable = types.StringNull()
-	if t := res.Get(path + "region.optionType"); t.Exists() {
-		va := res.Get(path + "region.value")
-		if t.String() == "variable" {
-			data.RegionVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Region = types.StringValue(va.String())
-		}
-	}
-	data.TrackerSourceIp = types.StringNull()
-	data.TrackerSourceIpVariable = types.StringNull()
-	if t := res.Get(path + "trackerSrcIp.optionType"); t.Exists() {
-		va := res.Get(path + "trackerSrcIp.value")
-		if t.String() == "variable" {
-			data.TrackerSourceIpVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.TrackerSourceIp = types.StringValue(va.String())
-		}
-	}
-	for i := range data.Trackers {
-		keys := [...]string{"name"}
-		keyValues := [...]string{data.Trackers[i].Name.ValueString()}
-		keyValuesVariables := [...]string{""}
-
-		var r gjson.Result
-		res.Get(path + "tracker").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.Trackers[i].Name = types.StringNull()
-
-		if t := r.Get("name.optionType"); t.Exists() {
-			va := r.Get("name.value")
-			if t.String() == "global" {
-				data.Trackers[i].Name = types.StringValue(va.String())
-			}
-		}
-		data.Trackers[i].EndpointApiUrl = types.StringNull()
-		data.Trackers[i].EndpointApiUrlVariable = types.StringNull()
-		if t := r.Get("endpointApiUrl.optionType"); t.Exists() {
-			va := r.Get("endpointApiUrl.value")
-			if t.String() == "variable" {
-				data.Trackers[i].EndpointApiUrlVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Trackers[i].EndpointApiUrl = types.StringValue(va.String())
-			}
-		}
-		data.Trackers[i].Threshold = types.Int64Null()
-		data.Trackers[i].ThresholdVariable = types.StringNull()
-		if t := r.Get("threshold.optionType"); t.Exists() {
-			va := r.Get("threshold.value")
-			if t.String() == "variable" {
-				data.Trackers[i].ThresholdVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Trackers[i].Threshold = types.Int64Value(va.Int())
-			}
-		}
-		data.Trackers[i].Interval = types.Int64Null()
-		data.Trackers[i].IntervalVariable = types.StringNull()
-		if t := r.Get("interval.optionType"); t.Exists() {
-			va := r.Get("interval.value")
-			if t.String() == "variable" {
-				data.Trackers[i].IntervalVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Trackers[i].Interval = types.Int64Value(va.Int())
-			}
-		}
-		data.Trackers[i].Multiplier = types.Int64Null()
-		data.Trackers[i].MultiplierVariable = types.StringNull()
-		if t := r.Get("multiplier.optionType"); t.Exists() {
-			va := r.Get("multiplier.value")
-			if t.String() == "variable" {
-				data.Trackers[i].MultiplierVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.Trackers[i].Multiplier = types.Int64Value(va.Int())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

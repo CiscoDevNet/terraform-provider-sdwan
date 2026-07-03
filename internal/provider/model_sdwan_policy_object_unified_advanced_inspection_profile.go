@@ -102,7 +102,7 @@ func (data PolicyObjectUnifiedAdvancedInspectionProfile) toBody(ctx context.Cont
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *PolicyObjectUnifiedAdvancedInspectionProfile) fromBody(ctx context.Context, res gjson.Result) {
+func (data *PolicyObjectUnifiedAdvancedInspectionProfile) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -153,56 +153,3 @@ func (data *PolicyObjectUnifiedAdvancedInspectionProfile) fromBody(ctx context.C
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *PolicyObjectUnifiedAdvancedInspectionProfile) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.TlsDecryptionAction = types.StringNull()
-
-	if t := res.Get(path + "tlsDecryptionAction.optionType"); t.Exists() {
-		va := res.Get(path + "tlsDecryptionAction.value")
-		if t.String() == "global" {
-			data.TlsDecryptionAction = types.StringValue(va.String())
-		}
-	}
-	data.IntrusionPreventionListId = types.StringNull()
-
-	if t := res.Get(path + "intrusionPrevention.refId.optionType"); t.Exists() {
-		va := res.Get(path + "intrusionPrevention.refId.value")
-		if t.String() == "global" {
-			data.IntrusionPreventionListId = types.StringValue(va.String())
-		}
-	}
-	data.UrlFilteringListId = types.StringNull()
-
-	if t := res.Get(path + "urlFiltering.refId.optionType"); t.Exists() {
-		va := res.Get(path + "urlFiltering.refId.value")
-		if t.String() == "global" {
-			data.UrlFilteringListId = types.StringValue(va.String())
-		}
-	}
-	data.AdvancedMalwareProtectionListId = types.StringNull()
-
-	if t := res.Get(path + "advancedMalwareProtection.refId.optionType"); t.Exists() {
-		va := res.Get(path + "advancedMalwareProtection.refId.value")
-		if t.String() == "global" {
-			data.AdvancedMalwareProtectionListId = types.StringValue(va.String())
-		}
-	}
-	data.TlsSslProfileListId = types.StringNull()
-
-	if t := res.Get(path + "sslDecryptionProfile.refId.optionType"); t.Exists() {
-		va := res.Get(path + "sslDecryptionProfile.refId.value")
-		if t.String() == "global" {
-			data.TlsSslProfileListId = types.StringValue(va.String())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

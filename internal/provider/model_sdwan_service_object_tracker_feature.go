@@ -154,7 +154,7 @@ func (data ServiceObjectTracker) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ServiceObjectTracker) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceObjectTracker) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -223,74 +223,3 @@ func (data *ServiceObjectTracker) fromBody(ctx context.Context, res gjson.Result
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *ServiceObjectTracker) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.ObjectTrackerId = types.Int64Null()
-	data.ObjectTrackerIdVariable = types.StringNull()
-	if t := res.Get(path + "objectId.optionType"); t.Exists() {
-		va := res.Get(path + "objectId.value")
-		if t.String() == "variable" {
-			data.ObjectTrackerIdVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.ObjectTrackerId = types.Int64Value(va.Int())
-		}
-	}
-	data.ObjectTrackerType = types.StringNull()
-
-	if t := res.Get(path + "objectTrackerType.optionType"); t.Exists() {
-		va := res.Get(path + "objectTrackerType.value")
-		if t.String() == "global" {
-			data.ObjectTrackerType = types.StringValue(va.String())
-		}
-	}
-	data.Interface = types.StringNull()
-	data.InterfaceVariable = types.StringNull()
-	if t := res.Get(path + "interface.optionType"); t.Exists() {
-		va := res.Get(path + "interface.value")
-		if t.String() == "variable" {
-			data.InterfaceVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Interface = types.StringValue(va.String())
-		}
-	}
-	data.RouteIp = types.StringNull()
-	data.RouteIpVariable = types.StringNull()
-	if t := res.Get(path + "routeIp.optionType"); t.Exists() {
-		va := res.Get(path + "routeIp.value")
-		if t.String() == "variable" {
-			data.RouteIpVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.RouteIp = types.StringValue(va.String())
-		}
-	}
-	data.RouteMask = types.StringNull()
-	data.RouteMaskVariable = types.StringNull()
-	if t := res.Get(path + "routeMask.optionType"); t.Exists() {
-		va := res.Get(path + "routeMask.value")
-		if t.String() == "variable" {
-			data.RouteMaskVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.RouteMask = types.StringValue(va.String())
-		}
-	}
-	data.Vpn = types.Int64Null()
-	data.VpnVariable = types.StringNull()
-	if t := res.Get(path + "vpn.optionType"); t.Exists() {
-		va := res.Get(path + "vpn.value")
-		if t.String() == "variable" {
-			data.VpnVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.Vpn = types.Int64Value(va.Int())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody
