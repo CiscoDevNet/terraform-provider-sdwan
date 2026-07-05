@@ -19,6 +19,7 @@ attributes:
       - model_name: name
         tf_name: hostname_ip_address
         id: true
+        mandatory: true
         example: "1.1.1.1"
       - model_name: key
         tf_name: authentication_key
