@@ -461,7 +461,7 @@ func (data OtherTrustSec) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *OtherTrustSec) fromBody(ctx context.Context, res gjson.Result) {
+func (data *OtherTrustSec) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -589,6 +589,7 @@ func (data *OtherTrustSec) fromBody(ctx context.Context, res gjson.Result) {
 			data.SxpSourceIp = types.StringValue(va.String())
 		}
 	}
+	oldSxpConnections := data.SxpConnections
 	if value := res.Get(path + "sxpConnectionList"); value.Exists() && len(value.Array()) > 0 {
 		data.SxpConnections = make([]OtherTrustSecSxpConnections, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -670,246 +671,41 @@ func (data *OtherTrustSec) fromBody(ctx context.Context, res gjson.Result) {
 			data.SxpConnections = append(data.SxpConnections, item)
 			return true
 		})
+	} else {
+		data.SxpConnections = nil
+	}
+	if !fullRead && data.SxpConnections != nil {
+		resultSxpConnections := make([]OtherTrustSecSxpConnections, 0, len(data.SxpConnections))
+		matchedSxpConnections := make([]bool, len(data.SxpConnections))
+		for _, oldItem := range oldSxpConnections {
+			for ni := range data.SxpConnections {
+				if matchedSxpConnections[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch && (oldItem.PeerIpVariable.ValueString() != "" || data.SxpConnections[ni].PeerIpVariable.ValueString() != "") {
+					if oldItem.PeerIpVariable.ValueString() != data.SxpConnections[ni].PeerIpVariable.ValueString() {
+						keyMatch = false
+					}
+				} else if keyMatch {
+					if oldItem.PeerIp.ValueString() != data.SxpConnections[ni].PeerIp.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedSxpConnections[ni] = true
+					resultSxpConnections = append(resultSxpConnections, data.SxpConnections[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.SxpConnections {
+			if !matchedSxpConnections[ni] {
+				resultSxpConnections = append(resultSxpConnections, data.SxpConnections[ni])
+			}
+		}
+		data.SxpConnections = resultSxpConnections
 	}
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *OtherTrustSec) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.DeviceId = types.StringNull()
-	data.DeviceIdVariable = types.StringNull()
-	if t := res.Get(path + "deviceId.optionType"); t.Exists() {
-		va := res.Get(path + "deviceId.value")
-		if t.String() == "variable" {
-			data.DeviceIdVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.DeviceId = types.StringValue(va.String())
-		}
-	}
-	data.DeviceSgt = types.Int64Null()
-	data.DeviceSgtVariable = types.StringNull()
-	if t := res.Get(path + "deviceSgt.optionType"); t.Exists() {
-		va := res.Get(path + "deviceSgt.value")
-		if t.String() == "variable" {
-			data.DeviceSgtVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			if va.Exists() {
-				data.DeviceSgt = types.Int64Value(va.Int())
-			}
-		}
-	}
-	data.EnableEnforcement = types.BoolNull()
-	data.EnableEnforcementVariable = types.StringNull()
-	if t := res.Get(path + "enableEnforcement.optionType"); t.Exists() {
-		va := res.Get(path + "enableEnforcement.value")
-		if t.String() == "variable" {
-			data.EnableEnforcementVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.EnableEnforcement = types.BoolValue(va.Bool())
-		}
-	}
-	data.EnableSxp = types.BoolNull()
-
-	if t := res.Get(path + "enableSxp.optionType"); t.Exists() {
-		va := res.Get(path + "enableSxp.value")
-		if t.String() == "global" {
-			data.EnableSxp = types.BoolValue(va.Bool())
-		}
-	}
-	data.ListenerHoldTimeMin = types.Int64Null()
-	data.ListenerHoldTimeMinVariable = types.StringNull()
-	if t := res.Get(path + "listenerHoldTimeMin.optionType"); t.Exists() {
-		va := res.Get(path + "listenerHoldTimeMin.value")
-		if t.String() == "variable" {
-			data.ListenerHoldTimeMinVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.ListenerHoldTimeMin = types.Int64Value(va.Int())
-		}
-	}
-	data.ListenerHoldTimeMax = types.Int64Null()
-	data.ListenerHoldTimeMaxVariable = types.StringNull()
-	if t := res.Get(path + "listenerHoldTimeMax.optionType"); t.Exists() {
-		va := res.Get(path + "listenerHoldTimeMax.value")
-		if t.String() == "variable" {
-			data.ListenerHoldTimeMaxVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.ListenerHoldTimeMax = types.Int64Value(va.Int())
-		}
-	}
-	data.SpeakerHoldTime = types.Int64Null()
-	data.SpeakerHoldTimeVariable = types.StringNull()
-	if t := res.Get(path + "speakerHoldTime.optionType"); t.Exists() {
-		va := res.Get(path + "speakerHoldTime.value")
-		if t.String() == "variable" {
-			data.SpeakerHoldTimeVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.SpeakerHoldTime = types.Int64Value(va.Int())
-		}
-	}
-	data.SxpKeyChain = types.StringNull()
-	data.SxpKeyChainVariable = types.StringNull()
-	if t := res.Get(path + "sxpKeyChain.optionType"); t.Exists() {
-		va := res.Get(path + "sxpKeyChain.value")
-		if t.String() == "variable" {
-			data.SxpKeyChainVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.SxpKeyChain = types.StringValue(va.String())
-		}
-	}
-	data.SxpLogBindingChanges = types.BoolNull()
-	data.SxpLogBindingChangesVariable = types.StringNull()
-	if t := res.Get(path + "sxpLogBindingChanges.optionType"); t.Exists() {
-		va := res.Get(path + "sxpLogBindingChanges.value")
-		if t.String() == "variable" {
-			data.SxpLogBindingChangesVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.SxpLogBindingChanges = types.BoolValue(va.Bool())
-		}
-	}
-	data.SxpReconciliationPeriod = types.Int64Null()
-	data.SxpReconciliationPeriodVariable = types.StringNull()
-	if t := res.Get(path + "sxpReconciliationPeriod.optionType"); t.Exists() {
-		va := res.Get(path + "sxpReconciliationPeriod.value")
-		if t.String() == "variable" {
-			data.SxpReconciliationPeriodVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.SxpReconciliationPeriod = types.Int64Value(va.Int())
-		}
-	}
-	data.SxpRetryPeriod = types.Int64Null()
-	data.SxpRetryPeriodVariable = types.StringNull()
-	if t := res.Get(path + "sxpRetryPeriod.optionType"); t.Exists() {
-		va := res.Get(path + "sxpRetryPeriod.value")
-		if t.String() == "variable" {
-			data.SxpRetryPeriodVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.SxpRetryPeriod = types.Int64Value(va.Int())
-		}
-	}
-	data.SxpSourceIp = types.StringNull()
-	data.SxpSourceIpVariable = types.StringNull()
-	if t := res.Get(path + "sxpSourceIp.optionType"); t.Exists() {
-		va := res.Get(path + "sxpSourceIp.value")
-		if t.String() == "variable" {
-			data.SxpSourceIpVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.SxpSourceIp = types.StringValue(va.String())
-		}
-	}
-	for i := range data.SxpConnections {
-		keys := [...]string{"connectionPeerIp"}
-		keyValues := [...]string{data.SxpConnections[i].PeerIp.ValueString()}
-		keyValuesVariables := [...]string{data.SxpConnections[i].PeerIpVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "sxpConnectionList").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType")
-					vv := v.Get(keys[ik] + ".value")
-					if tt.Exists() && vv.Exists() {
-						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
-							found = true
-							continue
-						} else if tt.String() == "default" {
-							continue
-						}
-						found = false
-						break
-					}
-					continue
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.SxpConnections[i].PeerIp = types.StringNull()
-		data.SxpConnections[i].PeerIpVariable = types.StringNull()
-		if t := r.Get("connectionPeerIp.optionType"); t.Exists() {
-			va := r.Get("connectionPeerIp.value")
-			if t.String() == "variable" {
-				data.SxpConnections[i].PeerIpVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.SxpConnections[i].PeerIp = types.StringValue(va.String())
-			}
-		}
-		data.SxpConnections[i].SourceIp = types.StringNull()
-		data.SxpConnections[i].SourceIpVariable = types.StringNull()
-		if t := r.Get("connectionSourceIp.optionType"); t.Exists() {
-			va := r.Get("connectionSourceIp.value")
-			if t.String() == "variable" {
-				data.SxpConnections[i].SourceIpVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.SxpConnections[i].SourceIp = types.StringValue(va.String())
-			}
-		}
-		data.SxpConnections[i].PresharedKey = types.StringNull()
-
-		if t := r.Get("connectionPresharedKey.optionType"); t.Exists() {
-			va := r.Get("connectionPresharedKey.value")
-			if t.String() == "global" {
-				data.SxpConnections[i].PresharedKey = types.StringValue(va.String())
-			}
-		}
-		data.SxpConnections[i].Mode = types.StringNull()
-
-		if t := r.Get("connectionMode.optionType"); t.Exists() {
-			va := r.Get("connectionMode.value")
-			if t.String() == "global" {
-				data.SxpConnections[i].Mode = types.StringValue(va.String())
-			}
-		}
-		data.SxpConnections[i].ModeType = types.StringNull()
-
-		if t := r.Get("connectionModeType.optionType"); t.Exists() {
-			va := r.Get("connectionModeType.value")
-			if t.String() == "global" {
-				data.SxpConnections[i].ModeType = types.StringValue(va.String())
-			}
-		}
-		data.SxpConnections[i].VpnId = types.Int64Null()
-		data.SxpConnections[i].VpnIdVariable = types.StringNull()
-		if t := r.Get("connectionVpnId.optionType"); t.Exists() {
-			va := r.Get("connectionVpnId.value")
-			if t.String() == "variable" {
-				data.SxpConnections[i].VpnIdVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.SxpConnections[i].VpnId = types.Int64Value(va.Int())
-			}
-		}
-		data.SxpConnections[i].MinHoldTime = types.Int64Null()
-		data.SxpConnections[i].MinHoldTimeVariable = types.StringNull()
-		if t := r.Get("connectionMinHoldTime.optionType"); t.Exists() {
-			va := r.Get("connectionMinHoldTime.value")
-			if t.String() == "variable" {
-				data.SxpConnections[i].MinHoldTimeVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.SxpConnections[i].MinHoldTime = types.Int64Value(va.Int())
-			}
-		}
-		data.SxpConnections[i].MaxHoldTime = types.Int64Null()
-		data.SxpConnections[i].MaxHoldTimeVariable = types.StringNull()
-		if t := r.Get("connectionMaxHoldTime.optionType"); t.Exists() {
-			va := r.Get("connectionMaxHoldTime.value")
-			if t.String() == "variable" {
-				data.SxpConnections[i].MaxHoldTimeVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.SxpConnections[i].MaxHoldTime = types.Int64Value(va.Int())
-			}
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody
