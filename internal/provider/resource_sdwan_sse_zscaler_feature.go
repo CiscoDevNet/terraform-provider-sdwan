@@ -951,11 +951,7 @@ func (r *SSEZscalerProfileParcelResource) Read(ctx context.Context, req resource
 		return
 	}
 
-	if imp {
-		state.fromBody(ctx, res)
-	} else {
-		state.updateFromBody(ctx, res)
-	}
+	state.fromBody(ctx, res, imp)
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

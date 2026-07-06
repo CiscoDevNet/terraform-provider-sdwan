@@ -7,7 +7,11 @@ description: |-
 
 # Changelog
 
-## 0.11.3 (unreleased)
+## 0.11.4 (unreleased)
+
+- Fix profile parcel resources reporting phantom/stale nested list entries by rebuilding lists from the SD-WAN Manager API response on every read, making the controller the authoritative source for list membership
+
+## 0.11.3
 
 - Fix issue where deleting a single device with tag removes this tag across all devices
 - Add `sdwan_topology_group` resource and data source
@@ -22,6 +26,7 @@ description: |-
 - Add `sdwan_sse_zscaler_feature` resource and data source
 - Fix integer validator generation for attributes with only a minimum or maximum bound, including schemas where one side of the bound is 0
 - Fix profile parcel default generation to prefer explicit JSON schema defaults over the first enum value. (Note - this impacts the generated default of `sdwan_system_omp_feature.holdtime from 60 to 300` which will be pushed, once changing the sdwan_system_omp_feature configuration after provider upgrade.)
+- Fix `sdwan_tag` resource perpetual drift on SD-WAN Manager 20.18 by using individual tag endpoint instead of list endpoint for Read and Update operations.
 
 ## 0.11.2
 

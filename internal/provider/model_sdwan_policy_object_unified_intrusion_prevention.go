@@ -102,7 +102,7 @@ func (data PolicyObjectUnifiedIntrusionPrevention) toBody(ctx context.Context) s
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *PolicyObjectUnifiedIntrusionPrevention) fromBody(ctx context.Context, res gjson.Result) {
+func (data *PolicyObjectUnifiedIntrusionPrevention) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -153,56 +153,3 @@ func (data *PolicyObjectUnifiedIntrusionPrevention) fromBody(ctx context.Context
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *PolicyObjectUnifiedIntrusionPrevention) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.SignatureSet = types.StringNull()
-
-	if t := res.Get(path + "signatureSet.optionType"); t.Exists() {
-		va := res.Get(path + "signatureSet.value")
-		if t.String() == "global" {
-			data.SignatureSet = types.StringValue(va.String())
-		}
-	}
-	data.InspectionMode = types.StringNull()
-
-	if t := res.Get(path + "inspectionMode.optionType"); t.Exists() {
-		va := res.Get(path + "inspectionMode.value")
-		if t.String() == "global" {
-			data.InspectionMode = types.StringValue(va.String())
-		}
-	}
-	data.IpsSignatureAllowListId = types.StringNull()
-
-	if t := res.Get(path + "signatureAllowedList.refId.optionType"); t.Exists() {
-		va := res.Get(path + "signatureAllowedList.refId.value")
-		if t.String() == "global" {
-			data.IpsSignatureAllowListId = types.StringValue(va.String())
-		}
-	}
-	data.LogLevel = types.StringNull()
-
-	if t := res.Get(path + "logLevel.optionType"); t.Exists() {
-		va := res.Get(path + "logLevel.value")
-		if t.String() == "global" {
-			data.LogLevel = types.StringValue(va.String())
-		}
-	}
-	data.CustomSignature = types.BoolNull()
-
-	if t := res.Get(path + "customSignature.optionType"); t.Exists() {
-		va := res.Get(path + "customSignature.value")
-		if t.String() == "global" {
-			data.CustomSignature = types.BoolValue(va.Bool())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

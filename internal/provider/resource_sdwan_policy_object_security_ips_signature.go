@@ -184,7 +184,7 @@ func (r *PolicyObjectSecurityIPSSignatureProfileParcelResource) Read(ctx context
 	}
 
 	// If every attribute is set to null we are dealing with an import operation and therefore reading all attributes
-	state.fromBody(ctx, res)
+	state.fromBody(ctx, res, true)
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}
