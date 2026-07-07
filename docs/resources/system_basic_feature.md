@@ -142,7 +142,7 @@ resource "sdwan_system_basic_feature" "example" {
   - Range: `1`-`4294967295`
   - Default value: `1`
 - `overlay_id_variable` (String) Variable name
-- `port_hopping` (Boolean) Enable port hopping
+- `port_hopping` (Boolean) The port hop functionality is deprecated for devices 17.18 and higher. Use the full-port-hop field instead on interfaces.
   - Default value: `true`
 - `port_hopping_variable` (String) Variable name
 - `port_offset` (Number) Set the TLOC port offset when multiple devices are behind a NAT

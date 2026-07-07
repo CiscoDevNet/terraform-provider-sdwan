@@ -2,7 +2,7 @@
 name: System NTP
 rest_endpoint: /v1/feature-profile/sdwan/system/%v/ntp
 minimum_version: 20.15.0
-test_tags: [SDWAN_2015]
+test_tags: [SDWAN_2015, SDWAN_2018]
 parcel_type: feature
 doc_category: Features - System
 attributes:
@@ -19,6 +19,7 @@ attributes:
       - model_name: name
         tf_name: hostname_ip_address
         id: true
+        mandatory: true
         example: "1.1.1.1"
       - model_name: key
         tf_name: authentication_key
