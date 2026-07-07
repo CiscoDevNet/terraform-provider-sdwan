@@ -78,10 +78,10 @@ resource "sdwan_system_ntp_feature" "example" {
 
 Optional:
 
-- `cmac_aes128_value` (String) CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes), Attribute conditional on SD-WAN Manager version `26.1.0` or higher
-- `cmac_aes128_value_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `26.1.0` or higher
-- `hmac_sha2_value` (String) HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes), Attribute conditional on SD-WAN Manager version `26.1.0` or higher
-- `hmac_sha2_value_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `26.1.0` or higher
+- `cmac_aes128_value` (String) CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher
+- `cmac_aes128_value_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `26.1.1` or higher
+- `hmac_sha2_value` (String) HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher
+- `hmac_sha2_value_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `26.1.1` or higher
 - `key_id` (Number) Authentication key ID
   - Range: `1`-`4294967295`
 - `key_id_variable` (String) Variable name

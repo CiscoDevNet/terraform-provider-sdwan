@@ -238,24 +238,24 @@ func (data SystemNTP) toBody(ctx context.Context, ver *version.Version) string {
 			}
 
 			if !item.HmacSha2ValueVariable.IsNull() {
-				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("26.1.0"))) {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("26.1.1"))) {
 					itemBody, _ = sjson.Set(itemBody, "hmacSha2Value.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "hmacSha2Value.value", item.HmacSha2ValueVariable.ValueString())
 				}
 			} else if !item.HmacSha2Value.IsNull() {
-				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("26.1.0"))) {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("26.1.1"))) {
 					itemBody, _ = sjson.Set(itemBody, "hmacSha2Value.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "hmacSha2Value.value", item.HmacSha2Value.ValueString())
 				}
 			}
 
 			if !item.CmacAes128ValueVariable.IsNull() {
-				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("26.1.0"))) {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("26.1.1"))) {
 					itemBody, _ = sjson.Set(itemBody, "cmacAes128Value.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "cmacAes128Value.value", item.CmacAes128ValueVariable.ValueString())
 				}
 			} else if !item.CmacAes128Value.IsNull() {
-				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("26.1.0"))) {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("26.1.1"))) {
 					itemBody, _ = sjson.Set(itemBody, "cmacAes128Value.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "cmacAes128Value.value", item.CmacAes128Value.ValueString())
 				}

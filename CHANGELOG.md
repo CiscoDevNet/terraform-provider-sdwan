@@ -12,6 +12,7 @@
 - Bump `sdwan_system_omp_feature` schema to `20.18.0`
 - Bump `sdwan_system_security_feature` schema to `20.18.0`
 - Bump `sdwan_system_snmp_feature` schema to `20.18.0`
+- Bump `sdwan_system_ntp_feature` schema to `26.1.1`
 
 ## 0.11.3
 
