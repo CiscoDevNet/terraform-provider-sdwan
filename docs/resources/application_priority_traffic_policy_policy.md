@@ -37,6 +37,7 @@ resource "sdwan_application_priority_traffic_policy_policy" "example" {
         {
           set_parameters = [
             {
+              dscp = 18
             }
           ]
         }

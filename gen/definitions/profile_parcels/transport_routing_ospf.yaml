@@ -121,7 +121,7 @@ attributes:
         example: 7
       - model_name: md5
         tf_name: message_digest_key
-        write_only: true
+        encrypted: true
         example: sdjfhsghbjdjr
     - model_name: range
       tf_name: ranges

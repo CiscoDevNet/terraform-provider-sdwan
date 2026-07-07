@@ -1,5 +1,5 @@
 ---
-# Manual resource - Modals toBody, fromBody, updateFromBody are manually configured to support "either" address option for 20.18 and global NAT type pool
+# Manual resource - Models toBody and fromBody are manually configured to support "either" address option for 20.18 and global NAT type pool
 name: Service LAN VPN Interface Ethernet
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/lan/vpn/%s/interface/ethernet
 minimum_version: 20.15.0
