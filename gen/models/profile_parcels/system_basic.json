@@ -1618,7 +1618,7 @@
             ]
           },
           "portHop": {
-            "description": "Enable port hopping",
+            "description": "The port hop functionality is deprecated for devices 17.18 and higher. Use the full-port-hop field instead on interfaces.",
             "type": "object",
             "oneOf": [
               {
@@ -2934,7 +2934,7 @@
                   ]
                 }
               },
-              "required": ["affinityGroupNumber", "vrfRange"],
+              "required": [],
               "additionalProperties": false
             }
           }
@@ -2967,7 +2967,7 @@
           "ISRv",
           "ir1101"
         ],
-        "minVManageVersion": "20.15.1"
+        "minVManageVersion": "20.18.1"
       },
       "documentation": {
         "description": "This is the documentation for POST request schema for Basic profile feature",

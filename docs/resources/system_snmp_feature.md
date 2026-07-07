@@ -155,7 +155,7 @@ Optional:
 - `authentication_password` (String) Specify authentication protocol password
 - `authentication_password_variable` (String) Variable name
 - `authentication_protocol` (String) Configure authentication protocol
-  - Choices: `sha`
+  - Choices: `sha`, `sha256`
 - `authentication_protocol_variable` (String) Variable name
 - `group` (String) Name of the SNMP group
 - `group_variable` (String) Variable name

@@ -226,7 +226,7 @@ func (r *SystemBasicProfileParcelResource) Schema(ctx context.Context, req resou
 				Optional:            true,
 			},
 			"port_hopping": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable port hopping").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("The port hop functionality is deprecated for devices 17.18 and higher. Use the full-port-hop field instead on interfaces.").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
 			"port_hopping_variable": schema.StringAttribute{
@@ -511,11 +511,7 @@ func (r *SystemBasicProfileParcelResource) Read(ctx context.Context, req resourc
 		return
 	}
 
-	if imp {
-		state.fromBody(ctx, res)
-	} else {
-		state.updateFromBody(ctx, res)
-	}
+	state.fromBody(ctx, res, imp)
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}
