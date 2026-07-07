@@ -78,7 +78,7 @@ resource "sdwan_system_security_feature" "example" {
 - `keychains` (Attributes List) Configure a Keychain (see [below for nested schema](#nestedatt--keychains))
 - `keys` (Attributes List) Configure a Key (see [below for nested schema](#nestedatt--keys))
 - `rekey` (Number) Set how often to change the AES key for DTLS connections
-  - Range: `10`-`1209600`
+  - Range: `10`-`63113904`
   - Default value: `86400`
 - `rekey_variable` (String) Variable name
 

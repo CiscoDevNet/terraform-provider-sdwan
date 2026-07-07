@@ -10,6 +10,17 @@ description: |-
 ## 0.11.4 (unreleased)
 
 - Fix profile parcel resources reporting phantom/stale nested list entries by rebuilding lists from the SD-WAN Manager API response on every read, making the controller the authoritative source for list membership
+- Bump `sdwan_system_banner_feature` schema to `20.18.0`
+- Bump `sdwan_system_basic_feature` schema to `20.18.0`
+- Bump `sdwan_system_bfd_feature` schema to `20.18.0`
+- Bump `sdwan_system_global_feature` schema to `20.18.0`
+- Bump `sdwan_system_ipv4_device_access_feature` schema to `20.18.0`
+- Bump `sdwan_system_logging_feature` schema to `20.18.0`
+- Bump `sdwan_system_mrf_feature` schema to `20.18.0`
+- Bump `sdwan_system_ntp_feature` schema to `20.18.0`
+- Bump `sdwan_system_omp_feature` schema to `20.18.0`
+- Bump `sdwan_system_security_feature` schema to `20.18.0`
+- Bump `sdwan_system_snmp_feature` schema to `20.18.0`
 
 ## 0.11.3
 

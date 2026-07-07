@@ -855,6 +855,10 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 				}
 				if keyMatch {
 					matchedUsers[ni] = true
+					data.Users[ni].AuthenticationPassword = oldItem.AuthenticationPassword
+					data.Users[ni].AuthenticationPasswordVariable = oldItem.AuthenticationPasswordVariable
+					data.Users[ni].PrivacyPassword = oldItem.PrivacyPassword
+					data.Users[ni].PrivacyPasswordVariable = oldItem.PrivacyPasswordVariable
 					resultUsers = append(resultUsers, data.Users[ni])
 					break
 				}

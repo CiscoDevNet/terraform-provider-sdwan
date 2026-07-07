@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanSystemSNMPProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015")
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "shutdown", "false"))
@@ -47,9 +47,7 @@ func TestAccDataSourceSdwanSystemSNMPProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "groups.0.view", "VIEW1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "users.0.name", "USER1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "users.0.authentication_protocol", "sha"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "users.0.authentication_password", "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "users.0.privacy_protocol", "aes-256-cfb-128"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "users.0.privacy_password", "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "users.0.group", "GROUP1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "trap_target_servers.0.vpn_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "trap_target_servers.0.ip", "10.75.221.156"))

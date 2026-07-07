@@ -2,7 +2,7 @@
 name: System SNMP
 rest_endpoint: /v1/feature-profile/sdwan/system/%v/snmp
 minimum_version: 20.15.0
-test_tags: [SDWAN_2015]
+test_tags: [SDWAN_2015, SDWAN_2018]
 parcel_type: feature
 doc_category: Features - System
 attributes:
@@ -69,12 +69,14 @@ attributes:
         example: "sha"
       - model_name: authPassword
         tf_name: authentication_password
+        encrypted: true
         example: "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="
       - model_name: priv
         tf_name: privacy_protocol
         example: "aes-256-cfb-128"
       - model_name: privPassword
         tf_name: privacy_password
+        encrypted: true
         example: "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="
       - model_name: group
         example: GROUP1
