@@ -147,7 +147,7 @@ func (d *SystemNTPProfileParcelDataSource) Schema(ctx context.Context, req datas
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"key_id": schema.Int64Attribute{
-							MarkdownDescription: "MD5 authentication key ID",
+							MarkdownDescription: "Authentication key ID",
 							Computed:            true,
 						},
 						"key_id_variable": schema.StringAttribute{
@@ -159,6 +159,22 @@ func (d *SystemNTPProfileParcelDataSource) Schema(ctx context.Context, req datas
 							Computed:            true,
 						},
 						"md5_value_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"hmac_sha2_value": schema.StringAttribute{
+							MarkdownDescription: "HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes)",
+							Computed:            true,
+						},
+						"hmac_sha2_value_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"cmac_aes128_value": schema.StringAttribute{
+							MarkdownDescription: "CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes)",
+							Computed:            true,
+						},
+						"cmac_aes128_value_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},

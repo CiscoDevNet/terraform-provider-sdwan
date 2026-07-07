@@ -24,6 +24,7 @@ import (
 	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -66,10 +67,14 @@ type SystemNTPServers struct {
 }
 
 type SystemNTPAuthenticationKeys struct {
-	KeyId            types.Int64  `tfsdk:"key_id"`
-	KeyIdVariable    types.String `tfsdk:"key_id_variable"`
-	Md5Value         types.String `tfsdk:"md5_value"`
-	Md5ValueVariable types.String `tfsdk:"md5_value_variable"`
+	KeyId                   types.Int64  `tfsdk:"key_id"`
+	KeyIdVariable           types.String `tfsdk:"key_id_variable"`
+	Md5Value                types.String `tfsdk:"md5_value"`
+	Md5ValueVariable        types.String `tfsdk:"md5_value_variable"`
+	HmacSha2Value           types.String `tfsdk:"hmac_sha2_value"`
+	HmacSha2ValueVariable   types.String `tfsdk:"hmac_sha2_value_variable"`
+	CmacAes128Value         types.String `tfsdk:"cmac_aes128_value"`
+	CmacAes128ValueVariable types.String `tfsdk:"cmac_aes128_value_variable"`
 }
 
 // End of section. //template:end types
@@ -89,7 +94,7 @@ func (data SystemNTP) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data SystemNTP) toBody(ctx context.Context) string {
+func (data SystemNTP) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -104,7 +109,12 @@ func (data SystemNTP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "name.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIpAddressVariable.ValueString())
 				}
-			} else if !item.HostnameIpAddress.IsNull() {
+			} else if item.HostnameIpAddress.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "name.optionType", "default")
+
+				}
+			} else {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIpAddress.ValueString())
@@ -224,6 +234,30 @@ func (data SystemNTP) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "md5Value.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "md5Value.value", item.Md5Value.ValueString())
+				}
+			}
+
+			if !item.HmacSha2ValueVariable.IsNull() {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("26.1.0"))) {
+					itemBody, _ = sjson.Set(itemBody, "hmacSha2Value.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "hmacSha2Value.value", item.HmacSha2ValueVariable.ValueString())
+				}
+			} else if !item.HmacSha2Value.IsNull() {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("26.1.0"))) {
+					itemBody, _ = sjson.Set(itemBody, "hmacSha2Value.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "hmacSha2Value.value", item.HmacSha2Value.ValueString())
+				}
+			}
+
+			if !item.CmacAes128ValueVariable.IsNull() {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("26.1.0"))) {
+					itemBody, _ = sjson.Set(itemBody, "cmacAes128Value.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "cmacAes128Value.value", item.CmacAes128ValueVariable.ValueString())
+				}
+			} else if !item.CmacAes128Value.IsNull() {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("26.1.0"))) {
+					itemBody, _ = sjson.Set(itemBody, "cmacAes128Value.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "cmacAes128Value.value", item.CmacAes128Value.ValueString())
 				}
 			}
 			body, _ = sjson.SetRaw(body, path+"authentication.authenticationKeys.-1", itemBody)
@@ -441,6 +475,26 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result, fullRead 
 					item.Md5Value = types.StringValue(va.String())
 				}
 			}
+			item.HmacSha2Value = types.StringNull()
+			item.HmacSha2ValueVariable = types.StringNull()
+			if t := v.Get("hmacSha2Value.optionType"); t.Exists() {
+				va := v.Get("hmacSha2Value.value")
+				if t.String() == "variable" {
+					item.HmacSha2ValueVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.HmacSha2Value = types.StringValue(va.String())
+				}
+			}
+			item.CmacAes128Value = types.StringNull()
+			item.CmacAes128ValueVariable = types.StringNull()
+			if t := v.Get("cmacAes128Value.optionType"); t.Exists() {
+				va := v.Get("cmacAes128Value.value")
+				if t.String() == "variable" {
+					item.CmacAes128ValueVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.CmacAes128Value = types.StringValue(va.String())
+				}
+			}
 			data.AuthenticationKeys = append(data.AuthenticationKeys, item)
 			return true
 		})
@@ -469,6 +523,10 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result, fullRead 
 					matchedAuthenticationKeys[ni] = true
 					data.AuthenticationKeys[ni].Md5Value = oldItem.Md5Value
 					data.AuthenticationKeys[ni].Md5ValueVariable = oldItem.Md5ValueVariable
+					data.AuthenticationKeys[ni].HmacSha2Value = oldItem.HmacSha2Value
+					data.AuthenticationKeys[ni].HmacSha2ValueVariable = oldItem.HmacSha2ValueVariable
+					data.AuthenticationKeys[ni].CmacAes128Value = oldItem.CmacAes128Value
+					data.AuthenticationKeys[ni].CmacAes128ValueVariable = oldItem.CmacAes128ValueVariable
 					resultAuthenticationKeys = append(resultAuthenticationKeys, data.AuthenticationKeys[ni])
 					break
 				}

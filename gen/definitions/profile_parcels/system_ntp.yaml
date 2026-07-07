@@ -42,6 +42,24 @@ attributes:
       - model_name: md5Value
         example: $CRYPT_CLUSTER
         encrypted: true
+      - model_name: hmacSha2Value
+        tf_name: hmac_sha2_value
+        example: hmac-sha2-key-example
+        encrypted: true
+        description: HMAC-SHA2-256 authentication key (1-32 characters)
+        conditional_attribute:
+          conditions:
+            - type: MinVersion
+              value: 26.1.0
+      - model_name: cmacAes128Value
+        tf_name: cmac_aes128_value
+        example: cmac-aes128-key-1234
+        encrypted: true
+        description: CMAC-AES-128 authentication key (16 or 32 characters)
+        conditional_attribute:
+          conditions:
+            - type: MinVersion
+              value: 26.1.0
   - model_name: trustedKeys
     data_path: [authentication]
     example: 49737
