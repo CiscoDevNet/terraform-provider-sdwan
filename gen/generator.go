@@ -293,7 +293,7 @@ type YamlConfigAttribute struct {
 	NoOptionType            bool                           `yaml:"no_option_type"`
 	PositionalFallback      bool                           `yaml:"positional_fallback"`
 	OptionalNullEmpty       bool                           `yaml:"optional_null_empty"`
-	IncludeEmptyValue       bool                           `yaml:"include_empty_value"`
+	ForceInclude            bool                           `yaml:"force_include"`
 	WriteAsDefault          bool                           `yaml:"write_as_default"`
 }
 

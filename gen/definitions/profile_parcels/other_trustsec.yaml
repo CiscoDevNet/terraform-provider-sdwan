@@ -22,7 +22,7 @@ attributes:
     example: Cisco123
     exclude_test: true
   - model_name: deviceSgt
-    include_empty_value: true
+    force_include: true
     example: 100
   - model_name: enableEnforcement
     example: true
