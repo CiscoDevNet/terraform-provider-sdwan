@@ -1,5 +1,9 @@
 ## 0.11.4 (unreleased)
 
+- Add `sdwan_other_trustsec_feature` resource and data source (SD-WAN Manager 20.18+)
+- Add compound conditional support (`groups:` + `operator: or(and)`/`and(or)`) to `conditional_attribute` in definition YAMLs, enabling 2-level DNF/CNF logic for `toBody` guards
+- Extend `force_include` (formerly `include_empty_value`) to scalar attributes: `toBody` now emits `{optionType:"global"}` without a value key for scalars (previously List/Set only), and `fromBody` guards scalar reads with `va.Exists()` to prevent phantom zero values on refresh
+- Rename definition YAML attribute `include_empty_value` to `force_include` for clarity (the old name implied an empty value was written, which is only true for List/Set; for scalars it simply forces the field into the payload)
 - Fix profile parcel resources reporting phantom/stale nested list entries by rebuilding lists from the SD-WAN Manager API response on every read, making the controller the authoritative source for list membership
 - Bump `sdwan_system_banner_feature` schema to `20.18.0`
 - Bump `sdwan_system_basic_feature` schema to `20.18.0`
