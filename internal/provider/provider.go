@@ -46,20 +46,22 @@ type SdwanProvider struct {
 
 // SdwanProviderModel describes the provider data model.
 type SdwanProviderModel struct {
-	Username    types.String `tfsdk:"username"`
-	Password    types.String `tfsdk:"password"`
-	URL         types.String `tfsdk:"url"`
-	APIToken    types.String `tfsdk:"api_token"`
-	Insecure    types.Bool   `tfsdk:"insecure"`
-	Retries     types.Int64  `tfsdk:"retries"`
-	TaskTimeout types.Int64  `tfsdk:"task_timeout"`
+	Username          types.String `tfsdk:"username"`
+	Password          types.String `tfsdk:"password"`
+	URL               types.String `tfsdk:"url"`
+	APIToken          types.String `tfsdk:"api_token"`
+	Insecure          types.Bool   `tfsdk:"insecure"`
+	Retries           types.Int64  `tfsdk:"retries"`
+	TaskTimeout       types.Int64  `tfsdk:"task_timeout"`
+	DeployOnOutOfDate types.Bool   `tfsdk:"deploy_on_out_of_date"`
 }
 
 // SdwanProviderData describes the data maintained by the provider.
 type SdwanProviderData struct {
-	Client      *sdwan.Client
-	UpdateMutex *sync.Mutex
-	TaskTimeout *int64
+	Client            *sdwan.Client
+	UpdateMutex       *sync.Mutex
+	TaskTimeout       *int64
+	DeployOnOutOfDate bool
 }
 
 // Metadata returns the provider type name.
@@ -102,6 +104,10 @@ func (p *SdwanProvider) Schema(ctx context.Context, req provider.SchemaRequest, 
 			},
 			"task_timeout": schema.Int64Attribute{
 				MarkdownDescription: "Timeout in seconds for asynchronous tasks. This can also be set as the `SDWAN_TASK_TIMEOUT` environment variable. Defaults to `1500`.",
+				Optional:            true,
+			},
+			"deploy_on_out_of_date": schema.BoolAttribute{
+				MarkdownDescription: "When enabled, Terraform will detect when a configuration group or policy group device is out of date during refresh and trigger a re-deploy on next apply. This can also be set as the `SDWAN_DEPLOY_ON_OUT_OF_DATE` environment variable. Defaults to `true`.",
 				Optional:            true,
 			},
 		},
@@ -275,6 +281,23 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 		taskTimeout = config.TaskTimeout.ValueInt64()
 	}
 
+	deployOnOutOfDate := true
+	if config.DeployOnOutOfDate.IsUnknown() {
+		resp.Diagnostics.AddWarning(
+			"Unable to create client",
+			"Cannot use unknown value as deploy_on_out_of_date",
+		)
+		return
+	}
+	if config.DeployOnOutOfDate.IsNull() {
+		deployOnOutOfDateStr := os.Getenv("SDWAN_DEPLOY_ON_OUT_OF_DATE")
+		if deployOnOutOfDateStr != "" {
+			deployOnOutOfDate, _ = strconv.ParseBool(deployOnOutOfDateStr)
+		}
+	} else {
+		deployOnOutOfDate = config.DeployOnOutOfDate.ValueBool()
+	}
+
 	// Create a new SDWAN client and set it to the provider client
 	var authMod func(*sdwan.Client)
 	if apiToken != "" {
@@ -300,7 +323,7 @@ func (p *SdwanProvider) Configure(ctx context.Context, req provider.ConfigureReq
 		return
 	}
 
-	data := SdwanProviderData{Client: &c, UpdateMutex: &sync.Mutex{}, TaskTimeout: &taskTimeout}
+	data := SdwanProviderData{Client: &c, UpdateMutex: &sync.Mutex{}, TaskTimeout: &taskTimeout, DeployOnOutOfDate: deployOnOutOfDate}
 	resp.DataSourceData = &data
 	resp.ResourceData = &data
 }

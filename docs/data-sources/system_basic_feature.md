@@ -78,7 +78,7 @@ data "sdwan_system_basic_feature" "example" {
 - `on_demand_idle_timeout_variable` (String) Variable name
 - `overlay_id` (Number) Set the Overlay ID
 - `overlay_id_variable` (String) Variable name
-- `port_hopping` (Boolean) Enable port hopping
+- `port_hopping` (Boolean) The port hop functionality is deprecated for devices 17.18 and higher. Use the full-port-hop field instead on interfaces.
 - `port_hopping_variable` (String) Variable name
 - `port_offset` (Number) Set the TLOC port offset when multiple devices are behind a NAT
 - `port_offset_variable` (String) Variable name

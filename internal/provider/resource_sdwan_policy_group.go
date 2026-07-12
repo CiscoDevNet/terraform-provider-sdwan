@@ -58,9 +58,10 @@ func NewPolicyGroupResource() resource.Resource {
 }
 
 type PolicyGroupResource struct {
-	client      *sdwan.Client
-	updateMutex *sync.Mutex
-	taskTimeout *int64
+	client            *sdwan.Client
+	updateMutex       *sync.Mutex
+	taskTimeout       *int64
+	deployOnOutOfDate bool
 }
 
 func (r *PolicyGroupResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -156,6 +157,7 @@ func (r *PolicyGroupResource) Configure(_ context.Context, req resource.Configur
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
+	r.deployOnOutOfDate = req.ProviderData.(*SdwanProviderData).DeployOnOutOfDate
 }
 
 // End of section. //template:end model
@@ -324,6 +326,7 @@ func (r *PolicyGroupResource) Read(ctx context.Context, req resource.ReadRequest
 	}
 
 	state.fromBodyPolicyGroupDevices(ctx, res)
+	associateRes := res
 
 	// Read policy group device variables
 	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
@@ -341,6 +344,23 @@ func (r *PolicyGroupResource) Read(ctx context.Context, req resource.ReadRequest
 	}
 
 	state.updateTfAttributes(ctx, &oldState)
+
+	if r.deployOnOutOfDate {
+		if value := associateRes.Get("devices"); value.Exists() {
+			value.ForEach(func(k, v gjson.Result) bool {
+				if !v.Get("policyGroupUpToDate").Bool() {
+					id := v.Get("id").String()
+					for i := range state.Devices {
+						if state.Devices[i].Id.ValueString() == id {
+							state.Devices[i].Deploy = types.BoolValue(false)
+							break
+						}
+					}
+				}
+				return true
+			})
+		}
+	}
 	imp, diags := helpers.IsFlagImporting(ctx, req)
 	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
 		return

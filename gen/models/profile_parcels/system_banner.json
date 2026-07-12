@@ -3,7 +3,7 @@
     "$schema": "http://json-schema.org/draft/2019-09/schema",
     "$id": "https://cisco.com/schema/profileparcel/sdwan/system/banner/post/request_schema.json",
     "title": "Banner Parcel Schema",
-    "description": "Banner profile parcel schema for POST request",
+    "description": "Banner feature schema",
     "type": "object",
     "properties": {
       "name": {
@@ -165,6 +165,7 @@
         "details-4": "when option Type is default, value should be present with given default value as specified in schema",
         "examples": [
           {
+            "name": "SystemBannerGlobalDefault",
             "data": {
               "login": {
                 "optionType": "global",
@@ -174,10 +175,10 @@
                 "optionType": "default",
                 "value": ""
               }
-            },
-            "name": "SystemBannerGlobalDefault"
+            }
           },
           {
+            "name": "SystemBannerVariable",
             "data": {
               "login": {
                 "optionType": "variable",
@@ -187,10 +188,10 @@
                 "optionType": "variable",
                 "variableName": "{{var_motd_parcel_cg1_ny}}"
               }
-            },
-            "name": "SystemBannerVariable"
+            }
           },
           {
+            "name": "SystemBannerDefaultGlobal",
             "data": {
               "login": {
                 "optionType": "default",
@@ -200,8 +201,7 @@
                 "optionType": "global",
                 "value": "Global Message of the Day"
               }
-            },
-            "name": "SystemBannerDefaultGlobal"
+            }
           }
         ]
       }
