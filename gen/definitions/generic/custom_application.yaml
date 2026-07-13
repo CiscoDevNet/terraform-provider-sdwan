@@ -13,7 +13,7 @@ attributes:
     response_data_path: [data]
     mandatory: true
     description: Application Name
-    example: Example
+    example: Example-Custom
   - model_name: serverNames
     tf_name: server_names
     type: Set

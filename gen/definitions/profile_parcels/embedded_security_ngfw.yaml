@@ -16,14 +16,19 @@ attributes:
     tf_name: default_action
     example: pass
   - model_name: sequences
+    minimum_test_value: 'true'
     attributes: 
     - model_name: sequenceId 
+      minimum_test_value: '"1"'
       example: 1
     - model_name: sequenceName
+      minimum_test_value: '"security"'
       example: security
     - model_name: baseAction
+      minimum_test_value: '"drop"'
       example: drop
     - model_name: sequenceType
+      minimum_test_value: '"ngfirewall"'
       example: ngfirewall
     - model_name: disableSequence
       example: false
