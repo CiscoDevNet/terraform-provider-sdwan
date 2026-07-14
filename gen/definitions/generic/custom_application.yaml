@@ -1,4 +1,5 @@
 ---
+# Manual resource - Create() is manually maintained to handle 20.18's async-only task response
 name: Custom Application
 rest_endpoint: /template/policy/customapp/
 has_version: true
