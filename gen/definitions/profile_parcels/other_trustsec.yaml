@@ -93,19 +93,19 @@ attributes:
       tf_name: max_hold_time
       optional: true
       conditional_attribute:
-        operator: or(and)
-        groups:
-          - conditions:
-              - name: mode
-                value: peer
-                type: String
+        operator: or
+        conditions:
+          - name: mode
+            value: peer
+            type: String
+            and:
               - name: mode_type
                 value: speaker
                 type: String
-          - conditions:
-              - name: mode
-                value: local
-                type: String
+          - name: mode
+            value: local
+            type: String
+            and:
               - name: mode_type
                 value: listener
                 type: String

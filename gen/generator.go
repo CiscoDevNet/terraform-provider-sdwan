@@ -298,25 +298,18 @@ type YamlConfigAttribute struct {
 }
 
 type YamlConfigConditionalAttribute struct {
-	Operator   string                     `yaml:"operator"`
-	Conditions []YamlConfigCondition      `yaml:"conditions"`
-	Groups     []YamlConfigConditionGroup `yaml:"groups"`
-}
-
-// YamlConfigConditionGroup represents one group of conditions in a compound
-// (2-level) conditional. Groups carry no operator of their own: the intra-group
-// operator is always the inverse of the top-level operator (DNF/CNF alternation).
-type YamlConfigConditionGroup struct {
+	Operator   string                `yaml:"operator"`
 	Conditions []YamlConfigCondition `yaml:"conditions"`
 }
 
 type YamlConfigCondition struct {
-	Name         string `yaml:"name"`
-	Value        string `yaml:"value"`
-	Type         string `yaml:"type"`
-	Negate       bool   `yaml:"negate"`
-	TfOnly       bool   // Populated during augmentation, true if the target attribute is tf_only
-	DefaultValue string // Populated during template execution, not from YAML
+	Name         string                `yaml:"name"`
+	Value        string                `yaml:"value"`
+	Type         string                `yaml:"type"`
+	Negate       bool                  `yaml:"negate"`
+	And          []YamlConfigCondition `yaml:"and"` // Optional nested conditions ANDed with this condition; enables OR-of-AND via operator 'or' + conditions each carrying 'and'
+	TfOnly       bool                  // Populated during augmentation, true if the target attribute is tf_only
+	DefaultValue string                // Populated during template execution, not from YAML
 }
 
 // Templating helper function to convert TF name to GO name
@@ -467,63 +460,37 @@ func Add(x, y int) int {
 
 // Templating helper function to check if conditional attribute has conditions
 func HasConditional(attr YamlConfigConditionalAttribute) bool {
-	return len(attr.Conditions) > 0 || len(attr.Groups) > 0
-}
-
-// parseGroupOperator parses a top-level operator value into its outer and inner
-// operators. It accepts the self-documenting parenthetical form `or(and)` /
-// `and(or)` as well as the plain shorthand `or` / `and`. The inner operator is
-// always the inverse of the outer one (DNF/CNF alternation); when a parenthetical
-// inner is supplied it must match the inferred inverse, otherwise generation fails.
-// An empty operator defaults to `or(and)` (DNF).
-func parseGroupOperator(op string) (outer string, inner string) {
-	op = strings.TrimSpace(op)
-	if op == "" {
-		return "or", "and"
-	}
-
-	var declaredInner string
-	if idx := strings.Index(op, "("); idx >= 0 {
-		outer = strings.TrimSpace(op[:idx])
-		declaredInner = strings.TrimSpace(strings.TrimSuffix(op[idx+1:], ")"))
-	} else {
-		outer = op
-	}
-
-	if outer != "and" && outer != "or" {
-		panic(fmt.Sprintf("invalid conditional operator %q: outer operator must be 'and' or 'or'", op))
-	}
-
-	if outer == "and" {
-		inner = "or"
-	} else {
-		inner = "and"
-	}
-
-	if declaredInner != "" && declaredInner != inner {
-		panic(fmt.Sprintf("invalid conditional operator %q: inner operator must be %q (the inverse of %q)", op, inner, outer))
-	}
-
-	return outer, inner
+	return len(attr.Conditions) > 0
 }
 
 // HasTfOnlyConditional checks if the conditional attribute has any conditions
-// whose target attribute is tf_only.
+// (including nested And sub-conditions) whose target attribute is tf_only.
 func HasTfOnlyConditional(attr YamlConfigConditionalAttribute) bool {
 	for _, c := range attr.Conditions {
 		if c.TfOnly {
 			return true
 		}
+		for _, ac := range c.And {
+			if ac.TfOnly {
+				return true
+			}
+		}
 	}
 	return false
 }
 
-// FilterTfOnlyConditions returns only the conditions whose target attribute is tf_only.
+// FilterTfOnlyConditions returns only the conditions (including nested And sub-conditions)
+// whose target attribute is tf_only.
 func FilterTfOnlyConditions(conditions []YamlConfigCondition) []YamlConfigCondition {
 	var filtered []YamlConfigCondition
 	for _, c := range conditions {
 		if c.TfOnly {
 			filtered = append(filtered, c)
+		}
+		for _, ac := range c.And {
+			if ac.TfOnly {
+				filtered = append(filtered, ac)
+			}
 		}
 	}
 	return filtered
@@ -545,11 +512,9 @@ func resolveConditionTfOnly(attributes []YamlConfigAttribute) {
 			if tfOnlyMap[attributes[i].ConditionalAttribute.Conditions[j].Name] {
 				attributes[i].ConditionalAttribute.Conditions[j].TfOnly = true
 			}
-		}
-		for g := range attributes[i].ConditionalAttribute.Groups {
-			for j := range attributes[i].ConditionalAttribute.Groups[g].Conditions {
-				if tfOnlyMap[attributes[i].ConditionalAttribute.Groups[g].Conditions[j].Name] {
-					attributes[i].ConditionalAttribute.Groups[g].Conditions[j].TfOnly = true
+			for k := range attributes[i].ConditionalAttribute.Conditions[j].And {
+				if tfOnlyMap[attributes[i].ConditionalAttribute.Conditions[j].And[k].Name] {
+					attributes[i].ConditionalAttribute.Conditions[j].And[k].TfOnly = true
 				}
 			}
 		}
@@ -568,10 +533,8 @@ func HasMinVersionCondition(attributes []YamlConfigAttribute) bool {
 			if cond.Type == "MinVersion" {
 				return true
 			}
-		}
-		for _, group := range attr.ConditionalAttribute.Groups {
-			for _, cond := range group.Conditions {
-				if cond.Type == "MinVersion" {
+			for _, ac := range cond.And {
+				if ac.Type == "MinVersion" {
 					return true
 				}
 			}
@@ -693,40 +656,6 @@ func BuildConditionalLogic(attr YamlConfigConditionalAttribute, attributesOrCont
 		}
 	}
 
-	// Compound (2-level) conditional: groups joined by the outer operator,
-	// conditions inside each group joined by the inner (inverse) operator.
-	if len(attr.Groups) > 0 {
-		outer, inner := parseGroupOperator(attr.Operator)
-		innerJoin := " && "
-		if inner == "or" {
-			innerJoin = " || "
-		}
-		outerJoin := " || "
-		if outer == "and" {
-			outerJoin = " && "
-		}
-
-		var groupChecks []string
-		for _, group := range attr.Groups {
-			var checks []string
-			for _, cond := range group.Conditions {
-				if defaultVal, exists := defaultValueMap[cond.Name]; exists {
-					cond.DefaultValue = defaultVal
-				}
-				checks = append(checks, BuildConditionCheck(cond, context))
-			}
-			if len(checks) == 0 {
-				continue
-			}
-			groupChecks = append(groupChecks, "("+strings.Join(checks, innerJoin)+")")
-		}
-
-		if len(groupChecks) == 0 {
-			return ""
-		}
-		return " && (" + strings.Join(groupChecks, outerJoin) + ")"
-	}
-
 	operator := attr.Operator
 	if operator == "" {
 		operator = "and"
@@ -738,7 +667,23 @@ func BuildConditionalLogic(attr YamlConfigConditionalAttribute, attributesOrCont
 		if defaultVal, exists := defaultValueMap[cond.Name]; exists {
 			cond.DefaultValue = defaultVal
 		}
-		checks = append(checks, BuildConditionCheck(cond, context))
+		check := BuildConditionCheck(cond, context)
+
+		// If the condition carries nested And sub-conditions, group them into
+		// a parenthesized AND expression: (check && and1 && and2 ...)
+		if len(cond.And) > 0 {
+			var andChecks []string
+			andChecks = append(andChecks, check)
+			for _, andCond := range cond.And {
+				if defaultVal, exists := defaultValueMap[andCond.Name]; exists {
+					andCond.DefaultValue = defaultVal
+				}
+				andChecks = append(andChecks, BuildConditionCheck(andCond, context))
+			}
+			check = "(" + strings.Join(andChecks, " && ") + ")"
+		}
+
+		checks = append(checks, check)
 	}
 
 	if len(checks) == 0 {
@@ -762,36 +707,6 @@ func BuildConditionalDescription(attr YamlConfigConditionalAttribute) string {
 		return ""
 	}
 
-	// Compound (2-level) conditional description.
-	if len(attr.Groups) > 0 {
-		outer, inner := parseGroupOperator(attr.Operator)
-		innerJoiner := " and "
-		if inner == "or" {
-			innerJoiner = " or "
-		}
-		outerJoiner := " or "
-		if outer == "and" {
-			outerJoiner = " and "
-		}
-
-		var groupParts []string
-		for _, group := range attr.Groups {
-			var parts []string
-			for _, cond := range group.Conditions {
-				parts = append(parts, buildConditionDescriptionPart(cond))
-			}
-			if len(parts) == 0 {
-				continue
-			}
-			groupParts = append(groupParts, "("+strings.Join(parts, innerJoiner)+")")
-		}
-
-		if len(groupParts) == 0 {
-			return ""
-		}
-		return ", Attribute conditional on " + strings.Join(groupParts, outerJoiner)
-	}
-
 	operator := attr.Operator
 	if operator == "" {
 		operator = "and"
@@ -799,7 +714,20 @@ func BuildConditionalDescription(attr YamlConfigConditionalAttribute) string {
 
 	var parts []string
 	for _, cond := range attr.Conditions {
-		parts = append(parts, buildConditionDescriptionPart(cond))
+		part := buildConditionDescriptionPart(cond)
+
+		// If the condition carries nested And sub-conditions, group them into
+		// a parenthesized description: (part and andPart1 and andPart2 ...)
+		if len(cond.And) > 0 {
+			var andParts []string
+			andParts = append(andParts, part)
+			for _, andCond := range cond.And {
+				andParts = append(andParts, buildConditionDescriptionPart(andCond))
+			}
+			part = "(" + strings.Join(andParts, " and ") + ")"
+		}
+
+		parts = append(parts, part)
 	}
 
 	if len(parts) == 0 {
