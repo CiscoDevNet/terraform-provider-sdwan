@@ -450,6 +450,14 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"tunnel_interface_color_description": schema.StringAttribute{
+				MarkdownDescription: "Set color description for TLOC",
+				Computed:            true,
+			},
+			"tunnel_interface_color_description_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 			"tunnel_interface_hello_interval": schema.Int64Attribute{
 				MarkdownDescription: "Set time period of control hello packets <100..600000> milli seconds",
 				Computed:            true,
@@ -547,8 +555,16 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"tunnel_interface_full_port_hop": schema.BoolAttribute{
+				MarkdownDescription: "Enable port hopping on the tunnel interface",
+				Computed:            true,
+			},
+			"tunnel_interface_full_port_hop_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 			"tunnel_interface_port_hop": schema.BoolAttribute{
-				MarkdownDescription: "Disallow port hopping on the tunnel interface",
+				MarkdownDescription: "The port hop functionality is deprecated for devices 17.18 and higher. Use the full-port-hop field instead",
 				Computed:            true,
 			},
 			"tunnel_interface_port_hop_variable": schema.StringAttribute{
@@ -1178,6 +1194,38 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 						},
 					},
 				},
+			},
+			"enable_sgt_propagation": schema.BoolAttribute{
+				MarkdownDescription: "Indicates that the interface is trustworthy for CTS",
+				Computed:            true,
+			},
+			"propagate": schema.BoolAttribute{
+				MarkdownDescription: "Enables the interface for CTS SGT authorization and forwarding",
+				Computed:            true,
+			},
+			"security_group_tag": schema.Int64Attribute{
+				MarkdownDescription: "SGT value between 2 and 65519",
+				Computed:            true,
+			},
+			"security_group_tag_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"trusted": schema.BoolAttribute{
+				MarkdownDescription: "Indicates that the interface is trustworthy for CTS.",
+				Computed:            true,
+			},
+			"enable_enforced_propogation": schema.BoolAttribute{
+				MarkdownDescription: "Enable/Disable SGT Enforcement on an interface",
+				Computed:            true,
+			},
+			"enforced_security_group_tag": schema.Int64Attribute{
+				MarkdownDescription: "SGT value between 2 and 65519",
+				Computed:            true,
+			},
+			"enforced_security_group_tag_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
 			},
 			"icmp_redirect_disable": schema.BoolAttribute{
 				MarkdownDescription: "ICMP/ICMPv6 Redirect Disable",

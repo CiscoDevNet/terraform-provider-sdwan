@@ -351,8 +351,8 @@ func (r *TransportRoutingOSPFv3IPv4ProfileParcelResource) Schema(ctx context.Con
 										MarkdownDescription: helpers.NewAttributeDescription("Set interface name").String,
 										Optional:            true,
 										Validators: []validator.String{
-											stringvalidator.LengthBetween(3, 32),
-											stringvalidator.RegexMatches(regexp.MustCompile(`(AppGigabitEthernet|BDI|BD-VIF|Virtual-Template|Dialer|Ethernet|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GigabitEthernet|HundredGigE|Loopback|Port-channel|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwoGigabitEthernet|TwoHundredGigE|Vlan|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
+											stringvalidator.LengthBetween(4, 32),
+											stringvalidator.RegexMatches(regexp.MustCompile(`^(AppGigabitEthernet|BDI|BD-VIF|Virtual-Template|Dialer|Ethernet|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GigabitEthernet|HundredGigE|Loopback|Port-channel|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwoGigabitEthernet|TwoHundredGigE|Vlan|vmi|ipsec|gre)((0|[1-9]\d*)(/(0|[1-9]\d*)){0,3}(\.([1-9]\d*))?)$`), ""),
 										},
 									},
 									"name_variable": schema.StringAttribute{
@@ -471,10 +471,10 @@ func (r *TransportRoutingOSPFv3IPv4ProfileParcelResource) Schema(ctx context.Con
 										Optional:            true,
 									},
 									"subnet_mask": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
+										MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.248.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
 										Optional:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0"),
+											stringvalidator.OneOf("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.248.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0"),
 										},
 									},
 									"subnet_mask_variable": schema.StringAttribute{

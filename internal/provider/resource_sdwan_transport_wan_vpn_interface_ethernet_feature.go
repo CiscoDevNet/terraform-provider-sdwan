@@ -541,6 +541,17 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
+			"tunnel_interface_color_description": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set color description for TLOC, Attribute conditional on `tunnel_interface` equal to `true` and SD-WAN Manager version `20.18.1` or higher").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+				},
+			},
+			"tunnel_interface_color_description_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true` and SD-WAN Manager version `20.18.1` or higher").String,
+				Optional:            true,
+			},
 			"tunnel_interface_hello_interval": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set time period of control hello packets <100..600000> milli seconds, Attribute conditional on `tunnel_interface` equal to `true`").AddIntegerRangeDescription(100, 600000).AddDefaultValueDescription("1000").String,
 				Optional:            true,
@@ -656,8 +667,16 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true`").String,
 				Optional:            true,
 			},
+			"tunnel_interface_full_port_hop": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enable port hopping on the tunnel interface, Attribute conditional on `tunnel_interface` equal to `true` and SD-WAN Manager version `20.18.1` or higher").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"tunnel_interface_full_port_hop_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_interface` equal to `true` and SD-WAN Manager version `20.18.1` or higher").String,
+				Optional:            true,
+			},
 			"tunnel_interface_port_hop": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Disallow port hopping on the tunnel interface, Attribute conditional on `tunnel_interface` equal to `true`").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("The port hop functionality is deprecated for devices 17.18 and higher. Use the full-port-hop field instead, Attribute conditional on `tunnel_interface` equal to `true`").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
 			"tunnel_interface_port_hop_variable": schema.StringAttribute{
@@ -1397,6 +1416,44 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 						},
 					},
 				},
+			},
+			"enable_sgt_propagation": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Indicates that the interface is trustworthy for CTS, Attribute conditional on `port_channel_member_interface` not equal to `true` and SD-WAN Manager version `20.18.1` or higher").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"propagate": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enables the interface for CTS SGT authorization and forwarding, Attribute conditional on `port_channel_member_interface` not equal to `true` and `enable_sgt_propagation` equal to `true` and SD-WAN Manager version `20.18.1` or higher").AddDefaultValueDescription("true").String,
+				Optional:            true,
+			},
+			"security_group_tag": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("SGT value between 2 and 65519, Attribute conditional on `port_channel_member_interface` not equal to `true` and `enable_sgt_propagation` equal to `true` and SD-WAN Manager version `20.18.1` or higher").AddIntegerRangeDescription(2, 65519).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(2, 65519),
+				},
+			},
+			"security_group_tag_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true` and `enable_sgt_propagation` equal to `true` and SD-WAN Manager version `20.18.1` or higher").String,
+				Optional:            true,
+			},
+			"trusted": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Indicates that the interface is trustworthy for CTS., Attribute conditional on `port_channel_member_interface` not equal to `true` and `enable_sgt_propagation` equal to `true` and `security_group_tag` being set and SD-WAN Manager version `20.18.1` or higher").AddDefaultValueDescription("true").String,
+				Optional:            true,
+			},
+			"enable_enforced_propogation": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enable/Disable SGT Enforcement on an interface, Attribute conditional on `port_channel_member_interface` not equal to `true` and SD-WAN Manager version `20.18.1` or higher").String,
+				Optional:            true,
+			},
+			"enforced_security_group_tag": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("SGT value between 2 and 65519, Attribute conditional on `port_channel_member_interface` not equal to `true` and SD-WAN Manager version `20.18.1` or higher").AddIntegerRangeDescription(2, 65519).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(2, 65519),
+				},
+			},
+			"enforced_security_group_tag_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true` and SD-WAN Manager version `20.18.1` or higher").String,
+				Optional:            true,
 			},
 			"icmp_redirect_disable": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("ICMP/ICMPv6 Redirect Disable, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddDefaultValueDescription("true").String,

@@ -49,4 +49,8 @@ data "sdwan_transport_cellular_profile_feature" "example" {
 - `profile_username` (String) Set the profile username
 - `profile_username_variable` (String) Variable name
 - `requires_authentication` (Boolean) Require authentication type
+- `slice_differentiator` (Number) S-NSSAI slice differentiator
+- `slice_differentiator_variable` (String) Variable name
+- `slice_type` (Number) S-NSSAI slice type number: 1(eMBB), 2(URLLC), 3(MioT)
+- `slice_type_variable` (String) Variable name
 - `version` (Number) The version of the Feature

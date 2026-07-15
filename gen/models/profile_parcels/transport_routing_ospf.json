@@ -1251,9 +1251,6 @@
                                     ]
                                 }
                             },
-                            "required": [
-                                "protocol"
-                            ],
                             "additionalProperties": false,
                             "allOf": [
                                 {
@@ -1266,17 +1263,14 @@
                                                     }
                                                 }
                                             }
-                                        }
+                                        },
+                                        "required": [
+                                            "protocol"
+                                        ]
                                     },
                                     "then": {
                                         "required": [
-                                            "protocol",
                                             "dia"
-                                        ]
-                                    },
-                                    "else": {
-                                        "required": [
-                                            "protocol"
                                         ]
                                     }
                                 },
@@ -1647,8 +1641,8 @@
                                                             },
                                                             "value": {
                                                                 "type": "string",
-                                                                "pattern": "(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
-                                                                "minLength": 3,
+                                                                "pattern": "^(AppGigabitEthernet|BDI|BD-VIF|Virtual-Template|Dialer|Ethernet|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GigabitEthernet|HundredGigE|Loopback|Port-channel|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwoGigabitEthernet|TwoHundredGigE|Vlan|vmi|ipsec|gre)((0|[1-9]\\d*)(/(0|[1-9]\\d*)){0,3}(\\.([1-9]\\d*))?)$",
+                                                                "minLength": 4,
                                                                 "maxLength": 32
                                                             }
                                                         },
@@ -1674,8 +1668,8 @@
                                                             },
                                                             "default": {
                                                                 "type": "string",
-                                                                "pattern": "(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
-                                                                "minLength": 3,
+                                                                "pattern": "^(AppGigabitEthernet|BDI|BD-VIF|Virtual-Template|Dialer|Ethernet|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GigabitEthernet|HundredGigE|Loopback|Port-channel|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwoGigabitEthernet|TwoHundredGigE|Vlan|vmi|ipsec|gre)((0|[1-9]\\d*)(/(0|[1-9]\\d*)){0,3}(\\.([1-9]\\d*))?)$",
+                                                                "minLength": 4,
                                                                 "maxLength": 32
                                                             },
                                                             "description": {
@@ -2566,6 +2560,7 @@
                                                                             "255.255.0.0",
                                                                             "255.254.0.0",
                                                                             "255.252.0.0",
+                                                                            "255.248.0.0",
                                                                             "255.240.0.0",
                                                                             "255.224.0.0",
                                                                             "255.192.0.0",
@@ -2623,6 +2618,7 @@
                                                                             "255.255.0.0",
                                                                             "255.254.0.0",
                                                                             "255.252.0.0",
+                                                                            "255.248.0.0",
                                                                             "255.240.0.0",
                                                                             "255.224.0.0",
                                                                             "255.192.0.0",
@@ -2824,9 +2820,6 @@
                                     }
                                 }
                             },
-                            "required": [
-                                "aNum"
-                            ],
                             "additionalProperties": false
                         }
                     }
@@ -2845,7 +2838,7 @@
                     "ISRv",
                     "ir1101"
                 ],
-                "minVManageVersion": "20.15.1"
+                "minVManageVersion": "20.17.1"
             },
             "documentation": {
                 "description": "This is the documentation for request schema for Ospf profile parcel",

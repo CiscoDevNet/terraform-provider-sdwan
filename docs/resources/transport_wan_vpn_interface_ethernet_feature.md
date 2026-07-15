@@ -149,22 +149,23 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
       mac_address = "00-B0-D0-63-C2-26"
     }
   ]
-  icmp_redirect_disable = true
-  duplex                = "full"
-  mac_address           = "00-B0-D0-63-C2-26"
-  ip_mtu                = 1500
-  interface_mtu         = 1500
-  tcp_mss               = 505
-  speed                 = "2500"
-  arp_timeout           = 1200
-  autonegotiate         = false
-  media_type            = "rj45"
-  tloc_extension        = "tloc"
-  gre_tunnel_source_ip  = "1.2.3.4"
-  xconnect              = "example"
-  load_interval         = 30
-  tracker               = "example"
-  ip_directed_broadcast = false
+  enforced_security_group_tag = 200
+  icmp_redirect_disable       = true
+  duplex                      = "full"
+  mac_address                 = "00-B0-D0-63-C2-26"
+  ip_mtu                      = 1500
+  interface_mtu               = 1500
+  tcp_mss                     = 505
+  speed                       = "2500"
+  arp_timeout                 = 1200
+  autonegotiate               = false
+  media_type                  = "rj45"
+  tloc_extension              = "tloc"
+  gre_tunnel_source_ip        = "1.2.3.4"
+  xconnect                    = "example"
+  load_interval               = 30
+  tracker                     = "example"
+  ip_directed_broadcast       = false
 }
 ```
 
@@ -207,6 +208,12 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
   - Choices: `full`, `half`, `auto`
 - `duplex_variable` (String) Variable name, Attribute conditional on `port_channel_interface` not equal to `true`
 - `enable_dhcpv6` (Boolean) Enable DHCPv6, Attribute conditional on `ipv6_address_type` equal to `dynamic` or `ipv6_address_type_variable` being set
+- `enable_enforced_propogation` (Boolean) Enable/Disable SGT Enforcement on an interface, Attribute conditional on `port_channel_member_interface` not equal to `true` and SD-WAN Manager version `20.18.1` or higher
+- `enable_sgt_propagation` (Boolean) Indicates that the interface is trustworthy for CTS, Attribute conditional on `port_channel_member_interface` not equal to `true` and SD-WAN Manager version `20.18.1` or higher
+  - Default value: `false`
+- `enforced_security_group_tag` (Number) SGT value between 2 and 65519, Attribute conditional on `port_channel_member_interface` not equal to `true` and SD-WAN Manager version `20.18.1` or higher
+  - Range: `2`-`65519`
+- `enforced_security_group_tag_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true` and SD-WAN Manager version `20.18.1` or higher
 - `gre_tunnel_source_ip` (String) GRE tunnel source IP, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `gre_tunnel_source_ip_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable, Attribute conditional on `port_channel_member_interface` not equal to `true`
@@ -342,6 +349,8 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
   - Default value: `true`
 - `port_channel_static_qos_aggregate_variable` (String) Variable name, Attribute conditional on `port_channel_mode` equal to `static`
 - `port_channel_subinterface` (Boolean) , Attribute conditional on `port_channel_interface` equal to `true`
+- `propagate` (Boolean) Enables the interface for CTS SGT authorization and forwarding, Attribute conditional on `port_channel_member_interface` not equal to `true` and `enable_sgt_propagation` equal to `true` and SD-WAN Manager version `20.18.1` or higher
+  - Default value: `true`
 - `qos_adaptive` (Boolean) Adaptive QoS, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Default value: `false`
 - `qos_adaptive_bandwidth_downstream` (Boolean) Shaping Rate Downstream
@@ -373,6 +382,9 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `qos_shaping_rate` (Number) Shaping Rate (Kbps)
   - Range: `8`-`100000000`
 - `qos_shaping_rate_variable` (String) Variable name
+- `security_group_tag` (Number) SGT value between 2 and 65519, Attribute conditional on `port_channel_member_interface` not equal to `true` and `enable_sgt_propagation` equal to `true` and SD-WAN Manager version `20.18.1` or higher
+  - Range: `2`-`65519`
+- `security_group_tag_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true` and `enable_sgt_propagation` equal to `true` and SD-WAN Manager version `20.18.1` or higher
 - `service_provider` (String) Service Provider Name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `service_provider_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `shutdown` (Boolean) - Default value: `true`
@@ -389,6 +401,8 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `tloc_extension_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `tracker` (String) Enable tracker for this interface, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `tracker_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `trusted` (Boolean) Indicates that the interface is trustworthy for CTS., Attribute conditional on `port_channel_member_interface` not equal to `true` and `enable_sgt_propagation` equal to `true` and `security_group_tag` being set and SD-WAN Manager version `20.18.1` or higher
+  - Default value: `true`
 - `tunnel_bandwidth_percent` (Number) Tunnels Bandwidth Percent, Attribute conditional on `tunnel_interface` equal to `true` and `tunnel_qos_mode` equal to `hub`
   - Range: `1`-`100`
   - Default value: `50`
@@ -452,6 +466,8 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `tunnel_interface_color` (String) Set color for TLOC, Attribute conditional on `tunnel_interface` equal to `true`
   - Choices: `default`, `mpls`, `metro-ethernet`, `biz-internet`, `public-internet`, `lte`, `3g`, `red`, `green`, `blue`, `gold`, `silver`, `bronze`, `custom1`, `custom2`, `custom3`, `private1`, `private2`, `private3`, `private4`, `private5`, `private6`
   - Default value: `mpls`
+- `tunnel_interface_color_description` (String) Set color description for TLOC, Attribute conditional on `tunnel_interface` equal to `true` and SD-WAN Manager version `20.18.1` or higher
+- `tunnel_interface_color_description_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true` and SD-WAN Manager version `20.18.1` or higher
 - `tunnel_interface_color_restrict` (Boolean) Restrict this TLOC behavior, Attribute conditional on `tunnel_interface` equal to `true`
   - Default value: `false`
 - `tunnel_interface_color_restrict_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
@@ -462,6 +478,9 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `tunnel_interface_encapsulations` (Attributes List) Encapsulation for TLOC, Attribute conditional on `port_channel_member_interface` not equal to `true` (see [below for nested schema](#nestedatt--tunnel_interface_encapsulations))
 - `tunnel_interface_exclude_controller_group_list` (Set of Number) Exclude the following controller groups defined in this list., Attribute conditional on `tunnel_interface` equal to `true`
 - `tunnel_interface_exclude_controller_group_list_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_full_port_hop` (Boolean) Enable port hopping on the tunnel interface, Attribute conditional on `tunnel_interface` equal to `true` and SD-WAN Manager version `20.18.1` or higher
+  - Default value: `false`
+- `tunnel_interface_full_port_hop_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true` and SD-WAN Manager version `20.18.1` or higher
 - `tunnel_interface_gre_tunnel_destination_ip` (String) GRE tunnel destination IP, Attribute conditional on `tunnel_interface` equal to `true`
 - `tunnel_interface_gre_tunnel_destination_ip_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
 - `tunnel_interface_groups` (Number) List of groups, Attribute conditional on `tunnel_interface` equal to `true`
@@ -491,7 +510,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `tunnel_interface_network_broadcast` (Boolean) Accept and respond to network-prefix-directed broadcasts, Attribute conditional on `tunnel_interface` equal to `true`
   - Default value: `false`
 - `tunnel_interface_network_broadcast_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
-- `tunnel_interface_port_hop` (Boolean) Disallow port hopping on the tunnel interface, Attribute conditional on `tunnel_interface` equal to `true`
+- `tunnel_interface_port_hop` (Boolean) The port hop functionality is deprecated for devices 17.18 and higher. Use the full-port-hop field instead, Attribute conditional on `tunnel_interface` equal to `true`
   - Default value: `true`
 - `tunnel_interface_port_hop_variable` (String) Variable name, Attribute conditional on `tunnel_interface` equal to `true`
 - `tunnel_interface_set_sdwan_tunnel_mtu_to_max` (Boolean) Set current tunnel mtu to 9k, Attribute conditional on `tunnel_interface` equal to `true`

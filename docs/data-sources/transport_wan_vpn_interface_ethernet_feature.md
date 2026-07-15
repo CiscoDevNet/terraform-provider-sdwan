@@ -56,6 +56,10 @@ data "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `duplex` (String) Duplex mode
 - `duplex_variable` (String) Variable name
 - `enable_dhcpv6` (Boolean) Enable DHCPv6
+- `enable_enforced_propogation` (Boolean) Enable/Disable SGT Enforcement on an interface
+- `enable_sgt_propagation` (Boolean) Indicates that the interface is trustworthy for CTS
+- `enforced_security_group_tag` (Number) SGT value between 2 and 65519
+- `enforced_security_group_tag_variable` (String) Variable name
 - `gre_tunnel_source_ip` (String) GRE tunnel source IP
 - `gre_tunnel_source_ip_variable` (String) Variable name
 - `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
@@ -147,6 +151,7 @@ data "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `port_channel_static_qos_aggregate` (Boolean) Enable QoS Port-Channel aggregate
 - `port_channel_static_qos_aggregate_variable` (String) Variable name
 - `port_channel_subinterface` (Boolean)
+- `propagate` (Boolean) Enables the interface for CTS SGT authorization and forwarding
 - `qos_adaptive` (Boolean) Adaptive QoS
 - `qos_adaptive_bandwidth_downstream` (Boolean) Shaping Rate Downstream
 - `qos_adaptive_bandwidth_upstream` (Boolean) Shaping Rate Upstream
@@ -166,6 +171,8 @@ data "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `qos_adaptive_period_variable` (String) Variable name
 - `qos_shaping_rate` (Number) Shaping Rate (Kbps)
 - `qos_shaping_rate_variable` (String) Variable name
+- `security_group_tag` (Number) SGT value between 2 and 65519
+- `security_group_tag_variable` (String) Variable name
 - `service_provider` (String) Service Provider Name
 - `service_provider_variable` (String) Variable name
 - `shutdown` (Boolean)
@@ -180,6 +187,7 @@ data "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `tloc_extension_variable` (String) Variable name
 - `tracker` (String) Enable tracker for this interface
 - `tracker_variable` (String) Variable name
+- `trusted` (Boolean) Indicates that the interface is trustworthy for CTS.
 - `tunnel_bandwidth_percent` (Number) Tunnels Bandwidth Percent
 - `tunnel_bandwidth_percent_variable` (String) Variable name
 - `tunnel_interface` (Boolean) Tunnel Interface on/off
@@ -220,6 +228,8 @@ data "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `tunnel_interface_clear_dont_fragment` (Boolean) Enable clear dont fragment (Currently Only SDWAN Tunnel Interface)
 - `tunnel_interface_clear_dont_fragment_variable` (String) Variable name
 - `tunnel_interface_color` (String) Set color for TLOC
+- `tunnel_interface_color_description` (String) Set color description for TLOC
+- `tunnel_interface_color_description_variable` (String) Variable name
 - `tunnel_interface_color_restrict` (Boolean) Restrict this TLOC behavior
 - `tunnel_interface_color_restrict_variable` (String) Variable name
 - `tunnel_interface_color_variable` (String) Variable name
@@ -228,6 +238,8 @@ data "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `tunnel_interface_encapsulations` (Attributes List) Encapsulation for TLOC (see [below for nested schema](#nestedatt--tunnel_interface_encapsulations))
 - `tunnel_interface_exclude_controller_group_list` (Set of Number) Exclude the following controller groups defined in this list.
 - `tunnel_interface_exclude_controller_group_list_variable` (String) Variable name
+- `tunnel_interface_full_port_hop` (Boolean) Enable port hopping on the tunnel interface
+- `tunnel_interface_full_port_hop_variable` (String) Variable name
 - `tunnel_interface_gre_tunnel_destination_ip` (String) GRE tunnel destination IP
 - `tunnel_interface_gre_tunnel_destination_ip_variable` (String) Variable name
 - `tunnel_interface_groups` (Number) List of groups
@@ -246,7 +258,7 @@ data "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `tunnel_interface_nat_refresh_interval_variable` (String) Variable name
 - `tunnel_interface_network_broadcast` (Boolean) Accept and respond to network-prefix-directed broadcasts
 - `tunnel_interface_network_broadcast_variable` (String) Variable name
-- `tunnel_interface_port_hop` (Boolean) Disallow port hopping on the tunnel interface
+- `tunnel_interface_port_hop` (Boolean) The port hop functionality is deprecated for devices 17.18 and higher. Use the full-port-hop field instead
 - `tunnel_interface_port_hop_variable` (String) Variable name
 - `tunnel_interface_set_sdwan_tunnel_mtu_to_max` (Boolean) Set current tunnel mtu to 9k
 - `tunnel_interface_set_sdwan_tunnel_mtu_to_max_variable` (String) Variable name
