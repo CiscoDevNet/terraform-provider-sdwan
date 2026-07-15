@@ -4193,6 +4193,78 @@
                                     }
                                 ]
                             },
+                            "colorDescription": {
+                                "description": "Set color description for TLOC",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "description": "Set color description for TLOC",
+                                                "type": "string",
+                                                "minLength": 1,
+                                                "maxLength": 128
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "description": "Set color description for TLOC",
+                                                "type": "string",
+                                                "minLength": 1,
+                                                "maxLength": 128
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
                             "helloInterval": {
                                 "description": "Set time period of control hello packets <100..600000> milli seconds",
                                 "type": "object",
@@ -5097,8 +5169,82 @@
                                     }
                                 ]
                             },
+                            "fullPortHop": {
+                                "description": "Enable port hopping on the tunnel interface",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean",
+                                                "enum": [
+                                                    false
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
                             "portHop": {
-                                "description": "Disallow port hopping on the tunnel interface",
+                                "description": "The port hop functionality is deprecated for devices 17.18 and higher. Use the full-port-hop field instead",
                                 "type": "object",
                                 "oneOf": [
                                     {
@@ -8497,11 +8643,72 @@
                                             ]
                                         }
                                     },
-                                    "required": [
-                                        "sourceIp",
-                                        "translateIp",
-                                        "staticNatDirection",
-                                        "sourceVpn"
+                                    "allOf": [
+                                        {
+                                            "if": {
+                                                "anyOf": [
+                                                    {
+                                                        "properties": {
+                                                            "sourceIp": {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "const": "global"
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "sourceIp"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "translateIp": {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "const": "global"
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "translateIp"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "sourceVpn": {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "const": "global"
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "sourceVpn"
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "then": {
+                                                "required": [
+                                                    "sourceIp",
+                                                    "translateIp",
+                                                    "staticNatDirection",
+                                                    "sourceVpn"
+                                                ]
+                                            }
+                                        }
                                     ],
                                     "additionalProperties": false
                                 }
@@ -8972,14 +9179,126 @@
                                             ]
                                         }
                                     },
-                                    "required": [
-                                        "protocol",
-                                        "sourceIp",
-                                        "sourcePort",
-                                        "translateIp",
-                                        "translatePort",
-                                        "staticNatDirection",
-                                        "sourceVpn"
+                                    "allOf": [
+                                        {
+                                            "if": {
+                                                "anyOf": [
+                                                    {
+                                                        "properties": {
+                                                            "protocol": {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "const": "global"
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "protocol"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "sourceIp": {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "const": "global"
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "sourceIp"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "sourcePort": {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "const": "global"
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "sourcePort"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "translateIp": {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "const": "global"
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "translateIp"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "translatePort": {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "const": "global"
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "translatePort"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "sourceVpn": {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "const": "global"
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "sourceVpn"
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "then": {
+                                                "required": [
+                                                    "protocol",
+                                                    "sourceIp",
+                                                    "sourcePort",
+                                                    "translateIp",
+                                                    "translatePort",
+                                                    "staticNatDirection",
+                                                    "sourceVpn"
+                                                ]
+                                            }
+                                        }
                                     ],
                                     "additionalProperties": false
                                 }
@@ -9440,9 +9759,53 @@
                                             ]
                                         }
                                     },
-                                    "required": [
-                                        "sourcePrefix",
-                                        "sourceVpnId"
+                                    "allOf": [
+                                        {
+                                            "if": {
+                                                "anyOf": [
+                                                    {
+                                                        "properties": {
+                                                            "sourcePrefix": {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "const": "global"
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "sourcePrefix"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "sourceVpnId": {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "const": "global"
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "sourceVpnId"
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "then": {
+                                                "required": [
+                                                    "sourcePrefix",
+                                                    "sourceVpnId"
+                                                ]
+                                            }
+                                        }
                                     ],
                                     "additionalProperties": false
                                 }
@@ -10534,12 +10897,426 @@
                                     ]
                                 }
                             },
-                            "required": [
-                                "ipAddress",
-                                "macAddress"
-                            ],
-                            "additionalProperties": false
+                            "additionalProperties": false,
+                            "allOf": [
+                                {
+                                    "if": {
+                                        "anyOf": [
+                                            {
+                                                "properties": {
+                                                    "ipAddress": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "const": "global"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "ipAddress"
+                                                ]
+                                            },
+                                            {
+                                                "properties": {
+                                                    "macAddress": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "const": "global"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "macAddress"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "then": {
+                                        "required": [
+                                            "ipAddress",
+                                            "macAddress"
+                                        ]
+                                    }
+                                }
+                            ]
                         }
+                    },
+                    "trustsec": {
+                        "description": "Trustsec",
+                        "type": "object",
+                        "properties": {
+                            "enableSGTPropogation": {
+                                "description": "Indicates that the interface is trustworthy for CTS",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean",
+                                                "enum": [
+                                                    false
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "propagate": {
+                                "description": "Enables the interface for CTS SGT authorization and forwarding",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean",
+                                                "default": true
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean",
+                                                "enum": [
+                                                    true
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "securityGroupTag": {
+                                "description": "SGT value between 2 and 65519",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "minimum": 2,
+                                                "maximum": 65519,
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "minimum": 2,
+                                                "maximum": 65519,
+                                                "type": "integer"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "enum": []
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "trusted": {
+                                "description": "Indicates that the interface is trustworthy for CTS.",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean",
+                                                "default": true
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean",
+                                                "enum": [
+                                                    true
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "enableEnforcedPropogation": {
+                                "description": "Enable/Disable SGT Enforcement on an interface",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "enforcedSecurityGroupTag": {
+                                "description": "SGT value between 2 and 65519",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "minimum": 2,
+                                                "maximum": 65519,
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "minimum": 2,
+                                                "maximum": 65519,
+                                                "type": "integer"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "enum": []
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            }
+                        },
+                        "required": [
+                            "enableSGTPropogation",
+                            "enableEnforcedPropogation",
+                            "enforcedSecurityGroupTag"
+                        ],
+                        "if": {
+                            "properties": {
+                                "propagate": {
+                                    "properties": {
+                                        "value": {
+                                            "const": false
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "then": {
+                            "properties": {
+                                "trusted": {
+                                    "properties": {
+                                        "optionType": {
+                                            "type": "string",
+                                            "enum": [
+                                                "global"
+                                            ]
+                                        },
+                                        "value": {
+                                            "const": false
+                                        }
+                                    },
+                                    "required": [
+                                        "optionType",
+                                        "value"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        },
+                        "additionalProperties": false
                     },
                     "advanced": {
                         "description": "Advanced Attributes",
@@ -12549,6 +13326,27 @@
                                                 "encapsulation",
                                                 "nat"
                                             ]
+                                        },
+                                        {
+                                            "$comment": "For non portChannelMemberInterface, ipv4 and ipv6 should config least one",
+                                            "anyOf": [
+                                                {
+                                                    "required": [
+                                                        "intfIpAddress"
+                                                    ]
+                                                },
+                                                {
+                                                    "required": [
+                                                        "intfIpV6Address"
+                                                    ]
+                                                },
+                                                {
+                                                    "required": [
+                                                        "intfIpAddress",
+                                                        "intfIpV6Address"
+                                                    ]
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -12622,7 +13420,7 @@
                         ]
                     }
                 ],
-                "minVManageVersion": "20.15.1 (modified to include \"either\" from 20.18 schema)"
+                "minVManageVersion": "20.18.1"
             },
             "documentation": {
                 "description": "This is the documentation for POST request schema for WAN VPN Ethernet Interface profile parcel",

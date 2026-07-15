@@ -3,7 +3,7 @@
 name: Transport WAN VPN Interface Ethernet
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/ethernet
 minimum_version: 20.15.0
-test_tags: [SDWAN_2015]
+test_tags: [SDWAN_2015, SDWAN_2018]
 parcel_type: feature
 doc_category: Features - Transport
 attributes:
@@ -414,6 +414,19 @@ attributes:
           value: true
           type: Bool
     example: mpls
+  - model_name: colorDescription
+    tf_name: tunnel_interface_color_description
+    exclude_ignore: true
+    exclude_example: true
+    exclude_test: true
+    data_path: [tunnel]
+    conditional_attribute:
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
+        - type: MinVersion
+          value: 20.18.1
   - model_name: helloInterval
     tf_name: tunnel_interface_hello_interval
     exclude_ignore: true
@@ -531,6 +544,19 @@ attributes:
           value: true
           type: Bool
     example: 8
+  - model_name: fullPortHop
+    tf_name: tunnel_interface_full_port_hop
+    exclude_ignore: true
+    exclude_test: true
+    data_path: [tunnel]
+    conditional_attribute:
+      conditions:
+        - name: tunnelInterface
+          value: true
+          type: Bool
+        - type: MinVersion
+          value: 20.18.1
+    exclude_example: true
   - model_name: portHop
     tf_name: tunnel_interface_port_hop
     data_path: [tunnel]
@@ -1173,6 +1199,92 @@ attributes:
           value: true
           type: Bool
           negate: true
+  - model_name: enableSGTPropogation
+    tf_name: enable_sgt_propagation
+    data_path: [trustsec]
+    example: true
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
+        - type: MinVersion
+          value: 20.18.1  
+  - model_name: propagate
+    data_path: [trustsec]
+    example: true
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
+        - name: enable_sgt_propagation
+          value: true
+          type: Bool
+        - type: MinVersion
+          value: 20.18.1  
+  - model_name: securityGroupTag
+    tf_name: security_group_tag
+    data_path: [trustsec]
+    example: 100
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
+        - name: enable_sgt_propagation
+          value: true
+          type: Bool
+        - type: MinVersion
+          value: 20.18.1  
+  - model_name: trusted
+    data_path: [trustsec]
+    example: true
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
+        - name: enable_sgt_propagation
+          value: true
+          type: Bool
+        - name: security_group_tag
+          value: ''
+          negate: true
+        - type: MinVersion
+          value: 20.18.1  
+  - model_name: enableEnforcedPropogation
+    data_path: [trustsec]
+    example: true
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
+        - type: MinVersion
+          value: 20.18.1  
+  - model_name: enforcedSecurityGroupTag
+    data_path: [trustsec]
+    example: 200
+    test_tags: [SDWAN_2018]
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
+        - type: MinVersion
+          value: 20.18.1  
   - model_name: icmpRedirectDisable
     data_path: [advanced]
     example: true

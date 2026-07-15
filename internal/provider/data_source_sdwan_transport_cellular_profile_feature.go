@@ -145,6 +145,22 @@ func (d *TransportCellularProfileProfileParcelDataSource) Schema(ctx context.Con
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"slice_type": schema.Int64Attribute{
+				MarkdownDescription: "S-NSSAI slice type number: 1(eMBB), 2(URLLC), 3(MioT)",
+				Computed:            true,
+			},
+			"slice_type_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"slice_differentiator": schema.Int64Attribute{
+				MarkdownDescription: "S-NSSAI slice differentiator",
+				Computed:            true,
+			},
+			"slice_differentiator_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 		},
 	}
 }

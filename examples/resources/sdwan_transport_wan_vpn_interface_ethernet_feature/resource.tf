@@ -132,20 +132,21 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
       mac_address = "00-B0-D0-63-C2-26"
     }
   ]
-  icmp_redirect_disable = true
-  duplex                = "full"
-  mac_address           = "00-B0-D0-63-C2-26"
-  ip_mtu                = 1500
-  interface_mtu         = 1500
-  tcp_mss               = 505
-  speed                 = "2500"
-  arp_timeout           = 1200
-  autonegotiate         = false
-  media_type            = "rj45"
-  tloc_extension        = "tloc"
-  gre_tunnel_source_ip  = "1.2.3.4"
-  xconnect              = "example"
-  load_interval         = 30
-  tracker               = "example"
-  ip_directed_broadcast = false
+  enforced_security_group_tag = 200
+  icmp_redirect_disable       = true
+  duplex                      = "full"
+  mac_address                 = "00-B0-D0-63-C2-26"
+  ip_mtu                      = 1500
+  interface_mtu               = 1500
+  tcp_mss                     = 505
+  speed                       = "2500"
+  arp_timeout                 = 1200
+  autonegotiate               = false
+  media_type                  = "rj45"
+  tloc_extension              = "tloc"
+  gre_tunnel_source_ip        = "1.2.3.4"
+  xconnect                    = "example"
+  load_interval               = 30
+  tracker                     = "example"
+  ip_directed_broadcast       = false
 }

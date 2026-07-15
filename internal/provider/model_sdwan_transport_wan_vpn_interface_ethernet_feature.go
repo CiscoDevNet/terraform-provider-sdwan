@@ -112,6 +112,8 @@ type TransportWANVPNInterfaceEthernet struct {
 	TunnelInterfaceCarrierVariable                     types.String                                                    `tfsdk:"tunnel_interface_carrier_variable"`
 	TunnelInterfaceColor                               types.String                                                    `tfsdk:"tunnel_interface_color"`
 	TunnelInterfaceColorVariable                       types.String                                                    `tfsdk:"tunnel_interface_color_variable"`
+	TunnelInterfaceColorDescription                    types.String                                                    `tfsdk:"tunnel_interface_color_description"`
+	TunnelInterfaceColorDescriptionVariable            types.String                                                    `tfsdk:"tunnel_interface_color_description_variable"`
 	TunnelInterfaceHelloInterval                       types.Int64                                                     `tfsdk:"tunnel_interface_hello_interval"`
 	TunnelInterfaceHelloIntervalVariable               types.String                                                    `tfsdk:"tunnel_interface_hello_interval_variable"`
 	TunnelInterfaceHelloTolerance                      types.Int64                                                     `tfsdk:"tunnel_interface_hello_tolerance"`
@@ -136,6 +138,8 @@ type TransportWANVPNInterfaceEthernet struct {
 	TunnelInterfaceExcludeControllerGroupListVariable  types.String                                                    `tfsdk:"tunnel_interface_exclude_controller_group_list_variable"`
 	TunnelInterfaceVmanageConnectionPreference         types.Int64                                                     `tfsdk:"tunnel_interface_vmanage_connection_preference"`
 	TunnelInterfaceVmanageConnectionPreferenceVariable types.String                                                    `tfsdk:"tunnel_interface_vmanage_connection_preference_variable"`
+	TunnelInterfaceFullPortHop                         types.Bool                                                      `tfsdk:"tunnel_interface_full_port_hop"`
+	TunnelInterfaceFullPortHopVariable                 types.String                                                    `tfsdk:"tunnel_interface_full_port_hop_variable"`
 	TunnelInterfacePortHop                             types.Bool                                                      `tfsdk:"tunnel_interface_port_hop"`
 	TunnelInterfacePortHopVariable                     types.String                                                    `tfsdk:"tunnel_interface_port_hop_variable"`
 	TunnelInterfaceLowBandwidthLink                    types.Bool                                                      `tfsdk:"tunnel_interface_low_bandwidth_link"`
@@ -235,6 +239,14 @@ type TransportWANVPNInterfaceEthernet struct {
 	AclIpv6EgressFeatureId                             types.String                                                    `tfsdk:"acl_ipv6_egress_feature_id"`
 	AclIpv6IngressFeatureId                            types.String                                                    `tfsdk:"acl_ipv6_ingress_feature_id"`
 	Arps                                               []TransportWANVPNInterfaceEthernetArps                          `tfsdk:"arps"`
+	EnableSgtPropagation                               types.Bool                                                      `tfsdk:"enable_sgt_propagation"`
+	Propagate                                          types.Bool                                                      `tfsdk:"propagate"`
+	SecurityGroupTag                                   types.Int64                                                     `tfsdk:"security_group_tag"`
+	SecurityGroupTagVariable                           types.String                                                    `tfsdk:"security_group_tag_variable"`
+	Trusted                                            types.Bool                                                      `tfsdk:"trusted"`
+	EnableEnforcedPropogation                          types.Bool                                                      `tfsdk:"enable_enforced_propogation"`
+	EnforcedSecurityGroupTag                           types.Int64                                                     `tfsdk:"enforced_security_group_tag"`
+	EnforcedSecurityGroupTagVariable                   types.String                                                    `tfsdk:"enforced_security_group_tag_variable"`
 	IcmpRedirectDisable                                types.Bool                                                      `tfsdk:"icmp_redirect_disable"`
 	IcmpRedirectDisableVariable                        types.String                                                    `tfsdk:"icmp_redirect_disable_variable"`
 	Duplex                                             types.String                                                    `tfsdk:"duplex"`
@@ -1191,6 +1203,23 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 		}
 	}
 
+	if !data.TunnelInterfaceColorDescriptionVariable.IsNull() {
+		if true && data.TunnelInterface.ValueBool() == true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"tunnel.colorDescription.optionType", "variable")
+			body, _ = sjson.Set(body, path+"tunnel.colorDescription.value", data.TunnelInterfaceColorDescriptionVariable.ValueString())
+		}
+	} else if data.TunnelInterfaceColorDescription.IsNull() {
+		if true && data.TunnelInterface.ValueBool() == true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"tunnel.colorDescription.optionType", "default")
+
+		}
+	} else {
+		if true && data.TunnelInterface.ValueBool() == true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"tunnel.colorDescription.optionType", "global")
+			body, _ = sjson.Set(body, path+"tunnel.colorDescription.value", data.TunnelInterfaceColorDescription.ValueString())
+		}
+	}
+
 	if !data.TunnelInterfaceHelloIntervalVariable.IsNull() {
 		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.helloInterval.optionType", "variable")
@@ -1394,6 +1423,23 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 		if true && data.TunnelInterface.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"tunnel.vManageConnectionPreference.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.vManageConnectionPreference.value", data.TunnelInterfaceVmanageConnectionPreference.ValueInt64())
+		}
+	}
+
+	if !data.TunnelInterfaceFullPortHopVariable.IsNull() {
+		if true && data.TunnelInterface.ValueBool() == true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.optionType", "variable")
+			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.value", data.TunnelInterfaceFullPortHopVariable.ValueString())
+		}
+	} else if data.TunnelInterfaceFullPortHop.IsNull() {
+		if true && data.TunnelInterface.ValueBool() == true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.optionType", "default")
+			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.value", false)
+		}
+	} else {
+		if true && data.TunnelInterface.ValueBool() == true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.optionType", "global")
+			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.value", data.TunnelInterfaceFullPortHop.ValueBool())
 		}
 	}
 
@@ -2519,6 +2565,84 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 			body, _ = sjson.SetRaw(body, path+"arp.-1", itemBody)
 		}
 	}
+	if data.EnableSgtPropagation.IsNull() {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"trustsec.enableSGTPropogation.optionType", "default")
+			body, _ = sjson.Set(body, path+"trustsec.enableSGTPropogation.value", false)
+		}
+	} else {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"trustsec.enableSGTPropogation.optionType", "global")
+			body, _ = sjson.Set(body, path+"trustsec.enableSGTPropogation.value", data.EnableSgtPropagation.ValueBool())
+		}
+	}
+	if data.Propagate.IsNull() {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && data.EnableSgtPropagation.ValueBool() == true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"trustsec.propagate.optionType", "default")
+			body, _ = sjson.Set(body, path+"trustsec.propagate.value", true)
+		}
+	} else {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && data.EnableSgtPropagation.ValueBool() == true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"trustsec.propagate.optionType", "global")
+			body, _ = sjson.Set(body, path+"trustsec.propagate.value", data.Propagate.ValueBool())
+		}
+	}
+
+	if !data.SecurityGroupTagVariable.IsNull() {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && data.EnableSgtPropagation.ValueBool() == true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"trustsec.securityGroupTag.optionType", "variable")
+			body, _ = sjson.Set(body, path+"trustsec.securityGroupTag.value", data.SecurityGroupTagVariable.ValueString())
+		}
+	} else if data.SecurityGroupTag.IsNull() {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && data.EnableSgtPropagation.ValueBool() == true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"trustsec.securityGroupTag.optionType", "default")
+
+		}
+	} else {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && data.EnableSgtPropagation.ValueBool() == true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"trustsec.securityGroupTag.optionType", "global")
+			body, _ = sjson.Set(body, path+"trustsec.securityGroupTag.value", data.SecurityGroupTag.ValueInt64())
+		}
+	}
+	if data.Trusted.IsNull() {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && data.EnableSgtPropagation.ValueBool() == true && !(data.SecurityGroupTag.IsNull()) && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"trustsec.trusted.optionType", "default")
+			body, _ = sjson.Set(body, path+"trustsec.trusted.value", true)
+		}
+	} else {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && data.EnableSgtPropagation.ValueBool() == true && !(data.SecurityGroupTag.IsNull()) && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"trustsec.trusted.optionType", "global")
+			body, _ = sjson.Set(body, path+"trustsec.trusted.value", data.Trusted.ValueBool())
+		}
+	}
+	if data.EnableEnforcedPropogation.IsNull() {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"trustsec.enableEnforcedPropogation.optionType", "default")
+
+		}
+	} else {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"trustsec.enableEnforcedPropogation.optionType", "global")
+			body, _ = sjson.Set(body, path+"trustsec.enableEnforcedPropogation.value", data.EnableEnforcedPropogation.ValueBool())
+		}
+	}
+
+	if !data.EnforcedSecurityGroupTagVariable.IsNull() {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"trustsec.enforcedSecurityGroupTag.optionType", "variable")
+			body, _ = sjson.Set(body, path+"trustsec.enforcedSecurityGroupTag.value", data.EnforcedSecurityGroupTagVariable.ValueString())
+		}
+	} else if data.EnforcedSecurityGroupTag.IsNull() {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"trustsec.enforcedSecurityGroupTag.optionType", "default")
+
+		}
+	} else {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"trustsec.enforcedSecurityGroupTag.optionType", "global")
+			body, _ = sjson.Set(body, path+"trustsec.enforcedSecurityGroupTag.value", data.EnforcedSecurityGroupTag.ValueInt64())
+		}
+	}
 
 	if !data.IcmpRedirectDisableVariable.IsNull() {
 		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
@@ -3547,6 +3671,16 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.TunnelInterfaceColor = types.StringValue(va.String())
 		}
 	}
+	data.TunnelInterfaceColorDescription = types.StringNull()
+	data.TunnelInterfaceColorDescriptionVariable = types.StringNull()
+	if t := res.Get(path + "tunnel.colorDescription.optionType"); t.Exists() {
+		va := res.Get(path + "tunnel.colorDescription.value")
+		if t.String() == "variable" {
+			data.TunnelInterfaceColorDescriptionVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TunnelInterfaceColorDescription = types.StringValue(va.String())
+		}
+	}
 	data.TunnelInterfaceHelloInterval = types.Int64Null()
 	data.TunnelInterfaceHelloIntervalVariable = types.StringNull()
 	if t := res.Get(path + "tunnel.helloInterval.optionType"); t.Exists() {
@@ -3665,6 +3799,16 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.TunnelInterfaceVmanageConnectionPreferenceVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.TunnelInterfaceVmanageConnectionPreference = types.Int64Value(va.Int())
+		}
+	}
+	data.TunnelInterfaceFullPortHop = types.BoolNull()
+	data.TunnelInterfaceFullPortHopVariable = types.StringNull()
+	if t := res.Get(path + "tunnel.fullPortHop.optionType"); t.Exists() {
+		va := res.Get(path + "tunnel.fullPortHop.value")
+		if t.String() == "variable" {
+			data.TunnelInterfaceFullPortHopVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TunnelInterfaceFullPortHop = types.BoolValue(va.Bool())
 		}
 	}
 	data.TunnelInterfacePortHop = types.BoolNull()
@@ -4797,6 +4941,58 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			}
 		}
 		data.Arps = resultArps
+	}
+	data.EnableSgtPropagation = types.BoolNull()
+
+	if t := res.Get(path + "trustsec.enableSGTPropogation.optionType"); t.Exists() {
+		va := res.Get(path + "trustsec.enableSGTPropogation.value")
+		if t.String() == "global" {
+			data.EnableSgtPropagation = types.BoolValue(va.Bool())
+		}
+	}
+	data.Propagate = types.BoolNull()
+
+	if t := res.Get(path + "trustsec.propagate.optionType"); t.Exists() {
+		va := res.Get(path + "trustsec.propagate.value")
+		if t.String() == "global" {
+			data.Propagate = types.BoolValue(va.Bool())
+		}
+	}
+	data.SecurityGroupTag = types.Int64Null()
+	data.SecurityGroupTagVariable = types.StringNull()
+	if t := res.Get(path + "trustsec.securityGroupTag.optionType"); t.Exists() {
+		va := res.Get(path + "trustsec.securityGroupTag.value")
+		if t.String() == "variable" {
+			data.SecurityGroupTagVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.SecurityGroupTag = types.Int64Value(va.Int())
+		}
+	}
+	data.Trusted = types.BoolNull()
+
+	if t := res.Get(path + "trustsec.trusted.optionType"); t.Exists() {
+		va := res.Get(path + "trustsec.trusted.value")
+		if t.String() == "global" {
+			data.Trusted = types.BoolValue(va.Bool())
+		}
+	}
+	data.EnableEnforcedPropogation = types.BoolNull()
+
+	if t := res.Get(path + "trustsec.enableEnforcedPropogation.optionType"); t.Exists() {
+		va := res.Get(path + "trustsec.enableEnforcedPropogation.value")
+		if t.String() == "global" {
+			data.EnableEnforcedPropogation = types.BoolValue(va.Bool())
+		}
+	}
+	data.EnforcedSecurityGroupTag = types.Int64Null()
+	data.EnforcedSecurityGroupTagVariable = types.StringNull()
+	if t := res.Get(path + "trustsec.enforcedSecurityGroupTag.optionType"); t.Exists() {
+		va := res.Get(path + "trustsec.enforcedSecurityGroupTag.value")
+		if t.String() == "variable" {
+			data.EnforcedSecurityGroupTagVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.EnforcedSecurityGroupTag = types.Int64Value(va.Int())
+		}
 	}
 	data.IcmpRedirectDisable = types.BoolNull()
 	data.IcmpRedirectDisableVariable = types.StringNull()

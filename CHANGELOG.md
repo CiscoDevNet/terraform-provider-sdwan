@@ -13,6 +13,15 @@
 - Bump `sdwan_system_security_feature` schema to `20.18.0`
 - Bump `sdwan_system_snmp_feature` schema to `20.18.0`
 - Add `deploy_on_out_of_date` provider attribute (env: `SDWAN_DEPLOY_ON_OUT_OF_DATE`, default: `true`) to automatically detect and re-deploy out-of-date devices in `sdwan_configuration_group` and `sdwan_policy_group` resources during refresh
+- Bump `sdwan_transport_cellular_profile_feature` schema to `20.18.0`
+- Bump `sdwan_transport_routing_bgp_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_interface_ethernet_feature` schema to `20.18.0`
+- Bump `sdwan_transport_management_vpn_feature` schema to `20.18.0`
+- Bump `sdwan_transport_routing_ospf_feature` schema to `20.18.0`
+- Bump `sdwan_transport_routing_ospfv3_ipv4_feature` schema to `20.18.0`
+- Bump `sdwan_transport_routing_ospfv3_ipv6_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_interface_ethernet_feature` schema to `20.18.0`
 
 ## 0.11.3
 

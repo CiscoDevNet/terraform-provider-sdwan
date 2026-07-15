@@ -29,16 +29,22 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanTransportCellularProfileProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015")
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "profile_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "profile_id", "2"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "access_point_name", "apn1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "authentication_type", "pap"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "profile_username", "example"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "packet_data_network_type", "ipv4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "no_overwrite", "false"))
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "slice_type", "2"))
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "slice_differentiator", "20"))
+	}
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -74,7 +80,7 @@ func testAccSdwanTransportCellularProfileProfileParcelConfig_all() string {
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
-	config += `	profile_id = 1` + "\n"
+	config += `	profile_id = 2` + "\n"
 	config += `	access_point_name = "apn1"` + "\n"
 	config += `	requires_authentication = true` + "\n"
 	config += `	authentication_type = "pap"` + "\n"
@@ -82,6 +88,12 @@ func testAccSdwanTransportCellularProfileProfileParcelConfig_all() string {
 	config += `	profile_password = "example123!"` + "\n"
 	config += `	packet_data_network_type = "ipv4"` + "\n"
 	config += `	no_overwrite = false` + "\n"
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	slice_type = 2` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	slice_differentiator = 20` + "\n"
+	}
 	config += `}` + "\n"
 	return config
 }

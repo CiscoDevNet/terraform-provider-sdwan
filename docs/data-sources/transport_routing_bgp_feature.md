@@ -94,9 +94,9 @@ Read-Only:
 
 - `as_set_path` (Boolean) Set AS set path information
 - `as_set_path_variable` (String) Variable name
-- `network_address` (String)
+- `network_address` (String) IP Address
 - `network_address_variable` (String) Variable name
-- `subnet_mask` (String)
+- `subnet_mask` (String) Subnet Mask
 - `subnet_mask_variable` (String) Variable name
 - `summary_only` (Boolean) Filter out more specific routes from updates
 - `summary_only_variable` (String) Variable name
@@ -173,9 +173,9 @@ Read-Only:
 
 Read-Only:
 
-- `network_address` (String)
+- `network_address` (String) IP Address
 - `network_address_variable` (String) Variable name
-- `subnet_mask` (String)
+- `subnet_mask` (String) Subnet Mask
 - `subnet_mask_variable` (String) Variable name
 
 
