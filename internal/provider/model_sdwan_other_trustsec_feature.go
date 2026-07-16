@@ -479,6 +479,19 @@ func (data *OtherTrustSec) fromBody(ctx context.Context, res gjson.Result, fullR
 			data.DeviceId = types.StringValue(va.String())
 		}
 	}
+	// Encrypted top-level attribute: read only on full read (import); on refresh the prior state value is preserved.
+	if fullRead {
+		data.DevicePassword = types.StringNull()
+		data.DevicePasswordVariable = types.StringNull()
+		if t := res.Get(path + "devicePassword.optionType"); t.Exists() {
+			va := res.Get(path + "devicePassword.value")
+			if t.String() == "variable" {
+				data.DevicePasswordVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				data.DevicePassword = types.StringValue(va.String())
+			}
+		}
+	}
 	data.DeviceSgt = types.Int64Null()
 	data.DeviceSgtVariable = types.StringNull()
 	if t := res.Get(path + "deviceSgt.optionType"); t.Exists() {
@@ -537,6 +550,19 @@ func (data *OtherTrustSec) fromBody(ctx context.Context, res gjson.Result, fullR
 			data.SpeakerHoldTimeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.SpeakerHoldTime = types.Int64Value(va.Int())
+		}
+	}
+	// Encrypted top-level attribute: read only on full read (import); on refresh the prior state value is preserved.
+	if fullRead {
+		data.SxpDefaultPassword = types.StringNull()
+		data.SxpDefaultPasswordVariable = types.StringNull()
+		if t := res.Get(path + "sxpDefaultPassword.optionType"); t.Exists() {
+			va := res.Get(path + "sxpDefaultPassword.value")
+			if t.String() == "variable" {
+				data.SxpDefaultPasswordVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				data.SxpDefaultPassword = types.StringValue(va.String())
+			}
 		}
 	}
 	data.SxpKeyChain = types.StringNull()

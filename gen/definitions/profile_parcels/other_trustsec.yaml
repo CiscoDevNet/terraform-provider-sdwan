@@ -18,7 +18,7 @@ attributes:
   - model_name: deviceId
     example: trustsecDevice
   - model_name: devicePassword
-    write_only: true
+    encrypted: true
     example: Cisco123
     exclude_test: true
   - model_name: deviceSgt
@@ -35,7 +35,7 @@ attributes:
   - model_name: speakerHoldTime
     example: 120
   - model_name: sxpDefaultPassword
-    write_only: true
+    encrypted: true
     example: Cisco123
     exclude_test: true
   - model_name: sxpKeyChain
