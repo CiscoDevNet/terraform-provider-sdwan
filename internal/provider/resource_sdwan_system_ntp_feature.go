@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -165,7 +166,7 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"key_id": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("MD5 authentication key ID").AddIntegerRangeDescription(1, 4294967295).String,
+							MarkdownDescription: helpers.NewAttributeDescription("Authentication key ID").AddIntegerRangeDescription(1, 4294967295).String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.Between(1, 4294967295),
@@ -184,6 +185,28 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 						},
 						"md5_value_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"hmac_sha2_value": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`^\S{1,32}$`), ""),
+							},
+						},
+						"hmac_sha2_value_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `26.1.1` or higher").String,
+							Optional:            true,
+						},
+						"cmac_aes128_value": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(16, 32),
+							},
+						},
+						"cmac_aes128_value_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `26.1.1` or higher").String,
 							Optional:            true,
 						},
 					},
@@ -258,7 +281,9 @@ func (r *SystemNTPProfileParcelResource) Create(ctx context.Context, req resourc
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
 	// Create object
-	body := plan.toBody(ctx)
+
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -341,7 +366,8 @@ func (r *SystemNTPProfileParcelResource) Update(ctx context.Context, req resourc
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

@@ -31,8 +31,10 @@ resource "sdwan_system_ntp_feature" "example" {
   ]
   authentication_keys = [
     {
-      key_id    = 49737
-      md5_value = "$CRYPT_CLUSTER"
+      key_id            = 49737
+      md5_value         = "$CRYPT_CLUSTER"
+      hmac_sha2_value   = "hmac-sha2-key-example"
+      cmac_aes128_value = "cmac-aes128-key-1234"
     }
   ]
   trusted_keys             = [49737]
@@ -76,7 +78,11 @@ resource "sdwan_system_ntp_feature" "example" {
 
 Optional:
 
-- `key_id` (Number) MD5 authentication key ID
+- `cmac_aes128_value` (String) CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher
+- `cmac_aes128_value_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `26.1.1` or higher
+- `hmac_sha2_value` (String) HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher
+- `hmac_sha2_value_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `26.1.1` or higher
+- `key_id` (Number) Authentication key ID
   - Range: `1`-`4294967295`
 - `key_id_variable` (String) Variable name
 - `md5_value` (String) Enter cleartext or AES-encrypted MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
