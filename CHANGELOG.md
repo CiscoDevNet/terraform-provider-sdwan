@@ -18,6 +18,7 @@
 - Bump `sdwan_system_snmp_feature` schema to `20.18.0`
 - Bump `sdwan_system_ntp_feature` schema to `26.1.1`
 - Add `deploy_on_out_of_date` provider attribute (env: `SDWAN_DEPLOY_ON_OUT_OF_DATE`, default: `true`) to automatically detect and re-deploy out-of-date devices in `sdwan_configuration_group` and `sdwan_policy_group` resources during refresh
+- Fix `sdwan_policy_group` device variables being sent with the wrong JSON type by resolving each variable's type from the `device/variables/schema` API (matching existing `sdwan_configuration_group` behavior)
 
 ## 0.11.3
 
