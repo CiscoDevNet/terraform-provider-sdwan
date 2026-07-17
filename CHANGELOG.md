@@ -1,5 +1,9 @@
 ## 0.11.4 (unreleased)
 
+- Add `sdwan_other_trustsec_feature` resource and data source (SD-WAN Manager 20.18+)
+- Add OR-of-AND conditional support via nested `and:` on conditions in `conditional_attribute` (e.g. `operator: or` + conditions each carrying `and:` sub-conditions) with a simpler single-shape approach
+- Extend `force_include` (formerly `include_empty_value`) to scalar attributes: `toBody` now emits `{optionType:"global"}` without a value key for scalars (previously List/Set only), and `fromBody` guards scalar reads with `va.Exists()` to prevent phantom zero values on refresh
+- Rename definition YAML attribute `include_empty_value` to `force_include` for clarity (the old name implied an empty value was written, which is only true for List/Set; for scalars it simply forces the field into the payload)
 - Fix profile parcel resources reporting phantom/stale nested list entries by rebuilding lists from the SD-WAN Manager API response on every read, making the controller the authoritative source for list membership
 - Bump `sdwan_system_banner_feature` schema to `20.18.0`
 - Bump `sdwan_system_basic_feature` schema to `20.18.0`
@@ -12,6 +16,7 @@
 - Bump `sdwan_system_omp_feature` schema to `20.18.0`
 - Bump `sdwan_system_security_feature` schema to `20.18.0`
 - Bump `sdwan_system_snmp_feature` schema to `20.18.0`
+- Bump `sdwan_system_ntp_feature` schema to `26.1.1`
 - Add `deploy_on_out_of_date` provider attribute (env: `SDWAN_DEPLOY_ON_OUT_OF_DATE`, default: `true`) to automatically detect and re-deploy out-of-date devices in `sdwan_configuration_group` and `sdwan_policy_group` resources during refresh
 
 ## 0.11.3

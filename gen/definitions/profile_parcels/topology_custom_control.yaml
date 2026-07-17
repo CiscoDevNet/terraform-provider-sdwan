@@ -51,7 +51,7 @@ attributes:
     example: SITE_100
     ignore_mandatory: true
     optional_null_empty: true
-    include_empty_value: true
+    force_include: true
     conditional_attribute:
       conditions:
         - name: target_level
@@ -65,7 +65,7 @@ attributes:
     example: SITE_200
     ignore_mandatory: true
     optional_null_empty: true
-    include_empty_value: true
+    force_include: true
     conditional_attribute:
       conditions:
         - name: target_level
