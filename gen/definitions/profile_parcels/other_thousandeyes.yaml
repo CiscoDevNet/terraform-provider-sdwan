@@ -21,7 +21,7 @@ attributes:
       tf_name: account_group_token
       id: true
       mandatory: true
-      example: qwer
+      example: qwerqwerqwerqwerqwerqwerqwerqwer
     - model_name: vpn
       example: 1
     - model_name: teMgmtIp

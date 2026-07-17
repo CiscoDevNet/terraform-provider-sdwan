@@ -16,7 +16,7 @@ This resource can manage a Custom Application .
 
 ```terraform
 resource "sdwan_custom_application" "example" {
-  app_name     = "Example"
+  app_name     = "Example-Custom"
   server_names = ["*customapp.com"]
   l3l4 = [
     {
