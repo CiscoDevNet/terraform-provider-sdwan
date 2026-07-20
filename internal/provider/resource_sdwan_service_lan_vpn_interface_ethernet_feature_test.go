@@ -42,6 +42,7 @@ func TestAccSdwanServiceLANVPNInterfaceEthernetProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_secondary_addresses.0.address", "1.2.3.5"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_secondary_addresses.0.subnet_mask", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv6_address_type", "static"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv6_address", "2001:0:0:1::0/64"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv6_dhcp_helpers.0.address", "2001:0:0:1::0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv6_dhcp_helpers.0.dhcpv6_helper_vpn", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_nat", "false"))
@@ -119,6 +120,7 @@ resource "sdwan_service_feature_profile" "test" {
 
 resource "sdwan_service_lan_vpn_feature" "test" {
   name = "TF_TEST_SLAN"
+  vpn = 1
   feature_profile_id = sdwan_service_feature_profile.test.id
 }
 
@@ -176,6 +178,7 @@ func testAccSdwanServiceLANVPNInterfaceEthernetProfileParcelConfig_all() string 
 	config += `	}]` + "\n"
 	config += `	ipv4_dhcp_helper = ["1.2.3.4"]` + "\n"
 	config += `	ipv6_address_type = "static"` + "\n"
+	config += `	ipv6_address = "2001:0:0:1::0/64"` + "\n"
 	config += `	ipv6_dhcp_helpers = [{` + "\n"
 	config += `	  address = "2001:0:0:1::0"` + "\n"
 	config += `	  dhcpv6_helper_vpn = 1` + "\n"

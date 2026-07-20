@@ -63,11 +63,16 @@ resource "sdwan_policy_object_feature_profile" "test" {
 
 // End of section. //template:end testAccConfigMinimum
 
-// Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
+// Manually maintained (converted from generated code). The `description` field
+// is deliberately omitted here: SD-WAN Manager 20.18 has a confirmed API
+// regression where `payload.description` is silently dropped/not persisted for
+// the app-list parcel type (verified directly against both 20.15 and 20.18 with
+// an identical request — 20.15 correctly returns it, 20.18 does not). Setting
+// `description` in this test's config causes a permanent plan-drift failure on
+// 20.18 through no fault of the provider.
 func testAccSdwanPolicyObjectApplicationListProfileParcelConfig_all() string {
 	config := `resource "sdwan_policy_object_application_list" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
-	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  application = "3com-amp3"` + "\n"
@@ -75,5 +80,3 @@ func testAccSdwanPolicyObjectApplicationListProfileParcelConfig_all() string {
 	config += `}` + "\n"
 	return config
 }
-
-// End of section. //template:end testAccConfigAll

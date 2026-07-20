@@ -1,4 +1,5 @@
 ---
+# Manual tests - description omitted from test configs due to a 20.18 Manager bug that drops payload.description
 name: Policy Object Application List
 rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/app-list
 minimum_version: 20.15.0
