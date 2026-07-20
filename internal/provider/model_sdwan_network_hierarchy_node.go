@@ -20,17 +20,12 @@ package provider
 import (
 	"context"
 	"fmt"
-	"strconv"
-	"strings"
 
-	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
-// NetworkHierarchyNode represents a node in the network hierarchy
-// This can be a Group (Area), Region, or Site
 type NetworkHierarchyNode struct {
 	Id          types.String                 `tfsdk:"id"`
 	Name        types.String                 `tfsdk:"name"`
@@ -40,10 +35,8 @@ type NetworkHierarchyNode struct {
 	SiteId      types.Int64                  `tfsdk:"site_id"`
 	IsSecondary types.Bool                   `tfsdk:"is_secondary"`
 	Address     *NetworkHierarchyNodeAddress `tfsdk:"address"`
-	Controllers types.Set                    `tfsdk:"controllers"`
 }
 
-// NetworkHierarchyNodeAddress represents the address for a site node
 type NetworkHierarchyNodeAddress struct {
 	Street  types.String `tfsdk:"street"`
 	City    types.String `tfsdk:"city"`
@@ -60,10 +53,9 @@ func (data NetworkHierarchyNode) getHierarchyListPath() string {
 	return "/v1/network-hierarchy?offset=0&limit=1500"
 }
 
-// resolveParentGroupToId finds the UUID for a group by name from the hierarchy list.
-// Returns the UUID and an error message if not found.
 func (data NetworkHierarchyNode) resolveParentGroupToId(hierarchyRes gjson.Result) (string, string) {
 	parentGroupName := data.ParentGroup.ValueString()
+	childType := data.Type.ValueString()
 
 	var foundId string
 	var matchCount int
@@ -72,10 +64,14 @@ func (data NetworkHierarchyNode) resolveParentGroupToId(hierarchyRes gjson.Resul
 		nodeName := value.Get("name").String()
 		nodeLabel := value.Get("data.label").String()
 
-		// Match by name - must be either Global (no label) or a group (no label means group)
-		// Groups don't have data.label, regions have "REGION", sites have "SITE"
-		if nodeName == parentGroupName && nodeLabel != "REGION" && nodeLabel != "SITE" {
-			// Use "id" field which exists for all nodes including Global
+		var isValidParent bool
+		if childType == "site" {
+			isValidParent = nodeLabel != "SITE"
+		} else {
+			isValidParent = nodeLabel != "REGION" && nodeLabel != "SITE"
+		}
+
+		if nodeName == parentGroupName && isValidParent {
 			foundId = value.Get("id").String()
 			matchCount++
 		}
@@ -92,7 +88,6 @@ func (data NetworkHierarchyNode) resolveParentGroupToId(hierarchyRes gjson.Resul
 	return foundId, ""
 }
 
-// resolveParentIdToGroup finds the group name for a given parent UUID from the hierarchy list.
 func (data NetworkHierarchyNode) resolveParentIdToGroup(hierarchyRes gjson.Result, parentId string) string {
 	var parentName string
 
@@ -100,7 +95,7 @@ func (data NetworkHierarchyNode) resolveParentIdToGroup(hierarchyRes gjson.Resul
 		nodeId := value.Get("id").String()
 		if nodeId == parentId {
 			parentName = value.Get("name").String()
-			return false // stop iteration
+			return false
 		}
 		return true
 	})
@@ -173,82 +168,6 @@ func (data NetworkHierarchyNode) toUpdateBody(ctx context.Context, currentNodeRe
 	}
 
 	return body
-}
-
-func (data NetworkHierarchyNode) getControllersPath() string {
-	return "/system/device/controllers"
-}
-
-func (data NetworkHierarchyNode) toWorkflowBody(ctx context.Context, regionId int64) string {
-	body := ""
-	body, _ = sjson.Set(body, "handler", "MRF")
-
-	nodeBody := ""
-	nodeBody, _ = sjson.Set(nodeBody, "uuid", data.Id.ValueString())
-	nodeBody, _ = sjson.Set(nodeBody, "name", data.Name.ValueString())
-	nodeBody, _ = sjson.Set(nodeBody, "type", "Region")
-
-	if !data.Description.IsNull() {
-		nodeBody, _ = sjson.Set(nodeBody, "description", data.Description.ValueString())
-	} else {
-		nodeBody, _ = sjson.Set(nodeBody, "description", "")
-	}
-
-	nodeBody, _ = sjson.Set(nodeBody, "data.label", "REGION")
-	nodeBody, _ = sjson.Set(nodeBody, "data.regionId", regionId)
-
-	if !data.IsSecondary.IsNull() {
-		nodeBody, _ = sjson.Set(nodeBody, "data.isSecondary", data.IsSecondary.ValueBool())
-	} else {
-		nodeBody, _ = sjson.Set(nodeBody, "data.isSecondary", false)
-	}
-
-	// Set controllers array
-	if !data.Controllers.IsNull() && !data.Controllers.IsUnknown() {
-		var controllers []string
-		data.Controllers.ElementsAs(ctx, &controllers, false)
-		nodeBody, _ = sjson.Set(nodeBody, "data.controllers", controllers)
-	} else {
-		nodeBody, _ = sjson.Set(nodeBody, "data.controllers", []string{})
-	}
-
-	body, _ = sjson.SetRaw(body, "nodes.0", nodeBody)
-	return body
-}
-
-func (data *NetworkHierarchyNode) readControllersFromResponse(ctx context.Context, controllersRes gjson.Result, regionId int64) {
-	regionIdStr := strconv.FormatInt(regionId, 10)
-	var controllerUUIDs []attr.Value
-
-	controllersRes.Get("data").ForEach(func(key, value gjson.Result) bool {
-		// Only vsmart controllers have region-id
-		if value.Get("deviceType").String() != "vsmart" {
-			return true
-		}
-
-		regionIds := value.Get("region-id").String()
-		if regionIds == "" {
-			return true
-		}
-
-		// region-id is comma-separated like "1,4" or "2"
-		for _, rid := range strings.Split(regionIds, ",") {
-			if strings.TrimSpace(rid) == regionIdStr {
-				uuid := value.Get("uuid").String()
-				if uuid != "" {
-					controllerUUIDs = append(controllerUUIDs, types.StringValue(uuid))
-				}
-				break
-			}
-		}
-		return true
-	})
-
-	if len(controllerUUIDs) > 0 {
-		data.Controllers, _ = types.SetValue(types.StringType, controllerUUIDs)
-	} else {
-		data.Controllers = types.SetNull(types.StringType)
-	}
 }
 
 func (data *NetworkHierarchyNode) fromBody(ctx context.Context, res gjson.Result) string {
@@ -360,9 +279,6 @@ func (data *NetworkHierarchyNode) hasChanges(ctx context.Context, state *Network
 			hasChanges = true
 		}
 	} else if (data.Address != nil && state.Address == nil) || (data.Address == nil && state.Address != nil) {
-		hasChanges = true
-	}
-	if !data.Controllers.Equal(state.Controllers) {
 		hasChanges = true
 	}
 	return hasChanges

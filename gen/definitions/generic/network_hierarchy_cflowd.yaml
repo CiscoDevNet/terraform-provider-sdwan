@@ -131,3 +131,7 @@ attributes:
         max_int: 86400
         default_value: "600"
         example: 600
+        conditional_attribute:
+          conditions:
+            - name: bfd_metrics_export
+              value: true

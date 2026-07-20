@@ -36,7 +36,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
-	"github.com/tidwall/gjson"
 )
 
 var _ resource.Resource = &NetworkHierarchyNodeResource{}
@@ -44,6 +43,36 @@ var _ resource.ResourceWithImportState = &NetworkHierarchyNodeResource{}
 
 func NewNetworkHierarchyNodeResource() resource.Resource {
 	return &NetworkHierarchyNodeResource{}
+}
+
+// siteIdImmutableModifier prevents site_id from being changed after creation
+type siteIdImmutableModifier struct{}
+
+func (m siteIdImmutableModifier) Description(ctx context.Context) string {
+	return "site_id cannot be changed after creation"
+}
+
+func (m siteIdImmutableModifier) MarkdownDescription(ctx context.Context) string {
+	return "site_id cannot be changed after creation"
+}
+
+func (m siteIdImmutableModifier) PlanModifyInt64(ctx context.Context, req planmodifier.Int64Request, resp *planmodifier.Int64Response) {
+	// If it's a create operation (no prior state), allow any value
+	if req.StateValue.IsNull() {
+		return
+	}
+
+	// If the value hasn't changed, no problem
+	if req.PlanValue.Equal(req.StateValue) {
+		return
+	}
+
+	// Value is changing on an existing resource - block it
+	resp.Diagnostics.AddError(
+		"site_id Cannot Be Modified",
+		"The site_id attribute cannot be changed after the site is created. "+
+			"To use a different site_id, you must destroy and recreate the site resource.",
+	)
 }
 
 type NetworkHierarchyNodeResource struct {
@@ -95,6 +124,9 @@ func (r *NetworkHierarchyNodeResource) Schema(ctx context.Context, req resource.
 				Validators: []validator.Int64{
 					int64validator.Between(1, 4294967295),
 				},
+				PlanModifiers: []planmodifier.Int64{
+					siteIdImmutableModifier{},
+				},
 			},
 			"is_secondary": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Whether this is a secondary region (only for region type nodes)").String,
@@ -125,11 +157,6 @@ func (r *NetworkHierarchyNodeResource) Schema(ctx context.Context, req resource.
 						Required:            true,
 					},
 				},
-			},
-			"controllers": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of controller UUIDs to assign to this region (only applicable for region type nodes)").String,
-				ElementType:         types.StringType,
-				Optional:            true,
 			},
 		},
 	}
@@ -182,29 +209,6 @@ func (r *NetworkHierarchyNodeResource) Create(ctx context.Context, req resource.
 		return
 	}
 
-	// Add controller assignment for regions
-	if plan.Type.ValueString() == "region" && !plan.Controllers.IsNull() && !plan.Controllers.IsUnknown() {
-		nodeRes, err := r.client.Get(plan.getPath() + url.QueryEscape(plan.Id.ValueString()))
-		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve node for regionId (GET), got error: %s, %s", err, nodeRes.String()))
-			return
-		}
-
-		regionId := nodeRes.Get("data.hierarchyId.regionId").Int()
-		if regionId == 0 {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to get regionId from node response: %s", nodeRes.String()))
-			return
-		}
-
-		wfBody := plan.toWorkflowBody(ctx, regionId)
-		wfRes, err := r.client.Post("/workflow/execute", wfBody)
-		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to assign controllers (POST workflow/execute), got error: %s, %s", err, wfRes.String()))
-			return
-		}
-		resp.Diagnostics.AddWarning("Controller Assignment", "vSmart controller assignment to region submitted successfully. Changes may take a few seconds to reflect in the system.")
-	}
-
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 
 	diags = resp.State.Set(ctx, &plan)
@@ -246,18 +250,6 @@ func (r *NetworkHierarchyNodeResource) Read(ctx context.Context, req resource.Re
 		state.ParentGroup = types.StringNull()
 	}
 
-	if state.Type.ValueString() == "region" {
-		regionId := res.Get("data.hierarchyId.regionId").Int()
-		if regionId > 0 {
-			controllersRes, err := r.client.Get(state.getControllersPath())
-			if err != nil {
-				resp.Diagnostics.AddWarning("Client Warning", fmt.Sprintf("Failed to retrieve controllers (GET), got error: %s", err))
-			} else {
-				state.readControllersFromResponse(ctx, controllersRes, regionId)
-			}
-		}
-	}
-
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 
 	diags = resp.State.Set(ctx, &state)
@@ -293,19 +285,13 @@ func (r *NetworkHierarchyNodeResource) Update(ctx context.Context, req resource.
 		return
 	}
 
-	var currentNodeRes gjson.Result
-	nodeNeedsUpdate := plan.hasChanges(ctx, &state)
-	controllerNeedsUpdate := plan.Type.ValueString() == "region" && !plan.Controllers.Equal(state.Controllers)
-
-	if nodeNeedsUpdate || controllerNeedsUpdate {
-		currentNodeRes, err = r.client.Get(plan.getPath() + url.QueryEscape(plan.Id.ValueString()))
+	if plan.hasChanges(ctx, &state) {
+		currentNodeRes, err := r.client.Get(plan.getPath() + url.QueryEscape(plan.Id.ValueString()))
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve current node (GET), got error: %s, %s", err, currentNodeRes.String()))
 			return
 		}
-	}
 
-	if nodeNeedsUpdate {
 		body := plan.toUpdateBody(ctx, currentNodeRes, parentId)
 		r.updateMutex.Lock()
 		res, err := r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), body)
@@ -316,24 +302,6 @@ func (r *NetworkHierarchyNodeResource) Update(ctx context.Context, req resource.
 		}
 	} else {
 		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Name.ValueString()))
-	}
-
-	if controllerNeedsUpdate {
-		regionId := currentNodeRes.Get("data.hierarchyId.regionId").Int()
-		if regionId == 0 {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to get regionId from node response: %s", currentNodeRes.String()))
-			return
-		}
-
-		wfBody := plan.toWorkflowBody(ctx, regionId)
-		r.updateMutex.Lock()
-		wfRes, err := r.client.Post("/workflow/execute", wfBody)
-		r.updateMutex.Unlock()
-		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update controllers (POST workflow/execute), got error: %s, %s", err, wfRes.String()))
-			return
-		}
-		resp.Diagnostics.AddWarning("Controller Assignment", "vSmart controller assignment to region submitted successfully. Changes may take a few seconds to reflect in the system.")
 	}
 
 	plan.Id = state.Id

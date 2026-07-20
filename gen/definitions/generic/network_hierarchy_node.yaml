@@ -91,11 +91,3 @@ attributes:
         description: Zip or postal code
         example: "10001"
         mandatory: true
-  - model_name: controllers
-    data_path: [data]
-    tf_name: controllers
-    type: Set
-    element_type: String
-    description: List of controller UUIDs (only for region type nodes)
-    exclude_example: true
-    exclude_test: true

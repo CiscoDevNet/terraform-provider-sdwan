@@ -23,14 +23,21 @@ import (
 	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework-validators/datasourcevalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
+	"github.com/tidwall/gjson"
 )
 
-var _ datasource.DataSource = &NetworkHierarchyNodeDataSource{}
+var (
+	_ datasource.DataSource                     = &NetworkHierarchyNodeDataSource{}
+	_ datasource.DataSourceWithConfigure        = &NetworkHierarchyNodeDataSource{}
+	_ datasource.DataSourceWithConfigValidators = &NetworkHierarchyNodeDataSource{}
+)
 
 func NewNetworkHierarchyNodeDataSource() datasource.DataSource {
 	return &NetworkHierarchyNodeDataSource{}
@@ -51,10 +58,12 @@ func (d *NetworkHierarchyNodeDataSource) Schema(ctx context.Context, req datasou
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The id of the object",
-				Required:            true,
+				Optional:            true,
+				Computed:            true,
 			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the node",
+				Optional:            true,
 				Computed:            true,
 			},
 			"description": schema.StringAttribute{
@@ -70,7 +79,8 @@ func (d *NetworkHierarchyNodeDataSource) Schema(ctx context.Context, req datasou
 				Computed:            true,
 			},
 			"site_id": schema.Int64Attribute{
-				MarkdownDescription: "The site ID (only for site type nodes)",
+				MarkdownDescription: "The site ID (only for site type nodes). Can be used to look up a site node by its site ID.",
+				Optional:            true,
 				Computed:            true,
 			},
 			"is_secondary": schema.BoolAttribute{
@@ -103,11 +113,6 @@ func (d *NetworkHierarchyNodeDataSource) Schema(ctx context.Context, req datasou
 					},
 				},
 			},
-			"controllers": schema.SetAttribute{
-				MarkdownDescription: "List of controller UUIDs assigned to this region (only applicable for region type nodes)",
-				ElementType:         types.StringType,
-				Computed:            true,
-			},
 		},
 	}
 }
@@ -120,6 +125,16 @@ func (d *NetworkHierarchyNodeDataSource) Configure(_ context.Context, req dataso
 	d.client = req.ProviderData.(*SdwanProviderData).Client
 }
 
+func (d *NetworkHierarchyNodeDataSource) ConfigValidators(_ context.Context) []datasource.ConfigValidator {
+	return []datasource.ConfigValidator{
+		datasourcevalidator.ExactlyOneOf(
+			path.MatchRoot("id"),
+			path.MatchRoot("name"),
+			path.MatchRoot("site_id"),
+		),
+	}
+}
+
 func (d *NetworkHierarchyNodeDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	var config NetworkHierarchyNode
 
@@ -130,6 +145,40 @@ func (d *NetworkHierarchyNodeDataSource) Read(ctx context.Context, req datasourc
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
+
+	if config.Id.IsNull() {
+		hierarchyRes, err := d.client.Get(config.getHierarchyListPath())
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve network hierarchy list, got error: %s", err))
+			return
+		}
+
+		found := false
+		hierarchyRes.ForEach(func(_, v gjson.Result) bool {
+			if !config.Name.IsNull() && v.Get("name").String() == config.Name.ValueString() {
+				config.Id = types.StringValue(v.Get("id").String())
+				found = true
+				return false
+			}
+			if !config.SiteId.IsNull() {
+				if v.Get("data.label").String() == "SITE" && v.Get("data.hierarchyId.siteId").Int() == config.SiteId.ValueInt64() {
+					config.Id = types.StringValue(v.Get("id").String())
+					found = true
+					return false
+				}
+			}
+			return true
+		})
+
+		if !found {
+			if !config.Name.IsNull() {
+				resp.Diagnostics.AddError("Not Found", fmt.Sprintf("No network hierarchy node found with name '%s'", config.Name.ValueString()))
+			} else if !config.SiteId.IsNull() {
+				resp.Diagnostics.AddError("Not Found", fmt.Sprintf("No network hierarchy node found with site_id '%d'", config.SiteId.ValueInt64()))
+			}
+			return
+		}
+	}
 
 	res, err := d.client.Get(config.getPath() + url.QueryEscape(config.Id.ValueString()))
 	if err != nil {
@@ -150,18 +199,6 @@ func (d *NetworkHierarchyNodeDataSource) Read(ctx context.Context, req datasourc
 		config.ParentGroup = types.StringValue(parentGroupName)
 	} else {
 		config.ParentGroup = types.StringNull()
-	}
-
-	if config.Type.ValueString() == "region" {
-		regionId := res.Get("data.hierarchyId.regionId").Int()
-		if regionId > 0 {
-			controllersRes, err := d.client.Get(config.getControllersPath())
-			if err != nil {
-				resp.Diagnostics.AddWarning("Client Warning", fmt.Sprintf("Failed to retrieve controllers (GET), got error: %s", err))
-			} else {
-				config.readControllersFromResponse(ctx, controllersRes, regionId)
-			}
-		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.String()))

@@ -145,11 +145,11 @@ func (data NetworkHierarchyCflowd) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "exportSpread.optionType", "global")
 				itemBody, _ = sjson.Set(itemBody, "exportSpread.value", collector.ExportSpread.ValueBool())
 			}
-			if !collector.BfdMetricsExport.IsNull() && collector.BfdMetricsExport.ValueBool() {
+			if !collector.BfdMetricsExport.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "bfdMetricsExport.optionType", "global")
 				itemBody, _ = sjson.Set(itemBody, "bfdMetricsExport.value", collector.BfdMetricsExport.ValueBool())
 			}
-			if !collector.ExportInterval.IsNull() {
+			if !collector.ExportInterval.IsNull() && collector.BfdMetricsExport.ValueBool() == true {
 				itemBody, _ = sjson.Set(itemBody, "exportInterval.optionType", "global")
 				itemBody, _ = sjson.Set(itemBody, "exportInterval.value", collector.ExportInterval.ValueInt64())
 			}

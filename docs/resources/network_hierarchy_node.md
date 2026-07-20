@@ -34,7 +34,6 @@ resource "sdwan_network_hierarchy_node" "example" {
 ### Optional
 
 - `address` (Attributes) The address of the site (only for site type nodes) (see [below for nested schema](#nestedatt--address))
-- `controllers` (Set of String) List of controller UUIDs to assign to this region (only applicable for region type nodes)
 - `description` (String) The description of the node
 - `is_secondary` (Boolean) Whether this is a secondary region (only for region type nodes)
 - `site_id` (Number) The site ID (only for site type nodes)
