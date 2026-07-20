@@ -20,7 +20,6 @@ attributes:
   - model_name: devicePassword
     encrypted: true
     example: Cisco123
-    exclude_test: true
   - model_name: deviceSgt
     force_include: true
     example: 100
