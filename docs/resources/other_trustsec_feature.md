@@ -20,6 +20,7 @@ resource "sdwan_other_trustsec_feature" "example" {
   description               = "My Example"
   feature_profile_id        = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   device_id                 = "trustsecDevice"
+  device_password           = "Cisco123"
   device_sgt                = 100
   enable_enforcement        = true
   enable_sxp                = true

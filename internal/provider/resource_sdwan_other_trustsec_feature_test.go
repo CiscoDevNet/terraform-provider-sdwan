@@ -90,6 +90,7 @@ func testAccSdwanOtherTrustSecProfileParcelConfig_all() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_other_feature_profile.test.id` + "\n"
 	config += `	device_id = "trustsecDevice"` + "\n"
+	config += `	device_password = "Cisco123"` + "\n"
 	config += `	device_sgt = 100` + "\n"
 	config += `	enable_enforcement = true` + "\n"
 	config += `	enable_sxp = true` + "\n"
