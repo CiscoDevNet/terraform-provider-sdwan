@@ -21,7 +21,7 @@ description: |-
 - Bump `sdwan_system_omp_feature` schema to `20.18.0`
 - Bump `sdwan_system_security_feature` schema to `20.18.0`
 - Bump `sdwan_system_snmp_feature` schema to `20.18.0`
-- Add `sdwan_network_hierarchy_node` resource and data source
+- Add `sdwan_network_hierarchy_node` resource and data source; controllers assignment for regions is not supported due to solution limitations. After creating a region, assign controllers manually via SD-WAN Manager GUI.
 - Add `sdwan_network_hierarchy_cflowd` resource and data source
 - Add `sdwan_network_hierarchy_security_logging` resource and data source
 - Add `deploy_on_out_of_date` provider attribute (env: `SDWAN_DEPLOY_ON_OUT_OF_DATE`, default: `true`) to automatically detect and re-deploy out-of-date devices in `sdwan_configuration_group` and `sdwan_policy_group` resources during refresh
