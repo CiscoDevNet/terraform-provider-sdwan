@@ -47,6 +47,8 @@ description: |-
 - Fix integer validator generation for attributes with only a minimum or maximum bound, including schemas where one side of the bound is 0
 - Fix profile parcel default generation to prefer explicit JSON schema defaults over the first enum value. (Note - this impacts the generated default of `sdwan_system_omp_feature.holdtime from 60 to 300` which will be pushed, once changing the sdwan_system_omp_feature configuration after provider upgrade.)
 - Fix `sdwan_tag` resource perpetual drift on SD-WAN Manager 20.18 by using individual tag endpoint instead of list endpoint for Read and Update operations.
+- Add `sdwan_service_lan_vpn_interface_ipsec_feature_associate_tracker_feature` resource and data source
+- Fix tracker issue in `sdwan_service_lan_vpn_interface_ipsec_feature` and `sdwan_transport_wan_vpn_interface_ipsec_feature` resource and data source
 
 ## 0.11.2
 
