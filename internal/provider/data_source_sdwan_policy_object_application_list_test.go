@@ -66,11 +66,13 @@ resource "sdwan_policy_object_feature_profile" "test" {
 
 // End of section. //template:end testPrerequisites
 
-// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
+// Manually maintained (converted from generated code). `description` is
+// deliberately omitted — see resource_sdwan_policy_object_application_list_test.go
+// for the full explanation (confirmed Manager 20.18 API regression, not a
+// provider bug).
 func testAccDataSourceSdwanPolicyObjectApplicationListProfileParcelConfig() string {
 	config := `resource "sdwan_policy_object_application_list" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
-	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  application = "3com-amp3"` + "\n"
@@ -86,13 +88,13 @@ func testAccDataSourceSdwanPolicyObjectApplicationListProfileParcelConfig() stri
 	return config
 }
 
-// End of section. //template:end testAccDataSourceConfig
-
-// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
+// Manually maintained (converted from generated code). `description` is
+// deliberately omitted — see resource_sdwan_policy_object_application_list_test.go
+// for the full explanation (confirmed Manager 20.18 API regression, not a
+// provider bug).
 func testAccDataSourceSdwanPolicyObjectApplicationListProfileParcelByNameConfig() string {
 	config := `resource "sdwan_policy_object_application_list" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
-	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  application = "3com-amp3"` + "\n"
@@ -107,5 +109,3 @@ func testAccDataSourceSdwanPolicyObjectApplicationListProfileParcelByNameConfig(
 	`
 	return config
 }
-
-// End of section. //template:end testAccDataSourceByNameConfig

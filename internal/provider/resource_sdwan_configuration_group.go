@@ -59,9 +59,10 @@ func NewConfigurationGroupResource() resource.Resource {
 }
 
 type ConfigurationGroupResource struct {
-	client      *sdwan.Client
-	updateMutex *sync.Mutex
-	taskTimeout *int64
+	client            *sdwan.Client
+	updateMutex       *sync.Mutex
+	taskTimeout       *int64
+	deployOnOutOfDate bool
 }
 
 func (r *ConfigurationGroupResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -206,6 +207,7 @@ func (r *ConfigurationGroupResource) Configure(_ context.Context, req resource.C
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
+	r.deployOnOutOfDate = req.ProviderData.(*SdwanProviderData).DeployOnOutOfDate
 }
 
 // End of section. //template:end model
@@ -413,6 +415,7 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 	state.fromBodyConfigGroup(ctx, res)
 
 	// Read config group device associations
+	var associateRes gjson.Result
 	if value := res.Get("numberOfDevices"); value.Exists() && value.Int() > 0 {
 		path := fmt.Sprintf("/v1/config-group/%v/device/associate/", state.Id.ValueString())
 		res, err = r.client.Get(path)
@@ -425,6 +428,7 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 		}
 
 		state.fromBodyConfigGroupDevices(ctx, res)
+		associateRes = res
 	}
 
 	// Read config group device variables
@@ -443,6 +447,23 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 	}
 
 	state.updateTfAttributes(ctx, &oldState)
+
+	if r.deployOnOutOfDate {
+		if value := associateRes.Get("devices"); value.Exists() {
+			value.ForEach(func(k, v gjson.Result) bool {
+				if !v.Get("configGroupUpToDate").Bool() {
+					id := v.Get("id").String()
+					for i := range state.Devices {
+						if state.Devices[i].Id.ValueString() == id {
+							state.Devices[i].Deploy = types.BoolValue(false)
+							break
+						}
+					}
+				}
+				return true
+			})
+		}
+	}
 
 	imp, diags := helpers.IsFlagImporting(ctx, req)
 	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {

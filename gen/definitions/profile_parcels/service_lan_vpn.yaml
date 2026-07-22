@@ -16,6 +16,7 @@ attributes:
   - model_name: vpnId
     tf_name: vpn
     example: 1
+    minimum_test_value: '1'
   - model_name: name
     tf_name: config_description
     example: VPN1

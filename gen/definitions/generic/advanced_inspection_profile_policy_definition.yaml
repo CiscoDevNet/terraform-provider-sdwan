@@ -80,7 +80,7 @@ test_prerequisites: |
   resource "sdwan_url_filtering_policy_definition" "test" {
     name                  = "TF_TEST"
     description           = "Terraform test"
-    mode                  = "security"
+    mode                  = "unified"
     alerts                = ["blacklist"]
     web_categories        = ["alcohol-and-tobacco"]
     web_categories_action = "allow"

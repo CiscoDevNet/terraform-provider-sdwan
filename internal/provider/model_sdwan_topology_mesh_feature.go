@@ -86,7 +86,7 @@ func (data TopologyMesh) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *TopologyMesh) fromBody(ctx context.Context, res gjson.Result) {
+func (data *TopologyMesh) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -113,32 +113,3 @@ func (data *TopologyMesh) fromBody(ctx context.Context, res gjson.Result) {
 }
 
 // End of section. //template:end fromBody
-
-// Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *TopologyMesh) updateFromBody(ctx context.Context, res gjson.Result) {
-	data.Name = types.StringValue(res.Get("payload.name").String())
-	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
-		data.Description = types.StringValue(value.String())
-	} else {
-		data.Description = types.StringNull()
-	}
-	path := "payload.data."
-	data.TargetVpns = types.SetNull(types.StringType)
-
-	if t := res.Get(path + "target.vpn.optionType"); t.Exists() {
-		va := res.Get(path + "target.vpn.value")
-		if t.String() == "global" {
-			data.TargetVpns = helpers.GetStringSet(va.Array())
-		}
-	}
-	data.Sites = types.SetNull(types.StringType)
-
-	if t := res.Get(path + "sites.optionType"); t.Exists() {
-		va := res.Get(path + "sites.value")
-		if t.String() == "global" {
-			data.Sites = helpers.GetStringSet(va.Array())
-		}
-	}
-}
-
-// End of section. //template:end updateFromBody

@@ -1,0 +1,117 @@
+---
+name: Other TrustSec
+rest_endpoint: /v1/feature-profile/sdwan/other/%v/trustsec
+minimum_version: 20.18.0
+id_attribute: parcelId
+test_tags: [SDWAN_2018]
+skip_minimum_test: true
+parcel_type: feature
+doc_category: Features - Other
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_other_feature_profile.test.id
+  - model_name: deviceId
+    example: trustsecDevice
+  - model_name: devicePassword
+    encrypted: true
+    example: Cisco123
+  - model_name: deviceSgt
+    force_include: true
+    example: 100
+  - model_name: enableEnforcement
+    example: true
+  - model_name: enableSxp
+    example: true
+  - model_name: listenerHoldTimeMin
+    example: 90
+  - model_name: listenerHoldTimeMax
+    example: 180
+  - model_name: speakerHoldTime
+    example: 120
+  - model_name: sxpDefaultPassword
+    encrypted: true
+    example: Cisco123
+    exclude_test: true
+  - model_name: sxpKeyChain
+    example: keychain1
+  - model_name: sxpLogBindingChanges
+    example: true
+  - model_name: sxpReconciliationPeriod
+    example: 120
+  - model_name: sxpRetryPeriod
+    example: 120
+  - model_name: sxpSourceIp
+    example: 10.0.0.1
+  - model_name: sxpNodeId
+    value: '"System IP"'
+    value_type: default
+  - model_name: sxpConnectionList
+    tf_name: sxp_connections
+    attributes:
+    - model_name: connectionPeerIp
+      tf_name: peer_ip
+      id: true
+      mandatory: true
+      example: 10.0.0.2
+    - model_name: connectionSourceIp
+      tf_name: source_ip
+      mandatory: true
+      example: 10.0.0.1
+    - model_name: connectionPresharedKey
+      tf_name: preshared_key
+      default_value_present: true
+      example: none
+    - model_name: connectionMode
+      tf_name: mode
+      default_value_present: true
+      example: peer
+    - model_name: connectionModeType
+      tf_name: mode_type
+      default_value_present: true
+      example: speaker
+    - model_name: connectionVpnId
+      tf_name: vpn_id
+      default_value_present: true
+      example: 1
+    - model_name: connectionMinHoldTime
+      tf_name: min_hold_time
+      optional: true
+      conditional_attribute:
+        conditions:
+          - name: mode_type
+            value: both
+            type: String
+            negate: true
+      example: 90
+    - model_name: connectionMaxHoldTime
+      tf_name: max_hold_time
+      optional: true
+      conditional_attribute:
+        operator: or
+        conditions:
+          - name: mode
+            value: peer
+            type: String
+            and:
+              - name: mode_type
+                value: speaker
+                type: String
+          - name: mode
+            value: local
+            type: String
+            and:
+              - name: mode_type
+                value: listener
+                type: String
+      example: 120
+
+test_prerequisites: |
+  resource "sdwan_other_feature_profile" "test" {
+    name        = "TF_TEST"
+    description = "Terraform test"
+  }

@@ -1138,11 +1138,7 @@ func (r *ServiceRoutingBGPProfileParcelResource) Read(ctx context.Context, req r
 		return
 	}
 
-	if imp {
-		state.fromBody(ctx, res)
-	} else {
-		state.updateFromBody(ctx, res)
-	}
+	state.fromBody(ctx, res, imp)
 	if state.Version.IsNull() {
 		state.Version = types.Int64Value(0)
 	}

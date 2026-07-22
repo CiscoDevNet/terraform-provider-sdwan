@@ -293,7 +293,7 @@ type YamlConfigAttribute struct {
 	NoOptionType            bool                           `yaml:"no_option_type"`
 	PositionalFallback      bool                           `yaml:"positional_fallback"`
 	OptionalNullEmpty       bool                           `yaml:"optional_null_empty"`
-	IncludeEmptyValue       bool                           `yaml:"include_empty_value"`
+	ForceInclude            bool                           `yaml:"force_include"`
 	WriteAsDefault          bool                           `yaml:"write_as_default"`
 }
 
@@ -303,12 +303,13 @@ type YamlConfigConditionalAttribute struct {
 }
 
 type YamlConfigCondition struct {
-	Name         string `yaml:"name"`
-	Value        string `yaml:"value"`
-	Type         string `yaml:"type"`
-	Negate       bool   `yaml:"negate"`
-	TfOnly       bool   // Populated during augmentation, true if the target attribute is tf_only
-	DefaultValue string // Populated during template execution, not from YAML
+	Name         string                `yaml:"name"`
+	Value        string                `yaml:"value"`
+	Type         string                `yaml:"type"`
+	Negate       bool                  `yaml:"negate"`
+	And          []YamlConfigCondition `yaml:"and"` // Optional nested conditions ANDed with this condition; enables OR-of-AND via operator 'or' + conditions each carrying 'and'
+	TfOnly       bool                  // Populated during augmentation, true if the target attribute is tf_only
+	DefaultValue string                // Populated during template execution, not from YAML
 }
 
 // Templating helper function to convert TF name to GO name
@@ -463,22 +464,33 @@ func HasConditional(attr YamlConfigConditionalAttribute) bool {
 }
 
 // HasTfOnlyConditional checks if the conditional attribute has any conditions
-// whose target attribute is tf_only.
+// (including nested And sub-conditions) whose target attribute is tf_only.
 func HasTfOnlyConditional(attr YamlConfigConditionalAttribute) bool {
 	for _, c := range attr.Conditions {
 		if c.TfOnly {
 			return true
 		}
+		for _, ac := range c.And {
+			if ac.TfOnly {
+				return true
+			}
+		}
 	}
 	return false
 }
 
-// FilterTfOnlyConditions returns only the conditions whose target attribute is tf_only.
+// FilterTfOnlyConditions returns only the conditions (including nested And sub-conditions)
+// whose target attribute is tf_only.
 func FilterTfOnlyConditions(conditions []YamlConfigCondition) []YamlConfigCondition {
 	var filtered []YamlConfigCondition
 	for _, c := range conditions {
 		if c.TfOnly {
 			filtered = append(filtered, c)
+		}
+		for _, ac := range c.And {
+			if ac.TfOnly {
+				filtered = append(filtered, ac)
+			}
 		}
 	}
 	return filtered
@@ -500,6 +512,11 @@ func resolveConditionTfOnly(attributes []YamlConfigAttribute) {
 			if tfOnlyMap[attributes[i].ConditionalAttribute.Conditions[j].Name] {
 				attributes[i].ConditionalAttribute.Conditions[j].TfOnly = true
 			}
+			for k := range attributes[i].ConditionalAttribute.Conditions[j].And {
+				if tfOnlyMap[attributes[i].ConditionalAttribute.Conditions[j].And[k].Name] {
+					attributes[i].ConditionalAttribute.Conditions[j].And[k].TfOnly = true
+				}
+			}
 		}
 		// Recurse into nested attributes
 		if len(attributes[i].Attributes) > 0 {
@@ -515,6 +532,11 @@ func HasMinVersionCondition(attributes []YamlConfigAttribute) bool {
 		for _, cond := range attr.ConditionalAttribute.Conditions {
 			if cond.Type == "MinVersion" {
 				return true
+			}
+			for _, ac := range cond.And {
+				if ac.Type == "MinVersion" {
+					return true
+				}
 			}
 		}
 		if len(attr.Attributes) > 0 && HasMinVersionCondition(attr.Attributes) {
@@ -645,7 +667,23 @@ func BuildConditionalLogic(attr YamlConfigConditionalAttribute, attributesOrCont
 		if defaultVal, exists := defaultValueMap[cond.Name]; exists {
 			cond.DefaultValue = defaultVal
 		}
-		checks = append(checks, BuildConditionCheck(cond, context))
+		check := BuildConditionCheck(cond, context)
+
+		// If the condition carries nested And sub-conditions, group them into
+		// a parenthesized AND expression: (check && and1 && and2 ...)
+		if len(cond.And) > 0 {
+			var andChecks []string
+			andChecks = append(andChecks, check)
+			for _, andCond := range cond.And {
+				if defaultVal, exists := defaultValueMap[andCond.Name]; exists {
+					andCond.DefaultValue = defaultVal
+				}
+				andChecks = append(andChecks, BuildConditionCheck(andCond, context))
+			}
+			check = "(" + strings.Join(andChecks, " && ") + ")"
+		}
+
+		checks = append(checks, check)
 	}
 
 	if len(checks) == 0 {
@@ -676,33 +714,19 @@ func BuildConditionalDescription(attr YamlConfigConditionalAttribute) string {
 
 	var parts []string
 	for _, cond := range attr.Conditions {
-		var part string
-		if cond.Type == "MinVersion" {
-			if cond.Negate {
-				part = fmt.Sprintf("SD-WAN Manager version lower than `%s`", cond.Value)
-			} else {
-				part = fmt.Sprintf("SD-WAN Manager version `%s` or higher", cond.Value)
+		part := buildConditionDescriptionPart(cond)
+
+		// If the condition carries nested And sub-conditions, group them into
+		// a parenthesized description: (part and andPart1 and andPart2 ...)
+		if len(cond.And) > 0 {
+			var andParts []string
+			andParts = append(andParts, part)
+			for _, andCond := range cond.And {
+				andParts = append(andParts, buildConditionDescriptionPart(andCond))
 			}
-		} else if cond.Type == "StringContains" {
-			if cond.Negate {
-				part = fmt.Sprintf("`%s` not containing `%s`", cond.Name, cond.Value)
-			} else {
-				part = fmt.Sprintf("`%s` containing `%s`", cond.Name, cond.Value)
-			}
-		} else if cond.Value == "" {
-			// Special handling for empty string checks to make description more readable
-			if cond.Negate {
-				part = fmt.Sprintf("`%s` being set", cond.Name)
-			} else {
-				part = fmt.Sprintf("`%s` not being set", cond.Name)
-			}
-		} else {
-			negation := ""
-			if cond.Negate {
-				negation = "not "
-			}
-			part = fmt.Sprintf("`%s` %sequal to `%s`", cond.Name, negation, cond.Value)
+			part = "(" + strings.Join(andParts, " and ") + ")"
 		}
+
 		parts = append(parts, part)
 	}
 
@@ -720,6 +744,38 @@ func BuildConditionalDescription(attr YamlConfigConditionalAttribute) string {
 	}
 
 	return ", Attribute conditional on " + strings.Join(parts, joiner)
+}
+
+// buildConditionDescriptionPart returns the human-readable phrase for a single condition.
+func buildConditionDescriptionPart(cond YamlConfigCondition) string {
+	var part string
+	if cond.Type == "MinVersion" {
+		if cond.Negate {
+			part = fmt.Sprintf("SD-WAN Manager version lower than `%s`", cond.Value)
+		} else {
+			part = fmt.Sprintf("SD-WAN Manager version `%s` or higher", cond.Value)
+		}
+	} else if cond.Type == "StringContains" {
+		if cond.Negate {
+			part = fmt.Sprintf("`%s` not containing `%s`", cond.Name, cond.Value)
+		} else {
+			part = fmt.Sprintf("`%s` containing `%s`", cond.Name, cond.Value)
+		}
+	} else if cond.Value == "" {
+		// Special handling for empty string checks to make description more readable
+		if cond.Negate {
+			part = fmt.Sprintf("`%s` being set", cond.Name)
+		} else {
+			part = fmt.Sprintf("`%s` not being set", cond.Name)
+		}
+	} else {
+		negation := ""
+		if cond.Negate {
+			negation = "not "
+		}
+		part = fmt.Sprintf("`%s` %sequal to `%s`", cond.Name, negation, cond.Value)
+	}
+	return part
 }
 
 // Templating helper function to return GJSON type
