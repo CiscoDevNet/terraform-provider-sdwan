@@ -63,8 +63,9 @@ func (r *ActivateTopologyGroupResource) Schema(ctx context.Context, req resource
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
-			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the topology group",
+			"feature_versions": schema.ListAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("List of all associated feature versions. Any change to this list will trigger a re-deployment of the topology group.").String,
+				ElementType:         types.StringType,
 				Optional:            true,
 			},
 		},
@@ -170,6 +171,8 @@ func (r *ActivateTopologyGroupResource) Update(ctx context.Context, req resource
 
 	if !plan.Id.Equal(state.Id) {
 		tflog.Debug(ctx, fmt.Sprintf("%s: Topology group ID changed, activating new topology group", plan.Id.ValueString()))
+	} else if plan.hasFeatureVersionChanges(ctx, &state) {
+		tflog.Debug(ctx, fmt.Sprintf("%s: Feature versions changed, re-deploying topology group", plan.Id.ValueString()))
 	}
 
 	r.updateMutex.Lock()

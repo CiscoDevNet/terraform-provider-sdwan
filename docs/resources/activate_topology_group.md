@@ -23,4 +23,4 @@ This resource can activate a topology group. Only one topology group can be acti
 
 ### Optional
 
-- `version` (Number) The version of the topology group
+- `feature_versions` (List of String) List of all associated feature versions. Any change to this list will trigger a re-deployment of the topology group.

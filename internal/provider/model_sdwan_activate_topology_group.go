@@ -26,8 +26,8 @@ import (
 )
 
 type ActivateTopologyGroup struct {
-	Id      types.String `tfsdk:"id"`
-	Version types.Int64  `tfsdk:"version"`
+	Id              types.String `tfsdk:"id"`
+	FeatureVersions types.List   `tfsdk:"feature_versions"`
 }
 
 func (data ActivateTopologyGroup) getPath() string {
@@ -61,5 +61,20 @@ func (data ActivateTopologyGroup) deactivateTopologyGroup(ctx context.Context, c
 }
 
 func (data *ActivateTopologyGroup) processImport(ctx context.Context) {
-	data.Version = types.Int64Value(0)
+	data.FeatureVersions = types.ListNull(types.StringType)
+}
+
+func (data ActivateTopologyGroup) hasFeatureVersionChanges(ctx context.Context, state *ActivateTopologyGroup) bool {
+	var planValues, stateValues []string
+	data.FeatureVersions.ElementsAs(ctx, &planValues, false)
+	state.FeatureVersions.ElementsAs(ctx, &stateValues, false)
+	if len(planValues) != len(stateValues) {
+		return true
+	}
+	for i := range planValues {
+		if i >= len(stateValues) || planValues[i] != stateValues[i] {
+			return true
+		}
+	}
+	return false
 }
