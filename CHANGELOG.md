@@ -21,11 +21,11 @@
 - Fix `sdwan_custom_application` resource/data source failing to read, update, or delete objects created against SD-WAN Manager 20.18, caused by the `POST /template/policy/customapp` endpoint no longer returning the created object's ID synchronously on that version (async task-based creation only)
 - Validate acceptance test suite against SD-WAN Manager 20.18 and fix test-data/fixture issues surfaced by tightened API validation on that version
 - Add `SDWAN_ISE` acceptance test tag to gate `sdwan_policy_object_security_identity_list` and `sdwan_policy_object_security_scalable_group_tag_list` tests
+- The `sdwan_security_policy` resource now supports multiple high-speed logging entries via `high_speed_logging_entries` block. The `high_speed_logging_server_source_interface` attribute has been moved to `source_interface` within each entry.
 
 ## 0.11.3
 
 - Fix issue where deleting a single device with tag removes this tag across all devices
-- Added support for multiple high-speed logging entries in the `sdwan_security_policy` resource 
 - Add `sdwan_topology_group` resource and data source
 - Add `sdwan_topology_feature_profile` resource and data source
 - Add `sdwan_activate_topology_group` resource
