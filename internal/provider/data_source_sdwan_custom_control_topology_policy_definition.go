@@ -248,7 +248,7 @@ func (d *CustomControlTopologyPolicyDefinitionDataSource) Schema(ctx context.Con
 										MarkdownDescription: "Type of action entry",
 										Computed:            true,
 									},
-									"set_parameters": schema.ListNestedAttribute{
+									"set_parameters": schema.SetNestedAttribute{
 										MarkdownDescription: "List of set parameters",
 										Computed:            true,
 										NestedObject: schema.NestedAttributeObject{

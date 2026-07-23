@@ -30,6 +30,7 @@ description: |-
 - Fix `sdwan_custom_application` resource/data source failing to read, update, or delete objects created against SD-WAN Manager 20.18, caused by the `POST /template/policy/customapp` endpoint no longer returning the created object's ID synchronously on that version (async task-based creation only)
 - Validate acceptance test suite against SD-WAN Manager 20.18 and fix test-data/fixture issues surfaced by tightened API validation on that version
 - Add `SDWAN_ISE` acceptance test tag to gate `sdwan_policy_object_security_identity_list` and `sdwan_policy_object_security_scalable_group_tag_list` tests
+- Fix import diffs for `omp_tag` and `preference` attributes in the `sdwan_custom_control_topology_policy_definition` resource
 
 ## 0.11.3
 
