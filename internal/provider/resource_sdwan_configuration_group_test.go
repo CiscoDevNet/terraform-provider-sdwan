@@ -122,6 +122,20 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "test" {
   ]
 }
 
+# Service VPN 1 (VRF 1) is included here so the device actually has a
+# routing instance for VRF 1 - without it, leftover/stale device config
+# referencing VRF 1 (e.g. MSDP) can fail to reconcile during deployment
+resource "sdwan_service_feature_profile" "test" {
+  name        = "SERVICE_TF"
+  description = "Terraform test"
+}
+
+resource "sdwan_service_lan_vpn_feature" "test" {
+  name                = "SERVICE_VPN_TF"
+  feature_profile_id  = sdwan_service_feature_profile.test.id
+  vpn                 = 1
+}
+
 `
 
 // End of section. //template:end testPrerequisites
@@ -134,6 +148,7 @@ func testAccSdwanConfigurationGroupConfig_all() string {
 	config += `	feature_profile_ids = [` + "\n"
 	config += `	  sdwan_system_feature_profile.test.id,` + "\n"
 	config += `	  sdwan_transport_feature_profile.test.id,` + "\n"
+	config += `	  sdwan_service_feature_profile.test.id,` + "\n"
 	config += `	]` + "\n"
 	config += `	devices = [{` + "\n"
 	config += `	  id = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"` + "\n"
@@ -169,6 +184,7 @@ func testAccSdwanConfigurationGroupConfig_all() string {
 	config += `	  sdwan_system_logging_feature.test.version,` + "\n"
 	config += `	  sdwan_system_omp_feature.test.version,` + "\n"
 	config += `	  sdwan_transport_wan_vpn_interface_ethernet_feature.test.version,` + "\n"
+	config += `	  sdwan_service_lan_vpn_feature.test.version,` + "\n"
 	config += `	]` + "\n"
 	// config += `	device_groups = [{` + "\n"
 	// config += `	  name = "CG_1"` + "\n"
