@@ -19,6 +19,7 @@ package provider
 
 import (
 	"context"
+	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -28,13 +29,14 @@ import (
 type ActivateTopologyGroup struct {
 	Id              types.String `tfsdk:"id"`
 	FeatureVersions types.List   `tfsdk:"feature_versions"`
+	DeployedVersion types.Int64  `tfsdk:"deployed_version"`
 }
 
 func (data ActivateTopologyGroup) getPath() string {
 	return "/v1/topology-group/"
 }
 
-func (data ActivateTopologyGroup) activateTopologyGroup(ctx context.Context, client *sdwan.Client, taskTimeout *int64) error {
+func (data *ActivateTopologyGroup) activateTopologyGroup(ctx context.Context, client *sdwan.Client, taskTimeout *int64) error {
 	res, err := client.Post("/v1/topology-group/"+data.Id.ValueString()+"/device/deploy", "{}")
 	if err != nil {
 		return err
@@ -44,6 +46,13 @@ func (data ActivateTopologyGroup) activateTopologyGroup(ctx context.Context, cli
 	if err != nil {
 		return err
 	}
+
+	// Re-GET the group to capture the settled server-side version for drift detection.
+	getRes, err := client.Get(data.getPath() + url.QueryEscape(data.Id.ValueString()))
+	if err != nil {
+		return err
+	}
+	data.DeployedVersion = types.Int64Value(getRes.Get("version").Int())
 	return nil
 }
 
@@ -60,8 +69,12 @@ func (data ActivateTopologyGroup) deactivateTopologyGroup(ctx context.Context, c
 	return nil
 }
 
-func (data *ActivateTopologyGroup) processImport(ctx context.Context) {
+func (data *ActivateTopologyGroup) processImport(ctx context.Context, serverVersion types.Int64) {
+	// Keep feature_versions null on import (cosmetic diff, like config/policy groups).
+	// Set deployed_version to the live server version so the Update gate can detect
+	// the group is already in sync and skip a needless re-activation.
 	data.FeatureVersions = types.ListNull(types.StringType)
+	data.DeployedVersion = serverVersion
 }
 
 func (data ActivateTopologyGroup) hasFeatureVersionChanges(ctx context.Context, state *ActivateTopologyGroup) bool {

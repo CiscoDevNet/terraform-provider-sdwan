@@ -30,8 +30,9 @@ description: |-
 - Fix `sdwan_custom_application` resource/data source failing to read, update, or delete objects created against SD-WAN Manager 20.18, caused by the `POST /template/policy/customapp` endpoint no longer returning the created object's ID synchronously on that version (async task-based creation only)
 - Validate acceptance test suite against SD-WAN Manager 20.18 and fix test-data/fixture issues surfaced by tightened API validation on that version
 - Add `SDWAN_ISE` acceptance test tag to gate `sdwan_policy_object_security_identity_list` and `sdwan_policy_object_security_scalable_group_tag_list` tests
-- Add `feature_versions` support in the `sdwan_topology_group` and `sdwan_activate_topology_group`
-
+- Add `feature_versions` support in the `sdwan_topology_group` and `sdwan_activate_topology_group` resources
+- Add convergent drift detection to `sdwan_activate_topology_group`: a new computed `deployed_version` attribute captures the group's server-side version after each activation, so removing a parcel or referenced object (which Terraform cannot signal at plan time) is detected on the next read and the group is automatically re-activated to converge
+ 
 ## 0.11.3
 
 - Fix issue where deleting a single device with tag removes this tag across all devices

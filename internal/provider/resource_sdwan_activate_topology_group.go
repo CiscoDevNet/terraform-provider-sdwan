@@ -53,7 +53,7 @@ func (r *ActivateTopologyGroupResource) Metadata(ctx context.Context, req resour
 
 func (r *ActivateTopologyGroupResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can activate a topology group. Only one topology group can be active at a time.").AddMinimumVersionDescription("20.15.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can activate a topology group. Only one topology group can be active at a time. To switch the active group, change the `id` attribute on the existing resource in place instead of replacing the resource (destroy + create); an in-place change issues a single activation that supersedes the previous group, whereas a replacement deactivates the previous group first and withdraws all overlay control policy from the vSmarts during the switch.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -67,6 +67,10 @@ func (r *ActivateTopologyGroupResource) Schema(ctx context.Context, req resource
 				MarkdownDescription: helpers.NewAttributeDescription("List of all associated feature versions. Any change to this list will trigger a re-deployment of the topology group.").String,
 				ElementType:         types.StringType,
 				Optional:            true,
+			},
+			"deployed_version": schema.Int64Attribute{
+				MarkdownDescription: "Server-side version of the topology group captured at last activation. Used internally for drift detection.",
+				Computed:            true,
 			},
 		},
 	}
@@ -120,6 +124,7 @@ func (r *ActivateTopologyGroupResource) Read(ctx context.Context, req resource.R
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Id.String()))
 
+	serverVersion := types.Int64Null()
 	if state.Id.ValueString() != "" {
 		res, err := r.client.Get(state.getPath() + url.QueryEscape(state.Id.ValueString()))
 		if res.Raw == "" && err == nil {
@@ -130,8 +135,28 @@ func (r *ActivateTopologyGroupResource) Read(ctx context.Context, req resource.R
 			return
 		}
 
+		serverVersion = types.Int64Value(res.Get("version").Int())
+
 		if !res.Get("activeStatus").Bool() {
 			state.Id = types.StringValue("")
+		} else if !state.DeployedVersion.IsNull() && res.Get("version").Int() != state.DeployedVersion.ValueInt64() {
+			// Server version advanced since last activation (e.g. a parcel was removed).
+			// Null both markers to force a re-activation: deployed_version is Computed and
+			// nulling it alone yields no plan diff, so we also null the config-backed
+			// feature_versions to trigger Update. The gate checks deployed_version==null
+			// before feature_versions==null, keeping removal drift distinct from import.
+			serverV := res.Get("version").Int()
+			deployedV := state.DeployedVersion.ValueInt64()
+			tflog.Debug(ctx, fmt.Sprintf("%s: Removal drift detected (server version %d != deployed version %d); re-activating on next apply", state.Id.ValueString(), serverV, deployedV))
+			resp.Diagnostics.AddWarning(
+				"Topology group drift detected",
+				fmt.Sprintf("Server-side version (%d) of topology group %s differs from the last deployed version (%d). "+
+					"A parcel or referenced object was likely removed, so the group will be re-activated on apply to converge. "+
+					"The 'feature_versions' and 'deployed_version' changes shown in the plan are an internal drift marker, "+
+					"not a configuration change.", serverV, state.Id.ValueString(), deployedV),
+			)
+			state.DeployedVersion = types.Int64Null()
+			state.FeatureVersions = types.ListNull(types.StringType)
 		}
 	}
 
@@ -141,7 +166,7 @@ func (r *ActivateTopologyGroupResource) Read(ctx context.Context, req resource.R
 	}
 
 	if imp {
-		state.processImport(ctx)
+		state.processImport(ctx, serverVersion)
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Id.ValueString()))
@@ -169,18 +194,50 @@ func (r *ActivateTopologyGroupResource) Update(ctx context.Context, req resource
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Id.ValueString()))
 
-	if !plan.Id.Equal(state.Id) {
+	// Decide whether a re-activation is required, using two null markers evaluated in
+	// priority order:
+	//   - deployed_version == null -> removal drift (set by Read) -> deploy
+	//   - feature_versions == null -> import reconcile -> skip deploy, resync
+	//     deployed_version from a fresh GET (the topology group's own PUT earlier in
+	//     this apply may have bumped the version).
+	needsDeploy := false
+	importReconcile := false
+	switch {
+	case !plan.Id.Equal(state.Id):
 		tflog.Debug(ctx, fmt.Sprintf("%s: Topology group ID changed, activating new topology group", plan.Id.ValueString()))
-	} else if plan.hasFeatureVersionChanges(ctx, &state) {
+		needsDeploy = true
+	case state.DeployedVersion.IsNull():
+		tflog.Debug(ctx, fmt.Sprintf("%s: Deployed version invalidated (removal drift), re-deploying topology group", plan.Id.ValueString()))
+		needsDeploy = true
+	case state.FeatureVersions.IsNull():
+		tflog.Debug(ctx, fmt.Sprintf("%s: Feature versions null (import reconcile), skipping re-deployment", plan.Id.ValueString()))
+		importReconcile = true
+	case plan.hasFeatureVersionChanges(ctx, &state):
 		tflog.Debug(ctx, fmt.Sprintf("%s: Feature versions changed, re-deploying topology group", plan.Id.ValueString()))
+		needsDeploy = true
 	}
 
-	r.updateMutex.Lock()
-	err := plan.activateTopologyGroup(ctx, r.client, r.taskTimeout)
-	r.updateMutex.Unlock()
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to activate topology group, got error: %s", err))
-		return
+	if needsDeploy {
+		r.updateMutex.Lock()
+		err := plan.activateTopologyGroup(ctx, r.client, r.taskTimeout)
+		r.updateMutex.Unlock()
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to activate topology group, got error: %s", err))
+			return
+		}
+	} else if importReconcile {
+		// No re-activation; just resync deployed_version from a fresh GET so a later
+		// PUT by the topology group resource does not read back as drift next apply.
+		res, err := r.client.Get(plan.getPath() + url.QueryEscape(plan.Id.ValueString()))
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+			return
+		}
+		plan.DeployedVersion = types.Int64Value(res.Get("version").Int())
+	} else {
+		// No change: carry the baseline forward so the Computed deployed_version
+		// resolves to a known value.
+		plan.DeployedVersion = state.DeployedVersion
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Id.ValueString()))
