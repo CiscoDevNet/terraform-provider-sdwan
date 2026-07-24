@@ -1,0 +1,93 @@
+# Model and Resource files are created manually since there are some custom logic involved in handling the different payload structure for group/region/site.
+---
+name: Network Hierarchy Node
+rest_endpoint: /v1/network-hierarchy/%s
+id_attribute: created.0.uuid
+doc_category: Network Hierarchy
+minimum_version: "20.15"
+res_description: This resource can manage a Network Hierarchy Node (group, region, or site).
+ds_description: This data source can read a Network Hierarchy Node (group, region, or site).
+skip_templates: ["model.go", "resource.go", "data_source_test.go"]
+attributes:
+  - model_name: parentUuid
+    tf_name: parent_group
+    type: String
+    id: true
+    mandatory: true
+    description: The name of the parent group. Use 'Global' for top-level nodes.
+    example: Global
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the node
+    example: EMEA-Group
+  - model_name: description
+    tf_name: description
+    type: String
+    description: The description of the node
+    example: EMEA group
+  - model_name: type
+    tf_name: type
+    type: String
+    mandatory: true
+    description: The type of node
+    enum_values: [group, region, site]
+    example: group
+  - model_name: isSecondary
+    data_path: [data]
+    tf_name: is_secondary
+    type: Bool
+    description: Whether this is a secondary region (only for region type nodes)
+    example: false
+    exclude_example: true
+    exclude_test: true
+  - model_name: siteId
+    data_path: [data, hierarchyId]
+    tf_name: site_id
+    type: Int64
+    description: The site ID (only for site type nodes)
+    min_int: 1
+    max_int: 4294967295
+    example: 101
+    exclude_example: true
+    exclude_test: true
+  - model_name: address
+    data_path: [data]
+    tf_name: address
+    type: List
+    max_list: 1
+    exclude_example: true
+    exclude_test: true
+    description: The address of the site (only for site type nodes)
+    attributes:
+      - model_name: street
+        tf_name: street
+        type: String
+        description: Street address
+        example: "123 Main St"
+        mandatory: true
+      - model_name: city
+        tf_name: city
+        type: String
+        description: City
+        mandatory: true
+        example: "New York"
+      - model_name: state
+        tf_name: state
+        type: String
+        description: State or province
+        mandatory: true
+        example: "NY"
+      - model_name: country
+        tf_name: country
+        type: String
+        description: Country
+        mandatory: true
+        example: "USA"
+      - model_name: zipcode
+        tf_name: zipcode
+        type: String
+        description: Zip or postal code
+        example: "10001"
+        mandatory: true
