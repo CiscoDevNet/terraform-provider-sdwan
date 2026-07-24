@@ -453,7 +453,7 @@ attributes:
               conditions:
                 - name: type
                   value: set
-            type: List
+            type: Set
             description: List of set parameters
             attributes:
               - model_name: field

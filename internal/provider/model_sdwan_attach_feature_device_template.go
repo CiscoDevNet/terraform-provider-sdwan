@@ -43,6 +43,122 @@ type AttachFeatureDeviceTemplateDevice struct {
 	Variables types.Map    `tfsdk:"variables"`
 }
 
+// qosAdaptiveLeaf maps one "Adaptive QoS" field's feature-template path (definitionPath, under
+// templateDefinition.qos-adaptive) to its config/input property suffix (propertySuffix).
+type qosAdaptiveLeaf struct {
+	definitionPath string
+	propertySuffix string
+}
+
+var qosAdaptiveLeaves = []qosAdaptiveLeaf{
+	{"qos-adaptive.period", "qos-adaptive/period"},
+	{"qos-adaptive.downstream.bandwidth-down", "qos-adaptive/downstream/bandwidth-down"},
+	{"qos-adaptive.downstream.range.dmin", "qos-adaptive/downstream/range/dmin"},
+	{"qos-adaptive.downstream.range.dmax", "qos-adaptive/downstream/range/dmax"},
+	{"qos-adaptive.upstream.bandwidth-up", "qos-adaptive/upstream/bandwidth-up"},
+	{"qos-adaptive.upstream.range.umin", "qos-adaptive/upstream/range/umin"},
+	{"qos-adaptive.upstream.range.umax", "qos-adaptive/upstream/range/umax"},
+}
+
+// isVpnInterfaceTemplateType reports whether a templateType can define a "qos-adaptive" block.
+// Verified against gen/models/feature_templates/*.json; SVI, T1/E1, GRE, IPsec do not qualify.
+func isVpnInterfaceTemplateType(templateType string) bool {
+	switch templateType {
+	case "cisco_vpn_interface",
+		"vpn-interface-ethpppoe",
+		"vpn-interface-ipoe",
+		"vpn-interface-pppoa",
+		"vpn-interface-pppoe",
+		"vpn-cedge-interface-cellular":
+		return true
+	default:
+		return false
+	}
+}
+
+// getQosAdaptiveVariableMappings works around a Manager quirk: "Adaptive QoS" columns from
+// POST /template/device/config/input carry a title with only a unit ("Default Downstream (Kbps)"),
+// no variable name, so the provider's title-based derivation collapses every qos-adaptive
+// variable to the literal name "Kbps" (dropped/cross-contaminated values, perpetual diffs).
+//
+// This walks the feature templates composing data.Id, fetching only VPN-interface template types
+// (the only ones that can define qos-adaptive), and reads each leaf's authoritative
+// vipVariableName straight from templateDefinition.qos-adaptive.*. Runs once per attach/read
+// operation, so cost is proportional to interface template count, not device count.
+//
+// The interface name (concrete vipValue or a vipVariableName) is read the same way regardless of
+// which option type is used: Manager sometimes embeds a variable interface's real qos-adaptive
+// name as a second title parenthetical, but that isn't guaranteed to survive every
+// edit/re-render/push, so the feature template is treated as authoritative in both cases.
+//
+// Returns a map keyed by the property-path suffix (e.g.
+// ".../GigabitEthernet5/interface/qos-adaptive/downstream/bandwidth-down") to the real variable
+// name. Keyed by suffix, not full path, since the leading vpn-id segment varies per device/site.
+func (data AttachFeatureDeviceTemplate) getQosAdaptiveVariableMappings(ctx context.Context, client *sdwan.Client) map[string]string {
+	mappings := make(map[string]string)
+
+	res, err := client.Get("/template/device/object/" + data.Id.ValueString())
+	if err != nil {
+		// Best-effort: on failure, fall back entirely to title-based resolution.
+		return mappings
+	}
+
+	var interfaceTemplateIds []string
+	var collect func(gjson.Result)
+	collect = func(templates gjson.Result) {
+		templates.ForEach(func(_, v gjson.Result) bool {
+			if isVpnInterfaceTemplateType(v.Get("templateType").String()) {
+				if id := v.Get("templateId").String(); id != "" {
+					interfaceTemplateIds = append(interfaceTemplateIds, id)
+				}
+			}
+			if sub := v.Get("subTemplates"); sub.Exists() {
+				collect(sub)
+			}
+			return true
+		})
+	}
+	collect(res.Get("generalTemplates"))
+
+	for _, id := range interfaceTemplateIds {
+		ftRes, err := client.Get("/template/feature/object/" + id)
+		if err != nil {
+			continue // skip this template rather than failing the whole operation
+		}
+		// Interface name can be a concrete vipValue or a vipVariableName; either way it's the
+		// exact token used in the config/input property path.
+		ifNameNode := ftRes.Get("templateDefinition.if-name")
+		ifName := ifNameNode.Get("vipValue").String()
+		if ifName == "" {
+			ifName = ifNameNode.Get("vipVariableName").String()
+		}
+		if ifName == "" {
+			continue // no name available; can't build a property path
+		}
+		for _, leaf := range qosAdaptiveLeaves {
+			varName := ftRes.Get("templateDefinition." + leaf.definitionPath + ".vipVariableName")
+			if !varName.Exists() || varName.String() == "" {
+				continue
+			}
+			suffix := "/" + ifName + "/interface/" + leaf.propertySuffix
+			mappings[suffix] = varName.String()
+		}
+	}
+
+	return mappings
+}
+
+// resolveQosAdaptiveVariableName suffix-matches a config/input property against the map from
+// getQosAdaptiveVariableMappings (suffix, not exact match, since the leading vpn-id varies).
+func resolveQosAdaptiveVariableName(property string, qosMappings map[string]string) (string, bool) {
+	for suffix, name := range qosMappings {
+		if strings.HasSuffix(property, suffix) {
+			return name, true
+		}
+	}
+	return "", false
+}
+
 func (data AttachFeatureDeviceTemplate) getVariables(ctx context.Context, client *sdwan.Client, edited bool, state *AttachFeatureDeviceTemplate) (map[string]map[string]string, error) {
 	deviceVariables := make(map[string]map[string]string)
 	var updatedDevices []string
@@ -73,6 +189,9 @@ func (data AttachFeatureDeviceTemplate) getVariables(ctx context.Context, client
 		}
 	}
 
+	// Resolved once per operation, not per device (see getQosAdaptiveVariableMappings).
+	qosMappings := data.getQosAdaptiveVariableMappings(ctx, client)
+
 	for _, item := range data.Devices {
 		if helpers.Contains(updatedDevices, item.Id.ValueString()) || helpers.Contains(attachedDevices, item.Id.ValueString()) || edited {
 			// Retrieve device variables
@@ -89,17 +208,21 @@ func (data AttachFeatureDeviceTemplate) getVariables(ctx context.Context, client
 			if value := res.Get("header.columns"); value.Exists() {
 				value.ForEach(func(k, v gjson.Result) bool {
 					if v.Get("editable").Bool() {
+						property := v.Get("property").String()
 						title := v.Get("title").String()
-						if strings.Contains(title, "(") {
+						if qosVarName, ok := resolveQosAdaptiveVariableName(property, qosMappings); ok {
+							// Feature-template-sourced name; takes precedence over the
+							// title-derived "Kbps" fallback below.
+							mappings[property] = qosVarName
+						} else if strings.Contains(title, "(") {
 							matches := regexp.MustCompile(`\((.*?)\)`).FindAllString(title, -1)
 							varName := matches[len(matches)-1]
 							if len(varName) > 0 {
 								varName = varName[1 : len(varName)-1]
 							}
-							mappings[v.Get("property").String()] = varName
+							mappings[property] = varName
 						} else {
 							// handle factory default feature template variables
-							property := v.Get("property").String()
 							if property == "//system/host-name" {
 								mappings[property] = "system_host_name"
 							} else if property == "//system/system-ip" {
@@ -239,25 +362,32 @@ func (data *AttachFeatureDeviceTemplate) readVariables(ctx context.Context, clie
 	if err != nil {
 		return err
 	}
+	// Resolved once per operation (see getQosAdaptiveVariableMappings).
+	qosMappings := data.getQosAdaptiveVariableMappings(ctx, client)
+
 	// Get variable mappings
 	mappings := make(map[string]string)
 	if value := res.Get("header.columns"); value.Exists() {
 		value.ForEach(func(k, v gjson.Result) bool {
 			if v.Get("editable").Bool() {
+				property := v.Get("property").String()
 				title := v.Get("title").String()
-				if strings.Contains(title, "(") {
+				if qosVarName, ok := resolveQosAdaptiveVariableName(property, qosMappings); ok {
+					// Feature-template-sourced name; avoids collapsing every qos-adaptive
+					// column onto the same "Kbps" key (see resolveQosAdaptiveVariableName).
+					mappings[qosVarName] = property
+				} else if strings.Contains(title, "(") {
 					matches := regexp.MustCompile(`\((.*?)\)`).FindAllString(title, -1)
 					varName := matches[len(matches)-1]
 					if len(varName) > 0 {
 						varName = varName[1 : len(varName)-1]
 					}
-					mappings[varName] = v.Get("property").String()
+					mappings[varName] = property
 				} else if !v.Get("templateType").Exists() {
 					// handle CLI template variables
 					mappings[title] = title
 				} else {
 					// handle factory default feature template variables
-					property := v.Get("property").String()
 					if property == "//system/host-name" {
 						mappings["system_host_name"] = property
 					} else if property == "//system/system-ip" {
