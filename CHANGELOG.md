@@ -21,6 +21,8 @@
 - Fix `sdwan_custom_application` resource/data source failing to read, update, or delete objects created against SD-WAN Manager 20.18, caused by the `POST /template/policy/customapp` endpoint no longer returning the created object's ID synchronously on that version (async task-based creation only)
 - Validate acceptance test suite against SD-WAN Manager 20.18 and fix test-data/fixture issues surfaced by tightened API validation on that version
 - Add `SDWAN_ISE` acceptance test tag to gate `sdwan_policy_object_security_identity_list` and `sdwan_policy_object_security_scalable_group_tag_list` tests
+- Fix import diffs for `omp_tag` and `preference` attributes in the `sdwan_custom_control_topology_policy_definition` resource
+- Fix `sdwan_attach_feature_device_template` perpetual diff on "Adaptive QoS" (`qos-adaptive`) variables: Manager returns identical column titles (e.g. `Default Downstream (Kbps)`) for all qos-adaptive fields on VPN-interface feature templates, causing the provider to collapse them all to the same variable name `Kbps`. The provider now resolves the real variable name from the composing feature template's `qos-adaptive.*` `vipVariableName`
 - The `sdwan_security_policy` resource now supports multiple high-speed logging entries via `high_speed_logging_entries` block. The `high_speed_logging_server_source_interface` attribute has been moved to `source_interface` within each entry.
 
 ## 0.11.3

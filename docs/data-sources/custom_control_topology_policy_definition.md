@@ -54,7 +54,7 @@ Read-Only:
 
 - `export_to_vpn_list_id` (String) Export to VPN list ID
 - `export_to_vpn_list_version` (Number) Export to VPN list version
-- `set_parameters` (Attributes List) List of set parameters (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
+- `set_parameters` (Attributes Set) List of set parameters (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
 - `type` (String) Type of action entry
 
 <a id="nestedatt--sequences--action_entries--set_parameters"></a>
