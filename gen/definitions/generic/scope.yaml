@@ -1,0 +1,61 @@
+---
+name: Scope
+rest_endpoint: /v1/resource-domain/
+id_from_query_path: data
+id_from_query_path_attribute: id
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015, SDWAN_2018]
+doc_category: Users and Access
+attributes:
+  - model_name: name
+    type: String
+    id: true
+    mandatory: true
+    string_min_length: 1
+    string_max_length: 128
+    description: The name of the scope
+    example: west1
+  - model_name: description
+    type: String
+    description: Description
+    example: West Coast Domain1
+  - model_name: objects
+    type: Set
+    description: List of objects belonging to the scope
+    attributes:
+      - model_name: objectType
+        type: String
+        id: true
+        mandatory: true
+        enum_values:
+          [
+            network-hierarchy-node,
+            config-group,
+            feature-profile,
+            device-template,
+            feature-template,
+            localized-policy,
+            security-policy,
+          ]
+        description: Object type
+        example: feature-profile
+      - model_name: objectIds
+        type: Set
+        element_type: String
+        mandatory: true
+        min_list: 1
+        description: List of object UUIDs
+        example: 003c4e0b-a2da-486d-8ee7-0e6dd4551bae
+        test_value: "[sdwan_policy_object_feature_profile.test.id]"
+  - model_name: users
+    type: Set
+    element_type: String
+    description: List of users who reference the scope
+    example: demouser1
+    exclude_test: true
+
+test_prerequisites: |
+  resource "sdwan_policy_object_feature_profile" "test" {
+    name = "POLICY_OBJECT_FP_1"
+    description = "My policy object feature profile 1"
+  }
