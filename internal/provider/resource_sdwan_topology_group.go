@@ -92,6 +92,11 @@ func (r *TopologyGroupResource) Schema(ctx context.Context, req resource.SchemaR
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
+			"feature_versions": schema.ListAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("List of all associated feature versions").String,
+				ElementType:         types.StringType,
+				Optional:            true,
+			},
 		},
 	}
 }

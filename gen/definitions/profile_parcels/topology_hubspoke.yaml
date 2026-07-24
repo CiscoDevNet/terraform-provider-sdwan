@@ -3,6 +3,7 @@ name: Topology Hub Spoke
 model: topology_hubspoke
 rest_endpoint: /v1/feature-profile/sdwan/topology/%v/hubspoke
 minimum_version: 20.15.0
+has_version: true
 id_attribute: id
 test_tags: [SDWAN_2015]
 skip_minimum_test: true
