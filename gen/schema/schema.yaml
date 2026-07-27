@@ -96,19 +96,19 @@ attribute:
   include_variable_check: bool(required=False) # UX1.0, If true will check for both "variableName" and "variable" vipType values in the fromBody method during read operation.
   reset_container_if_ignore: bool(required=False) # When true, resets the container attribute during read operations if the attribute's vipType is set to ignore.
   no_option_type: bool(required=False) # If true, the attribute is serialized as a bare value (no optionType/value envelope) in the API payload. Use for fields that the API stores as a plain JSON value rather than the standard {"optionType":"global","value":...} object. fromBody will also read the value directly from the path without an optionType wrapper.
-  positional_fallback: bool(required=False) # If true, when key-matching fails in updateFromBody, fall back to matching by array index position. Use for nested lists where the identifying keys may not be present in API responses (e.g., action_entries without export_to_vpn).
-  optional_null_empty: bool(required=False) # If true, in updateFromBody only update the attribute if API returns a non-empty array. Use for optional Set/List attributes where null (user did not specify) and empty array (API default) should be treated as equivalent to prevent perpetual diffs.
-  include_empty_value: bool(required=False) # If true, in toBody always include the attribute with empty array value when null. Use for Set/List attributes that the API expects to be present even when empty.
+  positional_fallback: bool(required=False) # If true, when key-matching fails in fromBody (non-import refresh), fall back to matching by array index position. Use for nested lists where the identifying keys may not be present in API responses (e.g., action_entries without export_to_vpn).
+  optional_null_empty: bool(required=False) # If true, in fromBody (non-import refresh) only update the attribute if API returns a non-empty array. Use for optional Set/List attributes where null (user did not specify) and empty array (API default) should be treated as equivalent to prevent perpetual diffs.
+  force_include: bool(required=False) # If true, toBody always emits the attribute even when null. For List/Set: writes {optionType:"global", value:[]}. For scalars: writes {optionType:"global"} with no value key. fromBody guards scalar reads with va.Exists() to prevent a missing response field from materialising as a phantom zero.
   write_as_default: bool(required=False) # If true, the attribute has no "global" optionType in the JSON schema (only "default" and "variable")
 conditional_attribute:
-  operator: enum('and', 'or', required=False) # Logical operator between conditions (default: 'and')
-  conditions: list(include('condition')) # List of conditions (single or multiple)
-
+  operator: enum('and', 'or', required=False) # Logical operator between top-level conditions (default: 'and')
+  conditions: list(include('condition'), required=False) # List of conditions (single or multiple)
 condition:
   name: str(required=False) # Reference to other attribute (not used for MinVersion conditions)
   value: any(str(), bool()) # Attribute value to check
   type: enum('String', 'Bool', 'StringContains', 'MinVersion', required=False) # Attribute value type: String (equality check), Bool (boolean equality), StringContains (substring check), MinVersion (manager version check). Default: String.
   negate: bool(required=False) # If true, condition passes when value does NOT match (default: false)
+  and: list(include('condition'), required=False) # Optional nested conditions ANDed with this condition; the resulting AND-group is joined with sibling conditions by 'operator'. Enables OR-of-AND (e.g. operator 'or' + conditions each carrying 'and') without a separate compound syntax.
 data_source_filter:
   tf_name: str()
   model_name: str()

@@ -79,6 +79,11 @@ func (d *TopologyGroupDataSource) Schema(ctx context.Context, req datasource.Sch
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
+			"feature_versions": schema.ListAttribute{
+				MarkdownDescription: "List of all associated feature versions",
+				ElementType:         types.StringType,
+				Computed:            true,
+			},
 		},
 	}
 }

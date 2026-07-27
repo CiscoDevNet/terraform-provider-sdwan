@@ -33,7 +33,7 @@ func TestAccDataSourceSdwanCustomApplication(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "app_name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "app_name", "Example-Custom"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "l3l4.0.l4_protocol", "TCP"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "l3l4.0.ports", "1 10-20"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "application_family", "routing"))
@@ -61,7 +61,7 @@ func TestAccDataSourceSdwanCustomApplication(t *testing.T) {
 func testAccDataSourceSdwanCustomApplicationConfig() string {
 	config := ""
 	config += `resource "sdwan_custom_application" "test" {` + "\n"
-	config += `	app_name = "Example"` + "\n"
+	config += `	app_name = "Example-Custom"` + "\n"
 	config += `	server_names = ["*customapp.com", "customapptest.com", "*appcustom"]` + "\n"
 	config += `	l3l4 = [{` + "\n"
 	config += `	  ip_addresses = ["10.2.2.25", "192.168.1.0/24"]` + "\n"

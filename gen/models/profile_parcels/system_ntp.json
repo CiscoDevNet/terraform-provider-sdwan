@@ -174,7 +174,18 @@
                           "type": "string",
                           "enum": [
                             "default"
-                          ]
+                          ],
+                          "x-attributeMetadata": {
+                            "insecureConfiguration": {
+                              "attributeJsonPath": "$.data.server[*].key.optionType",
+                              "values": [
+                                "default"
+                              ],
+                              "description": "NTP server configured without authentication - vulnerable",
+                              "reason": "NTP configuration lacks authentication, allowing potential time manipulation attacks",
+                              "remediation": "Configure a valid auth key and make it trusted"
+                            }
+                          }
                         }
                       },
                       "required": [
@@ -589,7 +600,7 @@
                   "type": "object",
                   "properties": {
                     "keyId": {
-                      "description": "MD5 authentication key ID",
+                      "description": "Authentication key ID",
                       "type": "object",
                       "oneOf": [
                         {
@@ -665,7 +676,15 @@
                             },
                             "default": {
                               "type": "string",
-                              "minLength": 1
+                              "minLength": 1,
+                              "x-attributeMetadata": {
+                                "insecureConfiguration": {
+                                  "attributeJsonPath": "$.data.authentication.authenticationKeys[*].md5Value",
+                                  "description": "NTP authentication using MD5 - vulnerable to collision attacks and should use stronger algorithms",
+                                  "reason": "Configuration employs an Insecure method for password storage",
+                                  "remediation": "Transition to more secure algorithms like SHA and AES"
+                                }
+                              }
                             },
                             "description": {
                               "minLength": 1,
@@ -689,7 +708,131 @@
                             },
                             "value": {
                               "type": "string",
-                              "minLength": 1
+                              "minLength": 1,
+                              "x-attributeMetadata": {
+                                "insecureConfiguration": {
+                                  "attributeJsonPath": "$.data.authentication.authenticationKeys[*].md5Value",
+                                  "description": "NTP authentication using MD5 - vulnerable to collision attacks and should use stronger algorithms",
+                                  "reason": "Configuration employs an Insecure method for password storage",
+                                  "remediation": "Transition to more secure algorithms like SHA and AES"
+                                }
+                              }
+                            }
+                          },
+                          "required": [
+                            "optionType",
+                            "value"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "hmacSha2Value": {
+                      "description": "HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes)",
+                      "type": "object",
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": [
+                                "variable"
+                              ]
+                            },
+                            "value": {
+                              "type": "string",
+                              "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                              "minLength": 1,
+                              "maxLength": 128
+                            },
+                            "default": {
+                              "type": "string",
+                              "description": "HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes)",
+                              "pattern": "^\\S{1,32}$"
+                            },
+                            "description": {
+                              "minLength": 1,
+                              "type": "string",
+                              "maxLength": 128
+                            }
+                          },
+                          "required": [
+                            "optionType",
+                            "value"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": [
+                                "global"
+                              ]
+                            },
+                            "value": {
+                              "type": "string",
+                              "description": "HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes)",
+                              "pattern": "^\\S{1,32}$"
+                            }
+                          },
+                          "required": [
+                            "optionType",
+                            "value"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "cmacAes128Value": {
+                      "description": "CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes)",
+                      "type": "object",
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": [
+                                "variable"
+                              ]
+                            },
+                            "value": {
+                              "type": "string",
+                              "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                              "minLength": 1,
+                              "maxLength": 128
+                            },
+                            "default": {
+                              "type": "string",
+                              "description": "CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes)",
+                              "minLength": 16,
+                              "maxLength": 32
+                            },
+                            "description": {
+                              "minLength": 1,
+                              "type": "string",
+                              "maxLength": 128
+                            }
+                          },
+                          "required": [
+                            "optionType",
+                            "value"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": [
+                                "global"
+                              ]
+                            },
+                            "value": {
+                              "type": "string",
+                              "description": "CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes)",
+                              "minLength": 16,
+                              "maxLength": 32
                             }
                           },
                           "required": [
@@ -702,50 +845,64 @@
                     }
                   },
                   "additionalProperties": false,
-                  "allOf": [
+                  "required": [
+                    "keyId"
+                  ],
+                  "oneOf": [
                     {
-                      "if": {
+                      "required": [
+                        "md5Value"
+                      ],
+                      "not": {
                         "anyOf": [
                           {
-                            "properties": {
-                              "keyId": {
-                                "properties": {
-                                  "optionType": {
-                                    "const": "global"
-                                  }
-                                },
-                                "required": [
-                                  "optionType"
-                                ]
-                              }
-                            },
                             "required": [
-                              "keyId"
+                              "hmacSha2Value"
                             ]
                           },
                           {
-                            "properties": {
-                              "md5Value": {
-                                "properties": {
-                                  "optionType": {
-                                    "const": "global"
-                                  }
-                                },
-                                "required": [
-                                  "optionType"
-                                ]
-                              }
-                            },
                             "required": [
-                              "md5Value"
+                              "cmacAes128Value"
                             ]
                           }
                         ]
-                      },
-                      "then": {
-                        "required": [
-                          "keyId",
-                          "md5Value"
+                      }
+                    },
+                    {
+                      "required": [
+                        "hmacSha2Value"
+                      ],
+                      "not": {
+                        "anyOf": [
+                          {
+                            "required": [
+                              "md5Value"
+                            ]
+                          },
+                          {
+                            "required": [
+                              "cmacAes128Value"
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "required": [
+                        "cmacAes128Value"
+                      ],
+                      "not": {
+                        "anyOf": [
+                          {
+                            "required": [
+                              "md5Value"
+                            ]
+                          },
+                          {
+                            "required": [
+                              "hmacSha2Value"
+                            ]
+                          }
                         ]
                       }
                     }
@@ -1080,7 +1237,7 @@
           "ISRv",
           "ir1101"
         ],
-        "minVManageVersion": "20.17.1"
+        "minVManageVersion": "26.1.1"
       },
       "documentation": {
         "description": "This is the documentation for POST request schema for NTP profile parcel",
@@ -1091,19 +1248,19 @@
                 {
                   "name": {
                     "optionType": "global",
-                    "value": "et aute voluptate aliqua proident"
+                    "value": "time.google.com"
                   },
                   "key": {
                     "optionType": "global",
-                    "value": 41673
+                    "value": 1
                   },
                   "vpn": {
-                    "optionType": "global",
-                    "value": 39484
+                    "optionType": "default",
+                    "value": 0
                   },
                   "version": {
-                    "optionType": "variable",
-                    "value": "{{Fr_2h94SBW}}"
+                    "optionType": "default",
+                    "value": 4
                   },
                   "sourceInterface": {
                     "optionType": "default"
@@ -1115,28 +1272,27 @@
                 },
                 {
                   "name": {
-                    "optionType": "variable",
-                    "value": "{{ntp-server-name}}"
+                    "optionType": "global",
+                    "value": "1.1.1.1"
                   },
                   "key": {
                     "optionType": "global",
-                    "value": 41673
+                    "value": 2
                   },
                   "vpn": {
-                    "optionType": "global",
-                    "value": 39484
+                    "optionType": "default",
+                    "value": 0
                   },
                   "version": {
-                    "optionType": "variable",
-                    "value": "{{Fr_2h94SBW}}"
+                    "optionType": "default",
+                    "value": 4
                   },
                   "sourceInterface": {
-                    "optionType": "global",
-                    "value": "aliqua ut dolore ullamco"
+                    "optionType": "default"
                   },
                   "prefer": {
-                    "optionType": "default",
-                    "value": false
+                    "optionType": "global",
+                    "value": true
                   }
                 }
               ],
@@ -1144,80 +1300,34 @@
                 "authenticationKeys": [
                   {
                     "keyId": {
-                      "optionType": "variable",
-                      "value": "{{vHy1bqA}}"
-                    },
-                    "md5Value": {
                       "optionType": "global",
-                      "value": "{&BH{vHy1bqA#$%$"
+                      "value": 1
+                    },
+                    "hmacSha2Value": {
+                      "optionType": "global",
+                      "value": "adsd123123"
                     }
                   },
                   {
                     "keyId": {
                       "optionType": "global",
-                      "value": 49737
+                      "value": 2
                     },
-                    "md5Value": {
+                    "cmacAes128Value": {
                       "optionType": "global",
-                      "value": "Ut ulla"
+                      "value": "0123456789abcdef"
                     }
                   }
                 ],
                 "trustedKeys": {
                   "optionType": "global",
                   "value": [
-                    49737
+                    1,
+                    2
                   ]
                 }
               }
             }
-          },
-          {
-            "data": {
-              "server": [
-                {
-                  "name": {
-                    "optionType": "variable",
-                    "value": "{{m95__MEIdt}}"
-                  },
-                  "vpn": {
-                    "optionType": "default",
-                    "value": 0
-                  },
-                  "version": {
-                    "optionType": "global",
-                    "value": 4
-                  },
-                  "prefer": {
-                    "optionType": "default",
-                    "value": false
-                  }
-                },
-                {
-                  "name": {
-                    "optionType": "variable",
-                    "value": "{{btb66B}}"
-                  },
-                  "vpn": {
-                    "optionType": "default",
-                    "value": 0
-                  },
-                  "version": {
-                    "optionType": "default",
-                    "value": 4
-                  },
-                  "prefer": {
-                    "optionType": "global",
-                    "value": false
-                  },
-                  "sourceInterface": {
-                    "optionType": "default"
-                  }
-                }
-              ]
-            },
-            "description": "ntp parcel post payload",
-            "name": "ntp_parcel_post1"
           }
         ]
       }

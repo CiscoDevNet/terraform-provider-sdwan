@@ -36,6 +36,7 @@ resource "sdwan_topology_group" "example" {
 ### Optional
 
 - `feature_profile_ids` (Set of String) List of feature profile IDs
+- `feature_versions` (List of String) List of all associated feature versions
 
 ### Read-Only
 

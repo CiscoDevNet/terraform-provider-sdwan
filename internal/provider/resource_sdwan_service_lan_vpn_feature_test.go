@@ -123,6 +123,7 @@ func testAccSdwanServiceLANVPNProfileParcelConfig_minimum() string {
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
+	config += `	vpn = 1` + "\n"
 	config += `}` + "\n"
 	return config
 }

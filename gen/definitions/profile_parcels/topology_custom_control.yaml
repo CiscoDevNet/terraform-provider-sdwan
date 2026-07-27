@@ -2,6 +2,7 @@
 name: Topology Custom Control
 rest_endpoint: /v1/feature-profile/sdwan/topology/%v/custom-control
 minimum_version: 20.15.0
+has_version: true
 id_attribute: id
 test_tags: [SDWAN_2015]
 skip_minimum_test: true
@@ -51,7 +52,7 @@ attributes:
     example: SITE_100
     ignore_mandatory: true
     optional_null_empty: true
-    include_empty_value: true
+    force_include: true
     conditional_attribute:
       conditions:
         - name: target_level
@@ -65,7 +66,7 @@ attributes:
     example: SITE_200
     ignore_mandatory: true
     optional_null_empty: true
-    include_empty_value: true
+    force_include: true
     conditional_attribute:
       conditions:
         - name: target_level

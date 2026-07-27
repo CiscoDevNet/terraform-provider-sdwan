@@ -317,7 +317,7 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 											stringvalidator.OneOf("set", "exportTo"),
 										},
 									},
-									"set_parameters": schema.ListNestedAttribute{
+									"set_parameters": schema.SetNestedAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("List of set parameters, Attribute conditional on `type` equal to `set`").String,
 										Optional:            true,
 										NestedObject: schema.NestedAttributeObject{
