@@ -29,5 +29,6 @@ data "sdwan_topology_group" "example" {
 
 - `description` (String) Description
 - `feature_profile_ids` (Set of String) List of feature profile IDs
+- `feature_versions` (List of String) List of all associated feature versions
 - `name` (String) The name of the topology group
 - `solution` (String) Type of solution
