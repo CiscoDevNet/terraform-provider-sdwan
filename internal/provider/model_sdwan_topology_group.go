@@ -38,6 +38,7 @@ type TopologyGroup struct {
 	Description       types.String `tfsdk:"description"`
 	Solution          types.String `tfsdk:"solution"`
 	FeatureProfileIds types.Set    `tfsdk:"feature_profile_ids"`
+	FeatureVersions   types.List   `tfsdk:"feature_versions"`
 }
 
 // End of section. //template:end types
@@ -131,6 +132,7 @@ func (data TopologyGroup) toBody(ctx context.Context) string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *TopologyGroup) fromBody(ctx context.Context, res gjson.Result) {
+	state := *data
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -151,6 +153,7 @@ func (data *TopologyGroup) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.FeatureProfileIds = types.SetNull(types.StringType)
 	}
+	data.updateVersions(ctx, &state)
 }
 
 // End of section. //template:end fromBody
@@ -174,3 +177,11 @@ func (data *TopologyGroup) hasChanges(ctx context.Context, state *TopologyGroup)
 }
 
 // End of section. //template:end hasChanges
+
+// Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
+
+func (data *TopologyGroup) updateVersions(ctx context.Context, state *TopologyGroup) {
+	data.FeatureVersions = state.FeatureVersions
+}
+
+// End of section. //template:end updateVersions

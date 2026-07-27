@@ -120,6 +120,20 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "test" {
   ]
 }
 
+# Service VPN 1 (VRF 1) is included here so the device actually has a
+# routing instance for VRF 1 - without it, leftover/stale device config
+# referencing VRF 1 (e.g. MSDP) can fail to reconcile during deployment
+resource "sdwan_service_feature_profile" "test" {
+  name        = "SERVICE_TF"
+  description = "Terraform test"
+}
+
+resource "sdwan_service_lan_vpn_feature" "test" {
+  name                = "SERVICE_VPN_TF"
+  feature_profile_id  = sdwan_service_feature_profile.test.id
+  vpn                 = 1
+}
+
 resource "sdwan_configuration_group" "test" {
   name = "CG_1"
   description = "My config group 1"
@@ -127,6 +141,7 @@ resource "sdwan_configuration_group" "test" {
   feature_profile_ids = [
     sdwan_system_feature_profile.test.id,
     sdwan_transport_feature_profile.test.id,
+    sdwan_service_feature_profile.test.id,
   ]
   devices = [{
     id = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"
@@ -162,6 +177,7 @@ resource "sdwan_configuration_group" "test" {
     sdwan_system_logging_feature.test.version,
     sdwan_system_omp_feature.test.version,
     sdwan_transport_wan_vpn_interface_ethernet_feature.test.version,
+    sdwan_service_lan_vpn_feature.test.version,
   ]
 }
 

@@ -166,7 +166,11 @@ func (r *CustomApplicationResource) Configure(_ context.Context, req resource.Co
 
 // End of section. //template:end model
 
-// Section below is generated&owned by "gen/generator.go". //template:begin create
+// Manually maintained (converted from generated code) — The 20.18 Manager changed POST /template/policy/customapp
+// to return only {"taskId": ...} (no "appId"), unlike 20.15 which returns both
+// synchronously. This function reacts to what's actually in the response rather
+// than hardcoding a version check, so it works correctly against both behaviors
+// (and any future Manager version that keeps either shape).
 func (r *CustomApplicationResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan CustomApplication
 
@@ -185,7 +189,38 @@ func (r *CustomApplicationResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
 	}
-	plan.Id = types.StringValue(res.Get("appId").String())
+
+	if res.Get("appId").Exists() {
+		// Synchronous response (confirmed on 20.15): appId present directly.
+		plan.Id = types.StringValue(res.Get("appId").String())
+	} else {
+		// Async-only response (confirmed on 20.18): only taskId present, no appId
+		// anywhere (not in the POST response, not in the completed task status).
+		taskId := res.Get("taskId").String()
+		err, _ := helpers.WaitForActionToComplete(ctx, r.client, taskId, r.taskTimeout)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed waiting for custom application creation task to complete: %s", err))
+			return
+		}
+
+		// Resolve the real ID via a follow-up list lookup, matching by appName
+		// (the API already enforces unique appName via POLICYVALIDATION0005).
+		listRes, err := r.client.Get(plan.getPath())
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to resolve created object ID, got error: %s", err))
+			return
+		}
+		for _, item := range listRes.Get("data").Array() {
+			if item.Get("appName").String() == plan.AppName.ValueString() {
+				plan.Id = types.StringValue(item.Get("appId").String())
+				break
+			}
+		}
+		if plan.Id.IsNull() || plan.Id.ValueString() == "" {
+			resp.Diagnostics.AddError("Client Error", "Failed to resolve created object ID: no matching appName found after task completion")
+			return
+		}
+	}
 	plan.Version = types.Int64Value(0)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Id.ValueString()))
@@ -195,8 +230,6 @@ func (r *CustomApplicationResource) Create(ctx context.Context, req resource.Cre
 
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
-
-// End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
 func (r *CustomApplicationResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {

@@ -97,7 +97,7 @@ Optional:
 
 - `export_to_vpn_list_id` (String) Export to VPN list ID, Attribute conditional on `type` equal to `exportTo`
 - `export_to_vpn_list_version` (Number) Export to VPN list version
-- `set_parameters` (Attributes List) List of set parameters, Attribute conditional on `type` equal to `set` (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
+- `set_parameters` (Attributes Set) List of set parameters, Attribute conditional on `type` equal to `set` (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
 
 <a id="nestedatt--sequences--action_entries--set_parameters"></a>
 ### Nested Schema for `sequences.action_entries.set_parameters`

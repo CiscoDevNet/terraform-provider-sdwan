@@ -75,6 +75,13 @@ func testAccSdwanEmbeddedSecurityNGFWProfileParcelConfig_minimum() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_embedded_security_feature_profile.test.id` + "\n"
 	config += `	default_action = "pass"` + "\n"
+	config += `	sequences = [{` + "\n"
+	config += `	  sequence_id = "1"` + "\n"
+	config += `	  sequence_name = "security"` + "\n"
+	config += `	  base_action = "drop"` + "\n"
+	config += `	  sequence_type = "ngfirewall"` + "\n"
+	config += `	  disable_sequence = false` + "\n"
+	config += `	}]` + "\n"
 	config += `}` + "\n"
 	return config
 }

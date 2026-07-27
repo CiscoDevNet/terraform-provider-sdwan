@@ -3,13 +3,13 @@
 page_title: "sdwan_activate_topology_group Resource - terraform-provider-sdwan"
 subcategory: ""
 description: |-
-  This resource can activate a topology group. Only one topology group can be active at a time.
+  This resource can activate a topology group. Only one topology group can be active at a time. To switch the active group, change the id attribute on the existing resource in place instead of replacing the resource (destroy + create); an in-place change issues a single activation that supersedes the previous group, whereas a replacement deactivates the previous group first and withdraws all overlay control policy from the vSmarts during the switch.
   Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_activate_topology_group (Resource)
 
-This resource can activate a topology group. Only one topology group can be active at a time.
+This resource can activate a topology group. Only one topology group can be active at a time. To switch the active group, change the `id` attribute on the existing resource in place instead of replacing the resource (destroy + create); an in-place change issues a single activation that supersedes the previous group, whereas a replacement deactivates the previous group first and withdraws all overlay control policy from the vSmarts during the switch.
   - Minimum SD-WAN Manager version: `20.15.0`
 
 
@@ -23,4 +23,8 @@ This resource can activate a topology group. Only one topology group can be acti
 
 ### Optional
 
-- `version` (Number) The version of the topology group
+- `feature_versions` (List of String) List of all associated feature versions. Any change to this list will trigger a re-deployment of the topology group.
+
+### Read-Only
+
+- `deployed_version` (Number) Server-side version of the topology group captured at last activation. Used internally for drift detection.

@@ -33,7 +33,7 @@ func TestAccDataSourceSdwanOtherThousandEyesProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_feature.test", "virtual_application.0.account_group_token", "qwer"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_feature.test", "virtual_application.0.account_group_token", "qwerqwerqwerqwerqwerqwerqwerqwer"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_feature.test", "virtual_application.0.vpn", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_feature.test", "virtual_application.0.management_ip", "10.0.0.2"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_feature.test", "virtual_application.0.management_subnet_mask", "255.255.255.0"))
@@ -82,7 +82,7 @@ func testAccDataSourceSdwanOtherThousandEyesProfileParcelConfig() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_other_feature_profile.test.id` + "\n"
 	config += `	virtual_application = [{` + "\n"
-	config += `	  account_group_token = "qwer"` + "\n"
+	config += `	  account_group_token = "qwerqwerqwerqwerqwerqwerqwerqwer"` + "\n"
 	config += `	  vpn = 1` + "\n"
 	config += `	  management_ip = "10.0.0.2"` + "\n"
 	config += `	  management_subnet_mask = "255.255.255.0"` + "\n"
@@ -113,7 +113,7 @@ func testAccDataSourceSdwanOtherThousandEyesProfileParcelByNameConfig() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_other_feature_profile.test.id` + "\n"
 	config += `	virtual_application = [{` + "\n"
-	config += `	  account_group_token = "qwer"` + "\n"
+	config += `	  account_group_token = "qwerqwerqwerqwerqwerqwerqwerqwer"` + "\n"
 	config += `	  vpn = 1` + "\n"
 	config += `	  management_ip = "10.0.0.2"` + "\n"
 	config += `	  management_subnet_mask = "255.255.255.0"` + "\n"

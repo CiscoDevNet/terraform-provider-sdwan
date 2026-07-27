@@ -315,8 +315,7 @@ attributes:
         - name: ipv6_address_type_variable
           value: ''
           negate: true
-    exclude_test: true
-    example: 2001:0:0:1::0
+    example: 2001:0:0:1::0/64
   - model_name: secondaryIpV6Address
     tf_name: ipv6_secondary_addresses
     data_path: [intfIpV6Address, either, static]
@@ -816,6 +815,7 @@ test_prerequisites: |
 
   resource "sdwan_service_lan_vpn_feature" "test" {
     name = "TF_TEST_SLAN"
+    vpn = 1
     feature_profile_id = sdwan_service_feature_profile.test.id
   }
 
