@@ -19,6 +19,7 @@ package provider
 
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
@@ -28,6 +29,9 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanNetworkHierarchySecurityLogging(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
+	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.0.vrf", "service_lan_vpn1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.0.server_ip", "10.1.2.1"))
@@ -72,6 +76,9 @@ func testAccSdwanNetworkHierarchySecurityLoggingConfig_all() string {
 // Custom tests - persist through code generation
 
 func TestAccSdwanNetworkHierarchySecurityLoggingMultipleHSL(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
+	}
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -111,6 +118,9 @@ func testAccSdwanNetworkHierarchySecurityLoggingConfig_multipleHSL() string {
 }
 
 func TestAccSdwanNetworkHierarchySecurityLoggingHSLOnly(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
+	}
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -146,6 +156,9 @@ func testAccSdwanNetworkHierarchySecurityLoggingConfig_hslOnly() string {
 }
 
 func TestAccSdwanNetworkHierarchySecurityLoggingUtdOnly(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
+	}
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -175,6 +188,9 @@ func testAccSdwanNetworkHierarchySecurityLoggingConfig_utdOnly() string {
 }
 
 func TestAccSdwanNetworkHierarchySecurityLoggingBothTypes(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
+	}
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,

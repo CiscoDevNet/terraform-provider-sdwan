@@ -5,6 +5,7 @@ rest_endpoint: /v1/network-hierarchy/%s/network-settings/security-logging
 id_attribute: id
 doc_category: Network Hierarchy
 minimum_version: "20.15"
+test_tags: [SDWAN_2015, SDWAN_2018]
 res_description: This resource can manage Network Hierarchy Security Logging settings on a network hierarchy node.
 ds_description: This data source can read Network Hierarchy Security Logging settings on a network hierarchy node.
 skip_templates: ["model.go", "resource.go", "data_source_test.go"]

@@ -19,6 +19,7 @@ package provider
 
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
@@ -28,6 +29,9 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanNetworkHierarchyCflowd(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
+	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_cflowd.test", "flow_active_timeout", "600"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_cflowd.test", "flow_inactive_timeout", "60"))
@@ -86,6 +90,9 @@ func testAccSdwanNetworkHierarchyCflowdConfig_all() string {
 // End of section. //template:end testAccConfigAll
 
 func TestAccSdwanNetworkHierarchyCflowdMultipleCollectors(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
+	}
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
