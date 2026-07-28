@@ -1,4 +1,4 @@
-## 0.11.4 (unreleased)
+## 0.11.4
 
 - Add `sdwan_other_trustsec_feature` resource and data source (SD-WAN Manager 20.18+)
 - Add OR-of-AND conditional support via nested `and:` on conditions in `conditional_attribute` (e.g. `operator: or` + conditions each carrying `and:` sub-conditions) with a simpler single-shape approach
