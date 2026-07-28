@@ -150,6 +150,10 @@ attributes:
     description: High Speed Logging Server IP
     example: 10.0.0.1
     exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: mode
+          value: security
   - model_name: vrf
     data_path: [policyDefinition, settings, highSpeedLogging]
     tf_name: high_speed_logging_vpn
@@ -157,6 +161,10 @@ attributes:
     description: High Speed Logging VPN
     example: 123
     exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: mode
+          value: security
   - model_name: port
     data_path: [policyDefinition, settings, highSpeedLogging]
     tf_name: high_speed_logging_server_port
@@ -164,13 +172,45 @@ attributes:
     description: High Speed Logging Port
     example: 2055
     exclude_test: true
-  - model_name: sourceInterface
+    conditional_attribute:
+      conditions:
+        - name: mode
+          value: security
+  - model_name: entries
     data_path: [policyDefinition, settings, highSpeedLogging]
-    tf_name: high_speed_logging_server_source_interface
-    type: String
-    description: High Speed Logging Source Interface
-    example: Loopback
+    tf_name: high_speed_logging_entries
+    type: Set
+    description: High Speed Logging entries for Unified Security Policy (supports multiple HSL servers)
     exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: mode
+          value: unified
+    attributes:
+      - model_name: serverIp
+        tf_name: server_ip
+        type: String
+        description: High Speed Logging Server IP
+        example: 10.0.0.1
+        mandatory: true
+      - model_name: vrf
+        id: true
+        tf_name: vpn
+        type: String
+        description: High Speed Logging VPN
+        example: 1
+        mandatory: true
+      - model_name: port
+        tf_name: port
+        type: String
+        description: High Speed Logging Port
+        example: 2055
+        mandatory: true
+      - model_name: sourceInterface
+        tf_name: source_interface
+        type: String
+        description: High Speed Logging Source Interface
+        example: GigabitEthernet0/0/0
   - model_name: maxIncompleteIcmpLimit
     data_path: [policyDefinition, settings]
     tf_name: max_incomplete_icmp_limit

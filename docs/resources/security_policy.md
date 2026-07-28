@@ -51,10 +51,10 @@ resource "sdwan_security_policy" "example" {
   - Choices: `allow`, `deny`
 - `failure_mode` (String) Failure mode
   - Choices: `open`, `close`
-- `high_speed_logging_server_ip` (String) High Speed Logging Server IP
-- `high_speed_logging_server_port` (String) High Speed Logging Port
-- `high_speed_logging_server_source_interface` (String) High Speed Logging Source Interface
-- `high_speed_logging_vpn` (String) High Speed Logging VPN
+- `high_speed_logging_entries` (Attributes Set) High Speed Logging entries for Unified Security Policy (supports multiple HSL servers), Attribute conditional on `mode` equal to `unified` (see [below for nested schema](#nestedatt--high_speed_logging_entries))
+- `high_speed_logging_server_ip` (String) High Speed Logging Server IP, Attribute conditional on `mode` equal to `security`
+- `high_speed_logging_server_port` (String) High Speed Logging Port, Attribute conditional on `mode` equal to `security`
+- `high_speed_logging_vpn` (String) High Speed Logging VPN, Attribute conditional on `mode` equal to `security`
 - `imcp_unreachable_allow` (String) ICMP Unreachable Allow
   - Choices: `on`, `off`
 - `logging` (Attributes List) (see [below for nested schema](#nestedatt--logging))
@@ -102,6 +102,20 @@ Optional:
 - `destination_zone` (String) Destination Zone
 - `source_zone` (String) Source Zone
 
+
+
+<a id="nestedatt--high_speed_logging_entries"></a>
+### Nested Schema for `high_speed_logging_entries`
+
+Required:
+
+- `port` (String) High Speed Logging Port
+- `server_ip` (String) High Speed Logging Server IP
+- `vpn` (String) High Speed Logging VPN
+
+Optional:
+
+- `source_interface` (String) High Speed Logging Source Interface
 
 
 <a id="nestedatt--logging"></a>
