@@ -29,6 +29,9 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanNetworkHierarchyNode(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
+	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "parent_group", "Global"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "name", "EMEA-Group"))
@@ -70,6 +73,9 @@ func testAccSdwanNetworkHierarchyNodeConfig_all() string {
 // On SD-WAN Manager 20.18+ (SDWAN_2018 set) the site uses the geolocation model
 // (location/latitude/longitude); on earlier versions it uses the address block.
 func TestAccSdwanNetworkHierarchyNodeSiteType(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
+	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttrSet("sdwan_network_hierarchy_node.test", "id"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.test", "name", "EMEA-Site-001"))
@@ -124,6 +130,9 @@ func testAccSdwanNetworkHierarchyNodeConfig_siteType() string {
 
 // TestAccSdwanNetworkHierarchyNodeRegionType tests creating a region node
 func TestAccSdwanNetworkHierarchyNodeRegionType(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
+	}
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -153,6 +162,9 @@ func testAccSdwanNetworkHierarchyNodeConfig_regionType() string {
 
 // TestAccSdwanNetworkHierarchyNodeNestedHierarchy tests creating nested parent-child nodes
 func TestAccSdwanNetworkHierarchyNodeNestedHierarchy(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
+	}
 	var checks []resource.TestCheckFunc
 	// Check parent group
 	checks = append(checks, resource.TestCheckResourceAttrSet("sdwan_network_hierarchy_node.parent_group", "id"))

@@ -45,6 +45,9 @@ func networkHierarchyNodeSiteBody() string {
 }
 
 func TestAccDataSourceSdwanNetworkHierarchyNode(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
+	}
 	var byIdChecks []resource.TestCheckFunc
 	byIdChecks = append(byIdChecks,
 		resource.TestCheckResourceAttrSet("data.sdwan_network_hierarchy_node.test_site", "id"),
