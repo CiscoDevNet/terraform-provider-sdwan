@@ -37,6 +37,7 @@ description: |-
 - Add `sdwan_network_hierarchy_node` resource and data source; controllers assignment for regions is not supported due to solution limitations. After creating a region, assign controllers manually via SD-WAN Manager GUI.
 - Add `sdwan_network_hierarchy_cflowd` resource and data source
 - Add `sdwan_network_hierarchy_security_logging` resource and data source
+- Fix `sdwan_policy_group` device variables being sent with the wrong JSON type by resolving each variable's type from the `device/variables/schema` API (matching existing `sdwan_configuration_group` behavior)
 
 ## 0.11.3
 
