@@ -84,7 +84,7 @@ func (d *ServiceDualRouterHAProfileParcelDataSource) Schema(ctx context.Context,
 				MarkdownDescription: "Feature Profile ID",
 				Required:            true,
 			},
-			"redundancy_groups": schema.ListNestedAttribute{
+			"redundancy_groups": schema.SetNestedAttribute{
 				MarkdownDescription: "Service VPN Id List",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{

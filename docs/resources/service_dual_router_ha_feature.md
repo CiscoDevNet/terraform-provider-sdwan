@@ -4,13 +4,13 @@ page_title: "sdwan_service_dual_router_ha_feature Resource - terraform-provider-
 subcategory: "Features - Service"
 description: |-
   This resource can manage a Service Dual Router HA Feature.
-  Minimum SD-WAN Manager version: 20.15.0
+  Minimum SD-WAN Manager version: 20.15.1
 ---
 
 # sdwan_service_dual_router_ha_feature (Resource)
 
 This resource can manage a Service Dual Router HA Feature.
-  - Minimum SD-WAN Manager version: `20.15.0`
+  - Minimum SD-WAN Manager version: `20.15.1`
 
 ## Example Usage
 
@@ -41,7 +41,7 @@ resource "sdwan_service_dual_router_ha_feature" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
-- `redundancy_groups` (Attributes List) Service VPN Id List (see [below for nested schema](#nestedatt--redundancy_groups))
+- `redundancy_groups` (Attributes Set) Service VPN Id List (see [below for nested schema](#nestedatt--redundancy_groups))
 
 ### Optional
 

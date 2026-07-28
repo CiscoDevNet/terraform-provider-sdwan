@@ -64,7 +64,7 @@ func (r *ServiceDualRouterHAProfileParcelResource) Metadata(ctx context.Context,
 func (r *ServiceDualRouterHAProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Dual Router HA Feature.").AddMinimumVersionDescription("20.15.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Dual Router HA Feature.").AddMinimumVersionDescription("20.15.1").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -90,7 +90,7 @@ func (r *ServiceDualRouterHAProfileParcelResource) Schema(ctx context.Context, r
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
 				Required:            true,
 			},
-			"redundancy_groups": schema.ListNestedAttribute{
+			"redundancy_groups": schema.SetNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Service VPN Id List").String,
 				Required:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -120,6 +120,10 @@ func (r *ServiceDualRouterHAProfileParcelResource) Schema(ctx context.Context, r
 						"tag_name": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(1, 128),
+								stringvalidator.RegexMatches(regexp.MustCompile(`^[^&<>! ",]+$`), ""),
+							},
 						},
 					},
 				},

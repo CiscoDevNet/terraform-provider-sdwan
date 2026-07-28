@@ -35,7 +35,7 @@ data "sdwan_service_dual_router_ha_feature" "example" {
 
 - `description` (String) The description of the Feature
 - `enable_optimize_paths` (Boolean) The operation mode is configured for each router in 2 configuration groups
-- `redundancy_groups` (Attributes List) Service VPN Id List (see [below for nested schema](#nestedatt--redundancy_groups))
+- `redundancy_groups` (Attributes Set) Service VPN Id List (see [below for nested schema](#nestedatt--redundancy_groups))
 - `version` (Number) The version of the Feature
 
 <a id="nestedatt--redundancy_groups"></a>
