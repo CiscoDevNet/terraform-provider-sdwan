@@ -36,6 +36,9 @@ resource "sdwan_network_hierarchy_node" "example" {
 - `address` (Attributes) The address of the site (only for site type nodes) (see [below for nested schema](#nestedatt--address))
 - `description` (String) The description of the node
 - `is_secondary` (Boolean) Whether this is a secondary region (only for region type nodes)
+- `latitude` (Number) The GPS latitude of the site (only for site type nodes). Required when `location` is set to a real location. Supported on SD-WAN Manager 20.18 and later.
+- `location` (String) The location (place name) of the site (only for site type nodes). On SD-WAN Manager 20.18 and later this replaces `address`; defaults to `Undisclosed` when not set. When a real location is set, `latitude` and `longitude` are required.
+- `longitude` (Number) The GPS longitude of the site (only for site type nodes). Required when `location` is set to a real location. Supported on SD-WAN Manager 20.18 and later.
 - `site_id` (Number) The site ID (only for site type nodes)
   - Range: `1`-`4294967295`
 

@@ -45,7 +45,7 @@ Read-Only:
 
 - `address` (String) Collector IPv4 or IPv6 address
 - `bfd_metrics_export` (Boolean) Enable BFD metrics exporting
-- `export_interval` (Number) BFD export interval in seconds
+- `export_interval` (Number) BFD export interval in seconds. Only applied when `bfd_metrics_export` is `true`; if set while `bfd_metrics_export` is `false` or unset, the value is ignored by SD-WAN Manager.
 - `export_spread` (Boolean) Enable export spreading
 - `udp_port` (Number) Collector UDP port number
 - `vpn_id` (Number) VPN ID

@@ -126,7 +126,7 @@ attributes:
       - model_name: exportInterval
         tf_name: export_interval
         type: Int64
-        description: BFD export interval in seconds
+        description: 'BFD export interval in seconds. Only applied when `bfd_metrics_export` is `true`; if set while `bfd_metrics_export` is `false` or unset, the value is ignored by SD-WAN Manager.'
         min_int: 1
         max_int: 86400
         default_value: "600"

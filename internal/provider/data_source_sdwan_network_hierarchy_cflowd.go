@@ -114,7 +114,7 @@ func (d *NetworkHierarchyCflowdDataSource) Schema(ctx context.Context, req datas
 							Computed:            true,
 						},
 						"export_interval": schema.Int64Attribute{
-							MarkdownDescription: "BFD export interval in seconds",
+							MarkdownDescription: "BFD export interval in seconds. Only applied when `bfd_metrics_export` is `true`; if set while `bfd_metrics_export` is `false` or unset, the value is ignored by SD-WAN Manager.",
 							Computed:            true,
 						},
 					},

@@ -18,35 +18,69 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
+// networkHierarchyNodeSiteBody returns the version-specific site geolocation
+// block: the geolocation model on SD-WAN Manager 20.18+ (SDWAN_2018 set),
+// otherwise the legacy address block.
+func networkHierarchyNodeSiteBody() string {
+	if os.Getenv("SDWAN_2018") != "" {
+		body := `	location = "New York"` + "\n"
+		body += `	latitude = 40.7484` + "\n"
+		body += `	longitude = -73.9857` + "\n"
+		return body
+	}
+	body := `	address = {` + "\n"
+	body += `	  street = "350 Fifth Avenue"` + "\n"
+	body += `	  city = "New York"` + "\n"
+	body += `	  state = "NY"` + "\n"
+	body += `	  country = "USA"` + "\n"
+	body += `	  zipcode = "10118"` + "\n"
+	body += `	}` + "\n"
+	return body
+}
+
 func TestAccDataSourceSdwanNetworkHierarchyNode(t *testing.T) {
+	var byIdChecks []resource.TestCheckFunc
+	byIdChecks = append(byIdChecks,
+		resource.TestCheckResourceAttrSet("data.sdwan_network_hierarchy_node.test_site", "id"),
+		resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "parent_group", "Global"),
+		resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "name", "EMEA-Site"),
+		resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "description", "EMEA Site"),
+		resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "type", "site"),
+		resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "site_id", "101"),
+	)
+	if os.Getenv("SDWAN_2018") != "" {
+		byIdChecks = append(byIdChecks,
+			resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "location", "New York"),
+			resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "latitude", "40.7484"),
+			resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "longitude", "-73.9857"),
+		)
+	} else {
+		byIdChecks = append(byIdChecks,
+			resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "address.state", "NY"),
+			resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "address.street", "350 Fifth Avenue"),
+			resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "address.city", "New York"),
+			resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "address.country", "USA"),
+			resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "address.zipcode", "10118"),
+		)
+	}
+	byIdChecks = append(byIdChecks,
+		resource.TestCheckResourceAttrSet("data.sdwan_network_hierarchy_node.test_region", "id"),
+		resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_region", "parent_group", "Global"),
+		resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_region", "name", "EMEA-Region"),
+	)
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccDataSourceSdwanNetworkHierarchyNodeConfig_byId(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttrSet("data.sdwan_network_hierarchy_node.test_site", "id"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "parent_group", "Global"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "name", "EMEA-Site"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "description", "EMEA Site"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "type", "site"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "site_id", "101"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "address.state", "NY"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "address.street", "350 Fifth Avenue"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "address.city", "New York"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "address.country", "USA"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_site", "address.zipcode", "10118"),
-
-					resource.TestCheckResourceAttrSet("data.sdwan_network_hierarchy_node.test_region", "id"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_region", "parent_group", "Global"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_node.test_region", "name", "EMEA-Region"),
-				),
+				Check:  resource.ComposeTestCheckFunc(byIdChecks...),
 			},
 			{
 				Config: testAccDataSourceSdwanNetworkHierarchyNodeConfig_byName(),
@@ -81,13 +115,7 @@ func testAccDataSourceSdwanNetworkHierarchyNodeConfig_byId() string {
 	config += `	description = "EMEA Site"` + "\n"
 	config += `	type = "site"` + "\n"
 	config += `	site_id = 101` + "\n"
-	config += `	address = {` + "\n"
-	config += `	  street = "350 Fifth Avenue"` + "\n"
-	config += `	  city = "New York"` + "\n"
-	config += `	  state = "NY"` + "\n"
-	config += `	  country = "USA"` + "\n"
-	config += `	  zipcode = "10118"` + "\n"
-	config += `	}` + "\n"
+	config += networkHierarchyNodeSiteBody()
 	config += `}` + "\n"
 	config += "\n"
 	config += `resource "sdwan_network_hierarchy_node" "test_region" {` + "\n"
@@ -114,13 +142,7 @@ func testAccDataSourceSdwanNetworkHierarchyNodeConfig_byName() string {
 	config += `	description = "EMEA Site"` + "\n"
 	config += `	type = "site"` + "\n"
 	config += `	site_id = 101` + "\n"
-	config += `	address = {` + "\n"
-	config += `	  street = "350 Fifth Avenue"` + "\n"
-	config += `	  city = "New York"` + "\n"
-	config += `	  state = "NY"` + "\n"
-	config += `	  country = "USA"` + "\n"
-	config += `	  zipcode = "10118"` + "\n"
-	config += `	}` + "\n"
+	config += networkHierarchyNodeSiteBody()
 	config += `}` + "\n"
 	config += "\n"
 	config += `resource "sdwan_network_hierarchy_node" "test_region" {` + "\n"
@@ -147,13 +169,7 @@ func testAccDataSourceSdwanNetworkHierarchyNodeConfig_bySiteId() string {
 	config += `	description = "EMEA Site"` + "\n"
 	config += `	type = "site"` + "\n"
 	config += `	site_id = 101` + "\n"
-	config += `	address = {` + "\n"
-	config += `	  street = "350 Fifth Avenue"` + "\n"
-	config += `	  city = "New York"` + "\n"
-	config += `	  state = "NY"` + "\n"
-	config += `	  country = "USA"` + "\n"
-	config += `	  zipcode = "10118"` + "\n"
-	config += `	}` + "\n"
+	config += networkHierarchyNodeSiteBody()
 	config += `}` + "\n"
 	config += "\n"
 	config += `data "sdwan_network_hierarchy_node" "test_site" {` + "\n"

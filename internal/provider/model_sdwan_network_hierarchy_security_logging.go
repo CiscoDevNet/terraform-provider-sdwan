@@ -21,6 +21,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -79,13 +80,20 @@ func (data NetworkHierarchySecurityLogging) getPathWithId() string {
 	return fmt.Sprintf("/v1/network-hierarchy/%s/network-settings/security-logging/%s", data.NodeId.ValueString(), data.Id.ValueString())
 }
 
-func (data NetworkHierarchySecurityLogging) toBody(ctx context.Context) string {
+func (data NetworkHierarchySecurityLogging) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 
 	if len(data.HighSpeedLogging) > 0 {
 		body, _ = sjson.Set(body, "data.highSpeedLogging", []interface{}{})
 		for _, entry := range data.HighSpeedLogging {
 			itemBody := ""
+			// `name` (server1-server4) is a positional profile identifier that
+			// SD-WAN Manager 20.18+ requires but auto-derives when omitted. It is
+			// not a user-facing config attribute; emit "server1" for the single
+			// supported entry on 20.18+ and omit entirely on earlier versions.
+			if ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+				itemBody, _ = sjson.Set(itemBody, "name", "server1")
+			}
 			if !entry.Vrf.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "vrf.optionType", "global")
 				itemBody, _ = sjson.Set(itemBody, "vrf.value", entry.Vrf.ValueString())

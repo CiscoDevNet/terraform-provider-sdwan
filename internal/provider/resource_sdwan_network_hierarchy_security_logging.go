@@ -24,6 +24,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -149,6 +150,8 @@ func (r *NetworkHierarchySecurityLoggingResource) Create(ctx context.Context, re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Using Global node ID", plan.NodeId.ValueString()))
 
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+
 	// Check if security-logging already exists for this node (only 1 allowed per node)
 	// GET returns {"data":[{"id":"..."}]} - array format
 	existingRes, _ := r.client.Get(plan.getPath())
@@ -157,14 +160,14 @@ func (r *NetworkHierarchySecurityLoggingResource) Create(ctx context.Context, re
 		plan.Id = types.StringValue(existingId)
 		tflog.Debug(ctx, fmt.Sprintf("%s: Security logging already exists with ID %s, updating instead", plan.NodeId.ValueString(), existingId))
 
-		body := plan.toBody(ctx)
+		body := plan.toBody(ctx, ver)
 		res, err := r.client.Put(plan.getPathWithId(), body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
 			return
 		}
 	} else {
-		body := plan.toBody(ctx)
+		body := plan.toBody(ctx, ver)
 		res, err := r.client.Post(plan.getPath(), body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
@@ -248,7 +251,8 @@ func (r *NetworkHierarchySecurityLoggingResource) Update(ctx context.Context, re
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.NodeId.ValueString()))
 
 	if plan.hasChanges(ctx, &state) {
-		body := plan.toBody(ctx)
+		ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+		body := plan.toBody(ctx, ver)
 		r.updateMutex.Lock()
 		res, err := r.client.Put(plan.getPathWithId(), body)
 		r.updateMutex.Unlock()

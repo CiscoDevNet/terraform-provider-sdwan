@@ -84,7 +84,7 @@ Optional:
 
 - `bfd_metrics_export` (Boolean) Enable BFD metrics exporting
   - Default value: `false`
-- `export_interval` (Number) BFD export interval in seconds
+- `export_interval` (Number) BFD export interval in seconds. Only valid when `bfd_metrics_export` is `true`; setting it while `bfd_metrics_export` is `false` or unset is a configuration error.
   - Range: `1`-`86400`
   - Default value: `600`
 - `export_spread` (Boolean) Enable export spreading

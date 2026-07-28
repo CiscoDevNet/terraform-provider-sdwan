@@ -39,6 +39,7 @@ import (
 
 var _ resource.Resource = &NetworkHierarchyCflowdResource{}
 var _ resource.ResourceWithImportState = &NetworkHierarchyCflowdResource{}
+var _ resource.ResourceWithValidateConfig = &NetworkHierarchyCflowdResource{}
 
 func NewNetworkHierarchyCflowdResource() resource.Resource {
 	return &NetworkHierarchyCflowdResource{}
@@ -151,7 +152,7 @@ func (r *NetworkHierarchyCflowdResource) Schema(ctx context.Context, req resourc
 							Optional:            true,
 						},
 						"export_interval": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("BFD export interval in seconds").AddIntegerRangeDescription(1, 86400).AddDefaultValueDescription("600").String,
+							MarkdownDescription: helpers.NewAttributeDescription("BFD export interval in seconds. Only valid when `bfd_metrics_export` is `true`; setting it while `bfd_metrics_export` is `false` or unset is a configuration error.").AddIntegerRangeDescription(1, 86400).AddDefaultValueDescription("600").String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.Between(1, 86400),
@@ -161,6 +162,31 @@ func (r *NetworkHierarchyCflowdResource) Schema(ctx context.Context, req resourc
 				},
 			},
 		},
+	}
+}
+
+func (r *NetworkHierarchyCflowdResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+	var config NetworkHierarchyCflowd
+
+	diags := req.Config.Get(ctx, &config)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// `export_interval` is only honored by SD-WAN Manager when
+	// `bfd_metrics_export` is `true`. If it is set while `bfd_metrics_export`
+	// is `false` or unset, the provider silently drops it (see toBody), which
+	// would otherwise be a silent no-op and can cause a `600 -> null` refresh
+	// drift. Surface it as a config error instead.
+	for i, collector := range config.Collectors {
+		if !collector.ExportInterval.IsNull() && collector.BfdMetricsExport.ValueBool() != true {
+			resp.Diagnostics.AddAttributeError(
+				path.Root("collectors").AtListIndex(i).AtName("export_interval"),
+				"Invalid Configuration",
+				"`export_interval` can only be set when `bfd_metrics_export` is `true` on the same collector.",
+			)
+		}
 	}
 }
 

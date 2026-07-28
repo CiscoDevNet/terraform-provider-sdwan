@@ -25,6 +25,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -40,6 +41,7 @@ import (
 
 var _ resource.Resource = &NetworkHierarchyNodeResource{}
 var _ resource.ResourceWithImportState = &NetworkHierarchyNodeResource{}
+var _ resource.ResourceWithValidateConfig = &NetworkHierarchyNodeResource{}
 
 func NewNetworkHierarchyNodeResource() resource.Resource {
 	return &NetworkHierarchyNodeResource{}
@@ -158,6 +160,22 @@ func (r *NetworkHierarchyNodeResource) Schema(ctx context.Context, req resource.
 					},
 				},
 			},
+			"location": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("The location (place name) of the site (only for site type nodes). On SD-WAN Manager 20.18 and later this replaces `address`; defaults to `Undisclosed` when not set. When a real location is set, `latitude` and `longitude` are required.").String,
+				Optional:            true,
+				Computed:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
+			},
+			"latitude": schema.Float64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("The GPS latitude of the site (only for site type nodes). Required when `location` is set to a real location. Supported on SD-WAN Manager 20.18 and later.").String,
+				Optional:            true,
+			},
+			"longitude": schema.Float64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("The GPS longitude of the site (only for site type nodes). Required when `location` is set to a real location. Supported on SD-WAN Manager 20.18 and later.").String,
+				Optional:            true,
+			},
 		},
 	}
 }
@@ -169,6 +187,37 @@ func (r *NetworkHierarchyNodeResource) Configure(_ context.Context, req resource
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
+}
+
+func (r *NetworkHierarchyNodeResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+	var config NetworkHierarchyNode
+
+	diags := req.Config.Get(ctx, &config)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	nodeType := config.Type.ValueString()
+
+	// A real `location` (anything other than "Undisclosed") on a site requires
+	// both GPS coordinates.
+	if nodeType == "site" && !config.Location.IsNull() && config.Location.ValueString() != "" && config.Location.ValueString() != "Undisclosed" {
+		if config.Latitude.IsNull() || config.Longitude.IsNull() {
+			resp.Diagnostics.AddError(
+				"Invalid Configuration",
+				"When `location` is set to a real location on a site, both `latitude` and `longitude` must be provided.",
+			)
+		}
+	}
+
+	// `is_secondary` only applies to region type nodes.
+	if !config.IsSecondary.IsNull() && nodeType != "region" {
+		resp.Diagnostics.AddError(
+			"Invalid Configuration",
+			"The `is_secondary` attribute can only be set when `type` is `region`.",
+		)
+	}
 }
 
 func (r *NetworkHierarchyNodeResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
@@ -194,7 +243,24 @@ func (r *NetworkHierarchyNodeResource) Create(ctx context.Context, req resource.
 		return
 	}
 
-	body := plan.toBody(ctx, parentId)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	if ver.GreaterThanOrEqual(minVersionNetworkHierarchyNodeGeo) && plan.Address != nil {
+		resp.Diagnostics.AddError(
+			"Invalid Configuration",
+			"The `address` attribute is not supported on SD-WAN Manager 20.18 and later. Use `location`, `latitude` and `longitude` instead.",
+		)
+		return
+	}
+	if !ver.GreaterThanOrEqual(minVersionNetworkHierarchyNodeGeo) &&
+		((!plan.Location.IsNull() && !plan.Location.IsUnknown()) ||
+			!plan.Latitude.IsNull() || !plan.Longitude.IsNull()) {
+		resp.Diagnostics.AddError(
+			"Invalid Configuration",
+			"The `location`, `latitude` and `longitude` attributes require SD-WAN Manager 20.18.1 or later. On earlier versions use the `address` block instead.",
+		)
+		return
+	}
+	body := plan.toBody(ctx, parentId, ver)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -208,6 +274,18 @@ func (r *NetworkHierarchyNodeResource) Create(ctx context.Context, req resource.
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to get UUID from response: %s", res.String()))
 		return
 	}
+
+	// The POST response only returns the UUID, not server-assigned computed
+	// values such as `location` (the Manager assigns e.g. `Undisclosed` for
+	// location-less sites) or the site id. Re-read the node so these computed
+	// attributes are resolved to known values before writing state, reusing the
+	// same GET + fromBody mechanism as Read.
+	readRes, err := r.client.Get(plan.getPath() + url.QueryEscape(plan.Id.ValueString()))
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve created object (GET), got error: %s, %s", err, readRes.String()))
+		return
+	}
+	plan.fromBody(ctx, readRes)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 
@@ -292,7 +370,24 @@ func (r *NetworkHierarchyNodeResource) Update(ctx context.Context, req resource.
 			return
 		}
 
-		body := plan.toUpdateBody(ctx, currentNodeRes, parentId)
+		ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+		if ver.GreaterThanOrEqual(minVersionNetworkHierarchyNodeGeo) && plan.Address != nil {
+			resp.Diagnostics.AddError(
+				"Invalid Configuration",
+				"The `address` attribute is not supported on SD-WAN Manager 20.18 and later. Use `location`, `latitude` and `longitude` instead.",
+			)
+			return
+		}
+		if !ver.GreaterThanOrEqual(minVersionNetworkHierarchyNodeGeo) &&
+			((!plan.Location.IsNull() && !plan.Location.IsUnknown()) ||
+				!plan.Latitude.IsNull() || !plan.Longitude.IsNull()) {
+			resp.Diagnostics.AddError(
+				"Invalid Configuration",
+				"The `location`, `latitude` and `longitude` attributes require SD-WAN Manager 20.18.1 or later. On earlier versions use the `address` block instead.",
+			)
+			return
+		}
+		body := plan.toUpdateBody(ctx, currentNodeRes, parentId, ver)
 		r.updateMutex.Lock()
 		res, err := r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), body)
 		r.updateMutex.Unlock()

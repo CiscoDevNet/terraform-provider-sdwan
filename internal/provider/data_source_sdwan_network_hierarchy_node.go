@@ -113,6 +113,18 @@ func (d *NetworkHierarchyNodeDataSource) Schema(ctx context.Context, req datasou
 					},
 				},
 			},
+			"location": schema.StringAttribute{
+				MarkdownDescription: "The location (place name) of the site (only for site type nodes). On SD-WAN Manager 20.18 and later this replaces `address`; defaults to `Undisclosed` when not set. When a real location is set, `latitude` and `longitude` are required.",
+				Computed:            true,
+			},
+			"latitude": schema.Float64Attribute{
+				MarkdownDescription: "The GPS latitude of the site (only for site type nodes). Required when `location` is set to a real location. Supported on SD-WAN Manager 20.18 and later.",
+				Computed:            true,
+			},
+			"longitude": schema.Float64Attribute{
+				MarkdownDescription: "The GPS longitude of the site (only for site type nodes). Required when `location` is set to a real location. Supported on SD-WAN Manager 20.18 and later.",
+				Computed:            true,
+			},
 		},
 	}
 }
