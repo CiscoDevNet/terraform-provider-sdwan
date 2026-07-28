@@ -26,6 +26,7 @@
 - The `sdwan_security_policy` resource now supports multiple high-speed logging entries via `high_speed_logging_entries` block. The `high_speed_logging_server_source_interface` attribute has been moved to `source_interface` within each entry.
 - Add `feature_versions` support in the `sdwan_topology_group` and `sdwan_activate_topology_group` resources
 - Add convergent drift detection to `sdwan_activate_topology_group`: a new computed `deployed_version` attribute captures the group's server-side version after each activation, so removing a parcel or referenced object (which Terraform cannot signal at plan time) is detected on the next read and the group is automatically re-activated to converge
+- Add `sdwan_service_dual_router_ha_feature` resource and data source
 
 ## 0.11.3
 
