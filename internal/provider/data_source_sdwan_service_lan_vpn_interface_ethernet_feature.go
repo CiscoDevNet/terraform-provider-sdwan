@@ -746,6 +746,10 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"trustsec_trusted": schema.BoolAttribute{
+				MarkdownDescription: "Indicates that the interface is trustworthy for CTS.",
+				Computed:            true,
+			},
 			"trustsec_enable_enforced_propogation": schema.BoolAttribute{
 				MarkdownDescription: "Enable/Disable SGT Enforcement on an interface",
 				Computed:            true,

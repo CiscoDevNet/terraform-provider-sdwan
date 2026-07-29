@@ -2817,16 +2817,57 @@
                                                 ]
                                             }
                                         },
-                                        "required": [
-                                            "familyType"
-                                        ],
                                         "additionalProperties": false
                                     }
                                 }
                             },
-                            "required": [
-                                "address",
-                                "remoteAs"
+                            "allOf": [
+                                {
+                                    "if": {
+                                        "anyOf": [
+                                            {
+                                                "properties": {
+                                                    "address": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "const": "global"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "address"
+                                                ]
+                                            },
+                                            {
+                                                "properties": {
+                                                    "remoteAs": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "const": "global"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "remoteAs"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "then": {
+                                        "required": [
+                                            "address",
+                                            "remoteAs"
+                                        ]
+                                    }
+                                }
                             ],
                             "additionalProperties": false
                         }
@@ -4501,16 +4542,57 @@
                                                 ]
                                             }
                                         },
-                                        "required": [
-                                            "familyType"
-                                        ],
                                         "additionalProperties": false
                                     }
                                 }
                             },
-                            "required": [
-                                "address",
-                                "remoteAs"
+                            "allOf": [
+                                {
+                                    "if": {
+                                        "anyOf": [
+                                            {
+                                                "properties": {
+                                                    "address": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "const": "global"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "address"
+                                                ]
+                                            },
+                                            {
+                                                "properties": {
+                                                    "remoteAs": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "const": "global"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "remoteAs"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "then": {
+                                        "required": [
+                                            "address",
+                                            "remoteAs"
+                                        ]
+                                    }
+                                }
                             ],
                             "additionalProperties": false
                         }
@@ -4527,10 +4609,12 @@
                                     "type": "object",
                                     "properties": {
                                         "prefix": {
-                                            "description": "Configure the IPv4 prefixes to aggregate",
                                             "type": "object",
+                                            "description": "Configure the IPv4 prefixes to aggregate",
                                             "properties": {
                                                 "address": {
+                                                    "description": "IP Address",
+                                                    "type": "object",
                                                     "oneOf": [
                                                         {
                                                             "properties": {
@@ -4584,6 +4668,8 @@
                                                     ]
                                                 },
                                                 "mask": {
+                                                    "description": "Subnet Mask",
+                                                    "type": "object",
                                                     "oneOf": [
                                                         {
                                                             "properties": {
@@ -4621,6 +4707,7 @@
                                                                         "255.255.0.0",
                                                                         "255.254.0.0",
                                                                         "255.252.0.0",
+                                                                        "255.248.0.0",
                                                                         "255.240.0.0",
                                                                         "255.224.0.0",
                                                                         "255.192.0.0",
@@ -4678,6 +4765,7 @@
                                                                         "255.255.0.0",
                                                                         "255.254.0.0",
                                                                         "255.252.0.0",
+                                                                        "255.248.0.0",
                                                                         "255.240.0.0",
                                                                         "255.224.0.0",
                                                                         "255.192.0.0",
@@ -4703,9 +4791,53 @@
                                                     ]
                                                 }
                                             },
-                                            "required": [
-                                                "address",
-                                                "mask"
+                                            "allOf": [
+                                                {
+                                                    "if": {
+                                                        "anyOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "address": {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "const": "global"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "address"
+                                                                ]
+                                                            },
+                                                            {
+                                                                "properties": {
+                                                                    "mask": {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "const": "global"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "mask"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    "then": {
+                                                        "required": [
+                                                            "address",
+                                                            "mask"
+                                                        ]
+                                                    }
+                                                }
                                             ],
                                             "additionalProperties": false
                                         },
@@ -4858,9 +4990,6 @@
                                             ]
                                         }
                                     },
-                                    "required": [
-                                        "prefix"
-                                    ],
                                     "additionalProperties": false
                                 }
                             },
@@ -4876,6 +5005,8 @@
                                             "type": "object",
                                             "properties": {
                                                 "address": {
+                                                    "description": "IP Address",
+                                                    "type": "object",
                                                     "oneOf": [
                                                         {
                                                             "properties": {
@@ -4929,6 +5060,8 @@
                                                     ]
                                                 },
                                                 "mask": {
+                                                    "description": "Subnet Mask",
+                                                    "type": "object",
                                                     "oneOf": [
                                                         {
                                                             "properties": {
@@ -4966,6 +5099,7 @@
                                                                         "255.255.0.0",
                                                                         "255.254.0.0",
                                                                         "255.252.0.0",
+                                                                        "255.248.0.0",
                                                                         "255.240.0.0",
                                                                         "255.224.0.0",
                                                                         "255.192.0.0",
@@ -5023,6 +5157,7 @@
                                                                         "255.255.0.0",
                                                                         "255.254.0.0",
                                                                         "255.252.0.0",
+                                                                        "255.248.0.0",
                                                                         "255.240.0.0",
                                                                         "255.224.0.0",
                                                                         "255.192.0.0",
@@ -5048,16 +5183,56 @@
                                                     ]
                                                 }
                                             },
-                                            "required": [
-                                                "address",
-                                                "mask"
-                                            ],
-                                            "additionalProperties": false
+                                            "allOf": [
+                                                {
+                                                    "if": {
+                                                        "anyOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "address": {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "const": "global"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "address"
+                                                                ]
+                                                            },
+                                                            {
+                                                                "properties": {
+                                                                    "mask": {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "const": "global"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "mask"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    "then": {
+                                                        "required": [
+                                                            "address",
+                                                            "mask"
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
-                                    "required": [
-                                        "prefix"
-                                    ],
                                     "additionalProperties": false
                                 }
                             },
@@ -5686,9 +5861,6 @@
                                             ]
                                         }
                                     },
-                                    "required": [
-                                        "protocol"
-                                    ],
                                     "additionalProperties": false,
                                     "dependencies": {
                                         "translateRibMetric": {
@@ -5936,9 +6108,6 @@
                                             ]
                                         }
                                     },
-                                    "required": [
-                                        "prefix"
-                                    ],
                                     "additionalProperties": false
                                 }
                             },
@@ -6005,9 +6174,6 @@
                                             ]
                                         }
                                     },
-                                    "required": [
-                                        "prefix"
-                                    ],
                                     "additionalProperties": false
                                 }
                             },
@@ -6630,9 +6796,6 @@
                                             ]
                                         }
                                     },
-                                    "required": [
-                                        "protocol"
-                                    ],
                                     "additionalProperties": false,
                                     "dependencies": {
                                         "translateRibMetric": {
@@ -6695,7 +6858,7 @@
                     "ISRv",
                     "ir1101"
                 ],
-                "minVManageVersion": "20.15.1"
+                "minVManageVersion": "20.16.1"
             },
             "documentation": {
                 "description": "This is the documentation for request schema for routing/bgp profile parcel",

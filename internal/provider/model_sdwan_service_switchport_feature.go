@@ -246,7 +246,7 @@ func (data ServiceSwitchport) toBody(ctx context.Context) string {
 			if item.EnableDot1x.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "enableDot1x.optionType", "default")
-					itemBody, _ = sjson.Set(itemBody, "enableDot1x.value", true)
+					itemBody, _ = sjson.Set(itemBody, "enableDot1x.value", false)
 				}
 			} else {
 				if true {
