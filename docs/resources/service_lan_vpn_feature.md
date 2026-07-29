@@ -208,6 +208,7 @@ resource "sdwan_service_lan_vpn_feature" "example" {
 - `static_nat_subnets` (Attributes List) Static NAT Subnet Rules (see [below for nested schema](#nestedatt--static_nat_subnets))
 - `static_nats` (Attributes List) Static NAT Rules (see [below for nested schema](#nestedatt--static_nats))
 - `vpn` (Number) VPN
+  - Range: `1`-`65527`
 - `vpn_variable` (String) Variable name
 
 ### Read-Only
