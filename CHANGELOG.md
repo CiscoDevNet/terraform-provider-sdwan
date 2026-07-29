@@ -1,3 +1,15 @@
+## 0.11.5 (unreleased)
+
+- Bump `sdwan_service_lan_vpn_interface_ethernet_feature` schema to `20.18.0`
+- Bump `sdwan_service_routing_bgp_feature` schema to `20.18.0`
+- Bump `sdwan_service_routing_eigrp_feature` schema to `20.18.0`
+- Bump `sdwan_service_lan_vpn_feature` schema to `20.18.0`
+- Bump `sdwan_service_lan_vpn_interface_svi_feature` schema to `20.18.0`
+- Bump `sdwan_service_routing_ospf_feature` schema to `20.18.0`
+- Bump `sdwan_service_lan_vpn_interface_svi_feature` schema to `20.18.0`
+- Bump `sdwan_service_switchport_feature` schema to `20.18.0`
+- Bump `sdwan_service_wireless_lan_feature` schema to `20.18.0`
+
 ## 0.11.4
 
 - Add `sdwan_other_trustsec_feature` resource and data source (SD-WAN Manager 20.18+)

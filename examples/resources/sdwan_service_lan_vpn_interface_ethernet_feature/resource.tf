@@ -80,9 +80,10 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
       mac_address = "00-B0-D0-63-C2-26"
     }
   ]
-  trustsec_enable_sgt_propogation      = false
+  trustsec_enable_sgt_propogation      = true
   trustsec_propogate                   = true
   trustsec_security_group_tag          = 123
+  trustsec_trusted                     = true
   trustsec_enable_enforced_propogation = false
   trustsec_enforced_security_group_tag = 1234
   duplex                               = "full"

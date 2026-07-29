@@ -656,7 +656,6 @@
                                                 "additionalProperties": false
                                             }
                                         },
-                                        "required": [],
                                         "additionalProperties": false
                                     }
                                 },
@@ -1193,7 +1192,7 @@
                     "ISRv",
                     "ir1101"
                 ],
-                "minVManageVersion": "20.15.1"
+                "minVManageVersion": "20.18.1"
             },
             "documentation": {
                 "description": "This is the documentation for route policy profile parcel",
