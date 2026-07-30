@@ -137,9 +137,13 @@ func (r *ActivateTopologyGroupResource) Read(ctx context.Context, req resource.R
 
 		serverVersion = types.Int64Value(res.Get("version").Int())
 
-		if !res.Get("activeStatus").Bool() {
-			state.Id = types.StringValue("")
-		} else if !state.DeployedVersion.IsNull() && res.Get("version").Int() != state.DeployedVersion.ValueInt64() {
+		// Note: the topology group's own PUT (e.g. a profiles update, or a no-op
+		// version-carry apply) bumps 'version' and resets 'activeStatus' to false
+		// server-side without any activate/deactivate transaction. So 'activeStatus'
+		// is NOT a reliable "externally deactivated" signal and is intentionally not
+		// used here; drift is detected purely from the server version advancing past
+		// the last deployed version.
+		if !state.DeployedVersion.IsNull() && res.Get("version").Int() != state.DeployedVersion.ValueInt64() {
 			// Server version advanced since last activation (e.g. a parcel was removed).
 			// Null both markers to force a re-activation: deployed_version is Computed and
 			// nulling it alone yields no plan diff, so we also null the config-backed
