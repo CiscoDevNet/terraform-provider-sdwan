@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"slices"
-	"strconv"
 	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
@@ -78,7 +77,7 @@ func (data PolicyGroupDevices) toBodyPolicyGroupDevices(ctx context.Context) str
 	return body
 }
 
-func (data PolicyGroupDevices) toBodyPolicyGroupDeviceVariables(ctx context.Context) string {
+func (data PolicyGroupDevices) toBodyPolicyGroupDeviceVariables(ctx context.Context, varTypes map[string]string) string {
 	body := ""
 	if !data.Solution.IsNull() {
 		body, _ = sjson.Set(body, "solution", data.Solution.ValueString())
@@ -100,17 +99,21 @@ func (data PolicyGroupDevices) toBodyPolicyGroupDeviceVariables(ctx context.Cont
 					if !childItem.ListValue.IsNull() {
 						var values []string
 						childItem.ListValue.ElementsAs(ctx, &values, false)
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", values)
-					} else if !childItem.Value.IsNull() {
-						if val, err := strconv.Atoi(childItem.Value.ValueString()); err == nil {
-							itemChildBody, _ = sjson.Set(itemChildBody, "value", val)
-						} else if val, err := strconv.ParseFloat(childItem.Value.ValueString(), 64); err == nil {
-							itemChildBody, _ = sjson.Set(itemChildBody, "value", val)
-						} else if val, err := strconv.ParseBool(childItem.Value.ValueString()); err == nil {
-							itemChildBody, _ = sjson.Set(itemChildBody, "value", val)
-						} else {
-							itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Value.ValueString())
+
+						varName := childItem.Name.ValueString()
+						// Convert each element in the list based on schema type
+						convertedValues := make([]interface{}, len(values))
+						schemaType := varTypes[varName] // empty string if not found
+						for i, valueStr := range values {
+							convertedValues[i] = convertValueByType(valueStr, schemaType)
 						}
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", convertedValues)
+					} else if !childItem.Value.IsNull() {
+						valueStr := childItem.Value.ValueString()
+						varName := childItem.Name.ValueString()
+						schemaType := varTypes[varName] // empty string if not found
+						convertedValue := convertValueByType(valueStr, schemaType)
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", convertedValue)
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "variables.-1", itemChildBody)
 				}

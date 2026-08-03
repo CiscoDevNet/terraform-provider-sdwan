@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## 0.11.4 (unreleased)
+## 0.11.4
 
 - Add `sdwan_other_trustsec_feature` resource and data source (SD-WAN Manager 20.18+)
 - Add OR-of-AND conditional support via nested `and:` on conditions in `conditional_attribute` (e.g. `operator: or` + conditions each carrying `and:` sub-conditions) with a simpler single-shape approach
@@ -25,7 +25,6 @@ description: |-
 - Bump `sdwan_system_omp_feature` schema to `20.18.0`
 - Bump `sdwan_system_security_feature` schema to `20.18.0`
 - Bump `sdwan_system_snmp_feature` schema to `20.18.0`
-- Bump `sdwan_system_ntp_feature` schema to `26.1.1`
 - Add `deploy_on_out_of_date` provider attribute (env: `SDWAN_DEPLOY_ON_OUT_OF_DATE`, default: `true`) to automatically detect and re-deploy out-of-date devices in `sdwan_configuration_group` and `sdwan_policy_group` resources during refresh
 - Fix `sdwan_custom_application` resource/data source failing to read, update, or delete objects created against SD-WAN Manager 20.18, caused by the `POST /template/policy/customapp` endpoint no longer returning the created object's ID synchronously on that version (async task-based creation only)
 - Validate acceptance test suite against SD-WAN Manager 20.18 and fix test-data/fixture issues surfaced by tightened API validation on that version
@@ -35,6 +34,10 @@ description: |-
 - The `sdwan_security_policy` resource now supports multiple high-speed logging entries via `high_speed_logging_entries` block. The `high_speed_logging_server_source_interface` attribute has been moved to `source_interface` within each entry.
 - Add `feature_versions` support in the `sdwan_topology_group` and `sdwan_activate_topology_group` resources
 - Add convergent drift detection to `sdwan_activate_topology_group`: a new computed `deployed_version` attribute captures the group's server-side version after each activation, so removing a parcel or referenced object (which Terraform cannot signal at plan time) is detected on the next read and the group is automatically re-activated to converge
+- Add `sdwan_network_hierarchy_node` resource and data source; controllers assignment for regions is not supported due to solution limitations. After creating a region, assign controllers manually via SD-WAN Manager GUI.
+- Add `sdwan_network_hierarchy_cflowd` resource and data source
+- Add `sdwan_network_hierarchy_security_logging` resource and data source
+- Fix `sdwan_policy_group` device variables being sent with the wrong JSON type by resolving each variable's type from the `device/variables/schema` API (matching existing `sdwan_configuration_group` behavior)
 
 ## 0.11.3
 

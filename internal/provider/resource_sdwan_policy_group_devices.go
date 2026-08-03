@@ -183,7 +183,8 @@ func (r *PolicyGroupDevicesResource) Create(ctx context.Context, req resource.Cr
 
 	// Set device variables
 	if len(plan.Devices) > 0 && plan.hasPolicyGroupDeviceVariables(ctx) {
-		body := plan.toBodyPolicyGroupDeviceVariables(ctx)
+		varTypes := r.getDeviceVariableTypes(ctx, plan.PolicyGroupId.ValueString())
+		body := plan.toBodyPolicyGroupDeviceVariables(ctx, varTypes)
 		path := fmt.Sprintf("/v1/policy-group/%v/device/variables/", plan.PolicyGroupId.ValueString())
 		res, err := r.client.Put(path, body)
 		if err != nil {
@@ -206,6 +207,45 @@ func (r *PolicyGroupDevicesResource) Create(ctx context.Context, req resource.Cr
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
+}
+
+// getDeviceVariableTypes fetches the variable schema from the API and extracts type information
+func (r *PolicyGroupDevicesResource) getDeviceVariableTypes(ctx context.Context, policyGroupId string) map[string]string {
+	varTypes := make(map[string]string)
+
+	path := fmt.Sprintf("/v1/policy-group/%v/device/variables/schema", policyGroupId)
+	res, err := r.client.Get(path)
+	if err != nil {
+		tflog.Debug(ctx, fmt.Sprintf("Failed to fetch variable schema: %s", err))
+		return varTypes
+	}
+
+	for _, item := range res.Array() {
+		variablesArray := item.Get("variables")
+		if !variablesArray.Exists() {
+			continue
+		}
+		for _, variable := range variablesArray.Array() {
+			schemaProps := variable.Get("schema.properties")
+			if !schemaProps.Exists() {
+				continue
+			}
+			schemaProps.ForEach(func(varName, varSchema gjson.Result) bool {
+				if valueType := varSchema.Get("properties.value.type"); valueType.Exists() {
+					typeStr := valueType.String()
+					if typeStr == "array" {
+						if itemsType := varSchema.Get("properties.value.items.type"); itemsType.Exists() {
+							typeStr = itemsType.String()
+						}
+					}
+					varTypes[varName.String()] = typeStr
+				}
+				return true
+			})
+		}
+	}
+
+	return varTypes
 }
 
 // disassociateDevices disassociates all of this resource's own devices from the policy group. In normal
@@ -474,7 +514,8 @@ func (r *PolicyGroupDevicesResource) Update(ctx context.Context, req resource.Up
 
 	// Update device variables
 	if len(plan.Devices) > 0 && plan.hasPolicyGroupDeviceVariables(ctx) {
-		body := plan.toBodyPolicyGroupDeviceVariables(ctx)
+		varTypes := r.getDeviceVariableTypes(ctx, plan.PolicyGroupId.ValueString())
+		body := plan.toBodyPolicyGroupDeviceVariables(ctx, varTypes)
 		res, err = r.client.Put(fmt.Sprintf("/v1/policy-group/%v/device/variables/", plan.PolicyGroupId.ValueString()), body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure policy group device variables (PUT), got error: %s, %s", err, res.String()))
