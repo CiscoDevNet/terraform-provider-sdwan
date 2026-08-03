@@ -62,7 +62,7 @@ type {{camelCase .Name}}Resource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
 	taskTimeout *int64
-{{- if or (eq .Name "Configuration Group") (eq .Name "Policy Group")}}
+{{- if or (eq .Name "Configuration Group Devices") (eq .Name "Policy Group Devices")}}
 	deployOnOutOfDate bool
 {{- end}}
 }
@@ -544,7 +544,7 @@ func (r *{{camelCase .Name}}Resource) Configure(_ context.Context, req resource.
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
-{{- if or (eq .Name "Configuration Group") (eq .Name "Policy Group")}}
+{{- if or (eq .Name "Configuration Group Devices") (eq .Name "Policy Group Devices")}}
 	r.deployOnOutOfDate = req.ProviderData.(*SdwanProviderData).DeployOnOutOfDate
 {{- end}}
 }

@@ -28,20 +28,18 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
-func TestAccSdwanConfigurationGroup(t *testing.T) {
+func TestAccSdwanPolicyGroupDevices(t *testing.T) {
 	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group.test", "name", "CG_1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group.test", "description", "My config group 1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group.test", "solution", "sdwan"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_group_devices.test", "solution", "sdwan"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanConfigurationGroupPrerequisitesConfig + testAccSdwanConfigurationGroupConfig_all(),
+				Config: testAccSdwanPolicyGroupDevicesPrerequisitesConfig + testAccSdwanPolicyGroupDevicesConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -51,9 +49,9 @@ func TestAccSdwanConfigurationGroup(t *testing.T) {
 // End of section. //template:end testAcc
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-const testAccSdwanConfigurationGroupPrerequisitesConfig = `
+const testAccSdwanPolicyGroupDevicesPrerequisitesConfig = `
 resource "sdwan_system_feature_profile" "test" {
-  name = "SYSTEM_TF"
+  name = "SYSTEM_PGD_TF"
   description = "Terraform test"
 }
 
@@ -90,10 +88,10 @@ resource "sdwan_system_logging_feature" "test" {
 resource "sdwan_system_omp_feature" "test" {
   name               = "OMP_TF"
   feature_profile_id = sdwan_system_feature_profile.test.id
-} 
+}
 
 resource "sdwan_transport_feature_profile" "test" {
-  name        = "TRANSPORT_TF"
+  name        = "TRANSPORT_PGD_TF"
   description = "My transport feature profile 1"
 }
 
@@ -119,11 +117,8 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "test" {
   ]
 }
 
-# Service VPN 1 (VRF 1) is included here so the device actually has a
-# routing instance for VRF 1 - without it, leftover/stale device config
-# referencing VRF 1 (e.g. MSDP) can fail to reconcile during deployment
 resource "sdwan_service_feature_profile" "test" {
-  name        = "SERVICE_TF"
+  name        = "SERVICE_PGD_TF"
   description = "Terraform test"
 }
 
@@ -133,33 +128,87 @@ resource "sdwan_service_lan_vpn_feature" "test" {
   vpn                 = 1
 }
 
+resource "sdwan_configuration_group" "test" {
+  name        = "CG_PGD_TF"
+  description = "My config group 1"
+  solution    = "sdwan"
+  feature_profile_ids = [
+    sdwan_system_feature_profile.test.id,
+    sdwan_transport_feature_profile.test.id,
+    sdwan_service_feature_profile.test.id,
+  ]
+  feature_versions = [
+    sdwan_system_basic_feature.test.version,
+    sdwan_system_aaa_feature.test.version,
+    sdwan_system_bfd_feature.test.version,
+    sdwan_system_global_feature.test.version,
+    sdwan_system_logging_feature.test.version,
+    sdwan_system_omp_feature.test.version,
+    sdwan_transport_wan_vpn_interface_ethernet_feature.test.version,
+    sdwan_service_lan_vpn_feature.test.version,
+  ]
+}
+
+resource "sdwan_configuration_group_devices" "test" {
+  configuration_group_id      = sdwan_configuration_group.test.id
+  solution                    = "sdwan"
+  configuration_group_version = sdwan_configuration_group.test.version
+  devices = [{
+    id     = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"
+    deploy = true
+    variables = [
+      { name = "host_name", value = "edge1" },
+      { name = "pseudo_commit_timer", value = 0 },
+      { name = "site_id", value = 1 },
+      { name = "system_ip", value = "10.1.1.1" },
+      { name = "ipv6_strict_control", value = "false" },
+    ]
+  }]
+}
+
+resource "sdwan_application_priority_feature_profile" "test" {
+  name        = "APPLICATION_PRIORITY_TF"
+  description = "Terraform test"
+}
+
+resource "sdwan_application_priority_qos_policy" "test" {
+  name                       = "qos"
+  description                = "QoS policy for application priority"
+  feature_profile_id         = sdwan_application_priority_feature_profile.test.id
+  target_interfaces_variable = "{{qos_interfaces}}"
+}
+
+resource "sdwan_policy_group" "test" {
+  name                = "PG_PGD_TF"
+  description         = "My policy group 1"
+  solution            = "sdwan"
+  feature_profile_ids = [sdwan_application_priority_feature_profile.test.id]
+  policy_versions     = [sdwan_application_priority_qos_policy.test.version]
+}
+
 `
 
 // End of section. //template:end testPrerequisites
 
-func testAccSdwanConfigurationGroupConfig_all() string {
-	config := `resource "sdwan_configuration_group" "test" {` + "\n"
-	config += `	name = "CG_1"` + "\n"
-	config += `	description = "My config group 1"` + "\n"
+func testAccSdwanPolicyGroupDevicesConfig_all() string {
+	config := `resource "sdwan_policy_group_devices" "test" {` + "\n"
+	config += `	policy_group_id = sdwan_policy_group.test.id` + "\n"
 	config += `	solution = "sdwan"` + "\n"
-	config += `	feature_profile_ids = [` + "\n"
-	config += `	  sdwan_system_feature_profile.test.id,` + "\n"
-	config += `	  sdwan_transport_feature_profile.test.id,` + "\n"
-	config += `	  sdwan_service_feature_profile.test.id,` + "\n"
-	config += `	]` + "\n"
-	config += `	feature_versions = [` + "\n"
-	config += `	  sdwan_system_basic_feature.test.version,` + "\n"
-	config += `	  sdwan_system_aaa_feature.test.version,` + "\n"
-	config += `	  sdwan_system_bfd_feature.test.version,` + "\n"
-	config += `	  sdwan_system_global_feature.test.version,` + "\n"
-	config += `	  sdwan_system_logging_feature.test.version,` + "\n"
-	config += `	  sdwan_system_omp_feature.test.version,` + "\n"
-	config += `	  sdwan_transport_wan_vpn_interface_ethernet_feature.test.version,` + "\n"
-	config += `	  sdwan_service_lan_vpn_feature.test.version,` + "\n"
-	config += `	]` + "\n"
-	// config += `	device_groups = [{` + "\n"
-	// config += `	  name = "CG_1"` + "\n"
-	// config += `	}]` + "\n"
+	config += `	policy_group_version = sdwan_policy_group.test.version` + "\n"
+	config += `	devices = [{` + "\n"
+	config += `	  id = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"` + "\n"
+	config += `	  deploy = true` + "\n"
+	config += `	  variables = [` + "\n"
+	config += `	    {` + "\n"
+	config += `	      name = "qos_interfaces"` + "\n"
+	config += `	      list_value = [` + "\n"
+	config += `	        "GigabitEthernet1",` + "\n"
+	config += `	        "GigabitEthernet2"` + "\n"
+	config += `	      ]` + "\n"
+	config += `	    },` + "\n"
+	config += `	  ]` + "\n"
+	config += `	}]` + "\n"
+	config += `	depends_on = [sdwan_configuration_group_devices.test]` + "\n"
 	config += `}` + "\n"
 	return config
 }

@@ -22,30 +22,22 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strings"
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
-	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
-	"github.com/tidwall/gjson"
-	"github.com/tidwall/sjson"
 )
 
 // End of section. //template:end imports
-
-var MinPolicyGroupUpdateVersion = version.Must(version.NewVersion("20.15.0"))
 
 // Section below is generated&owned by "gen/generator.go". //template:begin model
 
@@ -58,10 +50,9 @@ func NewPolicyGroupResource() resource.Resource {
 }
 
 type PolicyGroupResource struct {
-	client            *sdwan.Client
-	updateMutex       *sync.Mutex
-	taskTimeout       *int64
-	deployOnOutOfDate bool
+	client      *sdwan.Client
+	updateMutex *sync.Mutex
+	taskTimeout *int64
 }
 
 func (r *PolicyGroupResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -80,6 +71,10 @@ func (r *PolicyGroupResource) Schema(ctx context.Context, req resource.SchemaReq
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
+			},
+			"version": schema.Int64Attribute{
+				MarkdownDescription: "The version of the object",
+				Computed:            true,
 			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("The name of the policy group").String,
@@ -101,45 +96,6 @@ func (r *PolicyGroupResource) Schema(ctx context.Context, req resource.SchemaReq
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
-			"devices": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of devices").String,
-				Optional:            true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"id": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Device ID").String,
-							Optional:            true,
-						},
-						"deploy": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Deploy to device if enabled.").AddDefaultValueDescription("false").String,
-							Optional:            true,
-							Computed:            true,
-							Default:             booldefault.StaticBool(false),
-						},
-						"variables": schema.SetNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("List of variables").String,
-							Optional:            true,
-							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"name": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-										Required:            true,
-									},
-									"value": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable value").String,
-										Optional:            true,
-									},
-									"list_value": schema.ListAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Use this instead of `value` in case value is of type `List`.").String,
-										ElementType:         types.StringType,
-										Optional:            true,
-									},
-								},
-							},
-						},
-					},
-				},
-			},
 			"policy_versions": schema.ListAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of all associated policy versions").String,
 				ElementType:         types.StringType,
@@ -157,7 +113,6 @@ func (r *PolicyGroupResource) Configure(_ context.Context, req resource.Configur
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
-	r.deployOnOutOfDate = req.ProviderData.(*SdwanProviderData).DeployOnOutOfDate
 }
 
 // End of section. //template:end model
@@ -182,110 +137,13 @@ func (r *PolicyGroupResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 	plan.Id = types.StringValue(res.Get("id").String())
-
-	// Create policy group devices
-	if len(plan.Devices) > 0 {
-		body = plan.toBodyPolicyGroupDevices(ctx)
-
-		path := fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.Id.ValueString())
-		res, err = r.client.Post(path, body)
-		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure policy group devices (POST), got error: %s, %s", err, res.String()))
-			r.DeletePolicyGroup(ctx, plan, &resp.Diagnostics)
-			return
-		}
-	}
-
-	if len(plan.Devices) > 0 {
-		// Need to get existing variables so SD-WAN Manager refreshes database correctly
-		path := fmt.Sprintf("/v1/policy-group/%v/device/variables/", plan.Id.ValueString())
-		r.client.Get(path)
-	}
-
-	// Create policy group device variables
-	if len(plan.Devices) > 0 && plan.hasPolicyGroupDeviceVariables(ctx) {
-		body = plan.toBodyPolicyGroupDeviceVariables(ctx)
-
-		path := fmt.Sprintf("/v1/policy-group/%v/device/variables/", plan.Id.ValueString())
-		res, err = r.client.Put(path, body)
-		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure policy group device variables (PUT), got error: %s, %s", err, res.String()))
-			r.DeletePolicyGroup(ctx, plan, &resp.Diagnostics)
-			return
-		}
-	}
-
-	// Deploy policy group to devices
-	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, nil, &resp.Diagnostics, true)
-	}
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	plan.Version = types.Int64Value(0)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
-}
-
-func (r *PolicyGroupResource) Deploy(ctx context.Context, plan PolicyGroup, state *PolicyGroup, diag *diag.Diagnostics, deleteOnError bool) {
-	var updatedDevices []string
-	if state != nil {
-		updatedDevices = plan.getUpdatedDevices(ctx, state)
-	}
-
-	hasPolicyVersionChanges := false
-	currentVersion := version.Must(version.NewVersion(r.client.ManagerVersion))
-	if state != nil && currentVersion.LessThan(MinPolicyGroupUpdateVersion) {
-		hasPolicyVersionChanges = plan.hasPolicyVersionChanges(ctx, state)
-	}
-
-	path := fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.Id.ValueString())
-	res, err := r.client.Get(path)
-	if err != nil {
-		diag.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
-		return
-	}
-
-	// Build deploy body
-	body, _ := sjson.Set("", "devices", []interface{}{})
-	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
-		value.ForEach(func(k, v gjson.Result) bool {
-			id := v.Get("id").String()
-			for _, item := range plan.Devices {
-				if item.Id.ValueString() == id && item.Deploy.ValueBool() && (!v.Get("policyGroupUpToDate").Bool() || updatedDevices == nil || helpers.Contains(updatedDevices, id) || hasPolicyVersionChanges) {
-					itemBody, _ := sjson.Set("", "id", id)
-					body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
-					tflog.Debug(ctx, fmt.Sprintf("%s: Deploying to device %s", plan.Name.ValueString(), id))
-				}
-			}
-			return true
-		})
-	}
-	if len(gjson.Get(body, "devices").Array()) > 0 {
-		path := fmt.Sprintf("/v1/policy-group/%v/device/deploy/", plan.Id.ValueString())
-		res, err = r.client.Post(path, body)
-		if err != nil {
-			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to policy group devices (POST), got error: %s, %s", err, res.String()))
-			if deleteOnError {
-				r.DeletePolicyGroup(ctx, plan, diag)
-			}
-			return
-		}
-
-		// Wait for deploy action to complete
-		actionId := res.Get("parentTaskId").String()
-		err, _ = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
-		if err != nil {
-			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to config group devices, got error: %s", err))
-			if deleteOnError {
-				r.DeletePolicyGroup(ctx, plan, diag)
-			}
-			return
-		}
-	}
 }
 
 func (r *PolicyGroupResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
@@ -300,8 +158,6 @@ func (r *PolicyGroupResource) Read(ctx context.Context, req resource.ReadRequest
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.ValueString()))
 
-	oldState := state
-
 	// Read policy group
 	res, err := r.client.Get(state.getPath() + url.QueryEscape(state.Id.ValueString()))
 	if res.Raw == "" && err == nil {
@@ -314,60 +170,7 @@ func (r *PolicyGroupResource) Read(ctx context.Context, req resource.ReadRequest
 
 	state.fromBodyPolicyGroup(ctx, res)
 
-	// Read policy group device associations
-	path := fmt.Sprintf("/v1/policy-group/%v/device/associate/", state.Id.ValueString())
-	res, err = r.client.Get(path)
-	if strings.Contains(res.Get("error.message").String(), "Invalid policy group passed") {
-		resp.State.RemoveResource(ctx)
-		return
-	} else if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
-		return
-	}
-
-	state.fromBodyPolicyGroupDevices(ctx, res)
-	associateRes := res
-
-	// Read policy group device variables
-	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
-		path = fmt.Sprintf("/v1/policy-group/%v/device/variables/", state.Id.ValueString())
-		res, err = r.client.Get(path)
-		if strings.Contains(res.Get("error.message").String(), "Invalid policy group passed") {
-			resp.State.RemoveResource(ctx)
-			return
-		} else if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
-			return
-		}
-
-		state.fromBodyPolicyGroupDeviceVariables(ctx, res)
-	}
-
-	state.updateTfAttributes(ctx, &oldState)
-
-	if r.deployOnOutOfDate {
-		if value := associateRes.Get("devices"); value.Exists() {
-			value.ForEach(func(k, v gjson.Result) bool {
-				if !v.Get("policyGroupUpToDate").Bool() {
-					id := v.Get("id").String()
-					for i := range state.Devices {
-						if state.Devices[i].Id.ValueString() == id {
-							state.Devices[i].Deploy = types.BoolValue(false)
-							break
-						}
-					}
-				}
-				return true
-			})
-		}
-	}
-	imp, diags := helpers.IsFlagImporting(ctx, req)
-	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
-		return
-	}
-	if imp {
-		state.processImport(ctx)
-	}
+	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
@@ -392,139 +195,29 @@ func (r *PolicyGroupResource) Update(ctx context.Context, req resource.UpdateReq
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	// Update policy group only if something actually changed, to avoid marking all
-	// devices out-of-date (which triggers a repush to every device) on variable-only updates.
-	var body string
+	// Update policy group only if the group body actually changed.
 	planBody := plan.toBodyPolicyGroup(ctx)
 	stateBody := state.toBodyPolicyGroup(ctx)
 	if planBody != stateBody {
-		body = planBody
-		res2, err := r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), body)
+		res, err := r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), planBody)
 		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res2.String()))
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
 			return
 		}
 	}
 
-	res, err := r.client.Get(fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.Id.ValueString()))
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
-		return
-	}
-
-	var currentDeviceIds []string
-	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
-		value.ForEach(func(k, v gjson.Result) bool {
-			currentDeviceIds = append(currentDeviceIds, v.Get("id").String())
-			return true
-		})
-	}
-
-	associateBody, _ := sjson.Set("", "devices", []interface{}{})
-	for _, d := range plan.Devices {
-		found := false
-		for _, cdid := range currentDeviceIds {
-			if d.Id.ValueString() == cdid {
-				found = true
-				break
-			}
-		}
-		if !found {
-			associateBody, _ = sjson.SetRaw(associateBody, "devices.-1", helpers.Must(sjson.Set("", "id", d.Id.ValueString())))
-		}
-	}
-
-	disassociateBody, _ := sjson.Set("", "devices", []interface{}{})
-	for _, cdid := range currentDeviceIds {
-		found := false
-		for _, d := range plan.Devices {
-			if d.Id.ValueString() == cdid {
-				found = true
-				break
-			}
-		}
-		if !found {
-			disassociateBody, _ = sjson.SetRaw(disassociateBody, "devices.-1", helpers.Must(sjson.Set("", "id", cdid)))
-		}
-	}
-
-	// associate missing devices
-	if len(gjson.Get(associateBody, "devices").Array()) > 0 {
-		res, err = r.client.Put(fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.Id.ValueString()), associateBody)
-		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure policy group devices (PUT), got error: %s, %s", err, res.String()))
-			return
-		}
-	}
-
-	// disassociate extra devices
-	if len(gjson.Get(disassociateBody, "devices").Array()) > 0 {
-		res, err = r.client.DeleteBody(fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.Id.ValueString()), disassociateBody)
-		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete policy group devices (DELETE), got error: %s, %s", err, res.String()))
-			return
-		}
-	}
-
-	if len(plan.Devices) > 0 {
-		// Need to get existing variables so SD-WAN Manager refreshes database correctly
-		path := fmt.Sprintf("/v1/policy-group/%v/device/variables/", plan.Id.ValueString())
-		r.client.Get(path)
-	}
-
-	// Update policy group device variables
-	if len(plan.Devices) > 0 && plan.hasPolicyGroupDeviceVariables(ctx) {
-		body = plan.toBodyPolicyGroupDeviceVariables(ctx)
-
-		path := fmt.Sprintf("/v1/policy-group/%v/device/variables/", plan.Id.ValueString())
-		res, err = r.client.Put(path, body)
-		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure policy group device variables (PUT), got error: %s, %s", err, res.String()))
-			return
-		}
-	}
-
-	// Deploy policy group to devices
-	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, &state, &resp.Diagnostics, false)
-	}
-	if resp.Diagnostics.HasError() {
-		return
+	// Bump the version whenever the group body or any associated policy version changed, so that
+	// dependent sdwan_policy_group_devices resources can detect the change and redeploy.
+	if planBody != stateBody || plan.hasPolicyVersionChanges(ctx, &state) {
+		plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
+	} else {
+		plan.Version = state.Version
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
-}
-
-func (r *PolicyGroupResource) DeletePolicyGroup(ctx context.Context, state PolicyGroup, diag *diag.Diagnostics) {
-	path := fmt.Sprintf("/v1/policy-group/%v/device/associate/", state.Id.ValueString())
-	res, err := r.client.Get(path)
-	if err == nil {
-		body, _ := sjson.Set("", "devices", []interface{}{})
-		if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
-			value.ForEach(func(k, v gjson.Result) bool {
-				id := v.Get("id").String()
-				itemBody, _ := sjson.Set("", "id", id)
-				body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
-				return true
-			})
-		}
-		if len(gjson.Get(body, "devices").Array()) > 0 {
-			res, err := r.client.DeleteBody(path, body)
-			if err != nil {
-				diag.AddError("Client Error", fmt.Sprintf("Failed to delete policy group devices (DELETE), got error: %s, %s", err, res.String()))
-				return
-			}
-		}
-	}
-
-	res, err = r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
-	if err != nil {
-		diag.AddError("Client Error", fmt.Sprintf("Failed to delete policy group (DELETE), got error: %s, %s", err, res.String()))
-		return
-	}
 }
 
 func (r *PolicyGroupResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
@@ -539,7 +232,13 @@ func (r *PolicyGroupResource) Delete(ctx context.Context, req resource.DeleteReq
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
-	r.DeletePolicyGroup(ctx, state, &resp.Diagnostics)
+	// Delete the policy group. Devices are managed by sdwan_policy_group_devices resources (possibly in
+	// other state files); if devices are still associated the API errors, forcing them to be destroyed first.
+	res, err := r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete policy group (DELETE), got error: %s, %s", err, res.String()))
+		return
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Delete finished successfully", state.Name.ValueString()))
 
