@@ -20,12 +20,8 @@ package provider
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
-	"fmt"
-	"slices"
-	"strconv"
 	"strings"
 
-	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -34,31 +30,16 @@ import (
 
 // End of section. //template:end imports
 
-// isASDOTNotation checks if a string is in ASDOT notation format (e.g., "1.10", "65000.100").
-// ASDOT format: <high-order 16-bit>.<low-order 16-bit> where each part is 0-65535.
-func isASDOTNotation(s string) bool {
-	parts := strings.Split(s, ".")
-	if len(parts) != 2 {
-		return false
-	}
-	highPart, err1 := strconv.Atoi(parts[0])
-	lowPart, err2 := strconv.Atoi(parts[1])
-	if err1 != nil || err2 != nil {
-		return false
-	}
-	return highPart >= 0 && highPart <= 65535 && lowPart >= 0 && lowPart <= 65535
-}
-
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type ConfigurationGroup struct {
 	Id                  types.String                        `tfsdk:"id"`
+	Version             types.Int64                         `tfsdk:"version"`
 	Name                types.String                        `tfsdk:"name"`
 	Description         types.String                        `tfsdk:"description"`
 	Solution            types.String                        `tfsdk:"solution"`
 	FeatureProfileIds   types.Set                           `tfsdk:"feature_profile_ids"`
 	TopologyDevices     []ConfigurationGroupTopologyDevices `tfsdk:"topology_devices"`
 	TopologySiteDevices types.Int64                         `tfsdk:"topology_site_devices"`
-	Devices             []ConfigurationGroupDevices         `tfsdk:"devices"`
 	FeatureVersions     types.List                          `tfsdk:"feature_versions"`
 }
 
@@ -68,22 +49,9 @@ type ConfigurationGroupTopologyDevices struct {
 	UnsupportedFeatures []ConfigurationGroupTopologyDevicesUnsupportedFeatures `tfsdk:"unsupported_features"`
 }
 
-type ConfigurationGroupDevices struct {
-	Id            types.String                         `tfsdk:"id"`
-	TopologyLabel types.String                         `tfsdk:"topology_label"`
-	Deploy        types.Bool                           `tfsdk:"deploy"`
-	Variables     []ConfigurationGroupDevicesVariables `tfsdk:"variables"`
-}
-
 type ConfigurationGroupTopologyDevicesUnsupportedFeatures struct {
 	ParcelType types.String `tfsdk:"parcel_type"`
 	ParcelId   types.String `tfsdk:"parcel_id"`
-}
-
-type ConfigurationGroupDevicesVariables struct {
-	Name      types.String `tfsdk:"name"`
-	Value     types.String `tfsdk:"value"`
-	ListValue types.List   `tfsdk:"list_value"`
 }
 
 // End of section. //template:end types
@@ -145,138 +113,6 @@ func (data ConfigurationGroup) toBodyConfigGroup(ctx context.Context) string {
 	if !data.TopologySiteDevices.IsNull() {
 		body, _ = sjson.Set(body, "topology.siteDevices", data.TopologySiteDevices.ValueInt64())
 	}
-	return body
-}
-
-func (data ConfigurationGroup) toBodyConfigGroupDevices(ctx context.Context) string {
-	body := ""
-	if true {
-		body, _ = sjson.Set(body, "devices", []interface{}{})
-		for _, item := range data.Devices {
-			itemBody := ""
-			if !item.Id.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "id", item.Id.ValueString())
-				if !item.TopologyLabel.IsNull() {
-					itemBody, _ = sjson.Set(itemBody, "groupTopologyLabel", item.TopologyLabel.ValueString())
-				}
-			}
-			body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
-		}
-	}
-	return body
-}
-
-// convertValueByType converts a string value to the appropriate type based on schema type
-func convertValueByType(valueStr, schemaType string) interface{} {
-	switch schemaType {
-	case "integer":
-		if val, err := strconv.Atoi(valueStr); err == nil {
-			return val
-		}
-	case "number":
-		if val, err := strconv.ParseFloat(valueStr, 64); err == nil {
-			return val
-		}
-	case "boolean":
-		if val, err := strconv.ParseBool(valueStr); err == nil {
-			return val
-		}
-	case "string":
-		return valueStr
-	default:
-		// Auto-detect type for unknown schema types
-		if val, err := strconv.Atoi(valueStr); err == nil {
-			return val
-		} else if strings.Contains(valueStr, ".") {
-			if isASDOTNotation(valueStr) {
-				return valueStr
-			}
-			if val, err := strconv.ParseFloat(valueStr, 64); err == nil {
-				return val
-			}
-		} else if val, err := strconv.ParseBool(valueStr); err == nil {
-			return val
-		}
-	}
-	// Fallback to string if conversion fails
-	return valueStr
-}
-
-func (data ConfigurationGroup) toBodyConfigGroupDeviceVariables(ctx context.Context, varTypes map[string]string) string {
-	body := ""
-	if !data.Solution.IsNull() {
-		body, _ = sjson.Set(body, "solution", data.Solution.ValueString())
-	}
-	if true {
-		body, _ = sjson.Set(body, "devices", []interface{}{})
-		for _, item := range data.Devices {
-			itemBody := ""
-			if !item.Id.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "device-id", item.Id.ValueString())
-			}
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "variables", []interface{}{})
-				for _, childItem := range item.Variables {
-					itemChildBody := ""
-					if !childItem.Name.IsNull() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "name", childItem.Name.ValueString())
-					}
-					if !childItem.ListValue.IsNull() {
-						var values []string
-						childItem.ListValue.ElementsAs(ctx, &values, false)
-
-						varName := childItem.Name.ValueString()
-						// Convert each element in the list based on schema type
-						convertedValues := make([]interface{}, len(values))
-						schemaType := varTypes[varName] // empty string if not found
-						for i, valueStr := range values {
-							convertedValues[i] = convertValueByType(valueStr, schemaType)
-						}
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", convertedValues)
-					} else if !childItem.Value.IsNull() {
-						valueStr := childItem.Value.ValueString()
-						varName := childItem.Name.ValueString()
-						schemaType := varTypes[varName] // empty string if not found
-						convertedValue := convertValueByType(valueStr, schemaType)
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", convertedValue)
-					}
-					itemBody, _ = sjson.SetRaw(itemBody, "variables.-1", itemChildBody)
-				}
-			}
-			body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
-		}
-	}
-	// if true {
-	// 	//body, _ = sjson.Set(body, "groups", []interface{}{})
-	// 	for _, item := range data.DeviceGroups {
-	// 		itemBody := ""
-	// 		if !item.Name.IsNull() {
-	// 			itemBody, _ = sjson.Set(itemBody, "name", item.Name.ValueString())
-	// 		}
-	// 		if true {
-	// 			itemBody, _ = sjson.Set(itemBody, "group-variables", []interface{}{})
-	// 			for _, childItem := range item.Variables {
-	// 				itemChildBody := ""
-	// 				if !childItem.Name.IsNull() {
-	// 					itemChildBody, _ = sjson.Set(itemChildBody, "name", childItem.Name.ValueString())
-	// 				}
-	// 				if !childItem.Value.IsNull() {
-	// 					if val, err := strconv.Atoi(childItem.Value.ValueString()); err == nil {
-	// 						itemChildBody, _ = sjson.Set(itemChildBody, "value", val)
-	// 					} else if val, err := strconv.ParseFloat(childItem.Value.ValueString(), 64); err == nil {
-	// 						itemChildBody, _ = sjson.Set(itemChildBody, "value", val)
-	// 					} else if val, err := strconv.ParseBool(childItem.Value.ValueString()); err == nil {
-	// 						itemChildBody, _ = sjson.Set(itemChildBody, "value", val)
-	// 					} else {
-	// 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Value.ValueString())
-	// 					}
-	// 				}
-	// 				itemBody, _ = sjson.SetRaw(itemBody, "group-variables.-1", itemChildBody)
-	// 			}
-	// 		}
-	// 		body, _ = sjson.SetRaw(body, "groups.-1", itemBody)
-	// 	}
-	// }
 	return body
 }
 
@@ -363,233 +199,6 @@ func (data *ConfigurationGroup) fromBodyConfigGroup(ctx context.Context, res gjs
 	}
 }
 
-func (data *ConfigurationGroup) fromBodyConfigGroupDevices(ctx context.Context, res gjson.Result) {
-	original := *data
-	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
-		data.Devices = make([]ConfigurationGroupDevices, 0)
-		value.ForEach(func(k, v gjson.Result) bool {
-			item := ConfigurationGroupDevices{}
-			if cValue := v.Get("id"); cValue.Exists() {
-				item.Id = types.StringValue(cValue.String())
-			} else {
-				item.Id = types.StringNull()
-			}
-			if cValue := v.Get("groupTopologyLabel"); cValue.Exists() && cValue.String() != "" {
-				item.TopologyLabel = types.StringValue(cValue.String())
-			} else {
-				item.TopologyLabel = types.StringNull()
-			}
-			data.Devices = append(data.Devices, item)
-			return true
-		})
-	} else {
-		if len(data.Devices) > 0 {
-			data.Devices = []ConfigurationGroupDevices{}
-		}
-	}
-	// reorder devices to match original state order
-	slices.Reverse(original.Devices)
-	for i := range original.Devices {
-		keyValues := [...]string{original.Devices[i].Id.ValueString()}
-
-		for y := range data.Devices {
-			found := false
-			for _, keyValue := range keyValues {
-				if !data.Devices[y].Id.IsNull() {
-					if data.Devices[y].Id.ValueString() == keyValue {
-						found = true
-						continue
-					}
-					found = false
-					break
-				}
-				continue
-			}
-			if found {
-				//insert at the beginning
-				device := data.Devices[y]
-				data.Devices = append(data.Devices[:y], data.Devices[y+1:]...)
-				data.Devices = append([]ConfigurationGroupDevices{device}, data.Devices...)
-			}
-		}
-	}
-}
-
-func (data *ConfigurationGroup) fromBodyConfigGroupDeviceVariables(ctx context.Context, res gjson.Result, original *ConfigurationGroup) {
-	if value := res.Get("family"); value.Exists() {
-		data.Solution = types.StringValue(value.String())
-	} else {
-		data.Solution = types.StringNull()
-	}
-
-	// Update existing devices with variables instead of recreating the entire array
-	// This preserves all other fields (Id, TopologyLabel, Deploy, etc.)
-	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
-		value.ForEach(func(k, v gjson.Result) bool {
-			deviceId := v.Get("device-id").String()
-
-			// Find matching device in current data and update only its Variables
-			for i := range data.Devices {
-				if data.Devices[i].Id.ValueString() == deviceId {
-					if cValue := v.Get("variables"); cValue.Exists() && len(cValue.Array()) > 0 {
-						stateHasVariables := len(data.Devices[i].Variables) > 0
-
-						// First pass: check if API only has system variables
-						hasNonSystemVariables := false
-						cValue.ForEach(func(ck, cv gjson.Result) bool {
-							if !cv.Get("value").Exists() {
-								return true
-							}
-							varName := cv.Get("name").String()
-							if varName != "ipv6_strict_control" && varName != "pseudo_commit_timer" {
-								hasNonSystemVariables = true
-								return false // stop iteration early
-							}
-							return true
-						})
-
-						// If state has no variables AND API only has system variables, skip reading them
-						if !stateHasVariables && !hasNonSystemVariables {
-							// Don't update - keep existing empty state
-							break
-						}
-
-						// Otherwise, read all variables (including system ones)
-						data.Devices[i].Variables = make([]ConfigurationGroupDevicesVariables, 0)
-						cValue.ForEach(func(ck, cv gjson.Result) bool {
-							// skip optional variables
-							if !cv.Get("value").Exists() {
-								return true
-							}
-							cItem := ConfigurationGroupDevicesVariables{}
-							if ccValue := cv.Get("name"); ccValue.Exists() {
-								cItem.Name = types.StringValue(ccValue.String())
-							} else {
-								cItem.Name = types.StringNull()
-							}
-							if ccValue := cv.Get("value"); ccValue.Exists() {
-								if ccValue.IsArray() {
-									cItem.ListValue = helpers.GetStringList(ccValue.Array())
-									cItem.Value = types.StringNull()
-								} else {
-									cItem.ListValue = types.ListNull(types.StringType)
-									if !strings.Contains(strings.ToLower(ccValue.String()), "$crypt_cluster") {
-										cItem.Value = types.StringValue(ccValue.String())
-									} else {
-										// Preserve original state value for encrypted variables
-										cItem.Value = types.StringNull()
-										if original != nil {
-											varName := cv.Get("name").String()
-											for _, origDevice := range original.Devices {
-												if origDevice.Id.ValueString() == deviceId {
-													for _, origVar := range origDevice.Variables {
-														if origVar.Name.ValueString() == varName && !origVar.Value.IsNull() {
-															cItem.Value = origVar.Value
-															break
-														}
-													}
-													break
-												}
-											}
-										}
-									}
-								}
-							} else {
-								cItem.ListValue = types.ListNull(types.StringType)
-								cItem.Value = types.StringNull()
-							}
-							data.Devices[i].Variables = append(data.Devices[i].Variables, cItem)
-							return true
-						})
-					} else {
-						if len(data.Devices[i].Variables) > 0 {
-							data.Devices[i].Variables = []ConfigurationGroupDevicesVariables{}
-						}
-					}
-					break
-				}
-			}
-			return true
-		})
-	}
-}
-
-func (data *ConfigurationGroup) updateTfAttributes(ctx context.Context, state *ConfigurationGroup) {
-	data.FeatureVersions = state.FeatureVersions
-	for i := range data.Devices {
-		dataKeys := [...]string{fmt.Sprintf("%v", data.Devices[i].Id.ValueString())}
-		stateIndex := -1
-		for j := range state.Devices {
-			stateKeys := [...]string{fmt.Sprintf("%v", state.Devices[j].Id.ValueString())}
-			if dataKeys == stateKeys {
-				stateIndex = j
-				break
-			}
-		}
-		if stateIndex > -1 {
-			data.Devices[i].Deploy = state.Devices[stateIndex].Deploy
-		} else {
-			data.Devices[i].Deploy = types.BoolNull()
-		}
-	}
-}
-
-func (data ConfigurationGroup) hasConfigGroupDeviceVariables(ctx context.Context) bool {
-	for _, device := range data.Devices {
-		if len(device.Variables) > 0 {
-			return true
-		}
-	}
-	return false
-}
-
-func (data ConfigurationGroup) getUpdatedDevices(ctx context.Context, state *ConfigurationGroup) []string {
-	updatedDevices := make([]string, 0)
-	for _, device := range data.Devices {
-		for _, stateDevice := range state.Devices {
-			if device.Id.ValueString() == stateDevice.Id.ValueString() {
-				for _, variable := range device.Variables {
-					found := false
-					for _, stateVariable := range stateDevice.Variables {
-						if variable.Name.ValueString() == stateVariable.Name.ValueString() {
-							found = true
-							if variable.Value.ValueString() != stateVariable.Value.ValueString() {
-								if !slices.Contains(updatedDevices, device.Id.ValueString()) {
-									updatedDevices = append(updatedDevices, device.Id.ValueString())
-								}
-							}
-							if variable.ListValue.String() != stateVariable.ListValue.String() {
-								if !slices.Contains(updatedDevices, device.Id.ValueString()) {
-									updatedDevices = append(updatedDevices, device.Id.ValueString())
-								}
-							}
-						}
-					}
-					if !found {
-						if !slices.Contains(updatedDevices, device.Id.ValueString()) {
-							updatedDevices = append(updatedDevices, device.Id.ValueString())
-						}
-					}
-				}
-				for _, stateVariable := range stateDevice.Variables {
-					found := false
-					for _, variable := range device.Variables {
-						if variable.Name.ValueString() == stateVariable.Name.ValueString() {
-							found = true
-						}
-					}
-					if !found {
-						if !slices.Contains(updatedDevices, device.Id.ValueString()) {
-							updatedDevices = append(updatedDevices, device.Id.ValueString())
-						}
-					}
-				}
-			}
-		}
-	}
-	return updatedDevices
-}
-
 func (data ConfigurationGroup) hasFeatureVersionChanges(ctx context.Context, state *ConfigurationGroup) bool {
 	var planValues, stateValues []string
 	data.FeatureVersions.ElementsAs(ctx, &planValues, false)
@@ -603,10 +212,4 @@ func (data ConfigurationGroup) hasFeatureVersionChanges(ctx context.Context, sta
 		}
 	}
 	return false
-}
-
-func (data *ConfigurationGroup) processImport(ctx context.Context) {
-	for i := range data.Devices {
-		data.Devices[i].Deploy = types.BoolValue(true)
-	}
 }

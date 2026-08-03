@@ -28,20 +28,21 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
-func TestAccSdwanConfigurationGroup(t *testing.T) {
+func TestAccSdwanConfigurationGroupDevices(t *testing.T) {
 	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group.test", "name", "CG_1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group.test", "description", "My config group 1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group.test", "solution", "sdwan"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group_devices.test", "solution", "sdwan"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group_devices.test", "devices.0.id", "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group_devices.test", "devices.0.variables.0.name", "host_name"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group_devices.test", "devices.0.variables.0.value", "edge1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanConfigurationGroupPrerequisitesConfig + testAccSdwanConfigurationGroupConfig_all(),
+				Config: testAccSdwanConfigurationGroupDevicesPrerequisitesConfig + testAccSdwanConfigurationGroupDevicesConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -51,7 +52,7 @@ func TestAccSdwanConfigurationGroup(t *testing.T) {
 // End of section. //template:end testAcc
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-const testAccSdwanConfigurationGroupPrerequisitesConfig = `
+const testAccSdwanConfigurationGroupDevicesPrerequisitesConfig = `
 resource "sdwan_system_feature_profile" "test" {
   name = "SYSTEM_TF"
   description = "Terraform test"
@@ -133,33 +134,61 @@ resource "sdwan_service_lan_vpn_feature" "test" {
   vpn                 = 1
 }
 
+resource "sdwan_configuration_group" "test" {
+  name = "CG_1"
+  description = "My config group 1"
+  solution = "sdwan"
+  feature_profile_ids = [
+    sdwan_system_feature_profile.test.id,
+    sdwan_transport_feature_profile.test.id,
+    sdwan_service_feature_profile.test.id,
+  ]
+  feature_versions = [
+    sdwan_system_basic_feature.test.version,
+    sdwan_system_aaa_feature.test.version,
+    sdwan_system_bfd_feature.test.version,
+    sdwan_system_global_feature.test.version,
+    sdwan_system_logging_feature.test.version,
+    sdwan_system_omp_feature.test.version,
+    sdwan_transport_wan_vpn_interface_ethernet_feature.test.version,
+    sdwan_service_lan_vpn_feature.test.version,
+  ]
+}
+
 `
 
 // End of section. //template:end testPrerequisites
 
-func testAccSdwanConfigurationGroupConfig_all() string {
-	config := `resource "sdwan_configuration_group" "test" {` + "\n"
-	config += `	name = "CG_1"` + "\n"
-	config += `	description = "My config group 1"` + "\n"
+func testAccSdwanConfigurationGroupDevicesConfig_all() string {
+	config := `resource "sdwan_configuration_group_devices" "test" {` + "\n"
+	config += `	configuration_group_id = sdwan_configuration_group.test.id` + "\n"
 	config += `	solution = "sdwan"` + "\n"
-	config += `	feature_profile_ids = [` + "\n"
-	config += `	  sdwan_system_feature_profile.test.id,` + "\n"
-	config += `	  sdwan_transport_feature_profile.test.id,` + "\n"
-	config += `	  sdwan_service_feature_profile.test.id,` + "\n"
-	config += `	]` + "\n"
-	config += `	feature_versions = [` + "\n"
-	config += `	  sdwan_system_basic_feature.test.version,` + "\n"
-	config += `	  sdwan_system_aaa_feature.test.version,` + "\n"
-	config += `	  sdwan_system_bfd_feature.test.version,` + "\n"
-	config += `	  sdwan_system_global_feature.test.version,` + "\n"
-	config += `	  sdwan_system_logging_feature.test.version,` + "\n"
-	config += `	  sdwan_system_omp_feature.test.version,` + "\n"
-	config += `	  sdwan_transport_wan_vpn_interface_ethernet_feature.test.version,` + "\n"
-	config += `	  sdwan_service_lan_vpn_feature.test.version,` + "\n"
-	config += `	]` + "\n"
-	// config += `	device_groups = [{` + "\n"
-	// config += `	  name = "CG_1"` + "\n"
-	// config += `	}]` + "\n"
+	config += `	devices = [{` + "\n"
+	config += `	  id = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"` + "\n"
+	config += `	  deploy = true` + "\n"
+	config += `	  variables = [` + "\n"
+	config += `	    {` + "\n"
+	config += `	      name = "host_name"` + "\n"
+	config += `	      value = "edge1"` + "\n"
+	config += `	    },` + "\n"
+	config += `	    {` + "\n"
+	config += `	      name = "pseudo_commit_timer"` + "\n"
+	config += `	      value = 0` + "\n"
+	config += `	    },` + "\n"
+	config += `	    {` + "\n"
+	config += `	      name = "site_id"` + "\n"
+	config += `	      value = 1` + "\n"
+	config += `	    },` + "\n"
+	config += `	    {` + "\n"
+	config += `	      name = "system_ip"` + "\n"
+	config += `	      value = "10.1.1.1"` + "\n"
+	config += `	    },` + "\n"
+	config += `	    {` + "\n"
+	config += `	      name = "ipv6_strict_control"` + "\n"
+	config += `	      value = "false"` + "\n"
+	config += `	    }` + "\n"
+	config += `	  ]` + "\n"
+	config += `	}]` + "\n"
 	config += `}` + "\n"
 	return config
 }

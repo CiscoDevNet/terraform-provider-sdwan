@@ -1,127 +1,75 @@
 ---
-name: Configuration Group
+name: Configuration Group Devices
 rest_endpoint: /v1/config-group/
 id_attribute: id
 minimum_version: 20.15.0
-has_version: true
 test_tags: [SDWAN_2015, SDWAN_2018]
 doc_category: Configuration Groups
+no_data_source: true
+skip_minimum_test: true
 attributes:
-  - model_name: name
+  - model_name: configurationGroupId
+    tf_name: configuration_group_id
     type: String
     mandatory: true
-    description: The name of the configuration group
-    example: CG_1
-  - model_name: description
-    type: String
-    mandatory: true
-    description: Description
-    example: My config group 1
+    requires_replace: true
+    description: The ID of the configuration group to associate the devices with
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_configuration_group.test.id
   - model_name: solution
     type: String
     mandatory: true
     enum_values: [mobility, sdwan, nfvirtual]
     description: Type of solution
     example: sdwan
-  - model_name: profiles
-    tf_name: feature_profile_ids
-    type: Set
-    element_type: String
-    description: List of feature profile IDs
-    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-    test_value: "[sdwan_system_feature_profile.test.id]"
-  - model_name: devices
-    data_path: [topology]
-    tf_name: topology_devices
-    type: List
-    description: List of topology device types
+  - tf_name: configuration_group_version
+    tf_only: true
+    type: Int64
+    description: The version of the associated configuration group. Set this to `sdwan_configuration_group.<name>.version` so that any change to the configuration group triggers a redeployment of the devices managed by this resource.
+    example: 1
     exclude_test: true
-    conditional_list_length: topology_devices
+  - model_name: devices
+    type: List
+    description: List of devices
     attributes:
-      - model_name: attribute
-        data_path: [criteria]
-        tf_name: criteria_attribute
-        type: String
-        mandatory: true
-        enum_values: [tag]
-        description: Criteria attribute
-        example: tag
-      - model_name: value
-        data_path: [criteria]
-        tf_name: criteria_value
+      - model_name: id
         type: String
         id: true
-        description: Criteria value
-        example: EdgeDevice_01
-      - model_name: unsupportedFeatures
-        type: List
-        description: List of unsupported features
+        description: Device ID
+        example: C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B
+      - model_name: groupTopologyLabel
+        tf_name: topology_label
+        type: String
+        description: Topology label for dual device configuration group (supported from version 20.18.1 onwards)
+        example: EdgeDevice_1
+        exclude_test: true
+      - tf_name: deploy
+        tf_only: true
+        type: Bool
+        description: Deploy to device if enabled.
+        default_value: false
+        example: true
+      - model_name: variables
+        type: Set
+        description: List of variables
         attributes:
-          - model_name: parcelType
+          - model_name: name
             type: String
+            mandatory: true
             id: true
-            enum_values:
-              [
-                wan/vpn/interface/gre,
-                wan/vpn/interface/ethernet,
-                wan/vpn/interface/cellular,
-                wan/vpn/interface/ipsec,
-                wan/vpn/interface/serial,
-                route-policy,
-                routing/bgp,
-                routing/ospf,
-                lan/vpn/interface/ethernet,
-                lan/vpn/interface/svi,
-                lan/vpn/interface/ipsec,
-                lan/vpn,
-              ]
-            description: Parcel type
-            example: wan/vpn/interface/gre
-          - model_name: parcelId
+            description: Variable name
+            example: host_name
+          - model_name: value
             type: String
-            id: true
-            description: Parcel ID
-            example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-  - model_name: siteDevices
-    data_path: [topology]
-    tf_name: topology_site_devices
-    type: Int64
-    min_int: 1
-    max_int: 20
-    description: Number of devices per site
-    example: 2
-    exclude_test: true
-  - tf_name: feature_versions
-    tf_only: true
-    type: Versions
-    description: List of all associated feature versions
-    exclude_test: true
-  # - model_name: groups
-  #   tf_name: device_groups
-  #   type: List
-  #   description: List of device groups
-  #   exclude_test: true
-  #   attributes:
-  #     - model_name: name
-  #       type: String
-  #       id: true
-  #       description: Group name
-  #       example: name1
-  #     - model_name: group-variables
-  #       tf_name: variables
-  #       type: Set
-  #       description: List of variables
-  #       attributes:
-  #         - model_name: name
-  #           type: String
-  #           id: true
-  #           description: Variable name
-  #           example: var
-  #         - model_name: value
-  #           type: String
-  #           mandatory: true
-  #           description: Variable value
-  #           example: value1
+            description: Variable value
+            example: edge1
+          - model_name: list_value
+            type: List
+            element_type: String
+            tf_only: true
+            description: Use this instead of `value` in case value is of type `List`.
+            example: 1.2.3.4
+            exclude_test: true
 
 test_prerequisites: |
   resource "sdwan_system_feature_profile" "test" {
@@ -203,4 +151,25 @@ test_prerequisites: |
     name                = "SERVICE_VPN_TF"
     feature_profile_id  = sdwan_service_feature_profile.test.id
     vpn                 = 1
+  }
+
+  resource "sdwan_configuration_group" "test" {
+    name = "CG_1"
+    description = "My config group 1"
+    solution = "sdwan"
+    feature_profile_ids = [
+      sdwan_system_feature_profile.test.id,
+      sdwan_transport_feature_profile.test.id,
+      sdwan_service_feature_profile.test.id,
+    ]
+    feature_versions = [
+      sdwan_system_basic_feature.test.version,
+      sdwan_system_aaa_feature.test.version,
+      sdwan_system_bfd_feature.test.version,
+      sdwan_system_global_feature.test.version,
+      sdwan_system_logging_feature.test.version,
+      sdwan_system_omp_feature.test.version,
+      sdwan_transport_wan_vpn_interface_ethernet_feature.test.version,
+      sdwan_service_lan_vpn_feature.test.version,
+    ]
   }

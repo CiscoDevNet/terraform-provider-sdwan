@@ -7,6 +7,11 @@ description: |-
 
 # Changelog
 
+## 0.12.0 (unreleased)
+
+- BREAKING CHANGE: Split `sdwan_configuration_group` into a group-only resource plus a new `sdwan_configuration_group_devices` resource that manages device association, variables and deployment, so a group's devices can be spread across multiple state files (e.g. one state per device) without one state affecting devices managed by another. `sdwan_configuration_group` no longer has a `devices` attribute and gained a computed `version` attribute that increments whenever the group body or `feature_versions` change; `sdwan_configuration_group_devices` references the group via `configuration_group_id` and takes an optional `configuration_group_version` (set to `sdwan_configuration_group.<name>.version`) to trigger redeployment when the group changes. Deleting `sdwan_configuration_group` now fails if devices are still associated with it - `sdwan_configuration_group_devices` must be destroyed first. Existing configurations must migrate their `devices` block to the new resource.
+- BREAKING CHANGE: Apply the same group/devices split to `sdwan_policy_group`, adding a new `sdwan_policy_group_devices` resource (using `policy_group_id`, `policy_group_version` and `policy_versions`).
+
 ## 0.11.4
 
 - Add `sdwan_other_trustsec_feature` resource and data source (SD-WAN Manager 20.18+)
