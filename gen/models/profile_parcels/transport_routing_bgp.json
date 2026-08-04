@@ -2863,16 +2863,57 @@
                                                 ]
                                             }
                                         },
-                                        "required": [
-                                            "familyType"
-                                        ],
                                         "additionalProperties": false
                                     }
                                 }
                             },
-                            "required": [
-                                "address",
-                                "remoteAs"
+                            "allOf": [
+                                {
+                                    "if": {
+                                        "anyOf": [
+                                            {
+                                                "properties": {
+                                                    "address": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "const": "global"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "address"
+                                                ]
+                                            },
+                                            {
+                                                "properties": {
+                                                    "remoteAs": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "const": "global"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "remoteAs"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "then": {
+                                        "required": [
+                                            "address",
+                                            "remoteAs"
+                                        ]
+                                    }
+                                }
                             ],
                             "additionalProperties": false
                         }
@@ -4547,16 +4588,57 @@
                                                 ]
                                             }
                                         },
-                                        "required": [
-                                            "familyType"
-                                        ],
                                         "additionalProperties": false
                                     }
                                 }
                             },
-                            "required": [
-                                "address",
-                                "remoteAs"
+                            "allOf": [
+                                {
+                                    "if": {
+                                        "anyOf": [
+                                            {
+                                                "properties": {
+                                                    "address": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "const": "global"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "address"
+                                                ]
+                                            },
+                                            {
+                                                "properties": {
+                                                    "remoteAs": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "const": "global"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "remoteAs"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "then": {
+                                        "required": [
+                                            "address",
+                                            "remoteAs"
+                                        ]
+                                    }
+                                }
                             ],
                             "additionalProperties": false
                         }
@@ -4573,10 +4655,12 @@
                                     "type": "object",
                                     "properties": {
                                         "prefix": {
-                                            "description": "Configure the IPv4 prefixes to aggregate",
                                             "type": "object",
+                                            "description": "Configure the IPv4 prefixes to aggregate",
                                             "properties": {
                                                 "address": {
+                                                    "description": "IP Address",
+                                                    "type": "object",
                                                     "oneOf": [
                                                         {
                                                             "properties": {
@@ -4630,6 +4714,8 @@
                                                     ]
                                                 },
                                                 "mask": {
+                                                    "description": "Subnet Mask",
+                                                    "type": "object",
                                                     "oneOf": [
                                                         {
                                                             "properties": {
@@ -4667,6 +4753,7 @@
                                                                         "255.255.0.0",
                                                                         "255.254.0.0",
                                                                         "255.252.0.0",
+                                                                        "255.248.0.0",
                                                                         "255.240.0.0",
                                                                         "255.224.0.0",
                                                                         "255.192.0.0",
@@ -4724,6 +4811,7 @@
                                                                         "255.255.0.0",
                                                                         "255.254.0.0",
                                                                         "255.252.0.0",
+                                                                        "255.248.0.0",
                                                                         "255.240.0.0",
                                                                         "255.224.0.0",
                                                                         "255.192.0.0",
@@ -4749,9 +4837,53 @@
                                                     ]
                                                 }
                                             },
-                                            "required": [
-                                                "address",
-                                                "mask"
+                                            "allOf": [
+                                                {
+                                                    "if": {
+                                                        "anyOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "address": {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "const": "global"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "address"
+                                                                ]
+                                                            },
+                                                            {
+                                                                "properties": {
+                                                                    "mask": {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "const": "global"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "mask"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    "then": {
+                                                        "required": [
+                                                            "address",
+                                                            "mask"
+                                                        ]
+                                                    }
+                                                }
                                             ],
                                             "additionalProperties": false
                                         },
@@ -4904,9 +5036,6 @@
                                             ]
                                         }
                                     },
-                                    "required": [
-                                        "prefix"
-                                    ],
                                     "additionalProperties": false
                                 }
                             },
@@ -4918,10 +5047,12 @@
                                     "type": "object",
                                     "properties": {
                                         "prefix": {
-                                            "description": "Configure the prefixes for BGP to announce",
                                             "type": "object",
+                                            "description": "Configure the IPv4 prefixes to aggregate",
                                             "properties": {
                                                 "address": {
+                                                    "description": "IP Address",
+                                                    "type": "object",
                                                     "oneOf": [
                                                         {
                                                             "properties": {
@@ -4975,6 +5106,8 @@
                                                     ]
                                                 },
                                                 "mask": {
+                                                    "description": "Subnet Mask",
+                                                    "type": "object",
                                                     "oneOf": [
                                                         {
                                                             "properties": {
@@ -5012,6 +5145,7 @@
                                                                         "255.255.0.0",
                                                                         "255.254.0.0",
                                                                         "255.252.0.0",
+                                                                        "255.248.0.0",
                                                                         "255.240.0.0",
                                                                         "255.224.0.0",
                                                                         "255.192.0.0",
@@ -5069,6 +5203,7 @@
                                                                         "255.255.0.0",
                                                                         "255.254.0.0",
                                                                         "255.252.0.0",
+                                                                        "255.248.0.0",
                                                                         "255.240.0.0",
                                                                         "255.224.0.0",
                                                                         "255.192.0.0",
@@ -5094,16 +5229,57 @@
                                                     ]
                                                 }
                                             },
-                                            "required": [
-                                                "address",
-                                                "mask"
+                                            "allOf": [
+                                                {
+                                                    "if": {
+                                                        "anyOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "address": {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "const": "global"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "address"
+                                                                ]
+                                                            },
+                                                            {
+                                                                "properties": {
+                                                                    "mask": {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "const": "global"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "mask"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    "then": {
+                                                        "required": [
+                                                            "address",
+                                                            "mask"
+                                                        ]
+                                                    }
+                                                }
                                             ],
                                             "additionalProperties": false
                                         }
                                     },
-                                    "required": [
-                                        "prefix"
-                                    ],
                                     "additionalProperties": false
                                 }
                             },
@@ -5654,9 +5830,6 @@
                                             ]
                                         }
                                     },
-                                    "required": [
-                                        "protocol"
-                                    ],
                                     "additionalProperties": false,
                                     "dependencies": {
                                         "ospfMatchRoute": {
@@ -5892,9 +6065,6 @@
                                             ]
                                         }
                                     },
-                                    "required": [
-                                        "prefix"
-                                    ],
                                     "additionalProperties": false
                                 }
                             },
@@ -5961,9 +6131,6 @@
                                             ]
                                         }
                                     },
-                                    "required": [
-                                        "prefix"
-                                    ],
                                     "additionalProperties": false
                                 }
                             },
@@ -6510,9 +6677,6 @@
                                             ]
                                         }
                                     },
-                                    "required": [
-                                        "protocol"
-                                    ],
                                     "additionalProperties": false,
                                     "dependencies": {
                                         "ospfMatchRoute": {
@@ -6565,10 +6729,62 @@
                                                     ]
                                                 },
                                                 "value": {
-                                                    "type": "string",
-                                                    "pattern": "(AppGigabitEthernet|BD-VIF|BDI|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GigabitEthernet|HundredGigE|Loopback|Port-channel|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwoGigabitEthernet|TwoHundredGigE|Vlan)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
-                                                    "minLength": 3,
-                                                    "maxLength": 32
+                                                    "oneOf": [
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^(Ethernet|GigabitEthernet|TenGigabitEthernet|TwoGigabitEthernet|FiveGigabitEthernet|TwentyFiveGigabitEthernet|TwentyFiveGigE|HundredGigE|FortyGigabitEthernet|FastEthernet)(0|[1-9][0-9]?|(0|[1-9][0-9]?).[1-9][0-9]{0,3}|(0|[1-9][0-9]?)/(0|[1-9][0-9]?)/(0|[1-9][0-9]?).[1-9][0-9]{0,3}|[0-9]{1,2}/(0|[1-9][0-9]?)/(0|[1-9][0-9]?)|(0|[1-9][0-9]?)/(0|[1-9][0-9]?).[1-9][0-9]{0,3}|(0|[1-9][0-9]?)/(0|[1-9][0-9]?))$",
+                                                            "minLength": 3,
+                                                            "maxLength": 32
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^Loopback(0|[1-9][0-9]{0,9})$",
+                                                            "minLength": 9,
+                                                            "maxLength": 18
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^Vlan([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-3][0-9][0-9][0-9]|40[0-9][0-4])$",
+                                                            "minLength": 5,
+                                                            "maxLength": 8
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^Tunnel(0|[1-9][0-9]{0,9})$",
+                                                            "minLength": 7,
+                                                            "maxLength": 16
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^Port-channel([1-9]|[1-5][0-9]|6[0-4])$",
+                                                            "minLength": 13,
+                                                            "maxLength": 32
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^Port-channel([1-9]|[1-5][0-9]|6[0-4])\\.([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-3][0-9][0-9][0-9]|40[0-8][0-9]|409[0-4])$",
+                                                            "minLength": 13,
+                                                            "maxLength": 32
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^AppGigabitEthernet(0|[1-9][0-9]?|(0|[1-9][0-9]?).[1-9][0-9]{0,3}|(0|[1-9][0-9]?)/(0|[1-9][0-9]?)/(0|[1-9][0-9]?).[1-9][0-9]{0,3}|[0-9]{1,2}/(0|[1-9][0-9]?)/(0|[1-9][0-9]?)|(0|[1-9][0-9]?)/(0|[1-9][0-9]?).[1-9][0-9]{0,3}|(0|[1-9][0-9]?)/(0|[1-9][0-9]?))$",
+                                                            "minLength": 19,
+                                                            "maxLength": 32
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^Virtual-Template([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-3][0-9][0-9][0-9]|40[0-9][0-5])$",
+                                                            "minLength": 17,
+                                                            "maxLength": 20
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^(BDI|BD-VIF)([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-3][0-9][0-9][0-9]|40[0-9][0-6])$",
+                                                            "minLength": 4,
+                                                            "maxLength": 10
+                                                        }
+                                                    ]
                                                 }
                                             },
                                             "required": [
@@ -6592,10 +6808,62 @@
                                                     "maxLength": 128
                                                 },
                                                 "default": {
-                                                    "type": "string",
-                                                    "pattern": "(AppGigabitEthernet|BD-VIF|BDI|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GigabitEthernet|HundredGigE|Loopback|Port-channel|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwoGigabitEthernet|TwoHundredGigE|Vlan)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
-                                                    "minLength": 3,
-                                                    "maxLength": 32
+                                                    "oneOf": [
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^(Ethernet|GigabitEthernet|TenGigabitEthernet|TwoGigabitEthernet|FiveGigabitEthernet|TwentyFiveGigabitEthernet|TwentyFiveGigE|HundredGigE|FortyGigabitEthernet|FastEthernet)(0|[1-9][0-9]?|(0|[1-9][0-9]?).[1-9][0-9]{0,3}|(0|[1-9][0-9]?)/(0|[1-9][0-9]?)/(0|[1-9][0-9]?).[1-9][0-9]{0,3}|[0-9]{1,2}/(0|[1-9][0-9]?)/(0|[1-9][0-9]?)|(0|[1-9][0-9]?)/(0|[1-9][0-9]?).[1-9][0-9]{0,3}|(0|[1-9][0-9]?)/(0|[1-9][0-9]?))$",
+                                                            "minLength": 3,
+                                                            "maxLength": 32
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^Loopback(0|[1-9][0-9]{0,9})$",
+                                                            "minLength": 9,
+                                                            "maxLength": 18
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^Vlan([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-3][0-9][0-9][0-9]|40[0-9][0-4])$",
+                                                            "minLength": 5,
+                                                            "maxLength": 8
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^Tunnel(0|[1-9][0-9]{0,9})$",
+                                                            "minLength": 7,
+                                                            "maxLength": 16
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^Port-channel([1-9]|[1-5][0-9]|6[0-4])$",
+                                                            "minLength": 13,
+                                                            "maxLength": 32
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^Port-channel([1-9]|[1-5][0-9]|6[0-4])\\.([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-3][0-9][0-9][0-9]|40[0-8][0-9]|409[0-4])$",
+                                                            "minLength": 13,
+                                                            "maxLength": 32
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^AppGigabitEthernet(0|[1-9][0-9]?|(0|[1-9][0-9]?).[1-9][0-9]{0,3}|(0|[1-9][0-9]?)/(0|[1-9][0-9]?)/(0|[1-9][0-9]?).[1-9][0-9]{0,3}|[0-9]{1,2}/(0|[1-9][0-9]?)/(0|[1-9][0-9]?)|(0|[1-9][0-9]?)/(0|[1-9][0-9]?).[1-9][0-9]{0,3}|(0|[1-9][0-9]?)/(0|[1-9][0-9]?))$",
+                                                            "minLength": 19,
+                                                            "maxLength": 32
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^Virtual-Template([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-3][0-9][0-9][0-9]|40[0-9][0-5])$",
+                                                            "minLength": 17,
+                                                            "maxLength": 20
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "pattern": "^(BDI|BD-VIF)([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-3][0-9][0-9][0-9]|40[0-9][0-6])$",
+                                                            "minLength": 4,
+                                                            "maxLength": 10
+                                                        }
+                                                    ]
                                                 },
                                                 "description": {
                                                     "minLength": 1,
@@ -6636,7 +6904,7 @@
                     "ISRv",
                     "ir1101"
                 ],
-                "minVManageVersion": "20.15.1"
+                "minVManageVersion": "20.17.1"
             },
             "documentation": {
                 "description": "This is the documentation for request schema for routing/bgp profile parcel",

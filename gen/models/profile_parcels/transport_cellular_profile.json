@@ -539,19 +539,246 @@
                                                         "additionalProperties": false
                                                     }
                                                 ]
+                                            },
+                                            "networkSlicing": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "sliceType": {
+                                                        "description": "S-NSSAI slice type number: 1(eMBB), 2(URLLC), 3(MioT)",
+                                                        "type": "object",
+                                                        "oneOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "global"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "integer",
+                                                                        "enum": [
+                                                                            1,
+                                                                            2,
+                                                                            3
+                                                                        ],
+                                                                        "default": 1
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            },
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "variable"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "string",
+                                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                        "minLength": 1,
+                                                                        "maxLength": 128
+                                                                    },
+                                                                    "default": {
+                                                                        "type": "integer",
+                                                                        "enum": [
+                                                                            1,
+                                                                            2,
+                                                                            3
+                                                                        ],
+                                                                        "default": 1
+                                                                    },
+                                                                    "description": {
+                                                                        "minLength": 1,
+                                                                        "type": "string",
+                                                                        "maxLength": 128
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            },
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "default"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            }
+                                                        ]
+                                                    },
+                                                    "sliceDifferentiator": {
+                                                        "description": "S-NSSAI slice differentiator",
+                                                        "type": "object",
+                                                        "oneOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "global"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "integer",
+                                                                        "minimum": 0,
+                                                                        "maximum": 16777214
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            },
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "variable"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "string",
+                                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                        "minLength": 1,
+                                                                        "maxLength": 128
+                                                                    },
+                                                                    "default": {
+                                                                        "type": "integer",
+                                                                        "minimum": 0,
+                                                                        "maximum": 16777214
+                                                                    },
+                                                                    "description": {
+                                                                        "minLength": 1,
+                                                                        "type": "string",
+                                                                        "maxLength": 128
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            },
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "default"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "additionalProperties": false,
+                                                "dependencies": {
+                                                    "sliceDifferentiator": {
+                                                        "properties": {
+                                                            "sliceType": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "enum": [
+                                                                            "global",
+                                                                            "variable"
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
                                         },
                                         "required": [
                                             "apn"
                                         ],
-                                        "additionalProperties": false
+                                        "additionalProperties": false,
+                                        "allOf": [
+                                            {
+                                                "if": {
+                                                    "properties": {
+                                                        "noOverwrite": {
+                                                            "properties": {
+                                                                "value": {
+                                                                    "const": true
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "value"
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                "then": {
+                                                    "not": {
+                                                        "required": [
+                                                            "networkSlicing"
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        ]
                                     }
                                 },
                                 "required": [
                                     "id",
                                     "profileInfo"
                                 ],
-                                "additionalProperties": false
+                                "additionalProperties": false,
+                                "allOf": [
+                                    {
+                                        "if": {
+                                            "properties": {
+                                                "id": {
+                                                    "properties": {
+                                                        "value": {
+                                                            "type": "integer",
+                                                            "enum": [
+                                                                1
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "then": {
+                                            "properties": {
+                                                "profileInfo": {
+                                                    "not": {
+                                                        "required": [
+                                                            "networkSlicing"
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "required": [
@@ -572,7 +799,7 @@
                     "ISRv",
                     "ir1101"
                 ],
-                "minVManageVersion": "20.15.1"
+                "minVManageVersion": "20.16.1"
             },
             "documentation": {
                 "description": "This is the documentation for POST request schema for Transport WAN VPN profile parcel",

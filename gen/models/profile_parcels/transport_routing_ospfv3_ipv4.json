@@ -31,7 +31,9 @@
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["variable"]
+                        "enum": [
+                          "variable"
+                        ]
                       },
                       "value": {
                         "type": "string",
@@ -49,31 +51,43 @@
                         "maxLength": 128
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   },
                   {
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["global"]
+                        "enum": [
+                          "global"
+                        ]
                       },
                       "value": {
                         "type": "string",
                         "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   },
                   {
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["default"]
+                        "enum": [
+                          "default"
+                        ]
                       }
                     },
-                    "required": ["optionType"],
+                    "required": [
+                      "optionType"
+                    ],
                     "additionalProperties": false
                   }
                 ]
@@ -86,7 +100,9 @@
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["global"]
+                        "enum": [
+                          "global"
+                        ]
                       },
                       "value": {
                         "default": 110,
@@ -95,14 +111,19 @@
                         "type": "integer"
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   },
                   {
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["variable"]
+                        "enum": [
+                          "variable"
+                        ]
                       },
                       "value": {
                         "type": "string",
@@ -122,14 +143,19 @@
                         "maxLength": 128
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   },
                   {
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["default"]
+                        "enum": [
+                          "default"
+                        ]
                       },
                       "value": {
                         "type": "integer",
@@ -137,7 +163,10 @@
                         "maximum": 110
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   }
                 ]
@@ -150,7 +179,9 @@
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["global"]
+                        "enum": [
+                          "global"
+                        ]
                       },
                       "value": {
                         "default": 110,
@@ -159,14 +190,19 @@
                         "type": "integer"
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   },
                   {
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["variable"]
+                        "enum": [
+                          "variable"
+                        ]
                       },
                       "value": {
                         "type": "string",
@@ -186,14 +222,19 @@
                         "maxLength": 128
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   },
                   {
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["default"]
+                        "enum": [
+                          "default"
+                        ]
                       },
                       "value": {
                         "type": "integer",
@@ -201,7 +242,10 @@
                         "maximum": 110
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   }
                 ]
@@ -214,7 +258,9 @@
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["global"]
+                        "enum": [
+                          "global"
+                        ]
                       },
                       "value": {
                         "default": 110,
@@ -223,14 +269,19 @@
                         "type": "integer"
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   },
                   {
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["variable"]
+                        "enum": [
+                          "variable"
+                        ]
                       },
                       "value": {
                         "type": "string",
@@ -250,14 +301,19 @@
                         "maxLength": 128
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   },
                   {
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["default"]
+                        "enum": [
+                          "default"
+                        ]
                       },
                       "value": {
                         "type": "integer",
@@ -265,7 +321,10 @@
                         "maximum": 110
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   }
                 ]
@@ -278,7 +337,9 @@
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["global"]
+                        "enum": [
+                          "global"
+                        ]
                       },
                       "value": {
                         "default": 110,
@@ -287,14 +348,19 @@
                         "type": "integer"
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   },
                   {
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["variable"]
+                        "enum": [
+                          "variable"
+                        ]
                       },
                       "value": {
                         "type": "string",
@@ -314,14 +380,19 @@
                         "maxLength": 128
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   },
                   {
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["default"]
+                        "enum": [
+                          "default"
+                        ]
                       },
                       "value": {
                         "type": "integer",
@@ -329,7 +400,10 @@
                         "maximum": 110
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   }
                 ]
@@ -349,7 +423,9 @@
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["global"]
+                        "enum": [
+                          "global"
+                        ]
                       },
                       "value": {
                         "default": 100,
@@ -358,14 +434,19 @@
                         "type": "integer"
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   },
                   {
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["variable"]
+                        "enum": [
+                          "variable"
+                        ]
                       },
                       "value": {
                         "type": "string",
@@ -385,14 +466,19 @@
                         "maxLength": 128
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   },
                   {
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["default"]
+                        "enum": [
+                          "default"
+                        ]
                       },
                       "value": {
                         "type": "integer",
@@ -400,7 +486,10 @@
                         "maximum": 100
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   }
                 ]
@@ -413,7 +502,9 @@
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["variable"]
+                        "enum": [
+                          "variable"
+                        ]
                       },
                       "value": {
                         "type": "string",
@@ -430,34 +521,49 @@
                         "maxLength": 128
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   },
                   {
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["global"]
+                        "enum": [
+                          "global"
+                        ]
                       },
                       "value": {
                         "type": "boolean"
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   },
                   {
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["default"]
+                        "enum": [
+                          "default"
+                        ]
                       },
                       "value": {
                         "type": "boolean",
-                        "enum": [true]
+                        "enum": [
+                          true
+                        ]
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   }
                 ]
@@ -475,14 +581,22 @@
                         "properties": {
                           "optionType": {
                             "type": "string",
-                            "enum": ["global", "default"]
+                            "enum": [
+                              "global",
+                              "default"
+                            ]
                           },
                           "value": {
                             "type": "boolean",
-                            "enum": [false]
+                            "enum": [
+                              false
+                            ]
                           }
                         },
-                        "required": ["optionType", "value"],
+                        "required": [
+                          "optionType",
+                          "value"
+                        ],
                         "additionalProperties": false
                       }
                     }
@@ -496,14 +610,21 @@
                         "properties": {
                           "optionType": {
                             "type": "string",
-                            "enum": ["global"]
+                            "enum": [
+                              "global"
+                            ]
                           },
                           "value": {
                             "type": "boolean",
-                            "enum": [true]
+                            "enum": [
+                              true
+                            ]
                           }
                         },
-                        "required": ["optionType", "value"],
+                        "required": [
+                          "optionType",
+                          "value"
+                        ],
                         "additionalProperties": false
                       },
                       "always": {
@@ -514,7 +635,9 @@
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["variable"]
+                                "enum": [
+                                  "variable"
+                                ]
                               },
                               "value": {
                                 "type": "string",
@@ -531,34 +654,49 @@
                                 "maxLength": 128
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["global"]
+                                "enum": [
+                                  "global"
+                                ]
                               },
                               "value": {
                                 "type": "boolean"
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["default"]
+                                "enum": [
+                                  "default"
+                                ]
                               },
                               "value": {
                                 "type": "boolean",
-                                "enum": [false]
+                                "enum": [
+                                  false
+                                ]
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           }
                         ]
@@ -571,7 +709,9 @@
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["global"]
+                                "enum": [
+                                  "global"
+                                ]
                               },
                               "value": {
                                 "minimum": 0,
@@ -579,14 +719,19 @@
                                 "type": "integer"
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["variable"]
+                                "enum": [
+                                  "variable"
+                                ]
                               },
                               "value": {
                                 "type": "string",
@@ -605,17 +750,24 @@
                                 "maxLength": 128
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["default"]
+                                "enum": [
+                                  "default"
+                                ]
                               }
                             },
-                            "required": ["optionType"],
+                            "required": [
+                              "optionType"
+                            ],
                             "additionalProperties": false
                           }
                         ]
@@ -628,21 +780,31 @@
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["global"]
+                                "enum": [
+                                  "global"
+                                ]
                               },
                               "value": {
-                                "enum": ["type1", "type2"],
+                                "enum": [
+                                  "type1",
+                                  "type2"
+                                ],
                                 "type": "string"
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["variable"]
+                                "enum": [
+                                  "variable"
+                                ]
                               },
                               "value": {
                                 "type": "string",
@@ -651,7 +813,10 @@
                                 "maxLength": 128
                               },
                               "default": {
-                                "enum": ["type1", "type2"],
+                                "enum": [
+                                  "type1",
+                                  "type2"
+                                ],
                                 "type": "string"
                               },
                               "description": {
@@ -660,23 +825,32 @@
                                 "maxLength": 128
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["default"]
+                                "enum": [
+                                  "default"
+                                ]
                               }
                             },
-                            "required": ["optionType"],
+                            "required": [
+                              "optionType"
+                            ],
                             "additionalProperties": false
                           }
                         ]
                       }
                     },
-                    "required": ["originate"],
+                    "required": [
+                      "originate"
+                    ],
                     "additionalProperties": false
                   }
                 ]
@@ -693,7 +867,9 @@
                         "properties": {
                           "optionType": {
                             "type": "string",
-                            "enum": ["global"]
+                            "enum": [
+                              "global"
+                            ]
                           },
                           "value": {
                             "default": 200,
@@ -702,14 +878,19 @@
                             "type": "integer"
                           }
                         },
-                        "required": ["optionType", "value"],
+                        "required": [
+                          "optionType",
+                          "value"
+                        ],
                         "additionalProperties": false
                       },
                       {
                         "properties": {
                           "optionType": {
                             "type": "string",
-                            "enum": ["variable"]
+                            "enum": [
+                              "variable"
+                            ]
                           },
                           "value": {
                             "type": "string",
@@ -729,14 +910,19 @@
                             "maxLength": 128
                           }
                         },
-                        "required": ["optionType", "value"],
+                        "required": [
+                          "optionType",
+                          "value"
+                        ],
                         "additionalProperties": false
                       },
                       {
                         "properties": {
                           "optionType": {
                             "type": "string",
-                            "enum": ["default"]
+                            "enum": [
+                              "default"
+                            ]
                           },
                           "value": {
                             "type": "integer",
@@ -744,7 +930,10 @@
                             "maximum": 200
                           }
                         },
-                        "required": ["optionType", "value"],
+                        "required": [
+                          "optionType",
+                          "value"
+                        ],
                         "additionalProperties": false
                       }
                     ]
@@ -757,7 +946,9 @@
                         "properties": {
                           "optionType": {
                             "type": "string",
-                            "enum": ["global"]
+                            "enum": [
+                              "global"
+                            ]
                           },
                           "value": {
                             "default": 1000,
@@ -766,14 +957,19 @@
                             "type": "integer"
                           }
                         },
-                        "required": ["optionType", "value"],
+                        "required": [
+                          "optionType",
+                          "value"
+                        ],
                         "additionalProperties": false
                       },
                       {
                         "properties": {
                           "optionType": {
                             "type": "string",
-                            "enum": ["variable"]
+                            "enum": [
+                              "variable"
+                            ]
                           },
                           "value": {
                             "type": "string",
@@ -793,14 +989,19 @@
                             "maxLength": 128
                           }
                         },
-                        "required": ["optionType", "value"],
+                        "required": [
+                          "optionType",
+                          "value"
+                        ],
                         "additionalProperties": false
                       },
                       {
                         "properties": {
                           "optionType": {
                             "type": "string",
-                            "enum": ["default"]
+                            "enum": [
+                              "default"
+                            ]
                           },
                           "value": {
                             "type": "integer",
@@ -808,7 +1009,10 @@
                             "maximum": 1000
                           }
                         },
-                        "required": ["optionType", "value"],
+                        "required": [
+                          "optionType",
+                          "value"
+                        ],
                         "additionalProperties": false
                       }
                     ]
@@ -821,7 +1025,9 @@
                         "properties": {
                           "optionType": {
                             "type": "string",
-                            "enum": ["global"]
+                            "enum": [
+                              "global"
+                            ]
                           },
                           "value": {
                             "default": 10000,
@@ -830,14 +1036,19 @@
                             "type": "integer"
                           }
                         },
-                        "required": ["optionType", "value"],
+                        "required": [
+                          "optionType",
+                          "value"
+                        ],
                         "additionalProperties": false
                       },
                       {
                         "properties": {
                           "optionType": {
                             "type": "string",
-                            "enum": ["variable"]
+                            "enum": [
+                              "variable"
+                            ]
                           },
                           "value": {
                             "type": "string",
@@ -857,14 +1068,19 @@
                             "maxLength": 128
                           }
                         },
-                        "required": ["optionType", "value"],
+                        "required": [
+                          "optionType",
+                          "value"
+                        ],
                         "additionalProperties": false
                       },
                       {
                         "properties": {
                           "optionType": {
                             "type": "string",
-                            "enum": ["default"]
+                            "enum": [
+                              "default"
+                            ]
                           },
                           "value": {
                             "type": "integer",
@@ -872,7 +1088,10 @@
                             "maximum": 10000
                           }
                         },
-                        "required": ["optionType", "value"],
+                        "required": [
+                          "optionType",
+                          "value"
+                        ],
                         "additionalProperties": false
                       }
                     ]
@@ -888,10 +1107,14 @@
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["default"]
+                        "enum": [
+                          "default"
+                        ]
                       }
                     },
-                    "required": ["optionType"],
+                    "required": [
+                      "optionType"
+                    ],
                     "additionalProperties": false
                   },
                   {
@@ -900,18 +1123,25 @@
                         "properties": {
                           "optionType": {
                             "type": "string",
-                            "enum": ["global"]
+                            "enum": [
+                              "global"
+                            ]
                           },
                           "value": {
                             "type": "string",
                             "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
                           }
                         },
-                        "required": ["optionType", "value"],
+                        "required": [
+                          "optionType",
+                          "value"
+                        ],
                         "additionalProperties": false
                       }
                     },
-                    "required": ["refId"],
+                    "required": [
+                      "refId"
+                    ],
                     "additionalProperties": false
                   }
                 ]
@@ -924,7 +1154,9 @@
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["variable"]
+                        "enum": [
+                          "variable"
+                        ]
                       },
                       "value": {
                         "type": "string",
@@ -941,34 +1173,49 @@
                         "maxLength": 128
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   },
                   {
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["global"]
+                        "enum": [
+                          "global"
+                        ]
                       },
                       "value": {
                         "type": "boolean"
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   },
                   {
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["default"]
+                        "enum": [
+                          "default"
+                        ]
                       },
                       "value": {
                         "type": "boolean",
-                        "enum": [false]
+                        "enum": [
+                          false
+                        ]
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   }
                 ]
@@ -991,7 +1238,9 @@
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["global"]
+                          "enum": [
+                            "global"
+                          ]
                         },
                         "value": {
                           "enum": [
@@ -1005,14 +1254,19 @@
                           "type": "string"
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     },
                     {
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["variable"]
+                          "enum": [
+                            "variable"
+                          ]
                         },
                         "value": {
                           "type": "string",
@@ -1037,7 +1291,10 @@
                           "maxLength": 128
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     }
                   ]
@@ -1050,7 +1307,9 @@
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["variable"]
+                          "enum": [
+                            "variable"
+                          ]
                         },
                         "value": {
                           "type": "string",
@@ -1067,34 +1326,49 @@
                           "maxLength": 128
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     },
                     {
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["global"]
+                          "enum": [
+                            "global"
+                          ]
                         },
                         "value": {
                           "type": "boolean"
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     },
                     {
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["default"]
+                          "enum": [
+                            "default"
+                          ]
                         },
                         "value": {
                           "type": "boolean",
-                          "enum": [true]
+                          "enum": [
+                            true
+                          ]
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     }
                   ]
@@ -1107,7 +1381,9 @@
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["variable"]
+                          "enum": [
+                            "variable"
+                          ]
                         },
                         "value": {
                           "type": "string",
@@ -1124,34 +1400,49 @@
                           "maxLength": 128
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     },
                     {
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["global"]
+                          "enum": [
+                            "global"
+                          ]
                         },
                         "value": {
                           "type": "boolean"
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     },
                     {
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["default"]
+                          "enum": [
+                            "default"
+                          ]
                         },
                         "value": {
                           "type": "boolean",
-                          "enum": [false]
+                          "enum": [
+                            false
+                          ]
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     }
                   ]
@@ -1164,10 +1455,14 @@
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["default"]
+                          "enum": [
+                            "default"
+                          ]
                         }
                       },
-                      "required": ["optionType"],
+                      "required": [
+                        "optionType"
+                      ],
                       "additionalProperties": false
                     },
                     {
@@ -1176,24 +1471,30 @@
                           "properties": {
                             "optionType": {
                               "type": "string",
-                              "enum": ["global"]
+                              "enum": [
+                                "global"
+                              ]
                             },
                             "value": {
                               "type": "string",
                               "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
                             }
                           },
-                          "required": ["optionType", "value"],
+                          "required": [
+                            "optionType",
+                            "value"
+                          ],
                           "additionalProperties": false
                         }
                       },
-                      "required": ["refId"],
+                      "required": [
+                        "refId"
+                      ],
                       "additionalProperties": false
                     }
                   ]
                 }
               },
-              "required": ["protocol"],
               "additionalProperties": false,
               "allOf": [
                 {
@@ -1206,10 +1507,15 @@
                           }
                         }
                       }
-                    }
+                    },
+                    "required": [
+                      "protocol"
+                    ]
                   },
                   "then": {
-                    "required": ["protocol", "natDia"]
+                    "required": [
+                      "natDia"
+                    ]
                   }
                 },
                 {
@@ -1228,11 +1534,16 @@
                           }
                         }
                       }
-                    }
+                    },
+                    "required": [
+                      "protocol"
+                    ]
                   },
                   "then": {
                     "not": {
-                      "required": ["natDia"]
+                      "required": [
+                        "natDia"
+                      ]
                     }
                   }
                 },
@@ -1268,17 +1579,25 @@
                     "properties": {
                       "optionType": {
                         "type": "string",
-                        "enum": ["global", "default"]
+                        "enum": [
+                          "global",
+                          "default"
+                        ]
                       },
                       "value": {
                         "const": "disabled"
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   }
                 },
-                "required": ["action"],
+                "required": [
+                  "action"
+                ],
                 "additionalProperties": false
               },
               {
@@ -1295,11 +1614,16 @@
                         "const": "immediately"
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   }
                 },
-                "required": ["action"],
+                "required": [
+                  "action"
+                ],
                 "additionalProperties": false
               },
               {
@@ -1316,7 +1640,10 @@
                         "const": "on-startup"
                       }
                     },
-                    "required": ["optionType", "value"],
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
                     "additionalProperties": false
                   },
                   "onStartUpTime": {
@@ -1327,7 +1654,9 @@
                         "properties": {
                           "optionType": {
                             "type": "string",
-                            "enum": ["global"]
+                            "enum": [
+                              "global"
+                            ]
                           },
                           "value": {
                             "minimum": 5,
@@ -1335,14 +1664,19 @@
                             "type": "integer"
                           }
                         },
-                        "required": ["optionType", "value"],
+                        "required": [
+                          "optionType",
+                          "value"
+                        ],
                         "additionalProperties": false
                       },
                       {
                         "properties": {
                           "optionType": {
                             "type": "string",
-                            "enum": ["variable"]
+                            "enum": [
+                              "variable"
+                            ]
                           },
                           "value": {
                             "type": "string",
@@ -1361,13 +1695,19 @@
                             "maxLength": 128
                           }
                         },
-                        "required": ["optionType", "value"],
+                        "required": [
+                          "optionType",
+                          "value"
+                        ],
                         "additionalProperties": false
                       }
                     ]
                   }
                 },
-                "required": ["action", "onStartUpTime"],
+                "required": [
+                  "action",
+                  "onStartUpTime"
+                ],
                 "additionalProperties": false
               }
             ]
@@ -1388,7 +1728,9 @@
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["global"]
+                          "enum": [
+                            "global"
+                          ]
                         },
                         "value": {
                           "minimum": 0,
@@ -1396,14 +1738,19 @@
                           "type": "integer"
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     },
                     {
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["variable"]
+                          "enum": [
+                            "variable"
+                          ]
                         },
                         "value": {
                           "type": "string",
@@ -1422,7 +1769,10 @@
                           "maxLength": 128
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     }
                   ]
@@ -1439,14 +1789,21 @@
                           "properties": {
                             "optionType": {
                               "type": "string",
-                              "enum": ["global"]
+                              "enum": [
+                                "global"
+                              ]
                             },
                             "value": {
                               "type": "string",
-                              "enum": ["stub"]
+                              "enum": [
+                                "stub"
+                              ]
                             }
                           },
-                          "required": ["optionType", "value"],
+                          "required": [
+                            "optionType",
+                            "value"
+                          ],
                           "additionalProperties": false
                         },
                         "noSummary": {
@@ -1457,7 +1814,9 @@
                               "properties": {
                                 "optionType": {
                                   "type": "string",
-                                  "enum": ["variable"]
+                                  "enum": [
+                                    "variable"
+                                  ]
                                 },
                                 "value": {
                                   "type": "string",
@@ -1474,34 +1833,49 @@
                                   "maxLength": 128
                                 }
                               },
-                              "required": ["optionType", "value"],
+                              "required": [
+                                "optionType",
+                                "value"
+                              ],
                               "additionalProperties": false
                             },
                             {
                               "properties": {
                                 "optionType": {
                                   "type": "string",
-                                  "enum": ["global"]
+                                  "enum": [
+                                    "global"
+                                  ]
                                 },
                                 "value": {
                                   "type": "boolean"
                                 }
                               },
-                              "required": ["optionType", "value"],
+                              "required": [
+                                "optionType",
+                                "value"
+                              ],
                               "additionalProperties": false
                             },
                             {
                               "properties": {
                                 "optionType": {
                                   "type": "string",
-                                  "enum": ["default"]
+                                  "enum": [
+                                    "default"
+                                  ]
                                 },
                                 "value": {
                                   "type": "boolean",
-                                  "enum": [false]
+                                  "enum": [
+                                    false
+                                  ]
                                 }
                               },
-                              "required": ["optionType", "value"],
+                              "required": [
+                                "optionType",
+                                "value"
+                              ],
                               "additionalProperties": false
                             }
                           ]
@@ -1517,14 +1891,21 @@
                           "properties": {
                             "optionType": {
                               "type": "string",
-                              "enum": ["global"]
+                              "enum": [
+                                "global"
+                              ]
                             },
                             "value": {
                               "type": "string",
-                              "enum": ["nssa"]
+                              "enum": [
+                                "nssa"
+                              ]
                             }
                           },
-                          "required": ["optionType", "value"],
+                          "required": [
+                            "optionType",
+                            "value"
+                          ],
                           "additionalProperties": false
                         },
                         "noSummary": {
@@ -1535,7 +1916,9 @@
                               "properties": {
                                 "optionType": {
                                   "type": "string",
-                                  "enum": ["variable"]
+                                  "enum": [
+                                    "variable"
+                                  ]
                                 },
                                 "value": {
                                   "type": "string",
@@ -1552,34 +1935,49 @@
                                   "maxLength": 128
                                 }
                               },
-                              "required": ["optionType", "value"],
+                              "required": [
+                                "optionType",
+                                "value"
+                              ],
                               "additionalProperties": false
                             },
                             {
                               "properties": {
                                 "optionType": {
                                   "type": "string",
-                                  "enum": ["global"]
+                                  "enum": [
+                                    "global"
+                                  ]
                                 },
                                 "value": {
                                   "type": "boolean"
                                 }
                               },
-                              "required": ["optionType", "value"],
+                              "required": [
+                                "optionType",
+                                "value"
+                              ],
                               "additionalProperties": false
                             },
                             {
                               "properties": {
                                 "optionType": {
                                   "type": "string",
-                                  "enum": ["default"]
+                                  "enum": [
+                                    "default"
+                                  ]
                                 },
                                 "value": {
                                   "type": "boolean",
-                                  "enum": [false]
+                                  "enum": [
+                                    false
+                                  ]
                                 }
                               },
-                              "required": ["optionType", "value"],
+                              "required": [
+                                "optionType",
+                                "value"
+                              ],
                               "additionalProperties": false
                             }
                           ]
@@ -1592,7 +1990,9 @@
                               "properties": {
                                 "optionType": {
                                   "type": "string",
-                                  "enum": ["variable"]
+                                  "enum": [
+                                    "variable"
+                                  ]
                                 },
                                 "value": {
                                   "type": "string",
@@ -1609,34 +2009,49 @@
                                   "maxLength": 128
                                 }
                               },
-                              "required": ["optionType", "value"],
+                              "required": [
+                                "optionType",
+                                "value"
+                              ],
                               "additionalProperties": false
                             },
                             {
                               "properties": {
                                 "optionType": {
                                   "type": "string",
-                                  "enum": ["global"]
+                                  "enum": [
+                                    "global"
+                                  ]
                                 },
                                 "value": {
                                   "type": "boolean"
                                 }
                               },
-                              "required": ["optionType", "value"],
+                              "required": [
+                                "optionType",
+                                "value"
+                              ],
                               "additionalProperties": false
                             },
                             {
                               "properties": {
                                 "optionType": {
                                   "type": "string",
-                                  "enum": ["default"]
+                                  "enum": [
+                                    "default"
+                                  ]
                                 },
                                 "value": {
                                   "type": "boolean",
-                                  "enum": [false]
+                                  "enum": [
+                                    false
+                                  ]
                                 }
                               },
-                              "required": ["optionType", "value"],
+                              "required": [
+                                "optionType",
+                                "value"
+                              ],
                               "additionalProperties": false
                             }
                           ]
@@ -1652,14 +2067,21 @@
                           "properties": {
                             "optionType": {
                               "type": "string",
-                              "enum": ["global"]
+                              "enum": [
+                                "global"
+                              ]
                             },
                             "value": {
                               "type": "string",
-                              "enum": ["normal"]
+                              "enum": [
+                                "normal"
+                              ]
                             }
                           },
-                          "required": ["optionType", "value"],
+                          "required": [
+                            "optionType",
+                            "value"
+                          ],
                           "additionalProperties": false
                         }
                       },
@@ -1673,10 +2095,14 @@
                           "properties": {
                             "optionType": {
                               "type": "string",
-                              "enum": ["default"]
+                              "enum": [
+                                "default"
+                              ]
                             }
                           },
-                          "required": ["optionType"],
+                          "required": [
+                            "optionType"
+                          ],
                           "additionalProperties": false
                         }
                       },
@@ -1700,23 +2126,30 @@
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["global"]
+                                "enum": [
+                                  "global"
+                                ]
                               },
                               "value": {
                                 "type": "string",
-                                "pattern": "(AppGigabitEthernet|BDI|BD-VIF|Virtual-Template|Dialer|Ethernet|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GigabitEthernet|HundredGigE|Loopback|Port-channel|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwoGigabitEthernet|TwoHundredGigE|Vlan|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
-                                "minLength": 3,
+                                "pattern": "^(AppGigabitEthernet|BDI|BD-VIF|Virtual-Template|Dialer|Ethernet|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GigabitEthernet|HundredGigE|Loopback|Port-channel|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwoGigabitEthernet|TwoHundredGigE|Vlan|vmi|ipsec|gre)((0|[1-9]\\d*)(/(0|[1-9]\\d*)){0,3}(\\.([1-9]\\d*))?)$",
+                                "minLength": 4,
                                 "maxLength": 32
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["variable"]
+                                "enum": [
+                                  "variable"
+                                ]
                               },
                               "value": {
                                 "type": "string",
@@ -1726,8 +2159,8 @@
                               },
                               "default": {
                                 "type": "string",
-                                "pattern": "(AppGigabitEthernet|BDI|BD-VIF|Virtual-Template|Dialer|Ethernet|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GigabitEthernet|HundredGigE|Loopback|Port-channel|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwoGigabitEthernet|TwoHundredGigE|Vlan|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
-                                "minLength": 3,
+                                "pattern": "^(AppGigabitEthernet|BDI|BD-VIF|Virtual-Template|Dialer|Ethernet|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GigabitEthernet|HundredGigE|Loopback|Port-channel|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwoGigabitEthernet|TwoHundredGigE|Vlan|vmi|ipsec|gre)((0|[1-9]\\d*)(/(0|[1-9]\\d*)){0,3}(\\.([1-9]\\d*))?)$",
+                                "minLength": 4,
                                 "maxLength": 32
                               },
                               "description": {
@@ -1736,7 +2169,10 @@
                                 "maxLength": 128
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           }
                         ]
@@ -1749,7 +2185,9 @@
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["global"]
+                                "enum": [
+                                  "global"
+                                ]
                               },
                               "value": {
                                 "default": 10,
@@ -1758,14 +2196,19 @@
                                 "type": "integer"
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["variable"]
+                                "enum": [
+                                  "variable"
+                                ]
                               },
                               "value": {
                                 "type": "string",
@@ -1785,14 +2228,19 @@
                                 "maxLength": 128
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["default"]
+                                "enum": [
+                                  "default"
+                                ]
                               },
                               "value": {
                                 "type": "integer",
@@ -1800,7 +2248,10 @@
                                 "maximum": 10
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           }
                         ]
@@ -1813,7 +2264,9 @@
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["global"]
+                                "enum": [
+                                  "global"
+                                ]
                               },
                               "value": {
                                 "default": 40,
@@ -1822,14 +2275,19 @@
                                 "type": "integer"
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["variable"]
+                                "enum": [
+                                  "variable"
+                                ]
                               },
                               "value": {
                                 "type": "string",
@@ -1849,14 +2307,19 @@
                                 "maxLength": 128
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["default"]
+                                "enum": [
+                                  "default"
+                                ]
                               },
                               "value": {
                                 "type": "integer",
@@ -1864,7 +2327,10 @@
                                 "maximum": 40
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           }
                         ]
@@ -1877,7 +2343,9 @@
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["global"]
+                                "enum": [
+                                  "global"
+                                ]
                               },
                               "value": {
                                 "default": 5,
@@ -1886,14 +2354,19 @@
                                 "type": "integer"
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["variable"]
+                                "enum": [
+                                  "variable"
+                                ]
                               },
                               "value": {
                                 "type": "string",
@@ -1913,14 +2386,19 @@
                                 "maxLength": 128
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["default"]
+                                "enum": [
+                                  "default"
+                                ]
                               },
                               "value": {
                                 "type": "integer",
@@ -1928,7 +2406,10 @@
                                 "maximum": 5
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           }
                         ]
@@ -1941,7 +2422,9 @@
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["global"]
+                                "enum": [
+                                  "global"
+                                ]
                               },
                               "value": {
                                 "minimum": 1,
@@ -1949,14 +2432,19 @@
                                 "type": "integer"
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["variable"]
+                                "enum": [
+                                  "variable"
+                                ]
                               },
                               "value": {
                                 "type": "string",
@@ -1975,17 +2463,24 @@
                                 "maxLength": 128
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["default"]
+                                "enum": [
+                                  "default"
+                                ]
                               }
                             },
-                            "required": ["optionType"],
+                            "required": [
+                              "optionType"
+                            ],
                             "additionalProperties": false
                           }
                         ]
@@ -1998,7 +2493,9 @@
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["global"]
+                                "enum": [
+                                  "global"
+                                ]
                               },
                               "value": {
                                 "enum": [
@@ -2010,14 +2507,19 @@
                                 "type": "string"
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["variable"]
+                                "enum": [
+                                  "variable"
+                                ]
                               },
                               "value": {
                                 "type": "string",
@@ -2040,17 +2542,24 @@
                                 "maxLength": 128
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["default"]
+                                "enum": [
+                                  "default"
+                                ]
                               }
                             },
-                            "required": ["optionType"],
+                            "required": [
+                              "optionType"
+                            ],
                             "additionalProperties": false
                           }
                         ]
@@ -2063,7 +2572,9 @@
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["variable"]
+                                "enum": [
+                                  "variable"
+                                ]
                               },
                               "value": {
                                 "type": "string",
@@ -2080,34 +2591,49 @@
                                 "maxLength": 128
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["global"]
+                                "enum": [
+                                  "global"
+                                ]
                               },
                               "value": {
                                 "type": "boolean"
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["default"]
+                                "enum": [
+                                  "default"
+                                ]
                               },
                               "value": {
                                 "type": "boolean",
-                                "enum": [false]
+                                "enum": [
+                                  false
+                                ]
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           }
                         ]
@@ -2124,18 +2650,28 @@
                                 "properties": {
                                   "optionType": {
                                     "type": "string",
-                                    "enum": ["global", "default"]
+                                    "enum": [
+                                      "global",
+                                      "default"
+                                    ]
                                   },
                                   "value": {
                                     "type": "string",
-                                    "enum": ["no-auth"]
+                                    "enum": [
+                                      "no-auth"
+                                    ]
                                   }
                                 },
-                                "required": ["optionType", "value"],
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
                                 "additionalProperties": false
                               }
                             },
-                            "required": ["authType"],
+                            "required": [
+                              "authType"
+                            ],
                             "additionalProperties": false
                           },
                           {
@@ -2146,14 +2682,21 @@
                                 "properties": {
                                   "optionType": {
                                     "type": "string",
-                                    "enum": ["global"]
+                                    "enum": [
+                                      "global"
+                                    ]
                                   },
                                   "value": {
                                     "type": "string",
-                                    "enum": ["ipsec-sha1"]
+                                    "enum": [
+                                      "ipsec-sha1"
+                                    ]
                                   }
                                 },
-                                "required": ["optionType", "value"],
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
                                 "additionalProperties": false
                               },
                               "spi": {
@@ -2164,7 +2707,9 @@
                                     "properties": {
                                       "optionType": {
                                         "type": "string",
-                                        "enum": ["global"]
+                                        "enum": [
+                                          "global"
+                                        ]
                                       },
                                       "value": {
                                         "minimum": 256,
@@ -2172,14 +2717,19 @@
                                         "type": "integer"
                                       }
                                     },
-                                    "required": ["optionType", "value"],
+                                    "required": [
+                                      "optionType",
+                                      "value"
+                                    ],
                                     "additionalProperties": false
                                   },
                                   {
                                     "properties": {
                                       "optionType": {
                                         "type": "string",
-                                        "enum": ["variable"]
+                                        "enum": [
+                                          "variable"
+                                        ]
                                       },
                                       "value": {
                                         "type": "string",
@@ -2198,7 +2748,10 @@
                                         "maxLength": 128
                                       }
                                     },
-                                    "required": ["optionType", "value"],
+                                    "required": [
+                                      "optionType",
+                                      "value"
+                                    ],
                                     "additionalProperties": false
                                   }
                                 ]
@@ -2211,21 +2764,28 @@
                                     "properties": {
                                       "optionType": {
                                         "type": "string",
-                                        "enum": ["global"]
+                                        "enum": [
+                                          "global"
+                                        ]
                                       },
                                       "value": {
                                         "type": "string",
                                         "pattern": "^[0-9a-fA-F]{40}$"
                                       }
                                     },
-                                    "required": ["optionType", "value"],
+                                    "required": [
+                                      "optionType",
+                                      "value"
+                                    ],
                                     "additionalProperties": false
                                   },
                                   {
                                     "properties": {
                                       "optionType": {
                                         "type": "string",
-                                        "enum": ["variable"]
+                                        "enum": [
+                                          "variable"
+                                        ]
                                       },
                                       "value": {
                                         "type": "string",
@@ -2243,19 +2803,25 @@
                                         "maxLength": 128
                                       }
                                     },
-                                    "required": ["optionType", "value"],
+                                    "required": [
+                                      "optionType",
+                                      "value"
+                                    ],
                                     "additionalProperties": false
                                   }
                                 ]
                               }
                             },
-                            "required": ["authType", "spi", "authKey"],
+                            "required": [
+                              "authType",
+                              "spi",
+                              "authKey"
+                            ],
                             "additionalProperties": false
                           }
                         ]
                       }
                     },
-                    "required": ["ifName"],
                     "additionalProperties": false
                   }
                 },
@@ -2276,7 +2842,9 @@
                                 "properties": {
                                   "optionType": {
                                     "type": "string",
-                                    "enum": ["variable"]
+                                    "enum": [
+                                      "variable"
+                                    ]
                                   },
                                   "value": {
                                     "type": "string",
@@ -2294,21 +2862,29 @@
                                     "maxLength": 128
                                   }
                                 },
-                                "required": ["optionType", "value"],
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
                                 "additionalProperties": false
                               },
                               {
                                 "properties": {
                                   "optionType": {
                                     "type": "string",
-                                    "enum": ["global"]
+                                    "enum": [
+                                      "global"
+                                    ]
                                   },
                                   "value": {
                                     "type": "string",
                                     "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"
                                   }
                                 },
-                                "required": ["optionType", "value"],
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
                                 "additionalProperties": false
                               }
                             ]
@@ -2319,7 +2895,9 @@
                                 "properties": {
                                   "optionType": {
                                     "type": "string",
-                                    "enum": ["variable"]
+                                    "enum": [
+                                      "variable"
+                                    ]
                                   },
                                   "value": {
                                     "type": "string",
@@ -2349,6 +2927,7 @@
                                       "255.255.0.0",
                                       "255.254.0.0",
                                       "255.252.0.0",
+                                      "255.248.0.0",
                                       "255.240.0.0",
                                       "255.224.0.0",
                                       "255.192.0.0",
@@ -2370,14 +2949,19 @@
                                     "maxLength": 128
                                   }
                                 },
-                                "required": ["optionType", "value"],
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
                                 "additionalProperties": false
                               },
                               {
                                 "properties": {
                                   "optionType": {
                                     "type": "string",
-                                    "enum": ["global"]
+                                    "enum": [
+                                      "global"
+                                    ]
                                   },
                                   "value": {
                                     "type": "string",
@@ -2401,6 +2985,7 @@
                                       "255.255.0.0",
                                       "255.254.0.0",
                                       "255.252.0.0",
+                                      "255.248.0.0",
                                       "255.240.0.0",
                                       "255.224.0.0",
                                       "255.192.0.0",
@@ -2417,13 +3002,19 @@
                                     ]
                                   }
                                 },
-                                "required": ["optionType", "value"],
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
                                 "additionalProperties": false
                               }
                             ]
                           }
                         },
-                        "required": ["address", "mask"],
+                        "required": [
+                          "address",
+                          "mask"
+                        ],
                         "additionalProperties": false
                       },
                       "noAdvertise": {
@@ -2434,7 +3025,9 @@
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["variable"]
+                                "enum": [
+                                  "variable"
+                                ]
                               },
                               "value": {
                                 "type": "string",
@@ -2451,34 +3044,49 @@
                                 "maxLength": 128
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["global"]
+                                "enum": [
+                                  "global"
+                                ]
                               },
                               "value": {
                                 "type": "boolean"
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["default"]
+                                "enum": [
+                                  "default"
+                                ]
                               },
                               "value": {
                                 "type": "boolean",
-                                "enum": [false]
+                                "enum": [
+                                  false
+                                ]
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           }
                         ]
@@ -2491,7 +3099,9 @@
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["global"]
+                                "enum": [
+                                  "global"
+                                ]
                               },
                               "value": {
                                 "minimum": 0,
@@ -2499,14 +3109,19 @@
                                 "type": "integer"
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["variable"]
+                                "enum": [
+                                  "variable"
+                                ]
                               },
                               "value": {
                                 "type": "string",
@@ -2525,37 +3140,135 @@
                                 "maxLength": 128
                               }
                             },
-                            "required": ["optionType", "value"],
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
                             "additionalProperties": false
                           },
                           {
                             "properties": {
                               "optionType": {
                                 "type": "string",
-                                "enum": ["default"]
+                                "enum": [
+                                  "default"
+                                ]
                               }
                             },
-                            "required": ["optionType"],
+                            "required": [
+                              "optionType"
+                            ],
                             "additionalProperties": false
                           }
                         ]
                       }
                     },
-                    "required": ["network", "noAdvertise"],
+                    "allOf": [
+                      {
+                        "if": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "network": {
+                                  "properties": {
+                                    "optionType": {
+                                      "const": "global"
+                                    }
+                                  },
+                                  "required": [
+                                    "optionType"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "network"
+                              ]
+                            },
+                            {
+                              "properties": {
+                                "noAdvertise": {
+                                  "properties": {
+                                    "optionType": {
+                                      "const": "global"
+                                    }
+                                  },
+                                  "required": [
+                                    "optionType"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "noAdvertise"
+                              ]
+                            }
+                          ]
+                        },
+                        "then": {
+                          "type": "object",
+                          "required": [
+                            "network",
+                            "noAdvertise"
+                          ]
+                        }
+                      }
+                    ],
                     "additionalProperties": false
                   }
                 }
               },
-              "required": ["areaNum", "interfaces"],
+              "allOf": [
+                {
+                  "if": {
+                    "anyOf": [
+                      {
+                        "properties": {
+                          "areaNum": {
+                            "properties": {
+                              "optionType": {
+                                "const": "global"
+                              }
+                            },
+                            "required": [
+                              "optionType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "areaNum"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "interfaces": {
+                            "minItems": 1
+                          }
+                        },
+                        "required": [
+                          "interfaces"
+                        ]
+                      }
+                    ]
+                  },
+                  "then": {
+                    "type": "object",
+                    "required": [
+                      "areaNum",
+                      "interfaces"
+                    ]
+                  }
+                }
+              ],
               "additionalProperties": false
             }
           }
         },
-        "required": ["area"],
+        "required": [
+          "area"
+        ],
         "additionalProperties": false
       },
       "metadata": {
-        "minVManageVersion": "20.15.1"
+        "minVManageVersion": "20.17.1"
       }
     },
     "documentation": {
@@ -3049,9 +3762,15 @@
         }
       ]
     },
-    "required": ["name", "data"],
+    "required": [
+      "name",
+      "data"
+    ],
     "not": {
-      "required": ["metadata", "documentation"]
+      "required": [
+        "metadata",
+        "documentation"
+      ]
     },
     "additionalProperties": false
   }

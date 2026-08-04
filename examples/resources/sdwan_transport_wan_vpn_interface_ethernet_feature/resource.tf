@@ -24,6 +24,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
   bandwidth_upstream                             = 21474836
   bandwidth_downstream                           = 21474836
   auto_detect_bandwidth                          = false
+  enable_ha_interlink_interface                  = false
   tunnel_interface                               = true
   per_tunnel_qos                                 = true
   tunnel_qos_mode                                = "hub"
@@ -132,20 +133,21 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
       mac_address = "00-B0-D0-63-C2-26"
     }
   ]
-  icmp_redirect_disable = true
-  duplex                = "full"
-  mac_address           = "00-B0-D0-63-C2-26"
-  ip_mtu                = 1500
-  interface_mtu         = 1500
-  tcp_mss               = 505
-  speed                 = "2500"
-  arp_timeout           = 1200
-  autonegotiate         = false
-  media_type            = "rj45"
-  tloc_extension        = "tloc"
-  gre_tunnel_source_ip  = "1.2.3.4"
-  xconnect              = "example"
-  load_interval         = 30
-  tracker               = "example"
-  ip_directed_broadcast = false
+  enforced_security_group_tag = 200
+  icmp_redirect_disable       = true
+  duplex                      = "full"
+  mac_address                 = "00-B0-D0-63-C2-26"
+  ip_mtu                      = 1500
+  interface_mtu               = 1500
+  tcp_mss                     = 505
+  speed                       = "2500"
+  arp_timeout                 = 1200
+  autonegotiate               = false
+  media_type                  = "rj45"
+  tloc_extension              = "tloc"
+  gre_tunnel_source_ip        = "1.2.3.4"
+  xconnect                    = "example"
+  load_interval               = 30
+  tracker                     = "example"
+  ip_directed_broadcast       = false
 }

@@ -17,6 +17,15 @@
 - Bump `sdwan_system_security_feature` schema to `20.18.0`
 - Bump `sdwan_system_snmp_feature` schema to `20.18.0`
 - Add `deploy_on_out_of_date` provider attribute (env: `SDWAN_DEPLOY_ON_OUT_OF_DATE`, default: `true`) to automatically detect and re-deploy out-of-date devices in `sdwan_configuration_group` and `sdwan_policy_group` resources during refresh
+- Bump `sdwan_transport_cellular_profile_feature` schema to `20.18.0`
+- Bump `sdwan_transport_routing_bgp_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_interface_ethernet_feature` schema to `20.18.0`
+- Bump `sdwan_transport_management_vpn_feature` schema to `20.18.0`
+- Bump `sdwan_transport_routing_ospf_feature` schema to `20.18.0`
+- Bump `sdwan_transport_routing_ospfv3_ipv4_feature` schema to `20.18.0`
+- Bump `sdwan_transport_routing_ospfv3_ipv6_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_interface_ethernet_feature` schema to `20.18.0`
 - Fix `sdwan_custom_application` resource/data source failing to read, update, or delete objects created against SD-WAN Manager 20.18, caused by the `POST /template/policy/customapp` endpoint no longer returning the created object's ID synchronously on that version (async task-based creation only)
 - Validate acceptance test suite against SD-WAN Manager 20.18 and fix test-data/fixture issues surfaced by tightened API validation on that version
 - Add `SDWAN_ISE` acceptance test tag to gate `sdwan_policy_object_security_identity_list` and `sdwan_policy_object_security_scalable_group_tag_list` tests

@@ -343,8 +343,8 @@ func (r *TransportRoutingOSPFv3IPv6ProfileParcelResource) Schema(ctx context.Con
 										MarkdownDescription: helpers.NewAttributeDescription("Set interface name").String,
 										Optional:            true,
 										Validators: []validator.String{
-											stringvalidator.LengthBetween(3, 32),
-											stringvalidator.RegexMatches(regexp.MustCompile(`(AppGigabitEthernet|BDI|BD-VIF|Virtual-Template|Dialer|Ethernet|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GigabitEthernet|HundredGigE|Loopback|Port-channel|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwoGigabitEthernet|TwoHundredGigE|Vlan|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
+											stringvalidator.LengthBetween(4, 32),
+											stringvalidator.RegexMatches(regexp.MustCompile(`^(AppGigabitEthernet|BDI|BD-VIF|Virtual-Template|Dialer|Ethernet|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GigabitEthernet|HundredGigE|Loopback|Port-channel|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwoGigabitEthernet|TwoHundredGigE|Vlan|vmi|ipsec|gre)((0|[1-9]\d*)(/(0|[1-9]\d*)){0,3}(\.([1-9]\d*))?)$`), ""),
 										},
 									},
 									"name_variable": schema.StringAttribute{
