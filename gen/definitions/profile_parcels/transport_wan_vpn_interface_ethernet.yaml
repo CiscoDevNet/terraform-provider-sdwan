@@ -355,6 +355,15 @@ attributes:
           value: true
           type: Bool
           negate: true
+  - model_name: enableHAInterlinkInterface
+    tf_name: enable_ha_interlink_interface
+    example: false
+    conditional_attribute:
+      conditions:
+        - name: port_channel_member_interface
+          value: true
+          type: Bool
+          negate: true
   - model_name: tunnelInterface
     example: true
   - model_name: perTunnelQos

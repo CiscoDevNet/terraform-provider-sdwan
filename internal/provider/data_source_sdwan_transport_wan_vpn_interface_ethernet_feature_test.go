@@ -49,6 +49,7 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceEthernetProfileParcel(t *test
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_feature.test", "bandwidth_upstream", "21474836"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_feature.test", "bandwidth_downstream", "21474836"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_feature.test", "auto_detect_bandwidth", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_feature.test", "enable_ha_interlink_interface", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_interface", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_feature.test", "per_tunnel_qos", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_feature.test", "tunnel_qos_mode", "hub"))
@@ -327,6 +328,7 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig()
 	config += `	bandwidth_upstream = 21474836` + "\n"
 	config += `	bandwidth_downstream = 21474836` + "\n"
 	config += `	auto_detect_bandwidth = false` + "\n"
+	config += `	enable_ha_interlink_interface = false` + "\n"
 	config += `	tunnel_interface = true` + "\n"
 	config += `	per_tunnel_qos = true` + "\n"
 	config += `	tunnel_qos_mode = "hub"` + "\n"
@@ -480,6 +482,7 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceEthernetProfileParcelByNameCo
 	config += `	bandwidth_upstream = 21474836` + "\n"
 	config += `	bandwidth_downstream = 21474836` + "\n"
 	config += `	auto_detect_bandwidth = false` + "\n"
+	config += `	enable_ha_interlink_interface = false` + "\n"
 	config += `	tunnel_interface = true` + "\n"
 	config += `	per_tunnel_qos = true` + "\n"
 	config += `	tunnel_qos_mode = "hub"` + "\n"

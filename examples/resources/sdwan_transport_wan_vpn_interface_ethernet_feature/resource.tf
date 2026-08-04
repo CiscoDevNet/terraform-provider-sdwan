@@ -24,6 +24,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
   bandwidth_upstream                             = 21474836
   bandwidth_downstream                           = 21474836
   auto_detect_bandwidth                          = false
+  enable_ha_interlink_interface                  = false
   tunnel_interface                               = true
   per_tunnel_qos                                 = true
   tunnel_qos_mode                                = "hub"

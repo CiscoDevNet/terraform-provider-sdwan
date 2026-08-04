@@ -474,6 +474,10 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				Optional:            true,
 			},
+			"enable_ha_interlink_interface": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("HA Interlink interface on/off, Attribute conditional on `port_channel_member_interface` not equal to `true`").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
 			"tunnel_interface": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Tunnel Interface on/off").AddDefaultValueDescription("false").String,
 				Optional:            true,

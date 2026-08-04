@@ -57,6 +57,7 @@ data "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `duplex_variable` (String) Variable name
 - `enable_dhcpv6` (Boolean) Enable DHCPv6
 - `enable_enforced_propogation` (Boolean) Enable/Disable SGT Enforcement on an interface
+- `enable_ha_interlink_interface` (Boolean) HA Interlink interface on/off
 - `enable_sgt_propagation` (Boolean) Indicates that the interface is trustworthy for CTS
 - `enforced_security_group_tag` (Number) SGT value between 2 and 65519
 - `enforced_security_group_tag_variable` (String) Variable name

@@ -99,6 +99,7 @@ type TransportWANVPNInterfaceEthernet struct {
 	BandwidthDownstreamVariable                        types.String                                                    `tfsdk:"bandwidth_downstream_variable"`
 	AutoDetectBandwidth                                types.Bool                                                      `tfsdk:"auto_detect_bandwidth"`
 	AutoDetectBandwidthVariable                        types.String                                                    `tfsdk:"auto_detect_bandwidth_variable"`
+	EnableHaInterlinkInterface                         types.Bool                                                      `tfsdk:"enable_ha_interlink_interface"`
 	TunnelInterface                                    types.Bool                                                      `tfsdk:"tunnel_interface"`
 	PerTunnelQos                                       types.Bool                                                      `tfsdk:"per_tunnel_qos"`
 	PerTunnelQosVariable                               types.String                                                    `tfsdk:"per_tunnel_qos_variable"`
@@ -1092,6 +1093,17 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context, ver *ve
 		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"autoDetectBandwidth.optionType", "global")
 			body, _ = sjson.Set(body, path+"autoDetectBandwidth.value", data.AutoDetectBandwidth.ValueBool())
+		}
+	}
+	if data.EnableHaInterlinkInterface.IsNull() {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
+			body, _ = sjson.Set(body, path+"enableHAInterlinkInterface.optionType", "default")
+			body, _ = sjson.Set(body, path+"enableHAInterlinkInterface.value", false)
+		}
+	} else {
+		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
+			body, _ = sjson.Set(body, path+"enableHAInterlinkInterface.optionType", "global")
+			body, _ = sjson.Set(body, path+"enableHAInterlinkInterface.value", data.EnableHaInterlinkInterface.ValueBool())
 		}
 	}
 	if data.TunnelInterface.IsNull() {
@@ -3601,6 +3613,14 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.AutoDetectBandwidthVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.AutoDetectBandwidth = types.BoolValue(va.Bool())
+		}
+	}
+	data.EnableHaInterlinkInterface = types.BoolNull()
+
+	if t := res.Get(path + "enableHAInterlinkInterface.optionType"); t.Exists() {
+		va := res.Get(path + "enableHAInterlinkInterface.value")
+		if t.String() == "global" {
+			data.EnableHaInterlinkInterface = types.BoolValue(va.Bool())
 		}
 	}
 	data.TunnelInterface = types.BoolNull()

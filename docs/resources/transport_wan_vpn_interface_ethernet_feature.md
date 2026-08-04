@@ -41,6 +41,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
   bandwidth_upstream                             = 21474836
   bandwidth_downstream                           = 21474836
   auto_detect_bandwidth                          = false
+  enable_ha_interlink_interface                  = false
   tunnel_interface                               = true
   per_tunnel_qos                                 = true
   tunnel_qos_mode                                = "hub"
@@ -209,6 +210,8 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "example" {
 - `duplex_variable` (String) Variable name, Attribute conditional on `port_channel_interface` not equal to `true`
 - `enable_dhcpv6` (Boolean) Enable DHCPv6, Attribute conditional on `ipv6_address_type` equal to `dynamic` or `ipv6_address_type_variable` being set
 - `enable_enforced_propogation` (Boolean) Enable/Disable SGT Enforcement on an interface, Attribute conditional on `port_channel_member_interface` not equal to `true` and SD-WAN Manager version `20.18.1` or higher
+- `enable_ha_interlink_interface` (Boolean) HA Interlink interface on/off, Attribute conditional on `port_channel_member_interface` not equal to `true`
+  - Default value: `false`
 - `enable_sgt_propagation` (Boolean) Indicates that the interface is trustworthy for CTS, Attribute conditional on `port_channel_member_interface` not equal to `true` and SD-WAN Manager version `20.18.1` or higher
   - Default value: `false`
 - `enforced_security_group_tag` (Number) SGT value between 2 and 65519, Attribute conditional on `port_channel_member_interface` not equal to `true` and SD-WAN Manager version `20.18.1` or higher

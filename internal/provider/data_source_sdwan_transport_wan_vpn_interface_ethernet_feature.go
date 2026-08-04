@@ -398,6 +398,10 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"enable_ha_interlink_interface": schema.BoolAttribute{
+				MarkdownDescription: "HA Interlink interface on/off",
+				Computed:            true,
+			},
 			"tunnel_interface": schema.BoolAttribute{
 				MarkdownDescription: "Tunnel Interface on/off",
 				Computed:            true,
