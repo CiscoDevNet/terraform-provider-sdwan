@@ -132,6 +132,7 @@ resource "sdwan_system_omp_feature" "example" {
 - `graceful_restart_timer_variable` (String) Variable name
 - `graceful_restart_variable` (String) Variable name
 - `holdtime` (Number) Hold Time (seconds)
+  - Ranges: `0`-`0`, `3`-`65535`
   - Default value: `300`
 - `holdtime_variable` (String) Variable name
 - `ignore_region_path_length` (Boolean) Treat hierarchical and direct (secondary region) paths equally
