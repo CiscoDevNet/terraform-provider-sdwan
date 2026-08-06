@@ -89,6 +89,21 @@ resource "sdwan_service_lan_vpn_feature" "test" {
   vpn = 1
   feature_profile_id = sdwan_service_feature_profile.test.id
 }
+
+resource "sdwan_service_tracker_feature" "test" {
+  name                  = "TF_TEST_TRACKER"
+  description           = "Terraform test"
+  feature_profile_id    = sdwan_service_feature_profile.test.id
+  tracker_name          = "TRACKER_1"
+  endpoint_api_url      = "google.com"
+  endpoint_dns_name     = "google.com"
+  endpoint_ip           = "1.2.3.4"
+  interval              = 30
+  multiplier            = 3
+  threshold             = 300
+  endpoint_tracker_type = "static-route"
+  tracker_type          = "endpoint"
+}
 `
 
 // End of section. //template:end testPrerequisites
