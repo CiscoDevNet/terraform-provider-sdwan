@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.11.5 (unreleased)
+
+- Add `sdwan_service_dual_router_ha_feature` resource and data source
+
 ## 0.11.4
 
 - Add `sdwan_other_trustsec_feature` resource and data source (SD-WAN Manager 20.18+)
@@ -38,7 +42,6 @@ description: |-
 - Add `sdwan_network_hierarchy_cflowd` resource and data source
 - Add `sdwan_network_hierarchy_security_logging` resource and data source
 - Fix `sdwan_policy_group` device variables being sent with the wrong JSON type by resolving each variable's type from the `device/variables/schema` API (matching existing `sdwan_configuration_group` behavior)
-- Add `sdwan_service_dual_router_ha_feature` resource and data source
 
 ## 0.11.3
 
