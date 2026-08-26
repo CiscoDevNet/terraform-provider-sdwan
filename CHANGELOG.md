@@ -1,6 +1,7 @@
 ## 0.11.5 (unreleased)
 
 - Add `sdwan_service_dual_router_ha_feature` resource and data source
+- Fix `sdwan_network_hierarchy_node` rejecting a `group` nested under a `region` parent with `Parent group '<name>' not found in network hierarchy`. A `region` can now parent a `group` (as well as a `site`); it still cannot parent another `region`.
 
 ## 0.11.4
 

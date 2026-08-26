@@ -72,11 +72,12 @@ func (data NetworkHierarchyNode) resolveParentGroupToId(hierarchyRes gjson.Resul
 		nodeName := value.Get("name").String()
 		nodeLabel := value.Get("data.label").String()
 
-		var isValidParent bool
-		if childType == "site" {
-			isValidParent = nodeLabel != "SITE"
-		} else {
-			isValidParent = nodeLabel != "REGION" && nodeLabel != "SITE"
+		// A SITE can never be a parent of anything. A REGION can parent a group
+		// or a site, but not another region - a region cannot itself be nested
+		// under a region, only under a group or Global (matches the Manager GUI).
+		isValidParent := nodeLabel != "SITE"
+		if childType == "region" {
+			isValidParent = isValidParent && nodeLabel != "REGION"
 		}
 
 		if nodeName == parentGroupName && isValidParent {
