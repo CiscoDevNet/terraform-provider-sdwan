@@ -10,6 +10,8 @@ description: |-
 ## 0.11.5 (unreleased)
 
 - Add `sdwan_service_dual_router_ha_feature` resource and data source
+- Fix `sdwan_network_hierarchy_node` rejecting a `group` nested under a `region` parent with `Parent group '<name>' not found in network hierarchy`. A `region` can now parent a `group` (as well as a `site`); it still cannot parent another `region`.
+- Fix `sdwan_network_hierarchy_node`'s `address` attribute crashing with `Received unknown value, however the target type cannot handle unknown values` when set from a `for_each`-derived expression (e.g. `address = try(each.value.address, null)`). No change to the `address = { street = ..., ... }` syntax.
 
 ## 0.11.4
 
