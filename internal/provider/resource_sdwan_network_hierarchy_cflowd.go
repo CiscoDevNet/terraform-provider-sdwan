@@ -74,29 +74,29 @@ func (r *NetworkHierarchyCflowdResource) Schema(ctx context.Context, req resourc
 				},
 			},
 			"flow_active_timeout": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Active flow timeout in seconds").AddIntegerRangeDescription(30, 3600).AddDefaultValueDescription("600").String,
-				Optional:            true,
+				MarkdownDescription: helpers.NewAttributeDescription("Active flow timeout in seconds").AddIntegerRangeDescription(30, 3600).String,
+				Required:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(30, 3600),
 				},
 			},
 			"flow_inactive_timeout": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Inactive flow timeout in seconds").AddIntegerRangeDescription(1, 3600).AddDefaultValueDescription("60").String,
-				Optional:            true,
+				MarkdownDescription: helpers.NewAttributeDescription("Inactive flow timeout in seconds").AddIntegerRangeDescription(1, 3600).String,
+				Required:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 3600),
 				},
 			},
 			"flow_refresh_time": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Flow refresh time in seconds").AddIntegerRangeDescription(60, 86400).AddDefaultValueDescription("600").String,
-				Optional:            true,
+				MarkdownDescription: helpers.NewAttributeDescription("Flow refresh time in seconds").AddIntegerRangeDescription(60, 86400).String,
+				Required:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(60, 86400),
 				},
 			},
 			"flow_sampling_interval": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Flow sampling interval").AddIntegerRangeDescription(1, 65536).AddDefaultValueDescription("1").String,
-				Optional:            true,
+				MarkdownDescription: helpers.NewAttributeDescription("Flow sampling interval").AddIntegerRangeDescription(1, 65536).String,
+				Required:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65536),
 				},
@@ -106,8 +106,8 @@ func (r *NetworkHierarchyCflowdResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"protocol": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("FNF Protocol").AddStringEnumDescription("ipv4", "ipv6", "both").AddDefaultValueDescription("ipv4").String,
-				Optional:            true,
+				MarkdownDescription: helpers.NewAttributeDescription("FNF Protocol").AddStringEnumDescription("ipv4", "ipv6", "both").String,
+				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ipv4", "ipv6", "both"),
 				},
