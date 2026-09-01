@@ -1,11 +1,13 @@
 ---
 subcategory: "Guides"
-page_title: "Updating Templates and Policies"
+page_title: "Updating Classic Templates and Policies"
 description: |-
-    Updating Templates and Policies
+    Updating Classic Templates and Policies
 ---
 
-# Updating Templates and Policies
+# Updating Classic Templates and Policies
+
+This guide applies to the **classic** device/feature template and classic policy resources described in [Getting Started - Classic Templates](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/getting_started). Configuration Groups and Policy Groups (UX 2.0) use a different mechanism - see [Tracking Changes](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/configuration_groups#tracking-changes) in the Configuration and Policy Groups guide instead.
 
 Similary to the UI workflow, once device templates are attached to a device, updates to templates or policies require the device template to be re-attached to the device.
 

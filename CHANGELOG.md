@@ -1,5 +1,6 @@
 ## 0.11.5 (unreleased)
 
+- Update provider documentation: refresh tested platform versions to 20.12/20.15/20.18, restructure guides into "Getting Started - Configuration and Policy Groups" (new, recommended) and "Getting Started - Classic Templates"
 - Add `sdwan_service_dual_router_ha_feature` resource and data source
 - Bump `sdwan_transport_cellular_profile_feature` schema to `20.18.0`
 - Bump `sdwan_transport_routing_bgp_feature` schema to `20.18.0`

@@ -1,11 +1,13 @@
 ---
 subcategory: "Guides"
-page_title: "Getting Started"
+page_title: "Getting Started - Classic Templates"
 description: |-
-    Getting Started
+    Getting Started - Classic Templates
 ---
 
-# Getting Started
+# Getting Started - Classic Templates
+
+This guide covers the **classic** device/feature template model (pre-20.12). If you are starting a new deployment on SD-WAN Manager 20.15 or 20.18, use [Getting Started - Configuration and Policy Groups](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/configuration_groups) instead - classic templates remain supported for existing deployments but are not the recommended model for new ones.
 
 This example demonstrates how the provider can be used to attach an existing device template to a device. The configuration for the first part can be found [here](https://github.com/CiscoDevNet/terraform-provider-sdwan/tree/main/examples/basic/getting_started). The configuration for the second part can be found [here](https://github.com/CiscoDevNet/terraform-provider-sdwan/tree/main/examples/basic/getting_started_part_2).
 
@@ -226,3 +228,5 @@ Running `terraform apply` will now create the templates and attach the device te
 ## Update Deployed Feature Templates
 
 After deploying templates we can update them and a subsequent `terraform apply` will then update the templates and redeploy them accordingly. We can update the `console_baud_rate` of the previously created and deployed system feature template and run `terraform apply` again to see how this not only updates the feature template but also triggers an update of the device template and its attachment.
+
+For details on how template/policy version tracking and re-attachment locking work when updating multiple resources at once, see [Updating Classic Templates and Policies](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/updating_templates).
