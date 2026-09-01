@@ -28,7 +28,6 @@ The following guides with examples exist to demonstrate the use of the provider:
 
 - [Getting Started - Configuration and Policy Groups](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/configuration_groups) - the recommended starting point for new deployments (UX 2.0)
 - [Getting Started - Classic Templates](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/getting_started) - device/feature templates and classic policies (pre-20.12)
-- [Updating Classic Templates and Policies](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/updating_templates)
 
 ## Example Usage
 
