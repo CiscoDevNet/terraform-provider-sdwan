@@ -248,6 +248,13 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.Value}}{{if eq .Type "String"}}"{{end}})
 			}
 			{{- else if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .TfOnly)}}
+			{{- if .NoOptionType}}
+			if !item.{{toGoName .TfName}}.IsNull() {
+				if true{{buildConditionalLogic .ConditionalAttribute "item"}} {
+				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", item.{{toGoName .TfName}}.Value{{.Type}}())
+				}
+			}
+			{{- else}}
 			{{if .Variable}}
 			if !item.{{toGoName .TfName}}Variable.IsNull() {
 				if true{{buildConditionalLogic .ConditionalAttribute "item"}} {
@@ -290,6 +297,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 				{{- end}}
 				}
 			}
+			{{- end}}
 			{{- else if isNestedListSet .}}
 				if true{{buildConditionalLogic .ConditionalAttribute "item"}} {
 				{{if or .AlwaysInclude (and (not .MinList) (not .ExcludeNull))}}itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{}){{end}}
@@ -302,6 +310,13 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 					itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.Value}}{{if eq .Type "String"}}"{{end}})
 					}
 					{{- else if or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)}}
+					{{- if .NoOptionType}}
+					if !childItem.{{toGoName .TfName}}.IsNull() {
+						if true{{buildConditionalLogic .ConditionalAttribute "childItem"}} {
+						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", childItem.{{toGoName .TfName}}.Value{{.Type}}())
+						}
+					}
+					{{- else}}
 					{{if .Variable}}
 					if !childItem.{{toGoName .TfName}}Variable.IsNull() {
 						if true{{buildConditionalLogic .ConditionalAttribute "childItem"}} {
@@ -344,6 +359,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 						{{- end}}
 						}
 					}
+					{{- end}}
 					{{- else if isNestedListSet .}}
 					if true{{buildConditionalLogic .ConditionalAttribute "itemChildBody"}} {
 						{{if or .AlwaysInclude (and (not .MinList) (not .ExcludeNull))}}itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{}){{end}}
@@ -498,6 +514,11 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 			item.{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
 			{{- end}}
 			{{ if .Variable}}item.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
+			{{- if .NoOptionType}}
+			if va := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); va.Exists() {
+				item.{{toGoName .TfName}} = types.{{.Type}}Value(va.{{getGjsonType .Type}}())
+			}
+			{{- else}}
 			if t := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType"); t.Exists() {
 				va := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 				{{if .Variable}}if t.String() == "variable" {
@@ -519,6 +540,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 				{{- end}}
 				{{- end}}
 			}
+			{{- end}}
 			{{- else if isNestedListSet .}}
 			{{- $clist := (toGoName .TfName)}}
 			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cValue.Exists() && len(cValue.Array()) > 0 {
@@ -536,6 +558,11 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 					cItem.{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
 					{{- end}}
 					{{ if .Variable}}cItem.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
+					{{- if .NoOptionType}}
+					if va := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); va.Exists() {
+						cItem.{{toGoName .TfName}} = types.{{.Type}}Value(va.{{getGjsonType .Type}}())
+					}
+					{{- else}}
 					if t := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType"); t.Exists() {
 						va := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 						{{if .Variable}}if t.String() == "variable" {
@@ -557,6 +584,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 						{{- end}}
 						{{- end}}
 					}
+					{{- end}}
 					{{- else if isNestedListSet .}}
 					{{- $cclist := (toGoName .TfName)}}
 					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); ccValue.Exists() && len(ccValue.Array()) > 0{

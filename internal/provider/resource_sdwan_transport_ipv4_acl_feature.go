@@ -158,7 +158,7 @@ func (r *TransportIPv4ACLProfileParcelResource) Schema(ctx context.Context, req 
 										MarkdownDescription: helpers.NewAttributeDescription("Source Data IP Prefix").String,
 										Optional:            true,
 										Validators: []validator.String{
-											stringvalidator.RegexMatches(regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])`), ""),
+											stringvalidator.RegexMatches(regexp.MustCompile(`^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])$`), ""),
 										},
 									},
 									"source_data_prefix_variable": schema.StringAttribute{
@@ -188,7 +188,7 @@ func (r *TransportIPv4ACLProfileParcelResource) Schema(ctx context.Context, req 
 										MarkdownDescription: helpers.NewAttributeDescription("Destination Data IP Prefix").String,
 										Optional:            true,
 										Validators: []validator.String{
-											stringvalidator.RegexMatches(regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])`), ""),
+											stringvalidator.RegexMatches(regexp.MustCompile(`^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])$`), ""),
 										},
 									},
 									"destination_data_prefix_variable": schema.StringAttribute{

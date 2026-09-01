@@ -1,3 +1,34 @@
+## 0.11.5 (unreleased)
+
+- Add `sdwan_service_dual_router_ha_feature` resource and data source
+- Bump `sdwan_transport_cellular_profile_feature` schema to `20.18.0`
+- Bump `sdwan_transport_routing_bgp_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_interface_ethernet_feature` schema to `20.18.0`
+- Bump `sdwan_transport_management_vpn_feature` schema to `20.18.0`
+- Bump `sdwan_transport_routing_ospf_feature` schema to `20.18.0`
+- Bump `sdwan_transport_routing_ospfv3_ipv4_feature` schema to `20.18.0`
+- Bump `sdwan_transport_routing_ospfv3_ipv6_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_feature` schema to `20.18.0`
+- Bump `sdwan_transport_route_policy_feature` schema to `20.18.0`
+- Bump `sdwan_transport_cellular_controller_feature` schema to `20.18.0`
+- Bump `sdwan_transport_gps_feature` schema to `20.18.0`
+- Bump `sdwan_transport_ipv4_acl_feature` schema to `20.18.0`
+- Bump `sdwan_transport_ipv6_acl_feature` schema to `20.18.0`
+- Bump `sdwan_transport_ipv6_tracker_group_feature` schema to `20.18.0`
+- Bump `sdwan_transport_ipv6_tracker_feature` schema to `20.18.0`
+- Bump `sdwan_transport_management_vpn_interface_ethernet_feature` schema to `20.18.0`
+- Bump `sdwan_transport_t1_e1_controller_feature` schema to `20.18.0`
+- Bump `sdwan_transport_tracker_group_feature` schema to `20.18.0`
+- Bump `sdwan_transport_tracker_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_interface_cellular_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_interface_gre_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_interface_ipsec_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_interface_t1_e1_serial_feature` schema to `20.18.0`
+- Add `tunnel_interface_color_description` and `tunnel_interface_full_port_hop` attributes to `sdwan_transport_wan_vpn_interface_cellular_feature` resource and data source (SD-WAN Manager 20.18+)
+- Add `tunnel_interface_color_description` and `tunnel_interface_full_port_hop` attributes to `sdwan_transport_wan_vpn_interface_t1_e1_serial_feature` resource and data source (SD-WAN Manager 20.18+)
+- Deprecate `tunnel_interface_port_hop` in `sdwan_transport_wan_vpn_interface_cellular_feature`: deprecated in favor of `tunnel_interface_full_port_hop` on Manager 20.18+
+- Deprecate `tunnel_interface_port_hop` in `sdwan_transport_wan_vpn_interface_t1_e1_serial_feature`: deprecated in favor of `tunnel_interface_full_port_hop` on Manager 20.18+
+
 ## 0.11.4
 
 - Add `sdwan_other_trustsec_feature` resource and data source (SD-WAN Manager 20.18+)

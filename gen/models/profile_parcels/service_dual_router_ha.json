@@ -1,0 +1,127 @@
+{
+  "request": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/service/dual-router-ha/common/request_schema.json",
+    "title": "Dual Router HA Feature Schema",
+    "description": "Dual Router HA profile feature schema for POST and PUT request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "description": { "type": "string" },
+      "data": {
+        "type": "object",
+        "properties": {
+          "redundancyGroups": {
+            "description": "Service VPN Id List",
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 2,
+            "items": {
+              "type": "object",
+              "properties": {
+                "groupId": { "maximum": 2, "minimum": 1, "type": "integer" },
+                "vpnIds": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "refId": {
+                        "properties": {
+                          "optionType": {
+                            "type": "string",
+                            "enum": ["global"]
+                          },
+                          "value": {
+                            "type": "string",
+                            "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                          }
+                        },
+                        "required": ["optionType", "value"],
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": ["refId"],
+                    "additionalProperties": false
+                  }
+                },
+                "tagName": {
+                  "type": "string",
+                  "pattern": "^[^&<>! \",]+$",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["groupId", "vpnIds"],
+              "additionalProperties": false
+            }
+          },
+          "enableOptimizePaths": {
+            "description": "The operation mode is configured for each router in 2 configuration groups",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": { "type": "string", "enum": ["global"] },
+                  "value": { "type": "boolean" }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": { "type": "string", "enum": ["default"] },
+                  "value": { "type": "boolean", "enum": [true] }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "required": ["redundancyGroups", "enableOptimizePaths"],
+        "additionalProperties": false
+      },
+      "metadata": {
+        "supportedDeviceTypes": [],
+        "minVManageVersion": "20.15.1"
+      },
+      "documentation": {
+        "description": "This is the documentation for POST request schema for DualRouterHA profile feature",
+        "examples": [
+          {
+            "name": "Cedge_Dual_Router_HA_feature_Config",
+            "description": "Cedge Dual Router HA feature Config",
+            "data": {
+              "enablePreempt": { "optionType": "global", "value": true },
+              "redundancyGroups": [
+                {
+                  "groupId": "1",
+                  "vpnIds": [
+                    {
+                      "refId": {
+                        "optionType": "global",
+                        "value": "8ee63b83-ed05-4a67-8620-314f33bd1329"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "enableOptimizePaths": { "optionType": "global", "value": false }
+            }
+          }
+        ]
+      }
+    },
+    "required": ["name", "data"],
+    "not": { "required": ["metadata", "documentation"] },
+    "additionalProperties": false
+  }
+}
