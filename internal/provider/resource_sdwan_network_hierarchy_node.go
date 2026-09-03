@@ -244,7 +244,7 @@ func (r *NetworkHierarchyNodeResource) Create(ctx context.Context, req resource.
 	}
 
 	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
-	if ver.GreaterThanOrEqual(minVersionNetworkHierarchyNodeGeo) && plan.Address != nil {
+	if ver.GreaterThanOrEqual(minVersionNetworkHierarchyNodeGeo) && !plan.Address.IsNull() {
 		resp.Diagnostics.AddError(
 			"Invalid Configuration",
 			"The `address` attribute is not supported on SD-WAN Manager 20.18 and later. Use `location`, `latitude` and `longitude` instead.",
@@ -371,7 +371,7 @@ func (r *NetworkHierarchyNodeResource) Update(ctx context.Context, req resource.
 		}
 
 		ver := version.Must(version.NewVersion(r.client.ManagerVersion))
-		if ver.GreaterThanOrEqual(minVersionNetworkHierarchyNodeGeo) && plan.Address != nil {
+		if ver.GreaterThanOrEqual(minVersionNetworkHierarchyNodeGeo) && !plan.Address.IsNull() {
 			resp.Diagnostics.AddError(
 				"Invalid Configuration",
 				"The `address` attribute is not supported on SD-WAN Manager 20.18 and later. Use `location`, `latitude` and `longitude` instead.",

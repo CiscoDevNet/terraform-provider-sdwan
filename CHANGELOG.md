@@ -29,6 +29,18 @@
 - Add `tunnel_interface_color_description` and `tunnel_interface_full_port_hop` attributes to `sdwan_transport_wan_vpn_interface_t1_e1_serial_feature` resource and data source (SD-WAN Manager 20.18+)
 - Deprecate `tunnel_interface_port_hop` in `sdwan_transport_wan_vpn_interface_cellular_feature`: deprecated in favor of `tunnel_interface_full_port_hop` on Manager 20.18+
 - Deprecate `tunnel_interface_port_hop` in `sdwan_transport_wan_vpn_interface_t1_e1_serial_feature`: deprecated in favor of `tunnel_interface_full_port_hop` on Manager 20.18+
+- Add network hierarchy UUID support for topology resources (SD-WAN Manager 20.18+):
+  - `sdwan_topology_custom_control_feature`: Add `target_inbound_hierarchy_uuids`, `target_outbound_hierarchy_uuids`, and `hierarchy_uuids` (in match entries) attributes
+  - `sdwan_topology_hub_spoke_feature`: Add `selected_hierarchy_hubs`, `spoke_hierarchy_uuids`, and `hub_hierarchy_uuids` attributes
+  - `sdwan_topology_mesh_feature`: Add `hierarchy_uuids` attribute
+  - Site-name-based targeting continues to be supported on Manager 20.18+ alongside the new hierarchy-UUID attributes; site-based match entries have display issue in the GUI.
+  - Note: "By Tag Rules" is not yet implemented and will be included in an upcoming release
+- Fix `sdwan_network_hierarchy_node` rejecting a `group` nested under a `region` parent with `Parent group '<name>' not found in network hierarchy`. A `region` can now parent a `group` (as well as a `site`); it still cannot parent another `region`.
+- Fix `sdwan_network_hierarchy_node`'s `address` attribute crashing with `Received unknown value, however the target type cannot handle unknown values` when set from a `for_each`-derived expression (e.g. `address = try(each.value.address, null)`). No change to the `address = { street = ..., ... }` syntax.
+- Mark `flow_active_timeout`, `flow_inactive_timeout`, `flow_refresh_time`, `flow_sampling_interval`, and `protocol` as `Required` on `sdwan_network_hierarchy_cflowd` to match SD-WAN Manager's API schema, which rejects a request omitting any of them
+- Fix `sdwan_network_hierarchy_cflowd` crashing with `Received unknown value, however the target type cannot handle unknown values` when `collectors` is set from a `for_each`-derived expression
+- Fix `sdwan_topology_group` and `sdwan_activate_topology_group` producing an unwanted re-activation right after `terraform import`, caused by the internal `feature_versions` bookkeeping attribute
+- Fix `sdwan_activate_topology_group` documentation subcategory: now grouped under "Topology Groups" instead of the generic resources section
 
 ## 0.11.4
 
