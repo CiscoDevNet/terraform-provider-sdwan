@@ -24,6 +24,7 @@ import (
 	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -33,20 +34,22 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type TopologyCustomControl struct {
-	Id                    types.String                                 `tfsdk:"id"`
-	Version               types.Int64                                  `tfsdk:"version"`
-	Name                  types.String                                 `tfsdk:"name"`
-	Description           types.String                                 `tfsdk:"description"`
-	FeatureProfileId      types.String                                 `tfsdk:"feature_profile_id"`
-	DefaultAction         types.String                                 `tfsdk:"default_action"`
-	TargetVpn             types.Set                                    `tfsdk:"target_vpn"`
-	TargetRole            types.String                                 `tfsdk:"target_role"`
-	TargetLevel           types.String                                 `tfsdk:"target_level"`
-	TargetInboundSites    types.Set                                    `tfsdk:"target_inbound_sites"`
-	TargetOutboundSites   types.Set                                    `tfsdk:"target_outbound_sites"`
-	TargetInboundRegions  []TopologyCustomControlTargetInboundRegions  `tfsdk:"target_inbound_regions"`
-	TargetOutboundRegions []TopologyCustomControlTargetOutboundRegions `tfsdk:"target_outbound_regions"`
-	Sequences             []TopologyCustomControlSequences             `tfsdk:"sequences"`
+	Id                           types.String                                 `tfsdk:"id"`
+	Version                      types.Int64                                  `tfsdk:"version"`
+	Name                         types.String                                 `tfsdk:"name"`
+	Description                  types.String                                 `tfsdk:"description"`
+	FeatureProfileId             types.String                                 `tfsdk:"feature_profile_id"`
+	DefaultAction                types.String                                 `tfsdk:"default_action"`
+	TargetVpn                    types.Set                                    `tfsdk:"target_vpn"`
+	TargetRole                   types.String                                 `tfsdk:"target_role"`
+	TargetLevel                  types.String                                 `tfsdk:"target_level"`
+	TargetInboundSites           types.Set                                    `tfsdk:"target_inbound_sites"`
+	TargetInboundHierarchyUuids  types.Set                                    `tfsdk:"target_inbound_hierarchy_uuids"`
+	TargetOutboundSites          types.Set                                    `tfsdk:"target_outbound_sites"`
+	TargetOutboundHierarchyUuids types.Set                                    `tfsdk:"target_outbound_hierarchy_uuids"`
+	TargetInboundRegions         []TopologyCustomControlTargetInboundRegions  `tfsdk:"target_inbound_regions"`
+	TargetOutboundRegions        []TopologyCustomControlTargetOutboundRegions `tfsdk:"target_outbound_regions"`
+	Sequences                    []TopologyCustomControlSequences             `tfsdk:"sequences"`
 }
 
 type TopologyCustomControlTargetInboundRegions struct {
@@ -78,6 +81,7 @@ type TopologyCustomControlSequencesMatchEntries struct {
 	Originator              types.String                                             `tfsdk:"originator"`
 	Preference              types.Int64                                              `tfsdk:"preference"`
 	Site                    types.Set                                                `tfsdk:"site"`
+	HierarchyUuids          types.Set                                                `tfsdk:"hierarchy_uuids"`
 	MatchRegions            []TopologyCustomControlSequencesMatchEntriesMatchRegions `tfsdk:"match_regions"`
 	Role                    types.String                                             `tfsdk:"role"`
 	PathType                types.String                                             `tfsdk:"path_type"`
@@ -144,7 +148,7 @@ func (data TopologyCustomControl) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data TopologyCustomControl) toBody(ctx context.Context) string {
+func (data TopologyCustomControl) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -176,29 +180,55 @@ func (data TopologyCustomControl) toBody(ctx context.Context) string {
 		}
 	}
 	if data.TargetInboundSites.IsNull() {
-		if true && data.TargetLevel.ValueString() == "SITE" {
+		if true && data.TargetLevel.ValueString() == "SITE" && data.TargetInboundHierarchyUuids.IsNull() && data.TargetOutboundHierarchyUuids.IsNull() {
 			body, _ = sjson.Set(body, path+"target.inboundSites.optionType", "global")
 			body, _ = sjson.Set(body, path+"target.inboundSites.value", []interface{}{})
 		}
 	} else {
-		if true && data.TargetLevel.ValueString() == "SITE" {
+		if true && data.TargetLevel.ValueString() == "SITE" && data.TargetInboundHierarchyUuids.IsNull() && data.TargetOutboundHierarchyUuids.IsNull() {
 			body, _ = sjson.Set(body, path+"target.inboundSites.optionType", "global")
 			var values []string
 			data.TargetInboundSites.ElementsAs(ctx, &values, false)
 			body, _ = sjson.Set(body, path+"target.inboundSites.value", values)
 		}
 	}
+	if data.TargetInboundHierarchyUuids.IsNull() {
+		if true && data.TargetLevel.ValueString() == "SITE" && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) && data.TargetInboundSites.IsNull() && data.TargetOutboundSites.IsNull() {
+			body, _ = sjson.Set(body, path+"target.inboundHierarchyUuid.optionType", "global")
+			body, _ = sjson.Set(body, path+"target.inboundHierarchyUuid.value", []interface{}{})
+		}
+	} else {
+		if true && data.TargetLevel.ValueString() == "SITE" && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) && data.TargetInboundSites.IsNull() && data.TargetOutboundSites.IsNull() {
+			body, _ = sjson.Set(body, path+"target.inboundHierarchyUuid.optionType", "global")
+			var values []string
+			data.TargetInboundHierarchyUuids.ElementsAs(ctx, &values, false)
+			body, _ = sjson.Set(body, path+"target.inboundHierarchyUuid.value", values)
+		}
+	}
 	if data.TargetOutboundSites.IsNull() {
-		if true && data.TargetLevel.ValueString() == "SITE" {
+		if true && data.TargetLevel.ValueString() == "SITE" && data.TargetOutboundHierarchyUuids.IsNull() && data.TargetInboundHierarchyUuids.IsNull() {
 			body, _ = sjson.Set(body, path+"target.outboundSites.optionType", "global")
 			body, _ = sjson.Set(body, path+"target.outboundSites.value", []interface{}{})
 		}
 	} else {
-		if true && data.TargetLevel.ValueString() == "SITE" {
+		if true && data.TargetLevel.ValueString() == "SITE" && data.TargetOutboundHierarchyUuids.IsNull() && data.TargetInboundHierarchyUuids.IsNull() {
 			body, _ = sjson.Set(body, path+"target.outboundSites.optionType", "global")
 			var values []string
 			data.TargetOutboundSites.ElementsAs(ctx, &values, false)
 			body, _ = sjson.Set(body, path+"target.outboundSites.value", values)
+		}
+	}
+	if data.TargetOutboundHierarchyUuids.IsNull() {
+		if true && data.TargetLevel.ValueString() == "SITE" && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) && data.TargetOutboundSites.IsNull() && data.TargetInboundSites.IsNull() {
+			body, _ = sjson.Set(body, path+"target.outboundHierarchyUuid.optionType", "global")
+			body, _ = sjson.Set(body, path+"target.outboundHierarchyUuid.value", []interface{}{})
+		}
+	} else {
+		if true && data.TargetLevel.ValueString() == "SITE" && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) && data.TargetOutboundSites.IsNull() && data.TargetInboundSites.IsNull() {
+			body, _ = sjson.Set(body, path+"target.outboundHierarchyUuid.optionType", "global")
+			var values []string
+			data.TargetOutboundHierarchyUuids.ElementsAs(ctx, &values, false)
+			body, _ = sjson.Set(body, path+"target.outboundHierarchyUuid.value", values)
 		}
 	}
 	if true && (data.TargetLevel.ValueString() == "REGION" || data.TargetLevel.ValueString() == "SUB_REGION") {
@@ -329,6 +359,14 @@ func (data TopologyCustomControl) toBody(ctx context.Context) string {
 							var values []string
 							childItem.Site.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "site.value", values)
+						}
+					}
+					if !childItem.HierarchyUuids.IsNull() {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "hierarchyUuid.optionType", "global")
+							var values []string
+							childItem.HierarchyUuids.ElementsAs(ctx, &values, false)
+							itemChildBody, _ = sjson.Set(itemChildBody, "hierarchyUuid.value", values)
 						}
 					}
 					if true {
@@ -644,6 +682,16 @@ func (data *TopologyCustomControl) fromBody(ctx context.Context, res gjson.Resul
 			}
 		}
 	}
+	data.TargetInboundHierarchyUuids = types.SetNull(types.StringType)
+
+	if t := res.Get(path + "target.inboundHierarchyUuid.optionType"); t.Exists() {
+		va := res.Get(path + "target.inboundHierarchyUuid.value")
+		if t.String() == "global" {
+			if len(va.Array()) > 0 {
+				data.TargetInboundHierarchyUuids = helpers.GetStringSet(va.Array())
+			}
+		}
+	}
 	data.TargetOutboundSites = types.SetNull(types.StringType)
 
 	if t := res.Get(path + "target.outboundSites.optionType"); t.Exists() {
@@ -651,6 +699,16 @@ func (data *TopologyCustomControl) fromBody(ctx context.Context, res gjson.Resul
 		if t.String() == "global" {
 			if len(va.Array()) > 0 {
 				data.TargetOutboundSites = helpers.GetStringSet(va.Array())
+			}
+		}
+	}
+	data.TargetOutboundHierarchyUuids = types.SetNull(types.StringType)
+
+	if t := res.Get(path + "target.outboundHierarchyUuid.optionType"); t.Exists() {
+		va := res.Get(path + "target.outboundHierarchyUuid.value")
+		if t.String() == "global" {
+			if len(va.Array()) > 0 {
+				data.TargetOutboundHierarchyUuids = helpers.GetStringSet(va.Array())
 			}
 		}
 	}
@@ -885,6 +943,14 @@ func (data *TopologyCustomControl) fromBody(ctx context.Context, res gjson.Resul
 						va := cv.Get("site.value")
 						if t.String() == "global" {
 							cItem.Site = helpers.GetStringSet(va.Array())
+						}
+					}
+					cItem.HierarchyUuids = types.SetNull(types.StringType)
+
+					if t := cv.Get("hierarchyUuid.optionType"); t.Exists() {
+						va := cv.Get("hierarchyUuid.value")
+						if t.String() == "global" {
+							cItem.HierarchyUuids = helpers.GetStringSet(va.Array())
 						}
 					}
 					if ccValue := cv.Get("regions"); ccValue.Exists() && len(ccValue.Array()) > 0 {
@@ -1279,6 +1345,11 @@ func (data *TopologyCustomControl) fromBody(ctx context.Context, res gjson.Resul
 								}
 								if keyMatchC {
 									if helpers.GetStringFromSet(oldCItem.Site).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].Site).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.HierarchyUuids).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].HierarchyUuids).ValueString() {
 										keyMatchC = false
 									}
 								}

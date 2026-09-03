@@ -16,13 +16,13 @@ This resource can manage a Topology Custom Control Feature.
 
 ```terraform
 resource "sdwan_topology_custom_control_feature" "example" {
-  name                  = "Example"
-  description           = "My Example"
-  feature_profile_id    = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  default_action        = "reject"
-  target_level          = "SITE"
-  target_inbound_sites  = ["SITE_100"]
-  target_outbound_sites = ["SITE_200"]
+  name                            = "Example"
+  description                     = "My Example"
+  feature_profile_id              = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  default_action                  = "reject"
+  target_level                    = "SITE"
+  target_inbound_hierarchy_uuids  = ["acb2ea53-4a95-4970-a1ab-9bac15edb961"]
+  target_outbound_hierarchy_uuids = ["acb2ea53-4a95-4970-a1ab-9bac15edb961"]
   sequences = [
     {
       id          = 1
@@ -35,6 +35,7 @@ resource "sdwan_topology_custom_control_feature" "example" {
           omp_tag            = 100
           origin             = "connected"
           originator         = "1.2.3.4"
+          hierarchy_uuids    = ["c446d770-2ac0-4e2c-9a64-345d562a4ac7"]
           tloc_ip            = "1.2.3.4"
           tloc_color         = "bronze"
           tloc_encapsulation = "ipsec"
@@ -70,10 +71,12 @@ resource "sdwan_topology_custom_control_feature" "example" {
 
 - `description` (String) The description of the Feature
 - `sequences` (Attributes List) Sequence list (see [below for nested schema](#nestedatt--sequences))
+- `target_inbound_hierarchy_uuids` (Set of String) Inbound network hierarchy UUIDs, Attribute conditional on `target_level` equal to `SITE` and SD-WAN Manager version `20.18.1` or higher and `target_inbound_sites` not being set and `target_outbound_sites` not being set
 - `target_inbound_regions` (Attributes List) , Attribute conditional on `target_level` equal to `REGION` or `target_level` equal to `SUB_REGION` (see [below for nested schema](#nestedatt--target_inbound_regions))
-- `target_inbound_sites` (Set of String) , Attribute conditional on `target_level` equal to `SITE`
+- `target_inbound_sites` (Set of String) , Attribute conditional on `target_level` equal to `SITE` and `target_inbound_hierarchy_uuids` not being set and `target_outbound_hierarchy_uuids` not being set
+- `target_outbound_hierarchy_uuids` (Set of String) Outbound network hierarchy UUIDs, Attribute conditional on `target_level` equal to `SITE` and SD-WAN Manager version `20.18.1` or higher and `target_outbound_sites` not being set and `target_inbound_sites` not being set
 - `target_outbound_regions` (Attributes List) , Attribute conditional on `target_level` equal to `REGION` or `target_level` equal to `SUB_REGION` (see [below for nested schema](#nestedatt--target_outbound_regions))
-- `target_outbound_sites` (Set of String) , Attribute conditional on `target_level` equal to `SITE`
+- `target_outbound_sites` (Set of String) , Attribute conditional on `target_level` equal to `SITE` and `target_outbound_hierarchy_uuids` not being set and `target_inbound_hierarchy_uuids` not being set
 - `target_role` (String) - Choices: `edge-router`, `border-router`
 - `target_vpn` (Set of String)
 
@@ -162,6 +165,7 @@ Optional:
 - `expanded_community_list_id` (String) Expanded community list ID
 - `group_id` (Number) Group ID
   - Range: `0`-`4294967295`
+- `hierarchy_uuids` (Set of String) Network hierarchy UUIDs for matching, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
 - `ipv6_prefix_list_id` (String) IPv6 prefix list ID
 - `match_regions` (Attributes List) Match regions list (see [below for nested schema](#nestedatt--sequences--match_entries--match_regions))
 - `omp_tag` (Number) OMP tag

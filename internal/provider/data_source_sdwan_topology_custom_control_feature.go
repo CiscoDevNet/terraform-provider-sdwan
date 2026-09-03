@@ -100,8 +100,18 @@ func (d *TopologyCustomControlProfileParcelDataSource) Schema(ctx context.Contex
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
+			"target_inbound_hierarchy_uuids": schema.SetAttribute{
+				MarkdownDescription: "Inbound network hierarchy UUIDs",
+				ElementType:         types.StringType,
+				Computed:            true,
+			},
 			"target_outbound_sites": schema.SetAttribute{
 				MarkdownDescription: "",
+				ElementType:         types.StringType,
+				Computed:            true,
+			},
+			"target_outbound_hierarchy_uuids": schema.SetAttribute{
+				MarkdownDescription: "Outbound network hierarchy UUIDs",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
@@ -199,6 +209,11 @@ func (d *TopologyCustomControlProfileParcelDataSource) Schema(ctx context.Contex
 									},
 									"site": schema.SetAttribute{
 										MarkdownDescription: "Site list",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
+									"hierarchy_uuids": schema.SetAttribute{
+										MarkdownDescription: "Network hierarchy UUIDs for matching",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
