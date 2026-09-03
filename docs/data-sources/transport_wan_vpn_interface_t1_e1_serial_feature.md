@@ -112,10 +112,14 @@ data "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
 - `tunnel_interface_clear_network_broadcast` (Boolean) Accept and respond to network-prefix-directed broadcasts)
 - `tunnel_interface_clear_network_broadcast_variable` (String) Variable name
 - `tunnel_interface_color` (String) Set color for TLOC
+- `tunnel_interface_color_description` (String)
+- `tunnel_interface_color_description_variable` (String) Variable name
 - `tunnel_interface_color_variable` (String) Variable name
 - `tunnel_interface_encapsulations` (Attributes List) Encapsulation for TLOC (see [below for nested schema](#nestedatt--tunnel_interface_encapsulations))
 - `tunnel_interface_exclude_controller_group_list` (Set of Number) Exclude the following controller groups defined in this list
 - `tunnel_interface_exclude_controller_group_list_variable` (String) Variable name
+- `tunnel_interface_full_port_hop` (Boolean) Enable port hopping on the tunnel interface
+- `tunnel_interface_full_port_hop_variable` (String) Variable name
 - `tunnel_interface_groups` (Number) List of groups
 - `tunnel_interface_groups_variable` (String) Variable name
 - `tunnel_interface_hello_interval` (Number) Set time period of control hello packets <100..600000> milli seconds
@@ -130,7 +134,7 @@ data "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
 - `tunnel_interface_max_control_connections_variable` (String) Variable name
 - `tunnel_interface_nat_refresh_interval` (Number) Set time period of nat refresh packets <1...60> seconds
 - `tunnel_interface_nat_refresh_interval_variable` (String) Variable name
-- `tunnel_interface_port_hop` (Boolean) Disallow port hopping on the tunnel interface
+- `tunnel_interface_port_hop` (Boolean) The port hop functionality is deprecated for devices 17.18 and higher. Use the full-port-hop field instead.
 - `tunnel_interface_port_hop_variable` (String) Variable name
 - `tunnel_interface_restrict` (Boolean) Restrict this TLOC behavior
 - `tunnel_interface_restrict_variable` (String) Variable name

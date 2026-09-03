@@ -1,6 +1,39 @@
 ## 0.11.5 (unreleased)
 
 - Add `sdwan_service_dual_router_ha_feature` resource and data source
+- Bump `sdwan_transport_cellular_profile_feature` schema to `20.18.0`
+- Bump `sdwan_transport_routing_bgp_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_interface_ethernet_feature` schema to `20.18.0`
+- Bump `sdwan_transport_management_vpn_feature` schema to `20.18.0`
+- Bump `sdwan_transport_routing_ospf_feature` schema to `20.18.0`
+- Bump `sdwan_transport_routing_ospfv3_ipv4_feature` schema to `20.18.0`
+- Bump `sdwan_transport_routing_ospfv3_ipv6_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_feature` schema to `20.18.0`
+- Bump `sdwan_transport_route_policy_feature` schema to `20.18.0`
+- Bump `sdwan_transport_cellular_controller_feature` schema to `20.18.0`
+- Bump `sdwan_transport_gps_feature` schema to `20.18.0`
+- Bump `sdwan_transport_ipv4_acl_feature` schema to `20.18.0`
+- Bump `sdwan_transport_ipv6_acl_feature` schema to `20.18.0`
+- Bump `sdwan_transport_ipv6_tracker_group_feature` schema to `20.18.0`
+- Bump `sdwan_transport_ipv6_tracker_feature` schema to `20.18.0`
+- Bump `sdwan_transport_management_vpn_interface_ethernet_feature` schema to `20.18.0`
+- Bump `sdwan_transport_t1_e1_controller_feature` schema to `20.18.0`
+- Bump `sdwan_transport_tracker_group_feature` schema to `20.18.0`
+- Bump `sdwan_transport_tracker_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_interface_cellular_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_interface_gre_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_interface_ipsec_feature` schema to `20.18.0`
+- Bump `sdwan_transport_wan_vpn_interface_t1_e1_serial_feature` schema to `20.18.0`
+- Add `tunnel_interface_color_description` and `tunnel_interface_full_port_hop` attributes to `sdwan_transport_wan_vpn_interface_cellular_feature` resource and data source (SD-WAN Manager 20.18+)
+- Add `tunnel_interface_color_description` and `tunnel_interface_full_port_hop` attributes to `sdwan_transport_wan_vpn_interface_t1_e1_serial_feature` resource and data source (SD-WAN Manager 20.18+)
+- Deprecate `tunnel_interface_port_hop` in `sdwan_transport_wan_vpn_interface_cellular_feature`: deprecated in favor of `tunnel_interface_full_port_hop` on Manager 20.18+
+- Deprecate `tunnel_interface_port_hop` in `sdwan_transport_wan_vpn_interface_t1_e1_serial_feature`: deprecated in favor of `tunnel_interface_full_port_hop` on Manager 20.18+
+- Add network hierarchy UUID support for topology resources (SD-WAN Manager 20.18+):
+  - `sdwan_topology_custom_control_feature`: Add `target_inbound_hierarchy_uuids`, `target_outbound_hierarchy_uuids`, and `hierarchy_uuids` (in match entries) attributes
+  - `sdwan_topology_hub_spoke_feature`: Add `selected_hierarchy_hubs`, `spoke_hierarchy_uuids`, and `hub_hierarchy_uuids` attributes
+  - `sdwan_topology_mesh_feature`: Add `hierarchy_uuids` attribute
+  - Site-name-based targeting continues to be supported on Manager 20.18+ alongside the new hierarchy-UUID attributes; site-based match entries have display issue in the GUI.
+  - Note: "By Tag Rules" is not yet implemented and will be included in an upcoming release
 - Fix `sdwan_network_hierarchy_node` rejecting a `group` nested under a `region` parent with `Parent group '<name>' not found in network hierarchy`. A `region` can now parent a `group` (as well as a `site`); it still cannot parent another `region`.
 - Fix `sdwan_network_hierarchy_node`'s `address` attribute crashing with `Received unknown value, however the target type cannot handle unknown values` when set from a `for_each`-derived expression (e.g. `address = try(each.value.address, null)`). No change to the `address = { street = ..., ... }` syntax.
 - Mark `flow_active_timeout`, `flow_inactive_timeout`, `flow_refresh_time`, `flow_sampling_interval`, and `protocol` as `Required` on `sdwan_network_hierarchy_cflowd` to match SD-WAN Manager's API schema, which rejects a request omitting any of them

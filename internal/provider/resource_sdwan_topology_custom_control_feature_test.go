@@ -69,6 +69,13 @@ resource "sdwan_topology_feature_profile" "test" {
   name        = "TF_TEST"
   description = "Terraform test"
 }
+resource "sdwan_network_hierarchy_node" "network_hierarchy_node_site_test" {
+  parent_group    = "Global"
+  name         = "TF_TEST_SITE"
+  description  = "EMEA Region EMEA site update new"
+  type         = "site"
+  site_id      = 555
+}
 
 `
 
@@ -86,8 +93,18 @@ func testAccSdwanTopologyCustomControlProfileParcelConfig_all() string {
 	config += `	feature_profile_id = sdwan_topology_feature_profile.test.id` + "\n"
 	config += `	default_action = "reject"` + "\n"
 	config += `	target_level = "SITE"` + "\n"
-	config += `	target_inbound_sites = ["SITE_100"]` + "\n"
-	config += `	target_outbound_sites = ["SITE_200"]` + "\n"
+	if os.Getenv("SDWAN_2015") != "" {
+		config += `	target_inbound_sites = ["SITE_100"]` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	target_inbound_hierarchy_uuids = [sdwan_network_hierarchy_node.network_hierarchy_node_site_test.id]` + "\n"
+	}
+	if os.Getenv("SDWAN_2015") != "" {
+		config += `	target_outbound_sites = ["SITE_200"]` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	target_outbound_hierarchy_uuids = [sdwan_network_hierarchy_node.network_hierarchy_node_site_test.id]` + "\n"
+	}
 	config += `	sequences = [{` + "\n"
 	config += `	  id = 1` + "\n"
 	config += `	  name = "Rule1"` + "\n"
@@ -98,6 +115,12 @@ func testAccSdwanTopologyCustomControlProfileParcelConfig_all() string {
 	config += `		omp_tag = 100` + "\n"
 	config += `		origin = "connected"` + "\n"
 	config += `		originator = "1.2.3.4"` + "\n"
+	if os.Getenv("SDWAN_2015") != "" {
+		config += `		site = ["site_100"]` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `		hierarchy_uuids = [sdwan_network_hierarchy_node.network_hierarchy_node_site_test.id]` + "\n"
+	}
 	config += `		tloc_ip = "1.2.3.4"` + "\n"
 	config += `		tloc_color = "bronze"` + "\n"
 	config += `		tloc_encapsulation = "ipsec"` + "\n"
@@ -116,8 +139,8 @@ func testAccSdwanTopologyCustomControlProfileParcelConfig_all() string {
 // End of section. //template:end testAccConfigAll
 
 func TestAccSdwanTopologyCustomControlProfileParcelMultiSequence(t *testing.T) {
-	if os.Getenv("SDWAN_2015") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015")
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_custom_control_feature.test", "default_action", "reject"))
@@ -166,7 +189,14 @@ func testAccSdwanTopologyCustomControlProfileParcelConfig_multiSequence() string
 	config += `	feature_profile_id = sdwan_topology_feature_profile.test.id` + "\n"
 	config += `	default_action = "reject"` + "\n"
 	config += `	target_level = "SITE"` + "\n"
-	config += `	target_outbound_sites = ["SITE_100"]` + "\n"
+	if os.Getenv("SDWAN_2015") != "" {
+		config += `	target_inbound_sites = ["SITE_100"]` + "\n"
+		config += `	target_outbound_sites = ["SITE_100"]` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	target_inbound_hierarchy_uuids = [sdwan_network_hierarchy_node.network_hierarchy_node_site_test.id]` + "\n"
+		config += `	target_outbound_hierarchy_uuids = [sdwan_network_hierarchy_node.network_hierarchy_node_site_test.id]` + "\n"
+	}
 	config += `	sequences = [` + "\n"
 	config += `	  {` + "\n"
 	config += `	    id = 1` + "\n"

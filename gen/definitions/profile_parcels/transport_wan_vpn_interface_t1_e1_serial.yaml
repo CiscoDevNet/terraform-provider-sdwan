@@ -2,7 +2,7 @@
 name: Transport WAN VPN Interface T1 E1 Serial
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/serial
 minimum_version: 20.15.0
-test_tags: [SDWAN_2015]
+test_tags: [SDWAN_2015, SDWAN_2018]
 parcel_type: feature
 doc_category: Features - Transport
 attributes:
@@ -102,6 +102,26 @@ attributes:
     tf_name: tunnel_interface_port_hop
     data_path: [tunnel]
     example: true
+  - model_name: colorDescription
+    tf_name: tunnel_interface_color_description
+    data_path: [tunnel]
+    exclude_example: true
+    test_value: '"WAN Circuit 1"'
+    test_tags: [SDWAN_2018]
+    conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: "20.18.1"
+  - model_name: fullPortHop
+    tf_name: tunnel_interface_full_port_hop
+    data_path: [tunnel]
+    exclude_example: true
+    test_value: "false"
+    test_tags: [SDWAN_2018]
+    conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: "20.18.1"
   - model_name: lowBandwidthLink
     tf_name: tunnel_interface_low_bandwidth_link
     exclude_ignore: true
