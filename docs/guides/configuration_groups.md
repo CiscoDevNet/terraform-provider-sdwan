@@ -7,12 +7,13 @@ description: |-
 
 # Getting Started - Configuration and Policy Groups
 
-This is the recommended starting point for new deployments on SD-WAN Manager 20.15 or 20.18. The UX 2.0 model is built from two building blocks that share the same pattern - a feature profile, one or more features attached to it, and a group resource that ties feature profiles to devices for deployment:
+UX 2.0 replaces classic device and feature templates with an intent-based model, recommended for new deployments on SD-WAN Manager 20.15 or 20.18:
 
-- **Configuration Groups** manage device configuration (system, transport, service).
-- **Policy Groups** manage policy (application priority, security, and other policy feature profile types).
+- **Feature profiles** are reusable configuration building blocks for a specific function (system, transport, service, or policy).
+- **Configuration groups** combine feature profiles into a device's configuration.
+- **Policy groups** combine policy feature profiles (application priority, security, and others) into a device's policy.
 
-If you are working with an existing classic deployment (device/feature templates, classic policies), see [Getting Started - Classic Templates](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/getting_started) instead.
+A device is associated with one configuration group and one policy group. If you are working with an existing classic deployment, see [Getting Started - Classic Templates](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/getting_started) instead.
 
 ## Configuration Groups
 
