@@ -91,72 +91,47 @@ func (data Tag) toBodyDeviceAssociation(ctx context.Context) string {
 	return body
 }
 
-func (data Tag) toBodyDeviceAssociationWithExistingTags(ctx context.Context, tagAssociations map[string]map[string]bool) string {
+func (data Tag) deviceIds() []string {
+	var ids []string
+	for _, item := range data.Devices.Elements() {
+		if !item.IsNull() {
+			ids = append(ids, strings.Trim(item.String(), "\""))
+		}
+	}
+	return ids
+}
+
+// toBodyDeviceAssociationWithOverlap builds one /v1/tags/associate payload
+// for this tag's devices, plus one entry per other tag found in overlap so
+// they aren't dropped by the single-call replace behavior.
+func (data Tag) toBodyDeviceAssociationWithOverlap(ctx context.Context, overlap map[string][]string) string {
 	body := ""
 	body, _ = sjson.Set(body, "data", []interface{}{})
 
-	planDevices := make(map[string]bool)
+	selfItemBody := ""
+	selfItemBody, _ = sjson.Set(selfItemBody, "tagId", data.Id.ValueString())
+	selfItemBody, _ = sjson.Set(selfItemBody, "objects", []interface{}{})
 	for _, item := range data.Devices.Elements() {
-		if !item.IsNull() {
-			planDevices[strings.Trim(item.String(), "\"")] = true
+		if item.IsNull() {
+			continue
 		}
+		itemChildBody := ""
+		itemChildBody, _ = sjson.Set(itemChildBody, "id", strings.Trim(item.String(), "\""))
+		itemChildBody, _ = sjson.Set(itemChildBody, "objectType", "DEVICE")
+		selfItemBody, _ = sjson.SetRaw(selfItemBody, "objects.-1", itemChildBody)
 	}
+	body, _ = sjson.SetRaw(body, "data.-1", selfItemBody)
 
-	tagDeviceMap := make(map[string]map[string]bool)
-	tagDeviceMap[data.Id.ValueString()] = make(map[string]bool)
-	for d := range planDevices {
-		tagDeviceMap[data.Id.ValueString()][d] = true
-	}
-
-	touchedDevices := make(map[string]bool)
-	for d := range planDevices {
-		touchedDevices[d] = true
-	}
-
-	changed := true
-	for changed {
-		changed = false
-		for tagId, devices := range tagAssociations {
-			if _, alreadyIncluded := tagDeviceMap[tagId]; alreadyIncluded {
-				continue
-			}
-
-			// Check if this tag has any devices we're touching
-			hasOverlap := false
-			for deviceId := range devices {
-				if touchedDevices[deviceId] {
-					hasOverlap = true
-					break
-				}
-			}
-
-			if hasOverlap {
-				// Include all of this tag's device associations
-				tagDeviceMap[tagId] = make(map[string]bool)
-				for deviceId := range devices {
-					tagDeviceMap[tagId][deviceId] = true
-					if !touchedDevices[deviceId] {
-						touchedDevices[deviceId] = true
-						changed = true
-					}
-				}
-			}
-		}
-	}
-
-	// Build the request body with all tags and their devices
-	for tagId, devices := range tagDeviceMap {
+	for tagId, deviceIds := range overlap {
 		itemBody := ""
 		itemBody, _ = sjson.Set(itemBody, "tagId", tagId)
 		itemBody, _ = sjson.Set(itemBody, "objects", []interface{}{})
-
-		for deviceId := range devices {
+		for _, deviceId := range deviceIds {
 			itemChildBody := ""
 			itemChildBody, _ = sjson.Set(itemChildBody, "id", deviceId)
 			itemChildBody, _ = sjson.Set(itemChildBody, "objectType", "DEVICE")
 			itemBody, _ = sjson.SetRaw(itemBody, "objects.-1", itemChildBody)
 		}
-
 		body, _ = sjson.SetRaw(body, "data.-1", itemBody)
 	}
 

@@ -37,6 +37,16 @@ func TestAccSdwanTag(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_tag.test", "devices.#", "2"))
 	checks = append(checks, resource.TestCheckTypeSetElemAttr("sdwan_tag.test", "devices.*", "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"))
 	checks = append(checks, resource.TestCheckTypeSetElemAttr("sdwan_tag.test", "devices.*", "C8K-E94D7B88-4B9E-3323-C6C3-F29079FAAC3B"))
+
+	// TAG_1 must keep both its devices after TAG_2 is created on one of them.
+	var overlapChecks []resource.TestCheckFunc
+	overlapChecks = append(overlapChecks, resource.TestCheckResourceAttr("sdwan_tag.test", "devices.#", "2"))
+	overlapChecks = append(overlapChecks, resource.TestCheckTypeSetElemAttr("sdwan_tag.test", "devices.*", "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"))
+	overlapChecks = append(overlapChecks, resource.TestCheckTypeSetElemAttr("sdwan_tag.test", "devices.*", "C8K-E94D7B88-4B9E-3323-C6C3-F29079FAAC3B"))
+	overlapChecks = append(overlapChecks, resource.TestCheckResourceAttr("sdwan_tag.test2", "name", "TAG_2"))
+	overlapChecks = append(overlapChecks, resource.TestCheckResourceAttr("sdwan_tag.test2", "devices.#", "1"))
+	overlapChecks = append(overlapChecks, resource.TestCheckTypeSetElemAttr("sdwan_tag.test2", "devices.*", "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"))
+
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -44,6 +54,17 @@ func TestAccSdwanTag(t *testing.T) {
 			{
 				Config: testAccSdwanTagConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
+			{
+				// Adds TAG_2, sharing one device with TAG_1.
+				Config: testAccSdwanTagConfig_all() + testAccSdwanTagConfig_overlap(),
+				Check:  resource.ComposeTestCheckFunc(overlapChecks...),
+			},
+			{
+				// Re-apply the identical config: no drift expected once both
+				// tags coexist on the shared device.
+				Config:   testAccSdwanTagConfig_all() + testAccSdwanTagConfig_overlap(),
+				PlanOnly: true,
 			},
 		},
 	})
@@ -63,3 +84,13 @@ func testAccSdwanTagConfig_all() string {
 }
 
 // End of section. //template:end testAccConfigAll
+
+// Second tag, sharing one device with sdwan_tag.test.
+func testAccSdwanTagConfig_overlap() string {
+	config := `resource "sdwan_tag" "test2" {` + "\n"
+	config += `	name = "TAG_2"` + "\n"
+	config += `	description = "My second tag"` + "\n"
+	config += `	devices = ["C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"]` + "\n"
+	config += `}` + "\n"
+	return config
+}

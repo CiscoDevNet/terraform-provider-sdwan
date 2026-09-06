@@ -24,7 +24,6 @@ import (
 	"net/url"
 	"strings"
 	"sync"
-	"time"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -35,6 +34,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
+	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
@@ -108,17 +108,29 @@ func (r *TagResource) Configure(_ context.Context, req resource.ConfigureRequest
 
 // End of section. //template:end model
 
-// The device inventory carries the full device->tags mapping including tag ids.
-// From 20.18.4 the GET /v1/tags collection response reports "tagAssociation" as
-// an empty array (returning a "refCount" count instead), so it can no longer be
-// used to rebuild association state. One inventory request replaces what would
-// otherwise be one request per tag.
-func (r *TagResource) deviceTagAssociations(ctx context.Context, selfId string) (map[string]map[string]bool, error) {
-	res, err := r.client.Get("/system/device/vedges")
+// A single associate call fully replaces a named device's tag membership
+// with whatever it names for that device, so we must find which other
+// tags currently sit on the devices we're touching and re-assert those
+// too. Filtering /system/device/vedges by uuid keeps this scoped to those
+// devices instead of the whole fleet.
+func (r *TagResource) deviceTagOverlap(ctx context.Context, selfId string, deviceIds []string) (map[string][]string, error) {
+	overlap := make(map[string][]string)
+	if len(deviceIds) == 0 {
+		return overlap, nil
+	}
+
+	path := "/system/device/vedges?"
+	for i, id := range deviceIds {
+		if i > 0 {
+			path += "&"
+		}
+		path += "uuid=" + url.QueryEscape(id)
+	}
+
+	res, err := r.client.Get(path)
 	if err != nil {
 		return nil, err
 	}
-	assoc := make(map[string]map[string]bool)
 	for _, device := range res.Get("data").Array() {
 		deviceId := device.Get("uuid").String()
 		if deviceId == "" {
@@ -129,13 +141,10 @@ func (r *TagResource) deviceTagAssociations(ctx context.Context, selfId string) 
 			if tagId == "" || tagId == selfId {
 				continue
 			}
-			if assoc[tagId] == nil {
-				assoc[tagId] = make(map[string]bool)
-			}
-			assoc[tagId][deviceId] = true
+			overlap[tagId] = append(overlap[tagId], deviceId)
 		}
 	}
-	return assoc, nil
+	return overlap, nil
 }
 
 func (r *TagResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
@@ -169,13 +178,14 @@ func (r *TagResource) Create(ctx context.Context, req resource.CreateRequest, re
 	plan.Id = types.StringValue(existingTags.Get("#(name==\"" + plan.Name.ValueString() + "\").id").String())
 
 	if len(plan.Devices.Elements()) > 0 {
-		tagAssociations, err := r.deviceTagAssociations(ctx, plan.Id.ValueString())
+		deviceIds := plan.deviceIds()
+		overlap, err := r.deviceTagOverlap(ctx, plan.Id.ValueString(), deviceIds)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve existing tag associations (GET), got error: %s", err))
 			return
 		}
 
-		body = plan.toBodyDeviceAssociationWithExistingTags(ctx, tagAssociations)
+		body = plan.toBodyDeviceAssociationWithOverlap(ctx, overlap)
 		res, err = r.client.Post("/v1/tags/associate", body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to associate devices to tag (POST), got error: %s, %s", err, res.String()))
@@ -186,9 +196,16 @@ func (r *TagResource) Create(ctx context.Context, req resource.CreateRequest, re
 			}
 			return
 		}
-		// Wait for API eventual consistency before releasing mutex
-		// This ensures the next tag operation sees the updated associations
-		time.Sleep(time.Second)
+		taskId := res.Get("taskId").String()
+		if taskId != "" {
+			err, warnings := helpers.WaitForActionToComplete(ctx, r.client, taskId, r.taskTimeout)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed waiting for tag association task to complete: %s", err))
+				return
+			} else if warnings != "" {
+				resp.Diagnostics.AddWarning("Client Warning", warnings)
+			}
+		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
@@ -242,21 +259,29 @@ func (r *TagResource) Update(ctx context.Context, req resource.UpdateRequest, re
 	defer r.updateMutex.Unlock()
 
 	if len(plan.Devices.Elements()) > 0 {
-		tagAssociations, err := r.deviceTagAssociations(ctx, plan.Id.ValueString())
+		deviceIds := plan.deviceIds()
+		overlap, err := r.deviceTagOverlap(ctx, plan.Id.ValueString(), deviceIds)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve existing tag associations (GET), got error: %s", err))
 			return
 		}
 
-		body := plan.toBodyDeviceAssociationWithExistingTags(ctx, tagAssociations)
+		body := plan.toBodyDeviceAssociationWithOverlap(ctx, overlap)
 		res, err := r.client.Post("/v1/tags/associate", body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to associate devices to tag (POST), got error: %s, %s", err, res.String()))
 			return
 		}
-		// Wait for API eventual consistency before releasing mutex
-		// This ensures the next tag operation sees the updated associations
-		time.Sleep(time.Second)
+		taskId := res.Get("taskId").String()
+		if taskId != "" {
+			err, warnings := helpers.WaitForActionToComplete(ctx, r.client, taskId, r.taskTimeout)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed waiting for tag association task to complete: %s", err))
+				return
+			} else if warnings != "" {
+				resp.Diagnostics.AddWarning("Client Warning", warnings)
+			}
+		}
 	}
 
 	// Get all associate devices
@@ -294,11 +319,23 @@ func (r *TagResource) Update(ctx context.Context, req resource.UpdateRequest, re
 			itemBody, _ = sjson.SetRaw(itemBody, "objects.-1", itemChildBody)
 		}
 
-		body, _ = sjson.SetRaw(body, "data.-1", itemBody)
-		res, err := r.client.Post("/v1/tags/associate?operationType=DELETE", body)
-		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to disassociate devices from tag (POST), got error: %s, %s", err, res.String()))
-			return
+		if len(gjson.Parse(itemBody).Get("objects").Array()) > 0 {
+			body, _ = sjson.SetRaw(body, "data.-1", itemBody)
+			res, err := r.client.Post("/v1/tags/associate?operationType=DELETE", body)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to disassociate devices from tag (POST), got error: %s, %s", err, res.String()))
+				return
+			}
+			taskId := res.Get("taskId").String()
+			if taskId != "" {
+				err, warnings := helpers.WaitForActionToComplete(ctx, r.client, taskId, r.taskTimeout)
+				if err != nil {
+					resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed waiting for tag disassociation task to complete: %s", err))
+					return
+				} else if warnings != "" {
+					resp.Diagnostics.AddWarning("Client Warning", warnings)
+				}
+			}
 		}
 	}
 
@@ -330,9 +367,17 @@ func (r *TagResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to disassociate devices from tag (POST), got error: %s, %s", err, res.String()))
 			return
 		}
+		taskId := res.Get("taskId").String()
+		if taskId != "" {
+			err, warnings := helpers.WaitForActionToComplete(ctx, r.client, taskId, r.taskTimeout)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed waiting for tag disassociation task to complete: %s", err))
+				return
+			} else if warnings != "" {
+				resp.Diagnostics.AddWarning("Client Warning", warnings)
+			}
+		}
 	}
-
-	time.Sleep(time.Second)
 
 	res, err := r.client.Delete(state.getPath() + "?tagId=" + url.QueryEscape(state.Id.ValueString()))
 	if err != nil {
