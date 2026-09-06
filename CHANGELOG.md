@@ -1,5 +1,6 @@
 ## 0.11.5 (unreleased)
 
+- Fix `sdwan_topology_custom_control_feature`, `sdwan_topology_hub_spoke_feature`, and `sdwan_topology_mesh_feature` acceptance/data-source tests sending both the sites and hierarchy_uuids targeting families at once
 - Update provider documentation: refresh tested platform versions to 20.12/20.15/20.18, restructure guides into "Getting Started - Configuration and Policy Groups" (new, recommended) and "Getting Started - Classic Templates"
 - Bump `sdwan_service_lan_vpn_interface_ethernet_feature` schema to `20.18.0`
 - Bump `sdwan_service_routing_bgp_feature` schema to `20.18.0`

@@ -97,11 +97,11 @@ func TestAccSdwanTopologyMeshProfileParcel_WithChecks(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_mesh_feature.test", "name", "TF_TEST_ALL"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_mesh_feature.test", "description", "Terraform integration test"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_mesh_feature.test", "target_vpns.#", "1"))
-	if os.Getenv("SDWAN_2015") != "" {
-		checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_mesh_feature.test", "sites.#", "1"))
-	}
+	// Manual override: mirrors the config builder's mutually-exclusive family choice above.
 	if os.Getenv("SDWAN_2018") != "" {
 		checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_mesh_feature.test", "hierarchy_uuids.#", "1"))
+	} else if os.Getenv("SDWAN_2015") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("sdwan_topology_mesh_feature.test", "sites.#", "1"))
 	}
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },

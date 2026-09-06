@@ -1,3 +1,4 @@
+# Manual tests only (model/resource still generated) - test configs keep sites/hierarchy_uuids mutually exclusive (CI sets SDWAN_2015 and SDWAN_2018 together).
 ---
 name: Topology Mesh
 rest_endpoint: /v1/feature-profile/sdwan/topology/%v/mesh
