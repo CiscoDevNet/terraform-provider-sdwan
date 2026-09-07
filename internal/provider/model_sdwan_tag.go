@@ -91,6 +91,53 @@ func (data Tag) toBodyDeviceAssociation(ctx context.Context) string {
 	return body
 }
 
+func (data Tag) deviceIds() []string {
+	var ids []string
+	for _, item := range data.Devices.Elements() {
+		if !item.IsNull() {
+			ids = append(ids, strings.Trim(item.String(), "\""))
+		}
+	}
+	return ids
+}
+
+// toBodyDeviceAssociationWithOverlap builds one /v1/tags/associate payload
+// for this tag's devices, plus one entry per other tag found in overlap so
+// they aren't dropped by the single-call replace behavior.
+func (data Tag) toBodyDeviceAssociationWithOverlap(ctx context.Context, overlap map[string][]string) string {
+	body := ""
+	body, _ = sjson.Set(body, "data", []interface{}{})
+
+	selfItemBody := ""
+	selfItemBody, _ = sjson.Set(selfItemBody, "tagId", data.Id.ValueString())
+	selfItemBody, _ = sjson.Set(selfItemBody, "objects", []interface{}{})
+	for _, item := range data.Devices.Elements() {
+		if item.IsNull() {
+			continue
+		}
+		itemChildBody := ""
+		itemChildBody, _ = sjson.Set(itemChildBody, "id", strings.Trim(item.String(), "\""))
+		itemChildBody, _ = sjson.Set(itemChildBody, "objectType", "DEVICE")
+		selfItemBody, _ = sjson.SetRaw(selfItemBody, "objects.-1", itemChildBody)
+	}
+	body, _ = sjson.SetRaw(body, "data.-1", selfItemBody)
+
+	for tagId, deviceIds := range overlap {
+		itemBody := ""
+		itemBody, _ = sjson.Set(itemBody, "tagId", tagId)
+		itemBody, _ = sjson.Set(itemBody, "objects", []interface{}{})
+		for _, deviceId := range deviceIds {
+			itemChildBody := ""
+			itemChildBody, _ = sjson.Set(itemChildBody, "id", deviceId)
+			itemChildBody, _ = sjson.Set(itemChildBody, "objectType", "DEVICE")
+			itemBody, _ = sjson.SetRaw(itemBody, "objects.-1", itemChildBody)
+		}
+		body, _ = sjson.SetRaw(body, "data.-1", itemBody)
+	}
+
+	return body
+}
+
 func (data *Tag) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
