@@ -72,6 +72,8 @@ description: |-
 - Fix `sdwan_topology_group` and `sdwan_activate_topology_group` producing an unwanted re-activation right after `terraform import`, caused by the internal `feature_versions` bookkeeping attribute
 - Fix `sdwan_activate_topology_group` documentation subcategory: now grouped under "Topology Groups" instead of the generic resources section
 - Fix non-contiguous integer range validation (anyOf pattern) for `vpnId`
+- Fix `sdwan_tag` resource create replaces all existing device tag associations instead of adding membership
+
 
 ## 0.11.4
 

@@ -4,7 +4,7 @@ rest_endpoint: /v1/tags
 minimum_version: 20.15.0
 id_attribute: id
 doc_category: Inventory
-test_tags: [SDWAN_2015]
+test_tags: [SDWAN_2015, SDWAN_2018]
 attributes:
   - model_name: name
     mandatory: true
