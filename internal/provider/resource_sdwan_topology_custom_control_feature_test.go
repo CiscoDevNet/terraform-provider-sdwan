@@ -17,6 +17,8 @@
 
 package provider
 
+// NOTE: Hand-maintained (skip_templates in topology_custom_control.yaml) - keep sites/hierarchy_uuids mutually exclusive.
+
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"os"
@@ -93,17 +95,15 @@ func testAccSdwanTopologyCustomControlProfileParcelConfig_all() string {
 	config += `	feature_profile_id = sdwan_topology_feature_profile.test.id` + "\n"
 	config += `	default_action = "reject"` + "\n"
 	config += `	target_level = "SITE"` + "\n"
-	if os.Getenv("SDWAN_2015") != "" {
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	target_inbound_hierarchy_uuids = [sdwan_network_hierarchy_node.network_hierarchy_node_site_test.id]` + "\n"
+	} else if os.Getenv("SDWAN_2015") != "" {
 		config += `	target_inbound_sites = ["SITE_100"]` + "\n"
 	}
 	if os.Getenv("SDWAN_2018") != "" {
-		config += `	target_inbound_hierarchy_uuids = [sdwan_network_hierarchy_node.network_hierarchy_node_site_test.id]` + "\n"
-	}
-	if os.Getenv("SDWAN_2015") != "" {
-		config += `	target_outbound_sites = ["SITE_200"]` + "\n"
-	}
-	if os.Getenv("SDWAN_2018") != "" {
 		config += `	target_outbound_hierarchy_uuids = [sdwan_network_hierarchy_node.network_hierarchy_node_site_test.id]` + "\n"
+	} else if os.Getenv("SDWAN_2015") != "" {
+		config += `	target_outbound_sites = ["SITE_200"]` + "\n"
 	}
 	config += `	sequences = [{` + "\n"
 	config += `	  id = 1` + "\n"
@@ -115,11 +115,10 @@ func testAccSdwanTopologyCustomControlProfileParcelConfig_all() string {
 	config += `		omp_tag = 100` + "\n"
 	config += `		origin = "connected"` + "\n"
 	config += `		originator = "1.2.3.4"` + "\n"
-	if os.Getenv("SDWAN_2015") != "" {
-		config += `		site = ["site_100"]` + "\n"
-	}
 	if os.Getenv("SDWAN_2018") != "" {
 		config += `		hierarchy_uuids = [sdwan_network_hierarchy_node.network_hierarchy_node_site_test.id]` + "\n"
+	} else if os.Getenv("SDWAN_2015") != "" {
+		config += `		site = ["site_100"]` + "\n"
 	}
 	config += `		tloc_ip = "1.2.3.4"` + "\n"
 	config += `		tloc_color = "bronze"` + "\n"

@@ -17,6 +17,8 @@
 
 package provider
 
+// NOTE: Hand-maintained (skip_templates in topology_mesh.yaml) - keep sites/hierarchy_uuids mutually exclusive.
+
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"os"
@@ -72,11 +74,10 @@ func testAccDataSourceSdwanTopologyMeshProfileParcelConfig() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_topology_feature_profile.test.id` + "\n"
 	config += `	target_vpns = ["service_lan_vpn1"]` + "\n"
-	if os.Getenv("SDWAN_2015") != "" {
-		config += `	sites = ["SITE_100"]` + "\n"
-	}
 	if os.Getenv("SDWAN_2018") != "" {
 		config += `	hierarchy_uuids = [sdwan_network_hierarchy_node.network_hierarchy_node_site_test.id]` + "\n"
+	} else if os.Getenv("SDWAN_2015") != "" {
+		config += `	sites = ["SITE_100"]` + "\n"
 	}
 	config += `}` + "\n"
 
