@@ -1,4 +1,4 @@
-## 0.11.5 (unreleased)
+## 0.11.5
 
 - Update provider documentation: refresh tested platform versions to 20.12/20.15/20.18, restructure guides into "Getting Started - Configuration and Policy Groups" (new, recommended) and "Getting Started - Classic Templates"
 - Add `sdwan_service_dual_router_ha_feature` resource and data source
@@ -22,7 +22,6 @@
 - Fix `sdwan_activate_topology_group` documentation subcategory: now grouped under "Topology Groups" instead of the generic resources section
 - Fix non-contiguous integer range validation (anyOf pattern) for `vpnId`
 - Fix `sdwan_tag` resource create replaces all existing device tag associations instead of adding membership
-
 
 ## 0.11.4
 
