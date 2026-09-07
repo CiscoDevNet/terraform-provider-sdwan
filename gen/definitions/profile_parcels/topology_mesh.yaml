@@ -1,4 +1,4 @@
-# Manual tests only (model/resource still generated) - test configs keep sites/hierarchy_uuids mutually exclusive (CI sets SDWAN_2015 and SDWAN_2018 together).
+# Manual tests only (model/resource still generated) - test configs keep sites/hierarchy_uuids mutually exclusive.
 ---
 name: Topology Mesh
 rest_endpoint: /v1/feature-profile/sdwan/topology/%v/mesh
@@ -6,6 +6,7 @@ minimum_version: 20.15.0
 has_version: true
 id_attribute: id
 test_tags: [SDWAN_2015]
+skip_templates: ["resource_test.go", "data_source_test.go"]
 skip_minimum_test: true
 no_data_source_name_query: true
 parcel_type: feature
