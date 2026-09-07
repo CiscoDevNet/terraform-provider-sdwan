@@ -189,13 +189,13 @@ func testAccSdwanTopologyCustomControlProfileParcelConfig_multiSequence() string
 	config += `	feature_profile_id = sdwan_topology_feature_profile.test.id` + "\n"
 	config += `	default_action = "reject"` + "\n"
 	config += `	target_level = "SITE"` + "\n"
-	if os.Getenv("SDWAN_2015") != "" {
-		config += `	target_inbound_sites = ["SITE_100"]` + "\n"
-		config += `	target_outbound_sites = ["SITE_100"]` + "\n"
-	}
+	// Manual override: same mutual-exclusivity reason as testAccConfig_all above.
 	if os.Getenv("SDWAN_2018") != "" {
 		config += `	target_inbound_hierarchy_uuids = [sdwan_network_hierarchy_node.network_hierarchy_node_site_test.id]` + "\n"
 		config += `	target_outbound_hierarchy_uuids = [sdwan_network_hierarchy_node.network_hierarchy_node_site_test.id]` + "\n"
+	} else if os.Getenv("SDWAN_2015") != "" {
+		config += `	target_inbound_sites = ["SITE_100"]` + "\n"
+		config += `	target_outbound_sites = ["SITE_100"]` + "\n"
 	}
 	config += `	sequences = [` + "\n"
 	config += `	  {` + "\n"
