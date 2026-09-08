@@ -1,0 +1,363 @@
+// Copyright © 2023 Cisco Systems, Inc. and its affiliates.
+// All rights reserved.
+//
+// Licensed under the Mozilla Public License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://mozilla.org/MPL/2.0/
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+// SPDX-License-Identifier: MPL-2.0
+
+package provider
+
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
+import (
+	"context"
+	"fmt"
+	"net/url"
+
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework-validators/datasourcevalidator"
+	"github.com/hashicorp/terraform-plugin-framework/datasource"
+	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/path"
+	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
+	"github.com/netascode/go-sdwan"
+	"github.com/tidwall/gjson"
+)
+
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin model
+
+// Ensure the implementation satisfies the expected interfaces.
+var (
+	_ datasource.DataSource                     = &ServiceAppQoEProfileParcelDataSource{}
+	_ datasource.DataSourceWithConfigure        = &ServiceAppQoEProfileParcelDataSource{}
+	_ datasource.DataSourceWithConfigValidators = &ServiceAppQoEProfileParcelDataSource{}
+)
+
+func NewServiceAppQoEProfileParcelDataSource() datasource.DataSource {
+	return &ServiceAppQoEProfileParcelDataSource{}
+}
+
+type ServiceAppQoEProfileParcelDataSource struct {
+	client *sdwan.Client
+}
+
+func (d *ServiceAppQoEProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_service_appqoe_feature"
+}
+
+func (d *ServiceAppQoEProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+	resp.Schema = schema.Schema{
+		// This description is used by the documentation generator and the language server.
+		MarkdownDescription: "This data source can read the Service AppQoE Feature.",
+
+		Attributes: map[string]schema.Attribute{
+			"id": schema.StringAttribute{
+				MarkdownDescription: "The id of the Feature",
+				Optional:            true,
+				Computed:            true,
+			},
+			"version": schema.Int64Attribute{
+				MarkdownDescription: "The version of the Feature",
+				Computed:            true,
+			},
+			"name": schema.StringAttribute{
+				MarkdownDescription: "The name of the Feature",
+				Optional:            true,
+				Computed:            true,
+			},
+			"description": schema.StringAttribute{
+				MarkdownDescription: "The description of the Feature",
+				Computed:            true,
+			},
+			"feature_profile_id": schema.StringAttribute{
+				MarkdownDescription: "Feature Profile ID",
+				Required:            true,
+			},
+			"appqoe_device_role": schema.StringAttribute{
+				MarkdownDescription: "Appqoe Device Role",
+				Computed:            true,
+			},
+			"virtual_applications": schema.ListNestedAttribute{
+				MarkdownDescription: "Virtual application Instance",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"resource_profile": schema.StringAttribute{
+							MarkdownDescription: "Resource Profile",
+							Computed:            true,
+						},
+						"resource_profile_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+					},
+				},
+			},
+			"forwarder_controller_groups": schema.ListNestedAttribute{
+				MarkdownDescription: "Appnav controller group name",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"appnav_controllers": schema.ListNestedAttribute{
+							MarkdownDescription: "List of controllers",
+							Computed:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"address": schema.StringAttribute{
+										MarkdownDescription: "Controller IP Address",
+										Computed:            true,
+									},
+									"address_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"vpn": schema.Int64Attribute{
+										MarkdownDescription: "vpn id",
+										Computed:            true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"forwarder_service_node_groups": schema.ListNestedAttribute{
+				MarkdownDescription: "Name",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"name": schema.StringAttribute{
+							MarkdownDescription: "List of service node group",
+							Computed:            true,
+						},
+						"service_nodes": schema.ListNestedAttribute{
+							MarkdownDescription: "Service Node Information",
+							Computed:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"address": schema.StringAttribute{
+										MarkdownDescription: "IP Address",
+										Computed:            true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"forwarder_service_contexts": schema.ListNestedAttribute{
+				MarkdownDescription: "Appqoe",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"appnav_controller_group": schema.StringAttribute{
+							MarkdownDescription: "Appnav controller group",
+							Computed:            true,
+						},
+						"service_node_group": schema.StringAttribute{
+							MarkdownDescription: "Service node group",
+							Computed:            true,
+						},
+						"enable": schema.BoolAttribute{
+							MarkdownDescription: "enable service context",
+							Computed:            true,
+						},
+						"vpn": schema.Int64Attribute{
+							MarkdownDescription: "Vpn",
+							Computed:            true,
+						},
+						"vpn_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+					},
+				},
+			},
+			"combined_controller_groups": schema.ListNestedAttribute{
+				MarkdownDescription: "Appnav controller group name",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"group_name": schema.StringAttribute{
+							MarkdownDescription: "List of controller group",
+							Computed:            true,
+						},
+						"appnav_controllers": schema.ListNestedAttribute{
+							MarkdownDescription: "List of controllers",
+							Computed:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"address": schema.StringAttribute{
+										MarkdownDescription: "Controller IP Address",
+										Computed:            true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"combined_service_node_groups": schema.ListNestedAttribute{
+				MarkdownDescription: "Name",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"name": schema.StringAttribute{
+							MarkdownDescription: "List of service node group",
+							Computed:            true,
+						},
+						"service_nodes": schema.ListNestedAttribute{
+							MarkdownDescription: "Service Node Information",
+							Computed:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"address": schema.StringAttribute{
+										MarkdownDescription: "IP Address",
+										Computed:            true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"combined_service_contexts": schema.ListNestedAttribute{
+				MarkdownDescription: "Appqoe",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"appnav_controller_group": schema.StringAttribute{
+							MarkdownDescription: "Appnav controller group",
+							Computed:            true,
+						},
+						"service_node_group": schema.StringAttribute{
+							MarkdownDescription: "Service node group",
+							Computed:            true,
+						},
+						"enable": schema.BoolAttribute{
+							MarkdownDescription: "enable service context",
+							Computed:            true,
+						},
+						"vpn": schema.Int64Attribute{
+							MarkdownDescription: "Vpn",
+							Computed:            true,
+						},
+						"vpn_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+					},
+				},
+			},
+			"service_node_service_node_groups": schema.ListNestedAttribute{
+				MarkdownDescription: "Name",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"name": schema.StringAttribute{
+							MarkdownDescription: "List of service node group",
+							Computed:            true,
+						},
+						"service_nodes": schema.ListNestedAttribute{
+							MarkdownDescription: "Service Node Information",
+							Computed:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"address": schema.StringAttribute{
+										MarkdownDescription: "IP Address",
+										Computed:            true,
+									},
+									"vpg_ip": schema.StringAttribute{
+										MarkdownDescription: "ip and prefix",
+										Computed:            true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+}
+
+func (d *ServiceAppQoEProfileParcelDataSource) ConfigValidators(_ context.Context) []datasource.ConfigValidator {
+	return []datasource.ConfigValidator{
+		datasourcevalidator.ExactlyOneOf(
+			path.MatchRoot("id"),
+			path.MatchRoot("name"),
+		),
+	}
+}
+
+func (d *ServiceAppQoEProfileParcelDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
+	if req.ProviderData == nil {
+		return
+	}
+
+	d.client = req.ProviderData.(*SdwanProviderData).Client
+}
+
+// End of section. //template:end model
+
+// Section below is generated&owned by "gen/generator.go". //template:begin read
+func (d *ServiceAppQoEProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	var config ServiceAppQoE
+
+	// Read config
+	diags := req.Config.Get(ctx, &config)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
+	if config.Id.IsNull() && !config.Name.IsNull() {
+		// Look up parcel ID by name
+		res, err := d.client.Get(config.getPath())
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve parcels, got error: %s", err))
+			return
+		}
+		found := false
+		res.Get("data").ForEach(func(_, v gjson.Result) bool {
+			if v.Get("payload.name").String() == config.Name.ValueString() {
+				config.Id = types.StringValue(v.Get("parcelId").String())
+				found = true
+				return false
+			}
+			return true
+		})
+		if !found {
+			resp.Diagnostics.AddError("Not Found", fmt.Sprintf("No parcel found with name: %s", config.Name.ValueString()))
+			return
+		}
+	}
+
+	res, err := d.client.Get(config.getPath() + "/" + url.QueryEscape(config.Id.ValueString()))
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
+		return
+	}
+
+	config.fromBody(ctx, res, true)
+
+	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Name.ValueString()))
+
+	diags = resp.State.Set(ctx, &config)
+	resp.Diagnostics.Append(diags...)
+}
+
+// End of section. //template:end read

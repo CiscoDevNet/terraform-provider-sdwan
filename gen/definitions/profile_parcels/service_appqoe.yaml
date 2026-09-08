@@ -1,0 +1,246 @@
+---
+name: Service AppQoE
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/appqoe
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
+parcel_type: feature
+doc_category: Features - Service
+res_description: >-
+  `appqoe_device_role` selects which subtree is sent: `forwarder_*` attributes apply only to
+  the `forwarder` role, `combined_*` only to `forwarderAndServiceNode` and
+  `forwarderAndServiceNodeWithDre`, and `service_node_*` only to `serviceNode` and
+  `serviceNodeWithDre`. Attributes belonging to a role other than the configured one are
+  silently omitted from the request and will show as a recurring difference in
+  `terraform plan`. DRE optimization is enabled by selecting a `...WithDre` role, which also
+  unlocks `virtual_applications` for the DRE resource profile. Only one service node group
+  can be bound per service context.
+
+# `appqoe_device_role` selects which subtree is sent: `forwarder_*` attributes apply
+# only to the `forwarder` role, `combined_*` only to `forwarderAndServiceNode` /
+# `forwarderAndServiceNodeWithDre`, and `service_node_*` only to `serviceNode` /
+# `serviceNodeWithDre`. Attributes belonging to a role other than the configured one
+# are silently omitted from the request.
+
+# DRE optimization is enabled by selecting a `...WithDre` role, which also unlocks
+# `virtual_applications` for the DRE resource profile.
+
+# `forwarder_service_node_groups.name` should be left unset for the first group so the
+# `SNG-APPQOE` default applies; SD-WAN Manager normalises any value equal to a default
+# to `optionType: default`, which reads back as null and would show as permanent drift.
+
+# With this implementation only one service node group can be bound per service context.
+
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_feature_profile.test.id
+  - model_name: appqoeDeviceRole
+    example: forwarder
+  - model_name: dreopt
+    value: true
+    value_type: global
+    conditional_attribute:
+      conditions:
+        - name: appqoe_device_role
+          value: Dre
+          type: StringContains
+  - model_name: dreopt
+    value: false
+    value_type: global
+    conditional_attribute:
+      conditions:
+        - name: appqoe_device_role
+          value: Dre
+          type: StringContains
+          negate: true
+  - model_name: virtualApplication
+    tf_name: virtual_applications
+    positional_fallback: true
+    exclude_test: true
+    exclude_example: true
+    conditional_attribute:
+      conditions:
+        - name: appqoe_device_role
+          value: Dre
+          type: StringContains
+    attributes:
+      - model_name: instanceId
+        value: 1
+        value_type: global
+      - model_name: applicationType
+        value: '"dreopt"'
+        value_type: global
+      - model_name: resourceProfile
+        example: small
+  - model_name: appnavControllerGroup
+    tf_name: forwarder_controller_groups
+    data_path: [forwarder]
+    positional_fallback: true
+    conditional_attribute:
+      conditions:
+        - name: appqoe_device_role
+          value: forwarder
+    attributes:
+      - model_name: groupName
+        value: '"ACG-APPQOE"'
+      - model_name: appnavControllers
+        positional_fallback: true
+        attributes:
+          - model_name: address
+            id: true
+            example: 192.168.2.1
+          - model_name: vpn
+            example: 1
+  - model_name: serviceNodeGroup
+    tf_name: forwarder_service_node_groups
+    data_path: [forwarder]
+    positional_fallback: true
+    conditional_attribute:
+      conditions:
+        - name: appqoe_device_role
+          value: forwarder
+    attributes:
+      - model_name: name
+        id: true
+        exclude_test: true
+      - model_name: internal
+        value: false
+      - model_name: serviceNode
+        tf_name: service_nodes
+        positional_fallback: true
+        attributes:
+          - model_name: address
+            id: true
+            example: 192.168.2.2
+  - model_name: appqoe
+    tf_name: forwarder_service_contexts
+    data_path: [forwarder, serviceContext]
+    positional_fallback: true
+    conditional_attribute:
+      conditions:
+        - name: appqoe_device_role
+          value: forwarder
+    attributes:
+      - model_name: name
+        value: '"/1"'
+      - model_name: appnavControllerGroup
+        id: true
+        example: ACG-APPQOE
+      - model_name: serviceNodeGroup
+        example: SNG-APPQOE
+      - model_name: enable
+        example: true
+      - model_name: vpn
+        example: 0
+  - model_name: appnavControllerGroup
+    tf_name: combined_controller_groups
+    data_path: [forwarderAndServiceNode]
+    positional_fallback: true
+    exclude_test: true
+    exclude_example: true
+    conditional_attribute:
+      conditions:
+        - name: appqoe_device_role
+          value: forwarderAndServiceNode
+          type: StringContains
+    attributes:
+      - model_name: groupName
+        type: String
+        write_as_default: true
+        id: true
+      - model_name: appnavControllers
+        positional_fallback: true
+        attributes:
+          - model_name: address
+            type: String
+            write_as_default: true
+            id: true
+  - model_name: serviceNodeGroup
+    tf_name: combined_service_node_groups
+    data_path: [forwarderAndServiceNode]
+    positional_fallback: true
+    exclude_test: true
+    exclude_example: true
+    conditional_attribute:
+      conditions:
+        - name: appqoe_device_role
+          value: forwarderAndServiceNode
+          type: StringContains
+    attributes:
+      - model_name: name
+        type: String
+        write_as_default: true
+        id: true
+      - model_name: internal
+        value: true
+      - model_name: serviceNode
+        tf_name: service_nodes
+        positional_fallback: true
+        attributes:
+          - model_name: address
+            type: String
+            write_as_default: true
+            id: true
+  - model_name: appqoe
+    tf_name: combined_service_contexts
+    data_path: [forwarderAndServiceNode, serviceContext]
+    positional_fallback: true
+    exclude_test: true
+    exclude_example: true
+    conditional_attribute:
+      conditions:
+        - name: appqoe_device_role
+          value: forwarderAndServiceNode
+          type: StringContains
+    attributes:
+      - model_name: name
+        value: '"/1"'
+      - model_name: appnavControllerGroup
+        id: true
+        example: ACG-APPQOE
+      - model_name: serviceNodeGroup
+        example: SNG-APPQOE
+      - model_name: enable
+        example: true
+      - model_name: vpn
+        example: 0
+  - model_name: serviceNodeGroup
+    tf_name: service_node_service_node_groups
+    data_path: [serviceNode]
+    positional_fallback: true
+    exclude_test: true
+    exclude_example: true
+    conditional_attribute:
+      conditions:
+        - name: appqoe_device_role
+          value: serviceNode
+          type: StringContains
+    attributes:
+      - model_name: name
+        type: String
+        write_as_default: true
+        id: true
+      - model_name: externalNode
+        value: true
+      - model_name: serviceNode
+        tf_name: service_nodes
+        positional_fallback: true
+        attributes:
+          - model_name: address
+            type: String
+            write_as_default: true
+            id: true
+          - model_name: vpgIp
+            tf_name: vpg_ip
+            type: String
+            write_as_default: true
+
+test_prerequisites: |
+  resource "sdwan_service_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
