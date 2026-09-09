@@ -14,18 +14,20 @@ All resources and data sources have been tested with the following releases.
 
 | Platform        | Version |
 | --------------- | ------- |
-| Catalyst SD-WAN | 20.09   |
+| Catalyst SD-WAN | 20.12   |
 | Catalyst SD-WAN | 20.15   |
+| Catalyst SD-WAN | 20.18   |
 
 **Please note**: We no longer support or test UX 2.0 resources against 20.12.
+
+**Please note**: 20.18 support is being rolled out incrementally. Every resource that works on 20.15 is also being tested against a 20.18 lab, but not every UX 2.0 resource has been updated with the full set of 20.18 attributes yet - see the [changelog](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/changelog) for which resources have been bumped to the 20.18 release.
 
 ## Getting Started
 
 The following guides with examples exist to demonstrate the use of the provider:
 
-- [Getting Started](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/getting_started)
-- [Updating Templates](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/updating_templates)
-- [Configuration Groups](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/configuration_groups)
+- [Getting Started - Configuration and Policy Groups](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/configuration_groups) - the recommended starting point for new deployments (UX 2.0)
+- [Getting Started - Classic Templates](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/getting_started) - device/feature templates and classic policies (pre-20.12)
 
 ## Example Usage
 

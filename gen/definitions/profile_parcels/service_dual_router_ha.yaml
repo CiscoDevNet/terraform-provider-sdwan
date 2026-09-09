@@ -1,0 +1,62 @@
+---
+name: Service Dual Router HA
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/dual-router-ha
+minimum_version: 20.15.1
+test_tags: [SDWAN_2015, SDWAN_2018]
+parcel_type: feature
+doc_category: Features - Service
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_feature_profile.test.id
+  - model_name: redundancyGroups
+    mandatory: true
+    type: Set
+    max_list: 2
+    attributes:
+      - model_name: groupId
+        tf_name: group_id
+        no_option_type: true
+        type: Int64
+        id: true
+        mandatory: true
+        min_int: 1
+        max_int: 2
+        example: 1
+      - model_name: vpnIds
+        tf_name: vpn_ids
+        mandatory: true
+        attributes:
+          - model_name: refId
+            tf_name: vpn_id
+            id: true
+            mandatory: true
+            example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
+            test_value: sdwan_service_lan_vpn_feature.test.id
+      - model_name: tagName
+        tf_name: tag_name
+        no_option_type: true
+        type: String
+        string_patterns: ["^[^&<>! \",]+$"]
+        string_min_length: 1
+        string_max_length: 128
+        example: example
+  - model_name: enableOptimizePaths
+    type: Bool
+    example: false
+
+test_prerequisites: |
+  resource "sdwan_service_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_service_lan_vpn_feature" "test" {
+    name               = "TF_TEST_SLAN"
+    vpn                = 1
+    feature_profile_id = sdwan_service_feature_profile.test.id
+  }

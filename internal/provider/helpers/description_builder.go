@@ -54,6 +54,20 @@ func (d *AttributeDescription) AddIntegerRangeDescription(min, max int64) *Attri
 	return d
 }
 
+type IntRange struct {
+	Min int64
+	Max int64
+}
+
+func (d *AttributeDescription) AddIntegerRangesDescription(ranges []IntRange) *AttributeDescription {
+	var parts []string
+	for _, r := range ranges {
+		parts = append(parts, fmt.Sprintf("`%v`-`%v`", r.Min, r.Max))
+	}
+	d.String = fmt.Sprintf("%s\n  - Ranges: %s", d.String, strings.Join(parts, ", "))
+	return d
+}
+
 func (d *AttributeDescription) AddIntegerAtLeastDescription(min int64) *AttributeDescription {
 	d.String = fmt.Sprintf("%s\n  - At Least: `%v`", d.String, min)
 	return d

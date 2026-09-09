@@ -266,6 +266,22 @@ func (d *ServiceMulticastProfileParcelDataSource) Schema(ctx context.Context, re
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
+						"access_list_id": schema.StringAttribute{
+							MarkdownDescription: "Set IP Access List for PIM RP Announce",
+							Computed:            true,
+						},
+						"access_list_id_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"interval": schema.Int64Attribute{
+							MarkdownDescription: "Set RP Announce interval",
+							Computed:            true,
+						},
+						"interval_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
 					},
 				},
 			},

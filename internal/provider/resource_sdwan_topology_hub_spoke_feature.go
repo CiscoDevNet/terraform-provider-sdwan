@@ -26,6 +26,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -89,41 +90,56 @@ func (r *TopologyHubSpokeProfileParcelResource) Schema(ctx context.Context, req 
 				Required:            true,
 			},
 			"target_vpns": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Target VPN list").String,
 				ElementType:         types.StringType,
 				Required:            true,
 			},
 			"selected_hubs": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Selected hub sites").String,
 				ElementType:         types.StringType,
-				Required:            true,
+				Optional:            true,
+			},
+			"selected_hierarchy_hubs": schema.SetAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Selected hub network hierarchy UUIDs, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+				ElementType:         types.StringType,
+				Optional:            true,
 			},
 			"spokes": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Spokes").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Spoke configurations").String,
 				Required:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Spoke name").String,
 							Optional:            true,
 						},
 						"spoke_sites": schema.SetAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Spoke site list").String,
+							ElementType:         types.StringType,
+							Optional:            true,
+						},
+						"spoke_hierarchy_uuids": schema.SetAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Spoke network hierarchy UUIDs, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
 							ElementType:         types.StringType,
 							Optional:            true,
 						},
 						"hub_sites": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Hub Sites").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Hub site preferences").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"sites": schema.SetAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("sites").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Hub sites").String,
+										ElementType:         types.StringType,
+										Optional:            true,
+									},
+									"hub_hierarchy_uuids": schema.SetAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Hub network hierarchy UUIDs, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
 									"preference": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("preference").AddIntegerRangeDescription(1, 255).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Hub preference value").AddIntegerRangeDescription(1, 255).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 255),
@@ -164,7 +180,9 @@ func (r *TopologyHubSpokeProfileParcelResource) Create(ctx context.Context, req 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
 	// Create object
-	body := plan.toBody(ctx)
+
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -247,7 +265,8 @@ func (r *TopologyHubSpokeProfileParcelResource) Update(ctx context.Context, req 
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

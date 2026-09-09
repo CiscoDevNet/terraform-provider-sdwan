@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanServiceLANVPNInterfaceEthernetProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015")
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "shutdown", "false"))
@@ -76,9 +76,12 @@ func TestAccSdwanServiceLANVPNInterfaceEthernetProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "ipv4_vrrps.0.min_preempt_delay", "60"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "arps.0.ip_address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "arps.0.mac_address", "00-B0-D0-63-C2-26"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "trustsec_enable_sgt_propogation", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "trustsec_enable_sgt_propogation", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "trustsec_propogate", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "trustsec_security_group_tag", "123"))
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "trustsec_trusted", "true"))
+	}
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "trustsec_enable_enforced_propogation", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "trustsec_enforced_security_group_tag", "1234"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ethernet_feature.test", "duplex", "full"))
@@ -227,9 +230,12 @@ func testAccSdwanServiceLANVPNInterfaceEthernetProfileParcelConfig_all() string 
 	config += `	  ip_address = "1.2.3.4"` + "\n"
 	config += `	  mac_address = "00-B0-D0-63-C2-26"` + "\n"
 	config += `	}]` + "\n"
-	config += `	trustsec_enable_sgt_propogation = false` + "\n"
+	config += `	trustsec_enable_sgt_propogation = true` + "\n"
 	config += `	trustsec_propogate = true` + "\n"
 	config += `	trustsec_security_group_tag = 123` + "\n"
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	trustsec_trusted = true` + "\n"
+	}
 	config += `	trustsec_enable_enforced_propogation = false` + "\n"
 	config += `	trustsec_enforced_security_group_tag = 1234` + "\n"
 	config += `	duplex = "full"` + "\n"

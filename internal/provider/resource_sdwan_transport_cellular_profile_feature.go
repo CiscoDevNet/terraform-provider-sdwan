@@ -26,6 +26,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -158,6 +159,25 @@ func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
+			"slice_type": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("S-NSSAI slice type number: 1(eMBB), 2(URLLC), 3(MioT), Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+				Optional:            true,
+			},
+			"slice_type_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+				Optional:            true,
+			},
+			"slice_differentiator": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("S-NSSAI slice differentiator, Attribute conditional on `slice_type` being set and SD-WAN Manager version `20.18.1` or higher").AddIntegerRangeDescription(0, 16777214).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.AtMost(16777214),
+				},
+			},
+			"slice_differentiator_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `slice_type` being set and SD-WAN Manager version `20.18.1` or higher").String,
+				Optional:            true,
+			},
 		},
 	}
 }
@@ -187,7 +207,9 @@ func (r *TransportCellularProfileProfileParcelResource) Create(ctx context.Conte
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
 	// Create object
-	body := plan.toBody(ctx)
+
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -270,7 +292,8 @@ func (r *TransportCellularProfileProfileParcelResource) Update(ctx context.Conte
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

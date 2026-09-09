@@ -117,7 +117,7 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
 - `ip_mtu_variable` (String) Variable name
 - `ipv4_address` (String)
 - `ipv4_address_variable` (String) Variable name
-- `ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
+- `ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.248.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `ipv4_subnet_mask_variable` (String) Variable name
 - `ipv6_address` (String) Assign IPv6 address
 - `ipv6_address_variable` (String) Variable name
@@ -206,10 +206,15 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
 - `tunnel_interface_color` (String) Set color for TLOC
   - Choices: `default`, `mpls`, `metro-ethernet`, `biz-internet`, `public-internet`, `lte`, `3g`, `red`, `green`, `blue`, `gold`, `silver`, `bronze`, `custom1`, `custom2`, `custom3`, `private1`, `private2`, `private3`, `private4`, `private5`, `private6`
   - Default value: `default`
+- `tunnel_interface_color_description` (String) , Attribute conditional on SD-WAN Manager version `20.18.1` or higher
+- `tunnel_interface_color_description_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
 - `tunnel_interface_color_variable` (String) Variable name
 - `tunnel_interface_encapsulations` (Attributes List) Encapsulation for TLOC (see [below for nested schema](#nestedatt--tunnel_interface_encapsulations))
 - `tunnel_interface_exclude_controller_group_list` (Set of Number) Exclude the following controller groups defined in this list
 - `tunnel_interface_exclude_controller_group_list_variable` (String) Variable name
+- `tunnel_interface_full_port_hop` (Boolean) Enable port hopping on the tunnel interface, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
+  - Default value: `false`
+- `tunnel_interface_full_port_hop_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
 - `tunnel_interface_groups` (Number) List of groups
   - Range: `1`-`4294967295`
 - `tunnel_interface_groups_variable` (String) Variable name
@@ -234,7 +239,7 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
   - Range: `1`-`60`
   - Default value: `5`
 - `tunnel_interface_nat_refresh_interval_variable` (String) Variable name
-- `tunnel_interface_port_hop` (Boolean) Disallow port hopping on the tunnel interface
+- `tunnel_interface_port_hop` (Boolean) The port hop functionality is deprecated for devices 17.18 and higher. Use the full-port-hop field instead.
   - Default value: `true`
 - `tunnel_interface_port_hop_variable` (String) Variable name
 - `tunnel_interface_restrict` (Boolean) Restrict this TLOC behavior

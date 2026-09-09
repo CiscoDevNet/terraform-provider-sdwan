@@ -419,6 +419,7 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewPolicyObjectUnifiedURLFilteringProfileParcelResource,
 		NewPolicyObjectVPNGroupProfileParcelResource,
 		NewServiceDHCPServerProfileParcelResource,
+		NewServiceDualRouterHAProfileParcelResource,
 		NewServiceIPv4ACLProfileParcelResource,
 		NewServiceIPv6ACLProfileParcelResource,
 		NewServiceLANVPNProfileParcelResource,
@@ -589,6 +590,9 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewAttachFeatureDeviceTemplateResource,
 		NewActivateCentralizedPolicyResource,
 		NewActivateTopologyGroupResource,
+		NewNetworkHierarchyNodeResource,
+		NewNetworkHierarchyCflowdResource,
+		NewNetworkHierarchySecurityLoggingResource,
 	}
 }
 
@@ -683,6 +687,7 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewPolicyObjectUnifiedURLFilteringProfileParcelDataSource,
 		NewPolicyObjectVPNGroupProfileParcelDataSource,
 		NewServiceDHCPServerProfileParcelDataSource,
+		NewServiceDualRouterHAProfileParcelDataSource,
 		NewServiceIPv4ACLProfileParcelDataSource,
 		NewServiceIPv6ACLProfileParcelDataSource,
 		NewServiceLANVPNProfileParcelDataSource,
@@ -793,6 +798,9 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewLocalizedPolicyDataSource,
 		NewMeshTopologyPolicyDefinitionDataSource,
 		NewMirrorPolicyObjectDataSource,
+		NewNetworkHierarchyCflowdDataSource,
+		NewNetworkHierarchyNodeDataSource,
+		NewNetworkHierarchySecurityLoggingDataSource,
 		NewObjectGroupPolicyDefinitionDataSource,
 		NewOtherFeatureProfileDataSource,
 		NewPolicerPolicyObjectDataSource,

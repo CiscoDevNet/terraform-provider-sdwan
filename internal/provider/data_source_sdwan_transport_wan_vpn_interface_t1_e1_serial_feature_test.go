@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015")
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "shutdown", "true"))
@@ -268,6 +268,12 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelConfig
 	config += `	tunnel_interface_exclude_controller_group_list = [2]` + "\n"
 	config += `	tunnel_interface_vmanage_connection_preference = 8` + "\n"
 	config += `	tunnel_interface_port_hop = true` + "\n"
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	tunnel_interface_color_description = "WAN Circuit 1"` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	tunnel_interface_full_port_hop = false` + "\n"
+	}
 	config += `	tunnel_interface_low_bandwidth_link = false` + "\n"
 	config += `	tunnel_interface_tunnel_tcp_mss = 1460` + "\n"
 	config += `	tunnel_interface_clear_dont_fragment = false` + "\n"
@@ -345,6 +351,12 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelByName
 	config += `	tunnel_interface_exclude_controller_group_list = [2]` + "\n"
 	config += `	tunnel_interface_vmanage_connection_preference = 8` + "\n"
 	config += `	tunnel_interface_port_hop = true` + "\n"
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	tunnel_interface_color_description = "WAN Circuit 1"` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	tunnel_interface_full_port_hop = false` + "\n"
+	}
 	config += `	tunnel_interface_low_bandwidth_link = false` + "\n"
 	config += `	tunnel_interface_tunnel_tcp_mss = 1460` + "\n"
 	config += `	tunnel_interface_clear_dont_fragment = false` + "\n"

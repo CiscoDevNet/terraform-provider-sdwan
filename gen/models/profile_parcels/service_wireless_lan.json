@@ -479,36 +479,6 @@
                                                         "all"
                                                     ],
                                                     "type": "string"
-                                                },
-                                                "required": [
-                                                    "optionType",
-                                                    "value"
-                                                ]
-                                            },
-                                            "additionalProperties": false
-                                        }
-                                    ]
-                                },
-                                "securityConfig": {
-                                    "description": "Select security type",
-                                    "type": "object",
-                                    "properties": {
-                                        "securityType": {
-                                            "description": "Select security type",
-                                            "type": "object",
-                                            "properties": {
-                                                "optionType": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "global"
-                                                    ]
-                                                },
-                                                "value": {
-                                                    "enum": [
-                                                        "enterprise",
-                                                        "personal",
-                                                        "open"
-                                                    ]
                                                 }
                                             },
                                             "required": [
@@ -516,591 +486,353 @@
                                                 "value"
                                             ],
                                             "additionalProperties": false
-                                        },
-                                        "radiusServerIp": {
-                                            "description": "Set RADIUS server IP",
-                                            "type": "object",
-                                            "oneOf": [
-                                                {
-                                                    "properties": {
-                                                        "optionType": {
-                                                            "type": "string",
-                                                            "enum": [
-                                                                "variable"
-                                                            ]
-                                                        },
-                                                        "value": {
-                                                            "type": "string",
-                                                            "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                                                            "minLength": 1,
-                                                            "maxLength": 128
-                                                        },
-                                                        "default": {
-                                                            "type": "string",
-                                                            "pattern": "^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)$"
-                                                        },
-                                                        "description": {
-                                                            "minLength": 1,
-                                                            "type": "string",
-                                                            "maxLength": 128
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "optionType",
-                                                        "value"
-                                                    ],
-                                                    "additionalProperties": false
-                                                },
-                                                {
-                                                    "properties": {
-                                                        "optionType": {
-                                                            "type": "string",
-                                                            "enum": [
-                                                                "global"
-                                                            ]
-                                                        },
-                                                        "value": {
-                                                            "type": "string",
-                                                            "pattern": "^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)$"
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "optionType",
-                                                        "value"
-                                                    ],
-                                                    "additionalProperties": false
-                                                }
-                                            ]
-                                        },
-                                        "radiusServerPort": {
-                                            "description": "Set RADIUS server authentication port",
-                                            "type": "object",
-                                            "oneOf": [
-                                                {
-                                                    "properties": {
-                                                        "optionType": {
-                                                            "type": "string",
-                                                            "enum": [
-                                                                "global"
-                                                            ]
-                                                        },
-                                                        "value": {
-                                                            "default": 1812,
-                                                            "minimum": 1,
-                                                            "maximum": 65535,
-                                                            "type": "integer"
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "optionType",
-                                                        "value"
-                                                    ],
-                                                    "additionalProperties": false
-                                                },
-                                                {
-                                                    "properties": {
-                                                        "optionType": {
-                                                            "type": "string",
-                                                            "enum": [
-                                                                "variable"
-                                                            ]
-                                                        },
-                                                        "value": {
-                                                            "type": "string",
-                                                            "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                                                            "minLength": 1,
-                                                            "maxLength": 128
-                                                        },
-                                                        "default": {
-                                                            "default": 1812,
-                                                            "minimum": 1,
-                                                            "maximum": 65535,
-                                                            "type": "integer"
-                                                        },
-                                                        "description": {
-                                                            "minLength": 1,
-                                                            "type": "string",
-                                                            "maxLength": 128
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "optionType",
-                                                        "value"
-                                                    ],
-                                                    "additionalProperties": false
-                                                },
-                                                {
-                                                    "properties": {
-                                                        "optionType": {
-                                                            "type": "string",
-                                                            "enum": [
-                                                                "default"
-                                                            ]
-                                                        },
-                                                        "value": {
-                                                            "type": "integer",
-                                                            "minimum": 1812,
-                                                            "maximum": 1812
-                                                        },
-                                                        "required": [
-                                                            "optionType",
-                                                            "value"
-                                                        ]
-                                                    },
-                                                    "additionalProperties": false
-                                                }
-                                            ]
-                                        },
-                                        "radiusServerSecret": {
-                                            "description": "Set RADIUS server shared secret",
-                                            "type": "object",
-                                            "oneOf": [
-                                                {
-                                                    "properties": {
-                                                        "optionType": {
-                                                            "type": "string",
-                                                            "enum": [
-                                                                "global"
-                                                            ]
-                                                        },
-                                                        "value": {
-                                                            "minLength": 8,
-                                                            "type": "string",
-                                                            "maxLength": 32
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "optionType",
-                                                        "value"
-                                                    ],
-                                                    "additionalProperties": false
-                                                },
-                                                {
-                                                    "properties": {
-                                                        "optionType": {
-                                                            "type": "string",
-                                                            "enum": [
-                                                                "variable"
-                                                            ]
-                                                        },
-                                                        "value": {
-                                                            "type": "string",
-                                                            "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                                                            "minLength": 1,
-                                                            "maxLength": 128
-                                                        },
-                                                        "default": {
-                                                            "minLength": 8,
-                                                            "type": "string",
-                                                            "maxLength": 32
-                                                        },
-                                                        "description": {
-                                                            "minLength": 1,
-                                                            "type": "string",
-                                                            "maxLength": 128
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "optionType",
-                                                        "value"
-                                                    ],
-                                                    "additionalProperties": false
-                                                }
-                                            ]
-                                        },
-                                        "passphrase": {
-                                            "description": "Set passphrase",
-                                            "type": "object",
-                                            "oneOf": [
-                                                {
-                                                    "properties": {
-                                                        "optionType": {
-                                                            "type": "string",
-                                                            "enum": [
-                                                                "global"
-                                                            ]
-                                                        },
-                                                        "value": {
-                                                            "minLength": 8,
-                                                            "type": "string",
-                                                            "maxLength": 63
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "optionType",
-                                                        "value"
-                                                    ],
-                                                    "additionalProperties": false
-                                                },
-                                                {
-                                                    "properties": {
-                                                        "optionType": {
-                                                            "type": "string",
-                                                            "enum": [
-                                                                "variable"
-                                                            ]
-                                                        },
-                                                        "value": {
-                                                            "type": "string",
-                                                            "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                                                            "minLength": 1,
-                                                            "maxLength": 128
-                                                        },
-                                                        "default": {
-                                                            "minLength": 8,
-                                                            "type": "string",
-                                                            "maxLength": 63
-                                                        },
-                                                        "description": {
-                                                            "minLength": 1,
-                                                            "type": "string",
-                                                            "maxLength": 128
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "optionType",
-                                                        "value"
-                                                    ],
-                                                    "additionalProperties": false
-                                                }
-                                            ]
                                         }
-                                    },
-                                    "required": [
-                                        "securityType"
-                                    ],
-                                    "additionalProperties": false,
-                                    "allOf": [
+                                    ]
+                                },
+                                "securityConfig": {
+                                    "description": "Security configuration",
+                                    "type": "object",
+                                    "oneOf": [
                                         {
-                                            "if": {
-                                                "properties": {
-                                                    "securityType": {
-                                                        "properties": {
-                                                            "value": {
-                                                                "const": "enterprise"
-                                                            }
-                                                        }
-                                                    }
-                                                },
-                                                "required": [
-                                                    "securityType"
-                                                ]
-                                            },
-                                            "then": {
-                                                "properties": {
-                                                    "securityType": {
-                                                        "description": "Select security type",
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "optionType": {
-                                                                "const": "global"
-                                                            },
-                                                            "value": {
-                                                                "const": "enterprise"
-                                                            }
+                                            "properties": {
+                                                "securityType": {
+                                                    "description": "Select security type",
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "global"
+                                                            ]
                                                         },
-                                                        "required": [
-                                                            "optionType",
-                                                            "value"
-                                                        ],
-                                                        "additionalProperties": false
+                                                        "value": {
+                                                            "enum": [
+                                                                "enterprise"
+                                                            ]
+                                                        }
                                                     },
-                                                    "radiusServerIp": {
-                                                        "description": "Set RADIUS server IP",
-                                                        "type": "object",
-                                                        "oneOf": [
-                                                            {
-                                                                "properties": {
-                                                                    "optionType": {
-                                                                        "enum": [
-                                                                            "variable"
-                                                                        ]
-                                                                    },
-                                                                    "value": {
-                                                                        "type": "string",
-                                                                        "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
-                                                                        "minLength": 1,
-                                                                        "maxLength": 64
-                                                                    }
-                                                                },
-                                                                "required": [
-                                                                    "optionType",
-                                                                    "value"
-                                                                ],
-                                                                "additionalProperties": false
-                                                            },
-                                                            {
-                                                                "properties": {
-                                                                    "optionType": {
-                                                                        "enum": [
-                                                                            "global"
-                                                                        ]
-                                                                    },
-                                                                    "value": {
-                                                                        "type": "string",
-                                                                        "format": "ipv4"
-                                                                    }
-                                                                },
-                                                                "required": [
-                                                                    "optionType",
-                                                                    "value"
-                                                                ],
-                                                                "additionalProperties": false
-                                                            }
-                                                        ]
-                                                    },
-                                                    "radiusServerPort": {
-                                                        "description": "Set RADIUS server authentication port",
-                                                        "type": "object",
-                                                        "oneOf": [
-                                                            {
-                                                                "properties": {
-                                                                    "optionType": {
-                                                                        "enum": [
-                                                                            "global"
-                                                                        ]
-                                                                    },
-                                                                    "value": {
-                                                                        "default": 1812,
-                                                                        "minimum": 1,
-                                                                        "maximum": 65535,
-                                                                        "type": "integer"
-                                                                    }
-                                                                },
-                                                                "required": [
-                                                                    "optionType",
-                                                                    "value"
-                                                                ],
-                                                                "additionalProperties": false
-                                                            },
-                                                            {
-                                                                "properties": {
-                                                                    "optionType": {
-                                                                        "enum": [
-                                                                            "variable"
-                                                                        ]
-                                                                    },
-                                                                    "value": {
-                                                                        "type": "string",
-                                                                        "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
-                                                                        "minLength": 1,
-                                                                        "maxLength": 64
-                                                                    }
-                                                                },
-                                                                "required": [
-                                                                    "optionType",
-                                                                    "value"
-                                                                ],
-                                                                "additionalProperties": false
-                                                            },
-                                                            {
-                                                                "properties": {
-                                                                    "optionType": {
-                                                                        "enum": [
-                                                                            "default"
-                                                                        ]
-                                                                    },
-                                                                    "value": {
-                                                                        "type": "integer",
-                                                                        "minimum": 1812,
-                                                                        "maximum": 1812
-                                                                    },
-                                                                    "required": [
-                                                                        "optionType",
-                                                                        "value"
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                },
+                                                "radiusServerIp": {
+                                                    "description": "Set RADIUS server IP",
+                                                    "type": "object",
+                                                    "oneOf": [
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "variable"
                                                                     ]
                                                                 },
-                                                                "additionalProperties": false
-                                                            }
-                                                        ]
-                                                    },
-                                                    "radiusServerSecret": {
-                                                        "description": "Set RADIUS server shared secret",
-                                                        "type": "object",
-                                                        "oneOf": [
-                                                            {
-                                                                "properties": {
-                                                                    "optionType": {
-                                                                        "enum": [
-                                                                            "global"
-                                                                        ]
-                                                                    },
-                                                                    "value": {
-                                                                        "minLength": 8,
-                                                                        "type": "string",
-                                                                        "maxLength": 32
-                                                                    }
+                                                                "value": {
+                                                                    "type": "string",
+                                                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                    "minLength": 1,
+                                                                    "maxLength": 128
                                                                 },
-                                                                "required": [
-                                                                    "optionType",
-                                                                    "value"
-                                                                ],
-                                                                "additionalProperties": false
-                                                            },
-                                                            {
-                                                                "properties": {
-                                                                    "optionType": {
-                                                                        "enum": [
-                                                                            "variable"
-                                                                        ]
-                                                                    },
-                                                                    "value": {
-                                                                        "type": "string",
-                                                                        "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
-                                                                        "minLength": 1,
-                                                                        "maxLength": 64
-                                                                    }
+                                                                "default": {
+                                                                    "type": "string",
+                                                                    "pattern": "^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)$"
                                                                 },
-                                                                "required": [
-                                                                    "optionType",
-                                                                    "value"
-                                                                ],
-                                                                "additionalProperties": false
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                "required": [
-                                                    "securityType",
-                                                    "radiusServerIp",
-                                                    "radiusServerPort",
-                                                    "radiusServerSecret"
-                                                ],
-                                                "additionalProperties": false
-                                            }
-                                        },
-                                        {
-                                            "if": {
-                                                "properties": {
-                                                    "securityType": {
-                                                        "properties": {
-                                                            "value": {
-                                                                "const": "personal"
-                                                            }
-                                                        }
-                                                    }
-                                                },
-                                                "required": [
-                                                    "securityType"
-                                                ]
-                                            },
-                                            "then": {
-                                                "properties": {
-                                                    "securityType": {
-                                                        "description": "Select security type",
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "optionType": {
-                                                                "const": "global"
+                                                                "description": {
+                                                                    "minLength": 1,
+                                                                    "type": "string",
+                                                                    "maxLength": 128
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "const": "personal"
-                                                            }
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
                                                         },
-                                                        "required": [
-                                                            "optionType",
-                                                            "value"
-                                                        ],
-                                                        "additionalProperties": false
-                                                    },
-                                                    "passphrase": {
-                                                        "description": "Set passphrase",
-                                                        "type": "object",
-                                                        "oneOf": [
-                                                            {
-                                                                "properties": {
-                                                                    "optionType": {
-                                                                        "enum": [
-                                                                            "global"
-                                                                        ]
-                                                                    },
-                                                                    "value": {
-                                                                        "minLength": 8,
-                                                                        "type": "string",
-                                                                        "maxLength": 63
-                                                                    }
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "global"
+                                                                    ]
                                                                 },
-                                                                "required": [
-                                                                    "optionType",
-                                                                    "value"
-                                                                ],
-                                                                "additionalProperties": false
+                                                                "value": {
+                                                                    "type": "string",
+                                                                    "pattern": "^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)$"
+                                                                }
                                                             },
-                                                            {
-                                                                "properties": {
-                                                                    "optionType": {
-                                                                        "enum": [
-                                                                            "variable"
-                                                                        ]
-                                                                    },
-                                                                    "value": {
-                                                                        "type": "string",
-                                                                        "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
-                                                                        "minLength": 1,
-                                                                        "maxLength": 64
-                                                                    }
-                                                                },
-                                                                "required": [
-                                                                    "optionType",
-                                                                    "value"
-                                                                ],
-                                                                "additionalProperties": false
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                "required": [
-                                                    "securityType",
-                                                    "passphrase"
-                                                ],
-                                                "additionalProperties": false
-                                            }
-                                        },
-                                        {
-                                            "if": {
-                                                "properties": {
-                                                    "securityType": {
-                                                        "properties": {
-                                                            "value": {
-                                                                "const": "open"
-                                                            }
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
                                                         }
-                                                    }
-                                                },
-                                                "required": [
-                                                    "securityType"
-                                                ]
-                                            },
-                                            "then": {
-                                                "properties": {
-                                                    "securityType": {
-                                                        "description": "Select security type",
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "optionType": {
-                                                                "const": "global"
-                                                            },
-                                                            "value": {
-                                                                "const": "open"
-                                                            }
-                                                        },
-                                                        "required": [
-                                                            "optionType",
-                                                            "value"
-                                                        ],
-                                                        "additionalProperties": false
-                                                    }
-                                                },
-                                                "not": {
-                                                    "required": [
-                                                        "radiusServerIp",
-                                                        "radiusServerPort",
-                                                        "radiusServerSecret",
-                                                        "passphrase"
                                                     ]
                                                 },
-                                                "additionalProperties": false
-                                            }
+                                                "radiusServerPort": {
+                                                    "description": "Set RADIUS server authentication port",
+                                                    "type": "object",
+                                                    "oneOf": [
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "global"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "default": 1812,
+                                                                    "minimum": 1,
+                                                                    "maximum": 65535,
+                                                                    "type": "integer"
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "variable"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "string",
+                                                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                    "minLength": 1,
+                                                                    "maxLength": 128
+                                                                },
+                                                                "default": {
+                                                                    "default": 1812,
+                                                                    "minimum": 1,
+                                                                    "maximum": 65535,
+                                                                    "type": "integer"
+                                                                },
+                                                                "description": {
+                                                                    "minLength": 1,
+                                                                    "type": "string",
+                                                                    "maxLength": 128
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "default"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "integer",
+                                                                    "minimum": 1812,
+                                                                    "maximum": 1812
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        }
+                                                    ]
+                                                },
+                                                "radiusServerSecret": {
+                                                    "description": "Set RADIUS server shared secret",
+                                                    "type": "object",
+                                                    "oneOf": [
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "global"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "minLength": 8,
+                                                                    "type": "string",
+                                                                    "maxLength": 32
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "variable"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "string",
+                                                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                    "minLength": 1,
+                                                                    "maxLength": 128
+                                                                },
+                                                                "default": {
+                                                                    "minLength": 8,
+                                                                    "type": "string",
+                                                                    "maxLength": 32
+                                                                },
+                                                                "description": {
+                                                                    "minLength": 1,
+                                                                    "type": "string",
+                                                                    "maxLength": 128
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "securityType",
+                                                "radiusServerIp",
+                                                "radiusServerPort",
+                                                "radiusServerSecret"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "securityType": {
+                                                    "description": "Select security type",
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "global"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "enum": [
+                                                                "personal"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                },
+                                                "passphrase": {
+                                                    "description": "Set passphrase",
+                                                    "type": "object",
+                                                    "oneOf": [
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "global"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "minLength": 8,
+                                                                    "type": "string",
+                                                                    "maxLength": 63
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "variable"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "string",
+                                                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                    "minLength": 1,
+                                                                    "maxLength": 128
+                                                                },
+                                                                "default": {
+                                                                    "minLength": 8,
+                                                                    "type": "string",
+                                                                    "maxLength": 63
+                                                                },
+                                                                "description": {
+                                                                    "minLength": 1,
+                                                                    "type": "string",
+                                                                    "maxLength": 128
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "securityType",
+                                                "passphrase"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "securityType": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "global"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "enum": [
+                                                                "open"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                }
+                                            },
+                                            "required": [
+                                                "securityType"
+                                            ],
+                                            "additionalProperties": false
                                         }
                                     ]
                                 },
@@ -1182,12 +914,12 @@
                                                     "enum": [
                                                         "silver"
                                                     ]
-                                                },
-                                                "required": [
-                                                    "optionType",
-                                                    "value"
-                                                ]
+                                                }
                                             },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
                                             "additionalProperties": false
                                         }
                                     ]
@@ -1757,6 +1489,7 @@
                                                                     "255.255.0.0",
                                                                     "255.254.0.0",
                                                                     "255.252.0.0",
+                                                                    "255.248.0.0",
                                                                     "255.240.0.0",
                                                                     "255.224.0.0",
                                                                     "255.192.0.0",
@@ -1814,6 +1547,7 @@
                                                                     "255.255.0.0",
                                                                     "255.254.0.0",
                                                                     "255.252.0.0",
+                                                                    "255.248.0.0",
                                                                     "255.240.0.0",
                                                                     "255.224.0.0",
                                                                     "255.192.0.0",
@@ -1948,9 +1682,17 @@
                     "vedge-C1131-8PW",
                     "vedge-C1131X-8PW",
                     "vedge-C1131-8PLTEPW",
-                    "vedge-C1131X-8PLTEPW"
+                    "vedge-C1131X-8PLTEPW",
+                    "vedge-C8131-5T1S",
+                    "vedge-C8130-G2",
+                    "vedge-C8131-8T2S",
+                    "vedge-C8140-G2",
+                    "vedge-C8131X-1C-8T2S",
+                    "vedge-C8151-G2",
+                    "vedge-C8131X-1C-8P2S",
+                    "vedge-C8161-G2"
                 ],
-                "minVManageVersion": "20.16.1"
+                "minVManageVersion": "20.17.1"
             },
             "documentation": {
                 "description": "This is the documentation for POST request schema for wirelesslan profile parcel",

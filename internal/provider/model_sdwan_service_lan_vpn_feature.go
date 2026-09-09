@@ -386,12 +386,7 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"vpnId.optionType", "variable")
 			body, _ = sjson.Set(body, path+"vpnId.value", data.VpnVariable.ValueString())
 		}
-	} else if data.Vpn.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"vpnId.optionType", "default")
-			body, _ = sjson.Set(body, path+"vpnId.value", 0)
-		}
-	} else {
+	} else if !data.Vpn.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"vpnId.optionType", "global")
 			body, _ = sjson.Set(body, path+"vpnId.value", data.Vpn.ValueInt64())

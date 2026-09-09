@@ -97,9 +97,10 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
       mac_address = "00-B0-D0-63-C2-26"
     }
   ]
-  trustsec_enable_sgt_propogation      = false
+  trustsec_enable_sgt_propogation      = true
   trustsec_propogate                   = true
   trustsec_security_group_tag          = 123
+  trustsec_trusted                     = true
   trustsec_enable_enforced_propogation = false
   trustsec_enforced_security_group_tag = 1234
   duplex                               = "full"
@@ -280,6 +281,8 @@ resource "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `trustsec_security_group_tag` (Number) SGT value between 2 and 65519, Attribute conditional on `port_channel_member_interface` not equal to `true`
   - Range: `2`-`65519`
 - `trustsec_security_group_tag_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
+- `trustsec_trusted` (Boolean) Indicates that the interface is trustworthy for CTS., Attribute conditional on (`trustsec_security_group_tag` being set and `port_channel_member_interface` not equal to `true` and `trustsec_enable_sgt_propogation` equal to `true` and `trustsec_propogate` equal to `true` and SD-WAN Manager version `20.18.1` or higher) or (`trustsec_security_group_tag_variable` being set and `port_channel_member_interface` not equal to `true` and `trustsec_enable_sgt_propogation` equal to `true` and `trustsec_propogate` equal to `true` and SD-WAN Manager version `20.18.1` or higher)
+  - Default value: `true`
 - `xconnect` (String) Extend remote TLOC over a GRE tunnel to a local LAN interface, Attribute conditional on `port_channel_member_interface` not equal to `true`
 - `xconnect_variable` (String) Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`
 

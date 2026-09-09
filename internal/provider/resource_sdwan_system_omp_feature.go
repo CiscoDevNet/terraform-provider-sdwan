@@ -194,8 +194,14 @@ func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"holdtime": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Hold Time (seconds)").AddDefaultValueDescription("300").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Hold Time (seconds)").AddIntegerRangesDescription([]helpers.IntRange{{Min: 0, Max: 0}, {Min: 3, Max: 65535}}).AddDefaultValueDescription("300").String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Any(
+						int64validator.Between(0, 0),
+						int64validator.Between(3, 65535),
+					),
+				},
 			},
 			"holdtime_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

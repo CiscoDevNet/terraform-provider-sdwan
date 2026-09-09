@@ -1,9 +1,12 @@
+# Manual tests only (model/resource still generated) - test configs keep sites/hierarchy_uuids mutually exclusive.
 ---
 name: Topology Custom Control
 rest_endpoint: /v1/feature-profile/sdwan/topology/%v/custom-control
 minimum_version: 20.15.0
+has_version: true
 id_attribute: id
 test_tags: [SDWAN_2015]
+skip_templates: ["resource_test.go", "data_source_test.go"]
 skip_minimum_test: true
 no_data_source_name_query: true
 parcel_type: feature
@@ -52,10 +55,39 @@ attributes:
     ignore_mandatory: true
     optional_null_empty: true
     force_include: true
+    exclude_example: true
+    test_tags: [SDWAN_2015]
     conditional_attribute:
       conditions:
         - name: target_level
           value: SITE
+        - name: target_inbound_hierarchy_uuids
+          value: ''
+        - name: target_outbound_hierarchy_uuids
+          value: ''
+  - model_name: inboundHierarchyUuid
+    data_path: [target]
+    tf_name: target_inbound_hierarchy_uuids
+    no_augment_config: true
+    type: Set
+    element_type: String
+    description: Inbound network hierarchy UUIDs
+    example: acb2ea53-4a95-4970-a1ab-9bac15edb961
+    test_value: "[sdwan_network_hierarchy_node.network_hierarchy_node_site_test.id]"
+    test_tags: [SDWAN_2018]
+    ignore_mandatory: true
+    optional_null_empty: true
+    force_include: true
+    conditional_attribute:
+      conditions:
+        - name: target_level
+          value: SITE
+        - type: MinVersion
+          value: 20.18.1
+        - name: target_inbound_sites
+          value: ''
+        - name: target_outbound_sites
+          value: ''
   - model_name: outboundSites
     data_path: [target]
     tf_name: target_outbound_sites
@@ -66,10 +98,39 @@ attributes:
     ignore_mandatory: true
     optional_null_empty: true
     force_include: true
+    exclude_example: true
+    test_tags: [SDWAN_2015]
     conditional_attribute:
       conditions:
         - name: target_level
           value: SITE
+        - name: target_outbound_hierarchy_uuids
+          value: ''
+        - name: target_inbound_hierarchy_uuids
+          value: ''
+  - model_name: outboundHierarchyUuid
+    data_path: [target]
+    tf_name: target_outbound_hierarchy_uuids
+    no_augment_config: true
+    type: Set
+    element_type: String
+    description: Outbound network hierarchy UUIDs
+    example: acb2ea53-4a95-4970-a1ab-9bac15edb961
+    test_value: "[sdwan_network_hierarchy_node.network_hierarchy_node_site_test.id]"
+    test_tags: [SDWAN_2018]
+    ignore_mandatory: true
+    optional_null_empty: true
+    force_include: true
+    conditional_attribute:
+      conditions:
+        - name: target_level
+          value: SITE
+        - type: MinVersion
+          value: 20.18.1
+        - name: target_outbound_sites
+          value: ''
+        - name: target_inbound_sites
+          value: ''
   - model_name: inboundRegions
     data_path: [target]
     tf_name: target_inbound_regions
@@ -211,7 +272,21 @@ attributes:
             element_type: String
             description: Site list
             example: site_100
-            exclude_test: true
+            exclude_example: true
+            test_tags: [SDWAN_2015]
+          - model_name: hierarchyUuid
+            tf_name: hierarchy_uuids
+            no_augment_config: true
+            type: Set
+            element_type: String
+            description: Network hierarchy UUIDs for matching
+            example: c446d770-2ac0-4e2c-9a64-345d562a4ac7
+            test_value: "[sdwan_network_hierarchy_node.network_hierarchy_node_site_test.id]"
+            test_tags: [SDWAN_2018]
+            conditional_attribute:
+              conditions:
+                - type: MinVersion
+                  value: 20.18.1
           - model_name: regions
             tf_name: match_regions
             no_augment_config: true
@@ -535,4 +610,11 @@ test_prerequisites: |
   resource "sdwan_topology_feature_profile" "test" {
     name        = "TF_TEST"
     description = "Terraform test"
+  }
+  resource "sdwan_network_hierarchy_node" "network_hierarchy_node_site_test" {
+    parent_group    = "Global"
+    name         = "TF_TEST_SITE"
+    description  = "EMEA Region EMEA site update new"
+    type         = "site"
+    site_id      = 555
   }

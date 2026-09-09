@@ -134,6 +134,62 @@
                   }
                 ]
               },
+              "inboundHierarchyUuid": {
+                "type": "object",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "optionType": {
+                        "type": "string",
+                        "enum": [
+                          "global"
+                        ]
+                      },
+                      "value": {
+                        "type": "array",
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "string",
+                          "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                        }
+                      }
+                    },
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "inboundSiteRule": {
+                "type": "object",
+                "properties": {
+                  "ruleId": {
+                    "properties": {
+                      "optionType": {
+                        "type": "string",
+                        "enum": [
+                          "global"
+                        ]
+                      },
+                      "value": {
+                        "type": "string",
+                        "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                      }
+                    },
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "ruleId"
+                ],
+                "additionalProperties": false
+              },
               "outboundSites": {
                 "type": "object",
                 "oneOf": [
@@ -160,6 +216,62 @@
                     "additionalProperties": false
                   }
                 ]
+              },
+              "outboundHierarchyUuid": {
+                "type": "object",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "optionType": {
+                        "type": "string",
+                        "enum": [
+                          "global"
+                        ]
+                      },
+                      "value": {
+                        "type": "array",
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "string",
+                          "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                        }
+                      }
+                    },
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "outboundSiteRule": {
+                "type": "object",
+                "properties": {
+                  "ruleId": {
+                    "properties": {
+                      "optionType": {
+                        "type": "string",
+                        "enum": [
+                          "global"
+                        ]
+                      },
+                      "value": {
+                        "type": "string",
+                        "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                      }
+                    },
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "ruleId"
+                ],
+                "additionalProperties": false
               },
               "inboundRegions": {
                 "type": "array",
@@ -386,7 +498,7 @@
                   }
                 },
                 "then": {
-                  "anyOf": [
+                  "oneOf": [
                     {
                       "required": [
                         "inboundSites"
@@ -394,8 +506,83 @@
                     },
                     {
                       "required": [
-                        "outboundSites"
+                        "inboundSiteRule"
                       ]
+                    },
+                    {
+                      "required": [
+                        "inboundHierarchyUuid"
+                      ]
+                    }
+                  ],
+                  "allOf": [
+                    {
+                      "if": {
+                        "required": [
+                          "inboundSites"
+                        ]
+                      },
+                      "then": {
+                        "required": [
+                          "outboundSites"
+                        ],
+                        "not": {
+                          "anyOf": [
+                            {
+                              "required": [
+                                "outboundSiteRule"
+                              ]
+                            },
+                            {
+                              "required": [
+                                "outboundHierarchyUuid"
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "if": {
+                        "required": [
+                          "inboundSiteRule"
+                        ]
+                      },
+                      "then": {
+                        "oneOf": [
+                          {
+                            "required": [
+                              "outboundSiteRule"
+                            ]
+                          },
+                          {
+                            "required": [
+                              "outboundHierarchyUuid"
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "if": {
+                        "required": [
+                          "inboundHierarchyUuid"
+                        ]
+                      },
+                      "then": {
+                        "oneOf": [
+                          {
+                            "required": [
+                              "outboundSiteRule"
+                            ]
+                          },
+                          {
+                            "required": [
+                              "outboundHierarchyUuid"
+                            ]
+                          }
+                        ]
+                      }
                     }
                   ]
                 }
@@ -828,6 +1015,35 @@
                                     "uniqueItems": true,
                                     "items": {
                                       "type": "string"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            ]
+                          },
+                          "hierarchyUuid": {
+                            "description": "Site List",
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "uniqueItems": true,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
                                     }
                                   }
                                 },
@@ -1331,7 +1547,8 @@
                                       ]
                                     },
                                     "value": {
-                                      "type": "string"
+                                      "type": "string",
+                                      "pattern": "^\\s*(internet|local-AS|(?i:no-advertise|no-export)|((0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]):(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])))\\s*$"
                                     }
                                   },
                                   "required": [
@@ -1424,7 +1641,7 @@
                                     },
                                     "value": {
                                       "type": "integer",
-                                      "minimum": 0,
+                                      "minimum": 1,
                                       "maximum": 63
                                     }
                                   },
@@ -2237,7 +2454,7 @@
         }
       },
       "metadata": {
-        "minVManageVersion": "20.15.1"
+        "minVManageVersion": "20.18.1"
       }
     },
     "metadata": {

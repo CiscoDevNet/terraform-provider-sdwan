@@ -206,9 +206,6 @@
                                             ]
                                         }
                                     },
-                                    "required": [
-                                        "protocol"
-                                    ],
                                     "additionalProperties": false
                                 }
                             },
@@ -221,10 +218,12 @@
                                     "type": "object",
                                     "properties": {
                                         "prefix": {
-                                            "description": "Configure the prefixes for EIGRP to announce",
                                             "type": "object",
+                                            "description": "Configure the IPv4 prefixes to aggregate",
                                             "properties": {
                                                 "address": {
+                                                    "description": "IP Address",
+                                                    "type": "object",
                                                     "oneOf": [
                                                         {
                                                             "properties": {
@@ -278,6 +277,8 @@
                                                     ]
                                                 },
                                                 "mask": {
+                                                    "description": "Subnet Mask",
+                                                    "type": "object",
                                                     "oneOf": [
                                                         {
                                                             "properties": {
@@ -315,6 +316,7 @@
                                                                         "255.255.0.0",
                                                                         "255.254.0.0",
                                                                         "255.252.0.0",
+                                                                        "255.248.0.0",
                                                                         "255.240.0.0",
                                                                         "255.224.0.0",
                                                                         "255.192.0.0",
@@ -372,6 +374,7 @@
                                                                         "255.255.0.0",
                                                                         "255.254.0.0",
                                                                         "255.252.0.0",
+                                                                        "255.248.0.0",
                                                                         "255.240.0.0",
                                                                         "255.224.0.0",
                                                                         "255.192.0.0",
@@ -397,23 +400,62 @@
                                                     ]
                                                 }
                                             },
-                                            "required": [
-                                                "address",
-                                                "mask"
+                                            "allOf": [
+                                                {
+                                                    "if": {
+                                                        "anyOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "address": {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "const": "global"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "address"
+                                                                ]
+                                                            },
+                                                            {
+                                                                "properties": {
+                                                                    "mask": {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "const": "global"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "mask"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    "then": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "address",
+                                                            "mask"
+                                                        ]
+                                                    }
+                                                }
                                             ],
                                             "additionalProperties": false
                                         }
                                     },
-                                    "required": [
-                                        "prefix"
-                                    ],
                                     "additionalProperties": false
                                 }
                             }
                         },
-                        "required": [
-                            "network"
-                        ],
                         "additionalProperties": false
                     },
                     "helloInterval": {
@@ -1040,6 +1082,8 @@
                                                 "type": "object",
                                                 "properties": {
                                                     "address": {
+                                                        "description": "IP Address",
+                                                        "type": "object",
                                                         "oneOf": [
                                                             {
                                                                 "properties": {
@@ -1093,6 +1137,8 @@
                                                         ]
                                                     },
                                                     "mask": {
+                                                        "description": "Subnet Mask",
+                                                        "type": "object",
                                                         "oneOf": [
                                                             {
                                                                 "properties": {
@@ -1130,6 +1176,7 @@
                                                                             "255.255.0.0",
                                                                             "255.254.0.0",
                                                                             "255.252.0.0",
+                                                                            "255.248.0.0",
                                                                             "255.240.0.0",
                                                                             "255.224.0.0",
                                                                             "255.192.0.0",
@@ -1187,6 +1234,7 @@
                                                                             "255.255.0.0",
                                                                             "255.254.0.0",
                                                                             "255.252.0.0",
+                                                                            "255.248.0.0",
                                                                             "255.240.0.0",
                                                                             "255.224.0.0",
                                                                             "255.192.0.0",
@@ -1212,23 +1260,62 @@
                                                         ]
                                                     }
                                                 },
-                                                "required": [
-                                                    "address",
-                                                    "mask"
+                                                "allOf": [
+                                                    {
+                                                        "if": {
+                                                            "anyOf": [
+                                                                {
+                                                                    "properties": {
+                                                                        "address": {
+                                                                            "properties": {
+                                                                                "optionType": {
+                                                                                    "const": "global"
+                                                                                }
+                                                                            },
+                                                                            "required": [
+                                                                                "optionType"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "address"
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "properties": {
+                                                                        "mask": {
+                                                                            "properties": {
+                                                                                "optionType": {
+                                                                                    "const": "global"
+                                                                                }
+                                                                            },
+                                                                            "required": [
+                                                                                "optionType"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "mask"
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        },
+                                                        "then": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "address",
+                                                                "mask"
+                                                            ]
+                                                        }
+                                                    }
                                                 ],
                                                 "additionalProperties": false
                                             }
                                         },
-                                        "required": [
-                                            "prefix"
-                                        ],
                                         "additionalProperties": false
                                     }
                                 }
                             },
-                            "required": [
-                                "name"
-                            ],
                             "additionalProperties": false
                         }
                     },
@@ -1369,7 +1456,7 @@
                 "additionalProperties": false
             },
             "metadata": {
-                "minVManageVersion": "20.15.1"
+                "minVManageVersion": "20.17.1"
             },
             "documentation": {
                 "description": "This is the documentation for request schema for EIGRP feature",
