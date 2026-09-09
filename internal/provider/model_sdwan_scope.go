@@ -85,18 +85,27 @@ func (data Scope) toBody(ctx context.Context) string {
 
 // End of section. //template:end toBody
 
+// scopeObjectIDKeys lists, in priority order, the JSON keys that the resource-domain GET
+// response uses to carry an object's UUID inside "object[]". The key differs per objectType.
+var scopeObjectIDKeys = []string{"id", "profileId", "templateId", "policyId", "uuid"}
+
 // fromBody is hand-maintained (not generated) because the resource-domain API's GET response
 // shape does not match what POST/PUT accept:
 //   - "objects" always lists every enum objectType (even unused ones), each wrapped as
 //     {"objectType":..,"object":[{...full detail...}]} instead of the flat {"objectType":..,
 //     "objectIds":[...]} sent on write, and the id key inside "object" differs per type
-//     (e.g. "id" for config-group, "profileId" for feature-profile).
+//     (see scopeObjectIDKeys).
 //   - "users" returns full user records instead of the flat usernames sent on write.
 //
-// Note: the controller silently attaches a default "feature-profile" association (the built-in
-// "Default_Policy_Object_Profile") to every scope that was never explicitly requested. This is
-// intentionally NOT filtered out here (matching by name would be fragile) - callers that want a
-// diff-free plan should declare that association explicitly in their scope's "objects" config.
+// Ownership model: additive. The controller attaches associations that were never requested -
+// e.g. the built-in "Default_Policy_Object_Profile", and every feature template composing a
+// device template that was added to the scope. Adopting those into state produces a
+// non-convergent perpetual diff, because toBody only ever sends what the practitioner declared.
+// Therefore, when prior state/config is available, this only retains ids that Terraform already
+// knows about, per objectType. Controller-injected extras are ignored; ids that genuinely
+// disappeared server-side still drop out and surface as a diff. When no prior objects are known
+// (import, and the data source, which passes a config carrying only "id"), the full server-side
+// view is adopted instead.
 func (data *Scope) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
@@ -108,19 +117,45 @@ func (data *Scope) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.Description = types.StringNull()
 	}
+	// Snapshot the ids Terraform already knows about, keyed by objectType, before they are
+	// overwritten below. Empty means "no prior view" (import / data source) - see the doc comment.
+	known := make(map[string]map[string]bool, len(data.Objects))
+	for _, o := range data.Objects {
+		objectType := o.ObjectType.ValueString()
+		if known[objectType] == nil {
+			known[objectType] = make(map[string]bool)
+		}
+		var priorIds []string
+		o.ObjectIds.ElementsAs(ctx, &priorIds, false)
+		for _, id := range priorIds {
+			known[objectType][id] = true
+		}
+	}
+	retainOnlyKnown := len(known) > 0
+
 	if value := res.Get("objects"); value.Exists() {
 		objects := make([]ScopeObjects, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			objectType := v.Get("objectType").String()
 			var ids []string
 			v.Get("object").ForEach(func(k, item gjson.Result) bool {
-				if id := item.Get("id"); id.Exists() {
-					ids = append(ids, id.String())
-				} else if id := item.Get("profileId"); id.Exists() {
-					ids = append(ids, id.String())
+				for _, idKey := range scopeObjectIDKeys {
+					if id := item.Get(idKey); id.Exists() && id.String() != "" {
+						ids = append(ids, id.String())
+						break
+					}
 				}
 				return true
 			})
+			if retainOnlyKnown {
+				retained := make([]string, 0, len(ids))
+				for _, id := range ids {
+					if known[objectType][id] {
+						retained = append(retained, id)
+					}
+				}
+				ids = retained
+			}
 			if len(ids) == 0 {
 				return true
 			}
