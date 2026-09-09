@@ -7,7 +7,6 @@ description: |-
 
 # Changelog
 
-
 ## 0.11.6 (unreleased)
 
 - Add `sdwan_scope` resource and data source
