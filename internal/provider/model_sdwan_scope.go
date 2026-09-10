@@ -57,7 +57,7 @@ func (data Scope) toBody(ctx context.Context) string {
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}
-	if !data.Description.IsNull() {
+	if true {
 		body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	}
 	if true {
@@ -112,7 +112,7 @@ func (data *Scope) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.Name = types.StringNull()
 	}
-	if value := res.Get("description"); value.Exists() {
+	if value := res.Get("description"); value.Exists() && (value.String() != "" || !data.Description.IsNull()) {
 		data.Description = types.StringValue(value.String())
 	} else {
 		data.Description = types.StringNull()

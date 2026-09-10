@@ -17,6 +17,7 @@ attributes:
     example: west1
   - model_name: description
     type: String
+    always_include: true
     description: Description
     example: West Coast Domain1
   - model_name: objects
