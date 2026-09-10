@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.11.6 (unreleased)
+
+- Add `sdwan_scope` resource and data source
+
 ## 0.11.5
 
 - Update provider documentation: refresh tested platform versions to 20.12/20.15/20.18, restructure guides into "Getting Started - Configuration and Policy Groups" (new, recommended) and "Getting Started - Classic Templates"
