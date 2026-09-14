@@ -20,7 +20,7 @@ resource "sdwan_topology_mesh_feature" "example" {
   description        = "My Example"
   feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   target_vpns        = ["service_lan_vpn1"]
-  sites              = ["SITE_100"]
+  hierarchy_uuids    = ["acb2ea53-4a95-4970-a1ab-9bac15edb961"]
 }
 ```
 
@@ -31,12 +31,13 @@ resource "sdwan_topology_mesh_feature" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
-- `sites` (Set of String)
-- `target_vpns` (Set of String)
+- `target_vpns` (Set of String) Target VPN list
 
 ### Optional
 
 - `description` (String) The description of the Feature
+- `hierarchy_uuids` (Set of String) Network hierarchy UUIDs, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
+- `sites` (Set of String) Site list
 
 ### Read-Only
 

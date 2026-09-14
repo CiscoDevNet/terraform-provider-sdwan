@@ -202,6 +202,7 @@
                                                         "100",
                                                         "1000",
                                                         "2500",
+                                                        "5000",
                                                         "10000",
                                                         "25000"
                                                     ],
@@ -234,6 +235,7 @@
                                                         "100",
                                                         "1000",
                                                         "2500",
+                                                        "5000",
                                                         "10000",
                                                         "25000"
                                                     ],
@@ -1538,9 +1540,6 @@
                                     ]
                                 }
                             },
-                            "required": [
-                                "ifName"
-                            ],
                             "additionalProperties": false
                         }
                     },
@@ -1817,7 +1816,7 @@
                     "ISRv",
                     "ir1101"
                 ],
-                "minVManageVersion": "20.15.1"
+                "minVManageVersion": "20.18.1"
             },
             "documentation": {
                 "description": "This is the documentation for POST request schema for Switchport profile parcel",

@@ -24,6 +24,7 @@ import (
 	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -33,25 +34,28 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type TopologyHubSpoke struct {
-	Id               types.String             `tfsdk:"id"`
-	Version          types.Int64              `tfsdk:"version"`
-	Name             types.String             `tfsdk:"name"`
-	Description      types.String             `tfsdk:"description"`
-	FeatureProfileId types.String             `tfsdk:"feature_profile_id"`
-	TargetVpns       types.Set                `tfsdk:"target_vpns"`
-	SelectedHubs     types.Set                `tfsdk:"selected_hubs"`
-	Spokes           []TopologyHubSpokeSpokes `tfsdk:"spokes"`
+	Id                    types.String             `tfsdk:"id"`
+	Version               types.Int64              `tfsdk:"version"`
+	Name                  types.String             `tfsdk:"name"`
+	Description           types.String             `tfsdk:"description"`
+	FeatureProfileId      types.String             `tfsdk:"feature_profile_id"`
+	TargetVpns            types.Set                `tfsdk:"target_vpns"`
+	SelectedHubs          types.Set                `tfsdk:"selected_hubs"`
+	SelectedHierarchyHubs types.Set                `tfsdk:"selected_hierarchy_hubs"`
+	Spokes                []TopologyHubSpokeSpokes `tfsdk:"spokes"`
 }
 
 type TopologyHubSpokeSpokes struct {
-	Name       types.String                     `tfsdk:"name"`
-	SpokeSites types.Set                        `tfsdk:"spoke_sites"`
-	HubSites   []TopologyHubSpokeSpokesHubSites `tfsdk:"hub_sites"`
+	Name                types.String                     `tfsdk:"name"`
+	SpokeSites          types.Set                        `tfsdk:"spoke_sites"`
+	SpokeHierarchyUuids types.Set                        `tfsdk:"spoke_hierarchy_uuids"`
+	HubSites            []TopologyHubSpokeSpokesHubSites `tfsdk:"hub_sites"`
 }
 
 type TopologyHubSpokeSpokesHubSites struct {
-	Sites      types.Set   `tfsdk:"sites"`
-	Preference types.Int64 `tfsdk:"preference"`
+	Sites             types.Set   `tfsdk:"sites"`
+	HubHierarchyUuids types.Set   `tfsdk:"hub_hierarchy_uuids"`
+	Preference        types.Int64 `tfsdk:"preference"`
 }
 
 // End of section. //template:end types
@@ -71,7 +75,7 @@ func (data TopologyHubSpoke) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data TopologyHubSpoke) toBody(ctx context.Context) string {
+func (data TopologyHubSpoke) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -92,6 +96,14 @@ func (data TopologyHubSpoke) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"selectedHubs.value", values)
 		}
 	}
+	if !data.SelectedHierarchyHubs.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"selectedHierarchyHubs.optionType", "global")
+			var values []string
+			data.SelectedHierarchyHubs.ElementsAs(ctx, &values, false)
+			body, _ = sjson.Set(body, path+"selectedHierarchyHubs.value", values)
+		}
+	}
 	if true {
 		body, _ = sjson.Set(body, path+"spokes", []interface{}{})
 		for _, item := range data.Spokes {
@@ -110,6 +122,14 @@ func (data TopologyHubSpoke) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "spokeSites.value", values)
 				}
 			}
+			if !item.SpokeHierarchyUuids.IsNull() {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+					itemBody, _ = sjson.Set(itemBody, "spokeHierarchyUuid.optionType", "global")
+					var values []string
+					item.SpokeHierarchyUuids.ElementsAs(ctx, &values, false)
+					itemBody, _ = sjson.Set(itemBody, "spokeHierarchyUuid.value", values)
+				}
+			}
 			if true {
 
 				for _, childItem := range item.HubSites {
@@ -120,6 +140,14 @@ func (data TopologyHubSpoke) toBody(ctx context.Context) string {
 							var values []string
 							childItem.Sites.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "sites.value", values)
+						}
+					}
+					if !childItem.HubHierarchyUuids.IsNull() {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "hierarchyUuid.optionType", "global")
+							var values []string
+							childItem.HubHierarchyUuids.ElementsAs(ctx, &values, false)
+							itemChildBody, _ = sjson.Set(itemChildBody, "hierarchyUuid.value", values)
 						}
 					}
 					if !childItem.Preference.IsNull() {
@@ -164,6 +192,14 @@ func (data *TopologyHubSpoke) fromBody(ctx context.Context, res gjson.Result, fu
 			data.SelectedHubs = helpers.GetStringSet(va.Array())
 		}
 	}
+	data.SelectedHierarchyHubs = types.SetNull(types.StringType)
+
+	if t := res.Get(path + "selectedHierarchyHubs.optionType"); t.Exists() {
+		va := res.Get(path + "selectedHierarchyHubs.value")
+		if t.String() == "global" {
+			data.SelectedHierarchyHubs = helpers.GetStringSet(va.Array())
+		}
+	}
 	oldSpokes := data.Spokes
 	if value := res.Get(path + "spokes"); value.Exists() && len(value.Array()) > 0 {
 		data.Spokes = make([]TopologyHubSpokeSpokes, 0)
@@ -185,6 +221,14 @@ func (data *TopologyHubSpoke) fromBody(ctx context.Context, res gjson.Result, fu
 					item.SpokeSites = helpers.GetStringSet(va.Array())
 				}
 			}
+			item.SpokeHierarchyUuids = types.SetNull(types.StringType)
+
+			if t := v.Get("spokeHierarchyUuid.optionType"); t.Exists() {
+				va := v.Get("spokeHierarchyUuid.value")
+				if t.String() == "global" {
+					item.SpokeHierarchyUuids = helpers.GetStringSet(va.Array())
+				}
+			}
 			if cValue := v.Get("hubSites"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.HubSites = make([]TopologyHubSpokeSpokesHubSites, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
@@ -195,6 +239,14 @@ func (data *TopologyHubSpoke) fromBody(ctx context.Context, res gjson.Result, fu
 						va := cv.Get("sites.value")
 						if t.String() == "global" {
 							cItem.Sites = helpers.GetStringSet(va.Array())
+						}
+					}
+					cItem.HubHierarchyUuids = types.SetNull(types.StringType)
+
+					if t := cv.Get("hierarchyUuid.optionType"); t.Exists() {
+						va := cv.Get("hierarchyUuid.value")
+						if t.String() == "global" {
+							cItem.HubHierarchyUuids = helpers.GetStringSet(va.Array())
 						}
 					}
 					cItem.Preference = types.Int64Null()
@@ -242,6 +294,11 @@ func (data *TopologyHubSpoke) fromBody(ctx context.Context, res gjson.Result, fu
 								keyMatchC := true
 								if keyMatchC {
 									if helpers.GetStringFromSet(oldCItem.Sites).ValueString() != helpers.GetStringFromSet(data.Spokes[ni].HubSites[nci].Sites).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.HubHierarchyUuids).ValueString() != helpers.GetStringFromSet(data.Spokes[ni].HubSites[nci].HubHierarchyUuids).ValueString() {
 										keyMatchC = false
 									}
 								}

@@ -79,12 +79,17 @@ func (d *TopologyMeshProfileParcelDataSource) Schema(ctx context.Context, req da
 				Required:            true,
 			},
 			"target_vpns": schema.SetAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "Target VPN list",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
 			"sites": schema.SetAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "Site list",
+				ElementType:         types.StringType,
+				Computed:            true,
+			},
+			"hierarchy_uuids": schema.SetAttribute{
+				MarkdownDescription: "Network hierarchy UUIDs",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},

@@ -821,12 +821,6 @@
                         "minimum": 3,
                         "maximum": 65535,
                         "type": "integer"
-                      },
-                      {
-                        "default": 5400,
-                        "minimum": 3,
-                        "maximum": 65535,
-                        "type": "integer"
                       }
                     ]
                   },
@@ -860,12 +854,6 @@
                       },
                       {
                         "default": 300,
-                        "minimum": 3,
-                        "maximum": 65535,
-                        "type": "integer"
-                      },
-                      {
-                        "default": 5400,
                         "minimum": 3,
                         "maximum": 65535,
                         "type": "integer"

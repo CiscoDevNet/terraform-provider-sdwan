@@ -103,6 +103,7 @@ Optional:
   - Choices: `SC1`, `SC2`, `SC3`, `SC4`, `SC5`, `SC6`, `SC7`, `SC8`, `SC9`, `SC10`, `SC11`, `SC12`, `SC13`, `SC14`, `SC15`, `SC16`
 - `accept_set_service_chain_name_variable` (String) Variable name
 - `accept_set_service_chain_vpn` (Number) Set Service Chain VPN, Attribute conditional on `accept_set_service_chain_name` being set or `accept_set_service_chain_name_variable` being set
+  - Ranges: `1`-`511`, `513`-`65531`
 - `accept_set_service_chain_vpn_variable` (String) Variable name, Attribute conditional on `accept_set_service_chain_name` being set or `accept_set_service_chain_name_variable` being set
 - `accept_traffic_class` (Number) set traffic class number
   - Range: `0`-`63`

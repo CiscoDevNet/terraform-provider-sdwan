@@ -30,7 +30,8 @@ data "sdwan_topology_mesh_feature" "example" {
 ### Read-Only
 
 - `description` (String) The description of the Feature
+- `hierarchy_uuids` (Set of String) Network hierarchy UUIDs
 - `name` (String) The name of the Feature
-- `sites` (Set of String)
-- `target_vpns` (Set of String)
+- `sites` (Set of String) Site list
+- `target_vpns` (Set of String) Target VPN list
 - `version` (Number) The version of the Feature

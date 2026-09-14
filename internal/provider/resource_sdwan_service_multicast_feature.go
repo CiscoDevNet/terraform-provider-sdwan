@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -127,7 +128,7 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(3, 32),
-								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
 							},
 						},
 						"interface_name_variable": schema.StringAttribute{
@@ -210,7 +211,7 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(3, 32),
-								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
 							},
 						},
 						"interface_name_variable": schema.StringAttribute{
@@ -298,7 +299,7 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(3, 32),
-								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
 							},
 						},
 						"interface_name_variable": schema.StringAttribute{
@@ -316,6 +317,28 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
+						"access_list_id": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set IP Access List for PIM RP Announce, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(1, 32),
+							},
+						},
+						"access_list_id_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+							Optional:            true,
+						},
+						"interval": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set RP Announce interval, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").AddIntegerRangeDescription(1, 16383).String,
+							Optional:            true,
+							Validators: []validator.Int64{
+								int64validator.Between(1, 16383),
+							},
+						},
+						"interval_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+							Optional:            true,
+						},
 					},
 				},
 			},
@@ -329,7 +352,7 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(3, 32),
-								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
 							},
 						},
 						"interface_name_variable": schema.StringAttribute{
@@ -360,7 +383,7 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(3, 32),
-								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
 							},
 						},
 						"interface_name_variable": schema.StringAttribute{
@@ -413,7 +436,7 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(3, 32),
-								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
 							},
 						},
 						"interface_name_variable": schema.StringAttribute{
@@ -619,7 +642,9 @@ func (r *ServiceMulticastProfileParcelResource) Create(ctx context.Context, req 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
 	// Create object
-	body := plan.toBody(ctx)
+
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -702,7 +727,8 @@ func (r *ServiceMulticastProfileParcelResource) Update(ctx context.Context, req 
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

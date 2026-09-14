@@ -119,10 +119,10 @@ func (r *ServiceSwitchportProfileParcelResource) Schema(ctx context.Context, req
 							Optional:            true,
 						},
 						"speed": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set interface speed").AddStringEnumDescription("10", "100", "1000", "2500", "10000", "25000").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set interface speed").AddStringEnumDescription("10", "100", "1000", "2500", "5000", "10000", "25000").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.OneOf("10", "100", "1000", "2500", "10000", "25000"),
+								stringvalidator.OneOf("10", "100", "1000", "2500", "5000", "10000", "25000"),
 							},
 						},
 						"speed_variable": schema.StringAttribute{

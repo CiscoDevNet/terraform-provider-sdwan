@@ -26,6 +26,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -87,14 +88,19 @@ func (r *TopologyMeshProfileParcelResource) Schema(ctx context.Context, req reso
 				Required:            true,
 			},
 			"target_vpns": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Target VPN list").String,
 				ElementType:         types.StringType,
 				Required:            true,
 			},
 			"sites": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Site list").String,
 				ElementType:         types.StringType,
-				Required:            true,
+				Optional:            true,
+			},
+			"hierarchy_uuids": schema.SetAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Network hierarchy UUIDs, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+				ElementType:         types.StringType,
+				Optional:            true,
 			},
 		},
 	}
@@ -125,7 +131,9 @@ func (r *TopologyMeshProfileParcelResource) Create(ctx context.Context, req reso
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
 	// Create object
-	body := plan.toBody(ctx)
+
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -208,7 +216,8 @@ func (r *TopologyMeshProfileParcelResource) Update(ctx context.Context, req reso
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

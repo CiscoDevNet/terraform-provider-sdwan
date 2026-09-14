@@ -24,7 +24,6 @@ import (
 	"net/url"
 	"strings"
 	"sync"
-	"time"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -35,6 +34,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
+	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
@@ -108,6 +108,45 @@ func (r *TagResource) Configure(_ context.Context, req resource.ConfigureRequest
 
 // End of section. //template:end model
 
+// A single associate call fully replaces a named device's tag membership
+// with whatever it names for that device, so we must find which other
+// tags currently sit on the devices we're touching and re-assert those
+// too. Filtering /system/device/vedges by uuid keeps this scoped to those
+// devices instead of the whole fleet.
+func (r *TagResource) deviceTagOverlap(ctx context.Context, selfId string, deviceIds []string) (map[string][]string, error) {
+	overlap := make(map[string][]string)
+	if len(deviceIds) == 0 {
+		return overlap, nil
+	}
+
+	path := "/system/device/vedges?"
+	for i, id := range deviceIds {
+		if i > 0 {
+			path += "&"
+		}
+		path += "uuid=" + url.QueryEscape(id)
+	}
+
+	res, err := r.client.Get(path)
+	if err != nil {
+		return nil, err
+	}
+	for _, device := range res.Get("data").Array() {
+		deviceId := device.Get("uuid").String()
+		if deviceId == "" {
+			continue
+		}
+		for _, tag := range device.Get("tags").Array() {
+			tagId := tag.Get("id").String()
+			if tagId == "" || tagId == selfId {
+				continue
+			}
+			overlap[tagId] = append(overlap[tagId], deviceId)
+		}
+	}
+	return overlap, nil
+}
+
 func (r *TagResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan Tag
 
@@ -120,6 +159,9 @@ func (r *TagResource) Create(ctx context.Context, req resource.CreateRequest, re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
+	r.updateMutex.Lock()
+	defer r.updateMutex.Unlock()
+
 	// Create object
 	body := plan.toBody(ctx)
 
@@ -128,15 +170,22 @@ func (r *TagResource) Create(ctx context.Context, req resource.CreateRequest, re
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
 	}
-	res, err = r.client.Get(plan.getPath())
+	existingTags, err := r.client.Get(plan.getPath())
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, existingTags.String()))
 		return
 	}
-	plan.Id = types.StringValue(res.Get("#(name==\"" + plan.Name.ValueString() + "\").id").String())
+	plan.Id = types.StringValue(existingTags.Get("#(name==\"" + plan.Name.ValueString() + "\").id").String())
 
 	if len(plan.Devices.Elements()) > 0 {
-		body = plan.toBodyDeviceAssociation(ctx)
+		deviceIds := plan.deviceIds()
+		overlap, err := r.deviceTagOverlap(ctx, plan.Id.ValueString(), deviceIds)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve existing tag associations (GET), got error: %s", err))
+			return
+		}
+
+		body = plan.toBodyDeviceAssociationWithOverlap(ctx, overlap)
 		res, err = r.client.Post("/v1/tags/associate", body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to associate devices to tag (POST), got error: %s, %s", err, res.String()))
@@ -146,6 +195,16 @@ func (r *TagResource) Create(ctx context.Context, req resource.CreateRequest, re
 				return
 			}
 			return
+		}
+		taskId := res.Get("taskId").String()
+		if taskId != "" {
+			err, warnings := helpers.WaitForActionToComplete(ctx, r.client, taskId, r.taskTimeout)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed waiting for tag association task to complete: %s", err))
+				return
+			} else if warnings != "" {
+				resp.Diagnostics.AddWarning("Client Warning", warnings)
+			}
 		}
 	}
 
@@ -196,13 +255,32 @@ func (r *TagResource) Update(ctx context.Context, req resource.UpdateRequest, re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	// Add all devices in state
+	r.updateMutex.Lock()
+	defer r.updateMutex.Unlock()
+
 	if len(plan.Devices.Elements()) > 0 {
-		body := plan.toBodyDeviceAssociation(ctx)
+		deviceIds := plan.deviceIds()
+		overlap, err := r.deviceTagOverlap(ctx, plan.Id.ValueString(), deviceIds)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve existing tag associations (GET), got error: %s", err))
+			return
+		}
+
+		body := plan.toBodyDeviceAssociationWithOverlap(ctx, overlap)
 		res, err := r.client.Post("/v1/tags/associate", body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to associate devices to tag (POST), got error: %s, %s", err, res.String()))
 			return
+		}
+		taskId := res.Get("taskId").String()
+		if taskId != "" {
+			err, warnings := helpers.WaitForActionToComplete(ctx, r.client, taskId, r.taskTimeout)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed waiting for tag association task to complete: %s", err))
+				return
+			} else if warnings != "" {
+				resp.Diagnostics.AddWarning("Client Warning", warnings)
+			}
 		}
 	}
 
@@ -235,14 +313,29 @@ func (r *TagResource) Update(ctx context.Context, req resource.UpdateRequest, re
 					itemChildBody, _ = sjson.Set(itemChildBody, "objectType", "DEVICE")
 				}
 			}
+			if itemChildBody == "" {
+				continue
+			}
 			itemBody, _ = sjson.SetRaw(itemBody, "objects.-1", itemChildBody)
 		}
 
-		body, _ = sjson.SetRaw(body, "data.-1", itemBody)
-		res, err := r.client.Post("/v1/tags/associate?operationType=DELETE", body)
-		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to disassociate devices from tag (POST), got error: %s, %s", err, res.String()))
-			return
+		if len(gjson.Parse(itemBody).Get("objects").Array()) > 0 {
+			body, _ = sjson.SetRaw(body, "data.-1", itemBody)
+			res, err := r.client.Post("/v1/tags/associate?operationType=DELETE", body)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to disassociate devices from tag (POST), got error: %s, %s", err, res.String()))
+				return
+			}
+			taskId := res.Get("taskId").String()
+			if taskId != "" {
+				err, warnings := helpers.WaitForActionToComplete(ctx, r.client, taskId, r.taskTimeout)
+				if err != nil {
+					resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed waiting for tag disassociation task to complete: %s", err))
+					return
+				} else if warnings != "" {
+					resp.Diagnostics.AddWarning("Client Warning", warnings)
+				}
+			}
 		}
 	}
 
@@ -264,6 +357,9 @@ func (r *TagResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
+	r.updateMutex.Lock()
+	defer r.updateMutex.Unlock()
+
 	if len(state.Devices.Elements()) > 0 {
 		body := state.toBodyDeviceAssociation(ctx)
 		res, err := r.client.Post("/v1/tags/associate?operationType=DELETE", body)
@@ -271,9 +367,17 @@ func (r *TagResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to disassociate devices from tag (POST), got error: %s, %s", err, res.String()))
 			return
 		}
+		taskId := res.Get("taskId").String()
+		if taskId != "" {
+			err, warnings := helpers.WaitForActionToComplete(ctx, r.client, taskId, r.taskTimeout)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed waiting for tag disassociation task to complete: %s", err))
+				return
+			} else if warnings != "" {
+				resp.Diagnostics.AddWarning("Client Warning", warnings)
+			}
+		}
 	}
-
-	time.Sleep(time.Second)
 
 	res, err := r.client.Delete(state.getPath() + "?tagId=" + url.QueryEscape(state.Id.ValueString()))
 	if err != nil {

@@ -31,9 +31,10 @@ data "sdwan_topology_hub_spoke_feature" "example" {
 
 - `description` (String) The description of the Feature
 - `name` (String) The name of the Feature
-- `selected_hubs` (Set of String)
-- `spokes` (Attributes List) Spokes (see [below for nested schema](#nestedatt--spokes))
-- `target_vpns` (Set of String)
+- `selected_hierarchy_hubs` (Set of String) Selected hub network hierarchy UUIDs
+- `selected_hubs` (Set of String) Selected hub sites
+- `spokes` (Attributes List) Spoke configurations (see [below for nested schema](#nestedatt--spokes))
+- `target_vpns` (Set of String) Target VPN list
 - `version` (Number) The version of the Feature
 
 <a id="nestedatt--spokes"></a>
@@ -41,14 +42,16 @@ data "sdwan_topology_hub_spoke_feature" "example" {
 
 Read-Only:
 
-- `hub_sites` (Attributes List) Hub Sites (see [below for nested schema](#nestedatt--spokes--hub_sites))
-- `name` (String)
-- `spoke_sites` (Set of String)
+- `hub_sites` (Attributes List) Hub site preferences (see [below for nested schema](#nestedatt--spokes--hub_sites))
+- `name` (String) Spoke name
+- `spoke_hierarchy_uuids` (Set of String) Spoke network hierarchy UUIDs
+- `spoke_sites` (Set of String) Spoke site list
 
 <a id="nestedatt--spokes--hub_sites"></a>
 ### Nested Schema for `spokes.hub_sites`
 
 Read-Only:
 
-- `preference` (Number) preference
-- `sites` (Set of String) sites
+- `hub_hierarchy_uuids` (Set of String) Hub network hierarchy UUIDs
+- `preference` (Number) Hub preference value
+- `sites` (Set of String) Hub sites

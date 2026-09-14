@@ -283,7 +283,7 @@
                                                         },
                                                         "value": {
                                                             "type": "string",
-                                                            "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                                                            "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
                                                             "minLength": 3,
                                                             "maxLength": 32
                                                         }
@@ -310,7 +310,7 @@
                                                         },
                                                         "default": {
                                                             "type": "string",
-                                                            "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                                                            "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
                                                             "minLength": 3,
                                                             "maxLength": 32
                                                         },
@@ -783,7 +783,7 @@
                                                         },
                                                         "value": {
                                                             "type": "string",
-                                                            "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                                                            "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
                                                             "minLength": 3,
                                                             "maxLength": 32
                                                         }
@@ -810,7 +810,7 @@
                                                         },
                                                         "default": {
                                                             "type": "string",
-                                                            "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                                                            "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
                                                             "minLength": 3,
                                                             "maxLength": 32
                                                         },
@@ -1022,7 +1022,7 @@
                                                         },
                                                         "default": {
                                                             "type": "string",
-                                                            "pattern": "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)(\\.(?!$)|$)){4}$"
+                                                            "pattern": "^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)$"
                                                         },
                                                         "description": {
                                                             "minLength": 1,
@@ -1295,7 +1295,7 @@
                                                                 },
                                                                 "value": {
                                                                     "type": "string",
-                                                                    "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                                                                    "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
                                                                     "minLength": 3,
                                                                     "maxLength": 32
                                                                 }
@@ -1322,7 +1322,7 @@
                                                                 },
                                                                 "default": {
                                                                     "type": "string",
-                                                                    "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                                                                    "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
                                                                     "minLength": 3,
                                                                     "maxLength": 32
                                                                 },
@@ -1396,6 +1396,148 @@
                                                             "additionalProperties": false
                                                         }
                                                     ]
+                                                },
+                                                "groupList": {
+                                                    "description": "Set IP Access List for PIM RP Announce",
+                                                    "type": "object",
+                                                    "oneOf": [
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "global"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "minLength": 1,
+                                                                    "type": "string",
+                                                                    "maxLength": 32
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "variable"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "string",
+                                                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                    "minLength": 1,
+                                                                    "maxLength": 128
+                                                                },
+                                                                "default": {
+                                                                    "minLength": 1,
+                                                                    "type": "string",
+                                                                    "maxLength": 32
+                                                                },
+                                                                "description": {
+                                                                    "minLength": 1,
+                                                                    "type": "string",
+                                                                    "maxLength": 128
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "default"
+                                                                    ]
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        }
+                                                    ]
+                                                },
+                                                "interval": {
+                                                    "description": "Set RP Announce interval",
+                                                    "type": "object",
+                                                    "oneOf": [
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "global"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "minimum": 1,
+                                                                    "maximum": 16383,
+                                                                    "type": "integer"
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "variable"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "string",
+                                                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                    "minLength": 1,
+                                                                    "maxLength": 128
+                                                                },
+                                                                "default": {
+                                                                    "minimum": 1,
+                                                                    "maximum": 16383,
+                                                                    "type": "integer"
+                                                                },
+                                                                "description": {
+                                                                    "minLength": 1,
+                                                                    "type": "string",
+                                                                    "maxLength": 128
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "default"
+                                                                    ]
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        }
+                                                    ]
                                                 }
                                             },
                                             "required": [
@@ -1427,7 +1569,7 @@
                                                                 },
                                                                 "value": {
                                                                     "type": "string",
-                                                                    "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                                                                    "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
                                                                     "minLength": 3,
                                                                     "maxLength": 32
                                                                 }
@@ -1454,7 +1596,7 @@
                                                                 },
                                                                 "default": {
                                                                     "type": "string",
-                                                                    "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                                                                    "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
                                                                     "minLength": 3,
                                                                     "maxLength": 32
                                                                 },
@@ -1566,7 +1708,7 @@
                                                                 },
                                                                 "value": {
                                                                     "type": "string",
-                                                                    "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                                                                    "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
                                                                     "minLength": 3,
                                                                     "maxLength": 32
                                                                 }
@@ -1593,7 +1735,7 @@
                                                                 },
                                                                 "default": {
                                                                     "type": "string",
-                                                                    "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                                                                    "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
                                                                     "minLength": 3,
                                                                     "maxLength": 32
                                                                 },
@@ -1853,7 +1995,7 @@
                                                                 },
                                                                 "value": {
                                                                     "type": "string",
-                                                                    "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                                                                    "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
                                                                     "minLength": 3,
                                                                     "maxLength": 32
                                                                 }
@@ -1880,7 +2022,7 @@
                                                                 },
                                                                 "default": {
                                                                     "type": "string",
-                                                                    "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                                                                    "pattern": "(GigabitEthernet|TwoGigabitEthernet|TenGigabitEthernet|TwentyFiveGigE|TwentyFiveGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan|Tunnel|Port-channel|Loopback)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
                                                                     "minLength": 3,
                                                                     "maxLength": 32
                                                                 },
@@ -2972,7 +3114,7 @@
                         ]
                     }
                 ],
-                "minVManageVersion": "20.15.1"
+                "minVManageVersion": "20.16.1"
             },
             "documentation": {
                 "description": "This is the documentation for request schema for routing/multicast profile parcel",

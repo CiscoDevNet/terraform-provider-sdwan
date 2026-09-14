@@ -123,6 +123,7 @@ type ServiceLANVPNInterfaceEthernet struct {
 	TrustsecPropogate                                     types.Bool                                                   `tfsdk:"trustsec_propogate"`
 	TrustsecSecurityGroupTag                              types.Int64                                                  `tfsdk:"trustsec_security_group_tag"`
 	TrustsecSecurityGroupTagVariable                      types.String                                                 `tfsdk:"trustsec_security_group_tag_variable"`
+	TrustsecTrusted                                       types.Bool                                                   `tfsdk:"trustsec_trusted"`
 	TrustsecEnableEnforcedPropogation                     types.Bool                                                   `tfsdk:"trustsec_enable_enforced_propogation"`
 	TrustsecEnforcedSecurityGroupTag                      types.Int64                                                  `tfsdk:"trustsec_enforced_security_group_tag"`
 	TrustsecEnforcedSecurityGroupTagVariable              types.String                                                 `tfsdk:"trustsec_enforced_security_group_tag_variable"`
@@ -1578,6 +1579,17 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context, ver *vers
 		if true && !(data.PortChannelMemberInterface.ValueBool() == true) {
 			body, _ = sjson.Set(body, path+"trustsec.securityGroupTag.optionType", "global")
 			body, _ = sjson.Set(body, path+"trustsec.securityGroupTag.value", data.TrustsecSecurityGroupTag.ValueInt64())
+		}
+	}
+	if data.TrustsecTrusted.IsNull() {
+		if true && ((!(data.TrustsecSecurityGroupTag.IsNull()) && !(data.PortChannelMemberInterface.ValueBool() == true) && data.TrustsecEnableSgtPropogation.ValueBool() == true && data.TrustsecPropogate.ValueBool() == true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1")))) || (!(data.TrustsecSecurityGroupTagVariable.IsNull()) && !(data.PortChannelMemberInterface.ValueBool() == true) && data.TrustsecEnableSgtPropogation.ValueBool() == true && data.TrustsecPropogate.ValueBool() == true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))))) {
+			body, _ = sjson.Set(body, path+"trustsec.trusted.optionType", "default")
+			body, _ = sjson.Set(body, path+"trustsec.trusted.value", true)
+		}
+	} else {
+		if true && ((!(data.TrustsecSecurityGroupTag.IsNull()) && !(data.PortChannelMemberInterface.ValueBool() == true) && data.TrustsecEnableSgtPropogation.ValueBool() == true && data.TrustsecPropogate.ValueBool() == true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1")))) || (!(data.TrustsecSecurityGroupTagVariable.IsNull()) && !(data.PortChannelMemberInterface.ValueBool() == true) && data.TrustsecEnableSgtPropogation.ValueBool() == true && data.TrustsecPropogate.ValueBool() == true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))))) {
+			body, _ = sjson.Set(body, path+"trustsec.trusted.optionType", "global")
+			body, _ = sjson.Set(body, path+"trustsec.trusted.value", data.TrustsecTrusted.ValueBool())
 		}
 	}
 	if data.TrustsecEnableEnforcedPropogation.IsNull() {
@@ -3319,6 +3331,14 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.TrustsecSecurityGroupTagVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.TrustsecSecurityGroupTag = types.Int64Value(va.Int())
+		}
+	}
+	data.TrustsecTrusted = types.BoolNull()
+
+	if t := res.Get(path + "trustsec.trusted.optionType"); t.Exists() {
+		va := res.Get(path + "trustsec.trusted.value")
+		if t.String() == "global" {
+			data.TrustsecTrusted = types.BoolValue(va.Bool())
 		}
 	}
 	data.TrustsecEnableEnforcedPropogation = types.BoolNull()

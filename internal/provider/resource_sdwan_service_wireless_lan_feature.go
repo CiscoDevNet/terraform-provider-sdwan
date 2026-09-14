@@ -158,10 +158,10 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 							Optional:            true,
 						},
 						"security_type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Select security type").AddStringEnumDescription("enterprise", "personal", "open").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Select security type").AddStringEnumDescription("personal", "open", "enterprise").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.OneOf("enterprise", "personal", "open"),
+								stringvalidator.OneOf("personal", "open", "enterprise"),
 							},
 						},
 						"radius_server_ip": schema.StringAttribute{
@@ -269,10 +269,10 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 			},
 			"me_subnet_mask": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set mobile express controller subnet mask").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set mobile express controller subnet mask").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.248.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0"),
+					stringvalidator.OneOf("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.248.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0"),
 				},
 			},
 			"me_subnet_mask_variable": schema.StringAttribute{

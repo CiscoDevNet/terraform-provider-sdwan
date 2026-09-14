@@ -24,6 +24,7 @@ import (
 	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -40,6 +41,7 @@ type TopologyMesh struct {
 	FeatureProfileId types.String `tfsdk:"feature_profile_id"`
 	TargetVpns       types.Set    `tfsdk:"target_vpns"`
 	Sites            types.Set    `tfsdk:"sites"`
+	HierarchyUuids   types.Set    `tfsdk:"hierarchy_uuids"`
 }
 
 // End of section. //template:end types
@@ -59,7 +61,7 @@ func (data TopologyMesh) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data TopologyMesh) toBody(ctx context.Context) string {
+func (data TopologyMesh) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -78,6 +80,14 @@ func (data TopologyMesh) toBody(ctx context.Context) string {
 			var values []string
 			data.Sites.ElementsAs(ctx, &values, false)
 			body, _ = sjson.Set(body, path+"sites.value", values)
+		}
+	}
+	if !data.HierarchyUuids.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"hierarchyUuid.optionType", "global")
+			var values []string
+			data.HierarchyUuids.ElementsAs(ctx, &values, false)
+			body, _ = sjson.Set(body, path+"hierarchyUuid.value", values)
 		}
 	}
 	return body
@@ -108,6 +118,14 @@ func (data *TopologyMesh) fromBody(ctx context.Context, res gjson.Result, fullRe
 		va := res.Get(path + "sites.value")
 		if t.String() == "global" {
 			data.Sites = helpers.GetStringSet(va.Array())
+		}
+	}
+	data.HierarchyUuids = types.SetNull(types.StringType)
+
+	if t := res.Get(path + "hierarchyUuid.optionType"); t.Exists() {
+		va := res.Get(path + "hierarchyUuid.value")
+		if t.String() == "global" {
+			data.HierarchyUuids = helpers.GetStringSet(va.Array())
 		}
 	}
 }

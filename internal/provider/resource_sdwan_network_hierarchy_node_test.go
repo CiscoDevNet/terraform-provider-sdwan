@@ -20,6 +20,7 @@ package provider
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"os"
+	"regexp"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
@@ -232,6 +233,87 @@ func testAccSdwanNetworkHierarchyNodeConfig_nestedHierarchy() string {
 		config += `	  zipcode = "10118"` + "\n"
 		config += `	}` + "\n"
 	}
+	config += `}` + "\n"
+	return config
+}
+
+// TestAccSdwanNetworkHierarchyNodeGroupUnderRegion tests creating a group nested
+// under a region as its parent_group. A region can parent a group or a site, but
+// not another region - see TestAccSdwanNetworkHierarchyNodeRegionUnderRegionRejected.
+func TestAccSdwanNetworkHierarchyNodeGroupUnderRegion(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
+	}
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccSdwanNetworkHierarchyNodeConfig_groupUnderRegion(),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttrSet("sdwan_network_hierarchy_node.child_group", "id"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.child_group", "name", "EMEA-Sub-Group"),
+					resource.TestCheckResourceAttr("sdwan_network_hierarchy_node.child_group", "type", "group"),
+					resource.TestCheckResourceAttrPair("sdwan_network_hierarchy_node.child_group", "parent_group", "sdwan_network_hierarchy_node.parent_region", "name"),
+				),
+			},
+		},
+	})
+}
+
+func testAccSdwanNetworkHierarchyNodeConfig_groupUnderRegion() string {
+	config := `resource "sdwan_network_hierarchy_node" "parent_region" {` + "\n"
+	config += `	parent_group = "Global"` + "\n"
+	config += `	name = "EMEA-Parent-Region"` + "\n"
+	config += `	description = "Region used as the parent of a nested group"` + "\n"
+	config += `	type = "region"` + "\n"
+	config += `	is_secondary = false` + "\n"
+	config += `}` + "\n"
+	config += "\n"
+	config += `resource "sdwan_network_hierarchy_node" "child_group" {` + "\n"
+	config += `	parent_group = sdwan_network_hierarchy_node.parent_region.name` + "\n"
+	config += `	name = "EMEA-Sub-Group"` + "\n"
+	config += `	description = "Group nested under a region"` + "\n"
+	config += `	type = "group"` + "\n"
+	config += `}` + "\n"
+	return config
+}
+
+// TestAccSdwanNetworkHierarchyNodeRegionUnderRegionRejected verifies that a
+// region cannot be nested under another region - only under a group or Global.
+// See TestAccSdwanNetworkHierarchyNodeGroupUnderRegion for the group case, which
+// a region can parent.
+func TestAccSdwanNetworkHierarchyNodeRegionUnderRegionRejected(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
+	}
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config:      testAccSdwanNetworkHierarchyNodeConfig_regionUnderRegionRejected(),
+				ExpectError: regexp.MustCompile(`Parent group 'EMEA-Outer-Region' not found in network hierarchy`),
+			},
+		},
+	})
+}
+
+func testAccSdwanNetworkHierarchyNodeConfig_regionUnderRegionRejected() string {
+	config := `resource "sdwan_network_hierarchy_node" "outer_region" {` + "\n"
+	config += `	parent_group = "Global"` + "\n"
+	config += `	name = "EMEA-Outer-Region"` + "\n"
+	config += `	description = "Region that another region incorrectly nests under"` + "\n"
+	config += `	type = "region"` + "\n"
+	config += `	is_secondary = false` + "\n"
+	config += `}` + "\n"
+	config += "\n"
+	config += `resource "sdwan_network_hierarchy_node" "inner_region" {` + "\n"
+	config += `	parent_group = sdwan_network_hierarchy_node.outer_region.name` + "\n"
+	config += `	name = "EMEA-Inner-Region"` + "\n"
+	config += `	description = "Region incorrectly nested under another region"` + "\n"
+	config += `	type = "region"` + "\n"
+	config += `	is_secondary = false` + "\n"
 	config += `}` + "\n"
 	return config
 }

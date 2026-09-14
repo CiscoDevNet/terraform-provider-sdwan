@@ -119,7 +119,7 @@ func (d *ServiceRoutingEIGRPProfileParcelDataSource) Schema(ctx context.Context,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"ip_address": schema.StringAttribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "IP Address",
 							Computed:            true,
 						},
 						"ip_address_variable": schema.StringAttribute{
@@ -127,7 +127,7 @@ func (d *ServiceRoutingEIGRPProfileParcelDataSource) Schema(ctx context.Context,
 							Computed:            true,
 						},
 						"mask": schema.StringAttribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "Subnet Mask",
 							Computed:            true,
 						},
 						"mask_variable": schema.StringAttribute{
@@ -220,7 +220,7 @@ func (d *ServiceRoutingEIGRPProfileParcelDataSource) Schema(ctx context.Context,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"address": schema.StringAttribute{
-										MarkdownDescription: "",
+										MarkdownDescription: "IP Address",
 										Computed:            true,
 									},
 									"address_variable": schema.StringAttribute{
@@ -228,7 +228,7 @@ func (d *ServiceRoutingEIGRPProfileParcelDataSource) Schema(ctx context.Context,
 										Computed:            true,
 									},
 									"mask": schema.StringAttribute{
-										MarkdownDescription: "",
+										MarkdownDescription: "Subnet Mask",
 										Computed:            true,
 									},
 									"mask_variable": schema.StringAttribute{

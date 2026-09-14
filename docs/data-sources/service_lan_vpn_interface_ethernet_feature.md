@@ -143,6 +143,7 @@ data "sdwan_service_lan_vpn_interface_ethernet_feature" "example" {
 - `trustsec_propogate` (Boolean) Enables the interface for CTS SGT authorization and forwarding
 - `trustsec_security_group_tag` (Number) SGT value between 2 and 65519
 - `trustsec_security_group_tag_variable` (String) Variable name
+- `trustsec_trusted` (Boolean) Indicates that the interface is trustworthy for CTS.
 - `version` (Number) The version of the Feature
 - `xconnect` (String) Extend remote TLOC over a GRE tunnel to a local LAN interface
 - `xconnect_variable` (String) Variable name

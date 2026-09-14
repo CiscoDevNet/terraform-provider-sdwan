@@ -187,11 +187,20 @@ func (r *TopologyGroupResource) Update(ctx context.Context, req resource.UpdateR
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBodyTopologyGroup(ctx)
-	res, err := r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), body)
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
-		return
+	// feature_versions is a Terraform-side bookkeeping attribute only (it is never
+	// part of toBodyTopologyGroup and is consumed solely by sdwan_activate_topology_group).
+	// Skip the PUT when only feature_versions changed so we don't issue a content-identical
+	// write that bumps the server version and resets activeStatus for no reason (e.g. on
+	// import, or on a reconcile where only a referenced object/parcel version moved).
+	if plan.hasChanges(ctx, &state) {
+		body := plan.toBodyTopologyGroup(ctx)
+		res, err := r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), body)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
+			return
+		}
+	} else {
+		tflog.Debug(ctx, fmt.Sprintf("%s: Only feature_versions changed, skipping PUT", plan.Name.ValueString()))
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
