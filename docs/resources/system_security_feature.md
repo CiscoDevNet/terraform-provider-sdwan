@@ -68,7 +68,6 @@ resource "sdwan_system_security_feature" "example" {
 - `description` (String) The description of the Feature
 - `extended_anti_replay_window` (Number) Extended Anti-Replay Window
   - Range: `10`-`2048`
-  - Default value: `256`
 - `extended_anti_replay_window_variable` (String) Variable name
 - `integrity_type` (Set of String) Set the authentication type for DTLS connections
 - `integrity_type_variable` (String) Variable name

@@ -234,74 +234,77 @@ type IntRange struct {
 }
 
 type YamlConfigAttribute struct {
-	ModelName               string                         `yaml:"model_name"`
-	ResponseModelName       string                         `yaml:"response_model_name"`
-	TfName                  string                         `yaml:"tf_name"`
-	Type                    string                         `yaml:"type"`
-	ElementType             string                         `yaml:"element_type"`
-	ObjectType              string                         `yaml:"object_type"`
-	ModelTypeString         bool                           `yaml:"model_type_string"`
-	BoolEmptyString         bool                           `yaml:"bool_empty_string"`
-	DataPath                []string                       `yaml:"data_path"`
-	ResponseDataPath        []string                       `yaml:"response_data_path"`
-	Keys                    []string                       `yaml:"keys"`
-	Id                      bool                           `yaml:"id"`
-	Reference               bool                           `yaml:"reference"`
-	Variable                bool                           `yaml:"variable"`
-	Mandatory               bool                           `yaml:"mandatory"`
-	IgnoreMandatory         bool                           `yaml:"ignore_mandatory"`
-	Optional                bool                           `yaml:"optional"`
-	WriteOnly               bool                           `yaml:"write_only"`
-	Encrypted               bool                           `yaml:"encrypted"`
-	TfOnly                  bool                           `yaml:"tf_only"`
-	ExcludeTest             bool                           `yaml:"exclude_test"`
-	ExcludeExample          bool                           `yaml:"exclude_example"`
-	ExcludeIgnore           bool                           `yaml:"exclude_ignore"`
-	ExcludeNull             bool                           `yaml:"exclude_null"`
-	NodeOnlyContainer       bool                           `yaml:"node_only_container"`
-	Description             string                         `yaml:"description"`
-	Example                 string                         `yaml:"example"`
-	EnumValues              []string                       `yaml:"enum_values"`
-	IgnoreEnum              bool                           `yaml:"ignore_enum"`
-	MinList                 int64                          `yaml:"min_list"`
-	MaxList                 int64                          `yaml:"max_list"`
-	MinInt                  int64                          `yaml:"min_int"`
-	MaxInt                  int64                          `yaml:"max_int"`
-	IntRanges               []IntRange                     `yaml:"int_ranges"` // For disjoint/non-contiguous integer ranges
-	MinFloat                float64                        `yaml:"min_float"`
-	MaxFloat                float64                        `yaml:"max_float"`
-	StringPatterns          []string                       `yaml:"string_patterns"`
-	StringMinLength         int64                          `yaml:"string_min_length"`
-	StringMaxLength         int64                          `yaml:"string_max_length"`
-	DefaultValue            string                         `yaml:"default_value"`
-	DefaultValuePresent     bool                           `yaml:"default_value_present"`
-	DefaultValueEmptyString bool                           `yaml:"default_value_empty_string"`
-	Value                   string                         `yaml:"value"`
-	ValueType               string                         `yaml:"value_type"`
-	TestValue               string                         `yaml:"test_value"`
-	SecondaryTestValue      string                         `yaml:"secondary_test_value"`
-	MinimumTestValue        string                         `yaml:"minimum_test_value"`
-	AlwaysInclude           bool                           `yaml:"always_include"`
-	AlwaysIncludeParent     bool                           `yaml:"always_include_parent"`
-	Attributes              []YamlConfigAttribute          `yaml:"attributes"`
-	ConditionalAttribute    YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
-	ConditionalListLength   string                         `yaml:"conditional_list_length"`
-	QueryParam              bool                           `yaml:"query_param"`
-	NoAugmentConfig         bool                           `yaml:"no_augment_config"`
-	TestTags                []string                       `yaml:"test_tags"`
-	RequiresConstAndVar     bool                           `yaml:"requires_const_and_var"`
-	RequiresReplace         bool                           `yaml:"requires_replace"`
-	DynamicDefault          bool                           `yaml:"dynamic_default"`
-	PriorityOrderAlways     bool                           `yaml:"priority_order_always"`
-	IncludeDefaultOption    bool                           `yaml:"include_default_option"`
-	DefaultOption           string                         `yaml:"default_option"`
-	IncludeVariableCheck    bool                           `yaml:"include_variable_check"`
-	ResetContainerIfIgnore  bool                           `yaml:"reset_container_if_ignore"`
-	NoOptionType            bool                           `yaml:"no_option_type"`
-	PositionalFallback      bool                           `yaml:"positional_fallback"`
-	OptionalNullEmpty       bool                           `yaml:"optional_null_empty"`
-	ForceInclude            bool                           `yaml:"force_include"`
-	WriteAsDefault          bool                           `yaml:"write_as_default"`
+	ModelName         string     `yaml:"model_name"`
+	ResponseModelName string     `yaml:"response_model_name"`
+	TfName            string     `yaml:"tf_name"`
+	Type              string     `yaml:"type"`
+	ElementType       string     `yaml:"element_type"`
+	ObjectType        string     `yaml:"object_type"`
+	ModelTypeString   bool       `yaml:"model_type_string"`
+	BoolEmptyString   bool       `yaml:"bool_empty_string"`
+	DataPath          []string   `yaml:"data_path"`
+	ResponseDataPath  []string   `yaml:"response_data_path"`
+	Keys              []string   `yaml:"keys"`
+	Id                bool       `yaml:"id"`
+	Reference         bool       `yaml:"reference"`
+	Variable          bool       `yaml:"variable"`
+	Mandatory         bool       `yaml:"mandatory"`
+	IgnoreMandatory   bool       `yaml:"ignore_mandatory"`
+	Optional          bool       `yaml:"optional"`
+	WriteOnly         bool       `yaml:"write_only"`
+	Encrypted         bool       `yaml:"encrypted"`
+	TfOnly            bool       `yaml:"tf_only"`
+	ExcludeTest       bool       `yaml:"exclude_test"`
+	ExcludeExample    bool       `yaml:"exclude_example"`
+	ExcludeIgnore     bool       `yaml:"exclude_ignore"`
+	ExcludeNull       bool       `yaml:"exclude_null"`
+	NodeOnlyContainer bool       `yaml:"node_only_container"`
+	Description       string     `yaml:"description"`
+	Example           string     `yaml:"example"`
+	EnumValues        []string   `yaml:"enum_values"`
+	IgnoreEnum        bool       `yaml:"ignore_enum"`
+	MinList           int64      `yaml:"min_list"`
+	MaxList           int64      `yaml:"max_list"`
+	MinInt            int64      `yaml:"min_int"`
+	MaxInt            int64      `yaml:"max_int"`
+	IntRanges         []IntRange `yaml:"int_ranges"` // For disjoint/non-contiguous integer ranges
+	MinFloat          float64    `yaml:"min_float"`
+	MaxFloat          float64    `yaml:"max_float"`
+	StringPatterns    []string   `yaml:"string_patterns"`
+	StringMinLength   int64      `yaml:"string_min_length"`
+	StringMaxLength   int64      `yaml:"string_max_length"`
+	DefaultValue      string     `yaml:"default_value"`
+	// DefaultValuePresentOverride is tri-state: unset keeps the value derived from the model schema,
+	// true forces a default, false suppresses it.
+	DefaultValuePresentOverride *bool                          `yaml:"default_value_present"`
+	DefaultValuePresent         bool                           `yaml:"-"`
+	DefaultValueEmptyString     bool                           `yaml:"default_value_empty_string"`
+	Value                       string                         `yaml:"value"`
+	ValueType                   string                         `yaml:"value_type"`
+	TestValue                   string                         `yaml:"test_value"`
+	SecondaryTestValue          string                         `yaml:"secondary_test_value"`
+	MinimumTestValue            string                         `yaml:"minimum_test_value"`
+	AlwaysInclude               bool                           `yaml:"always_include"`
+	AlwaysIncludeParent         bool                           `yaml:"always_include_parent"`
+	Attributes                  []YamlConfigAttribute          `yaml:"attributes"`
+	ConditionalAttribute        YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
+	ConditionalListLength       string                         `yaml:"conditional_list_length"`
+	QueryParam                  bool                           `yaml:"query_param"`
+	NoAugmentConfig             bool                           `yaml:"no_augment_config"`
+	TestTags                    []string                       `yaml:"test_tags"`
+	RequiresConstAndVar         bool                           `yaml:"requires_const_and_var"`
+	RequiresReplace             bool                           `yaml:"requires_replace"`
+	DynamicDefault              bool                           `yaml:"dynamic_default"`
+	PriorityOrderAlways         bool                           `yaml:"priority_order_always"`
+	IncludeDefaultOption        bool                           `yaml:"include_default_option"`
+	DefaultOption               string                         `yaml:"default_option"`
+	IncludeVariableCheck        bool                           `yaml:"include_variable_check"`
+	ResetContainerIfIgnore      bool                           `yaml:"reset_container_if_ignore"`
+	NoOptionType                bool                           `yaml:"no_option_type"`
+	PositionalFallback          bool                           `yaml:"positional_fallback"`
+	OptionalNullEmpty           bool                           `yaml:"optional_null_empty"`
+	ForceInclude                bool                           `yaml:"force_include"`
+	WriteAsDefault              bool                           `yaml:"write_as_default"`
 }
 
 type YamlConfigConditionalAttribute struct {
@@ -972,7 +975,18 @@ var functions = template.FuncMap{
 	"hasInt64RangesValidator":     HasInt64RangesValidator,
 }
 
+func applyDefaultValuePresentOverride(attr *YamlConfigAttribute) {
+	if attr.DefaultValuePresentOverride != nil {
+		attr.DefaultValuePresent = *attr.DefaultValuePresentOverride
+	}
+}
+
+func isDefaultValueSuppressed(attr *YamlConfigAttribute) bool {
+	return attr.DefaultValuePresentOverride != nil && !*attr.DefaultValuePresentOverride
+}
+
 func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result) {
+	applyDefaultValuePresentOverride(attr)
 	if attr.NoAugmentConfig {
 		return
 	}
@@ -1148,6 +1162,7 @@ func augmentFeatureTemplateConfig(config *YamlConfig) {
 }
 
 func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, isOneOfAttribute bool) {
+	applyDefaultValuePresentOverride(attr)
 	if attr.ModelName == "" || attr.NoAugmentConfig {
 		return
 	}
@@ -1368,7 +1383,12 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		if value := r.Get("properties.optionType.enum.0"); value.String() == "default" {
 			d = r
 		}
-		if d.Exists() && (!isOneOfAttribute || attr.DefaultValuePresent == true) {
+		// An explicit `default_value_present: false` also opts the attribute out of the
+		// exclude_null/mandatory inference below, keeping it optional with no default.
+		if isDefaultValueSuppressed(attr) {
+			attr.DefaultValue = ""
+			attr.DefaultValueEmptyString = false
+		} else if d.Exists() && (!isOneOfAttribute || attr.DefaultValuePresent == true) {
 			attr.DefaultValuePresent = true
 			if value := d.Get("properties.value.default"); value.Exists() {
 				if value.String() == "" {
@@ -1453,6 +1473,7 @@ func augmentProfileParcelConfig(config *YamlConfig) {
 }
 
 func augmentGenericAttribute(attr *YamlConfigAttribute) {
+	applyDefaultValuePresentOverride(attr)
 	if attr.TfName == "" {
 		attr.TfName = SnakeCase(attr.ModelName)
 	}
