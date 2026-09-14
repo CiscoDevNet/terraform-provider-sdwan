@@ -981,6 +981,10 @@ func applyDefaultValuePresentOverride(attr *YamlConfigAttribute) {
 	}
 }
 
+func isDefaultValueSuppressed(attr *YamlConfigAttribute) bool {
+	return attr.DefaultValuePresentOverride != nil && !*attr.DefaultValuePresentOverride
+}
+
 func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result) {
 	applyDefaultValuePresentOverride(attr)
 	if attr.NoAugmentConfig {
@@ -1379,9 +1383,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		if value := r.Get("properties.optionType.enum.0"); value.String() == "default" {
 			d = r
 		}
-		suppressDefault := attr.DefaultValuePresentOverride != nil && !*attr.DefaultValuePresentOverride
-		if suppressDefault {
-			attr.DefaultValuePresent = false
+		// An explicit `default_value_present: false` also opts the attribute out of the
+		// exclude_null/mandatory inference below, keeping it optional with no default.
+		if isDefaultValueSuppressed(attr) {
 			attr.DefaultValue = ""
 			attr.DefaultValueEmptyString = false
 		} else if d.Exists() && (!isOneOfAttribute || attr.DefaultValuePresent == true) {

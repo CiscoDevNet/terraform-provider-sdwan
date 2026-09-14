@@ -1,3 +1,8 @@
+## 0.11.6 (unreleased)
+
+- Fix `sdwan_system_security_feature` sending `extended_anti_replay_window` with the SD-WAN Manager default of `256` when the attribute is not declared.
+- Support `default_value_present: false` in generator definitions to suppress a schema-derived default for a single attribute
+
 ## 0.11.5
 
 - Update provider documentation: refresh tested platform versions to 20.12/20.15/20.18, restructure guides into "Getting Started - Configuration and Policy Groups" (new, recommended) and "Getting Started - Classic Templates"
