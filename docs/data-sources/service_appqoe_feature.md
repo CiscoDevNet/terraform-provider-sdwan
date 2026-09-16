@@ -51,14 +51,9 @@ data "sdwan_service_appqoe_feature" "example" {
 Read-Only:
 
 - `appnav_controllers` (Attributes List) List of controllers (see [below for nested schema](#nestedatt--combined_controller_groups--appnav_controllers))
-- `group_name` (String) List of controller group
 
 <a id="nestedatt--combined_controller_groups--appnav_controllers"></a>
 ### Nested Schema for `combined_controller_groups.appnav_controllers`
-
-Read-Only:
-
-- `address` (String) Controller IP Address
 
 
 
@@ -70,6 +65,7 @@ Read-Only:
 - `appnav_controller_group` (String) Appnav controller group
 - `enable` (Boolean) enable service context
 - `service_node_group` (String) Service node group
+- `service_node_groups` (Set of String) Service node groups bound to this service context
 - `vpn` (Number) Vpn
 - `vpn_variable` (String) Variable name
 
@@ -79,15 +75,10 @@ Read-Only:
 
 Read-Only:
 
-- `name` (String) List of service node group
 - `service_nodes` (Attributes List) Service Node Information (see [below for nested schema](#nestedatt--combined_service_node_groups--service_nodes))
 
 <a id="nestedatt--combined_service_node_groups--service_nodes"></a>
 ### Nested Schema for `combined_service_node_groups.service_nodes`
-
-Read-Only:
-
-- `address` (String) IP Address
 
 
 
@@ -117,6 +108,7 @@ Read-Only:
 - `appnav_controller_group` (String) Appnav controller group
 - `enable` (Boolean) enable service context
 - `service_node_group` (String) Service node group
+- `service_node_groups` (Set of String) Service node groups bound to this service context
 - `vpn` (Number) Vpn
 - `vpn_variable` (String) Variable name
 
@@ -143,16 +135,10 @@ Read-Only:
 
 Read-Only:
 
-- `name` (String) List of service node group
 - `service_nodes` (Attributes List) Service Node Information (see [below for nested schema](#nestedatt--service_node_service_node_groups--service_nodes))
 
 <a id="nestedatt--service_node_service_node_groups--service_nodes"></a>
 ### Nested Schema for `service_node_service_node_groups.service_nodes`
-
-Read-Only:
-
-- `address` (String) IP Address
-- `vpg_ip` (String) ip and prefix
 
 
 

@@ -24,6 +24,7 @@ import (
 	"net/url"
 	"strings"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -66,31 +67,30 @@ type ServiceAppQoEForwarderServiceNodeGroups struct {
 type ServiceAppQoEForwarderServiceContexts struct {
 	AppnavControllerGroup types.String `tfsdk:"appnav_controller_group"`
 	ServiceNodeGroup      types.String `tfsdk:"service_node_group"`
+	ServiceNodeGroups     types.Set    `tfsdk:"service_node_groups"`
 	Enable                types.Bool   `tfsdk:"enable"`
 	Vpn                   types.Int64  `tfsdk:"vpn"`
 	VpnVariable           types.String `tfsdk:"vpn_variable"`
 }
 
 type ServiceAppQoECombinedControllerGroups struct {
-	GroupName         types.String                                             `tfsdk:"group_name"`
 	AppnavControllers []ServiceAppQoECombinedControllerGroupsAppnavControllers `tfsdk:"appnav_controllers"`
 }
 
 type ServiceAppQoECombinedServiceNodeGroups struct {
-	Name         types.String                                         `tfsdk:"name"`
 	ServiceNodes []ServiceAppQoECombinedServiceNodeGroupsServiceNodes `tfsdk:"service_nodes"`
 }
 
 type ServiceAppQoECombinedServiceContexts struct {
 	AppnavControllerGroup types.String `tfsdk:"appnav_controller_group"`
 	ServiceNodeGroup      types.String `tfsdk:"service_node_group"`
+	ServiceNodeGroups     types.Set    `tfsdk:"service_node_groups"`
 	Enable                types.Bool   `tfsdk:"enable"`
 	Vpn                   types.Int64  `tfsdk:"vpn"`
 	VpnVariable           types.String `tfsdk:"vpn_variable"`
 }
 
 type ServiceAppQoEServiceNodeServiceNodeGroups struct {
-	Name         types.String                                            `tfsdk:"name"`
 	ServiceNodes []ServiceAppQoEServiceNodeServiceNodeGroupsServiceNodes `tfsdk:"service_nodes"`
 }
 
@@ -105,16 +105,12 @@ type ServiceAppQoEForwarderServiceNodeGroupsServiceNodes struct {
 }
 
 type ServiceAppQoECombinedControllerGroupsAppnavControllers struct {
-	Address types.String `tfsdk:"address"`
 }
 
 type ServiceAppQoECombinedServiceNodeGroupsServiceNodes struct {
-	Address types.String `tfsdk:"address"`
 }
 
 type ServiceAppQoEServiceNodeServiceNodeGroupsServiceNodes struct {
-	Address types.String `tfsdk:"address"`
-	VpgIp   types.String `tfsdk:"vpg_ip"`
 }
 
 // End of section. //template:end types
@@ -276,6 +272,19 @@ func (data ServiceAppQoE) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "serviceNodeGroup.value", item.ServiceNodeGroup.ValueString())
 				}
 			}
+			if !item.ServiceNodeGroups.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "serviceNodeGroups", []interface{}{})
+					var values []string
+					item.ServiceNodeGroups.ElementsAs(ctx, &values, false)
+					for _, v := range values {
+						elemBody := ""
+						elemBody, _ = sjson.Set(elemBody, "optionType", "global")
+						elemBody, _ = sjson.Set(elemBody, "value", v)
+						itemBody, _ = sjson.SetRaw(itemBody, "serviceNodeGroups.-1", elemBody)
+					}
+				}
+			}
 			if !item.Enable.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "enable.optionType", "global")
@@ -306,31 +315,17 @@ func (data ServiceAppQoE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"forwarderAndServiceNode.appnavControllerGroup", []interface{}{})
 		for _, item := range data.CombinedControllerGroups {
 			itemBody := ""
-			if item.GroupName.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "groupName.optionType", "default")
-					itemBody, _ = sjson.Set(itemBody, "groupName.value", "ACG-APPQOE")
-				}
-			} else {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "groupName.optionType", "default")
-					itemBody, _ = sjson.Set(itemBody, "groupName.value", item.GroupName.ValueString())
-				}
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "groupName.optionType", "default")
+				itemBody, _ = sjson.Set(itemBody, "groupName.value", "ACG-APPQOE")
 			}
 			if true {
 				itemBody, _ = sjson.Set(itemBody, "appnavControllers", []interface{}{})
-				for _, childItem := range item.AppnavControllers {
+				for range item.AppnavControllers {
 					itemChildBody := ""
-					if childItem.Address.IsNull() {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "default")
-							itemChildBody, _ = sjson.Set(itemChildBody, "address.value", "192.168.2.1")
-						}
-					} else {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "default")
-							itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.Address.ValueString())
-						}
+					if true {
+						itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "default")
+						itemChildBody, _ = sjson.Set(itemChildBody, "address.value", "192.168.2.1")
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "appnavControllers.-1", itemChildBody)
 				}
@@ -342,16 +337,9 @@ func (data ServiceAppQoE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"forwarderAndServiceNode.serviceNodeGroup", []interface{}{})
 		for _, item := range data.CombinedServiceNodeGroups {
 			itemBody := ""
-			if item.Name.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "name.optionType", "default")
-					itemBody, _ = sjson.Set(itemBody, "name.value", "SNG-APPQOE")
-				}
-			} else {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "name.optionType", "default")
-					itemBody, _ = sjson.Set(itemBody, "name.value", item.Name.ValueString())
-				}
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "name.optionType", "default")
+				itemBody, _ = sjson.Set(itemBody, "name.value", "SNG-APPQOE")
 			}
 			if true {
 				itemBody, _ = sjson.Set(itemBody, "internal.optionType", "default")
@@ -359,18 +347,11 @@ func (data ServiceAppQoE) toBody(ctx context.Context) string {
 			}
 			if true {
 				itemBody, _ = sjson.Set(itemBody, "serviceNode", []interface{}{})
-				for _, childItem := range item.ServiceNodes {
+				for range item.ServiceNodes {
 					itemChildBody := ""
-					if childItem.Address.IsNull() {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "default")
-							itemChildBody, _ = sjson.Set(itemChildBody, "address.value", "192.168.2.2")
-						}
-					} else {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "default")
-							itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.Address.ValueString())
-						}
+					if true {
+						itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "default")
+						itemChildBody, _ = sjson.Set(itemChildBody, "address.value", "192.168.2.2")
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "serviceNode.-1", itemChildBody)
 				}
@@ -396,6 +377,19 @@ func (data ServiceAppQoE) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "serviceNodeGroup.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "serviceNodeGroup.value", item.ServiceNodeGroup.ValueString())
+				}
+			}
+			if !item.ServiceNodeGroups.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "serviceNodeGroups", []interface{}{})
+					var values []string
+					item.ServiceNodeGroups.ElementsAs(ctx, &values, false)
+					for _, v := range values {
+						elemBody := ""
+						elemBody, _ = sjson.Set(elemBody, "optionType", "global")
+						elemBody, _ = sjson.Set(elemBody, "value", v)
+						itemBody, _ = sjson.SetRaw(itemBody, "serviceNodeGroups.-1", elemBody)
+					}
 				}
 			}
 			if !item.Enable.IsNull() {
@@ -428,16 +422,9 @@ func (data ServiceAppQoE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"serviceNode.serviceNodeGroup", []interface{}{})
 		for _, item := range data.ServiceNodeServiceNodeGroups {
 			itemBody := ""
-			if item.Name.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "name.optionType", "default")
-					itemBody, _ = sjson.Set(itemBody, "name.value", "SNG-APPQOE")
-				}
-			} else {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "name.optionType", "default")
-					itemBody, _ = sjson.Set(itemBody, "name.value", item.Name.ValueString())
-				}
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "name.optionType", "default")
+				itemBody, _ = sjson.Set(itemBody, "name.value", "SNG-APPQOE")
 			}
 			if true {
 				itemBody, _ = sjson.Set(itemBody, "externalNode.optionType", "default")
@@ -445,29 +432,15 @@ func (data ServiceAppQoE) toBody(ctx context.Context) string {
 			}
 			if true {
 				itemBody, _ = sjson.Set(itemBody, "serviceNode", []interface{}{})
-				for _, childItem := range item.ServiceNodes {
+				for range item.ServiceNodes {
 					itemChildBody := ""
-					if childItem.Address.IsNull() {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "default")
-							itemChildBody, _ = sjson.Set(itemChildBody, "address.value", "192.168.2.2")
-						}
-					} else {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "default")
-							itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.Address.ValueString())
-						}
+					if true {
+						itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "default")
+						itemChildBody, _ = sjson.Set(itemChildBody, "address.value", "192.168.2.2")
 					}
-					if childItem.VpgIp.IsNull() {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "vpgIp.optionType", "default")
-							itemChildBody, _ = sjson.Set(itemChildBody, "vpgIp.value", "192.168.2.1/24")
-						}
-					} else {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "vpgIp.optionType", "default")
-							itemChildBody, _ = sjson.Set(itemChildBody, "vpgIp.value", childItem.VpgIp.ValueString())
-						}
+					if true {
+						itemChildBody, _ = sjson.Set(itemChildBody, "vpgIp.optionType", "default")
+						itemChildBody, _ = sjson.Set(itemChildBody, "vpgIp.value", "192.168.2.1/24")
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "serviceNode.-1", itemChildBody)
 				}
@@ -754,6 +727,17 @@ func (data *ServiceAppQoE) fromBody(ctx context.Context, res gjson.Result, fullR
 					item.ServiceNodeGroup = types.StringValue(va.String())
 				}
 			}
+			item.ServiceNodeGroups = types.SetNull(types.StringType)
+
+			if va := v.Get("serviceNodeGroups"); va.Exists() && len(va.Array()) > 0 {
+				elems := make([]gjson.Result, 0, len(va.Array()))
+				for _, e := range va.Array() {
+					if e.Get("optionType").String() == "global" {
+						elems = append(elems, e.Get("value"))
+					}
+				}
+				item.ServiceNodeGroups = helpers.GetStringSet(elems)
+			}
 			item.Enable = types.BoolNull()
 
 			if t := v.Get("enable.optionType"); t.Exists() {
@@ -811,26 +795,10 @@ func (data *ServiceAppQoE) fromBody(ctx context.Context, res gjson.Result, fullR
 		data.CombinedControllerGroups = make([]ServiceAppQoECombinedControllerGroups, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceAppQoECombinedControllerGroups{}
-			item.GroupName = types.StringNull()
-
-			if t := v.Get("groupName.optionType"); t.Exists() {
-				va := v.Get("groupName.value")
-				if t.String() == "global" || t.String() == "default" {
-					item.GroupName = types.StringValue(va.String())
-				}
-			}
 			if cValue := v.Get("appnavControllers"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.AppnavControllers = make([]ServiceAppQoECombinedControllerGroupsAppnavControllers, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceAppQoECombinedControllerGroupsAppnavControllers{}
-					cItem.Address = types.StringNull()
-
-					if t := cv.Get("address.optionType"); t.Exists() {
-						va := cv.Get("address.value")
-						if t.String() == "global" || t.String() == "default" {
-							cItem.Address = types.StringValue(va.String())
-						}
-					}
 					item.AppnavControllers = append(item.AppnavControllers, cItem)
 					return true
 				})
@@ -851,26 +819,16 @@ func (data *ServiceAppQoE) fromBody(ctx context.Context, res gjson.Result, fullR
 				}
 				keyMatch := true
 				if keyMatch {
-					if oldItem.GroupName.ValueString() != data.CombinedControllerGroups[ni].GroupName.ValueString() {
-						keyMatch = false
-					}
-				}
-				if keyMatch {
 					matchedCombinedControllerGroups[ni] = true
 					if data.CombinedControllerGroups[ni].AppnavControllers != nil {
 						resultC := make([]ServiceAppQoECombinedControllerGroupsAppnavControllers, 0, len(data.CombinedControllerGroups[ni].AppnavControllers))
 						matchedC := make([]bool, len(data.CombinedControllerGroups[ni].AppnavControllers))
-						for _, oldCItem := range oldItem.AppnavControllers {
+						for range oldItem.AppnavControllers {
 							for nci := range data.CombinedControllerGroups[ni].AppnavControllers {
 								if matchedC[nci] {
 									continue
 								}
 								keyMatchC := true
-								if keyMatchC {
-									if oldCItem.Address.ValueString() != data.CombinedControllerGroups[ni].AppnavControllers[nci].Address.ValueString() {
-										keyMatchC = false
-									}
-								}
 								if keyMatchC {
 									matchedC[nci] = true
 									resultC = append(resultC, data.CombinedControllerGroups[ni].AppnavControllers[nci])
@@ -902,26 +860,10 @@ func (data *ServiceAppQoE) fromBody(ctx context.Context, res gjson.Result, fullR
 		data.CombinedServiceNodeGroups = make([]ServiceAppQoECombinedServiceNodeGroups, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceAppQoECombinedServiceNodeGroups{}
-			item.Name = types.StringNull()
-
-			if t := v.Get("name.optionType"); t.Exists() {
-				va := v.Get("name.value")
-				if t.String() == "global" || t.String() == "default" {
-					item.Name = types.StringValue(va.String())
-				}
-			}
 			if cValue := v.Get("serviceNode"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ServiceNodes = make([]ServiceAppQoECombinedServiceNodeGroupsServiceNodes, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceAppQoECombinedServiceNodeGroupsServiceNodes{}
-					cItem.Address = types.StringNull()
-
-					if t := cv.Get("address.optionType"); t.Exists() {
-						va := cv.Get("address.value")
-						if t.String() == "global" || t.String() == "default" {
-							cItem.Address = types.StringValue(va.String())
-						}
-					}
 					item.ServiceNodes = append(item.ServiceNodes, cItem)
 					return true
 				})
@@ -942,26 +884,16 @@ func (data *ServiceAppQoE) fromBody(ctx context.Context, res gjson.Result, fullR
 				}
 				keyMatch := true
 				if keyMatch {
-					if oldItem.Name.ValueString() != data.CombinedServiceNodeGroups[ni].Name.ValueString() {
-						keyMatch = false
-					}
-				}
-				if keyMatch {
 					matchedCombinedServiceNodeGroups[ni] = true
 					if data.CombinedServiceNodeGroups[ni].ServiceNodes != nil {
 						resultC := make([]ServiceAppQoECombinedServiceNodeGroupsServiceNodes, 0, len(data.CombinedServiceNodeGroups[ni].ServiceNodes))
 						matchedC := make([]bool, len(data.CombinedServiceNodeGroups[ni].ServiceNodes))
-						for _, oldCItem := range oldItem.ServiceNodes {
+						for range oldItem.ServiceNodes {
 							for nci := range data.CombinedServiceNodeGroups[ni].ServiceNodes {
 								if matchedC[nci] {
 									continue
 								}
 								keyMatchC := true
-								if keyMatchC {
-									if oldCItem.Address.ValueString() != data.CombinedServiceNodeGroups[ni].ServiceNodes[nci].Address.ValueString() {
-										keyMatchC = false
-									}
-								}
 								if keyMatchC {
 									matchedC[nci] = true
 									resultC = append(resultC, data.CombinedServiceNodeGroups[ni].ServiceNodes[nci])
@@ -1008,6 +940,17 @@ func (data *ServiceAppQoE) fromBody(ctx context.Context, res gjson.Result, fullR
 				if t.String() == "global" {
 					item.ServiceNodeGroup = types.StringValue(va.String())
 				}
+			}
+			item.ServiceNodeGroups = types.SetNull(types.StringType)
+
+			if va := v.Get("serviceNodeGroups"); va.Exists() && len(va.Array()) > 0 {
+				elems := make([]gjson.Result, 0, len(va.Array()))
+				for _, e := range va.Array() {
+					if e.Get("optionType").String() == "global" {
+						elems = append(elems, e.Get("value"))
+					}
+				}
+				item.ServiceNodeGroups = helpers.GetStringSet(elems)
 			}
 			item.Enable = types.BoolNull()
 
@@ -1066,34 +1009,10 @@ func (data *ServiceAppQoE) fromBody(ctx context.Context, res gjson.Result, fullR
 		data.ServiceNodeServiceNodeGroups = make([]ServiceAppQoEServiceNodeServiceNodeGroups, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceAppQoEServiceNodeServiceNodeGroups{}
-			item.Name = types.StringNull()
-
-			if t := v.Get("name.optionType"); t.Exists() {
-				va := v.Get("name.value")
-				if t.String() == "global" || t.String() == "default" {
-					item.Name = types.StringValue(va.String())
-				}
-			}
 			if cValue := v.Get("serviceNode"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ServiceNodes = make([]ServiceAppQoEServiceNodeServiceNodeGroupsServiceNodes, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceAppQoEServiceNodeServiceNodeGroupsServiceNodes{}
-					cItem.Address = types.StringNull()
-
-					if t := cv.Get("address.optionType"); t.Exists() {
-						va := cv.Get("address.value")
-						if t.String() == "global" || t.String() == "default" {
-							cItem.Address = types.StringValue(va.String())
-						}
-					}
-					cItem.VpgIp = types.StringNull()
-
-					if t := cv.Get("vpgIp.optionType"); t.Exists() {
-						va := cv.Get("vpgIp.value")
-						if t.String() == "global" || t.String() == "default" {
-							cItem.VpgIp = types.StringValue(va.String())
-						}
-					}
 					item.ServiceNodes = append(item.ServiceNodes, cItem)
 					return true
 				})
@@ -1114,26 +1033,16 @@ func (data *ServiceAppQoE) fromBody(ctx context.Context, res gjson.Result, fullR
 				}
 				keyMatch := true
 				if keyMatch {
-					if oldItem.Name.ValueString() != data.ServiceNodeServiceNodeGroups[ni].Name.ValueString() {
-						keyMatch = false
-					}
-				}
-				if keyMatch {
 					matchedServiceNodeServiceNodeGroups[ni] = true
 					if data.ServiceNodeServiceNodeGroups[ni].ServiceNodes != nil {
 						resultC := make([]ServiceAppQoEServiceNodeServiceNodeGroupsServiceNodes, 0, len(data.ServiceNodeServiceNodeGroups[ni].ServiceNodes))
 						matchedC := make([]bool, len(data.ServiceNodeServiceNodeGroups[ni].ServiceNodes))
-						for _, oldCItem := range oldItem.ServiceNodes {
+						for range oldItem.ServiceNodes {
 							for nci := range data.ServiceNodeServiceNodeGroups[ni].ServiceNodes {
 								if matchedC[nci] {
 									continue
 								}
 								keyMatchC := true
-								if keyMatchC {
-									if oldCItem.Address.ValueString() != data.ServiceNodeServiceNodeGroups[ni].ServiceNodes[nci].Address.ValueString() {
-										keyMatchC = false
-									}
-								}
 								if keyMatchC {
 									matchedC[nci] = true
 									resultC = append(resultC, data.ServiceNodeServiceNodeGroups[ni].ServiceNodes[nci])

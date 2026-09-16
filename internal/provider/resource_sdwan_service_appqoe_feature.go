@@ -64,7 +64,7 @@ func (r *ServiceAppQoEProfileParcelResource) Metadata(ctx context.Context, req r
 func (r *ServiceAppQoEProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("`appqoe_device_role` selects which subtree is sent: `forwarder_*` attributes apply only to the `forwarder` role, `combined_*` only to `forwarderAndServiceNode` and `forwarderAndServiceNodeWithDre`, and `service_node_*` only to `serviceNode` and `serviceNodeWithDre`. Attributes belonging to a role other than the configured one are silently omitted from the request and will show as a recurring difference in `terraform plan`. DRE optimization is enabled by selecting a `...WithDre` role, which also unlocks `virtual_applications` for the DRE resource profile. Only one service node group can be bound per service context.").AddMinimumVersionDescription("20.15.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("`appqoe_device_role` selects which subtree is sent — `forwarder_*` for role `forwarder`, `combined_*` for `forwarderAndServiceNode`(`WithDre`), `service_node_*` for `serviceNode`(`WithDre`); attributes for the wrong role are silently dropped from the request and show as a permanent `terraform plan` diff. `combined_controller_groups`, `combined_service_node_groups`, and `service_node_service_node_groups` have no configurable fields (Manager fixes their names/addresses) — set each list item to `{}`. `combined_service_contexts` is required whenever the role is `combined`: leaving it empty deploys via the API but breaks the Manager GUI's own Save button. A `...WithDre` role requires `virtual_applications` with at least one entry (`{}` is fine) — omitting it while DRE is enabled sends an inconsistent payload the GUI never produces. `service_node_group` is the primary service node group bound to the context; `service_node_groups` lists every group bound to it (Manager supports binding more than one) — set both to the same single value/list when there's only one group.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -195,6 +195,11 @@ func (r *ServiceAppQoEProfileParcelResource) Schema(ctx context.Context, req res
 								stringvalidator.RegexMatches(regexp.MustCompile(`^[^&<>! "]+$`), ""),
 							},
 						},
+						"service_node_groups": schema.SetAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Service node groups bound to this service context").String,
+							ElementType:         types.StringType,
+							Optional:            true,
+						},
 						"enable": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("enable service context").String,
 							Optional:            true,
@@ -215,20 +220,11 @@ func (r *ServiceAppQoEProfileParcelResource) Schema(ctx context.Context, req res
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"group_name": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("List of controller group").AddDefaultValueDescription("ACG-APPQOE").String,
-							Optional:            true,
-						},
 						"appnav_controllers": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of controllers").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"address": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Controller IP Address").AddDefaultValueDescription("192.168.2.1").String,
-										Optional:            true,
-									},
-								},
+								Attributes: map[string]schema.Attribute{},
 							},
 						},
 					},
@@ -239,20 +235,11 @@ func (r *ServiceAppQoEProfileParcelResource) Schema(ctx context.Context, req res
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"name": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("List of service node group").AddDefaultValueDescription("SNG-APPQOE").String,
-							Optional:            true,
-						},
 						"service_nodes": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Service Node Information").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"address": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("IP Address").AddDefaultValueDescription("192.168.2.2").String,
-										Optional:            true,
-									},
-								},
+								Attributes: map[string]schema.Attribute{},
 							},
 						},
 					},
@@ -279,6 +266,11 @@ func (r *ServiceAppQoEProfileParcelResource) Schema(ctx context.Context, req res
 								stringvalidator.RegexMatches(regexp.MustCompile(`^[^&<>! "]+$`), ""),
 							},
 						},
+						"service_node_groups": schema.SetAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Service node groups bound to this service context").String,
+							ElementType:         types.StringType,
+							Optional:            true,
+						},
 						"enable": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("enable service context").String,
 							Optional:            true,
@@ -299,24 +291,11 @@ func (r *ServiceAppQoEProfileParcelResource) Schema(ctx context.Context, req res
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"name": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("List of service node group").AddDefaultValueDescription("SNG-APPQOE").String,
-							Optional:            true,
-						},
 						"service_nodes": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Service Node Information").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"address": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("IP Address").AddDefaultValueDescription("192.168.2.2").String,
-										Optional:            true,
-									},
-									"vpg_ip": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("ip and prefix").AddDefaultValueDescription("192.168.2.1/24").String,
-										Optional:            true,
-									},
-								},
+								Attributes: map[string]schema.Attribute{},
 							},
 						},
 					},

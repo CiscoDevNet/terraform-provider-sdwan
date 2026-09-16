@@ -103,6 +103,7 @@ func testAccSdwanServiceAppQoEProfileParcelConfig_all() string {
 	config += `	forwarder_service_contexts = [{` + "\n"
 	config += `	  appnav_controller_group = "ACG-APPQOE"` + "\n"
 	config += `	  service_node_group = "SNG-APPQOE"` + "\n"
+	config += `	  service_node_groups = ["SNG-APPQOE"]` + "\n"
 	config += `	  enable = true` + "\n"
 	config += `	  vpn = 0` + "\n"
 	config += `	}]` + "\n"

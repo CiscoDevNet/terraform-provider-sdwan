@@ -170,6 +170,11 @@ func (d *ServiceAppQoEProfileParcelDataSource) Schema(ctx context.Context, req d
 							MarkdownDescription: "Service node group",
 							Computed:            true,
 						},
+						"service_node_groups": schema.SetAttribute{
+							MarkdownDescription: "Service node groups bound to this service context",
+							ElementType:         types.StringType,
+							Computed:            true,
+						},
 						"enable": schema.BoolAttribute{
 							MarkdownDescription: "enable service context",
 							Computed:            true,
@@ -190,20 +195,11 @@ func (d *ServiceAppQoEProfileParcelDataSource) Schema(ctx context.Context, req d
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"group_name": schema.StringAttribute{
-							MarkdownDescription: "List of controller group",
-							Computed:            true,
-						},
 						"appnav_controllers": schema.ListNestedAttribute{
 							MarkdownDescription: "List of controllers",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"address": schema.StringAttribute{
-										MarkdownDescription: "Controller IP Address",
-										Computed:            true,
-									},
-								},
+								Attributes: map[string]schema.Attribute{},
 							},
 						},
 					},
@@ -214,20 +210,11 @@ func (d *ServiceAppQoEProfileParcelDataSource) Schema(ctx context.Context, req d
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"name": schema.StringAttribute{
-							MarkdownDescription: "List of service node group",
-							Computed:            true,
-						},
 						"service_nodes": schema.ListNestedAttribute{
 							MarkdownDescription: "Service Node Information",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"address": schema.StringAttribute{
-										MarkdownDescription: "IP Address",
-										Computed:            true,
-									},
-								},
+								Attributes: map[string]schema.Attribute{},
 							},
 						},
 					},
@@ -244,6 +231,11 @@ func (d *ServiceAppQoEProfileParcelDataSource) Schema(ctx context.Context, req d
 						},
 						"service_node_group": schema.StringAttribute{
 							MarkdownDescription: "Service node group",
+							Computed:            true,
+						},
+						"service_node_groups": schema.SetAttribute{
+							MarkdownDescription: "Service node groups bound to this service context",
+							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"enable": schema.BoolAttribute{
@@ -266,24 +258,11 @@ func (d *ServiceAppQoEProfileParcelDataSource) Schema(ctx context.Context, req d
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"name": schema.StringAttribute{
-							MarkdownDescription: "List of service node group",
-							Computed:            true,
-						},
 						"service_nodes": schema.ListNestedAttribute{
 							MarkdownDescription: "Service Node Information",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"address": schema.StringAttribute{
-										MarkdownDescription: "IP Address",
-										Computed:            true,
-									},
-									"vpg_ip": schema.StringAttribute{
-										MarkdownDescription: "ip and prefix",
-										Computed:            true,
-									},
-								},
+								Attributes: map[string]schema.Attribute{},
 							},
 						},
 					},

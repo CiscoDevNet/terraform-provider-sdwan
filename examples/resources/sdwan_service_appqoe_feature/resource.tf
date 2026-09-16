@@ -26,6 +26,7 @@ resource "sdwan_service_appqoe_feature" "example" {
     {
       appnav_controller_group = "ACG-APPQOE"
       service_node_group      = "SNG-APPQOE"
+      service_node_groups     = ["SNG-APPQOE"]
       enable                  = true
       vpn                     = 0
     }

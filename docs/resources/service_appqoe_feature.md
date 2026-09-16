@@ -3,13 +3,13 @@
 page_title: "sdwan_service_appqoe_feature Resource - terraform-provider-sdwan"
 subcategory: "Features - Service"
 description: |-
-  appqoe_device_role selects which subtree is sent: forwarder_* attributes apply only to the forwarder role, combined_* only to forwarderAndServiceNode and forwarderAndServiceNodeWithDre, and service_node_* only to serviceNode and serviceNodeWithDre. Attributes belonging to a role other than the configured one are silently omitted from the request and will show as a recurring difference in terraform plan. DRE optimization is enabled by selecting a ...WithDre role, which also unlocks virtual_applications for the DRE resource profile. Only one service node group can be bound per service context.
+  appqoe_device_role selects which subtree is sent — forwarder_* for role forwarder, combined_* for forwarderAndServiceNode(WithDre), service_node_* for serviceNode(WithDre); attributes for the wrong role are silently dropped from the request and show as a permanent terraform plan diff. combined_controller_groups, combined_service_node_groups, and service_node_service_node_groups have no configurable fields (Manager fixes their names/addresses) — set each list item to {}. combined_service_contexts is required whenever the role is combined: leaving it empty deploys via the API but breaks the Manager GUI's own Save button. A ...WithDre role requires virtual_applications with at least one entry ({} is fine) — omitting it while DRE is enabled sends an inconsistent payload the GUI never produces. service_node_group is the primary service node group bound to the context; service_node_groups lists every group bound to it (Manager supports binding more than one) — set both to the same single value/list when there's only one group.
   Minimum SD-WAN Manager version: 20.15.0
 ---
 
 # sdwan_service_appqoe_feature (Resource)
 
-`appqoe_device_role` selects which subtree is sent: `forwarder_*` attributes apply only to the `forwarder` role, `combined_*` only to `forwarderAndServiceNode` and `forwarderAndServiceNodeWithDre`, and `service_node_*` only to `serviceNode` and `serviceNodeWithDre`. Attributes belonging to a role other than the configured one are silently omitted from the request and will show as a recurring difference in `terraform plan`. DRE optimization is enabled by selecting a `...WithDre` role, which also unlocks `virtual_applications` for the DRE resource profile. Only one service node group can be bound per service context.
+`appqoe_device_role` selects which subtree is sent — `forwarder_*` for role `forwarder`, `combined_*` for `forwarderAndServiceNode`(`WithDre`), `service_node_*` for `serviceNode`(`WithDre`); attributes for the wrong role are silently dropped from the request and show as a permanent `terraform plan` diff. `combined_controller_groups`, `combined_service_node_groups`, and `service_node_service_node_groups` have no configurable fields (Manager fixes their names/addresses) — set each list item to `{}`. `combined_service_contexts` is required whenever the role is `combined`: leaving it empty deploys via the API but breaks the Manager GUI's own Save button. A `...WithDre` role requires `virtual_applications` with at least one entry (`{}` is fine) — omitting it while DRE is enabled sends an inconsistent payload the GUI never produces. `service_node_group` is the primary service node group bound to the context; `service_node_groups` lists every group bound to it (Manager supports binding more than one) — set both to the same single value/list when there's only one group.
   - Minimum SD-WAN Manager version: `20.15.0`
 
 ## Example Usage
@@ -43,6 +43,7 @@ resource "sdwan_service_appqoe_feature" "example" {
     {
       appnav_controller_group = "ACG-APPQOE"
       service_node_group      = "SNG-APPQOE"
+      service_node_groups     = ["SNG-APPQOE"]
       enable                  = true
       vpn                     = 0
     }
@@ -83,16 +84,9 @@ resource "sdwan_service_appqoe_feature" "example" {
 Optional:
 
 - `appnav_controllers` (Attributes List) List of controllers (see [below for nested schema](#nestedatt--combined_controller_groups--appnav_controllers))
-- `group_name` (String) List of controller group
-  - Default value: `ACG-APPQOE`
 
 <a id="nestedatt--combined_controller_groups--appnav_controllers"></a>
 ### Nested Schema for `combined_controller_groups.appnav_controllers`
-
-Optional:
-
-- `address` (String) Controller IP Address
-  - Default value: `192.168.2.1`
 
 
 
@@ -104,6 +98,7 @@ Optional:
 - `appnav_controller_group` (String) Appnav controller group
 - `enable` (Boolean) enable service context
 - `service_node_group` (String) Service node group
+- `service_node_groups` (Set of String) Service node groups bound to this service context
 - `vpn` (Number) Vpn
 - `vpn_variable` (String) Variable name
 
@@ -113,17 +108,10 @@ Optional:
 
 Optional:
 
-- `name` (String) List of service node group
-  - Default value: `SNG-APPQOE`
 - `service_nodes` (Attributes List) Service Node Information (see [below for nested schema](#nestedatt--combined_service_node_groups--service_nodes))
 
 <a id="nestedatt--combined_service_node_groups--service_nodes"></a>
 ### Nested Schema for `combined_service_node_groups.service_nodes`
-
-Optional:
-
-- `address` (String) IP Address
-  - Default value: `192.168.2.2`
 
 
 
@@ -154,6 +142,7 @@ Optional:
 - `appnav_controller_group` (String) Appnav controller group
 - `enable` (Boolean) enable service context
 - `service_node_group` (String) Service node group
+- `service_node_groups` (Set of String) Service node groups bound to this service context
 - `vpn` (Number) Vpn
 - `vpn_variable` (String) Variable name
 
@@ -181,19 +170,10 @@ Optional:
 
 Optional:
 
-- `name` (String) List of service node group
-  - Default value: `SNG-APPQOE`
 - `service_nodes` (Attributes List) Service Node Information (see [below for nested schema](#nestedatt--service_node_service_node_groups--service_nodes))
 
 <a id="nestedatt--service_node_service_node_groups--service_nodes"></a>
 ### Nested Schema for `service_node_service_node_groups.service_nodes`
-
-Optional:
-
-- `address` (String) IP Address
-  - Default value: `192.168.2.2`
-- `vpg_ip` (String) ip and prefix
-  - Default value: `192.168.2.1/24`
 
 
 

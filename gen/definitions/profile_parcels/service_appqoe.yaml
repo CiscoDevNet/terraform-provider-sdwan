@@ -6,14 +6,19 @@ test_tags: [SDWAN_2015]
 parcel_type: feature
 doc_category: Features - Service
 res_description: >-
-  `appqoe_device_role` selects which subtree is sent: `forwarder_*` attributes apply only to
-  the `forwarder` role, `combined_*` only to `forwarderAndServiceNode` and
-  `forwarderAndServiceNodeWithDre`, and `service_node_*` only to `serviceNode` and
-  `serviceNodeWithDre`. Attributes belonging to a role other than the configured one are
-  silently omitted from the request and will show as a recurring difference in
-  `terraform plan`. DRE optimization is enabled by selecting a `...WithDre` role, which also
-  unlocks `virtual_applications` for the DRE resource profile. Only one service node group
-  can be bound per service context.
+  `appqoe_device_role` selects which subtree is sent — `forwarder_*` for role `forwarder`,
+  `combined_*` for `forwarderAndServiceNode`(`WithDre`), `service_node_*` for
+  `serviceNode`(`WithDre`); attributes for the wrong role are silently dropped from the
+  request and show as a permanent `terraform plan` diff. `combined_controller_groups`,
+  `combined_service_node_groups`, and `service_node_service_node_groups` have no
+  configurable fields (Manager fixes their names/addresses) — set each list item to `{}`.
+  `combined_service_contexts` is required whenever the role is `combined`: leaving it empty
+  deploys via the API but breaks the Manager GUI's own Save button. A `...WithDre` role
+  requires `virtual_applications` with at least one entry (`{}` is fine) — omitting it while
+  DRE is enabled sends an inconsistent payload the GUI never produces. `service_node_group`
+  is the primary service node group bound to the context; `service_node_groups` lists every
+  group bound to it (Manager supports binding more than one) — set both to the same single
+  value/list when there's only one group.
 
 # `appqoe_device_role` selects which subtree is sent: `forwarder_*` attributes apply
 # only to the `forwarder` role, `combined_*` only to `forwarderAndServiceNode` /
@@ -28,7 +33,14 @@ res_description: >-
 # `SNG-APPQOE` default applies; SD-WAN Manager normalises any value equal to a default
 # to `optionType: default`, which reads back as null and would show as permanent drift.
 
-# With this implementation only one service node group can be bound per service context.
+# service_node_group/service_node_groups on *_service_contexts: the Manager GUI supports
+# binding multiple service node groups to one service context (serviceContext.appqoe[].
+# serviceNodeGroups, a plural array binding) alongside the legacy singular
+# serviceNodeGroup reference - both are sent together by the GUI, so both are modeled here
+# as real, directly-settable attributes rather than one being derived from the other.
+# serviceNodeGroups uses element_option_type because each array element is itself an
+# {optionType,value} wrapper (unlike every other Set(String) in this provider, where the
+# whole array is wrapped once) - see gen/schema/schema.yaml for the mechanism.
 
 attributes:
   - tf_name: feature_profile_id
@@ -132,6 +144,14 @@ attributes:
         example: ACG-APPQOE
       - model_name: serviceNodeGroup
         example: SNG-APPQOE
+      - model_name: serviceNodeGroups
+        tf_name: service_node_groups
+        type: Set
+        element_type: String
+        no_augment_config: true
+        element_option_type: true
+        description: Service node groups bound to this service context
+        example: SNG-APPQOE
       - model_name: enable
         example: true
       - model_name: vpn
@@ -149,16 +169,12 @@ attributes:
           type: StringContains
     attributes:
       - model_name: groupName
-        type: String
-        write_as_default: true
-        id: true
+        value: '"ACG-APPQOE"'
       - model_name: appnavControllers
         positional_fallback: true
         attributes:
           - model_name: address
-            type: String
-            write_as_default: true
-            id: true
+            value: '"192.168.2.1"'
   - model_name: serviceNodeGroup
     tf_name: combined_service_node_groups
     data_path: [forwarderAndServiceNode]
@@ -172,9 +188,7 @@ attributes:
           type: StringContains
     attributes:
       - model_name: name
-        type: String
-        write_as_default: true
-        id: true
+        value: '"SNG-APPQOE"'
       - model_name: internal
         value: true
       - model_name: serviceNode
@@ -182,9 +196,7 @@ attributes:
         positional_fallback: true
         attributes:
           - model_name: address
-            type: String
-            write_as_default: true
-            id: true
+            value: '"192.168.2.2"'
   - model_name: appqoe
     tf_name: combined_service_contexts
     data_path: [forwarderAndServiceNode, serviceContext]
@@ -204,6 +216,14 @@ attributes:
         example: ACG-APPQOE
       - model_name: serviceNodeGroup
         example: SNG-APPQOE
+      - model_name: serviceNodeGroups
+        tf_name: service_node_groups
+        type: Set
+        element_type: String
+        no_augment_config: true
+        element_option_type: true
+        description: Service node groups bound to this service context
+        example: SNG-APPQOE
       - model_name: enable
         example: true
       - model_name: vpn
@@ -221,9 +241,7 @@ attributes:
           type: StringContains
     attributes:
       - model_name: name
-        type: String
-        write_as_default: true
-        id: true
+        value: '"SNG-APPQOE"'
       - model_name: externalNode
         value: true
       - model_name: serviceNode
@@ -231,13 +249,10 @@ attributes:
         positional_fallback: true
         attributes:
           - model_name: address
-            type: String
-            write_as_default: true
-            id: true
+            value: '"192.168.2.2"'
           - model_name: vpgIp
             tf_name: vpg_ip
-            type: String
-            write_as_default: true
+            value: '"192.168.2.1/24"'
 
 test_prerequisites: |
   resource "sdwan_service_feature_profile" "test" {
