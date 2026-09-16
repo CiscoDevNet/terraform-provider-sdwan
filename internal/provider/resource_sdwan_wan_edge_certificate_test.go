@@ -100,7 +100,7 @@ func TestAccSdwanWANEdgeCertificateUnknownChassis(t *testing.T) {
 		Steps: []resource.TestStep{
 			{
 				Config:      testAccSdwanWANEdgeCertificateConfig("C8K-00000000-0000-0000-0000-000000000000", "staging"),
-				ExpectError: regexp.MustCompile(`not found in the WAN edge list`),
+				ExpectError: regexp.MustCompile(`chassis number`),
 			},
 		},
 	})
