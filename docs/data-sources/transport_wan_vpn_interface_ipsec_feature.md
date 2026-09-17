@@ -89,8 +89,6 @@ data "sdwan_transport_wan_vpn_interface_ipsec_feature" "example" {
 - `perfect_forward_secrecy_variable` (String) Variable name
 - `shutdown` (Boolean) Administrative state
 - `shutdown_variable` (String) Variable name
-- `tracker_id` (String) Enable tracker for this interface
-- `tracker_id_variable` (String) Variable name
 - `tunnel_destination_ipv4_address` (String)
 - `tunnel_destination_ipv4_address_variable` (String) Variable name
 - `tunnel_destination_ipv6_address` (String) Tunnel destination IPv6 Address
