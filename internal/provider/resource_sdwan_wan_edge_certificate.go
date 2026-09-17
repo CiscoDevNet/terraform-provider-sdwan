@@ -104,7 +104,7 @@ func (r *WANEdgeCertificateResource) Configure(_ context.Context, req resource.C
 }
 
 // apply resolves the serial number, saves the validity and optionally pushes the list to the controllers.
-func (r *WANEdgeCertificateResource) apply(ctx context.Context, data *WANEdgeCertificate, validity string) error {
+func (r *WANEdgeCertificateResource) apply(ctx context.Context, data *WANEdgeCertificate, validity string, forcePush bool) error {
 	entry, found, err := data.getCertificate(ctx, r.client)
 	if err != nil {
 		return fmt.Errorf("failed to retrieve WAN edge list (GET), got error: %s", err)
@@ -113,17 +113,26 @@ func (r *WANEdgeCertificateResource) apply(ctx context.Context, data *WANEdgeCer
 		return fmt.Errorf("chassis number %s not found in the WAN edge list of the Manager", data.ChassisNumber.ValueString())
 	}
 
-	if data.SerialNumber.IsNull() || data.SerialNumber.IsUnknown() {
+	if data.SerialNumber.IsNull() || data.SerialNumber.IsUnknown() || data.SerialNumber.ValueString() == "" {
 		data.SerialNumber = types.StringValue(entry.Get("serialNumber").String())
 	}
-
-	if err := data.setValidity(ctx, r.client, validity); err != nil {
-		return fmt.Errorf("failed to set certificate validity (POST), got error: %s", err)
+	if data.SerialNumber.ValueString() == "" {
+		return fmt.Errorf("chassis number %s has no serial number in the WAN edge list of the Manager", data.ChassisNumber.ValueString())
 	}
 
-	if data.SendToControllers.ValueBool() {
-		if err := data.sendToControllers(ctx, r.client, r.taskTimeout); err != nil {
-			return fmt.Errorf("failed to send the WAN edge list to the controllers, got error: %s", err)
+	sendToControllers := forcePush || data.SendToControllers.ValueBool()
+	err = data.setValidity(ctx, r.client, validity, sendToControllers)
+	if err != nil {
+		if !isSendToControllersUnsupported(err) {
+			return fmt.Errorf("failed to set certificate validity (POST), got error: %s", err)
+		}
+		if err := data.setValidityLegacy(ctx, r.client, validity); err != nil {
+			return fmt.Errorf("failed to set certificate validity using the legacy API payload (POST), got error: %s", err)
+		}
+		if sendToControllers {
+			if err := data.sendToControllers(ctx, r.client, r.taskTimeout); err != nil {
+				return fmt.Errorf("failed to send the WAN edge list to the controllers using the legacy API (POST), got error: %s", err)
+			}
 		}
 	}
 	return nil
@@ -141,7 +150,7 @@ func (r *WANEdgeCertificateResource) Create(ctx context.Context, req resource.Cr
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.ChassisNumber.ValueString()))
 
-	if err := r.apply(ctx, &plan, plan.Validity.ValueString()); err != nil {
+	if err := r.apply(ctx, &plan, plan.Validity.ValueString(), false); err != nil {
 		resp.Diagnostics.AddError("Client Error", err.Error())
 		return
 	}
@@ -208,7 +217,7 @@ func (r *WANEdgeCertificateResource) Update(ctx context.Context, req resource.Up
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.ChassisNumber.ValueString()))
 
-	if err := r.apply(ctx, &plan, plan.Validity.ValueString()); err != nil {
+	if err := r.apply(ctx, &plan, plan.Validity.ValueString(), false); err != nil {
 		resp.Diagnostics.AddError("Client Error", err.Error())
 		return
 	}
@@ -221,25 +230,6 @@ func (r *WANEdgeCertificateResource) Update(ctx context.Context, req resource.Up
 }
 
 func (r *WANEdgeCertificateResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state WANEdgeCertificate
-
-	// Read state
-	diags := req.State.Get(ctx, &state)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Id.ValueString()))
-
-	// Destroying the resource invalidates the certificate of the device
-	if err := r.apply(ctx, &state, "invalid"); err != nil {
-		resp.Diagnostics.AddError("Client Error", err.Error())
-		return
-	}
-
-	tflog.Debug(ctx, fmt.Sprintf("%s: Delete finished successfully", state.Id.ValueString()))
-
 	resp.State.RemoveResource(ctx)
 }
 

@@ -20,6 +20,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -55,21 +56,42 @@ func (data WANEdgeCertificate) getCertificate(ctx context.Context, client *sdwan
 	return entry, found, nil
 }
 
-func (data WANEdgeCertificate) toBody(ctx context.Context, validity string) string {
+func (data WANEdgeCertificate) toBody(ctx context.Context, validity string, sendToControllers bool) string {
 	body := `[]`
 	body, _ = sjson.Set(body, "0.chasisNumber", data.ChassisNumber.ValueString())
-	body, _ = sjson.Set(body, "0.serialNumber", data.SerialNumber.ValueString())
+	body, _ = sjson.Set(body, "0.validity", validity)
+	body, _ = sjson.Set(body, "0.sendToControllers", sendToControllers)
+	return body
+}
+
+func (data WANEdgeCertificate) legacyBody(ctx context.Context, validity string) string {
+	body := `[]`
+	body, _ = sjson.Set(body, "0.chasisNumber", data.ChassisNumber.ValueString())
 	body, _ = sjson.Set(body, "0.validity", validity)
 	return body
 }
 
-// setValidity stores the requested validity in Manager, without pushing it to the controllers.
-func (data WANEdgeCertificate) setValidity(ctx context.Context, client *sdwan.Client, validity string) error {
-	res, err := client.Post("/certificate/save/vedge/list", data.toBody(ctx, validity))
+// setValidity stores validity and asks Manager to propagate it when requested.
+func (data WANEdgeCertificate) setValidity(ctx context.Context, client *sdwan.Client, validity string, sendToControllers bool) error {
+	res, err := client.Post("/certificate/save/vedge/list", data.toBody(ctx, validity, sendToControllers))
 	if err != nil {
 		return fmt.Errorf("%s, %s", err, res.String())
 	}
 	return nil
+}
+
+func (data WANEdgeCertificate) setValidityLegacy(ctx context.Context, client *sdwan.Client, validity string) error {
+	res, err := client.Post("/certificate/save/vedge/list", data.legacyBody(ctx, validity))
+	if err != nil {
+		return fmt.Errorf("%s, %s", err, res.String())
+	}
+	return nil
+}
+
+func isSendToControllersUnsupported(err error) bool {
+	message := strings.ToLower(err.Error())
+	return strings.Contains(message, "sendtocontrollers") &&
+		(strings.Contains(message, "unknown") || strings.Contains(message, "invalid") || strings.Contains(message, "unsupported") || strings.Contains(message, "unrecognized"))
 }
 
 // sendToControllers pushes the WAN edge list to all controllers and waits for the action to finish.
@@ -80,7 +102,7 @@ func (data WANEdgeCertificate) sendToControllers(ctx context.Context, client *sd
 	}
 	actionId := res.Get("id").String()
 	if actionId == "" {
-		return nil
+		return fmt.Errorf("certificate push returned no action ID: %s", res.String())
 	}
 	err, _ = helpers.WaitForActionToComplete(ctx, client, actionId, taskTimeout)
 	return err
@@ -89,10 +111,8 @@ func (data WANEdgeCertificate) sendToControllers(ctx context.Context, client *sd
 func (data *WANEdgeCertificate) fromBody(ctx context.Context, res gjson.Result) {
 	data.Id = types.StringValue(res.Get("chasisNumber").String())
 	data.ChassisNumber = types.StringValue(res.Get("chasisNumber").String())
-	if value := res.Get("serialNumber"); value.Exists() && value.String() != "" {
+	if value := res.Get("serialNumber"); value.Exists() {
 		data.SerialNumber = types.StringValue(value.String())
-	} else {
-		data.SerialNumber = types.StringValue("")
 	}
 	if value := res.Get("validity"); value.Exists() {
 		data.Validity = types.StringValue(value.String())

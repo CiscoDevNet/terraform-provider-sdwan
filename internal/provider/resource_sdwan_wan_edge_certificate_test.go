@@ -92,6 +92,7 @@ func TestAccSdwanWANEdgeCertificateInvalidValidity(t *testing.T) {
 }
 
 func TestAccSdwanWANEdgeCertificateUnknownChassis(t *testing.T) {
+	// The helper is used for its environment guard; this test intentionally uses a fixed unknown chassis.
 	testAccWANEdgeCertificateChassis(t)
 
 	resource.Test(t, resource.TestCase{
