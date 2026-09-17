@@ -156,6 +156,24 @@ func (data *Scope) fromBody(ctx context.Context, res gjson.Result) {
 				}
 				ids = retained
 			}
+			// The resource-domain GET can report the same object more than once. The
+			// controller expands hierarchy containers, so a network hierarchy node that
+			// is both declared explicitly and reachable through a declared ancestor (or
+			// through the "Global" root) is returned once per path - e.g. a site nested
+			// under a region under a group comes back three times. ObjectIds is a Set,
+			// which cannot hold duplicates: feeding them to SetValueFrom yields an
+			// unknown value and Terraform then fails the apply/refresh with
+			if len(ids) > 1 {
+				seen := make(map[string]bool, len(ids))
+				unique := make([]string, 0, len(ids))
+				for _, id := range ids {
+					if !seen[id] {
+						seen[id] = true
+						unique = append(unique, id)
+					}
+				}
+				ids = unique
+			}
 			if len(ids) == 0 {
 				return true
 			}
