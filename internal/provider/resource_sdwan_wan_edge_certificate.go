@@ -121,19 +121,20 @@ func (r *WANEdgeCertificateResource) apply(ctx context.Context, data *WANEdgeCer
 	}
 
 	sendToControllers := forcePush || data.SendToControllers.ValueBool()
-	err = data.setValidity(ctx, r.client, validity, sendToControllers)
+	err = data.setValidity(ctx, r.client, validity, sendToControllers, r.taskTimeout)
 	if err != nil {
-		if !isSendToControllersUnsupported(err) {
-			return fmt.Errorf("failed to set certificate validity (POST), got error: %s", err)
-		}
-		if err := data.setValidityLegacy(ctx, r.client, validity); err != nil {
-			return fmt.Errorf("failed to set certificate validity using the legacy API payload (POST), got error: %s", err)
-		}
-		if sendToControllers {
-			if err := data.sendToControllers(ctx, r.client, r.taskTimeout); err != nil {
-				return fmt.Errorf("failed to send the WAN edge list to the controllers using the legacy API (POST), got error: %s", err)
+		if isSendToControllersUnsupported(err) {
+			if err := data.setValidityLegacy(ctx, r.client, validity); err != nil {
+				return fmt.Errorf("failed to set certificate validity using the legacy API payload (POST), got error: %s", err)
 			}
+			if sendToControllers {
+				if err := data.sendToControllers(ctx, r.client, r.taskTimeout); err != nil {
+					return fmt.Errorf("failed to send the WAN edge list to the controllers using the legacy API (POST), got error: %s", err)
+				}
+			}
+			return nil
 		}
+		return fmt.Errorf("failed to set certificate validity (POST), got error: %s", err)
 	}
 	return nil
 }

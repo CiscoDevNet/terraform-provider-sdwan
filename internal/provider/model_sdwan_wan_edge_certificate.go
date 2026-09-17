@@ -19,8 +19,10 @@ package provider
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -71,11 +73,14 @@ func (data WANEdgeCertificate) legacyBody(ctx context.Context, validity string) 
 	return body
 }
 
-// setValidity stores validity and asks Manager to propagate it when requested.
-func (data WANEdgeCertificate) setValidity(ctx context.Context, client *sdwan.Client, validity string, sendToControllers bool) error {
+// setValidity stores validity and waits for Manager's propagation action when requested.
+func (data WANEdgeCertificate) setValidity(ctx context.Context, client *sdwan.Client, validity string, sendToControllers bool, taskTimeout *int64) error {
 	res, err := client.Post("/certificate/save/vedge/list", data.toBody(ctx, validity, sendToControllers))
 	if err != nil {
 		return fmt.Errorf("%s, %s", err, res.String())
+	}
+	if sendToControllers {
+		return data.waitForAction(ctx, client, res, taskTimeout, "certificate validity update")
 	}
 	return nil
 }
@@ -91,7 +96,7 @@ func (data WANEdgeCertificate) setValidityLegacy(ctx context.Context, client *sd
 func isSendToControllersUnsupported(err error) bool {
 	message := strings.ToLower(err.Error())
 	return strings.Contains(message, "sendtocontrollers") &&
-		(strings.Contains(message, "unknown") || strings.Contains(message, "invalid") || strings.Contains(message, "unsupported") || strings.Contains(message, "unrecognized"))
+		(strings.Contains(message, "impermissible") || strings.Contains(message, "incorrect") || strings.Contains(message, "unknown") || strings.Contains(message, "invalid") || strings.Contains(message, "unsupported") || strings.Contains(message, "unrecognized"))
 }
 
 // sendToControllers pushes the WAN edge list to all controllers and waits for the action to finish.
@@ -100,12 +105,64 @@ func (data WANEdgeCertificate) sendToControllers(ctx context.Context, client *sd
 	if err != nil {
 		return fmt.Errorf("%s, %s", err, res.String())
 	}
-	actionId := res.Get("id").String()
+	actionId := res.Get("sendToControllerId").String()
+	if actionId == "" {
+		actionId = res.Get("id").String()
+	}
 	if actionId == "" {
 		return fmt.Errorf("certificate push returned no action ID: %s", res.String())
 	}
 	err, _ = helpers.WaitForActionToComplete(ctx, client, actionId, taskTimeout)
 	return err
+}
+
+func (data WANEdgeCertificate) waitForAction(ctx context.Context, client *sdwan.Client, res gjson.Result, taskTimeout *int64, operation string) error {
+	actionId := res.Get("sendToControllerId").String()
+	if actionId == "" {
+		actionId = res.Get("id").String()
+	}
+	if actionId == "" {
+		return fmt.Errorf("%s returned no action ID: %s", operation, res.String())
+	}
+	return waitForCertificateAction(ctx, client, actionId, taskTimeout)
+}
+
+func waitForCertificateAction(ctx context.Context, client *sdwan.Client, actionId string, taskTimeout *int64) error {
+	maxAttempts := *taskTimeout / 5
+	for attempts := int64(0); ; attempts++ {
+		time.Sleep(5 * time.Second)
+		res, err := client.Get("/device/action/status/" + actionId)
+		if err != nil {
+			return err
+		}
+		status := strings.ToLower(res.Get("summary.status").String())
+		switch status {
+		case "done", "success", "successful", "complete", "completed":
+			return certificateActionFailures(actionId, res)
+		case "failure", "failed":
+			return certificateActionFailures(actionId, res)
+		}
+		if attempts > maxAttempts {
+			return fmt.Errorf("maximum waiting time for action '%s' reached", actionId)
+		}
+	}
+}
+
+func certificateActionFailures(actionId string, res gjson.Result) error {
+	var failures []string
+	res.Get("data").ForEach(func(_, v gjson.Result) bool {
+		if strings.Contains(strings.ToLower(v.Get("statusId").String()), "failure") {
+			failures = append(failures, fmt.Sprintf("Action %s for device %s failed. Activity log: %+v", actionId, v.Get("deviceID").String(), v.Get("activity").String()))
+		}
+		return true
+	})
+	if strings.Contains(strings.ToLower(res.Get("validation.status").String()), "failure") {
+		failures = append(failures, fmt.Sprintf("Validation for action %s failed. Validation log: %+v", actionId, res.Get("validation.activity").String()))
+	}
+	if len(failures) > 0 {
+		return errors.New(strings.Join(failures, "\n"))
+	}
+	return nil
 }
 
 func (data *WANEdgeCertificate) fromBody(ctx context.Context, res gjson.Result) {
