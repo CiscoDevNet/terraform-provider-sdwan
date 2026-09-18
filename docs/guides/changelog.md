@@ -11,6 +11,8 @@ description: |-
 
 - Add `sdwan_scope` resource and data source
 - Add `sdwan_service_appqoe_feature` resource and data source
+- Add `sdwan_transport_cellular_controller_feature_associate_cellular_profile_feature` resource and data source, associating a `sdwan_transport_cellular_profile_feature` with a `sdwan_transport_cellular_controller_feature`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/767)
+- Add `sdwan_transport_cellular_controller_feature_associate_gps_feature` resource and data source, associating a `sdwan_transport_gps_feature` with a `sdwan_transport_cellular_controller_feature`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/766)
 
 ## 0.11.5
 
