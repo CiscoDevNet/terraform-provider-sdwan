@@ -112,6 +112,14 @@ func (d *CustomApplicationDataSource) Schema(ctx context.Context, req datasource
 				MarkdownDescription: "Business Relevance",
 				Computed:            true,
 			},
+			"endpoint_type": schema.StringAttribute{
+				MarkdownDescription: "Endpoint Type (SD-WAN Manager 20.18+)",
+				Computed:            true,
+			},
+			"endpoint_value": schema.StringAttribute{
+				MarkdownDescription: "Endpoint Value (SD-WAN Manager 20.18+)",
+				Computed:            true,
+			},
 		},
 	}
 }
