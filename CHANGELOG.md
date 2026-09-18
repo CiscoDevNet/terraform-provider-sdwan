@@ -1,6 +1,7 @@
 ## 0.11.6 (unreleased)
 
 - Add `sdwan_scope` resource and data source
+- Add `sdwan_service_appqoe_feature` resource and data source
 
 ## 0.11.5
 
