@@ -150,6 +150,20 @@ func (r *CustomApplicationResource) Schema(ctx context.Context, req resource.Sch
 					stringvalidator.OneOf("business-relevant", "business-irrelevant", "default"),
 				},
 			},
+			"endpoint_type": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Endpoint Type (SD-WAN Manager 20.18+)").AddStringEnumDescription("ip", "fqdn", "url").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("ip", "fqdn", "url"),
+				},
+			},
+			"endpoint_value": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Endpoint Value (SD-WAN Manager 20.18+)").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile(`(^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$)|(^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,63}\.?$)|(^(https?://)?([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})(/.*)?$)`), ""),
+				},
+			},
 		},
 	}
 }

@@ -29,6 +29,8 @@ resource "sdwan_custom_application" "example" {
   application_group  = "ipsec-group"
   traffic_class      = "signaling"
   business_relevance = "business-relevant"
+  endpoint_type      = "ip"
+  endpoint_value     = "10.2.2.2"
 }
 ```
 
@@ -47,6 +49,9 @@ resource "sdwan_custom_application" "example" {
   - Choices: `adp-group`, `amazon-group`, `aol-group`, `apple-group`, `apple-talk-group`, `atlassian-group`, `banyan-group`, `bittorrent-group`, `box-group`, `capwap-group`, `cisco-jabber-group`, `cisco-phone-group`, `concur-group`, `corba-group`, `dameware-group`, `demandware-group`, `dropbox-group`, `edonkey-emule-group`, `espn-group`, `fasttrack-group`, `flash-group`, `fring-group`, `ftp-group`, `gnutella-group`, `google-group`, `gotomeeting-group`, `hubspot-group`, `icq-group`, `imap-group`, `intuit-group`, `ipsec-group`, `irc-group`, `jive-group`, `kakao-group`, `kerberos-group`, `ldap-group`, `marketo-group`, `ms-cloud-group`, `msn-messenger-group`, `netbios-group`, `netsuite-group`, `nntp-group`, `npmp-group`, `oracle-group`, `pop3-group`, `prm-group`, `qq-group`, `ringcentral-group`, `salesforce-group`, `sap-group`, `servicenow-group`, `smtp-group`, `snmp-group`, `sqlsvr-group`, `stun-group`, `sugar-crm-group`, `telepresence-group`, `tftp-group`, `tiktok-group`, `vmware-group`, `vnc-group`, `wap-group`, `webex-group`, `workday-group`, `xns-xerox-group`, `xunlei-group`, `yahoo-group`, `yahoo-messenger-group`, `zendesk-group`, `zoho-crm-group`, `other`
 - `business_relevance` (String) Business Relevance
   - Choices: `business-relevant`, `business-irrelevant`, `default`
+- `endpoint_type` (String) Endpoint Type (SD-WAN Manager 20.18+)
+  - Choices: `ip`, `fqdn`, `url`
+- `endpoint_value` (String) Endpoint Value (SD-WAN Manager 20.18+)
 - `l3l4` (Attributes Set) L3/L4 Attributes (see [below for nested schema](#nestedatt--l3l4))
 - `server_names` (Set of String) Server Names (Fully Qualified Domain names or Regex starting with `*` but not ending with `*` or both separated by commas.)
 - `traffic_class` (String) Traffic Class

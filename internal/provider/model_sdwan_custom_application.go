@@ -40,6 +40,8 @@ type CustomApplication struct {
 	ApplicationGroup  types.String            `tfsdk:"application_group"`
 	TrafficClass      types.String            `tfsdk:"traffic_class"`
 	BusinessRelevance types.String            `tfsdk:"business_relevance"`
+	EndpointType      types.String            `tfsdk:"endpoint_type"`
+	EndpointValue     types.String            `tfsdk:"endpoint_value"`
 }
 
 type CustomApplicationL3l4 struct {
@@ -97,6 +99,12 @@ func (data CustomApplication) toBody(ctx context.Context) string {
 	}
 	if !data.BusinessRelevance.IsNull() {
 		body, _ = sjson.Set(body, "attributes.business-relevance", data.BusinessRelevance.ValueString())
+	}
+	if !data.EndpointType.IsNull() {
+		body, _ = sjson.Set(body, "attributes.endpointType", data.EndpointType.ValueString())
+	}
+	if !data.EndpointValue.IsNull() {
+		body, _ = sjson.Set(body, "attributes.endpointValue", data.EndpointValue.ValueString())
 	}
 	return body
 }
@@ -162,6 +170,16 @@ func (data *CustomApplication) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.BusinessRelevance = types.StringNull()
 	}
+	if value := res.Get("data.attributes.endpointType"); value.Exists() {
+		data.EndpointType = types.StringValue(value.String())
+	} else {
+		data.EndpointType = types.StringNull()
+	}
+	if value := res.Get("data.attributes.endpointValue"); value.Exists() {
+		data.EndpointValue = types.StringValue(value.String())
+	} else {
+		data.EndpointValue = types.StringNull()
+	}
 }
 
 // End of section. //template:end fromBody
@@ -200,6 +218,12 @@ func (data *CustomApplication) hasChanges(ctx context.Context, state *CustomAppl
 		hasChanges = true
 	}
 	if !data.BusinessRelevance.Equal(state.BusinessRelevance) {
+		hasChanges = true
+	}
+	if !data.EndpointType.Equal(state.EndpointType) {
+		hasChanges = true
+	}
+	if !data.EndpointValue.Equal(state.EndpointValue) {
 		hasChanges = true
 	}
 	return hasChanges
