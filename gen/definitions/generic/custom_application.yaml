@@ -86,16 +86,24 @@ attributes:
     type: String
     response_data_path: [data, attributes]
     data_path: [attributes]
-    description: Endpoint Type (SD-WAN Manager 20.18+)
+    description: Endpoint Type
     enum_values: [ip, fqdn, url]
     example: ip
     test_tags: [SDWAN_2018]
+    conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
   - model_name: endpointValue
     tf_name: endpoint_value
     type: String
     response_data_path: [data, attributes]
     data_path: [attributes]
-    description: Endpoint Value (SD-WAN Manager 20.18+)
+    description: Endpoint Value
     example: 10.2.2.2
     test_tags: [SDWAN_2018]
     string_patterns: ["(^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$)|(^[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?(\\.[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?)*\\.[a-zA-Z]{2,63}\\.?$)|(^(https?://)?([a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})(/.*)?$)"]
+    conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
