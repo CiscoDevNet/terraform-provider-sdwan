@@ -10,6 +10,8 @@ description: |-
 ## 0.11.6 (unreleased)
 
 - Add `sdwan_scope` resource and data source
+- Add `sdwan_service_appqoe_feature` resource and data source
+- Bump `sdwan_custom_application` schema to `20.18.0`
 - Fix `sdwan_service_lan_vpn_interface_svi_feature`: `track_omp = true` on `ipv4_vrrps`/`ipv6_vrrps` no longer sends an invalid `prefix_list`/`track_prefix_list` stub, fixing SCHVALID0001 errors
 
 ## 0.11.5
