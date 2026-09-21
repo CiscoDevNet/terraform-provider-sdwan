@@ -2,6 +2,7 @@
 
 - Add `sdwan_scope` resource and data source
 - Add `sdwan_service_appqoe_feature` resource and data source
+- Bump `sdwan_custom_application` schema to `20.18.0`
 
 ## 0.11.5
 

@@ -12,4 +12,6 @@ resource "sdwan_custom_application" "example" {
   application_group  = "ipsec-group"
   traffic_class      = "signaling"
   business_relevance = "business-relevant"
+  endpoint_type      = "ip"
+  endpoint_value     = "10.2.2.2"
 }
