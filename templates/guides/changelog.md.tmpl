@@ -15,6 +15,7 @@ description: |-
 - Fix `sdwan_service_lan_vpn_interface_svi_feature`: `track_omp = true` on `ipv4_vrrps`/`ipv6_vrrps` no longer sends an invalid `prefix_list`/`track_prefix_list` stub, fixing SCHVALID0001 errors
 - Add `sdwan_transport_cellular_controller_feature_associate_cellular_profile_feature` resource and data source, associating a `sdwan_transport_cellular_profile_feature` with a `sdwan_transport_cellular_controller_feature`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/767)
 - Add `sdwan_transport_cellular_controller_feature_associate_gps_feature` resource and data source, associating a `sdwan_transport_gps_feature` with a `sdwan_transport_cellular_controller_feature`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/766)
+- Fix `sdwan_system_security_feature` sending `extended_anti_replay_window` with the SD-WAN Manager default of `256` when the attribute is not declared.
 
 ## 0.11.5
 
