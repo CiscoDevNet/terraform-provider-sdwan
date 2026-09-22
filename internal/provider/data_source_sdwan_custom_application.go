@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -112,6 +113,14 @@ func (d *CustomApplicationDataSource) Schema(ctx context.Context, req datasource
 				MarkdownDescription: "Business Relevance",
 				Computed:            true,
 			},
+			"endpoint_type": schema.StringAttribute{
+				MarkdownDescription: "Endpoint Type",
+				Computed:            true,
+			},
+			"endpoint_value": schema.StringAttribute{
+				MarkdownDescription: "Endpoint Value",
+				Computed:            true,
+			},
 		},
 	}
 }
@@ -145,7 +154,9 @@ func (d *CustomApplicationDataSource) Read(ctx context.Context, req datasource.R
 		return
 	}
 
-	config.fromBody(ctx, res)
+	ver := version.Must(version.NewVersion(d.client.ManagerVersion))
+
+	config.fromBody(ctx, res, ver)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 

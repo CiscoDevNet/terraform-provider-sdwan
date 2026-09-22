@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanCustomApplication(t *testing.T) {
-	if os.Getenv("SDWAN_2015") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015")
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "app_name", "Example-Custom"))
@@ -40,6 +40,12 @@ func TestAccDataSourceSdwanCustomApplication(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "application_group", "ipsec-group"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "traffic_class", "signaling"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "business_relevance", "business-relevant"))
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "endpoint_type", "ip"))
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_application.test", "endpoint_value", "10.2.2.2"))
+	}
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -72,6 +78,12 @@ func testAccDataSourceSdwanCustomApplicationConfig() string {
 	config += `	application_group = "ipsec-group"` + "\n"
 	config += `	traffic_class = "signaling"` + "\n"
 	config += `	business_relevance = "business-relevant"` + "\n"
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	endpoint_type = "ip"` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	endpoint_value = "10.2.2.2"` + "\n"
+	}
 	config += `}` + "\n"
 
 	config += `

@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -150,6 +151,20 @@ func (r *CustomApplicationResource) Schema(ctx context.Context, req resource.Sch
 					stringvalidator.OneOf("business-relevant", "business-irrelevant", "default"),
 				},
 			},
+			"endpoint_type": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Endpoint Type, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").AddStringEnumDescription("ip", "fqdn", "url").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("ip", "fqdn", "url"),
+				},
+			},
+			"endpoint_value": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Endpoint Value, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile(`(^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$)|(^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,63}\.?$)|(^(https?://)?([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})(/.*)?$)`), ""),
+				},
+			},
 		},
 	}
 }
@@ -182,7 +197,8 @@ func (r *CustomApplicationResource) Create(ctx context.Context, req resource.Cre
 	}
 
 	// Create object
-	body := plan.toBody(ctx)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -253,7 +269,9 @@ func (r *CustomApplicationResource) Read(ctx context.Context, req resource.ReadR
 		return
 	}
 
-	state.fromBody(ctx, res)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+
+	state.fromBody(ctx, res, ver)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Id.ValueString()))
 
@@ -285,7 +303,8 @@ func (r *CustomApplicationResource) Update(ctx context.Context, req resource.Upd
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Id.ValueString()))
 
 	if plan.hasChanges(ctx, &state) {
-		body := plan.toBody(ctx)
+		ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+		body := plan.toBody(ctx, ver)
 		r.updateMutex.Lock()
 		res, err := r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), body)
 		r.updateMutex.Unlock()
