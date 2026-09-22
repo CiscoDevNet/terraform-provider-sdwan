@@ -16,6 +16,7 @@ description: |-
 - Add `sdwan_transport_cellular_controller_feature_associate_cellular_profile_feature` resource and data source, associating a `sdwan_transport_cellular_profile_feature` with a `sdwan_transport_cellular_controller_feature`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/767)
 - Add `sdwan_transport_cellular_controller_feature_associate_gps_feature` resource and data source, associating a `sdwan_transport_gps_feature` with a `sdwan_transport_cellular_controller_feature`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/766)
 - Fix `sdwan_system_security_feature` sending `extended_anti_replay_window` with the SD-WAN Manager default of `256` when the attribute is not declared.
+- Fix `sdwan_transport_route_policy_feature`: an `accept` sequence with no `actions` no longer sends synthesized `setCommunity` defaults
 
 ## 0.11.5
 
