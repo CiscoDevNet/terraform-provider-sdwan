@@ -20,7 +20,7 @@ attributes:
     example: 512
   - model_name: extendedArWindow
     tf_name: extended_anti_replay_window
-    default_value_present: false
+    exclude_null: true
     example: 256
   - model_name: pairwiseKeying
     tf_name: ipsec_pairwise_keying

@@ -112,7 +112,7 @@ func (r *SystemSecurityProfileParcelResource) Schema(ctx context.Context, req re
 				Optional:            true,
 			},
 			"extended_anti_replay_window": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Extended Anti-Replay Window").AddIntegerRangeDescription(10, 2048).String,
+				MarkdownDescription: helpers.NewAttributeDescription("Extended Anti-Replay Window").AddIntegerRangeDescription(10, 2048).AddDefaultValueDescription("256").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10, 2048),

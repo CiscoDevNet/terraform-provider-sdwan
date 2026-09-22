@@ -988,18 +988,7 @@ var functions = template.FuncMap{
 	"hasInt64RangesValidator":     HasInt64RangesValidator,
 }
 
-func applyDefaultValuePresentOverride(attr *YamlConfigAttribute) {
-	if attr.DefaultValuePresentOverride != nil {
-		attr.DefaultValuePresent = *attr.DefaultValuePresentOverride
-	}
-}
-
-func isDefaultValueSuppressed(attr *YamlConfigAttribute) bool {
-	return attr.DefaultValuePresentOverride != nil && !*attr.DefaultValuePresentOverride
-}
-
 func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result) {
-	applyDefaultValuePresentOverride(attr)
 	if attr.NoAugmentConfig {
 		return
 	}
@@ -1175,7 +1164,6 @@ func augmentFeatureTemplateConfig(config *YamlConfig) {
 }
 
 func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, isOneOfAttribute bool) {
-	applyDefaultValuePresentOverride(attr)
 	if attr.ModelName == "" || attr.NoAugmentConfig {
 		return
 	}
@@ -1396,12 +1384,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		if value := r.Get("properties.optionType.enum.0"); value.String() == "default" {
 			d = r
 		}
-		// An explicit `default_value_present: false` also opts the attribute out of the
-		// exclude_null/mandatory inference below, keeping it optional with no default.
-		if isDefaultValueSuppressed(attr) {
-			attr.DefaultValue = ""
-			attr.DefaultValueEmptyString = false
-		} else if d.Exists() && (!isOneOfAttribute || attr.DefaultValuePresent == true) {
+		if d.Exists() && (!isOneOfAttribute || attr.DefaultValuePresent == true) {
 			attr.DefaultValuePresent = true
 			if value := d.Get("properties.value.default"); value.Exists() {
 				if value.String() == "" {
@@ -1486,7 +1469,6 @@ func augmentProfileParcelConfig(config *YamlConfig) {
 }
 
 func augmentGenericAttribute(attr *YamlConfigAttribute) {
-	applyDefaultValuePresentOverride(attr)
 	if attr.TfName == "" {
 		attr.TfName = SnakeCase(attr.ModelName)
 	}
