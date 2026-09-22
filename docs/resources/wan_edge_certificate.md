@@ -3,20 +3,19 @@
 page_title: "sdwan_wan_edge_certificate Resource - terraform-provider-sdwan"
 subcategory: "Inventory"
 description: |-
-  This resource can manage the certificate validity of a WAN edge device (e.g. cEdge) and send the updated WAN edge list to the controllers. The device must already be present in the WAN edge list of the Manager, this resource only changes its certificate state.
+  This resource can manage the certificate validity of a WAN edge device (e.g. cEdge). The device must already be present in the WAN edge list of the Manager, this resource only changes its certificate state. This resource does not send the updated WAN edge list to the controllers, use the sdwan_wan_edge_certificate_push resource for that.
 ---
 
 # sdwan_wan_edge_certificate (Resource)
 
-This resource can manage the certificate validity of a WAN edge device (e.g. cEdge) and send the updated WAN edge list to the controllers. The device must already be present in the WAN edge list of the Manager, this resource only changes its certificate state.
+This resource can manage the certificate validity of a WAN edge device (e.g. cEdge). The device must already be present in the WAN edge list of the Manager, this resource only changes its certificate state. This resource does not send the updated WAN edge list to the controllers, use the `sdwan_wan_edge_certificate_push` resource for that.
 
 ## Example Usage
 
 ```terraform
 resource "sdwan_wan_edge_certificate" "example" {
-  chassis_number      = "C8K-679A6A64-288E-5F4A-082E-300770A277A1"
-  validity            = "valid"
-  send_to_controllers = true
+  chassis_number = "C8K-679A6A64-288E-5F4A-082E-300770A277A1"
+  validity       = "valid"
 }
 ```
 
@@ -31,8 +30,6 @@ resource "sdwan_wan_edge_certificate" "example" {
 
 ### Optional
 
-- `send_to_controllers` (Boolean) Send the updated WAN edge list to the controllers after every change
-  - Default value: `true`
 - `serial_number` (String) The certificate serial number of the WAN edge device, by default the serial number known by the Manager is used
 
 ### Read-Only

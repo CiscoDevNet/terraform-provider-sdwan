@@ -48,7 +48,6 @@ func TestAccSdwanWANEdgeCertificate(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate.test", "chassis_number", chassis),
 					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate.test", "id", chassis),
 					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate.test", "validity", "staging"),
-					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate.test", "send_to_controllers", "false"),
 					resource.TestCheckResourceAttrSet("sdwan_wan_edge_certificate.test", "serial_number"),
 				),
 			},
@@ -69,8 +68,6 @@ func TestAccSdwanWANEdgeCertificate(t *testing.T) {
 				ImportState:       true,
 				ImportStateId:     chassis,
 				ImportStateVerify: true,
-				// The resource does not know whether the list was pushed before the import
-				ImportStateVerifyIgnore: []string{"send_to_controllers"},
 			},
 		},
 	})
@@ -111,7 +108,6 @@ func testAccSdwanWANEdgeCertificateConfig(chassis, validity string) string {
 	config := `resource "sdwan_wan_edge_certificate" "test" {` + "\n"
 	config += fmt.Sprintf(`	chassis_number = "%s"`, chassis) + "\n"
 	config += fmt.Sprintf(`	validity = "%s"`, validity) + "\n"
-	config += `	send_to_controllers = false` + "\n"
 	config += `}` + "\n"
 	return config
 }

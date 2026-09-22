@@ -47,6 +47,7 @@ var extraDocs = map[string]string{
 	"activate_centralized_policy":    "(Classic) Centralized Policies",
 	"activate_topology_group":        "Topology Groups",
 	"wan_edge_certificate":           "Inventory",
+	"wan_edge_certificate_push":      "Inventory",
 }
 
 func SnakeCase(s string) string {

@@ -26,7 +26,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -44,8 +43,7 @@ func NewWANEdgeCertificateResource() resource.Resource {
 }
 
 type WANEdgeCertificateResource struct {
-	client      *sdwan.Client
-	taskTimeout *int64
+	client *sdwan.Client
 }
 
 func (r *WANEdgeCertificateResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -55,7 +53,7 @@ func (r *WANEdgeCertificateResource) Metadata(ctx context.Context, req resource.
 func (r *WANEdgeCertificateResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage the certificate validity of a WAN edge device (e.g. cEdge) and send the updated WAN edge list to the controllers. The device must already be present in the WAN edge list of the Manager, this resource only changes its certificate state.").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage the certificate validity of a WAN edge device (e.g. cEdge). The device must already be present in the WAN edge list of the Manager, this resource only changes its certificate state. This resource does not send the updated WAN edge list to the controllers, use the `sdwan_wan_edge_certificate_push` resource for that.").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -84,12 +82,6 @@ func (r *WANEdgeCertificateResource) Schema(ctx context.Context, req resource.Sc
 					stringvalidator.OneOf("invalid", "staging", "valid"),
 				},
 			},
-			"send_to_controllers": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Send the updated WAN edge list to the controllers after every change").AddDefaultValueDescription("true").String,
-				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(true),
-			},
 		},
 	}
 }
@@ -100,11 +92,11 @@ func (r *WANEdgeCertificateResource) Configure(_ context.Context, req resource.C
 	}
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
-	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
 }
 
-// apply resolves the serial number, saves the validity and optionally pushes the list to the controllers.
-func (r *WANEdgeCertificateResource) apply(ctx context.Context, data *WANEdgeCertificate, validity string, forcePush bool) error {
+// apply resolves the serial number and saves the validity. It does not push the updated WAN
+// edge list to the controllers, use the sdwan_wan_edge_certificate_push resource for that.
+func (r *WANEdgeCertificateResource) apply(ctx context.Context, data *WANEdgeCertificate, validity string) error {
 	entry, found, err := data.getCertificate(ctx, r.client)
 	if err != nil {
 		return fmt.Errorf("failed to retrieve WAN edge list (GET), got error: %s", err)
@@ -120,20 +112,7 @@ func (r *WANEdgeCertificateResource) apply(ctx context.Context, data *WANEdgeCer
 		return fmt.Errorf("chassis number %s has no serial number in the WAN edge list of the Manager", data.ChassisNumber.ValueString())
 	}
 
-	sendToControllers := forcePush || data.SendToControllers.ValueBool()
-	err = data.setValidity(ctx, r.client, validity, sendToControllers, r.taskTimeout)
-	if err != nil {
-		if isSendToControllersUnsupported(err) {
-			if err := data.setValidityLegacy(ctx, r.client, validity); err != nil {
-				return fmt.Errorf("failed to set certificate validity using the legacy API payload (POST), got error: %s", err)
-			}
-			if sendToControllers {
-				if err := data.sendToControllers(ctx, r.client, r.taskTimeout); err != nil {
-					return fmt.Errorf("failed to send the WAN edge list to the controllers using the legacy API (POST), got error: %s", err)
-				}
-			}
-			return nil
-		}
+	if err := data.setValidity(ctx, r.client, validity); err != nil {
 		return fmt.Errorf("failed to set certificate validity (POST), got error: %s", err)
 	}
 	return nil
@@ -151,7 +130,7 @@ func (r *WANEdgeCertificateResource) Create(ctx context.Context, req resource.Cr
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.ChassisNumber.ValueString()))
 
-	if err := r.apply(ctx, &plan, plan.Validity.ValueString(), false); err != nil {
+	if err := r.apply(ctx, &plan, plan.Validity.ValueString()); err != nil {
 		resp.Diagnostics.AddError("Client Error", err.Error())
 		return
 	}
@@ -218,7 +197,7 @@ func (r *WANEdgeCertificateResource) Update(ctx context.Context, req resource.Up
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.ChassisNumber.ValueString()))
 
-	if err := r.apply(ctx, &plan, plan.Validity.ValueString(), false); err != nil {
+	if err := r.apply(ctx, &plan, plan.Validity.ValueString()); err != nil {
 		resp.Diagnostics.AddError("Client Error", err.Error())
 		return
 	}
