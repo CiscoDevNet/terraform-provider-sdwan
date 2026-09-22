@@ -101,6 +101,10 @@ func (d *NetworkHierarchyCflowdDataSource) Schema(ctx context.Context, req datas
 							MarkdownDescription: "Collector IPv4 or IPv6 address",
 							Computed:            true,
 						},
+						"source_interface": schema.StringAttribute{
+							MarkdownDescription: "Source interface",
+							Computed:            true,
+						},
 						"udp_port": schema.Int64Attribute{
 							MarkdownDescription: "Collector UDP port number",
 							Computed:            true,
