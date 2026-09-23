@@ -303,6 +303,7 @@ type YamlConfigAttribute struct {
 	OptionalNullEmpty       bool                           `yaml:"optional_null_empty"`
 	ForceInclude            bool                           `yaml:"force_include"`
 	WriteAsDefault          bool                           `yaml:"write_as_default"`
+	ElementOptionType       bool                           `yaml:"element_option_type"`
 }
 
 type YamlConfigConditionalAttribute struct {
@@ -887,6 +888,20 @@ func IsNestedList(attribute YamlConfigAttribute) bool {
 	return false
 }
 
+// Templating helper function: returns true if any of the given attributes is NOT a fixed
+// `value:` literal - i.e. whether a per-item loop variable at this nesting level is actually
+// referenced anywhere in the generated code. A list whose attributes are all fixed literals
+// (nothing configurable) never touches its own loop variable, which would otherwise be an
+// unused-variable compile error.
+func HasConfigurableAttribute(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.Value == "" {
+			return true
+		}
+	}
+	return false
+}
+
 // Templating helper function to return true if type is a set with nested elements
 func IsNestedSet(attribute YamlConfigAttribute) bool {
 	if attribute.Type == "Set" && attribute.ElementType == "" {
@@ -939,6 +954,7 @@ var functions = template.FuncMap{
 	"toLower":                     strings.ToLower,
 	"path":                        BuildPath,
 	"hasId":                       HasId,
+	"hasConfigurableAttribute":    HasConfigurableAttribute,
 	"hasName":                     HasName,
 	"hasVersionAttribute":         HasVersionAttribute,
 	"getResponseModelPath":        GetResponseModelPath,

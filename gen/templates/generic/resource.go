@@ -43,6 +43,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
+	{{- if hasMinVersionCondition .Attributes}}
+	"github.com/hashicorp/go-version"
+	{{- end}}
 )
 // End of section. //template:end imports
 
@@ -566,7 +569,12 @@ func (r *{{camelCase .Name}}Resource) Create(ctx context.Context, req resource.C
 	{{end}}
 
 	// Create object
+	{{- if hasMinVersionCondition .Attributes}}
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
+	{{- else}}
 	body := plan.toBody(ctx)
+	{{- end}}
 
 	{{ if .CreateMutex}}
 	r.updateMutex.Lock()
@@ -632,7 +640,10 @@ func (r *{{camelCase .Name}}Resource) Read(ctx context.Context, req resource.Rea
 		return
 	}
 
-	state.fromBody(ctx, res)
+	{{if hasMinVersionCondition .Attributes}}
+		ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	{{end}}
+	state.fromBody(ctx, res{{if hasMinVersionCondition .Attributes}}, ver{{end}})
 	
 	{{- if and (not .NoImport) (not (isUx20Feature .)) (or (.HasVersion) (.TypeValue) (hasVersionAttribute .Attributes))}}
 	imp, diags := helpers.IsFlagImporting(ctx, req)
@@ -674,7 +685,12 @@ func (r *{{camelCase .Name}}Resource) Update(ctx context.Context, req resource.U
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", {{if hasName .Attributes}}plan.Name.ValueString(){{else}}plan.Id.ValueString(){{end}}))
 
 	if plan.hasChanges(ctx, &state) {
+		{{- if hasMinVersionCondition .Attributes}}
+		ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+		body := plan.toBody(ctx, ver)
+		{{- else}}
 		body := plan.toBody(ctx)
+		{{- end}}
 		r.updateMutex.Lock()
 		res, err := r.client.Put(plan.getPath(){{if not .RemoveId}} + url.QueryEscape(plan.Id.ValueString()){{end}}, body)
 		r.updateMutex.Unlock()

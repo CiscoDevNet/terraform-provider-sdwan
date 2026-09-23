@@ -31,6 +31,9 @@ import (
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
+	{{- if hasMinVersionCondition .Attributes}}
+	"github.com/hashicorp/go-version"
+	{{- end}}
 )
 // End of section. //template:end imports
 
@@ -170,7 +173,7 @@ func (data {{camelCase .Name}}) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
+func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCondition .Attributes}}, ver *version.Version{{end}}) string {
 	body := ""
 	{{- range .Attributes}}
 	{{- if .Value}}
@@ -313,7 +316,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result) {
+func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result{{if hasMinVersionCondition .Attributes}}, ver *version.Version{{end}}) {
 	{{- if hasVersionAttribute .Attributes}}
 	state := *data
 	{{- end}}
