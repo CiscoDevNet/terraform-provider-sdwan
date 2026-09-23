@@ -28,24 +28,31 @@ func TestAccDataSourceSdwanNetworkHierarchyCflowd(t *testing.T) {
 	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
 	}
+	checks := []resource.TestCheckFunc{
+		resource.TestCheckResourceAttrSet("data.sdwan_network_hierarchy_cflowd.test", "id"),
+		resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "flow_active_timeout", "600"),
+		resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "flow_inactive_timeout", "60"),
+		resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "flow_refresh_time", "600"),
+		resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "flow_sampling_interval", "1"),
+		resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collect_tloc_loopback", "true"),
+		resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "protocol", "ipv4"),
+		resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collect_tos", "true"),
+		resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collect_dscp_output", "true"),
+		resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collectors.#", "2"),
+	}
+	// `source_interface` on a cflowd collector requires SD-WAN Manager 20.18.1+
+	// (see minVersionNetworkHierarchyCflowdSourceInterface in
+	// model_sdwan_network_hierarchy_cflowd.go); older Managers reject it.
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collectors.0.source_interface", "Loopback1"))
+	}
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccDataSourceSdwanNetworkHierarchyCflowdConfig_withResource(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttrSet("data.sdwan_network_hierarchy_cflowd.test", "id"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "flow_active_timeout", "600"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "flow_inactive_timeout", "60"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "flow_refresh_time", "600"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "flow_sampling_interval", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collect_tloc_loopback", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "protocol", "ipv4"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collect_tos", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collect_dscp_output", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_network_hierarchy_cflowd.test", "collectors.#", "2"),
-				),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
@@ -64,6 +71,9 @@ func testAccDataSourceSdwanNetworkHierarchyCflowdConfig_withResource() string {
 	config += `	collectors = [{` + "\n"
 	config += `	  vpn_id = 1` + "\n"
 	config += `	  address = "10.0.0.1"` + "\n"
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	  source_interface = "Loopback1"` + "\n"
+	}
 	config += `	  udp_port = 4739` + "\n"
 	config += `	  export_spread = true` + "\n"
 	config += `	  bfd_metrics_export = true` + "\n"
