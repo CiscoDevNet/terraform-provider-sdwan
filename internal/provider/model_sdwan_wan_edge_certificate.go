@@ -33,6 +33,7 @@ type WANEdgeCertificate struct {
 	ChassisNumber types.String `tfsdk:"chassis_number"`
 	SerialNumber  types.String `tfsdk:"serial_number"`
 	Validity      types.String `tfsdk:"validity"`
+	Version       types.Int64  `tfsdk:"version"`
 }
 
 // getCertificate returns the WAN edge entry of the certificate list matching the chassis number.
@@ -69,7 +70,7 @@ func (data WANEdgeCertificate) legacyBody(ctx context.Context, validity string) 
 }
 
 // setValidity stores the certificate validity. It does not push the updated WAN edge list to
-// the controllers; use the sdwan_wan_edge_certificate_push resource for that.
+// the controllers; use the sdwan_send_wan_edge_list_to_controllers resource for that.
 func (data WANEdgeCertificate) setValidity(ctx context.Context, client *sdwan.Client, validity string) error {
 	res, err := client.Post("/certificate/save/vedge/list", data.toBody(ctx, validity))
 	if err != nil {
@@ -108,4 +109,8 @@ func (data *WANEdgeCertificate) fromBody(ctx context.Context, res gjson.Result) 
 	}
 }
 
-func (data *WANEdgeCertificate) processImport(ctx context.Context) {}
+func (data *WANEdgeCertificate) processImport(ctx context.Context) {
+	if data.Version.IsNull() || data.Version.IsUnknown() {
+		data.Version = types.Int64Value(1)
+	}
+}

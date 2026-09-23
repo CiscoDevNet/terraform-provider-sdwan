@@ -32,25 +32,25 @@ import (
 )
 
 // Ensure provider defined types fully satisfy framework interfaces
-var _ resource.Resource = &WANEdgeCertificatePushResource{}
+var _ resource.Resource = &WANEdgeCertificateSendResource{}
 
-func NewWANEdgeCertificatePushResource() resource.Resource {
-	return &WANEdgeCertificatePushResource{}
+func NewWANEdgeCertificateSendResource() resource.Resource {
+	return &WANEdgeCertificateSendResource{}
 }
 
-type WANEdgeCertificatePushResource struct {
+type WANEdgeCertificateSendResource struct {
 	client      *sdwan.Client
 	taskTimeout *int64
 }
 
-func (r *WANEdgeCertificatePushResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_wan_edge_certificate_push"
+func (r *WANEdgeCertificateSendResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_send_wan_edge_list_to_controllers"
 }
 
-func (r *WANEdgeCertificatePushResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *WANEdgeCertificateSendResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource sends the current WAN edge certificate list to the controllers. It does not manage the certificate validity of any device, use the `sdwan_wan_edge_certificate` resource for that. Every apply that changes the `triggers` attribute (or the initial create) issues a new push; change `triggers` to force a re-push, for example after updating one or more `sdwan_wan_edge_certificate` resources.").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource sends the current WAN edge certificate list to the controllers. It does not manage the certificate validity of any device, use the `sdwan_wan_edge_certificate_validate` resource for that. The initial create or any change to `version` or `triggers` issues a new push; use `version` to connect this resource to a certificate validation resource.").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -65,11 +65,15 @@ func (r *WANEdgeCertificatePushResource) Schema(ctx context.Context, req resourc
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
+			"version": schema.Int64Attribute{
+				MarkdownDescription: "A version value that, when changed, triggers a new push of the WAN edge certificate list to the controllers",
+				Optional:            true,
+			},
 		},
 	}
 }
 
-func (r *WANEdgeCertificatePushResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+func (r *WANEdgeCertificateSendResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -78,7 +82,7 @@ func (r *WANEdgeCertificatePushResource) Configure(_ context.Context, req resour
 	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
 }
 
-func (r *WANEdgeCertificatePushResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+func (r *WANEdgeCertificateSendResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan WANEdgeCertificatePush
 
 	// Read plan
@@ -102,7 +106,7 @@ func (r *WANEdgeCertificatePushResource) Create(ctx context.Context, req resourc
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *WANEdgeCertificatePushResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+func (r *WANEdgeCertificateSendResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	// The push is a one-time action against the Manager with no queryable state, so state is
 	// left untouched here.
 	var state WANEdgeCertificatePush
@@ -117,7 +121,7 @@ func (r *WANEdgeCertificatePushResource) Read(ctx context.Context, req resource.
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *WANEdgeCertificatePushResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+func (r *WANEdgeCertificateSendResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var plan WANEdgeCertificatePush
 
 	// Read plan
@@ -141,7 +145,7 @@ func (r *WANEdgeCertificatePushResource) Update(ctx context.Context, req resourc
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *WANEdgeCertificatePushResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+func (r *WANEdgeCertificateSendResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 	// Removing this resource does not un-push or otherwise change controller state.
 	resp.State.RemoveResource(ctx)
 }

@@ -24,7 +24,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
-func TestAccSdwanWANEdgeCertificatePush(t *testing.T) {
+func TestAccSdwanSendWANEdgeListToControllers(t *testing.T) {
 	if os.Getenv("SDWAN_TEST_CHASSIS_NUMBER") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_TEST_CHASSIS_NUMBER to enable certificate tests (this test pushes the WAN edge list to the controllers)")
 	}
@@ -34,24 +34,20 @@ func TestAccSdwanWANEdgeCertificatePush(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: `resource "sdwan_wan_edge_certificate_push" "test" {
-	triggers = {
-		run = "1"
-	}
+				Config: `resource "sdwan_send_wan_edge_list_to_controllers" "test" {
+	version = 1
 }`,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttrSet("sdwan_wan_edge_certificate_push.test", "id"),
-					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_push.test", "triggers.run", "1"),
+					resource.TestCheckResourceAttrSet("sdwan_send_wan_edge_list_to_controllers.test", "id"),
+					resource.TestCheckResourceAttr("sdwan_send_wan_edge_list_to_controllers.test", "version", "1"),
 				),
 			},
 			{
-				Config: `resource "sdwan_wan_edge_certificate_push" "test" {
-	triggers = {
-		run = "2"
-	}
+				Config: `resource "sdwan_send_wan_edge_list_to_controllers" "test" {
+	version = 2
 }`,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_push.test", "triggers.run", "2"),
+					resource.TestCheckResourceAttr("sdwan_send_wan_edge_list_to_controllers.test", "version", "2"),
 				),
 			},
 		},

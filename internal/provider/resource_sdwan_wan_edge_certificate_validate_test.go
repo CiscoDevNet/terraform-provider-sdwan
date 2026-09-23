@@ -35,7 +35,7 @@ func testAccWANEdgeCertificateChassis(t *testing.T) string {
 	return chassis
 }
 
-func TestAccSdwanWANEdgeCertificate(t *testing.T) {
+func TestAccSdwanWANEdgeCertificateValidate(t *testing.T) {
 	chassis := testAccWANEdgeCertificateChassis(t)
 
 	resource.Test(t, resource.TestCase{
@@ -45,26 +45,27 @@ func TestAccSdwanWANEdgeCertificate(t *testing.T) {
 			{
 				Config: testAccSdwanWANEdgeCertificateConfig(chassis, "staging"),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate.test", "chassis_number", chassis),
-					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate.test", "id", chassis),
-					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate.test", "validity", "staging"),
-					resource.TestCheckResourceAttrSet("sdwan_wan_edge_certificate.test", "serial_number"),
+					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_validate.test", "chassis_number", chassis),
+					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_validate.test", "id", chassis),
+					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_validate.test", "validity", "staging"),
+					resource.TestCheckResourceAttrSet("sdwan_wan_edge_certificate_validate.test", "serial_number"),
+					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_validate.test", "version", "1"),
 				),
 			},
 			{
 				Config: testAccSdwanWANEdgeCertificateConfig(chassis, "valid"),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate.test", "validity", "valid"),
+					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_validate.test", "validity", "valid"),
 				),
 			},
 			{
 				Config: testAccSdwanWANEdgeCertificateConfig(chassis, "invalid"),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate.test", "validity", "invalid"),
+					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_validate.test", "validity", "invalid"),
 				),
 			},
 			{
-				ResourceName:      "sdwan_wan_edge_certificate.test",
+				ResourceName:      "sdwan_wan_edge_certificate_validate.test",
 				ImportState:       true,
 				ImportStateId:     chassis,
 				ImportStateVerify: true,
@@ -73,7 +74,7 @@ func TestAccSdwanWANEdgeCertificate(t *testing.T) {
 	})
 }
 
-func TestAccSdwanWANEdgeCertificateInvalidValidity(t *testing.T) {
+func TestAccSdwanWANEdgeCertificateValidateInvalidValidity(t *testing.T) {
 	chassis := testAccWANEdgeCertificateChassis(t)
 
 	resource.Test(t, resource.TestCase{
@@ -88,7 +89,7 @@ func TestAccSdwanWANEdgeCertificateInvalidValidity(t *testing.T) {
 	})
 }
 
-func TestAccSdwanWANEdgeCertificateUnknownChassis(t *testing.T) {
+func TestAccSdwanWANEdgeCertificateValidateUnknownChassis(t *testing.T) {
 	// The helper is used for its environment guard; this test intentionally uses a fixed unknown chassis.
 	testAccWANEdgeCertificateChassis(t)
 
@@ -105,7 +106,7 @@ func TestAccSdwanWANEdgeCertificateUnknownChassis(t *testing.T) {
 }
 
 func testAccSdwanWANEdgeCertificateConfig(chassis, validity string) string {
-	config := `resource "sdwan_wan_edge_certificate" "test" {` + "\n"
+	config := `resource "sdwan_wan_edge_certificate_validate" "test" {` + "\n"
 	config += fmt.Sprintf(`	chassis_number = "%s"`, chassis) + "\n"
 	config += fmt.Sprintf(`	validity = "%s"`, validity) + "\n"
 	config += `}` + "\n"

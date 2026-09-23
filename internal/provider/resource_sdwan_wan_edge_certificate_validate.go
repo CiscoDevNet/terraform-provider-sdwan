@@ -35,25 +35,25 @@ import (
 )
 
 // Ensure provider defined types fully satisfy framework interfaces
-var _ resource.Resource = &WANEdgeCertificateResource{}
-var _ resource.ResourceWithImportState = &WANEdgeCertificateResource{}
+var _ resource.Resource = &WANEdgeCertificateValidateResource{}
+var _ resource.ResourceWithImportState = &WANEdgeCertificateValidateResource{}
 
-func NewWANEdgeCertificateResource() resource.Resource {
-	return &WANEdgeCertificateResource{}
+func NewWANEdgeCertificateValidateResource() resource.Resource {
+	return &WANEdgeCertificateValidateResource{}
 }
 
-type WANEdgeCertificateResource struct {
+type WANEdgeCertificateValidateResource struct {
 	client *sdwan.Client
 }
 
-func (r *WANEdgeCertificateResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_wan_edge_certificate"
+func (r *WANEdgeCertificateValidateResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_wan_edge_certificate_validate"
 }
 
-func (r *WANEdgeCertificateResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *WANEdgeCertificateValidateResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage the certificate validity of a WAN edge device (e.g. cEdge). The device must already be present in the WAN edge list of the Manager, this resource only changes its certificate state. This resource does not send the updated WAN edge list to the controllers, use the `sdwan_wan_edge_certificate_push` resource for that.").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage the certificate validity of a WAN edge device (e.g. cEdge). The device must already be present in the WAN edge list of the Manager, this resource only changes its certificate state. This resource does not send the updated WAN edge list to the controllers, use the `sdwan_send_wan_edge_list_to_controllers` resource for that.").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -82,11 +82,15 @@ func (r *WANEdgeCertificateResource) Schema(ctx context.Context, req resource.Sc
 					stringvalidator.OneOf("invalid", "staging", "valid"),
 				},
 			},
+			"version": schema.Int64Attribute{
+				MarkdownDescription: "A state version that changes after a successful certificate validity update and can trigger the controller push resource",
+				Computed:            true,
+			},
 		},
 	}
 }
 
-func (r *WANEdgeCertificateResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+func (r *WANEdgeCertificateValidateResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -95,8 +99,8 @@ func (r *WANEdgeCertificateResource) Configure(_ context.Context, req resource.C
 }
 
 // apply resolves the serial number and saves the validity. It does not push the updated WAN
-// edge list to the controllers, use the sdwan_wan_edge_certificate_push resource for that.
-func (r *WANEdgeCertificateResource) apply(ctx context.Context, data *WANEdgeCertificate, validity string) error {
+// edge list to the controllers, use the sdwan_send_wan_edge_list_to_controllers resource for that.
+func (r *WANEdgeCertificateValidateResource) apply(ctx context.Context, data *WANEdgeCertificate, validity string) error {
 	entry, found, err := data.getCertificate(ctx, r.client)
 	if err != nil {
 		return fmt.Errorf("failed to retrieve WAN edge list (GET), got error: %s", err)
@@ -118,7 +122,7 @@ func (r *WANEdgeCertificateResource) apply(ctx context.Context, data *WANEdgeCer
 	return nil
 }
 
-func (r *WANEdgeCertificateResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+func (r *WANEdgeCertificateValidateResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan WANEdgeCertificate
 
 	// Read plan
@@ -135,6 +139,7 @@ func (r *WANEdgeCertificateResource) Create(ctx context.Context, req resource.Cr
 		return
 	}
 	plan.Id = plan.ChassisNumber
+	plan.Version = types.Int64Value(1)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.ChassisNumber.ValueString()))
 
@@ -144,7 +149,7 @@ func (r *WANEdgeCertificateResource) Create(ctx context.Context, req resource.Cr
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
-func (r *WANEdgeCertificateResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+func (r *WANEdgeCertificateValidateResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var state WANEdgeCertificate
 
 	// Read state
@@ -185,11 +190,17 @@ func (r *WANEdgeCertificateResource) Read(ctx context.Context, req resource.Read
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
-func (r *WANEdgeCertificateResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan WANEdgeCertificate
+func (r *WANEdgeCertificateValidateResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, state WANEdgeCertificate
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	diags = req.State.Get(ctx, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -202,6 +213,11 @@ func (r *WANEdgeCertificateResource) Update(ctx context.Context, req resource.Up
 		return
 	}
 	plan.Id = plan.ChassisNumber
+	if state.Version.IsNull() || state.Version.IsUnknown() {
+		plan.Version = types.Int64Value(1)
+	} else {
+		plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.ChassisNumber.ValueString()))
 
@@ -209,11 +225,11 @@ func (r *WANEdgeCertificateResource) Update(ctx context.Context, req resource.Up
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *WANEdgeCertificateResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+func (r *WANEdgeCertificateValidateResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 	resp.State.RemoveResource(ctx)
 }
 
-func (r *WANEdgeCertificateResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *WANEdgeCertificateValidateResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("chassis_number"), req, resp)
 	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }
