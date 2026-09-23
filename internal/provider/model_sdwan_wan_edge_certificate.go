@@ -20,7 +20,6 @@ package provider
 import (
 	"context"
 	"fmt"
-	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/netascode/go-sdwan"
@@ -62,40 +61,14 @@ func (data WANEdgeCertificate) toBody(ctx context.Context, validity string) stri
 	return body
 }
 
-func (data WANEdgeCertificate) legacyBody(ctx context.Context, validity string) string {
-	body := `[]`
-	body, _ = sjson.Set(body, "0.chasisNumber", data.ChassisNumber.ValueString())
-	body, _ = sjson.Set(body, "0.validity", validity)
-	return body
-}
-
 // setValidity stores the certificate validity. It does not push the updated WAN edge list to
 // the controllers; use the sdwan_send_wan_edge_list_to_controllers resource for that.
 func (data WANEdgeCertificate) setValidity(ctx context.Context, client *sdwan.Client, validity string) error {
 	res, err := client.Post("/certificate/save/vedge/list", data.toBody(ctx, validity))
 	if err != nil {
-		if isSendToControllersUnsupported(err) {
-			return data.setValidityLegacy(ctx, client, validity)
-		}
 		return fmt.Errorf("%s, %s", err, res.String())
 	}
 	return nil
-}
-
-func (data WANEdgeCertificate) setValidityLegacy(ctx context.Context, client *sdwan.Client, validity string) error {
-	res, err := client.Post("/certificate/save/vedge/list", data.legacyBody(ctx, validity))
-	if err != nil {
-		return fmt.Errorf("%s, %s", err, res.String())
-	}
-	return nil
-}
-
-// isSendToControllersUnsupported reports whether Manager rejected the sendToControllers field
-// in the certificate save payload (older Manager versions do not support it).
-func isSendToControllersUnsupported(err error) bool {
-	message := strings.ToLower(err.Error())
-	return strings.Contains(message, "sendtocontrollers") &&
-		(strings.Contains(message, "impermissible") || strings.Contains(message, "incorrect") || strings.Contains(message, "unknown") || strings.Contains(message, "invalid") || strings.Contains(message, "unsupported") || strings.Contains(message, "unrecognized"))
 }
 
 func (data *WANEdgeCertificate) fromBody(ctx context.Context, res gjson.Result) {
