@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -90,12 +91,17 @@ func (r *ApplicationPriorityQoSProfileParcelResource) Schema(ctx context.Context
 				Required:            true,
 			},
 			"target_interfaces": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("interfaces").String,
+				MarkdownDescription: helpers.NewAttributeDescription("interfaces, Attribute conditional on `target_interface_rule_id` not being set").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"target_interfaces_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `target_interface_rule_id` not being set").String,
+				Optional:            true,
+			},
+			"target_interface_rule_id": schema.SetAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"qos_schedulers": schema.ListNestedAttribute{
@@ -158,7 +164,9 @@ func (r *ApplicationPriorityQoSProfileParcelResource) Create(ctx context.Context
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
 	// Create object
-	body := plan.toBody(ctx)
+
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -241,7 +249,8 @@ func (r *ApplicationPriorityQoSProfileParcelResource) Update(ctx context.Context
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

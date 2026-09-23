@@ -24,6 +24,7 @@ import (
 	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -40,6 +41,7 @@ type ApplicationPriorityQoS struct {
 	FeatureProfileId         types.String                          `tfsdk:"feature_profile_id"`
 	TargetInterfaces         types.Set                             `tfsdk:"target_interfaces"`
 	TargetInterfacesVariable types.String                          `tfsdk:"target_interfaces_variable"`
+	TargetInterfaceRuleId    types.Set                             `tfsdk:"target_interface_rule_id"`
 	QosSchedulers            []ApplicationPriorityQoSQosSchedulers `tfsdk:"qos_schedulers"`
 }
 
@@ -68,23 +70,31 @@ func (data ApplicationPriorityQoS) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data ApplicationPriorityQoS) toBody(ctx context.Context) string {
+func (data ApplicationPriorityQoS) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
 
 	if !data.TargetInterfacesVariable.IsNull() {
-		if true {
+		if true && data.TargetInterfaceRuleId.IsNull() {
 			body, _ = sjson.Set(body, path+"target.interfaces.optionType", "variable")
 			body, _ = sjson.Set(body, path+"target.interfaces.value", data.TargetInterfacesVariable.ValueString())
 		}
 	} else if !data.TargetInterfaces.IsNull() {
-		if true {
+		if true && data.TargetInterfaceRuleId.IsNull() {
 			body, _ = sjson.Set(body, path+"target.interfaces.optionType", "global")
 			var values []string
 			data.TargetInterfaces.ElementsAs(ctx, &values, false)
 			body, _ = sjson.Set(body, path+"target.interfaces.value", values)
+		}
+	}
+	if !data.TargetInterfaceRuleId.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"target.interfaceRule.optionType", "global")
+			var values []string
+			data.TargetInterfaceRuleId.ElementsAs(ctx, &values, false)
+			body, _ = sjson.Set(body, path+"target.interfaceRule.ruleId", values)
 		}
 	}
 	if true {
@@ -147,6 +157,11 @@ func (data *ApplicationPriorityQoS) fromBody(ctx context.Context, res gjson.Resu
 		} else if t.String() == "global" {
 			data.TargetInterfaces = helpers.GetStringSet(va.Array())
 		}
+	}
+	data.TargetInterfaceRuleId = types.SetNull(types.StringType)
+
+	if va := res.Get(path + "target.interfaceRule.ruleId"); va.Exists() {
+		data.TargetInterfaceRuleId = helpers.GetStringSet(va.Array())
 	}
 	oldQosSchedulers := data.QosSchedulers
 	if value := res.Get(path + "qosMap.qosSchedulers"); value.Exists() && len(value.Array()) > 0 {

@@ -24,6 +24,7 @@ import (
 	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -40,6 +41,7 @@ type ApplicationPriorityTrafficPolicy struct {
 	FeatureProfileId types.String                                `tfsdk:"feature_profile_id"`
 	DefaultAction    types.String                                `tfsdk:"default_action"`
 	Vpns             types.Set                                   `tfsdk:"vpns"`
+	VpnRuleId        types.Set                                   `tfsdk:"vpn_rule_id"`
 	Direction        types.String                                `tfsdk:"direction"`
 	Sequences        []ApplicationPriorityTrafficPolicySequences `tfsdk:"sequences"`
 }
@@ -79,6 +81,7 @@ type ApplicationPriorityTrafficPolicySequencesMatchEntries struct {
 	DestinationRegion               types.String `tfsdk:"destination_region"`
 	TrafficTo                       types.String `tfsdk:"traffic_to"`
 	Dns                             types.String `tfsdk:"dns"`
+	HierarchyIds                    types.Set    `tfsdk:"hierarchy_ids"`
 }
 type ApplicationPriorityTrafficPolicySequencesActions struct {
 	SlaClasses                []ApplicationPriorityTrafficPolicySequencesActionsSlaClasses    `tfsdk:"sla_classes"`
@@ -109,18 +112,20 @@ type ApplicationPriorityTrafficPolicySequencesActions struct {
 }
 
 type ApplicationPriorityTrafficPolicySequencesActionsSlaClasses struct {
-	SlaClassListId            types.String `tfsdk:"sla_class_list_id"`
-	PreferredColors           types.Set    `tfsdk:"preferred_colors"`
-	PreferredColorGroupListId types.String `tfsdk:"preferred_color_group_list_id"`
-	Strict                    types.Bool   `tfsdk:"strict"`
-	FallbackToBestPath        types.Bool   `tfsdk:"fallback_to_best_path"`
-	PreferredRemoteColors     types.Set    `tfsdk:"preferred_remote_colors"`
-	RemoteColorRestrict       types.Bool   `tfsdk:"remote_color_restrict"`
+	SlaClassListId              types.String `tfsdk:"sla_class_list_id"`
+	PreferredColors             types.Set    `tfsdk:"preferred_colors"`
+	PreferredColorGroupListId   types.String `tfsdk:"preferred_color_group_list_id"`
+	PreferredColorGroupRestrict types.Bool   `tfsdk:"preferred_color_group_restrict"`
+	Strict                      types.Bool   `tfsdk:"strict"`
+	FallbackToBestPath          types.Bool   `tfsdk:"fallback_to_best_path"`
+	PreferredRemoteColors       types.Set    `tfsdk:"preferred_remote_colors"`
+	RemoteColorRestrict         types.Bool   `tfsdk:"remote_color_restrict"`
 }
 type ApplicationPriorityTrafficPolicySequencesActionsSetParameters struct {
 	Dscp                          types.Int64  `tfsdk:"dscp"`
 	PolicerId                     types.String `tfsdk:"policer_id"`
 	PreferredColorGroupId         types.String `tfsdk:"preferred_color_group_id"`
+	PreferredColorGroupRestrict   types.Bool   `tfsdk:"preferred_color_group_restrict"`
 	ForwardingClassListId         types.String `tfsdk:"forwarding_class_list_id"`
 	LocalTlocListColors           types.Set    `tfsdk:"local_tloc_list_colors"`
 	LocalTlocListRestrict         types.Bool   `tfsdk:"local_tloc_list_restrict"`
@@ -170,7 +175,7 @@ func (data ApplicationPriorityTrafficPolicy) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string {
+func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -182,11 +187,19 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 		}
 	}
 	if !data.Vpns.IsNull() {
-		if true {
+		if true && data.VpnRuleId.IsNull() {
 			body, _ = sjson.Set(body, path+"target.vpn.optionType", "global")
 			var values []string
 			data.Vpns.ElementsAs(ctx, &values, false)
 			body, _ = sjson.Set(body, path+"target.vpn.value", values)
+		}
+	}
+	if !data.VpnRuleId.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"target.vpnRule.optionType", "global")
+			var values []string
+			data.VpnRuleId.ElementsAs(ctx, &values, false)
+			body, _ = sjson.Set(body, path+"target.vpnRule.ruleId", values)
 		}
 	}
 	if !data.Direction.IsNull() {
@@ -391,6 +404,14 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 							itemChildBody, _ = sjson.Set(itemChildBody, "dns.value", childItem.Dns.ValueString())
 						}
 					}
+					if !childItem.HierarchyIds.IsNull() {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "hierarchyUuid.optionType", "global")
+							var values []string
+							childItem.HierarchyIds.ElementsAs(ctx, &values, false)
+							itemChildBody, _ = sjson.Set(itemChildBody, "hierarchyUuid.value", values)
+						}
+					}
 					itemBody, _ = sjson.SetRaw(itemBody, "match.entries.-1", itemChildBody)
 				}
 			}
@@ -420,6 +441,12 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 								if true {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredColorGroup.refId.optionType", "global")
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredColorGroup.refId.value", childChildItem.PreferredColorGroupListId.ValueString())
+								}
+							}
+							if !childChildItem.PreferredColorGroupRestrict.IsNull() {
+								if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredColorGroupRestrict.optionType", "global")
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredColorGroupRestrict.value", childChildItem.PreferredColorGroupRestrict.ValueBool())
 								}
 							}
 							if !childChildItem.Strict.IsNull() {
@@ -479,6 +506,12 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 								if true {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredColorGroup.refId.optionType", "global")
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredColorGroup.refId.value", childChildItem.PreferredColorGroupId.ValueString())
+								}
+							}
+							if !childChildItem.PreferredColorGroupRestrict.IsNull() {
+								if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredColorGroupRestrict.optionType", "global")
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredColorGroupRestrict.value", childChildItem.PreferredColorGroupRestrict.ValueBool())
 								}
 							}
 							if !childChildItem.ForwardingClassListId.IsNull() {
@@ -846,6 +879,11 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 			data.Vpns = helpers.GetStringSet(va.Array())
 		}
 	}
+	data.VpnRuleId = types.SetNull(types.StringType)
+
+	if va := res.Get(path + "target.vpnRule.ruleId"); va.Exists() {
+		data.VpnRuleId = helpers.GetStringSet(va.Array())
+	}
 	data.Direction = types.StringNull()
 
 	if t := res.Get(path + "target.direction.optionType"); t.Exists() {
@@ -1095,6 +1133,14 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 							cItem.Dns = types.StringValue(va.String())
 						}
 					}
+					cItem.HierarchyIds = types.SetNull(types.StringType)
+
+					if t := cv.Get("hierarchyUuid.optionType"); t.Exists() {
+						va := cv.Get("hierarchyUuid.value")
+						if t.String() == "global" {
+							cItem.HierarchyIds = helpers.GetStringSet(va.Array())
+						}
+					}
 					item.MatchEntries = append(item.MatchEntries, cItem)
 					return true
 				})
@@ -1129,6 +1175,14 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 								va := ccv.Get("preferredColorGroup.refId.value")
 								if t.String() == "global" {
 									ccItem.PreferredColorGroupListId = types.StringValue(va.String())
+								}
+							}
+							ccItem.PreferredColorGroupRestrict = types.BoolNull()
+
+							if t := ccv.Get("preferredColorGroupRestrict.optionType"); t.Exists() {
+								va := ccv.Get("preferredColorGroupRestrict.value")
+								if t.String() == "global" {
+									ccItem.PreferredColorGroupRestrict = types.BoolValue(va.Bool())
 								}
 							}
 							ccItem.Strict = types.BoolNull()
@@ -1201,6 +1255,14 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 								va := ccv.Get("preferredColorGroup.refId.value")
 								if t.String() == "global" {
 									ccItem.PreferredColorGroupId = types.StringValue(va.String())
+								}
+							}
+							ccItem.PreferredColorGroupRestrict = types.BoolNull()
+
+							if t := ccv.Get("preferredColorGroupRestrict.optionType"); t.Exists() {
+								va := ccv.Get("preferredColorGroupRestrict.value")
+								if t.String() == "global" {
+									ccItem.PreferredColorGroupRestrict = types.BoolValue(va.Bool())
 								}
 							}
 							ccItem.ForwardingClassListId = types.StringNull()
@@ -1784,6 +1846,11 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 									}
 								}
 								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.HierarchyIds).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].HierarchyIds).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
 									matchedC[nci] = true
 									resultC = append(resultC, data.Sequences[ni].MatchEntries[nci])
 									break
@@ -1948,6 +2015,11 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 													}
 												}
 												if keyMatchCC {
+													if oldCCItem.PreferredColorGroupRestrict.ValueBool() != data.Sequences[ni].Actions[nci].SlaClasses[ncci].PreferredColorGroupRestrict.ValueBool() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
 													if oldCCItem.Strict.ValueBool() != data.Sequences[ni].Actions[nci].SlaClasses[ncci].Strict.ValueBool() {
 														keyMatchCC = false
 													}
@@ -2002,6 +2074,11 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 												}
 												if keyMatchCC {
 													if oldCCItem.PreferredColorGroupId.ValueString() != data.Sequences[ni].Actions[nci].SetParameters[ncci].PreferredColorGroupId.ValueString() {
+														keyMatchCC = false
+													}
+												}
+												if keyMatchCC {
+													if oldCCItem.PreferredColorGroupRestrict.ValueBool() != data.Sequences[ni].Actions[nci].SetParameters[ncci].PreferredColorGroupRestrict.ValueBool() {
 														keyMatchCC = false
 													}
 												}

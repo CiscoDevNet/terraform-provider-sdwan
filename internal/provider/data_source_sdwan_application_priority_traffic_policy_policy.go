@@ -87,6 +87,11 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
+			"vpn_rule_id": schema.SetAttribute{
+				MarkdownDescription: "",
+				ElementType:         types.StringType,
+				Computed:            true,
+			},
 			"direction": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
@@ -224,6 +229,11 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										MarkdownDescription: "Dns",
 										Computed:            true,
 									},
+									"hierarchy_ids": schema.SetAttribute{
+										MarkdownDescription: "Site List",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
 								},
 							},
 						},
@@ -250,6 +260,10 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 													MarkdownDescription: "",
 													Computed:            true,
 												},
+												"preferred_color_group_restrict": schema.BoolAttribute{
+													MarkdownDescription: "",
+													Computed:            true,
+												},
 												"strict": schema.BoolAttribute{
 													MarkdownDescription: "",
 													Computed:            true,
@@ -271,7 +285,7 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										},
 									},
 									"backup_sla_preferred_colors": schema.SetAttribute{
-										MarkdownDescription: "Backup SLA perferred color",
+										MarkdownDescription: "Backup SLA preferred color",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
@@ -289,6 +303,10 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 													Computed:            true,
 												},
 												"preferred_color_group_id": schema.StringAttribute{
+													MarkdownDescription: "",
+													Computed:            true,
+												},
+												"preferred_color_group_restrict": schema.BoolAttribute{
 													MarkdownDescription: "",
 													Computed:            true,
 												},

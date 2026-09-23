@@ -1,6 +1,11 @@
 ## 0.11.6 (unreleased)
 
 - Add `sdwan_scope` resource and data source
+- Bump schema to `20.18.0` for the following application priority resources: `sdwan_application_priority_qos_policy`, `sdwan_application_priority_traffic_policy_policy`
+- Add `hierarchy_ids` and `preferred_color_group_restrict` attributes to `sdwan_application_priority_traffic_policy_policy` resource and data source (SD-WAN Manager 20.18+)
+- Add `vpn_rule_id` attribute to `sdwan_application_priority_traffic_policy_policy` resource and data source, allowing VPN group rule based targeting, mutually exclusive with `vpns` (SD-WAN Manager 20.18+)
+- Add `target_interface_rule_id` attribute to `sdwan_application_priority_qos_policy` resource and data source, allowing interface group rule based targeting, mutually exclusive with `target_interfaces` (SD-WAN Manager 20.16.1+)
+- `vpns` and `direction` attributes of `sdwan_application_priority_traffic_policy_policy` are now optional, since the 20.18 schema introduces `vpn_rule_id` as an alternative target
 
 ## 0.11.5
 
