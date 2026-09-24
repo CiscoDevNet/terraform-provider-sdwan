@@ -50,7 +50,7 @@ func (r *WANEdgeCertificateSendResource) Metadata(ctx context.Context, req resou
 func (r *WANEdgeCertificateSendResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource sends the current WAN edge certificate list to the controllers. It does not manage the certificate validity of any device, use the `sdwan_wan_edge_certificate_validate` resource for that. The initial create or any change to `version` or `triggers` issues a new push; use `version` to connect this resource to a certificate validation resource.").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource sends the current WAN edge certificate list to the controllers. It does not manage the certificate validity of any device, use the `sdwan_wan_edge_certificate_validate` resource for that. The initial create or any change to `version` issues a new push; use `version` to connect this resource to a certificate validation resource.").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -59,11 +59,6 @@ func (r *WANEdgeCertificateSendResource) Schema(ctx context.Context, req resourc
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
-			},
-			"triggers": schema.MapAttribute{
-				MarkdownDescription: "A map of arbitrary strings that, when changed, triggers a new push of the WAN edge certificate list to the controllers",
-				ElementType:         types.StringType,
-				Optional:            true,
 			},
 			"version": schema.Int64Attribute{
 				MarkdownDescription: "A version value that, when changed, triggers a new push of the WAN edge certificate list to the controllers",

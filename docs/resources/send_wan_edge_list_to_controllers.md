@@ -3,12 +3,12 @@
 page_title: "sdwan_send_wan_edge_list_to_controllers Resource - terraform-provider-sdwan"
 subcategory: "Inventory"
 description: |-
-  This resource sends the current WAN edge certificate list to the controllers. It does not manage the certificate validity of any device, use the sdwan_wan_edge_certificate_validate resource for that. The initial create or any change to version or triggers issues a new push; use version to connect this resource to a certificate validation resource.
+  This resource sends the current WAN edge certificate list to the controllers. It does not manage the certificate validity of any device, use the sdwan_wan_edge_certificate_validate resource for that. The initial create or any change to version issues a new push; use version to connect this resource to a certificate validation resource.
 ---
 
 # sdwan_send_wan_edge_list_to_controllers (Resource)
 
-This resource sends the current WAN edge certificate list to the controllers. It does not manage the certificate validity of any device, use the `sdwan_wan_edge_certificate_validate` resource for that. The initial create or any change to `version` or `triggers` issues a new push; use `version` to connect this resource to a certificate validation resource.
+This resource sends the current WAN edge certificate list to the controllers. It does not manage the certificate validity of any device, use the `sdwan_wan_edge_certificate_validate` resource for that. The initial create or any change to `version` issues a new push; use `version` to connect this resource to a certificate validation resource.
 
 ## Example Usage
 
@@ -28,7 +28,6 @@ resource "sdwan_send_wan_edge_list_to_controllers" "example2" {
 
 ### Optional
 
-- `triggers` (Map of String) A map of arbitrary strings that, when changed, triggers a new push of the WAN edge certificate list to the controllers
 - `version` (Number) A version value that, when changed, triggers a new push of the WAN edge certificate list to the controllers
 
 ### Read-Only
