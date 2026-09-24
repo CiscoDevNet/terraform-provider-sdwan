@@ -26,6 +26,7 @@ resource "sdwan_network_hierarchy_cflowd" "example" {
     {
       vpn_id             = 1
       address            = "10.0.0.1"
+      source_interface   = "Loopback1"
       udp_port           = 4739
       export_spread      = true
       bfd_metrics_export = true
@@ -87,6 +88,7 @@ Optional:
   - Default value: `600`
 - `export_spread` (Boolean) Enable export spreading
   - Default value: `false`
+- `source_interface` (String) Source interface, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
 
 ## Import
 
