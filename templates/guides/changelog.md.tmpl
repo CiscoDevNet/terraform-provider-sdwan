@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## 0.11.6 (unreleased)
+## 0.11.6
 
 - Add `sdwan_scope` resource and data source
 - Add `sdwan_service_appqoe_feature` resource and data source
