@@ -3,7 +3,7 @@ name: Application Priority QoS
 rest_endpoint: /v1/feature-profile/sdwan/application-priority/%v/qos-policy
 minimum_version: 20.15.0
 id_attribute: id
-test_tags: [SDWAN_2015]
+test_tags: [SDWAN_2015, SDWAN_2018]
 parcel_type: policy
 no_data_source_name_query: true
 attributes:
@@ -18,6 +18,24 @@ attributes:
     tf_name: target_interfaces
     data_path: [target]
     example: '{{interface_var_1}}'
+    conditional_attribute:
+      conditions:
+        - name: target_interface_rule_id
+          value: ''
+  - model_name: ruleId
+    tf_name: target_interface_rule_id
+    data_path: [target, interfaceRule]
+    type: Set
+    element_type: String
+    no_option_type: true
+    flat_option_type: global
+    description: Interface Rule ID (Interface Group rule); mutually exclusive with `target_interfaces`. Exactly one element.
+    exclude_test: true
+    example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+    conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
   - model_name: qosSchedulers
     data_path: [qosMap]
     attributes:

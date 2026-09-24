@@ -20,7 +20,9 @@ resource "sdwan_application_priority_traffic_policy_policy" "example" {
         {
           set_parameters = [
             {
-              dscp = 18
+              dscp                           = 18
+              preferred_color_group_id       = "b1b45f19-69f4-44c5-8e0a-15a14b77a435"
+              preferred_color_group_restrict = true
             }
           ]
         }

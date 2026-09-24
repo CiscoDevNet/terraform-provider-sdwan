@@ -43,8 +43,9 @@ resource "sdwan_application_priority_qos_policy" "example" {
 
 - `description` (String) The description of the Policy
 - `qos_schedulers` (Attributes List) qosSchedulers (see [below for nested schema](#nestedatt--qos_schedulers))
-- `target_interfaces` (Set of String) interfaces
-- `target_interfaces_variable` (String) Variable name
+- `target_interface_rule_id` (Set of String) , Attribute conditional on SD-WAN Manager version `20.18.1` or higher
+- `target_interfaces` (Set of String) interfaces, Attribute conditional on `target_interface_rule_id` not being set
+- `target_interfaces_variable` (String) Variable name, Attribute conditional on `target_interface_rule_id` not being set
 
 ### Read-Only
 

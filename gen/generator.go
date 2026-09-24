@@ -298,6 +298,7 @@ type YamlConfigAttribute struct {
 	IncludeVariableCheck    bool                           `yaml:"include_variable_check"`
 	ResetContainerIfIgnore  bool                           `yaml:"reset_container_if_ignore"`
 	NoOptionType            bool                           `yaml:"no_option_type"`
+	FlatOptionType          string                         `yaml:"flat_option_type"`
 	PositionalFallback      bool                           `yaml:"positional_fallback"`
 	OptionalNullEmpty       bool                           `yaml:"optional_null_empty"`
 	ForceInclude            bool                           `yaml:"force_include"`

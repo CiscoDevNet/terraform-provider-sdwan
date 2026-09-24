@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -98,13 +99,18 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 				},
 			},
 			"vpns": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `vpn_rule_id` not being set").String,
 				ElementType:         types.StringType,
-				Required:            true,
+				Optional:            true,
+			},
+			"vpn_rule_id": schema.SetAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+				ElementType:         types.StringType,
+				Optional:            true,
 			},
 			"direction": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("service", "tunnel", "all").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("service", "tunnel", "all"),
 				},
@@ -302,6 +308,11 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 											stringvalidator.OneOf("request", "response"),
 										},
 									},
+									"hierarchy_ids": schema.SetAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Site List, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+										ElementType:         types.StringType,
+										Optional:            true,
+									},
 								},
 							},
 						},
@@ -334,6 +345,10 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 														stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 													},
 												},
+												"preferred_color_group_restrict": schema.BoolAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+													Optional:            true,
+												},
 												"strict": schema.BoolAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
 													Optional:            true,
@@ -355,7 +370,7 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										},
 									},
 									"backup_sla_preferred_colors": schema.SetAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Backup SLA perferred color").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Backup SLA preferred color").String,
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
@@ -384,6 +399,10 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 													Validators: []validator.String{
 														stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 													},
+												},
+												"preferred_color_group_restrict": schema.BoolAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+													Optional:            true,
 												},
 												"forwarding_class_list_id": schema.StringAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
@@ -711,7 +730,9 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Create(ctx conte
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
 	// Create object
-	body := plan.toBody(ctx)
+
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -794,7 +815,8 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Update(ctx conte
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

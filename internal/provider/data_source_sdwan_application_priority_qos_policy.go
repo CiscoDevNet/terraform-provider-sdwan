@@ -88,6 +88,11 @@ func (d *ApplicationPriorityQoSProfileParcelDataSource) Schema(ctx context.Conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"target_interface_rule_id": schema.SetAttribute{
+				MarkdownDescription: "",
+				ElementType:         types.StringType,
+				Computed:            true,
+			},
 			"qos_schedulers": schema.ListNestedAttribute{
 				MarkdownDescription: "qosSchedulers",
 				Computed:            true,
