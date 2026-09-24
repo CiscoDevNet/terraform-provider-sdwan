@@ -350,6 +350,8 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewNetworkHierarchyNodeResource,
 		NewNetworkHierarchyCflowdResource,
 		NewNetworkHierarchySecurityLoggingResource,
+		NewWANEdgeCertificateValidateResource,
+		NewWANEdgeCertificateSendResource,
 	}
 }
 

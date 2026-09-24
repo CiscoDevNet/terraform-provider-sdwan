@@ -43,9 +43,11 @@ type YamlConfig struct {
 var docPaths = []string{"./docs/data-sources/", "./docs/resources/"}
 
 var extraDocs = map[string]string{
-	"attach_feature_device_template": "(Classic) Device Templates",
-	"activate_centralized_policy":    "(Classic) Centralized Policies",
-	"activate_topology_group":        "Topology Groups",
+	"attach_feature_device_template":    "(Classic) Device Templates",
+	"activate_centralized_policy":       "(Classic) Centralized Policies",
+	"activate_topology_group":           "Topology Groups",
+	"wan_edge_certificate_validate":     "Inventory",
+	"send_wan_edge_list_to_controllers": "Inventory",
 }
 
 func SnakeCase(s string) string {
