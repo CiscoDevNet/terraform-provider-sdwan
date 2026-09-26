@@ -148,8 +148,6 @@ resource "sdwan_transport_wan_vpn_interface_ipsec_feature" "example" {
 - `shutdown` (Boolean) Administrative state
   - Default value: `true`
 - `shutdown_variable` (String) Variable name
-- `tracker_id` (String) Enable tracker for this interface
-- `tracker_id_variable` (String) Variable name
 - `tunnel_destination_ipv4_address` (String) , Attribute conditional on `tunnel_mode` equal to `ipv4` or `tunnel_mode` equal to `ipv4-v6overlay`
 - `tunnel_destination_ipv4_address_variable` (String) Variable name, Attribute conditional on `tunnel_mode` equal to `ipv4` or `tunnel_mode` equal to `ipv4-v6overlay`
 - `tunnel_destination_ipv6_address` (String) Tunnel destination IPv6 Address, Attribute conditional on `tunnel_mode` equal to `ipv6`
