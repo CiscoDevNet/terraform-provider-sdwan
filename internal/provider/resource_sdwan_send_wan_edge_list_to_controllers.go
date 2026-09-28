@@ -100,6 +100,21 @@ func (r *WANEdgeCertificateSendResource) ModifyPlan(ctx context.Context, req res
 		return
 	}
 
+	var plan, state WANEdgeCertificatePush
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	resp.Diagnostics.Append(req.State.Get(ctx, &state)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// When version is changing (or not yet known) the update is already planned and will push, so
+	// leave synced stable. Querying live drift here would be non-deterministic: a dependency can
+	// change the Manager's sync state between plan and apply, flipping synced from known to unknown
+	// and producing an "inconsistent final plan" error.
+	if plan.Version.IsUnknown() || !plan.Version.Equal(state.Version) {
+		return
+	}
+
 	outOfSync, err := helpers.GetControllersOutOfSyncCount(ctx, r.client)
 	if err != nil {
 		// Do not block planning on a transient status query failure.
