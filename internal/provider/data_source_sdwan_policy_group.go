@@ -24,11 +24,14 @@ import (
 	"net/url"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/datasourcevalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
+	"github.com/tidwall/gjson"
 )
 
 // End of section. //template:end imports
@@ -37,8 +40,9 @@ import (
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
-	_ datasource.DataSource              = &PolicyGroupDataSource{}
-	_ datasource.DataSourceWithConfigure = &PolicyGroupDataSource{}
+	_ datasource.DataSource                     = &PolicyGroupDataSource{}
+	_ datasource.DataSourceWithConfigure        = &PolicyGroupDataSource{}
+	_ datasource.DataSourceWithConfigValidators = &PolicyGroupDataSource{}
 )
 
 func NewPolicyGroupDataSource() datasource.DataSource {
@@ -61,10 +65,12 @@ func (d *PolicyGroupDataSource) Schema(ctx context.Context, req datasource.Schem
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The id of the object",
-				Required:            true,
+				Optional:            true,
+				Computed:            true,
 			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the policy group",
+				Optional:            true,
 				Computed:            true,
 			},
 			"description": schema.StringAttribute{
@@ -126,6 +132,15 @@ func (d *PolicyGroupDataSource) Schema(ctx context.Context, req datasource.Schem
 	}
 }
 
+func (d *PolicyGroupDataSource) ConfigValidators(_ context.Context) []datasource.ConfigValidator {
+	return []datasource.ConfigValidator{
+		datasourcevalidator.ExactlyOneOf(
+			path.MatchRoot("id"),
+			path.MatchRoot("name"),
+		),
+	}
+}
+
 func (d *PolicyGroupDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
@@ -147,6 +162,28 @@ func (d *PolicyGroupDataSource) Read(ctx context.Context, req datasource.ReadReq
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
+
+	if config.Id.IsNull() && !config.Name.IsNull() {
+		// Resolve the policy group ID by name against the list endpoint
+		res, err := d.client.Get(config.getPath())
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve objects, got error: %s", err))
+			return
+		}
+		found := false
+		res.ForEach(func(_, v gjson.Result) bool {
+			if v.Get("name").String() == config.Name.ValueString() {
+				config.Id = types.StringValue(v.Get("id").String())
+				found = true
+				return false
+			}
+			return true
+		})
+		if !found {
+			resp.Diagnostics.AddError("Not Found", fmt.Sprintf("No object found with name: %s", config.Name.ValueString()))
+			return
+		}
+	}
 
 	// Read policy group
 	res, err := d.client.Get(config.getPath() + url.QueryEscape(config.Id.ValueString()))
@@ -174,17 +211,20 @@ func (d *PolicyGroupDataSource) Read(ctx context.Context, req datasource.ReadReq
 	config.fromBodyPolicyGroupDevices(ctx, res)
 
 	// Read policy group devices variables
-	path = fmt.Sprintf("/v1/policy-group/%v/device/variables/", config.Id.ValueString())
-	res, err = d.client.Get(path)
-	if strings.Contains(res.Get("error.message").String(), "Invalid policy group passed") {
-		resp.State.RemoveResource(ctx)
-		return
-	} else if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
-		return
-	}
+	// The Manager answers HTTP 500 (CFGRP0014/PLGRP0014) when variables are requested for a group with no devices
+	if len(res.Get("devices").Array()) > 0 {
+		path = fmt.Sprintf("/v1/policy-group/%v/device/variables/", config.Id.ValueString())
+		res, err = d.client.Get(path)
+		if strings.Contains(res.Get("error.message").String(), "Invalid policy group passed") {
+			resp.State.RemoveResource(ctx)
+			return
+		} else if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+			return
+		}
 
-	config.fromBodyPolicyGroupDeviceVariables(ctx, res)
+		config.fromBodyPolicyGroupDeviceVariables(ctx, res)
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 
