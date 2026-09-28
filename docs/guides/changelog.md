@@ -18,6 +18,9 @@ description: |-
 - Fix `sdwan_system_security_feature` sending `extended_anti_replay_window` with the SD-WAN Manager default of `256` when the attribute is not declared.
 - Fix `sdwan_transport_route_policy_feature`: an `accept` sequence with no `actions` no longer sends synthesized `setCommunity` defaults
 - Add `source_interface` attribute to `collectors` on `sdwan_network_hierarchy_cflowd` resource and data source (SD-WAN Manager 20.18+), [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/770)
+- Bump `sdwan_embedded_security_ngfw_policy` schema to `20.18.0`
+- Fix `sdwan_embedded_security_ngfw_policy` attributes whose schema declares multiple `optionType` values in a single branch
+- Deprecate `source_security_group_list_ids` and `destination_security_group_list_ids` in `sdwan_embedded_security_ngfw_policy`: deprecated in favor of `source_object_group_list_ids` and `destination_object_group_list_ids` on Manager 20.18+
 
 ## 0.11.5
 
