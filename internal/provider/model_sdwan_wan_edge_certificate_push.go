@@ -29,6 +29,7 @@ import (
 type WANEdgeCertificatePush struct {
 	Id      types.String `tfsdk:"id"`
 	Version types.Int64  `tfsdk:"version"`
+	Synced  types.Bool   `tfsdk:"synced"`
 }
 
 // push sends the current WAN edge list to all controllers and waits for the action to finish.

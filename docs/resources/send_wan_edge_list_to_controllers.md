@@ -33,3 +33,4 @@ resource "sdwan_send_wan_edge_list_to_controllers" "example2" {
 ### Read-Only
 
 - `id` (String) Placeholder identifier attribute
+- `synced` (Boolean) Server-reported controller sync state captured at the last apply. `true` means the Manager reports all controllers in sync with the WAN edge certificate list. This is computed for drift detection: when the Manager reports controllers out of sync, a new push is planned.
