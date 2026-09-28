@@ -20,6 +20,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -112,6 +113,12 @@ func (r *WANEdgeCertificateValidateResource) apply(ctx context.Context, data *WA
 	}
 	if data.SerialNumber.ValueString() == "" {
 		return fmt.Errorf("chassis number %s has no serial number in the WAN edge list of the Manager", data.ChassisNumber.ValueString())
+	}
+
+	// Skip the save when the validity already matches; a redundant save marks the WAN edge list
+	// out of sync and forces an unnecessary controller push.
+	if strings.EqualFold(entry.Get("validity").String(), validity) {
+		return nil
 	}
 
 	if err := data.setValidity(ctx, r.client, validity); err != nil {
