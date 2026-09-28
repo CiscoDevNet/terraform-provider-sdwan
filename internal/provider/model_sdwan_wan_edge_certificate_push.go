@@ -19,14 +19,11 @@ package provider
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"strings"
-	"time"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/netascode/go-sdwan"
-	"github.com/tidwall/gjson"
 )
 
 type WANEdgeCertificatePush struct {
@@ -47,41 +44,6 @@ func (data WANEdgeCertificatePush) push(ctx context.Context, client *sdwan.Clien
 	if actionId == "" {
 		return fmt.Errorf("certificate push returned no action ID: %s", res.String())
 	}
-	return waitForCertificatePushAction(ctx, client, actionId, taskTimeout)
-}
-
-func waitForCertificatePushAction(ctx context.Context, client *sdwan.Client, actionId string, taskTimeout *int64) error {
-	maxAttempts := *taskTimeout / 5
-	for attempts := int64(0); ; attempts++ {
-		time.Sleep(5 * time.Second)
-		res, err := client.Get("/device/action/status/" + actionId)
-		if err != nil {
-			return err
-		}
-		status := strings.ToLower(res.Get("summary.status").String())
-		switch status {
-		case "done", "success", "successful", "complete", "completed", "failure", "failed":
-			return certificatePushActionFailures(actionId, res)
-		}
-		if attempts > maxAttempts {
-			return fmt.Errorf("maximum waiting time for action '%s' reached", actionId)
-		}
-	}
-}
-
-func certificatePushActionFailures(actionId string, res gjson.Result) error {
-	var failures []string
-	res.Get("data").ForEach(func(_, v gjson.Result) bool {
-		if strings.Contains(strings.ToLower(v.Get("statusId").String()), "failure") {
-			failures = append(failures, fmt.Sprintf("Action %s for device %s failed. Activity log: %+v", actionId, v.Get("deviceID").String(), v.Get("activity").String()))
-		}
-		return true
-	})
-	if strings.Contains(strings.ToLower(res.Get("validation.status").String()), "failure") {
-		failures = append(failures, fmt.Sprintf("Validation for action %s failed. Validation log: %+v", actionId, res.Get("validation.activity").String()))
-	}
-	if len(failures) > 0 {
-		return errors.New(strings.Join(failures, "\n"))
-	}
-	return nil
+	err, _ = helpers.WaitForActionToComplete(ctx, client, actionId, taskTimeout)
+	return err
 }
