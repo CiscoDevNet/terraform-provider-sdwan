@@ -64,12 +64,6 @@ func TestAccSdwanWANEdgeCertificateValidate(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_validate.test", "validity", "invalid"),
 				),
 			},
-			{
-				ResourceName:      "sdwan_wan_edge_certificate_validate.test",
-				ImportState:       true,
-				ImportStateId:     chassis,
-				ImportStateVerify: true,
-			},
 		},
 	})
 }

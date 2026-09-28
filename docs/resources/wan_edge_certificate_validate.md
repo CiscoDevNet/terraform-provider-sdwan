@@ -36,13 +36,3 @@ resource "sdwan_wan_edge_certificate_validate" "example" {
 
 - `id` (String) The chassis number of the WAN edge device
 - `version` (Number) A state version that changes after a successful certificate validity update and can trigger the controller push resource
-
-## Import
-
-Import is supported using the following syntax:
-
-The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
-
-```shell
-terraform import sdwan_wan_edge_certificate_validate.example "C8K-679A6A64-288E-5F4A-082E-300770A277A1"
-```

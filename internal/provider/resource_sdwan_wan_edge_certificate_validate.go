@@ -23,7 +23,6 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -36,7 +35,6 @@ import (
 
 // Ensure provider defined types fully satisfy framework interfaces
 var _ resource.Resource = &WANEdgeCertificateValidateResource{}
-var _ resource.ResourceWithImportState = &WANEdgeCertificateValidateResource{}
 
 func NewWANEdgeCertificateValidateResource() resource.Resource {
 	return &WANEdgeCertificateValidateResource{}
@@ -145,8 +143,6 @@ func (r *WANEdgeCertificateValidateResource) Create(ctx context.Context, req res
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
-
-	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 func (r *WANEdgeCertificateValidateResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
@@ -173,21 +169,10 @@ func (r *WANEdgeCertificateValidateResource) Read(ctx context.Context, req resou
 
 	state.fromBody(ctx, entry)
 
-	imp, diags := helpers.IsFlagImporting(ctx, req)
-	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
-		return
-	}
-
-	if imp {
-		state.processImport(ctx)
-	}
-
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Id.ValueString()))
 
 	diags = resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
-
-	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
 
 func (r *WANEdgeCertificateValidateResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
@@ -227,9 +212,4 @@ func (r *WANEdgeCertificateValidateResource) Update(ctx context.Context, req res
 
 func (r *WANEdgeCertificateValidateResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 	resp.State.RemoveResource(ctx)
-}
-
-func (r *WANEdgeCertificateValidateResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("chassis_number"), req, resp)
-	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
 }

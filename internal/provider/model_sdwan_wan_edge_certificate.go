@@ -81,9 +81,3 @@ func (data *WANEdgeCertificate) fromBody(ctx context.Context, res gjson.Result) 
 		data.Validity = types.StringValue(value.String())
 	}
 }
-
-func (data *WANEdgeCertificate) processImport(ctx context.Context) {
-	if data.Version.IsNull() || data.Version.IsUnknown() {
-		data.Version = types.Int64Value(1)
-	}
-}
