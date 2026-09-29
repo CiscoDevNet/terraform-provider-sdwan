@@ -172,6 +172,8 @@ attributes:
       data_path: [oneOfIpRoute]
       exclude_test: true
       example: 123
+      default_value: 1
+      default_value_present: true
       conditional_attribute:
         conditions:
           - name: gateway
@@ -209,6 +211,8 @@ attributes:
         - model_name: distance
           tf_name: administrative_distance
           example: 1
+          default_value: 1
+          default_value_present: true  
   - model_name: ipv6Route
     tf_name: ipv6_static_routes
     attributes:
@@ -270,6 +274,8 @@ attributes:
         - model_name: distance
           tf_name: administrative_distance
           example: 1
+          default_value: 1
+          default_value_present: true
   - model_name: service
     tf_name: services
     attributes:

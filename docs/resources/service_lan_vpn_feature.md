@@ -340,6 +340,7 @@ Optional:
 
 - `administrative_distance` (Number) Gateway distance, Attribute conditional on `gateway` equal to `null0`
   - Range: `1`-`255`
+  - Default value: `1`
 - `administrative_distance_variable` (String) Variable name, Attribute conditional on `gateway` equal to `null0`
 - `dhcp` (Boolean) IPv4 Route Gateway DHCP, Attribute conditional on `gateway` equal to `dhcp`
 - `gateway` (String) Gateway type
@@ -373,6 +374,7 @@ Optional:
 - `address_variable` (String) Variable name
 - `administrative_distance` (Number) Administrative distance
   - Range: `1`-`255`
+  - Default value: `1`
 - `administrative_distance_variable` (String) Variable name
 
 
@@ -457,6 +459,7 @@ Optional:
 - `address_variable` (String) Variable name
 - `administrative_distance` (Number) Administrative distance
   - Range: `1`-`254`
+  - Default value: `1`
 - `administrative_distance_variable` (String) Variable name
 
 
