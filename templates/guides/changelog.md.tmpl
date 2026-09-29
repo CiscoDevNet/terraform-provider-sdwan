@@ -9,6 +9,7 @@ description: |-
 
 ## 0.11.5
 
+- Add `sdwan_wan_edge_certificate_validate` and `sdwan_send_wan_edge_list_to_controllers` resources to manage WAN edge certificate validity and push the certificate list to the controllers, with drift detection based on the Manager's out-of-sync state
 - Update provider documentation: refresh tested platform versions to 20.12/20.15/20.18, restructure guides into "Getting Started - Configuration and Policy Groups" (new, recommended) and "Getting Started - Classic Templates"
 - Add `sdwan_service_dual_router_ha_feature` resource and data source
 - Bump schema to `20.18.0` for the following service resources: `sdwan_service_lan_vpn_interface_ethernet_feature`, `sdwan_service_routing_bgp_feature`, `sdwan_service_routing_eigrp_feature`, `sdwan_service_lan_vpn_feature`, `sdwan_service_lan_vpn_interface_svi_feature`, `sdwan_service_routing_ospf_feature`, `sdwan_service_route_policy_feature`, `sdwan_service_switchport_feature`, `sdwan_service_wireless_lan_feature`, `sdwan_service_ipv4_acl_feature`, `sdwan_service_lan_vpn_interface_gre_feature`, `sdwan_service_lan_vpn_interface_ipsec_feature`, `sdwan_service_object_tracker_feature`, `sdwan_service_routing_ospfv3_ipv4_feature`, `sdwan_service_routing_ospfv3_ipv6_feature`, `sdwan_service_tracker_feature`, `sdwan_service_ipv6_acl_feature`, `sdwan_service_object_tracker_group_feature`, `sdwan_service_tracker_group_feature`
