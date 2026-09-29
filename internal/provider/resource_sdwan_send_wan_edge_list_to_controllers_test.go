@@ -18,38 +18,57 @@
 package provider
 
 import (
-	"os"
+	"fmt"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccSdwanSendWANEdgeListToControllers(t *testing.T) {
-	if os.Getenv("SDWAN_TEST_CHASSIS_NUMBER") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_TEST_CHASSIS_NUMBER to enable certificate tests (this test pushes the WAN edge list to the controllers)")
-	}
-
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: `resource "sdwan_send_wan_edge_list_to_controllers" "test" {
-	version = 1
-}`,
+				Config: testAccSdwanSendWANEdgeListConfig("staging", "invalid"),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet("sdwan_send_wan_edge_list_to_controllers.test", "id"),
-					resource.TestCheckResourceAttr("sdwan_send_wan_edge_list_to_controllers.test", "version", "1"),
+					resource.TestCheckResourceAttr("sdwan_send_wan_edge_list_to_controllers.test", "synced", "true"),
 				),
 			},
 			{
-				Config: `resource "sdwan_send_wan_edge_list_to_controllers" "test" {
-	version = 2
-}`,
+				Config: testAccSdwanSendWANEdgeListConfig("invalid", "staging"),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_send_wan_edge_list_to_controllers.test", "version", "2"),
+					resource.TestCheckResourceAttr("sdwan_send_wan_edge_list_to_controllers.test", "synced", "true"),
 				),
+			},
+			// Restore both devices to valid; this is the real cleanup, not terraform destroy.
+			{
+				Config: testAccSdwanSendWANEdgeListConfig("valid", "valid"),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_send_wan_edge_list_to_controllers.test", "synced", "true"),
+				),
+			},
+			// Reapplying the same state must produce an empty plan (no dirty list, no push).
+			{
+				Config:   testAccSdwanSendWANEdgeListConfig("valid", "valid"),
+				PlanOnly: true,
 			},
 		},
 	})
+}
+
+func testAccSdwanSendWANEdgeListConfig(validity1, validity2 string) string {
+	config := `resource "sdwan_wan_edge_certificate_validate" "test1" {` + "\n"
+	config += fmt.Sprintf(`	chassis_number = "%s"`, wanEdgeCertificateChassis1) + "\n"
+	config += fmt.Sprintf(`	validity = "%s"`, validity1) + "\n"
+	config += `}` + "\n"
+	config += `resource "sdwan_wan_edge_certificate_validate" "test2" {` + "\n"
+	config += fmt.Sprintf(`	chassis_number = "%s"`, wanEdgeCertificateChassis2) + "\n"
+	config += fmt.Sprintf(`	validity = "%s"`, validity2) + "\n"
+	config += `}` + "\n"
+	config += `resource "sdwan_send_wan_edge_list_to_controllers" "test" {` + "\n"
+	config += `	version = sdwan_wan_edge_certificate_validate.test1.version + sdwan_wan_edge_certificate_validate.test2.version` + "\n"
+	config += `}` + "\n"
+	return config
 }

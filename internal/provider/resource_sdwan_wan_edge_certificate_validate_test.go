@@ -19,64 +19,69 @@ package provider
 
 import (
 	"fmt"
-	"os"
 	"regexp"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
-// The device has to be onboarded in the WAN edge list of the Manager already.
-func testAccWANEdgeCertificateChassis(t *testing.T) string {
-	chassis := os.Getenv("SDWAN_TEST_CHASSIS_NUMBER")
-	if chassis == "" {
-		t.Skip("skipping test, set environment variable SDWAN_TEST_CHASSIS_NUMBER to the chassis number of a WAN edge device")
-	}
-	return chassis
-}
+// Chassis numbers dedicated to the WAN edge certificate acceptance tests. These devices must be
+// onboarded in the WAN edge list of the test Manager and must not be shared with any other test.
+const (
+	wanEdgeCertificateChassis1 = "C8K-3D1A8960-6E76-532C-DA93-50626FC5797E"
+	wanEdgeCertificateChassis2 = "C8K-D4CE7174-5261-7E6F-91EA-4926BCF4C2DD"
+)
 
 func TestAccSdwanWANEdgeCertificateValidate(t *testing.T) {
-	chassis := testAccWANEdgeCertificateChassis(t)
-
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanWANEdgeCertificateConfig(chassis, "staging"),
+				Config: testAccSdwanWANEdgeCertificateConfig(wanEdgeCertificateChassis1, "staging"),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_validate.test", "chassis_number", chassis),
-					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_validate.test", "id", chassis),
+					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_validate.test", "chassis_number", wanEdgeCertificateChassis1),
+					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_validate.test", "id", wanEdgeCertificateChassis1),
 					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_validate.test", "validity", "staging"),
 					resource.TestCheckResourceAttrSet("sdwan_wan_edge_certificate_validate.test", "serial_number"),
 					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_validate.test", "version", "1"),
 				),
 			},
 			{
-				Config: testAccSdwanWANEdgeCertificateConfig(chassis, "valid"),
+				Config: testAccSdwanWANEdgeCertificateConfig(wanEdgeCertificateChassis1, "valid"),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_validate.test", "validity", "valid"),
 				),
 			},
 			{
-				Config: testAccSdwanWANEdgeCertificateConfig(chassis, "invalid"),
+				Config: testAccSdwanWANEdgeCertificateConfig(wanEdgeCertificateChassis1, "invalid"),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_validate.test", "validity", "invalid"),
 				),
+			},
+			// Restore to valid; Delete is a no-op, so this is the real cleanup for the device.
+			{
+				Config: testAccSdwanWANEdgeCertificateConfig(wanEdgeCertificateChassis1, "valid"),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_wan_edge_certificate_validate.test", "validity", "valid"),
+				),
+			},
+			// Reapplying the same validity must produce an empty plan (skip-redundant-save).
+			{
+				Config:   testAccSdwanWANEdgeCertificateConfig(wanEdgeCertificateChassis1, "valid"),
+				PlanOnly: true,
 			},
 		},
 	})
 }
 
 func TestAccSdwanWANEdgeCertificateValidateInvalidValidity(t *testing.T) {
-	chassis := testAccWANEdgeCertificateChassis(t)
-
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccSdwanWANEdgeCertificateConfig(chassis, "bogus"),
+				Config:      testAccSdwanWANEdgeCertificateConfig(wanEdgeCertificateChassis1, "bogus"),
 				ExpectError: regexp.MustCompile(`value must be one of`),
 			},
 		},
@@ -84,9 +89,6 @@ func TestAccSdwanWANEdgeCertificateValidateInvalidValidity(t *testing.T) {
 }
 
 func TestAccSdwanWANEdgeCertificateValidateUnknownChassis(t *testing.T) {
-	// The helper is used for its environment guard; this test intentionally uses a fixed unknown chassis.
-	testAccWANEdgeCertificateChassis(t)
-
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
