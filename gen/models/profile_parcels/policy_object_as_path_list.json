@@ -24,7 +24,9 @@
             "properties": {
               "optionType": {
                 "type": "string",
-                "enum": ["global"]
+                "enum": [
+                  "global"
+                ]
               },
               "value": {
                 "type": "integer",
@@ -46,23 +48,33 @@
                   "properties": {
                     "optionType": {
                       "type": "string",
-                      "enum": ["global"]
+                      "enum": [
+                        "global"
+                      ]
                     },
                     "value": {
                       "type": "string",
                       "pattern": "[^<>]*"
                     }
                   },
-                  "required": ["optionType", "value"],
+                  "required": [
+                    "optionType",
+                    "value"
+                  ],
                   "additionalProperties": false
                 }
               },
-              "required": ["asPath"],
+              "required": [
+                "asPath"
+              ],
               "additionalProperties": false
             }
           }
         },
-        "required": ["entries", "asPathListNum"],
+        "required": [
+          "entries",
+          "asPathListNum"
+        ],
         "additionalProperties": false
       },
       "documentation": {
@@ -101,9 +113,15 @@
         "minVManageVersion": "20.15.1"
       }
     },
-    "required": ["name", "data"],
+    "required": [
+      "name",
+      "data"
+    ],
     "not": {
-      "required": ["documentation", "metadata"]
+      "required": [
+        "documentation",
+        "metadata"
+      ]
     },
     "additionalProperties": false
   }
