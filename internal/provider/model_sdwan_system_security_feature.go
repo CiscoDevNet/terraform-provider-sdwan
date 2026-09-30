@@ -151,12 +151,7 @@ func (data SystemSecurity) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"extendedArWindow.optionType", "variable")
 			body, _ = sjson.Set(body, path+"extendedArWindow.value", data.ExtendedAntiReplayWindowVariable.ValueString())
 		}
-	} else if data.ExtendedAntiReplayWindow.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"extendedArWindow.optionType", "default")
-			body, _ = sjson.Set(body, path+"extendedArWindow.value", 256)
-		}
-	} else {
+	} else if !data.ExtendedAntiReplayWindow.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"extendedArWindow.optionType", "global")
 			body, _ = sjson.Set(body, path+"extendedArWindow.value", data.ExtendedAntiReplayWindow.ValueInt64())

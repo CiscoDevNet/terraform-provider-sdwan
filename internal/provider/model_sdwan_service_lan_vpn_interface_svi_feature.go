@@ -546,12 +546,7 @@ func (data ServiceLANVPNInterfaceSVI) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "prefixList.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "prefixList.value", item.PrefixListVariable.ValueString())
 				}
-			} else if item.PrefixList.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "prefixList.optionType", "default")
-
-				}
-			} else {
+			} else if !item.PrefixList.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "prefixList.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "prefixList.value", item.PrefixList.ValueString())
@@ -735,12 +730,7 @@ func (data ServiceLANVPNInterfaceSVI) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "trackPrefixList.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "trackPrefixList.value", item.TrackPrefixListVariable.ValueString())
 				}
-			} else if item.TrackPrefixList.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "trackPrefixList.optionType", "default")
-
-				}
-			} else {
+			} else if !item.TrackPrefixList.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "trackPrefixList.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "trackPrefixList.value", item.TrackPrefixList.ValueString())

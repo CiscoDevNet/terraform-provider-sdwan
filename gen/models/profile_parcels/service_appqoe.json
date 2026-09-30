@@ -1,0 +1,1796 @@
+{
+    "request": {
+        "$schema": "http://json-schema.org/draft/2019-09/schema",
+        "$id": "https://cisco.com/schema/profileparcel/sdwan/service/appqoe/common/request_schema.json",
+        "title": "Appqoe Feature Schema",
+        "description": "Appqoe profile feature schema for request",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "pattern": "^[^&<>! \"]+$",
+                "minLength": 1,
+                "maxLength": 128
+            },
+            "description": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "dreopt": {
+                        "description": "Enable/Disable DRE optimization",
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "default"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "boolean",
+                                        "enum": [
+                                            false
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "virtualApplication": {
+                        "description": "Virtual application Instance",
+                        "type": "array",
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "instanceId": {
+                                    "description": "List of Virtual applications",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "default": 1,
+                                                    "minLength": 0,
+                                                    "type": "integer",
+                                                    "maxLength": 65530
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "applicationType": {
+                                    "description": "List of Virtual applications",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "default": "dreopt",
+                                                    "enum": [
+                                                        "dreopt"
+                                                    ],
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "resourceProfile": {
+                                    "description": "Resource Profile",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "default": "default",
+                                                    "enum": [
+                                                        "small",
+                                                        "medium",
+                                                        "large",
+                                                        "extra-large",
+                                                        "default"
+                                                    ],
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 128
+                                                },
+                                                "default": {
+                                                    "default": "default",
+                                                    "enum": [
+                                                        "small",
+                                                        "medium",
+                                                        "large",
+                                                        "extra-large",
+                                                        "default"
+                                                    ],
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 128
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "default"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "default"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "instanceId"
+                            ],
+                            "additionalProperties": false
+                        }
+                    },
+                    "appqoeDeviceRole": {
+                        "description": "Appqoe Device Role",
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "default": "forwarder",
+                                        "enum": [
+                                            "forwarder",
+                                            "forwarderAndServiceNode",
+                                            "serviceNode",
+                                            "serviceNodeWithDre",
+                                            "forwarderAndServiceNodeWithDre"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "forwarder": {
+                        "description": "Appqoe Device Role Forwarder",
+                        "type": "object",
+                        "properties": {
+                            "appnavControllerGroup": {
+                                "description": "Appnav controller group name",
+                                "type": "array",
+                                "uniqueItems": true,
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "groupName": {
+                                            "description": "List of controller group",
+                                            "type": "object",
+                                            "oneOf": [
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "default"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "default": "ACG-APPQOE",
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "ACG-APPQOE"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                }
+                                            ]
+                                        },
+                                        "appnavControllers": {
+                                            "description": "List of controllers",
+                                            "type": "array",
+                                            "uniqueItems": true,
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "address": {
+                                                        "description": "Controller IP Address",
+                                                        "type": "object",
+                                                        "oneOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "global"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "oneOf": [
+                                                                            {
+                                                                                "type": "string",
+                                                                                "pattern": "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)(\\.(?!$)|$)){4}$"
+                                                                            },
+                                                                            {
+                                                                                "type": "string",
+                                                                                "format": "ipv6"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            },
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "variable"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "string",
+                                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                        "minLength": 1,
+                                                                        "maxLength": 128
+                                                                    },
+                                                                    "default": {
+                                                                        "oneOf": [
+                                                                            {
+                                                                                "type": "string",
+                                                                                "pattern": "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)(\\.(?!$)|$)){4}$"
+                                                                            },
+                                                                            {
+                                                                                "type": "string",
+                                                                                "format": "ipv6"
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    "description": {
+                                                                        "minLength": 1,
+                                                                        "type": "string",
+                                                                        "maxLength": 128
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            }
+                                                        ]
+                                                    },
+                                                    "vpn": {
+                                                        "description": "vpn id",
+                                                        "type": "object",
+                                                        "oneOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "global"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "default": 1,
+                                                                        "minimum": 1,
+                                                                        "maximum": 65530,
+                                                                        "type": "integer"
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "address"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "groupName"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            },
+                            "serviceNodeGroup": {
+                                "description": "Name",
+                                "type": "array",
+                                "uniqueItems": true,
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "description": "List of service node group",
+                                            "type": "object",
+                                            "oneOf": [
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "global"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "string",
+                                                            "pattern": "\\b(SNG-APPQOE([1-9]|[12][0-9]|3[0-1])|SNG-APPQOE)\\b"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                },
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "default"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "SNG-APPQOE"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                }
+                                            ]
+                                        },
+                                        "internal": {
+                                            "description": "Integrated Service Node",
+                                            "type": "object",
+                                            "oneOf": [
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "default"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "boolean",
+                                                            "enum": [
+                                                                false
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                }
+                                            ]
+                                        },
+                                        "serviceNode": {
+                                            "description": "Service Node Information",
+                                            "type": "array",
+                                            "uniqueItems": true,
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "address": {
+                                                        "description": "IP Address",
+                                                        "type": "object",
+                                                        "oneOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "global"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "oneOf": [
+                                                                            {
+                                                                                "type": "string",
+                                                                                "pattern": "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)(\\.(?!$)|$)){4}$"
+                                                                            },
+                                                                            {
+                                                                                "type": "string",
+                                                                                "format": "ipv6"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "address"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "name"
+                                    ],
+                                    "additionalProperties": false
+                                },
+                                "oneOf": [
+                                    {
+                                        "if": {
+                                            "items": {
+                                                "properties": {
+                                                    "serviceNode": {
+                                                        "items": {
+                                                            "properties": {
+                                                                "address": {
+                                                                    "properties": {
+                                                                        "value": {
+                                                                            "type": "string",
+                                                                            "pattern": "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)(\\.(?!$)|$)){4}$"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "else": {
+                                            "items": {
+                                                "properties": {
+                                                    "serviceNode": {
+                                                        "items": {
+                                                            "properties": {
+                                                                "address": {
+                                                                    "properties": {
+                                                                        "value": {
+                                                                            "type": "string",
+                                                                            "format": "ipv6"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            "serviceContext": {
+                                "description": "Service Context",
+                                "type": "object",
+                                "properties": {
+                                    "appqoe": {
+                                        "description": "Appqoe",
+                                        "type": "array",
+                                        "uniqueItems": true,
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "name": {
+                                                    "description": "List of services",
+                                                    "type": "object",
+                                                    "oneOf": [
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "default"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "default": "/1",
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        }
+                                                    ]
+                                                },
+                                                "appnavControllerGroup": {
+                                                    "description": "Appnav controller group",
+                                                    "type": "object",
+                                                    "oneOf": [
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "global"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "string",
+                                                                    "pattern": "^[^&<>! \"]+$",
+                                                                    "minLength": 1,
+                                                                    "maxLength": 128
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        }
+                                                    ]
+                                                },
+                                                "serviceNodeGroup": {
+                                                    "description": "Service node group",
+                                                    "type": "object",
+                                                    "oneOf": [
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "global"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "string",
+                                                                    "pattern": "^[^&<>! \"]+$",
+                                                                    "minLength": 1,
+                                                                    "maxLength": 128
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        }
+                                                    ]
+                                                },
+                                                "serviceNodeGroups": {
+                                                    "description": "Service node group",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "oneOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "global"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "string",
+                                                                        "pattern": "^[^&<>! \"]+$",
+                                                                        "minLength": 1,
+                                                                        "maxLength": 128
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "enable": {
+                                                    "description": "enable service context",
+                                                    "type": "object",
+                                                    "oneOf": [
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "global"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "boolean"
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        }
+                                                    ]
+                                                },
+                                                "vpn": {
+                                                    "description": "Vpn",
+                                                    "type": "object",
+                                                    "oneOf": [
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "global"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "default": 0,
+                                                                    "enum": [
+                                                                        0
+                                                                    ],
+                                                                    "type": "integer"
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "default"
+                                                                    ]
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "variable"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "string",
+                                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                    "minLength": 1,
+                                                                    "maxLength": 128
+                                                                },
+                                                                "default": {
+                                                                    "default": 0,
+                                                                    "enum": [
+                                                                        0
+                                                                    ],
+                                                                    "type": "integer"
+                                                                },
+                                                                "description": {
+                                                                    "minLength": 1,
+                                                                    "type": "string",
+                                                                    "maxLength": 128
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "name"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "if": {
+                                    "properties": {
+                                        "appnavControllerGroup": {
+                                            "items": {
+                                                "properties": {
+                                                    "appnavControllers": {
+                                                        "items": {
+                                                            "properties": {
+                                                                "address": {
+                                                                    "properties": {
+                                                                        "objectType": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "global"
+                                                                            ]
+                                                                        },
+                                                                        "value": {
+                                                                            "type": "string",
+                                                                            "pattern": "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)(\\.(?!$)|$)){4}$"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "appnavControllerGroup"
+                                    ]
+                                },
+                                "then": {
+                                    "properties": {
+                                        "serviceNodeGroup": {
+                                            "items": {
+                                                "properties": {
+                                                    "serviceNode": {
+                                                        "items": {
+                                                            "properties": {
+                                                                "address": {
+                                                                    "properties": {
+                                                                        "value": {
+                                                                            "type": "string",
+                                                                            "pattern": "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)(\\.(?!$)|$)){4}$"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "serviceNodeGroup"
+                                    ]
+                                }
+                            },
+                            {
+                                "if": {
+                                    "properties": {
+                                        "appnavControllerGroup": {
+                                            "items": {
+                                                "properties": {
+                                                    "appnavControllers": {
+                                                        "items": {
+                                                            "properties": {
+                                                                "address": {
+                                                                    "properties": {
+                                                                        "objectType": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "global"
+                                                                            ]
+                                                                        },
+                                                                        "value": {
+                                                                            "type": "string",
+                                                                            "format": "ipv6"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "appnavControllerGroup"
+                                    ]
+                                },
+                                "then": {
+                                    "properties": {
+                                        "serviceNodeGroup": {
+                                            "items": {
+                                                "properties": {
+                                                    "serviceNode": {
+                                                        "items": {
+                                                            "properties": {
+                                                                "address": {
+                                                                    "properties": {
+                                                                        "value": {
+                                                                            "type": "string",
+                                                                            "format": "ipv6"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "serviceNodeGroup"
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    "forwarderAndServiceNode": {
+                        "description": "Appqoe Device Role Forwarder And ServiceNode",
+                        "type": "object",
+                        "properties": {
+                            "appnavControllerGroup": {
+                                "description": "Appnav controller group name",
+                                "type": "array",
+                                "uniqueItems": true,
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "groupName": {
+                                            "description": "List of controller group",
+                                            "type": "object",
+                                            "oneOf": [
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "default"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "default": "ACG-APPQOE",
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "ACG-APPQOE"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                }
+                                            ]
+                                        },
+                                        "appnavControllers": {
+                                            "description": "List of controllers",
+                                            "type": "array",
+                                            "uniqueItems": true,
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "address": {
+                                                        "description": "Controller IP Address",
+                                                        "type": "object",
+                                                        "oneOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "default"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "192.168.2.1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "address"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "groupName"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            },
+                            "serviceNodeGroup": {
+                                "description": "Name",
+                                "type": "array",
+                                "uniqueItems": true,
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "description": "List of service node group",
+                                            "type": "object",
+                                            "oneOf": [
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "default"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "SNG-APPQOE"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                }
+                                            ]
+                                        },
+                                        "internal": {
+                                            "description": "Integrated Service Node",
+                                            "type": "object",
+                                            "oneOf": [
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "default"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "boolean",
+                                                            "enum": [
+                                                                true
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                }
+                                            ]
+                                        },
+                                        "serviceNode": {
+                                            "description": "Service Node Information",
+                                            "type": "array",
+                                            "uniqueItems": true,
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "address": {
+                                                        "description": "IP Address",
+                                                        "type": "object",
+                                                        "oneOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "default"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "192.168.2.2"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "address"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "name"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            },
+                            "serviceContext": {
+                                "description": "Service Context",
+                                "type": "object",
+                                "properties": {
+                                    "appqoe": {
+                                        "description": "Appqoe",
+                                        "type": "array",
+                                        "uniqueItems": true,
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "name": {
+                                                    "description": "List of services",
+                                                    "type": "object",
+                                                    "oneOf": [
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "default"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "default": "/1",
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        }
+                                                    ]
+                                                },
+                                                "appnavControllerGroup": {
+                                                    "description": "Appnav controller group",
+                                                    "type": "object",
+                                                    "oneOf": [
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "global"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "string",
+                                                                    "pattern": "^[^&<>! \"]+$",
+                                                                    "minLength": 1,
+                                                                    "maxLength": 128
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        }
+                                                    ]
+                                                },
+                                                "serviceNodeGroup": {
+                                                    "description": "Service node group",
+                                                    "type": "object",
+                                                    "oneOf": [
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "global"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "string",
+                                                                    "pattern": "^[^&<>! \"]+$",
+                                                                    "minLength": 1,
+                                                                    "maxLength": 128
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        }
+                                                    ]
+                                                },
+                                                "serviceNodeGroups": {
+                                                    "description": "Service node group",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "oneOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "global"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "string",
+                                                                        "pattern": "^[^&<>! \"]+$",
+                                                                        "minLength": 1,
+                                                                        "maxLength": 128
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "enable": {
+                                                    "description": "enable service context",
+                                                    "type": "object",
+                                                    "oneOf": [
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "global"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "boolean"
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        }
+                                                    ]
+                                                },
+                                                "vpn": {
+                                                    "description": "Vpn",
+                                                    "type": "object",
+                                                    "oneOf": [
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "global"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "default": 0,
+                                                                    "enum": [
+                                                                        0
+                                                                    ],
+                                                                    "type": "integer"
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "default"
+                                                                    ]
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "variable"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "string",
+                                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                    "minLength": 1,
+                                                                    "maxLength": 128
+                                                                },
+                                                                "default": {
+                                                                    "default": 0,
+                                                                    "enum": [
+                                                                        0
+                                                                    ],
+                                                                    "type": "integer"
+                                                                },
+                                                                "description": {
+                                                                    "minLength": 1,
+                                                                    "type": "string",
+                                                                    "maxLength": 128
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "name"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "serviceNode": {
+                        "description": "Appqoe Device Role ServiceNode",
+                        "type": "object",
+                        "properties": {
+                            "serviceNodeGroup": {
+                                "description": "Name",
+                                "type": "array",
+                                "uniqueItems": true,
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "description": "List of service node group",
+                                            "type": "object",
+                                            "oneOf": [
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "default"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "SNG-APPQOE"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                }
+                                            ]
+                                        },
+                                        "externalNode": {
+                                            "description": "External Service Node",
+                                            "type": "object",
+                                            "oneOf": [
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "default"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "boolean",
+                                                            "enum": [
+                                                                true
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                }
+                                            ]
+                                        },
+                                        "serviceNode": {
+                                            "description": "Service Node Information",
+                                            "type": "array",
+                                            "uniqueItems": true,
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "address": {
+                                                        "description": "IP Address",
+                                                        "type": "object",
+                                                        "oneOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "default"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "192.168.2.2"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            }
+                                                        ]
+                                                    },
+                                                    "vpgIp": {
+                                                        "description": "ip and prefix",
+                                                        "type": "object",
+                                                        "oneOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "default"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "192.168.2.1/24"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "address"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "name"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "required": [
+                    "appqoeDeviceRole"
+                ],
+                "additionalProperties": false
+            },
+            "metadata": {
+                "supportedDeviceTypes": [
+                    "vedge-ISR1100-4GLTENA-XE",
+                    "vedge-C1131-8PLTEPW",
+                    "vedge-C8500-12X4QC",
+                    "vedge-C8570-G2",
+                    "vedge-C1121X-8PLTEP",
+                    "vedge-C8200-1N-4T",
+                    "vedge-C1121X-8P",
+                    "vedge-C1131X-8PW",
+                    "vedge-C8300-1N1S-4T2X",
+                    "vedge-C8300-2N2S-6T",
+                    "vedge-C1131-8PW",
+                    "vedge-ISR1100X-6G-XE",
+                    "vedge-ISR-4351",
+                    "vedge-ISR-4431",
+                    "vedge-ISR-4331",
+                    "vedge-ISR-4221X",
+                    "vedge-ISR1100-4GLTEGB-XE",
+                    "vedge-C8500L-8G4X",
+                    "vedge-ISRv",
+                    "vedge-C8500-20X6C",
+                    "vedge-C8500-12X",
+                    "vedge-C8550-G2",
+                    "vedge-C1127X-8PMLTEP",
+                    "vedge-CSR-1000v",
+                    "vedge-ISR-4451-X",
+                    "vedge-C8300-1N1S-6T",
+                    "vedge-ASR-1001-HX",
+                    "vedge-C1121X-8PLTEPW",
+                    "vedge-ISR1100-6G-XE",
+                    "vedge-C8300-2N2S-4T2X",
+                    "vedge-C1131X-8PLTEPW",
+                    "vedge-C1127X-8PLTEP",
+                    "vedge-ASR-1001-X",
+                    "vedge-ISR-4461",
+                    "vedge-ASR-1002-X",
+                    "vedge-ASR-1002-HX",
+                    "vedge-ISR-4321",
+                    "vedge-ISR-4221",
+                    "vedge-C1111X-8P",
+                    "vedge-C1126X-8PLTEP",
+                    "vedge-ASR-1006-X",
+                    "vedge-C8000V",
+                    "vedge-ISR1100-4G-XE",
+                    "vedge-C1161X-8P",
+                    "vedge-C8500L-8S4X",
+                    "vedge-C8475-G2",
+                    "vedge-C1161X-8PLTEP",
+                    "vedge-ISR1100X-4G-XE",
+                    "vedge-C8375-E-G2",
+                    "vedge-C8455-G2"
+                ],
+                "minVManageVersion": "20.15.1"
+            },
+            "documentation": {
+                "description": "This is the documentation for request schema for appqoe profile feature",
+                "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+                "details-2": "variable name should not be present if optionType value is NOT variable",
+                "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+                "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+                "examples": [
+                    {
+                        "data": {
+                            "appqoeDeviceRole": {
+                                "optionType": "global",
+                                "value": "forwarder"
+                            },
+                            "dreopt": {
+                                "optionType": "global",
+                                "value": true
+                            },
+                            "virtualApplication": [
+                                {
+                                    "instanceId": {
+                                        "optionType": "global",
+                                        "value": 1
+                                    },
+                                    "applicationType": {
+                                        "optionType": "global",
+                                        "value": "dreopt"
+                                    },
+                                    "resourceProfile": {
+                                        "optionType": "global",
+                                        "value": "small"
+                                    }
+                                }
+                            ],
+                            "forwarder": {
+                                "appnavControllerGroup": [
+                                    {
+                                        "groupName": {
+                                            "optionType": "default",
+                                            "value": "ACG-APPQOE"
+                                        },
+                                        "appnavControllers": [
+                                            {
+                                                "address": {
+                                                    "optionType": "variable",
+                                                    "value": "{{address}}"
+                                                },
+                                                "vpn": {
+                                                    "optionType": "global",
+                                                    "value": 1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "serviceNodeGroup": [
+                                    {
+                                        "name": {
+                                            "optionType": "global",
+                                            "value": "SNG-APPQOE"
+                                        },
+                                        "internal": {
+                                            "optionType": "default",
+                                            "value": false
+                                        },
+                                        "serviceNode": [
+                                            {
+                                                "address": {
+                                                    "optionType": "global",
+                                                    "value": "192.168.2.2"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "serviceContext": {
+                                    "appqoe": [
+                                        {
+                                            "name": {
+                                                "optionType": "default",
+                                                "value": "/1"
+                                            },
+                                            "appnavControllerGroup": {
+                                                "optionType": "global",
+                                                "value": "ACG-APPQOE"
+                                            },
+                                            "serviceNodeGroup": {
+                                                "optionType": "global",
+                                                "value": "SNG-APPQOE"
+                                            },
+                                            "serviceNodeGroups": [
+                                                {
+                                                    "optionType": "global",
+                                                    "value": "SNG-APPQOE"
+                                                }
+                                            ],
+                                            "enable": {
+                                                "optionType": "global",
+                                                "value": true
+                                            },
+                                            "vpn": {
+                                                "optionType": "global",
+                                                "value": 0
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "forwarderAndServiceNode": {
+                                "appnavControllerGroup": [
+                                    {
+                                        "groupName": {
+                                            "optionType": "default",
+                                            "value": "ACG-APPQOE"
+                                        },
+                                        "appnavControllers": [
+                                            {
+                                                "address": {
+                                                    "optionType": "default",
+                                                    "value": "192.168.2.1"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "serviceNodeGroup": [
+                                    {
+                                        "name": {
+                                            "optionType": "default",
+                                            "value": "SNG-APPQOE"
+                                        },
+                                        "internal": {
+                                            "optionType": "default",
+                                            "value": true
+                                        },
+                                        "serviceNode": [
+                                            {
+                                                "address": {
+                                                    "optionType": "default",
+                                                    "value": "192.168.2.2"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "serviceContext": {
+                                    "appqoe": [
+                                        {
+                                            "name": {
+                                                "optionType": "default",
+                                                "value": "/1"
+                                            },
+                                            "appnavControllerGroup": {
+                                                "optionType": "global",
+                                                "value": "ACG-APPQOE"
+                                            },
+                                            "serviceNodeGroup": {
+                                                "optionType": "global",
+                                                "value": "SNG-APPQOE"
+                                            },
+                                            "serviceNodeGroups": [
+                                                {
+                                                    "optionType": "global",
+                                                    "value": "SNG-APPQOE"
+                                                }
+                                            ],
+                                            "enable": {
+                                                "optionType": "global",
+                                                "value": true
+                                            },
+                                            "vpn": {
+                                                "optionType": "global",
+                                                "value": 0
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "serviceNode": {
+                                "serviceNodeGroup": [
+                                    {
+                                        "name": {
+                                            "optionType": "default",
+                                            "value": "SNG-APPQOE"
+                                        },
+                                        "externalNode": {
+                                            "optionType": "default",
+                                            "value": true
+                                        },
+                                        "serviceNode": [
+                                            {
+                                                "address": {
+                                                    "optionType": "default",
+                                                    "value": "192.168.2.2"
+                                                },
+                                                "vpgIp": {
+                                                    "optionType": "default",
+                                                    "value": "192.168.2.1/24"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "name": "AppqoeFeatureGlobalDefault"
+                    }
+                ]
+            }
+        },
+        "required": [
+            "data"
+        ],
+        "not": {
+            "required": [
+                "metadata",
+                "documentation"
+            ]
+        },
+        "additionalProperties": false
+    }
+}

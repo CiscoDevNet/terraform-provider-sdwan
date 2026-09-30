@@ -24,6 +24,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
@@ -136,6 +137,10 @@ func (r *NetworkHierarchyCflowdResource) Schema(ctx context.Context, req resourc
 							MarkdownDescription: helpers.NewAttributeDescription("Collector IPv4 or IPv6 address").String,
 							Required:            true,
 						},
+						"source_interface": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Source interface, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+							Optional:            true,
+						},
 						"udp_port": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Collector UDP port number").AddIntegerRangeDescription(1024, 65535).AddDefaultValueDescription("4739").String,
 							Required:            true,
@@ -231,6 +236,8 @@ func (r *NetworkHierarchyCflowdResource) Create(ctx context.Context, req resourc
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Using Global node ID", plan.NodeId.ValueString()))
 
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+
 	// Check if cflowd already exists for this node (only 1 allowed per node)
 	existingRes, _ := r.client.Get(plan.getPath())
 	if existingRes.Get("id").Exists() {
@@ -239,7 +246,7 @@ func (r *NetworkHierarchyCflowdResource) Create(ctx context.Context, req resourc
 		plan.Id = types.StringValue(existingId)
 		tflog.Debug(ctx, fmt.Sprintf("%s: Cflowd already exists with ID %s, updating instead", plan.NodeId.ValueString(), existingId))
 
-		body := plan.toBody(ctx)
+		body := plan.toBody(ctx, ver)
 		res, err := r.client.Put(plan.getPathWithId(), body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
@@ -247,7 +254,7 @@ func (r *NetworkHierarchyCflowdResource) Create(ctx context.Context, req resourc
 		}
 	} else {
 		// Does not exist - use POST to create
-		body := plan.toBody(ctx)
+		body := plan.toBody(ctx, ver)
 		res, err := r.client.Post(plan.getPath(), body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
@@ -336,7 +343,8 @@ func (r *NetworkHierarchyCflowdResource) Update(ctx context.Context, req resourc
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.NodeId.ValueString()))
 
 	if plan.hasChanges(ctx, &state) {
-		body := plan.toBody(ctx)
+		ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+		body := plan.toBody(ctx, ver)
 		r.updateMutex.Lock()
 		res, err := r.client.Put(plan.getPathWithId(), body)
 		r.updateMutex.Unlock()

@@ -132,6 +132,7 @@ attributes:
     - model_name: trackOmp
       example: false
     - model_name: prefixList
+      exclude_null: true
       example: prefix
     - model_name: ipAddress
       tf_name: address
@@ -177,6 +178,7 @@ attributes:
     - model_name: trackOmp
       example: false
     - model_name: trackPrefixList
+      exclude_null: true
       example: 1
     - model_name: ipv6
       tf_name: addresses
