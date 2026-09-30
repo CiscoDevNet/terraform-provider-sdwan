@@ -89,6 +89,9 @@
               ],
               "additionalProperties": false
             }
+          },
+          "saasApp": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -125,7 +128,7 @@
         ]
       },
       "metadata": {
-        "minVManageVersion": "20.15.1"
+        "minVManageVersion": "20.18.1"
       }
     },
     "required": [
