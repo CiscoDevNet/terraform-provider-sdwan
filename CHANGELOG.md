@@ -1,3 +1,8 @@
+## 0.11.7 (unreleased)
+
+- Fix `sdwan_service_lan_vpn_feature` not sending the schema default for `administrative_distance` on IPv4/IPv6 static routes when the attribute is not declared
+- Fix generator to extract enum values from different oneOf branches.
+
 ## 0.11.6
 
 - Add `sdwan_scope` resource and data source
