@@ -94,6 +94,10 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
+						"is_rule_set": schema.BoolAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+						},
 						"sequence_id": schema.StringAttribute{
 							MarkdownDescription: "",
 							Computed:            true,
@@ -102,7 +106,15 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 							MarkdownDescription: "",
 							Computed:            true,
 						},
+						"sequence_comment": schema.StringAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+						},
 						"base_action": schema.StringAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+						},
+						"sequence_ip_type": schema.StringAttribute{
 							MarkdownDescription: "",
 							Computed:            true,
 						},
@@ -124,7 +136,17 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
+									"source_data_ipv6_prefix_list_ids": schema.SetAttribute{
+										MarkdownDescription: "",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
 									"destination_data_prefix_list_ids": schema.SetAttribute{
+										MarkdownDescription: "",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
+									"destination_data_ipv6_prefix_list_ids": schema.SetAttribute{
 										MarkdownDescription: "",
 										ElementType:         types.StringType,
 										Computed:            true,
@@ -184,7 +206,17 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
+									"source_object_group_list_ids": schema.SetAttribute{
+										MarkdownDescription: "",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
 									"source_security_group_list_ids": schema.SetAttribute{
+										MarkdownDescription: "",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
+									"destination_object_group_list_ids": schema.SetAttribute{
 										MarkdownDescription: "",
 										ElementType:         types.StringType,
 										Computed:            true,
@@ -203,12 +235,30 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
+									"source_ipv6_data_prefixes": schema.SetAttribute{
+										MarkdownDescription: "",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
+									"source_ipv6_data_prefixes_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
 									"destination_data_prefixes": schema.SetAttribute{
 										MarkdownDescription: "",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
 									"destination_data_prefixes_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"destination_ipv6_data_prefixes": schema.SetAttribute{
+										MarkdownDescription: "",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
+									"destination_ipv6_data_prefixes_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
