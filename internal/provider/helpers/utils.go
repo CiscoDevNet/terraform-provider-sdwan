@@ -131,6 +131,16 @@ func WaitForActionToComplete(ctx context.Context, client *sdwan.Client, id strin
 	return nil, strings.Join(warnings, "\n")
 }
 
+// GetControllersOutOfSyncCount returns the number of controllers the Manager reports as out of
+// sync with the current WAN edge certificate list.
+func GetControllersOutOfSyncCount(ctx context.Context, client *sdwan.Client) (int64, error) {
+	res, err := client.Get("/system/device/controllers/vedge/status")
+	if err != nil {
+		return 0, err
+	}
+	return res.Get("data.0.ControllersOutOfSync").Int(), nil
+}
+
 func Must[T any](v T, err error) T {
 	if err != nil {
 		panic(err)
