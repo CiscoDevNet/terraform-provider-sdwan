@@ -28,8 +28,8 @@ import (
 // End of section. //template:end imports
 
 func TestAccDataSourceSdwanTag(t *testing.T) {
-	if os.Getenv("SDWAN_2015") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015")
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tag.test", "name", "TAG_1"))

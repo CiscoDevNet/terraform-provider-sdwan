@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -335,11 +336,30 @@ func (r *TransportWANVPNInterfaceCellularProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"tunnel_interface_port_hop": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Disallow port hopping on the tunnel interface").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("The port hop functionality is deprecated for devices 17.18 and higher. Use the full-port-hop field instead").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
 			"tunnel_interface_port_hop_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"tunnel_interface_color_description": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+				},
+			},
+			"tunnel_interface_color_description_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+				Optional:            true,
+			},
+			"tunnel_interface_full_port_hop": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enable port hopping on the tunnel interface, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"tunnel_interface_full_port_hop_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
 				Optional:            true,
 			},
 			"tunnel_interface_low_bandwidth_link": schema.BoolAttribute{
@@ -797,7 +817,9 @@ func (r *TransportWANVPNInterfaceCellularProfileParcelResource) Create(ctx conte
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
 	// Create object
-	body := plan.toBody(ctx)
+
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -880,7 +902,8 @@ func (r *TransportWANVPNInterfaceCellularProfileParcelResource) Update(ctx conte
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

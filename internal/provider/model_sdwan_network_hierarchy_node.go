@@ -22,7 +22,9 @@ import (
 	"fmt"
 
 	"github.com/hashicorp/go-version"
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -31,18 +33,36 @@ import (
 // supports the location/latitude/longitude geolocation model on site nodes.
 var minVersionNetworkHierarchyNodeGeo = version.Must(version.NewVersion("20.18.1"))
 
+// networkHierarchyNodeAddressAttrTypes describes `address`'s object shape for
+// types.Object construction/decoding. `address` is types.Object rather than a
+// plain *NetworkHierarchyNodeAddress struct pointer specifically because a
+// plain struct pointer cannot represent Unknown (only nil=null or
+// populated=known) - confirmed live, referencing this attribute from a
+// for_each-derived expression (e.g. `try(each.value.address, null)`, standard
+// Terraform module authoring) crashes with "Received unknown value, however
+// the target type cannot handle unknown values" even when the real resolved
+// value would be null. types.Object has a proper null/unknown/known state and
+// does not have this problem.
+var networkHierarchyNodeAddressAttrTypes = map[string]attr.Type{
+	"street":  types.StringType,
+	"city":    types.StringType,
+	"state":   types.StringType,
+	"country": types.StringType,
+	"zipcode": types.StringType,
+}
+
 type NetworkHierarchyNode struct {
-	Id          types.String                 `tfsdk:"id"`
-	Name        types.String                 `tfsdk:"name"`
-	Description types.String                 `tfsdk:"description"`
-	ParentGroup types.String                 `tfsdk:"parent_group"`
-	Type        types.String                 `tfsdk:"type"`
-	SiteId      types.Int64                  `tfsdk:"site_id"`
-	IsSecondary types.Bool                   `tfsdk:"is_secondary"`
-	Address     *NetworkHierarchyNodeAddress `tfsdk:"address"`
-	Location    types.String                 `tfsdk:"location"`
-	Latitude    types.Float64                `tfsdk:"latitude"`
-	Longitude   types.Float64                `tfsdk:"longitude"`
+	Id          types.String  `tfsdk:"id"`
+	Name        types.String  `tfsdk:"name"`
+	Description types.String  `tfsdk:"description"`
+	ParentGroup types.String  `tfsdk:"parent_group"`
+	Type        types.String  `tfsdk:"type"`
+	SiteId      types.Int64   `tfsdk:"site_id"`
+	IsSecondary types.Bool    `tfsdk:"is_secondary"`
+	Address     types.Object  `tfsdk:"address"`
+	Location    types.String  `tfsdk:"location"`
+	Latitude    types.Float64 `tfsdk:"latitude"`
+	Longitude   types.Float64 `tfsdk:"longitude"`
 }
 
 type NetworkHierarchyNodeAddress struct {
@@ -72,11 +92,12 @@ func (data NetworkHierarchyNode) resolveParentGroupToId(hierarchyRes gjson.Resul
 		nodeName := value.Get("name").String()
 		nodeLabel := value.Get("data.label").String()
 
-		var isValidParent bool
-		if childType == "site" {
-			isValidParent = nodeLabel != "SITE"
-		} else {
-			isValidParent = nodeLabel != "REGION" && nodeLabel != "SITE"
+		// A SITE can never be a parent of anything. A REGION can parent a group
+		// or a site, but not another region - a region cannot itself be nested
+		// under a region, only under a group or Global (matches the Manager GUI).
+		isValidParent := nodeLabel != "SITE"
+		if childType == "region" {
+			isValidParent = isValidParent && nodeLabel != "REGION"
 		}
 
 		if nodeName == parentGroupName && isValidParent {
@@ -142,21 +163,23 @@ func (data NetworkHierarchyNode) toBody(ctx context.Context, parentId string, ve
 		// On SD-WAN Manager < 20.18.1 sites use a structured `address` block.
 		// On 20.18.1+ that block is invalid; sites use a place-name `location`
 		// plus a `gpsLocation` object instead.
-		if !isGeoVersion && data.Address != nil {
-			if !data.Address.Street.IsNull() {
-				body, _ = sjson.Set(body, "data.address.street", data.Address.Street.ValueString())
+		if !isGeoVersion && !data.Address.IsNull() {
+			var addr NetworkHierarchyNodeAddress
+			data.Address.As(ctx, &addr, basetypes.ObjectAsOptions{})
+			if !addr.Street.IsNull() {
+				body, _ = sjson.Set(body, "data.address.street", addr.Street.ValueString())
 			}
-			if !data.Address.City.IsNull() {
-				body, _ = sjson.Set(body, "data.address.city", data.Address.City.ValueString())
+			if !addr.City.IsNull() {
+				body, _ = sjson.Set(body, "data.address.city", addr.City.ValueString())
 			}
-			if !data.Address.State.IsNull() {
-				body, _ = sjson.Set(body, "data.address.state", data.Address.State.ValueString())
+			if !addr.State.IsNull() {
+				body, _ = sjson.Set(body, "data.address.state", addr.State.ValueString())
 			}
-			if !data.Address.Country.IsNull() {
-				body, _ = sjson.Set(body, "data.address.country", data.Address.Country.ValueString())
+			if !addr.Country.IsNull() {
+				body, _ = sjson.Set(body, "data.address.country", addr.Country.ValueString())
 			}
-			if !data.Address.Zipcode.IsNull() {
-				body, _ = sjson.Set(body, "data.address.zipcode", data.Address.Zipcode.ValueString())
+			if !addr.Zipcode.IsNull() {
+				body, _ = sjson.Set(body, "data.address.zipcode", addr.Zipcode.ValueString())
 			}
 		}
 		if isGeoVersion {
@@ -219,9 +242,13 @@ func (data *NetworkHierarchyNode) fromBody(ctx context.Context, res gjson.Result
 	}
 
 	// `location` is Optional+Computed, so it must always be resolved to a known
-	// value. It only exists on site nodes; for region/group nodes it is null.
-	// The SITE case below overrides this with the Manager-assigned value.
+	// value. `address` is types.Object, which (unlike a plain struct pointer)
+	// must always be resolved to a known state too - an object left at its Go
+	// zero value is not a valid null/unknown/known types.Object. Both only
+	// exist on site nodes; for region/group nodes they stay null. The SITE
+	// case below overrides them with the Manager-assigned values.
 	data.Location = types.StringNull()
+	data.Address = types.ObjectNull(networkHierarchyNodeAddressAttrTypes)
 
 	if value := res.Get("data.label"); value.Exists() {
 		label := value.String()
@@ -241,32 +268,30 @@ func (data *NetworkHierarchyNode) fromBody(ctx context.Context, res gjson.Result
 				data.SiteId = types.Int64Null()
 			}
 			if res.Get("data.address").Exists() {
-				data.Address = &NetworkHierarchyNodeAddress{}
+				addr := NetworkHierarchyNodeAddress{
+					Street:  types.StringNull(),
+					City:    types.StringNull(),
+					State:   types.StringNull(),
+					Country: types.StringNull(),
+					Zipcode: types.StringNull(),
+				}
 				if value := res.Get("data.address.street"); value.Exists() {
-					data.Address.Street = types.StringValue(value.String())
-				} else {
-					data.Address.Street = types.StringNull()
+					addr.Street = types.StringValue(value.String())
 				}
 				if value := res.Get("data.address.city"); value.Exists() {
-					data.Address.City = types.StringValue(value.String())
-				} else {
-					data.Address.City = types.StringNull()
+					addr.City = types.StringValue(value.String())
 				}
 				if value := res.Get("data.address.state"); value.Exists() {
-					data.Address.State = types.StringValue(value.String())
-				} else {
-					data.Address.State = types.StringNull()
+					addr.State = types.StringValue(value.String())
 				}
 				if value := res.Get("data.address.country"); value.Exists() {
-					data.Address.Country = types.StringValue(value.String())
-				} else {
-					data.Address.Country = types.StringNull()
+					addr.Country = types.StringValue(value.String())
 				}
 				if value := res.Get("data.address.zipcode"); value.Exists() {
-					data.Address.Zipcode = types.StringValue(value.String())
-				} else {
-					data.Address.Zipcode = types.StringNull()
+					addr.Zipcode = types.StringValue(value.String())
 				}
+				objVal, _ := types.ObjectValueFrom(ctx, networkHierarchyNodeAddressAttrTypes, addr)
+				data.Address = objVal
 			}
 			if value := res.Get("data.location"); value.Exists() {
 				data.Location = types.StringValue(value.String())
@@ -313,23 +338,11 @@ func (data *NetworkHierarchyNode) hasChanges(ctx context.Context, state *Network
 	if !data.IsSecondary.Equal(state.IsSecondary) {
 		hasChanges = true
 	}
-	if data.Address != nil && state.Address != nil {
-		if !data.Address.Street.Equal(state.Address.Street) {
-			hasChanges = true
-		}
-		if !data.Address.City.Equal(state.Address.City) {
-			hasChanges = true
-		}
-		if !data.Address.State.Equal(state.Address.State) {
-			hasChanges = true
-		}
-		if !data.Address.Country.Equal(state.Address.Country) {
-			hasChanges = true
-		}
-		if !data.Address.Zipcode.Equal(state.Address.Zipcode) {
-			hasChanges = true
-		}
-	} else if (data.Address != nil && state.Address == nil) || (data.Address == nil && state.Address != nil) {
+	// types.Object.Equal handles null-vs-null, null-vs-populated, and
+	// populated-vs-populated-with-different-fields in one call - the explicit
+	// per-field/nil-mismatch handling the *NetworkHierarchyNodeAddress pointer
+	// version needed is no longer necessary.
+	if !data.Address.Equal(state.Address) {
 		hasChanges = true
 	}
 	if !data.Location.Equal(state.Location) {

@@ -6,7 +6,7 @@ has_version: true
 id_attribute: appId
 doc_category: Custom Applications
 minimum_version: 20.15.0
-test_tags: [SDWAN_2015]
+test_tags: [SDWAN_2015, SDWAN_2018]
 attributes:
   - model_name: appName
     tf_name: app_name
@@ -81,3 +81,29 @@ attributes:
     description: Business Relevance
     enum_values: [business-relevant, business-irrelevant, default]
     example: business-relevant
+  - model_name: endpointType
+    tf_name: endpoint_type
+    type: String
+    response_data_path: [data, attributes]
+    data_path: [attributes]
+    description: Endpoint Type
+    enum_values: [ip, fqdn, url]
+    example: ip
+    test_tags: [SDWAN_2018]
+    conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
+  - model_name: endpointValue
+    tf_name: endpoint_value
+    type: String
+    response_data_path: [data, attributes]
+    data_path: [attributes]
+    description: Endpoint Value
+    example: 10.2.2.2
+    test_tags: [SDWAN_2018]
+    string_patterns: ["(^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$)|(^[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?(\\.[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?)*\\.[a-zA-Z]{2,63}\\.?$)|(^(https?://)?([a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})(/.*)?$)"]
+    conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: 20.18.1

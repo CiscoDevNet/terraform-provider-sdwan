@@ -2,7 +2,7 @@
 name: Transport Routing OSPFv3 IPv6
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/routing/ospfv3/ipv6
 minimum_version: 20.15.0
-test_tags: [SDWAN_2015]
+test_tags: [SDWAN_2015, SDWAN_2018]
 skip_minimum_test: true
 parcel_type: feature
 doc_category: Features - Transport

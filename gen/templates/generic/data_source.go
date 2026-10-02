@@ -36,6 +36,9 @@ import (
 	{{- if .DataSourceFilters}}
 	"github.com/tidwall/gjson"
 	{{- end}}
+	{{- if hasMinVersionCondition .Attributes}}
+	"github.com/hashicorp/go-version"
+	{{- end}}
 )
 // End of section. //template:end imports
 
@@ -213,7 +216,10 @@ func (d *{{camelCase .Name}}DataSource) Read(ctx context.Context, req datasource
 		return
 	}
 
-	config.fromBody(ctx, res)
+	{{if hasMinVersionCondition .Attributes}}
+		ver := version.Must(version.NewVersion(d.client.ManagerVersion))
+	{{end}}
+	config.fromBody(ctx, res{{if hasMinVersionCondition .Attributes}}, ver{{end}})
 	{{- if .DataSourceFilters}}
 
 	// Apply client-side filters to list results

@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -52,6 +53,10 @@ type TransportCellularProfile struct {
 	PacketDataNetworkTypeVariable types.String `tfsdk:"packet_data_network_type_variable"`
 	NoOverwrite                   types.Bool   `tfsdk:"no_overwrite"`
 	NoOverwriteVariable           types.String `tfsdk:"no_overwrite_variable"`
+	SliceType                     types.Int64  `tfsdk:"slice_type"`
+	SliceTypeVariable             types.String `tfsdk:"slice_type_variable"`
+	SliceDifferentiator           types.Int64  `tfsdk:"slice_differentiator"`
+	SliceDifferentiatorVariable   types.String `tfsdk:"slice_differentiator_variable"`
 }
 
 // End of section. //template:end types
@@ -71,7 +76,7 @@ func (data TransportCellularProfile) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data TransportCellularProfile) toBody(ctx context.Context) string {
+func (data TransportCellularProfile) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -178,6 +183,40 @@ func (data TransportCellularProfile) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.noOverwrite.value", data.NoOverwrite.ValueBool())
 		}
 	}
+
+	if !data.SliceTypeVariable.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.networkSlicing.sliceType.optionType", "variable")
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.networkSlicing.sliceType.value", data.SliceTypeVariable.ValueString())
+		}
+	} else if data.SliceType.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.networkSlicing.sliceType.optionType", "default")
+
+		}
+	} else {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.networkSlicing.sliceType.optionType", "global")
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.networkSlicing.sliceType.value", data.SliceType.ValueInt64())
+		}
+	}
+
+	if !data.SliceDifferentiatorVariable.IsNull() {
+		if true && !(data.SliceType.IsNull()) && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.networkSlicing.sliceDifferentiator.optionType", "variable")
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.networkSlicing.sliceDifferentiator.value", data.SliceDifferentiatorVariable.ValueString())
+		}
+	} else if data.SliceDifferentiator.IsNull() {
+		if true && !(data.SliceType.IsNull()) && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.networkSlicing.sliceDifferentiator.optionType", "default")
+
+		}
+	} else {
+		if true && !(data.SliceType.IsNull()) && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.networkSlicing.sliceDifferentiator.optionType", "global")
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.networkSlicing.sliceDifferentiator.value", data.SliceDifferentiator.ValueInt64())
+		}
+	}
 	return body
 }
 
@@ -266,6 +305,26 @@ func (data *TransportCellularProfile) fromBody(ctx context.Context, res gjson.Re
 			data.NoOverwriteVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.NoOverwrite = types.BoolValue(va.Bool())
+		}
+	}
+	data.SliceType = types.Int64Null()
+	data.SliceTypeVariable = types.StringNull()
+	if t := res.Get(path + "profileConfig.profileInfo.networkSlicing.sliceType.optionType"); t.Exists() {
+		va := res.Get(path + "profileConfig.profileInfo.networkSlicing.sliceType.value")
+		if t.String() == "variable" {
+			data.SliceTypeVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.SliceType = types.Int64Value(va.Int())
+		}
+	}
+	data.SliceDifferentiator = types.Int64Null()
+	data.SliceDifferentiatorVariable = types.StringNull()
+	if t := res.Get(path + "profileConfig.profileInfo.networkSlicing.sliceDifferentiator.optionType"); t.Exists() {
+		va := res.Get(path + "profileConfig.profileInfo.networkSlicing.sliceDifferentiator.value")
+		if t.String() == "variable" {
+			data.SliceDifferentiatorVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.SliceDifferentiator = types.Int64Value(va.Int())
 		}
 	}
 }

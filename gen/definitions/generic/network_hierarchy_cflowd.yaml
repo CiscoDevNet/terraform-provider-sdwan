@@ -103,6 +103,16 @@ attributes:
         mandatory: true
         description: Collector IPv4 or IPv6 address
         example: "10.0.0.1"
+      - model_name: sourceInterface
+        tf_name: source_interface
+        type: String
+        description: Source interface
+        example: "Loopback1"
+        test_tags: [SDWAN_2018]
+        conditional_attribute:
+          conditions:
+            - type: MinVersion
+              value: 20.18.1
       - model_name: udpPort
         tf_name: udp_port
         type: Int64

@@ -415,7 +415,6 @@
                     "ir8100",
                     "ir8340",
                     "isr",
-                    "ISRv",
                     "ir1101"
                 ],
                 "minVManageVersion": "20.15.1"

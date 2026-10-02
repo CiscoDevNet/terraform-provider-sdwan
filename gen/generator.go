@@ -227,6 +227,12 @@ type DataSourceFilter struct {
 	ListAttribute string `yaml:"list_attribute"`
 }
 
+// IntRange represents a single integer range with min and max values
+type IntRange struct {
+	Min int64 `yaml:"min"`
+	Max int64 `yaml:"max"`
+}
+
 type YamlConfigAttribute struct {
 	ModelName               string                         `yaml:"model_name"`
 	ResponseModelName       string                         `yaml:"response_model_name"`
@@ -261,6 +267,7 @@ type YamlConfigAttribute struct {
 	MaxList                 int64                          `yaml:"max_list"`
 	MinInt                  int64                          `yaml:"min_int"`
 	MaxInt                  int64                          `yaml:"max_int"`
+	IntRanges               []IntRange                     `yaml:"int_ranges"` // For disjoint/non-contiguous integer ranges
 	MinFloat                float64                        `yaml:"min_float"`
 	MaxFloat                float64                        `yaml:"max_float"`
 	StringPatterns          []string                       `yaml:"string_patterns"`
@@ -295,6 +302,7 @@ type YamlConfigAttribute struct {
 	OptionalNullEmpty       bool                           `yaml:"optional_null_empty"`
 	ForceInclude            bool                           `yaml:"force_include"`
 	WriteAsDefault          bool                           `yaml:"write_as_default"`
+	ElementOptionType       bool                           `yaml:"element_option_type"`
 }
 
 type YamlConfigConditionalAttribute struct {
@@ -588,6 +596,18 @@ func HasFloat64Validator(attributes []YamlConfigAttribute) bool {
 	return false
 }
 
+func HasInt64RangesValidator(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if len(attr.IntRanges) > 0 {
+			return true
+		}
+		if len(attr.Attributes) > 0 && HasInt64RangesValidator(attr.Attributes) {
+			return true
+		}
+	}
+	return false
+}
+
 // Templating helper function to build conditional logic check for a single condition
 func BuildConditionCheck(cond YamlConfigCondition, context string) string {
 	var check string
@@ -867,6 +887,20 @@ func IsNestedList(attribute YamlConfigAttribute) bool {
 	return false
 }
 
+// Templating helper function: returns true if any of the given attributes is NOT a fixed
+// `value:` literal - i.e. whether a per-item loop variable at this nesting level is actually
+// referenced anywhere in the generated code. A list whose attributes are all fixed literals
+// (nothing configurable) never touches its own loop variable, which would otherwise be an
+// unused-variable compile error.
+func HasConfigurableAttribute(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.Value == "" {
+			return true
+		}
+	}
+	return false
+}
+
 // Templating helper function to return true if type is a set with nested elements
 func IsNestedSet(attribute YamlConfigAttribute) bool {
 	if attribute.Type == "Set" && attribute.ElementType == "" {
@@ -919,6 +953,7 @@ var functions = template.FuncMap{
 	"toLower":                     strings.ToLower,
 	"path":                        BuildPath,
 	"hasId":                       HasId,
+	"hasConfigurableAttribute":    HasConfigurableAttribute,
 	"hasName":                     HasName,
 	"hasVersionAttribute":         HasVersionAttribute,
 	"getResponseModelPath":        GetResponseModelPath,
@@ -950,6 +985,7 @@ var functions = template.FuncMap{
 	"hasStringValidator":          HasStringValidator,
 	"hasRegexpValidator":          HasRegexpValidator,
 	"hasFloat64Validator":         HasFloat64Validator,
+	"hasInt64RangesValidator":     HasInt64RangesValidator,
 }
 
 func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result) {
@@ -1287,11 +1323,27 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 					}
 				} else {
 					attr.Type = "Int64"
-					if value := t.Get("properties.value.minimum"); value.Exists() {
-						attr.MinInt = value.Int()
-					}
-					if value := t.Get("properties.value.maximum"); value.Exists() {
-						attr.MaxInt = value.Int()
+					anyOfRanges := t.Get("properties.value.anyOf")
+					if anyOfRanges.Exists() && len(anyOfRanges.Array()) > 1 {
+						for _, rangeItem := range anyOfRanges.Array() {
+							if rangeItem.Get("type").String() == "integer" || rangeItem.Get("type").String() == "number" {
+								intRange := IntRange{}
+								if rangeItem.Get("minimum").Exists() {
+									intRange.Min = rangeItem.Get("minimum").Int()
+								}
+								if rangeItem.Get("maximum").Exists() {
+									intRange.Max = rangeItem.Get("maximum").Int()
+								}
+								attr.IntRanges = append(attr.IntRanges, intRange)
+							}
+						}
+					} else {
+						if value := t.Get("properties.value.minimum"); value.Exists() {
+							attr.MinInt = value.Int()
+						}
+						if value := t.Get("properties.value.maximum"); value.Exists() {
+							attr.MaxInt = value.Int()
+						}
 					}
 				}
 			} else if attr.Type == "List" && attr.ElementType != "" {

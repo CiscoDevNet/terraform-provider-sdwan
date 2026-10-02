@@ -5254,10 +5254,37 @@
                         ]
                       }
                     },
-                    "required": [
-                      "ipv6LinkLocal"
-                    ],
-                    "additionalProperties": false
+                    "additionalProperties": false,
+                    "allOf": [
+                      {
+                        "if": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "ipv6LinkLocal": {
+                                  "properties": {
+                                    "optionType": {
+                                      "const": "global"
+                                    }
+                                  },
+                                  "required": [
+                                    "optionType"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "ipv6LinkLocal"
+                              ]
+                            }
+                          ]
+                        },
+                        "then": {
+                          "required": [
+                            "ipv6LinkLocal"
+                          ]
+                        }
+                      }
+                    ]
                   }
                 },
                 "followDualRouterHAAvailability": {
@@ -5377,14 +5404,109 @@
                   ]
                 }
               },
-              "required": [
-                "groupId",
-                "priority",
-                "timer",
-                "trackOmp",
-                "ipv6"
-              ],
-              "additionalProperties": false
+              "additionalProperties": false,
+              "allOf": [
+                {
+                  "if": {
+                    "anyOf": [
+                      {
+                        "properties": {
+                          "groupId": {
+                            "properties": {
+                              "optionType": {
+                                "const": "global"
+                              }
+                            },
+                            "required": [
+                              "optionType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "groupId"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "priority": {
+                            "properties": {
+                              "optionType": {
+                                "const": "global"
+                              }
+                            },
+                            "required": [
+                              "optionType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "priority"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "timer": {
+                            "properties": {
+                              "optionType": {
+                                "const": "global"
+                              }
+                            },
+                            "required": [
+                              "optionType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "timer"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "trackOmp": {
+                            "properties": {
+                              "optionType": {
+                                "const": "global"
+                              }
+                            },
+                            "required": [
+                              "optionType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "trackOmp"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "ipv6": {
+                            "properties": {
+                              "optionType": {
+                                "const": "global"
+                              }
+                            },
+                            "required": [
+                              "optionType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "ipv6"
+                        ]
+                      }
+                    ]
+                  },
+                  "then": {
+                    "required": [
+                      "groupId",
+                      "priority",
+                      "timer",
+                      "trackOmp",
+                      "ipv6"
+                    ]
+                  }
+                }
+              ]
             }
           },
           "vrrp": {
@@ -5897,11 +6019,55 @@
                         ]
                       }
                     },
-                    "required": [
-                      "ipAddress",
-                      "subnetMask"
-                    ],
-                    "additionalProperties": false
+                    "additionalProperties": false,
+                    "allOf": [
+                      {
+                        "if": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "ipAddress": {
+                                  "properties": {
+                                    "optionType": {
+                                      "const": "global"
+                                    }
+                                  },
+                                  "required": [
+                                    "optionType"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "ipAddress"
+                              ]
+                            },
+                            {
+                              "properties": {
+                                "subnetMask": {
+                                  "properties": {
+                                    "optionType": {
+                                      "const": "global"
+                                    }
+                                  },
+                                  "required": [
+                                    "optionType"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "subnetMask"
+                              ]
+                            }
+                          ]
+                        },
+                        "then": {
+                          "required": [
+                            "ipAddress",
+                            "subnetMask"
+                          ]
+                        }
+                      }
+                    ]
                   },
                   "additionalProperties": false
                 },
@@ -6163,11 +6329,55 @@
                         ]
                       }
                     },
-                    "required": [
-                      "trackerId",
-                      "trackerAction"
-                    ],
-                    "additionalProperties": false
+                    "additionalProperties": false,
+                    "allOf": [
+                      {
+                        "if": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "trackerId": {
+                                  "properties": {
+                                    "optionType": {
+                                      "const": "global"
+                                    }
+                                  },
+                                  "required": [
+                                    "optionType"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "trackerId"
+                              ]
+                            },
+                            {
+                              "properties": {
+                                "trackerAction": {
+                                  "properties": {
+                                    "optionType": {
+                                      "const": "global"
+                                    }
+                                  },
+                                  "required": [
+                                    "optionType"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "trackerAction"
+                              ]
+                            }
+                          ]
+                        },
+                        "then": {
+                          "required": [
+                            "trackerId",
+                            "trackerAction"
+                          ]
+                        }
+                      }
+                    ]
                   }
                 },
                 "followDualRouterHAAvailability": {
@@ -6287,15 +6497,127 @@
                   ]
                 }
               },
-              "required": [
-                "group_id",
-                "priority",
-                "timer",
-                "trackOmp",
-                "ipAddress",
-                "tlocPrefChange"
-              ],
-              "additionalProperties": false
+              "additionalProperties": false,
+              "allOf": [
+                {
+                  "if": {
+                    "anyOf": [
+                      {
+                        "properties": {
+                          "group_id": {
+                            "properties": {
+                              "optionType": {
+                                "const": "global"
+                              }
+                            },
+                            "required": [
+                              "optionType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "group_id"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "priority": {
+                            "properties": {
+                              "optionType": {
+                                "const": "global"
+                              }
+                            },
+                            "required": [
+                              "optionType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "priority"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "timer": {
+                            "properties": {
+                              "optionType": {
+                                "const": "global"
+                              }
+                            },
+                            "required": [
+                              "optionType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "timer"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "trackOmp": {
+                            "properties": {
+                              "optionType": {
+                                "const": "global"
+                              }
+                            },
+                            "required": [
+                              "optionType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "trackOmp"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "ipAddress": {
+                            "properties": {
+                              "optionType": {
+                                "const": "global"
+                              }
+                            },
+                            "required": [
+                              "optionType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "ipAddress"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "tlocPrefChange": {
+                            "properties": {
+                              "optionType": {
+                                "const": "global"
+                              }
+                            },
+                            "required": [
+                              "optionType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "tlocPrefChange"
+                        ]
+                      }
+                    ]
+                  },
+                  "then": {
+                    "required": [
+                      "group_id",
+                      "priority",
+                      "timer",
+                      "trackOmp",
+                      "ipAddress",
+                      "tlocPrefChange"
+                    ]
+                  }
+                }
+              ]
             }
           },
           "arp": {
@@ -6444,11 +6766,55 @@
                   ]
                 }
               },
-              "required": [
-                "ipAddress",
-                "macAddress"
-              ],
-              "additionalProperties": false
+              "additionalProperties": false,
+              "allOf": [
+                {
+                  "if": {
+                    "anyOf": [
+                      {
+                        "properties": {
+                          "ipAddress": {
+                            "properties": {
+                              "optionType": {
+                                "const": "global"
+                              }
+                            },
+                            "required": [
+                              "optionType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "ipAddress"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "macAddress": {
+                            "properties": {
+                              "optionType": {
+                                "const": "global"
+                              }
+                            },
+                            "required": [
+                              "optionType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "macAddress"
+                        ]
+                      }
+                    ]
+                  },
+                  "then": {
+                    "required": [
+                      "ipAddress",
+                      "macAddress"
+                    ]
+                  }
+                }
+              ]
             }
           },
           "trustsec": {
@@ -6513,7 +6879,8 @@
                         ]
                       },
                       "value": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": true
                       }
                     },
                     "required": [
@@ -6607,10 +6974,60 @@
                         "enum": [
                           "default"
                         ]
+                      },
+                      "value": {
+                        "type": "string",
+                        "enum": []
                       }
                     },
                     "required": [
                       "optionType"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "trusted": {
+                "description": "Indicates that the interface is trustworthy for CTS.",
+                "type": "object",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "optionType": {
+                        "type": "string",
+                        "enum": [
+                          "global"
+                        ]
+                      },
+                      "value": {
+                        "type": "boolean",
+                        "default": true
+                      }
+                    },
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "properties": {
+                      "optionType": {
+                        "type": "string",
+                        "enum": [
+                          "default"
+                        ]
+                      },
+                      "value": {
+                        "type": "boolean",
+                        "enum": [
+                          true
+                        ]
+                      }
+                    },
+                    "required": [
+                      "optionType",
+                      "value"
                     ],
                     "additionalProperties": false
                   }
@@ -6716,6 +7133,10 @@
                         "enum": [
                           "default"
                         ]
+                      },
+                      "value": {
+                        "type": "string",
+                        "enum": []
                       }
                     },
                     "required": [
@@ -6731,6 +7152,39 @@
               "enableEnforcedPropogation",
               "enforcedSecurityGroupTag"
             ],
+            "if": {
+              "properties": {
+                "propogate": {
+                  "properties": {
+                    "value": {
+                      "const": false
+                    }
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "trusted": {
+                  "properties": {
+                    "optionType": {
+                      "type": "string",
+                      "enum": [
+                        "global"
+                      ]
+                    },
+                    "value": {
+                      "const": false
+                    }
+                  },
+                  "required": [
+                    "optionType",
+                    "value"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
             "additionalProperties": false
           },
           "advanced": {
@@ -8390,6 +8844,27 @@
                           ]
                         }
                       }
+                    },
+                    {
+                      "$comment": "For non portChannelMemberInterface, ipv4 and ipv6 should config least one",
+                      "anyOf": [
+                        {
+                          "required": [
+                            "intfIpAddress"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "intfIpV6Address"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "intfIpAddress",
+                            "intfIpV6Address"
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }
@@ -8462,7 +8937,7 @@
             ]
           }
         ],
-        "minVManageVersion": "20.15.1 (modified to include \"either\" from 20.18 schema)"
+        "minVManageVersion": "20.18.1"
       },
       "documentation": {
         "description": "This is the documentation for POST request schema for LAN VPN Ethernet Interface profile parcel",

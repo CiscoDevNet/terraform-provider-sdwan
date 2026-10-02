@@ -130,7 +130,7 @@ Optional:
   - Default value: `true`
 - `shutdown_variable` (String) Variable name
 - `speed` (String) Set interface speed
-  - Choices: `10`, `100`, `1000`, `2500`, `10000`, `25000`
+  - Choices: `10`, `100`, `1000`, `2500`, `5000`, `10000`, `25000`
 - `speed_variable` (String) Variable name
 - `switchport_access_vlan` (Number) Set VLAN identifier associated with bridging domain
   - Range: `1`-`4094`

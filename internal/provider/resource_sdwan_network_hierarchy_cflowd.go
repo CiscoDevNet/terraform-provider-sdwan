@@ -24,8 +24,10 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -39,7 +41,6 @@ import (
 
 var _ resource.Resource = &NetworkHierarchyCflowdResource{}
 var _ resource.ResourceWithImportState = &NetworkHierarchyCflowdResource{}
-var _ resource.ResourceWithValidateConfig = &NetworkHierarchyCflowdResource{}
 
 func NewNetworkHierarchyCflowdResource() resource.Resource {
 	return &NetworkHierarchyCflowdResource{}
@@ -74,29 +75,29 @@ func (r *NetworkHierarchyCflowdResource) Schema(ctx context.Context, req resourc
 				},
 			},
 			"flow_active_timeout": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Active flow timeout in seconds").AddIntegerRangeDescription(30, 3600).AddDefaultValueDescription("600").String,
-				Optional:            true,
+				MarkdownDescription: helpers.NewAttributeDescription("Active flow timeout in seconds").AddIntegerRangeDescription(30, 3600).String,
+				Required:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(30, 3600),
 				},
 			},
 			"flow_inactive_timeout": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Inactive flow timeout in seconds").AddIntegerRangeDescription(1, 3600).AddDefaultValueDescription("60").String,
-				Optional:            true,
+				MarkdownDescription: helpers.NewAttributeDescription("Inactive flow timeout in seconds").AddIntegerRangeDescription(1, 3600).String,
+				Required:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 3600),
 				},
 			},
 			"flow_refresh_time": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Flow refresh time in seconds").AddIntegerRangeDescription(60, 86400).AddDefaultValueDescription("600").String,
-				Optional:            true,
+				MarkdownDescription: helpers.NewAttributeDescription("Flow refresh time in seconds").AddIntegerRangeDescription(60, 86400).String,
+				Required:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(60, 86400),
 				},
 			},
 			"flow_sampling_interval": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Flow sampling interval").AddIntegerRangeDescription(1, 65536).AddDefaultValueDescription("1").String,
-				Optional:            true,
+				MarkdownDescription: helpers.NewAttributeDescription("Flow sampling interval").AddIntegerRangeDescription(1, 65536).String,
+				Required:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65536),
 				},
@@ -106,8 +107,8 @@ func (r *NetworkHierarchyCflowdResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"protocol": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("FNF Protocol").AddStringEnumDescription("ipv4", "ipv6", "both").AddDefaultValueDescription("ipv4").String,
-				Optional:            true,
+				MarkdownDescription: helpers.NewAttributeDescription("FNF Protocol").AddStringEnumDescription("ipv4", "ipv6", "both").String,
+				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ipv4", "ipv6", "both"),
 				},
@@ -135,6 +136,10 @@ func (r *NetworkHierarchyCflowdResource) Schema(ctx context.Context, req resourc
 						"address": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Collector IPv4 or IPv6 address").String,
 							Required:            true,
+						},
+						"source_interface": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Source interface, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+							Optional:            true,
 						},
 						"udp_port": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Collector UDP port number").AddIntegerRangeDescription(1024, 65535).AddDefaultValueDescription("4739").String,
@@ -165,23 +170,24 @@ func (r *NetworkHierarchyCflowdResource) Schema(ctx context.Context, req resourc
 	}
 }
 
-func (r *NetworkHierarchyCflowdResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
-	var config NetworkHierarchyCflowd
-
-	diags := req.Config.Get(ctx, &config)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	// `export_interval` is only honored by SD-WAN Manager when
-	// `bfd_metrics_export` is `true`. If it is set while `bfd_metrics_export`
-	// is `false` or unset, the provider silently drops it (see toBody), which
-	// would otherwise be a silent no-op and can cause a `600 -> null` refresh
-	// drift. Surface it as a config error instead.
-	for i, collector := range config.Collectors {
+// validateCollectors checks that `export_interval` is only set alongside
+// `bfd_metrics_export = true` on the same collector - SD-WAN Manager silently
+// drops it otherwise (see toBody), which would be a silent no-op and can
+// cause a `600 -> null` refresh drift. This runs from Create/Update against
+// `plan`, not from ValidateConfig: `collectors` comes through
+// provider::utils::yaml_merge (a provider-defined function), whose result is
+// Unknown during ValidateConfig's early evaluation pass. Decoding an Unknown
+// value into `[]NetworkHierarchyCflowdCollector` (a plain Go slice, no
+// Unknown state) crashed with "Received unknown value, however the target
+// type cannot handle unknown values" even when real data was present -
+// confirmed live, isolated down to this exact decode by process of
+// elimination (ruled out for_each, count, and the null-vs-list conditional
+// individually). By Create/Update time the instance is fully resolved, so
+// the same check here sees only concrete values.
+func (data NetworkHierarchyCflowd) validateCollectors(diags *diag.Diagnostics) {
+	for i, collector := range data.Collectors {
 		if !collector.ExportInterval.IsNull() && collector.BfdMetricsExport.ValueBool() != true {
-			resp.Diagnostics.AddAttributeError(
+			diags.AddAttributeError(
 				path.Root("collectors").AtListIndex(i).AtName("export_interval"),
 				"Invalid Configuration",
 				"`export_interval` can only be set when `bfd_metrics_export` is `true` on the same collector.",
@@ -208,6 +214,11 @@ func (r *NetworkHierarchyCflowdResource) Create(ctx context.Context, req resourc
 		return
 	}
 
+	plan.validateCollectors(&resp.Diagnostics)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	tflog.Debug(ctx, "NetworkHierarchyCflowd: Beginning Create")
 
 	hierarchyRes, err := r.client.Get(plan.getNetworkHierarchyListPath())
@@ -225,6 +236,8 @@ func (r *NetworkHierarchyCflowdResource) Create(ctx context.Context, req resourc
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Using Global node ID", plan.NodeId.ValueString()))
 
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+
 	// Check if cflowd already exists for this node (only 1 allowed per node)
 	existingRes, _ := r.client.Get(plan.getPath())
 	if existingRes.Get("id").Exists() {
@@ -233,7 +246,7 @@ func (r *NetworkHierarchyCflowdResource) Create(ctx context.Context, req resourc
 		plan.Id = types.StringValue(existingId)
 		tflog.Debug(ctx, fmt.Sprintf("%s: Cflowd already exists with ID %s, updating instead", plan.NodeId.ValueString(), existingId))
 
-		body := plan.toBody(ctx)
+		body := plan.toBody(ctx, ver)
 		res, err := r.client.Put(plan.getPathWithId(), body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
@@ -241,7 +254,7 @@ func (r *NetworkHierarchyCflowdResource) Create(ctx context.Context, req resourc
 		}
 	} else {
 		// Does not exist - use POST to create
-		body := plan.toBody(ctx)
+		body := plan.toBody(ctx, ver)
 		res, err := r.client.Post(plan.getPath(), body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
@@ -320,12 +333,18 @@ func (r *NetworkHierarchyCflowdResource) Update(ctx context.Context, req resourc
 		return
 	}
 
+	plan.validateCollectors(&resp.Diagnostics)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	plan.NodeId = state.NodeId
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.NodeId.ValueString()))
 
 	if plan.hasChanges(ctx, &state) {
-		body := plan.toBody(ctx)
+		ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+		body := plan.toBody(ctx, ver)
 		r.updateMutex.Lock()
 		res, err := r.client.Put(plan.getPathWithId(), body)
 		r.updateMutex.Unlock()

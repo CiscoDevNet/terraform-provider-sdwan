@@ -158,7 +158,7 @@ func (r *ServiceIPv4ACLProfileParcelResource) Schema(ctx context.Context, req re
 										MarkdownDescription: helpers.NewAttributeDescription("Source Data IP Prefix").String,
 										Optional:            true,
 										Validators: []validator.String{
-											stringvalidator.RegexMatches(regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])`), ""),
+											stringvalidator.RegexMatches(regexp.MustCompile(`^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])$`), ""),
 										},
 									},
 									"source_data_prefix_variable": schema.StringAttribute{
@@ -188,7 +188,7 @@ func (r *ServiceIPv4ACLProfileParcelResource) Schema(ctx context.Context, req re
 										MarkdownDescription: helpers.NewAttributeDescription("Destination Data IP Prefix").String,
 										Optional:            true,
 										Validators: []validator.String{
-											stringvalidator.RegexMatches(regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])`), ""),
+											stringvalidator.RegexMatches(regexp.MustCompile(`^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/)([0-2]?[0-9]$|[3]?[0-2])$`), ""),
 										},
 									},
 									"destination_data_prefix_variable": schema.StringAttribute{
@@ -256,8 +256,14 @@ func (r *ServiceIPv4ACLProfileParcelResource) Schema(ctx context.Context, req re
 										Optional:            true,
 									},
 									"accept_set_service_chain_vpn": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set Service Chain VPN, Attribute conditional on `accept_set_service_chain_name` being set or `accept_set_service_chain_name_variable` being set").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set Service Chain VPN, Attribute conditional on `accept_set_service_chain_name` being set or `accept_set_service_chain_name_variable` being set").AddIntegerRangesDescription([]helpers.IntRange{{Min: 1, Max: 511}, {Min: 513, Max: 65531}}).String,
 										Optional:            true,
+										Validators: []validator.Int64{
+											int64validator.Any(
+												int64validator.Between(1, 511),
+												int64validator.Between(513, 65531),
+											),
+										},
 									},
 									"accept_set_service_chain_vpn_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `accept_set_service_chain_name` being set or `accept_set_service_chain_name_variable` being set").String,

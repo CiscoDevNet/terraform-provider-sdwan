@@ -66,8 +66,12 @@ data "sdwan_service_multicast_feature" "example" {
 
 Read-Only:
 
+- `access_list_id` (String) Set IP Access List for PIM RP Announce
+- `access_list_id_variable` (String) Variable name
 - `interface_name` (String) Set RP Announce Interface Name
 - `interface_name_variable` (String) Variable name
+- `interval` (Number) Set RP Announce interval
+- `interval_variable` (String) Variable name
 - `scope` (Number) Set RP Announce Scope
 - `scope_variable` (String) Variable name
 

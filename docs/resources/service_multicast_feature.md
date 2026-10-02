@@ -144,8 +144,13 @@ resource "sdwan_service_multicast_feature" "example" {
 
 Optional:
 
+- `access_list_id` (String) Set IP Access List for PIM RP Announce, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
+- `access_list_id_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
 - `interface_name` (String) Set RP Announce Interface Name
 - `interface_name_variable` (String) Variable name
+- `interval` (Number) Set RP Announce interval, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
+  - Range: `1`-`16383`
+- `interval_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
 - `scope` (Number) Set RP Announce Scope
   - Range: `1`-`255`
 - `scope_variable` (String) Variable name

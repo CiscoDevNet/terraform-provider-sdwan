@@ -288,10 +288,26 @@ func (d *TransportWANVPNInterfaceCellularProfileParcelDataSource) Schema(ctx con
 				Computed:            true,
 			},
 			"tunnel_interface_port_hop": schema.BoolAttribute{
-				MarkdownDescription: "Disallow port hopping on the tunnel interface",
+				MarkdownDescription: "The port hop functionality is deprecated for devices 17.18 and higher. Use the full-port-hop field instead",
 				Computed:            true,
 			},
 			"tunnel_interface_port_hop_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"tunnel_interface_color_description": schema.StringAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+			},
+			"tunnel_interface_color_description_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"tunnel_interface_full_port_hop": schema.BoolAttribute{
+				MarkdownDescription: "Enable port hopping on the tunnel interface",
+				Computed:            true,
+			},
+			"tunnel_interface_full_port_hop_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

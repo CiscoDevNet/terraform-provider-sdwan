@@ -631,7 +631,7 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"network_address": schema.StringAttribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "IP Address",
 							Computed:            true,
 						},
 						"network_address_variable": schema.StringAttribute{
@@ -639,7 +639,7 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 							Computed:            true,
 						},
 						"subnet_mask": schema.StringAttribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "Subnet Mask",
 							Computed:            true,
 						},
 						"subnet_mask_variable": schema.StringAttribute{
@@ -671,7 +671,7 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"network_address": schema.StringAttribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "IP Address",
 							Computed:            true,
 						},
 						"network_address_variable": schema.StringAttribute{
@@ -679,7 +679,7 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 							Computed:            true,
 						},
 						"subnet_mask": schema.StringAttribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "Subnet Mask",
 							Computed:            true,
 						},
 						"subnet_mask_variable": schema.StringAttribute{

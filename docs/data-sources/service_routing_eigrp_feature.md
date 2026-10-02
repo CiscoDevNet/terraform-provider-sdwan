@@ -69,9 +69,9 @@ Read-Only:
 
 Read-Only:
 
-- `address` (String)
+- `address` (String) IP Address
 - `address_variable` (String) Variable name
-- `mask` (String)
+- `mask` (String) Subnet Mask
 - `mask_variable` (String) Variable name
 
 
@@ -92,9 +92,9 @@ Read-Only:
 
 Read-Only:
 
-- `ip_address` (String)
+- `ip_address` (String) IP Address
 - `ip_address_variable` (String) Variable name
-- `mask` (String)
+- `mask` (String) Subnet Mask
 - `mask_variable` (String) Variable name
 
 

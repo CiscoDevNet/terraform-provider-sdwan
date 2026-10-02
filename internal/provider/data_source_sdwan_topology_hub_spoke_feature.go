@@ -79,41 +79,56 @@ func (d *TopologyHubSpokeProfileParcelDataSource) Schema(ctx context.Context, re
 				Required:            true,
 			},
 			"target_vpns": schema.SetAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "Target VPN list",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
 			"selected_hubs": schema.SetAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "Selected hub sites",
+				ElementType:         types.StringType,
+				Computed:            true,
+			},
+			"selected_hierarchy_hubs": schema.SetAttribute{
+				MarkdownDescription: "Selected hub network hierarchy UUIDs",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
 			"spokes": schema.ListNestedAttribute{
-				MarkdownDescription: "Spokes",
+				MarkdownDescription: "Spoke configurations",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "Spoke name",
 							Computed:            true,
 						},
 						"spoke_sites": schema.SetAttribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "Spoke site list",
+							ElementType:         types.StringType,
+							Computed:            true,
+						},
+						"spoke_hierarchy_uuids": schema.SetAttribute{
+							MarkdownDescription: "Spoke network hierarchy UUIDs",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"hub_sites": schema.ListNestedAttribute{
-							MarkdownDescription: "Hub Sites",
+							MarkdownDescription: "Hub site preferences",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"sites": schema.SetAttribute{
-										MarkdownDescription: "sites",
+										MarkdownDescription: "Hub sites",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
+									"hub_hierarchy_uuids": schema.SetAttribute{
+										MarkdownDescription: "Hub network hierarchy UUIDs",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
 									"preference": schema.Int64Attribute{
-										MarkdownDescription: "preference",
+										MarkdownDescription: "Hub preference value",
 										Computed:            true,
 									},
 								},

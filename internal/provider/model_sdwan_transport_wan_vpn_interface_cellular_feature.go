@@ -24,6 +24,7 @@ import (
 	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -90,6 +91,10 @@ type TransportWANVPNInterfaceCellular struct {
 	TunnelInterfaceVmanageConnectionPreferenceVariable types.String                                                    `tfsdk:"tunnel_interface_vmanage_connection_preference_variable"`
 	TunnelInterfacePortHop                             types.Bool                                                      `tfsdk:"tunnel_interface_port_hop"`
 	TunnelInterfacePortHopVariable                     types.String                                                    `tfsdk:"tunnel_interface_port_hop_variable"`
+	TunnelInterfaceColorDescription                    types.String                                                    `tfsdk:"tunnel_interface_color_description"`
+	TunnelInterfaceColorDescriptionVariable            types.String                                                    `tfsdk:"tunnel_interface_color_description_variable"`
+	TunnelInterfaceFullPortHop                         types.Bool                                                      `tfsdk:"tunnel_interface_full_port_hop"`
+	TunnelInterfaceFullPortHopVariable                 types.String                                                    `tfsdk:"tunnel_interface_full_port_hop_variable"`
 	TunnelInterfaceLowBandwidthLink                    types.Bool                                                      `tfsdk:"tunnel_interface_low_bandwidth_link"`
 	TunnelInterfaceLowBandwidthLinkVariable            types.String                                                    `tfsdk:"tunnel_interface_low_bandwidth_link_variable"`
 	TunnelInterfaceTunnelTcpMss                        types.Int64                                                     `tfsdk:"tunnel_interface_tunnel_tcp_mss"`
@@ -203,7 +208,7 @@ func (data TransportWANVPNInterfaceCellular) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data TransportWANVPNInterfaceCellular) toBody(ctx context.Context) string {
+func (data TransportWANVPNInterfaceCellular) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -636,6 +641,40 @@ func (data TransportWANVPNInterfaceCellular) toBody(ctx context.Context) string 
 		if true {
 			body, _ = sjson.Set(body, path+"tunnel.portHop.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.portHop.value", data.TunnelInterfacePortHop.ValueBool())
+		}
+	}
+
+	if !data.TunnelInterfaceColorDescriptionVariable.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"tunnel.colorDescription.optionType", "variable")
+			body, _ = sjson.Set(body, path+"tunnel.colorDescription.value", data.TunnelInterfaceColorDescriptionVariable.ValueString())
+		}
+	} else if data.TunnelInterfaceColorDescription.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"tunnel.colorDescription.optionType", "default")
+
+		}
+	} else {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"tunnel.colorDescription.optionType", "global")
+			body, _ = sjson.Set(body, path+"tunnel.colorDescription.value", data.TunnelInterfaceColorDescription.ValueString())
+		}
+	}
+
+	if !data.TunnelInterfaceFullPortHopVariable.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.optionType", "variable")
+			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.value", data.TunnelInterfaceFullPortHopVariable.ValueString())
+		}
+	} else if data.TunnelInterfaceFullPortHop.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.optionType", "default")
+			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.value", false)
+		}
+	} else {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.optionType", "global")
+			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.value", data.TunnelInterfaceFullPortHop.ValueBool())
 		}
 	}
 
@@ -1588,6 +1627,26 @@ func (data *TransportWANVPNInterfaceCellular) fromBody(ctx context.Context, res 
 			data.TunnelInterfacePortHopVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.TunnelInterfacePortHop = types.BoolValue(va.Bool())
+		}
+	}
+	data.TunnelInterfaceColorDescription = types.StringNull()
+	data.TunnelInterfaceColorDescriptionVariable = types.StringNull()
+	if t := res.Get(path + "tunnel.colorDescription.optionType"); t.Exists() {
+		va := res.Get(path + "tunnel.colorDescription.value")
+		if t.String() == "variable" {
+			data.TunnelInterfaceColorDescriptionVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TunnelInterfaceColorDescription = types.StringValue(va.String())
+		}
+	}
+	data.TunnelInterfaceFullPortHop = types.BoolNull()
+	data.TunnelInterfaceFullPortHopVariable = types.StringNull()
+	if t := res.Get(path + "tunnel.fullPortHop.optionType"); t.Exists() {
+		va := res.Get(path + "tunnel.fullPortHop.value")
+		if t.String() == "variable" {
+			data.TunnelInterfaceFullPortHopVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TunnelInterfaceFullPortHop = types.BoolValue(va.Bool())
 		}
 	}
 	data.TunnelInterfaceLowBandwidthLink = types.BoolNull()

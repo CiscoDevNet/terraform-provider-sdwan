@@ -103,7 +103,9 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 					{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 					.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 					{{- end -}}
-					{{- if and (ne .MinInt 0) (ne .MaxInt 0) -}}
+					{{- if len .IntRanges -}}
+					.AddIntegerRangesDescription([]helpers.IntRange{ {{- range .IntRanges}}{Min: {{.Min}}, Max: {{.Max}}}, {{end -}} })
+					{{- else if and (ne .MinInt 0) (ne .MaxInt 0) -}}
 					.AddIntegerRangeDescription({{.MinInt}}, {{.MaxInt}})
 					{{- else if and (ne .MinInt 0) (eq .MaxInt 0) -}}
 					.AddIntegerAtLeastDescription({{.MinInt}})
@@ -142,6 +144,14 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 					stringvalidator.RegexMatches(regexp.MustCompile(`{{.}}`), ""),
 					{{- end}}
 				},
+				{{- else if len .IntRanges}}
+				Validators: []validator.Int64{
+					int64validator.Any(
+						{{- range .IntRanges}}
+						int64validator.Between({{.Min}}, {{.Max}}),
+						{{- end}}
+					),
+				},
 				{{- else if or (ne .MinInt 0) (ne .MaxInt 0)}}
 				Validators: []validator.Int64{
 					{{- if and (ne .MinInt 0) (ne .MaxInt 0)}}
@@ -173,7 +183,9 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 								{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 								.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 								{{- end -}}
-								{{- if and (ne .MinInt 0) (ne .MaxInt 0) -}}
+								{{- if len .IntRanges -}}
+								.AddIntegerRangesDescription([]helpers.IntRange{ {{- range .IntRanges}}{Min: {{.Min}}, Max: {{.Max}}}, {{end -}} })
+								{{- else if and (ne .MinInt 0) (ne .MaxInt 0) -}}
 								.AddIntegerRangeDescription({{.MinInt}}, {{.MaxInt}})
 								{{- else if and (ne .MinInt 0) (eq .MaxInt 0) -}}
 								.AddIntegerAtLeastDescription({{.MinInt}})
@@ -208,6 +220,14 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 								stringvalidator.RegexMatches(regexp.MustCompile(`{{.}}`), ""),
 								{{- end}}
 							},
+							{{- else if len .IntRanges}}
+							Validators: []validator.Int64{
+								int64validator.Any(
+									{{- range .IntRanges}}
+									int64validator.Between({{.Min}}, {{.Max}}),
+									{{- end}}
+								),
+							},
 							{{- else if or (ne .MinInt 0) (ne .MaxInt 0)}}
 							Validators: []validator.Int64{
 								{{- if and (ne .MinInt 0) (ne .MaxInt 0)}}
@@ -239,7 +259,9 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 											{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 											.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 											{{- end -}}
-											{{- if and (ne .MinInt 0) (ne .MaxInt 0) -}}
+											{{- if len .IntRanges -}}
+											.AddIntegerRangesDescription([]helpers.IntRange{ {{- range .IntRanges}}{Min: {{.Min}}, Max: {{.Max}}}, {{end -}} })
+											{{- else if and (ne .MinInt 0) (ne .MaxInt 0) -}}
 											.AddIntegerRangeDescription({{.MinInt}}, {{.MaxInt}})
 											{{- else if and (ne .MinInt 0) (eq .MaxInt 0) -}}
 											.AddIntegerAtLeastDescription({{.MinInt}})
@@ -274,6 +296,14 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 											stringvalidator.RegexMatches(regexp.MustCompile(`{{.}}`), ""),
 											{{- end}}
 										},
+										{{- else if len .IntRanges}}
+										Validators: []validator.Int64{
+											int64validator.Any(
+												{{- range .IntRanges}}
+												int64validator.Between({{.Min}}, {{.Max}}),
+												{{- end}}
+											),
+										},
 										{{- else if or (ne .MinInt 0) (ne .MaxInt 0)}}
 										Validators: []validator.Int64{
 											{{- if and (ne .MinInt 0) (ne .MaxInt 0)}}
@@ -305,7 +335,9 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 														{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 														.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 														{{- end -}}
-														{{- if and (ne .MinInt 0) (ne .MaxInt 0) -}}
+														{{- if len .IntRanges -}}
+														.AddIntegerRangesDescription([]helpers.IntRange{ {{- range .IntRanges}}{Min: {{.Min}}, Max: {{.Max}}}, {{end -}} })
+														{{- else if and (ne .MinInt 0) (ne .MaxInt 0) -}}
 														.AddIntegerRangeDescription({{.MinInt}}, {{.MaxInt}})
 														{{- else if and (ne .MinInt 0) (eq .MaxInt 0) -}}
 														.AddIntegerAtLeastDescription({{.MinInt}})
@@ -339,6 +371,14 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 														{{- range .StringPatterns}}
 														stringvalidator.RegexMatches(regexp.MustCompile(`{{.}}`), ""),
 														{{- end}}
+													},
+													{{- else if len .IntRanges}}
+													Validators: []validator.Int64{
+														int64validator.Any(
+															{{- range .IntRanges}}
+															int64validator.Between({{.Min}}, {{.Max}}),
+															{{- end}}
+														),
 													},
 													{{- else if or (ne .MinInt 0) (ne .MaxInt 0)}}
 													Validators: []validator.Int64{

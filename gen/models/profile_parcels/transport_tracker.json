@@ -733,15 +733,103 @@
                             }
                         },
                         "then": {
-                            "required": [
-                                "interval",
-                                "trackerName"
+                            "allOf": [
+                                {
+                                    "if": {
+                                        "anyOf": [
+                                            {
+                                                "properties": {
+                                                    "interval": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "const": "global"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "interval"
+                                                ]
+                                            },
+                                            {
+                                                "properties": {
+                                                    "trackerName": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "const": "global"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "trackerName"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "then": {
+                                        "required": [
+                                            "interval",
+                                            "trackerName"
+                                        ]
+                                    }
+                                }
                             ]
                         },
                         "else": {
-                            "required": [
-                                "icmpInterval",
-                                "trackerName"
+                            "allOf": [
+                                {
+                                    "if": {
+                                        "anyOf": [
+                                            {
+                                                "properties": {
+                                                    "icmpInterval": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "const": "global"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "icmpInterval"
+                                                ]
+                                            },
+                                            {
+                                                "properties": {
+                                                    "trackerName": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "const": "global"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "trackerName"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "then": {
+                                        "required": [
+                                            "icmpInterval",
+                                            "trackerName"
+                                        ]
+                                    }
+                                }
                             ]
                         }
                     }
@@ -760,7 +848,7 @@
                     "ISRv",
                     "ir1101"
                 ],
-                "minVManageVersion": "20.15.1"
+                "minVManageVersion": "20.17.1"
             },
             "documentation": {
                 "description": "This is the documentation for common request schema for Service WAN VPN profile parcel",

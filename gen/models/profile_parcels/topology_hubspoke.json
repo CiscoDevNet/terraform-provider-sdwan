@@ -84,6 +84,63 @@
               }
             ]
           },
+          "selectedHierarchyHubs": {
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "string",
+                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                    }
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "selectedHubRules": {
+            "type": "object",
+            "properties": {
+              "ruleId": {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "ruleId"
+            ],
+            "additionalProperties": false
+          },
           "spokes": {
             "description": "Spokes",
             "type": "array",
@@ -141,6 +198,63 @@
                     }
                   ]
                 },
+                "spokeHierarchyUuid": {
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": [
+                            "global"
+                          ]
+                        },
+                        "value": {
+                          "type": "array",
+                          "minItems": 1,
+                          "uniqueItems": true,
+                          "items": {
+                            "type": "string",
+                            "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                          }
+                        }
+                      },
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "spokeSiteRule": {
+                  "type": "object",
+                  "properties": {
+                    "ruleId": {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": [
+                            "global"
+                          ]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                        }
+                      },
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "ruleId"
+                  ],
+                  "additionalProperties": false
+                },
                 "hubSites": {
                   "description": "Hub Sites",
                   "type": "array",
@@ -165,6 +279,36 @@
                                 "uniqueItems": true,
                                 "items": {
                                   "type": "string"
+                                }
+                              }
+                            },
+                            "required": [
+                              "optionType",
+                              "value"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      },
+                      "hierarchyUuid": {
+                        "description": "sites",
+                        "type": "object",
+                        "oneOf": [
+                          {
+                            "properties": {
+                              "optionType": {
+                                "type": "string",
+                                "enum": [
+                                  "global"
+                                ]
+                              },
+                              "value": {
+                                "type": "array",
+                                "minItems": 1,
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "string",
+                                  "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
                                 }
                               }
                             },
@@ -202,32 +346,76 @@
                       }
                     },
                     "additionalProperties": false,
-                    "required": [
-                      "sites",
-                      "preference"
+                    "oneOf": [
+                      {
+                        "required": [
+                          "sites",
+                          "preference"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "hierarchyUuid",
+                          "preference"
+                        ]
+                      }
                     ]
                   },
                   "additionalProperties": false
                 }
               },
               "additionalProperties": false,
-              "required": [
-                "name",
-                "spokeSites"
+              "oneOf": [
+                {
+                  "required": [
+                    "spokeSites",
+                    "name"
+                  ]
+                },
+                {
+                  "required": [
+                    "spokeHierarchyUuid",
+                    "name"
+                  ]
+                },
+                {
+                  "required": [
+                    "spokeSiteRule",
+                    "name"
+                  ]
+                }
               ]
             },
             "additionalProperties": false
           }
         },
-        "required": [
-          "target",
-          "selectedHubs",
-          "spokes"
+        "oneOf": [
+          {
+            "required": [
+              "selectedHubs",
+              "target",
+              "spokes"
+            ]
+          },
+          {
+            "required": [
+              "selectedHierarchyHubs",
+              "target",
+              "spokes"
+            ]
+          },
+          {
+            "required": [
+              "selectedHubRules",
+              "target",
+              "spokes"
+            ]
+          }
         ],
         "additionalProperties": false
       },
       "metadata": {
-        "minVManageVersion": "20.15.1"
+        "minVManageVersion": "20.18.1"
       }
     },
     "metadata": {

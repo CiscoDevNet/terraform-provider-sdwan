@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -94,6 +95,10 @@ type ServiceMulticastAutoRpAnnounces struct {
 	InterfaceNameVariable types.String `tfsdk:"interface_name_variable"`
 	Scope                 types.Int64  `tfsdk:"scope"`
 	ScopeVariable         types.String `tfsdk:"scope_variable"`
+	AccessListId          types.String `tfsdk:"access_list_id"`
+	AccessListIdVariable  types.String `tfsdk:"access_list_id_variable"`
+	Interval              types.Int64  `tfsdk:"interval"`
+	IntervalVariable      types.String `tfsdk:"interval_variable"`
 }
 
 type ServiceMulticastAutoRpDiscoveries struct {
@@ -174,7 +179,7 @@ func (data ServiceMulticast) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data ServiceMulticast) toBody(ctx context.Context) string {
+func (data ServiceMulticast) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -475,6 +480,40 @@ func (data ServiceMulticast) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "scope.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "scope.value", item.Scope.ValueInt64())
+				}
+			}
+
+			if !item.AccessListIdVariable.IsNull() {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+					itemBody, _ = sjson.Set(itemBody, "groupList.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "groupList.value", item.AccessListIdVariable.ValueString())
+				}
+			} else if item.AccessListId.IsNull() {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+					itemBody, _ = sjson.Set(itemBody, "groupList.optionType", "default")
+
+				}
+			} else {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+					itemBody, _ = sjson.Set(itemBody, "groupList.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "groupList.value", item.AccessListId.ValueString())
+				}
+			}
+
+			if !item.IntervalVariable.IsNull() {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+					itemBody, _ = sjson.Set(itemBody, "interval.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "interval.value", item.IntervalVariable.ValueString())
+				}
+			} else if item.Interval.IsNull() {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+					itemBody, _ = sjson.Set(itemBody, "interval.optionType", "default")
+
+				}
+			} else {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+					itemBody, _ = sjson.Set(itemBody, "interval.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "interval.value", item.Interval.ValueInt64())
 				}
 			}
 			body, _ = sjson.SetRaw(body, path+"pim.autoRp.sendRpAnnounceList.-1", itemBody)
@@ -1223,6 +1262,26 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result, fu
 					item.ScopeVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
 					item.Scope = types.Int64Value(va.Int())
+				}
+			}
+			item.AccessListId = types.StringNull()
+			item.AccessListIdVariable = types.StringNull()
+			if t := v.Get("groupList.optionType"); t.Exists() {
+				va := v.Get("groupList.value")
+				if t.String() == "variable" {
+					item.AccessListIdVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.AccessListId = types.StringValue(va.String())
+				}
+			}
+			item.Interval = types.Int64Null()
+			item.IntervalVariable = types.StringNull()
+			if t := v.Get("interval.optionType"); t.Exists() {
+				va := v.Get("interval.value")
+				if t.String() == "variable" {
+					item.IntervalVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.Interval = types.Int64Value(va.Int())
 				}
 			}
 			data.AutoRpAnnounces = append(data.AutoRpAnnounces, item)

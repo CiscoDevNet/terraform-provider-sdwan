@@ -22,6 +22,7 @@ import (
 	"context"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -40,6 +41,8 @@ type CustomApplication struct {
 	ApplicationGroup  types.String            `tfsdk:"application_group"`
 	TrafficClass      types.String            `tfsdk:"traffic_class"`
 	BusinessRelevance types.String            `tfsdk:"business_relevance"`
+	EndpointType      types.String            `tfsdk:"endpoint_type"`
+	EndpointValue     types.String            `tfsdk:"endpoint_value"`
 }
 
 type CustomApplicationL3l4 struct {
@@ -58,7 +61,7 @@ func (data CustomApplication) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data CustomApplication) toBody(ctx context.Context) string {
+func (data CustomApplication) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	if !data.AppName.IsNull() {
 		body, _ = sjson.Set(body, "appName", data.AppName.ValueString())
@@ -98,13 +101,19 @@ func (data CustomApplication) toBody(ctx context.Context) string {
 	if !data.BusinessRelevance.IsNull() {
 		body, _ = sjson.Set(body, "attributes.business-relevance", data.BusinessRelevance.ValueString())
 	}
+	if !data.EndpointType.IsNull() && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+		body, _ = sjson.Set(body, "attributes.endpointType", data.EndpointType.ValueString())
+	}
+	if !data.EndpointValue.IsNull() && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+		body, _ = sjson.Set(body, "attributes.endpointValue", data.EndpointValue.ValueString())
+	}
 	return body
 }
 
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *CustomApplication) fromBody(ctx context.Context, res gjson.Result) {
+func (data *CustomApplication) fromBody(ctx context.Context, res gjson.Result, ver *version.Version) {
 	if value := res.Get("data.appName"); value.Exists() {
 		data.AppName = types.StringValue(value.String())
 	} else {
@@ -162,6 +171,16 @@ func (data *CustomApplication) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.BusinessRelevance = types.StringNull()
 	}
+	if value := res.Get("data.attributes.endpointType"); value.Exists() && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+		data.EndpointType = types.StringValue(value.String())
+	} else {
+		data.EndpointType = types.StringNull()
+	}
+	if value := res.Get("data.attributes.endpointValue"); value.Exists() && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+		data.EndpointValue = types.StringValue(value.String())
+	} else {
+		data.EndpointValue = types.StringNull()
+	}
 }
 
 // End of section. //template:end fromBody
@@ -200,6 +219,12 @@ func (data *CustomApplication) hasChanges(ctx context.Context, state *CustomAppl
 		hasChanges = true
 	}
 	if !data.BusinessRelevance.Equal(state.BusinessRelevance) {
+		hasChanges = true
+	}
+	if !data.EndpointType.Equal(state.EndpointType) {
+		hasChanges = true
+	}
+	if !data.EndpointValue.Equal(state.EndpointValue) {
 		hasChanges = true
 	}
 	return hasChanges

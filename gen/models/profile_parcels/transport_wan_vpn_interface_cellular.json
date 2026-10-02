@@ -1051,6 +1051,77 @@
                                     }
                                 ]
                             },
+                            "colorDescription": {
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "description": "Set color description for TLOC",
+                                                "type": "string",
+                                                "minLength": 1,
+                                                "maxLength": 128
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "description": "Set color description for TLOC",
+                                                "type": "string",
+                                                "minLength": 1,
+                                                "maxLength": 128
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
                             "helloInterval": {
                                 "description": "Set time period of control hello packets <100..600000> milli seconds",
                                 "type": "object",
@@ -1886,8 +1957,82 @@
                                     }
                                 ]
                             },
+                            "fullPortHop": {
+                                "description": "Enable port hopping on the tunnel interface",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 128
+                                            },
+                                            "default": {
+                                                "type": "boolean"
+                                            },
+                                            "description": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean",
+                                                "enum": [
+                                                    false
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
                             "portHop": {
-                                "description": "Disallow port hopping on the tunnel interface",
+                                "description": "The port hop functionality is deprecated for devices 17.18 and higher. Use the full-port-hop field instead",
                                 "type": "object",
                                 "oneOf": [
                                     {
@@ -5387,11 +5532,11 @@
                     "c1100",
                     "c8000be",
                     "isr",
-                    "ISRv",
                     "ir1101",
-                    "ir8340"
+                    "ir8340",
+                    "ir8100"
                 ],
-                "minVManageVersion": "20.15.1"
+                "minVManageVersion": "20.18.1"
             },
             "documentation": {
                 "description": "This is the documentation for POST request schema for WAN VPN Cellular Interface profile parcel",

@@ -11,6 +11,7 @@ resource "sdwan_network_hierarchy_cflowd" "example" {
     {
       vpn_id             = 1
       address            = "10.0.0.1"
+      source_interface   = "Loopback1"
       udp_port           = 4739
       export_spread      = true
       bfd_metrics_export = true

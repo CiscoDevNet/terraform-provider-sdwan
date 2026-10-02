@@ -2,7 +2,7 @@
 name: Transport Management VPN
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/management/vpn
 minimum_version: 20.15.0
-test_tags: [SDWAN_2015]
+test_tags: [SDWAN_2015, SDWAN_2018]
 parcel_type: feature
 doc_category: Features - Transport
 attributes:

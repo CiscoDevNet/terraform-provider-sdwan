@@ -1,11 +1,21 @@
 ---
 subcategory: "Guides"
-page_title: "Configuration Groups"
+page_title: "Getting Started - Configuration and Policy Groups"
 description: |-
-    Configuration Groups
+    Getting Started - Configuration and Policy Groups
 ---
 
-# Configuration Groups
+# Getting Started - Configuration and Policy Groups
+
+UX 2.0 replaces classic device and feature templates with an intent-based model, recommended for new deployments on SD-WAN Manager 20.15 or 20.18:
+
+- **Feature profiles** are reusable configuration building blocks for a specific function (system, transport, service, or policy).
+- **Configuration groups** combine feature profiles into a device's configuration.
+- **Policy groups** combine policy feature profiles (application priority, security, and others) into a device's policy.
+
+A device is associated with one configuration group and one policy group. If you are working with an existing classic deployment, see [Getting Started - Classic Templates](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/getting_started) instead.
+
+## Configuration Groups
 
 Configuration groups require a number of resources to be defined. We start by creating the required feature profiles.
 
@@ -140,7 +150,70 @@ resource "sdwan_configuration_group_devices" "config_group_01_devices" {
 }
 ```
 
-We can now simulate a change to a feature that is already deployed to a device, by for example modifying the password of the AAA feature resource.
+See [Tracking Changes](#tracking-changes) below for why the `feature_versions` list on the configuration group is required.
+
+## Policy Groups
+
+Policy groups follow the same pattern, but reference a policy feature profile (for example application priority, topology, or security) instead of system/transport/service. We start with a feature profile and a policy feature attached to it.
+
+```terraform
+resource "sdwan_application_priority_feature_profile" "app_priority_01" {
+  name        = "app_priority_01"
+  description = "My application priority feature profile"
+}
+
+resource "sdwan_application_priority_qos_policy" "app_priority_01_qos" {
+  name                        = "app_priority_01_qos"
+  description                 = "QoS policy for application priority"
+  feature_profile_id          = sdwan_application_priority_feature_profile.app_priority_01.id
+  target_interfaces_variable  = "{{qos_interfaces}}"
+}
+```
+
+The policy group itself references the feature profile and lists the `version` of every policy it uses via `policy_versions` - the policy equivalent of a configuration group's `feature_versions`. Like the configuration group, it has a computed `version` that is incremented whenever the group or any of its policy versions change.
+
+```terraform
+resource "sdwan_policy_group" "policy_group_01" {
+  name                = "policy_group_01"
+  description         = "My policy group"
+  solution            = "sdwan"
+  feature_profile_ids = [sdwan_application_priority_feature_profile.app_priority_01.id]
+  policy_versions = [
+    sdwan_application_priority_qos_policy.app_priority_01_qos.version,
+  ]
+}
+```
+
+Device association, variables and deployment are managed by a separate `sdwan_policy_group_devices` resource, which references the policy group via `policy_group_id`. Setting `policy_group_version` to `sdwan_policy_group.<name>.version` triggers a redeployment of the devices whenever the policy group changes.
+
+```terraform
+resource "sdwan_policy_group_devices" "policy_group_01_devices" {
+  policy_group_id      = sdwan_policy_group.policy_group_01.id
+  solution             = "sdwan"
+  policy_group_version = sdwan_policy_group.policy_group_01.version
+  devices = [{
+    id     = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"
+    deploy = true
+    variables = [
+      {
+        name       = "qos_interfaces"
+        list_value = ["GigabitEthernet1", "GigabitEthernet2"]
+      }
+    ]
+  }]
+}
+```
+
+A device can be associated with both a configuration group and a policy group at the same time - each has its own feature profiles, features/policies, its own `feature_versions`/`policy_versions` list, and its own `*_devices` resource.
+
+## Tracking Changes
+
+Both `sdwan_configuration_group.feature_versions` and `sdwan_policy_group.policy_versions` require a list of references to the `version` attribute of every feature or policy they use. This is required so that:
+
+- A change to any referenced feature/policy increments the group's `version`, which - referenced from `configuration_group_version`/`policy_group_version` - triggers a re-deployment of the devices in the corresponding `*_devices` resource.
+- The devices are always deployed *after* the changes to the features/policies and the group have been applied.
+
+We can simulate this by modifying a feature that is already deployed to a device, for example the password of the AAA feature resource from the Configuration Groups example above.
 
 ```terraform
 resource "sdwan_system_aaa_feature" "system_01_aaa" {
@@ -196,3 +269,5 @@ After running `terraform apply` the plan should show three changes: one for the 
 
 Plan: 0 to add, 3 to change, 0 to destroy.
 ```
+
+The same applies to a policy group: modifying `sdwan_application_priority_qos_policy.app_priority_01_qos` would show a matching plan diff on `sdwan_policy_group.policy_group_01.policy_versions` and `version`, and on `sdwan_policy_group_devices.policy_group_01_devices.policy_group_version`.

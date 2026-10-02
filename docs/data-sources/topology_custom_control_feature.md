@@ -33,9 +33,11 @@ data "sdwan_topology_custom_control_feature" "example" {
 - `description` (String) The description of the Feature
 - `name` (String) The name of the Feature
 - `sequences` (Attributes List) Sequence list (see [below for nested schema](#nestedatt--sequences))
+- `target_inbound_hierarchy_uuids` (Set of String) Inbound network hierarchy UUIDs
 - `target_inbound_regions` (Attributes List) (see [below for nested schema](#nestedatt--target_inbound_regions))
 - `target_inbound_sites` (Set of String)
 - `target_level` (String)
+- `target_outbound_hierarchy_uuids` (Set of String) Outbound network hierarchy UUIDs
 - `target_outbound_regions` (Attributes List) (see [below for nested schema](#nestedatt--target_outbound_regions))
 - `target_outbound_sites` (Set of String)
 - `target_role` (String)
@@ -104,6 +106,7 @@ Read-Only:
 - `domain_id` (Number) Domain ID
 - `expanded_community_list_id` (String) Expanded community list ID
 - `group_id` (Number) Group ID
+- `hierarchy_uuids` (Set of String) Network hierarchy UUIDs for matching
 - `ipv6_prefix_list_id` (String) IPv6 prefix list ID
 - `match_regions` (Attributes List) Match regions list (see [below for nested schema](#nestedatt--sequences--match_entries--match_regions))
 - `omp_tag` (Number) OMP tag

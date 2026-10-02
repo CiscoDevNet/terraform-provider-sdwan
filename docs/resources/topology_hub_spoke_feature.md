@@ -16,19 +16,19 @@ This resource can manage a Topology Hub Spoke Feature.
 
 ```terraform
 resource "sdwan_topology_hub_spoke_feature" "example" {
-  name               = "Example"
-  description        = "My Example"
-  feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  target_vpns        = ["service_lan_vpn1"]
-  selected_hubs      = ["SITE_100"]
+  name                    = "Example"
+  description             = "My Example"
+  feature_profile_id      = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  target_vpns             = ["service_lan_vpn1"]
+  selected_hierarchy_hubs = ["acb2ea53-4a95-4970-a1ab-9bac15edb961"]
   spokes = [
     {
-      name        = "spoke1"
-      spoke_sites = ["SITE_200"]
+      name                  = "spoke1"
+      spoke_hierarchy_uuids = ["acb2ea53-4a95-4970-a1ab-9bac15edb961"]
       hub_sites = [
         {
-          sites      = ["SITE_100"]
-          preference = 1
+          hub_hierarchy_uuids = ["acb2ea53-4a95-4970-a1ab-9bac15edb961"]
+          preference          = 1
         }
       ]
     }
@@ -43,13 +43,14 @@ resource "sdwan_topology_hub_spoke_feature" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
-- `selected_hubs` (Set of String)
-- `spokes` (Attributes List) Spokes (see [below for nested schema](#nestedatt--spokes))
-- `target_vpns` (Set of String)
+- `spokes` (Attributes List) Spoke configurations (see [below for nested schema](#nestedatt--spokes))
+- `target_vpns` (Set of String) Target VPN list
 
 ### Optional
 
 - `description` (String) The description of the Feature
+- `selected_hierarchy_hubs` (Set of String) Selected hub network hierarchy UUIDs, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
+- `selected_hubs` (Set of String) Selected hub sites
 
 ### Read-Only
 
@@ -61,18 +62,20 @@ resource "sdwan_topology_hub_spoke_feature" "example" {
 
 Optional:
 
-- `hub_sites` (Attributes List) Hub Sites (see [below for nested schema](#nestedatt--spokes--hub_sites))
-- `name` (String)
-- `spoke_sites` (Set of String)
+- `hub_sites` (Attributes List) Hub site preferences (see [below for nested schema](#nestedatt--spokes--hub_sites))
+- `name` (String) Spoke name
+- `spoke_hierarchy_uuids` (Set of String) Spoke network hierarchy UUIDs, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
+- `spoke_sites` (Set of String) Spoke site list
 
 <a id="nestedatt--spokes--hub_sites"></a>
 ### Nested Schema for `spokes.hub_sites`
 
 Optional:
 
-- `preference` (Number) preference
+- `hub_hierarchy_uuids` (Set of String) Hub network hierarchy UUIDs, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
+- `preference` (Number) Hub preference value
   - Range: `1`-`255`
-- `sites` (Set of String) sites
+- `sites` (Set of String) Hub sites
 
 ## Import
 

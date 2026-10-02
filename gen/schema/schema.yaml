@@ -100,6 +100,7 @@ attribute:
   optional_null_empty: bool(required=False) # If true, in fromBody (non-import refresh) only update the attribute if API returns a non-empty array. Use for optional Set/List attributes where null (user did not specify) and empty array (API default) should be treated as equivalent to prevent perpetual diffs.
   force_include: bool(required=False) # If true, toBody always emits the attribute even when null. For List/Set: writes {optionType:"global", value:[]}. For scalars: writes {optionType:"global"} with no value key. fromBody guards scalar reads with va.Exists() to prevent a missing response field from materialising as a phantom zero.
   write_as_default: bool(required=False) # If true, the attribute has no "global" optionType in the JSON schema (only "default" and "variable")
+  element_option_type: bool(required=False) # If true, this Set/List(String|Int64) attribute's array elements are themselves optionType/value wrappers (e.g. [{"optionType":"global","value":"x"}]) rather than a single optionType/value envelope wrapping a plain array. Use only for that exact shape; do not combine with .Variable/.DefaultValuePresent/.ForceInclude/.NoOptionType on the same attribute (not supported).
 conditional_attribute:
   operator: enum('and', 'or', required=False) # Logical operator between top-level conditions (default: 'and')
   conditions: list(include('condition'), required=False) # List of conditions (single or multiple)

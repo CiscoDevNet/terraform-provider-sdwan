@@ -19,7 +19,7 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
   name                     = "Example"
   description              = "My Example"
   feature_profile_id       = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  profile_id               = 1
+  profile_id               = 2
   access_point_name        = "apn1"
   requires_authentication  = true
   authentication_type      = "pap"
@@ -27,6 +27,8 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
   profile_password         = "example123!"
   packet_data_network_type = "ipv4"
   no_overwrite             = false
+  slice_type               = 2
+  slice_differentiator     = 20
 }
 ```
 
@@ -61,6 +63,11 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
 - `profile_username_variable` (String) Variable name, Attribute conditional on `requires_authentication` equal to `true`
 - `requires_authentication` (Boolean) Require authentication type
   - Default value: `false`
+- `slice_differentiator` (Number) S-NSSAI slice differentiator, Attribute conditional on `slice_type` being set and SD-WAN Manager version `20.18.1` or higher
+  - Range: `0`-`16777214`
+- `slice_differentiator_variable` (String) Variable name, Attribute conditional on `slice_type` being set and SD-WAN Manager version `20.18.1` or higher
+- `slice_type` (Number) S-NSSAI slice type number: 1(eMBB), 2(URLLC), 3(MioT), Attribute conditional on SD-WAN Manager version `20.18.1` or higher
+- `slice_type_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
 
 ### Read-Only
 
