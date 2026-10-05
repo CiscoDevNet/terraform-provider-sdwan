@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.11.7 (unreleased)
+
+- Add `sdwan_wan_edge_certificate_validate` and `sdwan_send_wan_edge_list_to_controllers` resources to manage WAN edge certificate validity and push the certificate list to the controllers, with drift detection based on the Manager's out-of-sync state
+
 ## 0.11.6
 
 - Add `sdwan_scope` resource and data source
