@@ -1,6 +1,4 @@
-
 ---
-layout: ""
 page_title: "Provider: SDWAN"
 description: |-
   The SDWAN provider provides resources to interact with a Cisco Catalyst SD-WAN environment.
