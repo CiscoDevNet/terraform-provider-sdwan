@@ -212,6 +212,8 @@ type YamlConfig struct {
 	NoDataSource             bool                  `yaml:"no_data_source"`
 	NoDelete                 bool                  `yaml:"no_delete"`
 	NoDataSourceNameQuery    bool                  `yaml:"no_data_source_name_query"`
+	DataSourceNameQuery      bool                  `yaml:"data_source_name_query"`
+	ListIdAttribute          string                `yaml:"list_id_attribute"`
 	GetBeforeDelete          bool                  `yaml:"get_before_delete"`
 	DeleteMutex              bool                  `yaml:"delete_mutex"`
 	ParcelType               string                `yaml:"parcel_type"`
@@ -403,6 +405,29 @@ func HasName(attributes []YamlConfigAttribute) bool {
 		}
 	}
 	return false
+}
+
+// Templating helper function to resolve the key holding the object name in a list endpoint response,
+// which is the name attribute's response model name if set (e.g. "profileName"), otherwise its model name
+func GetListNameAttribute(attributes []YamlConfigAttribute) string {
+	for _, attr := range attributes {
+		if attr.TfName == "name" {
+			if attr.ResponseModelName != "" {
+				return attr.ResponseModelName
+			}
+			return attr.ModelName
+		}
+	}
+	return "name"
+}
+
+// Templating helper function to resolve the key holding the object ID in a list endpoint response,
+// which differs from the POST response key for some endpoints (e.g. feature profiles return "profileId")
+func GetListIdAttribute(config YamlConfig) string {
+	if config.ListIdAttribute != "" {
+		return config.ListIdAttribute
+	}
+	return "id"
 }
 
 // Templating helper function to determine if attributes list contains one or more version attributes
@@ -1009,6 +1034,8 @@ var functions = template.FuncMap{
 	"hasId":                       HasId,
 	"hasConfigurableAttribute":    HasConfigurableAttribute,
 	"hasName":                     HasName,
+	"getListNameAttribute":        GetListNameAttribute,
+	"getListIdAttribute":          GetListIdAttribute,
 	"hasVersionAttribute":         HasVersionAttribute,
 	"getResponseModelPath":        GetResponseModelPath,
 	"hasReference":                HasReference,
