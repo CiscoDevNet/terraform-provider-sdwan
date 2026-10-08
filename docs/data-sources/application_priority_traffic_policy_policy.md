@@ -57,7 +57,7 @@ Read-Only:
 - `appqoe_dre_optimization` (Boolean)
 - `appqoe_service_node_group` (String)
 - `appqoe_tcp_optimization` (Boolean)
-- `backup_sla_preferred_colors` (Set of String) Backup SLA perferred color
+- `backup_sla_preferred_colors` (Set of String) Backup SLA preferred color
 - `cflowd` (Boolean)
 - `cloud_probe` (Boolean)
 - `cloud_saas` (Boolean)
@@ -95,6 +95,7 @@ Read-Only:
 - `next_hop_loose` (Boolean)
 - `policer_id` (String)
 - `preferred_color_group_id` (String)
+- `preferred_color_group_restrict` (Boolean)
 - `preferred_remote_color_restrict` (Boolean)
 - `preferred_remote_colors` (Set of String)
 - `service_chain_fallback_to_routing` (Boolean)
@@ -127,6 +128,7 @@ Read-Only:
 
 - `fallback_to_best_path` (Boolean)
 - `preferred_color_group_list_id` (String)
+- `preferred_color_group_restrict` (Boolean)
 - `preferred_colors` (Set of String)
 - `preferred_remote_colors` (Set of String)
 - `remote_color_restrict` (Boolean)
@@ -150,6 +152,7 @@ Read-Only:
 - `dns` (String) Dns
 - `dns_application_list_id` (String)
 - `dscps` (Set of Number) DSCP numbers
+- `hierarchy_ids` (Set of String) Site List
 - `icmp6_messages` (Set of String) ICMP6 Message
 - `icmp_messages` (Set of String) ICMP Message
 - `packet_length` (String) Packet Length

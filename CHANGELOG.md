@@ -3,6 +3,9 @@
 - Add `sdwan_wan_edge_certificate_validate` and `sdwan_send_wan_edge_list_to_controllers` resources to manage WAN edge certificate validity and push the certificate list to the controllers, with drift detection based on the Manager's out-of-sync state
 - Add optional `name`-based lookup to the `sdwan_configuration_group` and `sdwan_policy_group` data sources, and to all feature profile data sources (`sdwan_system_feature_profile`, `sdwan_transport_feature_profile`, `sdwan_service_feature_profile`, `sdwan_cli_feature_profile`, `sdwan_other_feature_profile`, `sdwan_application_priority_feature_profile`, `sdwan_embedded_security_feature_profile`, `sdwan_dns_security_feature_profile`, `sdwan_sig_security_feature_profile`, `sdwan_sse_feature_profile`, `sdwan_topology_feature_profile`, `sdwan_policy_object_feature_profile`). Exactly one of `id` or `name` must be configured; `name` is resolved against the corresponding list endpoint.
 - Fix `sdwan_configuration_group` and `sdwan_policy_group` data sources failing with HTTP 500 (`CFGRP0014`/`PLGRP0014`) when the group has no associated devices: the device variables are now only read when devices exist
+- Add `source_interface` attribute to `collectors` on `sdwan_network_hierarchy_cflowd` resource and data source (SD-WAN Manager 20.18+), [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/770)
+- Bump schema to `20.18.0` for the following application priority resources: `sdwan_application_priority_qos_policy`, `sdwan_application_priority_traffic_policy_policy`
+- Add `hierarchy_ids` and `preferred_color_group_restrict` attributes to `sdwan_application_priority_traffic_policy_policy` resource and data source (SD-WAN Manager 20.18+)
 
 ## 0.11.6
 

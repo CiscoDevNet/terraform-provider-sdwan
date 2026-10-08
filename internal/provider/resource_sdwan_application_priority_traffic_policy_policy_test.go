@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanApplicationPriorityTrafficPolicyProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015 or TF_VAR_policy_object_feature_template_id")
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018 or TF_VAR_policy_object_feature_template_id")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_policy.test", "default_action", "accept"))
@@ -40,6 +40,9 @@ func TestAccSdwanApplicationPriorityTrafficPolicyProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_policy.test", "sequences.0.base_action", "accept"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_policy.test", "sequences.0.protocol", "ipv4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_policy.test", "sequences.0.actions.0.set_parameters.0.dscp", "18"))
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_policy.test", "sequences.0.actions.0.set_parameters.0.preferred_color_group_restrict", "true"))
+	}
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -79,6 +82,18 @@ resource "sdwan_policy_object_policer" "test" {
     }
   ]
 }
+
+resource "sdwan_policy_object_preferred_color_group" "test" {
+  name               = "TF_TEST_PCG"
+  description        = "My Example"
+  feature_profile_id = sdwan_policy_object_feature_profile.test.id
+  entries = [
+    {
+      primary_color_preference = ["mpls"]
+      primary_path_preference  = "direct-path"
+    }
+  ]
+}
 `
 
 // End of section. //template:end testPrerequisites
@@ -107,6 +122,12 @@ func testAccSdwanApplicationPriorityTrafficPolicyProfileParcelConfig_all() strin
 	config += `	  actions = [{` + "\n"
 	config += `      set_parameters = [{` + "\n"
 	config += `			dscp = 18` + "\n"
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `			preferred_color_group_id = sdwan_policy_object_preferred_color_group.test.id` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `			preferred_color_group_restrict = true` + "\n"
+	}
 	config += `		}]` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
