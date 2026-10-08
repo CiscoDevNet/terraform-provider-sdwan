@@ -63,8 +63,7 @@ resource "sdwan_application_priority_traffic_policy_policy" "example" {
 - `description` (String) The description of the Policy
 - `direction` (String) - Choices: `service`, `tunnel`, `all`
 - `sequences` (Attributes List) Traffic policy sequence list (see [below for nested schema](#nestedatt--sequences))
-- `vpn_rule_id` (Set of String) , Attribute conditional on SD-WAN Manager version `20.18.1` or higher
-- `vpns` (Set of String) , Attribute conditional on `vpn_rule_id` not being set
+- `vpns` (Set of String)
 
 ### Read-Only
 

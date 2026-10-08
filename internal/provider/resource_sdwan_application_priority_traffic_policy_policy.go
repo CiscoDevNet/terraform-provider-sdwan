@@ -99,12 +99,7 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 				},
 			},
 			"vpns": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `vpn_rule_id` not being set").String,
-				ElementType:         types.StringType,
-				Optional:            true,
-			},
-			"vpn_rule_id": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},

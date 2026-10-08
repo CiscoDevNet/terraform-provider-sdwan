@@ -87,11 +87,6 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
-			"vpn_rule_id": schema.SetAttribute{
-				MarkdownDescription: "",
-				ElementType:         types.StringType,
-				Computed:            true,
-			},
 			"direction": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,

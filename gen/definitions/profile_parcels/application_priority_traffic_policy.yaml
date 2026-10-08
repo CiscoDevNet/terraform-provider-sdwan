@@ -29,24 +29,6 @@ attributes:
     tf_name: vpns
     data_path: [target]
     example: "edge_basic_vpn1"
-    conditional_attribute:
-      conditions:
-        - name: vpn_rule_id
-          value: ''
-  - model_name: ruleId
-    tf_name: vpn_rule_id
-    data_path: [target, vpnRule]
-    type: Set
-    element_type: String
-    no_option_type: true
-    flat_option_type: global
-    description: VPN Group rule ID; mutually exclusive with `vpns`. Exactly one element.
-    exclude_test: true
-    example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
-    conditional_attribute:
-      conditions:
-        - type: MinVersion
-          value: 20.18.1
   - model_name: direction
     data_path: [target]
     example: all

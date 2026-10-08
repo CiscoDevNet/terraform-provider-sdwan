@@ -35,7 +35,6 @@ data "sdwan_application_priority_traffic_policy_policy" "example" {
 - `name` (String) The name of the Policy
 - `sequences` (Attributes List) Traffic policy sequence list (see [below for nested schema](#nestedatt--sequences))
 - `version` (Number) The version of the Policy
-- `vpn_rule_id` (Set of String)
 - `vpns` (Set of String)
 
 <a id="nestedatt--sequences"></a>

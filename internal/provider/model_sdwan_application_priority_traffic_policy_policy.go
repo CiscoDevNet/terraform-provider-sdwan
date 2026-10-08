@@ -41,7 +41,6 @@ type ApplicationPriorityTrafficPolicy struct {
 	FeatureProfileId types.String                                `tfsdk:"feature_profile_id"`
 	DefaultAction    types.String                                `tfsdk:"default_action"`
 	Vpns             types.Set                                   `tfsdk:"vpns"`
-	VpnRuleId        types.Set                                   `tfsdk:"vpn_rule_id"`
 	Direction        types.String                                `tfsdk:"direction"`
 	Sequences        []ApplicationPriorityTrafficPolicySequences `tfsdk:"sequences"`
 }
@@ -187,19 +186,11 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context, ver *ve
 		}
 	}
 	if !data.Vpns.IsNull() {
-		if true && data.VpnRuleId.IsNull() {
+		if true {
 			body, _ = sjson.Set(body, path+"target.vpn.optionType", "global")
 			var values []string
 			data.Vpns.ElementsAs(ctx, &values, false)
 			body, _ = sjson.Set(body, path+"target.vpn.value", values)
-		}
-	}
-	if !data.VpnRuleId.IsNull() {
-		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
-			body, _ = sjson.Set(body, path+"target.vpnRule.optionType", "global")
-			var values []string
-			data.VpnRuleId.ElementsAs(ctx, &values, false)
-			body, _ = sjson.Set(body, path+"target.vpnRule.ruleId", values)
 		}
 	}
 	if !data.Direction.IsNull() {
@@ -878,11 +869,6 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 		if t.String() == "global" {
 			data.Vpns = helpers.GetStringSet(va.Array())
 		}
-	}
-	data.VpnRuleId = types.SetNull(types.StringType)
-
-	if va := res.Get(path + "target.vpnRule.ruleId"); va.Exists() {
-		data.VpnRuleId = helpers.GetStringSet(va.Array())
 	}
 	data.Direction = types.StringNull()
 
