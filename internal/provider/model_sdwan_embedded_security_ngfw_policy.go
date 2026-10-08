@@ -136,11 +136,11 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context, ver *version.Versio
 		}
 	}
 	if true {
-		body, _ = sjson.Set(body, path+"sequences", []interface{}{})
+
 		for _, item := range data.Sequences {
 			itemBody := ""
 			if !item.IsRuleSet.IsNull() {
-				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
 					itemBody, _ = sjson.Set(itemBody, "isRuleSet.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "isRuleSet.value", item.IsRuleSet.ValueBool())
 				}
@@ -158,7 +158,7 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context, ver *version.Versio
 				}
 			}
 			if !item.SequenceComment.IsNull() {
-				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
 					itemBody, _ = sjson.Set(itemBody, "sequenceComment", item.SequenceComment.ValueString())
 				}
 			}
@@ -169,12 +169,12 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context, ver *version.Versio
 				}
 			}
 			if item.SequenceIpType.IsNull() {
-				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
 					itemBody, _ = sjson.Set(itemBody, "sequenceIpType.optionType", "default")
 					itemBody, _ = sjson.Set(itemBody, "sequenceIpType.value", "ipv4")
 				}
 			} else {
-				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
 					itemBody, _ = sjson.Set(itemBody, "sequenceIpType.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "sequenceIpType.value", item.SequenceIpType.ValueString())
 				}
@@ -204,7 +204,7 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context, ver *version.Versio
 						}
 					}
 					if !childItem.SourceDataIpv6PrefixListIds.IsNull() {
-						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) && item.SequenceIpType.ValueString() == "ipv6" {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
 							itemChildBody, _ = sjson.Set(itemChildBody, "sourceDataIpv6PrefixList.refId.optionType", "global")
 							var values []string
 							childItem.SourceDataIpv6PrefixListIds.ElementsAs(ctx, &values, false)
@@ -220,7 +220,7 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context, ver *version.Versio
 						}
 					}
 					if !childItem.DestinationDataIpv6PrefixListIds.IsNull() {
-						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) && item.SequenceIpType.ValueString() == "ipv6" {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
 							itemChildBody, _ = sjson.Set(itemChildBody, "destinationDataIpv6PrefixList.refId.optionType", "global")
 							var values []string
 							childItem.DestinationDataIpv6PrefixListIds.ElementsAs(ctx, &values, false)
@@ -316,7 +316,7 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context, ver *version.Versio
 						}
 					}
 					if !childItem.SourceObjectGroupListIds.IsNull() {
-						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
 							itemChildBody, _ = sjson.Set(itemChildBody, "sourceObjectGroup.refId.optionType", "global")
 							var values []string
 							childItem.SourceObjectGroupListIds.ElementsAs(ctx, &values, false)
@@ -324,7 +324,7 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context, ver *version.Versio
 						}
 					}
 					if !childItem.SourceSecurityGroupListIds.IsNull() {
-						if true && !(ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1")))) {
+						if true && !(ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0")))) {
 							itemChildBody, _ = sjson.Set(itemChildBody, "sourceSecurityGroup.refId.optionType", "global")
 							var values []string
 							childItem.SourceSecurityGroupListIds.ElementsAs(ctx, &values, false)
@@ -332,7 +332,7 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context, ver *version.Versio
 						}
 					}
 					if !childItem.DestinationObjectGroupListIds.IsNull() {
-						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
 							itemChildBody, _ = sjson.Set(itemChildBody, "destinationObjectGroup.refId.optionType", "global")
 							var values []string
 							childItem.DestinationObjectGroupListIds.ElementsAs(ctx, &values, false)
@@ -340,7 +340,7 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context, ver *version.Versio
 						}
 					}
 					if !childItem.DestinationSecurityGroupListIds.IsNull() {
-						if true && !(ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1")))) {
+						if true && !(ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0")))) {
 							itemChildBody, _ = sjson.Set(itemChildBody, "destinationSecurityGroup.refId.optionType", "global")
 							var values []string
 							childItem.DestinationSecurityGroupListIds.ElementsAs(ctx, &values, false)
@@ -363,12 +363,12 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context, ver *version.Versio
 					}
 
 					if !childItem.SourceIpv6DataPrefixesVariable.IsNull() {
-						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) && item.SequenceIpType.ValueString() == "ipv6" {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
 							itemChildBody, _ = sjson.Set(itemChildBody, "sourceIpv6.ipv6Value.optionType", "variable")
 							itemChildBody, _ = sjson.Set(itemChildBody, "sourceIpv6.ipv6Value.value", childItem.SourceIpv6DataPrefixesVariable.ValueString())
 						}
 					} else if !childItem.SourceIpv6DataPrefixes.IsNull() {
-						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) && item.SequenceIpType.ValueString() == "ipv6" {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
 							itemChildBody, _ = sjson.Set(itemChildBody, "sourceIpv6.ipv6Value.optionType", "global")
 							var values []string
 							childItem.SourceIpv6DataPrefixes.ElementsAs(ctx, &values, false)
@@ -391,12 +391,12 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context, ver *version.Versio
 					}
 
 					if !childItem.DestinationIpv6DataPrefixesVariable.IsNull() {
-						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) && item.SequenceIpType.ValueString() == "ipv6" {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
 							itemChildBody, _ = sjson.Set(itemChildBody, "destinationIpv6.ipv6Value.optionType", "variable")
 							itemChildBody, _ = sjson.Set(itemChildBody, "destinationIpv6.ipv6Value.value", childItem.DestinationIpv6DataPrefixesVariable.ValueString())
 						}
 					} else if !childItem.DestinationIpv6DataPrefixes.IsNull() {
-						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) && item.SequenceIpType.ValueString() == "ipv6" {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
 							itemChildBody, _ = sjson.Set(itemChildBody, "destinationIpv6.ipv6Value.optionType", "global")
 							var values []string
 							childItem.DestinationIpv6DataPrefixes.ElementsAs(ctx, &values, false)

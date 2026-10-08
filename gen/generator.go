@@ -320,7 +320,6 @@ type YamlConfigCondition struct {
 	And          []YamlConfigCondition `yaml:"and"` // Optional nested conditions ANDed with this condition; enables OR-of-AND via operator 'or' + conditions each carrying 'and'
 	TfOnly       bool                  // Populated during augmentation, true if the target attribute is tf_only
 	DefaultValue string                // Populated during template execution, not from YAML
-	ParentLevels int                   // Populated during augmentation, number of nesting levels up where the target attribute lives
 }
 
 // Templating helper function to convert TF name to GO name
@@ -559,52 +558,6 @@ func resolveConditionTfOnly(attributes []YamlConfigAttribute) {
 	}
 }
 
-// conditionParentContext maps a template context variable to the one of its enclosing level.
-var conditionParentContext = map[string]string{
-	"childChildItem": "childItem",
-	"childItem":      "item",
-	"item":           "data",
-	"ccItem":         "cItem",
-	"cItem":          "item",
-}
-
-// resolveConditionScope records for each condition how many nesting levels up its target
-// attribute lives, so generated code references the enclosing loop variable instead of the
-// current one when a condition points at an ancestor attribute.
-func resolveConditionScope(attributes []YamlConfigAttribute, ancestors []map[string]bool) {
-	names := make(map[string]bool)
-	for _, a := range attributes {
-		names[a.TfName] = true
-	}
-	scopes := make([]map[string]bool, 0, len(ancestors)+1)
-	scopes = append(scopes, ancestors...)
-	scopes = append(scopes, names)
-
-	resolve := func(cond *YamlConfigCondition) {
-		if cond.Name == "" {
-			return
-		}
-		for i := len(scopes) - 1; i >= 0; i-- {
-			if scopes[i][cond.Name] {
-				cond.ParentLevels = len(scopes) - 1 - i
-				return
-			}
-		}
-	}
-
-	for i := range attributes {
-		for j := range attributes[i].ConditionalAttribute.Conditions {
-			resolve(&attributes[i].ConditionalAttribute.Conditions[j])
-			for k := range attributes[i].ConditionalAttribute.Conditions[j].And {
-				resolve(&attributes[i].ConditionalAttribute.Conditions[j].And[k])
-			}
-		}
-		if len(attributes[i].Attributes) > 0 {
-			resolveConditionScope(attributes[i].Attributes, scopes)
-		}
-	}
-}
-
 // HasMinVersionCondition recursively checks if any attribute in the list (or nested attributes)
 // has a conditional_attribute with a condition of type "MinVersion".
 func HasMinVersionCondition(attributes []YamlConfigAttribute) bool {
@@ -690,13 +643,6 @@ func BuildConditionCheck(cond YamlConfigCondition, context string) string {
 		check = fmt.Sprintf("ver.GreaterThanOrEqual(version.Must(version.NewVersion(\"%s\")))", cond.Value)
 	} else {
 		varName := ToGoName(cond.Name)
-		for i := 0; i < cond.ParentLevels; i++ {
-			parent, ok := conditionParentContext[context]
-			if !ok {
-				break
-			}
-			context = parent
-		}
 
 		if cond.Value == "" {
 			// Empty/null value means "check if attribute is null"
@@ -1554,7 +1500,6 @@ func augmentProfileParcelConfig(config *YamlConfig) {
 		}
 	}
 	resolveConditionTfOnly(config.Attributes)
-	resolveConditionScope(config.Attributes, nil)
 	if config.DsDescription == "" {
 		config.DsDescription = fmt.Sprintf("This data source can read the %s %s.", config.Name, CamelCase(config.ParcelType))
 	}
@@ -1578,7 +1523,6 @@ func augmentGenericConfig(config *YamlConfig, type_ string) {
 	for ia := range config.Attributes {
 		augmentGenericAttribute(&config.Attributes[ia])
 	}
-	resolveConditionScope(config.Attributes, nil)
 	if config.DsDescription == "" {
 		config.DsDescription = fmt.Sprintf("This data source can read the %s %s.", config.Name, type_)
 	}

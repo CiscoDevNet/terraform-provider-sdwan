@@ -89,7 +89,7 @@ Read-Only:
 - `destination_ports` (Set of String)
 - `destination_ports_variable` (String) Variable name
 - `destination_scalable_group_tag_list_ids` (Set of String)
-- `destination_security_group_list_ids` (Set of String)
+- `destination_security_group_list_ids` (Set of String) Deprecated, use `destination_object_group_list_ids` instead
 - `flat_app_list_ids` (Set of String)
 - `protocol_name_list_ids` (Set of String)
 - `protocol_names` (Set of String)
@@ -111,4 +111,4 @@ Read-Only:
 - `source_ports` (Set of String)
 - `source_ports_variable` (String) Variable name
 - `source_scalable_group_tag_list_ids` (Set of String)
-- `source_security_group_list_ids` (Set of String)
+- `source_security_group_list_ids` (Set of String) Deprecated, use `source_object_group_list_ids` instead

@@ -212,7 +212,7 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 										Computed:            true,
 									},
 									"source_security_group_list_ids": schema.SetAttribute{
-										MarkdownDescription: "",
+										MarkdownDescription: "Deprecated, use `source_object_group_list_ids` instead",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
@@ -222,7 +222,7 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 										Computed:            true,
 									},
 									"destination_security_group_list_ids": schema.SetAttribute{
-										MarkdownDescription: "",
+										MarkdownDescription: "Deprecated, use `destination_object_group_list_ids` instead",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},

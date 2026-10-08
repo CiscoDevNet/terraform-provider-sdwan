@@ -3,6 +3,9 @@
 - Add `sdwan_wan_edge_certificate_validate` and `sdwan_send_wan_edge_list_to_controllers` resources to manage WAN edge certificate validity and push the certificate list to the controllers, with drift detection based on the Manager's out-of-sync state
 - Add optional `name`-based lookup to the `sdwan_configuration_group` and `sdwan_policy_group` data sources, and to all feature profile data sources (`sdwan_system_feature_profile`, `sdwan_transport_feature_profile`, `sdwan_service_feature_profile`, `sdwan_cli_feature_profile`, `sdwan_other_feature_profile`, `sdwan_application_priority_feature_profile`, `sdwan_embedded_security_feature_profile`, `sdwan_dns_security_feature_profile`, `sdwan_sig_security_feature_profile`, `sdwan_sse_feature_profile`, `sdwan_topology_feature_profile`, `sdwan_policy_object_feature_profile`). Exactly one of `id` or `name` must be configured; `name` is resolved against the corresponding list endpoint.
 - Fix `sdwan_configuration_group` and `sdwan_policy_group` data sources failing with HTTP 500 (`CFGRP0014`/`PLGRP0014`) when the group has no associated devices: the device variables are now only read when devices exist
+- Bump `sdwan_embedded_security_ngfw_policy` schema to `20.18.0`
+- Fix `sdwan_embedded_security_ngfw_policy` attributes whose schema declares multiple `optionType` values in a single branch
+- Deprecate `source_security_group_list_ids` and `destination_security_group_list_ids` in `sdwan_embedded_security_ngfw_policy`: deprecated in favor of `source_object_group_list_ids` and `destination_object_group_list_ids` on Manager 20.18+
 
 ## 0.11.6
 
@@ -15,9 +18,6 @@
 - Fix `sdwan_service_lan_vpn_interface_svi_feature`: `track_omp = true` on `ipv4_vrrps`/`ipv6_vrrps` no longer sends an invalid `prefix_list`/`track_prefix_list` stub, fixing SCHVALID0001 errors
 - Fix `sdwan_system_security_feature` sending `extended_anti_replay_window` with the SD-WAN Manager default of `256` when the attribute is not declared
 - Fix `sdwan_transport_route_policy_feature`: an `accept` sequence with no `actions` no longer sends synthesized `setCommunity` defaults
-- Bump `sdwan_embedded_security_ngfw_policy` schema to `20.18.0`
-- Fix `sdwan_embedded_security_ngfw_policy` attributes whose schema declares multiple `optionType` values in a single branch
-- Deprecate `source_security_group_list_ids` and `destination_security_group_list_ids` in `sdwan_embedded_security_ngfw_policy`: deprecated in favor of `source_object_group_list_ids` and `destination_object_group_list_ids` on Manager 20.18+
 
 ## 0.11.5
 

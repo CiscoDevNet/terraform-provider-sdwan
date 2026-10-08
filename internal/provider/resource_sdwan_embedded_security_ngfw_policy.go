@@ -103,7 +103,7 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"is_rule_set": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+							MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 							Optional:            true,
 						},
 						"sequence_id": schema.StringAttribute{
@@ -121,7 +121,7 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 							},
 						},
 						"sequence_comment": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+							MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 							Optional:            true,
 						},
 						"base_action": schema.StringAttribute{
@@ -132,7 +132,7 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 							},
 						},
 						"sequence_ip_type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher").AddStringEnumDescription("ipv4", "ipv6").AddDefaultValueDescription("ipv4").String,
+							MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.0` or higher").AddStringEnumDescription("ipv4", "ipv6").AddDefaultValueDescription("ipv4").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("ipv4", "ipv6"),
@@ -160,7 +160,7 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 										Optional:            true,
 									},
 									"source_data_ipv6_prefix_list_ids": schema.SetAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher and `sequence_ip_type` equal to `ipv6`").String,
+										MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
@@ -170,7 +170,7 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 										Optional:            true,
 									},
 									"destination_data_ipv6_prefix_list_ids": schema.SetAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher and `sequence_ip_type` equal to `ipv6`").String,
+										MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
@@ -230,22 +230,22 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 										Optional:            true,
 									},
 									"source_object_group_list_ids": schema.SetAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+										MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
 									"source_security_group_list_ids": schema.SetAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version lower than `20.18.1`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Deprecated, use `source_object_group_list_ids` instead, Attribute conditional on SD-WAN Manager version lower than `20.18.0`").String,
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
 									"destination_object_group_list_ids": schema.SetAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+										MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
 									"destination_security_group_list_ids": schema.SetAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version lower than `20.18.1`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Deprecated, use `destination_object_group_list_ids` instead, Attribute conditional on SD-WAN Manager version lower than `20.18.0`").String,
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
@@ -259,12 +259,12 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 										Optional:            true,
 									},
 									"source_ipv6_data_prefixes": schema.SetAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher and `sequence_ip_type` equal to `ipv6`").String,
+										MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
 									"source_ipv6_data_prefixes_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher and `sequence_ip_type` equal to `ipv6`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 										Optional:            true,
 									},
 									"destination_data_prefixes": schema.SetAttribute{
@@ -277,12 +277,12 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 										Optional:            true,
 									},
 									"destination_ipv6_data_prefixes": schema.SetAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher and `sequence_ip_type` equal to `ipv6`").String,
+										MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
 									"destination_ipv6_data_prefixes_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher and `sequence_ip_type` equal to `ipv6`").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 										Optional:            true,
 									},
 									"destination_fqdns": schema.SetAttribute{

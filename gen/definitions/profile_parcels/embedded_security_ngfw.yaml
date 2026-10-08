@@ -24,7 +24,7 @@ attributes:
       conditional_attribute:
         conditions:
           - type: MinVersion
-            value: 20.18.1
+            value: 20.18.0
     - model_name: sequenceId
       minimum_test_value: '"1"'
       example: 1
@@ -39,18 +39,19 @@ attributes:
       conditional_attribute:
         conditions:
           - type: MinVersion
-            value: 20.18.1
+            value: 20.18.0
     - model_name: baseAction
       minimum_test_value: '"drop"'
       example: drop
     - model_name: sequenceIpType
       tf_name: sequence_ip_type
+      description: IP address family the sequence matches on, `ipv4` sequences only accept the IPv4 match attributes and `ipv6` sequences only accept the IPv6 ones
       example: ipv4
       test_tags: [SDWAN_2018]
       conditional_attribute:
         conditions:
           - type: MinVersion
-            value: 20.18.1
+            value: 20.18.0
     - model_name: sequenceType
       minimum_test_value: '"ngfirewall"'
       example: ngfirewall
@@ -68,17 +69,14 @@ attributes:
       - model_name: refId
         tf_name: source_data_ipv6_prefix_list_ids
         data_path: [sourceDataIpv6PrefixList]
+        description: Only supported on sequences with `sequence_ip_type` set to `ipv6`
         exclude_test: true
         example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
         test_tags: [SDWAN_2018]
         conditional_attribute:
-          operator: and
           conditions:
             - type: MinVersion
-              value: 20.18.1
-            - name: sequence_ip_type
-              type: String
-              value: ipv6
+              value: 20.18.0
       - model_name: refId
         tf_name: destination_data_prefix_list_ids
         data_path: [destinationDataPrefixList]
@@ -87,17 +85,14 @@ attributes:
       - model_name: refId
         tf_name: destination_data_ipv6_prefix_list_ids
         data_path: [destinationDataIpv6PrefixList]
+        description: Only supported on sequences with `sequence_ip_type` set to `ipv6`
         exclude_test: true
         example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
         test_tags: [SDWAN_2018]
         conditional_attribute:
-          operator: and
           conditions:
             - type: MinVersion
-              value: 20.18.1
-            - name: sequence_ip_type
-              type: String
-              value: ipv6
+              value: 20.18.0
       - model_name: refId
         tf_name: destination_fqdn_list_ids
         data_path: [destinationFqdnList]
@@ -162,10 +157,11 @@ attributes:
         conditional_attribute:
           conditions:
             - type: MinVersion
-              value: 20.18.1
+              value: 20.18.0
       - model_name: refId
         tf_name: source_security_group_list_ids
         data_path: [sourceSecurityGroup]
+        description: Deprecated, use `source_object_group_list_ids` instead
         exclude_test: true
         example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
         no_augment_config: true
@@ -175,7 +171,7 @@ attributes:
         conditional_attribute:
           conditions:
             - type: MinVersion
-              value: 20.18.1
+              value: 20.18.0
               negate: true
       - model_name: refId
         tf_name: destination_object_group_list_ids
@@ -186,10 +182,11 @@ attributes:
         conditional_attribute:
           conditions:
             - type: MinVersion
-              value: 20.18.1
+              value: 20.18.0
       - model_name: refId
         tf_name: destination_security_group_list_ids
         data_path: [destinationSecurityGroup]
+        description: Deprecated, use `destination_object_group_list_ids` instead
         exclude_test: true
         example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
         no_augment_config: true
@@ -199,7 +196,7 @@ attributes:
         conditional_attribute:
           conditions:
             - type: MinVersion
-              value: 20.18.1
+              value: 20.18.0
               negate: true
       - model_name: ipv4Value
         tf_name: source_data_prefixes
@@ -209,17 +206,14 @@ attributes:
       - model_name: ipv6Value
         tf_name: source_ipv6_data_prefixes
         data_path: [sourceIpv6]
+        description: Only supported on sequences with `sequence_ip_type` set to `ipv6`
         example: 2001:db8::/32
         exclude_test: true
         test_tags: [SDWAN_2018]
         conditional_attribute:
-          operator: and
           conditions:
             - type: MinVersion
-              value: 20.18.1
-            - name: sequence_ip_type
-              type: String
-              value: ipv6
+              value: 20.18.0
       - model_name: ipv4Value
         tf_name: destination_data_prefixes
         data_path: [destinationIp]
@@ -228,17 +222,14 @@ attributes:
       - model_name: ipv6Value
         tf_name: destination_ipv6_data_prefixes
         data_path: [destinationIpv6]
+        description: Only supported on sequences with `sequence_ip_type` set to `ipv6`
         exclude_test: true
         example: 2001:db8::/32
         test_tags: [SDWAN_2018]
         conditional_attribute:
-          operator: and
           conditions:
             - type: MinVersion
-              value: 20.18.1
-            - name: sequence_ip_type
-              type: String
-              value: ipv6
+              value: 20.18.0
       - model_name: fqdnValue
         tf_name: destination_fqdns
         data_path: [destinationFqdn]
