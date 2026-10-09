@@ -508,6 +508,173 @@
                   "value"
                 ],
                 "additionalProperties": false
+              },
+              "highSpeedLogging": {
+                "description": "High Speed Logging",
+                "type": "array",
+                "maxItems": 4,
+                "uniqueItems": true,
+                "items": {
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "enum": [
+                            "server1",
+                            "server2",
+                            "server3",
+                            "server4"
+                          ]
+                        },
+                        "sourceInterface": {
+                          "description": "InterfaceName",
+                          "type": "object",
+                          "oneOf": [
+                            {
+                              "properties": {
+                                "optionType": {
+                                  "type": "string",
+                                  "enum": [
+                                    "variable"
+                                  ]
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                  "minLength": 1,
+                                  "maxLength": 128
+                                },
+                                "default": {
+                                  "type": "string",
+                                  "pattern": "^(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)(\\w+)((\\/\\d+)*(\\.\\d+)?)?$",
+                                  "minLength": 3,
+                                  "maxLength": 32
+                                },
+                                "description": {
+                                  "minLength": 1,
+                                  "type": "string",
+                                  "maxLength": 128
+                                }
+                              },
+                              "required": [
+                                "optionType",
+                                "value"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "properties": {
+                                "optionType": {
+                                  "type": "string",
+                                  "enum": [
+                                    "global"
+                                  ]
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "pattern": "^(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)(\\w+)((\\/\\d+)*(\\.\\d+)?)?$",
+                                  "minLength": 3,
+                                  "maxLength": 32
+                                }
+                              },
+                              "required": [
+                                "optionType",
+                                "value"
+                              ],
+                              "additionalProperties": false
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "sourceInterface"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "sysLogServerSourceInterface": {
+                "description": "InterfaceName",
+                "type": "object",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "optionType": {
+                        "type": "string",
+                        "enum": [
+                          "variable"
+                        ]
+                      },
+                      "value": {
+                        "type": "string",
+                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "default": {
+                        "type": "string",
+                        "pattern": "^(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)(\\w+)((\\/\\d+)*(\\.\\d+)?)?$",
+                        "minLength": 3,
+                        "maxLength": 32
+                      },
+                      "description": {
+                        "minLength": 1,
+                        "type": "string",
+                        "maxLength": 128
+                      }
+                    },
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "properties": {
+                      "optionType": {
+                        "type": "string",
+                        "enum": [
+                          "global"
+                        ]
+                      },
+                      "value": {
+                        "type": "string",
+                        "pattern": "^(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)(\\w+)((\\/\\d+)*(\\.\\d+)?)?$",
+                        "minLength": 3,
+                        "maxLength": 32
+                      }
+                    },
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "optimized": {
+                "type": "object",
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
+                ],
+                "additionalProperties": false
               }
             },
             "additionalProperties": false
@@ -804,7 +971,7 @@
         ]
       },
       "metadata": {
-        "minVManageVersion": "20.15.1"
+        "minVManageVersion": "20.16.1"
       }
     },
     "required": [

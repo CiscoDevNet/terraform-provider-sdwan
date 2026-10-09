@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -217,6 +218,49 @@ func (r *EmbeddedSecurityProfileParcelResource) Schema(ctx context.Context, req 
 					stringvalidator.OneOf("close", "open"),
 				},
 			},
+			"high_speed_logging": schema.ListNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging, Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
+				Optional:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"name": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("server1", "server2", "server3", "server4").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("server1", "server2", "server3", "server4"),
+							},
+						},
+						"source_interface": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("InterfaceName").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(3, 32),
+								stringvalidator.RegexMatches(regexp.MustCompile(`^(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)(\w+)((\/\d+)*(\.\d+)?)?$`), ""),
+							},
+						},
+						"source_interface_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+					},
+				},
+			},
+			"syslog_server_source_interface": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("InterfaceName, Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(3, 32),
+					stringvalidator.RegexMatches(regexp.MustCompile(`^(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)(\w+)((\/\d+)*(\.\d+)?)?$`), ""),
+				},
+			},
+			"syslog_server_source_interface_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
+				Optional:            true,
+			},
+			"optimized": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
+				Optional:            true,
+			},
 			"nat": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Optional:            true,
@@ -273,7 +317,9 @@ func (r *EmbeddedSecurityProfileParcelResource) Create(ctx context.Context, req 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
 	// Create object
-	body := plan.toBody(ctx)
+
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -356,7 +402,8 @@ func (r *EmbeddedSecurityProfileParcelResource) Update(ctx context.Context, req 
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
