@@ -836,7 +836,12 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.distance.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.distance.value", item.AdministrativeDistanceVariable.ValueString())
 				}
-			} else if !item.AdministrativeDistance.IsNull() {
+			} else if item.AdministrativeDistance.IsNull() {
+				if true && item.Gateway.ValueString() == "null0" {
+					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.distance.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.distance.value", 1)
+				}
+			} else {
 				if true && item.Gateway.ValueString() == "null0" {
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.distance.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.distance.value", item.AdministrativeDistance.ValueInt64())
@@ -892,7 +897,12 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "distance.optionType", "variable")
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "distance.value", childChildItem.AdministrativeDistanceVariable.ValueString())
 								}
-							} else if !childChildItem.AdministrativeDistance.IsNull() {
+							} else if childChildItem.AdministrativeDistance.IsNull() {
+								if true {
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "distance.optionType", "default")
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "distance.value", 1)
+								}
+							} else {
 								if true {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "distance.optionType", "global")
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "distance.value", childChildItem.AdministrativeDistance.ValueInt64())
@@ -1015,7 +1025,12 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "distance.optionType", "variable")
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "distance.value", childChildItem.AdministrativeDistanceVariable.ValueString())
 								}
-							} else if !childChildItem.AdministrativeDistance.IsNull() {
+							} else if childChildItem.AdministrativeDistance.IsNull() {
+								if true {
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "distance.optionType", "default")
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "distance.value", 1)
+								}
+							} else {
 								if true {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "distance.optionType", "global")
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "distance.value", childChildItem.AdministrativeDistance.ValueInt64())
