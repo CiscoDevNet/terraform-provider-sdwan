@@ -5,6 +5,10 @@
 - Fix `sdwan_configuration_group` and `sdwan_policy_group` data sources failing with HTTP 500 (`CFGRP0014`/`PLGRP0014`) when the group has no associated devices: the device variables are now only read when devices exist
 - Fix `sdwan_service_lan_vpn_feature`: `administrative_distance` on `ip_static_route_interface`/`ipv6_static_route_interface` `next_hop` and on `null0` IPv4 static routes now defaults to `1` when not set, fixing schema validation errors when it is omitted
 - Fix generator to extract enum values from different oneOf branches.
+- Bump `sdwan_embedded_security_ngfw_policy` schema to `20.18.0`
+- Fix `sdwan_embedded_security_ngfw_policy` attributes whose schema declares multiple `optionType` values in a single branch
+- Deprecate `source_security_group_list_ids` and `destination_security_group_list_ids` in `sdwan_embedded_security_ngfw_policy`: deprecated in favor of `source_object_group_list_ids` and `destination_object_group_list_ids` on Manager 20.18+
+- Bump `sdwan_embedded_security_policy` schema to `20.18.0`
 
 ## 0.11.6
 

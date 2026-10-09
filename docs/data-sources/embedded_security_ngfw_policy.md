@@ -46,8 +46,11 @@ Read-Only:
 - `actions` (Attributes List) can be empty array or with type or parameter (see [below for nested schema](#nestedatt--sequences--actions))
 - `base_action` (String)
 - `disable_sequence` (Boolean)
+- `is_rule_set` (Boolean)
 - `match_entries` (Attributes List) (see [below for nested schema](#nestedatt--sequences--match_entries))
+- `sequence_comment` (String)
 - `sequence_id` (String)
+- `sequence_ip_type` (String)
 - `sequence_name` (String)
 - `sequence_type` (String)
 
@@ -69,6 +72,7 @@ Read-Only:
 - `app_list_ids` (Set of String)
 - `application_families` (Set of String)
 - `applications` (Set of String)
+- `destination_data_ipv6_prefix_list_ids` (Set of String)
 - `destination_data_prefix_list_ids` (Set of String)
 - `destination_data_prefixes` (Set of String)
 - `destination_data_prefixes_variable` (String) Variable name
@@ -78,15 +82,19 @@ Read-Only:
 - `destination_geo_location_list_ids` (Set of String)
 - `destination_geo_locations` (Set of String)
 - `destination_geo_locations_variable` (String) Variable name
+- `destination_ipv6_data_prefixes` (Set of String)
+- `destination_ipv6_data_prefixes_variable` (String) Variable name
+- `destination_object_group_list_ids` (Set of String)
 - `destination_port_list_ids` (Set of String)
 - `destination_ports` (Set of String)
 - `destination_ports_variable` (String) Variable name
 - `destination_scalable_group_tag_list_ids` (Set of String)
-- `destination_security_group_list_ids` (Set of String)
+- `destination_security_group_list_ids` (Set of String) Deprecated, use `destination_object_group_list_ids` instead
 - `flat_app_list_ids` (Set of String)
 - `protocol_name_list_ids` (Set of String)
 - `protocol_names` (Set of String)
 - `protocols` (Set of String)
+- `source_data_ipv6_prefix_list_ids` (Set of String)
 - `source_data_prefix_list_ids` (Set of String)
 - `source_data_prefixes` (Set of String)
 - `source_data_prefixes_variable` (String) Variable name
@@ -96,8 +104,11 @@ Read-Only:
 - `source_identity_list_ids` (Set of String)
 - `source_identity_usergroups` (Set of String)
 - `source_identity_users` (Set of String)
+- `source_ipv6_data_prefixes` (Set of String)
+- `source_ipv6_data_prefixes_variable` (String) Variable name
+- `source_object_group_list_ids` (Set of String)
 - `source_port_list_ids` (Set of String)
 - `source_ports` (Set of String)
 - `source_ports_variable` (String) Variable name
 - `source_scalable_group_tag_list_ids` (Set of String)
-- `source_security_group_list_ids` (Set of String)
+- `source_security_group_list_ids` (Set of String) Deprecated, use `source_object_group_list_ids` instead

@@ -2,7 +2,7 @@
 name: Embedded Security NGFW
 rest_endpoint: /v1/feature-profile/sdwan/embedded-security/%v/unified/ngfirewall
 minimum_version: 20.15.0
-test_tags: [SDWAN_2015]
+test_tags: [SDWAN_2015, SDWAN_2018]
 parcel_type: policy
 attributes:
   - tf_name: feature_profile_id
@@ -17,16 +17,41 @@ attributes:
     example: pass
   - model_name: sequences
     minimum_test_value: 'true'
-    attributes: 
-    - model_name: sequenceId 
+    attributes:
+    - model_name: isRuleSet
+      example: false
+      test_tags: [SDWAN_2018]
+      conditional_attribute:
+        conditions:
+          - type: MinVersion
+            value: 20.18.0
+    - model_name: sequenceId
       minimum_test_value: '"1"'
       example: 1
     - model_name: sequenceName
       minimum_test_value: '"security"'
       example: security
+    - model_name: sequenceComment
+      no_option_type: true
+      type: String
+      example: comment1
+      test_tags: [SDWAN_2018]
+      conditional_attribute:
+        conditions:
+          - type: MinVersion
+            value: 20.18.0
     - model_name: baseAction
       minimum_test_value: '"drop"'
       example: drop
+    - model_name: sequenceIpType
+      tf_name: sequence_ip_type
+      description: IP address family the sequence matches on, `ipv4` sequences only accept the IPv4 match attributes and `ipv6` sequences only accept the IPv6 ones
+      example: ipv4
+      test_tags: [SDWAN_2018]
+      conditional_attribute:
+        conditions:
+          - type: MinVersion
+            value: 20.18.0
     - model_name: sequenceType
       minimum_test_value: '"ngfirewall"'
       example: ngfirewall
@@ -42,10 +67,32 @@ attributes:
         exclude_test: true
         example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
       - model_name: refId
+        tf_name: source_data_ipv6_prefix_list_ids
+        data_path: [sourceDataIpv6PrefixList]
+        description: Only supported on sequences with `sequence_ip_type` set to `ipv6`
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+        test_tags: [SDWAN_2018]
+        conditional_attribute:
+          conditions:
+            - type: MinVersion
+              value: 20.18.0
+      - model_name: refId
         tf_name: destination_data_prefix_list_ids
         data_path: [destinationDataPrefixList]
         exclude_test: true
         example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: destination_data_ipv6_prefix_list_ids
+        data_path: [destinationDataIpv6PrefixList]
+        description: Only supported on sequences with `sequence_ip_type` set to `ipv6`
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+        test_tags: [SDWAN_2018]
+        conditional_attribute:
+          conditions:
+            - type: MinVersion
+              value: 20.18.0
       - model_name: refId
         tf_name: destination_fqdn_list_ids
         data_path: [destinationFqdnList]
@@ -102,25 +149,87 @@ attributes:
         exclude_test: true
         example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
       - model_name: refId
-        tf_name: source_security_group_list_ids
-        data_path: [sourceSecurityGroup]
+        tf_name: source_object_group_list_ids
+        data_path: [sourceObjectGroup]
         exclude_test: true
         example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+        test_tags: [SDWAN_2018]
+        conditional_attribute:
+          conditions:
+            - type: MinVersion
+              value: 20.18.0
+      - model_name: refId
+        tf_name: source_security_group_list_ids
+        data_path: [sourceSecurityGroup]
+        description: Deprecated, use `source_object_group_list_ids` instead
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+        no_augment_config: true
+        type: Set
+        element_type: String
+        test_tags: [SDWAN_2015]
+        conditional_attribute:
+          conditions:
+            - type: MinVersion
+              value: 20.18.0
+              negate: true
+      - model_name: refId
+        tf_name: destination_object_group_list_ids
+        data_path: [destinationObjectGroup]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+        test_tags: [SDWAN_2018]
+        conditional_attribute:
+          conditions:
+            - type: MinVersion
+              value: 20.18.0
       - model_name: refId
         tf_name: destination_security_group_list_ids
         data_path: [destinationSecurityGroup]
+        description: Deprecated, use `destination_object_group_list_ids` instead
         exclude_test: true
         example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+        no_augment_config: true
+        type: Set
+        element_type: String
+        test_tags: [SDWAN_2015]
+        conditional_attribute:
+          conditions:
+            - type: MinVersion
+              value: 20.18.0
+              negate: true
       - model_name: ipv4Value
         tf_name: source_data_prefixes
         data_path: [sourceIp]
         example: 10.0.0.2/12
         exclude_test: true
+      - model_name: ipv6Value
+        tf_name: source_ipv6_data_prefixes
+        data_path: [sourceIpv6]
+        description: Only supported on sequences with `sequence_ip_type` set to `ipv6`
+        example: 2001:db8::/32
+        exclude_test: true
+        test_tags: [SDWAN_2018]
+        conditional_attribute:
+          conditions:
+            - type: MinVersion
+              value: 20.18.0
       - model_name: ipv4Value
         tf_name: destination_data_prefixes
         data_path: [destinationIp]
         exclude_test: true
         example: 10.0.0.3/12
+      - model_name: ipv6Value
+        tf_name: destination_ipv6_data_prefixes
+        data_path: [destinationIpv6]
+        description: Only supported on sequences with `sequence_ip_type` set to `ipv6`
+        exclude_test: true
+        example: 2001:db8::/32
+        test_tags: [SDWAN_2018]
+        conditional_attribute:
+          conditions:
+            - type: MinVersion
+              value: 20.18.0
       - model_name: fqdnValue
         tf_name: destination_fqdns
         data_path: [destinationFqdn]
@@ -177,6 +286,7 @@ attributes:
       - model_name: refId
         tf_name: parameter_id
         data_path: [parameter]
+        type: String
         exclude_test: true
         example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
 

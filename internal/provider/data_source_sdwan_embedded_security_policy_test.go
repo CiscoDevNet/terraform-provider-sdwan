@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanEmbeddedSecurityProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015")
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "assembly.0.entries.0.source_zone", "untrusted"))
@@ -44,6 +44,16 @@ func TestAccDataSourceSdwanEmbeddedSecurityProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "session_reclassify_allow", "on"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "icmp_unreachable_allow", "on"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "failure_mode", "close"))
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "high_speed_logging.0.name", "server1"))
+		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "high_speed_logging.0.source_interface", "GigabitEthernet1"))
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "syslog_server_source_interface", "GigabitEthernet1"))
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "optimized", "false"))
+	}
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "nat", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "download_url_database_on_device", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_policy.test", "resource_profile", "low"))
@@ -128,6 +138,18 @@ func testAccDataSourceSdwanEmbeddedSecurityProfileParcelConfig() string {
 	config += `	session_reclassify_allow = "on"` + "\n"
 	config += `	icmp_unreachable_allow = "on"` + "\n"
 	config += `	failure_mode = "close"` + "\n"
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	high_speed_logging = [{` + "\n"
+		config += `	  name = "server1"` + "\n"
+		config += `	  source_interface = "GigabitEthernet1"` + "\n"
+		config += `	}]` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	syslog_server_source_interface = "GigabitEthernet1"` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	optimized = false` + "\n"
+	}
 	config += `	nat = true` + "\n"
 	config += `	download_url_database_on_device = false` + "\n"
 	config += `	resource_profile = "low"` + "\n"
@@ -166,6 +188,18 @@ func testAccDataSourceSdwanEmbeddedSecurityProfileParcelByNameConfig() string {
 	config += `	session_reclassify_allow = "on"` + "\n"
 	config += `	icmp_unreachable_allow = "on"` + "\n"
 	config += `	failure_mode = "close"` + "\n"
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	high_speed_logging = [{` + "\n"
+		config += `	  name = "server1"` + "\n"
+		config += `	  source_interface = "GigabitEthernet1"` + "\n"
+		config += `	}]` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	syslog_server_source_interface = "GigabitEthernet1"` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	optimized = false` + "\n"
+	}
 	config += `	nat = true` + "\n"
 	config += `	download_url_database_on_device = false` + "\n"
 	config += `	resource_profile = "low"` + "\n"
