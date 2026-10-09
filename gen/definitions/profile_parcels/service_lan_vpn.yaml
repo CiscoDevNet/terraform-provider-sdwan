@@ -138,7 +138,7 @@ attributes:
         tf_name: administrative_distance
         example: 1
         default_value: 1
-        default_value_present: true        
+        default_value_present: true
     - model_name: nextHopWithTracker
       tf_name: next_hop_with_trackers
       data_path: [oneOfIpRoute, nextHopContainer]
@@ -212,7 +212,7 @@ attributes:
           tf_name: administrative_distance
           example: 1
           default_value: 1
-          default_value_present: true  
+          default_value_present: true
   - model_name: ipv6Route
     tf_name: ipv6_static_routes
     attributes:
