@@ -14,7 +14,6 @@ description: |-
 - Fix `sdwan_configuration_group` and `sdwan_policy_group` data sources failing with HTTP 500 (`CFGRP0014`/`PLGRP0014`) when the group has no associated devices: the device variables are now only read when devices exist
 - Fix `sdwan_service_lan_vpn_feature`: `administrative_distance` on `ip_static_route_interface`/`ipv6_static_route_interface` `next_hop` and on `null0` IPv4 static routes now defaults to `1` when not set, fixing schema validation errors when it is omitted
 - Fix generator to extract enum values from different oneOf branches.
-- Add `source_interface` attribute to `collectors` on `sdwan_network_hierarchy_cflowd` resource and data source (SD-WAN Manager 20.18+), [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/770)
 - Bump schema to `20.18.0` for the following application priority resources: `sdwan_application_priority_qos_policy`, `sdwan_application_priority_traffic_policy_policy`
 - Add `hierarchy_ids` and `preferred_color_group_restrict` attributes to `sdwan_application_priority_traffic_policy_policy` resource and data source (SD-WAN Manager 20.18+)
 

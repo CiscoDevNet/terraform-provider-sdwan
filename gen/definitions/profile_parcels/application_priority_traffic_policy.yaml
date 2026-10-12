@@ -28,9 +28,11 @@ attributes:
   - model_name: vpn
     tf_name: vpns
     data_path: [target]
+    mandatory: true
     example: "edge_basic_vpn1"
   - model_name: direction
     data_path: [target]
+    mandatory: true
     example: all
   - model_name: sequences
     attributes:
@@ -188,6 +190,7 @@ attributes:
           example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
         - model_name: preferredColorGroupRestrict
           tf_name: preferred_color_group_restrict
+          description: Restrict traffic to the preferred color group, requires `preferred_color_group_list_id` to be set
           example: true
           test_tags: [SDWAN_2018]
           conditional_attribute:
@@ -231,6 +234,7 @@ attributes:
           test_tags: [SDWAN_2018]
         - model_name: preferredColorGroupRestrict
           tf_name: preferred_color_group_restrict
+          description: Restrict traffic to the preferred color group, requires `preferred_color_group_id` to be set
           example: true
           test_tags: [SDWAN_2018]
           conditional_attribute:

@@ -101,11 +101,11 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 			"vpns": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				ElementType:         types.StringType,
-				Optional:            true,
+				Required:            true,
 			},
 			"direction": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("service", "tunnel", "all").String,
-				Optional:            true,
+				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("service", "tunnel", "all"),
 				},

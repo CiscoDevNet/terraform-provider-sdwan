@@ -55,15 +55,15 @@ resource "sdwan_application_priority_traffic_policy_policy" "example" {
 ### Required
 
 - `default_action` (String) - Choices: `drop`, `accept`
+- `direction` (String) - Choices: `service`, `tunnel`, `all`
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Policy
+- `vpns` (Set of String)
 
 ### Optional
 
 - `description` (String) The description of the Policy
-- `direction` (String) - Choices: `service`, `tunnel`, `all`
 - `sequences` (Attributes List) Traffic policy sequence list (see [below for nested schema](#nestedatt--sequences))
-- `vpns` (Set of String)
 
 ### Read-Only
 
