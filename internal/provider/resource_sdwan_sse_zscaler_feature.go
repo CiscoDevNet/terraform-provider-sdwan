@@ -803,7 +803,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 			},
 			"tracker_source_ip": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Source IP address for Tracker").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`^((25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)$`), ""),
 				},

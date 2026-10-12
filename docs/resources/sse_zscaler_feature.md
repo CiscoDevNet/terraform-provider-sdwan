@@ -78,7 +78,6 @@ resource "sdwan_sse_zscaler_feature" "example" {
 - `interface_pairs` (Attributes List) Interface Pair for active and backup (see [below for nested schema](#nestedatt--interface_pairs))
 - `interfaces` (Attributes List) Interface name: IPsec when present (see [below for nested schema](#nestedatt--interfaces))
 - `name` (String) The name of the Feature
-- `tracker_source_ip` (String) Source IP address for Tracker
 
 ### Optional
 
@@ -149,6 +148,7 @@ resource "sdwan_sse_zscaler_feature" "example" {
 - `surrogate_ip` (Boolean) Enable Surrogate IP, Attribute conditional on `auth_required` equal to `true`
   - Default value: `false`
 - `surrogate_ip_variable` (String) Variable name, Attribute conditional on `auth_required` equal to `true`
+- `tracker_source_ip` (String) Source IP address for Tracker
 - `tracker_source_ip_variable` (String) Variable name
 - `trackers` (Attributes List) Tracker configuration (see [below for nested schema](#nestedatt--trackers))
 - `up_bandwidth` (Number) , Attribute conditional on `enforce_bandwidth_control` equal to `true`
