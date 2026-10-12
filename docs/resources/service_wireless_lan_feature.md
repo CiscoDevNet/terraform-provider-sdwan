@@ -109,7 +109,7 @@ Optional:
 - `radius_server_secret` (String) Set RADIUS server shared secret, Attribute conditional on `security_type` equal to `enterprise`
 - `radius_server_secret_variable` (String) Variable name, Attribute conditional on `security_type` equal to `enterprise`
 - `security_type` (String) Select security type
-  - Choices: `personal`, `open`, `enterprise`
+  - Choices: `enterprise`, `personal`, `open`
 - `ssid_name` (String) Configure wlan SSID
 - `vlan_id` (Number) Set VLAN ID
   - Range: `1`-`4094`
