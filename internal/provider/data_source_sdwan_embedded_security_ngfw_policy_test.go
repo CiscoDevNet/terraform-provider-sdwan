@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanEmbeddedSecurityNGFWProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "default_action", "pass"))
@@ -39,13 +39,7 @@ func TestAccDataSourceSdwanEmbeddedSecurityNGFWProfileParcel(t *testing.T) {
 	}
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.sequence_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.sequence_name", "security"))
-	if os.Getenv("SDWAN_2018") != "" {
-		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.sequence_comment", "comment1"))
-	}
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.base_action", "drop"))
-	if os.Getenv("SDWAN_2018") != "" {
-		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.sequence_ip_type", "ipv4"))
-	}
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.sequence_type", "ngfirewall"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.disable_sequence", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.actions.0.type", "log"))
@@ -95,13 +89,7 @@ func testAccDataSourceSdwanEmbeddedSecurityNGFWProfileParcelConfig() string {
 	}
 	config += `	  sequence_id = "1"` + "\n"
 	config += `	  sequence_name = "security"` + "\n"
-	if os.Getenv("SDWAN_2018") != "" {
-		config += `	  sequence_comment = "comment1"` + "\n"
-	}
 	config += `	  base_action = "drop"` + "\n"
-	if os.Getenv("SDWAN_2018") != "" {
-		config += `	  sequence_ip_type = "ipv4"` + "\n"
-	}
 	config += `	  sequence_type = "ngfirewall"` + "\n"
 	config += `	  disable_sequence = false` + "\n"
 	config += `	  match_entries = [{` + "\n"
@@ -138,13 +126,7 @@ func testAccDataSourceSdwanEmbeddedSecurityNGFWProfileParcelByNameConfig() strin
 	}
 	config += `	  sequence_id = "1"` + "\n"
 	config += `	  sequence_name = "security"` + "\n"
-	if os.Getenv("SDWAN_2018") != "" {
-		config += `	  sequence_comment = "comment1"` + "\n"
-	}
 	config += `	  base_action = "drop"` + "\n"
-	if os.Getenv("SDWAN_2018") != "" {
-		config += `	  sequence_ip_type = "ipv4"` + "\n"
-	}
 	config += `	  sequence_type = "ngfirewall"` + "\n"
 	config += `	  disable_sequence = false` + "\n"
 	config += `	  match_entries = [{` + "\n"

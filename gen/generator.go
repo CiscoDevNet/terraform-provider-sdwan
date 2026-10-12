@@ -1190,19 +1190,6 @@ func augmentFeatureTemplateConfig(config *YamlConfig) {
 	}
 }
 
-// A single schema branch can list several option types, eg. `"enum": ["default", "global"]`.
-func optionTypeEnumContains(r gjson.Result, optionType string) bool {
-	found := false
-	r.Get("properties.optionType.enum").ForEach(func(k, v gjson.Result) bool {
-		if v.String() == optionType {
-			found = true
-			return false
-		}
-		return true
-	})
-	return found
-}
-
 func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, isOneOfAttribute bool) {
 	if attr.ModelName == "" || attr.NoAugmentConfig {
 		return
@@ -1325,8 +1312,8 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	if attr.Value == "" && (r.Get("type").String() == "object" || !r.Get("type").Exists()) {
 		noGlobal := false
 
-		t := r.Get("oneOf.#(properties.optionType.enum.#(==\"global\"))")
-		if optionTypeEnumContains(r, "global") {
+		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
+		if value := r.Get("properties.optionType.enum.0"); value.String() == "global" {
 			t = r
 		}
 
@@ -1420,8 +1407,8 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 			attr.Variable = true
 		}
 
-		d := r.Get("oneOf.#(properties.optionType.enum.#(==\"default\"))")
-		if optionTypeEnumContains(r, "default") {
+		d := r.Get("oneOf.#(properties.optionType.enum.0=\"default\")")
+		if value := r.Get("properties.optionType.enum.0"); value.String() == "default" {
 			d = r
 		}
 		if d.Exists() && (!isOneOfAttribute || attr.DefaultValuePresent == true) {

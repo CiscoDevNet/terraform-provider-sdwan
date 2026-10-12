@@ -61,34 +61,10 @@
           "sequences": {
             "type": "array",
             "uniqueItems": true,
-            "minItems": 1,
+            "minItems": 0,
             "items": {
               "type": "object",
               "properties": {
-                "isRuleSet": {
-                  "type": "object",
-                  "oneOf": [
-                    {
-                      "properties": {
-                        "optionType": {
-                          "type": "string",
-                          "enum": [
-                            "global"
-                          ]
-                        },
-                        "value": {
-                          "type": "boolean",
-                          "default": false
-                        }
-                      },
-                      "required": [
-                        "optionType",
-                        "value"
-                      ],
-                      "additionalProperties": false
-                    }
-                  ]
-                },
                 "sequenceId": {
                   "type": "object",
                   "oneOf": [
@@ -138,9 +114,6 @@
                     }
                   ]
                 },
-                "sequenceComment": {
-                  "type": "string"
-                },
                 "baseAction": {
                   "type": "object",
                   "oneOf": [
@@ -158,35 +131,6 @@
                             "pass",
                             "inspect",
                             "drop"
-                          ],
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "optionType",
-                        "value"
-                      ],
-                      "additionalProperties": false
-                    }
-                  ]
-                },
-                "sequenceIpType": {
-                  "type": "object",
-                  "oneOf": [
-                    {
-                      "properties": {
-                        "optionType": {
-                          "type": "string",
-                          "enum": [
-                            "default",
-                            "global"
-                          ]
-                        },
-                        "value": {
-                          "default": "ipv4",
-                          "enum": [
-                            "ipv4",
-                            "ipv6"
                           ],
                           "type": "string"
                         }
@@ -249,42 +193,6 @@
                                   "value": {
                                     "type": "array",
                                     "minItems": 1,
-                                    "maxItems": 20,
-                                    "uniqueItems": true,
-                                    "items": {
-                                      "type": "string",
-                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
-                                    }
-                                  }
-                                },
-                                "required": [
-                                  "optionType",
-                                  "value"
-                                ],
-                                "additionalProperties": false
-                              }
-                            },
-                            "required": [
-                              "refId"
-                            ],
-                            "additionalProperties": false
-                          },
-                          "sourceDataIpv6PrefixList": {
-                            "type": "object",
-                            "properties": {
-                              "refId": {
-                                "properties": {
-                                  "optionType": {
-                                    "type": "string",
-                                    "enum": [
-                                      "global"
-                                    ]
-                                  },
-                                  "value": {
-                                    "type": "array",
-                                    "minItems": 1,
-                                    "maxItems": 20,
-                                    "uniqueItems": true,
                                     "items": {
                                       "type": "string",
                                       "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
@@ -317,42 +225,6 @@
                                   "value": {
                                     "type": "array",
                                     "minItems": 1,
-                                    "maxItems": 20,
-                                    "uniqueItems": true,
-                                    "items": {
-                                      "type": "string",
-                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
-                                    }
-                                  }
-                                },
-                                "required": [
-                                  "optionType",
-                                  "value"
-                                ],
-                                "additionalProperties": false
-                              }
-                            },
-                            "required": [
-                              "refId"
-                            ],
-                            "additionalProperties": false
-                          },
-                          "destinationDataIpv6PrefixList": {
-                            "type": "object",
-                            "properties": {
-                              "refId": {
-                                "properties": {
-                                  "optionType": {
-                                    "type": "string",
-                                    "enum": [
-                                      "global"
-                                    ]
-                                  },
-                                  "value": {
-                                    "type": "array",
-                                    "minItems": 1,
-                                    "maxItems": 20,
-                                    "uniqueItems": true,
                                     "items": {
                                       "type": "string",
                                       "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
@@ -385,8 +257,6 @@
                                   "value": {
                                     "type": "array",
                                     "minItems": 1,
-                                    "maxItems": 20,
-                                    "uniqueItems": true,
                                     "items": {
                                       "type": "string",
                                       "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
@@ -419,8 +289,6 @@
                                   "value": {
                                     "type": "array",
                                     "minItems": 1,
-                                    "maxItems": 20,
-                                    "uniqueItems": true,
                                     "items": {
                                       "type": "string",
                                       "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
@@ -453,8 +321,6 @@
                                   "value": {
                                     "type": "array",
                                     "minItems": 1,
-                                    "maxItems": 20,
-                                    "uniqueItems": true,
                                     "items": {
                                       "type": "string",
                                       "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
@@ -487,8 +353,6 @@
                                   "value": {
                                     "type": "array",
                                     "minItems": 1,
-                                    "maxItems": 20,
-                                    "uniqueItems": true,
                                     "items": {
                                       "type": "string",
                                       "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
@@ -521,8 +385,6 @@
                                   "value": {
                                     "type": "array",
                                     "minItems": 1,
-                                    "maxItems": 20,
-                                    "uniqueItems": true,
                                     "items": {
                                       "type": "string",
                                       "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
@@ -654,8 +516,6 @@
                                   "value": {
                                     "type": "array",
                                     "minItems": 1,
-                                    "maxItems": 20,
-                                    "uniqueItems": true,
                                     "items": {
                                       "type": "string",
                                       "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
@@ -771,7 +631,7 @@
                             ],
                             "additionalProperties": false
                           },
-                          "sourceObjectGroup": {
+                          "sourceSecurityGroup": {
                             "type": "object",
                             "properties": {
                               "refId": {
@@ -803,7 +663,7 @@
                             ],
                             "additionalProperties": false
                           },
-                          "destinationObjectGroup": {
+                          "destinationSecurityGroup": {
                             "type": "object",
                             "properties": {
                               "refId": {
@@ -854,7 +714,7 @@
                                         "uniqueItems": true,
                                         "items": {
                                           "type": "string",
-                                          "pattern": "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])$"
+                                          "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
                                         }
                                       }
                                     },
@@ -884,7 +744,7 @@
                                         "uniqueItems": true,
                                         "items": {
                                           "type": "string",
-                                          "pattern": "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])$"
+                                          "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
                                         }
                                       },
                                       "description": {
@@ -904,78 +764,6 @@
                             },
                             "required": [
                               "ipv4Value"
-                            ],
-                            "additionalProperties": false
-                          },
-                          "sourceIpv6": {
-                            "type": "object",
-                            "properties": {
-                              "ipv6Value": {
-                                "oneOf": [
-                                  {
-                                    "properties": {
-                                      "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                          "global"
-                                        ]
-                                      },
-                                      "value": {
-                                        "type": "array",
-                                        "minItems": 1,
-                                        "uniqueItems": true,
-                                        "items": {
-                                          "type": "string",
-                                          "pattern": "((^\\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?\\s*(\\/)(\\b([0-9]{1,2}|1[01][0-9]|12[0-8])\\b)$))"
-                                        }
-                                      }
-                                    },
-                                    "required": [
-                                      "optionType",
-                                      "value"
-                                    ],
-                                    "additionalProperties": false
-                                  },
-                                  {
-                                    "properties": {
-                                      "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                          "variable"
-                                        ]
-                                      },
-                                      "value": {
-                                        "type": "string",
-                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                                        "minLength": 1,
-                                        "maxLength": 128
-                                      },
-                                      "default": {
-                                        "type": "array",
-                                        "minItems": 1,
-                                        "uniqueItems": true,
-                                        "items": {
-                                          "type": "string",
-                                          "pattern": "((^\\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?\\s*(\\/)(\\b([0-9]{1,2}|1[01][0-9]|12[0-8])\\b)$))"
-                                        }
-                                      },
-                                      "description": {
-                                        "minLength": 1,
-                                        "type": "string",
-                                        "maxLength": 128
-                                      }
-                                    },
-                                    "required": [
-                                      "optionType",
-                                      "value"
-                                    ],
-                                    "additionalProperties": false
-                                  }
-                                ]
-                              }
-                            },
-                            "required": [
-                              "ipv6Value"
                             ],
                             "additionalProperties": false
                           },
@@ -998,7 +786,7 @@
                                         "uniqueItems": true,
                                         "items": {
                                           "type": "string",
-                                          "pattern": "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])$"
+                                          "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
                                         }
                                       }
                                     },
@@ -1028,7 +816,7 @@
                                         "uniqueItems": true,
                                         "items": {
                                           "type": "string",
-                                          "pattern": "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])$"
+                                          "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
                                         }
                                       },
                                       "description": {
@@ -1048,78 +836,6 @@
                             },
                             "required": [
                               "ipv4Value"
-                            ],
-                            "additionalProperties": false
-                          },
-                          "destinationIpv6": {
-                            "type": "object",
-                            "properties": {
-                              "ipv6Value": {
-                                "oneOf": [
-                                  {
-                                    "properties": {
-                                      "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                          "global"
-                                        ]
-                                      },
-                                      "value": {
-                                        "type": "array",
-                                        "minItems": 1,
-                                        "uniqueItems": true,
-                                        "items": {
-                                          "type": "string",
-                                          "pattern": "((^\\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?\\s*(\\/)(\\b([0-9]{1,2}|1[01][0-9]|12[0-8])\\b)$))"
-                                        }
-                                      }
-                                    },
-                                    "required": [
-                                      "optionType",
-                                      "value"
-                                    ],
-                                    "additionalProperties": false
-                                  },
-                                  {
-                                    "properties": {
-                                      "optionType": {
-                                        "type": "string",
-                                        "enum": [
-                                          "variable"
-                                        ]
-                                      },
-                                      "value": {
-                                        "type": "string",
-                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                                        "minLength": 1,
-                                        "maxLength": 128
-                                      },
-                                      "default": {
-                                        "type": "array",
-                                        "minItems": 1,
-                                        "uniqueItems": true,
-                                        "items": {
-                                          "type": "string",
-                                          "pattern": "((^\\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?\\s*(\\/)(\\b([0-9]{1,2}|1[01][0-9]|12[0-8])\\b)$))"
-                                        }
-                                      },
-                                      "description": {
-                                        "minLength": 1,
-                                        "type": "string",
-                                        "maxLength": 128
-                                      }
-                                    },
-                                    "required": [
-                                      "optionType",
-                                      "value"
-                                    ],
-                                    "additionalProperties": false
-                                  }
-                                ]
-                              }
-                            },
-                            "required": [
-                              "ipv6Value"
                             ],
                             "additionalProperties": false
                           },
@@ -2912,8 +2628,73 @@
                                 "additionalProperties": false
                               }
                             ]
+                          },
+                          "sourceObjectGroup": {
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "destinationObjectGroup": {
+                            "type": "object",
+                            "properties": {
+                              "refId": {
+                                "properties": {
+                                  "optionType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "optionType",
+                                  "value"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "refId"
+                            ],
+                            "additionalProperties": false
                           }
                         },
+                        "required": [],
                         "additionalProperties": false
                       }
                     }
@@ -3020,7 +2801,10 @@
                                 "type": "object",
                                 "properties": {
                                   "optionType": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "enum": [
+                                      "global"
+                                    ]
                                   },
                                   "value": {
                                     "type": "string",
@@ -3072,6 +2856,30 @@
                       "additionalProperties": false
                     }
                   ]
+                },
+                "isRuleSet": {
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": [
+                            "global"
+                          ]
+                        },
+                        "value": {
+                          "type": "boolean",
+                          "default": false
+                        }
+                      },
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
                 }
               },
               "required": [
@@ -3082,157 +2890,7 @@
                 "match",
                 "actions"
               ],
-              "additionalProperties": false,
-              "allOf": [
-                {
-                  "if": {
-                    "properties": {
-                      "sequenceIpType": {
-                        "properties": {
-                          "value": {
-                            "const": "ipv6"
-                          }
-                        }
-                      }
-                    },
-                    "required": [
-                      "sequenceIpType"
-                    ]
-                  },
-                  "then": {
-                    "properties": {
-                      "match": {
-                        "properties": {
-                          "entries": {
-                            "items": {
-                              "not": {
-                                "anyOf": [
-                                  {
-                                    "required": [
-                                      "protocol"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "sourceDataPrefixList"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "destinationDataPrefixList"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "sourceIp"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "destinationIp"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "sourceGeoLocationList"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "destinationGeoLocationList"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "sourceGeoLocation"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "destinationGeoLocation"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "sourceIdentityList"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "sourceIdentityUser"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "sourceIdentityUsergroup"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "sourceScalableGroupTagList"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "destinationScalableGroupTagList"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "sourceSecurityGroup"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "destinationSecurityGroup"
-                                    ]
-                                  }
-                                ]
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "else": {
-                    "properties": {
-                      "match": {
-                        "properties": {
-                          "entries": {
-                            "items": {
-                              "not": {
-                                "anyOf": [
-                                  {
-                                    "required": [
-                                      "sourceDataIpv6PrefixList"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "destinationDataIpv6PrefixList"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "sourceIpv6"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "destinationIpv6"
-                                    ]
-                                  }
-                                ]
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
+              "additionalProperties": false
             }
           }
         },
@@ -3262,10 +2920,6 @@
               },
               "sequences": [
                 {
-                  "isRuleSet": {
-                    "optionType": "global",
-                    "value": false
-                  },
                   "sequenceId": {
                     "optionType": "global",
                     "value": "1"
@@ -3277,10 +2931,6 @@
                   "baseAction": {
                     "optionType": "global",
                     "value": "drop"
-                  },
-                  "sequenceIpType": {
-                    "optionType": "global",
-                    "value": "ipv4"
                   },
                   "sequenceType": {
                     "optionType": "global",
@@ -3346,7 +2996,7 @@
         ]
       },
       "metadata": {
-        "minVManageVersion": "20.18"
+        "minVManageVersion": "20.15.1"
       }
     },
     "required": [

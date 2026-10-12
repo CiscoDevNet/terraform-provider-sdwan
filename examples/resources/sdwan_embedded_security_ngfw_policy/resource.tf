@@ -8,9 +8,7 @@ resource "sdwan_embedded_security_ngfw_policy" "example" {
       is_rule_set      = false
       sequence_id      = "1"
       sequence_name    = "security"
-      sequence_comment = "comment1"
       base_action      = "drop"
-      sequence_ip_type = "ipv4"
       sequence_type    = "ngfirewall"
       disable_sequence = false
       match_entries = [
