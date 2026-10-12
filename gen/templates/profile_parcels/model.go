@@ -394,6 +394,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 								if true{{buildConditionalLogic .ConditionalAttribute "childChildItem"}} {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 								{{if or .DefaultValue .DefaultValueEmptyString}}itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
+								}
 							} else {{else if .AlwaysInclude }}if childChildItem.{{toGoName .TfName}}.IsNull() {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 							} else {{else if .AlwaysIncludeParent }}if data.{{toGoName .TfName}}.IsNull() {
