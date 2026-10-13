@@ -158,10 +158,10 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 							Optional:            true,
 						},
 						"security_type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Select security type").AddStringEnumDescription("personal", "open", "enterprise").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Select security type").AddStringEnumDescription("enterprise", "personal", "open").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.OneOf("personal", "open", "enterprise"),
+								stringvalidator.OneOf("enterprise", "personal", "open"),
 							},
 						},
 						"radius_server_ip": schema.StringAttribute{

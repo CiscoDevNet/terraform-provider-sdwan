@@ -1196,6 +1196,10 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	}
 	path := ""
 	prefix := "properties."
+	// Branches of the oneOf that is the attribute's *immediate* parent, if any.
+	// Reset on every DataPath iteration so only the innermost level survives; this
+	// keeps sibling-branch enum aggregation from reaching across nesting levels.
+	var siblingOneOfBranches gjson.Result
 
 	// Check before loop for cases where DataPath is empty
 	// Only treat it as wrapped oneOf if properties don't exist at same level
@@ -1204,6 +1208,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	}
 
 	for i, e := range attr.DataPath {
+		siblingOneOfBranches = gjson.Result{}
 
 		next := ""
 		if i+1 < len(attr.DataPath) {
@@ -1224,10 +1229,12 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 			})
 		} else if model.Get(prefix + path + e + ".oneOf").Exists() {
 			index := 0
-			model.Get("properties." + path + e + ".oneOf").ForEach(func(k, v gjson.Result) bool {
+			branches := model.Get("properties." + path + e + ".oneOf")
+			branches.ForEach(func(k, v gjson.Result) bool {
 				if v.Get("properties." + next).Exists() {
 					path += fmt.Sprintf("%s.oneOf.%v.properties.", e, index)
 					isOneOfAttribute = true
+					siblingOneOfBranches = branches
 					return false // stop iterating
 				}
 				index += 1
@@ -1334,6 +1341,52 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				if value := t.Get("properties.value.enum"); value.Exists() {
 					for _, v := range value.Array() {
 						attr.EnumValues = append(attr.EnumValues, v.String())
+					}
+				}
+				// When the attribute is discriminated across sibling oneOf branches, each
+				// branch may pin a single legal value (e.g. securityType: enterprise |
+				// personal | open). Aggregate them so the validator accepts the full set
+				// instead of only the first matching branch. Order follows the schema's
+				// branch order, which is stable across regenerations.
+				//
+				// Only aggregate when *every* contributing branch restricts the value to
+				// an enum. If any branch accepts a free-form value (e.g. a plain string
+				// with maxLength), the union of the remaining enums would be narrower
+				// than the schema allows and the generated OneOf validator would reject
+				// values that branch legitimately accepts, so skip the merge entirely.
+				if siblingOneOfBranches.Exists() {
+					allEnum := true
+					var siblingEnums []string
+					siblingOneOfBranches.ForEach(func(k, branch gjson.Result) bool {
+						sibling := branch.Get("properties." + attr.ModelName)
+						if !sibling.Exists() {
+							return true
+						}
+						g := sibling.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
+						if sibling.Get("properties.optionType.enum.0").String() == "global" {
+							g = sibling
+						}
+						enum := g.Get("properties.value.enum")
+						if !enum.Exists() {
+							allEnum = false
+							return false
+						}
+						for _, ev := range enum.Array() {
+							siblingEnums = append(siblingEnums, ev.String())
+						}
+						return true
+					})
+					if allEnum {
+						enumSet := make(map[string]bool, len(attr.EnumValues))
+						for _, ev := range attr.EnumValues {
+							enumSet[ev] = true
+						}
+						for _, ev := range siblingEnums {
+							if !enumSet[ev] {
+								attr.EnumValues = append(attr.EnumValues, ev)
+								enumSet[ev] = true
+							}
+						}
 					}
 				}
 			} else if attr.Type == "Bool" || t.Get("properties.value.type").String() == "boolean" || t.Get("properties.value.oneOf.0.properties.value.type").String() == "boolean" {
