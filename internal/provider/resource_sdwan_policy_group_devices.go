@@ -196,7 +196,7 @@ func (r *PolicyGroupDevicesResource) Create(ctx context.Context, req resource.Cr
 
 	// Deploy to devices
 	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, nil, &resp.Diagnostics)
+		r.Deploy(ctx, plan, nil, nil, &resp.Diagnostics)
 	}
 	if resp.Diagnostics.HasError() {
 		return
@@ -255,12 +255,25 @@ func (r *PolicyGroupDevicesResource) disassociateDevices(ctx context.Context, da
 	if len(data.Devices) == 0 {
 		return
 	}
-	body, _ := sjson.Set("", "devices", []interface{}{})
+	path := fmt.Sprintf("/v1/policy-group/%v/device/associate/", data.PolicyGroupId.ValueString())
+	ids := make([]string, 0, len(data.Devices))
 	for _, d := range data.Devices {
-		itemBody, _ := sjson.Set("", "id", d.Id.ValueString())
+		ids = append(ids, d.Id.ValueString())
+	}
+	// Release only devices still on this group (the Manager's DELETE ignores the group in the URL).
+	ids, err := helpers.StillAssociated(ctx, r.client, path, ids)
+	if err != nil {
+		diag.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s", err))
+		return
+	}
+	if len(ids) == 0 {
+		return
+	}
+	body, _ := sjson.Set("", "devices", []interface{}{})
+	for _, id := range ids {
+		itemBody, _ := sjson.Set("", "id", id)
 		body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
 	}
-	path := fmt.Sprintf("/v1/policy-group/%v/device/associate/", data.PolicyGroupId.ValueString())
 	res, err := helpers.RetryWhileDeployInProgress(ctx, r.taskTimeout, func() (sdwan.Res, error) { return r.client.DeleteBody(path, body) })
 	if err != nil {
 		diag.AddError("Client Error", fmt.Sprintf("Failed to disassociate policy group devices (DELETE), got error: %s, %s", err, res.String()))
@@ -302,7 +315,9 @@ func (r *PolicyGroupDevicesResource) associateDevices(ctx context.Context, metho
 	}
 }
 
-func (r *PolicyGroupDevicesResource) Deploy(ctx context.Context, plan PolicyGroupDevices, state *PolicyGroupDevices, diag *diag.Diagnostics) {
+// associated, when set, is a GET .../device/associate/ response the caller has just made; it is used
+// instead of reading the group again.
+func (r *PolicyGroupDevicesResource) Deploy(ctx context.Context, plan PolicyGroupDevices, state *PolicyGroupDevices, associated *sdwan.Res, diag *diag.Diagnostics) {
 	var updatedDevices []string
 	if state != nil {
 		updatedDevices = plan.getUpdatedDevices(ctx, state)
@@ -314,8 +329,14 @@ func (r *PolicyGroupDevicesResource) Deploy(ctx context.Context, plan PolicyGrou
 		hasVersionChange = !plan.PolicyGroupVersion.Equal(state.PolicyGroupVersion)
 	}
 
-	path := fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.PolicyGroupId.ValueString())
-	res, err := r.client.Get(path)
+	var res sdwan.Res
+	var err error
+	if associated != nil {
+		res = *associated
+	} else {
+		path := fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.PolicyGroupId.ValueString())
+		res, err = r.client.Get(path)
+	}
 	if err != nil {
 		diag.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
 		return
@@ -464,6 +485,7 @@ func (r *PolicyGroupDevicesResource) Update(ctx context.Context, req resource.Up
 
 	// Associate devices new in the plan.
 	associateBody, _ := sjson.Set("", "devices", []interface{}{})
+	var added []string // checked again after the associate call
 	for _, d := range plan.Devices {
 		found := false
 		for _, cdid := range currentDeviceIds {
@@ -474,11 +496,12 @@ func (r *PolicyGroupDevicesResource) Update(ctx context.Context, req resource.Up
 		}
 		if !found {
 			associateBody, _ = sjson.SetRaw(associateBody, "devices.-1", helpers.Must(sjson.Set("", "id", d.Id.ValueString())))
+			added = append(added, d.Id.ValueString())
 		}
 	}
 
 	// Disassociate only devices that were in this resource's state but are no longer in the plan.
-	disassociateBody, _ := sjson.Set("", "devices", []interface{}{})
+	var removed []string
 	for _, sd := range state.Devices {
 		found := false
 		for _, d := range plan.Devices {
@@ -488,8 +511,20 @@ func (r *PolicyGroupDevicesResource) Update(ctx context.Context, req resource.Up
 			}
 		}
 		if !found {
-			disassociateBody, _ = sjson.SetRaw(disassociateBody, "devices.-1", helpers.Must(sjson.Set("", "id", sd.Id.ValueString())))
+			removed = append(removed, sd.Id.ValueString())
 		}
+	}
+	// Release only devices still on this group, read right before the DELETE: the Manager's DELETE
+	// removes a device from whatever group it is on, as for config groups.
+	associatePath := fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.PolicyGroupId.ValueString())
+	removed, err = helpers.StillAssociated(ctx, r.client, associatePath, removed)
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s", err))
+		return
+	}
+	disassociateBody, _ := sjson.Set("", "devices", []interface{}{})
+	for _, id := range removed {
+		disassociateBody, _ = sjson.SetRaw(disassociateBody, "devices.-1", helpers.Must(sjson.Set("", "id", id)))
 	}
 
 	// Disassociate removed devices first, so a device being moved out of this group is freed before we
@@ -506,11 +541,33 @@ func (r *PolicyGroupDevicesResource) Update(ctx context.Context, req resource.Up
 
 	// Associate missing devices (retries on the "already associated to another group" conflict).
 	if len(gjson.Get(associateBody, "devices").Array()) > 0 {
-		res, err = r.associateDevices(ctx, "PUT", fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.PolicyGroupId.ValueString()), associateBody)
+		res, err = r.associateDevices(ctx, "PUT", associatePath, associateBody)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure policy group devices (PUT), got error: %s, %s", err, res.String()))
 			return
 		}
+	}
+
+	// A device taken from another group can be removed again by that group's own release in the
+	// same apply (see helpers.StillAssociated). Check the added devices are still here, associate
+	// them again if not, and reuse this read for the deploy selection.
+	var associated *sdwan.Res
+	if len(added) > 0 {
+		assoc, missing, err := helpers.EnsureAssociated(ctx, r.client, associatePath, added, func(missing []string) (sdwan.Res, error) {
+			body, _ := sjson.Set("", "devices", []interface{}{})
+			for _, id := range missing {
+				body, _ = sjson.SetRaw(body, "devices.-1", helpers.Must(sjson.Set("", "id", id)))
+			}
+			return r.associateDevices(ctx, "PUT", associatePath, body)
+		})
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to verify policy group devices, got error: %s, %s", err, assoc.String()))
+			return
+		}
+		if len(missing) > 0 {
+			resp.Diagnostics.AddWarning("Devices not associated", fmt.Sprintf("Devices %v were removed from the group again after being associated several times. Run terraform apply again.", missing))
+		}
+		associated = &assoc
 	}
 
 	// Need to get existing variables so SD-WAN Manager refreshes database correctly
@@ -530,7 +587,7 @@ func (r *PolicyGroupDevicesResource) Update(ctx context.Context, req resource.Up
 	}
 
 	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, &state, &resp.Diagnostics)
+		r.Deploy(ctx, plan, &state, associated, &resp.Diagnostics)
 	}
 	if resp.Diagnostics.HasError() {
 		return

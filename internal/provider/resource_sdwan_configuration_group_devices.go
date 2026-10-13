@@ -196,7 +196,7 @@ func (r *ConfigurationGroupDevicesResource) Create(ctx context.Context, req reso
 
 	// Deploy to devices
 	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, nil, &resp.Diagnostics)
+		r.Deploy(ctx, plan, nil, nil, &resp.Diagnostics)
 	}
 	if resp.Diagnostics.HasError() {
 		return
@@ -255,12 +255,25 @@ func (r *ConfigurationGroupDevicesResource) disassociateDevices(ctx context.Cont
 	if len(data.Devices) == 0 {
 		return
 	}
-	body, _ := sjson.Set("", "devices", []interface{}{})
+	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", data.ConfigurationGroupId.ValueString())
+	ids := make([]string, 0, len(data.Devices))
 	for _, d := range data.Devices {
-		itemBody, _ := sjson.Set("", "id", d.Id.ValueString())
+		ids = append(ids, d.Id.ValueString())
+	}
+	// Release only devices still on this group (the Manager's DELETE ignores the group in the URL).
+	ids, err := helpers.StillAssociated(ctx, r.client, path, ids)
+	if err != nil {
+		diag.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s", err))
+		return
+	}
+	if len(ids) == 0 {
+		return
+	}
+	body, _ := sjson.Set("", "devices", []interface{}{})
+	for _, id := range ids {
+		itemBody, _ := sjson.Set("", "id", id)
 		body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
 	}
-	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", data.ConfigurationGroupId.ValueString())
 	res, err := helpers.RetryWhileDeployInProgress(ctx, r.taskTimeout, func() (sdwan.Res, error) { return r.client.DeleteBody(path, body) })
 	if err != nil {
 		diag.AddError("Client Error", fmt.Sprintf("Failed to disassociate config group devices (DELETE), got error: %s, %s", err, res.String()))
@@ -304,7 +317,9 @@ func (r *ConfigurationGroupDevicesResource) associateDevices(ctx context.Context
 	}
 }
 
-func (r *ConfigurationGroupDevicesResource) Deploy(ctx context.Context, plan ConfigurationGroupDevices, state *ConfigurationGroupDevices, diag *diag.Diagnostics) {
+// associated, when set, is a GET .../device/associate/ response the caller has just made; it is used
+// instead of reading the group again.
+func (r *ConfigurationGroupDevicesResource) Deploy(ctx context.Context, plan ConfigurationGroupDevices, state *ConfigurationGroupDevices, associated *sdwan.Res, diag *diag.Diagnostics) {
 	var updatedDevices []string
 	if state != nil {
 		updatedDevices = plan.getUpdatedDevices(ctx, state)
@@ -316,8 +331,14 @@ func (r *ConfigurationGroupDevicesResource) Deploy(ctx context.Context, plan Con
 		hasVersionChange = !plan.ConfigurationGroupVersion.Equal(state.ConfigurationGroupVersion)
 	}
 
-	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.ConfigurationGroupId.ValueString())
-	res, err := r.client.Get(path)
+	var res sdwan.Res
+	var err error
+	if associated != nil {
+		res = *associated
+	} else {
+		path := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.ConfigurationGroupId.ValueString())
+		res, err = r.client.Get(path)
+	}
 	if err != nil {
 		diag.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
 		return
@@ -474,11 +495,13 @@ func (r *ConfigurationGroupDevicesResource) Update(ctx context.Context, req reso
 
 	// Associate devices that are new in the plan or whose topology_label changed.
 	associateBody, _ := sjson.Set("", "devices", []interface{}{})
+	var added []string // not on this group yet; checked again after the associate call
 	for _, d := range plan.Devices {
 		label, exists := currentLabels[d.Id.ValueString()]
 		needsAssociate := false
 		if !exists {
 			needsAssociate = true
+			added = append(added, d.Id.ValueString())
 		} else {
 			planLabel := ""
 			if !d.TopologyLabel.IsNull() {
@@ -499,7 +522,7 @@ func (r *ConfigurationGroupDevicesResource) Update(ctx context.Context, req reso
 
 	// Disassociate only devices that were in this resource's state but are no longer in the plan.
 	// Devices owned by other resources / state files are never touched.
-	disassociateBody, _ := sjson.Set("", "devices", []interface{}{})
+	var removed []string
 	for _, sd := range state.Devices {
 		found := false
 		for _, d := range plan.Devices {
@@ -509,8 +532,21 @@ func (r *ConfigurationGroupDevicesResource) Update(ctx context.Context, req reso
 			}
 		}
 		if !found {
-			disassociateBody, _ = sjson.SetRaw(disassociateBody, "devices.-1", helpers.Must(sjson.Set("", "id", sd.Id.ValueString())))
+			removed = append(removed, sd.Id.ValueString())
 		}
+	}
+	// Release only devices still on this group, read right before the DELETE: the Manager's DELETE
+	// removes a device from whatever group it is on, so a device another state or the GUI has moved
+	// meanwhile would be pulled out of its new group.
+	associatePath := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.ConfigurationGroupId.ValueString())
+	removed, err = helpers.StillAssociated(ctx, r.client, associatePath, removed)
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s", err))
+		return
+	}
+	disassociateBody, _ := sjson.Set("", "devices", []interface{}{})
+	for _, id := range removed {
+		disassociateBody, _ = sjson.SetRaw(disassociateBody, "devices.-1", helpers.Must(sjson.Set("", "id", id)))
 	}
 
 	// Disassociate removed devices first, so that a device being moved out of this group is freed
@@ -529,11 +565,39 @@ func (r *ConfigurationGroupDevicesResource) Update(ctx context.Context, req reso
 
 	// Associate missing devices (retries on the "already associated to another group" conflict).
 	if len(gjson.Get(associateBody, "devices").Array()) > 0 {
-		res, err = r.associateDevices(ctx, "PUT", fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.ConfigurationGroupId.ValueString()), associateBody)
+		res, err = r.associateDevices(ctx, "PUT", associatePath, associateBody)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (PUT), got error: %s, %s", err, res.String()))
 			return
 		}
+	}
+
+	// A device taken from another group can be removed again by that group's own release in the
+	// same apply (see helpers.StillAssociated). Check the added devices are still here, associate
+	// them again if not, and reuse this read for the deploy selection.
+	var associated *sdwan.Res
+	if len(added) > 0 {
+		assoc, missing, err := helpers.EnsureAssociated(ctx, r.client, associatePath, added, func(missing []string) (sdwan.Res, error) {
+			body, _ := sjson.Set("", "devices", []interface{}{})
+			for _, d := range plan.Devices {
+				if helpers.Contains(missing, d.Id.ValueString()) {
+					itemBody := helpers.Must(sjson.Set("", "id", d.Id.ValueString()))
+					if !d.TopologyLabel.IsNull() {
+						itemBody = helpers.Must(sjson.Set(itemBody, "groupTopologyLabel", d.TopologyLabel.ValueString()))
+					}
+					body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
+				}
+			}
+			return r.associateDevices(ctx, "PUT", associatePath, body)
+		})
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to verify configuration group devices, got error: %s, %s", err, assoc.String()))
+			return
+		}
+		if len(missing) > 0 {
+			resp.Diagnostics.AddWarning("Devices not associated", fmt.Sprintf("Devices %v were removed from the group again after being associated several times. Run terraform apply again.", missing))
+		}
+		associated = &assoc
 	}
 
 	// Update device variables
@@ -550,7 +614,7 @@ func (r *ConfigurationGroupDevicesResource) Update(ctx context.Context, req reso
 
 	// Deploy to devices
 	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, &state, &resp.Diagnostics)
+		r.Deploy(ctx, plan, &state, associated, &resp.Diagnostics)
 	}
 	if resp.Diagnostics.HasError() {
 		return
