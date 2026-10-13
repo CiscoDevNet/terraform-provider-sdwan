@@ -34,9 +34,6 @@ func TestAccDataSourceSdwanEmbeddedSecurityNGFWProfileParcel(t *testing.T) {
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "default_action", "pass"))
-	if os.Getenv("SDWAN_2018") != "" {
-		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.is_rule_set", "false"))
-	}
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.sequence_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.sequence_name", "security"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test", "sequences.0.base_action", "drop"))
@@ -84,9 +81,6 @@ func testAccDataSourceSdwanEmbeddedSecurityNGFWProfileParcelConfig() string {
 	config += `	feature_profile_id = sdwan_embedded_security_feature_profile.test.id` + "\n"
 	config += `	default_action = "pass"` + "\n"
 	config += `	sequences = [{` + "\n"
-	if os.Getenv("SDWAN_2018") != "" {
-		config += `	  is_rule_set = false` + "\n"
-	}
 	config += `	  sequence_id = "1"` + "\n"
 	config += `	  sequence_name = "security"` + "\n"
 	config += `	  base_action = "drop"` + "\n"
@@ -121,9 +115,6 @@ func testAccDataSourceSdwanEmbeddedSecurityNGFWProfileParcelByNameConfig() strin
 	config += `	feature_profile_id = sdwan_embedded_security_feature_profile.test.id` + "\n"
 	config += `	default_action = "pass"` + "\n"
 	config += `	sequences = [{` + "\n"
-	if os.Getenv("SDWAN_2018") != "" {
-		config += `	  is_rule_set = false` + "\n"
-	}
 	config += `	  sequence_id = "1"` + "\n"
 	config += `	  sequence_name = "security"` + "\n"
 	config += `	  base_action = "drop"` + "\n"

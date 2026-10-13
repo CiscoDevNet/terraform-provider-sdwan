@@ -22,7 +22,6 @@ resource "sdwan_embedded_security_ngfw_policy" "example" {
   default_action     = "pass"
   sequences = [
     {
-      is_rule_set      = false
       sequence_id      = "1"
       sequence_name    = "security"
       base_action      = "drop"
@@ -71,7 +70,6 @@ Optional:
 - `actions` (Attributes List) can be empty array or with type or parameter (see [below for nested schema](#nestedatt--sequences--actions))
 - `base_action` (String) - Choices: `pass`, `inspect`, `drop`
 - `disable_sequence` (Boolean)
-- `is_rule_set` (Boolean) , Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `match_entries` (Attributes List) (see [below for nested schema](#nestedatt--sequences--match_entries))
 - `sequence_id` (String)
 - `sequence_name` (String)
@@ -104,7 +102,6 @@ Optional:
 - `destination_geo_location_list_ids` (Set of String)
 - `destination_geo_locations` (Set of String)
 - `destination_geo_locations_variable` (String) Variable name
-- `destination_object_group_list_ids` (Set of String) , Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `destination_port_list_ids` (Set of String)
 - `destination_ports` (Set of String)
 - `destination_ports_variable` (String) Variable name
@@ -114,7 +111,6 @@ Optional:
 - `protocol_name_list_ids` (Set of String)
 - `protocol_names` (Set of String)
 - `protocols` (Set of String)
-- `rule_set_list_ids` (Set of String) , Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `source_data_prefix_list_ids` (Set of String)
 - `source_data_prefixes` (Set of String)
 - `source_data_prefixes_variable` (String) Variable name
@@ -124,7 +120,6 @@ Optional:
 - `source_identity_list_ids` (Set of String)
 - `source_identity_usergroups` (Set of String)
 - `source_identity_users` (Set of String)
-- `source_object_group_list_ids` (Set of String) , Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `source_port_list_ids` (Set of String)
 - `source_ports` (Set of String)
 - `source_ports_variable` (String) Variable name

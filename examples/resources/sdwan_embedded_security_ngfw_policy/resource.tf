@@ -5,7 +5,6 @@ resource "sdwan_embedded_security_ngfw_policy" "example" {
   default_action     = "pass"
   sequences = [
     {
-      is_rule_set      = false
       sequence_id      = "1"
       sequence_name    = "security"
       base_action      = "drop"

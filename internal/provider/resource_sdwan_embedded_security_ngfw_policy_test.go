@@ -34,9 +34,6 @@ func TestAccSdwanEmbeddedSecurityNGFWProfileParcel(t *testing.T) {
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_ngfw_policy.test", "default_action", "pass"))
-	if os.Getenv("SDWAN_2018") != "" {
-		checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_ngfw_policy.test", "sequences.0.is_rule_set", "false"))
-	}
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_ngfw_policy.test", "sequences.0.sequence_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_ngfw_policy.test", "sequences.0.sequence_name", "security"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_embedded_security_ngfw_policy.test", "sequences.0.base_action", "drop"))
@@ -79,9 +76,6 @@ func testAccSdwanEmbeddedSecurityNGFWProfileParcelConfig_minimum() string {
 	config += `	feature_profile_id = sdwan_embedded_security_feature_profile.test.id` + "\n"
 	config += `	default_action = "pass"` + "\n"
 	config += `	sequences = [{` + "\n"
-	if os.Getenv("SDWAN_2018") != "" {
-		config += `	  is_rule_set = false` + "\n"
-	}
 	config += `	  sequence_id = "1"` + "\n"
 	config += `	  sequence_name = "security"` + "\n"
 	config += `	  base_action = "drop"` + "\n"
@@ -102,9 +96,6 @@ func testAccSdwanEmbeddedSecurityNGFWProfileParcelConfig_all() string {
 	config += `	feature_profile_id = sdwan_embedded_security_feature_profile.test.id` + "\n"
 	config += `	default_action = "pass"` + "\n"
 	config += `	sequences = [{` + "\n"
-	if os.Getenv("SDWAN_2018") != "" {
-		config += `	  is_rule_set = false` + "\n"
-	}
 	config += `	  sequence_id = "1"` + "\n"
 	config += `	  sequence_name = "security"` + "\n"
 	config += `	  base_action = "drop"` + "\n"
@@ -123,86 +114,3 @@ func testAccSdwanEmbeddedSecurityNGFWProfileParcelConfig_all() string {
 }
 
 // End of section. //template:end testAccConfigAll
-
-func TestAccSdwanEmbeddedSecurityNGFWProfileParcelRuleSet(t *testing.T) {
-	if os.Getenv("SDWAN_2018") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2018")
-	}
-
-	config := testAccSdwanEmbeddedSecurityNGFWRuleSetConfig
-	checks := []resource.TestCheckFunc{
-		resource.TestCheckResourceAttr("sdwan_embedded_security_ngfw_policy.test_ruleset", "sequences.0.is_rule_set", "true"),
-		resource.TestCheckResourceAttr("sdwan_embedded_security_ngfw_policy.test_ruleset", "sequences.0.match_entries.0.rule_set_list_ids.#", "1"),
-		resource.TestCheckResourceAttrPair("sdwan_embedded_security_ngfw_policy.test_ruleset", "sequences.0.match_entries.0.rule_set_list_ids.0", "sdwan_policy_object_security_rule_set.test", "id"),
-		resource.TestCheckResourceAttr("data.sdwan_embedded_security_ngfw_policy.test_ruleset", "sequences.0.is_rule_set", "true"),
-		resource.TestCheckResourceAttrPair("data.sdwan_embedded_security_ngfw_policy.test_ruleset", "sequences.0.match_entries.0.rule_set_list_ids.0", "sdwan_policy_object_security_rule_set.test", "id"),
-	}
-
-	resource.Test(t, resource.TestCase{
-		PreCheck:                 func() { testAccPreCheck(t) },
-		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
-		Steps: []resource.TestStep{
-			{
-				Config: config,
-				Check:  resource.ComposeTestCheckFunc(checks...),
-			},
-			{
-				Config:             config,
-				PlanOnly:           true,
-				ExpectNonEmptyPlan: false,
-			},
-		},
-	})
-}
-
-const testAccSdwanEmbeddedSecurityNGFWRuleSetConfig = `
-resource "sdwan_embedded_security_feature_profile" "test_ruleset" {
-	name        = "TF_TEST_NGFW_RULESET_FP"
-	description = "Terraform test"
-}
-
-resource "sdwan_policy_object_feature_profile" "test_ruleset" {
-	name        = "TF_TEST_NGFW_RULESET_PO"
-	description = "Terraform test"
-}
-
-resource "sdwan_policy_object_security_rule_set" "test" {
-	name               = "TF_TEST_NGFW_RULESET"
-	description        = "Terraform test"
-	feature_profile_id = sdwan_policy_object_feature_profile.test_ruleset.id
-	sequences = [{
-		name                = "rule1"
-		sequence_ip_type    = "ipv4"
-		sequence_id         = "1"
-		action              = "drop"
-		source_ipv4_prefixes = ["10.1.1.0/24"]
-	}]
-}
-
-resource "sdwan_embedded_security_ngfw_policy" "test_ruleset" {
-	name               = "TF_TEST_NGFW_RULESET_POLICY"
-	description        = "Terraform test"
-	feature_profile_id = sdwan_embedded_security_feature_profile.test_ruleset.id
-	default_action     = "pass"
-	sequences = [{
-		is_rule_set      = true
-		sequence_id      = "1"
-		sequence_name    = "ruleset"
-		base_action      = "drop"
-		sequence_type    = "ngfirewall"
-		disable_sequence = false
-		match_entries = [{
-			rule_set_list_ids = [sdwan_policy_object_security_rule_set.test.id]
-		}]
-		actions = [{
-			type      = "log"
-			parameter = "true"
-		}]
-	}]
-}
-
-data "sdwan_embedded_security_ngfw_policy" "test_ruleset" {
-	id                 = sdwan_embedded_security_ngfw_policy.test_ruleset.id
-	feature_profile_id = sdwan_embedded_security_feature_profile.test_ruleset.id
-}
-`

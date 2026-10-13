@@ -24,7 +24,6 @@ import (
 	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
-	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -44,7 +43,6 @@ type EmbeddedSecurityNGFW struct {
 }
 
 type EmbeddedSecurityNGFWSequences struct {
-	IsRuleSet       types.Bool                                  `tfsdk:"is_rule_set"`
 	SequenceId      types.String                                `tfsdk:"sequence_id"`
 	SequenceName    types.String                                `tfsdk:"sequence_name"`
 	BaseAction      types.String                                `tfsdk:"base_action"`
@@ -68,9 +66,6 @@ type EmbeddedSecurityNGFWSequencesMatchEntries struct {
 	ProtocolNameListIds                types.Set    `tfsdk:"protocol_name_list_ids"`
 	AppListIds                         types.Set    `tfsdk:"app_list_ids"`
 	FlatAppListIds                     types.Set    `tfsdk:"flat_app_list_ids"`
-	RuleSetListIds                     types.Set    `tfsdk:"rule_set_list_ids"`
-	SourceObjectGroupListIds           types.Set    `tfsdk:"source_object_group_list_ids"`
-	DestinationObjectGroupListIds      types.Set    `tfsdk:"destination_object_group_list_ids"`
 	SourceSecurityGroupListIds         types.Set    `tfsdk:"source_security_group_list_ids"`
 	DestinationSecurityGroupListIds    types.Set    `tfsdk:"destination_security_group_list_ids"`
 	SourceDataPrefixes                 types.Set    `tfsdk:"source_data_prefixes"`
@@ -117,7 +112,7 @@ func (data EmbeddedSecurityNGFW) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data EmbeddedSecurityNGFW) toBody(ctx context.Context, ver *version.Version) string {
+func (data EmbeddedSecurityNGFW) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -132,12 +127,6 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context, ver *version.Versio
 		body, _ = sjson.Set(body, path+"sequences", []interface{}{})
 		for _, item := range data.Sequences {
 			itemBody := ""
-			if !item.IsRuleSet.IsNull() {
-				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
-					itemBody, _ = sjson.Set(itemBody, "isRuleSet.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "isRuleSet.value", item.IsRuleSet.ValueBool())
-				}
-			}
 			if !item.SequenceId.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "sequenceId.optionType", "global")
@@ -274,30 +263,6 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context, ver *version.Versio
 							var values []string
 							childItem.FlatAppListIds.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "appListFlat.refId.value", values)
-						}
-					}
-					if !childItem.RuleSetListIds.IsNull() {
-						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
-							itemChildBody, _ = sjson.Set(itemChildBody, "ruleSetList.refId.optionType", "global")
-							var values []string
-							childItem.RuleSetListIds.ElementsAs(ctx, &values, false)
-							itemChildBody, _ = sjson.Set(itemChildBody, "ruleSetList.refId.value", values)
-						}
-					}
-					if !childItem.SourceObjectGroupListIds.IsNull() {
-						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
-							itemChildBody, _ = sjson.Set(itemChildBody, "sourceObjectGroup.refId.optionType", "global")
-							var values []string
-							childItem.SourceObjectGroupListIds.ElementsAs(ctx, &values, false)
-							itemChildBody, _ = sjson.Set(itemChildBody, "sourceObjectGroup.refId.value", values)
-						}
-					}
-					if !childItem.DestinationObjectGroupListIds.IsNull() {
-						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
-							itemChildBody, _ = sjson.Set(itemChildBody, "destinationObjectGroup.refId.optionType", "global")
-							var values []string
-							childItem.DestinationObjectGroupListIds.ElementsAs(ctx, &values, false)
-							itemChildBody, _ = sjson.Set(itemChildBody, "destinationObjectGroup.refId.value", values)
 						}
 					}
 					if !childItem.SourceSecurityGroupListIds.IsNull() {
@@ -520,14 +485,6 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 		data.Sequences = make([]EmbeddedSecurityNGFWSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := EmbeddedSecurityNGFWSequences{}
-			item.IsRuleSet = types.BoolNull()
-
-			if t := v.Get("isRuleSet.optionType"); t.Exists() {
-				va := v.Get("isRuleSet.value")
-				if t.String() == "global" {
-					item.IsRuleSet = types.BoolValue(va.Bool())
-				}
-			}
 			item.SequenceId = types.StringNull()
 
 			if t := v.Get("sequenceId.optionType"); t.Exists() {
@@ -674,30 +631,6 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 						va := cv.Get("appListFlat.refId.value")
 						if t.String() == "global" {
 							cItem.FlatAppListIds = helpers.GetStringSet(va.Array())
-						}
-					}
-					cItem.RuleSetListIds = types.SetNull(types.StringType)
-
-					if t := cv.Get("ruleSetList.refId.optionType"); t.Exists() {
-						va := cv.Get("ruleSetList.refId.value")
-						if t.String() == "global" {
-							cItem.RuleSetListIds = helpers.GetStringSet(va.Array())
-						}
-					}
-					cItem.SourceObjectGroupListIds = types.SetNull(types.StringType)
-
-					if t := cv.Get("sourceObjectGroup.refId.optionType"); t.Exists() {
-						va := cv.Get("sourceObjectGroup.refId.value")
-						if t.String() == "global" {
-							cItem.SourceObjectGroupListIds = helpers.GetStringSet(va.Array())
-						}
-					}
-					cItem.DestinationObjectGroupListIds = types.SetNull(types.StringType)
-
-					if t := cv.Get("destinationObjectGroup.refId.optionType"); t.Exists() {
-						va := cv.Get("destinationObjectGroup.refId.value")
-						if t.String() == "global" {
-							cItem.DestinationObjectGroupListIds = helpers.GetStringSet(va.Array())
 						}
 					}
 					cItem.SourceSecurityGroupListIds = types.SetNull(types.StringType)
@@ -886,11 +819,6 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 				}
 				keyMatch := true
 				if keyMatch {
-					if oldItem.IsRuleSet.ValueBool() != data.Sequences[ni].IsRuleSet.ValueBool() {
-						keyMatch = false
-					}
-				}
-				if keyMatch {
 					if oldItem.SequenceId.ValueString() != data.Sequences[ni].SequenceId.ValueString() {
 						keyMatch = false
 					}
@@ -988,21 +916,6 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 								}
 								if keyMatchC {
 									if helpers.GetStringFromSet(oldCItem.FlatAppListIds).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].FlatAppListIds).ValueString() {
-										keyMatchC = false
-									}
-								}
-								if keyMatchC {
-									if helpers.GetStringFromSet(oldCItem.RuleSetListIds).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].RuleSetListIds).ValueString() {
-										keyMatchC = false
-									}
-								}
-								if keyMatchC {
-									if helpers.GetStringFromSet(oldCItem.SourceObjectGroupListIds).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].SourceObjectGroupListIds).ValueString() {
-										keyMatchC = false
-									}
-								}
-								if keyMatchC {
-									if helpers.GetStringFromSet(oldCItem.DestinationObjectGroupListIds).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].DestinationObjectGroupListIds).ValueString() {
 										keyMatchC = false
 									}
 								}
