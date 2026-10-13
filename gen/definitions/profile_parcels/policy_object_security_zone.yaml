@@ -17,6 +17,7 @@ attributes:
   - model_name: entries
     mandatory: true
     description: List of entries
+    min_list: 1
     attributes:
       - model_name: vpn
         example: Guest

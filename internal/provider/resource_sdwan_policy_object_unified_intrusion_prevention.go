@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -97,7 +98,7 @@ func (r *PolicyObjectUnifiedIntrusionPreventionProfileParcelResource) Schema(ctx
 				},
 			},
 			"signature_set_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Reference to a user edited signature set parcel, Attribute conditional on `signature_set` not being set").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Reference to a user edited signature set parcel, Attribute conditional on `signature_set` not being set and SD-WAN Manager version `20.18.1` or higher").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
@@ -157,7 +158,9 @@ func (r *PolicyObjectUnifiedIntrusionPreventionProfileParcelResource) Create(ctx
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
 	// Create object
-	body := plan.toBody(ctx)
+
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -240,7 +243,8 @@ func (r *PolicyObjectUnifiedIntrusionPreventionProfileParcelResource) Update(ctx
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

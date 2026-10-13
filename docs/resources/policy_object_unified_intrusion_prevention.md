@@ -46,7 +46,7 @@ resource "sdwan_policy_object_unified_intrusion_prevention" "example" {
 - `ips_signature_allow_list_id` (String)
 - `signature_set` (String) Can be one of the enum value, Attribute conditional on `signature_set_id` not being set
   - Choices: `balanced`, `connectivity`, `security`, `max-detect`, `no-rules-active`
-- `signature_set_id` (String) Reference to a user edited signature set parcel, Attribute conditional on `signature_set` not being set
+- `signature_set_id` (String) Reference to a user edited signature set parcel, Attribute conditional on `signature_set` not being set and SD-WAN Manager version `20.18.1` or higher
 
 ### Read-Only
 

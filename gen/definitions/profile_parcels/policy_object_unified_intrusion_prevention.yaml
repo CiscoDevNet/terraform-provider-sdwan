@@ -28,6 +28,8 @@ attributes:
       conditions:
         - name: signature_set
           value: ''
+        - type: MinVersion
+          value: 20.18.1
     example: 2ad58d78-59ee-46d3-86dd-7b6b7ca09f38
   - model_name: inspectionMode
     example: detection

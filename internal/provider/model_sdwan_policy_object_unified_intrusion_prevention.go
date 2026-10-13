@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -62,7 +63,7 @@ func (data PolicyObjectUnifiedIntrusionPrevention) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data PolicyObjectUnifiedIntrusionPrevention) toBody(ctx context.Context) string {
+func (data PolicyObjectUnifiedIntrusionPrevention) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -74,7 +75,7 @@ func (data PolicyObjectUnifiedIntrusionPrevention) toBody(ctx context.Context) s
 		}
 	}
 	if !data.SignatureSetId.IsNull() {
-		if true && data.SignatureSet.IsNull() {
+		if true && data.SignatureSet.IsNull() && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
 			body, _ = sjson.Set(body, path+"signatureSet.refId.optionType", "global")
 			body, _ = sjson.Set(body, path+"signatureSet.refId.value", data.SignatureSetId.ValueString())
 		}
