@@ -90,10 +90,17 @@ func (r *PolicyObjectUnifiedIntrusionPreventionProfileParcelResource) Schema(ctx
 				Required:            true,
 			},
 			"signature_set": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Can be one of the enum value").AddStringEnumDescription("balanced", "connectivity", "security").String,
-				Required:            true,
+				MarkdownDescription: helpers.NewAttributeDescription("Can be one of the enum value, Attribute conditional on `signature_set_id` not being set").AddStringEnumDescription("balanced", "connectivity", "security", "max-detect", "no-rules-active").String,
+				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("balanced", "connectivity", "security"),
+					stringvalidator.OneOf("balanced", "connectivity", "security", "max-detect", "no-rules-active"),
+				},
+			},
+			"signature_set_id": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Reference to a user edited signature set parcel, Attribute conditional on `signature_set` not being set").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 				},
 			},
 			"inspection_mode": schema.StringAttribute{

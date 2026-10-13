@@ -38,6 +38,7 @@ type PolicyObjectUnifiedIntrusionPrevention struct {
 	Description             types.String `tfsdk:"description"`
 	FeatureProfileId        types.String `tfsdk:"feature_profile_id"`
 	SignatureSet            types.String `tfsdk:"signature_set"`
+	SignatureSetId          types.String `tfsdk:"signature_set_id"`
 	InspectionMode          types.String `tfsdk:"inspection_mode"`
 	IpsSignatureAllowListId types.String `tfsdk:"ips_signature_allow_list_id"`
 	LogLevel                types.String `tfsdk:"log_level"`
@@ -67,9 +68,15 @@ func (data PolicyObjectUnifiedIntrusionPrevention) toBody(ctx context.Context) s
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
 	if !data.SignatureSet.IsNull() {
-		if true {
+		if true && data.SignatureSetId.IsNull() {
 			body, _ = sjson.Set(body, path+"signatureSet.optionType", "global")
 			body, _ = sjson.Set(body, path+"signatureSet.value", data.SignatureSet.ValueString())
+		}
+	}
+	if !data.SignatureSetId.IsNull() {
+		if true && data.SignatureSet.IsNull() {
+			body, _ = sjson.Set(body, path+"signatureSet.refId.optionType", "global")
+			body, _ = sjson.Set(body, path+"signatureSet.refId.value", data.SignatureSetId.ValueString())
 		}
 	}
 	if !data.InspectionMode.IsNull() {
@@ -116,6 +123,14 @@ func (data *PolicyObjectUnifiedIntrusionPrevention) fromBody(ctx context.Context
 		va := res.Get(path + "signatureSet.value")
 		if t.String() == "global" {
 			data.SignatureSet = types.StringValue(va.String())
+		}
+	}
+	data.SignatureSetId = types.StringNull()
+
+	if t := res.Get(path + "signatureSet.refId.optionType"); t.Exists() {
+		va := res.Get(path + "signatureSet.refId.value")
+		if t.String() == "global" {
+			data.SignatureSetId = types.StringValue(va.String())
 		}
 	}
 	data.InspectionMode = types.StringNull()

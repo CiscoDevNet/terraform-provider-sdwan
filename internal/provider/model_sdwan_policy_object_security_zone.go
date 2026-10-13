@@ -68,7 +68,7 @@ func (data PolicyObjectSecurityZone) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
 	if true {
-
+		body, _ = sjson.Set(body, path+"entries", []interface{}{})
 		for _, item := range data.Entries {
 			itemBody := ""
 			if !item.Vpn.IsNull() {
