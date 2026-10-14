@@ -341,7 +341,7 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 													},
 												},
 												"preferred_color_group_restrict": schema.BoolAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Restrict traffic to the preferred color group, requires `preferred_color_group_list_id` to be set, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
 													Optional:            true,
 												},
 												"strict": schema.BoolAttribute{
@@ -396,7 +396,7 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 													},
 												},
 												"preferred_color_group_restrict": schema.BoolAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Restrict traffic to the preferred color group, requires `preferred_color_group_id` to be set, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
 													Optional:            true,
 												},
 												"forwarding_class_list_id": schema.StringAttribute{

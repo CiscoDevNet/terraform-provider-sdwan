@@ -95,7 +95,7 @@ Read-Only:
 - `next_hop_loose` (Boolean)
 - `policer_id` (String)
 - `preferred_color_group_id` (String)
-- `preferred_color_group_restrict` (Boolean)
+- `preferred_color_group_restrict` (Boolean) Restrict traffic to the preferred color group, requires `preferred_color_group_id` to be set
 - `preferred_remote_color_restrict` (Boolean)
 - `preferred_remote_colors` (Set of String)
 - `service_chain_fallback_to_routing` (Boolean)
@@ -128,7 +128,7 @@ Read-Only:
 
 - `fallback_to_best_path` (Boolean)
 - `preferred_color_group_list_id` (String)
-- `preferred_color_group_restrict` (Boolean)
+- `preferred_color_group_restrict` (Boolean) Restrict traffic to the preferred color group, requires `preferred_color_group_list_id` to be set
 - `preferred_colors` (Set of String)
 - `preferred_remote_colors` (Set of String)
 - `remote_color_restrict` (Boolean)

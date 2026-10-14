@@ -256,7 +256,7 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 													Computed:            true,
 												},
 												"preferred_color_group_restrict": schema.BoolAttribute{
-													MarkdownDescription: "",
+													MarkdownDescription: "Restrict traffic to the preferred color group, requires `preferred_color_group_list_id` to be set",
 													Computed:            true,
 												},
 												"strict": schema.BoolAttribute{
@@ -302,7 +302,7 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 													Computed:            true,
 												},
 												"preferred_color_group_restrict": schema.BoolAttribute{
-													MarkdownDescription: "",
+													MarkdownDescription: "Restrict traffic to the preferred color group, requires `preferred_color_group_id` to be set",
 													Computed:            true,
 												},
 												"forwarding_class_list_id": schema.StringAttribute{
