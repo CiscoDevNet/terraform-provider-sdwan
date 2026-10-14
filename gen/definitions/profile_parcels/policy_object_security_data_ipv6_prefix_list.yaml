@@ -17,9 +17,9 @@ attributes:
   - model_name: entries
     mandatory: true
     attributes:
-      - model_name: ipv6Prefix
-        mandatory: true
-        example: 2001:0:0:1::/64
+    - model_name: ipv6Prefix
+      mandatory: true
+      example: 2001:0:0:1::/64
 
 test_prerequisites: |
   resource "sdwan_policy_object_feature_profile" "test" {
