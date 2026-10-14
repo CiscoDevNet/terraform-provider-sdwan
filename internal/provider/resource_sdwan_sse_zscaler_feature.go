@@ -567,7 +567,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 				Optional:            true,
 			},
 			"country": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Country").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"country_variable": schema.StringAttribute{
@@ -575,7 +575,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 				Optional:            true,
 			},
 			"enforce_bandwidth_control": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enforce Bandwidth Control").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"enforce_bandwidth_control_variable": schema.StringAttribute{
@@ -583,7 +583,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 				Optional:            true,
 			},
 			"dn_bandwidth": schema.Float64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `enforce_bandwidth_control` equal to `true`").AddFloatRangeDescription(0.1, 99999).String,
+				MarkdownDescription: helpers.NewAttributeDescription("Download Bandwidth in Mbps, Attribute conditional on `enforce_bandwidth_control` equal to `true`").AddFloatRangeDescription(0.1, 99999).String,
 				Optional:            true,
 				Validators: []validator.Float64{
 					float64validator.Between(0.1, 99999),
@@ -594,7 +594,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 				Optional:            true,
 			},
 			"up_bandwidth": schema.Float64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `enforce_bandwidth_control` equal to `true`").AddFloatRangeDescription(0.1, 99999).String,
+				MarkdownDescription: helpers.NewAttributeDescription("Upload Bandwidth in Mbps, Attribute conditional on `enforce_bandwidth_control` equal to `true`").AddFloatRangeDescription(0.1, 99999).String,
 				Optional:            true,
 				Validators: []validator.Float64{
 					float64validator.Between(0.1, 99999),
@@ -610,7 +610,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Sub-location name").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 128),
@@ -706,7 +706,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 						},
 						"service_vpn": schema.SetAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Sub-location Service VPN").String,
 							ElementType:         types.StringType,
 							Optional:            true,
 						},
@@ -715,7 +715,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 						},
 						"internal_ip": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Internal Ip address").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
@@ -777,7 +777,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 						},
 						"up_bandwidth": schema.Float64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `enforce_bandwidth_control` equal to `override`").AddFloatRangeDescription(0.1, 99999).String,
+							MarkdownDescription: helpers.NewAttributeDescription("Upload Bandwidth in Mbps, Attribute conditional on `enforce_bandwidth_control` equal to `override`").AddFloatRangeDescription(0.1, 99999).String,
 							Optional:            true,
 							Validators: []validator.Float64{
 								float64validator.Between(0.1, 99999),
@@ -788,7 +788,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 						},
 						"dn_bandwidth": schema.Float64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `enforce_bandwidth_control` equal to `override`").AddFloatRangeDescription(0.1, 99999).String,
+							MarkdownDescription: helpers.NewAttributeDescription("Download Bandwidth in Mbps, Attribute conditional on `enforce_bandwidth_control` equal to `override`").AddFloatRangeDescription(0.1, 99999).String,
 							Optional:            true,
 							Validators: []validator.Float64{
 								float64validator.Between(0.1, 99999),
