@@ -4,13 +4,13 @@ page_title: "sdwan_policy_object_security_data_ipv6_prefix_list Resource - terra
 subcategory: "Policy Objects"
 description: |-
   This resource can manage a Policy Object Security Data IPv6 Prefix List Policy_object.
-  Minimum SD-WAN Manager version: 20.19.1
+  Minimum SD-WAN Manager version: 20.18.0
 ---
 
 # sdwan_policy_object_security_data_ipv6_prefix_list (Resource)
 
 This resource can manage a Policy Object Security Data IPv6 Prefix List Policy_object.
-  - Minimum SD-WAN Manager version: `20.19.1`
+  - Minimum SD-WAN Manager version: `20.18.0`
 
 ## Example Usage
 

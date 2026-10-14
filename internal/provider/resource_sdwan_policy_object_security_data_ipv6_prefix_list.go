@@ -63,7 +63,7 @@ func (r *PolicyObjectSecurityDataIPv6PrefixListProfileParcelResource) Metadata(c
 func (r *PolicyObjectSecurityDataIPv6PrefixListProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Policy Object Security Data IPv6 Prefix List Policy_object.").AddMinimumVersionDescription("20.19.1").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Policy Object Security Data IPv6 Prefix List Policy_object.").AddMinimumVersionDescription("20.18.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
