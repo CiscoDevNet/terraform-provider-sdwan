@@ -72,13 +72,14 @@ resource "sdwan_topology_custom_control_feature" "example" {
 - `description` (String) The description of the Feature
 - `sequences` (Attributes List) Sequence list (see [below for nested schema](#nestedatt--sequences))
 - `target_inbound_hierarchy_uuids` (Set of String) Inbound network hierarchy UUIDs, Attribute conditional on `target_level` equal to `SITE` and SD-WAN Manager version `20.18.1` or higher and `target_inbound_sites` not being set and `target_outbound_sites` not being set
-- `target_inbound_regions` (Attributes List) , Attribute conditional on `target_level` equal to `REGION` or `target_level` equal to `SUB_REGION` (see [below for nested schema](#nestedatt--target_inbound_regions))
-- `target_inbound_sites` (Set of String) , Attribute conditional on `target_level` equal to `SITE` and `target_inbound_hierarchy_uuids` not being set and `target_outbound_hierarchy_uuids` not being set
+- `target_inbound_regions` (Attributes List) Inbound regions list, Attribute conditional on `target_level` equal to `REGION` or `target_level` equal to `SUB_REGION` (see [below for nested schema](#nestedatt--target_inbound_regions))
+- `target_inbound_sites` (Set of String) Inbound site list, Attribute conditional on `target_level` equal to `SITE` and `target_inbound_hierarchy_uuids` not being set and `target_outbound_hierarchy_uuids` not being set
 - `target_outbound_hierarchy_uuids` (Set of String) Outbound network hierarchy UUIDs, Attribute conditional on `target_level` equal to `SITE` and SD-WAN Manager version `20.18.1` or higher and `target_outbound_sites` not being set and `target_inbound_sites` not being set
-- `target_outbound_regions` (Attributes List) , Attribute conditional on `target_level` equal to `REGION` or `target_level` equal to `SUB_REGION` (see [below for nested schema](#nestedatt--target_outbound_regions))
-- `target_outbound_sites` (Set of String) , Attribute conditional on `target_level` equal to `SITE` and `target_outbound_hierarchy_uuids` not being set and `target_inbound_hierarchy_uuids` not being set
-- `target_role` (String) - Choices: `edge-router`, `border-router`
-- `target_vpn` (Set of String)
+- `target_outbound_regions` (Attributes List) Outbound regions list, Attribute conditional on `target_level` equal to `REGION` or `target_level` equal to `SUB_REGION` (see [below for nested schema](#nestedatt--target_outbound_regions))
+- `target_outbound_sites` (Set of String) Outbound site list, Attribute conditional on `target_level` equal to `SITE` and `target_outbound_hierarchy_uuids` not being set and `target_inbound_hierarchy_uuids` not being set
+- `target_role` (String) Target role
+  - Choices: `edge-router`, `border-router`
+- `target_vpn` (Set of String) Target VPN list
 
 ### Read-Only
 
@@ -90,14 +91,14 @@ resource "sdwan_topology_custom_control_feature" "example" {
 
 Optional:
 
-- `action_entries` (Attributes List) (see [below for nested schema](#nestedatt--sequences--action_entries))
+- `action_entries` (Attributes List) List of action entries (see [below for nested schema](#nestedatt--sequences--action_entries))
 - `base_action` (String) Base Action
   - Choices: `reject`, `accept`
 - `id` (Number) Sequence Id
   - Range: `1`-`65536`
 - `ip_type` (String) Sequence IP Type
   - Choices: `ipv4`, `ipv6`, `all`
-- `match_entries` (Attributes Set) (see [below for nested schema](#nestedatt--sequences--match_entries))
+- `match_entries` (Attributes Set) Set of match entries (see [below for nested schema](#nestedatt--sequences--match_entries))
 - `name` (String) Sequence Name
 - `type` (String) Sequence Type
   - Choices: `route`, `tloc`

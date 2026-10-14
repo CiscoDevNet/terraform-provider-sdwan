@@ -83,12 +83,12 @@ func (d *TopologyCustomControlProfileParcelDataSource) Schema(ctx context.Contex
 				Computed:            true,
 			},
 			"target_vpn": schema.SetAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "Target VPN list",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
 			"target_role": schema.StringAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "Target role",
 				Computed:            true,
 			},
 			"target_level": schema.StringAttribute{
@@ -96,7 +96,7 @@ func (d *TopologyCustomControlProfileParcelDataSource) Schema(ctx context.Contex
 				Computed:            true,
 			},
 			"target_inbound_sites": schema.SetAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "Inbound site list",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
@@ -106,7 +106,7 @@ func (d *TopologyCustomControlProfileParcelDataSource) Schema(ctx context.Contex
 				Computed:            true,
 			},
 			"target_outbound_sites": schema.SetAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "Outbound site list",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
@@ -116,7 +116,7 @@ func (d *TopologyCustomControlProfileParcelDataSource) Schema(ctx context.Contex
 				Computed:            true,
 			},
 			"target_inbound_regions": schema.ListNestedAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "Inbound regions list",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -133,7 +133,7 @@ func (d *TopologyCustomControlProfileParcelDataSource) Schema(ctx context.Contex
 				},
 			},
 			"target_outbound_regions": schema.ListNestedAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "Outbound regions list",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -175,7 +175,7 @@ func (d *TopologyCustomControlProfileParcelDataSource) Schema(ctx context.Contex
 							Computed:            true,
 						},
 						"match_entries": schema.SetNestedAttribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "Set of match entries",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
@@ -287,7 +287,7 @@ func (d *TopologyCustomControlProfileParcelDataSource) Schema(ctx context.Contex
 							},
 						},
 						"action_entries": schema.ListNestedAttribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "List of action entries",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
