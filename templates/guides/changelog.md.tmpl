@@ -16,6 +16,8 @@ description: |-
 - Fix generator to extract enum values from different oneOf branches.
 - Bump schema to `20.18.0` for the following application priority resources: `sdwan_application_priority_qos_policy`, `sdwan_application_priority_traffic_policy_policy`
 - Add `hierarchy_ids` and `preferred_color_group_restrict` attributes to `sdwan_application_priority_traffic_policy_policy` resource and data source (SD-WAN Manager 20.18+)
+- Fix generator to fall back to the attribute description from the definition when the model schema does not provide one.
+
 
 ## 0.11.6
 
