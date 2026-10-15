@@ -10,6 +10,7 @@ description: |-
 ## 0.11.6 (unreleased)
 
 - Add `sdwan_scope` resource and data source
+- Add `sdwan_network_hierarchy_nodes` data source, resolving a list of Network Hierarchy site, group and region names in a single paginated API call, without requiring the hierarchy to be managed by this provider. `nodes` returns the UUID and type of every named node; `resolved_sites` and `container_sites` are the site view (named sites plus the members of named groups and regions), which `expand_containers = false` leaves empty
 - Add `sdwan_service_appqoe_feature` resource and data source
 - Bump `sdwan_custom_application` schema to `20.18.0`
 - Fix `sdwan_service_lan_vpn_interface_svi_feature`: `track_omp = true` on `ipv4_vrrps`/`ipv6_vrrps` no longer sends an invalid `prefix_list`/`track_prefix_list` stub, fixing SCHVALID0001 errors
