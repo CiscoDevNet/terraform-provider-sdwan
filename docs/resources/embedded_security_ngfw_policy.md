@@ -77,7 +77,7 @@ Optional:
 - `match_entries` (Attributes List) (see [below for nested schema](#nestedatt--sequences--match_entries))
 - `sequence_comment` (String) , Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `sequence_id` (String)
-- `sequence_ip_type` (String) , Attribute conditional on SD-WAN Manager version `20.18.0` or higher
+- `sequence_ip_type` (String) IP address family the sequence matches on, `ipv4` sequences only accept the IPv4 match attributes and `ipv6` sequences only accept the IPv6 ones, Attribute conditional on SD-WAN Manager version `20.18.0` or higher
   - Choices: `ipv4`, `ipv6`
   - Default value: `ipv4`
 - `sequence_name` (String)
@@ -101,7 +101,7 @@ Optional:
 - `app_list_ids` (Set of String)
 - `application_families` (Set of String)
 - `applications` (Set of String)
-- `destination_data_ipv6_prefix_list_ids` (Set of String) , Attribute conditional on SD-WAN Manager version `20.18.0` or higher
+- `destination_data_ipv6_prefix_list_ids` (Set of String) Only supported on sequences with `sequence_ip_type` set to `ipv6`, Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `destination_data_prefix_list_ids` (Set of String)
 - `destination_data_prefixes` (Set of String)
 - `destination_data_prefixes_variable` (String) Variable name
@@ -111,7 +111,7 @@ Optional:
 - `destination_geo_location_list_ids` (Set of String)
 - `destination_geo_locations` (Set of String)
 - `destination_geo_locations_variable` (String) Variable name
-- `destination_ipv6_data_prefixes` (Set of String) , Attribute conditional on SD-WAN Manager version `20.18.0` or higher
+- `destination_ipv6_data_prefixes` (Set of String) Only supported on sequences with `sequence_ip_type` set to `ipv6`, Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `destination_ipv6_data_prefixes_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `destination_object_group_list_ids` (Set of String) , Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `destination_port_list_ids` (Set of String)
@@ -123,7 +123,7 @@ Optional:
 - `protocol_name_list_ids` (Set of String)
 - `protocol_names` (Set of String)
 - `protocols` (Set of String)
-- `source_data_ipv6_prefix_list_ids` (Set of String) , Attribute conditional on SD-WAN Manager version `20.18.0` or higher
+- `source_data_ipv6_prefix_list_ids` (Set of String) Only supported on sequences with `sequence_ip_type` set to `ipv6`, Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `source_data_prefix_list_ids` (Set of String)
 - `source_data_prefixes` (Set of String)
 - `source_data_prefixes_variable` (String) Variable name
@@ -133,7 +133,7 @@ Optional:
 - `source_identity_list_ids` (Set of String)
 - `source_identity_usergroups` (Set of String)
 - `source_identity_users` (Set of String)
-- `source_ipv6_data_prefixes` (Set of String) , Attribute conditional on SD-WAN Manager version `20.18.0` or higher
+- `source_ipv6_data_prefixes` (Set of String) Only supported on sequences with `sequence_ip_type` set to `ipv6`, Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `source_ipv6_data_prefixes_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `source_object_group_list_ids` (Set of String) , Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `source_port_list_ids` (Set of String)

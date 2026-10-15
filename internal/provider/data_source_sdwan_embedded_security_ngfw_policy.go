@@ -115,7 +115,7 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 							Computed:            true,
 						},
 						"sequence_ip_type": schema.StringAttribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "IP address family the sequence matches on, `ipv4` sequences only accept the IPv4 match attributes and `ipv6` sequences only accept the IPv6 ones",
 							Computed:            true,
 						},
 						"sequence_type": schema.StringAttribute{
@@ -137,7 +137,7 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 										Computed:            true,
 									},
 									"source_data_ipv6_prefix_list_ids": schema.SetAttribute{
-										MarkdownDescription: "",
+										MarkdownDescription: "Only supported on sequences with `sequence_ip_type` set to `ipv6`",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
@@ -147,7 +147,7 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 										Computed:            true,
 									},
 									"destination_data_ipv6_prefix_list_ids": schema.SetAttribute{
-										MarkdownDescription: "",
+										MarkdownDescription: "Only supported on sequences with `sequence_ip_type` set to `ipv6`",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
@@ -236,7 +236,7 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 										Computed:            true,
 									},
 									"source_ipv6_data_prefixes": schema.SetAttribute{
-										MarkdownDescription: "",
+										MarkdownDescription: "Only supported on sequences with `sequence_ip_type` set to `ipv6`",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
@@ -254,7 +254,7 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 										Computed:            true,
 									},
 									"destination_ipv6_data_prefixes": schema.SetAttribute{
-										MarkdownDescription: "",
+										MarkdownDescription: "Only supported on sequences with `sequence_ip_type` set to `ipv6`",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
