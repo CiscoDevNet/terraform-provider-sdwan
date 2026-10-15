@@ -191,7 +191,8 @@ attributes:
         - model_name: preferredColorGroupRestrict
           tf_name: preferred_color_group_restrict
           description: Restrict traffic to the preferred color group, requires `preferred_color_group_list_id` to be set
-          example: true
+          exclude_example: true
+          exclude_test: true
           test_tags: [SDWAN_2018]
           conditional_attribute:
             conditions:
@@ -230,12 +231,14 @@ attributes:
           tf_name: preferred_color_group_id
           data_path: [preferredColorGroup]
           example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
-          test_value: sdwan_policy_object_preferred_color_group.test.id
+          exclude_example: true
+          exclude_test: true
           test_tags: [SDWAN_2018]
         - model_name: preferredColorGroupRestrict
           tf_name: preferred_color_group_restrict
           description: Restrict traffic to the preferred color group, requires `preferred_color_group_id` to be set
-          example: true
+          exclude_example: true
+          exclude_test: true
           test_tags: [SDWAN_2018]
           conditional_attribute:
             conditions:

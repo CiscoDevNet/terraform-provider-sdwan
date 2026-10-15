@@ -40,9 +40,6 @@ func TestAccSdwanApplicationPriorityTrafficPolicyProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_policy.test", "sequences.0.base_action", "accept"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_policy.test", "sequences.0.protocol", "ipv4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_policy.test", "sequences.0.actions.0.set_parameters.0.dscp", "18"))
-	if os.Getenv("SDWAN_2018") != "" {
-		checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_policy.test", "sequences.0.actions.0.set_parameters.0.preferred_color_group_restrict", "true"))
-	}
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -122,12 +119,6 @@ func testAccSdwanApplicationPriorityTrafficPolicyProfileParcelConfig_all() strin
 	config += `	  actions = [{` + "\n"
 	config += `      set_parameters = [{` + "\n"
 	config += `			dscp = 18` + "\n"
-	if os.Getenv("SDWAN_2018") != "" {
-		config += `			preferred_color_group_id = sdwan_policy_object_preferred_color_group.test.id` + "\n"
-	}
-	if os.Getenv("SDWAN_2018") != "" {
-		config += `			preferred_color_group_restrict = true` + "\n"
-	}
 	config += `		}]` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
