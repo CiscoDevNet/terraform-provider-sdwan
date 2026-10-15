@@ -6,6 +6,7 @@
 - Fix `sdwan_service_lan_vpn_feature`: `administrative_distance` on `ip_static_route_interface`/`ipv6_static_route_interface` `next_hop` and on `null0` IPv4 static routes now defaults to `1` when not set, fixing schema validation errors when it is omitted
 - Fix generator to extract enum values from different oneOf branches.
 - Fix generator to fall back to the attribute description from the definition when the model schema does not provide one.
+- Fix `sdwan_sse_cisco_feature` and `sdwan_sse_zscaler_feature`: tracker_source_ip_variable can't be defined, provider insists on tracker_source_ip.
 
 
 ## 0.11.6
