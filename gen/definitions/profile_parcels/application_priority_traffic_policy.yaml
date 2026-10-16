@@ -2,7 +2,7 @@ name: Application Priority Traffic Policy
 rest_endpoint: /v1/feature-profile/sdwan/application-priority/%v/traffic-policy
 minimum_version: 20.15.0
 id_attribute: id
-test_tags: [SDWAN_2015, TF_VAR_policy_object_feature_template_id]
+test_tags: [SDWAN_2015, SDWAN_2018, TF_VAR_policy_object_feature_template_id]
 skip_minimum_test: true
 parcel_type: policy
 no_data_source_name_query: true
@@ -28,9 +28,11 @@ attributes:
   - model_name: vpn
     tf_name: vpns
     data_path: [target]
+    mandatory: true
     example: "edge_basic_vpn1"
   - model_name: direction
     data_path: [target]
+    mandatory: true
     example: all
   - model_name: sequences
     attributes:
@@ -152,6 +154,18 @@ attributes:
       - model_name: dns
         exclude_test: true
         example: response
+      - model_name: hierarchyUuid
+        tf_name: hierarchy_ids
+        type: Set
+        element_type: String
+        description: Site List
+        example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+        exclude_test: true
+        test_tags: [SDWAN_2018]
+        conditional_attribute:
+          conditions:
+            - type: MinVersion
+              value: 20.18.1
     - model_name: actions
       tf_name: actions
       attributes:
@@ -174,6 +188,16 @@ attributes:
           data_path: [preferredColorGroup]
           exclude_test: true
           example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
+        - model_name: preferredColorGroupRestrict
+          tf_name: preferred_color_group_restrict
+          description: Restrict traffic to the preferred color group, requires `preferred_color_group_list_id` to be set
+          exclude_example: true
+          exclude_test: true
+          test_tags: [SDWAN_2018]
+          conditional_attribute:
+            conditions:
+              - type: MinVersion
+                value: 20.18.1
         - model_name: strict
           exclude_test: true
           example: true
@@ -206,8 +230,20 @@ attributes:
         - model_name: refId
           tf_name: preferred_color_group_id
           data_path: [preferredColorGroup]
-          exclude_test: true
           example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
+          exclude_example: true
+          exclude_test: true
+          test_tags: [SDWAN_2018]
+        - model_name: preferredColorGroupRestrict
+          tf_name: preferred_color_group_restrict
+          description: Restrict traffic to the preferred color group, requires `preferred_color_group_id` to be set
+          exclude_example: true
+          exclude_test: true
+          test_tags: [SDWAN_2018]
+          conditional_attribute:
+            conditions:
+              - type: MinVersion
+                value: 20.18.1
         - model_name: refId
           data_path: [forwardingClass]
           tf_name: forwarding_class_list_id
@@ -429,7 +465,7 @@ attributes:
         tf_name: nat_dia_interfaces
         data_path: [nat]
         exclude_test: true
-        example: ethernet
+        example: GigabitEthernet1
       - model_name: sig
         tf_name: secure_internet_gateway
         exclude_test: true
@@ -466,6 +502,18 @@ test_prerequisites: |
         burst_bytes   = 56500
         exceed_action = "remark"
         rate_bps      = 60000
+      }
+    ]
+  }
+
+  resource "sdwan_policy_object_preferred_color_group" "test" {
+    name               = "TF_TEST_PCG"
+    description        = "My Example"
+    feature_profile_id = sdwan_policy_object_feature_profile.test.id
+    entries = [
+      {
+        primary_color_preference = ["mpls"]
+        primary_path_preference  = "direct-path"
       }
     ]
   }

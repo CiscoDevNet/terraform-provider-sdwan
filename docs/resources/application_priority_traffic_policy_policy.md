@@ -91,7 +91,7 @@ Optional:
 - `appqoe_dre_optimization` (Boolean)
 - `appqoe_service_node_group` (String)
 - `appqoe_tcp_optimization` (Boolean)
-- `backup_sla_preferred_colors` (Set of String) Backup SLA perferred color
+- `backup_sla_preferred_colors` (Set of String) Backup SLA preferred color
 - `cflowd` (Boolean)
 - `cloud_probe` (Boolean)
 - `cloud_saas` (Boolean)
@@ -129,6 +129,7 @@ Optional:
 - `next_hop_loose` (Boolean)
 - `policer_id` (String)
 - `preferred_color_group_id` (String)
+- `preferred_color_group_restrict` (Boolean) Restrict traffic to the preferred color group, requires `preferred_color_group_id` to be set, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
 - `preferred_remote_color_restrict` (Boolean)
 - `preferred_remote_colors` (Set of String)
 - `service_chain_fallback_to_routing` (Boolean)
@@ -161,6 +162,7 @@ Optional:
 
 - `fallback_to_best_path` (Boolean)
 - `preferred_color_group_list_id` (String)
+- `preferred_color_group_restrict` (Boolean) Restrict traffic to the preferred color group, requires `preferred_color_group_list_id` to be set, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
 - `preferred_colors` (Set of String)
 - `preferred_remote_colors` (Set of String)
 - `remote_color_restrict` (Boolean)
@@ -186,6 +188,7 @@ Optional:
   - Choices: `request`, `response`
 - `dns_application_list_id` (String)
 - `dscps` (Set of Number) DSCP numbers
+- `hierarchy_ids` (Set of String) Site List, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
 - `icmp6_messages` (Set of String) ICMP6 Message
 - `icmp_messages` (Set of String) ICMP Message
 - `packet_length` (String) Packet Length

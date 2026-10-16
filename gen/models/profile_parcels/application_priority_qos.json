@@ -19,14 +19,87 @@
         "type": "object",
         "properties": {
           "target": {
-            "description": "Interfaces",
-            "type": "object",
-            "properties": {
-              "interfaces": {
-                "description": "interfaces",
+            "oneOf": [
+              {
+                "description": "Interfaces",
                 "type": "object",
-                "oneOf": [
-                  {
+                "properties": {
+                  "interfaces": {
+                    "description": "interfaces",
+                    "type": "object",
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "optionType": {
+                            "type": "string",
+                            "enum": [
+                              "global"
+                            ]
+                          },
+                          "value": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "additionalProperties": false,
+                            "uniqueItems": true,
+                            "type": "array"
+                          }
+                        },
+                        "required": [
+                          "optionType",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "properties": {
+                          "optionType": {
+                            "type": "string",
+                            "enum": [
+                              "variable"
+                            ]
+                          },
+                          "value": {
+                            "type": "string",
+                            "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "default": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "additionalProperties": false,
+                            "uniqueItems": true,
+                            "type": "array"
+                          },
+                          "description": {
+                            "minLength": 1,
+                            "type": "string",
+                            "maxLength": 128
+                          }
+                        },
+                        "required": [
+                          "optionType",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "interfaces"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "description": "Interface Rule",
+                "type": "object",
+                "properties": {
+                  "interfaceRule": {
+                    "description": "interface rule",
+                    "type": "object",
                     "properties": {
                       "optionType": {
                         "type": "string",
@@ -34,62 +107,30 @@
                           "global"
                         ]
                       },
-                      "value": {
+                      "ruleId": {
                         "items": {
-                          "type": "string"
+                          "type": "string",
+                          "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
                         },
                         "additionalProperties": false,
                         "uniqueItems": true,
-                        "type": "array"
+                        "type": "array",
+                        "maxItems": 1
                       }
                     },
                     "required": [
                       "optionType",
-                      "value"
-                    ],
-                    "additionalProperties": false
-                  },
-                  {
-                    "properties": {
-                      "optionType": {
-                        "type": "string",
-                        "enum": [
-                          "variable"
-                        ]
-                      },
-                      "value": {
-                        "type": "string",
-                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                        "minLength": 1,
-                        "maxLength": 128
-                      },
-                      "default": {
-                        "items": {
-                          "type": "string"
-                        },
-                        "additionalProperties": false,
-                        "uniqueItems": true,
-                        "type": "array"
-                      },
-                      "description": {
-                        "minLength": 1,
-                        "type": "string",
-                        "maxLength": 128
-                      }
-                    },
-                    "required": [
-                      "optionType",
-                      "value"
+                      "ruleId"
                     ],
                     "additionalProperties": false
                   }
-                ]
+                },
+                "required": [
+                  "interfaceRule"
+                ],
+                "additionalProperties": false
               }
-            },
-            "required": [
-              "interfaces"
-            ],
-            "additionalProperties": false
+            ]
           },
           "qosMap": {
             "description": "qos-map",
@@ -237,7 +278,7 @@
         "additionalProperties": false
       },
       "metadata": {
-        "minVManageVersion": "20.15.1"
+        "minVManageVersion": "20.16.1"
       },
       "documentation": {
         "description": "This is the documentation for POST request schema for [parcelType] profile parcel",
