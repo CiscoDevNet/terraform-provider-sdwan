@@ -149,8 +149,20 @@ attributes:
         exclude_test: true
         example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
       - model_name: refId
+        tf_name: rule_set_list_ids
+        data_path: [ruleSetList]
+        description: Security rule set IDs, requires `is_rule_set` set to `true` on the sequence
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+        test_tags: [SDWAN_2018]
+        conditional_attribute:
+          conditions:
+            - type: MinVersion
+              value: 20.18.0
+      - model_name: refId
         tf_name: source_object_group_list_ids
         data_path: [sourceObjectGroup]
+        description: Referenced object groups must not contain FQDNs, SD-WAN Manager rejects them as a source (PPARC0012)
         exclude_test: true
         example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
         test_tags: [SDWAN_2018]

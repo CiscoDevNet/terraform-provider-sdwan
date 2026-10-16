@@ -123,6 +123,7 @@ Optional:
 - `protocol_name_list_ids` (Set of String)
 - `protocol_names` (Set of String)
 - `protocols` (Set of String)
+- `rule_set_list_ids` (Set of String) Security rule set IDs, requires `is_rule_set` set to `true` on the sequence, Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `source_data_ipv6_prefix_list_ids` (Set of String) Only supported on sequences with `sequence_ip_type` set to `ipv6`, Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `source_data_prefix_list_ids` (Set of String)
 - `source_data_prefixes` (Set of String)
@@ -135,7 +136,7 @@ Optional:
 - `source_identity_users` (Set of String)
 - `source_ipv6_data_prefixes` (Set of String) Only supported on sequences with `sequence_ip_type` set to `ipv6`, Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `source_ipv6_data_prefixes_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.0` or higher
-- `source_object_group_list_ids` (Set of String) , Attribute conditional on SD-WAN Manager version `20.18.0` or higher
+- `source_object_group_list_ids` (Set of String) Referenced object groups must not contain FQDNs, SD-WAN Manager rejects them as a source (PPARC0012), Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `source_port_list_ids` (Set of String)
 - `source_ports` (Set of String)
 - `source_ports_variable` (String) Variable name

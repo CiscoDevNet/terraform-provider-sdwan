@@ -72,6 +72,7 @@ type EmbeddedSecurityNGFWSequencesMatchEntries struct {
 	ProtocolNameListIds                 types.Set    `tfsdk:"protocol_name_list_ids"`
 	AppListIds                          types.Set    `tfsdk:"app_list_ids"`
 	FlatAppListIds                      types.Set    `tfsdk:"flat_app_list_ids"`
+	RuleSetListIds                      types.Set    `tfsdk:"rule_set_list_ids"`
 	SourceObjectGroupListIds            types.Set    `tfsdk:"source_object_group_list_ids"`
 	SourceSecurityGroupListIds          types.Set    `tfsdk:"source_security_group_list_ids"`
 	DestinationObjectGroupListIds       types.Set    `tfsdk:"destination_object_group_list_ids"`
@@ -313,6 +314,14 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context, ver *version.Versio
 							var values []string
 							childItem.FlatAppListIds.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "appListFlat.refId.value", values)
+						}
+					}
+					if !childItem.RuleSetListIds.IsNull() {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "ruleSetList.refId.optionType", "global")
+							var values []string
+							childItem.RuleSetListIds.ElementsAs(ctx, &values, false)
+							itemChildBody, _ = sjson.Set(itemChildBody, "ruleSetList.refId.value", values)
 						}
 					}
 					if !childItem.SourceObjectGroupListIds.IsNull() {
@@ -764,6 +773,14 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 							cItem.FlatAppListIds = helpers.GetStringSet(va.Array())
 						}
 					}
+					cItem.RuleSetListIds = types.SetNull(types.StringType)
+
+					if t := cv.Get("ruleSetList.refId.optionType"); t.Exists() {
+						va := cv.Get("ruleSetList.refId.value")
+						if t.String() == "global" {
+							cItem.RuleSetListIds = helpers.GetStringSet(va.Array())
+						}
+					}
 					cItem.SourceObjectGroupListIds = types.SetNull(types.StringType)
 
 					if t := cv.Get("sourceObjectGroup.refId.optionType"); t.Exists() {
@@ -1108,6 +1125,11 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 								}
 								if keyMatchC {
 									if helpers.GetStringFromSet(oldCItem.FlatAppListIds).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].FlatAppListIds).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.RuleSetListIds).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].RuleSetListIds).ValueString() {
 										keyMatchC = false
 									}
 								}

@@ -24,6 +24,7 @@ description: |-
 - Fix `sdwan_embedded_security_ngfw_policy` attributes whose schema declares multiple `optionType` values in a single branch
 - Deprecate `source_security_group_list_ids` and `destination_security_group_list_ids` in `sdwan_embedded_security_ngfw_policy`: deprecated in favor of `source_object_group_list_ids` and `destination_object_group_list_ids` on Manager 20.18+
 - Bump `sdwan_embedded_security_policy` schema to `20.18.0`
+- Add `rule_set_list_ids` match attribute to `sdwan_embedded_security_ngfw_policy` resource and data source to reference `sdwan_policy_object_security_rule_set` from `is_rule_set` sequences (SD-WAN Manager 20.18+)
 
 ## 0.11.6
 

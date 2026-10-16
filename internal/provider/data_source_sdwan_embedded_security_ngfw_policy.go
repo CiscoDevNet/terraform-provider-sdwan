@@ -206,8 +206,13 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
+									"rule_set_list_ids": schema.SetAttribute{
+										MarkdownDescription: "Security rule set IDs, requires `is_rule_set` set to `true` on the sequence",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
 									"source_object_group_list_ids": schema.SetAttribute{
-										MarkdownDescription: "",
+										MarkdownDescription: "Referenced object groups must not contain FQDNs, SD-WAN Manager rejects them as a source (PPARC0012)",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
