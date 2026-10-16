@@ -13,6 +13,7 @@
 ## 0.11.6
 
 - Add `sdwan_scope` resource and data source
+- Add `sdwan_network_hierarchy_nodes` data source, resolving a list of Network Hierarchy site, group and region names in a single paginated API call, without requiring the hierarchy to be managed by this provider. `nodes` returns the UUID and type of every named node; `resolved_sites` and `container_sites` are the site view (named sites plus the members of named groups and regions), which `expand_containers = false` leaves empty
 - Add `sdwan_service_appqoe_feature` resource and data source
 - Add `sdwan_transport_cellular_controller_feature_associate_cellular_profile_feature` resource and data source, associating a `sdwan_transport_cellular_profile_feature` with a `sdwan_transport_cellular_controller_feature`
 - Add `sdwan_transport_cellular_controller_feature_associate_gps_feature` resource and data source, associating a `sdwan_transport_gps_feature` with a `sdwan_transport_cellular_controller_feature`

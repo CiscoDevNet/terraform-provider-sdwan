@@ -808,6 +808,7 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewMirrorPolicyObjectDataSource,
 		NewNetworkHierarchyCflowdDataSource,
 		NewNetworkHierarchyNodeDataSource,
+		NewNetworkHierarchyNodesDataSource,
 		NewNetworkHierarchySecurityLoggingDataSource,
 		NewObjectGroupPolicyDefinitionDataSource,
 		NewOtherFeatureProfileDataSource,
