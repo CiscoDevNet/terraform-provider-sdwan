@@ -30,15 +30,23 @@ resource "sdwan_embedded_security_policy" "example" {
       ]
     }
   ]
-  tcp_syn_flood_limit             = "432"
-  max_incomplete_tcp_limit        = "12345"
-  max_incomplete_udp_limit        = "12345"
-  max_incomplete_icmp_limit       = "12345"
-  audit_trail                     = "on"
-  unified_logging                 = "on"
-  session_reclassify_allow        = "on"
-  icmp_unreachable_allow          = "on"
-  failure_mode                    = "close"
+  tcp_syn_flood_limit       = "432"
+  max_incomplete_tcp_limit  = "12345"
+  max_incomplete_udp_limit  = "12345"
+  max_incomplete_icmp_limit = "12345"
+  audit_trail               = "on"
+  unified_logging           = "on"
+  session_reclassify_allow  = "on"
+  icmp_unreachable_allow    = "on"
+  failure_mode              = "close"
+  high_speed_logging = [
+    {
+      name             = "server1"
+      source_interface = "GigabitEthernet1"
+    }
+  ]
+  syslog_server_source_interface  = "GigabitEthernet1"
+  optimized                       = false
   nat                             = true
   download_url_database_on_device = false
   resource_profile                = "low"
@@ -62,6 +70,7 @@ resource "sdwan_embedded_security_policy" "example" {
 - `download_url_database_on_device` (Boolean)
 - `download_url_database_on_device_variable` (String) Variable name
 - `failure_mode` (String) - Choices: `close`, `open`
+- `high_speed_logging` (Attributes List) High Speed Logging, Attribute conditional on SD-WAN Manager version `20.18.0` or higher (see [below for nested schema](#nestedatt--high_speed_logging))
 - `icmp_unreachable_allow` (String) Setting can be string 'on' or missing for off
   - Choices: `on`
 - `max_incomplete_icmp_limit` (String)
@@ -69,10 +78,13 @@ resource "sdwan_embedded_security_policy" "example" {
 - `max_incomplete_udp_limit` (String)
 - `nat` (Boolean)
 - `nat_variable` (String) Variable name
+- `optimized` (Boolean) , Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `resource_profile` (String) - Choices: `low`, `medium`, `high`
 - `resource_profile_variable` (String) Variable name
 - `session_reclassify_allow` (String) Setting can be string 'on' or missing for off
   - Choices: `on`
+- `syslog_server_source_interface` (String) InterfaceName, Attribute conditional on SD-WAN Manager version `20.18.0` or higher
+- `syslog_server_source_interface_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.0` or higher
 - `tcp_syn_flood_limit` (String)
 - `unified_logging` (String) Setting can be string 'on' or missing for off
   - Choices: `on`
@@ -101,6 +113,17 @@ Optional:
 - `destination_zone_list_id` (String)
 - `source_zone` (String) - Choices: `self`, `default`, `untrusted`
 - `source_zone_list_id` (String)
+
+
+
+<a id="nestedatt--high_speed_logging"></a>
+### Nested Schema for `high_speed_logging`
+
+Optional:
+
+- `name` (String) - Choices: `server1`, `server2`, `server3`, `server4`
+- `source_interface` (String) InterfaceName
+- `source_interface_variable` (String) Variable name
 
 ## Import
 

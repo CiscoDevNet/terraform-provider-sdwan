@@ -165,6 +165,38 @@ func (d *EmbeddedSecurityProfileParcelDataSource) Schema(ctx context.Context, re
 				MarkdownDescription: "",
 				Computed:            true,
 			},
+			"high_speed_logging": schema.ListNestedAttribute{
+				MarkdownDescription: "High Speed Logging",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"name": schema.StringAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+						},
+						"source_interface": schema.StringAttribute{
+							MarkdownDescription: "InterfaceName",
+							Computed:            true,
+						},
+						"source_interface_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+					},
+				},
+			},
+			"syslog_server_source_interface": schema.StringAttribute{
+				MarkdownDescription: "InterfaceName",
+				Computed:            true,
+			},
+			"syslog_server_source_interface_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"optimized": schema.BoolAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+			},
 			"nat": schema.BoolAttribute{
 				MarkdownDescription: "",
 				Computed:            true,

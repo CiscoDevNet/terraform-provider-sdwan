@@ -24,6 +24,7 @@ import (
 	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -43,9 +44,12 @@ type EmbeddedSecurityNGFW struct {
 }
 
 type EmbeddedSecurityNGFWSequences struct {
+	IsRuleSet       types.Bool                                  `tfsdk:"is_rule_set"`
 	SequenceId      types.String                                `tfsdk:"sequence_id"`
 	SequenceName    types.String                                `tfsdk:"sequence_name"`
+	SequenceComment types.String                                `tfsdk:"sequence_comment"`
 	BaseAction      types.String                                `tfsdk:"base_action"`
+	SequenceIpType  types.String                                `tfsdk:"sequence_ip_type"`
 	SequenceType    types.String                                `tfsdk:"sequence_type"`
 	DisableSequence types.Bool                                  `tfsdk:"disable_sequence"`
 	MatchEntries    []EmbeddedSecurityNGFWSequencesMatchEntries `tfsdk:"match_entries"`
@@ -53,41 +57,50 @@ type EmbeddedSecurityNGFWSequences struct {
 }
 
 type EmbeddedSecurityNGFWSequencesMatchEntries struct {
-	SourceDataPrefixListIds            types.Set    `tfsdk:"source_data_prefix_list_ids"`
-	DestinationDataPrefixListIds       types.Set    `tfsdk:"destination_data_prefix_list_ids"`
-	DestinationFqdnListIds             types.Set    `tfsdk:"destination_fqdn_list_ids"`
-	SourceGeoLocationListIds           types.Set    `tfsdk:"source_geo_location_list_ids"`
-	DestinationGeoLocationListIds      types.Set    `tfsdk:"destination_geo_location_list_ids"`
-	SourcePortListIds                  types.Set    `tfsdk:"source_port_list_ids"`
-	DestinationPortListIds             types.Set    `tfsdk:"destination_port_list_ids"`
-	SourceScalableGroupTagListIds      types.Set    `tfsdk:"source_scalable_group_tag_list_ids"`
-	DestinationScalableGroupTagListIds types.Set    `tfsdk:"destination_scalable_group_tag_list_ids"`
-	SourceIdentityListIds              types.Set    `tfsdk:"source_identity_list_ids"`
-	ProtocolNameListIds                types.Set    `tfsdk:"protocol_name_list_ids"`
-	AppListIds                         types.Set    `tfsdk:"app_list_ids"`
-	FlatAppListIds                     types.Set    `tfsdk:"flat_app_list_ids"`
-	SourceSecurityGroupListIds         types.Set    `tfsdk:"source_security_group_list_ids"`
-	DestinationSecurityGroupListIds    types.Set    `tfsdk:"destination_security_group_list_ids"`
-	SourceDataPrefixes                 types.Set    `tfsdk:"source_data_prefixes"`
-	SourceDataPrefixesVariable         types.String `tfsdk:"source_data_prefixes_variable"`
-	DestinationDataPrefixes            types.Set    `tfsdk:"destination_data_prefixes"`
-	DestinationDataPrefixesVariable    types.String `tfsdk:"destination_data_prefixes_variable"`
-	DestinationFqdns                   types.Set    `tfsdk:"destination_fqdns"`
-	DestinationFqdnsVariable           types.String `tfsdk:"destination_fqdns_variable"`
-	SourcePorts                        types.Set    `tfsdk:"source_ports"`
-	SourcePortsVariable                types.String `tfsdk:"source_ports_variable"`
-	DestinationPorts                   types.Set    `tfsdk:"destination_ports"`
-	DestinationPortsVariable           types.String `tfsdk:"destination_ports_variable"`
-	SourceGeoLocations                 types.Set    `tfsdk:"source_geo_locations"`
-	SourceGeoLocationsVariable         types.String `tfsdk:"source_geo_locations_variable"`
-	DestinationGeoLocations            types.Set    `tfsdk:"destination_geo_locations"`
-	DestinationGeoLocationsVariable    types.String `tfsdk:"destination_geo_locations_variable"`
-	SourceIdentityUsers                types.Set    `tfsdk:"source_identity_users"`
-	SourceIdentityUsergroups           types.Set    `tfsdk:"source_identity_usergroups"`
-	Applications                       types.Set    `tfsdk:"applications"`
-	ApplicationFamilies                types.Set    `tfsdk:"application_families"`
-	Protocols                          types.Set    `tfsdk:"protocols"`
-	ProtocolNames                      types.Set    `tfsdk:"protocol_names"`
+	SourceDataPrefixListIds             types.Set    `tfsdk:"source_data_prefix_list_ids"`
+	SourceDataIpv6PrefixListIds         types.Set    `tfsdk:"source_data_ipv6_prefix_list_ids"`
+	DestinationDataPrefixListIds        types.Set    `tfsdk:"destination_data_prefix_list_ids"`
+	DestinationDataIpv6PrefixListIds    types.Set    `tfsdk:"destination_data_ipv6_prefix_list_ids"`
+	DestinationFqdnListIds              types.Set    `tfsdk:"destination_fqdn_list_ids"`
+	SourceGeoLocationListIds            types.Set    `tfsdk:"source_geo_location_list_ids"`
+	DestinationGeoLocationListIds       types.Set    `tfsdk:"destination_geo_location_list_ids"`
+	SourcePortListIds                   types.Set    `tfsdk:"source_port_list_ids"`
+	DestinationPortListIds              types.Set    `tfsdk:"destination_port_list_ids"`
+	SourceScalableGroupTagListIds       types.Set    `tfsdk:"source_scalable_group_tag_list_ids"`
+	DestinationScalableGroupTagListIds  types.Set    `tfsdk:"destination_scalable_group_tag_list_ids"`
+	SourceIdentityListIds               types.Set    `tfsdk:"source_identity_list_ids"`
+	ProtocolNameListIds                 types.Set    `tfsdk:"protocol_name_list_ids"`
+	AppListIds                          types.Set    `tfsdk:"app_list_ids"`
+	FlatAppListIds                      types.Set    `tfsdk:"flat_app_list_ids"`
+	RuleSetListIds                      types.Set    `tfsdk:"rule_set_list_ids"`
+	SourceObjectGroupListIds            types.Set    `tfsdk:"source_object_group_list_ids"`
+	SourceSecurityGroupListIds          types.Set    `tfsdk:"source_security_group_list_ids"`
+	DestinationObjectGroupListIds       types.Set    `tfsdk:"destination_object_group_list_ids"`
+	DestinationSecurityGroupListIds     types.Set    `tfsdk:"destination_security_group_list_ids"`
+	SourceDataPrefixes                  types.Set    `tfsdk:"source_data_prefixes"`
+	SourceDataPrefixesVariable          types.String `tfsdk:"source_data_prefixes_variable"`
+	SourceIpv6DataPrefixes              types.Set    `tfsdk:"source_ipv6_data_prefixes"`
+	SourceIpv6DataPrefixesVariable      types.String `tfsdk:"source_ipv6_data_prefixes_variable"`
+	DestinationDataPrefixes             types.Set    `tfsdk:"destination_data_prefixes"`
+	DestinationDataPrefixesVariable     types.String `tfsdk:"destination_data_prefixes_variable"`
+	DestinationIpv6DataPrefixes         types.Set    `tfsdk:"destination_ipv6_data_prefixes"`
+	DestinationIpv6DataPrefixesVariable types.String `tfsdk:"destination_ipv6_data_prefixes_variable"`
+	DestinationFqdns                    types.Set    `tfsdk:"destination_fqdns"`
+	DestinationFqdnsVariable            types.String `tfsdk:"destination_fqdns_variable"`
+	SourcePorts                         types.Set    `tfsdk:"source_ports"`
+	SourcePortsVariable                 types.String `tfsdk:"source_ports_variable"`
+	DestinationPorts                    types.Set    `tfsdk:"destination_ports"`
+	DestinationPortsVariable            types.String `tfsdk:"destination_ports_variable"`
+	SourceGeoLocations                  types.Set    `tfsdk:"source_geo_locations"`
+	SourceGeoLocationsVariable          types.String `tfsdk:"source_geo_locations_variable"`
+	DestinationGeoLocations             types.Set    `tfsdk:"destination_geo_locations"`
+	DestinationGeoLocationsVariable     types.String `tfsdk:"destination_geo_locations_variable"`
+	SourceIdentityUsers                 types.Set    `tfsdk:"source_identity_users"`
+	SourceIdentityUsergroups            types.Set    `tfsdk:"source_identity_usergroups"`
+	Applications                        types.Set    `tfsdk:"applications"`
+	ApplicationFamilies                 types.Set    `tfsdk:"application_families"`
+	Protocols                           types.Set    `tfsdk:"protocols"`
+	ProtocolNames                       types.Set    `tfsdk:"protocol_names"`
 }
 type EmbeddedSecurityNGFWSequencesActions struct {
 	Type        types.String `tfsdk:"type"`
@@ -112,7 +125,7 @@ func (data EmbeddedSecurityNGFW) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data EmbeddedSecurityNGFW) toBody(ctx context.Context) string {
+func (data EmbeddedSecurityNGFW) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -124,9 +137,15 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context) string {
 		}
 	}
 	if true {
-		body, _ = sjson.Set(body, path+"sequences", []interface{}{})
+
 		for _, item := range data.Sequences {
 			itemBody := ""
+			if !item.IsRuleSet.IsNull() {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+					itemBody, _ = sjson.Set(itemBody, "isRuleSet.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "isRuleSet.value", item.IsRuleSet.ValueBool())
+				}
+			}
 			if !item.SequenceId.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "sequenceId.optionType", "global")
@@ -139,10 +158,26 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "sequenceName.value", item.SequenceName.ValueString())
 				}
 			}
+			if !item.SequenceComment.IsNull() {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+					itemBody, _ = sjson.Set(itemBody, "sequenceComment", item.SequenceComment.ValueString())
+				}
+			}
 			if !item.BaseAction.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "baseAction.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "baseAction.value", item.BaseAction.ValueString())
+				}
+			}
+			if item.SequenceIpType.IsNull() {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+					itemBody, _ = sjson.Set(itemBody, "sequenceIpType.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "sequenceIpType.value", "ipv4")
+				}
+			} else {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+					itemBody, _ = sjson.Set(itemBody, "sequenceIpType.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "sequenceIpType.value", item.SequenceIpType.ValueString())
 				}
 			}
 			if !item.SequenceType.IsNull() {
@@ -169,12 +204,28 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "sourceDataPrefixList.refId.value", values)
 						}
 					}
+					if !childItem.SourceDataIpv6PrefixListIds.IsNull() {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "sourceDataIpv6PrefixList.refId.optionType", "global")
+							var values []string
+							childItem.SourceDataIpv6PrefixListIds.ElementsAs(ctx, &values, false)
+							itemChildBody, _ = sjson.Set(itemChildBody, "sourceDataIpv6PrefixList.refId.value", values)
+						}
+					}
 					if !childItem.DestinationDataPrefixListIds.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "destinationDataPrefixList.refId.optionType", "global")
 							var values []string
 							childItem.DestinationDataPrefixListIds.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "destinationDataPrefixList.refId.value", values)
+						}
+					}
+					if !childItem.DestinationDataIpv6PrefixListIds.IsNull() {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "destinationDataIpv6PrefixList.refId.optionType", "global")
+							var values []string
+							childItem.DestinationDataIpv6PrefixListIds.ElementsAs(ctx, &values, false)
+							itemChildBody, _ = sjson.Set(itemChildBody, "destinationDataIpv6PrefixList.refId.value", values)
 						}
 					}
 					if !childItem.DestinationFqdnListIds.IsNull() {
@@ -265,16 +316,40 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "appListFlat.refId.value", values)
 						}
 					}
+					if !childItem.RuleSetListIds.IsNull() {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "ruleSetList.refId.optionType", "global")
+							var values []string
+							childItem.RuleSetListIds.ElementsAs(ctx, &values, false)
+							itemChildBody, _ = sjson.Set(itemChildBody, "ruleSetList.refId.value", values)
+						}
+					}
+					if !childItem.SourceObjectGroupListIds.IsNull() {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "sourceObjectGroup.refId.optionType", "global")
+							var values []string
+							childItem.SourceObjectGroupListIds.ElementsAs(ctx, &values, false)
+							itemChildBody, _ = sjson.Set(itemChildBody, "sourceObjectGroup.refId.value", values)
+						}
+					}
 					if !childItem.SourceSecurityGroupListIds.IsNull() {
-						if true {
+						if true && !(ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0")))) {
 							itemChildBody, _ = sjson.Set(itemChildBody, "sourceSecurityGroup.refId.optionType", "global")
 							var values []string
 							childItem.SourceSecurityGroupListIds.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "sourceSecurityGroup.refId.value", values)
 						}
 					}
+					if !childItem.DestinationObjectGroupListIds.IsNull() {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "destinationObjectGroup.refId.optionType", "global")
+							var values []string
+							childItem.DestinationObjectGroupListIds.ElementsAs(ctx, &values, false)
+							itemChildBody, _ = sjson.Set(itemChildBody, "destinationObjectGroup.refId.value", values)
+						}
+					}
 					if !childItem.DestinationSecurityGroupListIds.IsNull() {
-						if true {
+						if true && !(ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0")))) {
 							itemChildBody, _ = sjson.Set(itemChildBody, "destinationSecurityGroup.refId.optionType", "global")
 							var values []string
 							childItem.DestinationSecurityGroupListIds.ElementsAs(ctx, &values, false)
@@ -296,6 +371,20 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context) string {
 						}
 					}
 
+					if !childItem.SourceIpv6DataPrefixesVariable.IsNull() {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "sourceIpv6.ipv6Value.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "sourceIpv6.ipv6Value.value", childItem.SourceIpv6DataPrefixesVariable.ValueString())
+						}
+					} else if !childItem.SourceIpv6DataPrefixes.IsNull() {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "sourceIpv6.ipv6Value.optionType", "global")
+							var values []string
+							childItem.SourceIpv6DataPrefixes.ElementsAs(ctx, &values, false)
+							itemChildBody, _ = sjson.Set(itemChildBody, "sourceIpv6.ipv6Value.value", values)
+						}
+					}
+
 					if !childItem.DestinationDataPrefixesVariable.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "destinationIp.ipv4Value.optionType", "variable")
@@ -307,6 +396,20 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context) string {
 							var values []string
 							childItem.DestinationDataPrefixes.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "destinationIp.ipv4Value.value", values)
+						}
+					}
+
+					if !childItem.DestinationIpv6DataPrefixesVariable.IsNull() {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "destinationIpv6.ipv6Value.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "destinationIpv6.ipv6Value.value", childItem.DestinationIpv6DataPrefixesVariable.ValueString())
+						}
+					} else if !childItem.DestinationIpv6DataPrefixes.IsNull() {
+						if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+							itemChildBody, _ = sjson.Set(itemChildBody, "destinationIpv6.ipv6Value.optionType", "global")
+							var values []string
+							childItem.DestinationIpv6DataPrefixes.ElementsAs(ctx, &values, false)
+							itemChildBody, _ = sjson.Set(itemChildBody, "destinationIpv6.ipv6Value.value", values)
 						}
 					}
 
@@ -485,6 +588,14 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 		data.Sequences = make([]EmbeddedSecurityNGFWSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := EmbeddedSecurityNGFWSequences{}
+			item.IsRuleSet = types.BoolNull()
+
+			if t := v.Get("isRuleSet.optionType"); t.Exists() {
+				va := v.Get("isRuleSet.value")
+				if t.String() == "global" {
+					item.IsRuleSet = types.BoolValue(va.Bool())
+				}
+			}
 			item.SequenceId = types.StringNull()
 
 			if t := v.Get("sequenceId.optionType"); t.Exists() {
@@ -501,12 +612,25 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 					item.SequenceName = types.StringValue(va.String())
 				}
 			}
+			item.SequenceComment = types.StringNull()
+
+			if va := v.Get("sequenceComment"); va.Exists() {
+				item.SequenceComment = types.StringValue(va.String())
+			}
 			item.BaseAction = types.StringNull()
 
 			if t := v.Get("baseAction.optionType"); t.Exists() {
 				va := v.Get("baseAction.value")
 				if t.String() == "global" {
 					item.BaseAction = types.StringValue(va.String())
+				}
+			}
+			item.SequenceIpType = types.StringNull()
+
+			if t := v.Get("sequenceIpType.optionType"); t.Exists() {
+				va := v.Get("sequenceIpType.value")
+				if t.String() == "global" {
+					item.SequenceIpType = types.StringValue(va.String())
 				}
 			}
 			item.SequenceType = types.StringNull()
@@ -537,12 +661,28 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 							cItem.SourceDataPrefixListIds = helpers.GetStringSet(va.Array())
 						}
 					}
+					cItem.SourceDataIpv6PrefixListIds = types.SetNull(types.StringType)
+
+					if t := cv.Get("sourceDataIpv6PrefixList.refId.optionType"); t.Exists() {
+						va := cv.Get("sourceDataIpv6PrefixList.refId.value")
+						if t.String() == "global" {
+							cItem.SourceDataIpv6PrefixListIds = helpers.GetStringSet(va.Array())
+						}
+					}
 					cItem.DestinationDataPrefixListIds = types.SetNull(types.StringType)
 
 					if t := cv.Get("destinationDataPrefixList.refId.optionType"); t.Exists() {
 						va := cv.Get("destinationDataPrefixList.refId.value")
 						if t.String() == "global" {
 							cItem.DestinationDataPrefixListIds = helpers.GetStringSet(va.Array())
+						}
+					}
+					cItem.DestinationDataIpv6PrefixListIds = types.SetNull(types.StringType)
+
+					if t := cv.Get("destinationDataIpv6PrefixList.refId.optionType"); t.Exists() {
+						va := cv.Get("destinationDataIpv6PrefixList.refId.value")
+						if t.String() == "global" {
+							cItem.DestinationDataIpv6PrefixListIds = helpers.GetStringSet(va.Array())
 						}
 					}
 					cItem.DestinationFqdnListIds = types.SetNull(types.StringType)
@@ -633,12 +773,36 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 							cItem.FlatAppListIds = helpers.GetStringSet(va.Array())
 						}
 					}
+					cItem.RuleSetListIds = types.SetNull(types.StringType)
+
+					if t := cv.Get("ruleSetList.refId.optionType"); t.Exists() {
+						va := cv.Get("ruleSetList.refId.value")
+						if t.String() == "global" {
+							cItem.RuleSetListIds = helpers.GetStringSet(va.Array())
+						}
+					}
+					cItem.SourceObjectGroupListIds = types.SetNull(types.StringType)
+
+					if t := cv.Get("sourceObjectGroup.refId.optionType"); t.Exists() {
+						va := cv.Get("sourceObjectGroup.refId.value")
+						if t.String() == "global" {
+							cItem.SourceObjectGroupListIds = helpers.GetStringSet(va.Array())
+						}
+					}
 					cItem.SourceSecurityGroupListIds = types.SetNull(types.StringType)
 
 					if t := cv.Get("sourceSecurityGroup.refId.optionType"); t.Exists() {
 						va := cv.Get("sourceSecurityGroup.refId.value")
 						if t.String() == "global" {
 							cItem.SourceSecurityGroupListIds = helpers.GetStringSet(va.Array())
+						}
+					}
+					cItem.DestinationObjectGroupListIds = types.SetNull(types.StringType)
+
+					if t := cv.Get("destinationObjectGroup.refId.optionType"); t.Exists() {
+						va := cv.Get("destinationObjectGroup.refId.value")
+						if t.String() == "global" {
+							cItem.DestinationObjectGroupListIds = helpers.GetStringSet(va.Array())
 						}
 					}
 					cItem.DestinationSecurityGroupListIds = types.SetNull(types.StringType)
@@ -659,6 +823,16 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 							cItem.SourceDataPrefixes = helpers.GetStringSet(va.Array())
 						}
 					}
+					cItem.SourceIpv6DataPrefixes = types.SetNull(types.StringType)
+					cItem.SourceIpv6DataPrefixesVariable = types.StringNull()
+					if t := cv.Get("sourceIpv6.ipv6Value.optionType"); t.Exists() {
+						va := cv.Get("sourceIpv6.ipv6Value.value")
+						if t.String() == "variable" {
+							cItem.SourceIpv6DataPrefixesVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
+							cItem.SourceIpv6DataPrefixes = helpers.GetStringSet(va.Array())
+						}
+					}
 					cItem.DestinationDataPrefixes = types.SetNull(types.StringType)
 					cItem.DestinationDataPrefixesVariable = types.StringNull()
 					if t := cv.Get("destinationIp.ipv4Value.optionType"); t.Exists() {
@@ -667,6 +841,16 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 							cItem.DestinationDataPrefixesVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
 							cItem.DestinationDataPrefixes = helpers.GetStringSet(va.Array())
+						}
+					}
+					cItem.DestinationIpv6DataPrefixes = types.SetNull(types.StringType)
+					cItem.DestinationIpv6DataPrefixesVariable = types.StringNull()
+					if t := cv.Get("destinationIpv6.ipv6Value.optionType"); t.Exists() {
+						va := cv.Get("destinationIpv6.ipv6Value.value")
+						if t.String() == "variable" {
+							cItem.DestinationIpv6DataPrefixesVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
+							cItem.DestinationIpv6DataPrefixes = helpers.GetStringSet(va.Array())
 						}
 					}
 					cItem.DestinationFqdns = types.SetNull(types.StringType)
@@ -819,6 +1003,11 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 				}
 				keyMatch := true
 				if keyMatch {
+					if oldItem.IsRuleSet.ValueBool() != data.Sequences[ni].IsRuleSet.ValueBool() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
 					if oldItem.SequenceId.ValueString() != data.Sequences[ni].SequenceId.ValueString() {
 						keyMatch = false
 					}
@@ -829,7 +1018,17 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 					}
 				}
 				if keyMatch {
+					if oldItem.SequenceComment.ValueString() != data.Sequences[ni].SequenceComment.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
 					if oldItem.BaseAction.ValueString() != data.Sequences[ni].BaseAction.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.SequenceIpType.ValueString() != data.Sequences[ni].SequenceIpType.ValueString() {
 						keyMatch = false
 					}
 				}
@@ -860,7 +1059,17 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 									}
 								}
 								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.SourceDataIpv6PrefixListIds).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].SourceDataIpv6PrefixListIds).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
 									if helpers.GetStringFromSet(oldCItem.DestinationDataPrefixListIds).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].DestinationDataPrefixListIds).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.DestinationDataIpv6PrefixListIds).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].DestinationDataIpv6PrefixListIds).ValueString() {
 										keyMatchC = false
 									}
 								}
@@ -920,7 +1129,22 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 									}
 								}
 								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.RuleSetListIds).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].RuleSetListIds).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.SourceObjectGroupListIds).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].SourceObjectGroupListIds).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
 									if helpers.GetStringFromSet(oldCItem.SourceSecurityGroupListIds).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].SourceSecurityGroupListIds).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.DestinationObjectGroupListIds).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].DestinationObjectGroupListIds).ValueString() {
 										keyMatchC = false
 									}
 								}
@@ -935,7 +1159,17 @@ func (data *EmbeddedSecurityNGFW) fromBody(ctx context.Context, res gjson.Result
 									}
 								}
 								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.SourceIpv6DataPrefixes).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].SourceIpv6DataPrefixes).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
 									if helpers.GetStringFromSet(oldCItem.DestinationDataPrefixes).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].DestinationDataPrefixes).ValueString() {
+										keyMatchC = false
+									}
+								}
+								if keyMatchC {
+									if helpers.GetStringFromSet(oldCItem.DestinationIpv6DataPrefixes).ValueString() != helpers.GetStringFromSet(data.Sequences[ni].MatchEntries[nci].DestinationIpv6DataPrefixes).ValueString() {
 										keyMatchC = false
 									}
 								}
