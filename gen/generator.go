@@ -1283,7 +1283,10 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		panic(fmt.Sprintf("Could not find element in schema: %v\n%v\n\n", attr.ModelName, model))
 	}
 
-	attr.Description = r.Get("description").String()
+	// The description from the model schema takes precedence, the one from the definition is used as a fallback
+	if d := r.Get("description").String(); d != "" {
+		attr.Description = d
+	}
 	if attr.TfName == "" {
 		attr.TfName = SnakeCase(attr.ModelName)
 	}

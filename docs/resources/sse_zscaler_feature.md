@@ -78,7 +78,6 @@ resource "sdwan_sse_zscaler_feature" "example" {
 - `interface_pairs` (Attributes List) Interface Pair for active and backup (see [below for nested schema](#nestedatt--interface_pairs))
 - `interfaces` (Attributes List) Interface name: IPsec when present (see [below for nested schema](#nestedatt--interfaces))
 - `name` (String) The name of the Feature
-- `tracker_source_ip` (String) Source IP address for Tracker
 
 ### Optional
 
@@ -98,17 +97,19 @@ resource "sdwan_sse_zscaler_feature" "example" {
 - `caution_enabled` (Boolean) Enable Caution
   - Default value: `false`
 - `caution_enabled_variable` (String) Variable name
-- `country` (Boolean) - Default value: `false`
+- `country` (Boolean) Country
+  - Default value: `false`
 - `country_variable` (String) Variable name
 - `description` (String) The description of the Feature
 - `display_time_unit` (String) Display time unit, Attribute conditional on `surrogate_ip` equal to `true`
   - Choices: `MINUTE`, `HOUR`, `DAY`
   - Default value: `MINUTE`
 - `display_time_unit_variable` (String) Variable name, Attribute conditional on `surrogate_ip` equal to `true`
-- `dn_bandwidth` (Number) , Attribute conditional on `enforce_bandwidth_control` equal to `true`
+- `dn_bandwidth` (Number) Download Bandwidth in Mbps, Attribute conditional on `enforce_bandwidth_control` equal to `true`
   - Range: `0.1`-`99999`
 - `dn_bandwidth_variable` (String) Variable name, Attribute conditional on `enforce_bandwidth_control` equal to `true`
-- `enforce_bandwidth_control` (Boolean) - Default value: `false`
+- `enforce_bandwidth_control` (Boolean) Enforce Bandwidth Control
+  - Default value: `false`
 - `enforce_bandwidth_control_variable` (String) Variable name
 - `force_ssl_inspection` (Boolean) For first-time Acceptable User Policy behavior, force SSL inspection, Attribute conditional on `aup_enabled` equal to `true`
   - Default value: `false`
@@ -149,9 +150,10 @@ resource "sdwan_sse_zscaler_feature" "example" {
 - `surrogate_ip` (Boolean) Enable Surrogate IP, Attribute conditional on `auth_required` equal to `true`
   - Default value: `false`
 - `surrogate_ip_variable` (String) Variable name, Attribute conditional on `auth_required` equal to `true`
+- `tracker_source_ip` (String) Source IP address for Tracker
 - `tracker_source_ip_variable` (String) Variable name
 - `trackers` (Attributes List) Tracker configuration (see [below for nested schema](#nestedatt--trackers))
-- `up_bandwidth` (Number) , Attribute conditional on `enforce_bandwidth_control` equal to `true`
+- `up_bandwidth` (Number) Upload Bandwidth in Mbps, Attribute conditional on `enforce_bandwidth_control` equal to `true`
   - Range: `0.1`-`99999`
 - `up_bandwidth_variable` (String) Variable name, Attribute conditional on `enforce_bandwidth_control` equal to `true`
 - `xff_forward_enabled` (Boolean) XFF forwarding enabled
@@ -289,7 +291,7 @@ Optional:
   - Choices: `MINUTE`, `HOUR`, `DAY`
   - Default value: `MINUTE`
 - `display_time_unit_variable` (String) Variable name, Attribute conditional on `surrogate_ip` equal to `true`
-- `dn_bandwidth` (Number) , Attribute conditional on `enforce_bandwidth_control` equal to `override`
+- `dn_bandwidth` (Number) Download Bandwidth in Mbps, Attribute conditional on `enforce_bandwidth_control` equal to `override`
   - Range: `0.1`-`99999`
 - `dn_bandwidth_variable` (String) Variable name, Attribute conditional on `enforce_bandwidth_control` equal to `override`
 - `enforce_bandwidth_control` (String) Enforce Bandwidth Control for sub location
@@ -303,11 +305,11 @@ Optional:
   - At Least: `1`
   - Default value: `1`
 - `idle_time_variable` (String) Variable name, Attribute conditional on `surrogate_ip` equal to `true`
-- `internal_ip` (Attributes List) (see [below for nested schema](#nestedatt--sub_locations--internal_ip))
+- `internal_ip` (Attributes List) Internal Ip address (see [below for nested schema](#nestedatt--sub_locations--internal_ip))
 - `ip_enforced_for_known_browsers` (Boolean) If enabled, and if the IP-user mapping exists, then the Surrogate user identity is used for traffic from known browsers. If disabled, traffic from known browsers will always be challenged using the configured authentication mechanism and Surrogate user identity is ignored
   - Default value: `false`
 - `ip_enforced_for_known_browsers_variable` (String) Variable name
-- `name` (String)
+- `name` (String) Sub-location name
 - `name_variable` (String) Variable name
 - `ofw_enabled` (Boolean) Enforces firewall at the location
   - Default value: `false`
@@ -320,12 +322,12 @@ Optional:
   - Default value: `MINUTE`
 - `refresh_time_unit_variable` (String) Variable name, Attribute conditional on `ip_enforced_for_known_browsers` equal to `true`
 - `refresh_time_variable` (String) Variable name, Attribute conditional on `ip_enforced_for_known_browsers` equal to `true`
-- `service_vpn` (Set of String)
+- `service_vpn` (Set of String) Sub-location Service VPN
 - `service_vpn_variable` (String) Variable name
 - `surrogate_ip` (Boolean) Enable Surrogate IP. Maps users to device IP addresses. This is used to enforce user policies on cookie-compatible traffic., Attribute conditional on `auth_required` equal to `true`
   - Default value: `false`
 - `surrogate_ip_variable` (String) Variable name, Attribute conditional on `auth_required` equal to `true`
-- `up_bandwidth` (Number) , Attribute conditional on `enforce_bandwidth_control` equal to `override`
+- `up_bandwidth` (Number) Upload Bandwidth in Mbps, Attribute conditional on `enforce_bandwidth_control` equal to `override`
   - Range: `0.1`-`99999`
 - `up_bandwidth_variable` (String) Variable name, Attribute conditional on `enforce_bandwidth_control` equal to `override`
 
