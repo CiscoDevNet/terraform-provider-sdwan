@@ -4,13 +4,13 @@ page_title: "sdwan_policy_object_security_object_group Resource - terraform-prov
 subcategory: "Policy Objects"
 description: |-
   This resource can manage a Policy Object Security Object Group Policy_object.
-  Minimum SD-WAN Manager version: 20.18.0
+  Minimum SD-WAN Manager version: 20.18.2
 ---
 
 # sdwan_policy_object_security_object_group (Resource)
 
 This resource can manage a Policy Object Security Object Group Policy_object.
-  - Minimum SD-WAN Manager version: `20.18.0`
+  - Minimum SD-WAN Manager version: `20.18.2`
 
 ## Example Usage
 

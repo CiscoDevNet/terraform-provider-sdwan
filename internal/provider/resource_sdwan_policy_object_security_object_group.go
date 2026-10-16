@@ -62,7 +62,7 @@ func (r *PolicyObjectSecurityObjectGroupProfileParcelResource) Metadata(ctx cont
 func (r *PolicyObjectSecurityObjectGroupProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Policy Object Security Object Group Policy_object.").AddMinimumVersionDescription("20.18.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Policy Object Security Object Group Policy_object.").AddMinimumVersionDescription("20.18.2").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{

@@ -4,13 +4,13 @@ page_title: "sdwan_policy_object_security_rule_set Resource - terraform-provider
 subcategory: "Policy Objects"
 description: |-
   This resource can manage a Policy Object Security Rule Set Policy_object.
-  Minimum SD-WAN Manager version: 20.18.0
+  Minimum SD-WAN Manager version: 20.18.2
 ---
 
 # sdwan_policy_object_security_rule_set (Resource)
 
 This resource can manage a Policy Object Security Rule Set Policy_object.
-  - Minimum SD-WAN Manager version: `20.18.0`
+  - Minimum SD-WAN Manager version: `20.18.2`
 
 ## Example Usage
 
