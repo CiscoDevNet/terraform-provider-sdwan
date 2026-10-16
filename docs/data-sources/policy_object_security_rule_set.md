@@ -50,7 +50,7 @@ Read-Only:
 - `destination_fqdns` (Set of String)
 - `destination_fqdns_variable` (String) Variable name
 - `destination_geo_location_list_ids` (Set of String)
-- `destination_geo_locations` (Set of String) Source Geolocation
+- `destination_geo_locations` (Set of String) Destination Geolocation
 - `destination_geo_locations_variable` (String) Variable name
 - `destination_ipv4_prefixes` (Set of String)
 - `destination_ipv4_prefixes_variable` (String) Variable name

@@ -1784,7 +1784,7 @@
                                     ]
                                 },
                                 "destinationGeoLocation": {
-                                    "description": "Source Geolocation",
+                                    "description": "Destination Geolocation",
                                     "oneOf": [
                                         {
                                             "properties": {
