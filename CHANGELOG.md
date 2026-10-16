@@ -6,6 +6,8 @@
 - Fix `sdwan_configuration_group` and `sdwan_policy_group` data sources failing with HTTP 500 (`CFGRP0014`/`PLGRP0014`) when the group has no associated devices: the device variables are now only read when devices exist
 - Fix `sdwan_service_lan_vpn_feature`: `administrative_distance` on `ip_static_route_interface`/`ipv6_static_route_interface` `next_hop` and on `null0` IPv4 static routes now defaults to `1` when not set, fixing schema validation errors when it is omitted
 - Fix generator to extract enum values from different oneOf branches.
+- Bump schema to `20.18.0` for the following application priority resources: `sdwan_application_priority_qos_policy`, `sdwan_application_priority_traffic_policy_policy`
+- Add `hierarchy_ids` and `preferred_color_group_restrict` attributes to `sdwan_application_priority_traffic_policy_policy` resource and data source (SD-WAN Manager 20.18+)
 - Fix generator to fall back to the attribute description from the definition when the model schema does not provide one.
 - Fix `sdwan_sse_cisco_feature` and `sdwan_sse_zscaler_feature`: tracker_source_ip_variable can't be defined, provider insists on tracker_source_ip.
 
