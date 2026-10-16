@@ -32,21 +32,28 @@
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["global"]
+                          "enum": [
+                            "global"
+                          ]
                         },
                         "value": {
                           "type": "string",
-                          "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
+                          "pattern": "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])$"
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     },
                     {
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["variable"]
+                          "enum": [
+                            "variable"
+                          ]
                         },
                         "value": {
                           "type": "string",
@@ -56,7 +63,7 @@
                         },
                         "default": {
                           "type": "string",
-                          "pattern": "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])"
+                          "pattern": "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/)([0-2]?[0-9]$|[3]?[0-2])$"
                         },
                         "description": {
                           "minLength": 1,
@@ -64,18 +71,25 @@
                           "maxLength": 128
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     }
                   ]
                 }
               },
-              "required": ["ipPrefix"],
+              "required": [
+                "ipPrefix"
+              ],
               "additionalProperties": false
             }
           }
         },
-        "required": ["entries"],
+        "required": [
+          "entries"
+        ],
         "additionalProperties": false
       },
       "documentation": {
@@ -104,9 +118,15 @@
         "minVManageVersion": "20.15.1"
       }
     },
-    "required": ["data", "name"],
+    "required": [
+      "data",
+      "name"
+    ],
     "not": {
-      "required": ["documentation", "metadata"]
+      "required": [
+        "documentation",
+        "metadata"
+      ]
     },
     "additionalProperties": false
   }

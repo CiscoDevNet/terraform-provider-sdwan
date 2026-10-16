@@ -10,7 +10,7 @@
         "type": "string",
         "minLength": 1,
         "maxLength": 32,
-        "pattern": "(?i)^(?:(?!\\b(untrusted|self|default|service)\\b).)*$"
+        "pattern": "^(?!.*[&<>! \"])(?!(?:[uU][nN][tT][rR][uU][sS][tT][eE][dD]|[sS][eE][lL][fF]|[dD][eE][fF][aA][uU][lL][tT]|[sS][eE][rR][vV][iI][cC][eE])$).+$"
       },
       "description": {
         "type": "string"
@@ -19,7 +19,6 @@
         "type": "object",
         "properties": {
           "entries": {
-            "minItems": 1,
             "oneOf": [
               {
                 "type": "array",
@@ -56,6 +55,47 @@
               },
               {
                 "type": "array",
+                "maxItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "vpnRule": {
+                      "description": "vpn rule",
+                      "type": "object",
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": [
+                            "global"
+                          ]
+                        },
+                        "ruleId": {
+                          "items": {
+                            "type": "string",
+                            "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                          },
+                          "additionalProperties": false,
+                          "uniqueItems": true,
+                          "type": "array",
+                          "maxItems": 1
+                        }
+                      },
+                      "required": [
+                        "optionType",
+                        "ruleId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "vpnRule"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "type": "array",
                 "minItems": 1,
                 "uniqueItems": true,
                 "items": {
@@ -86,6 +126,47 @@
                   },
                   "required": [
                     "interface"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "type": "array",
+                "maxItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "interfaceRule": {
+                      "description": "interface rule",
+                      "type": "object",
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": [
+                            "global"
+                          ]
+                        },
+                        "ruleId": {
+                          "items": {
+                            "type": "string",
+                            "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                          },
+                          "additionalProperties": false,
+                          "uniqueItems": true,
+                          "type": "array",
+                          "maxItems": 1
+                        }
+                      },
+                      "required": [
+                        "optionType",
+                        "ruleId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "interfaceRule"
                   ],
                   "additionalProperties": false
                 }
@@ -134,7 +215,7 @@
         ]
       },
       "metadata": {
-        "minVManageVersion": "20.15.1"
+        "minVManageVersion": "20.18"
       }
     },
     "required": [

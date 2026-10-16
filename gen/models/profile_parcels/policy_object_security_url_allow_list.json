@@ -100,7 +100,7 @@
                 ]
             },
             "metadata": {
-                "minVManageVersion": "20.15.1"
+                "minVManageVersion": "20.16.1"
             }
         },
         "required": [
