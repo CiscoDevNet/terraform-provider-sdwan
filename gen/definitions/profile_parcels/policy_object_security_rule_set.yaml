@@ -1,0 +1,157 @@
+---
+name: Policy Object Security Rule Set
+rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/security-rule-set
+minimum_version: 20.18.2
+test_tags: [SDWAN_2018]
+skip_minimum_test: true
+parcel_type: policy_object
+full_update: true
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_policy_object_feature_profile.test.id
+  - model_name: sequences
+    mandatory: true
+    attributes:
+      - model_name: sequenceName
+        tf_name: name
+        mandatory: true
+        example: rule1
+      - model_name: sequenceIpType
+        tf_name: sequence_ip_type
+        mandatory: true
+        example: ipv4
+      - model_name: sequenceId
+        tf_name: sequence_id
+        mandatory: true
+        example: "1"
+      - model_name: action
+        tf_name: action
+        mandatory: true
+        example: drop
+      - model_name: ipv4Value
+        tf_name: source_ipv4_prefixes
+        data_path: [sourceIp]
+        example: 10.1.1.0/24
+      - model_name: ipv6Value
+        tf_name: source_ipv6_prefixes
+        data_path: [sourceIpv6]
+        exclude_test: true
+        example: 2001:db8::/32
+      - model_name: ipv4Value
+        tf_name: destination_ipv4_prefixes
+        data_path: [destinationIp]
+        exclude_test: true
+        example: 10.2.2.0/24
+      - model_name: ipv6Value
+        tf_name: destination_ipv6_prefixes
+        data_path: [destinationIpv6]
+        exclude_test: true
+        example: 2001:db8:1::/32
+      - model_name: fqdnValue
+        tf_name: destination_fqdns
+        data_path: [destinationFqdn]
+        type: Set
+        element_type: String
+        exclude_test: true
+        example: cisco.com
+      - model_name: sourceGeoLocation
+        tf_name: source_geo_locations
+        type: Set
+        element_type: String
+        exclude_test: true
+        example: EU
+      - model_name: destinationGeoLocation
+        tf_name: destination_geo_locations
+        type: Set
+        element_type: String
+        exclude_test: true
+        example: EU
+      - model_name: portValue
+        tf_name: source_ports
+        data_path: [sourcePort]
+        exclude_test: true
+        example: 443
+      - model_name: portValue
+        tf_name: destination_ports
+        data_path: [destinationPort]
+        exclude_test: true
+        example: 443
+      - model_name: protocol
+        tf_name: protocols
+        exclude_test: true
+        example: 6
+      - model_name: protocolName
+        tf_name: protocol_names
+        exclude_test: true
+        example: tcp
+      - model_name: refId
+        tf_name: source_object_group_list_ids
+        data_path: [sourceObjectGroup]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: destination_object_group_list_ids
+        data_path: [destinationObjectGroup]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: source_data_ipv4_prefix_list_ids
+        data_path: [sourceDataPrefixList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: source_data_ipv6_prefix_list_ids
+        data_path: [sourceDataIpv6PrefixList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: destination_data_ipv4_prefix_list_ids
+        data_path: [destinationDataPrefixList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: destination_data_ipv6_prefix_list_ids
+        data_path: [destinationDataIpv6PrefixList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: destination_fqdn_list_ids
+        data_path: [destinationFqdnList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: source_geo_location_list_ids
+        data_path: [sourceGeoLocationList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: destination_geo_location_list_ids
+        data_path: [destinationGeoLocationList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: source_port_list_ids
+        data_path: [sourcePortList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: destination_port_list_ids
+        data_path: [destinationPortList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: protocol_name_list_ids
+        data_path: [protocolNameList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+
+test_prerequisites: |
+  resource "sdwan_policy_object_feature_profile" "test" {
+    name = "POLICY_OBJECT_FP_1"
+    description = "My policy object feature profile 1"
+  }

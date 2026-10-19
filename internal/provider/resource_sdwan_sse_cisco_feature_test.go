@@ -97,7 +97,7 @@ func testAccSdwanSSECiscoProfileParcelConfig_minimum() string {
 	config += `	  backup_interface_weight = 1` + "\n"
 	config += `	}]` + "\n"
 	config += `	region = "us-east-1"` + "\n"
-	config += `	tracker_source_ip = "1.2.3.4"` + "\n"
+	config += `	tracker_source_ip = "2.2.2.2"` + "\n"
 	config += `}` + "\n"
 	return config
 }
@@ -139,3 +139,47 @@ func testAccSdwanSSECiscoProfileParcelConfig_all() string {
 }
 
 // End of section. //template:end testAccConfigAll
+
+// Verifies tracker_source_ip can be replaced by its variable counterpart, i.e. neither is required.
+func TestAccSdwanSSECiscoProfileParcelTrackerSourceIpVariable(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
+	}
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccSdwanSSECiscoPrerequisitesProfileParcelConfig + testAccSdwanSSECiscoProfileParcelConfig_trackerSourceIpVariable(),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttrSet("sdwan_sse_cisco_feature.test", "id"),
+					resource.TestCheckResourceAttr("sdwan_sse_cisco_feature.test", "tracker_source_ip_variable", "{{tracker_source_ip_var1}}"),
+					resource.TestCheckNoResourceAttr("sdwan_sse_cisco_feature.test", "tracker_source_ip"),
+				),
+			},
+		},
+	})
+}
+
+func testAccSdwanSSECiscoProfileParcelConfig_trackerSourceIpVariable() string {
+	config := `resource "sdwan_sse_cisco_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST_TRACKER_SRC_IP_VAR"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_sse_feature_profile.test.id` + "\n"
+	config += `	interfaces = [{` + "\n"
+	config += `	  interface_name = "ipsec1"` + "\n"
+	config += `	  tunnel_source_interface = "GigabitEthernet8"` + "\n"
+	config += `	  tunnel_dc_preference = "primary-dc"` + "\n"
+	config += `	  mtu = 1400` + "\n"
+	config += `	}]` + "\n"
+	config += `	interface_pairs = [{` + "\n"
+	config += `	  active_interface = "ipsec1"` + "\n"
+	config += `	  active_interface_weight = 1` + "\n"
+	config += `	  backup_interface = "None"` + "\n"
+	config += `	  backup_interface_weight = 1` + "\n"
+	config += `	}]` + "\n"
+	config += `	region = "us-east-1"` + "\n"
+	config += `	tracker_source_ip_variable = "{{tracker_source_ip_var1}}"` + "\n"
+	config += `}` + "\n"
+	return config
+}
