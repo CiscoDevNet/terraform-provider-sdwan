@@ -261,7 +261,7 @@ func (r *PolicyGroupDevicesResource) disassociateDevices(ctx context.Context, da
 		body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
 	}
 	path := fmt.Sprintf("/v1/policy-group/%v/device/associate/", data.PolicyGroupId.ValueString())
-	res, err := r.client.DeleteBody(path, body)
+	res, err := helpers.RetryWhileDeployInProgress(ctx, r.taskTimeout, func() (sdwan.Res, error) { return r.client.DeleteBody(path, body) })
 	if err != nil {
 		diag.AddError("Client Error", fmt.Sprintf("Failed to disassociate policy group devices (DELETE), got error: %s, %s", err, res.String()))
 	}
@@ -278,13 +278,13 @@ func (r *PolicyGroupDevicesResource) associateDevices(ctx context.Context, metho
 	deadline := time.Now().Add(maxWait)
 
 	for {
-		var res sdwan.Res
-		var err error
-		if method == "PUT" {
-			res, err = r.client.Put(path, body)
-		} else {
-			res, err = r.client.Post(path, body)
-		}
+		// A deploy running on the group refuses associate calls too (PLGRP0017): wait for it.
+		res, err := helpers.RetryWhileDeployInProgress(ctx, r.taskTimeout, func() (sdwan.Res, error) {
+			if method == "PUT" {
+				return r.client.Put(path, body)
+			}
+			return r.client.Post(path, body)
+		})
 		if err == nil {
 			return res, nil
 		}
@@ -337,16 +337,20 @@ func (r *PolicyGroupDevicesResource) Deploy(ctx context.Context, plan PolicyGrou
 	}
 	if len(gjson.Get(body, "devices").Array()) > 0 {
 		path := fmt.Sprintf("/v1/policy-group/%v/device/deploy/", plan.PolicyGroupId.ValueString())
-		res, err = r.client.Post(path, body)
-		if err != nil {
-			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to policy group devices (POST), got error: %s, %s", err, res.String()))
+		// Waits while another deploy runs on the group (one deploy per group at a time), and sends
+		// the deploy again when its task collided with another deploy (helpers.DeployCollision).
+		res, postErr, taskErr, warnings := helpers.DeployAndWait(ctx, r.client, path, body, r.taskTimeout)
+		if postErr != nil {
+			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to policy group devices (POST), got error: %s, %s", postErr, res.String()))
 			return
 		}
-		actionId := res.Get("parentTaskId").String()
-		err, _ = helpers.WaitForActionToComplete(ctx, r.client, actionId, r.taskTimeout)
-		if err != nil {
-			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to policy group devices, got error: %s", err))
+		if taskErr != nil {
+			diag.AddError("Client Error", fmt.Sprintf("Failed to deploy to policy group devices, got error: %s", taskErr))
 			return
+		}
+		if warnings != "" {
+			// A device was skipped because another operation was in progress on it.
+			diag.AddWarning("Client Warning", warnings)
 		}
 	}
 }
@@ -491,7 +495,9 @@ func (r *PolicyGroupDevicesResource) Update(ctx context.Context, req resource.Up
 	// Disassociate removed devices first, so a device being moved out of this group is freed before we
 	// associate a device being moved in (avoids a deadlock when two resources swap devices concurrently).
 	if len(gjson.Get(disassociateBody, "devices").Array()) > 0 {
-		res, err = r.client.DeleteBody(fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.PolicyGroupId.ValueString()), disassociateBody)
+		res, err = helpers.RetryWhileDeployInProgress(ctx, r.taskTimeout, func() (sdwan.Res, error) {
+			return r.client.DeleteBody(fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.PolicyGroupId.ValueString()), disassociateBody)
+		})
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to disassociate policy group devices (DELETE), got error: %s, %s", err, res.String()))
 			return
