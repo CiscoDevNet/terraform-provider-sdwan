@@ -39,15 +39,19 @@ data "sdwan_embedded_security_policy" "example" {
 - `download_url_database_on_device` (Boolean)
 - `download_url_database_on_device_variable` (String) Variable name
 - `failure_mode` (String)
+- `high_speed_logging` (Attributes List) High Speed Logging (see [below for nested schema](#nestedatt--high_speed_logging))
 - `icmp_unreachable_allow` (String) Setting can be string 'on' or missing for off
 - `max_incomplete_icmp_limit` (String)
 - `max_incomplete_tcp_limit` (String)
 - `max_incomplete_udp_limit` (String)
 - `nat` (Boolean)
 - `nat_variable` (String) Variable name
+- `optimized` (Boolean)
 - `resource_profile` (String)
 - `resource_profile_variable` (String) Variable name
 - `session_reclassify_allow` (String) Setting can be string 'on' or missing for off
+- `syslog_server_source_interface` (String) InterfaceName
+- `syslog_server_source_interface_variable` (String) Variable name
 - `tcp_syn_flood_limit` (String)
 - `unified_logging` (String) Setting can be string 'on' or missing for off
 - `version` (Number) The version of the Policy
@@ -71,3 +75,14 @@ Read-Only:
 - `destination_zone_list_id` (String)
 - `source_zone` (String)
 - `source_zone_list_id` (String)
+
+
+
+<a id="nestedatt--high_speed_logging"></a>
+### Nested Schema for `high_speed_logging`
+
+Read-Only:
+
+- `name` (String)
+- `source_interface` (String) InterfaceName
+- `source_interface_variable` (String) Variable name

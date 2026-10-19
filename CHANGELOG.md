@@ -17,7 +17,10 @@
 - Fix `sdwan_policy_object_security_data_ipv4_prefix_list` accepting malformed `ip_prefix` values: the validation pattern is now anchored
 - Note: `pattern` constraints for `sdwan_policy_object_security_url_allow_list`, `sdwan_policy_object_security_url_block_list`, `sdwan_policy_object_security_local_domain_list`, and `sdwan_policy_object_unified_url_filtering` are kept at the 20.15 specification for backward compatibility; Manager 20.18+ enforces narrower patterns server-side
 - Note: `application`/`application_family` in `sdwan_policy_object_application_list` and `sdwan_policy_object_security_local_application_list` accept a narrower character set on Manager 20.18+
-
+- Bump `sdwan_embedded_security_ngfw_policy` schema to `20.18.0`
+- Bump `sdwan_embedded_security_policy` schema to `20.18.0`
+- Deprecate `source_security_group_list_ids` and `destination_security_group_list_ids` in `sdwan_embedded_security_ngfw_policy`, use `source_object_group_list_ids` and `destination_object_group_list_ids` instead (SD-WAN Manager 20.18+)
+- Fix generator to detect the `global` and `default` branches of an attribute when a schema branch lists several `optionType` values, e.g. `"enum": ["default", "global"]`
 
 ## 0.11.6
 
