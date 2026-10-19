@@ -170,14 +170,59 @@ func (r *ConfigurationGroupDevicesResource) Create(ctx context.Context, req reso
 
 	plan.Id = plan.ConfigurationGroupId
 
-	// Associate devices
+	// Associate devices. Devices already on this group are adopted: a previous Create that failed
+	// after associating them (e.g. its deploy failed) left them there without a state, and a POST for
+	// them would fail on CFGRP0018 against this very group.
+	associatePath := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.ConfigurationGroupId.ValueString())
+	newDevices := plan
+	newDevices.Devices = nil
+	var prior *ConfigurationGroupDevices
 	if len(plan.Devices) > 0 {
-		body := plan.toBodyConfigGroupDevices(ctx)
-		path := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.ConfigurationGroupId.ValueString())
-		res, err := r.associateDevices(ctx, "POST", path, body)
+		res, err := r.client.Get(associatePath)
 		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (POST), got error: %s, %s", err, res.String()))
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
 			return
+		}
+		currentLabels := make(map[string]string)
+		res.Get("devices").ForEach(func(k, v gjson.Result) bool {
+			currentLabels[v.Get("id").String()] = v.Get("groupTopologyLabel").String()
+			return true
+		})
+		relabel := plan
+		relabel.Devices = nil
+		var adopted []string
+		for _, d := range plan.Devices {
+			label, exists := currentLabels[d.Id.ValueString()]
+			if !exists {
+				newDevices.Devices = append(newDevices.Devices, d)
+				continue
+			}
+			adopted = append(adopted, d.Id.ValueString())
+			if d.TopologyLabel.ValueString() != label {
+				relabel.Devices = append(relabel.Devices, d)
+			}
+		}
+		if len(newDevices.Devices) > 0 {
+			res, err = r.associateDevices(ctx, "POST", associatePath, newDevices.toBodyConfigGroupDevices(ctx))
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (POST), got error: %s, %s", err, res.String()))
+				return
+			}
+		}
+		if len(relabel.Devices) > 0 {
+			res, err = r.associateDevices(ctx, "PUT", associatePath, relabel.toBodyConfigGroupDevices(ctx))
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group devices (PUT), got error: %s, %s", err, res.String()))
+				return
+			}
+		}
+		if len(adopted) > 0 {
+			tflog.Info(ctx, fmt.Sprintf("%s: devices %v are already on this group, adopting them", plan.ConfigurationGroupId.ValueString(), adopted))
+			prior, err = r.adoptedPriorState(ctx, plan, adopted)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s", err))
+				return
+			}
 		}
 	}
 
@@ -189,14 +234,15 @@ func (r *ConfigurationGroupDevicesResource) Create(ctx context.Context, req reso
 		res, err := r.client.Put(path, body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure configuration group device variables (PUT), got error: %s, %s", err, res.String()))
-			r.disassociateDevices(ctx, plan, &resp.Diagnostics)
+			r.disassociateDevices(ctx, newDevices, &resp.Diagnostics) // not the adopted ones
 			return
 		}
 	}
 
 	// Deploy to devices
 	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, nil, nil, &resp.Diagnostics)
+		// Adopted devices deploy like in Update, against what the Manager has; the others always.
+		r.Deploy(ctx, plan, prior, nil, &resp.Diagnostics)
 	}
 	if resp.Diagnostics.HasError() {
 		return
@@ -207,6 +253,27 @@ func (r *ConfigurationGroupDevicesResource) Create(ctx context.Context, req reso
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
+}
+
+// adoptedPriorState returns the adopted devices with the variables the Manager has for them now,
+// read before Create overwrites them. Deploy uses it as the prior state, so an adopted device is
+// deployed only when it is out of date or out of sync, or its variables change, as in Update.
+func (r *ConfigurationGroupDevicesResource) adoptedPriorState(ctx context.Context, plan ConfigurationGroupDevices, adopted []string) (*ConfigurationGroupDevices, error) {
+	res, err := r.client.Get(fmt.Sprintf("/v1/config-group/%v/device/variables/", plan.ConfigurationGroupId.ValueString()))
+	if err != nil {
+		return nil, fmt.Errorf("%s, %s", err, res.String())
+	}
+	prior := plan
+	prior.Devices = nil
+	for _, d := range plan.Devices {
+		if helpers.Contains(adopted, d.Id.ValueString()) {
+			d.Variables = nil
+			prior.Devices = append(prior.Devices, d)
+		}
+	}
+	// Encrypted values can't be compared and keep the planned value (as in Read).
+	prior.fromBodyConfigGroupDeviceVariables(ctx, res, &plan)
+	return &prior, nil
 }
 
 // getDeviceVariableTypes fetches the variable schema from the API and extracts type information
@@ -323,6 +390,16 @@ func (r *ConfigurationGroupDevicesResource) Deploy(ctx context.Context, plan Con
 	var updatedDevices []string
 	if state != nil {
 		updatedDevices = plan.getUpdatedDevices(ctx, state)
+		// A device not in the prior state is new to this resource: deploy it whatever the Manager reports.
+		inState := make(map[string]bool)
+		for _, d := range state.Devices {
+			inState[d.Id.ValueString()] = true
+		}
+		for _, d := range plan.Devices {
+			if !inState[d.Id.ValueString()] {
+				updatedDevices = append(updatedDevices, d.Id.ValueString())
+			}
+		}
 	}
 
 	// Force a redeploy when the associated configuration group version changed.

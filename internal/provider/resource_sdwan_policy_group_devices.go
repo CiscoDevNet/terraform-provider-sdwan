@@ -165,20 +165,60 @@ func (r *PolicyGroupDevicesResource) Create(ctx context.Context, req resource.Cr
 
 	plan.Id = plan.PolicyGroupId
 
-	// Associate devices
+	// Associate devices. Devices already on this group are adopted: a previous Create that failed
+	// after associating them (e.g. its deploy failed) left them there without a state, and a POST for
+	// them would fail with "already associated" against this very group.
+	associatePath := fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.PolicyGroupId.ValueString())
+	newDevices := plan
+	newDevices.Devices = nil
+	var adopted []string
 	if len(plan.Devices) > 0 {
-		body := plan.toBodyPolicyGroupDevices(ctx)
-		path := fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.PolicyGroupId.ValueString())
-		res, err := r.associateDevices(ctx, "POST", path, body)
+		res, err := r.client.Get(associatePath)
 		if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure policy group devices (POST), got error: %s, %s", err, res.String()))
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
 			return
+		}
+		current := helpers.AssociatedIds(res)
+		for _, d := range plan.Devices {
+			if current[d.Id.ValueString()] {
+				adopted = append(adopted, d.Id.ValueString())
+			} else {
+				newDevices.Devices = append(newDevices.Devices, d)
+			}
+		}
+		if len(newDevices.Devices) > 0 {
+			res, err = r.associateDevices(ctx, "POST", associatePath, newDevices.toBodyPolicyGroupDevices(ctx))
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure policy group devices (POST), got error: %s, %s", err, res.String()))
+				return
+			}
 		}
 	}
 
-	// Need to get existing variables so SD-WAN Manager refreshes database correctly
+	// Need to get existing variables so SD-WAN Manager refreshes database correctly. For adopted
+	// devices this is also what the Manager has before Create overwrites it: Deploy uses it as the
+	// prior state, so an adopted device is deployed only when it is out of date or out of sync, or
+	// its variables change, as in Update.
+	var prior *PolicyGroupDevices
 	if len(plan.Devices) > 0 {
-		r.client.Get(fmt.Sprintf("/v1/policy-group/%v/device/variables/", plan.PolicyGroupId.ValueString()))
+		res, err := r.client.Get(fmt.Sprintf("/v1/policy-group/%v/device/variables/", plan.PolicyGroupId.ValueString()))
+		if len(adopted) > 0 {
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+				return
+			}
+			tflog.Info(ctx, fmt.Sprintf("%s: devices %v are already on this group, adopting them", plan.PolicyGroupId.ValueString(), adopted))
+			p := plan
+			p.Devices = nil
+			for _, d := range plan.Devices {
+				if helpers.Contains(adopted, d.Id.ValueString()) {
+					d.Variables = nil
+					p.Devices = append(p.Devices, d)
+				}
+			}
+			p.fromBodyPolicyGroupDeviceVariables(ctx, res)
+			prior = &p
+		}
 	}
 
 	// Set device variables
@@ -189,14 +229,15 @@ func (r *PolicyGroupDevicesResource) Create(ctx context.Context, req resource.Cr
 		res, err := r.client.Put(path, body)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure policy group device variables (PUT), got error: %s, %s", err, res.String()))
-			r.disassociateDevices(ctx, plan, &resp.Diagnostics)
+			r.disassociateDevices(ctx, newDevices, &resp.Diagnostics) // not the adopted ones
 			return
 		}
 	}
 
 	// Deploy to devices
 	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, nil, nil, &resp.Diagnostics)
+		// Adopted devices deploy like in Update, against what the Manager has; the others always.
+		r.Deploy(ctx, plan, prior, nil, &resp.Diagnostics)
 	}
 	if resp.Diagnostics.HasError() {
 		return
@@ -321,6 +362,16 @@ func (r *PolicyGroupDevicesResource) Deploy(ctx context.Context, plan PolicyGrou
 	var updatedDevices []string
 	if state != nil {
 		updatedDevices = plan.getUpdatedDevices(ctx, state)
+		// A device not in the prior state is new to this resource: deploy it whatever the Manager reports.
+		inState := make(map[string]bool)
+		for _, d := range state.Devices {
+			inState[d.Id.ValueString()] = true
+		}
+		for _, d := range plan.Devices {
+			if !inState[d.Id.ValueString()] {
+				updatedDevices = append(updatedDevices, d.Id.ValueString())
+			}
+		}
 	}
 
 	// Force a redeploy when the associated policy group version changed.
