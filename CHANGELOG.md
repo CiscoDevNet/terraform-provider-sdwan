@@ -11,7 +11,10 @@
 - Add `hierarchy_ids` and `preferred_color_group_restrict` attributes to `sdwan_application_priority_traffic_policy_policy` resource and data source (SD-WAN Manager 20.18+)
 - Fix generator to fall back to the attribute description from the definition when the model schema does not provide one.
 - Fix `sdwan_sse_cisco_feature` and `sdwan_sse_zscaler_feature`: tracker_source_ip_variable can't be defined, provider insists on tracker_source_ip.
-
+- Bump `sdwan_embedded_security_ngfw_policy` schema to `20.18.0`
+- Bump `sdwan_embedded_security_policy` schema to `20.18.0`
+- Deprecate `source_security_group_list_ids` and `destination_security_group_list_ids` in `sdwan_embedded_security_ngfw_policy`, use `source_object_group_list_ids` and `destination_object_group_list_ids` instead (SD-WAN Manager 20.18+)
+- Fix generator to detect the `global` and `default` branches of an attribute when a schema branch lists several `optionType` values, e.g. `"enum": ["default", "global"]`
 
 ## 0.11.6
 
