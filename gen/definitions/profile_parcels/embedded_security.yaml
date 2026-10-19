@@ -3,7 +3,7 @@
 name: Embedded Security
 rest_endpoint: /v1/feature-profile/sdwan/embedded-security/%v/policy
 minimum_version: 20.15.0
-test_tags: [SDWAN_2015]
+test_tags: [SDWAN_2015, SDWAN_2018]
 parcel_type: policy
 skip_minimum_test: true
 attributes:
@@ -97,6 +97,46 @@ attributes:
     data_path: [settings]
     ignore_mandatory: true
     example: close
+  - model_name: highSpeedLogging
+    tf_name: high_speed_logging
+    data_path: [settings]
+    test_tags: [SDWAN_2018]
+    conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: 20.18.0
+    attributes:
+      - model_name: name
+        tf_name: name
+        type: String
+        no_option_type: true
+        id: true
+        mandatory: true
+        enum_values: [server1, server2, server3, server4]
+        example: server1
+      - model_name: sourceInterface
+        tf_name: source_interface
+        mandatory: true
+        example: GigabitEthernet1
+  - model_name: sysLogServerSourceInterface
+    tf_name: syslog_server_source_interface
+    data_path: [settings]
+    example: GigabitEthernet1
+    test_tags: [SDWAN_2018]
+    conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: 20.18.0
+  - model_name: optimized
+    tf_name: optimized
+    data_path: [settings]
+    ignore_mandatory: true
+    example: false
+    test_tags: [SDWAN_2018]
+    conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: 20.18.0
   - model_name: nat
     data_path: [appHosting]
     example: true

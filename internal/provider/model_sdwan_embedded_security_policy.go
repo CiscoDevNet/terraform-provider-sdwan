@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -32,27 +33,31 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type EmbeddedSecurity struct {
-	Id                                  types.String               `tfsdk:"id"`
-	Version                             types.Int64                `tfsdk:"version"`
-	Name                                types.String               `tfsdk:"name"`
-	Description                         types.String               `tfsdk:"description"`
-	FeatureProfileId                    types.String               `tfsdk:"feature_profile_id"`
-	Assembly                            []EmbeddedSecurityAssembly `tfsdk:"assembly"`
-	TcpSynFloodLimit                    types.String               `tfsdk:"tcp_syn_flood_limit"`
-	MaxIncompleteTcpLimit               types.String               `tfsdk:"max_incomplete_tcp_limit"`
-	MaxIncompleteUdpLimit               types.String               `tfsdk:"max_incomplete_udp_limit"`
-	MaxIncompleteIcmpLimit              types.String               `tfsdk:"max_incomplete_icmp_limit"`
-	AuditTrail                          types.String               `tfsdk:"audit_trail"`
-	UnifiedLogging                      types.String               `tfsdk:"unified_logging"`
-	SessionReclassifyAllow              types.String               `tfsdk:"session_reclassify_allow"`
-	IcmpUnreachableAllow                types.String               `tfsdk:"icmp_unreachable_allow"`
-	FailureMode                         types.String               `tfsdk:"failure_mode"`
-	Nat                                 types.Bool                 `tfsdk:"nat"`
-	NatVariable                         types.String               `tfsdk:"nat_variable"`
-	DownloadUrlDatabaseOnDevice         types.Bool                 `tfsdk:"download_url_database_on_device"`
-	DownloadUrlDatabaseOnDeviceVariable types.String               `tfsdk:"download_url_database_on_device_variable"`
-	ResourceProfile                     types.String               `tfsdk:"resource_profile"`
-	ResourceProfileVariable             types.String               `tfsdk:"resource_profile_variable"`
+	Id                                  types.String                       `tfsdk:"id"`
+	Version                             types.Int64                        `tfsdk:"version"`
+	Name                                types.String                       `tfsdk:"name"`
+	Description                         types.String                       `tfsdk:"description"`
+	FeatureProfileId                    types.String                       `tfsdk:"feature_profile_id"`
+	Assembly                            []EmbeddedSecurityAssembly         `tfsdk:"assembly"`
+	TcpSynFloodLimit                    types.String                       `tfsdk:"tcp_syn_flood_limit"`
+	MaxIncompleteTcpLimit               types.String                       `tfsdk:"max_incomplete_tcp_limit"`
+	MaxIncompleteUdpLimit               types.String                       `tfsdk:"max_incomplete_udp_limit"`
+	MaxIncompleteIcmpLimit              types.String                       `tfsdk:"max_incomplete_icmp_limit"`
+	AuditTrail                          types.String                       `tfsdk:"audit_trail"`
+	UnifiedLogging                      types.String                       `tfsdk:"unified_logging"`
+	SessionReclassifyAllow              types.String                       `tfsdk:"session_reclassify_allow"`
+	IcmpUnreachableAllow                types.String                       `tfsdk:"icmp_unreachable_allow"`
+	FailureMode                         types.String                       `tfsdk:"failure_mode"`
+	HighSpeedLogging                    []EmbeddedSecurityHighSpeedLogging `tfsdk:"high_speed_logging"`
+	SyslogServerSourceInterface         types.String                       `tfsdk:"syslog_server_source_interface"`
+	SyslogServerSourceInterfaceVariable types.String                       `tfsdk:"syslog_server_source_interface_variable"`
+	Optimized                           types.Bool                         `tfsdk:"optimized"`
+	Nat                                 types.Bool                         `tfsdk:"nat"`
+	NatVariable                         types.String                       `tfsdk:"nat_variable"`
+	DownloadUrlDatabaseOnDevice         types.Bool                         `tfsdk:"download_url_database_on_device"`
+	DownloadUrlDatabaseOnDeviceVariable types.String                       `tfsdk:"download_url_database_on_device_variable"`
+	ResourceProfile                     types.String                       `tfsdk:"resource_profile"`
+	ResourceProfileVariable             types.String                       `tfsdk:"resource_profile_variable"`
 }
 
 type EmbeddedSecurityAssembly struct {
@@ -60,6 +65,12 @@ type EmbeddedSecurityAssembly struct {
 	SslDecryptionProfileId            types.String                      `tfsdk:"ssl_decryption_profile_id"`
 	NgfwPolicyId                      types.String                      `tfsdk:"ngfw_policy_id"`
 	Entries                           []EmbeddedSecurityAssemblyEntries `tfsdk:"entries"`
+}
+
+type EmbeddedSecurityHighSpeedLogging struct {
+	Name                    types.String `tfsdk:"name"`
+	SourceInterface         types.String `tfsdk:"source_interface"`
+	SourceInterfaceVariable types.String `tfsdk:"source_interface_variable"`
 }
 
 type EmbeddedSecurityAssemblyEntries struct {
@@ -85,7 +96,7 @@ func (data EmbeddedSecurity) getPath() string {
 
 // End of section. //template:end getPath
 
-func (data EmbeddedSecurity) toBody(ctx context.Context) string {
+func (data EmbeddedSecurity) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -207,6 +218,50 @@ func (data EmbeddedSecurity) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"settings.securityLogging.value", true)
 	}
 	// Section below is manually configured
+
+	if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+
+		for _, item := range data.HighSpeedLogging {
+			itemBody := ""
+			if !item.Name.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "name", item.Name.ValueString())
+				}
+			}
+
+			if !item.SourceInterfaceVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterfaceVariable.ValueString())
+				}
+			} else if !item.SourceInterface.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"settings.highSpeedLogging.-1", itemBody)
+		}
+	}
+
+	if !data.SyslogServerSourceInterfaceVariable.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+			body, _ = sjson.Set(body, path+"settings.sysLogServerSourceInterface.optionType", "variable")
+			body, _ = sjson.Set(body, path+"settings.sysLogServerSourceInterface.value", data.SyslogServerSourceInterfaceVariable.ValueString())
+		}
+	} else if !data.SyslogServerSourceInterface.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+			body, _ = sjson.Set(body, path+"settings.sysLogServerSourceInterface.optionType", "global")
+			body, _ = sjson.Set(body, path+"settings.sysLogServerSourceInterface.value", data.SyslogServerSourceInterface.ValueString())
+		}
+	}
+
+	if !data.Optimized.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
+			body, _ = sjson.Set(body, path+"settings.optimized.optionType", "global")
+			body, _ = sjson.Set(body, path+"settings.optimized.value", data.Optimized.ValueBool())
+		}
+	}
 
 	if !data.NatVariable.IsNull() {
 		if true {
@@ -481,6 +536,78 @@ func (data *EmbeddedSecurity) fromBody(ctx context.Context, res gjson.Result, fu
 		va := res.Get(path + "settings.failureMode.value")
 		if t.String() == "global" {
 			data.FailureMode = types.StringValue(va.String())
+		}
+	}
+	oldHighSpeedLogging := data.HighSpeedLogging
+	if value := res.Get(path + "settings.highSpeedLogging"); value.Exists() && len(value.Array()) > 0 {
+		data.HighSpeedLogging = make([]EmbeddedSecurityHighSpeedLogging, 0)
+		value.ForEach(func(k, v gjson.Result) bool {
+			item := EmbeddedSecurityHighSpeedLogging{}
+			item.Name = types.StringNull()
+
+			if va := v.Get("name"); va.Exists() {
+				item.Name = types.StringValue(va.String())
+			}
+			item.SourceInterface = types.StringNull()
+			item.SourceInterfaceVariable = types.StringNull()
+			if t := v.Get("sourceInterface.optionType"); t.Exists() {
+				va := v.Get("sourceInterface.value")
+				if t.String() == "variable" {
+					item.SourceInterfaceVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.SourceInterface = types.StringValue(va.String())
+				}
+			}
+			data.HighSpeedLogging = append(data.HighSpeedLogging, item)
+			return true
+		})
+	} else {
+		data.HighSpeedLogging = nil
+	}
+	if !fullRead && data.HighSpeedLogging != nil {
+		resultHighSpeedLogging := make([]EmbeddedSecurityHighSpeedLogging, 0, len(data.HighSpeedLogging))
+		matchedHighSpeedLogging := make([]bool, len(data.HighSpeedLogging))
+		for _, oldItem := range oldHighSpeedLogging {
+			for ni := range data.HighSpeedLogging {
+				if matchedHighSpeedLogging[ni] {
+					continue
+				}
+				keyMatch := true
+				if keyMatch {
+					if oldItem.Name.ValueString() != data.HighSpeedLogging[ni].Name.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					matchedHighSpeedLogging[ni] = true
+					resultHighSpeedLogging = append(resultHighSpeedLogging, data.HighSpeedLogging[ni])
+					break
+				}
+			}
+		}
+		for ni := range data.HighSpeedLogging {
+			if !matchedHighSpeedLogging[ni] {
+				resultHighSpeedLogging = append(resultHighSpeedLogging, data.HighSpeedLogging[ni])
+			}
+		}
+		data.HighSpeedLogging = resultHighSpeedLogging
+	}
+	data.SyslogServerSourceInterface = types.StringNull()
+	data.SyslogServerSourceInterfaceVariable = types.StringNull()
+	if t := res.Get(path + "settings.sysLogServerSourceInterface.optionType"); t.Exists() {
+		va := res.Get(path + "settings.sysLogServerSourceInterface.value")
+		if t.String() == "variable" {
+			data.SyslogServerSourceInterfaceVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.SyslogServerSourceInterface = types.StringValue(va.String())
+		}
+	}
+	data.Optimized = types.BoolNull()
+
+	if t := res.Get(path + "settings.optimized.optionType"); t.Exists() {
+		va := res.Get(path + "settings.optimized.value")
+		if t.String() == "global" {
+			data.Optimized = types.BoolValue(va.Bool())
 		}
 	}
 	data.Nat = types.BoolNull()
