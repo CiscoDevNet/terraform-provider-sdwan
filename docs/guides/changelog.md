@@ -20,6 +20,12 @@ description: |-
 - Add `hierarchy_ids` and `preferred_color_group_restrict` attributes to `sdwan_application_priority_traffic_policy_policy` resource and data source (SD-WAN Manager 20.18+)
 - Fix generator to fall back to the attribute description from the definition when the model schema does not provide one.
 - Fix `sdwan_sse_cisco_feature` and `sdwan_sse_zscaler_feature`: tracker_source_ip_variable can't be defined, provider insists on tracker_source_ip.
+- Bump schema to `20.18.0` for all `sdwan_policy_object_*` resources
+- Add `signature_set` values `max-detect` and `no-rules-active` to `sdwan_policy_object_unified_intrusion_prevention`. These values are only accepted by SD-WAN Manager 20.18.1+; configuring them against an earlier Manager is rejected by the API at apply time
+- Add `signature_set_id` attribute to `sdwan_policy_object_unified_intrusion_prevention` resource and data source, referencing a user-edited signature set parcel (SD-WAN Manager 20.18.1+). `signature_set` is now optional and mutually exclusive with `signature_set_id`; exactly one of the two must be set
+- Fix `sdwan_policy_object_security_data_ipv4_prefix_list` accepting malformed `ip_prefix` values: the validation pattern is now anchored
+- Note: `pattern` constraints for `sdwan_policy_object_security_url_allow_list`, `sdwan_policy_object_security_url_block_list`, `sdwan_policy_object_security_local_domain_list`, and `sdwan_policy_object_unified_url_filtering` are kept at the 20.15 specification for backward compatibility; Manager 20.18+ enforces narrower patterns server-side
+- Note: `application`/`application_family` in `sdwan_policy_object_application_list` and `sdwan_policy_object_security_local_application_list` accept a narrower character set on Manager 20.18+
 
 
 ## 0.11.6
@@ -33,12 +39,6 @@ description: |-
 - Fix `sdwan_service_lan_vpn_interface_svi_feature`: `track_omp = true` on `ipv4_vrrps`/`ipv6_vrrps` no longer sends an invalid `prefix_list`/`track_prefix_list` stub, fixing SCHVALID0001 errors
 - Fix `sdwan_system_security_feature` sending `extended_anti_replay_window` with the SD-WAN Manager default of `256` when the attribute is not declared
 - Fix `sdwan_transport_route_policy_feature`: an `accept` sequence with no `actions` no longer sends synthesized `setCommunity` defaults
-- Add `signature_set` values `max-detect` and `no-rules-active` to `sdwan_policy_object_unified_intrusion_prevention` (SD-WAN Manager 20.18+)
-- Add `signature_set_id` attribute to `sdwan_policy_object_unified_intrusion_prevention` resource and data source, referencing a user-edited signature set parcel (SD-WAN Manager 20.18+). `signature_set` is now optional and mutually exclusive with `signature_set_id`; exactly one of the two must be set
-- Bump schema to `20.18.0` for all `sdwan_policy_object_*` resources
-- Fix `sdwan_policy_object_security_data_ipv4_prefix_list` accepting malformed `ip_prefix` values: the validation pattern is now anchored
-- Note: `pattern` constraints for `sdwan_policy_object_security_url_allow_list`, `sdwan_policy_object_security_url_block_list`, `sdwan_policy_object_security_local_domain_list`, and `sdwan_policy_object_unified_url_filtering` are kept at the 20.15 specification for backward compatibility; Manager 20.18+ enforces narrower patterns server-side
-- Note: `application`/`application_family` in `sdwan_policy_object_application_list` and `sdwan_policy_object_security_local_application_list` accept a narrower character set on Manager 20.18+
 
 ## 0.11.5
 
