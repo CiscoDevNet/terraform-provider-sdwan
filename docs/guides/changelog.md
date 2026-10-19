@@ -21,10 +21,9 @@ description: |-
 - Fix generator to fall back to the attribute description from the definition when the model schema does not provide one.
 - Fix `sdwan_sse_cisco_feature` and `sdwan_sse_zscaler_feature`: tracker_source_ip_variable can't be defined, provider insists on tracker_source_ip.
 - Bump `sdwan_embedded_security_ngfw_policy` schema to `20.18.0`
-- Fix `sdwan_embedded_security_ngfw_policy` attributes whose schema declares multiple `optionType` values in a single branch
-- Deprecate `source_security_group_list_ids` and `destination_security_group_list_ids` in `sdwan_embedded_security_ngfw_policy`: deprecated in favor of `source_object_group_list_ids` and `destination_object_group_list_ids` on Manager 20.18+
 - Bump `sdwan_embedded_security_policy` schema to `20.18.0`
-- Add `rule_set_list_ids` match attribute to `sdwan_embedded_security_ngfw_policy` resource and data source to reference `sdwan_policy_object_security_rule_set` from `is_rule_set` sequences (SD-WAN Manager 20.18+)
+- Deprecate `source_security_group_list_ids` and `destination_security_group_list_ids` in `sdwan_embedded_security_ngfw_policy`, use `source_object_group_list_ids` and `destination_object_group_list_ids` instead (SD-WAN Manager 20.18+)
+- Fix generator to detect the `global` and `default` branches of an attribute when a schema branch lists several `optionType` values, e.g. `"enum": ["default", "global"]`
 
 ## 0.11.6
 
