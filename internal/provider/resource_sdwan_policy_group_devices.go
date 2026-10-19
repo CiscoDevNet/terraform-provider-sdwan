@@ -347,7 +347,7 @@ func (r *PolicyGroupDevicesResource) Deploy(ctx context.Context, plan PolicyGrou
 		value.ForEach(func(k, v gjson.Result) bool {
 			id := v.Get("id").String()
 			for _, item := range plan.Devices {
-				if item.Id.ValueString() == id && item.Deploy.ValueBool() && (!v.Get("policyGroupUpToDate").Bool() || updatedDevices == nil || helpers.Contains(updatedDevices, id) || hasVersionChange) {
+				if item.Id.ValueString() == id && item.Deploy.ValueBool() && (!v.Get("policyGroupUpToDate").Bool() || helpers.IsOutOfSync(v) || updatedDevices == nil || helpers.Contains(updatedDevices, id) || hasVersionChange) {
 					itemBody, _ := sjson.Set("", "id", id)
 					body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
 					tflog.Debug(ctx, fmt.Sprintf("%s: Deploying to device %s", plan.PolicyGroupId.ValueString(), id))
@@ -422,10 +422,9 @@ func (r *PolicyGroupDevicesResource) Read(ctx context.Context, req resource.Read
 	if r.deployOnOutOfDate {
 		if value := associateRes.Get("devices"); value.Exists() {
 			value.ForEach(func(k, v gjson.Result) bool {
-				// An offline / not-yet-synced device always reports policyGroupUpToDate=false with a
-				// "Sync Pending" status; that is not a genuine out-of-date condition, so skip it to
-				// avoid a perpetual redeploy diff.
-				if !v.Get("policyGroupUpToDate").Bool() && v.Get("configStatusMessage").String() != "Sync Pending" {
+				// Out of date or "Out of Sync" (a deploy the router rejected); "Sync Pending" (offline) is
+				// skipped, see helpers.NeedsRedeploy.
+				if helpers.NeedsRedeploy(v, "policyGroupUpToDate") {
 					id := v.Get("id").String()
 					for i := range state.Devices {
 						if state.Devices[i].Id.ValueString() == id {

@@ -350,7 +350,7 @@ func (r *ConfigurationGroupDevicesResource) Deploy(ctx context.Context, plan Con
 		value.ForEach(func(k, v gjson.Result) bool {
 			id := v.Get("id").String()
 			for _, item := range plan.Devices {
-				if item.Id.ValueString() == id && item.Deploy.ValueBool() && (!v.Get("configGroupUpToDate").Bool() || updatedDevices == nil || helpers.Contains(updatedDevices, id) || hasVersionChange) {
+				if item.Id.ValueString() == id && item.Deploy.ValueBool() && (!v.Get("configGroupUpToDate").Bool() || helpers.IsOutOfSync(v) || updatedDevices == nil || helpers.Contains(updatedDevices, id) || hasVersionChange) {
 					itemBody, _ := sjson.Set("", "id", id)
 					body, _ = sjson.SetRaw(body, "devices.-1", itemBody)
 					tflog.Debug(ctx, fmt.Sprintf("%s: Deploying to device %s", plan.ConfigurationGroupId.ValueString(), id))
@@ -427,12 +427,9 @@ func (r *ConfigurationGroupDevicesResource) Read(ctx context.Context, req resour
 	if r.deployOnOutOfDate {
 		if value := associateRes.Get("devices"); value.Exists() {
 			value.ForEach(func(k, v gjson.Result) bool {
-				// An offline / not-yet-synced device always reports configGroupUpToDate=false with a
-				// "Sync Pending" status. That is not a genuine out-of-date condition, so skip it —
-				// otherwise the device would be flagged for redeploy on every refresh, producing a
-				// perpetual diff (e.g. on SD-WAN Manager 20.15, where offline devices never report
-				// configGroupUpToDate=true).
-				if !v.Get("configGroupUpToDate").Bool() && v.Get("configStatusMessage").String() != "Sync Pending" {
+				// Out of date or "Out of Sync" (a deploy the router rejected); "Sync Pending" (offline) is
+				// skipped, see helpers.NeedsRedeploy.
+				if helpers.NeedsRedeploy(v, "configGroupUpToDate") {
 					id := v.Get("id").String()
 					for i := range state.Devices {
 						if state.Devices[i].Id.ValueString() == id {
