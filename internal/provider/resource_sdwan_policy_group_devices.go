@@ -374,9 +374,12 @@ func (r *PolicyGroupDevicesResource) Deploy(ctx context.Context, plan PolicyGrou
 		}
 	}
 
-	// Force a redeploy when the associated policy group version changed.
+	// Force a redeploy when the associated group version changed. A version that is null on
+	// either side is not a change: null in state means never recorded (just imported, or wiring
+	// added later), null in the plan means not wired (wiring removed). Nothing in the group changed,
+	// and a real group change also marks the devices out of date on the Manager.
 	hasVersionChange := false
-	if state != nil {
+	if state != nil && !state.PolicyGroupVersion.IsNull() && !plan.PolicyGroupVersion.IsNull() {
 		hasVersionChange = !plan.PolicyGroupVersion.Equal(state.PolicyGroupVersion)
 	}
 

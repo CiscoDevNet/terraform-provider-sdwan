@@ -242,7 +242,7 @@ func (r *ConfigurationGroupDevicesResource) Create(ctx context.Context, req reso
 	// Deploy to devices
 	if len(plan.Devices) > 0 {
 		// Adopted devices deploy like in Update, against what the Manager has; the others always.
-		r.Deploy(ctx, plan, prior, nil, &resp.Diagnostics)
+		r.Deploy(ctx, plan, prior, nil, nil, &resp.Diagnostics)
 	}
 	if resp.Diagnostics.HasError() {
 		return
@@ -386,10 +386,29 @@ func (r *ConfigurationGroupDevicesResource) associateDevices(ctx context.Context
 
 // associated, when set, is a GET .../device/associate/ response the caller has just made; it is used
 // instead of reading the group again.
-func (r *ConfigurationGroupDevicesResource) Deploy(ctx context.Context, plan ConfigurationGroupDevices, state *ConfigurationGroupDevices, associated *sdwan.Res, diag *diag.Diagnostics) {
+// importEncrypted lists, per device, variables that came back encrypted at import: a difference
+// in only those doesn't make a device "updated".
+func (r *ConfigurationGroupDevicesResource) Deploy(ctx context.Context, plan ConfigurationGroupDevices, state *ConfigurationGroupDevices, associated *sdwan.Res, importEncrypted map[string][]string, diag *diag.Diagnostics) {
 	var updatedDevices []string
 	if state != nil {
 		updatedDevices = plan.getUpdatedDevices(ctx, state)
+		if len(importEncrypted) > 0 {
+			kept := updatedDevices[:0]
+			var skipped []string
+			for _, id := range updatedDevices {
+				if names := importEncrypted[id]; len(names) > 0 && onlyVariablesDiffer(plan, state, id, names) {
+					tflog.Info(ctx, fmt.Sprintf("%s: device %s only differs in variables encrypted at import %v, not redeploying for that", plan.ConfigurationGroupId.ValueString(), id, names))
+					skipped = append(skipped, fmt.Sprintf("%s %v", id, names))
+					continue
+				}
+				kept = append(kept, id)
+			}
+			updatedDevices = kept
+			if len(skipped) > 0 {
+				diag.AddWarning("Encrypted variables not compared after import",
+					fmt.Sprintf("The Manager returns encrypted variables without their value, so right after an import they can't be compared with the configuration. These devices are not redeployed for them in this apply: %s. If you changed one of these values in this apply, it was written to the Manager but not deployed: run terraform apply -replace on this resource, or change it in a separate apply.", strings.Join(skipped, "; ")))
+			}
+		}
 		// A device not in the prior state is new to this resource: deploy it whatever the Manager reports.
 		inState := make(map[string]bool)
 		for _, d := range state.Devices {
@@ -402,9 +421,12 @@ func (r *ConfigurationGroupDevicesResource) Deploy(ctx context.Context, plan Con
 		}
 	}
 
-	// Force a redeploy when the associated configuration group version changed.
+	// Force a redeploy when the associated group version changed. A version that is null on
+	// either side is not a change: null in state means never recorded (just imported, or wiring
+	// added later), null in the plan means not wired (wiring removed). Nothing in the group changed,
+	// and a real group change also marks the devices out of date on the Manager.
 	hasVersionChange := false
-	if state != nil {
+	if state != nil && !state.ConfigurationGroupVersion.IsNull() && !plan.ConfigurationGroupVersion.IsNull() {
 		hasVersionChange = !plan.ConfigurationGroupVersion.Equal(state.ConfigurationGroupVersion)
 	}
 
@@ -486,6 +508,7 @@ func (r *ConfigurationGroupDevicesResource) Read(ctx context.Context, req resour
 	state.fromBodyConfigGroupDevices(ctx, res)
 
 	// Read config group device variables (fromBody only updates devices we own)
+	var variablesRes sdwan.Res
 	if len(state.Devices) > 0 {
 		path = fmt.Sprintf("/v1/config-group/%v/device/variables/", state.ConfigurationGroupId.ValueString())
 		res, err = r.client.Get(path)
@@ -497,6 +520,7 @@ func (r *ConfigurationGroupDevicesResource) Read(ctx context.Context, req resour
 			return
 		}
 		state.fromBodyConfigGroupDeviceVariables(ctx, res, &oldState)
+		variablesRes = res
 	}
 
 	state.updateTfAttributes(ctx, &oldState)
@@ -524,9 +548,20 @@ func (r *ConfigurationGroupDevicesResource) Read(ctx context.Context, req resour
 	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
 		return
 	}
+	importEncrypted, diags := helpers.GetImportEncrypted(ctx, req.Private)
+	resp.Diagnostics.Append(diags...)
 	if imp {
 		state.processImport(ctx)
+		// Encrypted values come back as $CRYPT_CLUSTER and, with no earlier state to keep, are
+		// stored empty, so the clear-text config value looks like a change. Remember which ones,
+		// so the first Update doesn't redeploy for them alone.
+		ids := make([]string, 0, len(state.Devices))
+		for _, d := range state.Devices {
+			ids = append(ids, d.Id.ValueString())
+		}
+		importEncrypted = helpers.EncryptedVariables(variablesRes, ids)
 	}
+	resp.Diagnostics.Append(helpers.SetImportEncrypted(ctx, resp.Private, importEncrypted)...)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.ConfigurationGroupId.ValueString()))
 
@@ -687,9 +722,13 @@ func (r *ConfigurationGroupDevicesResource) Update(ctx context.Context, req reso
 	}
 
 	// Deploy to devices
+	importEncrypted, diags := helpers.GetImportEncrypted(ctx, req.Private)
+	resp.Diagnostics.Append(diags...)
 	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, &state, associated, &resp.Diagnostics)
+		r.Deploy(ctx, plan, &state, associated, importEncrypted, &resp.Diagnostics)
 	}
+	// From here the state holds the config values, so the import exception is used up.
+	resp.Diagnostics.Append(helpers.SetImportEncrypted(ctx, resp.Private, nil)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -751,4 +790,34 @@ func (r *ConfigurationGroupDevicesResource) ImportState(ctx context.Context, req
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("devices"), devices)...)
 
 	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
+}
+
+// onlyVariablesDiffer reports whether device id differs between plan and state in the variables
+// named in names only (everything else, including the set of other variables, is equal).
+func onlyVariablesDiffer(plan ConfigurationGroupDevices, state *ConfigurationGroupDevices, id string, names []string) bool {
+	collect := func(devices []ConfigurationGroupDevicesDevices) (map[string]string, bool) {
+		for _, d := range devices {
+			if d.Id.ValueString() == id {
+				vars := map[string]string{}
+				for _, v := range d.Variables {
+					if !helpers.Contains(names, v.Name.ValueString()) {
+						vars[v.Name.ValueString()] = v.Value.String() + "|" + v.ListValue.String()
+					}
+				}
+				return vars, true
+			}
+		}
+		return nil, false
+	}
+	p, okp := collect(plan.Devices)
+	st, oks := collect(state.Devices)
+	if !okp || !oks || len(p) != len(st) {
+		return false
+	}
+	for k, v := range p {
+		if st[k] != v {
+			return false
+		}
+	}
+	return true
 }
