@@ -27,7 +27,9 @@
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["global"]
+                    "enum": [
+                      "global"
+                    ]
                   },
                   "value": {
                     "type": "array",
@@ -38,14 +40,19 @@
                     }
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               },
               {
                 "properties": {
                   "optionType": {
                     "type": "string",
-                    "enum": ["variable"]
+                    "enum": [
+                      "variable"
+                    ]
                   },
                   "value": {
                     "type": "string",
@@ -67,13 +74,18 @@
                     "maxLength": 128
                   }
                 },
-                "required": ["optionType", "value"],
+                "required": [
+                  "optionType",
+                  "value"
+                ],
                 "additionalProperties": false
               }
             ]
           }
         },
-        "required": ["expandedCommunityList"],
+        "required": [
+          "expandedCommunityList"
+        ],
         "additionalProperties": false
       },
       "documentation": {
@@ -87,7 +99,10 @@
             "data": {
               "expandedCommunityList": {
                 "optionType": "global",
-                "value": ["123456any", "abcd"]
+                "value": [
+                  "123456any",
+                  "abcd"
+                ]
               }
             },
             "name": "ExpandedCommunityList"
@@ -98,9 +113,15 @@
         "minVManageVersion": "20.15.1"
       }
     },
-    "required": ["name", "data"],
+    "required": [
+      "name",
+      "data"
+    ],
     "not": {
-      "required": ["documentation", "metadata"]
+      "required": [
+        "documentation",
+        "metadata"
+      ]
     }
   }
 }

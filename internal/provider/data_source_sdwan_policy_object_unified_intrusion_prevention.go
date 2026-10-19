@@ -88,6 +88,10 @@ func (d *PolicyObjectUnifiedIntrusionPreventionProfileParcelDataSource) Schema(c
 				MarkdownDescription: "Can be one of the enum value",
 				Computed:            true,
 			},
+			"signature_set_id": schema.StringAttribute{
+				MarkdownDescription: "Reference to a user edited signature set parcel",
+				Computed:            true,
+			},
 			"inspection_mode": schema.StringAttribute{
 				MarkdownDescription: "Can be one of the enum value",
 				Computed:            true,

@@ -39,4 +39,5 @@ data "sdwan_policy_object_unified_intrusion_prevention" "example" {
 - `ips_signature_allow_list_id` (String)
 - `log_level` (String) Can be one of the enum value
 - `signature_set` (String) Can be one of the enum value
+- `signature_set_id` (String) Reference to a user edited signature set parcel
 - `version` (Number) The version of the Policy_object
