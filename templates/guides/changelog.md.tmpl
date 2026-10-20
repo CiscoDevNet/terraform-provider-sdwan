@@ -11,15 +11,16 @@ description: |-
 
 - Add `sdwan_policy_object_security_data_ipv6_prefix_list` resource and data source (SD-WAN Manager 20.18+)
 - Add `sdwan_wan_edge_certificate_validate` and `sdwan_send_wan_edge_list_to_controllers` resources to manage WAN edge certificate validity and push the certificate list to the controllers, with drift detection based on the Manager's out-of-sync state
-- Add optional `name`-based lookup to the `sdwan_configuration_group` and `sdwan_policy_group` data sources, and to all feature profile data sources (`sdwan_system_feature_profile`, `sdwan_transport_feature_profile`, `sdwan_service_feature_profile`, `sdwan_cli_feature_profile`, `sdwan_other_feature_profile`, `sdwan_application_priority_feature_profile`, `sdwan_embedded_security_feature_profile`, `sdwan_dns_security_feature_profile`, `sdwan_sig_security_feature_profile`, `sdwan_sse_feature_profile`, `sdwan_topology_feature_profile`, `sdwan_policy_object_feature_profile`). Exactly one of `id` or `name` must be configured; `name` is resolved against the corresponding list endpoint.
-- Fix `sdwan_configuration_group` and `sdwan_policy_group` data sources failing with HTTP 500 (`CFGRP0014`/`PLGRP0014`) when the group has no associated devices: the device variables are now only read when devices exist
 - Add 20.18 Security Object Group and Rule Set policy-object resources and data sources
+- Add optional `name`-based lookup to the `sdwan_configuration_group` and `sdwan_policy_group` data sources, and to all feature profile data sources (`sdwan_system_feature_profile`, `sdwan_transport_feature_profile`, `sdwan_service_feature_profile`, `sdwan_cli_feature_profile`, `sdwan_other_feature_profile`, `sdwan_application_priority_feature_profile`, `sdwan_embedded_security_feature_profile`, `sdwan_dns_security_feature_profile`, `sdwan_sig_security_feature_profile`, `sdwan_sse_feature_profile`, `sdwan_topology_feature_profile`, `sdwan_policy_object_feature_profile`). Exactly one of `id` or `name` must be configured; `name` is resolved against the corresponding list endpoint.
+- Add `sdwan_network_hierarchy_nodes` data source, resolving a list of Network Hierarchy site, group and region names in a single paginated API call, without requiring the hierarchy to be managed by this provider. `nodes` returns the UUID and type of every named node; `resolved_sites` and `container_sites` are the site view (named sites plus the members of named groups and regions), which `expand_containers = false` leaves empty
+- Fix `sdwan_configuration_group` and `sdwan_policy_group` data sources failing with HTTP 500 (`CFGRP0014`/`PLGRP0014`) when the group has no associated devices: the device variables are now only read when devices exist
 - Fix `sdwan_service_lan_vpn_feature`: `administrative_distance` on `ip_static_route_interface`/`ipv6_static_route_interface` `next_hop` and on `null0` IPv4 static routes now defaults to `1` when not set, fixing schema validation errors when it is omitted
 - Fix generator to extract enum values from different oneOf branches.
-- Bump schema to `20.18.0` for the following application priority resources: `sdwan_application_priority_qos_policy`, `sdwan_application_priority_traffic_policy_policy`
-- Add `hierarchy_ids` and `preferred_color_group_restrict` attributes to `sdwan_application_priority_traffic_policy_policy` resource and data source (SD-WAN Manager 20.18+)
 - Fix generator to fall back to the attribute description from the definition when the model schema does not provide one.
 - Fix `sdwan_sse_cisco_feature` and `sdwan_sse_zscaler_feature`: tracker_source_ip_variable can't be defined, provider insists on tracker_source_ip.
+- Bump schema to `20.18.0` for the following application priority resources: `sdwan_application_priority_qos_policy`, `sdwan_application_priority_traffic_policy_policy`
+- Add `hierarchy_ids` and `preferred_color_group_restrict` attributes to `sdwan_application_priority_traffic_policy_policy` resource and data source (SD-WAN Manager 20.18+)
 - Bump schema to `20.18.0` for all `sdwan_policy_object_*` resources
 - Add `signature_set` values `max-detect` and `no-rules-active` to `sdwan_policy_object_unified_intrusion_prevention`. These values are only accepted by SD-WAN Manager 20.18.1+; configuring them against an earlier Manager is rejected by the API at apply time
 - Add `signature_set_id` attribute to `sdwan_policy_object_unified_intrusion_prevention` resource and data source, referencing a user-edited signature set parcel (SD-WAN Manager 20.18.1+). `signature_set` is now optional and mutually exclusive with `signature_set_id`; exactly one of the two must be set
@@ -30,7 +31,6 @@ description: |-
 - Bump `sdwan_embedded_security_policy` schema to `20.18.0`
 - Deprecate `source_security_group_list_ids` and `destination_security_group_list_ids` in `sdwan_embedded_security_ngfw_policy`, use `source_object_group_list_ids` and `destination_object_group_list_ids` instead (SD-WAN Manager 20.18+)
 - Fix generator to detect the `global` and `default` branches of an attribute when a schema branch lists several `optionType` values, e.g. `"enum": ["default", "global"]`
-- Add `sdwan_network_hierarchy_nodes` data source, resolving a list of Network Hierarchy site, group and region names in a single paginated API call, without requiring the hierarchy to be managed by this provider. `nodes` returns the UUID and type of every named node; `resolved_sites` and `container_sites` are the site view (named sites plus the members of named groups and regions), which `expand_containers = false` leaves empty
 
 ## 0.11.6
 
