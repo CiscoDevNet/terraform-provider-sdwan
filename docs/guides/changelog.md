@@ -30,6 +30,7 @@ description: |-
 - Bump `sdwan_embedded_security_policy` schema to `20.18.0`
 - Deprecate `source_security_group_list_ids` and `destination_security_group_list_ids` in `sdwan_embedded_security_ngfw_policy`, use `source_object_group_list_ids` and `destination_object_group_list_ids` instead (SD-WAN Manager 20.18+)
 - Fix generator to detect the `global` and `default` branches of an attribute when a schema branch lists several `optionType` values, e.g. `"enum": ["default", "global"]`
+- Add `sdwan_network_hierarchy_nodes` data source, resolving a list of Network Hierarchy site, group and region names in a single paginated API call, without requiring the hierarchy to be managed by this provider. `nodes` returns the UUID and type of every named node; `resolved_sites` and `container_sites` are the site view (named sites plus the members of named groups and regions), which `expand_containers = false` leaves empty
 
 ## 0.11.6
 
