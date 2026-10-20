@@ -21,10 +21,17 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
+
+// minVersionNetworkHierarchyCflowdSourceInterface is the minimum SD-WAN
+// Manager version that supports `source_interface` on a cflowd collector.
+// Older Managers reject the field (`additionalProperties: false` on the
+// collector schema), so it is only sent on 20.18.1+ (see toBody).
+var minVersionNetworkHierarchyCflowdSourceInterface = version.Must(version.NewVersion("20.18.1"))
 
 // NetworkHierarchyCflowd represents cflowd settings for a network hierarchy node
 type NetworkHierarchyCflowd struct {
@@ -45,6 +52,7 @@ type NetworkHierarchyCflowd struct {
 type NetworkHierarchyCflowdCollector struct {
 	VpnId            types.Int64  `tfsdk:"vpn_id"`
 	Address          types.String `tfsdk:"address"`
+	SourceInterface  types.String `tfsdk:"source_interface"`
 	UdpPort          types.Int64  `tfsdk:"udp_port"`
 	ExportSpread     types.Bool   `tfsdk:"export_spread"`
 	BfdMetricsExport types.Bool   `tfsdk:"bfd_metrics_export"`
@@ -83,7 +91,7 @@ func (data NetworkHierarchyCflowd) getPathWithId() string {
 	return fmt.Sprintf("/v1/network-hierarchy/%s/network-settings/cflowd/%s", data.NodeId.ValueString(), data.Id.ValueString())
 }
 
-func (data NetworkHierarchyCflowd) toBody(ctx context.Context) string {
+func (data NetworkHierarchyCflowd) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 
 	if !data.FlowActiveTimeout.IsNull() {
@@ -136,6 +144,10 @@ func (data NetworkHierarchyCflowd) toBody(ctx context.Context) string {
 			if !collector.Address.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "address.optionType", "global")
 				itemBody, _ = sjson.Set(itemBody, "address.value", collector.Address.ValueString())
+			}
+			if !collector.SourceInterface.IsNull() && ver != nil && ver.GreaterThanOrEqual(minVersionNetworkHierarchyCflowdSourceInterface) {
+				itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", collector.SourceInterface.ValueString())
 			}
 			if !collector.UdpPort.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "udpPort.optionType", "global")
@@ -223,6 +235,11 @@ func (data *NetworkHierarchyCflowd) fromBody(ctx context.Context, res gjson.Resu
 			} else {
 				item.Address = types.StringNull()
 			}
+			if cValue := v.Get("sourceInterface.value"); cValue.Exists() {
+				item.SourceInterface = types.StringValue(cValue.String())
+			} else {
+				item.SourceInterface = types.StringNull()
+			}
 			if cValue := v.Get("udpPort.value"); cValue.Exists() {
 				item.UdpPort = types.Int64Value(cValue.Int())
 			} else {
@@ -287,6 +304,9 @@ func (data *NetworkHierarchyCflowd) hasChanges(ctx context.Context, state *Netwo
 				hasChanges = true
 			}
 			if !data.Collectors[i].Address.Equal(state.Collectors[i].Address) {
+				hasChanges = true
+			}
+			if !data.Collectors[i].SourceInterface.Equal(state.Collectors[i].SourceInterface) {
 				hasChanges = true
 			}
 			if !data.Collectors[i].UdpPort.Equal(state.Collectors[i].UdpPort) {

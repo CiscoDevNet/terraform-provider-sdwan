@@ -2,6 +2,7 @@
 name: Configuration Group
 rest_endpoint: /v1/config-group/
 id_attribute: id
+data_source_name_query: true
 minimum_version: 20.15.0
 test_tags: [SDWAN_2015]
 doc_category: Configuration Groups

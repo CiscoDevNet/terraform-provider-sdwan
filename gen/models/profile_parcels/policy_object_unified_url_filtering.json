@@ -146,7 +146,13 @@
                         "weapons",
                         "web-advertisements",
                         "web-based-email",
-                        "web-hosting"
+                        "web-hosting",
+                        "unused-food-and-dining",
+                        "unused-reputation",
+                        "self-harm",
+                        "dns-over-https",
+                        "low-thc-cannabis-products",
+                        "generative-ai"
                       ]
                     }
                   }
@@ -383,6 +389,9 @@
           "enableAlerts"
         ],
         "additionalProperties": false
+      },
+      "metadata": {
+        "minVManageVersion": "20.15.2"
       }
     },
     "documentation": {
@@ -441,7 +450,8 @@
     ],
     "not": {
       "required": [
-        "documentation"
+        "documentation",
+        "metadata"
       ]
     },
     "anyOf": [

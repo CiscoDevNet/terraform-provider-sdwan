@@ -43,14 +43,14 @@ data "sdwan_sse_zscaler_feature" "example" {
 - `block_internet_until_accepted_variable` (String) Variable name
 - `caution_enabled` (Boolean) Enable Caution
 - `caution_enabled_variable` (String) Variable name
-- `country` (Boolean)
+- `country` (Boolean) Country
 - `country_variable` (String) Variable name
 - `description` (String) The description of the Feature
 - `display_time_unit` (String) Display time unit
 - `display_time_unit_variable` (String) Variable name
-- `dn_bandwidth` (Number)
+- `dn_bandwidth` (Number) Download Bandwidth in Mbps
 - `dn_bandwidth_variable` (String) Variable name
-- `enforce_bandwidth_control` (Boolean)
+- `enforce_bandwidth_control` (Boolean) Enforce Bandwidth Control
 - `enforce_bandwidth_control_variable` (String) Variable name
 - `force_ssl_inspection` (Boolean) For first-time Acceptable User Policy behavior, force SSL inspection
 - `force_ssl_inspection_variable` (String) Variable name
@@ -81,7 +81,7 @@ data "sdwan_sse_zscaler_feature" "example" {
 - `tracker_source_ip` (String) Source IP address for Tracker
 - `tracker_source_ip_variable` (String) Variable name
 - `trackers` (Attributes List) Tracker configuration (see [below for nested schema](#nestedatt--trackers))
-- `up_bandwidth` (Number)
+- `up_bandwidth` (Number) Upload Bandwidth in Mbps
 - `up_bandwidth_variable` (String) Variable name
 - `version` (Number) The version of the Feature
 - `xff_forward_enabled` (Boolean) XFF forwarding enabled
@@ -175,7 +175,7 @@ Read-Only:
 - `caution_enabled_variable` (String) Variable name
 - `display_time_unit` (String) Display time unit for Idle Time to Disassociation
 - `display_time_unit_variable` (String) Variable name
-- `dn_bandwidth` (Number)
+- `dn_bandwidth` (Number) Download Bandwidth in Mbps
 - `dn_bandwidth_variable` (String) Variable name
 - `enforce_bandwidth_control` (String) Enforce Bandwidth Control for sub location
 - `enforce_bandwidth_control_variable` (String) Variable name
@@ -183,10 +183,10 @@ Read-Only:
 - `force_ssl_inspection_variable` (String) Variable name
 - `idle_time` (Number) Idle time to disassociation. How long after a completed transaction the service retains the IP address to user mapping.
 - `idle_time_variable` (String) Variable name
-- `internal_ip` (Attributes List) (see [below for nested schema](#nestedatt--sub_locations--internal_ip))
+- `internal_ip` (Attributes List) Internal Ip address (see [below for nested schema](#nestedatt--sub_locations--internal_ip))
 - `ip_enforced_for_known_browsers` (Boolean) If enabled, and if the IP-user mapping exists, then the Surrogate user identity is used for traffic from known browsers. If disabled, traffic from known browsers will always be challenged using the configured authentication mechanism and Surrogate user identity is ignored
 - `ip_enforced_for_known_browsers_variable` (String) Variable name
-- `name` (String)
+- `name` (String) Sub-location name
 - `name_variable` (String) Variable name
 - `ofw_enabled` (Boolean) Enforces firewall at the location
 - `ofw_enabled_variable` (String) Variable name
@@ -194,11 +194,11 @@ Read-Only:
 - `refresh_time_unit` (String) Refresh Time display unit
 - `refresh_time_unit_variable` (String) Variable name
 - `refresh_time_variable` (String) Variable name
-- `service_vpn` (Set of String)
+- `service_vpn` (Set of String) Sub-location Service VPN
 - `service_vpn_variable` (String) Variable name
 - `surrogate_ip` (Boolean) Enable Surrogate IP. Maps users to device IP addresses. This is used to enforce user policies on cookie-compatible traffic.
 - `surrogate_ip_variable` (String) Variable name
-- `up_bandwidth` (Number)
+- `up_bandwidth` (Number) Upload Bandwidth in Mbps
 - `up_bandwidth_variable` (String) Variable name
 
 <a id="nestedatt--sub_locations--internal_ip"></a>

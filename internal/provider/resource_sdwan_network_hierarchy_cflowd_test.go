@@ -43,6 +43,9 @@ func TestAccSdwanNetworkHierarchyCflowd(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_cflowd.test", "collect_dscp_output", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_cflowd.test", "collectors.0.vpn_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_cflowd.test", "collectors.0.address", "10.0.0.1"))
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_cflowd.test", "collectors.0.source_interface", "Loopback1"))
+	}
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_cflowd.test", "collectors.0.udp_port", "4739"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_cflowd.test", "collectors.0.export_spread", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_network_hierarchy_cflowd.test", "collectors.0.bfd_metrics_export", "true"))
@@ -78,6 +81,9 @@ func testAccSdwanNetworkHierarchyCflowdConfig_all() string {
 	config += `	collectors = [{` + "\n"
 	config += `	  vpn_id = 1` + "\n"
 	config += `	  address = "10.0.0.1"` + "\n"
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	  source_interface = "Loopback1"` + "\n"
+	}
 	config += `	  udp_port = 4739` + "\n"
 	config += `	  export_spread = true` + "\n"
 	config += `	  bfd_metrics_export = true` + "\n"

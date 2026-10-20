@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanApplicationPriorityTrafficPolicyProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015 or TF_VAR_policy_object_feature_template_id")
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018 or TF_VAR_policy_object_feature_template_id")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_priority_traffic_policy_policy.test", "default_action", "accept"))
@@ -75,6 +75,18 @@ resource "sdwan_policy_object_policer" "test" {
       burst_bytes   = 56500
       exceed_action = "remark"
       rate_bps      = 60000
+    }
+  ]
+}
+
+resource "sdwan_policy_object_preferred_color_group" "test" {
+  name               = "TF_TEST_PCG"
+  description        = "My Example"
+  feature_profile_id = sdwan_policy_object_feature_profile.test.id
+  entries = [
+    {
+      primary_color_preference = ["mpls"]
+      primary_path_preference  = "direct-path"
     }
   ]
 }

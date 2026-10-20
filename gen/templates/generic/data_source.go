@@ -33,8 +33,12 @@ import (
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
-	{{- if .DataSourceFilters}}
+	{{- if or .DataSourceFilters .DataSourceNameQuery}}
 	"github.com/tidwall/gjson"
+	{{- end}}
+	{{- if .DataSourceNameQuery}}
+	"github.com/hashicorp/terraform-plugin-framework-validators/datasourcevalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	{{- end}}
 	{{- if hasMinVersionCondition .Attributes}}
 	"github.com/hashicorp/go-version"
@@ -48,6 +52,9 @@ import (
 var (
 	_ datasource.DataSource              = &{{camelCase .Name}}DataSource{}
 	_ datasource.DataSourceWithConfigure = &{{camelCase .Name}}DataSource{}
+{{- if .DataSourceNameQuery}}
+	_ datasource.DataSourceWithConfigValidators = &{{camelCase .Name}}DataSource{}
+{{- end}}
 )
 
 func New{{camelCase .Name}}DataSource() datasource.DataSource {
@@ -70,7 +77,10 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The id of the object",
-				{{- if not .RemoveId}}
+				{{- if .DataSourceNameQuery}}
+				Optional:            true,
+				Computed:            true,
+				{{- else if not .RemoveId}}
 				Required:            true,
 				{{- else}}
 				Computed:            true,
@@ -101,6 +111,9 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 				Required:            true,
 				{{- else if .QueryParam}}
 				Optional:            true,
+				{{- else if and $.DataSourceNameQuery (eq .TfName "name")}}
+				Optional:            true,
+				Computed:            true,
 				{{ else }}
 				Computed:            true,
 				{{- end}}
@@ -174,6 +187,18 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 	}
 }
 
+{{- if .DataSourceNameQuery}}
+
+func (d *{{camelCase .Name}}DataSource) ConfigValidators(_ context.Context) []datasource.ConfigValidator {
+	return []datasource.ConfigValidator{
+		datasourcevalidator.ExactlyOneOf(
+			path.MatchRoot("id"),
+			path.MatchRoot("name"),
+		),
+	}
+}
+{{- end}}
+
 func (d *{{camelCase .Name}}DataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
@@ -195,6 +220,31 @@ func (d *{{camelCase .Name}}DataSource) Read(ctx context.Context, req datasource
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
+
+{{- if .DataSourceNameQuery}}
+
+	if config.Id.IsNull() && !config.Name.IsNull() {
+		// Resolve the object ID by name against the list endpoint
+		res, err := d.client.Get({{if .GetRestEndpoint}}"{{.GetRestEndpoint}}"{{else}}config.getPath(){{end}})
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve objects, got error: %s", err))
+			return
+		}
+		found := false
+		res.ForEach(func(_, v gjson.Result) bool {
+			if v.Get("{{getListNameAttribute .Attributes}}").String() == config.Name.ValueString() {
+				config.Id = types.StringValue(v.Get("{{getListIdAttribute .}}").String())
+				found = true
+				return false
+			}
+			return true
+		})
+		if !found {
+			resp.Diagnostics.AddError("Not Found", fmt.Sprintf("No object found with name: %s", config.Name.ValueString()))
+			return
+		}
+	}
+{{- end}}
 
 	{{if .RemoveId}}
 	var params = "?"
