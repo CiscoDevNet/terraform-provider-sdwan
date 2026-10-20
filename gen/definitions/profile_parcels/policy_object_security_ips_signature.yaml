@@ -2,7 +2,7 @@
 name: Policy Object Security IPS Signature
 rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/security-ipssignature
 minimum_version: 20.15.0
-test_tags: [SDWAN_2015]
+test_tags: [SDWAN_2015, SDWAN_2018]
 parcel_type: policy_object
 skip_minimum_test: true
 full_update: true

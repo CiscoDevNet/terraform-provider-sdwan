@@ -34,13 +34,18 @@
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["global"]
+                          "enum": [
+                            "global"
+                          ]
                         },
                         "value": {
                           "type": "string"
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     }
                   ]
@@ -53,13 +58,18 @@
                       "properties": {
                         "optionType": {
                           "type": "string",
-                          "enum": ["global"]
+                          "enum": [
+                            "global"
+                          ]
                         },
                         "value": {
                           "type": "string"
                         }
                       },
-                      "required": ["optionType", "value"],
+                      "required": [
+                        "optionType",
+                        "value"
+                      ],
                       "additionalProperties": false
                     }
                   ]
@@ -67,17 +77,26 @@
               },
               "oneOf": [
                 {
-                  "required": ["app"]
+                  "required": [
+                    "app"
+                  ]
                 },
                 {
-                  "required": ["appFamily"]
+                  "required": [
+                    "appFamily"
+                  ]
                 }
               ],
               "additionalProperties": false
             }
+          },
+          "saasApp": {
+            "type": "boolean"
           }
         },
-        "required": ["entries"],
+        "required": [
+          "entries"
+        ],
         "additionalProperties": false
       },
       "documentation": {
@@ -109,12 +128,18 @@
         ]
       },
       "metadata": {
-        "minVManageVersion": "20.15.1"
+        "minVManageVersion": "20.18.1"
       }
     },
-    "required": ["data", "name"],
+    "required": [
+      "data",
+      "name"
+    ],
     "not": {
-      "required": ["documentation", "metadata"]
+      "required": [
+        "documentation",
+        "metadata"
+      ]
     },
     "additionalProperties": false
   }

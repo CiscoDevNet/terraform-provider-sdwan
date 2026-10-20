@@ -11,6 +11,12 @@
 - Add `hierarchy_ids` and `preferred_color_group_restrict` attributes to `sdwan_application_priority_traffic_policy_policy` resource and data source (SD-WAN Manager 20.18+)
 - Fix generator to fall back to the attribute description from the definition when the model schema does not provide one.
 - Fix `sdwan_sse_cisco_feature` and `sdwan_sse_zscaler_feature`: tracker_source_ip_variable can't be defined, provider insists on tracker_source_ip.
+- Bump schema to `20.18.0` for all `sdwan_policy_object_*` resources
+- Add `signature_set` values `max-detect` and `no-rules-active` to `sdwan_policy_object_unified_intrusion_prevention`. These values are only accepted by SD-WAN Manager 20.18.1+; configuring them against an earlier Manager is rejected by the API at apply time
+- Add `signature_set_id` attribute to `sdwan_policy_object_unified_intrusion_prevention` resource and data source, referencing a user-edited signature set parcel (SD-WAN Manager 20.18.1+). `signature_set` is now optional and mutually exclusive with `signature_set_id`; exactly one of the two must be set
+- Fix `sdwan_policy_object_security_data_ipv4_prefix_list` accepting malformed `ip_prefix` values: the validation pattern is now anchored
+- Note: `pattern` constraints for `sdwan_policy_object_security_url_allow_list`, `sdwan_policy_object_security_url_block_list`, `sdwan_policy_object_security_local_domain_list`, and `sdwan_policy_object_unified_url_filtering` are kept at the 20.15 specification for backward compatibility; Manager 20.18+ enforces narrower patterns server-side
+- Note: `application`/`application_family` in `sdwan_policy_object_application_list` and `sdwan_policy_object_security_local_application_list` accept a narrower character set on Manager 20.18+
 - Bump `sdwan_embedded_security_ngfw_policy` schema to `20.18.0`
 - Bump `sdwan_embedded_security_policy` schema to `20.18.0`
 - Deprecate `source_security_group_list_ids` and `destination_security_group_list_ids` in `sdwan_embedded_security_ngfw_policy`, use `source_object_group_list_ids` and `destination_object_group_list_ids` instead (SD-WAN Manager 20.18+)
