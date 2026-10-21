@@ -61,7 +61,7 @@
           "sequences": {
             "type": "array",
             "uniqueItems": true,
-            "minItems": 1,
+            "minItems": 0,
             "items": {
               "type": "object",
               "properties": {
