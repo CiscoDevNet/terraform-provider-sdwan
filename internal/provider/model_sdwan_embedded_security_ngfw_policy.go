@@ -137,7 +137,7 @@ func (data EmbeddedSecurityNGFW) toBody(ctx context.Context, ver *version.Versio
 		}
 	}
 	if true {
-
+		body, _ = sjson.Set(body, path+"sequences", []interface{}{})
 		for _, item := range data.Sequences {
 			itemBody := ""
 			if !item.IsRuleSet.IsNull() {

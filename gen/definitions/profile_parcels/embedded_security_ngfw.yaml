@@ -16,6 +16,7 @@ attributes:
     tf_name: default_action
     example: pass
   - model_name: sequences
+    always_include: true # 20.15 rejects the POST without "sequences", even when empty; the 20.18 schema has minItems: 1
     minimum_test_value: 'true'
     attributes:
     - model_name: isRuleSet
