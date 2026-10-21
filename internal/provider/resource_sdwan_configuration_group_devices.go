@@ -218,10 +218,14 @@ func (r *ConfigurationGroupDevicesResource) Create(ctx context.Context, req reso
 		}
 		if len(adopted) > 0 {
 			tflog.Info(ctx, fmt.Sprintf("%s: devices %v are already on this group, adopting them", plan.ConfigurationGroupId.ValueString(), adopted))
-			prior, err = r.adoptedPriorState(ctx, plan, adopted)
+			var encrypted map[string][]string
+			prior, encrypted, err = r.adoptedPriorState(ctx, plan, adopted)
 			if err != nil {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s", err))
 				return
+			}
+			if w := helpers.AdoptedEncryptedWarning(encrypted); w != "" {
+				resp.Diagnostics.AddWarning("Encrypted variables not compared for adopted devices", w)
 			}
 		}
 	}
@@ -258,10 +262,11 @@ func (r *ConfigurationGroupDevicesResource) Create(ctx context.Context, req reso
 // adoptedPriorState returns the adopted devices with the variables the Manager has for them now,
 // read before Create overwrites them. Deploy uses it as the prior state, so an adopted device is
 // deployed only when it is out of date or out of sync, or its variables change, as in Update.
-func (r *ConfigurationGroupDevicesResource) adoptedPriorState(ctx context.Context, plan ConfigurationGroupDevices, adopted []string) (*ConfigurationGroupDevices, error) {
+// It also returns, per adopted device, the variables the Manager has encrypted.
+func (r *ConfigurationGroupDevicesResource) adoptedPriorState(ctx context.Context, plan ConfigurationGroupDevices, adopted []string) (*ConfigurationGroupDevices, map[string][]string, error) {
 	res, err := r.client.Get(fmt.Sprintf("/v1/config-group/%v/device/variables/", plan.ConfigurationGroupId.ValueString()))
 	if err != nil {
-		return nil, fmt.Errorf("%s, %s", err, res.String())
+		return nil, nil, fmt.Errorf("%s, %s", err, res.String())
 	}
 	prior := plan
 	prior.Devices = nil
@@ -273,7 +278,7 @@ func (r *ConfigurationGroupDevicesResource) adoptedPriorState(ctx context.Contex
 	}
 	// Encrypted values can't be compared and keep the planned value (as in Read).
 	prior.fromBodyConfigGroupDeviceVariables(ctx, res, &plan)
-	return &prior, nil
+	return &prior, helpers.EncryptedVariables(res, adopted), nil
 }
 
 // getDeviceVariableTypes fetches the variable schema from the API and extracts type information

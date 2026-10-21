@@ -19,6 +19,7 @@ package helpers
 
 import (
 	"slices"
+	"strings"
 	"testing"
 
 	"github.com/tidwall/gjson"
@@ -32,5 +33,16 @@ func TestEncryptedVariables(t *testing.T) {
 	got := EncryptedVariables(res, []string{"C8K-A", "C8K-B"})
 	if len(got) != 2 || !slices.Equal(got["C8K-A"], []string{"aaa_password"}) || !slices.Equal(got["C8K-B"], []string{"aaa_password"}) {
 		t.Errorf("unexpected: %v", got)
+	}
+}
+
+func TestAdoptedEncryptedWarning(t *testing.T) {
+	if got := AdoptedEncryptedWarning(nil); got != "" {
+		t.Errorf("no encrypted variables: got %q, want empty", got)
+	}
+	got := AdoptedEncryptedWarning(map[string][]string{"C8K-B": {"aaa_password"}, "C8K-A": {"aaa_password", "snmp_key"}})
+	want := "C8K-A [aaa_password snmp_key]; C8K-B [aaa_password]"
+	if !strings.Contains(got, want) {
+		t.Errorf("got %q, want it to list %q (sorted by device)", got, want)
 	}
 }

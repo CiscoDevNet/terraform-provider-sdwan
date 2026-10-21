@@ -20,6 +20,8 @@ package helpers
 import (
 	"context"
 	"encoding/json"
+	"fmt"
+	"sort"
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/diag"
@@ -51,6 +53,27 @@ func EncryptedVariables(res sdwan.Res, ids []string) map[string][]string {
 		return true
 	})
 	return out
+}
+
+// AdoptedEncryptedWarning returns the warning for devices a Create adopted whose variables the
+// Manager returned encrypted (see EncryptedVariables), or "" if there are none. Create compares an
+// adopted device with the Manager's variables, and an encrypted value can't be compared, so a value
+// changed in that same apply is written but not deployed. The state then holds the configured
+// value, so later changes are compared and deployed as usual.
+func AdoptedEncryptedWarning(encrypted map[string][]string) string {
+	if len(encrypted) == 0 {
+		return ""
+	}
+	ids := make([]string, 0, len(encrypted))
+	for id := range encrypted {
+		ids = append(ids, id)
+	}
+	sort.Strings(ids)
+	parts := make([]string, 0, len(ids))
+	for _, id := range ids {
+		parts = append(parts, fmt.Sprintf("%s %v", id, encrypted[id]))
+	}
+	return fmt.Sprintf("These devices were already on the group and were adopted. The Manager returns encrypted variables without their value, so they can't be compared with the configuration, and the devices are not redeployed for them in this apply: %s. If you changed one of these values in this apply, it was written to the Manager but not deployed. Later changes are compared with the state and deployed as usual.", strings.Join(parts, "; "))
 }
 
 // GetKeyer is something like ReadRequest.Private or UpdateRequest.Private.

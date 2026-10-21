@@ -218,6 +218,9 @@ func (r *PolicyGroupDevicesResource) Create(ctx context.Context, req resource.Cr
 			}
 			p.fromBodyPolicyGroupDeviceVariables(ctx, res)
 			prior = &p
+			if w := helpers.AdoptedEncryptedWarning(helpers.EncryptedVariables(res, adopted)); w != "" {
+				resp.Diagnostics.AddWarning("Encrypted variables not compared for adopted devices", w)
+			}
 		}
 	}
 
