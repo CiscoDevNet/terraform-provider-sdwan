@@ -238,6 +238,43 @@ func TestAccSdwanEmbeddedSecurityNGFWProfileParcelIPv6Sequence(t *testing.T) {
 	})
 }
 
+// SD-WAN Manager 20.15 rejects the NGFW policy POST without a "sequences" key, even when it is empty
+// (SCHVALID0001, "Required But Missing Attributes: data.sequences"). The 20.18 schema requires at least one
+// sequence (minItems: 1), so an empty policy is only valid on 20.15.
+func TestAccSdwanEmbeddedSecurityNGFWProfileParcelNoSequences(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015")
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		t.Skip("skipping test, SD-WAN Manager 20.18 requires at least one sequence")
+	}
+
+	config := testAccSdwanEmbeddedSecurityNGFWPrerequisitesProfileParcelConfig + `
+		resource "sdwan_embedded_security_ngfw_policy" "test_no_sequences" {
+			name               = "TF_TEST_NO_SEQUENCES"
+			description        = "Terraform integration test"
+			feature_profile_id = sdwan_embedded_security_feature_profile.test.id
+			default_action     = "pass"
+		}
+		`
+
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config: config,
+				Check:  resource.TestCheckResourceAttr("sdwan_embedded_security_ngfw_policy.test_no_sequences", "default_action", "pass"),
+			},
+			{
+				Config:             config,
+				PlanOnly:           true,
+				ExpectNonEmptyPlan: false,
+			},
+		},
+	})
+}
+
 // The source object group must stay FQDN-free, SD-WAN Manager rejects FQDNs in a source object group (PPARC0012).
 const testAccSdwanEmbeddedSecurityNGFWRuleSetPrerequisitesProfileParcelConfig = `
 resource "sdwan_embedded_security_feature_profile" "test_rule_set" {
