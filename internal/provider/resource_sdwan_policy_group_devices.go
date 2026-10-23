@@ -93,7 +93,7 @@ func (r *PolicyGroupDevicesResource) Schema(ctx context.Context, req resource.Sc
 				},
 			},
 			"policy_group_version": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("The version of the associated policy group. Set this to `sdwan_policy_group.<name>.version` so that any change to the policy group triggers a redeployment of the devices managed by this resource.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("The version of the associated policy group. Set this to `sdwan_policy_group.<name>.version` so that a change to the policy group is deployed in the same apply: from SD-WAN Manager 20.15 to the devices the Manager reports out of date, on older versions to all devices managed by this resource.").String,
 				Optional:            true,
 			},
 			"devices": schema.ListNestedAttribute{
@@ -377,13 +377,18 @@ func (r *PolicyGroupDevicesResource) Deploy(ctx context.Context, plan PolicyGrou
 		}
 	}
 
-	// Force a redeploy when the associated group version changed. A version that is null on
-	// either side is not a change: null in state means never recorded (just imported, or wiring
-	// added later), null in the plan means not wired (wiring removed). Nothing in the group changed,
-	// and a real group change also marks the devices out of date on the Manager.
+	// A change of the associated group version makes this resource run in the same apply as the
+	// group change. From Manager 20.15 the Manager then reports exactly the affected devices out of
+	// date, and only those are deployed; below 20.15 the version change deploys all devices
+	// (helpers.GroupVersionForcesDeploy). A version that is null on either side is not a change:
+	// null in state means never recorded (just imported, or wiring added later), null in the plan
+	// means not wired (wiring removed).
 	hasVersionChange := false
-	if state != nil && !state.PolicyGroupVersion.IsNull() && !plan.PolicyGroupVersion.IsNull() {
-		hasVersionChange = !plan.PolicyGroupVersion.Equal(state.PolicyGroupVersion)
+	if state != nil && !state.PolicyGroupVersion.IsNull() && !plan.PolicyGroupVersion.IsNull() && !plan.PolicyGroupVersion.Equal(state.PolicyGroupVersion) {
+		hasVersionChange = helpers.GroupVersionForcesDeploy(r.client.ManagerVersion)
+		if !hasVersionChange {
+			tflog.Debug(ctx, fmt.Sprintf("%s: policy group version changed, deploying the devices the Manager reports out of date", plan.PolicyGroupId.ValueString()))
+		}
 	}
 
 	var res sdwan.Res

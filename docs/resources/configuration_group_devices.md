@@ -43,7 +43,7 @@ resource "sdwan_configuration_group_devices" "example" {
 
 ### Optional
 
-- `configuration_group_version` (Number) The version of the associated configuration group. Set this to `sdwan_configuration_group.<name>.version` so that any change to the configuration group triggers a redeployment of the devices managed by this resource.
+- `configuration_group_version` (Number) The version of the associated configuration group. Set this to `sdwan_configuration_group.<name>.version` so that a change to the configuration group is deployed in the same apply: from SD-WAN Manager 20.15 to the devices the Manager reports out of date, on older versions to all devices managed by this resource.
 - `devices` (Attributes List) List of devices (see [below for nested schema](#nestedatt--devices))
 
 ### Read-Only

@@ -112,7 +112,7 @@ resource "sdwan_configuration_group" "config_group_01" {
 }
 ```
 
-Finally, device association, variables and deployment are managed by a separate `sdwan_configuration_group_devices` resource. It references the configuration group via `configuration_group_id` and provides a list of `devices`. Every device requires values to be provided for all the relevant variables used in the respective features, and has a `deploy` flag to enable/disable the deployment of configuration changes to that device. Setting `configuration_group_version` to `sdwan_configuration_group.<name>.version` ensures that any change to the configuration group (for example a changed feature) triggers a redeployment of the devices.
+Finally, device association, variables and deployment are managed by a separate `sdwan_configuration_group_devices` resource. It references the configuration group via `configuration_group_id` and provides a list of `devices`. Every device requires values to be provided for all the relevant variables used in the respective features, and has a `deploy` flag to enable/disable the deployment of configuration changes to that device. Setting `configuration_group_version` to `sdwan_configuration_group.<name>.version` ensures that a change to the configuration group (for example a changed feature) is deployed in the same apply: from SD-WAN Manager 20.15 to the devices the Manager reports out of date, on older versions to all devices of the resource.
 
 Because device associations live in their own resource, the devices of a single configuration group can be spread across multiple Terraform state files (for example a few thousand devices per state) without one state impacting the devices managed by another.
 
@@ -184,7 +184,7 @@ resource "sdwan_policy_group" "policy_group_01" {
 }
 ```
 
-Device association, variables and deployment are managed by a separate `sdwan_policy_group_devices` resource, which references the policy group via `policy_group_id`. Setting `policy_group_version` to `sdwan_policy_group.<name>.version` triggers a redeployment of the devices whenever the policy group changes.
+Device association, variables and deployment are managed by a separate `sdwan_policy_group_devices` resource, which references the policy group via `policy_group_id`. Setting `policy_group_version` to `sdwan_policy_group.<name>.version` deploys a policy group change in the same apply, in the same way.
 
 ```terraform
 resource "sdwan_policy_group_devices" "policy_group_01_devices" {

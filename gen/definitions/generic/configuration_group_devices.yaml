@@ -25,7 +25,7 @@ attributes:
   - tf_name: configuration_group_version
     tf_only: true
     type: Int64
-    description: The version of the associated configuration group. Set this to `sdwan_configuration_group.<name>.version` so that any change to the configuration group triggers a redeployment of the devices managed by this resource.
+    description: The version of the associated configuration group. Set this to `sdwan_configuration_group.<name>.version` so that a change to the configuration group is deployed in the same apply: from SD-WAN Manager 20.15 to the devices the Manager reports out of date, on older versions to all devices managed by this resource.
     example: 1
     exclude_test: true
   - model_name: devices

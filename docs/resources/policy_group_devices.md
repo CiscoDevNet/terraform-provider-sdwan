@@ -33,7 +33,7 @@ resource "sdwan_policy_group_devices" "example" {
 ### Optional
 
 - `devices` (Attributes List) List of devices (see [below for nested schema](#nestedatt--devices))
-- `policy_group_version` (Number) The version of the associated policy group. Set this to `sdwan_policy_group.<name>.version` so that any change to the policy group triggers a redeployment of the devices managed by this resource.
+- `policy_group_version` (Number) The version of the associated policy group. Set this to `sdwan_policy_group.<name>.version` so that a change to the policy group is deployed in the same apply: from SD-WAN Manager 20.15 to the devices the Manager reports out of date, on older versions to all devices managed by this resource.
 
 ### Read-Only
 
