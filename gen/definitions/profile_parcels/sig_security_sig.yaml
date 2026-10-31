@@ -1,0 +1,393 @@
+---
+name: SIG Security SIG
+rest_endpoint: /v1/feature-profile/sdwan/sig-security/%v/sig
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015]
+parcel_type: feature
+doc_category: Features - SIG Security
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_sig_security_feature_profile.test.id
+  - model_name: sigProvider
+    tf_name: sig_provider
+    mandatory: true
+    description: SIG Provider
+    example: Generic
+  - model_name: srcVpn
+    tf_name: src_vpn
+    data_path: [interfaceMetadataSharing]
+    description: Share Source VPN
+    example: false
+    exclude_test: true
+  - model_name: interface
+    tf_name: interfaces
+    mandatory: true
+    attributes:
+    - model_name: ifName
+      tf_name: interface_name
+      id: true
+      mandatory: true
+      description: Interface name, `greN` for a GRE tunnel or `ipsecN` for an IPsec tunnel
+      example: gre1
+    - model_name: auto
+      description: Auto Tunnel Mode
+      optional: true
+      example: false
+    - model_name: shutdown
+      description: Administrative state
+      default_value_present: true
+      exclude_test: true
+    - model_name: description
+      tf_name: interface_description
+      description: Interface description
+      example: Tunnel to SIG data center A
+    - model_name: unnumbered
+      description: Unnumbered interface
+      optional: true
+      example: true
+    - model_name: address
+      tf_name: ipv4_address
+      description: Assign IPv4 address
+      example: 192.0.2.1
+      exclude_test: true
+    - model_name: tunnelSource
+      tf_name: tunnel_source
+      description: Tunnel source IP Address
+      example: 192.0.2.2
+      exclude_test: true
+    - model_name: tunnelSourceInterface
+      tf_name: tunnel_source_interface
+      mandatory: true
+      description: Interface name for tunnel source
+      example: GigabitEthernet1
+    - model_name: tunnelRouteVia
+      tf_name: tunnel_route_via
+      description: Interface name for tunnel route
+      example: GigabitEthernet1
+    - model_name: tunnelDestination
+      tf_name: tunnel_destination
+      description: Tunnel destination IP address
+      example: 198.51.100.10
+    - model_name: application
+      value: '"sig"'
+      value_type: global
+    - model_name: tunnelSet
+      tf_name: tunnel_set
+      description: SIG Tunnel Provider
+      optional: true
+      example: secure-internet-gateway-other
+    - model_name: tunnelDcPreference
+      tf_name: tunnel_dc_preference
+      description: SIG Tunnel Data Center
+      optional: true
+      example: primary-dc
+    - model_name: tcpMssAdjust
+      tf_name: tcp_mss_adjust
+      description: TCP MSS on SYN packets, in bytes
+      example: 1300
+    - model_name: mtu
+      description: Interface MTU, in bytes
+      mandatory: true
+      default_value: 1400
+      example: 1400
+    - model_name: dpdInterval
+      tf_name: dpd_interval
+      description: IKE keepalive interval (seconds)
+      default_value_present: true
+      exclude_test: true
+    - model_name: dpdRetries
+      tf_name: dpd_retries
+      description: IKE keepalive retries
+      default_value_present: true
+      exclude_test: true
+    - model_name: ikeVersion
+      tf_name: ike_version
+      description: IKE Version
+      default_value_present: true
+      exclude_test: true
+    - model_name: preSharedSecret
+      tf_name: pre_shared_secret
+      description: Use preshared key to authenticate IKE peer
+      example: MyPreSharedKey1
+      exclude_test: true
+    - model_name: ikeRekeyInterval
+      tf_name: ike_rekey_interval
+      description: IKE rekey interval in seconds
+      default_value_present: true
+      exclude_test: true
+    - model_name: ikeCiphersuite
+      tf_name: ike_ciphersuite
+      description: IKE identity the IKE preshared secret belongs to
+      default_value_present: true
+      exclude_test: true
+    - model_name: ikeGroup
+      tf_name: ike_group
+      description: IKE Diffie Hellman Groups
+      default_value_present: true
+      exclude_test: true
+    - model_name: preSharedKeyDynamic
+      tf_name: pre_shared_key_dynamic
+      description: Use dynamic preshared key to authenticate IKE peer
+      optional: true
+      example: false
+      exclude_test: true
+    - model_name: ikeLocalId
+      tf_name: ike_local_id
+      description: IKE ID for the local endpoint
+      example: 192.0.2.3
+      exclude_test: true
+    - model_name: ikeRemoteId
+      tf_name: ike_remote_id
+      description: IKE ID for the remote endpoint
+      example: 198.51.100.10
+      exclude_test: true
+    - model_name: ipsecRekeyInterval
+      tf_name: ipsec_rekey_interval
+      description: IPsec rekey interval in seconds
+      default_value_present: true
+      exclude_test: true
+    - model_name: ipsecReplayWindow
+      tf_name: ipsec_replay_window
+      description: Replay window size
+      default_value_present: true
+      exclude_test: true
+    - model_name: ipsecCiphersuite
+      tf_name: ipsec_ciphersuite
+      description: IPsec(ESP) encryption and integrity protocol
+      default_value_present: true
+      exclude_test: true
+    - model_name: perfectForwardSecrecy
+      tf_name: perfect_forward_secrecy
+      description: IPsec perfect forward secrecy settings
+      default_value_present: true
+      exclude_test: true
+    - model_name: tracker
+      description: Name of the tracker to use for this interface
+      default_value_present: true
+      example: tracker1
+    - model_name: trackEnable
+      tf_name: track_enable
+      description: Enable/disable SIG tracking
+      default_value_present: true
+      example: true
+    - model_name: tunnelPublicIp
+      tf_name: tunnel_public_ip
+      description: Public IP required to setup GRE tunnel to Zscaler
+      example: Auto
+      exclude_test: true
+  - model_name: interfacePair
+    tf_name: interface_pairs
+    data_path: [service]
+    attributes:
+    - model_name: activeInterface
+      tf_name: active_interface
+      mandatory: true
+      description: Active Tunnel Interface for SIG
+      example: gre1
+    - model_name: activeInterfaceWeight
+      tf_name: active_interface_weight
+      mandatory: true
+      description: Active Tunnel Interface Weight
+      example: 255
+    - model_name: backupInterface
+      tf_name: backup_interface
+      mandatory: true
+      description: Backup Tunnel Interface for SIG
+      example: None
+    - model_name: backupInterfaceWeight
+      tf_name: backup_interface_weight
+      mandatory: true
+      description: Backup Tunnel Interface Weight
+      example: 1
+  - model_name: authRequired
+    tf_name: auth_required
+    data_path: [service]
+    description: Enforce Authentication
+    optional: true
+    default_value_present: true
+    exclude_test: true
+  - model_name: xffForwardEnabled
+    tf_name: xff_forward_enabled
+    data_path: [service]
+    description: XFF forwarding enabled
+    default_value_present: true
+    exclude_test: true
+  - model_name: ofwEnabled
+    tf_name: ofw_enabled
+    data_path: [service]
+    description: Firewall enabled
+    default_value_present: true
+    exclude_test: true
+  - model_name: ipsControl
+    tf_name: ips_control
+    data_path: [service]
+    description: Enable IPS Control
+    default_value_present: true
+    exclude_test: true
+  - model_name: cautionEnabled
+    tf_name: caution_enabled
+    data_path: [service]
+    description: Enable Caution
+    default_value_present: true
+    exclude_test: true
+  - model_name: primaryDataCenter
+    tf_name: primary_data_center
+    data_path: [service]
+    description: Custom Primary Datacenter
+    default_value_present: true
+    exclude_test: true
+  - model_name: secondaryDataCenter
+    tf_name: secondary_data_center
+    data_path: [service]
+    description: Custom Secondary Datacenter
+    default_value_present: true
+    exclude_test: true
+  - model_name: ip
+    tf_name: surrogate_ip
+    data_path: [service]
+    description: Enable Surrogate IP
+    example: false
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: auth_required
+          value: true
+          type: Bool
+  - model_name: idleTime
+    tf_name: idle_time
+    data_path: [service]
+    description: Idle time to disassociation
+    example: 1
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: surrogate_ip
+          value: true
+          type: Bool
+  - model_name: displayTimeUnit
+    tf_name: display_time_unit
+    data_path: [service]
+    description: Display time unit
+    example: MINUTE
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: surrogate_ip
+          value: true
+          type: Bool
+  - model_name: ipEnforcedForKnownBrowsers
+    tf_name: ip_enforced_for_known_browsers
+    data_path: [service]
+    description: Enforce Surrogate IP for known browsers
+    example: false
+    exclude_test: true
+  - model_name: refreshTime
+    tf_name: refresh_time
+    data_path: [service]
+    description: Refresh time for re-validation of surrogacy in minutes
+    example: 1
+    exclude_test: true
+  - model_name: refreshTimeUnit
+    tf_name: refresh_time_unit
+    data_path: [service]
+    description: Refresh Time unit
+    example: MINUTE
+    exclude_test: true
+  - model_name: enabled
+    tf_name: aup_enabled
+    data_path: [service]
+    description: Enable Acceptable User Policy
+    default_value_present: true
+    exclude_test: true
+  - model_name: blockInternetUntilAccepted
+    tf_name: block_internet_until_accepted
+    data_path: [service]
+    description: For first-time Acceptable User Policy behavior, block Internet access
+    example: false
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: aup_enabled
+          value: true
+          type: Bool
+  - model_name: forceSslInspection
+    tf_name: force_ssl_inspection
+    data_path: [service]
+    description: For first-time Acceptable User Policy behavior, force SSL inspection
+    example: false
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: aup_enabled
+          value: true
+          type: Bool
+  - model_name: timeout
+    tf_name: aup_timeout
+    data_path: [service]
+    description: Custom Acceptable User Policy frequency in days
+    example: 1
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: aup_enabled
+          value: true
+          type: Bool
+  - model_name: locationName
+    tf_name: location_name
+    data_path: [service]
+    description: Zscaler location name
+    type: String
+    write_as_default: true
+    default_value_present: true
+    exclude_test: true
+  - model_name: dataCenterPrimary
+    tf_name: umbrella_primary_data_center
+    data_path: [service]
+    description: Umbrella Primary Datacenter
+    default_value_present: true
+    exclude_test: true
+  - model_name: dataCenterSecondary
+    tf_name: umbrella_secondary_data_center
+    data_path: [service]
+    description: Umbrella Secondary Datacenter
+    default_value_present: true
+    exclude_test: true
+  - model_name: trackerSrcIp
+    tf_name: tracker_source_ip
+    description: Source IP address for Tracker
+    minimum_test_value: '"192.0.2.10"'
+    example: 192.0.2.10
+  - model_name: tracker
+    tf_name: trackers
+    attributes:
+    - model_name: name
+      id: true
+      description: Tracker name
+      example: tracker1
+    - model_name: endpointApiUrl
+      tf_name: endpoint_api_url
+      description: API url of endpoint
+      example: http://gateway.example.com/vpntest
+    - model_name: threshold
+      description: Probe Timeout threshold in milliseconds
+      example: 1000
+    - model_name: interval
+      description: Probe interval in seconds
+      example: 30
+    - model_name: multiplier
+      description: Probe failure multiplier
+      example: 2
+    - model_name: trackerType
+      value: '"SIG"'
+      value_type: global
+
+test_prerequisites: |
+  resource "sdwan_sig_security_feature_profile" "test" {
+    name        = "TF_TEST_SIG_SECURITY"
+    description = "Terraform test"
+  }

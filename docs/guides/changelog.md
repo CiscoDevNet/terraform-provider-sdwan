@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.11.8 (unreleased)
+
+- Add `sdwan_sig_security_sig_feature` resource and data source (SIG feature of the SIG Security feature profile: `sig_provider` Umbrella, Zscaler or Generic, GRE and IPsec tunnels, interface pairs and trackers)
+
 ## 0.11.7
 
 - Add `sdwan_policy_object_security_data_ipv6_prefix_list` resource and data source (SD-WAN Manager 20.18+)
