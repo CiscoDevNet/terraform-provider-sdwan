@@ -39,6 +39,7 @@ attributes:
         tf_name: crypto_algorithm
         example: hmac-sha-256
       - model_name: key-string
+        sensitive: true
         example: abc123
       - model_name: local
         data_path: [send-lifetime, lifetime-group-v1]

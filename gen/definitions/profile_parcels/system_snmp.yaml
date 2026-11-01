@@ -39,6 +39,7 @@ attributes:
     tf_name: communities
     attributes:
       - model_name: name
+        sensitive: true
         encrypted: true
         example: example
       - model_name: userLabel
@@ -68,6 +69,7 @@ attributes:
         tf_name: authentication_protocol
         example: "sha"
       - model_name: authPassword
+        sensitive: true
         tf_name: authentication_password
         encrypted: true
         example: "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="
@@ -75,6 +77,7 @@ attributes:
         tf_name: privacy_protocol
         example: "aes-256-cfb-128"
       - model_name: privPassword
+        sensitive: true
         tf_name: privacy_password
         encrypted: true
         example: "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="

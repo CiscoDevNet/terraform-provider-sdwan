@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -49,6 +50,8 @@ type TransportCellularProfile struct {
 	ProfileUsernameVariable       types.String `tfsdk:"profile_username_variable"`
 	ProfilePassword               types.String `tfsdk:"profile_password"`
 	ProfilePasswordVariable       types.String `tfsdk:"profile_password_variable"`
+	ProfilePasswordWo             types.String `tfsdk:"profile_password_wo"`
+	ProfilePasswordWoVersion      types.Int64  `tfsdk:"profile_password_wo_version"`
 	PacketDataNetworkType         types.String `tfsdk:"packet_data_network_type"`
 	PacketDataNetworkTypeVariable types.String `tfsdk:"packet_data_network_type_variable"`
 	NoOverwrite                   types.Bool   `tfsdk:"no_overwrite"`
@@ -147,6 +150,12 @@ func (data TransportCellularProfile) toBody(ctx context.Context, ver *version.Ve
 		if true && data.RequiresAuthentication.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.password.optionType", "global")
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.password.value", data.ProfilePassword.ValueString())
+		}
+	}
+	if !data.ProfilePasswordWo.IsNull() {
+		if true && data.RequiresAuthentication.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.password.optionType", "global")
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.password.value", data.ProfilePasswordWo.ValueString())
 		}
 	}
 
@@ -282,7 +291,10 @@ func (data *TransportCellularProfile) fromBody(ctx context.Context, res gjson.Re
 			if t.String() == "variable" {
 				data.ProfilePasswordVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.ProfilePassword = types.StringValue(va.String())
+				// Masked secrets returned by the Manager must never be written into state.
+				if !helpers.IsEncryptedValue(va.String()) {
+					data.ProfilePassword = types.StringValue(va.String())
+				}
 			}
 			data.RequiresAuthentication = types.BoolValue(true)
 		}

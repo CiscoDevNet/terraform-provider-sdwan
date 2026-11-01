@@ -55,6 +55,7 @@ attributes:
     example: md5
     minimum_test_value: '"md5"'
   - model_name: authKey
+    sensitive: true
     tf_name: hmac_authentication_key
     data_path: [authentication]
     conditional_attribute:
@@ -77,6 +78,7 @@ attributes:
       id: true
       example: 2
     - model_name: keystring
+      sensitive: true
       tf_name: key_string
       encrypted: true
       example: password123

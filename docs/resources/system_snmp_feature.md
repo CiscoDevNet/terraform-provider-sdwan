@@ -108,7 +108,7 @@ Optional:
 - `authorization` (String) Configure access permissions
   - Choices: `read-only`, `read-write`
 - `authorization_variable` (String) Variable name
-- `name` (String) Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `name` (String, Sensitive) Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `name_variable` (String) Variable name
 - `user_label` (String) Set user label of the SNMP community
 - `view` (String) Set name of the SNMP view
@@ -152,7 +152,7 @@ Optional:
 
 Optional:
 
-- `authentication_password` (String) Specify authentication protocol password
+- `authentication_password` (String, Sensitive) Specify authentication protocol password
 - `authentication_password_variable` (String) Variable name
 - `authentication_protocol` (String) Configure authentication protocol
   - Choices: `sha`, `sha256`
@@ -160,7 +160,7 @@ Optional:
 - `group` (String) Name of the SNMP group
 - `group_variable` (String) Variable name
 - `name` (String) Name of the SNMP user
-- `privacy_password` (String) Specify privacy protocol password
+- `privacy_password` (String, Sensitive) Specify privacy protocol password
 - `privacy_password_variable` (String) Variable name
 - `privacy_protocol` (String) Configure privacy protocol
   - Choices: `aes-cfb-128`, `aes-256-cfb-128`

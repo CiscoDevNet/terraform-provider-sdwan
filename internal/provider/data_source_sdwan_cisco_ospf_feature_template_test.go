@@ -64,7 +64,6 @@ func TestAccDataSourceSdwanCiscoOSPFFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospf_feature_template.test", "areas.0.interfaces.0.passive_interface", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospf_feature_template.test", "areas.0.interfaces.0.authentication_type", "message-digest"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospf_feature_template.test", "areas.0.interfaces.0.authentication_message_digest_key_id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospf_feature_template.test", "areas.0.interfaces.0.authentication_message_digest_key", "cisco123"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospf_feature_template.test", "areas.0.ranges.0.address", "1.1.1.0/24"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospf_feature_template.test", "areas.0.ranges.0.cost", "100"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospf_feature_template.test", "areas.0.ranges.0.no_advertise", "true"))
@@ -131,7 +130,6 @@ func testAccDataSourceSdwanCiscoOSPFFeatureTemplateConfig() string {
 	config += `		passive_interface = true` + "\n"
 	config += `		authentication_type = "message-digest"` + "\n"
 	config += `		authentication_message_digest_key_id = 1` + "\n"
-	config += `		authentication_message_digest_key = "cisco123"` + "\n"
 	config += `	}]` + "\n"
 	config += `	  ranges = [{` + "\n"
 	config += `		address = "1.1.1.0/24"` + "\n"

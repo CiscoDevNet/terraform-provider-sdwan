@@ -166,6 +166,7 @@ attributes:
       - model_name: remoteAs
         example: 1 
       - model_name: password
+        sensitive: true
         tf_name: peer_authentication_password
         encrypted: true
         example: Password123!

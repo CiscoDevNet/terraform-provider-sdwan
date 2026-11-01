@@ -300,6 +300,7 @@ func (d *ServiceRoutingBGPProfileParcelDataSource) Schema(ctx context.Context, r
 						},
 						"password": schema.StringAttribute{
 							MarkdownDescription: "Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"password_variable": schema.StringAttribute{
@@ -516,6 +517,7 @@ func (d *ServiceRoutingBGPProfileParcelDataSource) Schema(ctx context.Context, r
 						},
 						"password": schema.StringAttribute{
 							MarkdownDescription: "Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"password_variable": schema.StringAttribute{

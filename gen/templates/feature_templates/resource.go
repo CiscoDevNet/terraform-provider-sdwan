@@ -114,6 +114,9 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 				{{- if isListSet .}}
 				ElementType:         types.{{.ElementType}}Type,
 				{{- end}}
+				{{- if .Sensitive}}
+				Sensitive:           true,
+				{{- end}}
 				Optional:            true,
 				{{- if and (len .EnumValues) (not .IgnoreEnum)}}
 				Validators: []validator.String{
@@ -158,6 +161,9 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 								.String,
 							{{- if isListSet .}}
 							ElementType:         types.{{.ElementType}}Type,
+							{{- end}}
+							{{- if .Sensitive}}
+							Sensitive:           true,
 							{{- end}}
 							Optional:            true,
 							{{- if and (len .EnumValues) (not .IgnoreEnum)}}
@@ -204,6 +210,9 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 										{{- if isListSet .}}
 										ElementType:         types.{{.ElementType}}Type,
 										{{- end}}
+										{{- if .Sensitive}}
+										Sensitive:           true,
+										{{- end}}
 										Optional:            true,
 										{{- if and (len .EnumValues) (not .IgnoreEnum)}}
 										Validators: []validator.String{
@@ -248,6 +257,9 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 														.String,
 													{{- if isListSet .}}
 													ElementType:         types.{{.ElementType}}Type,
+													{{- end}}
+													{{- if .Sensitive}}
+													Sensitive:           true,
 													{{- end}}
 													Optional:            true,
 													{{- if and (len .EnumValues) (not .IgnoreEnum)}}

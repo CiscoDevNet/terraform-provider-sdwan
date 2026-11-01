@@ -18,6 +18,8 @@ attributes:
   - model_name: deviceId
     example: trustsecDevice
   - model_name: devicePassword
+    sensitive: true
+    write_only_tf: true
     encrypted: true
     example: Cisco123
   - model_name: deviceSgt
@@ -34,6 +36,8 @@ attributes:
   - model_name: speakerHoldTime
     example: 120
   - model_name: sxpDefaultPassword
+    sensitive: true
+    write_only_tf: true
     encrypted: true
     example: Cisco123
     exclude_test: true
@@ -63,6 +67,7 @@ attributes:
       mandatory: true
       example: 10.0.0.1
     - model_name: connectionPresharedKey
+      sensitive: true
       tf_name: preshared_key
       default_value_present: true
       example: none

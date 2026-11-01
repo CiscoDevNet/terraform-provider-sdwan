@@ -434,6 +434,7 @@ func (r *TransportRoutingOSPFv3IPv6ProfileParcelResource) Schema(ctx context.Con
 									},
 									"authentication_key": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set OSPF interface authentication IPSEC key").String,
+										Sensitive:           true,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.RegexMatches(regexp.MustCompile(`^[0-9a-fA-F]{40}$`), ""),

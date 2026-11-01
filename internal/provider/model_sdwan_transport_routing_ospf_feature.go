@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -1160,7 +1161,10 @@ func (data *TransportRoutingOSPF) fromBody(ctx context.Context, res gjson.Result
 						if t.String() == "variable" {
 							cItem.MessageDigestKeyVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.MessageDigestKey = types.StringValue(va.String())
+							// Masked secrets returned by the Manager must never be written into state.
+							if !helpers.IsEncryptedValue(va.String()) {
+								cItem.MessageDigestKey = types.StringValue(va.String())
+							}
 						}
 					}
 					item.Interfaces = append(item.Interfaces, cItem)

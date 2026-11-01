@@ -472,7 +472,10 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result, fullRead 
 				if t.String() == "variable" {
 					item.Md5ValueVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.Md5Value = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.Md5Value = types.StringValue(va.String())
+					}
 				}
 			}
 			item.HmacSha2Value = types.StringNull()
@@ -482,7 +485,10 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result, fullRead 
 				if t.String() == "variable" {
 					item.HmacSha2ValueVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.HmacSha2Value = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.HmacSha2Value = types.StringValue(va.String())
+					}
 				}
 			}
 			item.CmacAes128Value = types.StringNull()
@@ -492,7 +498,10 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result, fullRead 
 				if t.String() == "variable" {
 					item.CmacAes128ValueVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.CmacAes128Value = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.CmacAes128Value = types.StringValue(va.String())
+					}
 				}
 			}
 			data.AuthenticationKeys = append(data.AuthenticationKeys, item)

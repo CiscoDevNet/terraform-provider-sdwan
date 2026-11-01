@@ -20,7 +20,6 @@ resource "sdwan_other_trustsec_feature" "example" {
   description               = "My Example"
   feature_profile_id        = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   device_id                 = "trustsecDevice"
-  device_password           = "Cisco123"
   device_sgt                = 100
   enable_enforcement        = true
   enable_sxp                = true
@@ -57,11 +56,18 @@ resource "sdwan_other_trustsec_feature" "example" {
 
 ### Optional
 
+> **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
+
 - `description` (String) The description of the Feature
 - `device_id` (String) Specify the TrustSec Network Access Device ID, should be same as mentioned in the Identity Services Engine (upto 32 char)
 - `device_id_variable` (String) Variable name
-- `device_password` (String) Set the password for the device
+- `device_password` (String, Sensitive) Set the password for the device
+  - Only one of `device_password`, `device_password_variable` and `device_password_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `device_password_wo` together with `device_password_wo_version`, which keeps it out of state.
 - `device_password_variable` (String) Variable name
+- `device_password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set the password for the device
+  - Only one of `device_password`, `device_password_variable` and `device_password_wo` can be set.
+- `device_password_wo_version` (Number) Rotation trigger for `device_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `device_sgt` (Number) Configure Local device security group <2..65519>
   - Range: `2`-`65519`
 - `device_sgt_variable` (String) Variable name
@@ -83,8 +89,13 @@ resource "sdwan_other_trustsec_feature" "example" {
   - Default value: `120`
 - `speaker_hold_time_variable` (String) Variable name
 - `sxp_connections` (Attributes List) Configure SXP Connections (see [below for nested schema](#nestedatt--sxp_connections))
-- `sxp_default_password` (String) Configure SXP default password
+- `sxp_default_password` (String, Sensitive) Configure SXP default password
+  - Only one of `sxp_default_password`, `sxp_default_password_variable` and `sxp_default_password_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `sxp_default_password_wo` together with `sxp_default_password_wo_version`, which keeps it out of state.
 - `sxp_default_password_variable` (String) Variable name
+- `sxp_default_password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Configure SXP default password
+  - Only one of `sxp_default_password`, `sxp_default_password_variable` and `sxp_default_password_wo` can be set.
+- `sxp_default_password_wo_version` (Number) Rotation trigger for `sxp_default_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `sxp_key_chain` (String) Configure SXP key-chain
 - `sxp_key_chain_variable` (String) Variable name
 - `sxp_log_binding_changes` (Boolean) Enables logging for IP-to-SGT binding changes
@@ -127,7 +138,7 @@ Optional:
   - Default value: `speaker`
 - `peer_ip` (String) Configure SXP Peer IP address (IPv4)
 - `peer_ip_variable` (String) Variable name
-- `preshared_key` (String) Define Preshared Key type
+- `preshared_key` (String, Sensitive) Define Preshared Key type
   - Choices: `password`, `none`, `key chain`
   - Default value: `none`
 - `source_ip` (String) Configure SXP Source IP address (IPv4)

@@ -42,7 +42,7 @@ data "sdwan_service_routing_eigrp_feature" "example" {
 - `filter_variable` (String) Variable name
 - `hello_interval` (Number) Set EIGRP hello interval
 - `hello_interval_variable` (String) Variable name
-- `hmac_authentication_key` (String) Set hmac-sha-256 authentication key
+- `hmac_authentication_key` (String, Sensitive) Set hmac-sha-256 authentication key
 - `hmac_authentication_key_variable` (String) Variable name
 - `hold_time` (Number) Set EIGRP hold time
 - `hold_time_variable` (String) Variable name
@@ -83,7 +83,7 @@ Read-Only:
 
 - `key_id` (Number) Set MD5 key ID
 - `key_id_variable` (String) Variable name
-- `key_string` (String) Set MD5 key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `key_string` (String, Sensitive) Set MD5 key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `key_string_variable` (String) Variable name
 
 

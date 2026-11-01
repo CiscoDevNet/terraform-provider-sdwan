@@ -192,6 +192,7 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 			},
 			"hmac_authentication_key": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set hmac-sha-256 authentication key, Attribute conditional on `authentication_type` equal to `hmac-sha-256`").String,
+				Sensitive:           true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 31),
@@ -220,6 +221,7 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 						},
 						"key_string": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 31),
@@ -316,6 +318,35 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Configure(_ context.Context, 
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
+}
+
+var _ resource.ResourceWithValidateConfig = &ServiceRoutingEIGRPProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *ServiceRoutingEIGRPProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	var vHmacAuthenticationKey types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("hmac_authentication_key"), &vHmacAuthenticationKey)...)
+	var vHmacAuthenticationKeyVariable types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("hmac_authentication_key_variable"), &vHmacAuthenticationKeyVariable)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if !vHmacAuthenticationKey.IsUnknown() && !vHmacAuthenticationKeyVariable.IsUnknown() && !vHmacAuthenticationKey.IsNull() && !vHmacAuthenticationKeyVariable.IsNull() {
+		resp.Diagnostics.AddWarning(
+			"Conflicting Attribute Combination",
+			"Both `hmac_authentication_key` and `hmac_authentication_key_variable` are set. `hmac_authentication_key_variable` takes precedence, so the value of `hmac_authentication_key` is not sent to the device - but it is still stored in Terraform state. Set only one of them.",
+		)
+	}
 }
 
 // End of section. //template:end model

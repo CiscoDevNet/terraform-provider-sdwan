@@ -49,7 +49,6 @@ func TestAccSdwanTransportWANVPNInterfaceGREProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_feature.test", "ike_rekey_interval", "14400"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_feature.test", "ike_ciphersuite", "aes256-cbc-sha1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_feature.test", "ike_group", "16"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_feature.test", "pre_shared_secret", "123"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_feature.test", "ike_local_id", "xxx"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_feature.test", "ike_remote_id", "xxx"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_feature.test", "ipsec_rekey_interval", "3600"))
@@ -185,7 +184,6 @@ func testAccSdwanTransportWANVPNInterfaceGREProfileParcelConfig_all() string {
 	config += `	ike_rekey_interval = 14400` + "\n"
 	config += `	ike_ciphersuite = "aes256-cbc-sha1"` + "\n"
 	config += `	ike_group = "16"` + "\n"
-	config += `	pre_shared_secret = "123"` + "\n"
 	config += `	ike_local_id = "xxx"` + "\n"
 	config += `	ike_remote_id = "xxx"` + "\n"
 	config += `	ipsec_rekey_interval = 3600` + "\n"

@@ -603,7 +603,10 @@ func (data *SystemSecurity) fromBody(ctx context.Context, res gjson.Result, full
 				if t.String() == "variable" {
 					item.KeyStringVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.KeyString = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.KeyString = types.StringValue(va.String())
+					}
 				}
 			}
 			item.SendLifeTimeLocal = types.BoolNull()

@@ -73,6 +73,22 @@ func (d *AttributeDescription) AddIntegerAtLeastDescription(min int64) *Attribut
 	return d
 }
 
+// AddMutualExclusivityDescription documents that an attribute cannot be combined
+// with its write-only twin. Rendered as a documentation note only: a schema
+// validator or DeprecationMessage would make Terraform print the offending
+// configuration line - the secret itself - into plan output and CI logs.
+func (d *AttributeDescription) AddMutualExclusivityDescription(note string) *AttributeDescription {
+	d.String = fmt.Sprintf("%s\n  - %s", d.String, note)
+	return d
+}
+
+// AddCoexistenceNote documents that a state-storing attribute has a preferred
+// write-only spelling.
+func (d *AttributeDescription) AddCoexistenceNote(note string) *AttributeDescription {
+	d.String = fmt.Sprintf("%s\n  - %s", d.String, note)
+	return d
+}
+
 func (d *AttributeDescription) AddFloatRangeDescription(min, max float64) *AttributeDescription {
 	d.String = fmt.Sprintf("%s\n  - Range: `%v`-`%v`", d.String, min, max)
 	return d

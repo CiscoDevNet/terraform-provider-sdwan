@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -498,7 +499,10 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result, 
 				if t.String() == "variable" {
 					item.PassphraseVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.Passphrase = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.Passphrase = types.StringValue(va.String())
+					}
 				}
 			}
 			item.QosProfile = types.StringNull()
@@ -576,7 +580,10 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result, 
 			if t.String() == "variable" {
 				data.PasswordVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Password = types.StringValue(va.String())
+				// Masked secrets returned by the Manager must never be written into state.
+				if !helpers.IsEncryptedValue(va.String()) {
+					data.Password = types.StringValue(va.String())
+				}
 			}
 		}
 	}

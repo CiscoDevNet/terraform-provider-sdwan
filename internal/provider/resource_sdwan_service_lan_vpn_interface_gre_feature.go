@@ -394,6 +394,7 @@ func (r *ServiceLANVPNInterfaceGREProfileParcelResource) Schema(ctx context.Cont
 			},
 			"pre_shared_secret": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Use preshared key to authenticate IKE peer").String,
+				Sensitive:           true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 127),
@@ -491,6 +492,35 @@ func (r *ServiceLANVPNInterfaceGREProfileParcelResource) Configure(_ context.Con
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
+}
+
+var _ resource.ResourceWithValidateConfig = &ServiceLANVPNInterfaceGREProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *ServiceLANVPNInterfaceGREProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	var vPreSharedSecret types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("pre_shared_secret"), &vPreSharedSecret)...)
+	var vPreSharedSecretVariable types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("pre_shared_secret_variable"), &vPreSharedSecretVariable)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if !vPreSharedSecret.IsUnknown() && !vPreSharedSecretVariable.IsUnknown() && !vPreSharedSecret.IsNull() && !vPreSharedSecretVariable.IsNull() {
+		resp.Diagnostics.AddWarning(
+			"Conflicting Attribute Combination",
+			"Both `pre_shared_secret` and `pre_shared_secret_variable` are set. `pre_shared_secret_variable` takes precedence, so the value of `pre_shared_secret` is not sent to the device - but it is still stored in Terraform state. Set only one of them.",
+		)
+	}
 }
 
 // End of section. //template:end model

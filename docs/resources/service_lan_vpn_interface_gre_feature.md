@@ -138,7 +138,7 @@ resource "sdwan_service_lan_vpn_interface_gre_feature" "example" {
   - Choices: `group-1`, `group-2`, `group-5`, `group-14`, `group-15`, `group-16`, `group-19`, `group-20`, `group-21`, `group-24`, `none`
   - Default value: `group-16`
 - `perfect_forward_secrecy_variable` (String) Variable name
-- `pre_shared_secret` (String) Use preshared key to authenticate IKE peer
+- `pre_shared_secret` (String, Sensitive) Use preshared key to authenticate IKE peer
 - `pre_shared_secret_variable` (String) Variable name
 - `shutdown` (Boolean) Administrative state
   - Default value: `false`

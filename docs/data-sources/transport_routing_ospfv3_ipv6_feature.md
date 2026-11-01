@@ -91,7 +91,7 @@ Read-Only:
 
 Read-Only:
 
-- `authentication_key` (String) Set OSPF interface authentication IPSEC key
+- `authentication_key` (String, Sensitive) Set OSPF interface authentication IPSEC key
 - `authentication_key_variable` (String) Variable name
 - `authentication_spi` (Number) Set OSPF interface authentication IPSec SPI, range 256..4294967295
 - `authentication_spi_variable` (String) Variable name

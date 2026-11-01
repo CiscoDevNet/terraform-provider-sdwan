@@ -83,7 +83,7 @@ data "sdwan_service_lan_vpn_interface_gre_feature" "example" {
 - `ipv6_tcp_mss_variable` (String) Variable name
 - `perfect_forward_secrecy` (String) IPsec perfect forward secrecy settings
 - `perfect_forward_secrecy_variable` (String) Variable name
-- `pre_shared_secret` (String) Use preshared key to authenticate IKE peer
+- `pre_shared_secret` (String, Sensitive) Use preshared key to authenticate IKE peer
 - `pre_shared_secret_variable` (String) Variable name
 - `shutdown` (Boolean) Administrative state
 - `shutdown_variable` (String) Variable name

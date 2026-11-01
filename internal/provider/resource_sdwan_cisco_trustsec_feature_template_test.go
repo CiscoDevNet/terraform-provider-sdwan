@@ -31,11 +31,9 @@ func TestAccSdwanCiscoTrustSecFeatureTemplate(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "device_sgt", "100"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "credentials_id", "user1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "credentials_password", "MyPassword"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "enable_enforcement", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "enable_sxp", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_source_ip", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_default_password", "MyPassword"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_key_chain", "keychain1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_log_binding_changes", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_reconciliation_period", "120"))
@@ -47,7 +45,6 @@ func TestAccSdwanCiscoTrustSecFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_node_id", "VirtualPortGroup"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.peer_ip", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.source_ip", "2.3.4.5"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.preshared_key", "default"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.mode", "local"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.mode_type", "listener"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.minimum_hold_time", "100"))
@@ -93,11 +90,9 @@ func testAccSdwanCiscoTrustSecFeatureTemplateConfig_all() string {
 	config += ` device_types = ["vedge-C8000V"]` + "\n"
 	config += `	device_sgt = 100` + "\n"
 	config += `	credentials_id = "user1"` + "\n"
-	config += `	credentials_password = "MyPassword"` + "\n"
 	config += `	enable_enforcement = true` + "\n"
 	config += `	enable_sxp = true` + "\n"
 	config += `	sxp_source_ip = "1.2.3.4"` + "\n"
-	config += `	sxp_default_password = "MyPassword"` + "\n"
 	config += `	sxp_key_chain = "keychain1"` + "\n"
 	config += `	sxp_log_binding_changes = false` + "\n"
 	config += `	sxp_reconciliation_period = 120` + "\n"
@@ -110,7 +105,6 @@ func testAccSdwanCiscoTrustSecFeatureTemplateConfig_all() string {
 	config += `	sxp_connections = [{` + "\n"
 	config += `	  peer_ip = "1.2.3.4"` + "\n"
 	config += `	  source_ip = "2.3.4.5"` + "\n"
-	config += `	  preshared_key = "default"` + "\n"
 	config += `	  mode = "local"` + "\n"
 	config += `	  mode_type = "listener"` + "\n"
 	config += `	  minimum_hold_time = 100` + "\n"

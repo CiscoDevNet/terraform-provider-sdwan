@@ -194,7 +194,7 @@ Optional:
   - Range: `1`-`65534`
   - Default value: `1812`
 - `auth_port_variable` (String) Variable name
-- `key` (String) Set the Radius server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `key` (String, Sensitive) Set the Radius server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `key_enum` (String) Type of encyption. To be used for type 6
   - Choices: `6`, `7`
 - `key_type` (String) key type
@@ -206,7 +206,7 @@ Optional:
   - Range: `1`-`100`
   - Default value: `3`
 - `retransmit_variable` (String) Variable name
-- `secret_key` (String) Set the Radius server shared type 7 encrypted key
+- `secret_key` (String, Sensitive) Set the Radius server shared type 7 encrypted key
 - `secret_key_variable` (String) Variable name
 - `timeout` (Number) Configure how long to wait for replies from the Radius server
   - Range: `1`-`1000`
@@ -235,7 +235,7 @@ Optional:
 Optional:
 
 - `address` (String) Set IP address of TACACS server
-- `key` (String) Set the TACACS server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `key` (String, Sensitive) Set the TACACS server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `key_enum` (String) Type of encyption. To be used for type 6
   - Choices: `6`, `7`
 - `key_variable` (String) Variable name
@@ -243,7 +243,7 @@ Optional:
   - Range: `1`-`65535`
   - Default value: `49`
 - `port_variable` (String) Variable name
-- `secret_key` (String) Set the TACACS server shared type 7 encrypted key
+- `secret_key` (String, Sensitive) Set the TACACS server shared type 7 encrypted key
 - `secret_key_variable` (String) Variable name
 - `timeout` (Number) Configure how long to wait for replies from the TACACS server
   - Range: `1`-`1000`
@@ -259,7 +259,7 @@ Optional:
 
 - `name` (String) Set the username
 - `name_variable` (String) Variable name
-- `password` (String) Set the user password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `password` (String, Sensitive) Set the user password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `password_variable` (String) Variable name
 - `privilege` (String) Set Privilege Level for this user
   - Choices: `1`, `15`

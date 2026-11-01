@@ -124,6 +124,9 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 				{{- else if eq .Type "Versions"}}
 				ElementType:         types.StringType,
 				{{- end}}
+				{{- if .Sensitive}}
+				Sensitive:           true,
+				{{- end}}
 				{{- if .Mandatory}}
 				Required:            true,
 				{{- else}}
@@ -211,6 +214,9 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 							ElementType:         types.{{.ElementType}}Type,
 							{{- else if eq .Type "Versions"}}
 							ElementType:         types.StringType,
+							{{- end}}
+							{{- if .Sensitive}}
+							Sensitive:           true,
 							{{- end}}
 							{{- if .Mandatory}}
 							Required:            true,
@@ -300,6 +306,9 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 										{{- else if eq .Type "Versions"}}
 										ElementType:         types.StringType,
 										{{- end}}
+										{{- if .Sensitive}}
+										Sensitive:           true,
+										{{- end}}
 										{{- if .Mandatory}}
 										Required:            true,
 										{{- else}}
@@ -387,6 +396,9 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 													ElementType:         types.{{.ElementType}}Type,
 													{{- else if eq .Type "Versions"}}
 													ElementType:         types.StringType,
+													{{- end}}
+													{{- if .Sensitive}}
+													Sensitive:           true,
 													{{- end}}
 													{{- if .Mandatory}}
 													Required:            true,

@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -1607,7 +1608,10 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result, fu
 						if t.String() == "variable" {
 							cItem.PeerAuthenticationPasswordVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.PeerAuthenticationPassword = types.StringValue(va.String())
+							// Masked secrets returned by the Manager must never be written into state.
+							if !helpers.IsEncryptedValue(va.String()) {
+								cItem.PeerAuthenticationPassword = types.StringValue(va.String())
+							}
 						}
 					}
 					cItem.KeepaliveInterval = types.Int64Null()

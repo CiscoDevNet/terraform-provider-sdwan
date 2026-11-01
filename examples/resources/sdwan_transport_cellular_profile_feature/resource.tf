@@ -7,7 +7,6 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
   requires_authentication  = true
   authentication_type      = "pap"
   profile_username         = "example"
-  profile_password         = "example123!"
   packet_data_network_type = "ipv4"
   no_overwrite             = false
   slice_type               = 2

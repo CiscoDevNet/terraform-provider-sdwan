@@ -124,10 +124,12 @@ func (d *CEdgeAAAFeatureTemplateDataSource) Schema(ctx context.Context, req data
 						},
 						"password": schema.StringAttribute{
 							MarkdownDescription: "Set the user password",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"secret": schema.StringAttribute{
 							MarkdownDescription: "Set the user scrypt password/hash",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"privilege_level": schema.StringAttribute{
@@ -233,10 +235,12 @@ func (d *CEdgeAAAFeatureTemplateDataSource) Schema(ctx context.Context, req data
 									},
 									"key": schema.StringAttribute{
 										MarkdownDescription: "Set the Radius server shared key",
+										Sensitive:           true,
 										Computed:            true,
 									},
 									"secret_key": schema.StringAttribute{
 										MarkdownDescription: "Set the Radius server shared type 7 encrypted key",
+										Sensitive:           true,
 										Computed:            true,
 									},
 									"secret_key_variable": schema.StringAttribute{
@@ -297,6 +301,7 @@ func (d *CEdgeAAAFeatureTemplateDataSource) Schema(ctx context.Context, req data
 									},
 									"server_key": schema.StringAttribute{
 										MarkdownDescription: "Specify a RADIUS client server-key",
+										Sensitive:           true,
 										Computed:            true,
 									},
 									"server_key_variable": schema.StringAttribute{
@@ -319,6 +324,7 @@ func (d *CEdgeAAAFeatureTemplateDataSource) Schema(ctx context.Context, req data
 			},
 			"radius_dynamic_author_server_key": schema.StringAttribute{
 				MarkdownDescription: "Specify a radius dynamic author server-key",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"radius_dynamic_author_server_key_variable": schema.StringAttribute{
@@ -409,10 +415,12 @@ func (d *CEdgeAAAFeatureTemplateDataSource) Schema(ctx context.Context, req data
 									},
 									"key": schema.StringAttribute{
 										MarkdownDescription: "Set the TACACS server shared key",
+										Sensitive:           true,
 										Computed:            true,
 									},
 									"secret_key": schema.StringAttribute{
 										MarkdownDescription: "Set the TACACS server shared type 7 encrypted key",
+										Sensitive:           true,
 										Computed:            true,
 									},
 									"secret_key_variable": schema.StringAttribute{

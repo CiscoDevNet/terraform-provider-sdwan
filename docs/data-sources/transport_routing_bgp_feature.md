@@ -128,7 +128,7 @@ Read-Only:
 - `local_as_variable` (String) Variable name
 - `next_hop_self` (Boolean) Set router to be next hop for routes advertised to neighbor
 - `next_hop_self_variable` (String) Variable name
-- `password` (String) Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `password` (String, Sensitive) Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `password_variable` (String) Variable name
 - `remote_as` (String) Set remote autonomous system number
 - `remote_as_variable` (String) Variable name
@@ -230,7 +230,7 @@ Read-Only:
 - `local_as_variable` (String) Variable name
 - `next_hop_self` (Boolean) Set router to be next hop for routes advertised to neighbor
 - `next_hop_self_variable` (String) Variable name
-- `password` (String) Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `password` (String, Sensitive) Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `password_variable` (String) Variable name
 - `remote_as` (String) Set remote autonomous system number
 - `remote_as_variable` (String) Variable name

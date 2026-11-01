@@ -95,10 +95,20 @@ func (d *OtherTrustSecProfileParcelDataSource) Schema(ctx context.Context, req d
 			},
 			"device_password": schema.StringAttribute{
 				MarkdownDescription: "Set the password for the device",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"device_password_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"device_password_wo": schema.StringAttribute{
+				MarkdownDescription: "Set the password for the device",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"device_password_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `device_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 				Computed:            true,
 			},
 			"device_sgt": schema.Int64Attribute{
@@ -147,10 +157,20 @@ func (d *OtherTrustSecProfileParcelDataSource) Schema(ctx context.Context, req d
 			},
 			"sxp_default_password": schema.StringAttribute{
 				MarkdownDescription: "Configure SXP default password",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"sxp_default_password_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"sxp_default_password_wo": schema.StringAttribute{
+				MarkdownDescription: "Configure SXP default password",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"sxp_default_password_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `sxp_default_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 				Computed:            true,
 			},
 			"sxp_key_chain": schema.StringAttribute{
@@ -216,6 +236,7 @@ func (d *OtherTrustSecProfileParcelDataSource) Schema(ctx context.Context, req d
 						},
 						"preshared_key": schema.StringAttribute{
 							MarkdownDescription: "Define Preshared Key type",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"mode": schema.StringAttribute{

@@ -66,6 +66,8 @@ attributes:
           value: true
           type: Bool
   - model_name: password
+    sensitive: true
+    write_only_tf: true
     tf_name: profile_password
     data_path: [profileConfig, profileInfo, authentication, needAuthentication]
     type: String

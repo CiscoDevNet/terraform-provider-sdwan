@@ -127,6 +127,7 @@ func (d *SystemRemoteAccessProfileParcelDataSource) Schema(ctx context.Context, 
 			},
 			"psk_authentication_pre_shared_key": schema.StringAttribute{
 				MarkdownDescription: "PSK Pre Shared Key",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"psk_authentication_pre_shared_key_variable": schema.StringAttribute{
@@ -151,6 +152,7 @@ func (d *SystemRemoteAccessProfileParcelDataSource) Schema(ctx context.Context, 
 			},
 			"aaa_specify_name_policy_password": schema.StringAttribute{
 				MarkdownDescription: "",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"aaa_specify_name_policy_password_variable": schema.StringAttribute{

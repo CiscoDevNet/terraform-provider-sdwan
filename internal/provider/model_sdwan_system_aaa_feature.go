@@ -817,7 +817,10 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 				if t.String() == "variable" {
 					item.PasswordVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.Password = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.Password = types.StringValue(va.String())
+					}
 				}
 			}
 			item.Privilege = types.StringNull()
@@ -1020,7 +1023,10 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 						if t.String() == "variable" {
 							cItem.KeyVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.Key = types.StringValue(va.String())
+							// Masked secrets returned by the Manager must never be written into state.
+							if !helpers.IsEncryptedValue(va.String()) {
+								cItem.Key = types.StringValue(va.String())
+							}
 						}
 					}
 					cItem.SecretKey = types.StringNull()
@@ -1209,7 +1215,10 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 						if t.String() == "variable" {
 							cItem.KeyVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.Key = types.StringValue(va.String())
+							// Masked secrets returned by the Manager must never be written into state.
+							if !helpers.IsEncryptedValue(va.String()) {
+								cItem.Key = types.StringValue(va.String())
+							}
 						}
 					}
 					cItem.SecretKey = types.StringNull()

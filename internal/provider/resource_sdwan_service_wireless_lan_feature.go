@@ -188,6 +188,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 						},
 						"radius_server_secret": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server shared secret, Attribute conditional on `security_type` equal to `enterprise`").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(8, 32),
@@ -199,6 +200,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 						},
 						"passphrase": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set passphrase, Attribute conditional on `security_type` equal to `personal`").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(8, 63),
@@ -247,6 +249,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 			},
 			"password": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"password_variable": schema.StringAttribute{
@@ -301,6 +304,35 @@ func (r *ServiceWirelessLANProfileParcelResource) Configure(_ context.Context, r
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
+}
+
+var _ resource.ResourceWithValidateConfig = &ServiceWirelessLANProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *ServiceWirelessLANProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	var vPassword types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("password"), &vPassword)...)
+	var vPasswordVariable types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("password_variable"), &vPasswordVariable)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if !vPassword.IsUnknown() && !vPasswordVariable.IsUnknown() && !vPassword.IsNull() && !vPasswordVariable.IsNull() {
+		resp.Diagnostics.AddWarning(
+			"Conflicting Attribute Combination",
+			"Both `password` and `password_variable` are set. `password_variable` takes precedence, so the value of `password` is not sent to the device - but it is still stored in Terraform state. Set only one of them.",
+		)
+	}
 }
 
 // End of section. //template:end model

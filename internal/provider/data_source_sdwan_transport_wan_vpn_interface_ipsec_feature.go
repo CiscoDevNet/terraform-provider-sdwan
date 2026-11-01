@@ -255,6 +255,7 @@ func (d *TransportWANVPNInterfaceIPSECProfileParcelDataSource) Schema(ctx contex
 			},
 			"ike_preshared_key": schema.StringAttribute{
 				MarkdownDescription: "Use preshared key to authenticate IKE peer",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"ike_preshared_key_variable": schema.StringAttribute{

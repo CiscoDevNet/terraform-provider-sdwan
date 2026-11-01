@@ -190,6 +190,7 @@ func (r *CiscoWirelessLANFeatureTemplateResource) Schema(ctx context.Context, re
 						},
 						"radius_server_secret": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server shared secret").String,
+							Sensitive:           true,
 							Optional:            true,
 						},
 						"radius_server_secret_variable": schema.StringAttribute{
@@ -198,6 +199,7 @@ func (r *CiscoWirelessLANFeatureTemplateResource) Schema(ctx context.Context, re
 						},
 						"passphrase": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set passphrase").String,
+							Sensitive:           true,
 							Optional:            true,
 						},
 						"passphrase_variable": schema.StringAttribute{
@@ -246,6 +248,7 @@ func (r *CiscoWirelessLANFeatureTemplateResource) Schema(ctx context.Context, re
 			},
 			"password": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set management password").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"password_variable": schema.StringAttribute{

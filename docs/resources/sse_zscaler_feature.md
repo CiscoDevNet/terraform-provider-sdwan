@@ -237,7 +237,7 @@ Optional:
   - Default value: `none`
 - `perfect_forward_secrecy_variable` (String) Variable name
 - `pre_shared_key_dynamic` (Boolean) Use preshared key to authenticate IKE peer
-- `pre_shared_secret` (String) Use preshared key to authenticate IKE peer
+- `pre_shared_secret` (String, Sensitive) Use preshared key to authenticate IKE peer
 - `pre_shared_secret_variable` (String) Variable name
 - `shutdown` (Boolean) Administrative state
   - Default value: `false`

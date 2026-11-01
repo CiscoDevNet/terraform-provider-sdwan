@@ -54,7 +54,7 @@ data "sdwan_transport_wan_vpn_interface_ipsec_feature" "example" {
 - `ike_id_remote_end_point_variable` (String) Variable name
 - `ike_integrity_protocol` (String) IKE integrity protocol
 - `ike_integrity_protocol_variable` (String) Variable name
-- `ike_preshared_key` (String) Use preshared key to authenticate IKE peer
+- `ike_preshared_key` (String, Sensitive) Use preshared key to authenticate IKE peer
 - `ike_preshared_key_variable` (String) Variable name
 - `ike_rekey_interval` (Number) IKE rekey interval <60..86400> seconds
 - `ike_rekey_interval_variable` (String) Variable name

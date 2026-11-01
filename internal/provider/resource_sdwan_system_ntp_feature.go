@@ -178,6 +178,7 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 						},
 						"md5_value": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Enter cleartext or AES-encrypted MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthAtLeast(1),
@@ -189,6 +190,7 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 						},
 						"hmac_sha2_value": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.RegexMatches(regexp.MustCompile(`^\S{1,32}$`), ""),
@@ -200,6 +202,7 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 						},
 						"cmac_aes128_value": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(16, 32),

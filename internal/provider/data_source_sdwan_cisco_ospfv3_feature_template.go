@@ -397,6 +397,7 @@ func (d *CiscoOSPFv3FeatureTemplateDataSource) Schema(ctx context.Context, req d
 									},
 									"authentication_key": schema.StringAttribute{
 										MarkdownDescription: "Set OSPF interface authentication key",
+										Sensitive:           true,
 										Computed:            true,
 									},
 									"authentication_key_variable": schema.StringAttribute{
@@ -761,6 +762,7 @@ func (d *CiscoOSPFv3FeatureTemplateDataSource) Schema(ctx context.Context, req d
 									},
 									"authentication_key": schema.StringAttribute{
 										MarkdownDescription: "Set OSPF interface authentication key",
+										Sensitive:           true,
 										Computed:            true,
 									},
 									"authentication_key_variable": schema.StringAttribute{

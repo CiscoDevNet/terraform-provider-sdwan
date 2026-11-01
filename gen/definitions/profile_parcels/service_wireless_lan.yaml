@@ -66,6 +66,7 @@ attributes:
       exclude_test: true
       example: 1234
     - model_name: radiusServerSecret
+      sensitive: true
       data_path: [securityConfig]
       conditional_attribute:
         conditions:
@@ -74,6 +75,7 @@ attributes:
       exclude_test: true
       example: MyPassword123
     - model_name: passphrase
+      sensitive: true
       data_path: [securityConfig]
       encrypted: true
       conditional_attribute:
@@ -91,6 +93,7 @@ attributes:
     example: user1
     minimum_test_value: '"user1"'
   - model_name: password
+    sensitive: true
     encrypted: true
     example: Test@316s13
     minimum_test_value: '"Test@316s13"'

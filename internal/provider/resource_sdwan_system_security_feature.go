@@ -221,6 +221,7 @@ func (r *SystemSecurityProfileParcelResource) Schema(ctx context.Context, req re
 						},
 						"key_string": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Specify the Key String [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthAtLeast(1),

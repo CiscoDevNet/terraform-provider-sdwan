@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -638,7 +639,10 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 				if t.String() == "variable" {
 					item.NameVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.Name = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.Name = types.StringValue(va.String())
+					}
 				}
 			}
 			item.UserLabel = types.StringNull()
@@ -800,7 +804,10 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 				if t.String() == "variable" {
 					item.AuthenticationPasswordVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.AuthenticationPassword = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.AuthenticationPassword = types.StringValue(va.String())
+					}
 				}
 			}
 			item.PrivacyProtocol = types.StringNull()
@@ -820,7 +827,10 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 				if t.String() == "variable" {
 					item.PrivacyPasswordVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.PrivacyPassword = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.PrivacyPassword = types.StringValue(va.String())
+					}
 				}
 			}
 			item.Group = types.StringNull()

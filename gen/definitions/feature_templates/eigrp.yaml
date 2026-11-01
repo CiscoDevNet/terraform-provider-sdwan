@@ -36,6 +36,7 @@ attributes:
   tf_name: authentication_type
   example: hmac-sha-256
 - model_name: auth-key
+  sensitive: true
   tf_name: hmac_authentication_key
   example: myAuthKey
 - model_name: key
@@ -46,6 +47,7 @@ attributes:
     tf_name: md5_key_id
     example: 1
   - model_name: keystring
+    sensitive: true
     tf_name: md5_authentication_key
     example: myAuthKey
 - model_name: af-interface

@@ -31,7 +31,6 @@ func TestAccDataSourceSdwanCiscoThousandEyesFeatureTemplate(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.instance_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.application_type", "te"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_account_group_token", "1234567"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_vpn", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_agent_ip", "1.1.1.2/24"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_default_gateway", "1.1.1.255"))
@@ -63,7 +62,6 @@ func testAccDataSourceSdwanCiscoThousandEyesFeatureTemplateConfig() string {
 	config += `	virtual_applications = [{` + "\n"
 	config += `	  instance_id = "1"` + "\n"
 	config += `	  application_type = "te"` + "\n"
-	config += `	  te_account_group_token = "1234567"` + "\n"
 	config += `	  te_vpn = 1` + "\n"
 	config += `	  te_agent_ip = "1.1.1.2/24"` + "\n"
 	config += `	  te_default_gateway = "1.1.1.255"` + "\n"

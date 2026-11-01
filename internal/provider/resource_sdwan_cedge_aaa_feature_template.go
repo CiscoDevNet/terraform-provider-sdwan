@@ -137,10 +137,12 @@ func (r *CEdgeAAAFeatureTemplateResource) Schema(ctx context.Context, req resour
 						},
 						"password": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set the user password").String,
+							Sensitive:           true,
 							Optional:            true,
 						},
 						"secret": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set the user scrypt password/hash").String,
+							Sensitive:           true,
 							Optional:            true,
 						},
 						"privilege_level": schema.StringAttribute{
@@ -276,10 +278,12 @@ func (r *CEdgeAAAFeatureTemplateResource) Schema(ctx context.Context, req resour
 									},
 									"key": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set the Radius server shared key").String,
+										Sensitive:           true,
 										Optional:            true,
 									},
 									"secret_key": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set the Radius server shared type 7 encrypted key").String,
+										Sensitive:           true,
 										Optional:            true,
 									},
 									"secret_key_variable": schema.StringAttribute{
@@ -346,6 +350,7 @@ func (r *CEdgeAAAFeatureTemplateResource) Schema(ctx context.Context, req resour
 									},
 									"server_key": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Specify a RADIUS client server-key").String,
+										Sensitive:           true,
 										Optional:            true,
 									},
 									"server_key_variable": schema.StringAttribute{
@@ -368,6 +373,7 @@ func (r *CEdgeAAAFeatureTemplateResource) Schema(ctx context.Context, req resour
 			},
 			"radius_dynamic_author_server_key": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Specify a radius dynamic author server-key").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"radius_dynamic_author_server_key_variable": schema.StringAttribute{
@@ -485,10 +491,12 @@ func (r *CEdgeAAAFeatureTemplateResource) Schema(ctx context.Context, req resour
 									},
 									"key": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set the TACACS server shared key").String,
+										Sensitive:           true,
 										Optional:            true,
 									},
 									"secret_key": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set the TACACS server shared type 7 encrypted key").String,
+										Sensitive:           true,
 										Optional:            true,
 									},
 									"secret_key_variable": schema.StringAttribute{

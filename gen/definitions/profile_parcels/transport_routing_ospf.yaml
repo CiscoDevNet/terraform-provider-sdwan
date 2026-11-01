@@ -120,6 +120,7 @@ attributes:
         tf_name: message_digest_key_id
         example: 7
       - model_name: md5
+        sensitive: true
         tf_name: message_digest_key
         encrypted: true
         example: sdjfhsghbjdjr

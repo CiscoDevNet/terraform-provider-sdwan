@@ -17,8 +17,10 @@ attributes:
       - model_name: name
         example: user1
       - model_name: password
+        sensitive: true
         example: password123
       - model_name: secret
+        sensitive: true
         example: secret123
       - model_name: privilege
         tf_name: privilege_level
@@ -56,8 +58,10 @@ attributes:
           - model_name: retransmit
             example: 3
           - model_name: key
+            sensitive: true
             example: key123
           - model_name: secret-key
+            sensitive: true
             example: 1234567
           - model_name: key-enum
             tf_name: encryption_type
@@ -78,8 +82,10 @@ attributes:
             type: Int64
             example: 1
           - model_name: server-key
+            sensitive: true
             example: key123
   - model_name: rda-server-key
+    sensitive: true
     tf_name: radius_dynamic_author_server_key
     example: key123
   - model_name: domain-stripping
@@ -116,8 +122,10 @@ attributes:
           - model_name: timeout
             example: 5
           - model_name: key
+            sensitive: true
             example: key123
           - model_name: secret-key
+            sensitive: true
             example: 1234567
           - model_name: key-enum
             tf_name: encryption_type

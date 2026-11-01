@@ -361,6 +361,7 @@ func (d *ServiceRoutingOSPFv3IPv4ProfileParcelDataSource) Schema(ctx context.Con
 									},
 									"authentication_key": schema.StringAttribute{
 										MarkdownDescription: "Set OSPF interface authentication IPSEC key",
+										Sensitive:           true,
 										Computed:            true,
 									},
 									"authentication_key_variable": schema.StringAttribute{

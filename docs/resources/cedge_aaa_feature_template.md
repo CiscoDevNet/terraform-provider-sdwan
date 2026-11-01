@@ -152,7 +152,7 @@ resource "sdwan_cedge_aaa_feature_template" "example" {
   - Range: `0`-`65535`
   - Default value: `1700`
 - `radius_dynamic_author_port_variable` (String) Variable name
-- `radius_dynamic_author_server_key` (String) Specify a radius dynamic author server-key
+- `radius_dynamic_author_server_key` (String, Sensitive) Specify a radius dynamic author server-key
 - `radius_dynamic_author_server_key_variable` (String) Variable name
 - `radius_server_groups` (Attributes List) Configure the Radius serverGroup (see [below for nested schema](#nestedatt--radius_server_groups))
 - `radius_trustsec_cts_authorization_list` (String) CTS Authorization List
@@ -218,7 +218,7 @@ Optional:
 Optional:
 
 - `optional` (Boolean) Indicates if list item is considered optional.
-- `server_key` (String) Specify a RADIUS client server-key
+- `server_key` (String, Sensitive) Specify a RADIUS client server-key
 - `server_key_variable` (String) Variable name
 - `vpn_id` (Number) VPN ID
 - `vpn_id_variable` (String) Variable name
@@ -255,7 +255,7 @@ Optional:
 - `authentication_port_variable` (String) Variable name
 - `encryption_type` (String) Type of encyption. To be used for type 6
   - Choices: `6`, `7`
-- `key` (String) Set the Radius server shared key
+- `key` (String, Sensitive) Set the Radius server shared key
 - `key_type` (String) key type
   - Choices: `key`, `pac`
   - Default value: `key`
@@ -265,7 +265,7 @@ Optional:
   - Range: `1`-`100`
   - Default value: `3`
 - `retransmit_variable` (String) Variable name
-- `secret_key` (String) Set the Radius server shared type 7 encrypted key
+- `secret_key` (String, Sensitive) Set the Radius server shared type 7 encrypted key
 - `secret_key_variable` (String) Variable name
 - `timeout` (Number) Configure how long to wait for replies from the Radius server
   - Range: `1`-`1000`
@@ -296,13 +296,13 @@ Optional:
 - `address` (String) Set IP address of TACACS server
 - `encryption_type` (String) Type of encyption. To be used for type 6
   - Choices: `6`, `7`
-- `key` (String) Set the TACACS server shared key
+- `key` (String, Sensitive) Set the TACACS server shared key
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `port` (Number) TACACS Port
   - Range: `1`-`65535`
   - Default value: `49`
 - `port_variable` (String) Variable name
-- `secret_key` (String) Set the TACACS server shared type 7 encrypted key
+- `secret_key` (String, Sensitive) Set the TACACS server shared type 7 encrypted key
 - `secret_key_variable` (String) Variable name
 - `timeout` (Number) Configure how long to wait for replies from the TACACS server
   - Range: `1`-`1000`
@@ -319,12 +319,12 @@ Optional:
 - `name` (String) Set the username
 - `name_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
-- `password` (String) Set the user password
+- `password` (String, Sensitive) Set the user password
 - `privilege_level` (String) Set Privilege Level for this user
   - Choices: `1`, `15`
   - Default value: `15`
 - `privilege_level_variable` (String) Variable name
-- `secret` (String) Set the user scrypt password/hash
+- `secret` (String, Sensitive) Set the user scrypt password/hash
 - `ssh_pubkeys` (Attributes List) List of RSA public-keys per user (see [below for nested schema](#nestedatt--users--ssh_pubkeys))
 
 <a id="nestedatt--users--ssh_pubkeys"></a>

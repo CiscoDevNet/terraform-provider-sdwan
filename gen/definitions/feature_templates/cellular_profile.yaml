@@ -26,6 +26,7 @@ attributes:
     tf_name: profile_username
     example: MyUsername
   - model_name: user-pass
+    sensitive: true
     tf_name: profile_password
     example: MyPassword
   - model_name: primary-dns

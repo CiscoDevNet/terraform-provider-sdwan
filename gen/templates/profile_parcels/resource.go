@@ -118,9 +118,21 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 					{{- if .DefaultValue -}}
 					.AddDefaultValueDescription("{{.DefaultValue}}")
 					{{- end -}}
+					{{- if len .MutualExclusivityNote -}}
+					.AddMutualExclusivityDescription("{{.MutualExclusivityNote}}")
+					{{- end -}}
+					{{- if len .CoexistenceNote -}}
+					.AddCoexistenceNote("{{.CoexistenceNote}}")
+					{{- end -}}
 					.String,
 				{{- if isListSet .}}
 				ElementType:         types.{{.ElementType}}Type,
+				{{- end}}
+				{{- if .Sensitive}}
+				Sensitive:           true,
+				{{- end}}
+				{{- if .WoAttribute}}
+				WriteOnly:           true,
 				{{- end}}
 				{{- if and .Mandatory (not .Optional)}}
 				Required:            true,
@@ -198,9 +210,21 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 								{{- if .DefaultValue -}}
 								.AddDefaultValueDescription("{{.DefaultValue}}")
 								{{- end -}}
+								{{- if len .MutualExclusivityNote -}}
+								.AddMutualExclusivityDescription("{{.MutualExclusivityNote}}")
+								{{- end -}}
+								{{- if len .CoexistenceNote -}}
+								.AddCoexistenceNote("{{.CoexistenceNote}}")
+								{{- end -}}
 								.String,
 							{{- if isListSet .}}
 							ElementType:         types.{{.ElementType}}Type,
+							{{- end}}
+							{{- if .Sensitive}}
+							Sensitive:           true,
+							{{- end}}
+							{{- if .WoAttribute}}
+							WriteOnly:           true,
 							{{- end}}
 							Optional:            true,
 							{{- if and (len .EnumValues) (not .IgnoreEnum)}}
@@ -274,9 +298,21 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 											{{- if .DefaultValue -}}
 											.AddDefaultValueDescription("{{.DefaultValue}}")
 											{{- end -}}
+											{{- if len .MutualExclusivityNote -}}
+											.AddMutualExclusivityDescription("{{.MutualExclusivityNote}}")
+											{{- end -}}
+											{{- if len .CoexistenceNote -}}
+											.AddCoexistenceNote("{{.CoexistenceNote}}")
+											{{- end -}}
 											.String,
 										{{- if isListSet .}}
 										ElementType:         types.{{.ElementType}}Type,
+										{{- end}}
+										{{- if .Sensitive}}
+										Sensitive:           true,
+										{{- end}}
+										{{- if .WoAttribute}}
+										WriteOnly:           true,
 										{{- end}}
 										Optional:            true,
 										{{- if and (len .EnumValues) (not .IgnoreEnum)}}
@@ -350,9 +386,21 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 														{{- if .DefaultValue -}}
 														.AddDefaultValueDescription("{{.DefaultValue}}")
 														{{- end -}}
+														{{- if len .MutualExclusivityNote -}}
+														.AddMutualExclusivityDescription("{{.MutualExclusivityNote}}")
+														{{- end -}}
+														{{- if len .CoexistenceNote -}}
+														.AddCoexistenceNote("{{.CoexistenceNote}}")
+														{{- end -}}
 														.String,
 													{{- if isListSet .}}
 													ElementType:         types.{{.ElementType}}Type,
+													{{- end}}
+													{{- if .Sensitive}}
+													Sensitive:           true,
+													{{- end}}
+													{{- if .WoAttribute}}
+													WriteOnly:           true,
 													{{- end}}
 													Optional:            true,
 													{{- if and (len .EnumValues) (not .IgnoreEnum)}}
@@ -458,7 +506,93 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Configure(_ context.Context, 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
+{{- if needsValidateConfig .}}
+
+var _ resource.ResourceWithValidateConfig = &{{camelCase .Name}}ProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *{{camelCase .Name}}ProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+	{{- range coexistingSecretAttributes .}}
+
+	var v{{toGoName .TfName}} types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("{{.TfName}}"), &v{{toGoName .TfName}})...)
+	{{- if .Variable}}
+	var v{{toGoName .TfName}}Variable types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("{{.TfName}}_variable"), &v{{toGoName .TfName}}Variable)...)
+	{{- end}}
+	var v{{toGoName .TfName}}Wo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("{{.TfName}}_wo"), &v{{toGoName .TfName}}Wo)...)
+	var v{{toGoName .TfName}}WoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("{{.TfName}}_wo_version"), &v{{toGoName .TfName}}WoVersion)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !v{{toGoName .TfName}}.IsUnknown() && !v{{toGoName .TfName}}Wo.IsUnknown() && !v{{toGoName .TfName}}.IsNull() && !v{{toGoName .TfName}}Wo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `{{.TfName}}` and `{{.TfName}}_wo` can be set.",
+		)
+	}
+	{{- if .Variable}}
+	if !v{{toGoName .TfName}}Variable.IsUnknown() && !v{{toGoName .TfName}}Wo.IsUnknown() && !v{{toGoName .TfName}}Variable.IsNull() && !v{{toGoName .TfName}}Wo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"`{{.TfName}}_variable` and `{{.TfName}}_wo` cannot both be set. `{{.TfName}}_variable` defers the value to a device variable, so the write-only value would never be sent.",
+		)
+	}
+	if !v{{toGoName .TfName}}.IsUnknown() && !v{{toGoName .TfName}}Variable.IsUnknown() && !v{{toGoName .TfName}}.IsNull() && !v{{toGoName .TfName}}Variable.IsNull() {
+		resp.Diagnostics.AddWarning(
+			"Conflicting Attribute Combination",
+			"Both `{{.TfName}}` and `{{.TfName}}_variable` are set. `{{.TfName}}_variable` takes precedence, so the value of `{{.TfName}}` is not sent to the device - but it is still stored in Terraform state. Set only one of them.",
+		)
+	}
+	{{- end}}
+	if !v{{toGoName .TfName}}Wo.IsUnknown() && !v{{toGoName .TfName}}WoVersion.IsUnknown() && !v{{toGoName .TfName}}Wo.IsNull() && v{{toGoName .TfName}}WoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`{{.TfName}}_wo_version` must be set when `{{.TfName}}_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !v{{toGoName .TfName}}WoVersion.IsUnknown() && !v{{toGoName .TfName}}Wo.IsUnknown() && !v{{toGoName .TfName}}WoVersion.IsNull() && v{{toGoName .TfName}}Wo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`{{.TfName}}_wo` must be set when `{{.TfName}}_wo_version` is used.",
+		)
+	}
+	{{- end}}
+	{{- range sensitiveVariableAttributes .}}
+
+	var v{{toGoName .TfName}} types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("{{.TfName}}"), &v{{toGoName .TfName}})...)
+	var v{{toGoName .TfName}}Variable types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("{{.TfName}}_variable"), &v{{toGoName .TfName}}Variable)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if !v{{toGoName .TfName}}.IsUnknown() && !v{{toGoName .TfName}}Variable.IsUnknown() && !v{{toGoName .TfName}}.IsNull() && !v{{toGoName .TfName}}Variable.IsNull() {
+		resp.Diagnostics.AddWarning(
+			"Conflicting Attribute Combination",
+			"Both `{{.TfName}}` and `{{.TfName}}_variable` are set. `{{.TfName}}_variable` takes precedence, so the value of `{{.TfName}}` is not sent to the device - but it is still stored in Terraform state. Set only one of them.",
+		)
+	}
+	{{- end}}
+}
+{{- end}}
 // End of section. //template:end model
+
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
 func (r *{{camelCase .Name}}ProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
@@ -470,6 +604,16 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Create(ctx context.Context, r
 	if resp.Diagnostics.HasError() {
 		return
 	}
+	{{- range writeOnlyTFAttributes .}}
+
+	// Write-only value "{{.TfName}}" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("{{.TfName}}"), &plan.{{toGoName .TfName}})...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	{{- end}}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
@@ -556,6 +700,16 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Update(ctx context.Context, r
 	if resp.Diagnostics.HasError() {
 		return
 	}
+	{{- range writeOnlyTFAttributes .}}
+
+	// Write-only value "{{.TfName}}" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("{{.TfName}}"), &plan.{{toGoName .TfName}})...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	{{- end}}
 	// Read state
 	diags = req.State.Get(ctx, &state)
 	resp.Diagnostics.Append(diags...)

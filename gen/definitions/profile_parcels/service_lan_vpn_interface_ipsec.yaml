@@ -184,6 +184,7 @@ attributes:
   - model_name: dpdRetries 
     example: 3
   - model_name: preSharedSecret
+    sensitive: true
     tf_name: ike_preshared_key
     example: 123
     minimum_test_value: '"123"'

@@ -277,6 +277,7 @@ func (r *CiscoVPNInterfaceIPSecFeatureTemplateResource) Schema(ctx context.Conte
 			},
 			"ike_pre_shared_key": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Use preshared key to authenticate IKE peer").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"ike_pre_shared_key_variable": schema.StringAttribute{

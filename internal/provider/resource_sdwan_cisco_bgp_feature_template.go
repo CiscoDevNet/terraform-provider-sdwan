@@ -696,6 +696,7 @@ func (r *CiscoBGPFeatureTemplateResource) Schema(ctx context.Context, req resour
 						},
 						"password": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 password on TCP connection with BGP peer").String,
+							Sensitive:           true,
 							Optional:            true,
 						},
 						"password_variable": schema.StringAttribute{
@@ -947,6 +948,7 @@ func (r *CiscoBGPFeatureTemplateResource) Schema(ctx context.Context, req resour
 						},
 						"password": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 password on TCP connection with BGP peer").String,
+							Sensitive:           true,
 							Optional:            true,
 						},
 						"password_variable": schema.StringAttribute{

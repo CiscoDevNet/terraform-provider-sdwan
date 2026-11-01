@@ -363,7 +363,7 @@ Optional:
   - Default value: `false`
 - `next_hop_self_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
-- `password` (String) Set MD5 password on TCP connection with BGP peer
+- `password` (String, Sensitive) Set MD5 password on TCP connection with BGP peer
 - `password_variable` (String) Variable name
 - `remote_as` (String) Set remote autonomous system number
 - `remote_as_variable` (String) Variable name
@@ -484,7 +484,7 @@ Optional:
   - Default value: `false`
 - `next_hop_self_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
-- `password` (String) Set MD5 password on TCP connection with BGP peer
+- `password` (String, Sensitive) Set MD5 password on TCP connection with BGP peer
 - `password_variable` (String) Variable name
 - `remote_as` (String) Set remote autonomous system number
 - `remote_as_variable` (String) Variable name

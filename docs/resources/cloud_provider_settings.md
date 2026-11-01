@@ -40,22 +40,22 @@ resource "sdwan_cloud_provider_settings" "example" {
 
 ### Optional
 
-- `cisco_sse_auth_key` (String) Cisco SSE Authentication Key
-- `cisco_sse_auth_secret` (String) Cisco SSE Authentication Secret
+- `cisco_sse_auth_key` (String, Sensitive) Cisco SSE Authentication Key
+- `cisco_sse_auth_secret` (String, Sensitive) Cisco SSE Authentication Secret
 - `cisco_sse_context_sharing` (Boolean) Enable Cisco SSE Context Sharing
   - Default value: `false`
 - `cisco_sse_org_id` (String) Cisco SSE Organization ID (numeric string)
-- `umbrella_auth_key_v2` (String) Umbrella Authentication Key (v2)
-- `umbrella_auth_secret_v2` (String) Umbrella Authentication Secret (v2)
-- `umbrella_dns_auth_key` (String) Umbrella DNS Authentication Key
-- `umbrella_dns_auth_secret` (String) Umbrella DNS Authentication Secret
+- `umbrella_auth_key_v2` (String, Sensitive) Umbrella Authentication Key (v2)
+- `umbrella_auth_secret_v2` (String, Sensitive) Umbrella Authentication Secret (v2)
+- `umbrella_dns_auth_key` (String, Sensitive) Umbrella DNS Authentication Key
+- `umbrella_dns_auth_secret` (String, Sensitive) Umbrella DNS Authentication Secret
 - `umbrella_org_id` (String) Umbrella Organization ID (numeric string)
-- `umbrella_sig_auth_key` (String) Umbrella SIG Authentication Key
-- `umbrella_sig_auth_secret` (String) Umbrella SIG Authentication Secret
+- `umbrella_sig_auth_key` (String, Sensitive) Umbrella SIG Authentication Key
+- `umbrella_sig_auth_secret` (String, Sensitive) Umbrella SIG Authentication Secret
 - `zscaler_organization` (String) Zscaler Organization
 - `zscaler_partner_base_uri` (String) Zscaler Partner Base URI
-- `zscaler_partner_key` (String) Zscaler Partner Key
-- `zscaler_password` (String) Zscaler Password
+- `zscaler_partner_key` (String, Sensitive) Zscaler Partner Key
+- `zscaler_password` (String, Sensitive) Zscaler Password
 - `zscaler_username` (String) Zscaler Username
 
 ### Read-Only

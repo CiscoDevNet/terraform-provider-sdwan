@@ -170,6 +170,7 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthAtLeast(1),
@@ -267,6 +268,7 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 						},
 						"authentication_password": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Specify authentication protocol password").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 128),
@@ -289,6 +291,7 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 						},
 						"privacy_password": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Specify privacy protocol password").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 128),

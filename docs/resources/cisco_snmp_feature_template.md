@@ -109,7 +109,7 @@ Optional:
 - `authorization` (String) Configure access permissions
   - Choices: `read-only`
 - `authorization_variable` (String) Variable name
-- `name` (String) Set name of the SNMP community
+- `name` (String, Sensitive) Set name of the SNMP community
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `view` (String) Set name of the SNMP view
 - `view_variable` (String) Variable name
@@ -133,7 +133,7 @@ Optional:
 
 Optional:
 
-- `community_name` (String) Set name of the SNMP community
+- `community_name` (String, Sensitive) Set name of the SNMP community
 - `community_name_variable` (String) Variable name
 - `ip` (String) Set IPv4/IPv6 address of SNMP server
 - `ip_variable` (String) Variable name

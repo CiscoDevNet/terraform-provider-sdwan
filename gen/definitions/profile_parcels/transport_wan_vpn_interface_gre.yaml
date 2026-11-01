@@ -175,6 +175,7 @@ attributes:
     data_path: [basic]
     example: 16
   - model_name: preSharedSecret
+    sensitive: true
     data_path: [basic]
     example: 123
   - model_name: ikeLocalId

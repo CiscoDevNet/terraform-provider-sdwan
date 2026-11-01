@@ -41,7 +41,7 @@ data "sdwan_system_remote_access_feature" "example" {
 - `aaa_enable_accounting_variable` (String) Variable name
 - `aaa_specify_name_policy_name` (String)
 - `aaa_specify_name_policy_name_variable` (String) Variable name
-- `aaa_specify_name_policy_password` (String)
+- `aaa_specify_name_policy_password` (String, Sensitive)
 - `aaa_specify_name_policy_password_variable` (String) Variable name
 - `any_connect_eap_authentication_type` (String)
 - `connection_type_ssl` (Boolean) Enabled SSL VPN
@@ -68,7 +68,7 @@ data "sdwan_system_remote_access_feature" "example" {
 - `ipv4_pool_size_variable` (String) Variable name
 - `ipv6_pool_size` (Number) IPv6 Pool Size
 - `ipv6_pool_size_variable` (String) Variable name
-- `psk_authentication_pre_shared_key` (String) PSK Pre Shared Key
+- `psk_authentication_pre_shared_key` (String, Sensitive) PSK Pre Shared Key
 - `psk_authentication_pre_shared_key_variable` (String) Variable name
 - `psk_authentication_type` (String) PSK Selection
 - `psk_authentication_type_variable` (String) Variable name

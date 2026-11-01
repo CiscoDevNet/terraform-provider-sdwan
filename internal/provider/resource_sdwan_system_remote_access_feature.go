@@ -137,6 +137,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 			},
 			"psk_authentication_pre_shared_key": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("PSK Pre Shared Key, Attribute conditional on `psk_authentication_type` equal to `group`").String,
+				Sensitive:           true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 25),
@@ -170,6 +171,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 			},
 			"aaa_specify_name_policy_password": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				Sensitive:           true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 25),
@@ -299,6 +301,50 @@ func (r *SystemRemoteAccessProfileParcelResource) Configure(_ context.Context, r
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
+}
+
+var _ resource.ResourceWithValidateConfig = &SystemRemoteAccessProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *SystemRemoteAccessProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	var vPskAuthenticationPreSharedKey types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("psk_authentication_pre_shared_key"), &vPskAuthenticationPreSharedKey)...)
+	var vPskAuthenticationPreSharedKeyVariable types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("psk_authentication_pre_shared_key_variable"), &vPskAuthenticationPreSharedKeyVariable)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if !vPskAuthenticationPreSharedKey.IsUnknown() && !vPskAuthenticationPreSharedKeyVariable.IsUnknown() && !vPskAuthenticationPreSharedKey.IsNull() && !vPskAuthenticationPreSharedKeyVariable.IsNull() {
+		resp.Diagnostics.AddWarning(
+			"Conflicting Attribute Combination",
+			"Both `psk_authentication_pre_shared_key` and `psk_authentication_pre_shared_key_variable` are set. `psk_authentication_pre_shared_key_variable` takes precedence, so the value of `psk_authentication_pre_shared_key` is not sent to the device - but it is still stored in Terraform state. Set only one of them.",
+		)
+	}
+
+	var vAaaSpecifyNamePolicyPassword types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("aaa_specify_name_policy_password"), &vAaaSpecifyNamePolicyPassword)...)
+	var vAaaSpecifyNamePolicyPasswordVariable types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("aaa_specify_name_policy_password_variable"), &vAaaSpecifyNamePolicyPasswordVariable)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if !vAaaSpecifyNamePolicyPassword.IsUnknown() && !vAaaSpecifyNamePolicyPasswordVariable.IsUnknown() && !vAaaSpecifyNamePolicyPassword.IsNull() && !vAaaSpecifyNamePolicyPasswordVariable.IsNull() {
+		resp.Diagnostics.AddWarning(
+			"Conflicting Attribute Combination",
+			"Both `aaa_specify_name_policy_password` and `aaa_specify_name_policy_password_variable` are set. `aaa_specify_name_policy_password_variable` takes precedence, so the value of `aaa_specify_name_policy_password` is not sent to the device - but it is still stored in Terraform state. Set only one of them.",
+		)
+	}
 }
 
 // End of section. //template:end model

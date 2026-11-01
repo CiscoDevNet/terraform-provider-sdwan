@@ -56,7 +56,7 @@ Read-Only:
 - `ike_ciphersuite_variable` (String) Variable name
 - `ike_group` (String) IKE Diffie Hellman Groups
 - `ike_group_variable` (String) Variable name
-- `ike_pre_shared_key` (String) Use preshared key to authenticate IKE peer
+- `ike_pre_shared_key` (String, Sensitive) Use preshared key to authenticate IKE peer
 - `ike_pre_shared_key_dynamic` (Boolean) Use preshared key to authenticate IKE peer
 - `ike_pre_shared_key_local_id` (String) IKE ID for the local endpoint. Input IPv4 address, domain name, or email address
 - `ike_pre_shared_key_local_id_variable` (String) Variable name

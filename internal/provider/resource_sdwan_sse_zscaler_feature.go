@@ -249,6 +249,7 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 						},
 						"pre_shared_secret": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Use preshared key to authenticate IKE peer").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 127),

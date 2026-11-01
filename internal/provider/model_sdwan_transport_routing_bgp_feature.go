@@ -2041,7 +2041,10 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result,
 				if t.String() == "variable" {
 					item.PasswordVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.Password = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.Password = types.StringValue(va.String())
+					}
 				}
 			}
 			item.SendLabel = types.BoolNull()
@@ -2414,7 +2417,10 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result,
 				if t.String() == "variable" {
 					item.PasswordVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.Password = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.Password = types.StringValue(va.String())
+					}
 				}
 			}
 			item.AsOverride = types.BoolNull()

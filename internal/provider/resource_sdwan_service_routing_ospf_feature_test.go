@@ -150,7 +150,6 @@ func testAccSdwanServiceRoutingOSPFProfileParcelConfig_all() string {
 	config += `		passive_interface = false` + "\n"
 	config += `		authentication_type = "message-digest"` + "\n"
 	config += `		message_digest_key_id = 7` + "\n"
-	config += `		message_digest_key = "sdjfhsghbjdjr"` + "\n"
 	config += `	}]` + "\n"
 	config += `	  ranges = [{` + "\n"
 	config += `		ip_address = "10.1.1.0"` + "\n"

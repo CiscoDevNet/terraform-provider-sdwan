@@ -473,7 +473,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 	{{- end}}
 	{{ if .Variable}}data.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 	{{- if .NoOptionType}}
-	if va := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); va.Exists() {
+	if va := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); va.Exists() {{if .Encrypted}}&& !helpers.IsEncryptedValue(va.String()) {{end}}{
 		data.{{toGoName .TfName}} = types.{{.Type}}Value(va.{{getGjsonType .Type}}())
 	}
 	{{- else}}
@@ -482,6 +482,10 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 		{{if .Variable}}if t.String() == "variable" {
 			data.{{toGoName .TfName}}Variable = types.StringValue(va.String())
 		} else{{end}} if t.String() == "global" {{if .WriteAsDefault}}|| (t.String() == "default" && (!temp{{toGoName .TfName}}.IsNull() || fullRead)){{end}} {{if .DynamicDefault}}|| (t.String() == "default" && (temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}" || (fullRead && temp{{toGoName .TfName}}.ValueString() == ""))){{end}} {
+			{{- if .Encrypted}}
+			// Masked secrets returned by the Manager must never be written into state.
+			if !helpers.IsEncryptedValue(va.String()) {
+			{{- end}}
 			{{- if eq .Type "StringInt64" }}
 			data.{{toGoName .TfName}} = types.StringValue(va.String())
 			{{- else}}
@@ -496,6 +500,9 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 			{{- else}}
 			data.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 			{{- end}}
+			{{- end}}
+			{{- if .Encrypted}}
+			}
 			{{- end}}
 		}
 		{{- if hasTfOnlyConditional .ConditionalAttribute}}
@@ -538,7 +545,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 				item.{{toGoName .TfName}} = helpers.Get{{.ElementType}}{{.Type}}(elems)
 			}
 			{{- else if .NoOptionType}}
-			if va := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); va.Exists() {
+			if va := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); va.Exists() {{if .Encrypted}}&& !helpers.IsEncryptedValue(va.String()) {{end}}{
 				item.{{toGoName .TfName}} = types.{{.Type}}Value(va.{{getGjsonType .Type}}())
 			}
 			{{- else}}
@@ -547,6 +554,10 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 				{{if .Variable}}if t.String() == "variable" {
 					item.{{toGoName .TfName}}Variable = types.StringValue(va.String())
 				} else{{end}} if t.String() == "global" {{if .WriteAsDefault}}|| t.String() == "default"{{end}} {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
+					{{- if .Encrypted}}
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+					{{- end}}
 					{{- if eq .Type "StringInt64" }}
 					item.{{toGoName .TfName}} = types.StringValue(va.String())
 					{{- else if and (not (isListSet .)) .ForceInclude}}
@@ -555,6 +566,9 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 					}
 					{{- else}}
 					item.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
+					{{- end}}
+					{{- if .Encrypted}}
+					}
 					{{- end}}
 				}
 				{{- if hasTfOnlyConditional .ConditionalAttribute}}
@@ -582,7 +596,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 					{{- end}}
 					{{ if .Variable}}cItem.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 					{{- if .NoOptionType}}
-					if va := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); va.Exists() {
+					if va := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); va.Exists() {{if .Encrypted}}&& !helpers.IsEncryptedValue(va.String()) {{end}}{
 						cItem.{{toGoName .TfName}} = types.{{.Type}}Value(va.{{getGjsonType .Type}}())
 					}
 					{{- else}}
@@ -591,6 +605,10 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 						{{if .Variable}}if t.String() == "variable" {
 							cItem.{{toGoName .TfName}}Variable = types.StringValue(va.String())
 						} else{{end}} if t.String() == "global" {{if .WriteAsDefault}}|| t.String() == "default"{{end}} {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
+							{{- if .Encrypted}}
+							// Masked secrets returned by the Manager must never be written into state.
+							if !helpers.IsEncryptedValue(va.String()) {
+							{{- end}}
 							{{- if eq .Type "StringInt64" }}
 							cItem.{{toGoName .TfName}} = types.StringValue(va.String())
 							{{- else if and (not (isListSet .)) .ForceInclude}}
@@ -599,6 +617,9 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 							}
 							{{- else}}
 							cItem.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
+							{{- end}}
+							{{- if .Encrypted}}
+							}
 							{{- end}}
 						}
 						{{- if hasTfOnlyConditional .ConditionalAttribute}}
@@ -630,6 +651,10 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 								{{if .Variable}}if t.String() == "variable" {
 									ccItem.{{toGoName .TfName}}Variable = types.StringValue(va.String())
 								} else{{end}} if t.String() == "global" {{if .WriteAsDefault}}|| t.String() == "default"{{end}} {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
+									{{- if .Encrypted}}
+									// Masked secrets returned by the Manager must never be written into state.
+									if !helpers.IsEncryptedValue(va.String()) {
+									{{- end}}
 									{{- if eq .Type "StringInt64" }}
 									ccItem.{{toGoName .TfName}} = types.StringValue(va.String())
 								{{- else if and (not (isListSet .)) .ForceInclude}}
@@ -638,6 +663,9 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 									}
 									{{- else}}
 									ccItem.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
+									{{- end}}
+									{{- if .Encrypted}}
+									}
 									{{- end}}
 								}
 								{{- if hasTfOnlyConditional .ConditionalAttribute}}

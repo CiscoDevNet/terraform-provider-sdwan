@@ -107,6 +107,9 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 				{{- else if eq .Type "Versions"}}
 				ElementType:         types.StringType,
 				{{- end}}
+				{{- if .Sensitive}}
+				Sensitive:           true,
+				{{- end}}
 				{{- if .Reference}}
 				Required:            true,
 				{{- else if .QueryParam}}
@@ -129,6 +132,9 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 							{{- else if eq .Type "Versions"}}
 							ElementType:         types.StringType,
 							{{- end}}
+							{{- if .Sensitive}}
+							Sensitive:           true,
+							{{- end}}
 							Computed:            true,
 							{{- if isNestedListSet .}}
 							NestedObject: schema.NestedAttributeObject{
@@ -142,6 +148,9 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 										{{- else if eq .Type "Versions"}}
 										ElementType:         types.StringType,
 										{{- end}}
+										{{- if .Sensitive}}
+										Sensitive:           true,
+										{{- end}}
 										Computed:            true,
 										{{- if isNestedListSet .}}
 										NestedObject: schema.NestedAttributeObject{
@@ -154,6 +163,9 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 													ElementType:         types.{{.ElementType}}Type,
 													{{- else if eq .Type "Versions"}}
 													ElementType:         types.StringType,
+													{{- end}}
+													{{- if .Sensitive}}
+													Sensitive:           true,
 													{{- end}}
 													Computed:            true,
 												},

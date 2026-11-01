@@ -164,7 +164,7 @@ Optional:
 
 Optional:
 
-- `authentication_key` (String) Set OSPF interface authentication IPSEC key
+- `authentication_key` (String, Sensitive) Set OSPF interface authentication IPSEC key
 - `authentication_key_variable` (String) Variable name
 - `authentication_spi` (Number) Set OSPF interface authentication IPSec SPI, range 256..4294967295
   - Range: `256`-`4294967295`

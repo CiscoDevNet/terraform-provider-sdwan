@@ -215,7 +215,7 @@ Optional:
 - `keepalive_interval` (Number) Set MSDP peer ip keepalive interval
   - Range: `1`-`60`
 - `keepalive_interval_variable` (String) Variable name
-- `peer_authentication_password` (String) Set MSDP peer ip password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `peer_authentication_password` (String, Sensitive) Set MSDP peer ip password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `peer_authentication_password_variable` (String) Variable name
 - `peer_ip` (String) Set MSDP peer ip
 - `peer_ip_variable` (String) Variable name

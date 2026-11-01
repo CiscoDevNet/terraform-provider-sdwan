@@ -69,7 +69,7 @@ resource "sdwan_service_wireless_lan_feature" "example" {
 - `me_subnet_mask` (String) Set mobile express controller subnet mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.248.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `me_subnet_mask_variable` (String) Variable name
-- `password` (String) Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.
+- `password` (String, Sensitive) Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.
 - `password_variable` (String) Variable name
 - `username` (String) Set management username
 - `username_variable` (String) Variable name
@@ -90,7 +90,7 @@ Optional:
 - `broadcast_ssid` (Boolean) Enable broadcast SSID
   - Default value: `true`
 - `broadcast_ssid_variable` (String) Variable name
-- `passphrase` (String) Set passphrase, Attribute conditional on `security_type` equal to `personal`
+- `passphrase` (String, Sensitive) Set passphrase, Attribute conditional on `security_type` equal to `personal`
 - `passphrase_variable` (String) Variable name, Attribute conditional on `security_type` equal to `personal`
 - `qos_profile` (String) Select QoS profile
   - Choices: `platinum`, `gold`, `silver`, `bronze`
@@ -106,7 +106,7 @@ Optional:
   - Range: `1`-`65535`
   - Default value: `1812`
 - `radius_server_port_variable` (String) Variable name, Attribute conditional on `security_type` equal to `enterprise`
-- `radius_server_secret` (String) Set RADIUS server shared secret, Attribute conditional on `security_type` equal to `enterprise`
+- `radius_server_secret` (String, Sensitive) Set RADIUS server shared secret, Attribute conditional on `security_type` equal to `enterprise`
 - `radius_server_secret_variable` (String) Variable name, Attribute conditional on `security_type` equal to `enterprise`
 - `security_type` (String) Select security type
   - Choices: `enterprise`, `personal`, `open`

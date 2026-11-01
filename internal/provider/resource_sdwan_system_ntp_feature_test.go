@@ -98,13 +98,6 @@ func testAccSdwanSystemNTPProfileParcelConfig_all() string {
 	config += `	}]` + "\n"
 	config += `	authentication_keys = [{` + "\n"
 	config += `	  key_id = 49737` + "\n"
-	config += `	  md5_value = "$CRYPT_CLUSTER"` + "\n"
-	if os.Getenv("SDWAN_2601") != "" {
-		config += `	  hmac_sha2_value = "hmac-sha2-key-example"` + "\n"
-	}
-	if os.Getenv("SDWAN_2601") != "" {
-		config += `	  cmac_aes128_value = "cmac-aes128-key-1234"` + "\n"
-	}
 	config += `	}]` + "\n"
 	config += `	trusted_keys = [49737]` + "\n"
 	config += `	authoritative_ntp_server = false` + "\n"

@@ -159,6 +159,7 @@ attributes:
         exclude_test: true
         example: 12345
       - model_name: authKey
+        sensitive: true
         tf_name: authentication_key
         data_path: [authenticationConfig]
         exclude_test: true

@@ -59,7 +59,7 @@ resource "sdwan_other_thousandeyes_feature" "example" {
 
 Optional:
 
-- `account_group_token` (String) Set the Account Group Token
+- `account_group_token` (String, Sensitive) Set the Account Group Token
 - `account_group_token_variable` (String) Variable name
 - `agent_default_gateway` (String) Set the Agent default gateway
 - `agent_default_gateway_variable` (String) Variable name

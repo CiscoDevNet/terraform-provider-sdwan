@@ -81,26 +81,32 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 			},
 			"umbrella_auth_key_v2": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Authentication Key (v2)").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"umbrella_auth_secret_v2": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Authentication Secret (v2)").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"umbrella_sig_auth_key": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Umbrella SIG Authentication Key").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"umbrella_sig_auth_secret": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Umbrella SIG Authentication Secret").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"umbrella_dns_auth_key": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Umbrella DNS Authentication Key").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"umbrella_dns_auth_secret": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Umbrella DNS Authentication Secret").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"zscaler_organization": schema.StringAttribute{
@@ -113,6 +119,7 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 			},
 			"zscaler_partner_key": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Zscaler Partner Key").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"zscaler_username": schema.StringAttribute{
@@ -121,6 +128,7 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 			},
 			"zscaler_password": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Zscaler Password").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"cisco_sse_org_id": schema.StringAttribute{
@@ -132,10 +140,12 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 			},
 			"cisco_sse_auth_key": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Cisco SSE Authentication Key").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"cisco_sse_auth_secret": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Cisco SSE Authentication Secret").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"cisco_sse_context_sharing": schema.BoolAttribute{

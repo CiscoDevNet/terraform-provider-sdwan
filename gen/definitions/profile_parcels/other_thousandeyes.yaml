@@ -18,6 +18,7 @@ attributes:
   - model_name: virtualApplication
     attributes: 
     - model_name: token
+      sensitive: true
       tf_name: account_group_token
       id: true
       mandatory: true

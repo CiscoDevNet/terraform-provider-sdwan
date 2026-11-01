@@ -36,8 +36,10 @@ data "sdwan_other_trustsec_feature" "example" {
 - `description` (String) The description of the Feature
 - `device_id` (String) Specify the TrustSec Network Access Device ID, should be same as mentioned in the Identity Services Engine (upto 32 char)
 - `device_id_variable` (String) Variable name
-- `device_password` (String) Set the password for the device
+- `device_password` (String, Sensitive) Set the password for the device
 - `device_password_variable` (String) Variable name
+- `device_password_wo` (String, Sensitive) Set the password for the device
+- `device_password_wo_version` (Number) Rotation trigger for `device_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `device_sgt` (Number) Configure Local device security group <2..65519>
 - `device_sgt_variable` (String) Variable name
 - `enable_enforcement` (Boolean) Enable Role-based Access Control enforcement
@@ -50,8 +52,10 @@ data "sdwan_other_trustsec_feature" "example" {
 - `speaker_hold_time` (Number) Configure Speaker hold-time in seconds <1..65534>
 - `speaker_hold_time_variable` (String) Variable name
 - `sxp_connections` (Attributes List) Configure SXP Connections (see [below for nested schema](#nestedatt--sxp_connections))
-- `sxp_default_password` (String) Configure SXP default password
+- `sxp_default_password` (String, Sensitive) Configure SXP default password
 - `sxp_default_password_variable` (String) Variable name
+- `sxp_default_password_wo` (String, Sensitive) Configure SXP default password
+- `sxp_default_password_wo_version` (Number) Rotation trigger for `sxp_default_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `sxp_key_chain` (String) Configure SXP key-chain
 - `sxp_key_chain_variable` (String) Variable name
 - `sxp_log_binding_changes` (Boolean) Enables logging for IP-to-SGT binding changes
@@ -77,7 +81,7 @@ Read-Only:
 - `mode_type` (String) Define Role of a device <speaker/listener/both>
 - `peer_ip` (String) Configure SXP Peer IP address (IPv4)
 - `peer_ip_variable` (String) Variable name
-- `preshared_key` (String) Define Preshared Key type
+- `preshared_key` (String, Sensitive) Define Preshared Key type
 - `source_ip` (String) Configure SXP Source IP address (IPv4)
 - `source_ip_variable` (String) Variable name
 - `vpn_id` (Number) Configure Connection VPN (VRF) ID

@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -41,6 +42,8 @@ type OtherTrustSec struct {
 	DeviceIdVariable                types.String                  `tfsdk:"device_id_variable"`
 	DevicePassword                  types.String                  `tfsdk:"device_password"`
 	DevicePasswordVariable          types.String                  `tfsdk:"device_password_variable"`
+	DevicePasswordWo                types.String                  `tfsdk:"device_password_wo"`
+	DevicePasswordWoVersion         types.Int64                   `tfsdk:"device_password_wo_version"`
 	DeviceSgt                       types.Int64                   `tfsdk:"device_sgt"`
 	DeviceSgtVariable               types.String                  `tfsdk:"device_sgt_variable"`
 	EnableEnforcement               types.Bool                    `tfsdk:"enable_enforcement"`
@@ -54,6 +57,8 @@ type OtherTrustSec struct {
 	SpeakerHoldTimeVariable         types.String                  `tfsdk:"speaker_hold_time_variable"`
 	SxpDefaultPassword              types.String                  `tfsdk:"sxp_default_password"`
 	SxpDefaultPasswordVariable      types.String                  `tfsdk:"sxp_default_password_variable"`
+	SxpDefaultPasswordWo            types.String                  `tfsdk:"sxp_default_password_wo"`
+	SxpDefaultPasswordWoVersion     types.Int64                   `tfsdk:"sxp_default_password_wo_version"`
 	SxpKeyChain                     types.String                  `tfsdk:"sxp_key_chain"`
 	SxpKeyChainVariable             types.String                  `tfsdk:"sxp_key_chain_variable"`
 	SxpLogBindingChanges            types.Bool                    `tfsdk:"sxp_log_binding_changes"`
@@ -137,6 +142,17 @@ func (data OtherTrustSec) toBody(ctx context.Context) string {
 		if true {
 			body, _ = sjson.Set(body, path+"devicePassword.optionType", "global")
 			body, _ = sjson.Set(body, path+"devicePassword.value", data.DevicePassword.ValueString())
+		}
+	}
+	if data.DevicePasswordWo.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"devicePassword.optionType", "default")
+			body, _ = sjson.Set(body, path+"devicePassword.value", "")
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"devicePassword.optionType", "global")
+			body, _ = sjson.Set(body, path+"devicePassword.value", data.DevicePasswordWo.ValueString())
 		}
 	}
 
@@ -249,6 +265,17 @@ func (data OtherTrustSec) toBody(ctx context.Context) string {
 		if true {
 			body, _ = sjson.Set(body, path+"sxpDefaultPassword.optionType", "global")
 			body, _ = sjson.Set(body, path+"sxpDefaultPassword.value", data.SxpDefaultPassword.ValueString())
+		}
+	}
+	if data.SxpDefaultPasswordWo.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"sxpDefaultPassword.optionType", "default")
+			body, _ = sjson.Set(body, path+"sxpDefaultPassword.value", "")
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"sxpDefaultPassword.optionType", "global")
+			body, _ = sjson.Set(body, path+"sxpDefaultPassword.value", data.SxpDefaultPasswordWo.ValueString())
 		}
 	}
 
@@ -488,7 +515,10 @@ func (data *OtherTrustSec) fromBody(ctx context.Context, res gjson.Result, fullR
 			if t.String() == "variable" {
 				data.DevicePasswordVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.DevicePassword = types.StringValue(va.String())
+				// Masked secrets returned by the Manager must never be written into state.
+				if !helpers.IsEncryptedValue(va.String()) {
+					data.DevicePassword = types.StringValue(va.String())
+				}
 			}
 		}
 	}
@@ -561,7 +591,10 @@ func (data *OtherTrustSec) fromBody(ctx context.Context, res gjson.Result, fullR
 			if t.String() == "variable" {
 				data.SxpDefaultPasswordVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.SxpDefaultPassword = types.StringValue(va.String())
+				// Masked secrets returned by the Manager must never be written into state.
+				if !helpers.IsEncryptedValue(va.String()) {
+					data.SxpDefaultPassword = types.StringValue(va.String())
+				}
 			}
 		}
 	}

@@ -131,6 +131,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 						},
 						"password": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set the user password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+							Sensitive:           true,
 							Optional:            true,
 						},
 						"password_variable": schema.StringAttribute{
@@ -268,6 +269,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 									},
 									"key": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set the Radius server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+										Sensitive:           true,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthAtLeast(1),
@@ -279,6 +281,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 									},
 									"secret_key": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set the Radius server shared type 7 encrypted key").String,
+										Sensitive:           true,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthBetween(1, 150),
@@ -398,6 +401,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 									},
 									"key": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set the TACACS server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+										Sensitive:           true,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthAtLeast(1),
@@ -409,6 +413,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 									},
 									"secret_key": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set the TACACS server shared type 7 encrypted key").String,
+										Sensitive:           true,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthBetween(1, 150),

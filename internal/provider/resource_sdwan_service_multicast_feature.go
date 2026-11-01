@@ -531,6 +531,7 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 									},
 									"peer_authentication_password": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set MSDP peer ip password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+										Sensitive:           true,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthBetween(1, 25),

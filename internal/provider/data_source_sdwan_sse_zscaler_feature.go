@@ -208,6 +208,7 @@ func (d *SSEZscalerProfileParcelDataSource) Schema(ctx context.Context, req data
 						},
 						"pre_shared_secret": schema.StringAttribute{
 							MarkdownDescription: "Use preshared key to authenticate IKE peer",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"pre_shared_secret_variable": schema.StringAttribute{

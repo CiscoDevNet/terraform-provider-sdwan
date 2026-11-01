@@ -92,7 +92,7 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
   - Choices: `main`, `aggressive`
   - Default value: `main`
 - `ike_integrity_protocol_variable` (String) Variable name
-- `ike_preshared_key` (String) Use preshared key to authenticate IKE peer
+- `ike_preshared_key` (String, Sensitive) Use preshared key to authenticate IKE peer
 - `ike_preshared_key_variable` (String) Variable name
 - `ike_rekey_interval` (Number) IKE rekey interval <60..86400> seconds
   - Range: `60`-`86400`

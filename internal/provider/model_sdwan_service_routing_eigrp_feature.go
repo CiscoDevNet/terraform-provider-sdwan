@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -585,7 +586,10 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result,
 			if t.String() == "variable" {
 				data.HmacAuthenticationKeyVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.HmacAuthenticationKey = types.StringValue(va.String())
+				// Masked secrets returned by the Manager must never be written into state.
+				if !helpers.IsEncryptedValue(va.String()) {
+					data.HmacAuthenticationKey = types.StringValue(va.String())
+				}
 			}
 		}
 	}
@@ -611,7 +615,10 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result,
 				if t.String() == "variable" {
 					item.KeyStringVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.KeyString = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.KeyString = types.StringValue(va.String())
+					}
 				}
 			}
 			data.Md5Keys = append(data.Md5Keys, item)

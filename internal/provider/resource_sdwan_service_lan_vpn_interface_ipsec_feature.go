@@ -302,6 +302,7 @@ func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Schema(ctx context.Co
 			},
 			"ike_preshared_key": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Use preshared key to authenticate IKE peer").String,
+				Sensitive:           true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 127),
@@ -458,6 +459,35 @@ func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Configure(_ context.C
 
 	r.client = req.ProviderData.(*SdwanProviderData).Client
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
+}
+
+var _ resource.ResourceWithValidateConfig = &ServiceLANVPNInterfaceIPSecProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	var vIkePresharedKey types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("ike_preshared_key"), &vIkePresharedKey)...)
+	var vIkePresharedKeyVariable types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("ike_preshared_key_variable"), &vIkePresharedKeyVariable)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if !vIkePresharedKey.IsUnknown() && !vIkePresharedKeyVariable.IsUnknown() && !vIkePresharedKey.IsNull() && !vIkePresharedKeyVariable.IsNull() {
+		resp.Diagnostics.AddWarning(
+			"Conflicting Attribute Combination",
+			"Both `ike_preshared_key` and `ike_preshared_key_variable` are set. `ike_preshared_key_variable` takes precedence, so the value of `ike_preshared_key` is not sent to the device - but it is still stored in Terraform state. Set only one of them.",
+		)
+	}
 }
 
 // End of section. //template:end model

@@ -438,6 +438,7 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Schema(ctx context.Context, re
 									},
 									"message_digest_key": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+										Sensitive:           true,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthBetween(1, 127),

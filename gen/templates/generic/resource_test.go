@@ -37,28 +37,28 @@ func TestAccSdwan{{camelCase .Name}}(t *testing.T) {
 		var checks []resource.TestCheckFunc
 		{{- $name := .Name }}
 		{{- range  .Attributes}}
-		{{- if and (not .WriteOnly) (not .Encrypted) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue)}}
+		{{- if and (not .WriteOnly) (not .Encrypted) (not .ExcludeTest) (not .Sensitive) (not .TfOnly) (not .Value) (not .TestValue)}}
 		{{- if isNestedListSet .}}
 		{{- $list := .TfName }}
 		{{- if len .TestTags}}
 		if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		{{- end}}
 		{{- range  .Attributes}}
-		{{- if and (not .WriteOnly) (not .Encrypted) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue)}}
+		{{- if and (not .WriteOnly) (not .Encrypted) (not .ExcludeTest) (not .Sensitive) (not .TfOnly) (not .Value) (not .TestValue)}}
 		{{- if isNestedListSet .}}
 		{{- $clist := .TfName }}
 		{{- if len .TestTags}}
 		if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		{{- end}}
 		{{- range  .Attributes}}
-		{{- if and (not .WriteOnly) (not .Encrypted) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue)}}
+		{{- if and (not .WriteOnly) (not .Encrypted) (not .ExcludeTest) (not .Sensitive) (not .TfOnly) (not .Value) (not .TestValue)}}
 		{{- if isNestedListSet .}}
 		{{- $cclist := .TfName }}
 		{{- if len .TestTags}}
 		if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		{{- end}}
 		{{- range  .Attributes}}
-		{{- if and (not .WriteOnly) (not .Encrypted) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue) (not (isListSet .))}}
+		{{- if and (not .WriteOnly) (not .Encrypted) (not .ExcludeTest) (not .Sensitive) (not .TfOnly) (not .Value) (not .TestValue) (not (isListSet .))}}
 		{{- if len .TestTags}}
 		if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 			checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}{{if isList .}}.0{{end}}", "{{.Example}}"))
@@ -135,28 +135,28 @@ const testAccSdwan{{camelCase .Name}}PrerequisitesConfig = `
 func testAccSdwan{{camelCase .Name}}Config_all() string {
 	config := `resource "sdwan_{{snakeCase $name}}" "test" {` + "\n"
 	{{- range  .Attributes}}
-	{{- if and (not .ExcludeTest) (not .TfOnly) (not .Value)}}
+	{{- if and (not .ExcludeTest) (not .Sensitive) (not .TfOnly) (not .Value)}}
 	{{- if isNestedListSet .}}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	config += `	{{.TfName}} = [{` + "\n"
 		{{- range  .Attributes}}
-		{{- if and (not .ExcludeTest) (not .TfOnly) (not .Value)}}
+		{{- if and (not .ExcludeTest) (not .Sensitive) (not .TfOnly) (not .Value)}}
 		{{- if isNestedListSet .}}
 		{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		{{- end}}
 	config += `	  {{.TfName}} = [{` + "\n"
 			{{- range  .Attributes}}
-			{{- if and (not .ExcludeTest) (not .TfOnly) (not .Value)}}
+			{{- if and (not .ExcludeTest) (not .Sensitive) (not .TfOnly) (not .Value)}}
 			{{- if isNestedListSet .}}
 			{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 			{{- end}}
 	config += `      {{.TfName}} = [{` + "\n"
 				{{- range  .Attributes}}
-				{{- if and (not .ExcludeTest) (not .TfOnly) (not .Value)}}
+				{{- if and (not .ExcludeTest) (not .Sensitive) (not .TfOnly) (not .Value)}}
 				{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"

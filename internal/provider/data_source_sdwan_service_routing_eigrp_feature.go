@@ -163,6 +163,7 @@ func (d *ServiceRoutingEIGRPProfileParcelDataSource) Schema(ctx context.Context,
 			},
 			"hmac_authentication_key": schema.StringAttribute{
 				MarkdownDescription: "Set hmac-sha-256 authentication key",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"hmac_authentication_key_variable": schema.StringAttribute{
@@ -184,6 +185,7 @@ func (d *ServiceRoutingEIGRPProfileParcelDataSource) Schema(ctx context.Context,
 						},
 						"key_string": schema.StringAttribute{
 							MarkdownDescription: "Set MD5 key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"key_string_variable": schema.StringAttribute{

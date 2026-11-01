@@ -141,6 +141,25 @@ func GetControllersOutOfSyncCount(ctx context.Context, client *sdwan.Client) (in
 	return res.Get("data.0.ControllersOutOfSync").Int(), nil
 }
 
+// encryptedValueMarker is the prefix Catalyst SD-WAN Manager uses when it returns a
+// masked secret. At least two forms exist in the wild and both must be caught:
+//
+//	$CRYPT_CLUSTER$<base64>==$<base64>==   returned for many profile parcels
+//	$CRYPT$<base64>                        returned e.g. by the Other TrustSec parcel
+//
+// Occasionally only the bare marker is returned. Matching on the common "$CRYPT"
+// prefix covers every observed form; a practitioner's cleartext secret beginning
+// with "$CRYPT" is not a realistic configuration.
+const encryptedValueMarker = "$CRYPT"
+
+// IsEncryptedValue reports whether v is a Catalyst SD-WAN Manager masked
+// secret (e.g. "$CRYPT_CLUSTER$abc==$def==" or "$CRYPT$abc="). Such values must
+// not be written into Terraform state: they can never match the practitioner's
+// cleartext configuration, which would produce a permanent diff.
+func IsEncryptedValue(v string) bool {
+	return strings.HasPrefix(strings.ToUpper(strings.TrimSpace(v)), encryptedValueMarker)
+}
+
 func Must[T any](v T, err error) T {
 	if err != nil {
 		panic(err)

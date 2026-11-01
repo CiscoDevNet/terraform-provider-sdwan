@@ -137,6 +137,7 @@ func (d *CiscoNTPFeatureTemplateDataSource) Schema(ctx context.Context, req data
 						},
 						"value": schema.StringAttribute{
 							MarkdownDescription: "Enter cleartext or AES-encrypted MD5 authentication key",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"value_variable": schema.StringAttribute{
