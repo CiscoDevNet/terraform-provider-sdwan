@@ -185,6 +185,7 @@ attributes:
     example: 3
   - model_name: preSharedSecret
     sensitive: true
+    write_only_tf: true
     tf_name: ike_preshared_key
     example: 123
     minimum_test_value: '"123"'

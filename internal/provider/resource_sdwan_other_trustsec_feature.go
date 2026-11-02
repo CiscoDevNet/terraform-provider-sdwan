@@ -287,12 +287,25 @@ func (r *OtherTrustSecProfileParcelResource) Schema(ctx context.Context, req res
 							Optional:            true,
 						},
 						"preshared_key": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Define Preshared Key type").AddStringEnumDescription("password", "none", "key chain").AddDefaultValueDescription("none").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Define Preshared Key type").AddStringEnumDescription("password", "none", "key chain").AddDefaultValueDescription("none").AddMutualExclusivityDescription("Only one of `preshared_key` and `preshared_key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `preshared_key_wo` together with `preshared_key_wo_version`, which keeps it out of state.").String,
 							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("password", "none", "key chain"),
 							},
+						},
+						"preshared_key_wo": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Define Preshared Key type").AddStringEnumDescription("password", "none", "key chain").AddDefaultValueDescription("none").AddMutualExclusivityDescription("Only one of `preshared_key` and `preshared_key_wo` can be set.").String,
+							Sensitive:           true,
+							WriteOnly:           true,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("password", "none", "key chain"),
+							},
+						},
+						"preshared_key_wo_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `preshared_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
+							Optional:            true,
 						},
 						"mode": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Define Mode of connection").AddStringEnumDescription("local", "peer").AddDefaultValueDescription("local").String,
@@ -461,6 +474,40 @@ func (r *OtherTrustSecProfileParcelResource) ValidateConfig(ctx context.Context,
 			"`sxp_default_password_wo` must be set when `sxp_default_password_wo_version` is used.",
 		)
 	}
+
+	{
+		// Secrets nested in "sxp_connections" are validated per element. A list that cannot be
+		// read as a whole - because it is still unknown at validate time - is skipped rather
+		// than reported, since there is nothing to check yet.
+		var cfgSxpConnections []OtherTrustSecSxpConnections
+		if diags := req.Config.GetAttribute(ctx, path.Root("sxp_connections"), &cfgSxpConnections); !diags.HasError() {
+			for i := range cfgSxpConnections {
+				el := cfgSxpConnections[i]
+
+				// An unknown value is one that is not resolved yet at validate time, for example an
+				// ephemeral resource attribute or a random_password reference. Treat it as "not
+				// decided" rather than "set", otherwise every such configuration trips a false error.
+				if !el.PresharedKey.IsUnknown() && !el.PresharedKeyWo.IsUnknown() && !el.PresharedKey.IsNull() && !el.PresharedKeyWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("Only one of `preshared_key` and `preshared_key_wo` can be set in `sxp_connections` element %d.", i),
+					)
+				}
+				if !el.PresharedKeyWo.IsUnknown() && !el.PresharedKeyWoVersion.IsUnknown() && !el.PresharedKeyWo.IsNull() && el.PresharedKeyWoVersion.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`preshared_key_wo_version` must be set when `preshared_key_wo` is used in `sxp_connections` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i),
+					)
+				}
+				if !el.PresharedKeyWoVersion.IsUnknown() && !el.PresharedKeyWo.IsUnknown() && !el.PresharedKeyWoVersion.IsNull() && el.PresharedKeyWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`preshared_key_wo` must be set when `preshared_key_wo_version` is used in `sxp_connections` element %d.", i),
+					)
+				}
+			}
+		}
+	}
 }
 
 // End of section. //template:end model
@@ -490,6 +537,23 @@ func (r *OtherTrustSecProfileParcelResource) Create(ctx context.Context, req res
 	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("sxp_default_password_wo"), &plan.SxpDefaultPasswordWo)...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values in list "sxp_connections" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgSxpConnections []OtherTrustSecSxpConnections
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("sxp_connections"), &cfgSxpConnections)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.SxpConnections {
+			if i < len(cfgSxpConnections) {
+				plan.SxpConnections[i].PresharedKeyWo = cfgSxpConnections[i].PresharedKeyWo
+			}
+		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
@@ -584,6 +648,23 @@ func (r *OtherTrustSecProfileParcelResource) Update(ctx context.Context, req res
 	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("sxp_default_password_wo"), &plan.SxpDefaultPasswordWo)...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values in list "sxp_connections" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgSxpConnections []OtherTrustSecSxpConnections
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("sxp_connections"), &cfgSxpConnections)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.SxpConnections {
+			if i < len(cfgSxpConnections) {
+				plan.SxpConnections[i].PresharedKeyWo = cfgSxpConnections[i].PresharedKeyWo
+			}
+		}
 	}
 	// Read state
 	diags = req.State.Get(ctx, &state)

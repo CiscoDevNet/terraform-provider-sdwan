@@ -262,6 +262,15 @@ func (d *TransportWANVPNInterfaceIPSECProfileParcelDataSource) Schema(ctx contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"ike_preshared_key_wo": schema.StringAttribute{
+				MarkdownDescription: "Use preshared key to authenticate IKE peer",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"ike_preshared_key_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `ike_preshared_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+				Computed:            true,
+			},
 			"ike_version": schema.Int64Attribute{
 				MarkdownDescription: "IKE Version <1..2>",
 				Computed:            true,

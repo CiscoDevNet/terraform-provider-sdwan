@@ -134,6 +134,15 @@ func (d *SystemRemoteAccessProfileParcelDataSource) Schema(ctx context.Context, 
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"psk_authentication_pre_shared_key_wo": schema.StringAttribute{
+				MarkdownDescription: "PSK Pre Shared Key",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"psk_authentication_pre_shared_key_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `psk_authentication_pre_shared_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+				Computed:            true,
+			},
 			"radius_group_name": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
@@ -157,6 +166,15 @@ func (d *SystemRemoteAccessProfileParcelDataSource) Schema(ctx context.Context, 
 			},
 			"aaa_specify_name_policy_password_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"aaa_specify_name_policy_password_wo": schema.StringAttribute{
+				MarkdownDescription: "",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"aaa_specify_name_policy_password_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `aaa_specify_name_policy_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 				Computed:            true,
 			},
 			"aaa_derive_name_from_peer_identity": schema.StringAttribute{

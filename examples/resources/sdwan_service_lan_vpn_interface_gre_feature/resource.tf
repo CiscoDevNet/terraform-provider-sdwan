@@ -22,7 +22,6 @@ resource "sdwan_service_lan_vpn_interface_gre_feature" "example" {
   ike_rekey_interval              = 14400
   ike_ciphersuite                 = "aes256-cbc-sha1"
   ike_group                       = "16"
-  pre_shared_secret               = "123"
   ike_local_id                    = "xxx"
   ike_remote_id                   = "xxx"
   ipsec_rekey_interval            = 3600

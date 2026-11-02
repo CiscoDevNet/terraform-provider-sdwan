@@ -136,7 +136,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 			},
 			"psk_authentication_pre_shared_key": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("PSK Pre Shared Key, Attribute conditional on `psk_authentication_type` equal to `group`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("PSK Pre Shared Key, Attribute conditional on `psk_authentication_type` equal to `group`").AddMutualExclusivityDescription("Only one of `psk_authentication_pre_shared_key`, `psk_authentication_pre_shared_key_variable` and `psk_authentication_pre_shared_key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `psk_authentication_pre_shared_key_wo` together with `psk_authentication_pre_shared_key_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 				Validators: []validator.String{
@@ -145,6 +145,19 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 			},
 			"psk_authentication_pre_shared_key_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `psk_authentication_type` equal to `group`").String,
+				Optional:            true,
+			},
+			"psk_authentication_pre_shared_key_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("PSK Pre Shared Key, Attribute conditional on `psk_authentication_type` equal to `group`").AddMutualExclusivityDescription("Only one of `psk_authentication_pre_shared_key`, `psk_authentication_pre_shared_key_variable` and `psk_authentication_pre_shared_key_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 25),
+				},
+			},
+			"psk_authentication_pre_shared_key_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `psk_authentication_pre_shared_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"radius_group_name": schema.StringAttribute{
@@ -170,7 +183,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 			},
 			"aaa_specify_name_policy_password": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				MarkdownDescription: helpers.NewAttributeDescription("").AddMutualExclusivityDescription("Only one of `aaa_specify_name_policy_password`, `aaa_specify_name_policy_password_variable` and `aaa_specify_name_policy_password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `aaa_specify_name_policy_password_wo` together with `aaa_specify_name_policy_password_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 				Validators: []validator.String{
@@ -179,6 +192,19 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 			},
 			"aaa_specify_name_policy_password_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"aaa_specify_name_policy_password_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("").AddMutualExclusivityDescription("Only one of `aaa_specify_name_policy_password`, `aaa_specify_name_policy_password_variable` and `aaa_specify_name_policy_password_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 25),
+				},
+			},
+			"aaa_specify_name_policy_password_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `aaa_specify_name_policy_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"aaa_derive_name_from_peer_identity": schema.StringAttribute{
@@ -320,14 +346,45 @@ func (r *SystemRemoteAccessProfileParcelResource) ValidateConfig(ctx context.Con
 	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("psk_authentication_pre_shared_key"), &vPskAuthenticationPreSharedKey)...)
 	var vPskAuthenticationPreSharedKeyVariable types.String
 	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("psk_authentication_pre_shared_key_variable"), &vPskAuthenticationPreSharedKeyVariable)...)
+	var vPskAuthenticationPreSharedKeyWo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("psk_authentication_pre_shared_key_wo"), &vPskAuthenticationPreSharedKeyWo)...)
+	var vPskAuthenticationPreSharedKeyWoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("psk_authentication_pre_shared_key_wo_version"), &vPskAuthenticationPreSharedKeyWoVersion)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vPskAuthenticationPreSharedKey.IsUnknown() && !vPskAuthenticationPreSharedKeyWo.IsUnknown() && !vPskAuthenticationPreSharedKey.IsNull() && !vPskAuthenticationPreSharedKeyWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `psk_authentication_pre_shared_key` and `psk_authentication_pre_shared_key_wo` can be set.",
+		)
+	}
+	if !vPskAuthenticationPreSharedKeyVariable.IsUnknown() && !vPskAuthenticationPreSharedKeyWo.IsUnknown() && !vPskAuthenticationPreSharedKeyVariable.IsNull() && !vPskAuthenticationPreSharedKeyWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"`psk_authentication_pre_shared_key_variable` and `psk_authentication_pre_shared_key_wo` cannot both be set. `psk_authentication_pre_shared_key_variable` defers the value to a device variable, so the write-only value would never be sent.",
+		)
+	}
 	if !vPskAuthenticationPreSharedKey.IsUnknown() && !vPskAuthenticationPreSharedKeyVariable.IsUnknown() && !vPskAuthenticationPreSharedKey.IsNull() && !vPskAuthenticationPreSharedKeyVariable.IsNull() {
 		resp.Diagnostics.AddWarning(
 			"Conflicting Attribute Combination",
 			"Both `psk_authentication_pre_shared_key` and `psk_authentication_pre_shared_key_variable` are set. `psk_authentication_pre_shared_key_variable` takes precedence, so the value of `psk_authentication_pre_shared_key` is not sent to the device - but it is still stored in Terraform state. Set only one of them.",
+		)
+	}
+	if !vPskAuthenticationPreSharedKeyWo.IsUnknown() && !vPskAuthenticationPreSharedKeyWoVersion.IsUnknown() && !vPskAuthenticationPreSharedKeyWo.IsNull() && vPskAuthenticationPreSharedKeyWoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`psk_authentication_pre_shared_key_wo_version` must be set when `psk_authentication_pre_shared_key_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vPskAuthenticationPreSharedKeyWoVersion.IsUnknown() && !vPskAuthenticationPreSharedKeyWo.IsUnknown() && !vPskAuthenticationPreSharedKeyWoVersion.IsNull() && vPskAuthenticationPreSharedKeyWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`psk_authentication_pre_shared_key_wo` must be set when `psk_authentication_pre_shared_key_wo_version` is used.",
 		)
 	}
 
@@ -335,14 +392,45 @@ func (r *SystemRemoteAccessProfileParcelResource) ValidateConfig(ctx context.Con
 	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("aaa_specify_name_policy_password"), &vAaaSpecifyNamePolicyPassword)...)
 	var vAaaSpecifyNamePolicyPasswordVariable types.String
 	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("aaa_specify_name_policy_password_variable"), &vAaaSpecifyNamePolicyPasswordVariable)...)
+	var vAaaSpecifyNamePolicyPasswordWo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("aaa_specify_name_policy_password_wo"), &vAaaSpecifyNamePolicyPasswordWo)...)
+	var vAaaSpecifyNamePolicyPasswordWoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("aaa_specify_name_policy_password_wo_version"), &vAaaSpecifyNamePolicyPasswordWoVersion)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vAaaSpecifyNamePolicyPassword.IsUnknown() && !vAaaSpecifyNamePolicyPasswordWo.IsUnknown() && !vAaaSpecifyNamePolicyPassword.IsNull() && !vAaaSpecifyNamePolicyPasswordWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `aaa_specify_name_policy_password` and `aaa_specify_name_policy_password_wo` can be set.",
+		)
+	}
+	if !vAaaSpecifyNamePolicyPasswordVariable.IsUnknown() && !vAaaSpecifyNamePolicyPasswordWo.IsUnknown() && !vAaaSpecifyNamePolicyPasswordVariable.IsNull() && !vAaaSpecifyNamePolicyPasswordWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"`aaa_specify_name_policy_password_variable` and `aaa_specify_name_policy_password_wo` cannot both be set. `aaa_specify_name_policy_password_variable` defers the value to a device variable, so the write-only value would never be sent.",
+		)
+	}
 	if !vAaaSpecifyNamePolicyPassword.IsUnknown() && !vAaaSpecifyNamePolicyPasswordVariable.IsUnknown() && !vAaaSpecifyNamePolicyPassword.IsNull() && !vAaaSpecifyNamePolicyPasswordVariable.IsNull() {
 		resp.Diagnostics.AddWarning(
 			"Conflicting Attribute Combination",
 			"Both `aaa_specify_name_policy_password` and `aaa_specify_name_policy_password_variable` are set. `aaa_specify_name_policy_password_variable` takes precedence, so the value of `aaa_specify_name_policy_password` is not sent to the device - but it is still stored in Terraform state. Set only one of them.",
+		)
+	}
+	if !vAaaSpecifyNamePolicyPasswordWo.IsUnknown() && !vAaaSpecifyNamePolicyPasswordWoVersion.IsUnknown() && !vAaaSpecifyNamePolicyPasswordWo.IsNull() && vAaaSpecifyNamePolicyPasswordWoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`aaa_specify_name_policy_password_wo_version` must be set when `aaa_specify_name_policy_password_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vAaaSpecifyNamePolicyPasswordWoVersion.IsUnknown() && !vAaaSpecifyNamePolicyPasswordWo.IsUnknown() && !vAaaSpecifyNamePolicyPasswordWoVersion.IsNull() && vAaaSpecifyNamePolicyPasswordWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`aaa_specify_name_policy_password_wo` must be set when `aaa_specify_name_policy_password_wo_version` is used.",
 		)
 	}
 }
@@ -356,6 +444,22 @@ func (r *SystemRemoteAccessProfileParcelResource) Create(ctx context.Context, re
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "psk_authentication_pre_shared_key_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("psk_authentication_pre_shared_key_wo"), &plan.PskAuthenticationPreSharedKeyWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "aaa_specify_name_policy_password_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("aaa_specify_name_policy_password_wo"), &plan.AaaSpecifyNamePolicyPasswordWo)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -434,6 +538,22 @@ func (r *SystemRemoteAccessProfileParcelResource) Update(ctx context.Context, re
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "psk_authentication_pre_shared_key_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("psk_authentication_pre_shared_key_wo"), &plan.PskAuthenticationPreSharedKeyWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "aaa_specify_name_policy_password_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("aaa_specify_name_policy_password_wo"), &plan.AaaSpecifyNamePolicyPasswordWo)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}

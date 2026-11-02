@@ -261,6 +261,15 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
+									"secret_key_wo": schema.StringAttribute{
+										MarkdownDescription: "Set the Radius server shared type 7 encrypted key",
+										Sensitive:           true,
+										Computed:            true,
+									},
+									"secret_key_wo_version": schema.Int64Attribute{
+										MarkdownDescription: "Rotation trigger for `secret_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+										Computed:            true,
+									},
 									"key_enum": schema.StringAttribute{
 										MarkdownDescription: "Type of encyption. To be used for type 6",
 										Computed:            true,
@@ -366,6 +375,15 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 									},
 									"secret_key_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"secret_key_wo": schema.StringAttribute{
+										MarkdownDescription: "Set the TACACS server shared type 7 encrypted key",
+										Sensitive:           true,
+										Computed:            true,
+									},
+									"secret_key_wo_version": schema.Int64Attribute{
+										MarkdownDescription: "Rotation trigger for `secret_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 										Computed:            true,
 									},
 									"key_enum": schema.StringAttribute{

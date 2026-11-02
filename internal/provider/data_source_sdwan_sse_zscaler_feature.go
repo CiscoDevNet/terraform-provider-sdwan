@@ -215,6 +215,15 @@ func (d *SSEZscalerProfileParcelDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
+						"pre_shared_secret_wo": schema.StringAttribute{
+							MarkdownDescription: "Use preshared key to authenticate IKE peer",
+							Sensitive:           true,
+							Computed:            true,
+						},
+						"pre_shared_secret_wo_version": schema.Int64Attribute{
+							MarkdownDescription: "Rotation trigger for `pre_shared_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+							Computed:            true,
+						},
 						"ike_rekey_interval": schema.Int64Attribute{
 							MarkdownDescription: "IKE rekey interval <300..1209600> seconds",
 							Computed:            true,

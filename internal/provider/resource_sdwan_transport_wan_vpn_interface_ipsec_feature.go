@@ -309,7 +309,7 @@ func (r *TransportWANVPNInterfaceIPSECProfileParcelResource) Schema(ctx context.
 				Optional:            true,
 			},
 			"ike_preshared_key": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Use preshared key to authenticate IKE peer").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Use preshared key to authenticate IKE peer").AddMutualExclusivityDescription("Only one of `ike_preshared_key`, `ike_preshared_key_variable` and `ike_preshared_key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `ike_preshared_key_wo` together with `ike_preshared_key_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 				Validators: []validator.String{
@@ -318,6 +318,19 @@ func (r *TransportWANVPNInterfaceIPSECProfileParcelResource) Schema(ctx context.
 			},
 			"ike_preshared_key_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"ike_preshared_key_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Use preshared key to authenticate IKE peer").AddMutualExclusivityDescription("Only one of `ike_preshared_key`, `ike_preshared_key_variable` and `ike_preshared_key_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 127),
+				},
+			},
+			"ike_preshared_key_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `ike_preshared_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"ike_version": schema.Int64Attribute{
@@ -486,14 +499,45 @@ func (r *TransportWANVPNInterfaceIPSECProfileParcelResource) ValidateConfig(ctx 
 	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("ike_preshared_key"), &vIkePresharedKey)...)
 	var vIkePresharedKeyVariable types.String
 	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("ike_preshared_key_variable"), &vIkePresharedKeyVariable)...)
+	var vIkePresharedKeyWo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("ike_preshared_key_wo"), &vIkePresharedKeyWo)...)
+	var vIkePresharedKeyWoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("ike_preshared_key_wo_version"), &vIkePresharedKeyWoVersion)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vIkePresharedKey.IsUnknown() && !vIkePresharedKeyWo.IsUnknown() && !vIkePresharedKey.IsNull() && !vIkePresharedKeyWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `ike_preshared_key` and `ike_preshared_key_wo` can be set.",
+		)
+	}
+	if !vIkePresharedKeyVariable.IsUnknown() && !vIkePresharedKeyWo.IsUnknown() && !vIkePresharedKeyVariable.IsNull() && !vIkePresharedKeyWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"`ike_preshared_key_variable` and `ike_preshared_key_wo` cannot both be set. `ike_preshared_key_variable` defers the value to a device variable, so the write-only value would never be sent.",
+		)
+	}
 	if !vIkePresharedKey.IsUnknown() && !vIkePresharedKeyVariable.IsUnknown() && !vIkePresharedKey.IsNull() && !vIkePresharedKeyVariable.IsNull() {
 		resp.Diagnostics.AddWarning(
 			"Conflicting Attribute Combination",
 			"Both `ike_preshared_key` and `ike_preshared_key_variable` are set. `ike_preshared_key_variable` takes precedence, so the value of `ike_preshared_key` is not sent to the device - but it is still stored in Terraform state. Set only one of them.",
+		)
+	}
+	if !vIkePresharedKeyWo.IsUnknown() && !vIkePresharedKeyWoVersion.IsUnknown() && !vIkePresharedKeyWo.IsNull() && vIkePresharedKeyWoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`ike_preshared_key_wo_version` must be set when `ike_preshared_key_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vIkePresharedKeyWoVersion.IsUnknown() && !vIkePresharedKeyWo.IsUnknown() && !vIkePresharedKeyWoVersion.IsNull() && vIkePresharedKeyWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`ike_preshared_key_wo` must be set when `ike_preshared_key_wo_version` is used.",
 		)
 	}
 }
@@ -507,6 +551,14 @@ func (r *TransportWANVPNInterfaceIPSECProfileParcelResource) Create(ctx context.
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "ike_preshared_key_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("ike_preshared_key_wo"), &plan.IkePresharedKeyWo)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -585,6 +637,14 @@ func (r *TransportWANVPNInterfaceIPSECProfileParcelResource) Update(ctx context.
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "ike_preshared_key_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("ike_preshared_key_wo"), &plan.IkePresharedKeyWo)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}

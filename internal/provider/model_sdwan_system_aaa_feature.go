@@ -127,24 +127,28 @@ type SystemAAARadiusGroupsServers struct {
 	KeyWoVersion       types.Int64  `tfsdk:"key_wo_version"`
 	SecretKey          types.String `tfsdk:"secret_key"`
 	SecretKeyVariable  types.String `tfsdk:"secret_key_variable"`
+	SecretKeyWo        types.String `tfsdk:"secret_key_wo"`
+	SecretKeyWoVersion types.Int64  `tfsdk:"secret_key_wo_version"`
 	KeyEnum            types.String `tfsdk:"key_enum"`
 	KeyType            types.String `tfsdk:"key_type"`
 	KeyTypeVariable    types.String `tfsdk:"key_type_variable"`
 }
 
 type SystemAAATacacsGroupsServers struct {
-	Address           types.String `tfsdk:"address"`
-	Port              types.Int64  `tfsdk:"port"`
-	PortVariable      types.String `tfsdk:"port_variable"`
-	Timeout           types.Int64  `tfsdk:"timeout"`
-	TimeoutVariable   types.String `tfsdk:"timeout_variable"`
-	Key               types.String `tfsdk:"key"`
-	KeyVariable       types.String `tfsdk:"key_variable"`
-	KeyWo             types.String `tfsdk:"key_wo"`
-	KeyWoVersion      types.Int64  `tfsdk:"key_wo_version"`
-	SecretKey         types.String `tfsdk:"secret_key"`
-	SecretKeyVariable types.String `tfsdk:"secret_key_variable"`
-	KeyEnum           types.String `tfsdk:"key_enum"`
+	Address            types.String `tfsdk:"address"`
+	Port               types.Int64  `tfsdk:"port"`
+	PortVariable       types.String `tfsdk:"port_variable"`
+	Timeout            types.Int64  `tfsdk:"timeout"`
+	TimeoutVariable    types.String `tfsdk:"timeout_variable"`
+	Key                types.String `tfsdk:"key"`
+	KeyVariable        types.String `tfsdk:"key_variable"`
+	KeyWo              types.String `tfsdk:"key_wo"`
+	KeyWoVersion       types.Int64  `tfsdk:"key_wo_version"`
+	SecretKey          types.String `tfsdk:"secret_key"`
+	SecretKeyVariable  types.String `tfsdk:"secret_key_variable"`
+	SecretKeyWo        types.String `tfsdk:"secret_key_wo"`
+	SecretKeyWoVersion types.Int64  `tfsdk:"secret_key_wo_version"`
+	KeyEnum            types.String `tfsdk:"key_enum"`
 }
 
 // End of section. //template:end types
@@ -447,6 +451,17 @@ func (data SystemAAA) toBody(ctx context.Context, ver *version.Version) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKey.ValueString())
 						}
 					}
+					if childItem.SecretKeyWo.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "default")
+
+						}
+					} else {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKeyWo.ValueString())
+						}
+					}
 					if childItem.KeyEnum.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.optionType", "default")
@@ -625,6 +640,12 @@ func (data SystemAAA) toBody(ctx context.Context, ver *version.Version) string {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKey.ValueString())
+						}
+					}
+					if !childItem.SecretKeyWo.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKeyWo.ValueString())
 						}
 					}
 					if childItem.KeyEnum.IsNull() {

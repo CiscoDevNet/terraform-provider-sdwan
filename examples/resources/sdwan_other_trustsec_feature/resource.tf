@@ -18,7 +18,6 @@ resource "sdwan_other_trustsec_feature" "example" {
     {
       peer_ip       = "10.0.0.2"
       source_ip     = "10.0.0.1"
-      preshared_key = "none"
       mode          = "peer"
       mode_type     = "speaker"
       vpn_id        = 1

@@ -187,7 +187,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 							Optional:            true,
 						},
 						"radius_server_secret": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server shared secret, Attribute conditional on `security_type` equal to `enterprise`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server shared secret, Attribute conditional on `security_type` equal to `enterprise`").AddMutualExclusivityDescription("Only one of `radius_server_secret`, `radius_server_secret_variable` and `radius_server_secret_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `radius_server_secret_wo` together with `radius_server_secret_wo_version`, which keeps it out of state.").String,
 							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
@@ -196,6 +196,19 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 						},
 						"radius_server_secret_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `security_type` equal to `enterprise`").String,
+							Optional:            true,
+						},
+						"radius_server_secret_wo": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server shared secret, Attribute conditional on `security_type` equal to `enterprise`").AddMutualExclusivityDescription("Only one of `radius_server_secret`, `radius_server_secret_variable` and `radius_server_secret_wo` can be set.").String,
+							Sensitive:           true,
+							WriteOnly:           true,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(8, 32),
+							},
+						},
+						"radius_server_secret_wo_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `radius_server_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 							Optional:            true,
 						},
 						"passphrase": schema.StringAttribute{
@@ -400,6 +413,40 @@ func (r *ServiceWirelessLANProfileParcelResource) ValidateConfig(ctx context.Con
 				// An unknown value is one that is not resolved yet at validate time, for example an
 				// ephemeral resource attribute or a random_password reference. Treat it as "not
 				// decided" rather than "set", otherwise every such configuration trips a false error.
+				if !el.RadiusServerSecret.IsUnknown() && !el.RadiusServerSecretWo.IsUnknown() && !el.RadiusServerSecret.IsNull() && !el.RadiusServerSecretWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("Only one of `radius_server_secret` and `radius_server_secret_wo` can be set in `ssids` element %d.", i),
+					)
+				}
+				if !el.RadiusServerSecretVariable.IsUnknown() && !el.RadiusServerSecretWo.IsUnknown() && !el.RadiusServerSecretVariable.IsNull() && !el.RadiusServerSecretWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("`radius_server_secret_variable` and `radius_server_secret_wo` cannot both be set in `ssids` element %d. `radius_server_secret_variable` defers the value to a device variable, so the write-only value would never be sent.", i),
+					)
+				}
+				if !el.RadiusServerSecret.IsUnknown() && !el.RadiusServerSecretVariable.IsUnknown() && !el.RadiusServerSecret.IsNull() && !el.RadiusServerSecretVariable.IsNull() {
+					resp.Diagnostics.AddWarning(
+						"Conflicting Attribute Combination",
+						fmt.Sprintf("Both `radius_server_secret` and `radius_server_secret_variable` are set in `ssids` element %d. `radius_server_secret_variable` takes precedence, so the value of `radius_server_secret` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i),
+					)
+				}
+				if !el.RadiusServerSecretWo.IsUnknown() && !el.RadiusServerSecretWoVersion.IsUnknown() && !el.RadiusServerSecretWo.IsNull() && el.RadiusServerSecretWoVersion.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`radius_server_secret_wo_version` must be set when `radius_server_secret_wo` is used in `ssids` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i),
+					)
+				}
+				if !el.RadiusServerSecretWoVersion.IsUnknown() && !el.RadiusServerSecretWo.IsUnknown() && !el.RadiusServerSecretWoVersion.IsNull() && el.RadiusServerSecretWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`radius_server_secret_wo` must be set when `radius_server_secret_wo_version` is used in `ssids` element %d.", i),
+					)
+				}
+
+				// An unknown value is one that is not resolved yet at validate time, for example an
+				// ephemeral resource attribute or a random_password reference. Treat it as "not
+				// decided" rather than "set", otherwise every such configuration trips a false error.
 				if !el.Passphrase.IsUnknown() && !el.PassphraseWo.IsUnknown() && !el.Passphrase.IsNull() && !el.PassphraseWo.IsNull() {
 					resp.Diagnostics.AddError(
 						"Invalid Attribute Combination",
@@ -468,6 +515,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Create(ctx context.Context, re
 		}
 		for i := range plan.Ssids {
 			if i < len(cfgSsids) {
+				plan.Ssids[i].RadiusServerSecretWo = cfgSsids[i].RadiusServerSecretWo
 				plan.Ssids[i].PassphraseWo = cfgSsids[i].PassphraseWo
 			}
 		}
@@ -571,6 +619,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Update(ctx context.Context, re
 		}
 		for i := range plan.Ssids {
 			if i < len(cfgSsids) {
+				plan.Ssids[i].RadiusServerSecretWo = cfgSsids[i].RadiusServerSecretWo
 				plan.Ssids[i].PassphraseWo = cfgSsids[i].PassphraseWo
 			}
 		}

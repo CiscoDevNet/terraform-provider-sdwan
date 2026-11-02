@@ -326,6 +326,15 @@ func (d *ServiceLANVPNInterfaceGREProfileParcelDataSource) Schema(ctx context.Co
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"pre_shared_secret_wo": schema.StringAttribute{
+				MarkdownDescription: "Use preshared key to authenticate IKE peer",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"pre_shared_secret_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `pre_shared_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+				Computed:            true,
+			},
 			"ike_local_id": schema.StringAttribute{
 				MarkdownDescription: "IKE ID for the local endpoint. Input IPv4 address, domain name, or email address",
 				Computed:            true,

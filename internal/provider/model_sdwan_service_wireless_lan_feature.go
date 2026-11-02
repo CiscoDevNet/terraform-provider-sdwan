@@ -61,28 +61,30 @@ type ServiceWirelessLAN struct {
 }
 
 type ServiceWirelessLANSsids struct {
-	SsidName                   types.String `tfsdk:"ssid_name"`
-	AdminState                 types.Bool   `tfsdk:"admin_state"`
-	AdminStateVariable         types.String `tfsdk:"admin_state_variable"`
-	BroadcastSsid              types.Bool   `tfsdk:"broadcast_ssid"`
-	BroadcastSsidVariable      types.String `tfsdk:"broadcast_ssid_variable"`
-	VlanId                     types.Int64  `tfsdk:"vlan_id"`
-	VlanIdVariable             types.String `tfsdk:"vlan_id_variable"`
-	RadioType                  types.String `tfsdk:"radio_type"`
-	RadioTypeVariable          types.String `tfsdk:"radio_type_variable"`
-	SecurityType               types.String `tfsdk:"security_type"`
-	RadiusServerIp             types.String `tfsdk:"radius_server_ip"`
-	RadiusServerIpVariable     types.String `tfsdk:"radius_server_ip_variable"`
-	RadiusServerPort           types.Int64  `tfsdk:"radius_server_port"`
-	RadiusServerPortVariable   types.String `tfsdk:"radius_server_port_variable"`
-	RadiusServerSecret         types.String `tfsdk:"radius_server_secret"`
-	RadiusServerSecretVariable types.String `tfsdk:"radius_server_secret_variable"`
-	Passphrase                 types.String `tfsdk:"passphrase"`
-	PassphraseVariable         types.String `tfsdk:"passphrase_variable"`
-	PassphraseWo               types.String `tfsdk:"passphrase_wo"`
-	PassphraseWoVersion        types.Int64  `tfsdk:"passphrase_wo_version"`
-	QosProfile                 types.String `tfsdk:"qos_profile"`
-	QosProfileVariable         types.String `tfsdk:"qos_profile_variable"`
+	SsidName                    types.String `tfsdk:"ssid_name"`
+	AdminState                  types.Bool   `tfsdk:"admin_state"`
+	AdminStateVariable          types.String `tfsdk:"admin_state_variable"`
+	BroadcastSsid               types.Bool   `tfsdk:"broadcast_ssid"`
+	BroadcastSsidVariable       types.String `tfsdk:"broadcast_ssid_variable"`
+	VlanId                      types.Int64  `tfsdk:"vlan_id"`
+	VlanIdVariable              types.String `tfsdk:"vlan_id_variable"`
+	RadioType                   types.String `tfsdk:"radio_type"`
+	RadioTypeVariable           types.String `tfsdk:"radio_type_variable"`
+	SecurityType                types.String `tfsdk:"security_type"`
+	RadiusServerIp              types.String `tfsdk:"radius_server_ip"`
+	RadiusServerIpVariable      types.String `tfsdk:"radius_server_ip_variable"`
+	RadiusServerPort            types.Int64  `tfsdk:"radius_server_port"`
+	RadiusServerPortVariable    types.String `tfsdk:"radius_server_port_variable"`
+	RadiusServerSecret          types.String `tfsdk:"radius_server_secret"`
+	RadiusServerSecretVariable  types.String `tfsdk:"radius_server_secret_variable"`
+	RadiusServerSecretWo        types.String `tfsdk:"radius_server_secret_wo"`
+	RadiusServerSecretWoVersion types.Int64  `tfsdk:"radius_server_secret_wo_version"`
+	Passphrase                  types.String `tfsdk:"passphrase"`
+	PassphraseVariable          types.String `tfsdk:"passphrase_variable"`
+	PassphraseWo                types.String `tfsdk:"passphrase_wo"`
+	PassphraseWoVersion         types.Int64  `tfsdk:"passphrase_wo_version"`
+	QosProfile                  types.String `tfsdk:"qos_profile"`
+	QosProfileVariable          types.String `tfsdk:"qos_profile_variable"`
 }
 
 // End of section. //template:end types
@@ -259,6 +261,12 @@ func (data ServiceWirelessLAN) toBody(ctx context.Context) string {
 				if true && item.SecurityType.ValueString() == "enterprise" {
 					itemBody, _ = sjson.Set(itemBody, "securityConfig.radiusServerSecret.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "securityConfig.radiusServerSecret.value", item.RadiusServerSecret.ValueString())
+				}
+			}
+			if !item.RadiusServerSecretWo.IsNull() {
+				if true && item.SecurityType.ValueString() == "enterprise" {
+					itemBody, _ = sjson.Set(itemBody, "securityConfig.radiusServerSecret.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "securityConfig.radiusServerSecret.value", item.RadiusServerSecretWo.ValueString())
 				}
 			}
 

@@ -114,6 +114,8 @@ type ServiceRoutingOSPFv3IPv6AreasInterfaces struct {
 	AuthenticationSpiVariable     types.String `tfsdk:"authentication_spi_variable"`
 	AuthenticationKey             types.String `tfsdk:"authentication_key"`
 	AuthenticationKeyVariable     types.String `tfsdk:"authentication_key_variable"`
+	AuthenticationKeyWo           types.String `tfsdk:"authentication_key_wo"`
+	AuthenticationKeyWoVersion    types.Int64  `tfsdk:"authentication_key_wo_version"`
 }
 type ServiceRoutingOSPFv3IPv6AreasRanges struct {
 	Prefix              types.String `tfsdk:"prefix"`
@@ -633,6 +635,12 @@ func (data ServiceRoutingOSPFv3IPv6) toBody(ctx context.Context) string {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "authenticationConfig.authKey.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "authenticationConfig.authKey.value", childItem.AuthenticationKey.ValueString())
+						}
+					}
+					if !childItem.AuthenticationKeyWo.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "authenticationConfig.authKey.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "authenticationConfig.authKey.value", childItem.AuthenticationKeyWo.ValueString())
 						}
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "interfaces.-1", itemChildBody)

@@ -171,6 +171,15 @@ func (d *ServiceWirelessLANProfileParcelDataSource) Schema(ctx context.Context, 
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
+						"radius_server_secret_wo": schema.StringAttribute{
+							MarkdownDescription: "Set RADIUS server shared secret",
+							Sensitive:           true,
+							Computed:            true,
+						},
+						"radius_server_secret_wo_version": schema.Int64Attribute{
+							MarkdownDescription: "Rotation trigger for `radius_server_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+							Computed:            true,
+						},
 						"passphrase": schema.StringAttribute{
 							MarkdownDescription: "Set passphrase",
 							Sensitive:           true,

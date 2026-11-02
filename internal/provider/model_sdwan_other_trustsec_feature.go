@@ -73,19 +73,21 @@ type OtherTrustSec struct {
 }
 
 type OtherTrustSecSxpConnections struct {
-	PeerIp              types.String `tfsdk:"peer_ip"`
-	PeerIpVariable      types.String `tfsdk:"peer_ip_variable"`
-	SourceIp            types.String `tfsdk:"source_ip"`
-	SourceIpVariable    types.String `tfsdk:"source_ip_variable"`
-	PresharedKey        types.String `tfsdk:"preshared_key"`
-	Mode                types.String `tfsdk:"mode"`
-	ModeType            types.String `tfsdk:"mode_type"`
-	VpnId               types.Int64  `tfsdk:"vpn_id"`
-	VpnIdVariable       types.String `tfsdk:"vpn_id_variable"`
-	MinHoldTime         types.Int64  `tfsdk:"min_hold_time"`
-	MinHoldTimeVariable types.String `tfsdk:"min_hold_time_variable"`
-	MaxHoldTime         types.Int64  `tfsdk:"max_hold_time"`
-	MaxHoldTimeVariable types.String `tfsdk:"max_hold_time_variable"`
+	PeerIp                types.String `tfsdk:"peer_ip"`
+	PeerIpVariable        types.String `tfsdk:"peer_ip_variable"`
+	SourceIp              types.String `tfsdk:"source_ip"`
+	SourceIpVariable      types.String `tfsdk:"source_ip_variable"`
+	PresharedKey          types.String `tfsdk:"preshared_key"`
+	PresharedKeyWo        types.String `tfsdk:"preshared_key_wo"`
+	PresharedKeyWoVersion types.Int64  `tfsdk:"preshared_key_wo_version"`
+	Mode                  types.String `tfsdk:"mode"`
+	ModeType              types.String `tfsdk:"mode_type"`
+	VpnId                 types.Int64  `tfsdk:"vpn_id"`
+	VpnIdVariable         types.String `tfsdk:"vpn_id_variable"`
+	MinHoldTime           types.Int64  `tfsdk:"min_hold_time"`
+	MinHoldTimeVariable   types.String `tfsdk:"min_hold_time_variable"`
+	MaxHoldTime           types.Int64  `tfsdk:"max_hold_time"`
+	MaxHoldTimeVariable   types.String `tfsdk:"max_hold_time_variable"`
 }
 
 // End of section. //template:end types
@@ -404,6 +406,17 @@ func (data OtherTrustSec) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "connectionPresharedKey.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "connectionPresharedKey.value", item.PresharedKey.ValueString())
+				}
+			}
+			if item.PresharedKeyWo.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "connectionPresharedKey.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "connectionPresharedKey.value", "none")
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "connectionPresharedKey.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "connectionPresharedKey.value", item.PresharedKeyWo.ValueString())
 				}
 			}
 			if item.Mode.IsNull() {
