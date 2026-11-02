@@ -49,6 +49,8 @@ type ServiceWirelessLAN struct {
 	UsernameVariable         types.String              `tfsdk:"username_variable"`
 	Password                 types.String              `tfsdk:"password"`
 	PasswordVariable         types.String              `tfsdk:"password_variable"`
+	PasswordWo               types.String              `tfsdk:"password_wo"`
+	PasswordWoVersion        types.Int64               `tfsdk:"password_wo_version"`
 	MeDynamicIpEnabled       types.Bool                `tfsdk:"me_dynamic_ip_enabled"`
 	MeIpv4Address            types.String              `tfsdk:"me_ipv4_address"`
 	MeIpv4AddressVariable    types.String              `tfsdk:"me_ipv4_address_variable"`
@@ -77,6 +79,8 @@ type ServiceWirelessLANSsids struct {
 	RadiusServerSecretVariable types.String `tfsdk:"radius_server_secret_variable"`
 	Passphrase                 types.String `tfsdk:"passphrase"`
 	PassphraseVariable         types.String `tfsdk:"passphrase_variable"`
+	PassphraseWo               types.String `tfsdk:"passphrase_wo"`
+	PassphraseWoVersion        types.Int64  `tfsdk:"passphrase_wo_version"`
 	QosProfile                 types.String `tfsdk:"qos_profile"`
 	QosProfileVariable         types.String `tfsdk:"qos_profile_variable"`
 }
@@ -269,6 +273,12 @@ func (data ServiceWirelessLAN) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "securityConfig.passphrase.value", item.Passphrase.ValueString())
 				}
 			}
+			if !item.PassphraseWo.IsNull() {
+				if true && item.SecurityType.ValueString() == "personal" {
+					itemBody, _ = sjson.Set(itemBody, "securityConfig.passphrase.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "securityConfig.passphrase.value", item.PassphraseWo.ValueString())
+				}
+			}
 
 			if !item.QosProfileVariable.IsNull() {
 				if true {
@@ -323,6 +333,12 @@ func (data ServiceWirelessLAN) toBody(ctx context.Context) string {
 		if true {
 			body, _ = sjson.Set(body, path+"password.optionType", "global")
 			body, _ = sjson.Set(body, path+"password.value", data.Password.ValueString())
+		}
+	}
+	if !data.PasswordWo.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"password.optionType", "global")
+			body, _ = sjson.Set(body, path+"password.value", data.PasswordWo.ValueString())
 		}
 	}
 	if !data.MeDynamicIpEnabled.IsNull() {

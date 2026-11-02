@@ -59,6 +59,7 @@ attributes:
         example: aes-128-cmac
       - model_name: keyString
         sensitive: true
+        write_only_tf: true
         encrypted: true
         example: abcabc
       - model_name: local

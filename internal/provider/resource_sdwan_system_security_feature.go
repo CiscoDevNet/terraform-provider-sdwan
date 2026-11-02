@@ -220,7 +220,7 @@ func (r *SystemSecurityProfileParcelResource) Schema(ctx context.Context, req re
 							},
 						},
 						"key_string": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Specify the Key String [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Specify the Key String [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `key_string`, `key_string_variable` and `key_string_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `key_string_wo` together with `key_string_wo_version`, which keeps it out of state.").String,
 							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
@@ -229,6 +229,19 @@ func (r *SystemSecurityProfileParcelResource) Schema(ctx context.Context, req re
 						},
 						"key_string_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"key_string_wo": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Specify the Key String [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `key_string`, `key_string_variable` and `key_string_wo` can be set.").String,
+							Sensitive:           true,
+							WriteOnly:           true,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthAtLeast(1),
+							},
+						},
+						"key_string_wo_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `key_string_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 							Optional:            true,
 						},
 						"send_life_time_local": schema.BoolAttribute{
@@ -317,6 +330,66 @@ func (r *SystemSecurityProfileParcelResource) Configure(_ context.Context, req r
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
 
+var _ resource.ResourceWithValidateConfig = &SystemSecurityProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *SystemSecurityProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	{
+		// Secrets nested in "keys" are validated per element. A list that cannot be
+		// read as a whole - because it is still unknown at validate time - is skipped rather
+		// than reported, since there is nothing to check yet.
+		var cfgKeys []SystemSecurityKeys
+		if diags := req.Config.GetAttribute(ctx, path.Root("keys"), &cfgKeys); !diags.HasError() {
+			for i := range cfgKeys {
+				el := cfgKeys[i]
+
+				// An unknown value is one that is not resolved yet at validate time, for example an
+				// ephemeral resource attribute or a random_password reference. Treat it as "not
+				// decided" rather than "set", otherwise every such configuration trips a false error.
+				if !el.KeyString.IsUnknown() && !el.KeyStringWo.IsUnknown() && !el.KeyString.IsNull() && !el.KeyStringWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("Only one of `key_string` and `key_string_wo` can be set in `keys` element %d.", i),
+					)
+				}
+				if !el.KeyStringVariable.IsUnknown() && !el.KeyStringWo.IsUnknown() && !el.KeyStringVariable.IsNull() && !el.KeyStringWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("`key_string_variable` and `key_string_wo` cannot both be set in `keys` element %d. `key_string_variable` defers the value to a device variable, so the write-only value would never be sent.", i),
+					)
+				}
+				if !el.KeyString.IsUnknown() && !el.KeyStringVariable.IsUnknown() && !el.KeyString.IsNull() && !el.KeyStringVariable.IsNull() {
+					resp.Diagnostics.AddWarning(
+						"Conflicting Attribute Combination",
+						fmt.Sprintf("Both `key_string` and `key_string_variable` are set in `keys` element %d. `key_string_variable` takes precedence, so the value of `key_string` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i),
+					)
+				}
+				if !el.KeyStringWo.IsUnknown() && !el.KeyStringWoVersion.IsUnknown() && !el.KeyStringWo.IsNull() && el.KeyStringWoVersion.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`key_string_wo_version` must be set when `key_string_wo` is used in `keys` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i),
+					)
+				}
+				if !el.KeyStringWoVersion.IsUnknown() && !el.KeyStringWo.IsUnknown() && !el.KeyStringWoVersion.IsNull() && el.KeyStringWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`key_string_wo` must be set when `key_string_wo_version` is used in `keys` element %d.", i),
+					)
+				}
+			}
+		}
+	}
+}
+
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
@@ -328,6 +401,23 @@ func (r *SystemSecurityProfileParcelResource) Create(ctx context.Context, req re
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values in list "keys" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgKeys []SystemSecurityKeys
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("keys"), &cfgKeys)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Keys {
+			if i < len(cfgKeys) {
+				plan.Keys[i].KeyStringWo = cfgKeys[i].KeyStringWo
+			}
+		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
@@ -406,6 +496,23 @@ func (r *SystemSecurityProfileParcelResource) Update(ctx context.Context, req re
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values in list "keys" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgKeys []SystemSecurityKeys
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("keys"), &cfgKeys)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Keys {
+			if i < len(cfgKeys) {
+				plan.Keys[i].KeyStringWo = cfgKeys[i].KeyStringWo
+			}
+		}
 	}
 	// Read state
 	diags = req.State.Get(ctx, &state)

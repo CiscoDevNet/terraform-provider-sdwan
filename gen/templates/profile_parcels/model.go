@@ -321,7 +321,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 					itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", {{if .ValueType}}"{{.ValueType}}"{{else}}"default"{{end}})
 					itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.Value}}{{if eq .Type "String"}}"{{end}})
 					}
-					{{- else if or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)}}
+					{{- else if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "StringInt64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .TfOnly)}}
 					{{- if .NoOptionType}}
 					if !childItem.{{toGoName .TfName}}.IsNull() {
 						if true{{buildConditionalLogic .ConditionalAttribute "childItem"}} {

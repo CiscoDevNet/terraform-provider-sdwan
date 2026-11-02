@@ -49,6 +49,8 @@ data "sdwan_service_wireless_lan_feature" "example" {
 - `me_subnet_mask_variable` (String) Variable name
 - `password` (String, Sensitive) Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.
 - `password_variable` (String) Variable name
+- `password_wo` (String, Sensitive) Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.
+- `password_wo_version` (Number) Rotation trigger for `password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `ssids` (Attributes List) Configure Wi-Fi SSID profile (see [below for nested schema](#nestedatt--ssids))
 - `username` (String) Set management username
 - `username_variable` (String) Variable name
@@ -65,6 +67,8 @@ Read-Only:
 - `broadcast_ssid_variable` (String) Variable name
 - `passphrase` (String, Sensitive) Set passphrase
 - `passphrase_variable` (String) Variable name
+- `passphrase_wo` (String, Sensitive) Set passphrase
+- `passphrase_wo_version` (Number) Rotation trigger for `passphrase_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `qos_profile` (String) Select QoS profile
 - `qos_profile_variable` (String) Variable name
 - `radio_type` (String) Select radio type

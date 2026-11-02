@@ -31,8 +31,7 @@ resource "sdwan_service_routing_eigrp_feature" "example" {
   authentication_type = "md5"
   md5_keys = [
     {
-      key_id     = 2
-      key_string = "password123"
+      key_id = 2
     }
   ]
   interfaces = [
@@ -62,6 +61,8 @@ resource "sdwan_service_routing_eigrp_feature" "example" {
 
 ### Optional
 
+> **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
+
 - `authentication_type` (String) Set EIGRP router authentication type
   - Choices: `md5`, `hmac-sha-256`
 - `authentication_type_variable` (String) Variable name
@@ -77,7 +78,12 @@ resource "sdwan_service_routing_eigrp_feature" "example" {
   - Default value: `5`
 - `hello_interval_variable` (String) Variable name
 - `hmac_authentication_key` (String, Sensitive) Set hmac-sha-256 authentication key, Attribute conditional on `authentication_type` equal to `hmac-sha-256`
+  - Only one of `hmac_authentication_key`, `hmac_authentication_key_variable` and `hmac_authentication_key_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `hmac_authentication_key_wo` together with `hmac_authentication_key_wo_version`, which keeps it out of state.
 - `hmac_authentication_key_variable` (String) Variable name, Attribute conditional on `authentication_type` equal to `hmac-sha-256`
+- `hmac_authentication_key_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set hmac-sha-256 authentication key, Attribute conditional on `authentication_type` equal to `hmac-sha-256`
+  - Only one of `hmac_authentication_key`, `hmac_authentication_key_variable` and `hmac_authentication_key_wo` can be set.
+- `hmac_authentication_key_wo_version` (Number) Rotation trigger for `hmac_authentication_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `hold_time` (Number) Set EIGRP hold time
   - Range: `0`-`65535`
   - Default value: `15`
@@ -138,7 +144,12 @@ Optional:
   - Range: `1`-`255`
 - `key_id_variable` (String) Variable name
 - `key_string` (String, Sensitive) Set MD5 key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `key_string`, `key_string_variable` and `key_string_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `key_string_wo` together with `key_string_wo_version`, which keeps it out of state.
 - `key_string_variable` (String) Variable name
+- `key_string_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set MD5 key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `key_string`, `key_string_variable` and `key_string_wo` can be set.
+- `key_string_wo_version` (Number) Rotation trigger for `key_string_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 
 
 <a id="nestedatt--redistributes"></a>

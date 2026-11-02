@@ -170,6 +170,15 @@ func (d *ServiceRoutingEIGRPProfileParcelDataSource) Schema(ctx context.Context,
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"hmac_authentication_key_wo": schema.StringAttribute{
+				MarkdownDescription: "Set hmac-sha-256 authentication key",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"hmac_authentication_key_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `hmac_authentication_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+				Computed:            true,
+			},
 			"md5_keys": schema.ListNestedAttribute{
 				MarkdownDescription: "Set keychain details",
 				Computed:            true,
@@ -190,6 +199,15 @@ func (d *ServiceRoutingEIGRPProfileParcelDataSource) Schema(ctx context.Context,
 						},
 						"key_string_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"key_string_wo": schema.StringAttribute{
+							MarkdownDescription: "Set MD5 key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+							Sensitive:           true,
+							Computed:            true,
+						},
+						"key_string_wo_version": schema.Int64Attribute{
+							MarkdownDescription: "Rotation trigger for `key_string_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 							Computed:            true,
 						},
 					},

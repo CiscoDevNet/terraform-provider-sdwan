@@ -118,6 +118,8 @@ type ServiceRoutingOSPFAreasInterfaces struct {
 	MessageDigestKeyIdVariable       types.String `tfsdk:"message_digest_key_id_variable"`
 	MessageDigestKey                 types.String `tfsdk:"message_digest_key"`
 	MessageDigestKeyVariable         types.String `tfsdk:"message_digest_key_variable"`
+	MessageDigestKeyWo               types.String `tfsdk:"message_digest_key_wo"`
+	MessageDigestKeyWoVersion        types.Int64  `tfsdk:"message_digest_key_wo_version"`
 }
 type ServiceRoutingOSPFAreasRanges struct {
 	IpAddress           types.String `tfsdk:"ip_address"`
@@ -685,6 +687,17 @@ func (data ServiceRoutingOSPF) toBody(ctx context.Context) string {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "md5.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "md5.value", childItem.MessageDigestKey.ValueString())
+						}
+					}
+					if childItem.MessageDigestKeyWo.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "md5.optionType", "default")
+
+						}
+					} else {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "md5.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "md5.value", childItem.MessageDigestKeyWo.ValueString())
 						}
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "interface.-1", itemChildBody)

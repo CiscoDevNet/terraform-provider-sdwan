@@ -44,6 +44,8 @@ data "sdwan_service_routing_eigrp_feature" "example" {
 - `hello_interval_variable` (String) Variable name
 - `hmac_authentication_key` (String, Sensitive) Set hmac-sha-256 authentication key
 - `hmac_authentication_key_variable` (String) Variable name
+- `hmac_authentication_key_wo` (String, Sensitive) Set hmac-sha-256 authentication key
+- `hmac_authentication_key_wo_version` (Number) Rotation trigger for `hmac_authentication_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `hold_time` (Number) Set EIGRP hold time
 - `hold_time_variable` (String) Variable name
 - `interfaces` (Attributes List) Configure IPv4 Static Routes (see [below for nested schema](#nestedatt--interfaces))
@@ -85,6 +87,8 @@ Read-Only:
 - `key_id_variable` (String) Variable name
 - `key_string` (String, Sensitive) Set MD5 key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `key_string_variable` (String) Variable name
+- `key_string_wo` (String, Sensitive) Set MD5 key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `key_string_wo_version` (Number) Rotation trigger for `key_string_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 
 
 <a id="nestedatt--networks"></a>

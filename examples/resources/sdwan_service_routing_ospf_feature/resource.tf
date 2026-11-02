@@ -45,7 +45,6 @@ resource "sdwan_service_routing_ospf_feature" "example" {
           passive_interface          = false
           authentication_type        = "message-digest"
           message_digest_key_id      = 7
-          message_digest_key         = "sdjfhsghbjdjr"
         }
       ]
       ranges = [

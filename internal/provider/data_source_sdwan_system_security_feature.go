@@ -200,6 +200,15 @@ func (d *SystemSecurityProfileParcelDataSource) Schema(ctx context.Context, req 
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
+						"key_string_wo": schema.StringAttribute{
+							MarkdownDescription: "Specify the Key String [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+							Sensitive:           true,
+							Computed:            true,
+						},
+						"key_string_wo_version": schema.Int64Attribute{
+							MarkdownDescription: "Rotation trigger for `key_string_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+							Computed:            true,
+						},
 						"send_life_time_local": schema.BoolAttribute{
 							MarkdownDescription: "Configure Send lifetime Local",
 							Computed:            true,

@@ -199,7 +199,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 							Optional:            true,
 						},
 						"passphrase": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set passphrase, Attribute conditional on `security_type` equal to `personal`").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set passphrase, Attribute conditional on `security_type` equal to `personal`").AddMutualExclusivityDescription("Only one of `passphrase`, `passphrase_variable` and `passphrase_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `passphrase_wo` together with `passphrase_wo_version`, which keeps it out of state.").String,
 							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
@@ -208,6 +208,19 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 						},
 						"passphrase_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `security_type` equal to `personal`").String,
+							Optional:            true,
+						},
+						"passphrase_wo": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set passphrase, Attribute conditional on `security_type` equal to `personal`").AddMutualExclusivityDescription("Only one of `passphrase`, `passphrase_variable` and `passphrase_wo` can be set.").String,
+							Sensitive:           true,
+							WriteOnly:           true,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(8, 63),
+							},
+						},
+						"passphrase_wo_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `passphrase_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 							Optional:            true,
 						},
 						"qos_profile": schema.StringAttribute{
@@ -248,12 +261,22 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 			},
 			"password": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.").AddMutualExclusivityDescription("Only one of `password`, `password_variable` and `password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `password_wo` together with `password_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 			},
 			"password_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"password_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.").AddMutualExclusivityDescription("Only one of `password`, `password_variable` and `password_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+			},
+			"password_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"me_dynamic_ip_enabled": schema.BoolAttribute{
@@ -323,15 +346,92 @@ func (r *ServiceWirelessLANProfileParcelResource) ValidateConfig(ctx context.Con
 	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("password"), &vPassword)...)
 	var vPasswordVariable types.String
 	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("password_variable"), &vPasswordVariable)...)
+	var vPasswordWo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("password_wo"), &vPasswordWo)...)
+	var vPasswordWoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("password_wo_version"), &vPasswordWoVersion)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vPassword.IsUnknown() && !vPasswordWo.IsUnknown() && !vPassword.IsNull() && !vPasswordWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `password` and `password_wo` can be set.",
+		)
+	}
+	if !vPasswordVariable.IsUnknown() && !vPasswordWo.IsUnknown() && !vPasswordVariable.IsNull() && !vPasswordWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"`password_variable` and `password_wo` cannot both be set. `password_variable` defers the value to a device variable, so the write-only value would never be sent.",
+		)
+	}
 	if !vPassword.IsUnknown() && !vPasswordVariable.IsUnknown() && !vPassword.IsNull() && !vPasswordVariable.IsNull() {
 		resp.Diagnostics.AddWarning(
 			"Conflicting Attribute Combination",
 			"Both `password` and `password_variable` are set. `password_variable` takes precedence, so the value of `password` is not sent to the device - but it is still stored in Terraform state. Set only one of them.",
 		)
+	}
+	if !vPasswordWo.IsUnknown() && !vPasswordWoVersion.IsUnknown() && !vPasswordWo.IsNull() && vPasswordWoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`password_wo_version` must be set when `password_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vPasswordWoVersion.IsUnknown() && !vPasswordWo.IsUnknown() && !vPasswordWoVersion.IsNull() && vPasswordWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`password_wo` must be set when `password_wo_version` is used.",
+		)
+	}
+
+	{
+		// Secrets nested in "ssids" are validated per element. A list that cannot be
+		// read as a whole - because it is still unknown at validate time - is skipped rather
+		// than reported, since there is nothing to check yet.
+		var cfgSsids []ServiceWirelessLANSsids
+		if diags := req.Config.GetAttribute(ctx, path.Root("ssids"), &cfgSsids); !diags.HasError() {
+			for i := range cfgSsids {
+				el := cfgSsids[i]
+
+				// An unknown value is one that is not resolved yet at validate time, for example an
+				// ephemeral resource attribute or a random_password reference. Treat it as "not
+				// decided" rather than "set", otherwise every such configuration trips a false error.
+				if !el.Passphrase.IsUnknown() && !el.PassphraseWo.IsUnknown() && !el.Passphrase.IsNull() && !el.PassphraseWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("Only one of `passphrase` and `passphrase_wo` can be set in `ssids` element %d.", i),
+					)
+				}
+				if !el.PassphraseVariable.IsUnknown() && !el.PassphraseWo.IsUnknown() && !el.PassphraseVariable.IsNull() && !el.PassphraseWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("`passphrase_variable` and `passphrase_wo` cannot both be set in `ssids` element %d. `passphrase_variable` defers the value to a device variable, so the write-only value would never be sent.", i),
+					)
+				}
+				if !el.Passphrase.IsUnknown() && !el.PassphraseVariable.IsUnknown() && !el.Passphrase.IsNull() && !el.PassphraseVariable.IsNull() {
+					resp.Diagnostics.AddWarning(
+						"Conflicting Attribute Combination",
+						fmt.Sprintf("Both `passphrase` and `passphrase_variable` are set in `ssids` element %d. `passphrase_variable` takes precedence, so the value of `passphrase` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i),
+					)
+				}
+				if !el.PassphraseWo.IsUnknown() && !el.PassphraseWoVersion.IsUnknown() && !el.PassphraseWo.IsNull() && el.PassphraseWoVersion.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`passphrase_wo_version` must be set when `passphrase_wo` is used in `ssids` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i),
+					)
+				}
+				if !el.PassphraseWoVersion.IsUnknown() && !el.PassphraseWo.IsUnknown() && !el.PassphraseWoVersion.IsNull() && el.PassphraseWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`passphrase_wo` must be set when `passphrase_wo_version` is used in `ssids` element %d.", i),
+					)
+				}
+			}
+		}
 	}
 }
 
@@ -346,6 +446,31 @@ func (r *ServiceWirelessLANProfileParcelResource) Create(ctx context.Context, re
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only value "password_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("password_wo"), &plan.PasswordWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only values in list "ssids" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgSsids []ServiceWirelessLANSsids
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("ssids"), &cfgSsids)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Ssids {
+			if i < len(cfgSsids) {
+				plan.Ssids[i].PassphraseWo = cfgSsids[i].PassphraseWo
+			}
+		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
@@ -424,6 +549,31 @@ func (r *ServiceWirelessLANProfileParcelResource) Update(ctx context.Context, re
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only value "password_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("password_wo"), &plan.PasswordWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only values in list "ssids" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgSsids []ServiceWirelessLANSsids
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("ssids"), &cfgSsids)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Ssids {
+			if i < len(cfgSsids) {
+				plan.Ssids[i].PassphraseWo = cfgSsids[i].PassphraseWo
+			}
+		}
 	}
 	// Read state
 	diags = req.State.Get(ctx, &state)

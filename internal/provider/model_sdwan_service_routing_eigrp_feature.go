@@ -33,28 +33,30 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type ServiceRoutingEIGRP struct {
-	Id                            types.String                       `tfsdk:"id"`
-	Version                       types.Int64                        `tfsdk:"version"`
-	Name                          types.String                       `tfsdk:"name"`
-	Description                   types.String                       `tfsdk:"description"`
-	FeatureProfileId              types.String                       `tfsdk:"feature_profile_id"`
-	AutonomousSystemId            types.Int64                        `tfsdk:"autonomous_system_id"`
-	AutonomousSystemIdVariable    types.String                       `tfsdk:"autonomous_system_id_variable"`
-	Redistributes                 []ServiceRoutingEIGRPRedistributes `tfsdk:"redistributes"`
-	Networks                      []ServiceRoutingEIGRPNetworks      `tfsdk:"networks"`
-	HelloInterval                 types.Int64                        `tfsdk:"hello_interval"`
-	HelloIntervalVariable         types.String                       `tfsdk:"hello_interval_variable"`
-	HoldTime                      types.Int64                        `tfsdk:"hold_time"`
-	HoldTimeVariable              types.String                       `tfsdk:"hold_time_variable"`
-	AuthenticationType            types.String                       `tfsdk:"authentication_type"`
-	AuthenticationTypeVariable    types.String                       `tfsdk:"authentication_type_variable"`
-	HmacAuthenticationKey         types.String                       `tfsdk:"hmac_authentication_key"`
-	HmacAuthenticationKeyVariable types.String                       `tfsdk:"hmac_authentication_key_variable"`
-	Md5Keys                       []ServiceRoutingEIGRPMd5Keys       `tfsdk:"md5_keys"`
-	Interfaces                    []ServiceRoutingEIGRPInterfaces    `tfsdk:"interfaces"`
-	RoutePolicyId                 types.String                       `tfsdk:"route_policy_id"`
-	Filter                        types.Bool                         `tfsdk:"filter"`
-	FilterVariable                types.String                       `tfsdk:"filter_variable"`
+	Id                             types.String                       `tfsdk:"id"`
+	Version                        types.Int64                        `tfsdk:"version"`
+	Name                           types.String                       `tfsdk:"name"`
+	Description                    types.String                       `tfsdk:"description"`
+	FeatureProfileId               types.String                       `tfsdk:"feature_profile_id"`
+	AutonomousSystemId             types.Int64                        `tfsdk:"autonomous_system_id"`
+	AutonomousSystemIdVariable     types.String                       `tfsdk:"autonomous_system_id_variable"`
+	Redistributes                  []ServiceRoutingEIGRPRedistributes `tfsdk:"redistributes"`
+	Networks                       []ServiceRoutingEIGRPNetworks      `tfsdk:"networks"`
+	HelloInterval                  types.Int64                        `tfsdk:"hello_interval"`
+	HelloIntervalVariable          types.String                       `tfsdk:"hello_interval_variable"`
+	HoldTime                       types.Int64                        `tfsdk:"hold_time"`
+	HoldTimeVariable               types.String                       `tfsdk:"hold_time_variable"`
+	AuthenticationType             types.String                       `tfsdk:"authentication_type"`
+	AuthenticationTypeVariable     types.String                       `tfsdk:"authentication_type_variable"`
+	HmacAuthenticationKey          types.String                       `tfsdk:"hmac_authentication_key"`
+	HmacAuthenticationKeyVariable  types.String                       `tfsdk:"hmac_authentication_key_variable"`
+	HmacAuthenticationKeyWo        types.String                       `tfsdk:"hmac_authentication_key_wo"`
+	HmacAuthenticationKeyWoVersion types.Int64                        `tfsdk:"hmac_authentication_key_wo_version"`
+	Md5Keys                        []ServiceRoutingEIGRPMd5Keys       `tfsdk:"md5_keys"`
+	Interfaces                     []ServiceRoutingEIGRPInterfaces    `tfsdk:"interfaces"`
+	RoutePolicyId                  types.String                       `tfsdk:"route_policy_id"`
+	Filter                         types.Bool                         `tfsdk:"filter"`
+	FilterVariable                 types.String                       `tfsdk:"filter_variable"`
 }
 
 type ServiceRoutingEIGRPRedistributes struct {
@@ -71,10 +73,12 @@ type ServiceRoutingEIGRPNetworks struct {
 }
 
 type ServiceRoutingEIGRPMd5Keys struct {
-	KeyId             types.Int64  `tfsdk:"key_id"`
-	KeyIdVariable     types.String `tfsdk:"key_id_variable"`
-	KeyString         types.String `tfsdk:"key_string"`
-	KeyStringVariable types.String `tfsdk:"key_string_variable"`
+	KeyId              types.Int64  `tfsdk:"key_id"`
+	KeyIdVariable      types.String `tfsdk:"key_id_variable"`
+	KeyString          types.String `tfsdk:"key_string"`
+	KeyStringVariable  types.String `tfsdk:"key_string_variable"`
+	KeyStringWo        types.String `tfsdk:"key_string_wo"`
+	KeyStringWoVersion types.Int64  `tfsdk:"key_string_wo_version"`
 }
 
 type ServiceRoutingEIGRPInterfaces struct {
@@ -252,6 +256,17 @@ func (data ServiceRoutingEIGRP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"authentication.authKey.value", data.HmacAuthenticationKey.ValueString())
 		}
 	}
+	if data.HmacAuthenticationKeyWo.IsNull() {
+		if true && data.AuthenticationType.ValueString() == "hmac-sha-256" {
+			body, _ = sjson.Set(body, path+"authentication.authKey.optionType", "default")
+
+		}
+	} else {
+		if true && data.AuthenticationType.ValueString() == "hmac-sha-256" {
+			body, _ = sjson.Set(body, path+"authentication.authKey.optionType", "global")
+			body, _ = sjson.Set(body, path+"authentication.authKey.value", data.HmacAuthenticationKeyWo.ValueString())
+		}
+	}
 	if true && data.AuthenticationType.ValueString() == "md5" {
 		body, _ = sjson.Set(body, path+"authentication.key", []interface{}{})
 		for _, item := range data.Md5Keys {
@@ -288,6 +303,17 @@ func (data ServiceRoutingEIGRP) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "keystring.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "keystring.value", item.KeyString.ValueString())
+				}
+			}
+			if item.KeyStringWo.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "keystring.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "keystring.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "keystring.value", item.KeyStringWo.ValueString())
 				}
 			}
 			body, _ = sjson.SetRaw(body, path+"authentication.key.-1", itemBody)

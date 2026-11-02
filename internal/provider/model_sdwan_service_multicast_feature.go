@@ -145,22 +145,24 @@ type ServiceMulticastIgmpInterfacesJoinGroups struct {
 }
 
 type ServiceMulticastMsdpGroupsPeers struct {
-	PeerIp                             types.String `tfsdk:"peer_ip"`
-	PeerIpVariable                     types.String `tfsdk:"peer_ip_variable"`
-	ConnectionSourceInterface          types.String `tfsdk:"connection_source_interface"`
-	ConnectionSourceInterfaceVariable  types.String `tfsdk:"connection_source_interface_variable"`
-	RemoteAs                           types.Int64  `tfsdk:"remote_as"`
-	RemoteAsVariable                   types.String `tfsdk:"remote_as_variable"`
-	PeerAuthenticationPassword         types.String `tfsdk:"peer_authentication_password"`
-	PeerAuthenticationPasswordVariable types.String `tfsdk:"peer_authentication_password_variable"`
-	KeepaliveInterval                  types.Int64  `tfsdk:"keepalive_interval"`
-	KeepaliveIntervalVariable          types.String `tfsdk:"keepalive_interval_variable"`
-	KeepaliveHoldTime                  types.Int64  `tfsdk:"keepalive_hold_time"`
-	KeepaliveHoldTimeVariable          types.String `tfsdk:"keepalive_hold_time_variable"`
-	SaLimit                            types.Int64  `tfsdk:"sa_limit"`
-	SaLimitVariable                    types.String `tfsdk:"sa_limit_variable"`
-	DefaultPeer                        types.Bool   `tfsdk:"default_peer"`
-	PrefixListId                       types.String `tfsdk:"prefix_list_id"`
+	PeerIp                              types.String `tfsdk:"peer_ip"`
+	PeerIpVariable                      types.String `tfsdk:"peer_ip_variable"`
+	ConnectionSourceInterface           types.String `tfsdk:"connection_source_interface"`
+	ConnectionSourceInterfaceVariable   types.String `tfsdk:"connection_source_interface_variable"`
+	RemoteAs                            types.Int64  `tfsdk:"remote_as"`
+	RemoteAsVariable                    types.String `tfsdk:"remote_as_variable"`
+	PeerAuthenticationPassword          types.String `tfsdk:"peer_authentication_password"`
+	PeerAuthenticationPasswordVariable  types.String `tfsdk:"peer_authentication_password_variable"`
+	PeerAuthenticationPasswordWo        types.String `tfsdk:"peer_authentication_password_wo"`
+	PeerAuthenticationPasswordWoVersion types.Int64  `tfsdk:"peer_authentication_password_wo_version"`
+	KeepaliveInterval                   types.Int64  `tfsdk:"keepalive_interval"`
+	KeepaliveIntervalVariable           types.String `tfsdk:"keepalive_interval_variable"`
+	KeepaliveHoldTime                   types.Int64  `tfsdk:"keepalive_hold_time"`
+	KeepaliveHoldTimeVariable           types.String `tfsdk:"keepalive_hold_time_variable"`
+	SaLimit                             types.Int64  `tfsdk:"sa_limit"`
+	SaLimitVariable                     types.String `tfsdk:"sa_limit_variable"`
+	DefaultPeer                         types.Bool   `tfsdk:"default_peer"`
+	PrefixListId                        types.String `tfsdk:"prefix_list_id"`
 }
 
 // End of section. //template:end types
@@ -777,6 +779,17 @@ func (data ServiceMulticast) toBody(ctx context.Context, ver *version.Version) s
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "password.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "password.value", childItem.PeerAuthenticationPassword.ValueString())
+						}
+					}
+					if childItem.PeerAuthenticationPasswordWo.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "password.optionType", "default")
+
+						}
+					} else {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "password.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "password.value", childItem.PeerAuthenticationPasswordWo.ValueString())
 						}
 					}
 

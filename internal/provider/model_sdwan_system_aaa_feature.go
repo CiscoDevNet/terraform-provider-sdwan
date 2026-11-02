@@ -63,6 +63,8 @@ type SystemAAAUsers struct {
 	NameVariable      types.String               `tfsdk:"name_variable"`
 	Password          types.String               `tfsdk:"password"`
 	PasswordVariable  types.String               `tfsdk:"password_variable"`
+	PasswordWo        types.String               `tfsdk:"password_wo"`
+	PasswordWoVersion types.Int64                `tfsdk:"password_wo_version"`
 	Privilege         types.String               `tfsdk:"privilege"`
 	PrivilegeVariable types.String               `tfsdk:"privilege_variable"`
 	PublicKeys        []SystemAAAUsersPublicKeys `tfsdk:"public_keys"`
@@ -121,6 +123,8 @@ type SystemAAARadiusGroupsServers struct {
 	RetransmitVariable types.String `tfsdk:"retransmit_variable"`
 	Key                types.String `tfsdk:"key"`
 	KeyVariable        types.String `tfsdk:"key_variable"`
+	KeyWo              types.String `tfsdk:"key_wo"`
+	KeyWoVersion       types.Int64  `tfsdk:"key_wo_version"`
 	SecretKey          types.String `tfsdk:"secret_key"`
 	SecretKeyVariable  types.String `tfsdk:"secret_key_variable"`
 	KeyEnum            types.String `tfsdk:"key_enum"`
@@ -136,6 +140,8 @@ type SystemAAATacacsGroupsServers struct {
 	TimeoutVariable   types.String `tfsdk:"timeout_variable"`
 	Key               types.String `tfsdk:"key"`
 	KeyVariable       types.String `tfsdk:"key_variable"`
+	KeyWo             types.String `tfsdk:"key_wo"`
+	KeyWoVersion      types.Int64  `tfsdk:"key_wo_version"`
 	SecretKey         types.String `tfsdk:"secret_key"`
 	SecretKeyVariable types.String `tfsdk:"secret_key_variable"`
 	KeyEnum           types.String `tfsdk:"key_enum"`
@@ -231,6 +237,12 @@ func (data SystemAAA) toBody(ctx context.Context, ver *version.Version) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "password.value", item.Password.ValueString())
+				}
+			}
+			if !item.PasswordWo.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "password.value", item.PasswordWo.ValueString())
 				}
 			}
 
@@ -412,6 +424,12 @@ func (data SystemAAA) toBody(ctx context.Context, ver *version.Version) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "key.value", childItem.Key.ValueString())
 						}
 					}
+					if !childItem.KeyWo.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "key.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "key.value", childItem.KeyWo.ValueString())
+						}
+					}
 
 					if !childItem.SecretKeyVariable.IsNull() {
 						if true {
@@ -589,6 +607,12 @@ func (data SystemAAA) toBody(ctx context.Context, ver *version.Version) string {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "key.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "key.value", childItem.Key.ValueString())
+						}
+					}
+					if !childItem.KeyWo.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "key.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "key.value", childItem.KeyWo.ValueString())
 						}
 					}
 

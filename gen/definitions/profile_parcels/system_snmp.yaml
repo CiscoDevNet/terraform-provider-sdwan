@@ -40,6 +40,7 @@ attributes:
     attributes:
       - model_name: name
         sensitive: true
+        write_only_tf: true
         encrypted: true
         example: example
       - model_name: userLabel
@@ -70,6 +71,7 @@ attributes:
         example: "sha"
       - model_name: authPassword
         sensitive: true
+        write_only_tf: true
         tf_name: authentication_password
         encrypted: true
         example: "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="
@@ -78,6 +80,7 @@ attributes:
         example: "aes-256-cfb-128"
       - model_name: privPassword
         sensitive: true
+        write_only_tf: true
         tf_name: privacy_password
         encrypted: true
         example: "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="

@@ -47,7 +47,6 @@ resource "sdwan_transport_routing_bgp_feature" "example" {
       send_community          = true
       send_extended_community = true
       ebgp_multihop           = 1
-      password                = "myPassword"
       send_label              = true
       explicit_null           = false
       as_override             = false
@@ -77,7 +76,6 @@ resource "sdwan_transport_routing_bgp_feature" "example" {
       send_community          = true
       send_extended_community = true
       ebgp_multihop           = 3
-      password                = "myPassword"
       as_override             = true
       allowas_in_number       = 3
       address_families = [
@@ -277,7 +275,12 @@ Optional:
   - Default value: `false`
 - `next_hop_self_variable` (String) Variable name
 - `password` (String, Sensitive) Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `password`, `password_variable` and `password_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `password_wo` together with `password_wo_version`, which keeps it out of state.
 - `password_variable` (String) Variable name
+- `password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `password`, `password_variable` and `password_wo` can be set.
+- `password_wo_version` (Number) Rotation trigger for `password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `remote_as` (String) Set remote autonomous system number
 - `remote_as_variable` (String) Variable name
 - `send_community` (Boolean) Send community attribute
@@ -409,7 +412,12 @@ Optional:
   - Default value: `false`
 - `next_hop_self_variable` (String) Variable name
 - `password` (String, Sensitive) Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `password`, `password_variable` and `password_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `password_wo` together with `password_wo_version`, which keeps it out of state.
 - `password_variable` (String) Variable name
+- `password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `password`, `password_variable` and `password_wo` can be set.
+- `password_wo_version` (Number) Rotation trigger for `password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `remote_as` (String) Set remote autonomous system number
 - `remote_as_variable` (String) Variable name
 - `send_community` (Boolean) Send community attribute

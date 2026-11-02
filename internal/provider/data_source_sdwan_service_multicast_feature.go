@@ -440,6 +440,15 @@ func (d *ServiceMulticastProfileParcelDataSource) Schema(ctx context.Context, re
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
+									"peer_authentication_password_wo": schema.StringAttribute{
+										MarkdownDescription: "Set MSDP peer ip password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+										Sensitive:           true,
+										Computed:            true,
+									},
+									"peer_authentication_password_wo_version": schema.Int64Attribute{
+										MarkdownDescription: "Rotation trigger for `peer_authentication_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+										Computed:            true,
+									},
 									"keepalive_interval": schema.Int64Attribute{
 										MarkdownDescription: "Set MSDP peer ip keepalive interval",
 										Computed:            true,

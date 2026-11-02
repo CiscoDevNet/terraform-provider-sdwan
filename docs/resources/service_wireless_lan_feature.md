@@ -29,13 +29,11 @@ resource "sdwan_service_wireless_lan_feature" "example" {
       vlan_id        = 1
       radio_type     = "all"
       security_type  = "personal"
-      passphrase     = "MyPassword123"
       qos_profile    = "silver"
     }
   ]
   country               = "GB"
   username              = "user1"
-  password              = "Test@316s13"
   me_dynamic_ip_enabled = true
 }
 ```
@@ -51,6 +49,8 @@ resource "sdwan_service_wireless_lan_feature" "example" {
 - `ssids` (Attributes List) Configure Wi-Fi SSID profile (see [below for nested schema](#nestedatt--ssids))
 
 ### Optional
+
+> **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
 
 - `country` (String) Select country
   - Choices: `AE`, `AR`, `AT`, `AU`, `BA`, `BB`, `BE`, `BG`, `BH`, `BN`, `BO`, `BR`, `BY`, `CA`, `CA2`, `CH`, `CL`, `CM`, `CN`, `CO`, `CR`, `CY`, `CZ`, `DE`, `DK`, `DO`, `DZ`, `EC`, `EE`, `EG`, `ES`, `FI`, `FJ`, `FR`, `GB`, `GH`, `GI`, `GR`, `HK`, `HR`, `HU`, `ID`, `IE`, `IL`, `IO`, `IN`, `IQ`, `IS`, `IT`, `J2`, `J4`, `JM`, `JO`, `KE`, `KN`, `KW`, `KZ`, `LB`, `LI`, `LK`, `LT`, `LU`, `LV`, `LY`, `MA`, `MC`, `ME`, `MK`, `MN`, `MO`, `MT`, `MX`, `MY`, `NL`, `NO`, `NZ`, `OM`, `PA`, `PE`, `PH`, `PH2`, `PK`, `PL`, `PR`, `PT`, `PY`, `QA`, `RO`, `RS`, `RU`, `SA`, `SE`, `SG`, `SI`, `SK`, `TH`, `TN`, `TR`, `TW`, `UA`, `US`, `UY`, `VE`, `VN`, `ZA`
@@ -70,7 +70,12 @@ resource "sdwan_service_wireless_lan_feature" "example" {
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.248.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `me_subnet_mask_variable` (String) Variable name
 - `password` (String, Sensitive) Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.
+  - Only one of `password`, `password_variable` and `password_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `password_wo` together with `password_wo_version`, which keeps it out of state.
 - `password_variable` (String) Variable name
+- `password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.
+  - Only one of `password`, `password_variable` and `password_wo` can be set.
+- `password_wo_version` (Number) Rotation trigger for `password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `username` (String) Set management username
 - `username_variable` (String) Variable name
 
@@ -91,7 +96,12 @@ Optional:
   - Default value: `true`
 - `broadcast_ssid_variable` (String) Variable name
 - `passphrase` (String, Sensitive) Set passphrase, Attribute conditional on `security_type` equal to `personal`
+  - Only one of `passphrase`, `passphrase_variable` and `passphrase_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `passphrase_wo` together with `passphrase_wo_version`, which keeps it out of state.
 - `passphrase_variable` (String) Variable name, Attribute conditional on `security_type` equal to `personal`
+- `passphrase_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set passphrase, Attribute conditional on `security_type` equal to `personal`
+  - Only one of `passphrase`, `passphrase_variable` and `passphrase_wo` can be set.
+- `passphrase_wo_version` (Number) Rotation trigger for `passphrase_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `qos_profile` (String) Select QoS profile
   - Choices: `platinum`, `gold`, `silver`, `bronze`
   - Default value: `silver`

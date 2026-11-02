@@ -118,6 +118,8 @@ type ServiceRoutingBGPIpv4Neighbors struct {
 	EbgpMultihopVariable          types.String                                    `tfsdk:"ebgp_multihop_variable"`
 	Password                      types.String                                    `tfsdk:"password"`
 	PasswordVariable              types.String                                    `tfsdk:"password_variable"`
+	PasswordWo                    types.String                                    `tfsdk:"password_wo"`
+	PasswordWoVersion             types.Int64                                     `tfsdk:"password_wo_version"`
 	SendLabel                     types.Bool                                      `tfsdk:"send_label"`
 	SendLabelVariable             types.String                                    `tfsdk:"send_label_variable"`
 	AsOverride                    types.Bool                                      `tfsdk:"as_override"`
@@ -154,6 +156,8 @@ type ServiceRoutingBGPIpv6Neighbors struct {
 	EbgpMultihopVariable          types.String                                    `tfsdk:"ebgp_multihop_variable"`
 	Password                      types.String                                    `tfsdk:"password"`
 	PasswordVariable              types.String                                    `tfsdk:"password_variable"`
+	PasswordWo                    types.String                                    `tfsdk:"password_wo"`
+	PasswordWoVersion             types.Int64                                     `tfsdk:"password_wo_version"`
 	AsOverride                    types.Bool                                      `tfsdk:"as_override"`
 	AsOverrideVariable            types.String                                    `tfsdk:"as_override_variable"`
 	AllowasInNumber               types.Int64                                     `tfsdk:"allowas_in_number"`
@@ -741,6 +745,17 @@ func (data ServiceRoutingBGP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "password.value", item.Password.ValueString())
 				}
 			}
+			if item.PasswordWo.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "password.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "password.value", item.PasswordWo.ValueString())
+				}
+			}
 
 			if !item.SendLabelVariable.IsNull() {
 				if true {
@@ -1146,6 +1161,17 @@ func (data ServiceRoutingBGP) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "password.value", item.Password.ValueString())
+				}
+			}
+			if item.PasswordWo.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "password.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "password.value", item.PasswordWo.ValueString())
 				}
 			}
 
@@ -3172,5 +3198,3 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 		data.Ipv6Redistributes = resultIpv6Redistributes
 	}
 }
-
-// End of section. //template:end fromBody
