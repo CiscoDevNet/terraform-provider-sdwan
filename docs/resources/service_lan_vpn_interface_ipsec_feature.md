@@ -34,7 +34,6 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
   ipv4_mtu                        = 1500
   dpd_interval                    = 10
   dpd_retries                     = 3
-  ike_preshared_key               = "123"
   ike_version                     = 1
   ike_integrity_protocol          = "main"
   ike_rekey_interval              = 14400
@@ -60,6 +59,8 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
 - `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
 
 ### Optional
+
+> **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
 
 - `application_tunnel_type` (String) Enable Application Tunnel Type
   - Choices: `none`, `sig`
@@ -93,7 +94,12 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
   - Default value: `main`
 - `ike_integrity_protocol_variable` (String) Variable name
 - `ike_preshared_key` (String, Sensitive) Use preshared key to authenticate IKE peer
+  - Only one of `ike_preshared_key`, `ike_preshared_key_variable` and `ike_preshared_key_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `ike_preshared_key_wo` together with `ike_preshared_key_wo_version`, which keeps it out of state.
 - `ike_preshared_key_variable` (String) Variable name
+- `ike_preshared_key_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Use preshared key to authenticate IKE peer
+  - Only one of `ike_preshared_key`, `ike_preshared_key_variable` and `ike_preshared_key_wo` can be set.
+- `ike_preshared_key_wo_version` (Number) Rotation trigger for `ike_preshared_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `ike_rekey_interval` (Number) IKE rekey interval <60..86400> seconds
   - Range: `60`-`86400`
   - Default value: `14400`

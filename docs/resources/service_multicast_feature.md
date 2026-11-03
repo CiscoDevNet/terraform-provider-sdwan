@@ -73,14 +73,13 @@ resource "sdwan_service_multicast_feature" "example" {
       mesh_group_name = "Example"
       peers = [
         {
-          peer_ip                      = "1.2.3.4"
-          connection_source_interface  = "GigabitEthernet1"
-          remote_as                    = 1
-          peer_authentication_password = "Password123!"
-          keepalive_interval           = 15
-          keepalive_hold_time          = 30
-          sa_limit                     = 1
-          default_peer                 = false
+          peer_ip                     = "1.2.3.4"
+          connection_source_interface = "GigabitEthernet1"
+          remote_as                   = 1
+          keepalive_interval          = 15
+          keepalive_hold_time         = 30
+          sa_limit                    = 1
+          default_peer                = false
         }
       ]
     }
@@ -216,7 +215,12 @@ Optional:
   - Range: `1`-`60`
 - `keepalive_interval_variable` (String) Variable name
 - `peer_authentication_password` (String, Sensitive) Set MSDP peer ip password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `peer_authentication_password`, `peer_authentication_password_variable` and `peer_authentication_password_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `peer_authentication_password_wo` together with `peer_authentication_password_wo_version`, which keeps it out of state.
 - `peer_authentication_password_variable` (String) Variable name
+- `peer_authentication_password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set MSDP peer ip password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `peer_authentication_password`, `peer_authentication_password_variable` and `peer_authentication_password_wo` can be set.
+- `peer_authentication_password_wo_version` (Number) Rotation trigger for `peer_authentication_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `peer_ip` (String) Set MSDP peer ip
 - `peer_ip_variable` (String) Variable name
 - `prefix_list_id` (String)

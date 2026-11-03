@@ -35,7 +35,6 @@ resource "sdwan_other_trustsec_feature" "example" {
     {
       peer_ip       = "10.0.0.2"
       source_ip     = "10.0.0.1"
-      preshared_key = "none"
       mode          = "peer"
       mode_type     = "speaker"
       vpn_id        = 1
@@ -141,6 +140,13 @@ Optional:
 - `preshared_key` (String, Sensitive) Define Preshared Key type
   - Choices: `password`, `none`, `key chain`
   - Default value: `none`
+  - Only one of `preshared_key` and `preshared_key_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `preshared_key_wo` together with `preshared_key_wo_version`, which keeps it out of state.
+- `preshared_key_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Define Preshared Key type
+  - Choices: `password`, `none`, `key chain`
+  - Default value: `none`
+  - Only one of `preshared_key` and `preshared_key_wo` can be set.
+- `preshared_key_wo_version` (Number) Rotation trigger for `preshared_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `source_ip` (String) Configure SXP Source IP address (IPv4)
 - `source_ip_variable` (String) Variable name
 - `vpn_id` (Number) Configure Connection VPN (VRF) ID

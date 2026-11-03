@@ -117,7 +117,12 @@ Optional:
   - Default value: `1812`
 - `radius_server_port_variable` (String) Variable name, Attribute conditional on `security_type` equal to `enterprise`
 - `radius_server_secret` (String, Sensitive) Set RADIUS server shared secret, Attribute conditional on `security_type` equal to `enterprise`
+  - Only one of `radius_server_secret`, `radius_server_secret_variable` and `radius_server_secret_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `radius_server_secret_wo` together with `radius_server_secret_wo_version`, which keeps it out of state.
 - `radius_server_secret_variable` (String) Variable name, Attribute conditional on `security_type` equal to `enterprise`
+- `radius_server_secret_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set RADIUS server shared secret, Attribute conditional on `security_type` equal to `enterprise`
+  - Only one of `radius_server_secret`, `radius_server_secret_variable` and `radius_server_secret_wo` can be set.
+- `radius_server_secret_wo_version` (Number) Rotation trigger for `radius_server_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `security_type` (String) Select security type
   - Choices: `enterprise`, `personal`, `open`
 - `ssid_name` (String) Configure wlan SSID

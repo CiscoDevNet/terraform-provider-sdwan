@@ -79,6 +79,8 @@ Read-Only:
 - `radius_server_port_variable` (String) Variable name
 - `radius_server_secret` (String, Sensitive) Set RADIUS server shared secret
 - `radius_server_secret_variable` (String) Variable name
+- `radius_server_secret_wo` (String, Sensitive) Set RADIUS server shared secret
+- `radius_server_secret_wo_version` (Number) Rotation trigger for `radius_server_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `security_type` (String) Select security type
 - `ssid_name` (String) Configure wlan SSID
 - `vlan_id` (Number) Set VLAN ID

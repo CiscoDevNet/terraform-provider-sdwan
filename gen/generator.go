@@ -1891,6 +1891,9 @@ func augmentGenericConfig(config *YamlConfig, type_ string) {
 	for ia := range config.Attributes {
 		augmentGenericAttribute(&config.Attributes[ia])
 	}
+	// Must run after augmentGenericAttribute has populated TfName, so the
+	// "_wo" / "_wo_version" names are derived from the final Terraform name.
+	config.Attributes = rewriteWriteOnlyTF(config.Attributes, false)
 	if config.DsDescription == "" {
 		config.DsDescription = fmt.Sprintf("This data source can read the %s %s.", config.Name, type_)
 	}

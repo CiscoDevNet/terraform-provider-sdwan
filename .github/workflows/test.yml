@@ -41,7 +41,13 @@ jobs:
           cache: true
       - uses: hashicorp/setup-terraform@v4
         with:
-          terraform_version: 1.10.4
+          # Pinned deliberately: this job runs `go generate` followed by
+          # `git diff --exit-code`, so the Terraform version must be reproducible.
+          # A floating version would let a new release change tfplugindocs output
+          # and fail CI on an unrelated commit.
+          # Must be >= 1.11, otherwise tfplugindocs cannot read write-only
+          # attributes and the regenerated docs would not match the committed ones.
+          terraform_version: 1.13.3
       - run: pip install yamale
       - run: yamale -s gen/schema/schema.yaml gen/definitions/
       - run: go mod download
@@ -59,11 +65,19 @@ jobs:
       fail-fast: true
       max-parallel: 1
       matrix:
-        # list whatever Terraform versions here you would like to support
+        # NOTE: the acceptance test step below is currently commented out, so none
+        # of these versions actually execute tests today. The matrix only installs
+        # a toolchain. These entries describe what SHOULD be covered once the step
+        # is re-enabled:
+        #   1.10 - last release WITHOUT write-only support. Verifies the legacy
+        #          secret spelling still works, and that the framework rejects a
+        #          "_wo" attribute instead of silently storing its value.
+        #   1.11 - first release WITH write-only support ("_wo" attributes).
+        #   1.13 - tracks a current release.
         terraform:
-          - "1.0.*"
-          - "1.5.*"
           - "1.10.*"
+          - "1.11.*"
+          - "1.13.*"
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-go@v7

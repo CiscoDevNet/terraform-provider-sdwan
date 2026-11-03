@@ -25,7 +25,6 @@ resource "sdwan_system_aaa_feature" "example" {
   users = [
     {
       name      = "User1"
-      password  = "cisco123"
       privilege = "15"
       public_keys = [
         {
@@ -47,8 +46,6 @@ resource "sdwan_system_aaa_feature" "example" {
           acct_port  = 1813
           timeout    = 5
           retransmit = 3
-          key        = "cisco123"
-          secret_key = "cisco123"
           key_enum   = "7"
           key_type   = "key"
         }
@@ -64,12 +61,10 @@ resource "sdwan_system_aaa_feature" "example" {
       source_interface = "GigabitEthernet0"
       servers = [
         {
-          address    = "1.2.3.4"
-          port       = 49
-          timeout    = 5
-          key        = "cisco123"
-          secret_key = "cisco123"
-          key_enum   = "7"
+          address  = "1.2.3.4"
+          port     = 49
+          timeout  = 5
+          key_enum = "7"
         }
       ]
     }
@@ -195,6 +190,8 @@ Optional:
   - Default value: `1812`
 - `auth_port_variable` (String) Variable name
 - `key` (String, Sensitive) Set the Radius server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `key`, `key_variable` and `key_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `key_wo` together with `key_wo_version`, which keeps it out of state.
 - `key_enum` (String) Type of encyption. To be used for type 6
   - Choices: `6`, `7`
 - `key_type` (String) key type
@@ -202,12 +199,20 @@ Optional:
   - Default value: `key`
 - `key_type_variable` (String) Variable name
 - `key_variable` (String) Variable name
+- `key_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set the Radius server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `key`, `key_variable` and `key_wo` can be set.
+- `key_wo_version` (Number) Rotation trigger for `key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `retransmit` (Number) Configure how many times to contact this Radius server
   - Range: `1`-`100`
   - Default value: `3`
 - `retransmit_variable` (String) Variable name
 - `secret_key` (String, Sensitive) Set the Radius server shared type 7 encrypted key
+  - Only one of `secret_key`, `secret_key_variable` and `secret_key_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `secret_key_wo` together with `secret_key_wo_version`, which keeps it out of state.
 - `secret_key_variable` (String) Variable name
+- `secret_key_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set the Radius server shared type 7 encrypted key
+  - Only one of `secret_key`, `secret_key_variable` and `secret_key_wo` can be set.
+- `secret_key_wo_version` (Number) Rotation trigger for `secret_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `timeout` (Number) Configure how long to wait for replies from the Radius server
   - Range: `1`-`1000`
   - Default value: `5`
@@ -236,15 +241,25 @@ Optional:
 
 - `address` (String) Set IP address of TACACS server
 - `key` (String, Sensitive) Set the TACACS server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `key`, `key_variable` and `key_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `key_wo` together with `key_wo_version`, which keeps it out of state.
 - `key_enum` (String) Type of encyption. To be used for type 6
   - Choices: `6`, `7`
 - `key_variable` (String) Variable name
+- `key_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set the TACACS server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `key`, `key_variable` and `key_wo` can be set.
+- `key_wo_version` (Number) Rotation trigger for `key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `port` (Number) TACACS Port
   - Range: `1`-`65535`
   - Default value: `49`
 - `port_variable` (String) Variable name
 - `secret_key` (String, Sensitive) Set the TACACS server shared type 7 encrypted key
+  - Only one of `secret_key`, `secret_key_variable` and `secret_key_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `secret_key_wo` together with `secret_key_wo_version`, which keeps it out of state.
 - `secret_key_variable` (String) Variable name
+- `secret_key_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set the TACACS server shared type 7 encrypted key
+  - Only one of `secret_key`, `secret_key_variable` and `secret_key_wo` can be set.
+- `secret_key_wo_version` (Number) Rotation trigger for `secret_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `timeout` (Number) Configure how long to wait for replies from the TACACS server
   - Range: `1`-`1000`
   - Default value: `5`
@@ -260,7 +275,12 @@ Optional:
 - `name` (String) Set the username
 - `name_variable` (String) Variable name
 - `password` (String, Sensitive) Set the user password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `password`, `password_variable` and `password_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `password_wo` together with `password_wo_version`, which keeps it out of state.
 - `password_variable` (String) Variable name
+- `password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set the user password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `password`, `password_variable` and `password_wo` can be set.
+- `password_wo_version` (Number) Rotation trigger for `password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `privilege` (String) Set Privilege Level for this user
   - Choices: `1`, `15`
   - Default value: `15`

@@ -69,9 +69,27 @@ func (d *CloudProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 				Sensitive:           true,
 				Computed:            true,
 			},
+			"umbrella_auth_key_v2_wo": schema.StringAttribute{
+				MarkdownDescription: "Umbrella Authentication Key (v2)",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"umbrella_auth_key_v2_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `umbrella_auth_key_v2_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+				Computed:            true,
+			},
 			"umbrella_auth_secret_v2": schema.StringAttribute{
 				MarkdownDescription: "Umbrella Authentication Secret (v2)",
 				Sensitive:           true,
+				Computed:            true,
+			},
+			"umbrella_auth_secret_v2_wo": schema.StringAttribute{
+				MarkdownDescription: "Umbrella Authentication Secret (v2)",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"umbrella_auth_secret_v2_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `umbrella_auth_secret_v2_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 				Computed:            true,
 			},
 			"umbrella_sig_auth_key": schema.StringAttribute{
@@ -79,9 +97,27 @@ func (d *CloudProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 				Sensitive:           true,
 				Computed:            true,
 			},
+			"umbrella_sig_auth_key_wo": schema.StringAttribute{
+				MarkdownDescription: "Umbrella SIG Authentication Key",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"umbrella_sig_auth_key_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `umbrella_sig_auth_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+				Computed:            true,
+			},
 			"umbrella_sig_auth_secret": schema.StringAttribute{
 				MarkdownDescription: "Umbrella SIG Authentication Secret",
 				Sensitive:           true,
+				Computed:            true,
+			},
+			"umbrella_sig_auth_secret_wo": schema.StringAttribute{
+				MarkdownDescription: "Umbrella SIG Authentication Secret",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"umbrella_sig_auth_secret_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `umbrella_sig_auth_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 				Computed:            true,
 			},
 			"umbrella_dns_auth_key": schema.StringAttribute{
@@ -89,9 +125,27 @@ func (d *CloudProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 				Sensitive:           true,
 				Computed:            true,
 			},
+			"umbrella_dns_auth_key_wo": schema.StringAttribute{
+				MarkdownDescription: "Umbrella DNS Authentication Key",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"umbrella_dns_auth_key_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `umbrella_dns_auth_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+				Computed:            true,
+			},
 			"umbrella_dns_auth_secret": schema.StringAttribute{
 				MarkdownDescription: "Umbrella DNS Authentication Secret",
 				Sensitive:           true,
+				Computed:            true,
+			},
+			"umbrella_dns_auth_secret_wo": schema.StringAttribute{
+				MarkdownDescription: "Umbrella DNS Authentication Secret",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"umbrella_dns_auth_secret_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `umbrella_dns_auth_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 				Computed:            true,
 			},
 			"zscaler_organization": schema.StringAttribute{
@@ -107,6 +161,15 @@ func (d *CloudProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 				Sensitive:           true,
 				Computed:            true,
 			},
+			"zscaler_partner_key_wo": schema.StringAttribute{
+				MarkdownDescription: "Zscaler Partner Key",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"zscaler_partner_key_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `zscaler_partner_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+				Computed:            true,
+			},
 			"zscaler_username": schema.StringAttribute{
 				MarkdownDescription: "Zscaler Username",
 				Computed:            true,
@@ -114,6 +177,15 @@ func (d *CloudProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 			"zscaler_password": schema.StringAttribute{
 				MarkdownDescription: "Zscaler Password",
 				Sensitive:           true,
+				Computed:            true,
+			},
+			"zscaler_password_wo": schema.StringAttribute{
+				MarkdownDescription: "Zscaler Password",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"zscaler_password_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `zscaler_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 				Computed:            true,
 			},
 			"cisco_sse_org_id": schema.StringAttribute{
@@ -125,9 +197,27 @@ func (d *CloudProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 				Sensitive:           true,
 				Computed:            true,
 			},
+			"cisco_sse_auth_key_wo": schema.StringAttribute{
+				MarkdownDescription: "Cisco SSE Authentication Key",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"cisco_sse_auth_key_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `cisco_sse_auth_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+				Computed:            true,
+			},
 			"cisco_sse_auth_secret": schema.StringAttribute{
 				MarkdownDescription: "Cisco SSE Authentication Secret",
 				Sensitive:           true,
+				Computed:            true,
+			},
+			"cisco_sse_auth_secret_wo": schema.StringAttribute{
+				MarkdownDescription: "Cisco SSE Authentication Secret",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"cisco_sse_auth_secret_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `cisco_sse_auth_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 				Computed:            true,
 			},
 			"cisco_sse_context_sharing": schema.BoolAttribute{

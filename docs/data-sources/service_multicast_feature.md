@@ -132,6 +132,8 @@ Read-Only:
 - `keepalive_interval_variable` (String) Variable name
 - `peer_authentication_password` (String, Sensitive) Set MSDP peer ip password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `peer_authentication_password_variable` (String) Variable name
+- `peer_authentication_password_wo` (String, Sensitive) Set MSDP peer ip password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `peer_authentication_password_wo_version` (Number) Rotation trigger for `peer_authentication_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `peer_ip` (String) Set MSDP peer ip
 - `peer_ip_variable` (String) Variable name
 - `prefix_list_id` (String)

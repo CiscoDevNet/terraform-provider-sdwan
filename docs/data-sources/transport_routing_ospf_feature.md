@@ -99,6 +99,8 @@ Read-Only:
 - `message_digest_key_id` (Number) Set MD5 message digest key
 - `message_digest_key_id_variable` (String) Variable name
 - `message_digest_key_variable` (String) Variable name
+- `message_digest_key_wo` (String, Sensitive) Set MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `message_digest_key_wo_version` (Number) Rotation trigger for `message_digest_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `name` (String) Set interface name
 - `name_variable` (String) Variable name
 - `network_type` (String) Set the OSPF network type

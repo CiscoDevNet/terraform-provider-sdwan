@@ -17,6 +17,7 @@ attributes:
     example: "123456"
   - model_name: umbrellaAuthKeyV2
     sensitive: true
+    write_only_tf: true
     tf_name: umbrella_auth_key_v2
     type: String
     response_data_path: [data, "0"]
@@ -24,6 +25,7 @@ attributes:
     example: aaaaaa
   - model_name: umbrellaAuthSecretV2
     sensitive: true
+    write_only_tf: true
     tf_name: umbrella_auth_secret_v2
     type: String
     encrypted: true
@@ -32,6 +34,7 @@ attributes:
     example: $CRYPT_CLUSTER$a8nXr4uYaCN66qTQ1737+A==$gjmYVxnKMqvUEjo3BfIGbg==
   - model_name: umbrellaSIGAuthKey
     sensitive: true
+    write_only_tf: true
     tf_name: umbrella_sig_auth_key
     type: String
     response_data_path: [data, "0"]
@@ -39,6 +42,7 @@ attributes:
     example: bbbbbb
   - model_name: umbrellaSIGAuthSecret
     sensitive: true
+    write_only_tf: true
     tf_name: umbrella_sig_auth_secret
     type: String
     write_only: true
@@ -47,6 +51,7 @@ attributes:
     example: secret456
   - model_name: umbrellaDNSAuthKey
     sensitive: true
+    write_only_tf: true
     tf_name: umbrella_dns_auth_key
     type: String
     response_data_path: [data, "0"]
@@ -54,6 +59,7 @@ attributes:
     example: cccccc
   - model_name: umbrellaDNSAuthSecret
     sensitive: true
+    write_only_tf: true
     tf_name: umbrella_dns_auth_secret
     type: String
     write_only: true
@@ -74,6 +80,7 @@ attributes:
     example: zscaler.net
   - model_name: zscalerPartnerKey
     sensitive: true
+    write_only_tf: true
     tf_name: zscaler_partner_key
     type: String
     response_data_path: [data, "0"]
@@ -87,6 +94,7 @@ attributes:
     example: user1
   - model_name: zscalerPassword
     sensitive: true
+    write_only_tf: true
     tf_name: zscaler_password
     type: String
     write_only: true
@@ -102,6 +110,7 @@ attributes:
     example: "323456"
   - model_name: ciscoSSEAuthKey
     sensitive: true
+    write_only_tf: true
     tf_name: cisco_sse_auth_key
     type: String
     response_data_path: [data, "0"]
@@ -109,6 +118,7 @@ attributes:
     example: "33333444"
   - model_name: ciscoSSEAuthSecret
     sensitive: true
+    write_only_tf: true
     tf_name: cisco_sse_auth_secret
     type: String
     encrypted: true

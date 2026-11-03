@@ -49,6 +49,8 @@ resource "sdwan_system_remote_access_feature" "example" {
 
 ### Optional
 
+> **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
+
 - `aaa_derive_name_from_peer_domain` (String) , Attribute conditional on `connection_type_ssl` equal to `false`
 - `aaa_derive_name_from_peer_domain_variable` (String) Variable name, Attribute conditional on `connection_type_ssl` equal to `false`
 - `aaa_derive_name_from_peer_identity` (String) , Attribute conditional on `connection_type_ssl` equal to `false`
@@ -58,8 +60,11 @@ resource "sdwan_system_remote_access_feature" "example" {
 - `aaa_enable_accounting_variable` (String) Variable name
 - `aaa_specify_name_policy_name` (String)
 - `aaa_specify_name_policy_name_variable` (String) Variable name
-- `aaa_specify_name_policy_password` (String, Sensitive)
+- `aaa_specify_name_policy_password` (String, Sensitive) - Only one of `aaa_specify_name_policy_password`, `aaa_specify_name_policy_password_variable` and `aaa_specify_name_policy_password_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `aaa_specify_name_policy_password_wo` together with `aaa_specify_name_policy_password_wo_version`, which keeps it out of state.
 - `aaa_specify_name_policy_password_variable` (String) Variable name
+- `aaa_specify_name_policy_password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) - Only one of `aaa_specify_name_policy_password`, `aaa_specify_name_policy_password_variable` and `aaa_specify_name_policy_password_wo` can be set.
+- `aaa_specify_name_policy_password_wo_version` (Number) Rotation trigger for `aaa_specify_name_policy_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `any_connect_eap_authentication_type` (String) , Attribute conditional on `connection_type_ssl` equal to `false`
   - Choices: `user`, `device`
 - `connection_type_ssl` (Boolean) Enabled SSL VPN
@@ -100,7 +105,12 @@ resource "sdwan_system_remote_access_feature" "example" {
   - Default value: `1024`
 - `ipv6_pool_size_variable` (String) Variable name
 - `psk_authentication_pre_shared_key` (String, Sensitive) PSK Pre Shared Key, Attribute conditional on `psk_authentication_type` equal to `group`
+  - Only one of `psk_authentication_pre_shared_key`, `psk_authentication_pre_shared_key_variable` and `psk_authentication_pre_shared_key_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `psk_authentication_pre_shared_key_wo` together with `psk_authentication_pre_shared_key_wo_version`, which keeps it out of state.
 - `psk_authentication_pre_shared_key_variable` (String) Variable name, Attribute conditional on `psk_authentication_type` equal to `group`
+- `psk_authentication_pre_shared_key_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) PSK Pre Shared Key, Attribute conditional on `psk_authentication_type` equal to `group`
+  - Only one of `psk_authentication_pre_shared_key`, `psk_authentication_pre_shared_key_variable` and `psk_authentication_pre_shared_key_wo` can be set.
+- `psk_authentication_pre_shared_key_wo_version` (Number) Rotation trigger for `psk_authentication_pre_shared_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `psk_authentication_type` (String) PSK Selection, Attribute conditional on `connection_type_ssl` equal to `false`
   - Choices: `aaa`, `group`
 - `psk_authentication_type_variable` (String) Variable name, Attribute conditional on `connection_type_ssl` equal to `false`

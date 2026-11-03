@@ -21,7 +21,6 @@ resource "sdwan_other_thousandeyes_feature" "example" {
   feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   virtual_application = [
     {
-      account_group_token    = "qwerqwerqwerqwerqwerqwerqwerqwer"
       vpn                    = 1
       management_ip          = "10.0.0.2"
       management_subnet_mask = "255.255.255.0"
@@ -60,7 +59,12 @@ resource "sdwan_other_thousandeyes_feature" "example" {
 Optional:
 
 - `account_group_token` (String, Sensitive) Set the Account Group Token
+  - Only one of `account_group_token`, `account_group_token_variable` and `account_group_token_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `account_group_token_wo` together with `account_group_token_wo_version`, which keeps it out of state.
 - `account_group_token_variable` (String) Variable name
+- `account_group_token_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set the Account Group Token
+  - Only one of `account_group_token`, `account_group_token_variable` and `account_group_token_wo` can be set.
+- `account_group_token_wo_version` (Number) Rotation trigger for `account_group_token_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `agent_default_gateway` (String) Set the Agent default gateway
 - `agent_default_gateway_variable` (String) Variable name
 - `hostname` (String) Set the host name

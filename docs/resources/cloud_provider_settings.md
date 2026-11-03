@@ -17,20 +17,10 @@ This resource can manage a Cloud Provider Settings .
 ```terraform
 resource "sdwan_cloud_provider_settings" "example" {
   umbrella_org_id           = "123456"
-  umbrella_auth_key_v2      = "aaaaaa"
-  umbrella_auth_secret_v2   = "$CRYPT_CLUSTER$a8nXr4uYaCN66qTQ1737+A==$gjmYVxnKMqvUEjo3BfIGbg=="
-  umbrella_sig_auth_key     = "bbbbbb"
-  umbrella_sig_auth_secret  = "secret456"
-  umbrella_dns_auth_key     = "cccccc"
-  umbrella_dns_auth_secret  = "secret789"
   zscaler_organization      = "z223456"
   zscaler_partner_base_uri  = "zscaler.net"
-  zscaler_partner_key       = "secret012"
   zscaler_username          = "user1"
-  zscaler_password          = "pass123"
   cisco_sse_org_id          = "323456"
-  cisco_sse_auth_key        = "33333444"
-  cisco_sse_auth_secret     = "$CRYPT_CLUSTER$Gg4nVpFdldXga1hLKhdJrA==$hiFPirWJnqNxMq3l/m1ekw=="
   cisco_sse_context_sharing = true
 }
 ```
@@ -40,22 +30,74 @@ resource "sdwan_cloud_provider_settings" "example" {
 
 ### Optional
 
+> **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
+
 - `cisco_sse_auth_key` (String, Sensitive) Cisco SSE Authentication Key
+  - Only one of `cisco_sse_auth_key` and `cisco_sse_auth_key_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `cisco_sse_auth_key_wo` together with `cisco_sse_auth_key_wo_version`, which keeps it out of state.
+- `cisco_sse_auth_key_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Cisco SSE Authentication Key
+  - Only one of `cisco_sse_auth_key` and `cisco_sse_auth_key_wo` can be set.
+- `cisco_sse_auth_key_wo_version` (Number) Rotation trigger for `cisco_sse_auth_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `cisco_sse_auth_secret` (String, Sensitive) Cisco SSE Authentication Secret
+  - Only one of `cisco_sse_auth_secret` and `cisco_sse_auth_secret_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `cisco_sse_auth_secret_wo` together with `cisco_sse_auth_secret_wo_version`, which keeps it out of state.
+- `cisco_sse_auth_secret_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Cisco SSE Authentication Secret
+  - Only one of `cisco_sse_auth_secret` and `cisco_sse_auth_secret_wo` can be set.
+- `cisco_sse_auth_secret_wo_version` (Number) Rotation trigger for `cisco_sse_auth_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `cisco_sse_context_sharing` (Boolean) Enable Cisco SSE Context Sharing
   - Default value: `false`
 - `cisco_sse_org_id` (String) Cisco SSE Organization ID (numeric string)
 - `umbrella_auth_key_v2` (String, Sensitive) Umbrella Authentication Key (v2)
+  - Only one of `umbrella_auth_key_v2` and `umbrella_auth_key_v2_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `umbrella_auth_key_v2_wo` together with `umbrella_auth_key_v2_wo_version`, which keeps it out of state.
+- `umbrella_auth_key_v2_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Umbrella Authentication Key (v2)
+  - Only one of `umbrella_auth_key_v2` and `umbrella_auth_key_v2_wo` can be set.
+- `umbrella_auth_key_v2_wo_version` (Number) Rotation trigger for `umbrella_auth_key_v2_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `umbrella_auth_secret_v2` (String, Sensitive) Umbrella Authentication Secret (v2)
+  - Only one of `umbrella_auth_secret_v2` and `umbrella_auth_secret_v2_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `umbrella_auth_secret_v2_wo` together with `umbrella_auth_secret_v2_wo_version`, which keeps it out of state.
+- `umbrella_auth_secret_v2_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Umbrella Authentication Secret (v2)
+  - Only one of `umbrella_auth_secret_v2` and `umbrella_auth_secret_v2_wo` can be set.
+- `umbrella_auth_secret_v2_wo_version` (Number) Rotation trigger for `umbrella_auth_secret_v2_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `umbrella_dns_auth_key` (String, Sensitive) Umbrella DNS Authentication Key
+  - Only one of `umbrella_dns_auth_key` and `umbrella_dns_auth_key_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `umbrella_dns_auth_key_wo` together with `umbrella_dns_auth_key_wo_version`, which keeps it out of state.
+- `umbrella_dns_auth_key_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Umbrella DNS Authentication Key
+  - Only one of `umbrella_dns_auth_key` and `umbrella_dns_auth_key_wo` can be set.
+- `umbrella_dns_auth_key_wo_version` (Number) Rotation trigger for `umbrella_dns_auth_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `umbrella_dns_auth_secret` (String, Sensitive) Umbrella DNS Authentication Secret
+  - Only one of `umbrella_dns_auth_secret` and `umbrella_dns_auth_secret_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `umbrella_dns_auth_secret_wo` together with `umbrella_dns_auth_secret_wo_version`, which keeps it out of state.
+- `umbrella_dns_auth_secret_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Umbrella DNS Authentication Secret
+  - Only one of `umbrella_dns_auth_secret` and `umbrella_dns_auth_secret_wo` can be set.
+- `umbrella_dns_auth_secret_wo_version` (Number) Rotation trigger for `umbrella_dns_auth_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `umbrella_org_id` (String) Umbrella Organization ID (numeric string)
 - `umbrella_sig_auth_key` (String, Sensitive) Umbrella SIG Authentication Key
+  - Only one of `umbrella_sig_auth_key` and `umbrella_sig_auth_key_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `umbrella_sig_auth_key_wo` together with `umbrella_sig_auth_key_wo_version`, which keeps it out of state.
+- `umbrella_sig_auth_key_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Umbrella SIG Authentication Key
+  - Only one of `umbrella_sig_auth_key` and `umbrella_sig_auth_key_wo` can be set.
+- `umbrella_sig_auth_key_wo_version` (Number) Rotation trigger for `umbrella_sig_auth_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `umbrella_sig_auth_secret` (String, Sensitive) Umbrella SIG Authentication Secret
+  - Only one of `umbrella_sig_auth_secret` and `umbrella_sig_auth_secret_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `umbrella_sig_auth_secret_wo` together with `umbrella_sig_auth_secret_wo_version`, which keeps it out of state.
+- `umbrella_sig_auth_secret_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Umbrella SIG Authentication Secret
+  - Only one of `umbrella_sig_auth_secret` and `umbrella_sig_auth_secret_wo` can be set.
+- `umbrella_sig_auth_secret_wo_version` (Number) Rotation trigger for `umbrella_sig_auth_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `zscaler_organization` (String) Zscaler Organization
 - `zscaler_partner_base_uri` (String) Zscaler Partner Base URI
 - `zscaler_partner_key` (String, Sensitive) Zscaler Partner Key
+  - Only one of `zscaler_partner_key` and `zscaler_partner_key_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `zscaler_partner_key_wo` together with `zscaler_partner_key_wo_version`, which keeps it out of state.
+- `zscaler_partner_key_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Zscaler Partner Key
+  - Only one of `zscaler_partner_key` and `zscaler_partner_key_wo` can be set.
+- `zscaler_partner_key_wo_version` (Number) Rotation trigger for `zscaler_partner_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `zscaler_password` (String, Sensitive) Zscaler Password
+  - Only one of `zscaler_password` and `zscaler_password_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `zscaler_password_wo` together with `zscaler_password_wo_version`, which keeps it out of state.
+- `zscaler_password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Zscaler Password
+  - Only one of `zscaler_password` and `zscaler_password_wo` can be set.
+- `zscaler_password_wo_version` (Number) Rotation trigger for `zscaler_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `zscaler_username` (String) Zscaler Username
 
 ### Read-Only

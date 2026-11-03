@@ -43,6 +43,8 @@ data "sdwan_system_remote_access_feature" "example" {
 - `aaa_specify_name_policy_name_variable` (String) Variable name
 - `aaa_specify_name_policy_password` (String, Sensitive)
 - `aaa_specify_name_policy_password_variable` (String) Variable name
+- `aaa_specify_name_policy_password_wo` (String, Sensitive)
+- `aaa_specify_name_policy_password_wo_version` (Number) Rotation trigger for `aaa_specify_name_policy_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `any_connect_eap_authentication_type` (String)
 - `connection_type_ssl` (Boolean) Enabled SSL VPN
 - `description` (String) The description of the Feature
@@ -70,6 +72,8 @@ data "sdwan_system_remote_access_feature" "example" {
 - `ipv6_pool_size_variable` (String) Variable name
 - `psk_authentication_pre_shared_key` (String, Sensitive) PSK Pre Shared Key
 - `psk_authentication_pre_shared_key_variable` (String) Variable name
+- `psk_authentication_pre_shared_key_wo` (String, Sensitive) PSK Pre Shared Key
+- `psk_authentication_pre_shared_key_wo_version` (Number) Rotation trigger for `psk_authentication_pre_shared_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `psk_authentication_type` (String) PSK Selection
 - `psk_authentication_type_variable` (String) Variable name
 - `radius_group_name` (String)

@@ -138,6 +138,8 @@ Read-Only:
 - `pre_shared_key_dynamic` (Boolean) Use preshared key to authenticate IKE peer
 - `pre_shared_secret` (String, Sensitive) Use preshared key to authenticate IKE peer
 - `pre_shared_secret_variable` (String) Variable name
+- `pre_shared_secret_wo` (String, Sensitive) Use preshared key to authenticate IKE peer
+- `pre_shared_secret_wo_version` (Number) Rotation trigger for `pre_shared_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `shutdown` (Boolean) Administrative state
 - `tcp_mss_adjust` (Number) TCP MSS on SYN packets, in bytes
 - `tcp_mss_adjust_variable` (String) Variable name

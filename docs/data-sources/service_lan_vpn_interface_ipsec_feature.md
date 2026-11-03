@@ -56,6 +56,8 @@ data "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
 - `ike_integrity_protocol_variable` (String) Variable name
 - `ike_preshared_key` (String, Sensitive) Use preshared key to authenticate IKE peer
 - `ike_preshared_key_variable` (String) Variable name
+- `ike_preshared_key_wo` (String, Sensitive) Use preshared key to authenticate IKE peer
+- `ike_preshared_key_wo_version` (Number) Rotation trigger for `ike_preshared_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `ike_rekey_interval` (Number) IKE rekey interval <60..86400> seconds
 - `ike_rekey_interval_variable` (String) Variable name
 - `ike_version` (Number) IKE Version <1..2>

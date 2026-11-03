@@ -62,7 +62,6 @@ resource "sdwan_service_routing_ospf_feature" "example" {
           passive_interface          = false
           authentication_type        = "message-digest"
           message_digest_key_id      = 7
-          message_digest_key         = "sdjfhsghbjdjr"
         }
       ]
       ranges = [
@@ -187,10 +186,15 @@ Optional:
   - Default value: `5`
 - `lsa_retransmit_interval_variable` (String) Variable name
 - `message_digest_key` (String, Sensitive) Set MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `message_digest_key`, `message_digest_key_variable` and `message_digest_key_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `message_digest_key_wo` together with `message_digest_key_wo_version`, which keeps it out of state.
 - `message_digest_key_id` (Number) Set MD5 message digest key
   - Range: `1`-`255`
 - `message_digest_key_id_variable` (String) Variable name
 - `message_digest_key_variable` (String) Variable name
+- `message_digest_key_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `message_digest_key`, `message_digest_key_variable` and `message_digest_key_wo` can be set.
+- `message_digest_key_wo_version` (Number) Rotation trigger for `message_digest_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `name` (String) Set interface name
 - `name_variable` (String) Variable name
 - `network_type` (String) Set the OSPF network type

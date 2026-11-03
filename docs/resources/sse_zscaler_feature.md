@@ -238,7 +238,12 @@ Optional:
 - `perfect_forward_secrecy_variable` (String) Variable name
 - `pre_shared_key_dynamic` (Boolean) Use preshared key to authenticate IKE peer
 - `pre_shared_secret` (String, Sensitive) Use preshared key to authenticate IKE peer
+  - Only one of `pre_shared_secret`, `pre_shared_secret_variable` and `pre_shared_secret_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `pre_shared_secret_wo` together with `pre_shared_secret_wo_version`, which keeps it out of state.
 - `pre_shared_secret_variable` (String) Variable name
+- `pre_shared_secret_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Use preshared key to authenticate IKE peer
+  - Only one of `pre_shared_secret`, `pre_shared_secret_variable` and `pre_shared_secret_wo` can be set.
+- `pre_shared_secret_wo_version` (Number) Rotation trigger for `pre_shared_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `shutdown` (Boolean) Administrative state
   - Default value: `false`
 - `tcp_mss_adjust` (Number) TCP MSS on SYN packets, in bytes
