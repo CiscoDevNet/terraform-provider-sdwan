@@ -45,6 +45,7 @@ resource "sdwan_configuration_group_devices" "example" {
 
 - `configuration_group_version` (Number) The version of the associated configuration group. Set this to `sdwan_configuration_group.<name>.version` so that a change to the configuration group is deployed in the same apply: from SD-WAN Manager 20.15 to the devices the Manager reports out of date, on older versions to all devices managed by this resource.
 - `devices` (Attributes List) List of devices (see [below for nested schema](#nestedatt--devices))
+- `retain_devices` (Set of String) Device IDs this resource stops managing without releasing them, for a hand-over to another state. A device removed from `devices` and listed here is dropped from the state but stays associated with the configuration group, so it is not disassociated and needs no deploy. A device can't be in `devices` and in `retain_devices` at the same time. Not needed with a single state.
 
 ### Read-Only
 

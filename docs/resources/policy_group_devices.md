@@ -34,6 +34,7 @@ resource "sdwan_policy_group_devices" "example" {
 
 - `devices` (Attributes List) List of devices (see [below for nested schema](#nestedatt--devices))
 - `policy_group_version` (Number) The version of the associated policy group. Set this to `sdwan_policy_group.<name>.version` so that a change to the policy group is deployed in the same apply: from SD-WAN Manager 20.15 to the devices the Manager reports out of date, on older versions to all devices managed by this resource.
+- `retain_devices` (Set of String) Device IDs this resource stops managing without releasing them, for a hand-over to another state. A device removed from `devices` and listed here is dropped from the state but stays associated with the policy group, so it is not disassociated and needs no deploy. A device can't be in `devices` and in `retain_devices` at the same time. Not needed with a single state.
 
 ### Read-Only
 

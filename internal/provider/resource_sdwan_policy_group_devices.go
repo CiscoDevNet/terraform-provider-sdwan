@@ -96,6 +96,11 @@ func (r *PolicyGroupDevicesResource) Schema(ctx context.Context, req resource.Sc
 				MarkdownDescription: helpers.NewAttributeDescription("The version of the associated policy group. Set this to `sdwan_policy_group.<name>.version` so that a change to the policy group is deployed in the same apply: from SD-WAN Manager 20.15 to the devices the Manager reports out of date, on older versions to all devices managed by this resource.").String,
 				Optional:            true,
 			},
+			"retain_devices": schema.SetAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Device IDs this resource stops managing without releasing them, for a hand-over to another state. A device removed from `devices` and listed here is dropped from the state but stays associated with the policy group, so it is not disassociated and needs no deploy. A device can't be in `devices` and in `retain_devices` at the same time. Not needed with a single state.").String,
+				ElementType:         types.StringType,
+				Optional:            true,
+			},
 			"devices": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of devices").String,
 				Optional:            true,
@@ -151,6 +156,12 @@ func (r *PolicyGroupDevicesResource) Configure(_ context.Context, req resource.C
 }
 
 // End of section. //template:end model
+
+var _ resource.ResourceWithValidateConfig = &PolicyGroupDevicesResource{}
+
+func (r *PolicyGroupDevicesResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+	helpers.ValidateRetainDevices(ctx, req.Config, &resp.Diagnostics)
+}
 
 func (r *PolicyGroupDevicesResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan PolicyGroupDevices
@@ -539,6 +550,15 @@ func (r *PolicyGroupDevicesResource) Update(ctx context.Context, req resource.Up
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.PolicyGroupId.ValueString()))
 
+	// Only retain_devices changed (a hand-over set or cleared): nothing to send to the Manager. The
+	// variables write and deploy selection below would deploy this state's out-of-date devices at an
+	// unexpected time.
+	if only, err := helpers.OnlyAttributeChanged(req.Plan.Raw, req.State.Raw, "retain_devices"); err == nil && only {
+		tflog.Debug(ctx, fmt.Sprintf("%s: only retain_devices changed, nothing to update", plan.PolicyGroupId.ValueString()))
+		resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
+		return
+	}
+
 	res, err := r.client.Get(fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.PolicyGroupId.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
@@ -596,9 +616,12 @@ func (r *PolicyGroupDevicesResource) Update(ctx context.Context, req resource.Up
 			removed = append(removed, sd.Id.ValueString())
 		}
 	}
+	// Devices in retain_devices are handed over to another state on this group: dropped from this
+	// state, not released.
+	associatePath := fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.PolicyGroupId.ValueString())
+	removed = helpers.ExceptRetained(ctx, plan.RetainDevices, removed, associatePath)
 	// Release only devices still on this group, read right before the DELETE: the Manager's DELETE
 	// removes a device from whatever group it is on, as for config groups.
-	associatePath := fmt.Sprintf("/v1/policy-group/%v/device/associate/", plan.PolicyGroupId.ValueString())
 	removed, err = helpers.StillAssociated(ctx, r.client, associatePath, removed)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s", err))

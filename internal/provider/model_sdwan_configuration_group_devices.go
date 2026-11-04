@@ -39,6 +39,7 @@ type ConfigurationGroupDevices struct {
 	ConfigurationGroupId      types.String                       `tfsdk:"configuration_group_id"`
 	Solution                  types.String                       `tfsdk:"solution"`
 	ConfigurationGroupVersion types.Int64                        `tfsdk:"configuration_group_version"`
+	RetainDevices             types.Set                          `tfsdk:"retain_devices"`
 	Devices                   []ConfigurationGroupDevicesDevices `tfsdk:"devices"`
 }
 

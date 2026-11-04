@@ -96,6 +96,11 @@ func (r *ConfigurationGroupDevicesResource) Schema(ctx context.Context, req reso
 				MarkdownDescription: helpers.NewAttributeDescription("The version of the associated configuration group. Set this to `sdwan_configuration_group.<name>.version` so that a change to the configuration group is deployed in the same apply: from SD-WAN Manager 20.15 to the devices the Manager reports out of date, on older versions to all devices managed by this resource.").String,
 				Optional:            true,
 			},
+			"retain_devices": schema.SetAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Device IDs this resource stops managing without releasing them, for a hand-over to another state. A device removed from `devices` and listed here is dropped from the state but stays associated with the configuration group, so it is not disassociated and needs no deploy. A device can't be in `devices` and in `retain_devices` at the same time. Not needed with a single state.").String,
+				ElementType:         types.StringType,
+				Optional:            true,
+			},
 			"devices": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of devices").String,
 				Optional:            true,
@@ -155,6 +160,12 @@ func (r *ConfigurationGroupDevicesResource) Configure(_ context.Context, req res
 }
 
 // End of section. //template:end model
+
+var _ resource.ResourceWithValidateConfig = &ConfigurationGroupDevicesResource{}
+
+func (r *ConfigurationGroupDevicesResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+	helpers.ValidateRetainDevices(ctx, req.Config, &resp.Diagnostics)
+}
 
 func (r *ConfigurationGroupDevicesResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan ConfigurationGroupDevices
@@ -598,6 +609,15 @@ func (r *ConfigurationGroupDevicesResource) Update(ctx context.Context, req reso
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.ConfigurationGroupId.ValueString()))
 
+	// Only retain_devices changed (a hand-over set or cleared): nothing to send to the Manager. The
+	// variables write and deploy selection below would deploy this state's out-of-date devices at an
+	// unexpected time.
+	if only, err := helpers.OnlyAttributeChanged(req.Plan.Raw, req.State.Raw, "retain_devices"); err == nil && only {
+		tflog.Debug(ctx, fmt.Sprintf("%s: only retain_devices changed, nothing to update", plan.ConfigurationGroupId.ValueString()))
+		resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
+		return
+	}
+
 	// Retrieve currently associated devices with their topology labels.
 	res, err := r.client.Get(fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.ConfigurationGroupId.ValueString()))
 	if err != nil {
@@ -667,10 +687,13 @@ func (r *ConfigurationGroupDevicesResource) Update(ctx context.Context, req reso
 			removed = append(removed, sd.Id.ValueString())
 		}
 	}
+	// Devices in retain_devices are handed over to another state on this group: dropped from this
+	// state, not released.
+	associatePath := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.ConfigurationGroupId.ValueString())
+	removed = helpers.ExceptRetained(ctx, plan.RetainDevices, removed, associatePath)
 	// Release only devices still on this group, read right before the DELETE: the Manager's DELETE
 	// removes a device from whatever group it is on, so a device another state or the GUI has moved
 	// meanwhile would be pulled out of its new group.
-	associatePath := fmt.Sprintf("/v1/config-group/%v/device/associate/", plan.ConfigurationGroupId.ValueString())
 	removed, err = helpers.StillAssociated(ctx, r.client, associatePath, removed)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s", err))

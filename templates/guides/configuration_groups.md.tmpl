@@ -116,6 +116,8 @@ Finally, device association, variables and deployment are managed by a separate 
 
 Because device associations live in their own resource, the devices of a single configuration group can be spread across multiple Terraform state files (for example a few thousand devices per state) without one state impacting the devices managed by another.
 
+To hand a device over to another state on the same configuration group (for example when its site moves to another workspace), remove it from `devices` in the old state's resource and list it in that resource's `retain_devices`, and add it to `devices` in the new state's resource. The old state drops the device without disassociating it, and the new state adopts it: the device is deployed only if SD-WAN Manager reports it out of date or its variables changed. The two applies can run in either order. `sdwan_policy_group_devices` works the same way.
+
 ```terraform
 resource "sdwan_configuration_group_devices" "config_group_01_devices" {
   configuration_group_id      = sdwan_configuration_group.config_group_01.id

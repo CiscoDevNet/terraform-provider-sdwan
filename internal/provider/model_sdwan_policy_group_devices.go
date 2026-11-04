@@ -38,6 +38,7 @@ type PolicyGroupDevices struct {
 	PolicyGroupId      types.String                `tfsdk:"policy_group_id"`
 	Solution           types.String                `tfsdk:"solution"`
 	PolicyGroupVersion types.Int64                 `tfsdk:"policy_group_version"`
+	RetainDevices      types.Set                   `tfsdk:"retain_devices"`
 	Devices            []PolicyGroupDevicesDevices `tfsdk:"devices"`
 }
 
