@@ -208,16 +208,7 @@ func (r *PolicyGroupDevicesResource) Create(ctx context.Context, req resource.Cr
 				return
 			}
 			tflog.Info(ctx, fmt.Sprintf("%s: devices %v are already on this group, adopting them", plan.PolicyGroupId.ValueString(), adopted))
-			p := plan
-			p.Devices = nil
-			for _, d := range plan.Devices {
-				if helpers.Contains(adopted, d.Id.ValueString()) {
-					d.Variables = nil
-					p.Devices = append(p.Devices, d)
-				}
-			}
-			p.fromBodyPolicyGroupDeviceVariables(ctx, res)
-			prior = &p
+			prior = adoptedPriorState(ctx, plan, adopted, res)
 			if w := helpers.AdoptedEncryptedWarning(helpers.EncryptedVariables(res, adopted)); w != "" {
 				resp.Diagnostics.AddWarning("Encrypted variables not compared for adopted devices", w)
 			}
@@ -251,6 +242,23 @@ func (r *PolicyGroupDevicesResource) Create(ctx context.Context, req resource.Cr
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
+}
+
+// adoptedPriorState returns the adopted devices with the variables the Manager has for them now
+// (res: GET .../device/variables/, read before Create or Update overwrites them). Deploy uses it as
+// the prior state, so an adopted device is deployed only when it is out of date or out of sync, or
+// its variables change.
+func adoptedPriorState(ctx context.Context, plan PolicyGroupDevices, adopted []string, res sdwan.Res) *PolicyGroupDevices {
+	prior := plan
+	prior.Devices = nil
+	for _, d := range plan.Devices {
+		if helpers.Contains(adopted, d.Id.ValueString()) {
+			d.Variables = nil
+			prior.Devices = append(prior.Devices, d)
+		}
+	}
+	prior.fromBodyPolicyGroupDeviceVariables(ctx, res)
+	return &prior
 }
 
 // getDeviceVariableTypes fetches the variable schema from the API and extracts type information
@@ -544,6 +552,19 @@ func (r *PolicyGroupDevicesResource) Update(ctx context.Context, req resource.Up
 		})
 	}
 
+	// Devices already on this group but not in this resource's state were handed over by another
+	// state, or associated in the GUI. They are adopted as in Create (see the variables read below).
+	inState := make(map[string]bool)
+	for _, sd := range state.Devices {
+		inState[sd.Id.ValueString()] = true
+	}
+	var adopted []string
+	for _, d := range plan.Devices {
+		if helpers.Contains(currentDeviceIds, d.Id.ValueString()) && !inState[d.Id.ValueString()] {
+			adopted = append(adopted, d.Id.ValueString())
+		}
+	}
+
 	// Associate devices new in the plan.
 	associateBody, _ := sjson.Set("", "devices", []interface{}{})
 	var added []string // checked again after the associate call
@@ -631,9 +652,24 @@ func (r *PolicyGroupDevicesResource) Update(ctx context.Context, req resource.Up
 		associated = &assoc
 	}
 
-	// Need to get existing variables so SD-WAN Manager refreshes database correctly
+	// Need to get existing variables so SD-WAN Manager refreshes database correctly. For adopted
+	// devices this is also their prior state, as in Create: a device taken over from another state is
+	// deployed only when it is out of date or out of sync, or its variables change.
+	deployState := state
 	if len(plan.Devices) > 0 {
-		r.client.Get(fmt.Sprintf("/v1/policy-group/%v/device/variables/", plan.PolicyGroupId.ValueString()))
+		res, err := r.client.Get(fmt.Sprintf("/v1/policy-group/%v/device/variables/", plan.PolicyGroupId.ValueString()))
+		if len(adopted) > 0 {
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+				return
+			}
+			tflog.Info(ctx, fmt.Sprintf("%s: devices %v are already on this group, adopting them", plan.PolicyGroupId.ValueString(), adopted))
+			prior := adoptedPriorState(ctx, plan, adopted, res)
+			deployState.Devices = append(append([]PolicyGroupDevicesDevices{}, state.Devices...), prior.Devices...)
+			if w := helpers.AdoptedEncryptedWarning(helpers.EncryptedVariables(res, adopted)); w != "" {
+				resp.Diagnostics.AddWarning("Encrypted variables not compared for adopted devices", w)
+			}
+		}
 	}
 
 	// Update device variables
@@ -648,7 +684,7 @@ func (r *PolicyGroupDevicesResource) Update(ctx context.Context, req resource.Up
 	}
 
 	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, &state, associated, &resp.Diagnostics)
+		r.Deploy(ctx, plan, &deployState, associated, &resp.Diagnostics)
 	}
 	if resp.Diagnostics.HasError() {
 		return

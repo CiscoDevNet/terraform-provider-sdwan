@@ -260,8 +260,8 @@ func (r *ConfigurationGroupDevicesResource) Create(ctx context.Context, req reso
 }
 
 // adoptedPriorState returns the adopted devices with the variables the Manager has for them now,
-// read before Create overwrites them. Deploy uses it as the prior state, so an adopted device is
-// deployed only when it is out of date or out of sync, or its variables change, as in Update.
+// read before Create or Update overwrites them. Deploy uses it as the prior state, so an adopted
+// device is deployed only when it is out of date or out of sync, or its variables change.
 // It also returns, per adopted device, the variables the Manager has encrypted.
 func (r *ConfigurationGroupDevicesResource) adoptedPriorState(ctx context.Context, plan ConfigurationGroupDevices, adopted []string) (*ConfigurationGroupDevices, map[string][]string, error) {
 	res, err := r.client.Get(fmt.Sprintf("/v1/config-group/%v/device/variables/", plan.ConfigurationGroupId.ValueString()))
@@ -612,6 +612,19 @@ func (r *ConfigurationGroupDevicesResource) Update(ctx context.Context, req reso
 		})
 	}
 
+	// Devices already on this group but not in this resource's state were handed over by another
+	// state, or associated in the GUI. They are adopted as in Create (see the deploy below).
+	inState := make(map[string]bool)
+	for _, sd := range state.Devices {
+		inState[sd.Id.ValueString()] = true
+	}
+	var adopted []string
+	for _, d := range plan.Devices {
+		if _, exists := currentLabels[d.Id.ValueString()]; exists && !inState[d.Id.ValueString()] {
+			adopted = append(adopted, d.Id.ValueString())
+		}
+	}
+
 	// Associate devices that are new in the plan or whose topology_label changed.
 	associateBody, _ := sjson.Set("", "devices", []interface{}{})
 	var added []string // not on this group yet; checked again after the associate call
@@ -719,6 +732,23 @@ func (r *ConfigurationGroupDevicesResource) Update(ctx context.Context, req reso
 		associated = &assoc
 	}
 
+	// Adopted devices deploy against what the Manager has, as in Create: their variables are read
+	// before the write below and used as their prior state. So a device taken over from another
+	// state is deployed only when it is out of date or out of sync, or its variables change.
+	deployState := state
+	if len(adopted) > 0 {
+		tflog.Info(ctx, fmt.Sprintf("%s: devices %v are already on this group, adopting them", plan.ConfigurationGroupId.ValueString(), adopted))
+		prior, encrypted, err := r.adoptedPriorState(ctx, plan, adopted)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s", err))
+			return
+		}
+		if w := helpers.AdoptedEncryptedWarning(encrypted); w != "" {
+			resp.Diagnostics.AddWarning("Encrypted variables not compared for adopted devices", w)
+		}
+		deployState.Devices = append(append([]ConfigurationGroupDevicesDevices{}, state.Devices...), prior.Devices...)
+	}
+
 	// Update device variables
 	if len(plan.Devices) > 0 && plan.hasConfigGroupDeviceVariables(ctx) {
 		varTypes := r.getDeviceVariableTypes(ctx, plan.ConfigurationGroupId.ValueString())
@@ -735,7 +765,7 @@ func (r *ConfigurationGroupDevicesResource) Update(ctx context.Context, req reso
 	importEncrypted, diags := helpers.GetImportEncrypted(ctx, req.Private)
 	resp.Diagnostics.Append(diags...)
 	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, &state, associated, importEncrypted, &resp.Diagnostics)
+		r.Deploy(ctx, plan, &deployState, associated, importEncrypted, &resp.Diagnostics)
 	}
 	// From here the state holds the config values, so the import exception is used up.
 	resp.Diagnostics.Append(helpers.SetImportEncrypted(ctx, resp.Private, nil)...)
