@@ -85,7 +85,7 @@ func (d *PolicyObjectSecurityZoneProfileParcelDataSource) Schema(ctx context.Con
 				Required:            true,
 			},
 			"entries": schema.ListNestedAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "List of entries",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{

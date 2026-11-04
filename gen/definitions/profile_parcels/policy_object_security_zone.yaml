@@ -2,7 +2,7 @@
 name: Policy Object Security Zone
 rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/security-zone
 minimum_version: 20.15.0
-test_tags: [SDWAN_2015]
+test_tags: [SDWAN_2015, SDWAN_2018]
 skip_minimum_test: true
 parcel_type: policy_object
 full_update: true
@@ -17,6 +17,7 @@ attributes:
   - model_name: entries
     mandatory: true
     description: List of entries
+    min_list: 1
     attributes:
       - model_name: vpn
         example: Guest

@@ -33,7 +33,9 @@
                   "properties": {
                     "optionType": {
                       "type": "string",
-                      "enum": ["global"]
+                      "enum": [
+                        "global"
+                      ]
                     },
                     "value": {
                       "oneOf": [
@@ -48,16 +50,23 @@
                       ]
                     }
                   },
-                  "required": ["optionType", "value"],
+                  "required": [
+                    "optionType",
+                    "value"
+                  ],
                   "additionalProperties": false
                 }
               },
-              "required": ["port"],
+              "required": [
+                "port"
+              ],
               "additionalProperties": false
             }
           }
         },
-        "required": ["entries"],
+        "required": [
+          "entries"
+        ],
         "additionalProperties": false
       },
       "documentation": {
@@ -98,9 +107,15 @@
         "minVManageVersion": "20.15.1"
       }
     },
-    "required": ["name", "data"],
+    "required": [
+      "name",
+      "data"
+    ],
     "not": {
-      "required": ["documentation", "metadata"]
+      "required": [
+        "documentation",
+        "metadata"
+      ]
     },
     "additionalProperties": false
   }

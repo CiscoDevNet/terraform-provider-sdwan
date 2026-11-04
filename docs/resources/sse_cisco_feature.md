@@ -63,7 +63,6 @@ resource "sdwan_sse_cisco_feature" "example" {
 - `name` (String) The name of the Feature
 - `region` (String) Region for Primary and Secondary Datacenter
   - Default value: `auto`
-- `tracker_source_ip` (String) Source IP address for Tracker
 
 ### Optional
 
@@ -73,6 +72,7 @@ resource "sdwan_sse_cisco_feature" "example" {
   - Default value: `false`
 - `description` (String) The description of the Feature
 - `region_variable` (String) Variable name
+- `tracker_source_ip` (String) Source IP address for Tracker
 - `tracker_source_ip_variable` (String) Variable name
 - `trackers` (Attributes List) Tracker configuration (see [below for nested schema](#nestedatt--trackers))
 

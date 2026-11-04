@@ -21,29 +21,66 @@
         "properties": {
           "signatureSet": {
             "description": "Can be one of the enum value",
-            "type": "object",
-            "properties": {
-              "optionType": {
-                "type": "string",
-                "enum": [
-                  "global"
-                ]
-              },
-              "value": {
-                "enum": [
-                  "balanced",
-                  "connectivity",
-                  "security"
+            "oneOf": [
+              {
+                "description": "One of the predefined signature set enum value",
+                "type": "object",
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": [
+                      "global"
+                    ]
+                  },
+                  "value": {
+                    "enum": [
+                      "balanced",
+                      "connectivity",
+                      "security",
+                      "max-detect",
+                      "no-rules-active"
+                    ],
+                    "type": "string",
+                    "default": "balanced"
+                  }
+                },
+                "required": [
+                  "optionType",
+                  "value"
                 ],
-                "type": "string",
-                "default": "balanced"
+                "additionalProperties": false
+              },
+              {
+                "description": "Reference to a user edited signature set parcel",
+                "type": "object",
+                "properties": {
+                  "refId": {
+                    "description": "Reference to a user edited signature set parcel",
+                    "properties": {
+                      "optionType": {
+                        "type": "string",
+                        "enum": [
+                          "global"
+                        ]
+                      },
+                      "value": {
+                        "type": "string",
+                        "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                      }
+                    },
+                    "required": [
+                      "optionType",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "refId"
+                ],
+                "additionalProperties": false
               }
-            },
-            "required": [
-              "optionType",
-              "value"
-            ],
-            "additionalProperties": false
+            ]
           },
           "inspectionMode": {
             "description": "Can be one of the enum value",
@@ -191,6 +228,9 @@
             "name": "Intrusion Prevention Parcel"
           }
         ]
+      },
+      "metadata": {
+        "minVManageVersion": "20.18.1"
       }
     },
     "required": [
@@ -199,7 +239,8 @@
     ],
     "not": {
       "required": [
-        "documentation"
+        "documentation",
+        "metadata"
       ]
     },
     "additionalProperties": false

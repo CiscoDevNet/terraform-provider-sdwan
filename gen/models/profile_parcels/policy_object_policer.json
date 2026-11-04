@@ -33,7 +33,9 @@
                   "properties": {
                     "optionType": {
                       "type": "string",
-                      "enum": ["global"]
+                      "enum": [
+                        "global"
+                      ]
                     },
                     "value": {
                       "minimum": 15000,
@@ -41,7 +43,10 @@
                       "type": "integer"
                     }
                   },
-                  "required": ["optionType", "value"],
+                  "required": [
+                    "optionType",
+                    "value"
+                  ],
                   "additionalProperties": false
                 },
                 "exceed": {
@@ -50,14 +55,22 @@
                   "properties": {
                     "optionType": {
                       "type": "string",
-                      "enum": ["global"]
+                      "enum": [
+                        "global"
+                      ]
                     },
                     "value": {
-                      "enum": ["drop", "remark"],
+                      "enum": [
+                        "drop",
+                        "remark"
+                      ],
                       "type": "string"
                     }
                   },
-                  "required": ["optionType", "value"],
+                  "required": [
+                    "optionType",
+                    "value"
+                  ],
                   "additionalProperties": false
                 },
                 "rate": {
@@ -66,7 +79,9 @@
                   "properties": {
                     "optionType": {
                       "type": "string",
-                      "enum": ["global"]
+                      "enum": [
+                        "global"
+                      ]
                     },
                     "value": {
                       "minimum": 8,
@@ -74,16 +89,25 @@
                       "type": "integer"
                     }
                   },
-                  "required": ["optionType", "value"],
+                  "required": [
+                    "optionType",
+                    "value"
+                  ],
                   "additionalProperties": false
                 }
               },
-              "required": ["burst", "exceed", "rate"],
+              "required": [
+                "burst",
+                "exceed",
+                "rate"
+              ],
               "additionalProperties": false
             }
           }
         },
-        "required": ["entries"],
+        "required": [
+          "entries"
+        ],
         "additionalProperties": false
       },
       "documentation": {
@@ -120,9 +144,15 @@
         "minVManageVersion": "20.15.1"
       }
     },
-    "required": ["name", "data"],
+    "required": [
+      "name",
+      "data"
+    ],
     "not": {
-      "required": ["documentation", "metadata"]
+      "required": [
+        "documentation",
+        "metadata"
+      ]
     },
     "additionalProperties": false
   }

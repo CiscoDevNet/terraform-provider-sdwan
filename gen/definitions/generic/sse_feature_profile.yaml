@@ -3,6 +3,8 @@ name: SSE Feature Profile
 rest_endpoint: /v1/feature-profile/sdwan/sse/
 minimum_version: 20.15.0
 id_attribute: id
+data_source_name_query: true
+list_id_attribute: profileId
 doc_category: Feature Profiles
 test_tags: [SDWAN_2015]
 attributes:

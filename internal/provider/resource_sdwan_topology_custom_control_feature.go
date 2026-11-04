@@ -98,12 +98,12 @@ func (r *TopologyCustomControlProfileParcelResource) Schema(ctx context.Context,
 				},
 			},
 			"target_vpn": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Target VPN list").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"target_role": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("edge-router", "border-router").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Target role").AddStringEnumDescription("edge-router", "border-router").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("edge-router", "border-router"),
@@ -117,7 +117,7 @@ func (r *TopologyCustomControlProfileParcelResource) Schema(ctx context.Context,
 				},
 			},
 			"target_inbound_sites": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `target_level` equal to `SITE` and `target_inbound_hierarchy_uuids` not being set and `target_outbound_hierarchy_uuids` not being set").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Inbound site list, Attribute conditional on `target_level` equal to `SITE` and `target_inbound_hierarchy_uuids` not being set and `target_outbound_hierarchy_uuids` not being set").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
@@ -127,7 +127,7 @@ func (r *TopologyCustomControlProfileParcelResource) Schema(ctx context.Context,
 				Optional:            true,
 			},
 			"target_outbound_sites": schema.SetAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `target_level` equal to `SITE` and `target_outbound_hierarchy_uuids` not being set and `target_inbound_hierarchy_uuids` not being set").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Outbound site list, Attribute conditional on `target_level` equal to `SITE` and `target_outbound_hierarchy_uuids` not being set and `target_inbound_hierarchy_uuids` not being set").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
@@ -137,7 +137,7 @@ func (r *TopologyCustomControlProfileParcelResource) Schema(ctx context.Context,
 				Optional:            true,
 			},
 			"target_inbound_regions": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `target_level` equal to `REGION` or `target_level` equal to `SUB_REGION`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Inbound regions list, Attribute conditional on `target_level` equal to `REGION` or `target_level` equal to `SUB_REGION`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -154,7 +154,7 @@ func (r *TopologyCustomControlProfileParcelResource) Schema(ctx context.Context,
 				},
 			},
 			"target_outbound_regions": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on `target_level` equal to `REGION` or `target_level` equal to `SUB_REGION`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Outbound regions list, Attribute conditional on `target_level` equal to `REGION` or `target_level` equal to `SUB_REGION`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -208,7 +208,7 @@ func (r *TopologyCustomControlProfileParcelResource) Schema(ctx context.Context,
 							},
 						},
 						"match_entries": schema.SetNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set of match entries").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
@@ -347,7 +347,7 @@ func (r *TopologyCustomControlProfileParcelResource) Schema(ctx context.Context,
 							},
 						},
 						"action_entries": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							MarkdownDescription: helpers.NewAttributeDescription("List of action entries").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{

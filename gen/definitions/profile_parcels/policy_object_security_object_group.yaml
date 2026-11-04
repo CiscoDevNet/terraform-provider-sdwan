@@ -1,0 +1,78 @@
+---
+name: Policy Object Security Object Group
+rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/security-object-group
+minimum_version: 20.18.2
+test_tags: [SDWAN_2018]
+skip_minimum_test: true
+parcel_type: policy_object
+full_update: true
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_policy_object_feature_profile.test.id
+  - model_name: sequenceIpType
+    tf_name: sequence_ip_type
+    example: ipv4
+  - model_name: entries
+    mandatory: true
+    attributes:
+      - model_name: ipv4Value
+        tf_name: data_ipv4_prefixes
+        data_path: [dataPrefix]
+        example: 10.1.1.0/24
+      - model_name: ipv6Value
+        tf_name: data_ipv6_prefixes
+        data_path: [dataPrefixIpv6]
+        exclude_test: true
+        example: 2001:db8::/32
+      - model_name: fqdnValue
+        tf_name: fqdns
+        data_path: [fqdn]
+        type: Set
+        element_type: String
+        example: cisco.com
+      - model_name: geoLocation
+        tf_name: geo_locations
+        type: Set
+        element_type: String
+        example: EU
+      - model_name: portValue
+        tf_name: ports
+        data_path: [port]
+        exclude_test: true
+        example: 443
+      - model_name: refId
+        tf_name: data_ipv4_prefix_list_ids
+        data_path: [dataPrefixList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: data_ipv6_prefix_list_ids
+        data_path: [dataPrefixIpv6List]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: fqdn_list_ids
+        data_path: [fqdnList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: geo_location_list_ids
+        data_path: [geoLocationList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+      - model_name: refId
+        tf_name: port_list_ids
+        data_path: [portList]
+        exclude_test: true
+        example: 0c4e096d-b06d-4052-93ed-70fe34fda6dc
+
+test_prerequisites: |
+  resource "sdwan_policy_object_feature_profile" "test" {
+    name = "POLICY_OBJECT_FP_1"
+    description = "My policy object feature profile 1"
+  }

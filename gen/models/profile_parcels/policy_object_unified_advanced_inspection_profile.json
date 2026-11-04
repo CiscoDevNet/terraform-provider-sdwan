@@ -229,6 +229,9 @@
             }
           }
         ]
+      },
+      "metadata": {
+        "minVManageVersion": "20.15.1"
       }
     },
     "required": [
@@ -238,89 +241,10 @@
     ],
     "not": {
       "required": [
-        "documentation"
+        "documentation",
+        "metadata"
       ]
     },
-    "allOf": [
-      {
-        "if": {
-          "properties": {
-            "data": {
-              "properties": {
-                "tlsDecryptionAction": {
-                  "properties": {
-                    "value": {
-                      "enum": [
-                        "decrypt"
-                      ]
-                    }
-                  }
-                }
-              },
-              "required": [
-                "tlsDecryptionAction"
-              ]
-            }
-          }
-        },
-        "then": {
-          "properties": {
-            "data": {
-              "required": [
-                "tlsDecryptionAction",
-                "sslDecryptionProfile"
-              ]
-            }
-          }
-        }
-      },
-      {
-        "if": {
-          "properties": {
-            "data": {
-              "properties": {
-                "sslDecryptionProfile": {
-                  "properties": {
-                    "refId": {
-                      "properties": {
-                        "optionType": {
-                          "enum": [
-                            "global"
-                          ]
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "required": [
-                "sslDecryptionProfile"
-              ]
-            }
-          }
-        },
-        "then": {
-          "properties": {
-            "data": {
-              "properties": {
-                "tlsDecryptionAction": {
-                  "properties": {
-                    "value": {
-                      "enum": [
-                        "decrypt"
-                      ]
-                    }
-                  }
-                }
-              },
-              "required": [
-                "sslDecryptionProfile"
-              ]
-            }
-          }
-        }
-      }
-    ],
     "additionalProperties": false
   }
 }

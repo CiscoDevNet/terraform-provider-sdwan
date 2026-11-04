@@ -1,0 +1,51 @@
+# model.go and data_source.go are hand-written (recursive group expansion does not fit the generic
+# template). This file only drives the docs example and category.
+# Keep "data_source.go" out of skip_templates: gen/templates/provider.go then drops the DataSources()
+# registration. The hand-written file has no //template markers, so regeneration leaves it unchanged.
+# The map attributes and expand_containers are not listed: the generator has no Map type, and the
+# docs page is rendered from the Go schema.
+---
+name: Network Hierarchy Nodes
+rest_endpoint: /v1/network-hierarchy
+doc_category: Network Hierarchy
+minimum_version: "20.15"
+remove_id: true
+no_resource: true
+skip_templates: ["model.go", "data_source_test.go"]
+ds_description: >-
+  This data source resolves a list of Network Hierarchy site and group/region
+  names to their site UUIDs, without requiring the hierarchy to be managed by
+  this provider. A site name resolves directly; a group or region name
+  expands to every site nested underneath it, any depth. Only sites are ever
+  returned - a requested group's own UUID never appears in the result,
+  matching what the SD-WAN Manager GUI itself sends when a group is selected
+  for topology targeting.
+attributes:
+  - model_name: names
+    tf_name: names
+    type: List
+    element_type: String
+    mandatory: true
+    query_param: true
+    description: Site, group, or region names to resolve. A name that does not exist in the Network Hierarchy fails the read.
+    example: EMEA-Group
+  - model_name: resolvedSites
+    tf_name: resolved_sites
+    type: List
+    description: The resolved, deduplicated set of sites. Never includes the groups/regions named in `names` themselves - only their member sites.
+    attributes:
+      - model_name: name
+        tf_name: name
+        type: String
+        description: The site's name
+        example: EMEA-Site
+      - model_name: id
+        tf_name: id
+        type: String
+        description: The site's Network Hierarchy node UUID
+        example: f6b2c44c-693c-4763-b010-895aa9a1c5e4
+      - model_name: siteId
+        tf_name: site_id
+        type: Int64
+        description: The site's numeric site ID
+        example: 101

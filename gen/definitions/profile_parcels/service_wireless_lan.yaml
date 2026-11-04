@@ -45,7 +45,6 @@ attributes:
     - model_name: securityType
       data_path: [securityConfig]
       type: String
-      enum_values: [ personal, open]
       mandatory: true
       example: personal
     - model_name: radiusServerIp

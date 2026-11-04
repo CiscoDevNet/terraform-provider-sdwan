@@ -94,6 +94,10 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
+						"is_rule_set": schema.BoolAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+						},
 						"sequence_id": schema.StringAttribute{
 							MarkdownDescription: "",
 							Computed:            true,
@@ -102,8 +106,16 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 							MarkdownDescription: "",
 							Computed:            true,
 						},
+						"sequence_comment": schema.StringAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+						},
 						"base_action": schema.StringAttribute{
 							MarkdownDescription: "",
+							Computed:            true,
+						},
+						"sequence_ip_type": schema.StringAttribute{
+							MarkdownDescription: "IP address family the sequence matches on, `ipv4` sequences only accept the IPv4 match attributes and `ipv6` sequences only accept the IPv6 ones",
 							Computed:            true,
 						},
 						"sequence_type": schema.StringAttribute{
@@ -124,8 +136,18 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
+									"source_data_ipv6_prefix_list_ids": schema.SetAttribute{
+										MarkdownDescription: "Only supported on sequences with `sequence_ip_type` set to `ipv6`",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
 									"destination_data_prefix_list_ids": schema.SetAttribute{
 										MarkdownDescription: "",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
+									"destination_data_ipv6_prefix_list_ids": schema.SetAttribute{
+										MarkdownDescription: "Only supported on sequences with `sequence_ip_type` set to `ipv6`",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
@@ -184,13 +206,28 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
+									"rule_set_list_ids": schema.SetAttribute{
+										MarkdownDescription: "Security rule set IDs, requires `is_rule_set` set to `true` on the sequence",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
+									"source_object_group_list_ids": schema.SetAttribute{
+										MarkdownDescription: "Referenced object groups must not contain FQDNs, SD-WAN Manager rejects them as a source (PPARC0012)",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
 									"source_security_group_list_ids": schema.SetAttribute{
+										MarkdownDescription: "Deprecated, use `source_object_group_list_ids` instead",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
+									"destination_object_group_list_ids": schema.SetAttribute{
 										MarkdownDescription: "",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
 									"destination_security_group_list_ids": schema.SetAttribute{
-										MarkdownDescription: "",
+										MarkdownDescription: "Deprecated, use `destination_object_group_list_ids` instead",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
@@ -203,12 +240,30 @@ func (d *EmbeddedSecurityNGFWProfileParcelDataSource) Schema(ctx context.Context
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
+									"source_ipv6_data_prefixes": schema.SetAttribute{
+										MarkdownDescription: "Only supported on sequences with `sequence_ip_type` set to `ipv6`",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
+									"source_ipv6_data_prefixes_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
 									"destination_data_prefixes": schema.SetAttribute{
 										MarkdownDescription: "",
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
 									"destination_data_prefixes_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"destination_ipv6_data_prefixes": schema.SetAttribute{
+										MarkdownDescription: "Only supported on sequences with `sequence_ip_type` set to `ipv6`",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
+									"destination_ipv6_data_prefixes_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},

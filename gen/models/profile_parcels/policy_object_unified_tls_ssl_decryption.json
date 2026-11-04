@@ -539,6 +539,9 @@
             "description": "TLS/SSL Proxy Policy Definition"
           }
         ]
+      },
+      "metadata": {
+        "minVManageVersion": "20.15.1"
       }
     },
     "required": [
@@ -548,7 +551,8 @@
     ],
     "not": {
       "required": [
-        "documentation"
+        "documentation",
+        "metadata"
       ]
     },
     "allOf": [

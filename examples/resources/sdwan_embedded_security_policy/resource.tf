@@ -13,15 +13,23 @@ resource "sdwan_embedded_security_policy" "example" {
       ]
     }
   ]
-  tcp_syn_flood_limit             = "432"
-  max_incomplete_tcp_limit        = "12345"
-  max_incomplete_udp_limit        = "12345"
-  max_incomplete_icmp_limit       = "12345"
-  audit_trail                     = "on"
-  unified_logging                 = "on"
-  session_reclassify_allow        = "on"
-  icmp_unreachable_allow          = "on"
-  failure_mode                    = "close"
+  tcp_syn_flood_limit       = "432"
+  max_incomplete_tcp_limit  = "12345"
+  max_incomplete_udp_limit  = "12345"
+  max_incomplete_icmp_limit = "12345"
+  audit_trail               = "on"
+  unified_logging           = "on"
+  session_reclassify_allow  = "on"
+  icmp_unreachable_allow    = "on"
+  failure_mode              = "close"
+  high_speed_logging = [
+    {
+      name             = "server1"
+      source_interface = "GigabitEthernet1"
+    }
+  ]
+  syslog_server_source_interface  = "GigabitEthernet1"
+  optimized                       = false
   nat                             = true
   download_url_database_on_device = false
   resource_profile                = "low"

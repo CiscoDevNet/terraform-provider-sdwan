@@ -90,7 +90,7 @@ func (r *PolicyObjectSecurityZoneProfileParcelResource) Schema(ctx context.Conte
 				Required:            true,
 			},
 			"entries": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				MarkdownDescription: helpers.NewAttributeDescription("List of entries").String,
 				Required:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{

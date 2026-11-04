@@ -32,7 +32,7 @@ resource "sdwan_policy_object_security_zone" "example" {
 
 ### Required
 
-- `entries` (Attributes List) (see [below for nested schema](#nestedatt--entries))
+- `entries` (Attributes List) List of entries (see [below for nested schema](#nestedatt--entries))
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Policy_object
 

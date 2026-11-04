@@ -34,14 +34,14 @@ data "sdwan_topology_custom_control_feature" "example" {
 - `name` (String) The name of the Feature
 - `sequences` (Attributes List) Sequence list (see [below for nested schema](#nestedatt--sequences))
 - `target_inbound_hierarchy_uuids` (Set of String) Inbound network hierarchy UUIDs
-- `target_inbound_regions` (Attributes List) (see [below for nested schema](#nestedatt--target_inbound_regions))
-- `target_inbound_sites` (Set of String)
+- `target_inbound_regions` (Attributes List) Inbound regions list (see [below for nested schema](#nestedatt--target_inbound_regions))
+- `target_inbound_sites` (Set of String) Inbound site list
 - `target_level` (String)
 - `target_outbound_hierarchy_uuids` (Set of String) Outbound network hierarchy UUIDs
-- `target_outbound_regions` (Attributes List) (see [below for nested schema](#nestedatt--target_outbound_regions))
-- `target_outbound_sites` (Set of String)
-- `target_role` (String)
-- `target_vpn` (Set of String)
+- `target_outbound_regions` (Attributes List) Outbound regions list (see [below for nested schema](#nestedatt--target_outbound_regions))
+- `target_outbound_sites` (Set of String) Outbound site list
+- `target_role` (String) Target role
+- `target_vpn` (Set of String) Target VPN list
 - `version` (Number) The version of the Feature
 
 <a id="nestedatt--sequences"></a>
@@ -49,11 +49,11 @@ data "sdwan_topology_custom_control_feature" "example" {
 
 Read-Only:
 
-- `action_entries` (Attributes List) (see [below for nested schema](#nestedatt--sequences--action_entries))
+- `action_entries` (Attributes List) List of action entries (see [below for nested schema](#nestedatt--sequences--action_entries))
 - `base_action` (String) Base Action
 - `id` (Number) Sequence Id
 - `ip_type` (String) Sequence IP Type
-- `match_entries` (Attributes Set) (see [below for nested schema](#nestedatt--sequences--match_entries))
+- `match_entries` (Attributes Set) Set of match entries (see [below for nested schema](#nestedatt--sequences--match_entries))
 - `name` (String) Sequence Name
 - `type` (String) Sequence Type
 

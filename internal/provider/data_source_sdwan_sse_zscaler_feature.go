@@ -478,7 +478,7 @@ func (d *SSEZscalerProfileParcelDataSource) Schema(ctx context.Context, req data
 				Computed:            true,
 			},
 			"country": schema.BoolAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "Country",
 				Computed:            true,
 			},
 			"country_variable": schema.StringAttribute{
@@ -486,7 +486,7 @@ func (d *SSEZscalerProfileParcelDataSource) Schema(ctx context.Context, req data
 				Computed:            true,
 			},
 			"enforce_bandwidth_control": schema.BoolAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "Enforce Bandwidth Control",
 				Computed:            true,
 			},
 			"enforce_bandwidth_control_variable": schema.StringAttribute{
@@ -494,7 +494,7 @@ func (d *SSEZscalerProfileParcelDataSource) Schema(ctx context.Context, req data
 				Computed:            true,
 			},
 			"dn_bandwidth": schema.Float64Attribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "Download Bandwidth in Mbps",
 				Computed:            true,
 			},
 			"dn_bandwidth_variable": schema.StringAttribute{
@@ -502,7 +502,7 @@ func (d *SSEZscalerProfileParcelDataSource) Schema(ctx context.Context, req data
 				Computed:            true,
 			},
 			"up_bandwidth": schema.Float64Attribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "Upload Bandwidth in Mbps",
 				Computed:            true,
 			},
 			"up_bandwidth_variable": schema.StringAttribute{
@@ -515,7 +515,7 @@ func (d *SSEZscalerProfileParcelDataSource) Schema(ctx context.Context, req data
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "Sub-location name",
 							Computed:            true,
 						},
 						"name_variable": schema.StringAttribute{
@@ -595,7 +595,7 @@ func (d *SSEZscalerProfileParcelDataSource) Schema(ctx context.Context, req data
 							Computed:            true,
 						},
 						"service_vpn": schema.SetAttribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "Sub-location Service VPN",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
@@ -604,7 +604,7 @@ func (d *SSEZscalerProfileParcelDataSource) Schema(ctx context.Context, req data
 							Computed:            true,
 						},
 						"internal_ip": schema.ListNestedAttribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "Internal Ip address",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
@@ -660,7 +660,7 @@ func (d *SSEZscalerProfileParcelDataSource) Schema(ctx context.Context, req data
 							Computed:            true,
 						},
 						"up_bandwidth": schema.Float64Attribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "Upload Bandwidth in Mbps",
 							Computed:            true,
 						},
 						"up_bandwidth_variable": schema.StringAttribute{
@@ -668,7 +668,7 @@ func (d *SSEZscalerProfileParcelDataSource) Schema(ctx context.Context, req data
 							Computed:            true,
 						},
 						"dn_bandwidth": schema.Float64Attribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "Download Bandwidth in Mbps",
 							Computed:            true,
 						},
 						"dn_bandwidth_variable": schema.StringAttribute{

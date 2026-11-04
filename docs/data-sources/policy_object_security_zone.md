@@ -34,7 +34,7 @@ data "sdwan_policy_object_security_zone" "example" {
 ### Read-Only
 
 - `description` (String) The description of the Policy_object
-- `entries` (Attributes List) (see [below for nested schema](#nestedatt--entries))
+- `entries` (Attributes List) List of entries (see [below for nested schema](#nestedatt--entries))
 - `version` (Number) The version of the Policy_object
 
 <a id="nestedatt--entries"></a>
