@@ -77,10 +77,12 @@ func PostDeploy(ctx context.Context, client *sdwan.Client, path, body string, ta
 //   - the controller pre-check skips it, nothing deployed: validation failure with "operation is
 //     already in progress for device: <controller>";
 //   - its controller writes conflict with the other deploy's: every failed device reports
-//     "Transaction … conflicts with transaction …".
+//     "Transaction … conflicts with transaction …";
+//   - both: the controllers report the transaction conflict and the edges "Error while
+//     generating cli. Error: NullPointerException".
 //
 // Such a deploy can be sent again. Any other failure (a router rejecting the config, Manager
-// failing to generate it) is not a collision.
+// failing to generate it with no transaction conflict in the same task) is not a collision.
 func DeployCollision(task gjson.Result) string {
 	if validationFailed(task) {
 		for _, line := range task.Get("validation.activity").Array() {
@@ -96,14 +98,22 @@ func DeployCollision(task gjson.Result) string {
 			continue
 		}
 		activity := d.Get("activity").String()
-		if !strings.Contains(activity, "conflicts with transaction") {
+		switch {
+		case strings.Contains(activity, "conflicts with transaction"):
+			if conflict == "" {
+				conflict = activity
+			}
+		case isGenerationCrash(activity):
+			// A collision only next to a transaction conflict; alone it stays an error.
+		default:
 			return ""
-		}
-		if conflict == "" {
-			conflict = activity
 		}
 	}
 	return conflict
+}
+
+func isGenerationCrash(activity string) bool {
+	return strings.Contains(activity, "Error while generating cli") && strings.Contains(activity, "NullPointerException")
 }
 
 func validationFailed(task gjson.Result) bool {

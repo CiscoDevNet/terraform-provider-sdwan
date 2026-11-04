@@ -56,6 +56,11 @@ const (
 	taskConflictAndOther = `{"summary":{"status":"done","total":2},"validation":{"statusId":"success"},"data":[` +
 		`{"deviceID":"5b8d9988","statusId":"failure","activity":["Transaction 1 conflicts with transaction 2"]},` +
 		`{"deviceID":"C8K-83E4","statusId":"failure","activity":["% 172.16.1.0 overlaps with GigabitEthernet1"]}]}`
+	// Deploys sent close together: the controllers conflict, the edges fail to generate the CLI.
+	taskConflictAndGenerationCrash = `{"summary":{"status":"done","total":6},"validation":{"statusId":"validation_success","status":"Validation success"},"data":[` +
+		`{"deviceID":"C8K-40C0CCFD","statusId":"failure","activity":["Failed to deploy device with Policy Group - pg1, Error while generating cli. Error: NullPointerException"]},` +
+		`{"deviceID":"5b8d9988","statusId":"failure","activity":["Failed to deploy device with Policy Group - pg1, Transaction 14383 conflicts with transaction 14354 started by user vmanage-admin"]},` +
+		`{"deviceID":"6fe90e6c","statusId":"failure","activity":["Failed to deploy device with Policy Group - pg1, Transaction 14385 conflicts with transaction 14341 started by user vmanage-admin"]}]}`
 	taskSuccess = `{"summary":{"status":"done","total":5},"validation":{"statusId":"success","status":"Success"},"data":[{"deviceID":"C8K-B5EE","statusId":"success"}]}`
 )
 
@@ -69,6 +74,7 @@ func TestDeployCollision(t *testing.T) {
 		{"generation crash is not a collision", taskGenerationCrash, false},
 		{"router rejected the config", taskRouterRejected, false},
 		{"conflict plus another failure", taskConflictAndOther, false},
+		{"controller conflict plus generation crash on the edges", taskConflictAndGenerationCrash, true},
 		{"success", taskSuccess, false},
 	}
 	for _, c := range cases {
