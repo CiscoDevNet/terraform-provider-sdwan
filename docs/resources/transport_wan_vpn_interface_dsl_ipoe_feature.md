@@ -86,6 +86,7 @@ resource "sdwan_transport_wan_vpn_interface_dsl_ipoe_feature" "example" {
 - `ipv4_address_variable` (String) Variable name, Attribute conditional on `ipv4_address_type` equal to `static`
 - `ipv4_dhcp_distance` (Number) DHCP Distance, Attribute conditional on `ipv4_address_type` equal to `dynamic`
   - Range: `1`-`255`
+  - Default value: `1`
 - `ipv4_dhcp_distance_variable` (String) Variable name, Attribute conditional on `ipv4_address_type` equal to `dynamic`
 - `ipv4_dhcp_helper` (String) List of DHCP IPv4 helper addresses, Attribute conditional on `ipv4_address_type` equal to `dynamic`
 - `ipv4_dhcp_helper_variable` (String) Variable name, Attribute conditional on `ipv4_address_type` equal to `dynamic`

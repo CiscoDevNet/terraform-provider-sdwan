@@ -427,7 +427,12 @@ func (data TransportWANVPNInterfaceDSLIPoE) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ethernet.intfIpAddress.dynamic.dynamicDhcpDistance.optionType", "variable")
 			body, _ = sjson.Set(body, path+"ethernet.intfIpAddress.dynamic.dynamicDhcpDistance.value", data.Ipv4DhcpDistanceVariable.ValueString())
 		}
-	} else if !data.Ipv4DhcpDistance.IsNull() {
+	} else if data.Ipv4DhcpDistance.IsNull() {
+		if true && data.Ipv4AddressType.ValueString() == "dynamic" {
+			body, _ = sjson.Set(body, path+"ethernet.intfIpAddress.dynamic.dynamicDhcpDistance.optionType", "default")
+			body, _ = sjson.Set(body, path+"ethernet.intfIpAddress.dynamic.dynamicDhcpDistance.value", 1)
+		}
+	} else {
 		if true && data.Ipv4AddressType.ValueString() == "dynamic" {
 			body, _ = sjson.Set(body, path+"ethernet.intfIpAddress.dynamic.dynamicDhcpDistance.optionType", "global")
 			body, _ = sjson.Set(body, path+"ethernet.intfIpAddress.dynamic.dynamicDhcpDistance.value", data.Ipv4DhcpDistance.ValueInt64())

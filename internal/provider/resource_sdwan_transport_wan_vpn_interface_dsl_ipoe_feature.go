@@ -231,7 +231,7 @@ func (r *TransportWANVPNInterfaceDSLIPoEProfileParcelResource) Schema(ctx contex
 				},
 			},
 			"ipv4_dhcp_distance": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("DHCP Distance, Attribute conditional on `ipv4_address_type` equal to `dynamic`").AddIntegerRangeDescription(1, 255).String,
+				MarkdownDescription: helpers.NewAttributeDescription("DHCP Distance, Attribute conditional on `ipv4_address_type` equal to `dynamic`").AddIntegerRangeDescription(1, 255).AddDefaultValueDescription("1").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 255),

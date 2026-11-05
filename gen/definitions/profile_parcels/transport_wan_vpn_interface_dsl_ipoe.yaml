@@ -89,7 +89,8 @@ attributes:
     tf_name: ipv4_dhcp_distance
     data_path: [ethernet, intfIpAddress, dynamic]
     example: 1
-    minimum_test_value: 1
+    default_value_present: true
+    default_value: 1
     exclude_test: true
     conditional_attribute:
       conditions:
