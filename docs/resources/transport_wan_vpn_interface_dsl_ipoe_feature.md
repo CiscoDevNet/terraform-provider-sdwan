@@ -16,18 +16,20 @@ This resource can manage a Transport WAN VPN Interface DSL IPoE Feature.
 
 ```terraform
 resource "sdwan_transport_wan_vpn_interface_dsl_ipoe_feature" "example" {
-  name                         = "Example"
-  description                  = "My Example"
-  feature_profile_id           = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  transport_wan_vpn_feature_id = "140331f6-5418-4755-a059-13c77eb96037"
-  shutdown                     = true
-  vdsl_slot                    = "0/0/0"
-  interface_name               = "GigabitEthernet1"
-  ipv4_address_type            = "dynamic"
-  ipv4_address                 = "192.0.2.10"
-  ipv4_subnet_mask             = "255.255.255.0"
-  tunnel_interface_enabled     = true
-  tunnel_interface_color       = "default"
+  name                               = "Example"
+  description                        = "My Example"
+  feature_profile_id                 = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  transport_wan_vpn_feature_id       = "140331f6-5418-4755-a059-13c77eb96037"
+  shutdown                           = true
+  vdsl_slot                          = "0/0/0"
+  interface_name                     = "GigabitEthernet1"
+  ipv4_address_type                  = "static"
+  ipv4_address                       = "192.0.2.10"
+  ipv4_subnet_mask                   = "255.255.255.0"
+  tunnel_interface_enabled           = true
+  tunnel_interface_color             = "default"
+  tunnel_interface_color_description = "DSL WAN"
+  tunnel_interface_full_port_hop     = false
 }
 ```
 
@@ -44,14 +46,14 @@ resource "sdwan_transport_wan_vpn_interface_dsl_ipoe_feature" "example" {
 
 ### Optional
 
-- `acl_ipv4_egress_feature_id` (String)
-- `acl_ipv4_egress_feature_id_variable` (String) Variable name
-- `acl_ipv4_ingress_feature_id` (String)
-- `acl_ipv4_ingress_feature_id_variable` (String) Variable name
-- `acl_ipv6_egress_feature_id` (String)
-- `acl_ipv6_egress_feature_id_variable` (String) Variable name
-- `acl_ipv6_ingress_feature_id` (String)
-- `acl_ipv6_ingress_feature_id_variable` (String) Variable name
+- `acl_ipv4_egress_feature_id` (String) IPv4 egress ACL feature ID. Variable references require Manager 20.18.1 or later., Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv4_egress_feature_id` being set
+- `acl_ipv4_egress_feature_id_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv4_egress_feature_id` being set
+- `acl_ipv4_ingress_feature_id` (String) IPv4 ingress ACL feature ID. Variable references require Manager 20.18.1 or later., Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv4_ingress_feature_id` being set
+- `acl_ipv4_ingress_feature_id_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv4_ingress_feature_id` being set
+- `acl_ipv6_egress_feature_id` (String) IPv6 egress ACL feature ID. Variable references require Manager 20.18.1 or later., Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv6_egress_feature_id` being set
+- `acl_ipv6_egress_feature_id_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv6_egress_feature_id` being set
+- `acl_ipv6_ingress_feature_id` (String) IPv6 ingress ACL feature ID. Variable references require Manager 20.18.1 or later., Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv6_ingress_feature_id` being set
+- `acl_ipv6_ingress_feature_id_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv6_ingress_feature_id` being set
 - `adaptive_qos` (Boolean) Adaptive QoS
   - Default value: `false`
 - `adaptive_qos_period` (Number) Adapt Period(Minutes)
@@ -195,8 +197,8 @@ resource "sdwan_transport_wan_vpn_interface_dsl_ipoe_feature" "example" {
 - `tunnel_interface_color` (String) Set color for TLOC
   - Choices: `default`, `mpls`, `metro-ethernet`, `biz-internet`, `public-internet`, `lte`, `3g`, `red`, `green`, `blue`, `gold`, `silver`, `bronze`, `custom1`, `custom2`, `custom3`, `private1`, `private2`, `private3`, `private4`, `private5`, `private6`
   - Default value: `default`
-- `tunnel_interface_color_description` (String)
-- `tunnel_interface_color_description_variable` (String) Variable name
+- `tunnel_interface_color_description` (String) , Attribute conditional on SD-WAN Manager version `20.18.1` or higher
+- `tunnel_interface_color_description_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
 - `tunnel_interface_color_restrict` (Boolean) Restrict this TLOC behavior
   - Default value: `false`
 - `tunnel_interface_color_restrict_variable` (String) Variable name
@@ -205,9 +207,9 @@ resource "sdwan_transport_wan_vpn_interface_dsl_ipoe_feature" "example" {
   - Default value: `false`
 - `tunnel_interface_exclude_controller_group_list` (String) Exclude the following controller groups defined in this list
 - `tunnel_interface_exclude_controller_group_list_variable` (String) Variable name
-- `tunnel_interface_full_port_hop` (Boolean) Enable port hopping on the tunnel interface
+- `tunnel_interface_full_port_hop` (Boolean) Enable port hopping on the tunnel interface, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
   - Default value: `false`
-- `tunnel_interface_full_port_hop_variable` (String) Variable name
+- `tunnel_interface_full_port_hop_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
 - `tunnel_interface_gre_encapsulation` (Boolean) Encapsulation
   - Default value: `false`
 - `tunnel_interface_gre_preference` (Number) Set preference for TLOC

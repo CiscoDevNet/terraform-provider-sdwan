@@ -40,6 +40,12 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceDSLIPoEProfileParcel(t *testi
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "ipv4_subnet_mask", "255.255.255.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_interface_enabled", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_interface_color", "default"))
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_interface_color_description", "DSL WAN"))
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_interface_full_port_hop", "false"))
+	}
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -94,6 +100,12 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceDSLIPoEProfileParcelConfig() 
 	config += `	ipv4_subnet_mask = "255.255.255.0"` + "\n"
 	config += `	tunnel_interface_enabled = true` + "\n"
 	config += `	tunnel_interface_color = "default"` + "\n"
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	tunnel_interface_color_description = "DSL WAN"` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	tunnel_interface_full_port_hop = false` + "\n"
+	}
 	config += `}` + "\n"
 
 	config += `
@@ -123,6 +135,12 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceDSLIPoEProfileParcelByNameCon
 	config += `	ipv4_subnet_mask = "255.255.255.0"` + "\n"
 	config += `	tunnel_interface_enabled = true` + "\n"
 	config += `	tunnel_interface_color = "default"` + "\n"
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	tunnel_interface_color_description = "DSL WAN"` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	tunnel_interface_full_port_hop = false` + "\n"
+	}
 	config += `}` + "\n"
 
 	config += `

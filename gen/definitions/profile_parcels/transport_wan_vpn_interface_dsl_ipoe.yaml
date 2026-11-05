@@ -34,6 +34,11 @@ attributes:
   - model_name: slot
     tf_name: vdsl_slot
     data_path: [vdsl]
+    no_augment_config: true
+    type: String
+    variable: true
+    description: Set module slot/subslot/port number
+    string_patterns: ['(\b([0-3])\b)(/(\b([0-3])\b))(/(\b([0-1])\b))']
     example: 0/0/0
     minimum_test_value: '"0/0/0"'
   - model_name: mode
@@ -64,6 +69,12 @@ attributes:
   - model_name: ifName
     tf_name: interface_name
     data_path: [ethernet]
+    no_augment_config: true
+    type: String
+    variable: true
+    description: Ethernet Interface/Sub Interface Name including sub interface number
+    string_min_length: 3
+    string_max_length: 32
     example: GigabitEthernet1
     minimum_test_value: '"GigabitEthernet1"'
   - model_name: description
@@ -82,7 +93,7 @@ attributes:
     mandatory: true
     description: IPv4 address configuration type
     enum_values: [dynamic, static]
-    example: dynamic
+    example: static
     minimum_test_value: '"dynamic"'
     test_value: '"static"'
   - model_name: dynamicDhcpDistance
@@ -159,7 +170,11 @@ attributes:
     tf_name: tunnel_interface_color_description
     data_path: [tunnel]
     example: DSL WAN
-    exclude_test: true
+    test_tags: [SDWAN_2018]
+    conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
   - model_name: helloInterval
     tf_name: tunnel_interface_hello_interval
     data_path: [tunnelAdvancedOption]
@@ -214,7 +229,11 @@ attributes:
     tf_name: tunnel_interface_full_port_hop
     data_path: [tunnel]
     example: false
-    exclude_test: true
+    test_tags: [SDWAN_2018]
+    conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
   - model_name: portHop
     tf_name: tunnel_interface_port_hop
     data_path: [tunnel]
@@ -429,7 +448,17 @@ attributes:
     tf_name: acl_ipv4_egress_feature_id
     data_path: [aclQos, ipv4AclEgress]
     type: String
+    description: IPv4 egress ACL feature ID. Variable references require Manager 20.18.1 or later.
     ignore_mandatory: true
+    exclude_null: true
+    conditional_attribute:
+      operator: or
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
+        - name: acl_ipv4_egress_feature_id
+          value: ''
+          negate: true
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_transport_ipv4_acl_feature.test.id
     exclude_test: true
@@ -437,7 +466,17 @@ attributes:
     tf_name: acl_ipv4_ingress_feature_id
     data_path: [aclQos, ipv4AclIngress]
     type: String
+    description: IPv4 ingress ACL feature ID. Variable references require Manager 20.18.1 or later.
     ignore_mandatory: true
+    exclude_null: true
+    conditional_attribute:
+      operator: or
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
+        - name: acl_ipv4_ingress_feature_id
+          value: ''
+          negate: true
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_transport_ipv4_acl_feature.test.id
     exclude_test: true
@@ -445,7 +484,17 @@ attributes:
     tf_name: acl_ipv6_egress_feature_id
     data_path: [aclQos, ipv6AclEgress]
     type: String
+    description: IPv6 egress ACL feature ID. Variable references require Manager 20.18.1 or later.
     ignore_mandatory: true
+    exclude_null: true
+    conditional_attribute:
+      operator: or
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
+        - name: acl_ipv6_egress_feature_id
+          value: ''
+          negate: true
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_transport_ipv6_acl_feature.test.id
     exclude_test: true
@@ -453,7 +502,17 @@ attributes:
     tf_name: acl_ipv6_ingress_feature_id
     data_path: [aclQos, ipv6AclIngress]
     type: String
+    description: IPv6 ingress ACL feature ID. Variable references require Manager 20.18.1 or later.
     ignore_mandatory: true
+    exclude_null: true
+    conditional_attribute:
+      operator: or
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
+        - name: acl_ipv6_ingress_feature_id
+          value: ''
+          negate: true
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_transport_ipv6_acl_feature.test.id
     exclude_test: true

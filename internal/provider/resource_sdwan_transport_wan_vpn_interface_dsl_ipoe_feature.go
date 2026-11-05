@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -136,8 +137,7 @@ func (r *TransportWANVPNInterfaceDSLIPoEProfileParcelResource) Schema(ctx contex
 				MarkdownDescription: helpers.NewAttributeDescription("Set module slot/subslot/port number").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.LengthAtMost(5),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[0-3]/[0-3]/[0-1]$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile(`(\b([0-3])\b)(/(\b([0-3])\b))(/(\b([0-1])\b))`), ""),
 				},
 			},
 			"vdsl_slot_variable": schema.StringAttribute{
@@ -194,7 +194,6 @@ func (r *TransportWANVPNInterfaceDSLIPoEProfileParcelResource) Schema(ctx contex
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(3, 32),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)\s*(?:\d+(?:/\d+){0,2}(?::\d+)?(?:\.\d+)?|\d+(?:\.\d+)?)$`), ""),
 				},
 			},
 			"interface_name_variable": schema.StringAttribute{
@@ -339,14 +338,14 @@ func (r *TransportWANVPNInterfaceDSLIPoEProfileParcelResource) Schema(ctx contex
 				Optional:            true,
 			},
 			"tunnel_interface_color_description": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
 				},
 			},
 			"tunnel_interface_color_description_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
 				Optional:            true,
 			},
 			"tunnel_interface_hello_interval": schema.Int64Attribute{
@@ -450,11 +449,11 @@ func (r *TransportWANVPNInterfaceDSLIPoEProfileParcelResource) Schema(ctx contex
 				Optional:            true,
 			},
 			"tunnel_interface_full_port_hop": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable port hopping on the tunnel interface").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable port hopping on the tunnel interface, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"tunnel_interface_full_port_hop_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
 				Optional:            true,
 			},
 			"tunnel_interface_port_hop": schema.BoolAttribute{
@@ -812,47 +811,47 @@ func (r *TransportWANVPNInterfaceDSLIPoEProfileParcelResource) Schema(ctx contex
 				Optional:            true,
 			},
 			"acl_ipv4_egress_feature_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv4 egress ACL feature ID. Variable references require Manager 20.18.1 or later., Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv4_egress_feature_id` being set").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 				},
 			},
 			"acl_ipv4_egress_feature_id_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv4_egress_feature_id` being set").String,
 				Optional:            true,
 			},
 			"acl_ipv4_ingress_feature_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv4 ingress ACL feature ID. Variable references require Manager 20.18.1 or later., Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv4_ingress_feature_id` being set").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 				},
 			},
 			"acl_ipv4_ingress_feature_id_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv4_ingress_feature_id` being set").String,
 				Optional:            true,
 			},
 			"acl_ipv6_egress_feature_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv6 egress ACL feature ID. Variable references require Manager 20.18.1 or later., Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv6_egress_feature_id` being set").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 				},
 			},
 			"acl_ipv6_egress_feature_id_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv6_egress_feature_id` being set").String,
 				Optional:            true,
 			},
 			"acl_ipv6_ingress_feature_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv6 ingress ACL feature ID. Variable references require Manager 20.18.1 or later., Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv6_ingress_feature_id` being set").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 				},
 			},
 			"acl_ipv6_ingress_feature_id_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv6_ingress_feature_id` being set").String,
 				Optional:            true,
 			},
 		},
@@ -884,7 +883,9 @@ func (r *TransportWANVPNInterfaceDSLIPoEProfileParcelResource) Create(ctx contex
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
 	// Create object
-	body := plan.toBody(ctx)
+
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -967,7 +968,8 @@ func (r *TransportWANVPNInterfaceDSLIPoEProfileParcelResource) Update(ctx contex
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

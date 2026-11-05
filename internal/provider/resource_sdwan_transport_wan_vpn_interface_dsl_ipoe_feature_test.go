@@ -19,13 +19,69 @@ package provider
 
 // Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
+	"context"
 	"os"
 	"testing"
 
+	"github.com/hashicorp/go-version"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
+	"github.com/tidwall/gjson"
 )
 
 // End of section. //template:end imports
+
+func TestTransportWANVPNInterfaceDSLIPoEVersionedPayload(t *testing.T) {
+	for _, managerVersion := range []string{"20.15.1", "20.18.1"} {
+		for _, option := range []string{"default", "global", "variable"} {
+			t.Run(managerVersion+"/"+option, func(t *testing.T) {
+				data := TransportWANVPNInterfaceDSLIPoE{
+					Ipv4AddressType: types.StringValue("dynamic"),
+				}
+				if option == "global" {
+					data.TunnelInterfaceColorDescription = types.StringValue("DSL WAN")
+					data.TunnelInterfaceFullPortHop = types.BoolValue(true)
+					data.AclIpv4EgressFeatureId = types.StringValue("11111111-1111-1111-1111-111111111111")
+					data.AclIpv4IngressFeatureId = data.AclIpv4EgressFeatureId
+					data.AclIpv6EgressFeatureId = data.AclIpv4EgressFeatureId
+					data.AclIpv6IngressFeatureId = data.AclIpv4EgressFeatureId
+				} else if option == "variable" {
+					data.TunnelInterfaceColorDescriptionVariable = types.StringValue("{{description}}")
+					data.TunnelInterfaceFullPortHopVariable = types.StringValue("{{port_hop}}")
+					data.AclIpv4EgressFeatureIdVariable = types.StringValue("{{acl}}")
+					data.AclIpv4IngressFeatureIdVariable = data.AclIpv4EgressFeatureIdVariable
+					data.AclIpv6EgressFeatureIdVariable = data.AclIpv4EgressFeatureIdVariable
+					data.AclIpv6IngressFeatureIdVariable = data.AclIpv4EgressFeatureIdVariable
+				}
+				body := gjson.Parse(data.toBody(context.Background(), version.Must(version.NewVersion(managerVersion))))
+				for _, field := range []string{"colorDescription", "fullPortHop"} {
+					value := body.Get("data.tunnel." + field)
+					if managerVersion == "20.15.1" {
+						if value.Exists() {
+							t.Errorf("20.18-only field %s was sent to 20.15: %s", field, value.Raw)
+						}
+					} else if value.Get("optionType").String() != option {
+						t.Errorf("%s optionType = %q, want %q", field, value.Get("optionType").String(), option)
+					}
+				}
+				for _, field := range []string{"ipv4AclEgress", "ipv4AclIngress", "ipv6AclEgress", "ipv6AclIngress"} {
+					value := body.Get("data.aclQos." + field)
+					if option == "default" || (option == "variable" && managerVersion == "20.15.1") {
+						if value.Exists() {
+							t.Errorf("unsupported or unset ACL %s was serialized: %s", field, value.Raw)
+						}
+					} else if value.Get("refId.optionType").String() != option {
+						t.Errorf("%s refId.optionType = %q, want %q", field, value.Get("refId.optionType").String(), option)
+					}
+				}
+				distance := body.Get("data.ethernet.intfIpAddress.dynamic.dynamicDhcpDistance")
+				if distance.Get("optionType").String() != "default" || distance.Get("value").Int() != 1 {
+					t.Errorf("omitted DHCP distance did not serialize as default 1: %s", distance.Raw)
+				}
+			})
+		}
+	}
+}
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanTransportWANVPNInterfaceDSLIPoEProfileParcel(t *testing.T) {
@@ -40,6 +96,12 @@ func TestAccSdwanTransportWANVPNInterfaceDSLIPoEProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "ipv4_subnet_mask", "255.255.255.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_interface_enabled", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_interface_color", "default"))
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_interface_color_description", "DSL WAN"))
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_interface_full_port_hop", "false"))
+	}
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -106,6 +168,12 @@ func testAccSdwanTransportWANVPNInterfaceDSLIPoEProfileParcelConfig_all() string
 	config += `	ipv4_subnet_mask = "255.255.255.0"` + "\n"
 	config += `	tunnel_interface_enabled = true` + "\n"
 	config += `	tunnel_interface_color = "default"` + "\n"
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	tunnel_interface_color_description = "DSL WAN"` + "\n"
+	}
+	if os.Getenv("SDWAN_2018") != "" {
+		config += `	tunnel_interface_full_port_hop = false` + "\n"
+	}
 	config += `}` + "\n"
 	return config
 }

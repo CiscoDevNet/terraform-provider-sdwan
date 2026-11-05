@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -211,7 +212,7 @@ func (data TransportWANVPNInterfaceDSLIPoE) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data TransportWANVPNInterfaceDSLIPoE) toBody(ctx context.Context) string {
+func (data TransportWANVPNInterfaceDSLIPoE) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -584,17 +585,17 @@ func (data TransportWANVPNInterfaceDSLIPoE) toBody(ctx context.Context) string {
 	}
 
 	if !data.TunnelInterfaceColorDescriptionVariable.IsNull() {
-		if true {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
 			body, _ = sjson.Set(body, path+"tunnel.colorDescription.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.colorDescription.value", data.TunnelInterfaceColorDescriptionVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceColorDescription.IsNull() {
-		if true {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
 			body, _ = sjson.Set(body, path+"tunnel.colorDescription.optionType", "default")
 
 		}
 	} else {
-		if true {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
 			body, _ = sjson.Set(body, path+"tunnel.colorDescription.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.colorDescription.value", data.TunnelInterfaceColorDescription.ValueString())
 		}
@@ -771,17 +772,17 @@ func (data TransportWANVPNInterfaceDSLIPoE) toBody(ctx context.Context) string {
 	}
 
 	if !data.TunnelInterfaceFullPortHopVariable.IsNull() {
-		if true {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
 			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.value", data.TunnelInterfaceFullPortHopVariable.ValueString())
 		}
 	} else if data.TunnelInterfaceFullPortHop.IsNull() {
-		if true {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
 			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.value", false)
 		}
 	} else {
-		if true {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
 			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.fullPortHop.value", data.TunnelInterfaceFullPortHop.ValueBool())
 		}
@@ -1418,48 +1419,48 @@ func (data TransportWANVPNInterfaceDSLIPoE) toBody(ctx context.Context) string {
 	}
 
 	if !data.AclIpv4EgressFeatureIdVariable.IsNull() {
-		if true {
+		if true && (ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) || !(data.AclIpv4EgressFeatureId.IsNull())) {
 			body, _ = sjson.Set(body, path+"aclQos.ipv4AclEgress.refId.optionType", "variable")
 			body, _ = sjson.Set(body, path+"aclQos.ipv4AclEgress.refId.value", data.AclIpv4EgressFeatureIdVariable.ValueString())
 		}
 	} else if !data.AclIpv4EgressFeatureId.IsNull() {
-		if true {
+		if true && (ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) || !(data.AclIpv4EgressFeatureId.IsNull())) {
 			body, _ = sjson.Set(body, path+"aclQos.ipv4AclEgress.refId.optionType", "global")
 			body, _ = sjson.Set(body, path+"aclQos.ipv4AclEgress.refId.value", data.AclIpv4EgressFeatureId.ValueString())
 		}
 	}
 
 	if !data.AclIpv4IngressFeatureIdVariable.IsNull() {
-		if true {
+		if true && (ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) || !(data.AclIpv4IngressFeatureId.IsNull())) {
 			body, _ = sjson.Set(body, path+"aclQos.ipv4AclIngress.refId.optionType", "variable")
 			body, _ = sjson.Set(body, path+"aclQos.ipv4AclIngress.refId.value", data.AclIpv4IngressFeatureIdVariable.ValueString())
 		}
 	} else if !data.AclIpv4IngressFeatureId.IsNull() {
-		if true {
+		if true && (ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) || !(data.AclIpv4IngressFeatureId.IsNull())) {
 			body, _ = sjson.Set(body, path+"aclQos.ipv4AclIngress.refId.optionType", "global")
 			body, _ = sjson.Set(body, path+"aclQos.ipv4AclIngress.refId.value", data.AclIpv4IngressFeatureId.ValueString())
 		}
 	}
 
 	if !data.AclIpv6EgressFeatureIdVariable.IsNull() {
-		if true {
+		if true && (ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) || !(data.AclIpv6EgressFeatureId.IsNull())) {
 			body, _ = sjson.Set(body, path+"aclQos.ipv6AclEgress.refId.optionType", "variable")
 			body, _ = sjson.Set(body, path+"aclQos.ipv6AclEgress.refId.value", data.AclIpv6EgressFeatureIdVariable.ValueString())
 		}
 	} else if !data.AclIpv6EgressFeatureId.IsNull() {
-		if true {
+		if true && (ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) || !(data.AclIpv6EgressFeatureId.IsNull())) {
 			body, _ = sjson.Set(body, path+"aclQos.ipv6AclEgress.refId.optionType", "global")
 			body, _ = sjson.Set(body, path+"aclQos.ipv6AclEgress.refId.value", data.AclIpv6EgressFeatureId.ValueString())
 		}
 	}
 
 	if !data.AclIpv6IngressFeatureIdVariable.IsNull() {
-		if true {
+		if true && (ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) || !(data.AclIpv6IngressFeatureId.IsNull())) {
 			body, _ = sjson.Set(body, path+"aclQos.ipv6AclIngress.refId.optionType", "variable")
 			body, _ = sjson.Set(body, path+"aclQos.ipv6AclIngress.refId.value", data.AclIpv6IngressFeatureIdVariable.ValueString())
 		}
 	} else if !data.AclIpv6IngressFeatureId.IsNull() {
-		if true {
+		if true && (ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) || !(data.AclIpv6IngressFeatureId.IsNull())) {
 			body, _ = sjson.Set(body, path+"aclQos.ipv6AclIngress.refId.optionType", "global")
 			body, _ = sjson.Set(body, path+"aclQos.ipv6AclIngress.refId.value", data.AclIpv6IngressFeatureId.ValueString())
 		}

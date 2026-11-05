@@ -35,13 +35,13 @@ data "sdwan_transport_wan_vpn_interface_dsl_ipoe_feature" "example" {
 
 ### Read-Only
 
-- `acl_ipv4_egress_feature_id` (String)
+- `acl_ipv4_egress_feature_id` (String) IPv4 egress ACL feature ID. Variable references require Manager 20.18.1 or later.
 - `acl_ipv4_egress_feature_id_variable` (String) Variable name
-- `acl_ipv4_ingress_feature_id` (String)
+- `acl_ipv4_ingress_feature_id` (String) IPv4 ingress ACL feature ID. Variable references require Manager 20.18.1 or later.
 - `acl_ipv4_ingress_feature_id_variable` (String) Variable name
-- `acl_ipv6_egress_feature_id` (String)
+- `acl_ipv6_egress_feature_id` (String) IPv6 egress ACL feature ID. Variable references require Manager 20.18.1 or later.
 - `acl_ipv6_egress_feature_id_variable` (String) Variable name
-- `acl_ipv6_ingress_feature_id` (String)
+- `acl_ipv6_ingress_feature_id` (String) IPv6 ingress ACL feature ID. Variable references require Manager 20.18.1 or later.
 - `acl_ipv6_ingress_feature_id_variable` (String) Variable name
 - `adaptive_qos` (Boolean) Adaptive QoS
 - `adaptive_qos_period` (Number) Adapt Period(Minutes)

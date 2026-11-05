@@ -674,7 +674,7 @@ func (d *TransportWANVPNInterfaceDSLIPoEProfileParcelDataSource) Schema(ctx cont
 				Computed:            true,
 			},
 			"acl_ipv4_egress_feature_id": schema.StringAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "IPv4 egress ACL feature ID. Variable references require Manager 20.18.1 or later.",
 				Computed:            true,
 			},
 			"acl_ipv4_egress_feature_id_variable": schema.StringAttribute{
@@ -682,7 +682,7 @@ func (d *TransportWANVPNInterfaceDSLIPoEProfileParcelDataSource) Schema(ctx cont
 				Computed:            true,
 			},
 			"acl_ipv4_ingress_feature_id": schema.StringAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "IPv4 ingress ACL feature ID. Variable references require Manager 20.18.1 or later.",
 				Computed:            true,
 			},
 			"acl_ipv4_ingress_feature_id_variable": schema.StringAttribute{
@@ -690,7 +690,7 @@ func (d *TransportWANVPNInterfaceDSLIPoEProfileParcelDataSource) Schema(ctx cont
 				Computed:            true,
 			},
 			"acl_ipv6_egress_feature_id": schema.StringAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "IPv6 egress ACL feature ID. Variable references require Manager 20.18.1 or later.",
 				Computed:            true,
 			},
 			"acl_ipv6_egress_feature_id_variable": schema.StringAttribute{
@@ -698,7 +698,7 @@ func (d *TransportWANVPNInterfaceDSLIPoEProfileParcelDataSource) Schema(ctx cont
 				Computed:            true,
 			},
 			"acl_ipv6_ingress_feature_id": schema.StringAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "IPv6 ingress ACL feature ID. Variable references require Manager 20.18.1 or later.",
 				Computed:            true,
 			},
 			"acl_ipv6_ingress_feature_id_variable": schema.StringAttribute{
