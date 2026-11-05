@@ -4,7 +4,8 @@ rest_endpoint: /v1/config-group/
 id_attribute: id
 data_source_name_query: true
 minimum_version: 20.15.0
-test_tags: [SDWAN_2015]
+has_version: true
+test_tags: [SDWAN_2015, SDWAN_2018]
 doc_category: Configuration Groups
 attributes:
   - model_name: name
@@ -91,48 +92,6 @@ attributes:
     description: Number of devices per site
     example: 2
     exclude_test: true
-  - model_name: devices
-    type: List
-    description: List of devices
-    attributes:
-      - model_name: id
-        type: String
-        id: true
-        description: Device ID
-        example: C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B
-      - model_name: groupTopologyLabel
-        tf_name: topology_label
-        type: String
-        description: Topology label for dual device configuration group (supported from version 20.18.1 onwards)
-        example: EdgeDevice_1
-        exclude_test: true
-      - tf_name: deploy
-        tf_only: true
-        type: Bool
-        description: Deploy to device if enabled.
-        default_value: false
-        example: true
-      - model_name: variables
-        type: Set
-        description: List of variables
-        attributes:
-          - model_name: name
-            type: String
-            mandatory: true
-            id: true
-            description: Variable name
-            example: host_name
-          - model_name: value
-            type: String
-            description: Variable value
-            example: edge1
-          - model_name: list_value
-            type: List
-            element_type: String
-            tf_only: true
-            description: Use this instead of `value` in case value is of type `List`.
-            example: 1.2.3.4
-            exclude_test: true
   - tf_name: feature_versions
     tf_only: true
     type: Versions

@@ -1,0 +1,182 @@
+---
+name: Configuration Group Devices
+rest_endpoint: /v1/config-group/
+id_attribute: id
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015, SDWAN_2018]
+doc_category: Configuration Groups
+no_data_source: true
+skip_minimum_test: true
+attributes:
+  - model_name: configurationGroupId
+    tf_name: configuration_group_id
+    type: String
+    mandatory: true
+    requires_replace: true
+    description: The ID of the configuration group to associate the devices with
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_configuration_group.test.id
+  - model_name: solution
+    type: String
+    mandatory: true
+    enum_values: [mobility, sdwan, nfvirtual]
+    description: Type of solution
+    example: sdwan
+  - tf_name: configuration_group_version
+    tf_only: true
+    type: Int64
+    description: "The version of the associated configuration group. Set this to `sdwan_configuration_group.<name>.version` so that a change to the configuration group is deployed in the same apply: from SD-WAN Manager 20.15 to the devices the Manager reports out of date, on older versions to all devices managed by this resource."
+    example: 1
+    exclude_test: true
+  - tf_name: retain_devices
+    tf_only: true
+    type: Set
+    element_type: String
+    description: "Device IDs this resource stops managing without releasing them, for a hand-over to another state. A device removed from `devices` and listed here is dropped from the state but stays associated with the configuration group, so it is not disassociated and needs no deploy. A device can't be in `devices` and in `retain_devices` at the same time. Not needed with a single state."
+    example: C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B
+    exclude_test: true
+  - model_name: devices
+    type: List
+    description: List of devices
+    attributes:
+      - model_name: id
+        type: String
+        id: true
+        description: Device ID
+        example: C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B
+      - model_name: groupTopologyLabel
+        tf_name: topology_label
+        type: String
+        description: Topology label for dual device configuration group (supported from version 20.18.1 onwards)
+        example: EdgeDevice_1
+        exclude_test: true
+      - tf_name: deploy
+        tf_only: true
+        type: Bool
+        description: Deploy to device if enabled.
+        default_value: false
+        example: true
+      - model_name: variables
+        type: Set
+        description: List of variables
+        attributes:
+          - model_name: name
+            type: String
+            mandatory: true
+            id: true
+            description: Variable name
+            example: host_name
+          - model_name: value
+            type: String
+            description: Variable value
+            example: edge1
+          - model_name: list_value
+            type: List
+            element_type: String
+            tf_only: true
+            description: Use this instead of `value` in case value is of type `List`.
+            example: 1.2.3.4
+            exclude_test: true
+
+test_prerequisites: |
+  resource "sdwan_system_feature_profile" "test" {
+    name = "SYSTEM_TF"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_system_basic_feature" "test" {
+    name = "BASIC_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+  }
+
+  resource "sdwan_system_aaa_feature" "test" {
+    name               = "AAA_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+    server_auth_order  = ["local"]
+    users = [{
+      name     = "admin"
+      password = "admin"
+    }]
+  }
+
+  resource "sdwan_system_bfd_feature" "test" {
+    name               = "BFD_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+  }
+
+  resource "sdwan_system_global_feature" "test" {
+    name               = "GLOBAL_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+  }
+
+  resource "sdwan_system_logging_feature" "test" {
+    name               = "LOGGING_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+  }
+
+  resource "sdwan_system_omp_feature" "test" {
+    name               = "OMP_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+  } 
+
+  resource "sdwan_transport_feature_profile" "test" {
+    name        = "TRANSPORT_TF"
+    description = "My transport feature profile 1"
+  }
+
+  resource "sdwan_transport_wan_vpn_feature" "test" {
+    name               = "WAN_VPN_TF"
+    feature_profile_id = sdwan_transport_feature_profile.test.id
+    vpn                = 0
+  }
+
+  resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "test" {
+    name                         = "WAN_VPN_INT_TF"
+    feature_profile_id           = sdwan_transport_feature_profile.test.id
+    transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id
+    interface_name               = "GigabitEthernet1"
+    shutdown                     = false
+    ipv4_address_type            = "dynamic"
+    ipv4_dhcp_distance           = 1
+    tunnel_interface             = true
+    tunnel_interface_encapsulations = [
+      {
+        encapsulation = "ipsec"
+      }
+    ]
+  }
+
+  # Service VPN 1 (VRF 1) is included here so the device actually has a
+  # routing instance for VRF 1 - without it, leftover/stale device config
+  # referencing VRF 1 (e.g. MSDP) can fail to reconcile during deployment
+  resource "sdwan_service_feature_profile" "test" {
+    name        = "SERVICE_TF"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_service_lan_vpn_feature" "test" {
+    name                = "SERVICE_VPN_TF"
+    feature_profile_id  = sdwan_service_feature_profile.test.id
+    vpn                 = 1
+  }
+
+  resource "sdwan_configuration_group" "test" {
+    name = "CG_1"
+    description = "My config group 1"
+    solution = "sdwan"
+    feature_profile_ids = [
+      sdwan_system_feature_profile.test.id,
+      sdwan_transport_feature_profile.test.id,
+      sdwan_service_feature_profile.test.id,
+    ]
+    feature_versions = [
+      sdwan_system_basic_feature.test.version,
+      sdwan_system_aaa_feature.test.version,
+      sdwan_system_bfd_feature.test.version,
+      sdwan_system_global_feature.test.version,
+      sdwan_system_logging_feature.test.version,
+      sdwan_system_omp_feature.test.version,
+      sdwan_transport_wan_vpn_interface_ethernet_feature.test.version,
+      sdwan_service_lan_vpn_feature.test.version,
+    ]
+  }

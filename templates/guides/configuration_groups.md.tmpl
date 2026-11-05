@@ -91,7 +91,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "transport_01_wan_
 }
 ```
 
-Finally, we need to create the corresponding configuration group, referencing the previously created feature profiles. `devices` is a list of devices associated with the configuration group. Every device then requires values to be provided for all the relevant variables being used in the respective features. Every device has a flag `deploy` to enable/disable the deployment of configuration changes to the respective devices.
+Next, we create the corresponding configuration group, referencing the previously created feature profiles. The `feature_versions` attribute is a list of references to the `version` attribute of all used features. Whenever any of them change, the configuration group's computed `version` is incremented, which in turn can be used to trigger a redeployment of the associated devices (see below).
 
 ```terraform
 resource "sdwan_configuration_group" "config_group_01" {
@@ -99,6 +99,30 @@ resource "sdwan_configuration_group" "config_group_01" {
   description = "My config group"
   solution     = "sdwan"
   feature_profile_ids = [sdwan_system_feature_profile.system_01.id, sdwan_transport_feature_profile.transport_01.id]
+  feature_versions = [
+    sdwan_system_basic_feature.system_01_basic.version,
+    sdwan_system_aaa_feature.system_01_aaa.version,
+    sdwan_system_bfd_feature.system_01_bfd.version,
+    sdwan_system_global_feature.system_01_global.version,
+    sdwan_system_logging_feature.system_01_logging.version,
+    sdwan_system_omp_feature.system_01_omp.version,
+    sdwan_transport_wan_vpn_feature.transport_01_wan_vpn.version,
+    sdwan_transport_wan_vpn_interface_ethernet_feature.transport_01_wan_vpn_interface_ethernet.version,
+  ]
+}
+```
+
+Finally, device association, variables and deployment are managed by a separate `sdwan_configuration_group_devices` resource. It references the configuration group via `configuration_group_id` and provides a list of `devices`. Every device requires values to be provided for all the relevant variables used in the respective features, and has a `deploy` flag to enable/disable the deployment of configuration changes to that device. Setting `configuration_group_version` to `sdwan_configuration_group.<name>.version` ensures that a change to the configuration group (for example a changed feature) is deployed in the same apply: from SD-WAN Manager 20.15 to the devices the Manager reports out of date, on older versions to all devices of the resource.
+
+Because device associations live in their own resource, the devices of a single configuration group can be spread across multiple Terraform state files (for example a few thousand devices per state) without one state impacting the devices managed by another.
+
+To hand a device over to another state on the same configuration group (for example when its site moves to another workspace), remove it from `devices` in the old state's resource and list it in that resource's `retain_devices`, and add it to `devices` in the new state's resource. The old state drops the device without disassociating it, and the new state adopts it: the device is deployed only if SD-WAN Manager reports it out of date or its variables changed. The two applies can run in either order. `sdwan_policy_group_devices` works the same way.
+
+```terraform
+resource "sdwan_configuration_group_devices" "config_group_01_devices" {
+  configuration_group_id      = sdwan_configuration_group.config_group_01.id
+  solution                    = "sdwan"
+  configuration_group_version = sdwan_configuration_group.config_group_01.version
   devices = [{
     id     = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"
     deploy = true
@@ -125,20 +149,10 @@ resource "sdwan_configuration_group" "config_group_01" {
       }
     ]
   }]
-  feature_versions = [
-    sdwan_system_basic_feature.system_01_basic.version,
-    sdwan_system_aaa_feature.system_01_aaa.version,
-    sdwan_system_bfd_feature.system_01_bfd.version,
-    sdwan_system_global_feature.system_01_global.version,
-    sdwan_system_logging_feature.system_01_logging.version,
-    sdwan_system_omp_feature.system_01_omp.version,
-    sdwan_transport_wan_vpn_feature.transport_01_wan_vpn.version,
-    sdwan_transport_wan_vpn_interface_ethernet_feature.transport_01_wan_vpn_interface_ethernet.version,
-  ]
 }
 ```
 
-Note the `feature_versions` list at the end - see [Tracking Changes](#tracking-changes) below for why this is required.
+See [Tracking Changes](#tracking-changes) below for why the `feature_versions` list on the configuration group is required.
 
 ## Policy Groups
 
@@ -158,7 +172,7 @@ resource "sdwan_application_priority_qos_policy" "app_priority_01_qos" {
 }
 ```
 
-The policy group itself references the feature profile and lists the `version` of every policy it uses via `policy_versions` - the policy equivalent of a configuration group's `feature_versions`.
+The policy group itself references the feature profile and lists the `version` of every policy it uses via `policy_versions` - the policy equivalent of a configuration group's `feature_versions`. Like the configuration group, it has a computed `version` that is incremented whenever the group or any of its policy versions change.
 
 ```terraform
 resource "sdwan_policy_group" "policy_group_01" {
@@ -166,6 +180,19 @@ resource "sdwan_policy_group" "policy_group_01" {
   description         = "My policy group"
   solution            = "sdwan"
   feature_profile_ids = [sdwan_application_priority_feature_profile.app_priority_01.id]
+  policy_versions = [
+    sdwan_application_priority_qos_policy.app_priority_01_qos.version,
+  ]
+}
+```
+
+Device association, variables and deployment are managed by a separate `sdwan_policy_group_devices` resource, which references the policy group via `policy_group_id`. Setting `policy_group_version` to `sdwan_policy_group.<name>.version` deploys a policy group change in the same apply, in the same way.
+
+```terraform
+resource "sdwan_policy_group_devices" "policy_group_01_devices" {
+  policy_group_id      = sdwan_policy_group.policy_group_01.id
+  solution             = "sdwan"
+  policy_group_version = sdwan_policy_group.policy_group_01.version
   devices = [{
     id     = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"
     deploy = true
@@ -176,20 +203,17 @@ resource "sdwan_policy_group" "policy_group_01" {
       }
     ]
   }]
-  policy_versions = [
-    sdwan_application_priority_qos_policy.app_priority_01_qos.version,
-  ]
 }
 ```
 
-A device can be associated with both a configuration group and a policy group at the same time - each has its own feature profiles, features/policies, and its own `feature_versions`/`policy_versions` list.
+A device can be associated with both a configuration group and a policy group at the same time - each has its own feature profiles, features/policies, its own `feature_versions`/`policy_versions` list, and its own `*_devices` resource.
 
 ## Tracking Changes
 
 Both `sdwan_configuration_group.feature_versions` and `sdwan_policy_group.policy_versions` require a list of references to the `version` attribute of every feature or policy they use. This is required so that:
 
-- A change to any referenced feature/policy triggers a re-deployment of the group.
-- The group is always deployed *after* the changes to its features/policies have been applied.
+- A change to any referenced feature/policy increments the group's `version`, which - referenced from `configuration_group_version`/`policy_group_version` - triggers a re-deployment of the devices in the corresponding `*_devices` resource.
+- The devices are always deployed *after* the changes to the features/policies and the group have been applied.
 
 We can simulate this by modifying a feature that is already deployed to a device, for example the password of the AAA feature resource from the Configuration Groups example above.
 
@@ -205,7 +229,7 @@ resource "sdwan_system_aaa_feature" "system_01_aaa" {
 }
 ```
 
-After running `terraform apply` the plan should show two changes, one for the feature resource that was just modified and one for the configuration group resource which is required in order to trigger a re-deployment of the configuration.
+After running `terraform apply` the plan should show three changes: one for the feature resource that was just modified, one for the configuration group resource whose `version` is incremented as a result of the changed feature version, and one for the `sdwan_configuration_group_devices` resource which is required in order to trigger a re-deployment of the configuration to the devices.
 
 ```
   # sdwan_configuration_group.config_group_01 will be updated in-place
@@ -220,7 +244,15 @@ After running `terraform apply` the plan should show two changes, one for the fe
         ]
         id               = "1466cfc0-8104-4300-936b-3152aad1fe70"
         name             = "config_group_01"
-        # (4 unchanged attributes hidden)
+      ~ version          = 0 -> (known after apply)
+        # (3 unchanged attributes hidden)
+    }
+
+  # sdwan_configuration_group_devices.config_group_01_devices will be updated in-place
+  ~ resource "sdwan_configuration_group_devices" "config_group_01_devices" {
+        id                          = "1466cfc0-8104-4300-936b-3152aad1fe70"
+      ~ configuration_group_version = 0 -> (known after apply)
+        # (2 unchanged attributes hidden)
     }
 
   # sdwan_system_aaa_feature.system_01_aaa will be updated in-place
@@ -237,7 +269,7 @@ After running `terraform apply` the plan should show two changes, one for the fe
         # (2 unchanged attributes hidden)
     }
 
-Plan: 0 to add, 2 to change, 0 to destroy.
+Plan: 0 to add, 3 to change, 0 to destroy.
 ```
 
-The same applies to a policy group: modifying `sdwan_application_priority_qos_policy.app_priority_01_qos` would show a matching plan diff on `sdwan_policy_group.policy_group_01.policy_versions`.
+The same applies to a policy group: modifying `sdwan_application_priority_qos_policy.app_priority_01_qos` would show a matching plan diff on `sdwan_policy_group.policy_group_01.policy_versions` and `version`, and on `sdwan_policy_group_devices.policy_group_01_devices.policy_group_version`.
