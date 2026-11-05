@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.11.8
+
+- THe `devices` in `sdwan_attach_feature_device_template` is now a set instead of a list. Previously, adding or removing a single device caused every device positioned after it in the list to render as changed in the Terraform plan. The configuration syntax is unchanged; existing state is migrated automatically.
+
 ## 0.11.7
 
 - Add `sdwan_policy_object_security_data_ipv6_prefix_list` resource and data source (SD-WAN Manager 20.18+)
