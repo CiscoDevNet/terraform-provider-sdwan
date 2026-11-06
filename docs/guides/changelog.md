@@ -7,9 +7,9 @@ description: |-
 
 # Changelog
 
-## 0.11.8
+## 0.11.8 (unreleased)
 
-- THe `devices` in `sdwan_attach_feature_device_template` is now a set instead of a list. Previously, adding or removing a single device caused every device positioned after it in the list to render as changed in the Terraform plan. The configuration syntax is unchanged; existing state is migrated automatically.
+- The `devices` in `sdwan_attach_feature_device_template` is now a set instead of a list. Previously, adding or removing a single device caused every device positioned after it in the list to render as changed in the Terraform plan. The configuration syntax is unchanged; existing state is migrated automatically.
 
 ## 0.11.7
 
