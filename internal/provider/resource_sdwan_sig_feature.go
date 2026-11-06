@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -45,26 +46,26 @@ import (
 // Section below is generated&owned by "gen/generator.go". //template:begin model
 
 // Ensure provider defined types fully satisfy framework interfaces
-var _ resource.Resource = &SIGSecuritySIGProfileParcelResource{}
-var _ resource.ResourceWithImportState = &SIGSecuritySIGProfileParcelResource{}
+var _ resource.Resource = &SigProfileParcelResource{}
+var _ resource.ResourceWithImportState = &SigProfileParcelResource{}
 
-func NewSIGSecuritySIGProfileParcelResource() resource.Resource {
-	return &SIGSecuritySIGProfileParcelResource{}
+func NewSigProfileParcelResource() resource.Resource {
+	return &SigProfileParcelResource{}
 }
 
-type SIGSecuritySIGProfileParcelResource struct {
+type SigProfileParcelResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
 }
 
-func (r *SIGSecuritySIGProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_sig_security_sig_feature"
+func (r *SigProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_sig_feature"
 }
 
-func (r *SIGSecuritySIGProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *SigProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a SIG Security SIG Feature.").AddMinimumVersionDescription("20.15.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a SIG (Secure Internet Gateway) Feature.").AddMinimumVersionDescription("20.15.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -166,7 +167,7 @@ func (r *SIGSecuritySIGProfileParcelResource) Schema(ctx context.Context, req re
 							Optional:            true,
 						},
 						"tunnel_route_via": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid").String,
+							MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(3, 32),
@@ -174,7 +175,7 @@ func (r *SIGSecuritySIGProfileParcelResource) Schema(ctx context.Context, req re
 							},
 						},
 						"tunnel_route_via_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher").String,
 							Optional:            true,
 						},
 						"tunnel_destination": schema.StringAttribute{
@@ -434,20 +435,20 @@ func (r *SIGSecuritySIGProfileParcelResource) Schema(ctx context.Context, req re
 				MarkdownDescription: helpers.NewAttributeDescription("Enable Caution").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"primary_data_center": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Custom Primary Datacenter").AddDefaultValueDescription("Auto").String,
+			"zscaler_primary_data_center": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Custom Primary Datacenter, Attribute conditional on `sig_provider` equal to `Zscaler`").AddDefaultValueDescription("Auto").String,
 				Optional:            true,
 			},
-			"primary_data_center_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+			"zscaler_primary_data_center_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `sig_provider` equal to `Zscaler`").String,
 				Optional:            true,
 			},
-			"secondary_data_center": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Custom Secondary Datacenter").AddDefaultValueDescription("Auto").String,
+			"zscaler_secondary_data_center": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Custom Secondary Datacenter, Attribute conditional on `sig_provider` equal to `Zscaler`").AddDefaultValueDescription("Auto").String,
 				Optional:            true,
 			},
-			"secondary_data_center_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+			"zscaler_secondary_data_center_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `sig_provider` equal to `Zscaler`").String,
 				Optional:            true,
 			},
 			"surrogate_ip": schema.BoolAttribute{
@@ -505,19 +506,19 @@ func (r *SIGSecuritySIGProfileParcelResource) Schema(ctx context.Context, req re
 				Optional:            true,
 			},
 			"umbrella_primary_data_center": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Primary Datacenter").AddDefaultValueDescription("Auto").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Primary Datacenter, Attribute conditional on `sig_provider` equal to `Umbrella`").AddDefaultValueDescription("Auto").String,
 				Optional:            true,
 			},
 			"umbrella_primary_data_center_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `sig_provider` equal to `Umbrella`").String,
 				Optional:            true,
 			},
 			"umbrella_secondary_data_center": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Secondary Datacenter").AddDefaultValueDescription("Auto").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Secondary Datacenter, Attribute conditional on `sig_provider` equal to `Umbrella`").AddDefaultValueDescription("Auto").String,
 				Optional:            true,
 			},
 			"umbrella_secondary_data_center_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `sig_provider` equal to `Umbrella`").String,
 				Optional:            true,
 			},
 			"tracker_source_ip": schema.StringAttribute{
@@ -596,7 +597,7 @@ func (r *SIGSecuritySIGProfileParcelResource) Schema(ctx context.Context, req re
 	}
 }
 
-func (r *SIGSecuritySIGProfileParcelResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+func (r *SigProfileParcelResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -608,8 +609,8 @@ func (r *SIGSecuritySIGProfileParcelResource) Configure(_ context.Context, req r
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
-func (r *SIGSecuritySIGProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan SIGSecuritySIG
+func (r *SigProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var plan Sig
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -621,7 +622,9 @@ func (r *SIGSecuritySIGProfileParcelResource) Create(ctx context.Context, req re
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
 	// Create object
-	body := plan.toBody(ctx)
+
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -643,8 +646,8 @@ func (r *SIGSecuritySIGProfileParcelResource) Create(ctx context.Context, req re
 // End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (r *SIGSecuritySIGProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state SIGSecuritySIG
+func (r *SigProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var state Sig
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -686,8 +689,8 @@ func (r *SIGSecuritySIGProfileParcelResource) Read(ctx context.Context, req reso
 // End of section. //template:end read
 
 // Section below is generated&owned by "gen/generator.go". //template:begin update
-func (r *SIGSecuritySIGProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state SIGSecuritySIG
+func (r *SigProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, state Sig
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -704,7 +707,8 @@ func (r *SIGSecuritySIGProfileParcelResource) Update(ctx context.Context, req re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
@@ -722,8 +726,8 @@ func (r *SIGSecuritySIGProfileParcelResource) Update(ctx context.Context, req re
 // End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
-func (r *SIGSecuritySIGProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state SIGSecuritySIG
+func (r *SigProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state Sig
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -748,11 +752,11 @@ func (r *SIGSecuritySIGProfileParcelResource) Delete(ctx context.Context, req re
 // End of section. //template:end delete
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
-func (r *SIGSecuritySIGProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *SigProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	count := 1
 	parts := strings.SplitN(req.ID, ",", (count + 1))
 
-	pattern := "sig_security_sig_feature_id" + ",feature_profile_id"
+	pattern := "sig_feature_id" + ",feature_profile_id"
 	if len(parts) != (count + 1) {
 		resp.Diagnostics.AddError(
 			"Unexpected Import Identifier", fmt.Sprintf("Expected import identifier with the format: %s. Got: %q", pattern, req.ID),

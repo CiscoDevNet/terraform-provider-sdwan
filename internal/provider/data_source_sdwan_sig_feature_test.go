@@ -28,49 +28,48 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
-func TestAccDataSourceSdwanSIGSecuritySIGProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2015") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2015")
+func TestAccDataSourceSdwanSigProfileParcel(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "sig_provider", "Generic"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "interfaces.0.interface_name", "gre1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "interfaces.0.auto", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "interfaces.0.interface_description", "Tunnel to SIG data center A"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "interfaces.0.unnumbered", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "interfaces.0.tunnel_source_interface", "GigabitEthernet1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "interfaces.0.tunnel_route_via", "GigabitEthernet1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "interfaces.0.tunnel_destination", "198.51.100.10"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "interfaces.0.tunnel_set", "secure-internet-gateway-other"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "interfaces.0.tunnel_dc_preference", "primary-dc"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "interfaces.0.tcp_mss_adjust", "1300"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "interfaces.0.mtu", "1400"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "interfaces.0.tracker", "tracker1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "interfaces.0.track_enable", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "interface_pairs.0.active_interface", "gre1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "interface_pairs.0.active_interface_weight", "255"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "interface_pairs.0.backup_interface", "None"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "interface_pairs.0.backup_interface_weight", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "tracker_source_ip", "192.0.2.10"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "trackers.0.name", "tracker1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "trackers.0.endpoint_api_url", "http://gateway.example.com/vpntest"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "trackers.0.threshold", "1000"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "trackers.0.interval", "30"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "trackers.0.multiplier", "2"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "sig_provider", "Generic"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "interfaces.0.interface_name", "gre1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "interfaces.0.auto", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "interfaces.0.interface_description", "Tunnel to SIG data center A"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "interfaces.0.unnumbered", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "interfaces.0.tunnel_source_interface", "GigabitEthernet1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "interfaces.0.tunnel_destination", "198.51.100.10"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "interfaces.0.tunnel_set", "secure-internet-gateway-other"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "interfaces.0.tunnel_dc_preference", "primary-dc"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "interfaces.0.tcp_mss_adjust", "1300"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "interfaces.0.mtu", "1400"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "interfaces.0.tracker", "tracker1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "interfaces.0.track_enable", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "interface_pairs.0.active_interface", "gre1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "interface_pairs.0.active_interface_weight", "255"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "interface_pairs.0.backup_interface", "None"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "interface_pairs.0.backup_interface_weight", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "tracker_source_ip", "192.0.2.10"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "trackers.0.name", "tracker1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "trackers.0.endpoint_api_url", "http://gateway.example.com/vpntest"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "trackers.0.threshold", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "trackers.0.interval", "30"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "trackers.0.multiplier", "2"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanSIGSecuritySIGPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSIGSecuritySIGProfileParcelConfig(),
+				Config: testAccDataSourceSdwanSigPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSigProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 			{
-				Config: testAccDataSourceSdwanSIGSecuritySIGPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSIGSecuritySIGProfileParcelByNameConfig(),
+				Config: testAccDataSourceSdwanSigPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSigProfileParcelByNameConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					append(checks,
-						resource.TestCheckResourceAttr("data.sdwan_sig_security_sig_feature.test", "name", "TF_TEST"),
-						resource.TestCheckResourceAttrSet("data.sdwan_sig_security_sig_feature.test", "id"),
+						resource.TestCheckResourceAttr("data.sdwan_sig_feature.test", "name", "TF_TEST"),
+						resource.TestCheckResourceAttrSet("data.sdwan_sig_feature.test", "id"),
 					)...),
 			},
 		},
@@ -80,7 +79,7 @@ func TestAccDataSourceSdwanSIGSecuritySIGProfileParcel(t *testing.T) {
 // End of section. //template:end testAccDataSource
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-const testAccDataSourceSdwanSIGSecuritySIGPrerequisitesProfileParcelConfig = `
+const testAccDataSourceSdwanSigPrerequisitesProfileParcelConfig = `
 resource "sdwan_sig_security_feature_profile" "test" {
   name        = "TF_TEST_SIG_SECURITY"
   description = "Terraform test"
@@ -91,8 +90,8 @@ resource "sdwan_sig_security_feature_profile" "test" {
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
-func testAccDataSourceSdwanSIGSecuritySIGProfileParcelConfig() string {
-	config := `resource "sdwan_sig_security_sig_feature" "test" {` + "\n"
+func testAccDataSourceSdwanSigProfileParcelConfig() string {
+	config := `resource "sdwan_sig_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_sig_security_feature_profile.test.id` + "\n"
@@ -103,7 +102,6 @@ func testAccDataSourceSdwanSIGSecuritySIGProfileParcelConfig() string {
 	config += `	  interface_description = "Tunnel to SIG data center A"` + "\n"
 	config += `	  unnumbered = true` + "\n"
 	config += `	  tunnel_source_interface = "GigabitEthernet1"` + "\n"
-	config += `	  tunnel_route_via = "GigabitEthernet1"` + "\n"
 	config += `	  tunnel_destination = "198.51.100.10"` + "\n"
 	config += `	  tunnel_set = "secure-internet-gateway-other"` + "\n"
 	config += `	  tunnel_dc_preference = "primary-dc"` + "\n"
@@ -129,8 +127,8 @@ func testAccDataSourceSdwanSIGSecuritySIGProfileParcelConfig() string {
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_sig_security_sig_feature" "test" {
-			id = sdwan_sig_security_sig_feature.test.id
+		data "sdwan_sig_feature" "test" {
+			id = sdwan_sig_feature.test.id
 			feature_profile_id = sdwan_sig_security_feature_profile.test.id
 		}
 	`
@@ -140,8 +138,8 @@ func testAccDataSourceSdwanSIGSecuritySIGProfileParcelConfig() string {
 // End of section. //template:end testAccDataSourceConfig
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceByNameConfig
-func testAccDataSourceSdwanSIGSecuritySIGProfileParcelByNameConfig() string {
-	config := `resource "sdwan_sig_security_sig_feature" "test" {` + "\n"
+func testAccDataSourceSdwanSigProfileParcelByNameConfig() string {
+	config := `resource "sdwan_sig_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_sig_security_feature_profile.test.id` + "\n"
@@ -152,7 +150,6 @@ func testAccDataSourceSdwanSIGSecuritySIGProfileParcelByNameConfig() string {
 	config += `	  interface_description = "Tunnel to SIG data center A"` + "\n"
 	config += `	  unnumbered = true` + "\n"
 	config += `	  tunnel_source_interface = "GigabitEthernet1"` + "\n"
-	config += `	  tunnel_route_via = "GigabitEthernet1"` + "\n"
 	config += `	  tunnel_destination = "198.51.100.10"` + "\n"
 	config += `	  tunnel_set = "secure-internet-gateway-other"` + "\n"
 	config += `	  tunnel_dc_preference = "primary-dc"` + "\n"
@@ -178,7 +175,7 @@ func testAccDataSourceSdwanSIGSecuritySIGProfileParcelByNameConfig() string {
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_sig_security_sig_feature" "test" {
+		data "sdwan_sig_feature" "test" {
 			name = "TF_TEST"
 			feature_profile_id = sdwan_sig_security_feature_profile.test.id
 		}

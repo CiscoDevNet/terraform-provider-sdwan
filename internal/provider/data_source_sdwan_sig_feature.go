@@ -40,27 +40,27 @@ import (
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
-	_ datasource.DataSource                     = &SIGSecuritySIGProfileParcelDataSource{}
-	_ datasource.DataSourceWithConfigure        = &SIGSecuritySIGProfileParcelDataSource{}
-	_ datasource.DataSourceWithConfigValidators = &SIGSecuritySIGProfileParcelDataSource{}
+	_ datasource.DataSource                     = &SigProfileParcelDataSource{}
+	_ datasource.DataSourceWithConfigure        = &SigProfileParcelDataSource{}
+	_ datasource.DataSourceWithConfigValidators = &SigProfileParcelDataSource{}
 )
 
-func NewSIGSecuritySIGProfileParcelDataSource() datasource.DataSource {
-	return &SIGSecuritySIGProfileParcelDataSource{}
+func NewSigProfileParcelDataSource() datasource.DataSource {
+	return &SigProfileParcelDataSource{}
 }
 
-type SIGSecuritySIGProfileParcelDataSource struct {
+type SigProfileParcelDataSource struct {
 	client *sdwan.Client
 }
 
-func (d *SIGSecuritySIGProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_sig_security_sig_feature"
+func (d *SigProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_sig_feature"
 }
 
-func (d *SIGSecuritySIGProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (d *SigProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the SIG Security SIG Feature.",
+		MarkdownDescription: "This data source can read the SIG (Secure Internet Gateway) Feature.",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -357,19 +357,19 @@ func (d *SIGSecuritySIGProfileParcelDataSource) Schema(ctx context.Context, req 
 				MarkdownDescription: "Enable Caution",
 				Computed:            true,
 			},
-			"primary_data_center": schema.StringAttribute{
+			"zscaler_primary_data_center": schema.StringAttribute{
 				MarkdownDescription: "Custom Primary Datacenter",
 				Computed:            true,
 			},
-			"primary_data_center_variable": schema.StringAttribute{
+			"zscaler_primary_data_center_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"secondary_data_center": schema.StringAttribute{
+			"zscaler_secondary_data_center": schema.StringAttribute{
 				MarkdownDescription: "Custom Secondary Datacenter",
 				Computed:            true,
 			},
-			"secondary_data_center_variable": schema.StringAttribute{
+			"zscaler_secondary_data_center_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -493,7 +493,7 @@ func (d *SIGSecuritySIGProfileParcelDataSource) Schema(ctx context.Context, req 
 	}
 }
 
-func (d *SIGSecuritySIGProfileParcelDataSource) ConfigValidators(_ context.Context) []datasource.ConfigValidator {
+func (d *SigProfileParcelDataSource) ConfigValidators(_ context.Context) []datasource.ConfigValidator {
 	return []datasource.ConfigValidator{
 		datasourcevalidator.ExactlyOneOf(
 			path.MatchRoot("id"),
@@ -502,7 +502,7 @@ func (d *SIGSecuritySIGProfileParcelDataSource) ConfigValidators(_ context.Conte
 	}
 }
 
-func (d *SIGSecuritySIGProfileParcelDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
+func (d *SigProfileParcelDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -513,8 +513,8 @@ func (d *SIGSecuritySIGProfileParcelDataSource) Configure(_ context.Context, req
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (d *SIGSecuritySIGProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config SIGSecuritySIG
+func (d *SigProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	var config Sig
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)

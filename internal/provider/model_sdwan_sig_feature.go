@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -31,47 +32,47 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
-type SIGSecuritySIG struct {
-	Id                                  types.String                   `tfsdk:"id"`
-	Version                             types.Int64                    `tfsdk:"version"`
-	Name                                types.String                   `tfsdk:"name"`
-	Description                         types.String                   `tfsdk:"description"`
-	FeatureProfileId                    types.String                   `tfsdk:"feature_profile_id"`
-	SigProvider                         types.String                   `tfsdk:"sig_provider"`
-	SrcVpn                              types.Bool                     `tfsdk:"src_vpn"`
-	Interfaces                          []SIGSecuritySIGInterfaces     `tfsdk:"interfaces"`
-	InterfacePairs                      []SIGSecuritySIGInterfacePairs `tfsdk:"interface_pairs"`
-	AuthRequired                        types.Bool                     `tfsdk:"auth_required"`
-	XffForwardEnabled                   types.Bool                     `tfsdk:"xff_forward_enabled"`
-	OfwEnabled                          types.Bool                     `tfsdk:"ofw_enabled"`
-	IpsControl                          types.Bool                     `tfsdk:"ips_control"`
-	CautionEnabled                      types.Bool                     `tfsdk:"caution_enabled"`
-	PrimaryDataCenter                   types.String                   `tfsdk:"primary_data_center"`
-	PrimaryDataCenterVariable           types.String                   `tfsdk:"primary_data_center_variable"`
-	SecondaryDataCenter                 types.String                   `tfsdk:"secondary_data_center"`
-	SecondaryDataCenterVariable         types.String                   `tfsdk:"secondary_data_center_variable"`
-	SurrogateIp                         types.Bool                     `tfsdk:"surrogate_ip"`
-	IdleTime                            types.Int64                    `tfsdk:"idle_time"`
-	DisplayTimeUnit                     types.String                   `tfsdk:"display_time_unit"`
-	IpEnforcedForKnownBrowsers          types.Bool                     `tfsdk:"ip_enforced_for_known_browsers"`
-	RefreshTime                         types.Int64                    `tfsdk:"refresh_time"`
-	RefreshTimeUnit                     types.String                   `tfsdk:"refresh_time_unit"`
-	AupEnabled                          types.Bool                     `tfsdk:"aup_enabled"`
-	BlockInternetUntilAccepted          types.Bool                     `tfsdk:"block_internet_until_accepted"`
-	ForceSslInspection                  types.Bool                     `tfsdk:"force_ssl_inspection"`
-	AupTimeout                          types.Int64                    `tfsdk:"aup_timeout"`
-	LocationName                        types.String                   `tfsdk:"location_name"`
-	LocationNameVariable                types.String                   `tfsdk:"location_name_variable"`
-	UmbrellaPrimaryDataCenter           types.String                   `tfsdk:"umbrella_primary_data_center"`
-	UmbrellaPrimaryDataCenterVariable   types.String                   `tfsdk:"umbrella_primary_data_center_variable"`
-	UmbrellaSecondaryDataCenter         types.String                   `tfsdk:"umbrella_secondary_data_center"`
-	UmbrellaSecondaryDataCenterVariable types.String                   `tfsdk:"umbrella_secondary_data_center_variable"`
-	TrackerSourceIp                     types.String                   `tfsdk:"tracker_source_ip"`
-	TrackerSourceIpVariable             types.String                   `tfsdk:"tracker_source_ip_variable"`
-	Trackers                            []SIGSecuritySIGTrackers       `tfsdk:"trackers"`
+type Sig struct {
+	Id                                  types.String        `tfsdk:"id"`
+	Version                             types.Int64         `tfsdk:"version"`
+	Name                                types.String        `tfsdk:"name"`
+	Description                         types.String        `tfsdk:"description"`
+	FeatureProfileId                    types.String        `tfsdk:"feature_profile_id"`
+	SigProvider                         types.String        `tfsdk:"sig_provider"`
+	SrcVpn                              types.Bool          `tfsdk:"src_vpn"`
+	Interfaces                          []SigInterfaces     `tfsdk:"interfaces"`
+	InterfacePairs                      []SigInterfacePairs `tfsdk:"interface_pairs"`
+	AuthRequired                        types.Bool          `tfsdk:"auth_required"`
+	XffForwardEnabled                   types.Bool          `tfsdk:"xff_forward_enabled"`
+	OfwEnabled                          types.Bool          `tfsdk:"ofw_enabled"`
+	IpsControl                          types.Bool          `tfsdk:"ips_control"`
+	CautionEnabled                      types.Bool          `tfsdk:"caution_enabled"`
+	ZscalerPrimaryDataCenter            types.String        `tfsdk:"zscaler_primary_data_center"`
+	ZscalerPrimaryDataCenterVariable    types.String        `tfsdk:"zscaler_primary_data_center_variable"`
+	ZscalerSecondaryDataCenter          types.String        `tfsdk:"zscaler_secondary_data_center"`
+	ZscalerSecondaryDataCenterVariable  types.String        `tfsdk:"zscaler_secondary_data_center_variable"`
+	SurrogateIp                         types.Bool          `tfsdk:"surrogate_ip"`
+	IdleTime                            types.Int64         `tfsdk:"idle_time"`
+	DisplayTimeUnit                     types.String        `tfsdk:"display_time_unit"`
+	IpEnforcedForKnownBrowsers          types.Bool          `tfsdk:"ip_enforced_for_known_browsers"`
+	RefreshTime                         types.Int64         `tfsdk:"refresh_time"`
+	RefreshTimeUnit                     types.String        `tfsdk:"refresh_time_unit"`
+	AupEnabled                          types.Bool          `tfsdk:"aup_enabled"`
+	BlockInternetUntilAccepted          types.Bool          `tfsdk:"block_internet_until_accepted"`
+	ForceSslInspection                  types.Bool          `tfsdk:"force_ssl_inspection"`
+	AupTimeout                          types.Int64         `tfsdk:"aup_timeout"`
+	LocationName                        types.String        `tfsdk:"location_name"`
+	LocationNameVariable                types.String        `tfsdk:"location_name_variable"`
+	UmbrellaPrimaryDataCenter           types.String        `tfsdk:"umbrella_primary_data_center"`
+	UmbrellaPrimaryDataCenterVariable   types.String        `tfsdk:"umbrella_primary_data_center_variable"`
+	UmbrellaSecondaryDataCenter         types.String        `tfsdk:"umbrella_secondary_data_center"`
+	UmbrellaSecondaryDataCenterVariable types.String        `tfsdk:"umbrella_secondary_data_center_variable"`
+	TrackerSourceIp                     types.String        `tfsdk:"tracker_source_ip"`
+	TrackerSourceIpVariable             types.String        `tfsdk:"tracker_source_ip_variable"`
+	Trackers                            []SigTrackers       `tfsdk:"trackers"`
 }
 
-type SIGSecuritySIGInterfaces struct {
+type SigInterfaces struct {
 	InterfaceName                 types.String `tfsdk:"interface_name"`
 	Auto                          types.Bool   `tfsdk:"auto"`
 	Shutdown                      types.Bool   `tfsdk:"shutdown"`
@@ -127,14 +128,14 @@ type SIGSecuritySIGInterfaces struct {
 	TunnelPublicIpVariable        types.String `tfsdk:"tunnel_public_ip_variable"`
 }
 
-type SIGSecuritySIGInterfacePairs struct {
+type SigInterfacePairs struct {
 	ActiveInterface       types.String `tfsdk:"active_interface"`
 	ActiveInterfaceWeight types.Int64  `tfsdk:"active_interface_weight"`
 	BackupInterface       types.String `tfsdk:"backup_interface"`
 	BackupInterfaceWeight types.Int64  `tfsdk:"backup_interface_weight"`
 }
 
-type SIGSecuritySIGTrackers struct {
+type SigTrackers struct {
 	Name                   types.String `tfsdk:"name"`
 	EndpointApiUrl         types.String `tfsdk:"endpoint_api_url"`
 	EndpointApiUrlVariable types.String `tfsdk:"endpoint_api_url_variable"`
@@ -149,21 +150,21 @@ type SIGSecuritySIGTrackers struct {
 // End of section. //template:end types
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getModel
-func (data SIGSecuritySIG) getModel() string {
+func (data Sig) getModel() string {
 	return "sig_security_sig"
 }
 
 // End of section. //template:end getModel
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getPath
-func (data SIGSecuritySIG) getPath() string {
+func (data Sig) getPath() string {
 	return fmt.Sprintf("/v1/feature-profile/sdwan/sig-security/%v/sig", url.QueryEscape(data.FeatureProfileId.ValueString()))
 }
 
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data SIGSecuritySIG) toBody(ctx context.Context) string {
+func (data Sig) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -278,17 +279,17 @@ func (data SIGSecuritySIG) toBody(ctx context.Context) string {
 			}
 
 			if !item.TunnelRouteViaVariable.IsNull() {
-				if true {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
 					itemBody, _ = sjson.Set(itemBody, "tunnelRouteVia.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "tunnelRouteVia.value", item.TunnelRouteViaVariable.ValueString())
 				}
 			} else if item.TunnelRouteVia.IsNull() {
-				if true {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
 					itemBody, _ = sjson.Set(itemBody, "tunnelRouteVia.optionType", "default")
 					itemBody, _ = sjson.Set(itemBody, "tunnelRouteVia.value", "")
 				}
 			} else {
-				if true {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
 					itemBody, _ = sjson.Set(itemBody, "tunnelRouteVia.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "tunnelRouteVia.value", item.TunnelRouteVia.ValueString())
 				}
@@ -706,37 +707,37 @@ func (data SIGSecuritySIG) toBody(ctx context.Context) string {
 		}
 	}
 
-	if !data.PrimaryDataCenterVariable.IsNull() {
-		if true {
+	if !data.ZscalerPrimaryDataCenterVariable.IsNull() {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.primaryDataCenter.optionType", "variable")
-			body, _ = sjson.Set(body, path+"service.primaryDataCenter.value", data.PrimaryDataCenterVariable.ValueString())
+			body, _ = sjson.Set(body, path+"service.primaryDataCenter.value", data.ZscalerPrimaryDataCenterVariable.ValueString())
 		}
-	} else if data.PrimaryDataCenter.IsNull() {
-		if true {
+	} else if data.ZscalerPrimaryDataCenter.IsNull() {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.primaryDataCenter.optionType", "default")
 			body, _ = sjson.Set(body, path+"service.primaryDataCenter.value", "Auto")
 		}
 	} else {
-		if true {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.primaryDataCenter.optionType", "global")
-			body, _ = sjson.Set(body, path+"service.primaryDataCenter.value", data.PrimaryDataCenter.ValueString())
+			body, _ = sjson.Set(body, path+"service.primaryDataCenter.value", data.ZscalerPrimaryDataCenter.ValueString())
 		}
 	}
 
-	if !data.SecondaryDataCenterVariable.IsNull() {
-		if true {
+	if !data.ZscalerSecondaryDataCenterVariable.IsNull() {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.secondaryDataCenter.optionType", "variable")
-			body, _ = sjson.Set(body, path+"service.secondaryDataCenter.value", data.SecondaryDataCenterVariable.ValueString())
+			body, _ = sjson.Set(body, path+"service.secondaryDataCenter.value", data.ZscalerSecondaryDataCenterVariable.ValueString())
 		}
-	} else if data.SecondaryDataCenter.IsNull() {
-		if true {
+	} else if data.ZscalerSecondaryDataCenter.IsNull() {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.secondaryDataCenter.optionType", "default")
 			body, _ = sjson.Set(body, path+"service.secondaryDataCenter.value", "Auto")
 		}
 	} else {
-		if true {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.secondaryDataCenter.optionType", "global")
-			body, _ = sjson.Set(body, path+"service.secondaryDataCenter.value", data.SecondaryDataCenter.ValueString())
+			body, _ = sjson.Set(body, path+"service.secondaryDataCenter.value", data.ZscalerSecondaryDataCenter.ValueString())
 		}
 	}
 	if data.SurrogateIp.IsNull() {
@@ -868,34 +869,34 @@ func (data SIGSecuritySIG) toBody(ctx context.Context) string {
 	}
 
 	if !data.UmbrellaPrimaryDataCenterVariable.IsNull() {
-		if true {
+		if true && data.SigProvider.ValueString() == "Umbrella" {
 			body, _ = sjson.Set(body, path+"service.dataCenterPrimary.optionType", "variable")
 			body, _ = sjson.Set(body, path+"service.dataCenterPrimary.value", data.UmbrellaPrimaryDataCenterVariable.ValueString())
 		}
 	} else if data.UmbrellaPrimaryDataCenter.IsNull() {
-		if true {
+		if true && data.SigProvider.ValueString() == "Umbrella" {
 			body, _ = sjson.Set(body, path+"service.dataCenterPrimary.optionType", "default")
 			body, _ = sjson.Set(body, path+"service.dataCenterPrimary.value", "Auto")
 		}
 	} else {
-		if true {
+		if true && data.SigProvider.ValueString() == "Umbrella" {
 			body, _ = sjson.Set(body, path+"service.dataCenterPrimary.optionType", "global")
 			body, _ = sjson.Set(body, path+"service.dataCenterPrimary.value", data.UmbrellaPrimaryDataCenter.ValueString())
 		}
 	}
 
 	if !data.UmbrellaSecondaryDataCenterVariable.IsNull() {
-		if true {
+		if true && data.SigProvider.ValueString() == "Umbrella" {
 			body, _ = sjson.Set(body, path+"service.dataCenterSecondary.optionType", "variable")
 			body, _ = sjson.Set(body, path+"service.dataCenterSecondary.value", data.UmbrellaSecondaryDataCenterVariable.ValueString())
 		}
 	} else if data.UmbrellaSecondaryDataCenter.IsNull() {
-		if true {
+		if true && data.SigProvider.ValueString() == "Umbrella" {
 			body, _ = sjson.Set(body, path+"service.dataCenterSecondary.optionType", "default")
 			body, _ = sjson.Set(body, path+"service.dataCenterSecondary.value", "Auto")
 		}
 	} else {
-		if true {
+		if true && data.SigProvider.ValueString() == "Umbrella" {
 			body, _ = sjson.Set(body, path+"service.dataCenterSecondary.optionType", "global")
 			body, _ = sjson.Set(body, path+"service.dataCenterSecondary.value", data.UmbrellaSecondaryDataCenter.ValueString())
 		}
@@ -998,7 +999,7 @@ func (data SIGSecuritySIG) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *SIGSecuritySIG) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
+func (data *Sig) fromBody(ctx context.Context, res gjson.Result, fullRead bool) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -1024,9 +1025,9 @@ func (data *SIGSecuritySIG) fromBody(ctx context.Context, res gjson.Result, full
 	}
 	oldInterfaces := data.Interfaces
 	if value := res.Get(path + "interface"); value.Exists() && len(value.Array()) > 0 {
-		data.Interfaces = make([]SIGSecuritySIGInterfaces, 0)
+		data.Interfaces = make([]SigInterfaces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := SIGSecuritySIGInterfaces{}
+			item := SigInterfaces{}
 			item.InterfaceName = types.StringNull()
 
 			if t := v.Get("ifName.optionType"); t.Exists() {
@@ -1326,7 +1327,7 @@ func (data *SIGSecuritySIG) fromBody(ctx context.Context, res gjson.Result, full
 		data.Interfaces = nil
 	}
 	if !fullRead && data.Interfaces != nil {
-		resultInterfaces := make([]SIGSecuritySIGInterfaces, 0, len(data.Interfaces))
+		resultInterfaces := make([]SigInterfaces, 0, len(data.Interfaces))
 		matchedInterfaces := make([]bool, len(data.Interfaces))
 		for _, oldItem := range oldInterfaces {
 			for ni := range data.Interfaces {
@@ -1355,9 +1356,9 @@ func (data *SIGSecuritySIG) fromBody(ctx context.Context, res gjson.Result, full
 	}
 	oldInterfacePairs := data.InterfacePairs
 	if value := res.Get(path + "service.interfacePair"); value.Exists() && len(value.Array()) > 0 {
-		data.InterfacePairs = make([]SIGSecuritySIGInterfacePairs, 0)
+		data.InterfacePairs = make([]SigInterfacePairs, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := SIGSecuritySIGInterfacePairs{}
+			item := SigInterfacePairs{}
 			item.ActiveInterface = types.StringNull()
 
 			if t := v.Get("activeInterface.optionType"); t.Exists() {
@@ -1397,7 +1398,7 @@ func (data *SIGSecuritySIG) fromBody(ctx context.Context, res gjson.Result, full
 		data.InterfacePairs = nil
 	}
 	if !fullRead && data.InterfacePairs != nil {
-		resultInterfacePairs := make([]SIGSecuritySIGInterfacePairs, 0, len(data.InterfacePairs))
+		resultInterfacePairs := make([]SigInterfacePairs, 0, len(data.InterfacePairs))
 		matchedInterfacePairs := make([]bool, len(data.InterfacePairs))
 		for _, oldItem := range oldInterfacePairs {
 			for ni := range data.InterfacePairs {
@@ -1479,24 +1480,24 @@ func (data *SIGSecuritySIG) fromBody(ctx context.Context, res gjson.Result, full
 			data.CautionEnabled = types.BoolValue(va.Bool())
 		}
 	}
-	data.PrimaryDataCenter = types.StringNull()
-	data.PrimaryDataCenterVariable = types.StringNull()
+	data.ZscalerPrimaryDataCenter = types.StringNull()
+	data.ZscalerPrimaryDataCenterVariable = types.StringNull()
 	if t := res.Get(path + "service.primaryDataCenter.optionType"); t.Exists() {
 		va := res.Get(path + "service.primaryDataCenter.value")
 		if t.String() == "variable" {
-			data.PrimaryDataCenterVariable = types.StringValue(va.String())
+			data.ZscalerPrimaryDataCenterVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.PrimaryDataCenter = types.StringValue(va.String())
+			data.ZscalerPrimaryDataCenter = types.StringValue(va.String())
 		}
 	}
-	data.SecondaryDataCenter = types.StringNull()
-	data.SecondaryDataCenterVariable = types.StringNull()
+	data.ZscalerSecondaryDataCenter = types.StringNull()
+	data.ZscalerSecondaryDataCenterVariable = types.StringNull()
 	if t := res.Get(path + "service.secondaryDataCenter.optionType"); t.Exists() {
 		va := res.Get(path + "service.secondaryDataCenter.value")
 		if t.String() == "variable" {
-			data.SecondaryDataCenterVariable = types.StringValue(va.String())
+			data.ZscalerSecondaryDataCenterVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.SecondaryDataCenter = types.StringValue(va.String())
+			data.ZscalerSecondaryDataCenter = types.StringValue(va.String())
 		}
 	}
 	data.SurrogateIp = types.BoolNull()
@@ -1622,9 +1623,9 @@ func (data *SIGSecuritySIG) fromBody(ctx context.Context, res gjson.Result, full
 	}
 	oldTrackers := data.Trackers
 	if value := res.Get(path + "tracker"); value.Exists() && len(value.Array()) > 0 {
-		data.Trackers = make([]SIGSecuritySIGTrackers, 0)
+		data.Trackers = make([]SigTrackers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := SIGSecuritySIGTrackers{}
+			item := SigTrackers{}
 			item.Name = types.StringNull()
 
 			if t := v.Get("name.optionType"); t.Exists() {
@@ -1680,7 +1681,7 @@ func (data *SIGSecuritySIG) fromBody(ctx context.Context, res gjson.Result, full
 		data.Trackers = nil
 	}
 	if !fullRead && data.Trackers != nil {
-		resultTrackers := make([]SIGSecuritySIGTrackers, 0, len(data.Trackers))
+		resultTrackers := make([]SigTrackers, 0, len(data.Trackers))
 		matchedTrackers := make([]bool, len(data.Trackers))
 		for _, oldItem := range oldTrackers {
 			for ni := range data.Trackers {

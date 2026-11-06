@@ -1,10 +1,13 @@
 ---
-name: SIG Security SIG
+name: sig
+model: sig_security_sig
 rest_endpoint: /v1/feature-profile/sdwan/sig-security/%v/sig
 minimum_version: 20.15.0
-test_tags: [SDWAN_2015]
+test_tags: [SDWAN_2015, SDWAN_2018]
 parcel_type: feature
-doc_category: Features - SIG Security
+doc_category: Features - SIG
+res_description: This resource can manage a SIG (Secure Internet Gateway) Feature.
+ds_description: This data source can read the SIG (Secure Internet Gateway) Feature.
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -69,6 +72,12 @@ attributes:
       tf_name: tunnel_route_via
       description: Interface name for tunnel route
       example: GigabitEthernet1
+      exclude_test: true
+      test_tags: [SDWAN_2018]
+      conditional_attribute:
+        conditions:
+          - type: MinVersion
+            value: 20.18.1
     - model_name: tunnelDestination
       tf_name: tunnel_destination
       description: Tunnel destination IP address
@@ -236,17 +245,25 @@ attributes:
     default_value_present: true
     exclude_test: true
   - model_name: primaryDataCenter
-    tf_name: primary_data_center
+    tf_name: zscaler_primary_data_center
     data_path: [service]
-    description: Custom Primary Datacenter
+    description: Zscaler Primary Datacenter
     default_value_present: true
     exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Zscaler
   - model_name: secondaryDataCenter
-    tf_name: secondary_data_center
+    tf_name: zscaler_secondary_data_center
     data_path: [service]
-    description: Custom Secondary Datacenter
+    description: Zscaler Secondary Datacenter
     default_value_present: true
     exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Zscaler
   - model_name: ip
     tf_name: surrogate_ip
     data_path: [service]
@@ -351,12 +368,20 @@ attributes:
     description: Umbrella Primary Datacenter
     default_value_present: true
     exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Umbrella
   - model_name: dataCenterSecondary
     tf_name: umbrella_secondary_data_center
     data_path: [service]
     description: Umbrella Secondary Datacenter
     default_value_present: true
     exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Umbrella
   - model_name: trackerSrcIp
     tf_name: tracker_source_ip
     description: Source IP address for Tracker
