@@ -27,6 +27,8 @@ resource "sdwan_transport_wan_vpn_interface_dsl_ipoe_feature" "example" {
   ipv4_address                       = "192.0.2.10"
   ipv4_subnet_mask                   = "255.255.255.0"
   tunnel_interface_enabled           = true
+  tunnel_per_tunnel_qos              = true
+  tunnel_qos_mode                    = "spoke"
   tunnel_interface_color             = "default"
   tunnel_interface_color_description = "DSL WAN"
   tunnel_interface_full_port_hop     = false
@@ -54,24 +56,24 @@ resource "sdwan_transport_wan_vpn_interface_dsl_ipoe_feature" "example" {
 - `acl_ipv6_egress_feature_id_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv6_egress_feature_id` being set
 - `acl_ipv6_ingress_feature_id` (String) IPv6 ingress ACL feature ID. Variable references require Manager 20.18.1 or later., Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv6_ingress_feature_id` being set
 - `acl_ipv6_ingress_feature_id_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher or `acl_ipv6_ingress_feature_id` being set
-- `adaptive_qos` (Boolean) Adaptive QoS
+- `adaptive_qos` (Boolean) Adaptive QoS, Attribute conditional on `tunnel_qos_mode` not equal to `hub`
   - Default value: `false`
-- `adaptive_qos_period` (Number) Adapt Period(Minutes)
+- `adaptive_qos_period` (Number) Adapt Period(Minutes), Attribute conditional on `tunnel_qos_mode` not equal to `hub`
   - Range: `1`-`720`
   - Default value: `15`
-- `adaptive_qos_period_variable` (String) Variable name
+- `adaptive_qos_period_variable` (String) Variable name, Attribute conditional on `tunnel_qos_mode` not equal to `hub`
 - `bandwidth_downstream` (Number) Interface downstream bandwidth capacity, in kbps
   - Range: `1`-`2147483647`
 - `bandwidth_downstream_variable` (String) Variable name
 - `bandwidth_upstream` (Number) Interface upstream bandwidth capacity, in kbps
   - Range: `1`-`2147483647`
 - `bandwidth_upstream_variable` (String) Variable name
-- `default_shaping_rate_downstream` (Number) Adaptive QoS default downstream bandwidth (kbps)
+- `default_shaping_rate_downstream` (Number) Adaptive QoS default downstream bandwidth (kbps), Attribute conditional on `tunnel_qos_mode` not equal to `hub`
   - Range: `8`-`100000000`
-- `default_shaping_rate_downstream_variable` (String) Variable name
-- `default_shaping_rate_upstream` (Number) Adaptive QoS default upstream bandwidth (kbps)
+- `default_shaping_rate_downstream_variable` (String) Variable name, Attribute conditional on `tunnel_qos_mode` not equal to `hub`
+- `default_shaping_rate_upstream` (Number) Adaptive QoS default upstream bandwidth (kbps), Attribute conditional on `tunnel_qos_mode` not equal to `hub`
   - Range: `8`-`100000000`
-- `default_shaping_rate_upstream_variable` (String) Variable name
+- `default_shaping_rate_upstream_variable` (String) Variable name, Attribute conditional on `tunnel_qos_mode` not equal to `hub`
 - `description` (String) The description of the Feature
 - `interface_description` (String) Interface description
 - `interface_description_variable` (String) Variable name
@@ -95,18 +97,18 @@ resource "sdwan_transport_wan_vpn_interface_dsl_ipoe_feature" "example" {
 - `ipv4_subnet_mask` (String) Subnet Mask, Attribute conditional on `ipv4_address_type` equal to `static`
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.248.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `ipv4_subnet_mask_variable` (String) Variable name, Attribute conditional on `ipv4_address_type` equal to `static`
-- `max_shaping_rate_downstream` (Number) Downstream max bandwidth limit (kbps)
+- `max_shaping_rate_downstream` (Number) Downstream max bandwidth limit (kbps), Attribute conditional on `tunnel_qos_mode` not equal to `hub`
   - Range: `8`-`100000000`
-- `max_shaping_rate_downstream_variable` (String) Variable name
-- `max_shaping_rate_upstream` (Number) Upstream max bandwidth limit (kbps)
+- `max_shaping_rate_downstream_variable` (String) Variable name, Attribute conditional on `tunnel_qos_mode` not equal to `hub`
+- `max_shaping_rate_upstream` (Number) Upstream max bandwidth limit (kbps), Attribute conditional on `tunnel_qos_mode` not equal to `hub`
   - Range: `8`-`100000000`
-- `max_shaping_rate_upstream_variable` (String) Variable name
-- `min_shaping_rate_downstream` (Number) Downstream min bandwidth limit (kbps)
+- `max_shaping_rate_upstream_variable` (String) Variable name, Attribute conditional on `tunnel_qos_mode` not equal to `hub`
+- `min_shaping_rate_downstream` (Number) Downstream min bandwidth limit (kbps), Attribute conditional on `tunnel_qos_mode` not equal to `hub`
   - Range: `8`-`100000000`
-- `min_shaping_rate_downstream_variable` (String) Variable name
-- `min_shaping_rate_upstream` (Number) Upstream min bandwidth limit (kbps)
+- `min_shaping_rate_downstream_variable` (String) Variable name, Attribute conditional on `tunnel_qos_mode` not equal to `hub`
+- `min_shaping_rate_upstream` (Number) Upstream min bandwidth limit (kbps), Attribute conditional on `tunnel_qos_mode` not equal to `hub`
   - Range: `8`-`100000000`
-- `min_shaping_rate_upstream_variable` (String) Variable name
+- `min_shaping_rate_upstream_variable` (String) Variable name, Attribute conditional on `tunnel_qos_mode` not equal to `hub`
 - `multi_region_fabric_core_region` (String) Core Region
   - Choices: `core-shared`, `core`
   - Default value: `core-shared`
@@ -132,9 +134,9 @@ resource "sdwan_transport_wan_vpn_interface_dsl_ipoe_feature" "example" {
 - `service_provider_variable` (String) Variable name
 - `shaping_rate` (Number) Shaping Rate (Kbps)
   - Range: `8`-`100000000`
-- `shaping_rate_downstream` (Boolean) Shaping Rate Downstream
+- `shaping_rate_downstream` (Boolean) Shaping Rate Downstream, Attribute conditional on `tunnel_qos_mode` not equal to `hub`
   - Default value: `false`
-- `shaping_rate_upstream` (Boolean) Shaping Rate Upstream
+- `shaping_rate_upstream` (Boolean) Shaping Rate Upstream, Attribute conditional on `tunnel_qos_mode` not equal to `hub`
   - Default value: `false`
 - `shaping_rate_variable` (String) Variable name
 - `shutdown` (Boolean) Administrative state
@@ -145,10 +147,10 @@ resource "sdwan_transport_wan_vpn_interface_dsl_ipoe_feature" "example" {
 - `tcp_mss_variable` (String) Variable name
 - `tloc_extension` (String) Extends a local TLOC to a remote node only for vpn 0
 - `tloc_extension_variable` (String) Variable name
-- `tunnel_bandwidth_percent` (Number) Tunnels Bandwidth Percent
+- `tunnel_bandwidth_percent` (Number) Tunnels Bandwidth Percent, Attribute conditional on (`tunnel_qos_mode` equal to `hub` and `tunnel_per_tunnel_qos_variable` not being set) or (`tunnel_qos_mode_variable` being set and `tunnel_bandwidth_percent` being set and `tunnel_per_tunnel_qos_variable` not being set) or (`tunnel_qos_mode_variable` being set and `tunnel_bandwidth_percent_variable` being set and `tunnel_per_tunnel_qos_variable` not being set)
   - Range: `1`-`100`
   - Default value: `50`
-- `tunnel_bandwidth_percent_variable` (String) Variable name
+- `tunnel_bandwidth_percent_variable` (String) Variable name, Attribute conditional on (`tunnel_qos_mode` equal to `hub` and `tunnel_per_tunnel_qos_variable` not being set) or (`tunnel_qos_mode_variable` being set and `tunnel_bandwidth_percent` being set and `tunnel_per_tunnel_qos_variable` not being set) or (`tunnel_qos_mode_variable` being set and `tunnel_bandwidth_percent_variable` being set and `tunnel_per_tunnel_qos_variable` not being set)
 - `tunnel_interface_allow_all` (Boolean) Allow all traffic. Overrides all other allow-service options if allow-service all is set
   - Default value: `false`
 - `tunnel_interface_allow_all_variable` (String) Variable name
@@ -270,9 +272,9 @@ resource "sdwan_transport_wan_vpn_interface_dsl_ipoe_feature" "example" {
 - `tunnel_per_tunnel_qos` (Boolean) Per-tunnel Qos
   - Default value: `false`
 - `tunnel_per_tunnel_qos_variable` (String) Variable name
-- `tunnel_qos_mode` (String) Set tunnel QoS mode
+- `tunnel_qos_mode` (String) Set tunnel QoS mode, Attribute conditional on `tunnel_per_tunnel_qos_variable` not being set
   - Choices: `hub`, `spoke`
-- `tunnel_qos_mode_variable` (String) Variable name
+- `tunnel_qos_mode_variable` (String) Variable name, Attribute conditional on `tunnel_per_tunnel_qos_variable` not being set
 - `vdsl_mode` (String) Set VDSL operating mode
   - Choices: `ADSL1`, `ADSL2`, `ADSL2+`, `ANSI`, `VDSL2`
   - Default value: `auto`

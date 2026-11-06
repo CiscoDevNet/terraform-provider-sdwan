@@ -283,25 +283,25 @@ func (r *TransportWANVPNInterfaceDSLIPoEProfileParcelResource) Schema(ctx contex
 				Optional:            true,
 			},
 			"tunnel_qos_mode": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set tunnel QoS mode").AddStringEnumDescription("hub", "spoke").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set tunnel QoS mode, Attribute conditional on `tunnel_per_tunnel_qos_variable` not being set").AddStringEnumDescription("hub", "spoke").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("hub", "spoke"),
 				},
 			},
 			"tunnel_qos_mode_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_per_tunnel_qos_variable` not being set").String,
 				Optional:            true,
 			},
 			"tunnel_bandwidth_percent": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Tunnels Bandwidth Percent").AddIntegerRangeDescription(1, 100).AddDefaultValueDescription("50").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Tunnels Bandwidth Percent, Attribute conditional on (`tunnel_qos_mode` equal to `hub` and `tunnel_per_tunnel_qos_variable` not being set) or (`tunnel_qos_mode_variable` being set and `tunnel_bandwidth_percent` being set and `tunnel_per_tunnel_qos_variable` not being set) or (`tunnel_qos_mode_variable` being set and `tunnel_bandwidth_percent_variable` being set and `tunnel_per_tunnel_qos_variable` not being set)").AddIntegerRangeDescription(1, 100).AddDefaultValueDescription("50").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 100),
 				},
 			},
 			"tunnel_bandwidth_percent_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on (`tunnel_qos_mode` equal to `hub` and `tunnel_per_tunnel_qos_variable` not being set) or (`tunnel_qos_mode_variable` being set and `tunnel_bandwidth_percent` being set and `tunnel_per_tunnel_qos_variable` not being set) or (`tunnel_qos_mode_variable` being set and `tunnel_bandwidth_percent_variable` being set and `tunnel_per_tunnel_qos_variable` not being set)").String,
 				Optional:            true,
 			},
 			"tunnel_interface_bind_loopback_tunnel": schema.StringAttribute{
@@ -711,92 +711,92 @@ func (r *TransportWANVPNInterfaceDSLIPoEProfileParcelResource) Schema(ctx contex
 				Optional:            true,
 			},
 			"adaptive_qos": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Adaptive QoS").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Adaptive QoS, Attribute conditional on `tunnel_qos_mode` not equal to `hub`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"adaptive_qos_period": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Adapt Period(Minutes)").AddIntegerRangeDescription(1, 720).AddDefaultValueDescription("15").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Adapt Period(Minutes), Attribute conditional on `tunnel_qos_mode` not equal to `hub`").AddIntegerRangeDescription(1, 720).AddDefaultValueDescription("15").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 720),
 				},
 			},
 			"adaptive_qos_period_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_qos_mode` not equal to `hub`").String,
 				Optional:            true,
 			},
 			"shaping_rate_upstream": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Shaping Rate Upstream").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Shaping Rate Upstream, Attribute conditional on `tunnel_qos_mode` not equal to `hub`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"min_shaping_rate_upstream": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Upstream min bandwidth limit (kbps)").AddIntegerRangeDescription(8, 100000000).String,
+				MarkdownDescription: helpers.NewAttributeDescription("Upstream min bandwidth limit (kbps), Attribute conditional on `tunnel_qos_mode` not equal to `hub`").AddIntegerRangeDescription(8, 100000000).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(8, 100000000),
 				},
 			},
 			"min_shaping_rate_upstream_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_qos_mode` not equal to `hub`").String,
 				Optional:            true,
 			},
 			"max_shaping_rate_upstream": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Upstream max bandwidth limit (kbps)").AddIntegerRangeDescription(8, 100000000).String,
+				MarkdownDescription: helpers.NewAttributeDescription("Upstream max bandwidth limit (kbps), Attribute conditional on `tunnel_qos_mode` not equal to `hub`").AddIntegerRangeDescription(8, 100000000).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(8, 100000000),
 				},
 			},
 			"max_shaping_rate_upstream_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_qos_mode` not equal to `hub`").String,
 				Optional:            true,
 			},
 			"default_shaping_rate_upstream": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Adaptive QoS default upstream bandwidth (kbps)").AddIntegerRangeDescription(8, 100000000).String,
+				MarkdownDescription: helpers.NewAttributeDescription("Adaptive QoS default upstream bandwidth (kbps), Attribute conditional on `tunnel_qos_mode` not equal to `hub`").AddIntegerRangeDescription(8, 100000000).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(8, 100000000),
 				},
 			},
 			"default_shaping_rate_upstream_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_qos_mode` not equal to `hub`").String,
 				Optional:            true,
 			},
 			"shaping_rate_downstream": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Shaping Rate Downstream").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Shaping Rate Downstream, Attribute conditional on `tunnel_qos_mode` not equal to `hub`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"min_shaping_rate_downstream": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Downstream min bandwidth limit (kbps)").AddIntegerRangeDescription(8, 100000000).String,
+				MarkdownDescription: helpers.NewAttributeDescription("Downstream min bandwidth limit (kbps), Attribute conditional on `tunnel_qos_mode` not equal to `hub`").AddIntegerRangeDescription(8, 100000000).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(8, 100000000),
 				},
 			},
 			"min_shaping_rate_downstream_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_qos_mode` not equal to `hub`").String,
 				Optional:            true,
 			},
 			"max_shaping_rate_downstream": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Downstream max bandwidth limit (kbps)").AddIntegerRangeDescription(8, 100000000).String,
+				MarkdownDescription: helpers.NewAttributeDescription("Downstream max bandwidth limit (kbps), Attribute conditional on `tunnel_qos_mode` not equal to `hub`").AddIntegerRangeDescription(8, 100000000).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(8, 100000000),
 				},
 			},
 			"max_shaping_rate_downstream_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_qos_mode` not equal to `hub`").String,
 				Optional:            true,
 			},
 			"default_shaping_rate_downstream": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Adaptive QoS default downstream bandwidth (kbps)").AddIntegerRangeDescription(8, 100000000).String,
+				MarkdownDescription: helpers.NewAttributeDescription("Adaptive QoS default downstream bandwidth (kbps), Attribute conditional on `tunnel_qos_mode` not equal to `hub`").AddIntegerRangeDescription(8, 100000000).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(8, 100000000),
 				},
 			},
 			"default_shaping_rate_downstream_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `tunnel_qos_mode` not equal to `hub`").String,
 				Optional:            true,
 			},
 			"shaping_rate": schema.Int64Attribute{
@@ -868,6 +868,27 @@ func (r *TransportWANVPNInterfaceDSLIPoEProfileParcelResource) Configure(_ conte
 }
 
 // End of section. //template:end model
+
+var _ resource.ResourceWithValidateConfig = &TransportWANVPNInterfaceDSLIPoEProfileParcelResource{}
+
+func (r *TransportWANVPNInterfaceDSLIPoEProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+	var qosVariable types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("tunnel_per_tunnel_qos_variable"), &qosVariable)...)
+	if resp.Diagnostics.HasError() || qosVariable.IsNull() || qosVariable.IsUnknown() {
+		return
+	}
+	var downstream types.Int64
+	var downstreamVariable types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("bandwidth_downstream"), &downstream)...)
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("bandwidth_downstream_variable"), &downstreamVariable)...)
+	if resp.Diagnostics.HasError() || downstream.IsUnknown() || downstreamVariable.IsUnknown() {
+		return
+	}
+	if downstream.IsNull() && (downstreamVariable.IsNull() || downstreamVariable.ValueString() == "") {
+		resp.Diagnostics.AddAttributeError(path.Root("bandwidth_downstream"), "Missing Downstream Bandwidth",
+			"Configure bandwidth_downstream or bandwidth_downstream_variable when tunnel_per_tunnel_qos_variable is configured.")
+	}
+}
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
 func (r *TransportWANVPNInterfaceDSLIPoEProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {

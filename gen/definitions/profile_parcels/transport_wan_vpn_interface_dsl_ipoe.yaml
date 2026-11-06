@@ -140,16 +140,44 @@ attributes:
   - model_name: perTunnelQos
     tf_name: tunnel_per_tunnel_qos
     data_path: [tunnel]
-    example: false
-    exclude_test: true
+    example: true
   - model_name: mode
     tf_name: tunnel_qos_mode
     data_path: [tunnel]
-    example: hub
-    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: tunnel_per_tunnel_qos_variable
+          value: ''
+    example: spoke
   - model_name: bandwidthPercent
     tf_name: tunnel_bandwidth_percent
     data_path: [tunnel]
+    conditional_attribute:
+      operator: or
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          and:
+            - name: tunnel_per_tunnel_qos_variable
+              value: ''
+        - name: tunnel_qos_mode_variable
+          value: ''
+          negate: true
+          and:
+            - name: tunnel_bandwidth_percent
+              value: ''
+              negate: true
+            - name: tunnel_per_tunnel_qos_variable
+              value: ''
+        - name: tunnel_qos_mode_variable
+          value: ''
+          negate: true
+          and:
+            - name: tunnel_bandwidth_percent_variable
+              value: ''
+              negate: true
+            - name: tunnel_per_tunnel_qos_variable
+              value: ''
     example: 50
     exclude_test: true
   - model_name: bind
@@ -392,51 +420,101 @@ attributes:
   - model_name: adaptiveQoS
     tf_name: adaptive_qos
     data_path: [aclQos]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
     example: false
     exclude_test: true
   - model_name: adaptPeriod
     tf_name: adaptive_qos_period
     data_path: [aclQos]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
     example: 15
     exclude_test: true
   - model_name: shapingRateUpstream
     tf_name: shaping_rate_upstream
     data_path: [aclQos]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
     example: false
     exclude_test: true
   - model_name: minShapingRateUpstream
     tf_name: min_shaping_rate_upstream
     data_path: [aclQos, shapingRateUpstreamConfig]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
     example: 100
     exclude_test: true
   - model_name: maxShapingRateUpstream
     tf_name: max_shaping_rate_upstream
     data_path: [aclQos, shapingRateUpstreamConfig]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
     example: 10000
     exclude_test: true
   - model_name: defaultShapingRateUpstream
     tf_name: default_shaping_rate_upstream
     data_path: [aclQos, shapingRateUpstreamConfig]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
     example: 1000
     exclude_test: true
   - model_name: shapingRateDownstream
     tf_name: shaping_rate_downstream
     data_path: [aclQos]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
     example: false
     exclude_test: true
   - model_name: minShapingRateDownstream
     tf_name: min_shaping_rate_downstream
     data_path: [aclQos, shapingRateDownstreamConfig]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
     example: 100
     exclude_test: true
   - model_name: maxShapingRateDownstream
     tf_name: max_shaping_rate_downstream
     data_path: [aclQos, shapingRateDownstreamConfig]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
     example: 10000
     exclude_test: true
   - model_name: defaultShapingRateDownstream
     tf_name: default_shaping_rate_downstream
     data_path: [aclQos, shapingRateDownstreamConfig]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
     example: 1000
     exclude_test: true
   - model_name: shapingRate

@@ -505,29 +505,29 @@ func (data TransportWANVPNInterfaceDSLIPoE) toBody(ctx context.Context, ver *ver
 	}
 
 	if !data.TunnelQosModeVariable.IsNull() {
-		if true {
+		if true && data.TunnelPerTunnelQosVariable.IsNull() {
 			body, _ = sjson.Set(body, path+"tunnel.mode.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.mode.value", data.TunnelQosModeVariable.ValueString())
 		}
 	} else if !data.TunnelQosMode.IsNull() {
-		if true {
+		if true && data.TunnelPerTunnelQosVariable.IsNull() {
 			body, _ = sjson.Set(body, path+"tunnel.mode.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.mode.value", data.TunnelQosMode.ValueString())
 		}
 	}
 
 	if !data.TunnelBandwidthPercentVariable.IsNull() {
-		if true {
+		if true && ((data.TunnelQosMode.ValueString() == "hub" && data.TunnelPerTunnelQosVariable.IsNull()) || (!(data.TunnelQosModeVariable.IsNull()) && !(data.TunnelBandwidthPercent.IsNull()) && data.TunnelPerTunnelQosVariable.IsNull()) || (!(data.TunnelQosModeVariable.IsNull()) && !(data.TunnelBandwidthPercentVariable.IsNull()) && data.TunnelPerTunnelQosVariable.IsNull())) {
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.optionType", "variable")
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.value", data.TunnelBandwidthPercentVariable.ValueString())
 		}
 	} else if data.TunnelBandwidthPercent.IsNull() {
-		if true {
+		if true && ((data.TunnelQosMode.ValueString() == "hub" && data.TunnelPerTunnelQosVariable.IsNull()) || (!(data.TunnelQosModeVariable.IsNull()) && !(data.TunnelBandwidthPercent.IsNull()) && data.TunnelPerTunnelQosVariable.IsNull()) || (!(data.TunnelQosModeVariable.IsNull()) && !(data.TunnelBandwidthPercentVariable.IsNull()) && data.TunnelPerTunnelQosVariable.IsNull())) {
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.optionType", "default")
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.value", 50)
 		}
 	} else {
-		if true {
+		if true && ((data.TunnelQosMode.ValueString() == "hub" && data.TunnelPerTunnelQosVariable.IsNull()) || (!(data.TunnelQosModeVariable.IsNull()) && !(data.TunnelBandwidthPercent.IsNull()) && data.TunnelPerTunnelQosVariable.IsNull()) || (!(data.TunnelQosModeVariable.IsNull()) && !(data.TunnelBandwidthPercentVariable.IsNull()) && data.TunnelPerTunnelQosVariable.IsNull())) {
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.optionType", "global")
 			body, _ = sjson.Set(body, path+"tunnel.bandwidthPercent.value", data.TunnelBandwidthPercent.ValueInt64())
 		}
@@ -1279,123 +1279,123 @@ func (data TransportWANVPNInterfaceDSLIPoE) toBody(ctx context.Context, ver *ver
 		}
 	}
 	if data.AdaptiveQos.IsNull() {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.adaptiveQoS.optionType", "default")
 			body, _ = sjson.Set(body, path+"aclQos.adaptiveQoS.value", false)
 		}
 	} else {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.adaptiveQoS.optionType", "global")
 			body, _ = sjson.Set(body, path+"aclQos.adaptiveQoS.value", data.AdaptiveQos.ValueBool())
 		}
 	}
 
 	if !data.AdaptiveQosPeriodVariable.IsNull() {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.optionType", "variable")
 			body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.value", data.AdaptiveQosPeriodVariable.ValueString())
 		}
 	} else if data.AdaptiveQosPeriod.IsNull() {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.optionType", "default")
 			body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.value", 15)
 		}
 	} else {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.optionType", "global")
 			body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.value", data.AdaptiveQosPeriod.ValueInt64())
 		}
 	}
 	if data.ShapingRateUpstream.IsNull() {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstream.optionType", "default")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstream.value", false)
 		}
 	} else {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstream.optionType", "global")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstream.value", data.ShapingRateUpstream.ValueBool())
 		}
 	}
 
 	if !data.MinShapingRateUpstreamVariable.IsNull() {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.minShapingRateUpstream.optionType", "variable")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.minShapingRateUpstream.value", data.MinShapingRateUpstreamVariable.ValueString())
 		}
 	} else if !data.MinShapingRateUpstream.IsNull() {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.minShapingRateUpstream.optionType", "global")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.minShapingRateUpstream.value", data.MinShapingRateUpstream.ValueInt64())
 		}
 	}
 
 	if !data.MaxShapingRateUpstreamVariable.IsNull() {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.maxShapingRateUpstream.optionType", "variable")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.maxShapingRateUpstream.value", data.MaxShapingRateUpstreamVariable.ValueString())
 		}
 	} else if !data.MaxShapingRateUpstream.IsNull() {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.maxShapingRateUpstream.optionType", "global")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.maxShapingRateUpstream.value", data.MaxShapingRateUpstream.ValueInt64())
 		}
 	}
 
 	if !data.DefaultShapingRateUpstreamVariable.IsNull() {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.defaultShapingRateUpstream.optionType", "variable")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.defaultShapingRateUpstream.value", data.DefaultShapingRateUpstreamVariable.ValueString())
 		}
 	} else if !data.DefaultShapingRateUpstream.IsNull() {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.defaultShapingRateUpstream.optionType", "global")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.defaultShapingRateUpstream.value", data.DefaultShapingRateUpstream.ValueInt64())
 		}
 	}
 	if data.ShapingRateDownstream.IsNull() {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstream.optionType", "default")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstream.value", false)
 		}
 	} else {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstream.optionType", "global")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstream.value", data.ShapingRateDownstream.ValueBool())
 		}
 	}
 
 	if !data.MinShapingRateDownstreamVariable.IsNull() {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.minShapingRateDownstream.optionType", "variable")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.minShapingRateDownstream.value", data.MinShapingRateDownstreamVariable.ValueString())
 		}
 	} else if !data.MinShapingRateDownstream.IsNull() {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.minShapingRateDownstream.optionType", "global")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.minShapingRateDownstream.value", data.MinShapingRateDownstream.ValueInt64())
 		}
 	}
 
 	if !data.MaxShapingRateDownstreamVariable.IsNull() {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.maxShapingRateDownstream.optionType", "variable")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.maxShapingRateDownstream.value", data.MaxShapingRateDownstreamVariable.ValueString())
 		}
 	} else if !data.MaxShapingRateDownstream.IsNull() {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.maxShapingRateDownstream.optionType", "global")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.maxShapingRateDownstream.value", data.MaxShapingRateDownstream.ValueInt64())
 		}
 	}
 
 	if !data.DefaultShapingRateDownstreamVariable.IsNull() {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.defaultShapingRateDownstream.optionType", "variable")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.defaultShapingRateDownstream.value", data.DefaultShapingRateDownstreamVariable.ValueString())
 		}
 	} else if !data.DefaultShapingRateDownstream.IsNull() {
-		if true {
+		if true && !(data.TunnelQosMode.ValueString() == "hub") {
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.defaultShapingRateDownstream.optionType", "global")
 			body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.defaultShapingRateDownstream.value", data.DefaultShapingRateDownstream.ValueInt64())
 		}

@@ -21,15 +21,273 @@ package provider
 import (
 	"context"
 	"os"
+	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/hashicorp/go-version"
+	"github.com/hashicorp/terraform-plugin-framework/tfsdk"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-go/tftypes"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/tidwall/gjson"
 )
 
 // End of section. //template:end imports
+
+func TestAccSdwanTransportWANVPNInterfaceDSLIPoEVariableMode(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("set SDWAN_2015 or SDWAN_2018 for the matching Manager lab")
+	}
+	config := strings.ReplaceAll(testAccSdwanTransportWANVPNInterfaceDSLIPoEProfileParcelConfig_all(),
+		`tunnel_qos_mode = "spoke"`, `tunnel_qos_mode_variable = "{{tunnel_qos_mode}}"`)
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{{
+			Config: testAccSdwanTransportWANVPNInterfaceDSLIPoEPrerequisitesProfileParcelConfig + config,
+			Check: resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test",
+				"tunnel_qos_mode_variable", "{{tunnel_qos_mode}}"),
+		}},
+	})
+}
+
+func TestAccSdwanTransportWANVPNInterfaceDSLIPoEHubMode(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("set SDWAN_2015 or SDWAN_2018 for the matching Manager lab")
+	}
+	config := strings.ReplaceAll(testAccSdwanTransportWANVPNInterfaceDSLIPoEProfileParcelConfig_all(),
+		`tunnel_qos_mode = "spoke"`, `tunnel_qos_mode = "hub"`)
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{{
+			Config: testAccSdwanTransportWANVPNInterfaceDSLIPoEPrerequisitesProfileParcelConfig + config,
+			Check: resource.ComposeTestCheckFunc(
+				resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_qos_mode", "hub"),
+				resource.TestCheckNoResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "adaptive_qos"),
+				resource.TestCheckNoResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "adaptive_qos_period"),
+				resource.TestCheckNoResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "shaping_rate_upstream"),
+				resource.TestCheckNoResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "shaping_rate_downstream"),
+			),
+		}},
+	})
+}
+
+func TestAccSdwanTransportWANVPNInterfaceDSLIPoEPerTunnelQosVariable(t *testing.T) {
+	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
+		t.Skip("set SDWAN_2015 or SDWAN_2018 for the matching Manager lab")
+	}
+	config := strings.ReplaceAll(testAccSdwanTransportWANVPNInterfaceDSLIPoEProfileParcelConfig_all(),
+		`tunnel_per_tunnel_qos = true`, `tunnel_per_tunnel_qos_variable = "{{per_tunnel_qos}}"`)
+	config = strings.ReplaceAll(config, `tunnel_qos_mode = "spoke"`, "")
+	globalConfig := strings.TrimSuffix(config, "}\n") + "bandwidth_downstream = 5000\n}\n"
+	variableConfig := strings.TrimSuffix(config, "}\n") + "bandwidth_downstream_variable = \"{{downstream}}\"\n}\n"
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config:      testAccSdwanTransportWANVPNInterfaceDSLIPoEPrerequisitesProfileParcelConfig + config,
+				ExpectError: regexp.MustCompile("Missing Downstream Bandwidth"),
+			},
+			{
+				Config: testAccSdwanTransportWANVPNInterfaceDSLIPoEPrerequisitesProfileParcelConfig + globalConfig,
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "bandwidth_downstream", "5000"),
+					resource.TestCheckNoResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_qos_mode"),
+					resource.TestCheckNoResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_qos_mode_variable"),
+				),
+			},
+			{
+				Config: testAccSdwanTransportWANVPNInterfaceDSLIPoEPrerequisitesProfileParcelConfig + variableConfig,
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "bandwidth_downstream_variable", "{{downstream}}"),
+					resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_per_tunnel_qos_variable", "{{per_tunnel_qos}}"),
+					resource.TestCheckNoResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_qos_mode"),
+					resource.TestCheckNoResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_qos_mode_variable"),
+				),
+			},
+		},
+	})
+}
+
+func TestTransportWANVPNInterfaceDSLIPoEVariableQosValidation(t *testing.T) {
+	ctx := context.Background()
+	configSchema := resourceschema.Schema{Attributes: map[string]resourceschema.Attribute{
+		"tunnel_per_tunnel_qos_variable": resourceschema.StringAttribute{Optional: true},
+		"bandwidth_downstream":           resourceschema.Int64Attribute{Optional: true},
+		"bandwidth_downstream_variable":  resourceschema.StringAttribute{Optional: true},
+	}}
+	cases := []struct {
+		name       string
+		qos        interface{}
+		downstream interface{}
+		variable   interface{}
+		wantError  bool
+	}{
+		{name: "qos omitted"},
+		{name: "qos unknown", qos: tftypes.UnknownValue},
+		{name: "bandwidth missing", qos: "{{qos}}", wantError: true},
+		{name: "bandwidth global", qos: "{{qos}}", downstream: 5000},
+		{name: "bandwidth variable", qos: "{{qos}}", variable: "{{downstream}}"},
+		{name: "bandwidth variable empty", qos: "{{qos}}", variable: "", wantError: true},
+		{name: "bandwidth unknown", qos: "{{qos}}", downstream: tftypes.UnknownValue},
+		{name: "bandwidth variable unknown", qos: "{{qos}}", variable: tftypes.UnknownValue},
+	}
+	for _, testCase := range cases {
+		t.Run(testCase.name, func(t *testing.T) {
+			req := frameworkresource.ValidateConfigRequest{Config: tfsdk.Config{
+				Schema: configSchema,
+				Raw: tftypes.NewValue(configSchema.Type().TerraformType(ctx), map[string]tftypes.Value{
+					"tunnel_per_tunnel_qos_variable": tftypes.NewValue(tftypes.String, testCase.qos),
+					"bandwidth_downstream":           tftypes.NewValue(tftypes.Number, testCase.downstream),
+					"bandwidth_downstream_variable":  tftypes.NewValue(tftypes.String, testCase.variable),
+				}),
+			}}
+			var resp frameworkresource.ValidateConfigResponse
+			resourceUnderTest := TransportWANVPNInterfaceDSLIPoEProfileParcelResource{}
+			resourceUnderTest.ValidateConfig(ctx, req, &resp)
+			if resp.Diagnostics.HasError() != testCase.wantError {
+				t.Fatalf("validation errors = %v, want error %t", resp.Diagnostics, testCase.wantError)
+			}
+		})
+	}
+}
+
+func TestTransportWANVPNInterfaceDSLIPoEVariableQosPayload(t *testing.T) {
+	for _, managerVersion := range []string{"20.15.1", "20.18.1"} {
+		for _, mode := range []string{"", "spoke", "hub", "variable"} {
+			t.Run(managerVersion+"/"+mode, func(t *testing.T) {
+				data := TransportWANVPNInterfaceDSLIPoE{
+					TunnelPerTunnelQosVariable:  types.StringValue("{{qos}}"),
+					BandwidthDownstreamVariable: types.StringValue("{{downstream}}"),
+					TunnelBandwidthPercent:      types.Int64Value(60),
+				}
+				if mode == "variable" {
+					data.TunnelQosModeVariable = types.StringValue("{{mode}}")
+				} else if mode != "" {
+					data.TunnelQosMode = types.StringValue(mode)
+				}
+				body := gjson.Parse(data.toBody(context.Background(), version.Must(version.NewVersion(managerVersion))))
+				if body.Get("data.tunnel.mode").Exists() || body.Get("data.tunnel.bandwidthPercent").Exists() {
+					t.Error("variable per-tunnel QoS must omit mode and bandwidth percentage")
+				}
+				if body.Get("data.tunnel.perTunnelQos.optionType").String() != "variable" || body.Get("data.bandwidthDownstream.value").String() != "{{downstream}}" {
+					t.Error("per-tunnel QoS or downstream bandwidth variable was not preserved")
+				}
+			})
+		}
+	}
+}
+
+func TestTransportWANVPNInterfaceDSLIPoEAdaptiveQosMode(t *testing.T) {
+	fields := []string{
+		"adaptiveQoS", "adaptPeriod", "shapingRateUpstream", "shapingRateDownstream",
+		"shapingRateUpstreamConfig.minShapingRateUpstream",
+		"shapingRateUpstreamConfig.maxShapingRateUpstream",
+		"shapingRateUpstreamConfig.defaultShapingRateUpstream",
+		"shapingRateDownstreamConfig.minShapingRateDownstream",
+		"shapingRateDownstreamConfig.maxShapingRateDownstream",
+		"shapingRateDownstreamConfig.defaultShapingRateDownstream",
+	}
+	for _, managerVersion := range []string{"20.15.1", "20.18.1"} {
+		for _, mode := range []string{"", "spoke", "hub", "variable"} {
+			for _, option := range []string{"default", "global", "variable"} {
+				t.Run(managerVersion+"/"+mode+"/"+option, func(t *testing.T) {
+					data := TransportWANVPNInterfaceDSLIPoE{TunnelPerTunnelQos: types.BoolValue(true)}
+					if mode == "variable" {
+						data.TunnelQosModeVariable = types.StringValue("{{mode}}")
+					} else if mode != "" {
+						data.TunnelQosMode = types.StringValue(mode)
+					}
+					if option != "default" {
+						data.AdaptiveQos = types.BoolValue(true)
+						data.ShapingRateUpstream = types.BoolValue(true)
+						data.ShapingRateDownstream = types.BoolValue(true)
+					}
+					if option == "global" {
+						data.AdaptiveQosPeriod = types.Int64Value(20)
+						data.MinShapingRateUpstream = types.Int64Value(100)
+						data.MaxShapingRateUpstream = types.Int64Value(1000)
+						data.DefaultShapingRateUpstream = types.Int64Value(500)
+						data.MinShapingRateDownstream = types.Int64Value(200)
+						data.MaxShapingRateDownstream = types.Int64Value(2000)
+						data.DefaultShapingRateDownstream = types.Int64Value(1000)
+					} else if option == "variable" {
+						data.AdaptiveQosPeriodVariable = types.StringValue("{{period}}")
+						data.MinShapingRateUpstreamVariable = types.StringValue("{{min_up}}")
+						data.MaxShapingRateUpstreamVariable = types.StringValue("{{max_up}}")
+						data.DefaultShapingRateUpstreamVariable = types.StringValue("{{default_up}}")
+						data.MinShapingRateDownstreamVariable = types.StringValue("{{min_down}}")
+						data.MaxShapingRateDownstreamVariable = types.StringValue("{{max_down}}")
+						data.DefaultShapingRateDownstreamVariable = types.StringValue("{{default_down}}")
+					}
+					body := gjson.Parse(data.toBody(context.Background(), version.Must(version.NewVersion(managerVersion))))
+					for index, field := range fields {
+						value := body.Get("data.aclQos." + field)
+						expected := mode != "hub" && (option != "default" || index < 4)
+						if value.Exists() != expected {
+							t.Errorf("%s exists = %t, want %t; value: %s", field, value.Exists(), expected, value.Raw)
+						}
+					}
+					if mode == "hub" && (body.Get("data.aclQos.shapingRateUpstreamConfig").Exists() || body.Get("data.aclQos.shapingRateDownstreamConfig").Exists()) {
+						t.Error("hub payload must not contain adaptive bandwidth configuration objects")
+					}
+				})
+			}
+		}
+	}
+}
+
+func TestTransportWANVPNInterfaceDSLIPoEQosBandwidth(t *testing.T) {
+	for _, managerVersion := range []string{"20.15.1", "20.18.1"} {
+		for _, mode := range []string{"", "spoke", "hub", "variable"} {
+			t.Run(managerVersion+"/"+mode, func(t *testing.T) {
+				data := TransportWANVPNInterfaceDSLIPoE{TunnelPerTunnelQos: types.BoolValue(true)}
+				if mode == "variable" {
+					data.TunnelQosModeVariable = types.StringValue("{{tunnel_qos_mode}}")
+				} else if mode != "" {
+					data.TunnelQosMode = types.StringValue(mode)
+				}
+				body := gjson.Parse(data.toBody(context.Background(), version.Must(version.NewVersion(managerVersion))))
+				bandwidth := body.Get("data.tunnel.bandwidthPercent")
+				if mode == "hub" {
+					if bandwidth.Get("optionType").String() != "default" || bandwidth.Get("value").Int() != 50 {
+						t.Errorf("hub bandwidth = %s, want default 50", bandwidth.Raw)
+					}
+				} else if bandwidth.Exists() {
+					t.Errorf("bandwidth must not be sent for mode %q: %s", mode, bandwidth.Raw)
+				}
+				serializedMode := body.Get("data.tunnel.mode")
+				if mode == "" {
+					if serializedMode.Exists() {
+						t.Error("an omitted mode must remain omitted; no provider mode default")
+					}
+				} else if mode == "variable" {
+					if serializedMode.Get("optionType").String() != "variable" || serializedMode.Get("value").String() != "{{tunnel_qos_mode}}" {
+						t.Errorf("variable mode was not preserved: %s", serializedMode.Raw)
+					}
+					for _, option := range []string{"global", "variable"} {
+						if option == "global" {
+							data.TunnelBandwidthPercent = types.Int64Value(60)
+						} else {
+							data.TunnelBandwidthPercent = types.Int64Null()
+							data.TunnelBandwidthPercentVariable = types.StringValue("{{bandwidth}}")
+						}
+						configuredBody := gjson.Parse(data.toBody(context.Background(), version.Must(version.NewVersion(managerVersion))))
+						configuredBandwidth := configuredBody.Get("data.tunnel.bandwidthPercent")
+						if configuredBandwidth.Get("optionType").String() != option {
+							t.Errorf("explicit bandwidth option = %s, want %s", configuredBandwidth.Raw, option)
+						}
+					}
+				} else if serializedMode.Get("optionType").String() != "global" || serializedMode.Get("value").String() != mode {
+					t.Errorf("explicit mode was not preserved: %s", serializedMode.Raw)
+				}
+			})
+		}
+	}
+}
 
 func TestTransportWANVPNInterfaceDSLIPoEVersionedPayload(t *testing.T) {
 	for _, managerVersion := range []string{"20.15.1", "20.18.1"} {
@@ -95,6 +353,8 @@ func TestAccSdwanTransportWANVPNInterfaceDSLIPoEProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "ipv4_address", "192.0.2.10"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "ipv4_subnet_mask", "255.255.255.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_interface_enabled", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_per_tunnel_qos", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_qos_mode", "spoke"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_interface_color", "default"))
 	if os.Getenv("SDWAN_2018") != "" {
 		checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_interface_color_description", "DSL WAN"))
@@ -167,6 +427,8 @@ func testAccSdwanTransportWANVPNInterfaceDSLIPoEProfileParcelConfig_all() string
 	config += `	ipv4_address = "192.0.2.10"` + "\n"
 	config += `	ipv4_subnet_mask = "255.255.255.0"` + "\n"
 	config += `	tunnel_interface_enabled = true` + "\n"
+	config += `	tunnel_per_tunnel_qos = true` + "\n"
+	config += `	tunnel_qos_mode = "spoke"` + "\n"
 	config += `	tunnel_interface_color = "default"` + "\n"
 	if os.Getenv("SDWAN_2018") != "" {
 		config += `	tunnel_interface_color_description = "DSL WAN"` + "\n"

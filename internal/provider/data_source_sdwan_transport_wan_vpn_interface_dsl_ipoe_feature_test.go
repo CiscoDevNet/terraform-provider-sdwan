@@ -39,6 +39,8 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceDSLIPoEProfileParcel(t *testi
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "ipv4_address", "192.0.2.10"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "ipv4_subnet_mask", "255.255.255.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_interface_enabled", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_per_tunnel_qos", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_qos_mode", "spoke"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_interface_color", "default"))
 	if os.Getenv("SDWAN_2018") != "" {
 		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_dsl_ipoe_feature.test", "tunnel_interface_color_description", "DSL WAN"))
@@ -99,6 +101,8 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceDSLIPoEProfileParcelConfig() 
 	config += `	ipv4_address = "192.0.2.10"` + "\n"
 	config += `	ipv4_subnet_mask = "255.255.255.0"` + "\n"
 	config += `	tunnel_interface_enabled = true` + "\n"
+	config += `	tunnel_per_tunnel_qos = true` + "\n"
+	config += `	tunnel_qos_mode = "spoke"` + "\n"
 	config += `	tunnel_interface_color = "default"` + "\n"
 	if os.Getenv("SDWAN_2018") != "" {
 		config += `	tunnel_interface_color_description = "DSL WAN"` + "\n"
@@ -134,6 +138,8 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceDSLIPoEProfileParcelByNameCon
 	config += `	ipv4_address = "192.0.2.10"` + "\n"
 	config += `	ipv4_subnet_mask = "255.255.255.0"` + "\n"
 	config += `	tunnel_interface_enabled = true` + "\n"
+	config += `	tunnel_per_tunnel_qos = true` + "\n"
+	config += `	tunnel_qos_mode = "spoke"` + "\n"
 	config += `	tunnel_interface_color = "default"` + "\n"
 	if os.Getenv("SDWAN_2018") != "" {
 		config += `	tunnel_interface_color_description = "DSL WAN"` + "\n"

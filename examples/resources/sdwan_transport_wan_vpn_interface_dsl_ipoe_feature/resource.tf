@@ -10,6 +10,8 @@ resource "sdwan_transport_wan_vpn_interface_dsl_ipoe_feature" "example" {
   ipv4_address                       = "192.0.2.10"
   ipv4_subnet_mask                   = "255.255.255.0"
   tunnel_interface_enabled           = true
+  tunnel_per_tunnel_qos              = true
+  tunnel_qos_mode                    = "spoke"
   tunnel_interface_color             = "default"
   tunnel_interface_color_description = "DSL WAN"
   tunnel_interface_full_port_hop     = false
