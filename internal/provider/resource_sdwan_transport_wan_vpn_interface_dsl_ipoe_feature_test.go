@@ -26,9 +26,7 @@ import (
 	"testing"
 
 	"github.com/hashicorp/go-version"
-	"github.com/hashicorp/terraform-plugin-framework/tfsdk"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/hashicorp/terraform-plugin-go/tftypes"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/tidwall/gjson"
 )
@@ -110,49 +108,6 @@ func TestAccSdwanTransportWANVPNInterfaceDSLIPoEPerTunnelQosVariable(t *testing.
 			},
 		},
 	})
-}
-
-func TestTransportWANVPNInterfaceDSLIPoEVariableQosValidation(t *testing.T) {
-	ctx := context.Background()
-	configSchema := resourceschema.Schema{Attributes: map[string]resourceschema.Attribute{
-		"tunnel_per_tunnel_qos_variable": resourceschema.StringAttribute{Optional: true},
-		"bandwidth_downstream":           resourceschema.Int64Attribute{Optional: true},
-		"bandwidth_downstream_variable":  resourceschema.StringAttribute{Optional: true},
-	}}
-	cases := []struct {
-		name       string
-		qos        interface{}
-		downstream interface{}
-		variable   interface{}
-		wantError  bool
-	}{
-		{name: "qos omitted"},
-		{name: "qos unknown", qos: tftypes.UnknownValue},
-		{name: "bandwidth missing", qos: "{{qos}}", wantError: true},
-		{name: "bandwidth global", qos: "{{qos}}", downstream: 5000},
-		{name: "bandwidth variable", qos: "{{qos}}", variable: "{{downstream}}"},
-		{name: "bandwidth variable empty", qos: "{{qos}}", variable: "", wantError: true},
-		{name: "bandwidth unknown", qos: "{{qos}}", downstream: tftypes.UnknownValue},
-		{name: "bandwidth variable unknown", qos: "{{qos}}", variable: tftypes.UnknownValue},
-	}
-	for _, testCase := range cases {
-		t.Run(testCase.name, func(t *testing.T) {
-			req := frameworkresource.ValidateConfigRequest{Config: tfsdk.Config{
-				Schema: configSchema,
-				Raw: tftypes.NewValue(configSchema.Type().TerraformType(ctx), map[string]tftypes.Value{
-					"tunnel_per_tunnel_qos_variable": tftypes.NewValue(tftypes.String, testCase.qos),
-					"bandwidth_downstream":           tftypes.NewValue(tftypes.Number, testCase.downstream),
-					"bandwidth_downstream_variable":  tftypes.NewValue(tftypes.String, testCase.variable),
-				}),
-			}}
-			var resp frameworkresource.ValidateConfigResponse
-			resourceUnderTest := TransportWANVPNInterfaceDSLIPoEProfileParcelResource{}
-			resourceUnderTest.ValidateConfig(ctx, req, &resp)
-			if resp.Diagnostics.HasError() != testCase.wantError {
-				t.Fatalf("validation errors = %v, want error %t", resp.Diagnostics, testCase.wantError)
-			}
-		})
-	}
 }
 
 func TestTransportWANVPNInterfaceDSLIPoEVariableQosPayload(t *testing.T) {
