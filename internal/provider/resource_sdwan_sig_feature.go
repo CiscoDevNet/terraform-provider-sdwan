@@ -115,10 +115,6 @@ func (r *SigProfileParcelResource) Schema(ctx context.Context, req resource.Sche
 								stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9\-/]+$`), ""),
 							},
 						},
-						"auto": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Auto Tunnel Mode").String,
-							Optional:            true,
-						},
 						"shutdown": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Administrative state").AddDefaultValueDescription("false").String,
 							Optional:            true,
@@ -131,26 +127,6 @@ func (r *SigProfileParcelResource) Schema(ctx context.Context, req resource.Sche
 							},
 						},
 						"interface_description_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Optional:            true,
-						},
-						"unnumbered": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Unnumbered interface").String,
-							Optional:            true,
-						},
-						"ipv4_address": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Assign IPv4 address").String,
-							Optional:            true,
-						},
-						"ipv4_address_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Optional:            true,
-						},
-						"tunnel_source": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Tunnel source IP Address").String,
-							Optional:            true,
-						},
-						"tunnel_source_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
@@ -241,17 +217,6 @@ func (r *SigProfileParcelResource) Schema(ctx context.Context, req resource.Sche
 							},
 						},
 						"dpd_retries_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Optional:            true,
-						},
-						"ike_version": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IKE Version <1..2>").AddIntegerRangeDescription(1, 2).AddDefaultValueDescription("2").String,
-							Optional:            true,
-							Validators: []validator.Int64{
-								int64validator.Between(1, 2),
-							},
-						},
-						"ike_version_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
@@ -416,23 +381,23 @@ func (r *SigProfileParcelResource) Schema(ctx context.Context, req resource.Sche
 				},
 			},
 			"auth_required": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enforce Authentication").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enforce Authentication, Attribute conditional on `sig_provider` equal to `Zscaler`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"xff_forward_enabled": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("XFF forwarding enabled").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("XFF forwarding enabled, Attribute conditional on `sig_provider` equal to `Zscaler`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"ofw_enabled": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Firewall enabled").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Firewall enabled, Attribute conditional on `sig_provider` equal to `Zscaler`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"ips_control": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable IPS Control").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable IPS Control, Attribute conditional on `sig_provider` equal to `Zscaler`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"caution_enabled": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable Caution").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable Caution, Attribute conditional on `sig_provider` equal to `Zscaler`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"zscaler_primary_data_center": schema.StringAttribute{
@@ -451,58 +416,16 @@ func (r *SigProfileParcelResource) Schema(ctx context.Context, req resource.Sche
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `sig_provider` equal to `Zscaler`").String,
 				Optional:            true,
 			},
-			"surrogate_ip": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable Surrogate IP, Attribute conditional on `auth_required` equal to `true`").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"idle_time": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Idle time to disassociation, Attribute conditional on `surrogate_ip` equal to `true`").AddDefaultValueDescription("0").String,
-				Optional:            true,
-			},
-			"display_time_unit": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Display time unit, Attribute conditional on `surrogate_ip` equal to `true`").AddStringEnumDescription("MINUTE", "HOUR", "DAY").AddDefaultValueDescription("MINUTE").String,
-				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("MINUTE", "HOUR", "DAY"),
-				},
-			},
-			"ip_enforced_for_known_browsers": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enforce Surrogate IP for known browsers").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"refresh_time": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Refresh time for re-validation of surrogacy in minutes").AddDefaultValueDescription("0").String,
-				Optional:            true,
-			},
-			"refresh_time_unit": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Refresh Time unit").AddStringEnumDescription("MINUTE", "HOUR", "DAY").AddDefaultValueDescription("MINUTE").String,
-				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("MINUTE", "HOUR", "DAY"),
-				},
-			},
 			"aup_enabled": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable Acceptable User Policy").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"block_internet_until_accepted": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("For first-time Acceptable User Policy behavior, block Internet access, Attribute conditional on `aup_enabled` equal to `true`").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"force_ssl_inspection": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("For first-time Acceptable User Policy behavior, force SSL inspection, Attribute conditional on `aup_enabled` equal to `true`").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"aup_timeout": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Custom Acceptable User Policy frequency in days, Attribute conditional on `aup_enabled` equal to `true`").AddDefaultValueDescription("0").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable Acceptable User Policy, Attribute conditional on `sig_provider` equal to `Zscaler`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"location_name": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Zscaler location name (optional)").AddDefaultValueDescription("Auto").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Zscaler location name (optional), Attribute conditional on `sig_provider` equal to `Zscaler`").AddDefaultValueDescription("Auto").String,
 				Optional:            true,
 			},
 			"location_name_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `sig_provider` equal to `Zscaler`").String,
 				Optional:            true,
 			},
 			"umbrella_primary_data_center": schema.StringAttribute{

@@ -34,26 +34,17 @@ data "sdwan_sig_feature" "example" {
 ### Read-Only
 
 - `aup_enabled` (Boolean) Enable Acceptable User Policy
-- `aup_timeout` (Number) Custom Acceptable User Policy frequency in days
 - `auth_required` (Boolean) Enforce Authentication
-- `block_internet_until_accepted` (Boolean) For first-time Acceptable User Policy behavior, block Internet access
 - `caution_enabled` (Boolean) Enable Caution
 - `description` (String) The description of the Feature
-- `display_time_unit` (String) Display time unit
-- `force_ssl_inspection` (Boolean) For first-time Acceptable User Policy behavior, force SSL inspection
-- `idle_time` (Number) Idle time to disassociation
 - `interface_pairs` (Attributes List) Interface Pair for active and backup (see [below for nested schema](#nestedatt--interface_pairs))
 - `interfaces` (Attributes List) Interface name: IPsec when present (see [below for nested schema](#nestedatt--interfaces))
-- `ip_enforced_for_known_browsers` (Boolean) Enforce Surrogate IP for known browsers
 - `ips_control` (Boolean) Enable IPS Control
 - `location_name` (String) Zscaler location name (optional)
 - `location_name_variable` (String) Variable name
 - `ofw_enabled` (Boolean) Firewall enabled
-- `refresh_time` (Number) Refresh time for re-validation of surrogacy in minutes
-- `refresh_time_unit` (String) Refresh Time unit
 - `sig_provider` (String) SIG Provider
 - `src_vpn` (Boolean) Share Source VPN
-- `surrogate_ip` (Boolean) Enable Surrogate IP
 - `tracker_source_ip` (String) Source IP address for Tracker
 - `tracker_source_ip_variable` (String) Variable name
 - `trackers` (Attributes List) Tracker configuration (see [below for nested schema](#nestedatt--trackers))
@@ -84,7 +75,6 @@ Read-Only:
 
 Read-Only:
 
-- `auto` (Boolean) Auto Tunnel Mode
 - `dpd_interval` (Number) IKE keepalive interval (seconds)
 - `dpd_interval_variable` (String) Variable name
 - `dpd_retries` (Number) IKE keepalive retries
@@ -99,8 +89,6 @@ Read-Only:
 - `ike_rekey_interval_variable` (String) Variable name
 - `ike_remote_id` (String) IKE ID for the remote endpoint. Input IPv4 address, domain name, or email address
 - `ike_remote_id_variable` (String) Variable name
-- `ike_version` (Number) IKE Version <1..2>
-- `ike_version_variable` (String) Variable name
 - `interface_description` (String) Interface description
 - `interface_description_variable` (String) Variable name
 - `interface_name` (String) Interface name: IPsec when present
@@ -110,8 +98,6 @@ Read-Only:
 - `ipsec_rekey_interval_variable` (String) Variable name
 - `ipsec_replay_window` (Number) Replay window size 32..8192 (must be a power of 2)
 - `ipsec_replay_window_variable` (String) Variable name
-- `ipv4_address` (String) Assign IPv4 address
-- `ipv4_address_variable` (String) Variable name
 - `mtu` (Number) Interface MTU <576..2000>, in bytes
 - `mtu_variable` (String) Variable name
 - `perfect_forward_secrecy` (String) IPsec perfect forward secrecy settings
@@ -132,11 +118,8 @@ Read-Only:
 - `tunnel_route_via` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
 - `tunnel_route_via_variable` (String) Variable name
 - `tunnel_set` (String) SIG Tunnel Provider
-- `tunnel_source` (String) Tunnel source IP Address
 - `tunnel_source_interface` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
 - `tunnel_source_interface_variable` (String) Variable name
-- `tunnel_source_variable` (String) Variable name
-- `unnumbered` (Boolean) Unnumbered interface
 
 
 <a id="nestedatt--trackers"></a>

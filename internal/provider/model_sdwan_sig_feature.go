@@ -51,16 +51,7 @@ type Sig struct {
 	ZscalerPrimaryDataCenterVariable    types.String        `tfsdk:"zscaler_primary_data_center_variable"`
 	ZscalerSecondaryDataCenter          types.String        `tfsdk:"zscaler_secondary_data_center"`
 	ZscalerSecondaryDataCenterVariable  types.String        `tfsdk:"zscaler_secondary_data_center_variable"`
-	SurrogateIp                         types.Bool          `tfsdk:"surrogate_ip"`
-	IdleTime                            types.Int64         `tfsdk:"idle_time"`
-	DisplayTimeUnit                     types.String        `tfsdk:"display_time_unit"`
-	IpEnforcedForKnownBrowsers          types.Bool          `tfsdk:"ip_enforced_for_known_browsers"`
-	RefreshTime                         types.Int64         `tfsdk:"refresh_time"`
-	RefreshTimeUnit                     types.String        `tfsdk:"refresh_time_unit"`
 	AupEnabled                          types.Bool          `tfsdk:"aup_enabled"`
-	BlockInternetUntilAccepted          types.Bool          `tfsdk:"block_internet_until_accepted"`
-	ForceSslInspection                  types.Bool          `tfsdk:"force_ssl_inspection"`
-	AupTimeout                          types.Int64         `tfsdk:"aup_timeout"`
 	LocationName                        types.String        `tfsdk:"location_name"`
 	LocationNameVariable                types.String        `tfsdk:"location_name_variable"`
 	UmbrellaPrimaryDataCenter           types.String        `tfsdk:"umbrella_primary_data_center"`
@@ -74,15 +65,9 @@ type Sig struct {
 
 type SigInterfaces struct {
 	InterfaceName                 types.String `tfsdk:"interface_name"`
-	Auto                          types.Bool   `tfsdk:"auto"`
 	Shutdown                      types.Bool   `tfsdk:"shutdown"`
 	InterfaceDescription          types.String `tfsdk:"interface_description"`
 	InterfaceDescriptionVariable  types.String `tfsdk:"interface_description_variable"`
-	Unnumbered                    types.Bool   `tfsdk:"unnumbered"`
-	Ipv4Address                   types.String `tfsdk:"ipv4_address"`
-	Ipv4AddressVariable           types.String `tfsdk:"ipv4_address_variable"`
-	TunnelSource                  types.String `tfsdk:"tunnel_source"`
-	TunnelSourceVariable          types.String `tfsdk:"tunnel_source_variable"`
 	TunnelSourceInterface         types.String `tfsdk:"tunnel_source_interface"`
 	TunnelSourceInterfaceVariable types.String `tfsdk:"tunnel_source_interface_variable"`
 	TunnelRouteVia                types.String `tfsdk:"tunnel_route_via"`
@@ -99,8 +84,6 @@ type SigInterfaces struct {
 	DpdIntervalVariable           types.String `tfsdk:"dpd_interval_variable"`
 	DpdRetries                    types.Int64  `tfsdk:"dpd_retries"`
 	DpdRetriesVariable            types.String `tfsdk:"dpd_retries_variable"`
-	IkeVersion                    types.Int64  `tfsdk:"ike_version"`
-	IkeVersionVariable            types.String `tfsdk:"ike_version_variable"`
 	PreSharedSecret               types.String `tfsdk:"pre_shared_secret"`
 	PreSharedSecretVariable       types.String `tfsdk:"pre_shared_secret_variable"`
 	IkeRekeyInterval              types.Int64  `tfsdk:"ike_rekey_interval"`
@@ -196,12 +179,6 @@ func (data Sig) toBody(ctx context.Context, ver *version.Version) string {
 					itemBody, _ = sjson.Set(itemBody, "ifName.value", item.InterfaceName.ValueString())
 				}
 			}
-			if !item.Auto.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "auto.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "auto.value", item.Auto.ValueBool())
-				}
-			}
 			if item.Shutdown.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "shutdown.optionType", "default")
@@ -228,41 +205,6 @@ func (data Sig) toBody(ctx context.Context, ver *version.Version) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "description.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "description.value", item.InterfaceDescription.ValueString())
-				}
-			}
-			if !item.Unnumbered.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "unnumbered.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "unnumbered.value", item.Unnumbered.ValueBool())
-				}
-			}
-
-			if !item.Ipv4AddressVariable.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "address.optionType", "variable")
-					itemBody, _ = sjson.Set(itemBody, "address.value", item.Ipv4AddressVariable.ValueString())
-				}
-			} else if item.Ipv4Address.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "address.optionType", "default")
-
-				}
-			} else {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "address.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "address.value", item.Ipv4Address.ValueString())
-				}
-			}
-
-			if !item.TunnelSourceVariable.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "tunnelSource.optionType", "variable")
-					itemBody, _ = sjson.Set(itemBody, "tunnelSource.value", item.TunnelSourceVariable.ValueString())
-				}
-			} else if !item.TunnelSource.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "tunnelSource.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "tunnelSource.value", item.TunnelSource.ValueString())
 				}
 			}
 
@@ -383,23 +325,6 @@ func (data Sig) toBody(ctx context.Context, ver *version.Version) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "dpdRetries.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "dpdRetries.value", item.DpdRetries.ValueInt64())
-				}
-			}
-
-			if !item.IkeVersionVariable.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "ikeVersion.optionType", "variable")
-					itemBody, _ = sjson.Set(itemBody, "ikeVersion.value", item.IkeVersionVariable.ValueString())
-				}
-			} else if item.IkeVersion.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "ikeVersion.optionType", "default")
-					itemBody, _ = sjson.Set(itemBody, "ikeVersion.value", 2)
-				}
-			} else {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "ikeVersion.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "ikeVersion.value", item.IkeVersion.ValueInt64())
 				}
 			}
 
@@ -652,56 +577,56 @@ func (data Sig) toBody(ctx context.Context, ver *version.Version) string {
 		}
 	}
 	if data.AuthRequired.IsNull() {
-		if true {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.authRequired.optionType", "default")
 			body, _ = sjson.Set(body, path+"service.authRequired.value", false)
 		}
 	} else {
-		if true {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.authRequired.optionType", "global")
 			body, _ = sjson.Set(body, path+"service.authRequired.value", data.AuthRequired.ValueBool())
 		}
 	}
 	if data.XffForwardEnabled.IsNull() {
-		if true {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.xffForwardEnabled.optionType", "default")
 			body, _ = sjson.Set(body, path+"service.xffForwardEnabled.value", false)
 		}
 	} else {
-		if true {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.xffForwardEnabled.optionType", "global")
 			body, _ = sjson.Set(body, path+"service.xffForwardEnabled.value", data.XffForwardEnabled.ValueBool())
 		}
 	}
 	if data.OfwEnabled.IsNull() {
-		if true {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.ofwEnabled.optionType", "default")
 			body, _ = sjson.Set(body, path+"service.ofwEnabled.value", false)
 		}
 	} else {
-		if true {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.ofwEnabled.optionType", "global")
 			body, _ = sjson.Set(body, path+"service.ofwEnabled.value", data.OfwEnabled.ValueBool())
 		}
 	}
 	if data.IpsControl.IsNull() {
-		if true {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.ipsControl.optionType", "default")
 			body, _ = sjson.Set(body, path+"service.ipsControl.value", false)
 		}
 	} else {
-		if true {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.ipsControl.optionType", "global")
 			body, _ = sjson.Set(body, path+"service.ipsControl.value", data.IpsControl.ValueBool())
 		}
 	}
 	if data.CautionEnabled.IsNull() {
-		if true {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.cautionEnabled.optionType", "default")
 			body, _ = sjson.Set(body, path+"service.cautionEnabled.value", false)
 		}
 	} else {
-		if true {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.cautionEnabled.optionType", "global")
 			body, _ = sjson.Set(body, path+"service.cautionEnabled.value", data.CautionEnabled.ValueBool())
 		}
@@ -740,129 +665,30 @@ func (data Sig) toBody(ctx context.Context, ver *version.Version) string {
 			body, _ = sjson.Set(body, path+"service.secondaryDataCenter.value", data.ZscalerSecondaryDataCenter.ValueString())
 		}
 	}
-	if data.SurrogateIp.IsNull() {
-		if true && data.AuthRequired.ValueBool() == true {
-			body, _ = sjson.Set(body, path+"service.ip.optionType", "default")
-			body, _ = sjson.Set(body, path+"service.ip.value", false)
-		}
-	} else {
-		if true && data.AuthRequired.ValueBool() == true {
-			body, _ = sjson.Set(body, path+"service.ip.optionType", "global")
-			body, _ = sjson.Set(body, path+"service.ip.value", data.SurrogateIp.ValueBool())
-		}
-	}
-	if data.IdleTime.IsNull() {
-		if true && data.SurrogateIp.ValueBool() == true {
-			body, _ = sjson.Set(body, path+"service.idleTime.optionType", "default")
-			body, _ = sjson.Set(body, path+"service.idleTime.value", 0)
-		}
-	} else {
-		if true && data.SurrogateIp.ValueBool() == true {
-			body, _ = sjson.Set(body, path+"service.idleTime.optionType", "global")
-			body, _ = sjson.Set(body, path+"service.idleTime.value", data.IdleTime.ValueInt64())
-		}
-	}
-	if data.DisplayTimeUnit.IsNull() {
-		if true && data.SurrogateIp.ValueBool() == true {
-			body, _ = sjson.Set(body, path+"service.displayTimeUnit.optionType", "default")
-			body, _ = sjson.Set(body, path+"service.displayTimeUnit.value", "MINUTE")
-		}
-	} else {
-		if true && data.SurrogateIp.ValueBool() == true {
-			body, _ = sjson.Set(body, path+"service.displayTimeUnit.optionType", "global")
-			body, _ = sjson.Set(body, path+"service.displayTimeUnit.value", data.DisplayTimeUnit.ValueString())
-		}
-	}
-	if data.IpEnforcedForKnownBrowsers.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"service.ipEnforcedForKnownBrowsers.optionType", "default")
-			body, _ = sjson.Set(body, path+"service.ipEnforcedForKnownBrowsers.value", false)
-		}
-	} else {
-		if true {
-			body, _ = sjson.Set(body, path+"service.ipEnforcedForKnownBrowsers.optionType", "global")
-			body, _ = sjson.Set(body, path+"service.ipEnforcedForKnownBrowsers.value", data.IpEnforcedForKnownBrowsers.ValueBool())
-		}
-	}
-	if data.RefreshTime.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"service.refreshTime.optionType", "default")
-			body, _ = sjson.Set(body, path+"service.refreshTime.value", 0)
-		}
-	} else {
-		if true {
-			body, _ = sjson.Set(body, path+"service.refreshTime.optionType", "global")
-			body, _ = sjson.Set(body, path+"service.refreshTime.value", data.RefreshTime.ValueInt64())
-		}
-	}
-	if data.RefreshTimeUnit.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"service.refreshTimeUnit.optionType", "default")
-			body, _ = sjson.Set(body, path+"service.refreshTimeUnit.value", "MINUTE")
-		}
-	} else {
-		if true {
-			body, _ = sjson.Set(body, path+"service.refreshTimeUnit.optionType", "global")
-			body, _ = sjson.Set(body, path+"service.refreshTimeUnit.value", data.RefreshTimeUnit.ValueString())
-		}
-	}
 	if data.AupEnabled.IsNull() {
-		if true {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.enabled.optionType", "default")
 			body, _ = sjson.Set(body, path+"service.enabled.value", false)
 		}
 	} else {
-		if true {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.enabled.optionType", "global")
 			body, _ = sjson.Set(body, path+"service.enabled.value", data.AupEnabled.ValueBool())
 		}
 	}
-	if data.BlockInternetUntilAccepted.IsNull() {
-		if true && data.AupEnabled.ValueBool() == true {
-			body, _ = sjson.Set(body, path+"service.blockInternetUntilAccepted.optionType", "default")
-			body, _ = sjson.Set(body, path+"service.blockInternetUntilAccepted.value", false)
-		}
-	} else {
-		if true && data.AupEnabled.ValueBool() == true {
-			body, _ = sjson.Set(body, path+"service.blockInternetUntilAccepted.optionType", "global")
-			body, _ = sjson.Set(body, path+"service.blockInternetUntilAccepted.value", data.BlockInternetUntilAccepted.ValueBool())
-		}
-	}
-	if data.ForceSslInspection.IsNull() {
-		if true && data.AupEnabled.ValueBool() == true {
-			body, _ = sjson.Set(body, path+"service.forceSslInspection.optionType", "default")
-			body, _ = sjson.Set(body, path+"service.forceSslInspection.value", false)
-		}
-	} else {
-		if true && data.AupEnabled.ValueBool() == true {
-			body, _ = sjson.Set(body, path+"service.forceSslInspection.optionType", "global")
-			body, _ = sjson.Set(body, path+"service.forceSslInspection.value", data.ForceSslInspection.ValueBool())
-		}
-	}
-	if data.AupTimeout.IsNull() {
-		if true && data.AupEnabled.ValueBool() == true {
-			body, _ = sjson.Set(body, path+"service.timeout.optionType", "default")
-			body, _ = sjson.Set(body, path+"service.timeout.value", 0)
-		}
-	} else {
-		if true && data.AupEnabled.ValueBool() == true {
-			body, _ = sjson.Set(body, path+"service.timeout.optionType", "global")
-			body, _ = sjson.Set(body, path+"service.timeout.value", data.AupTimeout.ValueInt64())
-		}
-	}
 
 	if !data.LocationNameVariable.IsNull() {
-		if true {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.locationName.optionType", "variable")
 			body, _ = sjson.Set(body, path+"service.locationName.value", data.LocationNameVariable.ValueString())
 		}
 	} else if data.LocationName.IsNull() {
-		if true {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.locationName.optionType", "default")
 			body, _ = sjson.Set(body, path+"service.locationName.value", "Auto")
 		}
 	} else {
-		if true {
+		if true && data.SigProvider.ValueString() == "Zscaler" {
 			body, _ = sjson.Set(body, path+"service.locationName.optionType", "default")
 			body, _ = sjson.Set(body, path+"service.locationName.value", data.LocationName.ValueString())
 		}
@@ -1036,14 +862,6 @@ func (data *Sig) fromBody(ctx context.Context, res gjson.Result, fullRead bool) 
 					item.InterfaceName = types.StringValue(va.String())
 				}
 			}
-			item.Auto = types.BoolNull()
-
-			if t := v.Get("auto.optionType"); t.Exists() {
-				va := v.Get("auto.value")
-				if t.String() == "global" {
-					item.Auto = types.BoolValue(va.Bool())
-				}
-			}
 			item.Shutdown = types.BoolNull()
 
 			if t := v.Get("shutdown.optionType"); t.Exists() {
@@ -1060,34 +878,6 @@ func (data *Sig) fromBody(ctx context.Context, res gjson.Result, fullRead bool) 
 					item.InterfaceDescriptionVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
 					item.InterfaceDescription = types.StringValue(va.String())
-				}
-			}
-			item.Unnumbered = types.BoolNull()
-
-			if t := v.Get("unnumbered.optionType"); t.Exists() {
-				va := v.Get("unnumbered.value")
-				if t.String() == "global" {
-					item.Unnumbered = types.BoolValue(va.Bool())
-				}
-			}
-			item.Ipv4Address = types.StringNull()
-			item.Ipv4AddressVariable = types.StringNull()
-			if t := v.Get("address.optionType"); t.Exists() {
-				va := v.Get("address.value")
-				if t.String() == "variable" {
-					item.Ipv4AddressVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					item.Ipv4Address = types.StringValue(va.String())
-				}
-			}
-			item.TunnelSource = types.StringNull()
-			item.TunnelSourceVariable = types.StringNull()
-			if t := v.Get("tunnelSource.optionType"); t.Exists() {
-				va := v.Get("tunnelSource.value")
-				if t.String() == "variable" {
-					item.TunnelSourceVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					item.TunnelSource = types.StringValue(va.String())
 				}
 			}
 			item.TunnelSourceInterface = types.StringNull()
@@ -1174,16 +964,6 @@ func (data *Sig) fromBody(ctx context.Context, res gjson.Result, fullRead bool) 
 					item.DpdRetriesVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
 					item.DpdRetries = types.Int64Value(va.Int())
-				}
-			}
-			item.IkeVersion = types.Int64Null()
-			item.IkeVersionVariable = types.StringNull()
-			if t := v.Get("ikeVersion.optionType"); t.Exists() {
-				va := v.Get("ikeVersion.value")
-				if t.String() == "variable" {
-					item.IkeVersionVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					item.IkeVersion = types.Int64Value(va.Int())
 				}
 			}
 			item.PreSharedSecret = types.StringNull()
@@ -1500,84 +1280,12 @@ func (data *Sig) fromBody(ctx context.Context, res gjson.Result, fullRead bool) 
 			data.ZscalerSecondaryDataCenter = types.StringValue(va.String())
 		}
 	}
-	data.SurrogateIp = types.BoolNull()
-
-	if t := res.Get(path + "service.ip.optionType"); t.Exists() {
-		va := res.Get(path + "service.ip.value")
-		if t.String() == "global" {
-			data.SurrogateIp = types.BoolValue(va.Bool())
-		}
-	}
-	data.IdleTime = types.Int64Null()
-
-	if t := res.Get(path + "service.idleTime.optionType"); t.Exists() {
-		va := res.Get(path + "service.idleTime.value")
-		if t.String() == "global" {
-			data.IdleTime = types.Int64Value(va.Int())
-		}
-	}
-	data.DisplayTimeUnit = types.StringNull()
-
-	if t := res.Get(path + "service.displayTimeUnit.optionType"); t.Exists() {
-		va := res.Get(path + "service.displayTimeUnit.value")
-		if t.String() == "global" {
-			data.DisplayTimeUnit = types.StringValue(va.String())
-		}
-	}
-	data.IpEnforcedForKnownBrowsers = types.BoolNull()
-
-	if t := res.Get(path + "service.ipEnforcedForKnownBrowsers.optionType"); t.Exists() {
-		va := res.Get(path + "service.ipEnforcedForKnownBrowsers.value")
-		if t.String() == "global" {
-			data.IpEnforcedForKnownBrowsers = types.BoolValue(va.Bool())
-		}
-	}
-	data.RefreshTime = types.Int64Null()
-
-	if t := res.Get(path + "service.refreshTime.optionType"); t.Exists() {
-		va := res.Get(path + "service.refreshTime.value")
-		if t.String() == "global" {
-			data.RefreshTime = types.Int64Value(va.Int())
-		}
-	}
-	data.RefreshTimeUnit = types.StringNull()
-
-	if t := res.Get(path + "service.refreshTimeUnit.optionType"); t.Exists() {
-		va := res.Get(path + "service.refreshTimeUnit.value")
-		if t.String() == "global" {
-			data.RefreshTimeUnit = types.StringValue(va.String())
-		}
-	}
 	data.AupEnabled = types.BoolNull()
 
 	if t := res.Get(path + "service.enabled.optionType"); t.Exists() {
 		va := res.Get(path + "service.enabled.value")
 		if t.String() == "global" {
 			data.AupEnabled = types.BoolValue(va.Bool())
-		}
-	}
-	data.BlockInternetUntilAccepted = types.BoolNull()
-
-	if t := res.Get(path + "service.blockInternetUntilAccepted.optionType"); t.Exists() {
-		va := res.Get(path + "service.blockInternetUntilAccepted.value")
-		if t.String() == "global" {
-			data.BlockInternetUntilAccepted = types.BoolValue(va.Bool())
-		}
-	}
-	data.ForceSslInspection = types.BoolNull()
-
-	if t := res.Get(path + "service.forceSslInspection.optionType"); t.Exists() {
-		va := res.Get(path + "service.forceSslInspection.value")
-		if t.String() == "global" {
-			data.ForceSslInspection = types.BoolValue(va.Bool())
-		}
-	}
-	data.AupTimeout = types.Int64Null()
-
-	if t := res.Get(path + "service.timeout.optionType"); t.Exists() {
-		va := res.Get(path + "service.timeout.value")
-		if t.String() == "global" {
-			data.AupTimeout = types.Int64Value(va.Int())
 		}
 	}
 	tempLocationName := data.LocationName

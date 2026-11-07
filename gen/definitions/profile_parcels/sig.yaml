@@ -37,10 +37,6 @@ attributes:
       mandatory: true
       description: Interface name, `greN` for a GRE tunnel or `ipsecN` for an IPsec tunnel
       example: gre1
-    - model_name: auto
-      description: Auto Tunnel Mode
-      optional: true
-      example: false
     - model_name: shutdown
       description: Administrative state
       default_value_present: true
@@ -49,20 +45,6 @@ attributes:
       tf_name: interface_description
       description: Interface description
       example: Tunnel to SIG data center A
-    - model_name: unnumbered
-      description: Unnumbered interface
-      optional: true
-      example: true
-    - model_name: address
-      tf_name: ipv4_address
-      description: Assign IPv4 address
-      example: 192.0.2.1
-      exclude_test: true
-    - model_name: tunnelSource
-      tf_name: tunnel_source
-      description: Tunnel source IP Address
-      example: 192.0.2.2
-      exclude_test: true
     - model_name: tunnelSourceInterface
       tf_name: tunnel_source_interface
       mandatory: true
@@ -80,7 +62,7 @@ attributes:
             value: 20.18.1
     - model_name: tunnelDestination
       tf_name: tunnel_destination
-      description: Tunnel destination IP address
+      description: Tunnel Destination IP Address/FQDN(IPsec)
       example: 198.51.100.10
     - model_name: application
       value: '"sig"'
@@ -112,11 +94,6 @@ attributes:
     - model_name: dpdRetries
       tf_name: dpd_retries
       description: IKE keepalive retries
-      default_value_present: true
-      exclude_test: true
-    - model_name: ikeVersion
-      tf_name: ike_version
-      description: IKE Version
       default_value_present: true
       exclude_test: true
     - model_name: preSharedSecret
@@ -220,30 +197,50 @@ attributes:
     optional: true
     default_value_present: true
     exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Zscaler
   - model_name: xffForwardEnabled
     tf_name: xff_forward_enabled
     data_path: [service]
     description: XFF forwarding enabled
     default_value_present: true
     exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Zscaler
   - model_name: ofwEnabled
     tf_name: ofw_enabled
     data_path: [service]
     description: Firewall enabled
     default_value_present: true
     exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Zscaler
   - model_name: ipsControl
     tf_name: ips_control
     data_path: [service]
     description: Enable IPS Control
     default_value_present: true
     exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Zscaler
   - model_name: cautionEnabled
     tf_name: caution_enabled
     data_path: [service]
     description: Enable Caution
     default_value_present: true
     exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Zscaler
   - model_name: primaryDataCenter
     tf_name: zscaler_primary_data_center
     data_path: [service]
@@ -264,96 +261,16 @@ attributes:
       conditions:
         - name: sig_provider
           value: Zscaler
-  - model_name: ip
-    tf_name: surrogate_ip
-    data_path: [service]
-    description: Enable Surrogate IP
-    example: false
-    exclude_test: true
-    conditional_attribute:
-      conditions:
-        - name: auth_required
-          value: true
-          type: Bool
-  - model_name: idleTime
-    tf_name: idle_time
-    data_path: [service]
-    description: Idle time to disassociation
-    example: 1
-    exclude_test: true
-    conditional_attribute:
-      conditions:
-        - name: surrogate_ip
-          value: true
-          type: Bool
-  - model_name: displayTimeUnit
-    tf_name: display_time_unit
-    data_path: [service]
-    description: Display time unit
-    example: MINUTE
-    exclude_test: true
-    conditional_attribute:
-      conditions:
-        - name: surrogate_ip
-          value: true
-          type: Bool
-  - model_name: ipEnforcedForKnownBrowsers
-    tf_name: ip_enforced_for_known_browsers
-    data_path: [service]
-    description: Enforce Surrogate IP for known browsers
-    example: false
-    exclude_test: true
-  - model_name: refreshTime
-    tf_name: refresh_time
-    data_path: [service]
-    description: Refresh time for re-validation of surrogacy in minutes
-    example: 1
-    exclude_test: true
-  - model_name: refreshTimeUnit
-    tf_name: refresh_time_unit
-    data_path: [service]
-    description: Refresh Time unit
-    example: MINUTE
-    exclude_test: true
   - model_name: enabled
     tf_name: aup_enabled
     data_path: [service]
     description: Enable Acceptable User Policy
     default_value_present: true
     exclude_test: true
-  - model_name: blockInternetUntilAccepted
-    tf_name: block_internet_until_accepted
-    data_path: [service]
-    description: For first-time Acceptable User Policy behavior, block Internet access
-    example: false
-    exclude_test: true
     conditional_attribute:
       conditions:
-        - name: aup_enabled
-          value: true
-          type: Bool
-  - model_name: forceSslInspection
-    tf_name: force_ssl_inspection
-    data_path: [service]
-    description: For first-time Acceptable User Policy behavior, force SSL inspection
-    example: false
-    exclude_test: true
-    conditional_attribute:
-      conditions:
-        - name: aup_enabled
-          value: true
-          type: Bool
-  - model_name: timeout
-    tf_name: aup_timeout
-    data_path: [service]
-    description: Custom Acceptable User Policy frequency in days
-    example: 1
-    exclude_test: true
-    conditional_attribute:
-      conditions:
-        - name: aup_enabled
-          value: true
-          type: Bool
+        - name: sig_provider
+          value: Zscaler
   - model_name: locationName
     tf_name: location_name
     data_path: [service]
@@ -362,6 +279,10 @@ attributes:
     write_as_default: true
     default_value_present: true
     exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Zscaler
   - model_name: dataCenterPrimary
     tf_name: umbrella_primary_data_center
     data_path: [service]

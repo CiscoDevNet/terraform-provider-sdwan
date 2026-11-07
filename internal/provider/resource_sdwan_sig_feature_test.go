@@ -35,9 +35,7 @@ func TestAccSdwanSigProfileParcel(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sig_feature.test", "sig_provider", "Generic"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sig_feature.test", "interfaces.0.interface_name", "gre1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sig_feature.test", "interfaces.0.auto", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sig_feature.test", "interfaces.0.interface_description", "Tunnel to SIG data center A"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sig_feature.test", "interfaces.0.unnumbered", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sig_feature.test", "interfaces.0.tunnel_source_interface", "GigabitEthernet1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sig_feature.test", "interfaces.0.tunnel_destination", "198.51.100.10"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_sig_feature.test", "interfaces.0.tunnel_set", "secure-internet-gateway-other"))
@@ -112,9 +110,7 @@ func testAccSdwanSigProfileParcelConfig_all() string {
 	config += `	sig_provider = "Generic"` + "\n"
 	config += `	interfaces = [{` + "\n"
 	config += `	  interface_name = "gre1"` + "\n"
-	config += `	  auto = false` + "\n"
 	config += `	  interface_description = "Tunnel to SIG data center A"` + "\n"
-	config += `	  unnumbered = true` + "\n"
 	config += `	  tunnel_source_interface = "GigabitEthernet1"` + "\n"
 	config += `	  tunnel_destination = "198.51.100.10"` + "\n"
 	config += `	  tunnel_set = "secure-internet-gateway-other"` + "\n"
@@ -185,9 +181,7 @@ func testAccSdwanSigProfileParcelConfig_genericGreInterfacePair() string {
   interfaces = [
     {
       interface_name                   = "gre1"
-      auto                             = false
       interface_description            = "Tunnel to SIG data center A"
-      unnumbered                       = true
       tunnel_source_interface_variable = "{{sig_wan1_if}}"
       tunnel_destination_variable      = "{{sig_dc_a_ip}}"
       tunnel_set                       = "secure-internet-gateway-other"
@@ -199,9 +193,7 @@ func testAccSdwanSigProfileParcelConfig_genericGreInterfacePair() string {
     },
     {
       interface_name                   = "gre2"
-      auto                             = false
       interface_description            = "Tunnel to SIG data center B"
-      unnumbered                       = true
       tunnel_source_interface_variable = "{{sig_wan1_if}}"
       tunnel_destination_variable      = "{{sig_dc_b_ip}}"
       tunnel_set                       = "secure-internet-gateway-other"

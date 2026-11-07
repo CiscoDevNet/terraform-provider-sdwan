@@ -23,9 +23,7 @@ resource "sdwan_sig_feature" "example" {
   interfaces = [
     {
       interface_name          = "gre1"
-      auto                    = false
       interface_description   = "Tunnel to SIG data center A"
-      unnumbered              = true
       tunnel_source_interface = "GigabitEthernet1"
       tunnel_destination      = "198.51.100.10"
       tunnel_set              = "secure-internet-gateway-other"
@@ -70,42 +68,22 @@ resource "sdwan_sig_feature" "example" {
 
 ### Optional
 
-- `aup_enabled` (Boolean) Enable Acceptable User Policy
+- `aup_enabled` (Boolean) Enable Acceptable User Policy, Attribute conditional on `sig_provider` equal to `Zscaler`
   - Default value: `false`
-- `aup_timeout` (Number) Custom Acceptable User Policy frequency in days, Attribute conditional on `aup_enabled` equal to `true`
-  - Default value: `0`
-- `auth_required` (Boolean) Enforce Authentication
+- `auth_required` (Boolean) Enforce Authentication, Attribute conditional on `sig_provider` equal to `Zscaler`
   - Default value: `false`
-- `block_internet_until_accepted` (Boolean) For first-time Acceptable User Policy behavior, block Internet access, Attribute conditional on `aup_enabled` equal to `true`
-  - Default value: `false`
-- `caution_enabled` (Boolean) Enable Caution
+- `caution_enabled` (Boolean) Enable Caution, Attribute conditional on `sig_provider` equal to `Zscaler`
   - Default value: `false`
 - `description` (String) The description of the Feature
-- `display_time_unit` (String) Display time unit, Attribute conditional on `surrogate_ip` equal to `true`
-  - Choices: `MINUTE`, `HOUR`, `DAY`
-  - Default value: `MINUTE`
-- `force_ssl_inspection` (Boolean) For first-time Acceptable User Policy behavior, force SSL inspection, Attribute conditional on `aup_enabled` equal to `true`
-  - Default value: `false`
-- `idle_time` (Number) Idle time to disassociation, Attribute conditional on `surrogate_ip` equal to `true`
-  - Default value: `0`
 - `interface_pairs` (Attributes List) Interface Pair for active and backup (see [below for nested schema](#nestedatt--interface_pairs))
-- `ip_enforced_for_known_browsers` (Boolean) Enforce Surrogate IP for known browsers
+- `ips_control` (Boolean) Enable IPS Control, Attribute conditional on `sig_provider` equal to `Zscaler`
   - Default value: `false`
-- `ips_control` (Boolean) Enable IPS Control
-  - Default value: `false`
-- `location_name` (String) Zscaler location name (optional)
+- `location_name` (String) Zscaler location name (optional), Attribute conditional on `sig_provider` equal to `Zscaler`
   - Default value: `Auto`
-- `location_name_variable` (String) Variable name
-- `ofw_enabled` (Boolean) Firewall enabled
+- `location_name_variable` (String) Variable name, Attribute conditional on `sig_provider` equal to `Zscaler`
+- `ofw_enabled` (Boolean) Firewall enabled, Attribute conditional on `sig_provider` equal to `Zscaler`
   - Default value: `false`
-- `refresh_time` (Number) Refresh time for re-validation of surrogacy in minutes
-  - Default value: `0`
-- `refresh_time_unit` (String) Refresh Time unit
-  - Choices: `MINUTE`, `HOUR`, `DAY`
-  - Default value: `MINUTE`
 - `src_vpn` (Boolean) Share Source VPN
-  - Default value: `false`
-- `surrogate_ip` (Boolean) Enable Surrogate IP, Attribute conditional on `auth_required` equal to `true`
   - Default value: `false`
 - `tracker_source_ip` (String) Source IP address for Tracker
 - `tracker_source_ip_variable` (String) Variable name
@@ -116,7 +94,7 @@ resource "sdwan_sig_feature" "example" {
 - `umbrella_secondary_data_center` (String) Umbrella Secondary Datacenter, Attribute conditional on `sig_provider` equal to `Umbrella`
   - Default value: `Auto`
 - `umbrella_secondary_data_center_variable` (String) Variable name, Attribute conditional on `sig_provider` equal to `Umbrella`
-- `xff_forward_enabled` (Boolean) XFF forwarding enabled
+- `xff_forward_enabled` (Boolean) XFF forwarding enabled, Attribute conditional on `sig_provider` equal to `Zscaler`
   - Default value: `false`
 - `zscaler_primary_data_center` (String) Custom Primary Datacenter, Attribute conditional on `sig_provider` equal to `Zscaler`
   - Default value: `Auto`
@@ -135,7 +113,6 @@ resource "sdwan_sig_feature" "example" {
 
 Optional:
 
-- `auto` (Boolean) Auto Tunnel Mode
 - `dpd_interval` (Number) IKE keepalive interval (seconds)
   - Range: `10`-`3600`
   - Default value: `10`
@@ -160,10 +137,6 @@ Optional:
 - `ike_rekey_interval_variable` (String) Variable name
 - `ike_remote_id` (String) IKE ID for the remote endpoint. Input IPv4 address, domain name, or email address
 - `ike_remote_id_variable` (String) Variable name
-- `ike_version` (Number) IKE Version <1..2>
-  - Range: `1`-`2`
-  - Default value: `2`
-- `ike_version_variable` (String) Variable name
 - `interface_description` (String) Interface description
 - `interface_description_variable` (String) Variable name
 - `interface_name` (String) Interface name: IPsec when present
@@ -178,8 +151,6 @@ Optional:
 - `ipsec_replay_window` (Number) Replay window size 32..8192 (must be a power of 2)
   - Default value: `512`
 - `ipsec_replay_window_variable` (String) Variable name
-- `ipv4_address` (String) Assign IPv4 address
-- `ipv4_address_variable` (String) Variable name
 - `mtu` (Number) Interface MTU <576..2000>, in bytes
   - Range: `576`-`2000`
   - Default value: `1400`
@@ -210,11 +181,8 @@ Optional:
 - `tunnel_route_via_variable` (String) Variable name, Attribute conditional on SD-WAN Manager version `20.18.1` or higher
 - `tunnel_set` (String) SIG Tunnel Provider
   - Choices: `secure-internet-gateway-umbrella`, `secure-internet-gateway-zscaler`, `secure-internet-gateway-other`
-- `tunnel_source` (String) Tunnel source IP Address
 - `tunnel_source_interface` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
 - `tunnel_source_interface_variable` (String) Variable name
-- `tunnel_source_variable` (String) Variable name
-- `unnumbered` (Boolean) Unnumbered interface
 
 
 <a id="nestedatt--interface_pairs"></a>
