@@ -385,7 +385,7 @@ attributes:
   - model_name: coreRegion
     tf_name: multi_region_fabric_core_region
     data_path: [multiRegionFabric]
-    example: region1
+    example: core
     exclude_test: true
   - model_name: enableSecondaryRegion
     tf_name: multi_region_fabric_enable_secondary_region
@@ -395,7 +395,7 @@ attributes:
   - model_name: secondaryRegion
     tf_name: multi_region_fabric_secondary_region
     data_path: [multiRegionFabric]
-    example: region2
+    example: secondary-only
     exclude_test: true
   - model_name: ipDirectedBroadcast
     tf_name: ip_directed_broadcast
