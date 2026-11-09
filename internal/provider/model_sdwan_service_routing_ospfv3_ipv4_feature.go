@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -65,6 +66,7 @@ type ServiceRoutingOSPFv3IPv4 struct {
 	SpfMaximumHoldTime                            types.Int64                             `tfsdk:"spf_maximum_hold_time"`
 	SpfMaximumHoldTimeVariable                    types.String                            `tfsdk:"spf_maximum_hold_time_variable"`
 	RoutePolicyId                                 types.String                            `tfsdk:"route_policy_id"`
+	RoutePolicyIdVariable                         types.String                            `tfsdk:"route_policy_id_variable"`
 	Filter                                        types.Bool                              `tfsdk:"filter"`
 	FilterVariable                                types.String                            `tfsdk:"filter_variable"`
 	Redistributes                                 []ServiceRoutingOSPFv3IPv4Redistributes `tfsdk:"redistributes"`
@@ -80,6 +82,7 @@ type ServiceRoutingOSPFv3IPv4Redistributes struct {
 	NatDia                     types.Bool   `tfsdk:"nat_dia"`
 	NatDiaVariable             types.String `tfsdk:"nat_dia_variable"`
 	RoutePolicyId              types.String `tfsdk:"route_policy_id"`
+	RoutePolicyIdVariable      types.String `tfsdk:"route_policy_id_variable"`
 	TranslateRibMetric         types.Bool   `tfsdk:"translate_rib_metric"`
 	TranslateRibMetricVariable types.String `tfsdk:"translate_rib_metric_variable"`
 }
@@ -145,7 +148,7 @@ func (data ServiceRoutingOSPFv3IPv4) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data ServiceRoutingOSPFv3IPv4) toBody(ctx context.Context) string {
+func (data ServiceRoutingOSPFv3IPv4) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -362,7 +365,13 @@ func (data ServiceRoutingOSPFv3IPv4) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"advanced.spfTimers.maxHold.value", data.SpfMaximumHoldTime.ValueInt64())
 		}
 	}
-	if !data.RoutePolicyId.IsNull() {
+
+	if !data.RoutePolicyIdVariable.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.5"))) {
+			body, _ = sjson.Set(body, path+"advanced.policyName.refId.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advanced.policyName.refId.value", data.RoutePolicyIdVariable.ValueString())
+		}
+	} else if !data.RoutePolicyId.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"advanced.policyName.refId.optionType", "global")
 			body, _ = sjson.Set(body, path+"advanced.policyName.refId.value", data.RoutePolicyId.ValueString())
@@ -418,7 +427,13 @@ func (data ServiceRoutingOSPFv3IPv4) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "natDia.value", item.NatDia.ValueBool())
 				}
 			}
-			if !item.RoutePolicyId.IsNull() {
+
+			if !item.RoutePolicyIdVariable.IsNull() {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.5"))) {
+					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.value", item.RoutePolicyIdVariable.ValueString())
+				}
+			} else if !item.RoutePolicyId.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.value", item.RoutePolicyId.ValueString())
@@ -880,10 +895,12 @@ func (data *ServiceRoutingOSPFv3IPv4) fromBody(ctx context.Context, res gjson.Re
 		}
 	}
 	data.RoutePolicyId = types.StringNull()
-
+	data.RoutePolicyIdVariable = types.StringNull()
 	if t := res.Get(path + "advanced.policyName.refId.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.policyName.refId.value")
-		if t.String() == "global" {
+		if t.String() == "variable" {
+			data.RoutePolicyIdVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
 			data.RoutePolicyId = types.StringValue(va.String())
 		}
 	}
@@ -923,10 +940,12 @@ func (data *ServiceRoutingOSPFv3IPv4) fromBody(ctx context.Context, res gjson.Re
 				}
 			}
 			item.RoutePolicyId = types.StringNull()
-
+			item.RoutePolicyIdVariable = types.StringNull()
 			if t := v.Get("routePolicy.refId.optionType"); t.Exists() {
 				va := v.Get("routePolicy.refId.value")
-				if t.String() == "global" {
+				if t.String() == "variable" {
+					item.RoutePolicyIdVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
 					item.RoutePolicyId = types.StringValue(va.String())
 				}
 			}

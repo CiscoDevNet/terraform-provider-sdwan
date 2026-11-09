@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -65,6 +66,7 @@ type ServiceRoutingOSPF struct {
 	Redistributes                                 []ServiceRoutingOSPFRedistributes `tfsdk:"redistributes"`
 	RouterLsas                                    []ServiceRoutingOSPFRouterLsas    `tfsdk:"router_lsas"`
 	RoutePolicyId                                 types.String                      `tfsdk:"route_policy_id"`
+	RoutePolicyIdVariable                         types.String                      `tfsdk:"route_policy_id_variable"`
 	Areas                                         []ServiceRoutingOSPFAreas         `tfsdk:"areas"`
 }
 
@@ -74,6 +76,7 @@ type ServiceRoutingOSPFRedistributes struct {
 	NatDia                     types.Bool   `tfsdk:"nat_dia"`
 	NatDiaVariable             types.String `tfsdk:"nat_dia_variable"`
 	RoutePolicyId              types.String `tfsdk:"route_policy_id"`
+	RoutePolicyIdVariable      types.String `tfsdk:"route_policy_id_variable"`
 	TranslateRibMetric         types.Bool   `tfsdk:"translate_rib_metric"`
 	TranslateRibMetricVariable types.String `tfsdk:"translate_rib_metric_variable"`
 }
@@ -146,7 +149,7 @@ func (data ServiceRoutingOSPF) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data ServiceRoutingOSPF) toBody(ctx context.Context) string {
+func (data ServiceRoutingOSPF) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -399,7 +402,13 @@ func (data ServiceRoutingOSPF) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "dia.value", item.NatDia.ValueBool())
 				}
 			}
-			if !item.RoutePolicyId.IsNull() {
+
+			if !item.RoutePolicyIdVariable.IsNull() {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.5"))) {
+					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.value", item.RoutePolicyIdVariable.ValueString())
+				}
+			} else if !item.RoutePolicyId.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.value", item.RoutePolicyId.ValueString())
@@ -450,7 +459,13 @@ func (data ServiceRoutingOSPF) toBody(ctx context.Context) string {
 			body, _ = sjson.SetRaw(body, path+"routerLsa.-1", itemBody)
 		}
 	}
-	if !data.RoutePolicyId.IsNull() {
+
+	if !data.RoutePolicyIdVariable.IsNull() {
+		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.5"))) {
+			body, _ = sjson.Set(body, path+"routePolicy.refId.optionType", "variable")
+			body, _ = sjson.Set(body, path+"routePolicy.refId.value", data.RoutePolicyIdVariable.ValueString())
+		}
+	} else if !data.RoutePolicyId.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"routePolicy.refId.optionType", "global")
 			body, _ = sjson.Set(body, path+"routePolicy.refId.value", data.RoutePolicyId.ValueString())
@@ -925,10 +940,12 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result, 
 				}
 			}
 			item.RoutePolicyId = types.StringNull()
-
+			item.RoutePolicyIdVariable = types.StringNull()
 			if t := v.Get("routePolicy.refId.optionType"); t.Exists() {
 				va := v.Get("routePolicy.refId.value")
-				if t.String() == "global" {
+				if t.String() == "variable" {
+					item.RoutePolicyIdVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
 					item.RoutePolicyId = types.StringValue(va.String())
 				}
 			}
@@ -1038,10 +1055,12 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result, 
 		data.RouterLsas = resultRouterLsas
 	}
 	data.RoutePolicyId = types.StringNull()
-
+	data.RoutePolicyIdVariable = types.StringNull()
 	if t := res.Get(path + "routePolicy.refId.optionType"); t.Exists() {
 		va := res.Get(path + "routePolicy.refId.value")
-		if t.String() == "global" {
+		if t.String() == "variable" {
+			data.RoutePolicyIdVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
 			data.RoutePolicyId = types.StringValue(va.String())
 		}
 	}

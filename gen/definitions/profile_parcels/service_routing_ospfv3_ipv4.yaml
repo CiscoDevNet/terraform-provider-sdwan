@@ -70,8 +70,13 @@ attributes:
   - model_name: refId
     tf_name: route_policy_id
     data_path: [advanced, policyName]
+    variable: true
     exclude_test: true
     example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
+    variable_conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: 20.18.5
   - model_name: filter
     data_path: [advanced]
     example: false
@@ -91,8 +96,13 @@ attributes:
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
+      variable: true
       exclude_test: true
       example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
+      variable_conditional_attribute:
+        conditions:
+          - type: MinVersion
+            value: 20.18.5
     - model_name: translateRibMetric
       exclude_test: true
       example: true

@@ -210,6 +210,10 @@ func (d *ServiceRoutingOSPFProfileParcelDataSource) Schema(ctx context.Context, 
 							MarkdownDescription: "",
 							Computed:            true,
 						},
+						"route_policy_id_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
 						"translate_rib_metric": schema.BoolAttribute{
 							MarkdownDescription: "Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network.",
 							Computed:            true,
@@ -243,6 +247,10 @@ func (d *ServiceRoutingOSPFProfileParcelDataSource) Schema(ctx context.Context, 
 			},
 			"route_policy_id": schema.StringAttribute{
 				MarkdownDescription: "",
+				Computed:            true,
+			},
+			"route_policy_id_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
 			"areas": schema.ListNestedAttribute{

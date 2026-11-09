@@ -86,6 +86,7 @@ attribute:
   always_include_parent: bool(required=False) # Include attributes parent always in payload
   attributes: list(include('attribute'), required=False) # List of attributes, only relevant if type is "List" or "Set"
   conditional_attribute: include('conditional_attribute', required=False) # Add attribute to payload only if condition is true
+  variable_conditional_attribute: include('conditional_attribute', required=False) # Override payload conditions for the variable option; defaults to conditional_attribute
   conditional_list_length: str(required=False) # Add attribute to payload only if referenced list has a length greater than 0
   query_param: bool(required=False) # Set to true if attribute is a query parameter to be included in request url
   no_augment_config: bool(required=False) # If true do not augment with model data

@@ -404,7 +404,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 												},
 												{{- if .Variable}}
 												"{{.TfName}}_variable": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Variable name{{buildConditionalDescription .ConditionalAttribute}}").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Variable name{{buildConditionalDescription .VariableConditionalAttribute}}").String,
 													Optional:            true,
 												},
 												{{- end}}
@@ -416,7 +416,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 									},
 									{{- if .Variable}}
 									"{{.TfName}}_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name{{buildConditionalDescription .ConditionalAttribute}}").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name{{buildConditionalDescription .VariableConditionalAttribute}}").String,
 										Optional:            true,
 									},
 									{{- end}}
@@ -428,7 +428,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 						},
 						{{- if .Variable}}
 						"{{.TfName}}_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name{{buildConditionalDescription .ConditionalAttribute}}").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name{{buildConditionalDescription .VariableConditionalAttribute}}").String,
 							Optional:            true,
 						},
 						{{- end}}
@@ -440,7 +440,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 			},
 			{{- if .Variable}}
 			"{{.TfName}}_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name{{buildConditionalDescription .ConditionalAttribute}}").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name{{buildConditionalDescription .VariableConditionalAttribute}}").String,
 				Optional:            true,
 			},
 			{{- end}}
