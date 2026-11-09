@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.11.8 (unreleased)
+
+- Fix `sdwan_network_hierarchy_security_logging` assigning the same `server1` name to every high speed logging entry on SD-WAN Manager 20.18 and later, causing multiple HSL servers to be rendered inconsistently in the Manager UI. Each entry is now assigned a distinct `server1`-`server4` slot name; Manager versions below 20.18 are unaffected as they do not use this key
+
 ## 0.11.7
 
 - Add `sdwan_policy_object_security_data_ipv6_prefix_list` resource and data source (SD-WAN Manager 20.18+)
