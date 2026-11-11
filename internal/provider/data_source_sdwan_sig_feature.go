@@ -341,8 +341,44 @@ func (d *SigProfileParcelDataSource) Schema(ctx context.Context, req datasource.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"surrogate_ip": schema.BoolAttribute{
+				MarkdownDescription: "Enable Surrogate IP",
+				Computed:            true,
+			},
+			"idle_time": schema.Int64Attribute{
+				MarkdownDescription: "Idle time to disassociation",
+				Computed:            true,
+			},
+			"display_time_unit": schema.StringAttribute{
+				MarkdownDescription: "Display time unit",
+				Computed:            true,
+			},
+			"ip_enforced_for_known_browsers": schema.BoolAttribute{
+				MarkdownDescription: "Enforce Surrogate IP for known browsers",
+				Computed:            true,
+			},
+			"refresh_time": schema.Int64Attribute{
+				MarkdownDescription: "Refresh time for re-validation of surrogacy in minutes",
+				Computed:            true,
+			},
+			"refresh_time_unit": schema.StringAttribute{
+				MarkdownDescription: "Refresh Time unit",
+				Computed:            true,
+			},
 			"aup_enabled": schema.BoolAttribute{
 				MarkdownDescription: "Enable Acceptable User Policy",
+				Computed:            true,
+			},
+			"block_internet_until_accepted": schema.BoolAttribute{
+				MarkdownDescription: "For first-time Acceptable User Policy behavior, block Internet access",
+				Computed:            true,
+			},
+			"force_ssl_inspection": schema.BoolAttribute{
+				MarkdownDescription: "For first-time Acceptable User Policy behavior, force SSL inspection",
+				Computed:            true,
+			},
+			"aup_timeout": schema.Int64Attribute{
+				MarkdownDescription: "Custom Acceptable User Policy frequency in days",
 				Computed:            true,
 			},
 			"location_name": schema.StringAttribute{

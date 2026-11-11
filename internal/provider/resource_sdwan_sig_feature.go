@@ -397,7 +397,7 @@ func (r *SigProfileParcelResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 			},
 			"caution_enabled": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable Caution, Attribute conditional on `sig_provider` equal to `Zscaler`").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable Caution, Attribute conditional on `sig_provider` equal to `Zscaler` and `auth_required` equal to `false`").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
 			"zscaler_primary_data_center": schema.StringAttribute{
@@ -416,8 +416,50 @@ func (r *SigProfileParcelResource) Schema(ctx context.Context, req resource.Sche
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `sig_provider` equal to `Zscaler`").String,
 				Optional:            true,
 			},
+			"surrogate_ip": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enable Surrogate IP, Attribute conditional on `sig_provider` equal to `Zscaler` and `auth_required` equal to `true`").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"idle_time": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Idle time to disassociation, Attribute conditional on `sig_provider` equal to `Zscaler` and `surrogate_ip` equal to `true`").AddDefaultValueDescription("0").String,
+				Optional:            true,
+			},
+			"display_time_unit": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Display time unit, Attribute conditional on `sig_provider` equal to `Zscaler` and `surrogate_ip` equal to `true`").AddStringEnumDescription("MINUTE", "HOUR", "DAY").AddDefaultValueDescription("MINUTE").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("MINUTE", "HOUR", "DAY"),
+				},
+			},
+			"ip_enforced_for_known_browsers": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enforce Surrogate IP for known browsers, Attribute conditional on `sig_provider` equal to `Zscaler` and `surrogate_ip` equal to `true`").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"refresh_time": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Refresh time for re-validation of surrogacy in minutes, Attribute conditional on `sig_provider` equal to `Zscaler` and `ip_enforced_for_known_browsers` equal to `true`").AddDefaultValueDescription("0").String,
+				Optional:            true,
+			},
+			"refresh_time_unit": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Refresh Time unit, Attribute conditional on `sig_provider` equal to `Zscaler` and `ip_enforced_for_known_browsers` equal to `true`").AddStringEnumDescription("MINUTE", "HOUR", "DAY").AddDefaultValueDescription("MINUTE").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("MINUTE", "HOUR", "DAY"),
+				},
+			},
 			"aup_enabled": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Enable Acceptable User Policy, Attribute conditional on `sig_provider` equal to `Zscaler`").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable Acceptable User Policy, Attribute conditional on `sig_provider` equal to `Zscaler` and `auth_required` equal to `false`").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"block_internet_until_accepted": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("For first-time Acceptable User Policy behavior, block Internet access, Attribute conditional on `sig_provider` equal to `Zscaler` and `aup_enabled` equal to `true`").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"force_ssl_inspection": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("For first-time Acceptable User Policy behavior, force SSL inspection, Attribute conditional on `sig_provider` equal to `Zscaler` and `aup_enabled` equal to `true`").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"aup_timeout": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Custom Acceptable User Policy frequency in days, Attribute conditional on `sig_provider` equal to `Zscaler` and `aup_enabled` equal to `true`").AddDefaultValueDescription("0").String,
 				Optional:            true,
 			},
 			"location_name": schema.StringAttribute{

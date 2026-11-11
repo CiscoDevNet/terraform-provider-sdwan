@@ -51,7 +51,16 @@ type Sig struct {
 	ZscalerPrimaryDataCenterVariable    types.String        `tfsdk:"zscaler_primary_data_center_variable"`
 	ZscalerSecondaryDataCenter          types.String        `tfsdk:"zscaler_secondary_data_center"`
 	ZscalerSecondaryDataCenterVariable  types.String        `tfsdk:"zscaler_secondary_data_center_variable"`
+	SurrogateIp                         types.Bool          `tfsdk:"surrogate_ip"`
+	IdleTime                            types.Int64         `tfsdk:"idle_time"`
+	DisplayTimeUnit                     types.String        `tfsdk:"display_time_unit"`
+	IpEnforcedForKnownBrowsers          types.Bool          `tfsdk:"ip_enforced_for_known_browsers"`
+	RefreshTime                         types.Int64         `tfsdk:"refresh_time"`
+	RefreshTimeUnit                     types.String        `tfsdk:"refresh_time_unit"`
 	AupEnabled                          types.Bool          `tfsdk:"aup_enabled"`
+	BlockInternetUntilAccepted          types.Bool          `tfsdk:"block_internet_until_accepted"`
+	ForceSslInspection                  types.Bool          `tfsdk:"force_ssl_inspection"`
+	AupTimeout                          types.Int64         `tfsdk:"aup_timeout"`
 	LocationName                        types.String        `tfsdk:"location_name"`
 	LocationNameVariable                types.String        `tfsdk:"location_name_variable"`
 	UmbrellaPrimaryDataCenter           types.String        `tfsdk:"umbrella_primary_data_center"`
@@ -621,12 +630,12 @@ func (data Sig) toBody(ctx context.Context, ver *version.Version) string {
 		}
 	}
 	if data.CautionEnabled.IsNull() {
-		if true && data.SigProvider.ValueString() == "Zscaler" {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.AuthRequired.ValueBool() == false {
 			body, _ = sjson.Set(body, path+"service.cautionEnabled.optionType", "default")
 			body, _ = sjson.Set(body, path+"service.cautionEnabled.value", false)
 		}
 	} else {
-		if true && data.SigProvider.ValueString() == "Zscaler" {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.AuthRequired.ValueBool() == false {
 			body, _ = sjson.Set(body, path+"service.cautionEnabled.optionType", "global")
 			body, _ = sjson.Set(body, path+"service.cautionEnabled.value", data.CautionEnabled.ValueBool())
 		}
@@ -665,15 +674,114 @@ func (data Sig) toBody(ctx context.Context, ver *version.Version) string {
 			body, _ = sjson.Set(body, path+"service.secondaryDataCenter.value", data.ZscalerSecondaryDataCenter.ValueString())
 		}
 	}
+	if data.SurrogateIp.IsNull() {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.AuthRequired.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.ip.optionType", "default")
+			body, _ = sjson.Set(body, path+"service.ip.value", false)
+		}
+	} else {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.AuthRequired.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.ip.optionType", "global")
+			body, _ = sjson.Set(body, path+"service.ip.value", data.SurrogateIp.ValueBool())
+		}
+	}
+	if data.IdleTime.IsNull() {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.SurrogateIp.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.idleTime.optionType", "default")
+			body, _ = sjson.Set(body, path+"service.idleTime.value", 0)
+		}
+	} else {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.SurrogateIp.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.idleTime.optionType", "global")
+			body, _ = sjson.Set(body, path+"service.idleTime.value", data.IdleTime.ValueInt64())
+		}
+	}
+	if data.DisplayTimeUnit.IsNull() {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.SurrogateIp.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.displayTimeUnit.optionType", "default")
+			body, _ = sjson.Set(body, path+"service.displayTimeUnit.value", "MINUTE")
+		}
+	} else {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.SurrogateIp.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.displayTimeUnit.optionType", "global")
+			body, _ = sjson.Set(body, path+"service.displayTimeUnit.value", data.DisplayTimeUnit.ValueString())
+		}
+	}
+	if data.IpEnforcedForKnownBrowsers.IsNull() {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.SurrogateIp.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.ipEnforcedForKnownBrowsers.optionType", "default")
+			body, _ = sjson.Set(body, path+"service.ipEnforcedForKnownBrowsers.value", false)
+		}
+	} else {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.SurrogateIp.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.ipEnforcedForKnownBrowsers.optionType", "global")
+			body, _ = sjson.Set(body, path+"service.ipEnforcedForKnownBrowsers.value", data.IpEnforcedForKnownBrowsers.ValueBool())
+		}
+	}
+	if data.RefreshTime.IsNull() {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.IpEnforcedForKnownBrowsers.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.refreshTime.optionType", "default")
+			body, _ = sjson.Set(body, path+"service.refreshTime.value", 0)
+		}
+	} else {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.IpEnforcedForKnownBrowsers.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.refreshTime.optionType", "global")
+			body, _ = sjson.Set(body, path+"service.refreshTime.value", data.RefreshTime.ValueInt64())
+		}
+	}
+	if data.RefreshTimeUnit.IsNull() {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.IpEnforcedForKnownBrowsers.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.refreshTimeUnit.optionType", "default")
+			body, _ = sjson.Set(body, path+"service.refreshTimeUnit.value", "MINUTE")
+		}
+	} else {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.IpEnforcedForKnownBrowsers.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.refreshTimeUnit.optionType", "global")
+			body, _ = sjson.Set(body, path+"service.refreshTimeUnit.value", data.RefreshTimeUnit.ValueString())
+		}
+	}
 	if data.AupEnabled.IsNull() {
-		if true && data.SigProvider.ValueString() == "Zscaler" {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.AuthRequired.ValueBool() == false {
 			body, _ = sjson.Set(body, path+"service.enabled.optionType", "default")
 			body, _ = sjson.Set(body, path+"service.enabled.value", false)
 		}
 	} else {
-		if true && data.SigProvider.ValueString() == "Zscaler" {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.AuthRequired.ValueBool() == false {
 			body, _ = sjson.Set(body, path+"service.enabled.optionType", "global")
 			body, _ = sjson.Set(body, path+"service.enabled.value", data.AupEnabled.ValueBool())
+		}
+	}
+	if data.BlockInternetUntilAccepted.IsNull() {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.AupEnabled.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.blockInternetUntilAccepted.optionType", "default")
+			body, _ = sjson.Set(body, path+"service.blockInternetUntilAccepted.value", false)
+		}
+	} else {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.AupEnabled.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.blockInternetUntilAccepted.optionType", "global")
+			body, _ = sjson.Set(body, path+"service.blockInternetUntilAccepted.value", data.BlockInternetUntilAccepted.ValueBool())
+		}
+	}
+	if data.ForceSslInspection.IsNull() {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.AupEnabled.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.forceSslInspection.optionType", "default")
+			body, _ = sjson.Set(body, path+"service.forceSslInspection.value", false)
+		}
+	} else {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.AupEnabled.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.forceSslInspection.optionType", "global")
+			body, _ = sjson.Set(body, path+"service.forceSslInspection.value", data.ForceSslInspection.ValueBool())
+		}
+	}
+	if data.AupTimeout.IsNull() {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.AupEnabled.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.timeout.optionType", "default")
+			body, _ = sjson.Set(body, path+"service.timeout.value", 0)
+		}
+	} else {
+		if true && data.SigProvider.ValueString() == "Zscaler" && data.AupEnabled.ValueBool() == true {
+			body, _ = sjson.Set(body, path+"service.timeout.optionType", "global")
+			body, _ = sjson.Set(body, path+"service.timeout.value", data.AupTimeout.ValueInt64())
 		}
 	}
 
@@ -1280,12 +1388,84 @@ func (data *Sig) fromBody(ctx context.Context, res gjson.Result, fullRead bool) 
 			data.ZscalerSecondaryDataCenter = types.StringValue(va.String())
 		}
 	}
+	data.SurrogateIp = types.BoolNull()
+
+	if t := res.Get(path + "service.ip.optionType"); t.Exists() {
+		va := res.Get(path + "service.ip.value")
+		if t.String() == "global" {
+			data.SurrogateIp = types.BoolValue(va.Bool())
+		}
+	}
+	data.IdleTime = types.Int64Null()
+
+	if t := res.Get(path + "service.idleTime.optionType"); t.Exists() {
+		va := res.Get(path + "service.idleTime.value")
+		if t.String() == "global" {
+			data.IdleTime = types.Int64Value(va.Int())
+		}
+	}
+	data.DisplayTimeUnit = types.StringNull()
+
+	if t := res.Get(path + "service.displayTimeUnit.optionType"); t.Exists() {
+		va := res.Get(path + "service.displayTimeUnit.value")
+		if t.String() == "global" {
+			data.DisplayTimeUnit = types.StringValue(va.String())
+		}
+	}
+	data.IpEnforcedForKnownBrowsers = types.BoolNull()
+
+	if t := res.Get(path + "service.ipEnforcedForKnownBrowsers.optionType"); t.Exists() {
+		va := res.Get(path + "service.ipEnforcedForKnownBrowsers.value")
+		if t.String() == "global" {
+			data.IpEnforcedForKnownBrowsers = types.BoolValue(va.Bool())
+		}
+	}
+	data.RefreshTime = types.Int64Null()
+
+	if t := res.Get(path + "service.refreshTime.optionType"); t.Exists() {
+		va := res.Get(path + "service.refreshTime.value")
+		if t.String() == "global" {
+			data.RefreshTime = types.Int64Value(va.Int())
+		}
+	}
+	data.RefreshTimeUnit = types.StringNull()
+
+	if t := res.Get(path + "service.refreshTimeUnit.optionType"); t.Exists() {
+		va := res.Get(path + "service.refreshTimeUnit.value")
+		if t.String() == "global" {
+			data.RefreshTimeUnit = types.StringValue(va.String())
+		}
+	}
 	data.AupEnabled = types.BoolNull()
 
 	if t := res.Get(path + "service.enabled.optionType"); t.Exists() {
 		va := res.Get(path + "service.enabled.value")
 		if t.String() == "global" {
 			data.AupEnabled = types.BoolValue(va.Bool())
+		}
+	}
+	data.BlockInternetUntilAccepted = types.BoolNull()
+
+	if t := res.Get(path + "service.blockInternetUntilAccepted.optionType"); t.Exists() {
+		va := res.Get(path + "service.blockInternetUntilAccepted.value")
+		if t.String() == "global" {
+			data.BlockInternetUntilAccepted = types.BoolValue(va.Bool())
+		}
+	}
+	data.ForceSslInspection = types.BoolNull()
+
+	if t := res.Get(path + "service.forceSslInspection.optionType"); t.Exists() {
+		va := res.Get(path + "service.forceSslInspection.value")
+		if t.String() == "global" {
+			data.ForceSslInspection = types.BoolValue(va.Bool())
+		}
+	}
+	data.AupTimeout = types.Int64Null()
+
+	if t := res.Get(path + "service.timeout.optionType"); t.Exists() {
+		va := res.Get(path + "service.timeout.value")
+		if t.String() == "global" {
+			data.AupTimeout = types.Int64Value(va.Int())
 		}
 	}
 	tempLocationName := data.LocationName

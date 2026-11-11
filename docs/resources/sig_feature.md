@@ -68,14 +68,27 @@ resource "sdwan_sig_feature" "example" {
 
 ### Optional
 
-- `aup_enabled` (Boolean) Enable Acceptable User Policy, Attribute conditional on `sig_provider` equal to `Zscaler`
+- `aup_enabled` (Boolean) Enable Acceptable User Policy, Attribute conditional on `sig_provider` equal to `Zscaler` and `auth_required` equal to `false`
   - Default value: `false`
+- `aup_timeout` (Number) Custom Acceptable User Policy frequency in days, Attribute conditional on `sig_provider` equal to `Zscaler` and `aup_enabled` equal to `true`
+  - Default value: `0`
 - `auth_required` (Boolean) Enforce Authentication, Attribute conditional on `sig_provider` equal to `Zscaler`
   - Default value: `false`
-- `caution_enabled` (Boolean) Enable Caution, Attribute conditional on `sig_provider` equal to `Zscaler`
+- `block_internet_until_accepted` (Boolean) For first-time Acceptable User Policy behavior, block Internet access, Attribute conditional on `sig_provider` equal to `Zscaler` and `aup_enabled` equal to `true`
+  - Default value: `false`
+- `caution_enabled` (Boolean) Enable Caution, Attribute conditional on `sig_provider` equal to `Zscaler` and `auth_required` equal to `false`
   - Default value: `false`
 - `description` (String) The description of the Feature
+- `display_time_unit` (String) Display time unit, Attribute conditional on `sig_provider` equal to `Zscaler` and `surrogate_ip` equal to `true`
+  - Choices: `MINUTE`, `HOUR`, `DAY`
+  - Default value: `MINUTE`
+- `force_ssl_inspection` (Boolean) For first-time Acceptable User Policy behavior, force SSL inspection, Attribute conditional on `sig_provider` equal to `Zscaler` and `aup_enabled` equal to `true`
+  - Default value: `false`
+- `idle_time` (Number) Idle time to disassociation, Attribute conditional on `sig_provider` equal to `Zscaler` and `surrogate_ip` equal to `true`
+  - Default value: `0`
 - `interface_pairs` (Attributes List) Interface Pair for active and backup (see [below for nested schema](#nestedatt--interface_pairs))
+- `ip_enforced_for_known_browsers` (Boolean) Enforce Surrogate IP for known browsers, Attribute conditional on `sig_provider` equal to `Zscaler` and `surrogate_ip` equal to `true`
+  - Default value: `false`
 - `ips_control` (Boolean) Enable IPS Control, Attribute conditional on `sig_provider` equal to `Zscaler`
   - Default value: `false`
 - `location_name` (String) Zscaler location name (optional), Attribute conditional on `sig_provider` equal to `Zscaler`
@@ -83,7 +96,14 @@ resource "sdwan_sig_feature" "example" {
 - `location_name_variable` (String) Variable name, Attribute conditional on `sig_provider` equal to `Zscaler`
 - `ofw_enabled` (Boolean) Firewall enabled, Attribute conditional on `sig_provider` equal to `Zscaler`
   - Default value: `false`
+- `refresh_time` (Number) Refresh time for re-validation of surrogacy in minutes, Attribute conditional on `sig_provider` equal to `Zscaler` and `ip_enforced_for_known_browsers` equal to `true`
+  - Default value: `0`
+- `refresh_time_unit` (String) Refresh Time unit, Attribute conditional on `sig_provider` equal to `Zscaler` and `ip_enforced_for_known_browsers` equal to `true`
+  - Choices: `MINUTE`, `HOUR`, `DAY`
+  - Default value: `MINUTE`
 - `src_vpn` (Boolean) Share Source VPN
+  - Default value: `false`
+- `surrogate_ip` (Boolean) Enable Surrogate IP, Attribute conditional on `sig_provider` equal to `Zscaler` and `auth_required` equal to `true`
   - Default value: `false`
 - `tracker_source_ip` (String) Source IP address for Tracker
 - `tracker_source_ip_variable` (String) Variable name

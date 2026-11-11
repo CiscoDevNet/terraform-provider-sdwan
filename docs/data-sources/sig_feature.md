@@ -34,17 +34,26 @@ data "sdwan_sig_feature" "example" {
 ### Read-Only
 
 - `aup_enabled` (Boolean) Enable Acceptable User Policy
+- `aup_timeout` (Number) Custom Acceptable User Policy frequency in days
 - `auth_required` (Boolean) Enforce Authentication
+- `block_internet_until_accepted` (Boolean) For first-time Acceptable User Policy behavior, block Internet access
 - `caution_enabled` (Boolean) Enable Caution
 - `description` (String) The description of the Feature
+- `display_time_unit` (String) Display time unit
+- `force_ssl_inspection` (Boolean) For first-time Acceptable User Policy behavior, force SSL inspection
+- `idle_time` (Number) Idle time to disassociation
 - `interface_pairs` (Attributes List) Interface Pair for active and backup (see [below for nested schema](#nestedatt--interface_pairs))
 - `interfaces` (Attributes List) Interface name: IPsec when present (see [below for nested schema](#nestedatt--interfaces))
+- `ip_enforced_for_known_browsers` (Boolean) Enforce Surrogate IP for known browsers
 - `ips_control` (Boolean) Enable IPS Control
 - `location_name` (String) Zscaler location name (optional)
 - `location_name_variable` (String) Variable name
 - `ofw_enabled` (Boolean) Firewall enabled
+- `refresh_time` (Number) Refresh time for re-validation of surrogacy in minutes
+- `refresh_time_unit` (String) Refresh Time unit
 - `sig_provider` (String) SIG Provider
 - `src_vpn` (Boolean) Share Source VPN
+- `surrogate_ip` (Boolean) Enable Surrogate IP
 - `tracker_source_ip` (String) Source IP address for Tracker
 - `tracker_source_ip_variable` (String) Variable name
 - `trackers` (Attributes List) Tracker configuration (see [below for nested schema](#nestedatt--trackers))

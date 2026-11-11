@@ -241,6 +241,9 @@ attributes:
       conditions:
         - name: sig_provider
           value: Zscaler
+        - name: auth_required
+          value: false
+          type: Bool
   - model_name: primaryDataCenter
     tf_name: zscaler_primary_data_center
     data_path: [service]
@@ -261,6 +264,84 @@ attributes:
       conditions:
         - name: sig_provider
           value: Zscaler
+  - model_name: ip
+    tf_name: surrogate_ip
+    data_path: [service]
+    description: Enable Surrogate IP
+    example: false
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Zscaler
+        - name: auth_required
+          value: true
+          type: Bool
+  - model_name: idleTime
+    tf_name: idle_time
+    data_path: [service]
+    description: Idle time to disassociation
+    example: 1
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Zscaler
+        - name: surrogate_ip
+          value: true
+          type: Bool
+  - model_name: displayTimeUnit
+    tf_name: display_time_unit
+    data_path: [service]
+    description: Display time unit
+    example: MINUTE
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Zscaler
+        - name: surrogate_ip
+          value: true
+          type: Bool
+  - model_name: ipEnforcedForKnownBrowsers
+    tf_name: ip_enforced_for_known_browsers
+    data_path: [service]
+    description: Enforce Surrogate IP for known browsers
+    example: false
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Zscaler
+        - name: surrogate_ip
+          value: true
+          type: Bool
+  - model_name: refreshTime
+    tf_name: refresh_time
+    data_path: [service]
+    description: Refresh time for re-validation of surrogacy in minutes
+    example: 1
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Zscaler
+        - name: ip_enforced_for_known_browsers
+          value: true
+          type: Bool
+  - model_name: refreshTimeUnit
+    tf_name: refresh_time_unit
+    data_path: [service]
+    description: Refresh Time unit
+    example: MINUTE
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Zscaler
+        - name: ip_enforced_for_known_browsers
+          value: true
+          type: Bool
   - model_name: enabled
     tf_name: aup_enabled
     data_path: [service]
@@ -271,6 +352,48 @@ attributes:
       conditions:
         - name: sig_provider
           value: Zscaler
+        - name: auth_required
+          value: false
+          type: Bool
+  - model_name: blockInternetUntilAccepted
+    tf_name: block_internet_until_accepted
+    data_path: [service]
+    description: For first-time Acceptable User Policy behavior, block Internet access
+    example: false
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Zscaler
+        - name: aup_enabled
+          value: true
+          type: Bool
+  - model_name: forceSslInspection
+    tf_name: force_ssl_inspection
+    data_path: [service]
+    description: For first-time Acceptable User Policy behavior, force SSL inspection
+    example: false
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Zscaler
+        - name: aup_enabled
+          value: true
+          type: Bool
+  - model_name: timeout
+    tf_name: aup_timeout
+    data_path: [service]
+    description: Custom Acceptable User Policy frequency in days
+    example: 1
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: sig_provider
+          value: Zscaler
+        - name: aup_enabled
+          value: true
+          type: Bool
   - model_name: locationName
     tf_name: location_name
     data_path: [service]
