@@ -1,6 +1,7 @@
 ## 0.12.0 (unreleased)
 
 - Add `sdwan_policy_object_security_ips_signature_set` resource and data source (SD-WAN Manager 20.18.1+)
+- Add `sdwan_sig_feature` resource and data source (SIG feature of the SIG Security feature profile, SD-WAN Manager 20.15 and later, `tunnel_route_via` from 20.18.1: `sig_provider` Umbrella, Zscaler or Generic, GRE and IPsec tunnels, interface pairs and trackers)
 
 ## 0.11.7
 
