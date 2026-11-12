@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## 0.11.8 (unreleased)
+## 0.12.0 (unreleased)
 
 - Add `sdwan_policy_object_security_ips_signature_set` resource and data source (SD-WAN Manager 20.18.1+)
 
