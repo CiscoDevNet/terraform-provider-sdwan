@@ -1,6 +1,7 @@
 ## 0.12.0 (unreleased)
 
 - Add `sdwan_sig_feature` resource and data source (SIG feature of the SIG Security feature profile, SD-WAN Manager 20.15 and later, `tunnel_route_via` from 20.18.1: `sig_provider` Umbrella, Zscaler or Generic, GRE and IPsec tunnels, interface pairs and trackers)
+- Fix `sdwan_network_hierarchy_security_logging` assigning the same `server1` name to every high speed logging entry on SD-WAN Manager 20.18 and later, causing multiple HSL servers to be rendered inconsistently in the Manager UI. Each entry is now assigned a distinct `server1`-`server4` slot name; Manager versions below 20.18 are unaffected as they do not use this key
 
 ## 0.11.7
 
