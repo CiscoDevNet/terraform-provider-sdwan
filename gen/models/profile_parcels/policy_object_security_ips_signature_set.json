@@ -1,0 +1,112 @@
+{
+    "request": {
+        "$schema": "http://json-schema.org/draft/2019-09/schema",
+        "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/security-ipssignatureset/post/request_schema.json",
+        "title": "security-ipssignatureset Parcel Schema",
+        "description": "security-ipssignatureset profile parcel schema for POST request",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "pattern": "^[^&<>! \"]+$",
+                "minLength": 1,
+                "maxLength": 32
+            },
+            "description": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "entries": {
+                        "description": "Editable Ips Signature Set",
+                        "type": "array",
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "baseSignature": {
+                                    "description": "",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "enum": [
+                                                        "balanced",
+                                                        "connectivity",
+                                                        "security",
+                                                        "max-detect",
+                                                        "no-rules-active"
+                                                    ],
+                                                    "type": "string",
+                                                    "default": "balanced"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "baseSignature"
+                            ],
+                            "additionalProperties": false
+                        }
+                    }
+                },
+                "required": [
+                    "entries"
+                ],
+                "additionalProperties": false
+            },
+            "documentation": {
+                "description": "This is the documentation for POST request schema for security-ipssignatureset profile parcel",
+                "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+                "details-2": "variable name should not be present if optionType value is NOT variable",
+                "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+                "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+                "examples": [
+                    {
+                        "data": {
+                            "entries": [
+                                {
+                                    "baseSignature": {
+                                        "optionType": "global",
+                                        "value": "balanced"
+                                    }
+                                }
+                            ]
+                        },
+                        "name": "SecurityIpsSignatureSet"
+                    }
+                ]
+            },
+            "metadata": {
+                "minVManageVersion": "20.18.1"
+            }
+        },
+        "required": [
+            "data",
+            "name"
+        ],
+        "not": {
+            "required": [
+                "documentation",
+                "metadata"
+            ]
+        },
+        "additionalProperties": false
+    }
+}

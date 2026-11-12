@@ -1,3 +1,7 @@
+## 0.11.8 (unreleased)
+
+- Add `sdwan_policy_object_security_ips_signature_set` resource and data source (SD-WAN Manager 20.18.1+)
+
 ## 0.11.7
 
 - Add `sdwan_policy_object_security_data_ipv6_prefix_list` resource and data source (SD-WAN Manager 20.18+)
