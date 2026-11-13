@@ -530,7 +530,8 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 										Optional:            true,
 									},
 									"peer_authentication_password": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set MSDP peer ip password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set MSDP peer ip password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `peer_authentication_password`, `peer_authentication_password_variable` and `peer_authentication_password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `peer_authentication_password_wo` together with `peer_authentication_password_wo_version`, which keeps it out of state.").String,
+										Sensitive:           true,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthBetween(1, 25),
@@ -538,6 +539,19 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 									},
 									"peer_authentication_password_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
+									},
+									"peer_authentication_password_wo": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Set MSDP peer ip password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `peer_authentication_password`, `peer_authentication_password_variable` and `peer_authentication_password_wo` can be set.").String,
+										Sensitive:           true,
+										WriteOnly:           true,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.LengthBetween(1, 25),
+										},
+									},
+									"peer_authentication_password_wo_version": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `peer_authentication_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 										Optional:            true,
 									},
 									"keepalive_interval": schema.Int64Attribute{
@@ -626,6 +640,68 @@ func (r *ServiceMulticastProfileParcelResource) Configure(_ context.Context, req
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
 
+var _ resource.ResourceWithValidateConfig = &ServiceMulticastProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *ServiceMulticastProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	{
+		// Secrets nested two list levels under "msdp_groups" are validated per element pair.
+		// A list that cannot be read as a whole - because it is still unknown at validate
+		// time - is skipped rather than reported, since there is nothing to check yet.
+		var cfgMsdpGroups []ServiceMulticastMsdpGroups
+		if diags := req.Config.GetAttribute(ctx, path.Root("msdp_groups"), &cfgMsdpGroups); !diags.HasError() {
+			for i := range cfgMsdpGroups {
+				for j := range cfgMsdpGroups[i].Peers {
+					el := cfgMsdpGroups[i].Peers[j]
+
+					// An unknown value is one that is not resolved yet at validate time, for example an
+					// ephemeral resource attribute or a random_password reference. Treat it as "not
+					// decided" rather than "set", otherwise every such configuration trips a false error.
+					if !el.PeerAuthenticationPassword.IsUnknown() && !el.PeerAuthenticationPasswordWo.IsUnknown() && !el.PeerAuthenticationPassword.IsNull() && !el.PeerAuthenticationPasswordWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Invalid Attribute Combination",
+							fmt.Sprintf("Only one of `peer_authentication_password` and `peer_authentication_password_wo` can be set in `msdp_groups` element %d, `peers` element %d.", i, j),
+						)
+					}
+					if !el.PeerAuthenticationPasswordVariable.IsUnknown() && !el.PeerAuthenticationPasswordWo.IsUnknown() && !el.PeerAuthenticationPasswordVariable.IsNull() && !el.PeerAuthenticationPasswordWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Invalid Attribute Combination",
+							fmt.Sprintf("`peer_authentication_password_variable` and `peer_authentication_password_wo` cannot both be set in `msdp_groups` element %d, `peers` element %d. `peer_authentication_password_variable` defers the value to a device variable, so the write-only value would never be sent.", i, j),
+						)
+					}
+					if !el.PeerAuthenticationPassword.IsUnknown() && !el.PeerAuthenticationPasswordVariable.IsUnknown() && !el.PeerAuthenticationPassword.IsNull() && !el.PeerAuthenticationPasswordVariable.IsNull() {
+						resp.Diagnostics.AddWarning(
+							"Conflicting Attribute Combination",
+							fmt.Sprintf("Both `peer_authentication_password` and `peer_authentication_password_variable` are set in `msdp_groups` element %d, `peers` element %d. `peer_authentication_password_variable` takes precedence, so the value of `peer_authentication_password` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i, j),
+						)
+					}
+					if !el.PeerAuthenticationPasswordWo.IsUnknown() && !el.PeerAuthenticationPasswordWoVersion.IsUnknown() && !el.PeerAuthenticationPasswordWo.IsNull() && el.PeerAuthenticationPasswordWoVersion.IsNull() {
+						resp.Diagnostics.AddError(
+							"Missing Required Attribute",
+							fmt.Sprintf("`peer_authentication_password_wo_version` must be set when `peer_authentication_password_wo` is used in `msdp_groups` element %d, `peers` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i, j),
+						)
+					}
+					if !el.PeerAuthenticationPasswordWoVersion.IsUnknown() && !el.PeerAuthenticationPasswordWo.IsUnknown() && !el.PeerAuthenticationPasswordWoVersion.IsNull() && el.PeerAuthenticationPasswordWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Missing Required Attribute",
+							fmt.Sprintf("`peer_authentication_password_wo` must be set when `peer_authentication_password_wo_version` is used in `msdp_groups` element %d, `peers` element %d.", i, j),
+						)
+					}
+				}
+			}
+		}
+	}
+}
+
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
@@ -637,6 +713,27 @@ func (r *ServiceMulticastProfileParcelResource) Create(ctx context.Context, req 
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values nested two list levels under "msdp_groups" are not stored in plan
+	// or state; read the list from the configuration and copy them in element by element.
+	// Both joins are positional, which is sound only for ordered Lists - write_only_tf is
+	// rejected at generate time anywhere under a Set.
+	{
+		var cfgMsdpGroups []ServiceMulticastMsdpGroups
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("msdp_groups"), &cfgMsdpGroups)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.MsdpGroups {
+			if i < len(cfgMsdpGroups) {
+				for j := range plan.MsdpGroups[i].Peers {
+					if j < len(cfgMsdpGroups[i].Peers) {
+						plan.MsdpGroups[i].Peers[j].PeerAuthenticationPasswordWo = cfgMsdpGroups[i].Peers[j].PeerAuthenticationPasswordWo
+					}
+				}
+			}
+		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
@@ -717,6 +814,27 @@ func (r *ServiceMulticastProfileParcelResource) Update(ctx context.Context, req 
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values nested two list levels under "msdp_groups" are not stored in plan
+	// or state; read the list from the configuration and copy them in element by element.
+	// Both joins are positional, which is sound only for ordered Lists - write_only_tf is
+	// rejected at generate time anywhere under a Set.
+	{
+		var cfgMsdpGroups []ServiceMulticastMsdpGroups
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("msdp_groups"), &cfgMsdpGroups)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.MsdpGroups {
+			if i < len(cfgMsdpGroups) {
+				for j := range plan.MsdpGroups[i].Peers {
+					if j < len(cfgMsdpGroups[i].Peers) {
+						plan.MsdpGroups[i].Peers[j].PeerAuthenticationPasswordWo = cfgMsdpGroups[i].Peers[j].PeerAuthenticationPasswordWo
+					}
+				}
+			}
+		}
 	}
 	// Read state
 	diags = req.State.Get(ctx, &state)

@@ -24,7 +24,6 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
   requires_authentication  = true
   authentication_type      = "pap"
   profile_username         = "example"
-  profile_password         = "example123!"
   packet_data_network_type = "ipv4"
   no_overwrite             = false
   slice_type               = 2
@@ -42,6 +41,8 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
 
 ### Optional
 
+> **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
+
 - `access_point_name` (String) Set access point name
 - `access_point_name_variable` (String) Variable name
 - `authentication_type` (String) Set authentication type, Attribute conditional on `requires_authentication` equal to `true`
@@ -57,8 +58,13 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
 - `profile_id` (Number) Set Profile ID
   - Range: `1`-`16`
 - `profile_id_variable` (String) Variable name
-- `profile_password` (String) Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.], Attribute conditional on `requires_authentication` equal to `true`
+- `profile_password` (String, Sensitive) Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.], Attribute conditional on `requires_authentication` equal to `true`
+  - Only one of `profile_password`, `profile_password_variable` and `profile_password_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `profile_password_wo` together with `profile_password_wo_version`, which keeps it out of state.
 - `profile_password_variable` (String) Variable name, Attribute conditional on `requires_authentication` equal to `true`
+- `profile_password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.], Attribute conditional on `requires_authentication` equal to `true`
+  - Only one of `profile_password`, `profile_password_variable` and `profile_password_wo` can be set.
+- `profile_password_wo_version` (Number) Rotation trigger for `profile_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `profile_username` (String) Set the profile username, Attribute conditional on `requires_authentication` equal to `true`
 - `profile_username_variable` (String) Variable name, Attribute conditional on `requires_authentication` equal to `true`
 - `requires_authentication` (Boolean) Require authentication type

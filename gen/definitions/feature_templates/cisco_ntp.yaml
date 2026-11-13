@@ -21,6 +21,7 @@ attributes:
         tf_name: id
         example: 1
       - model_name: md5
+        sensitive: true
         tf_name: value
         example: 12345
   - model_name: server

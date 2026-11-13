@@ -157,7 +157,6 @@ func testAccSdwanServiceMulticastProfileParcelConfig_all() string {
 	config += `		peer_ip = "1.2.3.4"` + "\n"
 	config += `		connection_source_interface = "GigabitEthernet1"` + "\n"
 	config += `		remote_as = 1` + "\n"
-	config += `		peer_authentication_password = "Password123!"` + "\n"
 	config += `		keepalive_interval = 15` + "\n"
 	config += `		keepalive_hold_time = 30` + "\n"
 	config += `		sa_limit = 1` + "\n"

@@ -24,6 +24,7 @@ attributes:
     tf_name: communities
     attributes:
       - model_name: name
+        sensitive: true
         example: community1
       - model_name: view
         example: VIEW1
@@ -70,6 +71,7 @@ attributes:
         tf_name: udp_port
         example: 12345
       - model_name: community-name
+        sensitive: true
         example: community1
       - model_name: user
         example: user1

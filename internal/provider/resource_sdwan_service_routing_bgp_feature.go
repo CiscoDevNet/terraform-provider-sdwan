@@ -338,7 +338,8 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 							Optional:            true,
 						},
 						"password": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `password`, `password_variable` and `password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `password_wo` together with `password_wo_version`, which keeps it out of state.").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 25),
@@ -346,6 +347,19 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 						},
 						"password_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"password_wo": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `password`, `password_variable` and `password_wo` can be set.").String,
+							Sensitive:           true,
+							WriteOnly:           true,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(1, 25),
+							},
+						},
+						"password_wo_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 							Optional:            true,
 						},
 						"send_label": schema.BoolAttribute{
@@ -609,7 +623,8 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 							Optional:            true,
 						},
 						"password": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `password`, `password_variable` and `password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `password_wo` together with `password_wo_version`, which keeps it out of state.").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 25),
@@ -617,6 +632,19 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 						},
 						"password_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"password_wo": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `password`, `password_variable` and `password_wo` can be set.").String,
+							Sensitive:           true,
+							WriteOnly:           true,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(1, 25),
+							},
+						},
+						"password_wo_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 							Optional:            true,
 						},
 						"as_override": schema.BoolAttribute{
@@ -1073,6 +1101,112 @@ func (r *ServiceRoutingBGPProfileParcelResource) Configure(_ context.Context, re
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
 
+var _ resource.ResourceWithValidateConfig = &ServiceRoutingBGPProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *ServiceRoutingBGPProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	{
+		// Secrets nested in "ipv4_neighbors" are validated per element. A list that cannot be
+		// read as a whole - because it is still unknown at validate time - is skipped rather
+		// than reported, since there is nothing to check yet.
+		var cfgIpv4Neighbors []ServiceRoutingBGPIpv4Neighbors
+		if diags := req.Config.GetAttribute(ctx, path.Root("ipv4_neighbors"), &cfgIpv4Neighbors); !diags.HasError() {
+			for i := range cfgIpv4Neighbors {
+				el := cfgIpv4Neighbors[i]
+
+				// An unknown value is one that is not resolved yet at validate time, for example an
+				// ephemeral resource attribute or a random_password reference. Treat it as "not
+				// decided" rather than "set", otherwise every such configuration trips a false error.
+				if !el.Password.IsUnknown() && !el.PasswordWo.IsUnknown() && !el.Password.IsNull() && !el.PasswordWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("Only one of `password` and `password_wo` can be set in `ipv4_neighbors` element %d.", i),
+					)
+				}
+				if !el.PasswordVariable.IsUnknown() && !el.PasswordWo.IsUnknown() && !el.PasswordVariable.IsNull() && !el.PasswordWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("`password_variable` and `password_wo` cannot both be set in `ipv4_neighbors` element %d. `password_variable` defers the value to a device variable, so the write-only value would never be sent.", i),
+					)
+				}
+				if !el.Password.IsUnknown() && !el.PasswordVariable.IsUnknown() && !el.Password.IsNull() && !el.PasswordVariable.IsNull() {
+					resp.Diagnostics.AddWarning(
+						"Conflicting Attribute Combination",
+						fmt.Sprintf("Both `password` and `password_variable` are set in `ipv4_neighbors` element %d. `password_variable` takes precedence, so the value of `password` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i),
+					)
+				}
+				if !el.PasswordWo.IsUnknown() && !el.PasswordWoVersion.IsUnknown() && !el.PasswordWo.IsNull() && el.PasswordWoVersion.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`password_wo_version` must be set when `password_wo` is used in `ipv4_neighbors` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i),
+					)
+				}
+				if !el.PasswordWoVersion.IsUnknown() && !el.PasswordWo.IsUnknown() && !el.PasswordWoVersion.IsNull() && el.PasswordWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`password_wo` must be set when `password_wo_version` is used in `ipv4_neighbors` element %d.", i),
+					)
+				}
+			}
+		}
+	}
+
+	{
+		// Secrets nested in "ipv6_neighbors" are validated per element. A list that cannot be
+		// read as a whole - because it is still unknown at validate time - is skipped rather
+		// than reported, since there is nothing to check yet.
+		var cfgIpv6Neighbors []ServiceRoutingBGPIpv6Neighbors
+		if diags := req.Config.GetAttribute(ctx, path.Root("ipv6_neighbors"), &cfgIpv6Neighbors); !diags.HasError() {
+			for i := range cfgIpv6Neighbors {
+				el := cfgIpv6Neighbors[i]
+
+				// An unknown value is one that is not resolved yet at validate time, for example an
+				// ephemeral resource attribute or a random_password reference. Treat it as "not
+				// decided" rather than "set", otherwise every such configuration trips a false error.
+				if !el.Password.IsUnknown() && !el.PasswordWo.IsUnknown() && !el.Password.IsNull() && !el.PasswordWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("Only one of `password` and `password_wo` can be set in `ipv6_neighbors` element %d.", i),
+					)
+				}
+				if !el.PasswordVariable.IsUnknown() && !el.PasswordWo.IsUnknown() && !el.PasswordVariable.IsNull() && !el.PasswordWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("`password_variable` and `password_wo` cannot both be set in `ipv6_neighbors` element %d. `password_variable` defers the value to a device variable, so the write-only value would never be sent.", i),
+					)
+				}
+				if !el.Password.IsUnknown() && !el.PasswordVariable.IsUnknown() && !el.Password.IsNull() && !el.PasswordVariable.IsNull() {
+					resp.Diagnostics.AddWarning(
+						"Conflicting Attribute Combination",
+						fmt.Sprintf("Both `password` and `password_variable` are set in `ipv6_neighbors` element %d. `password_variable` takes precedence, so the value of `password` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i),
+					)
+				}
+				if !el.PasswordWo.IsUnknown() && !el.PasswordWoVersion.IsUnknown() && !el.PasswordWo.IsNull() && el.PasswordWoVersion.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`password_wo_version` must be set when `password_wo` is used in `ipv6_neighbors` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i),
+					)
+				}
+				if !el.PasswordWoVersion.IsUnknown() && !el.PasswordWo.IsUnknown() && !el.PasswordWoVersion.IsNull() && el.PasswordWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`password_wo` must be set when `password_wo_version` is used in `ipv6_neighbors` element %d.", i),
+					)
+				}
+			}
+		}
+	}
+}
+
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
@@ -1084,6 +1218,40 @@ func (r *ServiceRoutingBGPProfileParcelResource) Create(ctx context.Context, req
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values in list "ipv4_neighbors" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgIpv4Neighbors []ServiceRoutingBGPIpv4Neighbors
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("ipv4_neighbors"), &cfgIpv4Neighbors)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Ipv4Neighbors {
+			if i < len(cfgIpv4Neighbors) {
+				plan.Ipv4Neighbors[i].PasswordWo = cfgIpv4Neighbors[i].PasswordWo
+			}
+		}
+	}
+
+	// Write-only values in list "ipv6_neighbors" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgIpv6Neighbors []ServiceRoutingBGPIpv6Neighbors
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("ipv6_neighbors"), &cfgIpv6Neighbors)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Ipv6Neighbors {
+			if i < len(cfgIpv6Neighbors) {
+				plan.Ipv6Neighbors[i].PasswordWo = cfgIpv6Neighbors[i].PasswordWo
+			}
+		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
@@ -1162,6 +1330,40 @@ func (r *ServiceRoutingBGPProfileParcelResource) Update(ctx context.Context, req
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values in list "ipv4_neighbors" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgIpv4Neighbors []ServiceRoutingBGPIpv4Neighbors
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("ipv4_neighbors"), &cfgIpv4Neighbors)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Ipv4Neighbors {
+			if i < len(cfgIpv4Neighbors) {
+				plan.Ipv4Neighbors[i].PasswordWo = cfgIpv4Neighbors[i].PasswordWo
+			}
+		}
+	}
+
+	// Write-only values in list "ipv6_neighbors" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgIpv6Neighbors []ServiceRoutingBGPIpv6Neighbors
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("ipv6_neighbors"), &cfgIpv6Neighbors)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Ipv6Neighbors {
+			if i < len(cfgIpv6Neighbors) {
+				plan.Ipv6Neighbors[i].PasswordWo = cfgIpv6Neighbors[i].PasswordWo
+			}
+		}
 	}
 	// Read state
 	diags = req.State.Get(ctx, &state)

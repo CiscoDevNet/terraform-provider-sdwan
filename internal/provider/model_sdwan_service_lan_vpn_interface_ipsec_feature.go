@@ -79,6 +79,8 @@ type ServiceLANVPNInterfaceIPSec struct {
 	DpdRetriesVariable                   types.String `tfsdk:"dpd_retries_variable"`
 	IkePresharedKey                      types.String `tfsdk:"ike_preshared_key"`
 	IkePresharedKeyVariable              types.String `tfsdk:"ike_preshared_key_variable"`
+	IkePresharedKeyWo                    types.String `tfsdk:"ike_preshared_key_wo"`
+	IkePresharedKeyWoVersion             types.Int64  `tfsdk:"ike_preshared_key_wo_version"`
 	IkeVersion                           types.Int64  `tfsdk:"ike_version"`
 	IkeIntegrityProtocol                 types.String `tfsdk:"ike_integrity_protocol"`
 	IkeIntegrityProtocolVariable         types.String `tfsdk:"ike_integrity_protocol_variable"`
@@ -430,6 +432,12 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 		if true {
 			body, _ = sjson.Set(body, path+"preSharedSecret.optionType", "global")
 			body, _ = sjson.Set(body, path+"preSharedSecret.value", data.IkePresharedKey.ValueString())
+		}
+	}
+	if !data.IkePresharedKeyWo.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"preSharedSecret.optionType", "global")
+			body, _ = sjson.Set(body, path+"preSharedSecret.value", data.IkePresharedKeyWo.ValueString())
 		}
 	}
 	if data.IkeVersion.IsNull() {

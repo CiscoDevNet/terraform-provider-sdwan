@@ -183,6 +183,7 @@ func (r *CellularProfileFeatureTemplateResource) Schema(ctx context.Context, req
 			},
 			"profile_password": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set the profile password").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"profile_password_variable": schema.StringAttribute{

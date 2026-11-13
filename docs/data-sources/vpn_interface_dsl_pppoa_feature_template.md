@@ -39,7 +39,7 @@ data "sdwan_vpn_interface_dsl_pppoa_feature_template" "example" {
 - `bandwidth_upstream_variable` (String) Variable name
 - `chap_hostname` (String) CHAP Hostname
 - `chap_hostname_variable` (String) Variable name
-- `chap_ppp_auth_password` (String) Specify ppp authentication Password
+- `chap_ppp_auth_password` (String, Sensitive) Specify ppp authentication Password
 - `chap_ppp_auth_password_variable` (String) Variable name
 - `core_region` (String) Enable core region
 - `core_region_variable` (String) Variable name
@@ -64,7 +64,7 @@ data "sdwan_vpn_interface_dsl_pppoa_feature_template" "example" {
 - `nat_udp_timeout` (Number) Set NAT UDP session timeout, in minutes
 - `nat_udp_timeout_variable` (String) Variable name
 - `pap_password` (Boolean) PAP outbound Password
-- `pap_ppp_auth_password` (String) Specify ppp authentication Password
+- `pap_ppp_auth_password` (String, Sensitive) Specify ppp authentication Password
 - `pap_ppp_auth_password_variable` (String) Variable name
 - `pap_username` (String) PAP outbound Sent Username
 - `pap_username_variable` (String) Variable name

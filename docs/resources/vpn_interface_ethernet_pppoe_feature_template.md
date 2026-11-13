@@ -149,7 +149,7 @@ resource "sdwan_vpn_interface_ethernet_pppoe_feature_template" "example" {
 - `bandwidth_upstream_variable` (String) Variable name
 - `chap_hostname` (String) CHAP Hostname
 - `chap_hostname_variable` (String) Variable name
-- `chap_ppp_auth_password` (String) Specify ppp chap authentication Password
+- `chap_ppp_auth_password` (String, Sensitive) Specify ppp chap authentication Password
 - `chap_ppp_auth_password_variable` (String) Variable name
 - `core_region` (String) Enable core region
   - Choices: `core`, `core-shared`
@@ -202,7 +202,7 @@ resource "sdwan_vpn_interface_ethernet_pppoe_feature_template" "example" {
   - Default value: `1`
 - `nat_udp_timeout_variable` (String) Variable name
 - `pap_password` (Boolean) PAP outbound Password
-- `pap_ppp_auth_password` (String) Specify ppp pap authentication Password
+- `pap_ppp_auth_password` (String, Sensitive) Specify ppp pap authentication Password
 - `pap_ppp_auth_password_variable` (String) Variable name
 - `pap_username` (String) PAP outbound Sent Username
 - `pap_username_variable` (String) Variable name

@@ -38,7 +38,7 @@ data "sdwan_cisco_wireless_lan_feature_template" "example" {
 - `country_variable` (String) Variable name
 - `description` (String) The description of the feature template
 - `device_types` (Set of String) List of supported device types
-- `password` (String) Set management password
+- `password` (String, Sensitive) Set management password
 - `password_variable` (String) Variable name
 - `shutdown_2_4ghz` (Boolean) 2.4GHz Shutdown
 - `shutdown_2_4ghz_variable` (String) Variable name
@@ -59,7 +59,7 @@ Read-Only:
 - `admin_state_variable` (String) Variable name
 - `broadcast_ssid` (Boolean) Enable broadcast SSID
 - `optional` (Boolean) Indicates if list item is considered optional.
-- `passphrase` (String) Set passphrase
+- `passphrase` (String, Sensitive) Set passphrase
 - `passphrase_variable` (String) Variable name
 - `qos_profile` (String) Select QoS profile
 - `qos_profile_variable` (String) Variable name
@@ -69,7 +69,7 @@ Read-Only:
 - `radius_server_ip_variable` (String) Variable name
 - `radius_server_port` (Number) Set RADIUS server authentication port
 - `radius_server_port_variable` (String) Variable name
-- `radius_server_secret` (String) Set RADIUS server shared secret
+- `radius_server_secret` (String, Sensitive) Set RADIUS server shared secret
 - `radius_server_secret_variable` (String) Variable name
 - `security_type` (String) Select security type
 - `security_type_variable` (String) Variable name

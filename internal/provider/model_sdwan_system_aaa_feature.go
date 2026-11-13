@@ -63,6 +63,8 @@ type SystemAAAUsers struct {
 	NameVariable      types.String               `tfsdk:"name_variable"`
 	Password          types.String               `tfsdk:"password"`
 	PasswordVariable  types.String               `tfsdk:"password_variable"`
+	PasswordWo        types.String               `tfsdk:"password_wo"`
+	PasswordWoVersion types.Int64                `tfsdk:"password_wo_version"`
 	Privilege         types.String               `tfsdk:"privilege"`
 	PrivilegeVariable types.String               `tfsdk:"privilege_variable"`
 	PublicKeys        []SystemAAAUsersPublicKeys `tfsdk:"public_keys"`
@@ -121,24 +123,32 @@ type SystemAAARadiusGroupsServers struct {
 	RetransmitVariable types.String `tfsdk:"retransmit_variable"`
 	Key                types.String `tfsdk:"key"`
 	KeyVariable        types.String `tfsdk:"key_variable"`
+	KeyWo              types.String `tfsdk:"key_wo"`
+	KeyWoVersion       types.Int64  `tfsdk:"key_wo_version"`
 	SecretKey          types.String `tfsdk:"secret_key"`
 	SecretKeyVariable  types.String `tfsdk:"secret_key_variable"`
+	SecretKeyWo        types.String `tfsdk:"secret_key_wo"`
+	SecretKeyWoVersion types.Int64  `tfsdk:"secret_key_wo_version"`
 	KeyEnum            types.String `tfsdk:"key_enum"`
 	KeyType            types.String `tfsdk:"key_type"`
 	KeyTypeVariable    types.String `tfsdk:"key_type_variable"`
 }
 
 type SystemAAATacacsGroupsServers struct {
-	Address           types.String `tfsdk:"address"`
-	Port              types.Int64  `tfsdk:"port"`
-	PortVariable      types.String `tfsdk:"port_variable"`
-	Timeout           types.Int64  `tfsdk:"timeout"`
-	TimeoutVariable   types.String `tfsdk:"timeout_variable"`
-	Key               types.String `tfsdk:"key"`
-	KeyVariable       types.String `tfsdk:"key_variable"`
-	SecretKey         types.String `tfsdk:"secret_key"`
-	SecretKeyVariable types.String `tfsdk:"secret_key_variable"`
-	KeyEnum           types.String `tfsdk:"key_enum"`
+	Address            types.String `tfsdk:"address"`
+	Port               types.Int64  `tfsdk:"port"`
+	PortVariable       types.String `tfsdk:"port_variable"`
+	Timeout            types.Int64  `tfsdk:"timeout"`
+	TimeoutVariable    types.String `tfsdk:"timeout_variable"`
+	Key                types.String `tfsdk:"key"`
+	KeyVariable        types.String `tfsdk:"key_variable"`
+	KeyWo              types.String `tfsdk:"key_wo"`
+	KeyWoVersion       types.Int64  `tfsdk:"key_wo_version"`
+	SecretKey          types.String `tfsdk:"secret_key"`
+	SecretKeyVariable  types.String `tfsdk:"secret_key_variable"`
+	SecretKeyWo        types.String `tfsdk:"secret_key_wo"`
+	SecretKeyWoVersion types.Int64  `tfsdk:"secret_key_wo_version"`
+	KeyEnum            types.String `tfsdk:"key_enum"`
 }
 
 // End of section. //template:end types
@@ -231,6 +241,12 @@ func (data SystemAAA) toBody(ctx context.Context, ver *version.Version) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "password.value", item.Password.ValueString())
+				}
+			}
+			if !item.PasswordWo.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "password.value", item.PasswordWo.ValueString())
 				}
 			}
 
@@ -412,6 +428,12 @@ func (data SystemAAA) toBody(ctx context.Context, ver *version.Version) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "key.value", childItem.Key.ValueString())
 						}
 					}
+					if !childItem.KeyWo.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "key.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "key.value", childItem.KeyWo.ValueString())
+						}
+					}
 
 					if !childItem.SecretKeyVariable.IsNull() {
 						if true {
@@ -427,6 +449,17 @@ func (data SystemAAA) toBody(ctx context.Context, ver *version.Version) string {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKey.ValueString())
+						}
+					}
+					if childItem.SecretKeyWo.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "default")
+
+						}
+					} else {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKeyWo.ValueString())
 						}
 					}
 					if childItem.KeyEnum.IsNull() {
@@ -591,6 +624,12 @@ func (data SystemAAA) toBody(ctx context.Context, ver *version.Version) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "key.value", childItem.Key.ValueString())
 						}
 					}
+					if !childItem.KeyWo.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "key.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "key.value", childItem.KeyWo.ValueString())
+						}
+					}
 
 					if !childItem.SecretKeyVariable.IsNull() {
 						if true {
@@ -601,6 +640,12 @@ func (data SystemAAA) toBody(ctx context.Context, ver *version.Version) string {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKey.ValueString())
+						}
+					}
+					if !childItem.SecretKeyWo.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKeyWo.ValueString())
 						}
 					}
 					if childItem.KeyEnum.IsNull() {
@@ -817,7 +862,10 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 				if t.String() == "variable" {
 					item.PasswordVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.Password = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.Password = types.StringValue(va.String())
+					}
 				}
 			}
 			item.Privilege = types.StringNull()
@@ -1020,7 +1068,10 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 						if t.String() == "variable" {
 							cItem.KeyVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.Key = types.StringValue(va.String())
+							// Masked secrets returned by the Manager must never be written into state.
+							if !helpers.IsEncryptedValue(va.String()) {
+								cItem.Key = types.StringValue(va.String())
+							}
 						}
 					}
 					cItem.SecretKey = types.StringNull()
@@ -1209,7 +1260,10 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 						if t.String() == "variable" {
 							cItem.KeyVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.Key = types.StringValue(va.String())
+							// Masked secrets returned by the Manager must never be written into state.
+							if !helpers.IsEncryptedValue(va.String()) {
+								cItem.Key = types.StringValue(va.String())
+							}
 						}
 					}
 					cItem.SecretKey = types.StringNull()

@@ -32,13 +32,8 @@ func TestAccSdwanCiscoSIGCredentialsFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_organization", "org1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_partner_base_uri", "abc"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_username", "user1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_password", "password123"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_cloud_name", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_partner_username", "partner1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_partner_password", "password123"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_partner_api_key", "key123"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "umbrella_api_key", "key123"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "umbrella_api_secret", "secret123"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "umbrella_organization_id", "org1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
@@ -81,13 +76,8 @@ func testAccSdwanCiscoSIGCredentialsFeatureTemplateConfig_all() string {
 	config += `	zscaler_organization = "org1"` + "\n"
 	config += `	zscaler_partner_base_uri = "abc"` + "\n"
 	config += `	zscaler_username = "user1"` + "\n"
-	config += `	zscaler_password = "password123"` + "\n"
 	config += `	zscaler_cloud_name = 1` + "\n"
 	config += `	zscaler_partner_username = "partner1"` + "\n"
-	config += `	zscaler_partner_password = "password123"` + "\n"
-	config += `	zscaler_partner_api_key = "key123"` + "\n"
-	config += `	umbrella_api_key = "key123"` + "\n"
-	config += `	umbrella_api_secret = "secret123"` + "\n"
 	config += `	umbrella_organization_id = "org1"` + "\n"
 	config += `}` + "\n"
 	return config

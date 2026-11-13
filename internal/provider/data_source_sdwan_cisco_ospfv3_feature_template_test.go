@@ -65,7 +65,6 @@ func TestAccDataSourceSdwanCiscoOSPFv3FeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.network", "point-to-point"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.passive_interface", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.authentication_type", "md5"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.authentication_key", "authenticationKey"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.ipsec_spi", "256"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.ranges.0.address", "1.1.1.0/24"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.ranges.0.cost", "100"))
@@ -105,7 +104,6 @@ func TestAccDataSourceSdwanCiscoOSPFv3FeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.network", "point-to-point"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.passive_interface", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.authentication_type", "md5"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.authentication_key", "authenticationKey"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.ipsec_spi", "256"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.ranges.0.address", "2001::/48"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.ranges.0.cost", "100"))
@@ -172,7 +170,6 @@ func testAccDataSourceSdwanCiscoOSPFv3FeatureTemplateConfig() string {
 	config += `		network = "point-to-point"` + "\n"
 	config += `		passive_interface = true` + "\n"
 	config += `		authentication_type = "md5"` + "\n"
-	config += `		authentication_key = "authenticationKey"` + "\n"
 	config += `		ipsec_spi = 256` + "\n"
 	config += `	}]` + "\n"
 	config += `	  ranges = [{` + "\n"
@@ -222,7 +219,6 @@ func testAccDataSourceSdwanCiscoOSPFv3FeatureTemplateConfig() string {
 	config += `		network = "point-to-point"` + "\n"
 	config += `		passive_interface = true` + "\n"
 	config += `		authentication_type = "md5"` + "\n"
-	config += `		authentication_key = "authenticationKey"` + "\n"
 	config += `		ipsec_spi = 256` + "\n"
 	config += `	}]` + "\n"
 	config += `	  ranges = [{` + "\n"

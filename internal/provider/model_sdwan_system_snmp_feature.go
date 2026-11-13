@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -58,6 +59,8 @@ type SystemSNMPViews struct {
 type SystemSNMPCommunities struct {
 	Name                  types.String `tfsdk:"name"`
 	NameVariable          types.String `tfsdk:"name_variable"`
+	NameWo                types.String `tfsdk:"name_wo"`
+	NameWoVersion         types.Int64  `tfsdk:"name_wo_version"`
 	UserLabel             types.String `tfsdk:"user_label"`
 	View                  types.String `tfsdk:"view"`
 	ViewVariable          types.String `tfsdk:"view_variable"`
@@ -73,17 +76,21 @@ type SystemSNMPGroups struct {
 }
 
 type SystemSNMPUsers struct {
-	Name                           types.String `tfsdk:"name"`
-	AuthenticationProtocol         types.String `tfsdk:"authentication_protocol"`
-	AuthenticationProtocolVariable types.String `tfsdk:"authentication_protocol_variable"`
-	AuthenticationPassword         types.String `tfsdk:"authentication_password"`
-	AuthenticationPasswordVariable types.String `tfsdk:"authentication_password_variable"`
-	PrivacyProtocol                types.String `tfsdk:"privacy_protocol"`
-	PrivacyProtocolVariable        types.String `tfsdk:"privacy_protocol_variable"`
-	PrivacyPassword                types.String `tfsdk:"privacy_password"`
-	PrivacyPasswordVariable        types.String `tfsdk:"privacy_password_variable"`
-	Group                          types.String `tfsdk:"group"`
-	GroupVariable                  types.String `tfsdk:"group_variable"`
+	Name                            types.String `tfsdk:"name"`
+	AuthenticationProtocol          types.String `tfsdk:"authentication_protocol"`
+	AuthenticationProtocolVariable  types.String `tfsdk:"authentication_protocol_variable"`
+	AuthenticationPassword          types.String `tfsdk:"authentication_password"`
+	AuthenticationPasswordVariable  types.String `tfsdk:"authentication_password_variable"`
+	AuthenticationPasswordWo        types.String `tfsdk:"authentication_password_wo"`
+	AuthenticationPasswordWoVersion types.Int64  `tfsdk:"authentication_password_wo_version"`
+	PrivacyProtocol                 types.String `tfsdk:"privacy_protocol"`
+	PrivacyProtocolVariable         types.String `tfsdk:"privacy_protocol_variable"`
+	PrivacyPassword                 types.String `tfsdk:"privacy_password"`
+	PrivacyPasswordVariable         types.String `tfsdk:"privacy_password_variable"`
+	PrivacyPasswordWo               types.String `tfsdk:"privacy_password_wo"`
+	PrivacyPasswordWoVersion        types.Int64  `tfsdk:"privacy_password_wo_version"`
+	Group                           types.String `tfsdk:"group"`
+	GroupVariable                   types.String `tfsdk:"group_variable"`
 }
 
 type SystemSNMPTrapTargetServers struct {
@@ -245,6 +252,12 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "name.value", item.Name.ValueString())
 				}
 			}
+			if !item.NameWo.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "name.value", item.NameWo.ValueString())
+				}
+			}
 			if !item.UserLabel.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "userLabel.optionType", "global")
@@ -353,6 +366,17 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "authPassword.value", item.AuthenticationPassword.ValueString())
 				}
 			}
+			if item.AuthenticationPasswordWo.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "authPassword.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "authPassword.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "authPassword.value", item.AuthenticationPasswordWo.ValueString())
+				}
+			}
 
 			if !item.PrivacyProtocolVariable.IsNull() {
 				if true {
@@ -385,6 +409,17 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "privPassword.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "privPassword.value", item.PrivacyPassword.ValueString())
+				}
+			}
+			if item.PrivacyPasswordWo.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "privPassword.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "privPassword.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "privPassword.value", item.PrivacyPasswordWo.ValueString())
 				}
 			}
 
@@ -638,7 +673,10 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 				if t.String() == "variable" {
 					item.NameVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.Name = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.Name = types.StringValue(va.String())
+					}
 				}
 			}
 			item.UserLabel = types.StringNull()
@@ -800,7 +838,10 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 				if t.String() == "variable" {
 					item.AuthenticationPasswordVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.AuthenticationPassword = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.AuthenticationPassword = types.StringValue(va.String())
+					}
 				}
 			}
 			item.PrivacyProtocol = types.StringNull()
@@ -820,7 +861,10 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 				if t.String() == "variable" {
 					item.PrivacyPasswordVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.PrivacyPassword = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.PrivacyPassword = types.StringValue(va.String())
+					}
 				}
 			}
 			item.Group = types.StringNull()

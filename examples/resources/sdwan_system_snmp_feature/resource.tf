@@ -18,7 +18,6 @@ resource "sdwan_system_snmp_feature" "example" {
   ]
   communities = [
     {
-      name          = "example"
       user_label    = "COMMUNITY1"
       view          = "VIEW1"
       authorization = "read-only"
@@ -35,9 +34,7 @@ resource "sdwan_system_snmp_feature" "example" {
     {
       name                    = "USER1"
       authentication_protocol = "sha"
-      authentication_password = "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="
       privacy_protocol        = "aes-256-cfb-128"
-      privacy_password        = "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="
       group                   = "GROUP1"
     }
   ]

@@ -33,7 +33,6 @@ func TestAccDataSourceSdwanCiscoNTPFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "master_stratum", "6"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "master_source_interface", "e1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "authentication_keys.0.id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "authentication_keys.0.value", "12345"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "servers.0.hostname_ip", "NTP_SERVER1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "servers.0.authentication_key_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "servers.0.vpn_id", "1"))
@@ -66,7 +65,6 @@ func testAccDataSourceSdwanCiscoNTPFeatureTemplateConfig() string {
 	config += `	trusted_keys = [1]` + "\n"
 	config += `	authentication_keys = [{` + "\n"
 	config += `	  id = 1` + "\n"
-	config += `	  value = "12345"` + "\n"
 	config += `	}]` + "\n"
 	config += `	servers = [{` + "\n"
 	config += `	  hostname_ip = "NTP_SERVER1"` + "\n"

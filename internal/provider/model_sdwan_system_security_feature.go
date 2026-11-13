@@ -71,6 +71,8 @@ type SystemSecurityKeys struct {
 	CryptoAlgorithm                types.String `tfsdk:"crypto_algorithm"`
 	KeyString                      types.String `tfsdk:"key_string"`
 	KeyStringVariable              types.String `tfsdk:"key_string_variable"`
+	KeyStringWo                    types.String `tfsdk:"key_string_wo"`
+	KeyStringWoVersion             types.Int64  `tfsdk:"key_string_wo_version"`
 	SendLifeTimeLocal              types.Bool   `tfsdk:"send_life_time_local"`
 	SendLifeTimeLocalVariable      types.String `tfsdk:"send_life_time_local_variable"`
 	SendLifeTimeStartEpoch         types.Int64  `tfsdk:"send_life_time_start_epoch"`
@@ -297,6 +299,12 @@ func (data SystemSecurity) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "keyString.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "keyString.value", item.KeyString.ValueString())
+				}
+			}
+			if !item.KeyStringWo.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "keyString.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "keyString.value", item.KeyStringWo.ValueString())
 				}
 			}
 
@@ -603,7 +611,10 @@ func (data *SystemSecurity) fromBody(ctx context.Context, res gjson.Result, full
 				if t.String() == "variable" {
 					item.KeyStringVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.KeyString = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.KeyString = types.StringValue(va.String())
+					}
 				}
 			}
 			item.SendLifeTimeLocal = types.BoolNull()

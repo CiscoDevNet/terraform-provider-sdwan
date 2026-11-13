@@ -220,6 +220,7 @@ func (d *CiscoSecureInternetGatewayFeatureTemplateDataSource) Schema(ctx context
 						},
 						"ike_pre_shared_key": schema.StringAttribute{
 							MarkdownDescription: "Use preshared key to authenticate IKE peer",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"ike_pre_shared_key_variable": schema.StringAttribute{

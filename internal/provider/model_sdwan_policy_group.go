@@ -227,8 +227,8 @@ func (data *PolicyGroup) fromBodyPolicyGroupDevices(ctx context.Context, res gjs
 	}
 }
 
-func (data *PolicyGroup) fromBodyPolicyGroupDeviceVariables(ctx context.Context, res gjson.Result) {
-	original := *data
+func (data *PolicyGroup) fromBodyPolicyGroupDeviceVariables(ctx context.Context, res gjson.Result, original *PolicyGroup) {
+	previous := *data
 	if value := res.Get("family"); value.Exists() {
 		data.Solution = types.StringValue(value.String())
 	} else {
@@ -238,6 +238,7 @@ func (data *PolicyGroup) fromBodyPolicyGroupDeviceVariables(ctx context.Context,
 		data.Devices = make([]PolicyGroupDevices, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := PolicyGroupDevices{}
+			deviceId := v.Get("device-id").String()
 			if cValue := v.Get("device-id"); cValue.Exists() {
 				item.Id = types.StringValue(cValue.String())
 			} else {
@@ -264,6 +265,23 @@ func (data *PolicyGroup) fromBodyPolicyGroupDeviceVariables(ctx context.Context,
 							cItem.ListValue = types.ListNull(types.StringType)
 							if !strings.Contains(strings.ToLower(ccValue.String()), "$crypt_cluster") {
 								cItem.Value = types.StringValue(ccValue.String())
+							} else {
+								// Preserve original state value for encrypted variables
+								cItem.Value = types.StringNull()
+								if original != nil {
+									varName := cv.Get("name").String()
+									for _, origDevice := range original.Devices {
+										if origDevice.Id.ValueString() == deviceId {
+											for _, origVar := range origDevice.Variables {
+												if origVar.Name.ValueString() == varName && !origVar.Value.IsNull() {
+													cItem.Value = origVar.Value
+													break
+												}
+											}
+											break
+										}
+									}
+								}
 							}
 						}
 					} else {
@@ -291,9 +309,9 @@ func (data *PolicyGroup) fromBodyPolicyGroupDeviceVariables(ctx context.Context,
 	}
 
 	// reorder
-	slices.Reverse(original.Devices)
-	for i := range original.Devices {
-		keyValues := [...]string{original.Devices[i].Id.ValueString()}
+	slices.Reverse(previous.Devices)
+	for i := range previous.Devices {
+		keyValues := [...]string{previous.Devices[i].Id.ValueString()}
 
 		for y := range data.Devices {
 			found := false

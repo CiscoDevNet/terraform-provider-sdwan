@@ -14,10 +14,7 @@ resource "sdwan_system_ntp_feature" "example" {
   ]
   authentication_keys = [
     {
-      key_id            = 49737
-      md5_value         = "$CRYPT_CLUSTER"
-      hmac_sha2_value   = "hmac-sha2-key-example"
-      cmac_aes128_value = "cmac-aes128-key-1234"
+      key_id = 49737
     }
   ]
   trusted_keys             = [49737]

@@ -33,8 +33,6 @@ func TestAccSdwanCEdgeAAAFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "dot1x_accounting", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "server_groups_priority_order", "100"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "users.0.name", "user1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "users.0.password", "password123"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "users.0.secret", "secret123"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "users.0.privilege_level", "15"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "users.0.ssh_pubkeys.0.key_string", "abc123"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "users.0.ssh_pubkeys.0.key_type", "rsa"))
@@ -46,14 +44,10 @@ func TestAccSdwanCEdgeAAAFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_server_groups.0.servers.0.accounting_port", "1813"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_server_groups.0.servers.0.timeout", "5"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_server_groups.0.servers.0.retransmit", "3"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_server_groups.0.servers.0.key", "key123"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_server_groups.0.servers.0.secret_key", "1234567"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_server_groups.0.servers.0.encryption_type", "7"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_server_groups.0.servers.0.key_type", "pac"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_clients.0.client_ip", "2.2.2.2"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_clients.0.vpn_configurations.0.vpn_id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_clients.0.vpn_configurations.0.server_key", "key123"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_dynamic_author_server_key", "key123"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_dynamic_author_domain_stripping", "yes"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_dynamic_author_authentication_type", "all"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_dynamic_author_port", "1700"))
@@ -65,8 +59,6 @@ func TestAccSdwanCEdgeAAAFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "tacacs_server_groups.0.servers.0.address", "1.1.1.1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "tacacs_server_groups.0.servers.0.port", "49"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "tacacs_server_groups.0.servers.0.timeout", "5"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "tacacs_server_groups.0.servers.0.key", "key123"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "tacacs_server_groups.0.servers.0.secret_key", "1234567"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "tacacs_server_groups.0.servers.0.encryption_type", "7"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "accounting_rules.0.name", "RULE1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "accounting_rules.0.method", "exec"))
@@ -123,8 +115,6 @@ func testAccSdwanCEdgeAAAFeatureTemplateConfig_all() string {
 	config += `	server_groups_priority_order = "100"` + "\n"
 	config += `	users = [{` + "\n"
 	config += `	  name = "user1"` + "\n"
-	config += `	  password = "password123"` + "\n"
-	config += `	  secret = "secret123"` + "\n"
 	config += `	  privilege_level = "15"` + "\n"
 	config += `	  ssh_pubkeys = [{` + "\n"
 	config += `		key_string = "abc123"` + "\n"
@@ -141,8 +131,6 @@ func testAccSdwanCEdgeAAAFeatureTemplateConfig_all() string {
 	config += `		accounting_port = 1813` + "\n"
 	config += `		timeout = 5` + "\n"
 	config += `		retransmit = 3` + "\n"
-	config += `		key = "key123"` + "\n"
-	config += `		secret_key = "1234567"` + "\n"
 	config += `		encryption_type = "7"` + "\n"
 	config += `		key_type = "pac"` + "\n"
 	config += `	}]` + "\n"
@@ -151,10 +139,8 @@ func testAccSdwanCEdgeAAAFeatureTemplateConfig_all() string {
 	config += `	  client_ip = "2.2.2.2"` + "\n"
 	config += `	  vpn_configurations = [{` + "\n"
 	config += `		vpn_id = 1` + "\n"
-	config += `		server_key = "key123"` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
-	config += `	radius_dynamic_author_server_key = "key123"` + "\n"
 	config += `	radius_dynamic_author_domain_stripping = "yes"` + "\n"
 	config += `	radius_dynamic_author_authentication_type = "all"` + "\n"
 	config += `	radius_dynamic_author_port = 1700` + "\n"
@@ -168,8 +154,6 @@ func testAccSdwanCEdgeAAAFeatureTemplateConfig_all() string {
 	config += `		address = "1.1.1.1"` + "\n"
 	config += `		port = 49` + "\n"
 	config += `		timeout = 5` + "\n"
-	config += `		key = "key123"` + "\n"
-	config += `		secret_key = "1234567"` + "\n"
 	config += `		encryption_type = "7"` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"

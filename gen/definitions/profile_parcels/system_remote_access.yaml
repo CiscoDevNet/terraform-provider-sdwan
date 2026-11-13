@@ -56,6 +56,8 @@ attributes:
           type: Bool
     example: aaa
   - model_name: preSharedKey
+    sensitive: true
+    write_only_tf: true
     tf_name: psk_authentication_pre_shared_key
     data_path: [pskAuth]
     exclude_test: true
@@ -73,6 +75,8 @@ attributes:
     exclude_test: true
     example: raPolicy
   - model_name: password
+    sensitive: true
+    write_only_tf: true
     tf_name: aaa_specify_name_policy_password
     data_path: [aaaPolicy, specifyName]
     exclude_test: true

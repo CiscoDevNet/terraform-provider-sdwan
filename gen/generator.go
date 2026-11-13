@@ -236,25 +236,34 @@ type IntRange struct {
 }
 
 type YamlConfigAttribute struct {
-	ModelName               string                         `yaml:"model_name"`
-	ResponseModelName       string                         `yaml:"response_model_name"`
-	TfName                  string                         `yaml:"tf_name"`
-	Type                    string                         `yaml:"type"`
-	ElementType             string                         `yaml:"element_type"`
-	ObjectType              string                         `yaml:"object_type"`
-	ModelTypeString         bool                           `yaml:"model_type_string"`
-	BoolEmptyString         bool                           `yaml:"bool_empty_string"`
-	DataPath                []string                       `yaml:"data_path"`
-	ResponseDataPath        []string                       `yaml:"response_data_path"`
-	Keys                    []string                       `yaml:"keys"`
-	Id                      bool                           `yaml:"id"`
-	Reference               bool                           `yaml:"reference"`
-	Variable                bool                           `yaml:"variable"`
-	Mandatory               bool                           `yaml:"mandatory"`
-	IgnoreMandatory         bool                           `yaml:"ignore_mandatory"`
-	Optional                bool                           `yaml:"optional"`
-	WriteOnly               bool                           `yaml:"write_only"`
-	Encrypted               bool                           `yaml:"encrypted"`
+	ModelName         string   `yaml:"model_name"`
+	ResponseModelName string   `yaml:"response_model_name"`
+	TfName            string   `yaml:"tf_name"`
+	Type              string   `yaml:"type"`
+	ElementType       string   `yaml:"element_type"`
+	ObjectType        string   `yaml:"object_type"`
+	ModelTypeString   bool     `yaml:"model_type_string"`
+	BoolEmptyString   bool     `yaml:"bool_empty_string"`
+	DataPath          []string `yaml:"data_path"`
+	ResponseDataPath  []string `yaml:"response_data_path"`
+	Keys              []string `yaml:"keys"`
+	Id                bool     `yaml:"id"`
+	Reference         bool     `yaml:"reference"`
+	Variable          bool     `yaml:"variable"`
+	Mandatory         bool     `yaml:"mandatory"`
+	IgnoreMandatory   bool     `yaml:"ignore_mandatory"`
+	Optional          bool     `yaml:"optional"`
+	WriteOnly         bool     `yaml:"write_only"`
+	Encrypted         bool     `yaml:"encrypted"`
+	Sensitive         bool     `yaml:"sensitive"`
+	WriteOnlyTF       bool     `yaml:"write_only_tf"`
+	// Internal, set by rewriteWriteOnlyTF - not authored in YAML.
+	WoVersion               bool                           `yaml:"-"` // marks a generated "<attr>_wo_version" rotation-trigger companion
+	WoAttribute             bool                           `yaml:"-"` // marks the generated "<attr>_wo" write-only twin
+	CoexistingSecret        bool                           `yaml:"-"` // marks the legacy state-storing twin of a "<attr>_wo" attribute
+	WoBaseName              string                         `yaml:"-"` // on a "_wo" or "_wo_version" attribute, the tf_name of its legacy twin
+	MutualExclusivityNote   string                         `yaml:"-"` // doc note carried by both halves of a write_only_tf pair
+	CoexistenceNote         string                         `yaml:"-"` // doc note on the legacy twin recommending the "_wo" spelling
 	TfOnly                  bool                           `yaml:"tf_only"`
 	ExcludeTest             bool                           `yaml:"exclude_test"`
 	ExcludeExample          bool                           `yaml:"exclude_example"`
@@ -970,49 +979,64 @@ func contains(s []string, str string) bool {
 
 // Map of templating functions
 var functions = template.FuncMap{
-	"toGoName":                    ToGoName,
-	"toVersionName":               ToVersionName,
-	"camelCase":                   CamelCase,
-	"snakeCase":                   SnakeCase,
-	"sprintf":                     fmt.Sprintf,
-	"toLower":                     strings.ToLower,
-	"path":                        BuildPath,
-	"hasId":                       HasId,
-	"hasConfigurableAttribute":    HasConfigurableAttribute,
-	"hasName":                     HasName,
-	"getListNameAttribute":        GetListNameAttribute,
-	"getListIdAttribute":          GetListIdAttribute,
-	"hasVersionAttribute":         HasVersionAttribute,
-	"getResponseModelPath":        GetResponseModelPath,
-	"hasReference":                HasReference,
-	"countReferences":             CountReferences,
-	"add":                         Add,
-	"getGjsonType":                GetGjsonType,
-	"getId":                       GetId,
-	"isUx20Feature":               IsUx20Feature,
-	"isListSet":                   IsListSet,
-	"isList":                      IsList,
-	"isSet":                       IsSet,
-	"isStringListSet":             IsStringListSet,
-	"isInt64ListSet":              IsInt64ListSet,
-	"isStringInt64":               IsStringInt64,
-	"isNestedListSet":             IsNestedListSet,
-	"isNestedList":                IsNestedList,
-	"isNestedSet":                 IsNestedSet,
-	"getParentModelName":          GetParentModelName,
-	"getProfileParcelSuffix":      GetProfileParcelSuffix,
-	"getProfileParcelName":        GetProfileParcelName,
-	"contains":                    contains,
-	"hasConditional":              HasConditional,
-	"hasTfOnlyConditional":        HasTfOnlyConditional,
-	"filterTfOnlyConditions":      FilterTfOnlyConditions,
-	"buildConditionalLogic":       BuildConditionalLogic,
-	"buildConditionalDescription": BuildConditionalDescription,
-	"hasMinVersionCondition":      HasMinVersionCondition,
-	"hasStringValidator":          HasStringValidator,
-	"hasRegexpValidator":          HasRegexpValidator,
-	"hasFloat64Validator":         HasFloat64Validator,
-	"hasInt64RangesValidator":     HasInt64RangesValidator,
+	"toGoName":                         ToGoName,
+	"toVersionName":                    ToVersionName,
+	"camelCase":                        CamelCase,
+	"snakeCase":                        SnakeCase,
+	"sprintf":                          fmt.Sprintf,
+	"toLower":                          strings.ToLower,
+	"path":                             BuildPath,
+	"hasId":                            HasId,
+	"hasConfigurableAttribute":         HasConfigurableAttribute,
+	"hasName":                          HasName,
+	"getListNameAttribute":             GetListNameAttribute,
+	"getListIdAttribute":               GetListIdAttribute,
+	"hasVersionAttribute":              HasVersionAttribute,
+	"getResponseModelPath":             GetResponseModelPath,
+	"hasReference":                     HasReference,
+	"countReferences":                  CountReferences,
+	"add":                              Add,
+	"getGjsonType":                     GetGjsonType,
+	"getId":                            GetId,
+	"isUx20Feature":                    IsUx20Feature,
+	"isListSet":                        IsListSet,
+	"isList":                           IsList,
+	"isSet":                            IsSet,
+	"isStringListSet":                  IsStringListSet,
+	"isInt64ListSet":                   IsInt64ListSet,
+	"isStringInt64":                    IsStringInt64,
+	"isNestedListSet":                  IsNestedListSet,
+	"coexistingSecretAttributes":       CoexistingSecretAttributes,
+	"sensitiveVariableAttributes":      SensitiveVariableAttributes,
+	"needsValidateConfig":              NeedsValidateConfig,
+	"writeOnlyTFAttributes":            WriteOnlyTFAttributes,
+	"writeOnlyTFParentLists":           WriteOnlyTFParentLists,
+	"writeOnlyTFGrandparentLists":      WriteOnlyTFGrandparentLists,
+	"writeOnlyTFChildLists":            WriteOnlyTFChildLists,
+	"coexistingSecretGrandparentLists": CoexistingSecretGrandparentLists,
+	"coexistingSecretChildLists":       CoexistingSecretChildLists,
+	"hasDeepWriteOnlyTF":               HasDeepWriteOnlyTF,
+	"writeOnlyTFChildren":              WriteOnlyTFChildren,
+	"coexistingSecretParentLists":      CoexistingSecretParentLists,
+	"coexistingSecretChildren":         CoexistingSecretChildren,
+	"hasNestedWriteOnlyTF":             HasNestedWriteOnlyTF,
+	"hasWriteOnlyTF":                   HasWriteOnlyTF,
+	"isNestedList":                     IsNestedList,
+	"isNestedSet":                      IsNestedSet,
+	"getParentModelName":               GetParentModelName,
+	"getProfileParcelSuffix":           GetProfileParcelSuffix,
+	"getProfileParcelName":             GetProfileParcelName,
+	"contains":                         contains,
+	"hasConditional":                   HasConditional,
+	"hasTfOnlyConditional":             HasTfOnlyConditional,
+	"filterTfOnlyConditions":           FilterTfOnlyConditions,
+	"buildConditionalLogic":            BuildConditionalLogic,
+	"buildConditionalDescription":      BuildConditionalDescription,
+	"hasMinVersionCondition":           HasMinVersionCondition,
+	"hasStringValidator":               HasStringValidator,
+	"hasRegexpValidator":               HasRegexpValidator,
+	"hasFloat64Validator":              HasFloat64Validator,
+	"hasInt64RangesValidator":          HasInt64RangesValidator,
 }
 
 func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result) {
@@ -1535,6 +1559,291 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	}
 }
 
+// rewriteWriteOnlyTF expands every attribute flagged `write_only_tf` into three
+// coexisting attributes:
+//
+//	<tf_name>              the original, kept as-is and still stored in state. No longer
+//	                       Mandatory: neither half can carry the schema's Required flag
+//	                       (setting it on either makes that spelling the only usable one),
+//	                       so the requirement moves to ValidateConfig.
+//	<tf_name>_wo           Terraform write-only. Never present in plan or state.
+//	<tf_name>_wo_version   Int64 rotation trigger. Stored in state; the secret is not.
+//
+// Both twins keep the same model_name and data_path, so toBody needs no special
+// handling: each emits a null-guarded write to the same payload path, and
+// ValidateConfig guarantees at most one of them is set.
+//
+// inSet reports whether any ancestor is a Set. terraform-plugin-framework forbids
+// write-only attributes anywhere beneath a set, and the Create/Update positional
+// plan[i] <-> config[i] join is only sound for ordered lists.
+func rewriteWriteOnlyTF(attrs []YamlConfigAttribute, inSet bool) []YamlConfigAttribute {
+	out := make([]YamlConfigAttribute, 0, len(attrs))
+	for _, attr := range attrs {
+		if len(attr.Attributes) > 0 {
+			attr.Attributes = rewriteWriteOnlyTF(attr.Attributes, inSet || IsNestedSet(attr) || IsSet(attr))
+		}
+		if !attr.WriteOnlyTF {
+			out = append(out, attr)
+			continue
+		}
+
+		// Fail at generate time rather than emitting code that will not compile,
+		// or worse, that compiles and silently mishandles a credential.
+		if attr.Type != "" && attr.Type != "String" {
+			panic(fmt.Sprintf("write_only_tf is only supported on String attributes, but %q has type %q", attr.TfName, attr.Type))
+		}
+		if !attr.Sensitive {
+			panic(fmt.Sprintf("write_only_tf requires sensitive to be set as well, but %q sets only write_only_tf", attr.TfName))
+		}
+		if inSet {
+			panic(fmt.Sprintf("write_only_tf is not permitted under a Set: %q. terraform-plugin-framework forbids write-only attributes inside sets, and the positional config-to-plan copy is only sound for ordered lists", attr.TfName))
+		}
+
+		base := attr.TfName
+		exclusivity := fmt.Sprintf("Only one of `%s`, `%s_variable` and `%s_wo` can be set.", base, base, base)
+		if !attr.Variable {
+			exclusivity = fmt.Sprintf("Only one of `%s` and `%s_wo` can be set.", base, base)
+		}
+
+		// 1. Legacy twin: still stored in state, kept working, no deprecation warning.
+		// A schema DeprecationMessage would make Terraform render the offending
+		// configuration line - which is the secret itself - into plan output.
+		legacy := attr
+		legacy.WriteOnlyTF = false
+		legacy.CoexistingSecret = true
+		legacy.Mandatory = false
+		legacy.ExcludeTest = true
+		legacy.ExcludeExample = true
+		legacy.MinimumTestValue = ""
+		legacy.MutualExclusivityNote = exclusivity
+		legacy.CoexistenceNote = fmt.Sprintf("This attribute stores the secret in Terraform state. Prefer `%s_wo` together with `%s_wo_version`, which keeps it out of state.", base, base)
+		out = append(out, legacy)
+
+		// 2. The write-only twin. Same model_name/data_path as the legacy twin.
+		// WriteOnly reuses the existing "skip in fromBody" machinery: the value is
+		// still emitted by toBody, but never read back into state. The framework
+		// nulls write-only values on every RPC regardless.
+		wo := attr
+		wo.TfName = base + "_wo"
+		wo.WoAttribute = true
+		wo.WoBaseName = base
+		wo.WriteOnly = true
+		wo.Encrypted = false // read-side restore is meaningless for a value never read
+		wo.Mandatory = false
+		wo.Variable = false // a variable NAME is not a secret; the legacy twin keeps _variable
+		wo.ExcludeTest = true
+		wo.ExcludeExample = true
+		wo.MinimumTestValue = ""
+		wo.MutualExclusivityNote = exclusivity
+		out = append(out, wo)
+
+		// 3. Rotation trigger. Excluded from the payload and from read-back, but
+		// stored in state so that changing it produces a diff and drives an Update.
+		out = append(out, YamlConfigAttribute{
+			TfName:      base + "_wo_version",
+			Type:        "Int64",
+			WoVersion:   true,
+			WoBaseName:  base,
+			TfOnly:      true,
+			ExcludeTest: true,
+			Description: fmt.Sprintf("Rotation trigger for `%s_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.", base),
+			Example:     "1",
+		})
+	}
+	return out
+}
+
+// CoexistingSecretAttributes returns the top-level legacy twins of write_only_tf
+// pairs. Used to generate the resource-level ValidateConfig checks.
+func CoexistingSecretAttributes(config YamlConfig) []YamlConfigAttribute {
+	var r []YamlConfigAttribute
+	for _, a := range config.Attributes {
+		if a.CoexistingSecret {
+			r = append(r, a)
+		}
+	}
+	return r
+}
+
+// WriteOnlyTFAttributes returns the top-level "_wo" attributes. Their values exist
+// only in the configuration, so Create and Update must read them from req.Config
+// rather than from the plan.
+func WriteOnlyTFAttributes(config YamlConfig) []YamlConfigAttribute {
+	var r []YamlConfigAttribute
+	for _, a := range config.Attributes {
+		if a.WoAttribute {
+			r = append(r, a)
+		}
+	}
+	return r
+}
+
+// HasWriteOnlyTF reports whether the resource has any write-only attribute, and
+// therefore needs a ValidateConfig implementation and a Terraform version gate.
+func HasWriteOnlyTF(config YamlConfig) bool {
+	return len(WriteOnlyTFAttributes(config)) > 0
+}
+
+// SensitiveVariableAttributes returns the top-level secret attributes that also
+// have a "_variable" sibling and are NOT part of a write_only_tf pair. Setting both
+// a secret and its "_variable" sibling is a pre-existing correctness hole: toBody
+// emits the variable branch and silently drops the literal secret, yet the secret is
+// still written to Terraform state. The resource warns about it.
+//
+// Legacy write_only_tf twins are excluded because they already have their config
+// values read in the write-only block; emitting them here too would redeclare the
+// same Go variables. They get the same warning inline in that block instead.
+//
+// Scoped to secrets deliberately. The same precedence applies to every
+// variable-capable attribute (over 3000 of them), but for a non-secret the
+// consequence is a visible misconfiguration, whereas for a credential it is a
+// value that never reaches the device while still being persisted.
+func SensitiveVariableAttributes(config YamlConfig) []YamlConfigAttribute {
+	var r []YamlConfigAttribute
+	for _, a := range config.Attributes {
+		if a.Sensitive && a.Variable && !a.WoAttribute && !a.WoVersion && !a.CoexistingSecret {
+			r = append(r, a)
+		}
+	}
+	return r
+}
+
+// NeedsValidateConfig reports whether the resource requires a ValidateConfig
+// implementation, for either write-only pairing rules or the secret/variable warning.
+// Nested write-only pairs count too: a definition may carry write_only_tf only inside
+// a list, in which case there is no top-level attribute to key off but the per-element
+// pairing rules still have to be enforced.
+//
+// EVERY nesting depth must be listed here. A resource whose secrets live only at a
+// depth that is missing from this disjunction generates no ValidateConfig at all -
+// silently, with no compile error and no validation.
+func NeedsValidateConfig(config YamlConfig) bool {
+	return HasWriteOnlyTF(config) ||
+		HasNestedWriteOnlyTF(config) ||
+		HasDeepWriteOnlyTF(config) ||
+		len(SensitiveVariableAttributes(config)) > 0
+}
+
+// WriteOnlyTFParentLists returns the top-level nested list attributes that directly
+// contain one or more "_wo" children. Create and Update must read the whole parent
+// list from the configuration and copy the write-only values into the plan
+// element-by-element, because write-only values exist only in the configuration.
+//
+// The positional plan[i] <-> config[i] join this enables is sound only because the
+// parent is an ordered List. rewriteWriteOnlyTF panics if write_only_tf appears
+// anywhere under a Set, which is what keeps that invariant true.
+func WriteOnlyTFParentLists(config YamlConfig) []YamlConfigAttribute {
+	var r []YamlConfigAttribute
+	for _, a := range config.Attributes {
+		if IsNestedListSet(a) && len(WriteOnlyTFChildren(a)) > 0 {
+			r = append(r, a)
+		}
+	}
+	return r
+}
+
+// WriteOnlyTFChildren returns the "_wo" children of a nested list attribute.
+func WriteOnlyTFChildren(attr YamlConfigAttribute) []YamlConfigAttribute {
+	var r []YamlConfigAttribute
+	for _, a := range attr.Attributes {
+		if a.WoAttribute {
+			r = append(r, a)
+		}
+	}
+	return r
+}
+
+// CoexistingSecretParentLists returns the top-level nested list attributes that
+// directly contain the legacy twin of a write_only_tf pair. Used to generate the
+// per-element ValidateConfig checks.
+func CoexistingSecretParentLists(config YamlConfig) []YamlConfigAttribute {
+	var r []YamlConfigAttribute
+	for _, a := range config.Attributes {
+		if IsNestedListSet(a) && len(CoexistingSecretChildren(a)) > 0 {
+			r = append(r, a)
+		}
+	}
+	return r
+}
+
+// CoexistingSecretChildren returns the legacy secret twins of a nested list attribute.
+func CoexistingSecretChildren(attr YamlConfigAttribute) []YamlConfigAttribute {
+	var r []YamlConfigAttribute
+	for _, a := range attr.Attributes {
+		if a.CoexistingSecret {
+			r = append(r, a)
+		}
+	}
+	return r
+}
+
+// HasNestedWriteOnlyTF reports whether any nested list carries write-only children.
+func HasNestedWriteOnlyTF(config YamlConfig) bool {
+	return len(WriteOnlyTFParentLists(config)) > 0
+}
+
+// WriteOnlyTFGrandparentLists returns the top-level nested lists that do NOT have
+// "_wo" children directly, but contain a child list that does. These need a
+// two-level positional copy: read the top-level list once from the configuration
+// (which brings the whole subtree), then walk grandparent[i].parent[j].
+//
+// A list is reported here only when it has no direct "_wo" children of its own,
+// so a list carrying secrets at both depths is never emitted twice.
+func WriteOnlyTFGrandparentLists(config YamlConfig) []YamlConfigAttribute {
+	var r []YamlConfigAttribute
+	for _, a := range config.Attributes {
+		if !IsNestedListSet(a) || len(WriteOnlyTFChildren(a)) > 0 {
+			continue
+		}
+		if len(WriteOnlyTFChildLists(a)) > 0 {
+			r = append(r, a)
+		}
+	}
+	return r
+}
+
+// WriteOnlyTFChildLists returns the nested lists inside attr that carry "_wo" children.
+func WriteOnlyTFChildLists(attr YamlConfigAttribute) []YamlConfigAttribute {
+	var r []YamlConfigAttribute
+	for _, a := range attr.Attributes {
+		if IsNestedListSet(a) && len(WriteOnlyTFChildren(a)) > 0 {
+			r = append(r, a)
+		}
+	}
+	return r
+}
+
+// CoexistingSecretGrandparentLists mirrors WriteOnlyTFGrandparentLists for the
+// legacy twins, used to generate the two-level ValidateConfig checks.
+func CoexistingSecretGrandparentLists(config YamlConfig) []YamlConfigAttribute {
+	var r []YamlConfigAttribute
+	for _, a := range config.Attributes {
+		if !IsNestedListSet(a) || len(CoexistingSecretChildren(a)) > 0 {
+			continue
+		}
+		if len(CoexistingSecretChildLists(a)) > 0 {
+			r = append(r, a)
+		}
+	}
+	return r
+}
+
+// CoexistingSecretChildLists returns the nested lists inside attr that carry legacy twins.
+func CoexistingSecretChildLists(attr YamlConfigAttribute) []YamlConfigAttribute {
+	var r []YamlConfigAttribute
+	for _, a := range attr.Attributes {
+		if IsNestedListSet(a) && len(CoexistingSecretChildren(a)) > 0 {
+			r = append(r, a)
+		}
+	}
+	return r
+}
+
+// HasDeepWriteOnlyTF reports whether any secret sits two list levels down.
+func HasDeepWriteOnlyTF(config YamlConfig) bool {
+	return len(WriteOnlyTFGrandparentLists(config)) > 0
+}
+
 func augmentProfileParcelConfig(config *YamlConfig) {
 	if config.Model == "" {
 		config.Model = SnakeCase(config.Name)
@@ -1556,6 +1865,9 @@ func augmentProfileParcelConfig(config *YamlConfig) {
 		}
 	}
 	resolveConditionTfOnly(config.Attributes)
+	// Must run after parseProfileParcelAttribute has populated TfName, so the
+	// "_wo" / "_wo_version" names are derived from the final Terraform name.
+	config.Attributes = rewriteWriteOnlyTF(config.Attributes, false)
 	if config.DsDescription == "" {
 		config.DsDescription = fmt.Sprintf("This data source can read the %s %s.", config.Name, CamelCase(config.ParcelType))
 	}
@@ -1579,6 +1891,9 @@ func augmentGenericConfig(config *YamlConfig, type_ string) {
 	for ia := range config.Attributes {
 		augmentGenericAttribute(&config.Attributes[ia])
 	}
+	// Must run after augmentGenericAttribute has populated TfName, so the
+	// "_wo" / "_wo_version" names are derived from the final Terraform name.
+	config.Attributes = rewriteWriteOnlyTF(config.Attributes, false)
 	if config.DsDescription == "" {
 		config.DsDescription = fmt.Sprintf("This data source can read the %s %s.", config.Name, type_)
 	}

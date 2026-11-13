@@ -98,12 +98,16 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 				MarkdownDescription: "The description of the {{camelCase .ParcelType}}",
 				Computed:            true,
 			},
-			{{- range  .Attributes}}
+			{{- /* Interim choice: the "_wo" and "_wo_version" twins generated from write_only_tf are emitted here as ordinary Computed attributes and are always null in a data source read. They must NOT carry WriteOnly - that flag is invalid on a data-source schema - but they also cannot be omitted, because the resource and the data source share one generated model struct and a missing field yields a "Struct defines fields not found in object" conversion error at runtime. */}}
+{{- range  .Attributes}}
 			{{- if not .Value}}
 			"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if isStringInt64 .}}String{{else}}{{.Type}}{{end}}Attribute{
 				MarkdownDescription: "{{.Description}}",
 				{{- if isListSet .}}
 				ElementType:         types.{{.ElementType}}Type,
+				{{- end}}
+				{{- if .Sensitive}}
+				Sensitive:           true,
 				{{- end}}
 				{{- if .Reference}}
 				Required:            true,
@@ -120,6 +124,9 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 							{{- if isListSet .}}
 							ElementType:         types.{{.ElementType}}Type,
 							{{- end}}
+							{{- if .Sensitive}}
+							Sensitive:           true,
+							{{- end}}
 							Computed:            true,
 							{{- if isNestedListSet .}}
 							NestedObject: schema.NestedAttributeObject{
@@ -131,6 +138,9 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 										{{- if isListSet .}}
 										ElementType:         types.{{.ElementType}}Type,
 										{{- end}}
+										{{- if .Sensitive}}
+										Sensitive:           true,
+										{{- end}}
 										Computed:            true,
 										{{- if isNestedListSet .}}
 										NestedObject: schema.NestedAttributeObject{
@@ -141,6 +151,9 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 													MarkdownDescription: "{{.Description}}",
 													{{- if isListSet .}}
 													ElementType:         types.{{.ElementType}}Type,
+													{{- end}}
+													{{- if .Sensitive}}
+													Sensitive:           true,
 													{{- end}}
 													Computed:            true,
 												},

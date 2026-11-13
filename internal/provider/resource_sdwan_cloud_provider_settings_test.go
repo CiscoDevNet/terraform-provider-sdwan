@@ -34,15 +34,10 @@ func TestAccSdwanCloudProviderSettings(t *testing.T) {
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "umbrella_org_id", "123456"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "umbrella_auth_key_v2", "aaaaaa"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "umbrella_sig_auth_key", "bbbbbb"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "umbrella_dns_auth_key", "cccccc"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "zscaler_organization", "z223456"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "zscaler_partner_base_uri", "zscaler.net"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "zscaler_partner_key", "secret012"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "zscaler_username", "user1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "cisco_sse_org_id", "323456"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "cisco_sse_auth_key", "33333444"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "cisco_sse_context_sharing", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
@@ -65,20 +60,10 @@ func TestAccSdwanCloudProviderSettings(t *testing.T) {
 func testAccSdwanCloudProviderSettingsConfig_all() string {
 	config := `resource "sdwan_cloud_provider_settings" "test" {` + "\n"
 	config += `	umbrella_org_id = "123456"` + "\n"
-	config += `	umbrella_auth_key_v2 = "aaaaaa"` + "\n"
-	config += `	umbrella_auth_secret_v2 = "$CRYPT_CLUSTER$a8nXr4uYaCN66qTQ1737+A==$gjmYVxnKMqvUEjo3BfIGbg=="` + "\n"
-	config += `	umbrella_sig_auth_key = "bbbbbb"` + "\n"
-	config += `	umbrella_sig_auth_secret = "secret456"` + "\n"
-	config += `	umbrella_dns_auth_key = "cccccc"` + "\n"
-	config += `	umbrella_dns_auth_secret = "secret789"` + "\n"
 	config += `	zscaler_organization = "z223456"` + "\n"
 	config += `	zscaler_partner_base_uri = "zscaler.net"` + "\n"
-	config += `	zscaler_partner_key = "secret012"` + "\n"
 	config += `	zscaler_username = "user1"` + "\n"
-	config += `	zscaler_password = "pass123"` + "\n"
 	config += `	cisco_sse_org_id = "323456"` + "\n"
-	config += `	cisco_sse_auth_key = "33333444"` + "\n"
-	config += `	cisco_sse_auth_secret = "$CRYPT_CLUSTER$Gg4nVpFdldXga1hLKhdJrA==$hiFPirWJnqNxMq3l/m1ekw=="` + "\n"
 	config += `	cisco_sse_context_sharing = true` + "\n"
 	config += `}` + "\n"
 	return config

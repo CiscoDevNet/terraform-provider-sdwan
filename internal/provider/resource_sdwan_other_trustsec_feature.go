@@ -102,7 +102,8 @@ func (r *OtherTrustSecProfileParcelResource) Schema(ctx context.Context, req res
 				Optional:            true,
 			},
 			"device_password": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set the password for the device").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set the password for the device").AddMutualExclusivityDescription("Only one of `device_password`, `device_password_variable` and `device_password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `device_password_wo` together with `device_password_wo_version`, which keeps it out of state.").String,
+				Sensitive:           true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 24),
@@ -110,6 +111,19 @@ func (r *OtherTrustSecProfileParcelResource) Schema(ctx context.Context, req res
 			},
 			"device_password_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"device_password_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set the password for the device").AddMutualExclusivityDescription("Only one of `device_password`, `device_password_variable` and `device_password_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 24),
+				},
+			},
+			"device_password_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `device_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"device_sgt": schema.Int64Attribute{
@@ -169,7 +183,8 @@ func (r *OtherTrustSecProfileParcelResource) Schema(ctx context.Context, req res
 				Optional:            true,
 			},
 			"sxp_default_password": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Configure SXP default password").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Configure SXP default password").AddMutualExclusivityDescription("Only one of `sxp_default_password`, `sxp_default_password_variable` and `sxp_default_password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `sxp_default_password_wo` together with `sxp_default_password_wo_version`, which keeps it out of state.").String,
+				Sensitive:           true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 24),
@@ -177,6 +192,19 @@ func (r *OtherTrustSecProfileParcelResource) Schema(ctx context.Context, req res
 			},
 			"sxp_default_password_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"sxp_default_password_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Configure SXP default password").AddMutualExclusivityDescription("Only one of `sxp_default_password`, `sxp_default_password_variable` and `sxp_default_password_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 24),
+				},
+			},
+			"sxp_default_password_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `sxp_default_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"sxp_key_chain": schema.StringAttribute{
@@ -259,11 +287,25 @@ func (r *OtherTrustSecProfileParcelResource) Schema(ctx context.Context, req res
 							Optional:            true,
 						},
 						"preshared_key": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Define Preshared Key type").AddStringEnumDescription("password", "none", "key chain").AddDefaultValueDescription("none").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Define Preshared Key type").AddStringEnumDescription("password", "none", "key chain").AddDefaultValueDescription("none").AddMutualExclusivityDescription("Only one of `preshared_key` and `preshared_key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `preshared_key_wo` together with `preshared_key_wo_version`, which keeps it out of state.").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("password", "none", "key chain"),
 							},
+						},
+						"preshared_key_wo": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Define Preshared Key type").AddStringEnumDescription("password", "none", "key chain").AddDefaultValueDescription("none").AddMutualExclusivityDescription("Only one of `preshared_key` and `preshared_key_wo` can be set.").String,
+							Sensitive:           true,
+							WriteOnly:           true,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("password", "none", "key chain"),
+							},
+						},
+						"preshared_key_wo_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `preshared_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
+							Optional:            true,
 						},
 						"mode": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Define Mode of connection").AddStringEnumDescription("local", "peer").AddDefaultValueDescription("local").String,
@@ -328,6 +370,146 @@ func (r *OtherTrustSecProfileParcelResource) Configure(_ context.Context, req re
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
 
+var _ resource.ResourceWithValidateConfig = &OtherTrustSecProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *OtherTrustSecProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	var vDevicePassword types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("device_password"), &vDevicePassword)...)
+	var vDevicePasswordVariable types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("device_password_variable"), &vDevicePasswordVariable)...)
+	var vDevicePasswordWo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("device_password_wo"), &vDevicePasswordWo)...)
+	var vDevicePasswordWoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("device_password_wo_version"), &vDevicePasswordWoVersion)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vDevicePassword.IsUnknown() && !vDevicePasswordWo.IsUnknown() && !vDevicePassword.IsNull() && !vDevicePasswordWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `device_password` and `device_password_wo` can be set.",
+		)
+	}
+	if !vDevicePasswordVariable.IsUnknown() && !vDevicePasswordWo.IsUnknown() && !vDevicePasswordVariable.IsNull() && !vDevicePasswordWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"`device_password_variable` and `device_password_wo` cannot both be set. `device_password_variable` defers the value to a device variable, so the write-only value would never be sent.",
+		)
+	}
+	if !vDevicePassword.IsUnknown() && !vDevicePasswordVariable.IsUnknown() && !vDevicePassword.IsNull() && !vDevicePasswordVariable.IsNull() {
+		resp.Diagnostics.AddWarning(
+			"Conflicting Attribute Combination",
+			"Both `device_password` and `device_password_variable` are set. `device_password_variable` takes precedence, so the value of `device_password` is not sent to the device - but it is still stored in Terraform state. Set only one of them.",
+		)
+	}
+	if !vDevicePasswordWo.IsUnknown() && !vDevicePasswordWoVersion.IsUnknown() && !vDevicePasswordWo.IsNull() && vDevicePasswordWoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`device_password_wo_version` must be set when `device_password_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vDevicePasswordWoVersion.IsUnknown() && !vDevicePasswordWo.IsUnknown() && !vDevicePasswordWoVersion.IsNull() && vDevicePasswordWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`device_password_wo` must be set when `device_password_wo_version` is used.",
+		)
+	}
+
+	var vSxpDefaultPassword types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("sxp_default_password"), &vSxpDefaultPassword)...)
+	var vSxpDefaultPasswordVariable types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("sxp_default_password_variable"), &vSxpDefaultPasswordVariable)...)
+	var vSxpDefaultPasswordWo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("sxp_default_password_wo"), &vSxpDefaultPasswordWo)...)
+	var vSxpDefaultPasswordWoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("sxp_default_password_wo_version"), &vSxpDefaultPasswordWoVersion)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vSxpDefaultPassword.IsUnknown() && !vSxpDefaultPasswordWo.IsUnknown() && !vSxpDefaultPassword.IsNull() && !vSxpDefaultPasswordWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `sxp_default_password` and `sxp_default_password_wo` can be set.",
+		)
+	}
+	if !vSxpDefaultPasswordVariable.IsUnknown() && !vSxpDefaultPasswordWo.IsUnknown() && !vSxpDefaultPasswordVariable.IsNull() && !vSxpDefaultPasswordWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"`sxp_default_password_variable` and `sxp_default_password_wo` cannot both be set. `sxp_default_password_variable` defers the value to a device variable, so the write-only value would never be sent.",
+		)
+	}
+	if !vSxpDefaultPassword.IsUnknown() && !vSxpDefaultPasswordVariable.IsUnknown() && !vSxpDefaultPassword.IsNull() && !vSxpDefaultPasswordVariable.IsNull() {
+		resp.Diagnostics.AddWarning(
+			"Conflicting Attribute Combination",
+			"Both `sxp_default_password` and `sxp_default_password_variable` are set. `sxp_default_password_variable` takes precedence, so the value of `sxp_default_password` is not sent to the device - but it is still stored in Terraform state. Set only one of them.",
+		)
+	}
+	if !vSxpDefaultPasswordWo.IsUnknown() && !vSxpDefaultPasswordWoVersion.IsUnknown() && !vSxpDefaultPasswordWo.IsNull() && vSxpDefaultPasswordWoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`sxp_default_password_wo_version` must be set when `sxp_default_password_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vSxpDefaultPasswordWoVersion.IsUnknown() && !vSxpDefaultPasswordWo.IsUnknown() && !vSxpDefaultPasswordWoVersion.IsNull() && vSxpDefaultPasswordWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`sxp_default_password_wo` must be set when `sxp_default_password_wo_version` is used.",
+		)
+	}
+
+	{
+		// Secrets nested in "sxp_connections" are validated per element. A list that cannot be
+		// read as a whole - because it is still unknown at validate time - is skipped rather
+		// than reported, since there is nothing to check yet.
+		var cfgSxpConnections []OtherTrustSecSxpConnections
+		if diags := req.Config.GetAttribute(ctx, path.Root("sxp_connections"), &cfgSxpConnections); !diags.HasError() {
+			for i := range cfgSxpConnections {
+				el := cfgSxpConnections[i]
+
+				// An unknown value is one that is not resolved yet at validate time, for example an
+				// ephemeral resource attribute or a random_password reference. Treat it as "not
+				// decided" rather than "set", otherwise every such configuration trips a false error.
+				if !el.PresharedKey.IsUnknown() && !el.PresharedKeyWo.IsUnknown() && !el.PresharedKey.IsNull() && !el.PresharedKeyWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("Only one of `preshared_key` and `preshared_key_wo` can be set in `sxp_connections` element %d.", i),
+					)
+				}
+				if !el.PresharedKeyWo.IsUnknown() && !el.PresharedKeyWoVersion.IsUnknown() && !el.PresharedKeyWo.IsNull() && el.PresharedKeyWoVersion.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`preshared_key_wo_version` must be set when `preshared_key_wo` is used in `sxp_connections` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i),
+					)
+				}
+				if !el.PresharedKeyWoVersion.IsUnknown() && !el.PresharedKeyWo.IsUnknown() && !el.PresharedKeyWoVersion.IsNull() && el.PresharedKeyWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`preshared_key_wo` must be set when `preshared_key_wo_version` is used in `sxp_connections` element %d.", i),
+					)
+				}
+			}
+		}
+	}
+}
+
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
@@ -339,6 +521,39 @@ func (r *OtherTrustSecProfileParcelResource) Create(ctx context.Context, req res
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only value "device_password_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("device_password_wo"), &plan.DevicePasswordWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "sxp_default_password_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("sxp_default_password_wo"), &plan.SxpDefaultPasswordWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only values in list "sxp_connections" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgSxpConnections []OtherTrustSecSxpConnections
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("sxp_connections"), &cfgSxpConnections)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.SxpConnections {
+			if i < len(cfgSxpConnections) {
+				plan.SxpConnections[i].PresharedKeyWo = cfgSxpConnections[i].PresharedKeyWo
+			}
+		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
@@ -417,6 +632,39 @@ func (r *OtherTrustSecProfileParcelResource) Update(ctx context.Context, req res
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only value "device_password_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("device_password_wo"), &plan.DevicePasswordWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "sxp_default_password_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("sxp_default_password_wo"), &plan.SxpDefaultPasswordWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only values in list "sxp_connections" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgSxpConnections []OtherTrustSecSxpConnections
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("sxp_connections"), &cfgSxpConnections)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.SxpConnections {
+			if i < len(cfgSxpConnections) {
+				plan.SxpConnections[i].PresharedKeyWo = cfgSxpConnections[i].PresharedKeyWo
+			}
+		}
 	}
 	// Read state
 	diags = req.State.Get(ctx, &state)

@@ -429,7 +429,8 @@ func (r *TransportRoutingOSPFProfileParcelResource) Schema(ctx context.Context, 
 										Optional:            true,
 									},
 									"message_digest_key": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `message_digest_key`, `message_digest_key_variable` and `message_digest_key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `message_digest_key_wo` together with `message_digest_key_wo_version`, which keeps it out of state.").String,
+										Sensitive:           true,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthBetween(1, 127),
@@ -437,6 +438,19 @@ func (r *TransportRoutingOSPFProfileParcelResource) Schema(ctx context.Context, 
 									},
 									"message_digest_key_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
+									},
+									"message_digest_key_wo": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Set MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `message_digest_key`, `message_digest_key_variable` and `message_digest_key_wo` can be set.").String,
+										Sensitive:           true,
+										WriteOnly:           true,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.LengthBetween(1, 127),
+										},
+									},
+									"message_digest_key_wo_version": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `message_digest_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 										Optional:            true,
 									},
 								},
@@ -504,6 +518,68 @@ func (r *TransportRoutingOSPFProfileParcelResource) Configure(_ context.Context,
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
 
+var _ resource.ResourceWithValidateConfig = &TransportRoutingOSPFProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *TransportRoutingOSPFProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	{
+		// Secrets nested two list levels under "areas" are validated per element pair.
+		// A list that cannot be read as a whole - because it is still unknown at validate
+		// time - is skipped rather than reported, since there is nothing to check yet.
+		var cfgAreas []TransportRoutingOSPFAreas
+		if diags := req.Config.GetAttribute(ctx, path.Root("areas"), &cfgAreas); !diags.HasError() {
+			for i := range cfgAreas {
+				for j := range cfgAreas[i].Interfaces {
+					el := cfgAreas[i].Interfaces[j]
+
+					// An unknown value is one that is not resolved yet at validate time, for example an
+					// ephemeral resource attribute or a random_password reference. Treat it as "not
+					// decided" rather than "set", otherwise every such configuration trips a false error.
+					if !el.MessageDigestKey.IsUnknown() && !el.MessageDigestKeyWo.IsUnknown() && !el.MessageDigestKey.IsNull() && !el.MessageDigestKeyWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Invalid Attribute Combination",
+							fmt.Sprintf("Only one of `message_digest_key` and `message_digest_key_wo` can be set in `areas` element %d, `interfaces` element %d.", i, j),
+						)
+					}
+					if !el.MessageDigestKeyVariable.IsUnknown() && !el.MessageDigestKeyWo.IsUnknown() && !el.MessageDigestKeyVariable.IsNull() && !el.MessageDigestKeyWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Invalid Attribute Combination",
+							fmt.Sprintf("`message_digest_key_variable` and `message_digest_key_wo` cannot both be set in `areas` element %d, `interfaces` element %d. `message_digest_key_variable` defers the value to a device variable, so the write-only value would never be sent.", i, j),
+						)
+					}
+					if !el.MessageDigestKey.IsUnknown() && !el.MessageDigestKeyVariable.IsUnknown() && !el.MessageDigestKey.IsNull() && !el.MessageDigestKeyVariable.IsNull() {
+						resp.Diagnostics.AddWarning(
+							"Conflicting Attribute Combination",
+							fmt.Sprintf("Both `message_digest_key` and `message_digest_key_variable` are set in `areas` element %d, `interfaces` element %d. `message_digest_key_variable` takes precedence, so the value of `message_digest_key` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i, j),
+						)
+					}
+					if !el.MessageDigestKeyWo.IsUnknown() && !el.MessageDigestKeyWoVersion.IsUnknown() && !el.MessageDigestKeyWo.IsNull() && el.MessageDigestKeyWoVersion.IsNull() {
+						resp.Diagnostics.AddError(
+							"Missing Required Attribute",
+							fmt.Sprintf("`message_digest_key_wo_version` must be set when `message_digest_key_wo` is used in `areas` element %d, `interfaces` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i, j),
+						)
+					}
+					if !el.MessageDigestKeyWoVersion.IsUnknown() && !el.MessageDigestKeyWo.IsUnknown() && !el.MessageDigestKeyWoVersion.IsNull() && el.MessageDigestKeyWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Missing Required Attribute",
+							fmt.Sprintf("`message_digest_key_wo` must be set when `message_digest_key_wo_version` is used in `areas` element %d, `interfaces` element %d.", i, j),
+						)
+					}
+				}
+			}
+		}
+	}
+}
+
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
@@ -515,6 +591,27 @@ func (r *TransportRoutingOSPFProfileParcelResource) Create(ctx context.Context, 
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values nested two list levels under "areas" are not stored in plan
+	// or state; read the list from the configuration and copy them in element by element.
+	// Both joins are positional, which is sound only for ordered Lists - write_only_tf is
+	// rejected at generate time anywhere under a Set.
+	{
+		var cfgAreas []TransportRoutingOSPFAreas
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("areas"), &cfgAreas)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Areas {
+			if i < len(cfgAreas) {
+				for j := range plan.Areas[i].Interfaces {
+					if j < len(cfgAreas[i].Interfaces) {
+						plan.Areas[i].Interfaces[j].MessageDigestKeyWo = cfgAreas[i].Interfaces[j].MessageDigestKeyWo
+					}
+				}
+			}
+		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
@@ -593,6 +690,27 @@ func (r *TransportRoutingOSPFProfileParcelResource) Update(ctx context.Context, 
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values nested two list levels under "areas" are not stored in plan
+	// or state; read the list from the configuration and copy them in element by element.
+	// Both joins are positional, which is sound only for ordered Lists - write_only_tf is
+	// rejected at generate time anywhere under a Set.
+	{
+		var cfgAreas []TransportRoutingOSPFAreas
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("areas"), &cfgAreas)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Areas {
+			if i < len(cfgAreas) {
+				for j := range plan.Areas[i].Interfaces {
+					if j < len(cfgAreas[i].Interfaces) {
+						plan.Areas[i].Interfaces[j].MessageDigestKeyWo = cfgAreas[i].Interfaces[j].MessageDigestKeyWo
+					}
+				}
+			}
+		}
 	}
 	// Read state
 	diags = req.State.Get(ctx, &state)

@@ -39,7 +39,6 @@ resource "sdwan_system_security_feature" "example" {
       include_tcp_options          = false
       accept_ao_mismatch           = false
       crypto_algorithm             = "aes-128-cmac"
-      key_string                   = "abcabc"
       send_life_time_local         = true
       send_life_time_start_epoch   = 1659284400
       send_life_time_infinite      = true
@@ -121,8 +120,13 @@ Optional:
 - `include_tcp_options` (Boolean) Configure Include TCP Options
   - Default value: `false`
 - `include_tcp_options_variable` (String) Variable name
-- `key_string` (String) Specify the Key String [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `key_string` (String, Sensitive) Specify the Key String [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `key_string`, `key_string_variable` and `key_string_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `key_string_wo` together with `key_string_wo_version`, which keeps it out of state.
 - `key_string_variable` (String) Variable name
+- `key_string_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Specify the Key String [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `key_string`, `key_string_variable` and `key_string_wo` can be set.
+- `key_string_wo_version` (Number) Rotation trigger for `key_string_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `name` (String) Select the chain name
 - `receiver_id` (Number) Specify the Receiver ID
   - Range: `0`-`255`

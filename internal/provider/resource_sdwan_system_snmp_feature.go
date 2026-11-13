@@ -169,7 +169,8 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `name`, `name_variable` and `name_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `name_wo` together with `name_wo_version`, which keeps it out of state.").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthAtLeast(1),
@@ -178,6 +179,20 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 						},
 						"name_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"name_wo": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `name`, `name_variable` and `name_wo` can be set.").String,
+							Sensitive:           true,
+							WriteOnly:           true,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthAtLeast(1),
+								stringvalidator.RegexMatches(regexp.MustCompile(`^[\S]+$`), ""),
+							},
+						},
+						"name_wo_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `name_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 							Optional:            true,
 						},
 						"user_label": schema.StringAttribute{
@@ -266,7 +281,8 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 						},
 						"authentication_password": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Specify authentication protocol password").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Specify authentication protocol password").AddMutualExclusivityDescription("Only one of `authentication_password`, `authentication_password_variable` and `authentication_password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `authentication_password_wo` together with `authentication_password_wo_version`, which keeps it out of state.").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 128),
@@ -274,6 +290,19 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 						},
 						"authentication_password_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"authentication_password_wo": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Specify authentication protocol password").AddMutualExclusivityDescription("Only one of `authentication_password`, `authentication_password_variable` and `authentication_password_wo` can be set.").String,
+							Sensitive:           true,
+							WriteOnly:           true,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(1, 128),
+							},
+						},
+						"authentication_password_wo_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `authentication_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 							Optional:            true,
 						},
 						"privacy_protocol": schema.StringAttribute{
@@ -288,7 +317,8 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 						},
 						"privacy_password": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Specify privacy protocol password").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Specify privacy protocol password").AddMutualExclusivityDescription("Only one of `privacy_password`, `privacy_password_variable` and `privacy_password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `privacy_password_wo` together with `privacy_password_wo_version`, which keeps it out of state.").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 128),
@@ -296,6 +326,19 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 						},
 						"privacy_password_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"privacy_password_wo": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Specify privacy protocol password").AddMutualExclusivityDescription("Only one of `privacy_password`, `privacy_password_variable` and `privacy_password_wo` can be set.").String,
+							Sensitive:           true,
+							WriteOnly:           true,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(1, 128),
+							},
+						},
+						"privacy_password_wo_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `privacy_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 							Optional:            true,
 						},
 						"group": schema.StringAttribute{
@@ -393,6 +436,146 @@ func (r *SystemSNMPProfileParcelResource) Configure(_ context.Context, req resou
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
 
+var _ resource.ResourceWithValidateConfig = &SystemSNMPProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *SystemSNMPProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	{
+		// Secrets nested in "communities" are validated per element. A list that cannot be
+		// read as a whole - because it is still unknown at validate time - is skipped rather
+		// than reported, since there is nothing to check yet.
+		var cfgCommunities []SystemSNMPCommunities
+		if diags := req.Config.GetAttribute(ctx, path.Root("communities"), &cfgCommunities); !diags.HasError() {
+			for i := range cfgCommunities {
+				el := cfgCommunities[i]
+
+				// An unknown value is one that is not resolved yet at validate time, for example an
+				// ephemeral resource attribute or a random_password reference. Treat it as "not
+				// decided" rather than "set", otherwise every such configuration trips a false error.
+				if !el.Name.IsUnknown() && !el.NameWo.IsUnknown() && !el.Name.IsNull() && !el.NameWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("Only one of `name` and `name_wo` can be set in `communities` element %d.", i),
+					)
+				}
+				if !el.NameVariable.IsUnknown() && !el.NameWo.IsUnknown() && !el.NameVariable.IsNull() && !el.NameWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("`name_variable` and `name_wo` cannot both be set in `communities` element %d. `name_variable` defers the value to a device variable, so the write-only value would never be sent.", i),
+					)
+				}
+				if !el.Name.IsUnknown() && !el.NameVariable.IsUnknown() && !el.Name.IsNull() && !el.NameVariable.IsNull() {
+					resp.Diagnostics.AddWarning(
+						"Conflicting Attribute Combination",
+						fmt.Sprintf("Both `name` and `name_variable` are set in `communities` element %d. `name_variable` takes precedence, so the value of `name` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i),
+					)
+				}
+				if !el.NameWo.IsUnknown() && !el.NameWoVersion.IsUnknown() && !el.NameWo.IsNull() && el.NameWoVersion.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`name_wo_version` must be set when `name_wo` is used in `communities` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i),
+					)
+				}
+				if !el.NameWoVersion.IsUnknown() && !el.NameWo.IsUnknown() && !el.NameWoVersion.IsNull() && el.NameWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`name_wo` must be set when `name_wo_version` is used in `communities` element %d.", i),
+					)
+				}
+			}
+		}
+	}
+
+	{
+		// Secrets nested in "users" are validated per element. A list that cannot be
+		// read as a whole - because it is still unknown at validate time - is skipped rather
+		// than reported, since there is nothing to check yet.
+		var cfgUsers []SystemSNMPUsers
+		if diags := req.Config.GetAttribute(ctx, path.Root("users"), &cfgUsers); !diags.HasError() {
+			for i := range cfgUsers {
+				el := cfgUsers[i]
+
+				// An unknown value is one that is not resolved yet at validate time, for example an
+				// ephemeral resource attribute or a random_password reference. Treat it as "not
+				// decided" rather than "set", otherwise every such configuration trips a false error.
+				if !el.AuthenticationPassword.IsUnknown() && !el.AuthenticationPasswordWo.IsUnknown() && !el.AuthenticationPassword.IsNull() && !el.AuthenticationPasswordWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("Only one of `authentication_password` and `authentication_password_wo` can be set in `users` element %d.", i),
+					)
+				}
+				if !el.AuthenticationPasswordVariable.IsUnknown() && !el.AuthenticationPasswordWo.IsUnknown() && !el.AuthenticationPasswordVariable.IsNull() && !el.AuthenticationPasswordWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("`authentication_password_variable` and `authentication_password_wo` cannot both be set in `users` element %d. `authentication_password_variable` defers the value to a device variable, so the write-only value would never be sent.", i),
+					)
+				}
+				if !el.AuthenticationPassword.IsUnknown() && !el.AuthenticationPasswordVariable.IsUnknown() && !el.AuthenticationPassword.IsNull() && !el.AuthenticationPasswordVariable.IsNull() {
+					resp.Diagnostics.AddWarning(
+						"Conflicting Attribute Combination",
+						fmt.Sprintf("Both `authentication_password` and `authentication_password_variable` are set in `users` element %d. `authentication_password_variable` takes precedence, so the value of `authentication_password` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i),
+					)
+				}
+				if !el.AuthenticationPasswordWo.IsUnknown() && !el.AuthenticationPasswordWoVersion.IsUnknown() && !el.AuthenticationPasswordWo.IsNull() && el.AuthenticationPasswordWoVersion.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`authentication_password_wo_version` must be set when `authentication_password_wo` is used in `users` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i),
+					)
+				}
+				if !el.AuthenticationPasswordWoVersion.IsUnknown() && !el.AuthenticationPasswordWo.IsUnknown() && !el.AuthenticationPasswordWoVersion.IsNull() && el.AuthenticationPasswordWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`authentication_password_wo` must be set when `authentication_password_wo_version` is used in `users` element %d.", i),
+					)
+				}
+
+				// An unknown value is one that is not resolved yet at validate time, for example an
+				// ephemeral resource attribute or a random_password reference. Treat it as "not
+				// decided" rather than "set", otherwise every such configuration trips a false error.
+				if !el.PrivacyPassword.IsUnknown() && !el.PrivacyPasswordWo.IsUnknown() && !el.PrivacyPassword.IsNull() && !el.PrivacyPasswordWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("Only one of `privacy_password` and `privacy_password_wo` can be set in `users` element %d.", i),
+					)
+				}
+				if !el.PrivacyPasswordVariable.IsUnknown() && !el.PrivacyPasswordWo.IsUnknown() && !el.PrivacyPasswordVariable.IsNull() && !el.PrivacyPasswordWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("`privacy_password_variable` and `privacy_password_wo` cannot both be set in `users` element %d. `privacy_password_variable` defers the value to a device variable, so the write-only value would never be sent.", i),
+					)
+				}
+				if !el.PrivacyPassword.IsUnknown() && !el.PrivacyPasswordVariable.IsUnknown() && !el.PrivacyPassword.IsNull() && !el.PrivacyPasswordVariable.IsNull() {
+					resp.Diagnostics.AddWarning(
+						"Conflicting Attribute Combination",
+						fmt.Sprintf("Both `privacy_password` and `privacy_password_variable` are set in `users` element %d. `privacy_password_variable` takes precedence, so the value of `privacy_password` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i),
+					)
+				}
+				if !el.PrivacyPasswordWo.IsUnknown() && !el.PrivacyPasswordWoVersion.IsUnknown() && !el.PrivacyPasswordWo.IsNull() && el.PrivacyPasswordWoVersion.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`privacy_password_wo_version` must be set when `privacy_password_wo` is used in `users` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i),
+					)
+				}
+				if !el.PrivacyPasswordWoVersion.IsUnknown() && !el.PrivacyPasswordWo.IsUnknown() && !el.PrivacyPasswordWoVersion.IsNull() && el.PrivacyPasswordWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`privacy_password_wo` must be set when `privacy_password_wo_version` is used in `users` element %d.", i),
+					)
+				}
+			}
+		}
+	}
+}
+
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
@@ -404,6 +587,41 @@ func (r *SystemSNMPProfileParcelResource) Create(ctx context.Context, req resour
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values in list "communities" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgCommunities []SystemSNMPCommunities
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("communities"), &cfgCommunities)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Communities {
+			if i < len(cfgCommunities) {
+				plan.Communities[i].NameWo = cfgCommunities[i].NameWo
+			}
+		}
+	}
+
+	// Write-only values in list "users" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgUsers []SystemSNMPUsers
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("users"), &cfgUsers)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Users {
+			if i < len(cfgUsers) {
+				plan.Users[i].AuthenticationPasswordWo = cfgUsers[i].AuthenticationPasswordWo
+				plan.Users[i].PrivacyPasswordWo = cfgUsers[i].PrivacyPasswordWo
+			}
+		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
@@ -482,6 +700,41 @@ func (r *SystemSNMPProfileParcelResource) Update(ctx context.Context, req resour
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values in list "communities" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgCommunities []SystemSNMPCommunities
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("communities"), &cfgCommunities)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Communities {
+			if i < len(cfgCommunities) {
+				plan.Communities[i].NameWo = cfgCommunities[i].NameWo
+			}
+		}
+	}
+
+	// Write-only values in list "users" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgUsers []SystemSNMPUsers
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("users"), &cfgUsers)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Users {
+			if i < len(cfgUsers) {
+				plan.Users[i].AuthenticationPasswordWo = cfgUsers[i].AuthenticationPasswordWo
+				plan.Users[i].PrivacyPasswordWo = cfgUsers[i].PrivacyPasswordWo
+			}
+		}
 	}
 	// Read state
 	diags = req.State.Get(ctx, &state)

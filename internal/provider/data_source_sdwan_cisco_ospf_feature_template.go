@@ -401,6 +401,7 @@ func (d *CiscoOSPFFeatureTemplateDataSource) Schema(ctx context.Context, req dat
 									},
 									"authentication_message_digest_key": schema.StringAttribute{
 										MarkdownDescription: "Set MD5 authentication key",
+										Sensitive:           true,
 										Computed:            true,
 									},
 									"authentication_message_digest_key_variable": schema.StringAttribute{

@@ -43,6 +43,8 @@ type OtherThousandEyes struct {
 type OtherThousandEyesVirtualApplication struct {
 	AccountGroupToken            types.String `tfsdk:"account_group_token"`
 	AccountGroupTokenVariable    types.String `tfsdk:"account_group_token_variable"`
+	AccountGroupTokenWo          types.String `tfsdk:"account_group_token_wo"`
+	AccountGroupTokenWoVersion   types.Int64  `tfsdk:"account_group_token_wo_version"`
 	Vpn                          types.Int64  `tfsdk:"vpn"`
 	VpnVariable                  types.String `tfsdk:"vpn_variable"`
 	ManagementIp                 types.String `tfsdk:"management_ip"`
@@ -100,6 +102,12 @@ func (data OtherThousandEyes) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "token.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "token.value", item.AccountGroupToken.ValueString())
+				}
+			}
+			if !item.AccountGroupTokenWo.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "token.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "token.value", item.AccountGroupTokenWo.ValueString())
 				}
 			}
 
@@ -382,6 +390,11 @@ func (data *OtherThousandEyes) fromBody(ctx context.Context, res gjson.Result, f
 					}
 				} else if keyMatch {
 					if oldItem.AccountGroupToken.ValueString() != data.VirtualApplication[ni].AccountGroupToken.ValueString() {
+						keyMatch = false
+					}
+				}
+				if keyMatch {
+					if oldItem.AccountGroupTokenWo.ValueString() != data.VirtualApplication[ni].AccountGroupTokenWo.ValueString() {
 						keyMatch = false
 					}
 				}

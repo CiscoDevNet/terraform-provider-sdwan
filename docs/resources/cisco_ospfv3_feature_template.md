@@ -305,7 +305,7 @@ Optional:
 
 Optional:
 
-- `authentication_key` (String) Set OSPF interface authentication key
+- `authentication_key` (String, Sensitive) Set OSPF interface authentication key
 - `authentication_key_variable` (String) Variable name
 - `authentication_type` (String) Set OSPF interface authentication type
   - Choices: `md5`, `sha1`
@@ -417,7 +417,7 @@ Optional:
 
 Optional:
 
-- `authentication_key` (String) Set OSPF interface authentication key
+- `authentication_key` (String, Sensitive) Set OSPF interface authentication key
 - `authentication_key_variable` (String) Variable name
 - `authentication_type` (String) Set OSPF interface authentication type
   - Choices: `md5`, `sha1`

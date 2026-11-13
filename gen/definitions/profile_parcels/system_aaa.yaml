@@ -28,6 +28,8 @@ attributes:
         id: true
         example: User1
       - model_name: password
+        sensitive: true
+        write_only_tf: true
         encrypted: true
         example: cisco123
       - model_name: privilege
@@ -65,9 +67,13 @@ attributes:
           - model_name: retransmit
             example: 3
           - model_name: key
+            sensitive: true
+            write_only_tf: true
             encrypted: true
             example: cisco123
           - model_name: secretKey
+            sensitive: true
+            write_only_tf: true
             example: cisco123
           - model_name: keyEnum
             example: "7"
@@ -110,9 +116,13 @@ attributes:
           - model_name: timeout
             example: 5
           - model_name: key
+            sensitive: true
+            write_only_tf: true
             encrypted: true
             example: cisco123
           - model_name: secretKey
+            sensitive: true
+            write_only_tf: true
             example: cisco123
           - model_name: keyEnum
             example: "7"

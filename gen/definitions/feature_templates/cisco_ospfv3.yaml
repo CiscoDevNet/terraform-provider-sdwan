@@ -147,6 +147,7 @@ attributes:
             tf_name: authentication_type
             example: md5
           - model_name: authentication-key
+            sensitive: true
             example: authenticationKey
           - model_name: spi
             tf_name: ipsec_spi
@@ -302,6 +303,7 @@ attributes:
             tf_name: authentication_type
             example: md5
           - model_name: authentication-key
+            sensitive: true
             example: authenticationKey
           - model_name: spi
             tf_name: ipsec_spi

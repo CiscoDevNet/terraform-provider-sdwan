@@ -177,7 +177,8 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 							Optional:            true,
 						},
 						"md5_value": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Enter cleartext or AES-encrypted MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Enter cleartext or AES-encrypted MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `md5_value`, `md5_value_variable` and `md5_value_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `md5_value_wo` together with `md5_value_wo_version`, which keeps it out of state.").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthAtLeast(1),
@@ -187,8 +188,22 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
+						"md5_value_wo": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Enter cleartext or AES-encrypted MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `md5_value`, `md5_value_variable` and `md5_value_wo` can be set.").String,
+							Sensitive:           true,
+							WriteOnly:           true,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthAtLeast(1),
+							},
+						},
+						"md5_value_wo_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `md5_value_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
+							Optional:            true,
+						},
 						"hmac_sha2_value": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").String,
+							MarkdownDescription: helpers.NewAttributeDescription("HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").AddMutualExclusivityDescription("Only one of `hmac_sha2_value`, `hmac_sha2_value_variable` and `hmac_sha2_value_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `hmac_sha2_value_wo` together with `hmac_sha2_value_wo_version`, which keeps it out of state.").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.RegexMatches(regexp.MustCompile(`^\S{1,32}$`), ""),
@@ -198,8 +213,22 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `26.1.1` or higher").String,
 							Optional:            true,
 						},
+						"hmac_sha2_value_wo": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").AddMutualExclusivityDescription("Only one of `hmac_sha2_value`, `hmac_sha2_value_variable` and `hmac_sha2_value_wo` can be set.").String,
+							Sensitive:           true,
+							WriteOnly:           true,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`^\S{1,32}$`), ""),
+							},
+						},
+						"hmac_sha2_value_wo_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `hmac_sha2_value_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
+							Optional:            true,
+						},
 						"cmac_aes128_value": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").String,
+							MarkdownDescription: helpers.NewAttributeDescription("CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").AddMutualExclusivityDescription("Only one of `cmac_aes128_value`, `cmac_aes128_value_variable` and `cmac_aes128_value_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `cmac_aes128_value_wo` together with `cmac_aes128_value_wo_version`, which keeps it out of state.").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(16, 32),
@@ -207,6 +236,19 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 						},
 						"cmac_aes128_value_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `26.1.1` or higher").String,
+							Optional:            true,
+						},
+						"cmac_aes128_value_wo": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").AddMutualExclusivityDescription("Only one of `cmac_aes128_value`, `cmac_aes128_value_variable` and `cmac_aes128_value_wo` can be set.").String,
+							Sensitive:           true,
+							WriteOnly:           true,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(16, 32),
+							},
+						},
+						"cmac_aes128_value_wo_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `cmac_aes128_value_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 							Optional:            true,
 						},
 					},
@@ -265,6 +307,134 @@ func (r *SystemNTPProfileParcelResource) Configure(_ context.Context, req resour
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
 
+var _ resource.ResourceWithValidateConfig = &SystemNTPProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *SystemNTPProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	{
+		// Secrets nested in "authentication_keys" are validated per element. A list that cannot be
+		// read as a whole - because it is still unknown at validate time - is skipped rather
+		// than reported, since there is nothing to check yet.
+		var cfgAuthenticationKeys []SystemNTPAuthenticationKeys
+		if diags := req.Config.GetAttribute(ctx, path.Root("authentication_keys"), &cfgAuthenticationKeys); !diags.HasError() {
+			for i := range cfgAuthenticationKeys {
+				el := cfgAuthenticationKeys[i]
+
+				// An unknown value is one that is not resolved yet at validate time, for example an
+				// ephemeral resource attribute or a random_password reference. Treat it as "not
+				// decided" rather than "set", otherwise every such configuration trips a false error.
+				if !el.Md5Value.IsUnknown() && !el.Md5ValueWo.IsUnknown() && !el.Md5Value.IsNull() && !el.Md5ValueWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("Only one of `md5_value` and `md5_value_wo` can be set in `authentication_keys` element %d.", i),
+					)
+				}
+				if !el.Md5ValueVariable.IsUnknown() && !el.Md5ValueWo.IsUnknown() && !el.Md5ValueVariable.IsNull() && !el.Md5ValueWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("`md5_value_variable` and `md5_value_wo` cannot both be set in `authentication_keys` element %d. `md5_value_variable` defers the value to a device variable, so the write-only value would never be sent.", i),
+					)
+				}
+				if !el.Md5Value.IsUnknown() && !el.Md5ValueVariable.IsUnknown() && !el.Md5Value.IsNull() && !el.Md5ValueVariable.IsNull() {
+					resp.Diagnostics.AddWarning(
+						"Conflicting Attribute Combination",
+						fmt.Sprintf("Both `md5_value` and `md5_value_variable` are set in `authentication_keys` element %d. `md5_value_variable` takes precedence, so the value of `md5_value` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i),
+					)
+				}
+				if !el.Md5ValueWo.IsUnknown() && !el.Md5ValueWoVersion.IsUnknown() && !el.Md5ValueWo.IsNull() && el.Md5ValueWoVersion.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`md5_value_wo_version` must be set when `md5_value_wo` is used in `authentication_keys` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i),
+					)
+				}
+				if !el.Md5ValueWoVersion.IsUnknown() && !el.Md5ValueWo.IsUnknown() && !el.Md5ValueWoVersion.IsNull() && el.Md5ValueWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`md5_value_wo` must be set when `md5_value_wo_version` is used in `authentication_keys` element %d.", i),
+					)
+				}
+
+				// An unknown value is one that is not resolved yet at validate time, for example an
+				// ephemeral resource attribute or a random_password reference. Treat it as "not
+				// decided" rather than "set", otherwise every such configuration trips a false error.
+				if !el.HmacSha2Value.IsUnknown() && !el.HmacSha2ValueWo.IsUnknown() && !el.HmacSha2Value.IsNull() && !el.HmacSha2ValueWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("Only one of `hmac_sha2_value` and `hmac_sha2_value_wo` can be set in `authentication_keys` element %d.", i),
+					)
+				}
+				if !el.HmacSha2ValueVariable.IsUnknown() && !el.HmacSha2ValueWo.IsUnknown() && !el.HmacSha2ValueVariable.IsNull() && !el.HmacSha2ValueWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("`hmac_sha2_value_variable` and `hmac_sha2_value_wo` cannot both be set in `authentication_keys` element %d. `hmac_sha2_value_variable` defers the value to a device variable, so the write-only value would never be sent.", i),
+					)
+				}
+				if !el.HmacSha2Value.IsUnknown() && !el.HmacSha2ValueVariable.IsUnknown() && !el.HmacSha2Value.IsNull() && !el.HmacSha2ValueVariable.IsNull() {
+					resp.Diagnostics.AddWarning(
+						"Conflicting Attribute Combination",
+						fmt.Sprintf("Both `hmac_sha2_value` and `hmac_sha2_value_variable` are set in `authentication_keys` element %d. `hmac_sha2_value_variable` takes precedence, so the value of `hmac_sha2_value` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i),
+					)
+				}
+				if !el.HmacSha2ValueWo.IsUnknown() && !el.HmacSha2ValueWoVersion.IsUnknown() && !el.HmacSha2ValueWo.IsNull() && el.HmacSha2ValueWoVersion.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`hmac_sha2_value_wo_version` must be set when `hmac_sha2_value_wo` is used in `authentication_keys` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i),
+					)
+				}
+				if !el.HmacSha2ValueWoVersion.IsUnknown() && !el.HmacSha2ValueWo.IsUnknown() && !el.HmacSha2ValueWoVersion.IsNull() && el.HmacSha2ValueWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`hmac_sha2_value_wo` must be set when `hmac_sha2_value_wo_version` is used in `authentication_keys` element %d.", i),
+					)
+				}
+
+				// An unknown value is one that is not resolved yet at validate time, for example an
+				// ephemeral resource attribute or a random_password reference. Treat it as "not
+				// decided" rather than "set", otherwise every such configuration trips a false error.
+				if !el.CmacAes128Value.IsUnknown() && !el.CmacAes128ValueWo.IsUnknown() && !el.CmacAes128Value.IsNull() && !el.CmacAes128ValueWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("Only one of `cmac_aes128_value` and `cmac_aes128_value_wo` can be set in `authentication_keys` element %d.", i),
+					)
+				}
+				if !el.CmacAes128ValueVariable.IsUnknown() && !el.CmacAes128ValueWo.IsUnknown() && !el.CmacAes128ValueVariable.IsNull() && !el.CmacAes128ValueWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("`cmac_aes128_value_variable` and `cmac_aes128_value_wo` cannot both be set in `authentication_keys` element %d. `cmac_aes128_value_variable` defers the value to a device variable, so the write-only value would never be sent.", i),
+					)
+				}
+				if !el.CmacAes128Value.IsUnknown() && !el.CmacAes128ValueVariable.IsUnknown() && !el.CmacAes128Value.IsNull() && !el.CmacAes128ValueVariable.IsNull() {
+					resp.Diagnostics.AddWarning(
+						"Conflicting Attribute Combination",
+						fmt.Sprintf("Both `cmac_aes128_value` and `cmac_aes128_value_variable` are set in `authentication_keys` element %d. `cmac_aes128_value_variable` takes precedence, so the value of `cmac_aes128_value` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i),
+					)
+				}
+				if !el.CmacAes128ValueWo.IsUnknown() && !el.CmacAes128ValueWoVersion.IsUnknown() && !el.CmacAes128ValueWo.IsNull() && el.CmacAes128ValueWoVersion.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`cmac_aes128_value_wo_version` must be set when `cmac_aes128_value_wo` is used in `authentication_keys` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i),
+					)
+				}
+				if !el.CmacAes128ValueWoVersion.IsUnknown() && !el.CmacAes128ValueWo.IsUnknown() && !el.CmacAes128ValueWoVersion.IsNull() && el.CmacAes128ValueWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`cmac_aes128_value_wo` must be set when `cmac_aes128_value_wo_version` is used in `authentication_keys` element %d.", i),
+					)
+				}
+			}
+		}
+	}
+}
+
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
@@ -276,6 +446,25 @@ func (r *SystemNTPProfileParcelResource) Create(ctx context.Context, req resourc
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values in list "authentication_keys" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgAuthenticationKeys []SystemNTPAuthenticationKeys
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("authentication_keys"), &cfgAuthenticationKeys)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.AuthenticationKeys {
+			if i < len(cfgAuthenticationKeys) {
+				plan.AuthenticationKeys[i].Md5ValueWo = cfgAuthenticationKeys[i].Md5ValueWo
+				plan.AuthenticationKeys[i].HmacSha2ValueWo = cfgAuthenticationKeys[i].HmacSha2ValueWo
+				plan.AuthenticationKeys[i].CmacAes128ValueWo = cfgAuthenticationKeys[i].CmacAes128ValueWo
+			}
+		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
@@ -356,6 +545,25 @@ func (r *SystemNTPProfileParcelResource) Update(ctx context.Context, req resourc
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values in list "authentication_keys" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgAuthenticationKeys []SystemNTPAuthenticationKeys
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("authentication_keys"), &cfgAuthenticationKeys)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.AuthenticationKeys {
+			if i < len(cfgAuthenticationKeys) {
+				plan.AuthenticationKeys[i].Md5ValueWo = cfgAuthenticationKeys[i].Md5ValueWo
+				plan.AuthenticationKeys[i].HmacSha2ValueWo = cfgAuthenticationKeys[i].HmacSha2ValueWo
+				plan.AuthenticationKeys[i].CmacAes128ValueWo = cfgAuthenticationKeys[i].CmacAes128ValueWo
+			}
+		}
 	}
 	// Read state
 	diags = req.State.Get(ctx, &state)

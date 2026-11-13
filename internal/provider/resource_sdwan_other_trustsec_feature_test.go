@@ -47,7 +47,6 @@ func TestAccSdwanOtherTrustSecProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_trustsec_feature.test", "sxp_source_ip", "10.0.0.1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_trustsec_feature.test", "sxp_connections.0.peer_ip", "10.0.0.2"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_trustsec_feature.test", "sxp_connections.0.source_ip", "10.0.0.1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_trustsec_feature.test", "sxp_connections.0.preshared_key", "none"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_trustsec_feature.test", "sxp_connections.0.mode", "peer"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_trustsec_feature.test", "sxp_connections.0.mode_type", "speaker"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_trustsec_feature.test", "sxp_connections.0.vpn_id", "1"))
@@ -90,7 +89,6 @@ func testAccSdwanOtherTrustSecProfileParcelConfig_all() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_other_feature_profile.test.id` + "\n"
 	config += `	device_id = "trustsecDevice"` + "\n"
-	config += `	device_password = "Cisco123"` + "\n"
 	config += `	device_sgt = 100` + "\n"
 	config += `	enable_enforcement = true` + "\n"
 	config += `	enable_sxp = true` + "\n"
@@ -105,7 +103,6 @@ func testAccSdwanOtherTrustSecProfileParcelConfig_all() string {
 	config += `	sxp_connections = [{` + "\n"
 	config += `	  peer_ip = "10.0.0.2"` + "\n"
 	config += `	  source_ip = "10.0.0.1"` + "\n"
-	config += `	  preshared_key = "none"` + "\n"
 	config += `	  mode = "peer"` + "\n"
 	config += `	  mode_type = "speaker"` + "\n"
 	config += `	  vpn_id = 1` + "\n"

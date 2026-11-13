@@ -109,7 +109,6 @@ func testAccSdwanServiceRoutingEIGRPProfileParcelConfig_all() string {
 	config += `	authentication_type = "md5"` + "\n"
 	config += `	md5_keys = [{` + "\n"
 	config += `	  key_id = 2` + "\n"
-	config += `	  key_string = "password123"` + "\n"
 	config += `	}]` + "\n"
 	config += `	interfaces = [{` + "\n"
 	config += `	  name = "GigabitEthernet3"` + "\n"

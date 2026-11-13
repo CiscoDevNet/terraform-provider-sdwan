@@ -122,6 +122,8 @@ type SSEZscalerInterfaces struct {
 	IkeVersionVariable            types.String `tfsdk:"ike_version_variable"`
 	PreSharedSecret               types.String `tfsdk:"pre_shared_secret"`
 	PreSharedSecretVariable       types.String `tfsdk:"pre_shared_secret_variable"`
+	PreSharedSecretWo             types.String `tfsdk:"pre_shared_secret_wo"`
+	PreSharedSecretWoVersion      types.Int64  `tfsdk:"pre_shared_secret_wo_version"`
 	IkeRekeyInterval              types.Int64  `tfsdk:"ike_rekey_interval"`
 	IkeRekeyIntervalVariable      types.String `tfsdk:"ike_rekey_interval_variable"`
 	IkeCiphersuite                types.String `tfsdk:"ike_ciphersuite"`
@@ -474,6 +476,17 @@ func (data SSEZscaler) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "preSharedSecret.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "preSharedSecret.value", item.PreSharedSecret.ValueString())
+				}
+			}
+			if item.PreSharedSecretWo.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "preSharedSecret.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "preSharedSecret.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "preSharedSecret.value", item.PreSharedSecretWo.ValueString())
 				}
 			}
 

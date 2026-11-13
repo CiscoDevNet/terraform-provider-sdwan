@@ -35,7 +35,6 @@ resource "sdwan_system_snmp_feature" "example" {
   ]
   communities = [
     {
-      name          = "example"
       user_label    = "COMMUNITY1"
       view          = "VIEW1"
       authorization = "read-only"
@@ -52,9 +51,7 @@ resource "sdwan_system_snmp_feature" "example" {
     {
       name                    = "USER1"
       authentication_protocol = "sha"
-      authentication_password = "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="
       privacy_protocol        = "aes-256-cfb-128"
-      privacy_password        = "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="
       group                   = "GROUP1"
     }
   ]
@@ -108,8 +105,13 @@ Optional:
 - `authorization` (String) Configure access permissions
   - Choices: `read-only`, `read-write`
 - `authorization_variable` (String) Variable name
-- `name` (String) Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `name` (String, Sensitive) Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `name`, `name_variable` and `name_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `name_wo` together with `name_wo_version`, which keeps it out of state.
 - `name_variable` (String) Variable name
+- `name_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+  - Only one of `name`, `name_variable` and `name_wo` can be set.
+- `name_wo_version` (Number) Rotation trigger for `name_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `user_label` (String) Set user label of the SNMP community
 - `view` (String) Set name of the SNMP view
 - `view_variable` (String) Variable name
@@ -152,16 +154,26 @@ Optional:
 
 Optional:
 
-- `authentication_password` (String) Specify authentication protocol password
+- `authentication_password` (String, Sensitive) Specify authentication protocol password
+  - Only one of `authentication_password`, `authentication_password_variable` and `authentication_password_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `authentication_password_wo` together with `authentication_password_wo_version`, which keeps it out of state.
 - `authentication_password_variable` (String) Variable name
+- `authentication_password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Specify authentication protocol password
+  - Only one of `authentication_password`, `authentication_password_variable` and `authentication_password_wo` can be set.
+- `authentication_password_wo_version` (Number) Rotation trigger for `authentication_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `authentication_protocol` (String) Configure authentication protocol
   - Choices: `sha`, `sha256`
 - `authentication_protocol_variable` (String) Variable name
 - `group` (String) Name of the SNMP group
 - `group_variable` (String) Variable name
 - `name` (String) Name of the SNMP user
-- `privacy_password` (String) Specify privacy protocol password
+- `privacy_password` (String, Sensitive) Specify privacy protocol password
+  - Only one of `privacy_password`, `privacy_password_variable` and `privacy_password_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `privacy_password_wo` together with `privacy_password_wo_version`, which keeps it out of state.
 - `privacy_password_variable` (String) Variable name
+- `privacy_password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Specify privacy protocol password
+  - Only one of `privacy_password`, `privacy_password_variable` and `privacy_password_wo` can be set.
+- `privacy_password_wo_version` (Number) Rotation trigger for `privacy_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `privacy_protocol` (String) Configure privacy protocol
   - Choices: `aes-cfb-128`, `aes-256-cfb-128`
 - `privacy_protocol_variable` (String) Variable name

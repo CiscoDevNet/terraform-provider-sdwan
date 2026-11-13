@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -48,6 +49,8 @@ type ServiceWirelessLAN struct {
 	UsernameVariable         types.String              `tfsdk:"username_variable"`
 	Password                 types.String              `tfsdk:"password"`
 	PasswordVariable         types.String              `tfsdk:"password_variable"`
+	PasswordWo               types.String              `tfsdk:"password_wo"`
+	PasswordWoVersion        types.Int64               `tfsdk:"password_wo_version"`
 	MeDynamicIpEnabled       types.Bool                `tfsdk:"me_dynamic_ip_enabled"`
 	MeIpv4Address            types.String              `tfsdk:"me_ipv4_address"`
 	MeIpv4AddressVariable    types.String              `tfsdk:"me_ipv4_address_variable"`
@@ -58,26 +61,30 @@ type ServiceWirelessLAN struct {
 }
 
 type ServiceWirelessLANSsids struct {
-	SsidName                   types.String `tfsdk:"ssid_name"`
-	AdminState                 types.Bool   `tfsdk:"admin_state"`
-	AdminStateVariable         types.String `tfsdk:"admin_state_variable"`
-	BroadcastSsid              types.Bool   `tfsdk:"broadcast_ssid"`
-	BroadcastSsidVariable      types.String `tfsdk:"broadcast_ssid_variable"`
-	VlanId                     types.Int64  `tfsdk:"vlan_id"`
-	VlanIdVariable             types.String `tfsdk:"vlan_id_variable"`
-	RadioType                  types.String `tfsdk:"radio_type"`
-	RadioTypeVariable          types.String `tfsdk:"radio_type_variable"`
-	SecurityType               types.String `tfsdk:"security_type"`
-	RadiusServerIp             types.String `tfsdk:"radius_server_ip"`
-	RadiusServerIpVariable     types.String `tfsdk:"radius_server_ip_variable"`
-	RadiusServerPort           types.Int64  `tfsdk:"radius_server_port"`
-	RadiusServerPortVariable   types.String `tfsdk:"radius_server_port_variable"`
-	RadiusServerSecret         types.String `tfsdk:"radius_server_secret"`
-	RadiusServerSecretVariable types.String `tfsdk:"radius_server_secret_variable"`
-	Passphrase                 types.String `tfsdk:"passphrase"`
-	PassphraseVariable         types.String `tfsdk:"passphrase_variable"`
-	QosProfile                 types.String `tfsdk:"qos_profile"`
-	QosProfileVariable         types.String `tfsdk:"qos_profile_variable"`
+	SsidName                    types.String `tfsdk:"ssid_name"`
+	AdminState                  types.Bool   `tfsdk:"admin_state"`
+	AdminStateVariable          types.String `tfsdk:"admin_state_variable"`
+	BroadcastSsid               types.Bool   `tfsdk:"broadcast_ssid"`
+	BroadcastSsidVariable       types.String `tfsdk:"broadcast_ssid_variable"`
+	VlanId                      types.Int64  `tfsdk:"vlan_id"`
+	VlanIdVariable              types.String `tfsdk:"vlan_id_variable"`
+	RadioType                   types.String `tfsdk:"radio_type"`
+	RadioTypeVariable           types.String `tfsdk:"radio_type_variable"`
+	SecurityType                types.String `tfsdk:"security_type"`
+	RadiusServerIp              types.String `tfsdk:"radius_server_ip"`
+	RadiusServerIpVariable      types.String `tfsdk:"radius_server_ip_variable"`
+	RadiusServerPort            types.Int64  `tfsdk:"radius_server_port"`
+	RadiusServerPortVariable    types.String `tfsdk:"radius_server_port_variable"`
+	RadiusServerSecret          types.String `tfsdk:"radius_server_secret"`
+	RadiusServerSecretVariable  types.String `tfsdk:"radius_server_secret_variable"`
+	RadiusServerSecretWo        types.String `tfsdk:"radius_server_secret_wo"`
+	RadiusServerSecretWoVersion types.Int64  `tfsdk:"radius_server_secret_wo_version"`
+	Passphrase                  types.String `tfsdk:"passphrase"`
+	PassphraseVariable          types.String `tfsdk:"passphrase_variable"`
+	PassphraseWo                types.String `tfsdk:"passphrase_wo"`
+	PassphraseWoVersion         types.Int64  `tfsdk:"passphrase_wo_version"`
+	QosProfile                  types.String `tfsdk:"qos_profile"`
+	QosProfileVariable          types.String `tfsdk:"qos_profile_variable"`
 }
 
 // End of section. //template:end types
@@ -256,6 +263,12 @@ func (data ServiceWirelessLAN) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "securityConfig.radiusServerSecret.value", item.RadiusServerSecret.ValueString())
 				}
 			}
+			if !item.RadiusServerSecretWo.IsNull() {
+				if true && item.SecurityType.ValueString() == "enterprise" {
+					itemBody, _ = sjson.Set(itemBody, "securityConfig.radiusServerSecret.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "securityConfig.radiusServerSecret.value", item.RadiusServerSecretWo.ValueString())
+				}
+			}
 
 			if !item.PassphraseVariable.IsNull() {
 				if true && item.SecurityType.ValueString() == "personal" {
@@ -266,6 +279,12 @@ func (data ServiceWirelessLAN) toBody(ctx context.Context) string {
 				if true && item.SecurityType.ValueString() == "personal" {
 					itemBody, _ = sjson.Set(itemBody, "securityConfig.passphrase.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "securityConfig.passphrase.value", item.Passphrase.ValueString())
+				}
+			}
+			if !item.PassphraseWo.IsNull() {
+				if true && item.SecurityType.ValueString() == "personal" {
+					itemBody, _ = sjson.Set(itemBody, "securityConfig.passphrase.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "securityConfig.passphrase.value", item.PassphraseWo.ValueString())
 				}
 			}
 
@@ -322,6 +341,12 @@ func (data ServiceWirelessLAN) toBody(ctx context.Context) string {
 		if true {
 			body, _ = sjson.Set(body, path+"password.optionType", "global")
 			body, _ = sjson.Set(body, path+"password.value", data.Password.ValueString())
+		}
+	}
+	if !data.PasswordWo.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"password.optionType", "global")
+			body, _ = sjson.Set(body, path+"password.value", data.PasswordWo.ValueString())
 		}
 	}
 	if !data.MeDynamicIpEnabled.IsNull() {
@@ -498,7 +523,10 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result, 
 				if t.String() == "variable" {
 					item.PassphraseVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.Passphrase = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.Passphrase = types.StringValue(va.String())
+					}
 				}
 			}
 			item.QosProfile = types.StringNull()
@@ -576,7 +604,10 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result, 
 			if t.String() == "variable" {
 				data.PasswordVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Password = types.StringValue(va.String())
+				// Masked secrets returned by the Manager must never be written into state.
+				if !helpers.IsEncryptedValue(va.String()) {
+					data.Password = types.StringValue(va.String())
+				}
 			}
 		}
 	}

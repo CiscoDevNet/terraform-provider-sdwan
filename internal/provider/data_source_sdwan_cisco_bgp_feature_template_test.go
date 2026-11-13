@@ -73,7 +73,6 @@ func TestAccDataSourceSdwanCiscoBGPFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bgp_feature_template.test", "ipv4_neighbors.0.send_community", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bgp_feature_template.test", "ipv4_neighbors.0.send_ext_community", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bgp_feature_template.test", "ipv4_neighbors.0.ebgp_multihop", "10"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bgp_feature_template.test", "ipv4_neighbors.0.password", "cisco123"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bgp_feature_template.test", "ipv4_neighbors.0.send_label", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bgp_feature_template.test", "ipv4_neighbors.0.send_label_explicit", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bgp_feature_template.test", "ipv4_neighbors.0.as_override", "true"))
@@ -96,7 +95,6 @@ func TestAccDataSourceSdwanCiscoBGPFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bgp_feature_template.test", "ipv6_neighbors.0.send_community", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bgp_feature_template.test", "ipv6_neighbors.0.send_ext_community", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bgp_feature_template.test", "ipv6_neighbors.0.ebgp_multihop", "10"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bgp_feature_template.test", "ipv6_neighbors.0.password", "cisco123"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bgp_feature_template.test", "ipv6_neighbors.0.send_label", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bgp_feature_template.test", "ipv6_neighbors.0.send_label_explicit", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bgp_feature_template.test", "ipv6_neighbors.0.as_override", "true"))
@@ -195,7 +193,6 @@ func testAccDataSourceSdwanCiscoBGPFeatureTemplateConfig() string {
 	config += `	  send_community = false` + "\n"
 	config += `	  send_ext_community = false` + "\n"
 	config += `	  ebgp_multihop = 10` + "\n"
-	config += `	  password = "cisco123"` + "\n"
 	config += `	  send_label = true` + "\n"
 	config += `	  send_label_explicit = true` + "\n"
 	config += `	  as_override = true` + "\n"
@@ -224,7 +221,6 @@ func testAccDataSourceSdwanCiscoBGPFeatureTemplateConfig() string {
 	config += `	  send_community = false` + "\n"
 	config += `	  send_ext_community = false` + "\n"
 	config += `	  ebgp_multihop = 10` + "\n"
-	config += `	  password = "cisco123"` + "\n"
 	config += `	  send_label = true` + "\n"
 	config += `	  send_label_explicit = true` + "\n"
 	config += `	  as_override = true` + "\n"

@@ -90,6 +90,8 @@ attributes:
     - model_name: ebgpMultihop
       example: 1
     - model_name: password
+      sensitive: true
+      write_only_tf: true
       encrypted: true
       example: myPassword
     - model_name: sendLabel
@@ -223,6 +225,8 @@ attributes:
     - model_name: ebgpMultihop
       example: 3
     - model_name: password
+      sensitive: true
+      write_only_tf: true
       encrypted: true
       example: myPassword
     - model_name: asOverride

@@ -67,14 +67,20 @@ type SystemNTPServers struct {
 }
 
 type SystemNTPAuthenticationKeys struct {
-	KeyId                   types.Int64  `tfsdk:"key_id"`
-	KeyIdVariable           types.String `tfsdk:"key_id_variable"`
-	Md5Value                types.String `tfsdk:"md5_value"`
-	Md5ValueVariable        types.String `tfsdk:"md5_value_variable"`
-	HmacSha2Value           types.String `tfsdk:"hmac_sha2_value"`
-	HmacSha2ValueVariable   types.String `tfsdk:"hmac_sha2_value_variable"`
-	CmacAes128Value         types.String `tfsdk:"cmac_aes128_value"`
-	CmacAes128ValueVariable types.String `tfsdk:"cmac_aes128_value_variable"`
+	KeyId                    types.Int64  `tfsdk:"key_id"`
+	KeyIdVariable            types.String `tfsdk:"key_id_variable"`
+	Md5Value                 types.String `tfsdk:"md5_value"`
+	Md5ValueVariable         types.String `tfsdk:"md5_value_variable"`
+	Md5ValueWo               types.String `tfsdk:"md5_value_wo"`
+	Md5ValueWoVersion        types.Int64  `tfsdk:"md5_value_wo_version"`
+	HmacSha2Value            types.String `tfsdk:"hmac_sha2_value"`
+	HmacSha2ValueVariable    types.String `tfsdk:"hmac_sha2_value_variable"`
+	HmacSha2ValueWo          types.String `tfsdk:"hmac_sha2_value_wo"`
+	HmacSha2ValueWoVersion   types.Int64  `tfsdk:"hmac_sha2_value_wo_version"`
+	CmacAes128Value          types.String `tfsdk:"cmac_aes128_value"`
+	CmacAes128ValueVariable  types.String `tfsdk:"cmac_aes128_value_variable"`
+	CmacAes128ValueWo        types.String `tfsdk:"cmac_aes128_value_wo"`
+	CmacAes128ValueWoVersion types.Int64  `tfsdk:"cmac_aes128_value_wo_version"`
 }
 
 // End of section. //template:end types
@@ -236,6 +242,12 @@ func (data SystemNTP) toBody(ctx context.Context, ver *version.Version) string {
 					itemBody, _ = sjson.Set(itemBody, "md5Value.value", item.Md5Value.ValueString())
 				}
 			}
+			if !item.Md5ValueWo.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "md5Value.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "md5Value.value", item.Md5ValueWo.ValueString())
+				}
+			}
 
 			if !item.HmacSha2ValueVariable.IsNull() {
 				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("26.1.1"))) {
@@ -248,6 +260,12 @@ func (data SystemNTP) toBody(ctx context.Context, ver *version.Version) string {
 					itemBody, _ = sjson.Set(itemBody, "hmacSha2Value.value", item.HmacSha2Value.ValueString())
 				}
 			}
+			if !item.HmacSha2ValueWo.IsNull() {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("26.1.1"))) {
+					itemBody, _ = sjson.Set(itemBody, "hmacSha2Value.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "hmacSha2Value.value", item.HmacSha2ValueWo.ValueString())
+				}
+			}
 
 			if !item.CmacAes128ValueVariable.IsNull() {
 				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("26.1.1"))) {
@@ -258,6 +276,12 @@ func (data SystemNTP) toBody(ctx context.Context, ver *version.Version) string {
 				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("26.1.1"))) {
 					itemBody, _ = sjson.Set(itemBody, "cmacAes128Value.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "cmacAes128Value.value", item.CmacAes128Value.ValueString())
+				}
+			}
+			if !item.CmacAes128ValueWo.IsNull() {
+				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("26.1.1"))) {
+					itemBody, _ = sjson.Set(itemBody, "cmacAes128Value.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "cmacAes128Value.value", item.CmacAes128ValueWo.ValueString())
 				}
 			}
 			body, _ = sjson.SetRaw(body, path+"authentication.authenticationKeys.-1", itemBody)
@@ -472,7 +496,10 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result, fullRead 
 				if t.String() == "variable" {
 					item.Md5ValueVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.Md5Value = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.Md5Value = types.StringValue(va.String())
+					}
 				}
 			}
 			item.HmacSha2Value = types.StringNull()
@@ -482,7 +509,10 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result, fullRead 
 				if t.String() == "variable" {
 					item.HmacSha2ValueVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.HmacSha2Value = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.HmacSha2Value = types.StringValue(va.String())
+					}
 				}
 			}
 			item.CmacAes128Value = types.StringNull()
@@ -492,7 +522,10 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result, fullRead 
 				if t.String() == "variable" {
 					item.CmacAes128ValueVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.CmacAes128Value = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if !helpers.IsEncryptedValue(va.String()) {
+						item.CmacAes128Value = types.StringValue(va.String())
+					}
 				}
 			}
 			data.AuthenticationKeys = append(data.AuthenticationKeys, item)

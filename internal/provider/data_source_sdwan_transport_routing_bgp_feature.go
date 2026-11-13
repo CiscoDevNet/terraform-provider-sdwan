@@ -300,10 +300,20 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 						},
 						"password": schema.StringAttribute{
 							MarkdownDescription: "Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"password_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"password_wo": schema.StringAttribute{
+							MarkdownDescription: "Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+							Sensitive:           true,
+							Computed:            true,
+						},
+						"password_wo_version": schema.Int64Attribute{
+							MarkdownDescription: "Rotation trigger for `password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 							Computed:            true,
 						},
 						"send_label": schema.BoolAttribute{
@@ -520,10 +530,20 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 						},
 						"password": schema.StringAttribute{
 							MarkdownDescription: "Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"password_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"password_wo": schema.StringAttribute{
+							MarkdownDescription: "Set MD5 password on TCP connection with BGP peer [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+							Sensitive:           true,
+							Computed:            true,
+						},
+						"password_wo_version": schema.Int64Attribute{
+							MarkdownDescription: "Rotation trigger for `password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 							Computed:            true,
 						},
 						"as_override": schema.BoolAttribute{

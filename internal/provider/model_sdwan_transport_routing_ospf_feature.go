@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -115,6 +116,8 @@ type TransportRoutingOSPFAreasInterfaces struct {
 	MessageDigestKeyIdVariable       types.String `tfsdk:"message_digest_key_id_variable"`
 	MessageDigestKey                 types.String `tfsdk:"message_digest_key"`
 	MessageDigestKeyVariable         types.String `tfsdk:"message_digest_key_variable"`
+	MessageDigestKeyWo               types.String `tfsdk:"message_digest_key_wo"`
+	MessageDigestKeyWoVersion        types.Int64  `tfsdk:"message_digest_key_wo_version"`
 }
 type TransportRoutingOSPFAreasRanges struct {
 	IpAddress           types.String `tfsdk:"ip_address"`
@@ -667,6 +670,17 @@ func (data TransportRoutingOSPF) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "md5.value", childItem.MessageDigestKey.ValueString())
 						}
 					}
+					if childItem.MessageDigestKeyWo.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "md5.optionType", "default")
+
+						}
+					} else {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "md5.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "md5.value", childItem.MessageDigestKeyWo.ValueString())
+						}
+					}
 					itemBody, _ = sjson.SetRaw(itemBody, "interface.-1", itemChildBody)
 				}
 			}
@@ -1160,7 +1174,10 @@ func (data *TransportRoutingOSPF) fromBody(ctx context.Context, res gjson.Result
 						if t.String() == "variable" {
 							cItem.MessageDigestKeyVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.MessageDigestKey = types.StringValue(va.String())
+							// Masked secrets returned by the Manager must never be written into state.
+							if !helpers.IsEncryptedValue(va.String()) {
+								cItem.MessageDigestKey = types.StringValue(va.String())
+							}
 						}
 					}
 					item.Interfaces = append(item.Interfaces, cItem)

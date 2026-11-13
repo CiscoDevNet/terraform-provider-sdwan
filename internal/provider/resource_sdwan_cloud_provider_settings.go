@@ -27,6 +27,7 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
@@ -80,27 +81,93 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 				},
 			},
 			"umbrella_auth_key_v2": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Authentication Key (v2)").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Authentication Key (v2)").AddMutualExclusivityDescription("Only one of `umbrella_auth_key_v2` and `umbrella_auth_key_v2_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `umbrella_auth_key_v2_wo` together with `umbrella_auth_key_v2_wo_version`, which keeps it out of state.").String,
+				Sensitive:           true,
+				Optional:            true,
+			},
+			"umbrella_auth_key_v2_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Authentication Key (v2)").AddMutualExclusivityDescription("Only one of `umbrella_auth_key_v2` and `umbrella_auth_key_v2_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+			},
+			"umbrella_auth_key_v2_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `umbrella_auth_key_v2_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"umbrella_auth_secret_v2": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Authentication Secret (v2)").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Authentication Secret (v2)").AddMutualExclusivityDescription("Only one of `umbrella_auth_secret_v2` and `umbrella_auth_secret_v2_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `umbrella_auth_secret_v2_wo` together with `umbrella_auth_secret_v2_wo_version`, which keeps it out of state.").String,
+				Sensitive:           true,
+				Optional:            true,
+			},
+			"umbrella_auth_secret_v2_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Authentication Secret (v2)").AddMutualExclusivityDescription("Only one of `umbrella_auth_secret_v2` and `umbrella_auth_secret_v2_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+			},
+			"umbrella_auth_secret_v2_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `umbrella_auth_secret_v2_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"umbrella_sig_auth_key": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella SIG Authentication Key").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella SIG Authentication Key").AddMutualExclusivityDescription("Only one of `umbrella_sig_auth_key` and `umbrella_sig_auth_key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `umbrella_sig_auth_key_wo` together with `umbrella_sig_auth_key_wo_version`, which keeps it out of state.").String,
+				Sensitive:           true,
+				Optional:            true,
+			},
+			"umbrella_sig_auth_key_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella SIG Authentication Key").AddMutualExclusivityDescription("Only one of `umbrella_sig_auth_key` and `umbrella_sig_auth_key_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+			},
+			"umbrella_sig_auth_key_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `umbrella_sig_auth_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"umbrella_sig_auth_secret": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella SIG Authentication Secret").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella SIG Authentication Secret").AddMutualExclusivityDescription("Only one of `umbrella_sig_auth_secret` and `umbrella_sig_auth_secret_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `umbrella_sig_auth_secret_wo` together with `umbrella_sig_auth_secret_wo_version`, which keeps it out of state.").String,
+				Sensitive:           true,
+				Optional:            true,
+			},
+			"umbrella_sig_auth_secret_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella SIG Authentication Secret").AddMutualExclusivityDescription("Only one of `umbrella_sig_auth_secret` and `umbrella_sig_auth_secret_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+			},
+			"umbrella_sig_auth_secret_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `umbrella_sig_auth_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"umbrella_dns_auth_key": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella DNS Authentication Key").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella DNS Authentication Key").AddMutualExclusivityDescription("Only one of `umbrella_dns_auth_key` and `umbrella_dns_auth_key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `umbrella_dns_auth_key_wo` together with `umbrella_dns_auth_key_wo_version`, which keeps it out of state.").String,
+				Sensitive:           true,
+				Optional:            true,
+			},
+			"umbrella_dns_auth_key_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella DNS Authentication Key").AddMutualExclusivityDescription("Only one of `umbrella_dns_auth_key` and `umbrella_dns_auth_key_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+			},
+			"umbrella_dns_auth_key_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `umbrella_dns_auth_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"umbrella_dns_auth_secret": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella DNS Authentication Secret").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella DNS Authentication Secret").AddMutualExclusivityDescription("Only one of `umbrella_dns_auth_secret` and `umbrella_dns_auth_secret_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `umbrella_dns_auth_secret_wo` together with `umbrella_dns_auth_secret_wo_version`, which keeps it out of state.").String,
+				Sensitive:           true,
+				Optional:            true,
+			},
+			"umbrella_dns_auth_secret_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella DNS Authentication Secret").AddMutualExclusivityDescription("Only one of `umbrella_dns_auth_secret` and `umbrella_dns_auth_secret_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+			},
+			"umbrella_dns_auth_secret_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `umbrella_dns_auth_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"zscaler_organization": schema.StringAttribute{
@@ -112,7 +179,18 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 			},
 			"zscaler_partner_key": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Zscaler Partner Key").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Zscaler Partner Key").AddMutualExclusivityDescription("Only one of `zscaler_partner_key` and `zscaler_partner_key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `zscaler_partner_key_wo` together with `zscaler_partner_key_wo_version`, which keeps it out of state.").String,
+				Sensitive:           true,
+				Optional:            true,
+			},
+			"zscaler_partner_key_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Zscaler Partner Key").AddMutualExclusivityDescription("Only one of `zscaler_partner_key` and `zscaler_partner_key_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+			},
+			"zscaler_partner_key_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `zscaler_partner_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"zscaler_username": schema.StringAttribute{
@@ -120,7 +198,18 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 			},
 			"zscaler_password": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Zscaler Password").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Zscaler Password").AddMutualExclusivityDescription("Only one of `zscaler_password` and `zscaler_password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `zscaler_password_wo` together with `zscaler_password_wo_version`, which keeps it out of state.").String,
+				Sensitive:           true,
+				Optional:            true,
+			},
+			"zscaler_password_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Zscaler Password").AddMutualExclusivityDescription("Only one of `zscaler_password` and `zscaler_password_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+			},
+			"zscaler_password_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `zscaler_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"cisco_sse_org_id": schema.StringAttribute{
@@ -131,11 +220,33 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 				},
 			},
 			"cisco_sse_auth_key": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Cisco SSE Authentication Key").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Cisco SSE Authentication Key").AddMutualExclusivityDescription("Only one of `cisco_sse_auth_key` and `cisco_sse_auth_key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `cisco_sse_auth_key_wo` together with `cisco_sse_auth_key_wo_version`, which keeps it out of state.").String,
+				Sensitive:           true,
+				Optional:            true,
+			},
+			"cisco_sse_auth_key_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Cisco SSE Authentication Key").AddMutualExclusivityDescription("Only one of `cisco_sse_auth_key` and `cisco_sse_auth_key_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+			},
+			"cisco_sse_auth_key_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `cisco_sse_auth_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"cisco_sse_auth_secret": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Cisco SSE Authentication Secret").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Cisco SSE Authentication Secret").AddMutualExclusivityDescription("Only one of `cisco_sse_auth_secret` and `cisco_sse_auth_secret_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `cisco_sse_auth_secret_wo` together with `cisco_sse_auth_secret_wo_version`, which keeps it out of state.").String,
+				Sensitive:           true,
+				Optional:            true,
+			},
+			"cisco_sse_auth_secret_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Cisco SSE Authentication Secret").AddMutualExclusivityDescription("Only one of `cisco_sse_auth_secret` and `cisco_sse_auth_secret_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+			},
+			"cisco_sse_auth_secret_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `cisco_sse_auth_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"cisco_sse_context_sharing": schema.BoolAttribute{
@@ -158,6 +269,342 @@ func (r *CloudProviderSettingsResource) Configure(_ context.Context, req resourc
 	r.taskTimeout = req.ProviderData.(*SdwanProviderData).TaskTimeout
 }
 
+var _ resource.ResourceWithValidateConfig = &CloudProviderSettingsResource{}
+
+// ValidateConfig enforces the rules between a secret attribute and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+//
+// Generic resources have no "_variable" siblings - that concept only exists in the
+// profile_parcels family - so the variable/secret precedence checks are omitted here.
+func (r *CloudProviderSettingsResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	var vUmbrellaAuthKeyV2 types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_auth_key_v2"), &vUmbrellaAuthKeyV2)...)
+	var vUmbrellaAuthKeyV2Wo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_auth_key_v2_wo"), &vUmbrellaAuthKeyV2Wo)...)
+	var vUmbrellaAuthKeyV2WoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_auth_key_v2_wo_version"), &vUmbrellaAuthKeyV2WoVersion)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vUmbrellaAuthKeyV2.IsUnknown() && !vUmbrellaAuthKeyV2Wo.IsUnknown() && !vUmbrellaAuthKeyV2.IsNull() && !vUmbrellaAuthKeyV2Wo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `umbrella_auth_key_v2` and `umbrella_auth_key_v2_wo` can be set.",
+		)
+	}
+	if !vUmbrellaAuthKeyV2Wo.IsUnknown() && !vUmbrellaAuthKeyV2WoVersion.IsUnknown() && !vUmbrellaAuthKeyV2Wo.IsNull() && vUmbrellaAuthKeyV2WoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`umbrella_auth_key_v2_wo_version` must be set when `umbrella_auth_key_v2_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vUmbrellaAuthKeyV2WoVersion.IsUnknown() && !vUmbrellaAuthKeyV2Wo.IsUnknown() && !vUmbrellaAuthKeyV2WoVersion.IsNull() && vUmbrellaAuthKeyV2Wo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`umbrella_auth_key_v2_wo` must be set when `umbrella_auth_key_v2_wo_version` is used.",
+		)
+	}
+
+	var vUmbrellaAuthSecretV2 types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_auth_secret_v2"), &vUmbrellaAuthSecretV2)...)
+	var vUmbrellaAuthSecretV2Wo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_auth_secret_v2_wo"), &vUmbrellaAuthSecretV2Wo)...)
+	var vUmbrellaAuthSecretV2WoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_auth_secret_v2_wo_version"), &vUmbrellaAuthSecretV2WoVersion)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vUmbrellaAuthSecretV2.IsUnknown() && !vUmbrellaAuthSecretV2Wo.IsUnknown() && !vUmbrellaAuthSecretV2.IsNull() && !vUmbrellaAuthSecretV2Wo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `umbrella_auth_secret_v2` and `umbrella_auth_secret_v2_wo` can be set.",
+		)
+	}
+	if !vUmbrellaAuthSecretV2Wo.IsUnknown() && !vUmbrellaAuthSecretV2WoVersion.IsUnknown() && !vUmbrellaAuthSecretV2Wo.IsNull() && vUmbrellaAuthSecretV2WoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`umbrella_auth_secret_v2_wo_version` must be set when `umbrella_auth_secret_v2_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vUmbrellaAuthSecretV2WoVersion.IsUnknown() && !vUmbrellaAuthSecretV2Wo.IsUnknown() && !vUmbrellaAuthSecretV2WoVersion.IsNull() && vUmbrellaAuthSecretV2Wo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`umbrella_auth_secret_v2_wo` must be set when `umbrella_auth_secret_v2_wo_version` is used.",
+		)
+	}
+
+	var vUmbrellaSigAuthKey types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_sig_auth_key"), &vUmbrellaSigAuthKey)...)
+	var vUmbrellaSigAuthKeyWo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_sig_auth_key_wo"), &vUmbrellaSigAuthKeyWo)...)
+	var vUmbrellaSigAuthKeyWoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_sig_auth_key_wo_version"), &vUmbrellaSigAuthKeyWoVersion)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vUmbrellaSigAuthKey.IsUnknown() && !vUmbrellaSigAuthKeyWo.IsUnknown() && !vUmbrellaSigAuthKey.IsNull() && !vUmbrellaSigAuthKeyWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `umbrella_sig_auth_key` and `umbrella_sig_auth_key_wo` can be set.",
+		)
+	}
+	if !vUmbrellaSigAuthKeyWo.IsUnknown() && !vUmbrellaSigAuthKeyWoVersion.IsUnknown() && !vUmbrellaSigAuthKeyWo.IsNull() && vUmbrellaSigAuthKeyWoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`umbrella_sig_auth_key_wo_version` must be set when `umbrella_sig_auth_key_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vUmbrellaSigAuthKeyWoVersion.IsUnknown() && !vUmbrellaSigAuthKeyWo.IsUnknown() && !vUmbrellaSigAuthKeyWoVersion.IsNull() && vUmbrellaSigAuthKeyWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`umbrella_sig_auth_key_wo` must be set when `umbrella_sig_auth_key_wo_version` is used.",
+		)
+	}
+
+	var vUmbrellaSigAuthSecret types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_sig_auth_secret"), &vUmbrellaSigAuthSecret)...)
+	var vUmbrellaSigAuthSecretWo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_sig_auth_secret_wo"), &vUmbrellaSigAuthSecretWo)...)
+	var vUmbrellaSigAuthSecretWoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_sig_auth_secret_wo_version"), &vUmbrellaSigAuthSecretWoVersion)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vUmbrellaSigAuthSecret.IsUnknown() && !vUmbrellaSigAuthSecretWo.IsUnknown() && !vUmbrellaSigAuthSecret.IsNull() && !vUmbrellaSigAuthSecretWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `umbrella_sig_auth_secret` and `umbrella_sig_auth_secret_wo` can be set.",
+		)
+	}
+	if !vUmbrellaSigAuthSecretWo.IsUnknown() && !vUmbrellaSigAuthSecretWoVersion.IsUnknown() && !vUmbrellaSigAuthSecretWo.IsNull() && vUmbrellaSigAuthSecretWoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`umbrella_sig_auth_secret_wo_version` must be set when `umbrella_sig_auth_secret_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vUmbrellaSigAuthSecretWoVersion.IsUnknown() && !vUmbrellaSigAuthSecretWo.IsUnknown() && !vUmbrellaSigAuthSecretWoVersion.IsNull() && vUmbrellaSigAuthSecretWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`umbrella_sig_auth_secret_wo` must be set when `umbrella_sig_auth_secret_wo_version` is used.",
+		)
+	}
+
+	var vUmbrellaDnsAuthKey types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_dns_auth_key"), &vUmbrellaDnsAuthKey)...)
+	var vUmbrellaDnsAuthKeyWo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_dns_auth_key_wo"), &vUmbrellaDnsAuthKeyWo)...)
+	var vUmbrellaDnsAuthKeyWoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_dns_auth_key_wo_version"), &vUmbrellaDnsAuthKeyWoVersion)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vUmbrellaDnsAuthKey.IsUnknown() && !vUmbrellaDnsAuthKeyWo.IsUnknown() && !vUmbrellaDnsAuthKey.IsNull() && !vUmbrellaDnsAuthKeyWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `umbrella_dns_auth_key` and `umbrella_dns_auth_key_wo` can be set.",
+		)
+	}
+	if !vUmbrellaDnsAuthKeyWo.IsUnknown() && !vUmbrellaDnsAuthKeyWoVersion.IsUnknown() && !vUmbrellaDnsAuthKeyWo.IsNull() && vUmbrellaDnsAuthKeyWoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`umbrella_dns_auth_key_wo_version` must be set when `umbrella_dns_auth_key_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vUmbrellaDnsAuthKeyWoVersion.IsUnknown() && !vUmbrellaDnsAuthKeyWo.IsUnknown() && !vUmbrellaDnsAuthKeyWoVersion.IsNull() && vUmbrellaDnsAuthKeyWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`umbrella_dns_auth_key_wo` must be set when `umbrella_dns_auth_key_wo_version` is used.",
+		)
+	}
+
+	var vUmbrellaDnsAuthSecret types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_dns_auth_secret"), &vUmbrellaDnsAuthSecret)...)
+	var vUmbrellaDnsAuthSecretWo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_dns_auth_secret_wo"), &vUmbrellaDnsAuthSecretWo)...)
+	var vUmbrellaDnsAuthSecretWoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_dns_auth_secret_wo_version"), &vUmbrellaDnsAuthSecretWoVersion)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vUmbrellaDnsAuthSecret.IsUnknown() && !vUmbrellaDnsAuthSecretWo.IsUnknown() && !vUmbrellaDnsAuthSecret.IsNull() && !vUmbrellaDnsAuthSecretWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `umbrella_dns_auth_secret` and `umbrella_dns_auth_secret_wo` can be set.",
+		)
+	}
+	if !vUmbrellaDnsAuthSecretWo.IsUnknown() && !vUmbrellaDnsAuthSecretWoVersion.IsUnknown() && !vUmbrellaDnsAuthSecretWo.IsNull() && vUmbrellaDnsAuthSecretWoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`umbrella_dns_auth_secret_wo_version` must be set when `umbrella_dns_auth_secret_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vUmbrellaDnsAuthSecretWoVersion.IsUnknown() && !vUmbrellaDnsAuthSecretWo.IsUnknown() && !vUmbrellaDnsAuthSecretWoVersion.IsNull() && vUmbrellaDnsAuthSecretWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`umbrella_dns_auth_secret_wo` must be set when `umbrella_dns_auth_secret_wo_version` is used.",
+		)
+	}
+
+	var vZscalerPartnerKey types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("zscaler_partner_key"), &vZscalerPartnerKey)...)
+	var vZscalerPartnerKeyWo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("zscaler_partner_key_wo"), &vZscalerPartnerKeyWo)...)
+	var vZscalerPartnerKeyWoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("zscaler_partner_key_wo_version"), &vZscalerPartnerKeyWoVersion)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vZscalerPartnerKey.IsUnknown() && !vZscalerPartnerKeyWo.IsUnknown() && !vZscalerPartnerKey.IsNull() && !vZscalerPartnerKeyWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `zscaler_partner_key` and `zscaler_partner_key_wo` can be set.",
+		)
+	}
+	if !vZscalerPartnerKeyWo.IsUnknown() && !vZscalerPartnerKeyWoVersion.IsUnknown() && !vZscalerPartnerKeyWo.IsNull() && vZscalerPartnerKeyWoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`zscaler_partner_key_wo_version` must be set when `zscaler_partner_key_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vZscalerPartnerKeyWoVersion.IsUnknown() && !vZscalerPartnerKeyWo.IsUnknown() && !vZscalerPartnerKeyWoVersion.IsNull() && vZscalerPartnerKeyWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`zscaler_partner_key_wo` must be set when `zscaler_partner_key_wo_version` is used.",
+		)
+	}
+
+	var vZscalerPassword types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("zscaler_password"), &vZscalerPassword)...)
+	var vZscalerPasswordWo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("zscaler_password_wo"), &vZscalerPasswordWo)...)
+	var vZscalerPasswordWoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("zscaler_password_wo_version"), &vZscalerPasswordWoVersion)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vZscalerPassword.IsUnknown() && !vZscalerPasswordWo.IsUnknown() && !vZscalerPassword.IsNull() && !vZscalerPasswordWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `zscaler_password` and `zscaler_password_wo` can be set.",
+		)
+	}
+	if !vZscalerPasswordWo.IsUnknown() && !vZscalerPasswordWoVersion.IsUnknown() && !vZscalerPasswordWo.IsNull() && vZscalerPasswordWoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`zscaler_password_wo_version` must be set when `zscaler_password_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vZscalerPasswordWoVersion.IsUnknown() && !vZscalerPasswordWo.IsUnknown() && !vZscalerPasswordWoVersion.IsNull() && vZscalerPasswordWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`zscaler_password_wo` must be set when `zscaler_password_wo_version` is used.",
+		)
+	}
+
+	var vCiscoSseAuthKey types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("cisco_sse_auth_key"), &vCiscoSseAuthKey)...)
+	var vCiscoSseAuthKeyWo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("cisco_sse_auth_key_wo"), &vCiscoSseAuthKeyWo)...)
+	var vCiscoSseAuthKeyWoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("cisco_sse_auth_key_wo_version"), &vCiscoSseAuthKeyWoVersion)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vCiscoSseAuthKey.IsUnknown() && !vCiscoSseAuthKeyWo.IsUnknown() && !vCiscoSseAuthKey.IsNull() && !vCiscoSseAuthKeyWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `cisco_sse_auth_key` and `cisco_sse_auth_key_wo` can be set.",
+		)
+	}
+	if !vCiscoSseAuthKeyWo.IsUnknown() && !vCiscoSseAuthKeyWoVersion.IsUnknown() && !vCiscoSseAuthKeyWo.IsNull() && vCiscoSseAuthKeyWoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`cisco_sse_auth_key_wo_version` must be set when `cisco_sse_auth_key_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vCiscoSseAuthKeyWoVersion.IsUnknown() && !vCiscoSseAuthKeyWo.IsUnknown() && !vCiscoSseAuthKeyWoVersion.IsNull() && vCiscoSseAuthKeyWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`cisco_sse_auth_key_wo` must be set when `cisco_sse_auth_key_wo_version` is used.",
+		)
+	}
+
+	var vCiscoSseAuthSecret types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("cisco_sse_auth_secret"), &vCiscoSseAuthSecret)...)
+	var vCiscoSseAuthSecretWo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("cisco_sse_auth_secret_wo"), &vCiscoSseAuthSecretWo)...)
+	var vCiscoSseAuthSecretWoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("cisco_sse_auth_secret_wo_version"), &vCiscoSseAuthSecretWoVersion)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vCiscoSseAuthSecret.IsUnknown() && !vCiscoSseAuthSecretWo.IsUnknown() && !vCiscoSseAuthSecret.IsNull() && !vCiscoSseAuthSecretWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `cisco_sse_auth_secret` and `cisco_sse_auth_secret_wo` can be set.",
+		)
+	}
+	if !vCiscoSseAuthSecretWo.IsUnknown() && !vCiscoSseAuthSecretWoVersion.IsUnknown() && !vCiscoSseAuthSecretWo.IsNull() && vCiscoSseAuthSecretWoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`cisco_sse_auth_secret_wo_version` must be set when `cisco_sse_auth_secret_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vCiscoSseAuthSecretWoVersion.IsUnknown() && !vCiscoSseAuthSecretWo.IsUnknown() && !vCiscoSseAuthSecretWoVersion.IsNull() && vCiscoSseAuthSecretWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`cisco_sse_auth_secret_wo` must be set when `cisco_sse_auth_secret_wo_version` is used.",
+		)
+	}
+}
+
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
@@ -167,6 +614,86 @@ func (r *CloudProviderSettingsResource) Create(ctx context.Context, req resource
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "umbrella_auth_key_v2_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_auth_key_v2_wo"), &plan.UmbrellaAuthKeyV2Wo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "umbrella_auth_secret_v2_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_auth_secret_v2_wo"), &plan.UmbrellaAuthSecretV2Wo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "umbrella_sig_auth_key_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_sig_auth_key_wo"), &plan.UmbrellaSigAuthKeyWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "umbrella_sig_auth_secret_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_sig_auth_secret_wo"), &plan.UmbrellaSigAuthSecretWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "umbrella_dns_auth_key_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_dns_auth_key_wo"), &plan.UmbrellaDnsAuthKeyWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "umbrella_dns_auth_secret_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_dns_auth_secret_wo"), &plan.UmbrellaDnsAuthSecretWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "zscaler_partner_key_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("zscaler_partner_key_wo"), &plan.ZscalerPartnerKeyWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "zscaler_password_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("zscaler_password_wo"), &plan.ZscalerPasswordWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "cisco_sse_auth_key_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("cisco_sse_auth_key_wo"), &plan.CiscoSseAuthKeyWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "cisco_sse_auth_secret_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("cisco_sse_auth_secret_wo"), &plan.CiscoSseAuthSecretWo)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -232,6 +759,86 @@ func (r *CloudProviderSettingsResource) Update(ctx context.Context, req resource
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "umbrella_auth_key_v2_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_auth_key_v2_wo"), &plan.UmbrellaAuthKeyV2Wo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "umbrella_auth_secret_v2_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_auth_secret_v2_wo"), &plan.UmbrellaAuthSecretV2Wo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "umbrella_sig_auth_key_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_sig_auth_key_wo"), &plan.UmbrellaSigAuthKeyWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "umbrella_sig_auth_secret_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_sig_auth_secret_wo"), &plan.UmbrellaSigAuthSecretWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "umbrella_dns_auth_key_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_dns_auth_key_wo"), &plan.UmbrellaDnsAuthKeyWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "umbrella_dns_auth_secret_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("umbrella_dns_auth_secret_wo"), &plan.UmbrellaDnsAuthSecretWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "zscaler_partner_key_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("zscaler_partner_key_wo"), &plan.ZscalerPartnerKeyWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "zscaler_password_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("zscaler_password_wo"), &plan.ZscalerPasswordWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "cisco_sse_auth_key_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("cisco_sse_auth_key_wo"), &plan.CiscoSseAuthKeyWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "cisco_sse_auth_secret_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because the PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("cisco_sse_auth_secret_wo"), &plan.CiscoSseAuthSecretWo)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}

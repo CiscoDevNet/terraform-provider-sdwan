@@ -91,8 +91,10 @@ Read-Only:
 
 Read-Only:
 
-- `authentication_key` (String) Set OSPF interface authentication IPSEC key
+- `authentication_key` (String, Sensitive) Set OSPF interface authentication IPSEC key
 - `authentication_key_variable` (String) Variable name
+- `authentication_key_wo` (String, Sensitive) Set OSPF interface authentication IPSEC key
+- `authentication_key_wo_version` (Number) Rotation trigger for `authentication_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `authentication_spi` (Number) Set OSPF interface authentication IPSec SPI, range 256..4294967295
 - `authentication_spi_variable` (String) Variable name
 - `authentication_type` (String) Set OSPF interface authentication configuration

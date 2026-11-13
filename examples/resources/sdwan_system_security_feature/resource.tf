@@ -22,7 +22,6 @@ resource "sdwan_system_security_feature" "example" {
       include_tcp_options          = false
       accept_ao_mismatch           = false
       crypto_algorithm             = "aes-128-cmac"
-      key_string                   = "abcabc"
       send_life_time_local         = true
       send_life_time_start_epoch   = 1659284400
       send_life_time_infinite      = true

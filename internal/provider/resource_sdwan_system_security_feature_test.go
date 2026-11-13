@@ -114,7 +114,6 @@ func testAccSdwanSystemSecurityProfileParcelConfig_all() string {
 	config += `	  include_tcp_options = false` + "\n"
 	config += `	  accept_ao_mismatch = false` + "\n"
 	config += `	  crypto_algorithm = "aes-128-cmac"` + "\n"
-	config += `	  key_string = "abcabc"` + "\n"
 	config += `	  send_life_time_local = true` + "\n"
 	config += `	  send_life_time_start_epoch = 1659284400` + "\n"
 	config += `	  send_life_time_infinite = true` + "\n"

@@ -137,7 +137,7 @@ Optional:
 - `include_tcp_options` (Boolean) Configure Include TCP Options
   - Default value: `false`
 - `include_tcp_options_variable` (String) Variable name
-- `key_string` (String) Specify the Key String
+- `key_string` (String, Sensitive) Specify the Key String
 - `key_string_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `receive_id` (Number) Specify the Receiver ID

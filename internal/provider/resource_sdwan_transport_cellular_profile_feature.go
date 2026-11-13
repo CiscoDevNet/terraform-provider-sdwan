@@ -133,11 +133,22 @@ func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Conte
 				Optional:            true,
 			},
 			"profile_password": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.], Attribute conditional on `requires_authentication` equal to `true`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.], Attribute conditional on `requires_authentication` equal to `true`").AddMutualExclusivityDescription("Only one of `profile_password`, `profile_password_variable` and `profile_password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `profile_password_wo` together with `profile_password_wo_version`, which keeps it out of state.").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"profile_password_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `requires_authentication` equal to `true`").String,
+				Optional:            true,
+			},
+			"profile_password_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.], Attribute conditional on `requires_authentication` equal to `true`").AddMutualExclusivityDescription("Only one of `profile_password`, `profile_password_variable` and `profile_password_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+			},
+			"profile_password_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `profile_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"packet_data_network_type": schema.StringAttribute{
@@ -191,6 +202,66 @@ func (r *TransportCellularProfileProfileParcelResource) Configure(_ context.Cont
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
 
+var _ resource.ResourceWithValidateConfig = &TransportCellularProfileProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *TransportCellularProfileProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	var vProfilePassword types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("profile_password"), &vProfilePassword)...)
+	var vProfilePasswordVariable types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("profile_password_variable"), &vProfilePasswordVariable)...)
+	var vProfilePasswordWo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("profile_password_wo"), &vProfilePasswordWo)...)
+	var vProfilePasswordWoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("profile_password_wo_version"), &vProfilePasswordWoVersion)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vProfilePassword.IsUnknown() && !vProfilePasswordWo.IsUnknown() && !vProfilePassword.IsNull() && !vProfilePasswordWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `profile_password` and `profile_password_wo` can be set.",
+		)
+	}
+	if !vProfilePasswordVariable.IsUnknown() && !vProfilePasswordWo.IsUnknown() && !vProfilePasswordVariable.IsNull() && !vProfilePasswordWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"`profile_password_variable` and `profile_password_wo` cannot both be set. `profile_password_variable` defers the value to a device variable, so the write-only value would never be sent.",
+		)
+	}
+	if !vProfilePassword.IsUnknown() && !vProfilePasswordVariable.IsUnknown() && !vProfilePassword.IsNull() && !vProfilePasswordVariable.IsNull() {
+		resp.Diagnostics.AddWarning(
+			"Conflicting Attribute Combination",
+			"Both `profile_password` and `profile_password_variable` are set. `profile_password_variable` takes precedence, so the value of `profile_password` is not sent to the device - but it is still stored in Terraform state. Set only one of them.",
+		)
+	}
+	if !vProfilePasswordWo.IsUnknown() && !vProfilePasswordWoVersion.IsUnknown() && !vProfilePasswordWo.IsNull() && vProfilePasswordWoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`profile_password_wo_version` must be set when `profile_password_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vProfilePasswordWoVersion.IsUnknown() && !vProfilePasswordWo.IsUnknown() && !vProfilePasswordWoVersion.IsNull() && vProfilePasswordWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`profile_password_wo` must be set when `profile_password_wo_version` is used.",
+		)
+	}
+}
+
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
@@ -200,6 +271,14 @@ func (r *TransportCellularProfileProfileParcelResource) Create(ctx context.Conte
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "profile_password_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("profile_password_wo"), &plan.ProfilePasswordWo)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -280,6 +359,14 @@ func (r *TransportCellularProfileProfileParcelResource) Update(ctx context.Conte
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only value "profile_password_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("profile_password_wo"), &plan.ProfilePasswordWo)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}

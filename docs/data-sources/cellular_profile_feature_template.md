@@ -46,7 +46,7 @@ data "sdwan_cellular_profile_feature_template" "example" {
 - `profile_id_variable` (String) Variable name
 - `profile_name` (String) Set profile name
 - `profile_name_variable` (String) Variable name
-- `profile_password` (String) Set the profile password
+- `profile_password` (String, Sensitive) Set the profile password
 - `profile_password_variable` (String) Variable name
 - `profile_username` (String) Set the profile username
 - `profile_username_variable` (String) Variable name

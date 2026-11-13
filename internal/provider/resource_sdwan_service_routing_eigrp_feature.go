@@ -191,7 +191,8 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 				Optional:            true,
 			},
 			"hmac_authentication_key": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set hmac-sha-256 authentication key, Attribute conditional on `authentication_type` equal to `hmac-sha-256`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set hmac-sha-256 authentication key, Attribute conditional on `authentication_type` equal to `hmac-sha-256`").AddMutualExclusivityDescription("Only one of `hmac_authentication_key`, `hmac_authentication_key_variable` and `hmac_authentication_key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `hmac_authentication_key_wo` together with `hmac_authentication_key_wo_version`, which keeps it out of state.").String,
+				Sensitive:           true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 31),
@@ -200,6 +201,20 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 			},
 			"hmac_authentication_key_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `authentication_type` equal to `hmac-sha-256`").String,
+				Optional:            true,
+			},
+			"hmac_authentication_key_wo": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set hmac-sha-256 authentication key, Attribute conditional on `authentication_type` equal to `hmac-sha-256`").AddMutualExclusivityDescription("Only one of `hmac_authentication_key`, `hmac_authentication_key_variable` and `hmac_authentication_key_wo` can be set.").String,
+				Sensitive:           true,
+				WriteOnly:           true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 31),
+					stringvalidator.RegexMatches(regexp.MustCompile(`^(|[^0-7]|.{2,})$`), ""),
+				},
+			},
+			"hmac_authentication_key_wo_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `hmac_authentication_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 				Optional:            true,
 			},
 			"md5_keys": schema.ListNestedAttribute{
@@ -219,7 +234,8 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 							Optional:            true,
 						},
 						"key_string": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `key_string`, `key_string_variable` and `key_string_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `key_string_wo` together with `key_string_wo_version`, which keeps it out of state.").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 31),
@@ -227,6 +243,19 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 						},
 						"key_string_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"key_string_wo": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `key_string`, `key_string_variable` and `key_string_wo` can be set.").String,
+							Sensitive:           true,
+							WriteOnly:           true,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(1, 31),
+							},
+						},
+						"key_string_wo_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `key_string_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 							Optional:            true,
 						},
 					},
@@ -318,6 +347,112 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Configure(_ context.Context, 
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
 
+var _ resource.ResourceWithValidateConfig = &ServiceRoutingEIGRPProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *ServiceRoutingEIGRPProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	var vHmacAuthenticationKey types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("hmac_authentication_key"), &vHmacAuthenticationKey)...)
+	var vHmacAuthenticationKeyVariable types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("hmac_authentication_key_variable"), &vHmacAuthenticationKeyVariable)...)
+	var vHmacAuthenticationKeyWo types.String
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("hmac_authentication_key_wo"), &vHmacAuthenticationKeyWo)...)
+	var vHmacAuthenticationKeyWoVersion types.Int64
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("hmac_authentication_key_wo_version"), &vHmacAuthenticationKeyWoVersion)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// An unknown value is one that is not resolved yet at validate time, for example an
+	// ephemeral resource attribute or a random_password reference. Treat it as "not
+	// decided" rather than "set", otherwise every such configuration trips a false error.
+	if !vHmacAuthenticationKey.IsUnknown() && !vHmacAuthenticationKeyWo.IsUnknown() && !vHmacAuthenticationKey.IsNull() && !vHmacAuthenticationKeyWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"Only one of `hmac_authentication_key` and `hmac_authentication_key_wo` can be set.",
+		)
+	}
+	if !vHmacAuthenticationKeyVariable.IsUnknown() && !vHmacAuthenticationKeyWo.IsUnknown() && !vHmacAuthenticationKeyVariable.IsNull() && !vHmacAuthenticationKeyWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Invalid Attribute Combination",
+			"`hmac_authentication_key_variable` and `hmac_authentication_key_wo` cannot both be set. `hmac_authentication_key_variable` defers the value to a device variable, so the write-only value would never be sent.",
+		)
+	}
+	if !vHmacAuthenticationKey.IsUnknown() && !vHmacAuthenticationKeyVariable.IsUnknown() && !vHmacAuthenticationKey.IsNull() && !vHmacAuthenticationKeyVariable.IsNull() {
+		resp.Diagnostics.AddWarning(
+			"Conflicting Attribute Combination",
+			"Both `hmac_authentication_key` and `hmac_authentication_key_variable` are set. `hmac_authentication_key_variable` takes precedence, so the value of `hmac_authentication_key` is not sent to the device - but it is still stored in Terraform state. Set only one of them.",
+		)
+	}
+	if !vHmacAuthenticationKeyWo.IsUnknown() && !vHmacAuthenticationKeyWoVersion.IsUnknown() && !vHmacAuthenticationKeyWo.IsNull() && vHmacAuthenticationKeyWoVersion.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`hmac_authentication_key_wo_version` must be set when `hmac_authentication_key_wo` is used. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.",
+		)
+	}
+	if !vHmacAuthenticationKeyWoVersion.IsUnknown() && !vHmacAuthenticationKeyWo.IsUnknown() && !vHmacAuthenticationKeyWoVersion.IsNull() && vHmacAuthenticationKeyWo.IsNull() {
+		resp.Diagnostics.AddError(
+			"Missing Required Attribute",
+			"`hmac_authentication_key_wo` must be set when `hmac_authentication_key_wo_version` is used.",
+		)
+	}
+
+	{
+		// Secrets nested in "md5_keys" are validated per element. A list that cannot be
+		// read as a whole - because it is still unknown at validate time - is skipped rather
+		// than reported, since there is nothing to check yet.
+		var cfgMd5Keys []ServiceRoutingEIGRPMd5Keys
+		if diags := req.Config.GetAttribute(ctx, path.Root("md5_keys"), &cfgMd5Keys); !diags.HasError() {
+			for i := range cfgMd5Keys {
+				el := cfgMd5Keys[i]
+
+				// An unknown value is one that is not resolved yet at validate time, for example an
+				// ephemeral resource attribute or a random_password reference. Treat it as "not
+				// decided" rather than "set", otherwise every such configuration trips a false error.
+				if !el.KeyString.IsUnknown() && !el.KeyStringWo.IsUnknown() && !el.KeyString.IsNull() && !el.KeyStringWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("Only one of `key_string` and `key_string_wo` can be set in `md5_keys` element %d.", i),
+					)
+				}
+				if !el.KeyStringVariable.IsUnknown() && !el.KeyStringWo.IsUnknown() && !el.KeyStringVariable.IsNull() && !el.KeyStringWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("`key_string_variable` and `key_string_wo` cannot both be set in `md5_keys` element %d. `key_string_variable` defers the value to a device variable, so the write-only value would never be sent.", i),
+					)
+				}
+				if !el.KeyString.IsUnknown() && !el.KeyStringVariable.IsUnknown() && !el.KeyString.IsNull() && !el.KeyStringVariable.IsNull() {
+					resp.Diagnostics.AddWarning(
+						"Conflicting Attribute Combination",
+						fmt.Sprintf("Both `key_string` and `key_string_variable` are set in `md5_keys` element %d. `key_string_variable` takes precedence, so the value of `key_string` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i),
+					)
+				}
+				if !el.KeyStringWo.IsUnknown() && !el.KeyStringWoVersion.IsUnknown() && !el.KeyStringWo.IsNull() && el.KeyStringWoVersion.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`key_string_wo_version` must be set when `key_string_wo` is used in `md5_keys` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i),
+					)
+				}
+				if !el.KeyStringWoVersion.IsUnknown() && !el.KeyStringWo.IsUnknown() && !el.KeyStringWoVersion.IsNull() && el.KeyStringWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`key_string_wo` must be set when `key_string_wo_version` is used in `md5_keys` element %d.", i),
+					)
+				}
+			}
+		}
+	}
+}
+
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
@@ -329,6 +464,31 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Create(ctx context.Context, r
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only value "hmac_authentication_key_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("hmac_authentication_key_wo"), &plan.HmacAuthenticationKeyWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only values in list "md5_keys" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgMd5Keys []ServiceRoutingEIGRPMd5Keys
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("md5_keys"), &cfgMd5Keys)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Md5Keys {
+			if i < len(cfgMd5Keys) {
+				plan.Md5Keys[i].KeyStringWo = cfgMd5Keys[i].KeyStringWo
+			}
+		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
@@ -407,6 +567,31 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Update(ctx context.Context, r
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only value "hmac_authentication_key_wo" is not stored in plan or state; read it from the
+	// configuration so it can be sent to the API. Read unconditionally on every
+	// Update, because a parcel PUT replaces the whole object.
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("hmac_authentication_key_wo"), &plan.HmacAuthenticationKeyWo)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Write-only values in list "md5_keys" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgMd5Keys []ServiceRoutingEIGRPMd5Keys
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("md5_keys"), &cfgMd5Keys)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Md5Keys {
+			if i < len(cfgMd5Keys) {
+				plan.Md5Keys[i].KeyStringWo = cfgMd5Keys[i].KeyStringWo
+			}
+		}
 	}
 	// Read state
 	diags = req.State.Get(ctx, &state)

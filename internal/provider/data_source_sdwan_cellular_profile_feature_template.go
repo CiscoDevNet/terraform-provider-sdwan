@@ -155,6 +155,7 @@ func (d *CellularProfileFeatureTemplateDataSource) Schema(ctx context.Context, r
 			},
 			"profile_password": schema.StringAttribute{
 				MarkdownDescription: "Set the profile password",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"profile_password_variable": schema.StringAttribute{

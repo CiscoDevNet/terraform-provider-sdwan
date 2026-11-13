@@ -97,6 +97,8 @@ type ServiceLANVPNInterfaceGRE struct {
 	IkeGroupVariable                      types.String `tfsdk:"ike_group_variable"`
 	PreSharedSecret                       types.String `tfsdk:"pre_shared_secret"`
 	PreSharedSecretVariable               types.String `tfsdk:"pre_shared_secret_variable"`
+	PreSharedSecretWo                     types.String `tfsdk:"pre_shared_secret_wo"`
+	PreSharedSecretWoVersion              types.Int64  `tfsdk:"pre_shared_secret_wo_version"`
 	IkeLocalId                            types.String `tfsdk:"ike_local_id"`
 	IkeLocalIdVariable                    types.String `tfsdk:"ike_local_id_variable"`
 	IkeRemoteId                           types.String `tfsdk:"ike_remote_id"`
@@ -587,6 +589,17 @@ func (data ServiceLANVPNInterfaceGRE) toBody(ctx context.Context) string {
 		if true {
 			body, _ = sjson.Set(body, path+"basic.preSharedSecret.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.preSharedSecret.value", data.PreSharedSecret.ValueString())
+		}
+	}
+	if data.PreSharedSecretWo.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"basic.preSharedSecret.optionType", "default")
+
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"basic.preSharedSecret.optionType", "global")
+			body, _ = sjson.Set(body, path+"basic.preSharedSecret.value", data.PreSharedSecretWo.ValueString())
 		}
 	}
 

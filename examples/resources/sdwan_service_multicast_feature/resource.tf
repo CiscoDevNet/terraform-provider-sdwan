@@ -56,14 +56,13 @@ resource "sdwan_service_multicast_feature" "example" {
       mesh_group_name = "Example"
       peers = [
         {
-          peer_ip                      = "1.2.3.4"
-          connection_source_interface  = "GigabitEthernet1"
-          remote_as                    = 1
-          peer_authentication_password = "Password123!"
-          keepalive_interval           = 15
-          keepalive_hold_time          = 30
-          sa_limit                     = 1
-          default_peer                 = false
+          peer_ip                     = "1.2.3.4"
+          connection_source_interface = "GigabitEthernet1"
+          remote_as                   = 1
+          keepalive_interval          = 15
+          keepalive_hold_time         = 30
+          sa_limit                    = 1
+          default_peer                = false
         }
       ]
     }

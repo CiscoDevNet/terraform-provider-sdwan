@@ -92,10 +92,20 @@ func (d *OtherThousandEyesProfileParcelDataSource) Schema(ctx context.Context, r
 					Attributes: map[string]schema.Attribute{
 						"account_group_token": schema.StringAttribute{
 							MarkdownDescription: "Set the Account Group Token",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"account_group_token_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"account_group_token_wo": schema.StringAttribute{
+							MarkdownDescription: "Set the Account Group Token",
+							Sensitive:           true,
+							Computed:            true,
+						},
+						"account_group_token_wo_version": schema.Int64Attribute{
+							MarkdownDescription: "Rotation trigger for `account_group_token_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 							Computed:            true,
 						},
 						"vpn": schema.Int64Attribute{

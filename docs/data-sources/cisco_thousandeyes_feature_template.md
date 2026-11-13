@@ -42,7 +42,7 @@ Read-Only:
 - `application_type` (String) List of Virtual applications
 - `instance_id` (String) List of Virtual applications
 - `optional` (Boolean) Indicates if list item is considered optional.
-- `te_account_group_token` (String) Set the Account Group Token
+- `te_account_group_token` (String, Sensitive) Set the Account Group Token
 - `te_account_group_token_variable` (String) Variable name
 - `te_agent_ip` (String) Set the Agent IP Address
 - `te_agent_ip_variable` (String) Variable name

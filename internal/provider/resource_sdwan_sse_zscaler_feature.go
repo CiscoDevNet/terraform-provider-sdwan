@@ -248,7 +248,8 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 						},
 						"pre_shared_secret": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Use preshared key to authenticate IKE peer").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Use preshared key to authenticate IKE peer").AddMutualExclusivityDescription("Only one of `pre_shared_secret`, `pre_shared_secret_variable` and `pre_shared_secret_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `pre_shared_secret_wo` together with `pre_shared_secret_wo_version`, which keeps it out of state.").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 127),
@@ -256,6 +257,19 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 						},
 						"pre_shared_secret_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"pre_shared_secret_wo": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Use preshared key to authenticate IKE peer").AddMutualExclusivityDescription("Only one of `pre_shared_secret`, `pre_shared_secret_variable` and `pre_shared_secret_wo` can be set.").String,
+							Sensitive:           true,
+							WriteOnly:           true,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(1, 127),
+							},
+						},
+						"pre_shared_secret_wo_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `pre_shared_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 							Optional:            true,
 						},
 						"ike_rekey_interval": schema.Int64Attribute{
@@ -886,6 +900,66 @@ func (r *SSEZscalerProfileParcelResource) Configure(_ context.Context, req resou
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
 
+var _ resource.ResourceWithValidateConfig = &SSEZscalerProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *SSEZscalerProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	{
+		// Secrets nested in "interfaces" are validated per element. A list that cannot be
+		// read as a whole - because it is still unknown at validate time - is skipped rather
+		// than reported, since there is nothing to check yet.
+		var cfgInterfaces []SSEZscalerInterfaces
+		if diags := req.Config.GetAttribute(ctx, path.Root("interfaces"), &cfgInterfaces); !diags.HasError() {
+			for i := range cfgInterfaces {
+				el := cfgInterfaces[i]
+
+				// An unknown value is one that is not resolved yet at validate time, for example an
+				// ephemeral resource attribute or a random_password reference. Treat it as "not
+				// decided" rather than "set", otherwise every such configuration trips a false error.
+				if !el.PreSharedSecret.IsUnknown() && !el.PreSharedSecretWo.IsUnknown() && !el.PreSharedSecret.IsNull() && !el.PreSharedSecretWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("Only one of `pre_shared_secret` and `pre_shared_secret_wo` can be set in `interfaces` element %d.", i),
+					)
+				}
+				if !el.PreSharedSecretVariable.IsUnknown() && !el.PreSharedSecretWo.IsUnknown() && !el.PreSharedSecretVariable.IsNull() && !el.PreSharedSecretWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("`pre_shared_secret_variable` and `pre_shared_secret_wo` cannot both be set in `interfaces` element %d. `pre_shared_secret_variable` defers the value to a device variable, so the write-only value would never be sent.", i),
+					)
+				}
+				if !el.PreSharedSecret.IsUnknown() && !el.PreSharedSecretVariable.IsUnknown() && !el.PreSharedSecret.IsNull() && !el.PreSharedSecretVariable.IsNull() {
+					resp.Diagnostics.AddWarning(
+						"Conflicting Attribute Combination",
+						fmt.Sprintf("Both `pre_shared_secret` and `pre_shared_secret_variable` are set in `interfaces` element %d. `pre_shared_secret_variable` takes precedence, so the value of `pre_shared_secret` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i),
+					)
+				}
+				if !el.PreSharedSecretWo.IsUnknown() && !el.PreSharedSecretWoVersion.IsUnknown() && !el.PreSharedSecretWo.IsNull() && el.PreSharedSecretWoVersion.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`pre_shared_secret_wo_version` must be set when `pre_shared_secret_wo` is used in `interfaces` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i),
+					)
+				}
+				if !el.PreSharedSecretWoVersion.IsUnknown() && !el.PreSharedSecretWo.IsUnknown() && !el.PreSharedSecretWoVersion.IsNull() && el.PreSharedSecretWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`pre_shared_secret_wo` must be set when `pre_shared_secret_wo_version` is used in `interfaces` element %d.", i),
+					)
+				}
+			}
+		}
+	}
+}
+
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
@@ -897,6 +971,23 @@ func (r *SSEZscalerProfileParcelResource) Create(ctx context.Context, req resour
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values in list "interfaces" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgInterfaces []SSEZscalerInterfaces
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("interfaces"), &cfgInterfaces)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Interfaces {
+			if i < len(cfgInterfaces) {
+				plan.Interfaces[i].PreSharedSecretWo = cfgInterfaces[i].PreSharedSecretWo
+			}
+		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
@@ -975,6 +1066,23 @@ func (r *SSEZscalerProfileParcelResource) Update(ctx context.Context, req resour
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values in list "interfaces" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgInterfaces []SSEZscalerInterfaces
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("interfaces"), &cfgInterfaces)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Interfaces {
+			if i < len(cfgInterfaces) {
+				plan.Interfaces[i].PreSharedSecretWo = cfgInterfaces[i].PreSharedSecretWo
+			}
+		}
 	}
 	// Read state
 	diags = req.State.Get(ctx, &state)

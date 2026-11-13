@@ -223,7 +223,7 @@ func (d *PolicyGroupDataSource) Read(ctx context.Context, req datasource.ReadReq
 			return
 		}
 
-		config.fromBodyPolicyGroupDeviceVariables(ctx, res)
+		config.fromBodyPolicyGroupDeviceVariables(ctx, res, nil)
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))

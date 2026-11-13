@@ -18,7 +18,6 @@ resource "sdwan_transport_wan_vpn_interface_ipsec_feature" "example" {
   ipv4_mtu                        = 1500
   dpd_interval                    = 10
   dpd_retries                     = 3
-  ike_preshared_key               = "123"
   ike_version                     = 1
   ike_integrity_protocol          = "main"
   ike_rekey_interval              = 14400

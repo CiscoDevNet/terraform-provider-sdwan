@@ -12,12 +12,10 @@ resource "sdwan_service_wireless_lan_feature" "example" {
       vlan_id        = 1
       radio_type     = "all"
       security_type  = "personal"
-      passphrase     = "MyPassword123"
       qos_profile    = "silver"
     }
   ]
   country               = "GB"
   username              = "user1"
-  password              = "Test@316s13"
   me_dynamic_ip_enabled = true
 }

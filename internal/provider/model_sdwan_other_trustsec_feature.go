@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -41,6 +42,8 @@ type OtherTrustSec struct {
 	DeviceIdVariable                types.String                  `tfsdk:"device_id_variable"`
 	DevicePassword                  types.String                  `tfsdk:"device_password"`
 	DevicePasswordVariable          types.String                  `tfsdk:"device_password_variable"`
+	DevicePasswordWo                types.String                  `tfsdk:"device_password_wo"`
+	DevicePasswordWoVersion         types.Int64                   `tfsdk:"device_password_wo_version"`
 	DeviceSgt                       types.Int64                   `tfsdk:"device_sgt"`
 	DeviceSgtVariable               types.String                  `tfsdk:"device_sgt_variable"`
 	EnableEnforcement               types.Bool                    `tfsdk:"enable_enforcement"`
@@ -54,6 +57,8 @@ type OtherTrustSec struct {
 	SpeakerHoldTimeVariable         types.String                  `tfsdk:"speaker_hold_time_variable"`
 	SxpDefaultPassword              types.String                  `tfsdk:"sxp_default_password"`
 	SxpDefaultPasswordVariable      types.String                  `tfsdk:"sxp_default_password_variable"`
+	SxpDefaultPasswordWo            types.String                  `tfsdk:"sxp_default_password_wo"`
+	SxpDefaultPasswordWoVersion     types.Int64                   `tfsdk:"sxp_default_password_wo_version"`
 	SxpKeyChain                     types.String                  `tfsdk:"sxp_key_chain"`
 	SxpKeyChainVariable             types.String                  `tfsdk:"sxp_key_chain_variable"`
 	SxpLogBindingChanges            types.Bool                    `tfsdk:"sxp_log_binding_changes"`
@@ -68,19 +73,21 @@ type OtherTrustSec struct {
 }
 
 type OtherTrustSecSxpConnections struct {
-	PeerIp              types.String `tfsdk:"peer_ip"`
-	PeerIpVariable      types.String `tfsdk:"peer_ip_variable"`
-	SourceIp            types.String `tfsdk:"source_ip"`
-	SourceIpVariable    types.String `tfsdk:"source_ip_variable"`
-	PresharedKey        types.String `tfsdk:"preshared_key"`
-	Mode                types.String `tfsdk:"mode"`
-	ModeType            types.String `tfsdk:"mode_type"`
-	VpnId               types.Int64  `tfsdk:"vpn_id"`
-	VpnIdVariable       types.String `tfsdk:"vpn_id_variable"`
-	MinHoldTime         types.Int64  `tfsdk:"min_hold_time"`
-	MinHoldTimeVariable types.String `tfsdk:"min_hold_time_variable"`
-	MaxHoldTime         types.Int64  `tfsdk:"max_hold_time"`
-	MaxHoldTimeVariable types.String `tfsdk:"max_hold_time_variable"`
+	PeerIp                types.String `tfsdk:"peer_ip"`
+	PeerIpVariable        types.String `tfsdk:"peer_ip_variable"`
+	SourceIp              types.String `tfsdk:"source_ip"`
+	SourceIpVariable      types.String `tfsdk:"source_ip_variable"`
+	PresharedKey          types.String `tfsdk:"preshared_key"`
+	PresharedKeyWo        types.String `tfsdk:"preshared_key_wo"`
+	PresharedKeyWoVersion types.Int64  `tfsdk:"preshared_key_wo_version"`
+	Mode                  types.String `tfsdk:"mode"`
+	ModeType              types.String `tfsdk:"mode_type"`
+	VpnId                 types.Int64  `tfsdk:"vpn_id"`
+	VpnIdVariable         types.String `tfsdk:"vpn_id_variable"`
+	MinHoldTime           types.Int64  `tfsdk:"min_hold_time"`
+	MinHoldTimeVariable   types.String `tfsdk:"min_hold_time_variable"`
+	MaxHoldTime           types.Int64  `tfsdk:"max_hold_time"`
+	MaxHoldTimeVariable   types.String `tfsdk:"max_hold_time_variable"`
 }
 
 // End of section. //template:end types
@@ -137,6 +144,17 @@ func (data OtherTrustSec) toBody(ctx context.Context) string {
 		if true {
 			body, _ = sjson.Set(body, path+"devicePassword.optionType", "global")
 			body, _ = sjson.Set(body, path+"devicePassword.value", data.DevicePassword.ValueString())
+		}
+	}
+	if data.DevicePasswordWo.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"devicePassword.optionType", "default")
+			body, _ = sjson.Set(body, path+"devicePassword.value", "")
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"devicePassword.optionType", "global")
+			body, _ = sjson.Set(body, path+"devicePassword.value", data.DevicePasswordWo.ValueString())
 		}
 	}
 
@@ -249,6 +267,17 @@ func (data OtherTrustSec) toBody(ctx context.Context) string {
 		if true {
 			body, _ = sjson.Set(body, path+"sxpDefaultPassword.optionType", "global")
 			body, _ = sjson.Set(body, path+"sxpDefaultPassword.value", data.SxpDefaultPassword.ValueString())
+		}
+	}
+	if data.SxpDefaultPasswordWo.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"sxpDefaultPassword.optionType", "default")
+			body, _ = sjson.Set(body, path+"sxpDefaultPassword.value", "")
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"sxpDefaultPassword.optionType", "global")
+			body, _ = sjson.Set(body, path+"sxpDefaultPassword.value", data.SxpDefaultPasswordWo.ValueString())
 		}
 	}
 
@@ -379,6 +408,17 @@ func (data OtherTrustSec) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "connectionPresharedKey.value", item.PresharedKey.ValueString())
 				}
 			}
+			if item.PresharedKeyWo.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "connectionPresharedKey.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "connectionPresharedKey.value", "none")
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "connectionPresharedKey.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "connectionPresharedKey.value", item.PresharedKeyWo.ValueString())
+				}
+			}
 			if item.Mode.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "connectionMode.optionType", "default")
@@ -488,7 +528,10 @@ func (data *OtherTrustSec) fromBody(ctx context.Context, res gjson.Result, fullR
 			if t.String() == "variable" {
 				data.DevicePasswordVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.DevicePassword = types.StringValue(va.String())
+				// Masked secrets returned by the Manager must never be written into state.
+				if !helpers.IsEncryptedValue(va.String()) {
+					data.DevicePassword = types.StringValue(va.String())
+				}
 			}
 		}
 	}
@@ -561,7 +604,10 @@ func (data *OtherTrustSec) fromBody(ctx context.Context, res gjson.Result, fullR
 			if t.String() == "variable" {
 				data.SxpDefaultPasswordVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.SxpDefaultPassword = types.StringValue(va.String())
+				// Masked secrets returned by the Manager must never be written into state.
+				if !helpers.IsEncryptedValue(va.String()) {
+					data.SxpDefaultPassword = types.StringValue(va.String())
+				}
 			}
 		}
 	}

@@ -150,7 +150,6 @@ func testAccSdwanTransportWANVPNInterfaceIPSECProfileParcelConfig_minimum() stri
 	config += `	tunnel_source_ipv4_address = "1.3.5.88"` + "\n"
 	config += `	tunnel_destination_ipv4_address = "2.55.67.99"` + "\n"
 	config += `	application_tunnel_type = "none"` + "\n"
-	config += `	ike_preshared_key = "123"` + "\n"
 	config += `}` + "\n"
 	return config
 }
@@ -179,7 +178,6 @@ func testAccSdwanTransportWANVPNInterfaceIPSECProfileParcelConfig_all() string {
 	config += `	ipv4_mtu = 1500` + "\n"
 	config += `	dpd_interval = 10` + "\n"
 	config += `	dpd_retries = 3` + "\n"
-	config += `	ike_preshared_key = "123"` + "\n"
 	config += `	ike_version = 1` + "\n"
 	config += `	ike_integrity_protocol = "main"` + "\n"
 	config += `	ike_rekey_interval = 14400` + "\n"

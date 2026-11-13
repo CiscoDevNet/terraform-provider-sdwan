@@ -130,11 +130,22 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 							Optional:            true,
 						},
 						"password": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set the user password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set the user password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `password`, `password_variable` and `password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `password_wo` together with `password_wo_version`, which keeps it out of state.").String,
+							Sensitive:           true,
 							Optional:            true,
 						},
 						"password_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"password_wo": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set the user password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `password`, `password_variable` and `password_wo` can be set.").String,
+							Sensitive:           true,
+							WriteOnly:           true,
+							Optional:            true,
+						},
+						"password_wo_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 							Optional:            true,
 						},
 						"privilege": schema.StringAttribute{
@@ -267,7 +278,8 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 										Optional:            true,
 									},
 									"key": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set the Radius server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set the Radius server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `key`, `key_variable` and `key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `key_wo` together with `key_wo_version`, which keeps it out of state.").String,
+										Sensitive:           true,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthAtLeast(1),
@@ -277,8 +289,22 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
+									"key_wo": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Set the Radius server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `key`, `key_variable` and `key_wo` can be set.").String,
+										Sensitive:           true,
+										WriteOnly:           true,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.LengthAtLeast(1),
+										},
+									},
+									"key_wo_version": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
+										Optional:            true,
+									},
 									"secret_key": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set the Radius server shared type 7 encrypted key").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set the Radius server shared type 7 encrypted key").AddMutualExclusivityDescription("Only one of `secret_key`, `secret_key_variable` and `secret_key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `secret_key_wo` together with `secret_key_wo_version`, which keeps it out of state.").String,
+										Sensitive:           true,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthBetween(1, 150),
@@ -286,6 +312,19 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 									},
 									"secret_key_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
+									},
+									"secret_key_wo": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Set the Radius server shared type 7 encrypted key").AddMutualExclusivityDescription("Only one of `secret_key`, `secret_key_variable` and `secret_key_wo` can be set.").String,
+										Sensitive:           true,
+										WriteOnly:           true,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.LengthBetween(1, 150),
+										},
+									},
+									"secret_key_wo_version": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `secret_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 										Optional:            true,
 									},
 									"key_enum": schema.StringAttribute{
@@ -397,7 +436,8 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 										Optional:            true,
 									},
 									"key": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set the TACACS server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set the TACACS server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `key`, `key_variable` and `key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `key_wo` together with `key_wo_version`, which keeps it out of state.").String,
+										Sensitive:           true,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthAtLeast(1),
@@ -407,8 +447,22 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
+									"key_wo": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Set the TACACS server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `key`, `key_variable` and `key_wo` can be set.").String,
+										Sensitive:           true,
+										WriteOnly:           true,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.LengthAtLeast(1),
+										},
+									},
+									"key_wo_version": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
+										Optional:            true,
+									},
 									"secret_key": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set the TACACS server shared type 7 encrypted key").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set the TACACS server shared type 7 encrypted key").AddMutualExclusivityDescription("Only one of `secret_key`, `secret_key_variable` and `secret_key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `secret_key_wo` together with `secret_key_wo_version`, which keeps it out of state.").String,
+										Sensitive:           true,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthBetween(1, 150),
@@ -416,6 +470,19 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 									},
 									"secret_key_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
+									},
+									"secret_key_wo": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Set the TACACS server shared type 7 encrypted key").AddMutualExclusivityDescription("Only one of `secret_key`, `secret_key_variable` and `secret_key_wo` can be set.").String,
+										Sensitive:           true,
+										WriteOnly:           true,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.LengthBetween(1, 150),
+										},
+									},
+									"secret_key_wo_version": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `secret_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 										Optional:            true,
 									},
 									"key_enum": schema.StringAttribute{
@@ -540,6 +607,230 @@ func (r *SystemAAAProfileParcelResource) Configure(_ context.Context, req resour
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
 
+var _ resource.ResourceWithValidateConfig = &SystemAAAProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *SystemAAAProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	{
+		// Secrets nested in "users" are validated per element. A list that cannot be
+		// read as a whole - because it is still unknown at validate time - is skipped rather
+		// than reported, since there is nothing to check yet.
+		var cfgUsers []SystemAAAUsers
+		if diags := req.Config.GetAttribute(ctx, path.Root("users"), &cfgUsers); !diags.HasError() {
+			for i := range cfgUsers {
+				el := cfgUsers[i]
+
+				// An unknown value is one that is not resolved yet at validate time, for example an
+				// ephemeral resource attribute or a random_password reference. Treat it as "not
+				// decided" rather than "set", otherwise every such configuration trips a false error.
+				if !el.Password.IsUnknown() && !el.PasswordWo.IsUnknown() && !el.Password.IsNull() && !el.PasswordWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("Only one of `password` and `password_wo` can be set in `users` element %d.", i),
+					)
+				}
+				if !el.PasswordVariable.IsUnknown() && !el.PasswordWo.IsUnknown() && !el.PasswordVariable.IsNull() && !el.PasswordWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("`password_variable` and `password_wo` cannot both be set in `users` element %d. `password_variable` defers the value to a device variable, so the write-only value would never be sent.", i),
+					)
+				}
+				if !el.Password.IsUnknown() && !el.PasswordVariable.IsUnknown() && !el.Password.IsNull() && !el.PasswordVariable.IsNull() {
+					resp.Diagnostics.AddWarning(
+						"Conflicting Attribute Combination",
+						fmt.Sprintf("Both `password` and `password_variable` are set in `users` element %d. `password_variable` takes precedence, so the value of `password` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i),
+					)
+				}
+				if !el.PasswordWo.IsUnknown() && !el.PasswordWoVersion.IsUnknown() && !el.PasswordWo.IsNull() && el.PasswordWoVersion.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`password_wo_version` must be set when `password_wo` is used in `users` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i),
+					)
+				}
+				if !el.PasswordWoVersion.IsUnknown() && !el.PasswordWo.IsUnknown() && !el.PasswordWoVersion.IsNull() && el.PasswordWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`password_wo` must be set when `password_wo_version` is used in `users` element %d.", i),
+					)
+				}
+			}
+		}
+	}
+
+	{
+		// Secrets nested two list levels under "radius_groups" are validated per element pair.
+		// A list that cannot be read as a whole - because it is still unknown at validate
+		// time - is skipped rather than reported, since there is nothing to check yet.
+		var cfgRadiusGroups []SystemAAARadiusGroups
+		if diags := req.Config.GetAttribute(ctx, path.Root("radius_groups"), &cfgRadiusGroups); !diags.HasError() {
+			for i := range cfgRadiusGroups {
+				for j := range cfgRadiusGroups[i].Servers {
+					el := cfgRadiusGroups[i].Servers[j]
+
+					// An unknown value is one that is not resolved yet at validate time, for example an
+					// ephemeral resource attribute or a random_password reference. Treat it as "not
+					// decided" rather than "set", otherwise every such configuration trips a false error.
+					if !el.Key.IsUnknown() && !el.KeyWo.IsUnknown() && !el.Key.IsNull() && !el.KeyWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Invalid Attribute Combination",
+							fmt.Sprintf("Only one of `key` and `key_wo` can be set in `radius_groups` element %d, `servers` element %d.", i, j),
+						)
+					}
+					if !el.KeyVariable.IsUnknown() && !el.KeyWo.IsUnknown() && !el.KeyVariable.IsNull() && !el.KeyWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Invalid Attribute Combination",
+							fmt.Sprintf("`key_variable` and `key_wo` cannot both be set in `radius_groups` element %d, `servers` element %d. `key_variable` defers the value to a device variable, so the write-only value would never be sent.", i, j),
+						)
+					}
+					if !el.Key.IsUnknown() && !el.KeyVariable.IsUnknown() && !el.Key.IsNull() && !el.KeyVariable.IsNull() {
+						resp.Diagnostics.AddWarning(
+							"Conflicting Attribute Combination",
+							fmt.Sprintf("Both `key` and `key_variable` are set in `radius_groups` element %d, `servers` element %d. `key_variable` takes precedence, so the value of `key` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i, j),
+						)
+					}
+					if !el.KeyWo.IsUnknown() && !el.KeyWoVersion.IsUnknown() && !el.KeyWo.IsNull() && el.KeyWoVersion.IsNull() {
+						resp.Diagnostics.AddError(
+							"Missing Required Attribute",
+							fmt.Sprintf("`key_wo_version` must be set when `key_wo` is used in `radius_groups` element %d, `servers` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i, j),
+						)
+					}
+					if !el.KeyWoVersion.IsUnknown() && !el.KeyWo.IsUnknown() && !el.KeyWoVersion.IsNull() && el.KeyWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Missing Required Attribute",
+							fmt.Sprintf("`key_wo` must be set when `key_wo_version` is used in `radius_groups` element %d, `servers` element %d.", i, j),
+						)
+					}
+
+					// An unknown value is one that is not resolved yet at validate time, for example an
+					// ephemeral resource attribute or a random_password reference. Treat it as "not
+					// decided" rather than "set", otherwise every such configuration trips a false error.
+					if !el.SecretKey.IsUnknown() && !el.SecretKeyWo.IsUnknown() && !el.SecretKey.IsNull() && !el.SecretKeyWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Invalid Attribute Combination",
+							fmt.Sprintf("Only one of `secret_key` and `secret_key_wo` can be set in `radius_groups` element %d, `servers` element %d.", i, j),
+						)
+					}
+					if !el.SecretKeyVariable.IsUnknown() && !el.SecretKeyWo.IsUnknown() && !el.SecretKeyVariable.IsNull() && !el.SecretKeyWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Invalid Attribute Combination",
+							fmt.Sprintf("`secret_key_variable` and `secret_key_wo` cannot both be set in `radius_groups` element %d, `servers` element %d. `secret_key_variable` defers the value to a device variable, so the write-only value would never be sent.", i, j),
+						)
+					}
+					if !el.SecretKey.IsUnknown() && !el.SecretKeyVariable.IsUnknown() && !el.SecretKey.IsNull() && !el.SecretKeyVariable.IsNull() {
+						resp.Diagnostics.AddWarning(
+							"Conflicting Attribute Combination",
+							fmt.Sprintf("Both `secret_key` and `secret_key_variable` are set in `radius_groups` element %d, `servers` element %d. `secret_key_variable` takes precedence, so the value of `secret_key` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i, j),
+						)
+					}
+					if !el.SecretKeyWo.IsUnknown() && !el.SecretKeyWoVersion.IsUnknown() && !el.SecretKeyWo.IsNull() && el.SecretKeyWoVersion.IsNull() {
+						resp.Diagnostics.AddError(
+							"Missing Required Attribute",
+							fmt.Sprintf("`secret_key_wo_version` must be set when `secret_key_wo` is used in `radius_groups` element %d, `servers` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i, j),
+						)
+					}
+					if !el.SecretKeyWoVersion.IsUnknown() && !el.SecretKeyWo.IsUnknown() && !el.SecretKeyWoVersion.IsNull() && el.SecretKeyWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Missing Required Attribute",
+							fmt.Sprintf("`secret_key_wo` must be set when `secret_key_wo_version` is used in `radius_groups` element %d, `servers` element %d.", i, j),
+						)
+					}
+				}
+			}
+		}
+	}
+
+	{
+		// Secrets nested two list levels under "tacacs_groups" are validated per element pair.
+		// A list that cannot be read as a whole - because it is still unknown at validate
+		// time - is skipped rather than reported, since there is nothing to check yet.
+		var cfgTacacsGroups []SystemAAATacacsGroups
+		if diags := req.Config.GetAttribute(ctx, path.Root("tacacs_groups"), &cfgTacacsGroups); !diags.HasError() {
+			for i := range cfgTacacsGroups {
+				for j := range cfgTacacsGroups[i].Servers {
+					el := cfgTacacsGroups[i].Servers[j]
+
+					// An unknown value is one that is not resolved yet at validate time, for example an
+					// ephemeral resource attribute or a random_password reference. Treat it as "not
+					// decided" rather than "set", otherwise every such configuration trips a false error.
+					if !el.Key.IsUnknown() && !el.KeyWo.IsUnknown() && !el.Key.IsNull() && !el.KeyWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Invalid Attribute Combination",
+							fmt.Sprintf("Only one of `key` and `key_wo` can be set in `tacacs_groups` element %d, `servers` element %d.", i, j),
+						)
+					}
+					if !el.KeyVariable.IsUnknown() && !el.KeyWo.IsUnknown() && !el.KeyVariable.IsNull() && !el.KeyWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Invalid Attribute Combination",
+							fmt.Sprintf("`key_variable` and `key_wo` cannot both be set in `tacacs_groups` element %d, `servers` element %d. `key_variable` defers the value to a device variable, so the write-only value would never be sent.", i, j),
+						)
+					}
+					if !el.Key.IsUnknown() && !el.KeyVariable.IsUnknown() && !el.Key.IsNull() && !el.KeyVariable.IsNull() {
+						resp.Diagnostics.AddWarning(
+							"Conflicting Attribute Combination",
+							fmt.Sprintf("Both `key` and `key_variable` are set in `tacacs_groups` element %d, `servers` element %d. `key_variable` takes precedence, so the value of `key` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i, j),
+						)
+					}
+					if !el.KeyWo.IsUnknown() && !el.KeyWoVersion.IsUnknown() && !el.KeyWo.IsNull() && el.KeyWoVersion.IsNull() {
+						resp.Diagnostics.AddError(
+							"Missing Required Attribute",
+							fmt.Sprintf("`key_wo_version` must be set when `key_wo` is used in `tacacs_groups` element %d, `servers` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i, j),
+						)
+					}
+					if !el.KeyWoVersion.IsUnknown() && !el.KeyWo.IsUnknown() && !el.KeyWoVersion.IsNull() && el.KeyWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Missing Required Attribute",
+							fmt.Sprintf("`key_wo` must be set when `key_wo_version` is used in `tacacs_groups` element %d, `servers` element %d.", i, j),
+						)
+					}
+
+					// An unknown value is one that is not resolved yet at validate time, for example an
+					// ephemeral resource attribute or a random_password reference. Treat it as "not
+					// decided" rather than "set", otherwise every such configuration trips a false error.
+					if !el.SecretKey.IsUnknown() && !el.SecretKeyWo.IsUnknown() && !el.SecretKey.IsNull() && !el.SecretKeyWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Invalid Attribute Combination",
+							fmt.Sprintf("Only one of `secret_key` and `secret_key_wo` can be set in `tacacs_groups` element %d, `servers` element %d.", i, j),
+						)
+					}
+					if !el.SecretKeyVariable.IsUnknown() && !el.SecretKeyWo.IsUnknown() && !el.SecretKeyVariable.IsNull() && !el.SecretKeyWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Invalid Attribute Combination",
+							fmt.Sprintf("`secret_key_variable` and `secret_key_wo` cannot both be set in `tacacs_groups` element %d, `servers` element %d. `secret_key_variable` defers the value to a device variable, so the write-only value would never be sent.", i, j),
+						)
+					}
+					if !el.SecretKey.IsUnknown() && !el.SecretKeyVariable.IsUnknown() && !el.SecretKey.IsNull() && !el.SecretKeyVariable.IsNull() {
+						resp.Diagnostics.AddWarning(
+							"Conflicting Attribute Combination",
+							fmt.Sprintf("Both `secret_key` and `secret_key_variable` are set in `tacacs_groups` element %d, `servers` element %d. `secret_key_variable` takes precedence, so the value of `secret_key` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i, j),
+						)
+					}
+					if !el.SecretKeyWo.IsUnknown() && !el.SecretKeyWoVersion.IsUnknown() && !el.SecretKeyWo.IsNull() && el.SecretKeyWoVersion.IsNull() {
+						resp.Diagnostics.AddError(
+							"Missing Required Attribute",
+							fmt.Sprintf("`secret_key_wo_version` must be set when `secret_key_wo` is used in `tacacs_groups` element %d, `servers` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i, j),
+						)
+					}
+					if !el.SecretKeyWoVersion.IsUnknown() && !el.SecretKeyWo.IsUnknown() && !el.SecretKeyWoVersion.IsNull() && el.SecretKeyWo.IsNull() {
+						resp.Diagnostics.AddError(
+							"Missing Required Attribute",
+							fmt.Sprintf("`secret_key_wo` must be set when `secret_key_wo_version` is used in `tacacs_groups` element %d, `servers` element %d.", i, j),
+						)
+					}
+				}
+			}
+		}
+	}
+}
+
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
@@ -551,6 +842,67 @@ func (r *SystemAAAProfileParcelResource) Create(ctx context.Context, req resourc
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values in list "users" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgUsers []SystemAAAUsers
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("users"), &cfgUsers)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Users {
+			if i < len(cfgUsers) {
+				plan.Users[i].PasswordWo = cfgUsers[i].PasswordWo
+			}
+		}
+	}
+
+	// Write-only values nested two list levels under "radius_groups" are not stored in plan
+	// or state; read the list from the configuration and copy them in element by element.
+	// Both joins are positional, which is sound only for ordered Lists - write_only_tf is
+	// rejected at generate time anywhere under a Set.
+	{
+		var cfgRadiusGroups []SystemAAARadiusGroups
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("radius_groups"), &cfgRadiusGroups)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.RadiusGroups {
+			if i < len(cfgRadiusGroups) {
+				for j := range plan.RadiusGroups[i].Servers {
+					if j < len(cfgRadiusGroups[i].Servers) {
+						plan.RadiusGroups[i].Servers[j].KeyWo = cfgRadiusGroups[i].Servers[j].KeyWo
+						plan.RadiusGroups[i].Servers[j].SecretKeyWo = cfgRadiusGroups[i].Servers[j].SecretKeyWo
+					}
+				}
+			}
+		}
+	}
+
+	// Write-only values nested two list levels under "tacacs_groups" are not stored in plan
+	// or state; read the list from the configuration and copy them in element by element.
+	// Both joins are positional, which is sound only for ordered Lists - write_only_tf is
+	// rejected at generate time anywhere under a Set.
+	{
+		var cfgTacacsGroups []SystemAAATacacsGroups
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("tacacs_groups"), &cfgTacacsGroups)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.TacacsGroups {
+			if i < len(cfgTacacsGroups) {
+				for j := range plan.TacacsGroups[i].Servers {
+					if j < len(cfgTacacsGroups[i].Servers) {
+						plan.TacacsGroups[i].Servers[j].KeyWo = cfgTacacsGroups[i].Servers[j].KeyWo
+						plan.TacacsGroups[i].Servers[j].SecretKeyWo = cfgTacacsGroups[i].Servers[j].SecretKeyWo
+					}
+				}
+			}
+		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
@@ -631,6 +983,67 @@ func (r *SystemAAAProfileParcelResource) Update(ctx context.Context, req resourc
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values in list "users" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgUsers []SystemAAAUsers
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("users"), &cfgUsers)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.Users {
+			if i < len(cfgUsers) {
+				plan.Users[i].PasswordWo = cfgUsers[i].PasswordWo
+			}
+		}
+	}
+
+	// Write-only values nested two list levels under "radius_groups" are not stored in plan
+	// or state; read the list from the configuration and copy them in element by element.
+	// Both joins are positional, which is sound only for ordered Lists - write_only_tf is
+	// rejected at generate time anywhere under a Set.
+	{
+		var cfgRadiusGroups []SystemAAARadiusGroups
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("radius_groups"), &cfgRadiusGroups)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.RadiusGroups {
+			if i < len(cfgRadiusGroups) {
+				for j := range plan.RadiusGroups[i].Servers {
+					if j < len(cfgRadiusGroups[i].Servers) {
+						plan.RadiusGroups[i].Servers[j].KeyWo = cfgRadiusGroups[i].Servers[j].KeyWo
+						plan.RadiusGroups[i].Servers[j].SecretKeyWo = cfgRadiusGroups[i].Servers[j].SecretKeyWo
+					}
+				}
+			}
+		}
+	}
+
+	// Write-only values nested two list levels under "tacacs_groups" are not stored in plan
+	// or state; read the list from the configuration and copy them in element by element.
+	// Both joins are positional, which is sound only for ordered Lists - write_only_tf is
+	// rejected at generate time anywhere under a Set.
+	{
+		var cfgTacacsGroups []SystemAAATacacsGroups
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("tacacs_groups"), &cfgTacacsGroups)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.TacacsGroups {
+			if i < len(cfgTacacsGroups) {
+				for j := range plan.TacacsGroups[i].Servers {
+					if j < len(cfgTacacsGroups[i].Servers) {
+						plan.TacacsGroups[i].Servers[j].KeyWo = cfgTacacsGroups[i].Servers[j].KeyWo
+						plan.TacacsGroups[i].Servers[j].SecretKeyWo = cfgTacacsGroups[i].Servers[j].SecretKeyWo
+					}
+				}
+			}
+		}
 	}
 	// Read state
 	diags = req.State.Get(ctx, &state)
