@@ -197,6 +197,10 @@ func (d *ServiceRoutingOSPFv3IPv4ProfileParcelDataSource) Schema(ctx context.Con
 				MarkdownDescription: "",
 				Computed:            true,
 			},
+			"route_policy_id_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 			"filter": schema.BoolAttribute{
 				MarkdownDescription: "Table map filtered or not",
 				Computed:            true,
@@ -228,6 +232,10 @@ func (d *ServiceRoutingOSPFv3IPv4ProfileParcelDataSource) Schema(ctx context.Con
 						},
 						"route_policy_id": schema.StringAttribute{
 							MarkdownDescription: "",
+							Computed:            true,
+						},
+						"route_policy_id_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
 						"translate_rib_metric": schema.BoolAttribute{

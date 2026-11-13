@@ -197,7 +197,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 	{{- else}}
 	{{if .Variable}}
 	if !data.{{toGoName .TfName}}Variable.IsNull() {
-		if true{{buildConditionalLogic .ConditionalAttribute $.Attributes "data"}} {
+		if true{{buildConditionalLogic .VariableConditionalAttribute $.Attributes "data"}} {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", data.{{toGoName .TfName}}Variable.ValueString())
 		}
@@ -257,7 +257,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 			{{- else}}
 			{{if .Variable}}
 			if !item.{{toGoName .TfName}}Variable.IsNull() {
-				if true{{buildConditionalLogic .ConditionalAttribute "item"}} {
+				if true{{buildConditionalLogic .VariableConditionalAttribute "item"}} {
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", item.{{toGoName .TfName}}Variable.ValueString())
 				}
@@ -331,7 +331,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 					{{- else}}
 					{{if .Variable}}
 					if !childItem.{{toGoName .TfName}}Variable.IsNull() {
-						if true{{buildConditionalLogic .ConditionalAttribute "childItem"}} {
+						if true{{buildConditionalLogic .VariableConditionalAttribute "childItem"}} {
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", childItem.{{toGoName .TfName}}Variable.ValueString())
 						}
@@ -386,7 +386,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context{{if hasMinVersionCond
 							{{- else if and (or (eq .Type "String") (eq .Type "StringInt64") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .TfOnly)}}
 							{{if .Variable}}
 							if !childChildItem.{{toGoName .TfName}}Variable.IsNull() {
-								if true{{buildConditionalLogic .ConditionalAttribute "childChildItem"}} {
+								if true{{buildConditionalLogic .VariableConditionalAttribute "childChildItem"}} {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", childChildItem.{{toGoName .TfName}}Variable.ValueString())
 								}

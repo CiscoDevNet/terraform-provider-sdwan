@@ -287,24 +287,26 @@ type YamlConfigAttribute struct {
 	AlwaysIncludeParent     bool                           `yaml:"always_include_parent"`
 	Attributes              []YamlConfigAttribute          `yaml:"attributes"`
 	ConditionalAttribute    YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
-	ConditionalListLength   string                         `yaml:"conditional_list_length"`
-	QueryParam              bool                           `yaml:"query_param"`
-	NoAugmentConfig         bool                           `yaml:"no_augment_config"`
-	TestTags                []string                       `yaml:"test_tags"`
-	RequiresConstAndVar     bool                           `yaml:"requires_const_and_var"`
-	RequiresReplace         bool                           `yaml:"requires_replace"`
-	DynamicDefault          bool                           `yaml:"dynamic_default"`
-	PriorityOrderAlways     bool                           `yaml:"priority_order_always"`
-	IncludeDefaultOption    bool                           `yaml:"include_default_option"`
-	DefaultOption           string                         `yaml:"default_option"`
-	IncludeVariableCheck    bool                           `yaml:"include_variable_check"`
-	ResetContainerIfIgnore  bool                           `yaml:"reset_container_if_ignore"`
-	NoOptionType            bool                           `yaml:"no_option_type"`
-	PositionalFallback      bool                           `yaml:"positional_fallback"`
-	OptionalNullEmpty       bool                           `yaml:"optional_null_empty"`
-	ForceInclude            bool                           `yaml:"force_include"`
-	WriteAsDefault          bool                           `yaml:"write_as_default"`
-	ElementOptionType       bool                           `yaml:"element_option_type"`
+	// VariableConditionalAttribute gates only the "_variable" attribute; it defaults to ConditionalAttribute
+	VariableConditionalAttribute YamlConfigConditionalAttribute `yaml:"variable_conditional_attribute"`
+	ConditionalListLength        string                         `yaml:"conditional_list_length"`
+	QueryParam                   bool                           `yaml:"query_param"`
+	NoAugmentConfig              bool                           `yaml:"no_augment_config"`
+	TestTags                     []string                       `yaml:"test_tags"`
+	RequiresConstAndVar          bool                           `yaml:"requires_const_and_var"`
+	RequiresReplace              bool                           `yaml:"requires_replace"`
+	DynamicDefault               bool                           `yaml:"dynamic_default"`
+	PriorityOrderAlways          bool                           `yaml:"priority_order_always"`
+	IncludeDefaultOption         bool                           `yaml:"include_default_option"`
+	DefaultOption                string                         `yaml:"default_option"`
+	IncludeVariableCheck         bool                           `yaml:"include_variable_check"`
+	ResetContainerIfIgnore       bool                           `yaml:"reset_container_if_ignore"`
+	NoOptionType                 bool                           `yaml:"no_option_type"`
+	PositionalFallback           bool                           `yaml:"positional_fallback"`
+	OptionalNullEmpty            bool                           `yaml:"optional_null_empty"`
+	ForceInclude                 bool                           `yaml:"force_include"`
+	WriteAsDefault               bool                           `yaml:"write_as_default"`
+	ElementOptionType            bool                           `yaml:"element_option_type"`
 }
 
 type YamlConfigConditionalAttribute struct {
@@ -562,7 +564,7 @@ func resolveConditionTfOnly(attributes []YamlConfigAttribute) {
 // has a conditional_attribute with a condition of type "MinVersion".
 func HasMinVersionCondition(attributes []YamlConfigAttribute) bool {
 	for _, attr := range attributes {
-		for _, cond := range attr.ConditionalAttribute.Conditions {
+		for _, cond := range append(append([]YamlConfigCondition{}, attr.ConditionalAttribute.Conditions...), attr.VariableConditionalAttribute.Conditions...) {
 			if cond.Type == "MinVersion" {
 				return true
 			}
@@ -1308,6 +1310,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		if attr.ConditionalAttribute.Conditions[i].Name != "" {
 			attr.ConditionalAttribute.Conditions[i].Name = SnakeCase(attr.ConditionalAttribute.Conditions[i].Name)
 		}
+	}
+	if len(attr.VariableConditionalAttribute.Conditions) == 0 {
+		attr.VariableConditionalAttribute = attr.ConditionalAttribute
 	}
 
 	if r.Get("oneOf.0.type").String() == "array" && len(attr.Attributes) > 0 {
