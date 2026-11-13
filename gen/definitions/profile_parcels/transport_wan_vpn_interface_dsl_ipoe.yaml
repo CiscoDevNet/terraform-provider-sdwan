@@ -1,0 +1,609 @@
+---
+name: Transport WAN VPN Interface DSL IPoE
+rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/dsl-ipoe
+minimum_version: 20.15.0
+test_tags: [SDWAN_2015, SDWAN_2018]
+parcel_type: feature
+doc_category: Features - Transport
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_feature_profile.test.id
+  - tf_name: transport_wan_vpn_feature_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Transport WAN VPN Feature ID
+    example: 140331f6-5418-4755-a059-13c77eb96037
+    test_value: sdwan_transport_wan_vpn_feature.test.id
+  - model_name: shutdown
+    example: true
+  - model_name: serviceProvider
+    example: Example ISP
+    exclude_test: true
+  - model_name: bandwidthUpstream
+    example: 100000
+    exclude_test: true
+  - model_name: bandwidthDownstream
+    example: 100000
+    exclude_test: true
+  - model_name: slot
+    tf_name: vdsl_slot
+    data_path: [vdsl]
+    no_augment_config: true
+    type: String
+    variable: true
+    description: Set module slot/subslot/port number
+    string_patterns: ['(\b([0-3])\b)(/(\b([0-3])\b))(/(\b([0-1])\b))']
+    example: 0/0/0
+    minimum_test_value: '"0/0/0"'
+  - model_name: mode
+    tf_name: vdsl_mode
+    data_path: [vdsl]
+    example: VDSL2
+    exclude_test: true
+  - model_name: sra
+    tf_name: vdsl_sra
+    data_path: [vdsl]
+    example: true
+    exclude_test: true
+  - model_name: nat
+    tf_name: nat_enabled
+    data_path: [natProp]
+    example: false
+    exclude_test: true
+  - model_name: tcpTimeout
+    tf_name: nat_tcp_timeout
+    data_path: [natProp]
+    example: 360
+    exclude_test: true
+  - model_name: udpTimeout
+    tf_name: nat_udp_timeout
+    data_path: [natProp]
+    example: 30
+    exclude_test: true
+  - model_name: ifName
+    tf_name: interface_name
+    data_path: [ethernet]
+    no_augment_config: true
+    type: String
+    variable: true
+    description: Ethernet Interface/Sub Interface Name including sub interface number
+    string_min_length: 3
+    string_max_length: 32
+    example: GigabitEthernet1
+    minimum_test_value: '"GigabitEthernet1"'
+  - model_name: description
+    tf_name: interface_description
+    data_path: [ethernet]
+    example: WAN DSL
+    exclude_test: true
+  - model_name: vlanId
+    tf_name: vlan_id
+    data_path: [ethernet]
+    example: 100
+    exclude_test: true
+  - tf_name: ipv4_address_type
+    type: String
+    tf_only: true
+    mandatory: true
+    description: IPv4 address configuration type
+    enum_values: [dynamic, static]
+    example: static
+    minimum_test_value: '"dynamic"'
+    test_value: '"static"'
+  - model_name: dynamicDhcpDistance
+    tf_name: ipv4_dhcp_distance
+    data_path: [ethernet, intfIpAddress, dynamic]
+    example: 1
+    default_value_present: true
+    default_value: 1
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: ipv4_address_type
+          value: dynamic
+  - model_name: dhcpHelper
+    tf_name: ipv4_dhcp_helper
+    data_path: [ethernet, intfIpAddress, dynamic]
+    example: 192.0.2.10
+    exclude_test: true
+    conditional_attribute:
+      conditions:
+        - name: ipv4_address_type
+          value: dynamic
+  - model_name: ipAddress
+    tf_name: ipv4_address
+    data_path: [ethernet, intfIpAddress, static, staticIpV4AddressPrimary]
+    example: 192.0.2.10
+    conditional_attribute:
+      conditions:
+        - name: ipv4_address_type
+          value: static
+  - model_name: subnetMask
+    tf_name: ipv4_subnet_mask
+    data_path: [ethernet, intfIpAddress, static, staticIpV4AddressPrimary]
+    example: 255.255.255.0
+    conditional_attribute:
+      conditions:
+        - name: ipv4_address_type
+          value: static
+  - model_name: tunnelInterface
+    tf_name: tunnel_interface_enabled
+    data_path: [tunnel]
+    example: true
+    minimum_test_value: true
+  - model_name: perTunnelQos
+    tf_name: tunnel_per_tunnel_qos
+    data_path: [tunnel]
+    example: true
+  - model_name: mode
+    tf_name: tunnel_qos_mode
+    data_path: [tunnel]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_per_tunnel_qos_variable
+          value: ''
+    example: spoke
+  - model_name: bandwidthPercent
+    tf_name: tunnel_bandwidth_percent
+    data_path: [tunnel]
+    conditional_attribute:
+      operator: or
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          and:
+            - name: tunnel_per_tunnel_qos_variable
+              value: ''
+        - name: tunnel_qos_mode_variable
+          value: ''
+          negate: true
+          and:
+            - name: tunnel_bandwidth_percent
+              value: ''
+              negate: true
+            - name: tunnel_per_tunnel_qos_variable
+              value: ''
+        - name: tunnel_qos_mode_variable
+          value: ''
+          negate: true
+          and:
+            - name: tunnel_bandwidth_percent_variable
+              value: ''
+              negate: true
+            - name: tunnel_per_tunnel_qos_variable
+              value: ''
+    example: 50
+    exclude_test: true
+  - model_name: bind
+    tf_name: tunnel_interface_bind_loopback_tunnel
+    data_path: [tunnelAdvancedOption]
+    example: Loopback1
+    exclude_test: true
+  - model_name: carrier
+    tf_name: tunnel_interface_carrier
+    data_path: [tunnelAdvancedOption]
+    example: default
+    exclude_test: true
+  - model_name: color
+    tf_name: tunnel_interface_color
+    data_path: [tunnel]
+    example: default
+  - model_name: colorDescription
+    tf_name: tunnel_interface_color_description
+    data_path: [tunnel]
+    example: DSL WAN
+    test_tags: [SDWAN_2018]
+    conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
+  - model_name: helloInterval
+    tf_name: tunnel_interface_hello_interval
+    data_path: [tunnelAdvancedOption]
+    example: 1000
+    exclude_test: true
+  - model_name: helloTolerance
+    tf_name: tunnel_interface_hello_tolerance
+    data_path: [tunnelAdvancedOption]
+    example: 12
+    exclude_test: true
+  - model_name: lastResortCircuit
+    tf_name: tunnel_interface_last_resort_circuit
+    data_path: [tunnelAdvancedOption]
+    example: false
+    exclude_test: true
+  - model_name: restrict
+    tf_name: tunnel_interface_color_restrict
+    data_path: [tunnel]
+    example: false
+    exclude_test: true
+  - model_name: group
+    tf_name: tunnel_interface_groups
+    data_path: [tunnel]
+    example: 1
+    exclude_test: true
+  - model_name: border
+    tf_name: tunnel_interface_border
+    data_path: [tunnel]
+    example: false
+    exclude_test: true
+  - model_name: maxControlConnections
+    tf_name: tunnel_interface_max_control_connections
+    data_path: [tunnel]
+    example: 8
+    exclude_test: true
+  - model_name: vbondAsStunServer
+    tf_name: tunnel_interface_vbond_as_stun_server
+    data_path: [tunnel]
+    example: false
+    exclude_test: true
+  - model_name: excludeControllerGroupList
+    tf_name: tunnel_interface_exclude_controller_group_list
+    data_path: [tunnel]
+    example: 1
+    exclude_test: true
+  - model_name: vmanageConnectionPreference
+    tf_name: tunnel_interface_vmanage_connection_preference
+    data_path: [tunnel]
+    example: 5
+    exclude_test: true
+  - model_name: fullPortHop
+    tf_name: tunnel_interface_full_port_hop
+    data_path: [tunnel]
+    example: false
+    test_tags: [SDWAN_2018]
+    conditional_attribute:
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
+  - model_name: portHop
+    tf_name: tunnel_interface_port_hop
+    data_path: [tunnel]
+    example: true
+    exclude_test: true
+  - model_name: lowBandwidthLink
+    tf_name: tunnel_interface_low_bandwidth_link
+    data_path: [tunnel]
+    example: false
+    exclude_test: true
+  - model_name: networkBroadcast
+    tf_name: tunnel_interface_network_broadcast
+    data_path: [tunnel]
+    example: false
+    exclude_test: true
+  - model_name: tunnelTcpMssAdjust
+    tf_name: tunnel_interface_tunnel_tcp_mss
+    data_path: [tunnel]
+    example: 1460
+    exclude_test: true
+  - model_name: clearDontFragment
+    tf_name: tunnel_interface_clear_dont_fragment
+    data_path: [tunnel]
+    example: false
+    exclude_test: true
+  - model_name: all
+    tf_name: tunnel_interface_allow_all
+    data_path: [tunnelAllowService]
+    example: false
+    exclude_test: true
+  - model_name: bgp
+    tf_name: tunnel_interface_allow_bgp
+    data_path: [tunnelAllowService]
+    example: false
+    exclude_test: true
+  - model_name: dhcp
+    tf_name: tunnel_interface_allow_dhcp
+    data_path: [tunnelAllowService]
+    example: true
+    exclude_test: true
+  - model_name: dns
+    tf_name: tunnel_interface_allow_dns
+    data_path: [tunnelAllowService]
+    example: true
+    exclude_test: true
+  - model_name: icmp
+    tf_name: tunnel_interface_allow_icmp
+    data_path: [tunnelAllowService]
+    example: true
+    exclude_test: true
+  - model_name: sshd
+    tf_name: tunnel_interface_allow_ssh
+    data_path: [tunnelAllowService]
+    example: false
+    exclude_test: true
+  - model_name: ntp
+    tf_name: tunnel_interface_allow_ntp
+    data_path: [tunnelAllowService]
+    example: false
+    exclude_test: true
+  - model_name: stun
+    tf_name: tunnel_interface_allow_stun
+    data_path: [tunnelAllowService]
+    example: false
+    exclude_test: true
+  - model_name: netconf
+    tf_name: tunnel_interface_allow_netconf
+    data_path: [tunnelAllowService]
+    example: false
+    exclude_test: true
+  - model_name: ospf
+    tf_name: tunnel_interface_allow_ospf
+    data_path: [tunnelAllowService]
+    example: false
+    exclude_test: true
+  - model_name: snmp
+    tf_name: tunnel_interface_allow_snmp
+    data_path: [tunnelAllowService]
+    example: false
+    exclude_test: true
+  - model_name: ipsecEncap
+    tf_name: tunnel_interface_ipsec_encapsulation
+    data_path: [tunnelAdvancedOption]
+    example: true
+    exclude_test: true
+  - model_name: ipsecPreference
+    tf_name: tunnel_interface_ipsec_preference
+    data_path: [tunnelAdvancedOption]
+    example: 1
+    exclude_test: true
+  - model_name: ipsecWeight
+    tf_name: tunnel_interface_ipsec_weight
+    data_path: [tunnelAdvancedOption]
+    example: 1
+    exclude_test: true
+  - model_name: greEncap
+    tf_name: tunnel_interface_gre_encapsulation
+    data_path: [tunnelAdvancedOption]
+    example: false
+    exclude_test: true
+  - model_name: grePreference
+    tf_name: tunnel_interface_gre_preference
+    data_path: [tunnelAdvancedOption]
+    example: 1
+    exclude_test: true
+  - model_name: greWeight
+    tf_name: tunnel_interface_gre_weight
+    data_path: [tunnelAdvancedOption]
+    example: 1
+    exclude_test: true
+  - model_name: natRefreshInterval
+    tf_name: tunnel_interface_nat_refresh_interval
+    data_path: [tunnelAdvancedOption]
+    example: 5
+    exclude_test: true
+  - model_name: enableCoreRegion
+    tf_name: multi_region_fabric_enable_core_region
+    data_path: [multiRegionFabric]
+    example: false
+    exclude_test: true
+  - model_name: coreRegion
+    tf_name: multi_region_fabric_core_region
+    data_path: [multiRegionFabric]
+    example: core
+    exclude_test: true
+  - model_name: enableSecondaryRegion
+    tf_name: multi_region_fabric_enable_secondary_region
+    data_path: [multiRegionFabric]
+    example: false
+    exclude_test: true
+  - model_name: secondaryRegion
+    tf_name: multi_region_fabric_secondary_region
+    data_path: [multiRegionFabric]
+    example: secondary-only
+    exclude_test: true
+  - model_name: ipDirectedBroadcast
+    tf_name: ip_directed_broadcast
+    data_path: [advanced]
+    example: false
+    exclude_test: true
+  - model_name: ipMtu
+    tf_name: ip_mtu
+    data_path: [advanced]
+    example: 1500
+    exclude_test: true
+  - model_name: tcpMss
+    tf_name: tcp_mss
+    data_path: [advanced]
+    example: 1460
+    exclude_test: true
+  - model_name: tlocExtension
+    tf_name: tloc_extension
+    data_path: [advanced]
+    example: example
+    exclude_test: true
+  - model_name: adaptiveQoS
+    tf_name: adaptive_qos
+    data_path: [aclQos]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
+    example: false
+    exclude_test: true
+  - model_name: adaptPeriod
+    tf_name: adaptive_qos_period
+    data_path: [aclQos]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
+    example: 15
+    exclude_test: true
+  - model_name: shapingRateUpstream
+    tf_name: shaping_rate_upstream
+    data_path: [aclQos]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
+    example: false
+    exclude_test: true
+  - model_name: minShapingRateUpstream
+    tf_name: min_shaping_rate_upstream
+    data_path: [aclQos, shapingRateUpstreamConfig]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
+    example: 100
+    exclude_test: true
+  - model_name: maxShapingRateUpstream
+    tf_name: max_shaping_rate_upstream
+    data_path: [aclQos, shapingRateUpstreamConfig]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
+    example: 10000
+    exclude_test: true
+  - model_name: defaultShapingRateUpstream
+    tf_name: default_shaping_rate_upstream
+    data_path: [aclQos, shapingRateUpstreamConfig]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
+    example: 1000
+    exclude_test: true
+  - model_name: shapingRateDownstream
+    tf_name: shaping_rate_downstream
+    data_path: [aclQos]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
+    example: false
+    exclude_test: true
+  - model_name: minShapingRateDownstream
+    tf_name: min_shaping_rate_downstream
+    data_path: [aclQos, shapingRateDownstreamConfig]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
+    example: 100
+    exclude_test: true
+  - model_name: maxShapingRateDownstream
+    tf_name: max_shaping_rate_downstream
+    data_path: [aclQos, shapingRateDownstreamConfig]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
+    example: 10000
+    exclude_test: true
+  - model_name: defaultShapingRateDownstream
+    tf_name: default_shaping_rate_downstream
+    data_path: [aclQos, shapingRateDownstreamConfig]
+    conditional_attribute:
+      conditions:
+        - name: tunnel_qos_mode
+          value: hub
+          negate: true
+    example: 1000
+    exclude_test: true
+  - model_name: shapingRate
+    tf_name: shaping_rate
+    data_path: [aclQos]
+    example: 10000
+    exclude_test: true
+  - model_name: refId
+    tf_name: acl_ipv4_egress_feature_id
+    data_path: [aclQos, ipv4AclEgress]
+    type: String
+    description: IPv4 egress ACL feature ID. Variable references require Manager 20.18.1 or later.
+    ignore_mandatory: true
+    exclude_null: true
+    conditional_attribute:
+      operator: or
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
+        - name: acl_ipv4_egress_feature_id
+          value: ''
+          negate: true
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_ipv4_acl_feature.test.id
+    exclude_test: true
+  - model_name: refId
+    tf_name: acl_ipv4_ingress_feature_id
+    data_path: [aclQos, ipv4AclIngress]
+    type: String
+    description: IPv4 ingress ACL feature ID. Variable references require Manager 20.18.1 or later.
+    ignore_mandatory: true
+    exclude_null: true
+    conditional_attribute:
+      operator: or
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
+        - name: acl_ipv4_ingress_feature_id
+          value: ''
+          negate: true
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_ipv4_acl_feature.test.id
+    exclude_test: true
+  - model_name: refId
+    tf_name: acl_ipv6_egress_feature_id
+    data_path: [aclQos, ipv6AclEgress]
+    type: String
+    description: IPv6 egress ACL feature ID. Variable references require Manager 20.18.1 or later.
+    ignore_mandatory: true
+    exclude_null: true
+    conditional_attribute:
+      operator: or
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
+        - name: acl_ipv6_egress_feature_id
+          value: ''
+          negate: true
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_ipv6_acl_feature.test.id
+    exclude_test: true
+  - model_name: refId
+    tf_name: acl_ipv6_ingress_feature_id
+    data_path: [aclQos, ipv6AclIngress]
+    type: String
+    description: IPv6 ingress ACL feature ID. Variable references require Manager 20.18.1 or later.
+    ignore_mandatory: true
+    exclude_null: true
+    conditional_attribute:
+      operator: or
+      conditions:
+        - type: MinVersion
+          value: 20.18.1
+        - name: acl_ipv6_ingress_feature_id
+          value: ''
+          negate: true
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_ipv6_acl_feature.test.id
+    exclude_test: true
+
+test_prerequisites: |
+  resource "sdwan_transport_feature_profile" "test" {
+    name        = "TF_TEST"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_transport_wan_vpn_feature" "test" {
+    name               = "TF_TEST_WAN"
+    description        = "Terraform test"
+    feature_profile_id = sdwan_transport_feature_profile.test.id
+    vpn                = 0
+  }
