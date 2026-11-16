@@ -76,6 +76,7 @@ attributes:
     description: Ethernet Interface/Sub Interface Name including sub interface number
     string_min_length: 3
     string_max_length: 32
+    string_patterns: ['^(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)\s*(\d+(/\d+){0,2}(:\d+)?(\.\d+)?|\d+(\.\d+)?)$']
     example: GigabitEthernet1
     minimum_test_value: '"GigabitEthernet1"'
   - model_name: description

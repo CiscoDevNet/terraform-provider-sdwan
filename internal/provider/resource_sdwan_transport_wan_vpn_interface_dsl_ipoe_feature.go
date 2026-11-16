@@ -194,6 +194,7 @@ func (r *TransportWANVPNInterfaceDSLIPoEProfileParcelResource) Schema(ctx contex
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(3, 32),
+					stringvalidator.RegexMatches(regexp.MustCompile(`^(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)\s*(\d+(/\d+){0,2}(:\d+)?(\.\d+)?|\d+(\.\d+)?)$`), ""),
 				},
 			},
 			"interface_name_variable": schema.StringAttribute{
