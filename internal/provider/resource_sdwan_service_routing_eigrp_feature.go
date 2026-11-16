@@ -28,6 +28,7 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -104,6 +105,9 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 			"redistributes": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Redistribute routes into EIGRP").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(7),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"protocol": schema.StringAttribute{
@@ -130,6 +134,9 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 			"networks": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure the networks for EIGRP to advertise").String,
 				Required:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(1),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"ip_address": schema.StringAttribute{

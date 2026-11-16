@@ -29,6 +29,7 @@ import (
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -115,6 +116,9 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 			"users": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Create local login account").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(1),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
@@ -151,6 +155,9 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 						"public_keys": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of RSA public-keys per user").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtMost(2),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"key_string": schema.StringAttribute{

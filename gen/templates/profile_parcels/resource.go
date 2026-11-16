@@ -33,6 +33,12 @@ import (
 	{{- if hasFloat64Validator .Attributes}}
 	"github.com/hashicorp/terraform-plugin-framework-validators/float64validator"
 	{{- end}}
+	{{- if hasListSizeValidator .Attributes}}
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	{{- end}}
+	{{- if hasSetSizeValidator .Attributes}}
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
+	{{- end}}
 	{{- if hasStringValidator .Attributes}}
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	{{- end}}
@@ -127,7 +133,16 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 				{{- else}}
 				Optional:            true,
 				{{- end}}
-				{{- if and (len .EnumValues) (not .IgnoreEnum)}}
+				{{- if and (or (eq .Type "List") (eq .Type "Set")) (or (ne .MinList 0) (ne .MaxList 0))}}
+				Validators: []validator.{{.Type}}{
+					{{- if ne .MinList 0}}
+					{{if eq .Type "Set"}}setvalidator{{else}}listvalidator{{end}}.SizeAtLeast({{.MinList}}),
+					{{- end}}
+					{{- if ne .MaxList 0}}
+					{{if eq .Type "Set"}}setvalidator{{else}}listvalidator{{end}}.SizeAtMost({{.MaxList}}),
+					{{- end}}
+				},
+				{{- else if and (len .EnumValues) (not .IgnoreEnum)}}
 				Validators: []validator.String{
 					stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 				},
@@ -203,7 +218,16 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 							ElementType:         types.{{.ElementType}}Type,
 							{{- end}}
 							Optional:            true,
-							{{- if and (len .EnumValues) (not .IgnoreEnum)}}
+							{{- if and (or (eq .Type "List") (eq .Type "Set")) (or (ne .MinList 0) (ne .MaxList 0))}}
+							Validators: []validator.{{.Type}}{
+								{{- if ne .MinList 0}}
+								{{if eq .Type "Set"}}setvalidator{{else}}listvalidator{{end}}.SizeAtLeast({{.MinList}}),
+								{{- end}}
+								{{- if ne .MaxList 0}}
+								{{if eq .Type "Set"}}setvalidator{{else}}listvalidator{{end}}.SizeAtMost({{.MaxList}}),
+								{{- end}}
+							},
+							{{- else if and (len .EnumValues) (not .IgnoreEnum)}}
 							Validators: []validator.String{
 								stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 							},
@@ -279,7 +303,16 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 										ElementType:         types.{{.ElementType}}Type,
 										{{- end}}
 										Optional:            true,
-										{{- if and (len .EnumValues) (not .IgnoreEnum)}}
+										{{- if and (or (eq .Type "List") (eq .Type "Set")) (or (ne .MinList 0) (ne .MaxList 0))}}
+										Validators: []validator.{{.Type}}{
+											{{- if ne .MinList 0}}
+											{{if eq .Type "Set"}}setvalidator{{else}}listvalidator{{end}}.SizeAtLeast({{.MinList}}),
+											{{- end}}
+											{{- if ne .MaxList 0}}
+											{{if eq .Type "Set"}}setvalidator{{else}}listvalidator{{end}}.SizeAtMost({{.MaxList}}),
+											{{- end}}
+										},
+										{{- else if and (len .EnumValues) (not .IgnoreEnum)}}
 										Validators: []validator.String{
 											stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 										},
@@ -355,7 +388,16 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 													ElementType:         types.{{.ElementType}}Type,
 													{{- end}}
 													Optional:            true,
-													{{- if and (len .EnumValues) (not .IgnoreEnum)}}
+													{{- if and (or (eq .Type "List") (eq .Type "Set")) (or (ne .MinList 0) (ne .MaxList 0))}}
+													Validators: []validator.{{.Type}}{
+														{{- if ne .MinList 0}}
+														{{if eq .Type "Set"}}setvalidator{{else}}listvalidator{{end}}.SizeAtLeast({{.MinList}}),
+														{{- end}}
+														{{- if ne .MaxList 0}}
+														{{if eq .Type "Set"}}setvalidator{{else}}listvalidator{{end}}.SizeAtMost({{.MaxList}}),
+														{{- end}}
+													},
+													{{- else if and (len .EnumValues) (not .IgnoreEnum)}}
 													Validators: []validator.String{
 														stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 													},

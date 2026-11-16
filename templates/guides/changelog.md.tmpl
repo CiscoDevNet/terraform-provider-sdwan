@@ -11,6 +11,7 @@ description: |-
 
 - Add `sdwan_sig_feature` resource and data source (SIG feature of the SIG Security feature profile, SD-WAN Manager 20.15 and later, `tunnel_route_via` from 20.18.1: `sig_provider` Umbrella, Zscaler or Generic, GRE and IPsec tunnels, interface pairs and trackers)
 - The `devices` in `sdwan_attach_feature_device_template` is now a set instead of a list. Previously, adding or removing a single device caused every device positioned after it in the list to render as changed in the Terraform plan. The configuration syntax is unchanged; existing state is migrated automatically.
+- Fix generator to honor `minItems`/`maxItems` from the profile parcel JSON schemas: feature/policy resources now generate `listvalidator`/`setvalidator` `SizeAtLeast`/`SizeAtMost` validators for nested lists (e.g. `sequences` in `sdwan_embedded_security_ngfw_policy`) and for string/integer sets (e.g. `source_data_ipv6_prefix_list_ids`, `destination_data_ipv6_prefix_list_ids`, `protocol_name_list_ids`). Configurations that violate these limits, such as an explicitly empty list where the schema requires at least one item, are now rejected at plan time instead of by SD-WAN Manager at apply time
 
 ## 0.11.7
 

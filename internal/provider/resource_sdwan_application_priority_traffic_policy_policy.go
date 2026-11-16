@@ -29,6 +29,7 @@ import (
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -102,6 +103,9 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				ElementType:         types.StringType,
 				Required:            true,
+				Validators: []validator.Set{
+					setvalidator.SizeAtLeast(1),
+				},
 			},
 			"direction": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("service", "tunnel", "all").String,
@@ -163,6 +167,9 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										MarkdownDescription: helpers.NewAttributeDescription("M365 Service Area").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"traffic_category": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("M365 Traffic Category").AddStringEnumDescription("optimize-allow", "optimize", "all").String,
@@ -198,16 +205,25 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										MarkdownDescription: helpers.NewAttributeDescription("protocol (0-255) range or individual number separated by space").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"icmp_messages": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("ICMP Message").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"icmp6_messages": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("ICMP6 Message").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"source_data_ipv4_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
@@ -241,6 +257,9 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										MarkdownDescription: helpers.NewAttributeDescription("Source Port (0-65535) range or individual number separated by space").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"destination_data_ipv4_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
@@ -274,6 +293,9 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										MarkdownDescription: helpers.NewAttributeDescription("Destination Port (0-65535) range or individual number separated by space").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"tcp": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("TCP States").AddStringEnumDescription("syn").String,
@@ -332,6 +354,9 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
 													ElementType:         types.StringType,
 													Optional:            true,
+													Validators: []validator.Set{
+														setvalidator.SizeAtLeast(1),
+													},
 												},
 												"preferred_color_group_list_id": schema.StringAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
@@ -356,6 +381,9 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
 													ElementType:         types.StringType,
 													Optional:            true,
+													Validators: []validator.Set{
+														setvalidator.SizeAtLeast(1),
+													},
 												},
 												"remote_color_restrict": schema.BoolAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
@@ -368,6 +396,9 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										MarkdownDescription: helpers.NewAttributeDescription("Backup SLA preferred color").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"set_parameters": schema.ListNestedAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
@@ -410,6 +441,9 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
 													ElementType:         types.StringType,
 													Optional:            true,
+													Validators: []validator.Set{
+														setvalidator.SizeAtLeast(1),
+													},
 												},
 												"local_tloc_list_restrict": schema.BoolAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
@@ -426,6 +460,9 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
 													ElementType:         types.StringType,
 													Optional:            true,
+													Validators: []validator.Set{
+														setvalidator.SizeAtLeast(1),
+													},
 												},
 												"preferred_remote_color_restrict": schema.BoolAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
@@ -435,6 +472,10 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
 													ElementType:         types.StringType,
 													Optional:            true,
+													Validators: []validator.Set{
+														setvalidator.SizeAtLeast(1),
+														setvalidator.SizeAtMost(1),
+													},
 												},
 												"tloc_encapsulation": schema.StringAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("ipsec", "gre").String,
@@ -461,6 +502,10 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
 													ElementType:         types.StringType,
 													Optional:            true,
+													Validators: []validator.Set{
+														setvalidator.SizeAtLeast(1),
+														setvalidator.SizeAtMost(1),
+													},
 												},
 												"service_tloc_encapsulation": schema.StringAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("ipsec", "gre").String,
@@ -531,6 +576,10 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
 													ElementType:         types.StringType,
 													Optional:            true,
+													Validators: []validator.Set{
+														setvalidator.SizeAtLeast(1),
+														setvalidator.SizeAtMost(1),
+													},
 												},
 												"service_chain_tloc_encapsulation": schema.StringAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("ipsec", "gre").String,
@@ -665,11 +714,19 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.Int64Type,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+											setvalidator.SizeAtMost(4),
+										},
 									},
 									"nat_dia_interfaces": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+											setvalidator.SizeAtMost(4),
+										},
 									},
 									"secure_internet_gateway": schema.BoolAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,

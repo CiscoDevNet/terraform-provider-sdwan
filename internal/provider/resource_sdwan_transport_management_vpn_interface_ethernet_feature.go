@@ -29,6 +29,7 @@ import (
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -173,6 +174,9 @@ func (r *TransportManagementVPNInterfaceEthernetProfileParcelResource) Schema(ct
 			"ipv4_secondary_addresses": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Secondary IpV4 Addresses, Attribute conditional on `ipv4_address_type` equal to `static` or `ipv4_address_type_variable` being set").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(4),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"address": schema.StringAttribute{
