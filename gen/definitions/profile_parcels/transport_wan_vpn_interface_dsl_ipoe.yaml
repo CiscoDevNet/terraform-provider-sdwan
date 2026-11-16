@@ -1,3 +1,4 @@
+# Manual resource tests cover QoS mode and variable behavior, hub restrictions, adaptive QoS, and omitted static IPv4 defaults.
 ---
 name: Transport WAN VPN Interface DSL IPoE
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/dsl-ipoe
