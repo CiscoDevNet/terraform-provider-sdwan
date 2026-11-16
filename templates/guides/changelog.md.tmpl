@@ -14,6 +14,7 @@ description: |-
 
 ## 0.11.7
 
+- Add `sdwan_transport_wan_vpn_interface_dsl_ipoe_feature` resource and data source support for both 20.15 and 20.18+
 - Add `sdwan_policy_object_security_data_ipv6_prefix_list` resource and data source (SD-WAN Manager 20.18+)
 - Add `sdwan_wan_edge_certificate_validate` and `sdwan_send_wan_edge_list_to_controllers` resources to manage WAN edge certificate validity and push the certificate list to the controllers, with drift detection based on the Manager's out-of-sync state
 - Add 20.18 Security Object Group and Rule Set policy-object resources and data sources
