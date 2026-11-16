@@ -457,7 +457,12 @@ func (data TransportWANVPNInterfaceDSLIPoE) toBody(ctx context.Context, ver *ver
 			body, _ = sjson.Set(body, path+"ethernet.intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType", "variable")
 			body, _ = sjson.Set(body, path+"ethernet.intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.value", data.Ipv4AddressVariable.ValueString())
 		}
-	} else if !data.Ipv4Address.IsNull() {
+	} else if data.Ipv4Address.IsNull() {
+		if true && data.Ipv4AddressType.ValueString() == "static" {
+			body, _ = sjson.Set(body, path+"ethernet.intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType", "default")
+
+		}
+	} else {
 		if true && data.Ipv4AddressType.ValueString() == "static" {
 			body, _ = sjson.Set(body, path+"ethernet.intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType", "global")
 			body, _ = sjson.Set(body, path+"ethernet.intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.value", data.Ipv4Address.ValueString())
@@ -469,7 +474,12 @@ func (data TransportWANVPNInterfaceDSLIPoE) toBody(ctx context.Context, ver *ver
 			body, _ = sjson.Set(body, path+"ethernet.intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType", "variable")
 			body, _ = sjson.Set(body, path+"ethernet.intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value", data.Ipv4SubnetMaskVariable.ValueString())
 		}
-	} else if !data.Ipv4SubnetMask.IsNull() {
+	} else if data.Ipv4SubnetMask.IsNull() {
+		if true && data.Ipv4AddressType.ValueString() == "static" {
+			body, _ = sjson.Set(body, path+"ethernet.intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType", "default")
+
+		}
+	} else {
 		if true && data.Ipv4AddressType.ValueString() == "static" {
 			body, _ = sjson.Set(body, path+"ethernet.intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType", "global")
 			body, _ = sjson.Set(body, path+"ethernet.intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value", data.Ipv4SubnetMask.ValueString())

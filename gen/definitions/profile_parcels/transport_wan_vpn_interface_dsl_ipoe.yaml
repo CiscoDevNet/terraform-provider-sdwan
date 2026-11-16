@@ -120,6 +120,7 @@ attributes:
     tf_name: ipv4_address
     data_path: [ethernet, intfIpAddress, static, staticIpV4AddressPrimary]
     example: 192.0.2.10
+    default_value_present: true
     conditional_attribute:
       conditions:
         - name: ipv4_address_type
@@ -128,6 +129,7 @@ attributes:
     tf_name: ipv4_subnet_mask
     data_path: [ethernet, intfIpAddress, static, staticIpV4AddressPrimary]
     example: 255.255.255.0
+    default_value_present: true
     conditional_attribute:
       conditions:
         - name: ipv4_address_type
@@ -226,7 +228,7 @@ attributes:
   - model_name: group
     tf_name: tunnel_interface_groups
     data_path: [tunnel]
-    example: 1
+    example: "10,20"
     exclude_test: true
   - model_name: border
     tf_name: tunnel_interface_border
@@ -246,7 +248,7 @@ attributes:
   - model_name: excludeControllerGroupList
     tf_name: tunnel_interface_exclude_controller_group_list
     data_path: [tunnel]
-    example: 1
+    example: "1,2"
     exclude_test: true
   - model_name: vmanageConnectionPreference
     tf_name: tunnel_interface_vmanage_connection_preference

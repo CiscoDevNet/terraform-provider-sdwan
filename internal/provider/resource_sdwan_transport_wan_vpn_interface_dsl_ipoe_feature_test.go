@@ -296,6 +296,23 @@ func TestTransportWANVPNInterfaceDSLIPoEVersionedPayload(t *testing.T) {
 	}
 }
 
+func TestTransportWANVPNInterfaceDSLIPoEStaticAddressDefaults(t *testing.T) {
+	for _, managerVersion := range []string{"20.15.1", "20.18.1"} {
+		t.Run(managerVersion, func(t *testing.T) {
+			data := TransportWANVPNInterfaceDSLIPoE{
+				Ipv4AddressType: types.StringValue("static"),
+			}
+			body := gjson.Parse(data.toBody(context.Background(), version.Must(version.NewVersion(managerVersion))))
+			for _, field := range []string{"ipAddress", "subnetMask"} {
+				value := body.Get("data.ethernet.intfIpAddress.static.staticIpV4AddressPrimary." + field)
+				if value.Get("optionType").String() != "default" {
+					t.Errorf("omitted static %s optionType = %q, want default: %s", field, value.Get("optionType").String(), value.Raw)
+				}
+			}
+		})
+	}
+}
+
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanTransportWANVPNInterfaceDSLIPoEProfileParcel(t *testing.T) {
 	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
