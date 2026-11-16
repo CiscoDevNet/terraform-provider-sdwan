@@ -36,16 +36,22 @@ func TestAccSdwanAttachFeatureDeviceTemplate(t *testing.T) {
 			{
 				Config: testAccSdwanAttachFeatureDeviceTemplateConfig_all("1.1.1.1"),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.system_site_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.system_system_ip", "1.1.1.1"),
-					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.system_host_name", "Edge1"),
-					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.vpn_if_name_Default_vEdge_DHCP_Tunnel_Interface", "GigabitEthernet1"),
+					resource.TestCheckTypeSetElemNestedAttrs("sdwan_attach_feature_device_template.test", "devices.*", map[string]string{
+						"id":                         "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B",
+						"variables.system_site_id":   "1",
+						"variables.system_system_ip": "1.1.1.1",
+						"variables.system_host_name": "Edge1",
+						"variables.vpn_if_name_Default_vEdge_DHCP_Tunnel_Interface": "GigabitEthernet1",
+					}),
 				),
 			},
 			{
 				Config: testAccSdwanAttachFeatureDeviceTemplateConfig_all("10.0.0.1"),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.system_system_ip", "10.0.0.1"),
+					resource.TestCheckTypeSetElemNestedAttrs("sdwan_attach_feature_device_template.test", "devices.*", map[string]string{
+						"id":                         "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B",
+						"variables.system_system_ip": "10.0.0.1",
+					}),
 				),
 			},
 		},
