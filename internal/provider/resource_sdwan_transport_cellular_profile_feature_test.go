@@ -99,3 +99,77 @@ func testAccSdwanTransportCellularProfileProfileParcelConfig_all() string {
 }
 
 // End of section. //template:end testAccConfigAll
+
+// Profile ID 1 must not send a networkSlicing block when slice_type is not configured.
+func TestAccSdwanTransportCellularProfileProfileParcelProfileId1(t *testing.T) {
+	if os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2018")
+	}
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "profile_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "access_point_name", "apn1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "packet_data_network_type", "ipv4"))
+	checks = append(checks, resource.TestCheckNoResourceAttr("sdwan_transport_cellular_profile_feature.test", "slice_type"))
+	checks = append(checks, resource.TestCheckNoResourceAttr("sdwan_transport_cellular_profile_feature.test", "slice_differentiator"))
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccSdwanTransportCellularProfilePrerequisitesProfileParcelConfig + testAccSdwanTransportCellularProfileProfileParcelConfig_profileId1(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
+		},
+	})
+}
+
+func testAccSdwanTransportCellularProfileProfileParcelConfig_profileId1() string {
+	config := `resource "sdwan_transport_cellular_profile_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST_PROFILE_ID_1"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	profile_id = 1` + "\n"
+	config += `	access_point_name = "apn1"` + "\n"
+	config += `	requires_authentication = false` + "\n"
+	config += `	packet_data_network_type = "ipv4"` + "\n"
+	config += `	no_overwrite = false` + "\n"
+	config += `}` + "\n"
+	return config
+}
+
+// Network slicing on a profile ID that supports it (20.18+).
+func TestAccSdwanTransportCellularProfileProfileParcelSlicing(t *testing.T) {
+	if os.Getenv("SDWAN_2018") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2018")
+	}
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "profile_id", "7"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "slice_type", "2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "slice_differentiator", "20"))
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccSdwanTransportCellularProfilePrerequisitesProfileParcelConfig + testAccSdwanTransportCellularProfileProfileParcelConfig_slicing(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
+			},
+		},
+	})
+}
+
+func testAccSdwanTransportCellularProfileProfileParcelConfig_slicing() string {
+	config := `resource "sdwan_transport_cellular_profile_feature" "test" {` + "\n"
+	config += ` name = "TF_TEST_SLICING"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	profile_id = 7` + "\n"
+	config += `	access_point_name = "apn1"` + "\n"
+	config += `	requires_authentication = false` + "\n"
+	config += `	packet_data_network_type = "ipv4"` + "\n"
+	config += `	no_overwrite = false` + "\n"
+	config += `	slice_type = 2` + "\n"
+	config += `	slice_differentiator = 20` + "\n"
+	config += `}` + "\n"
+	return config
+}
