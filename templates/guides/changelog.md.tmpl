@@ -12,9 +12,11 @@ description: |-
 - Add `parcel_names` filter to `sdwan_policy_object_feature_profile_parcels` data source: returns only the parcels whose name is in the set
 - Add `sdwan_sig_feature` resource and data source (SIG feature of the SIG Security feature profile, SD-WAN Manager 20.15 and later, `tunnel_route_via` from 20.18.1: `sig_provider` Umbrella, Zscaler or Generic, GRE and IPsec tunnels, interface pairs and trackers)
 - The `devices` in `sdwan_attach_feature_device_template` is now a set instead of a list. Previously, adding or removing a single device caused every device positioned after it in the list to render as changed in the Terraform plan. The configuration syntax is unchanged; existing state is migrated automatically.
+- Fix `sdwan_transport_cellular_profile_feature` failing to create a profile with `profile_id = 1` on SD-WAN Manager 20.18+ (`Invalid Json Payload`, `networkSlicing`): the `networkSlicing` block is no longer sent when `slice_type` is not configured
 
 ## 0.11.7
 
+- Add `sdwan_transport_wan_vpn_interface_dsl_ipoe_feature` resource and data source support for both 20.15 and 20.18+
 - Add `sdwan_policy_object_security_data_ipv6_prefix_list` resource and data source (SD-WAN Manager 20.18+)
 - Add `sdwan_wan_edge_certificate_validate` and `sdwan_send_wan_edge_list_to_controllers` resources to manage WAN edge certificate validity and push the certificate list to the controllers, with drift detection based on the Manager's out-of-sync state
 - Add 20.18 Security Object Group and Rule Set policy-object resources and data sources

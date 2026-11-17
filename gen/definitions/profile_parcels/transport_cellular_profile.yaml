@@ -87,6 +87,7 @@ attributes:
     tf_name: slice_type
     data_path: [profileConfig, profileInfo, networkSlicing]
     example: 2
+    exclude_null: true
     test_tags: [SDWAN_2018]
     conditional_attribute:
       conditions:
