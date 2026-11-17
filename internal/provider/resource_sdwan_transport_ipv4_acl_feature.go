@@ -28,6 +28,8 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -126,12 +128,19 @@ func (r *TransportIPv4ACLProfileParcelResource) Schema(ctx context.Context, req 
 						"match_entries": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Define match conditions").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtLeast(1),
+								listvalidator.SizeAtMost(1),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"dscps": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("DSCP number").String,
 										ElementType:         types.Int64Type,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"packet_length": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Packet Length").String,
@@ -141,11 +150,17 @@ func (r *TransportIPv4ACLProfileParcelResource) Schema(ctx context.Context, req 
 										MarkdownDescription: helpers.NewAttributeDescription("protocol number list with at least one item").String,
 										ElementType:         types.Int64Type,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"icmp_messages": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("ICMP Message").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"source_data_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
@@ -220,6 +235,10 @@ func (r *TransportIPv4ACLProfileParcelResource) Schema(ctx context.Context, req 
 						"actions": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Define list of actions").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtLeast(1),
+								listvalidator.SizeAtMost(1),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"accept_set_dscp": schema.Int64Attribute{

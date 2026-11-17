@@ -28,6 +28,8 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -378,6 +380,9 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 						"address_families": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set BGP address family").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtMost(1),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"family_type": schema.StringAttribute{
@@ -641,6 +646,9 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 						"address_families": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set IPv6 BGP address family").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtMost(1),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"family_type": schema.StringAttribute{
@@ -867,6 +875,9 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 			"ipv4_redistributes": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Redistribute routes into BGP").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(7),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"protocol": schema.StringAttribute{
@@ -910,6 +921,9 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 							MarkdownDescription: helpers.NewAttributeDescription("Match the OSPF internal,external type 1 or external type 2 route and redistribute them to BGP., Attribute conditional on `protocol` equal to `ospf`").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"ospf_match_route_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `protocol` equal to `ospf`").String,
@@ -1009,6 +1023,9 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 			"ipv6_redistributes": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Redistribute routes into BGP").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(5),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"protocol": schema.StringAttribute{
@@ -1052,6 +1069,9 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 							MarkdownDescription: helpers.NewAttributeDescription("Match the OSPF internal,external type 1 or external type 2 route and redistribute them to BGP., Attribute conditional on `protocol` equal to `ospf`").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"ospf_match_route_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `protocol` equal to `ospf`").String,

@@ -28,6 +28,7 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -133,6 +134,10 @@ func (r *TransportRoutePolicyProfileParcelResource) Schema(ctx context.Context, 
 						"match_entries": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Define match conditions").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtLeast(1),
+								listvalidator.SizeAtMost(1),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"as_path_list_id": schema.StringAttribute{
@@ -152,6 +157,9 @@ func (r *TransportRoutePolicyProfileParcelResource) Schema(ctx context.Context, 
 									"standard_community_lists": schema.ListNestedAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Select a standard community list").String,
 										Optional:            true,
+										Validators: []validator.List{
+											listvalidator.SizeAtLeast(1),
+										},
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
 												"id": schema.StringAttribute{
@@ -240,6 +248,10 @@ func (r *TransportRoutePolicyProfileParcelResource) Schema(ctx context.Context, 
 						"actions": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Define list of actions").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtLeast(1),
+								listvalidator.SizeAtMost(1),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"as_path_prepend": schema.ListAttribute{

@@ -28,6 +28,8 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/go-version"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -100,6 +102,9 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 			"sequences": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(1),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"is_rule_set": schema.BoolAttribute{
@@ -158,86 +163,147 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+											setvalidator.SizeAtMost(20),
+										},
 									},
 									"source_data_ipv6_prefix_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Only supported on sequences with `sequence_ip_type` set to `ipv6`, Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+											setvalidator.SizeAtMost(20),
+										},
 									},
 									"destination_data_prefix_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+											setvalidator.SizeAtMost(20),
+										},
 									},
 									"destination_data_ipv6_prefix_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Only supported on sequences with `sequence_ip_type` set to `ipv6`, Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+											setvalidator.SizeAtMost(20),
+										},
 									},
 									"destination_fqdn_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+											setvalidator.SizeAtMost(20),
+										},
 									},
 									"source_geo_location_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+											setvalidator.SizeAtMost(20),
+										},
 									},
 									"destination_geo_location_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+											setvalidator.SizeAtMost(20),
+										},
 									},
 									"source_port_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+											setvalidator.SizeAtMost(20),
+										},
 									},
 									"destination_port_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+											setvalidator.SizeAtMost(20),
+										},
 									},
 									"source_scalable_group_tag_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"destination_scalable_group_tag_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"source_identity_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"protocol_name_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+											setvalidator.SizeAtMost(20),
+										},
 									},
 									"app_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"flat_app_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"rule_set_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Security rule set IDs, requires `is_rule_set` set to `true` on the sequence, Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"source_object_group_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Referenced object groups must not contain FQDNs, SD-WAN Manager rejects them as a source (PPARC0012), Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"source_security_group_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Deprecated, use `source_object_group_list_ids` instead, Attribute conditional on SD-WAN Manager version lower than `20.18.0`").String,
@@ -248,6 +314,9 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 										MarkdownDescription: helpers.NewAttributeDescription(", Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"destination_security_group_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Deprecated, use `destination_object_group_list_ids` instead, Attribute conditional on SD-WAN Manager version lower than `20.18.0`").String,
@@ -258,6 +327,9 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"source_data_prefixes_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -267,6 +339,9 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 										MarkdownDescription: helpers.NewAttributeDescription("Only supported on sequences with `sequence_ip_type` set to `ipv6`, Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"source_ipv6_data_prefixes_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
@@ -276,6 +351,9 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"destination_data_prefixes_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -285,6 +363,9 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 										MarkdownDescription: helpers.NewAttributeDescription("Only supported on sequences with `sequence_ip_type` set to `ipv6`, Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"destination_ipv6_data_prefixes_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
@@ -294,6 +375,9 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"destination_fqdns_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -303,6 +387,9 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"source_ports_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -312,6 +399,9 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"destination_ports_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -321,6 +411,9 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"source_geo_locations_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -330,6 +423,9 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"destination_geo_locations_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -339,31 +435,49 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"source_identity_usergroups": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"applications": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"application_families": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"protocols": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"protocol_names": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 								},
 							},
@@ -371,6 +485,9 @@ func (r *EmbeddedSecurityNGFWProfileParcelResource) Schema(ctx context.Context, 
 						"actions": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("can be empty array or with type or parameter").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtMost(2),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{

@@ -28,6 +28,7 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -323,6 +324,9 @@ func (r *ServiceLANVPNInterfaceSVIProfileParcelResource) Schema(ctx context.Cont
 			"ipv4_vrrps": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable ipv4 VRRP").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(1),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"group_id": schema.Int64Attribute{
@@ -470,6 +474,9 @@ func (r *ServiceLANVPNInterfaceSVIProfileParcelResource) Schema(ctx context.Cont
 			"ipv6_vrrps": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable ipv6 VRRP").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(1),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"group_id": schema.Int64Attribute{
@@ -555,6 +562,9 @@ func (r *ServiceLANVPNInterfaceSVIProfileParcelResource) Schema(ctx context.Cont
 						"secondary_addresses": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Secondary IP address").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtMost(4),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"prefix": schema.StringAttribute{

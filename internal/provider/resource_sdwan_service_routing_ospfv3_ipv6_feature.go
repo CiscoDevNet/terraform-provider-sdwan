@@ -28,6 +28,7 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -298,6 +299,9 @@ func (r *ServiceRoutingOSPFv3IPv6ProfileParcelResource) Schema(ctx context.Conte
 			"areas": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure OSPFv3 IPv6 area").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(1),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"area_number": schema.Int64Attribute{
@@ -337,6 +341,9 @@ func (r *ServiceRoutingOSPFv3IPv6ProfileParcelResource) Schema(ctx context.Conte
 						"interfaces": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set OSPF interface parameters").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtLeast(1),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"name": schema.StringAttribute{
