@@ -1016,6 +1016,7 @@ var functions = template.FuncMap{
 	"coexistingSecretGrandparentLists": CoexistingSecretGrandparentLists,
 	"coexistingSecretChildLists":       CoexistingSecretChildLists,
 	"hasDeepWriteOnlyTF":               HasDeepWriteOnlyTF,
+	"hasAnyWriteOnlyTF":                HasAnyWriteOnlyTF,
 	"writeOnlyTFChildren":              WriteOnlyTFChildren,
 	"coexistingSecretParentLists":      CoexistingSecretParentLists,
 	"coexistingSecretChildren":         CoexistingSecretChildren,
@@ -1612,9 +1613,6 @@ func rewriteWriteOnlyTF(attrs []YamlConfigAttribute, inSet bool) []YamlConfigAtt
 		legacy.WriteOnlyTF = false
 		legacy.CoexistingSecret = true
 		legacy.Mandatory = false
-		legacy.ExcludeTest = true
-		legacy.ExcludeExample = true
-		legacy.MinimumTestValue = ""
 		legacy.MutualExclusivityNote = exclusivity
 		legacy.CoexistenceNote = fmt.Sprintf("This attribute stores the secret in Terraform state. Prefer `%s_wo` together with `%s_wo_version`, which keeps it out of state.", base, base)
 		out = append(out, legacy)
@@ -1635,6 +1633,22 @@ func rewriteWriteOnlyTF(attrs []YamlConfigAttribute, inSet bool) []YamlConfigAtt
 		wo.ExcludeExample = true
 		wo.MinimumTestValue = ""
 		wo.MutualExclusivityNote = exclusivity
+
+		// INVARIANT: a null "_wo" twin must emit NOTHING.
+		//
+		// Both twins write to the same payload path. toBody runs the legacy twin
+		// first and the "_wo" twin second, so if the "_wo" twin emits anything on
+		// its null branch it overwrites whatever the legacy twin just wrote. A user
+		// who has not opted in has "_wo" == null, which is everybody immediately
+		// after upgrading - their existing secret would be replaced by an empty
+		// default and the Manager rejects the payload (SCHVALID0001).
+		wo.DefaultValuePresent = false // null -> optionType "default"
+		wo.DefaultValue = ""           // value written alongside that default
+		wo.DefaultValueEmptyString = false
+		wo.DynamicDefault = false      // widens the default branch to a value match
+		wo.AlwaysIncludeParent = false // null -> optionType "default" on the parent
+		wo.AlwaysInclude = false       // null -> optionType "default" (nested levels)
+		wo.ForceInclude = false        // null -> optionType "global" with an empty value
 		out = append(out, wo)
 
 		// 3. Rotation trigger. Excluded from the payload and from read-back, but
@@ -1842,6 +1856,11 @@ func CoexistingSecretChildLists(attr YamlConfigAttribute) []YamlConfigAttribute 
 // HasDeepWriteOnlyTF reports whether any secret sits two list levels down.
 func HasDeepWriteOnlyTF(config YamlConfig) bool {
 	return len(WriteOnlyTFGrandparentLists(config)) > 0
+}
+
+// HasAnyWriteOnlyTF reports whether the resource carries a write-only secret at any nesting depth.
+func HasAnyWriteOnlyTF(config YamlConfig) bool {
+	return HasWriteOnlyTF(config) || HasNestedWriteOnlyTF(config) || HasDeepWriteOnlyTF(config)
 }
 
 func augmentProfileParcelConfig(config *YamlConfig) {

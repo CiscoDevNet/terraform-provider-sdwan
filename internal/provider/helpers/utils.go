@@ -19,8 +19,10 @@ package helpers
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"reflect"
 	"strings"
 	"time"
 
@@ -158,6 +160,32 @@ const encryptedValueMarker = "$CRYPT"
 // cleartext configuration, which would produce a permanent diff.
 func IsEncryptedValue(v string) bool {
 	return strings.HasPrefix(strings.ToUpper(strings.TrimSpace(v)), encryptedValueMarker)
+}
+
+// JSONEqual reports whether two request bodies are semantically identical,
+// ignoring key order and formatting.
+//
+// Used to detect a no-op update. When a practitioner opts a secret into its
+// write-only twin, the same value simply moves from "x" to "x_wo". Both
+// spellings serialise to the same payload path, so the body built from the plan
+// equals the body built from state. Sending it anyway would bump the parcel
+// version, which in Network as Code bumps the configuration group and redeploys
+// every device attached to it, for a payload the Manager already has.
+//
+// Returns false when either side is not valid JSON, so an unparseable body
+// always falls through to the request rather than being silently skipped.
+func JSONEqual(a, b string) bool {
+	if a == b {
+		return true
+	}
+	var av, bv any
+	if err := json.Unmarshal([]byte(a), &av); err != nil {
+		return false
+	}
+	if err := json.Unmarshal([]byte(b), &bv); err != nil {
+		return false
+	}
+	return reflect.DeepEqual(av, bv)
 }
 
 func Must[T any](v T, err error) T {

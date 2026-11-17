@@ -96,7 +96,7 @@ func (r *OtherThousandEyesProfileParcelResource) Schema(ctx context.Context, req
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"account_group_token": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set the Account Group Token").AddMutualExclusivityDescription("Only one of `account_group_token`, `account_group_token_variable` and `account_group_token_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `account_group_token_wo` together with `account_group_token_wo_version`, which keeps it out of state.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set the Account Group Token").AddNote("Only one of `account_group_token`, `account_group_token_variable` and `account_group_token_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `account_group_token_wo` together with `account_group_token_wo_version`, which keeps it out of state.").String,
 							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
@@ -108,7 +108,7 @@ func (r *OtherThousandEyesProfileParcelResource) Schema(ctx context.Context, req
 							Optional:            true,
 						},
 						"account_group_token_wo": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set the Account Group Token").AddMutualExclusivityDescription("Only one of `account_group_token`, `account_group_token_variable` and `account_group_token_wo` can be set.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set the Account Group Token").AddNote("Only one of `account_group_token`, `account_group_token_variable` and `account_group_token_wo` can be set.").String,
 							Sensitive:           true,
 							WriteOnly:           true,
 							Optional:            true,
@@ -430,6 +430,23 @@ func (r *OtherThousandEyesProfileParcelResource) Update(ctx context.Context, req
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
 	body := plan.toBody(ctx)
+
+	// Opting a secret into its write-only twin moves the same value from "x" to
+	// "x_wo". Both spellings serialise to the same payload path, so the body built
+	// from the plan equals the body built from state and there is nothing to send.
+	// PUTting anyway would bump the parcel version, which in Network as Code bumps
+	// the configuration group and redeploys every device attached to it - for a
+	// payload the Manager already has.
+	//
+	// Only this migration case can produce equal bodies. Rotating the secret, or
+	// changing any other attribute, yields a different body and still PUTs.
+	if helpers.JSONEqual(body, state.toBody(ctx)) {
+		plan.Version = state.Version
+		tflog.Debug(ctx, fmt.Sprintf("%s: Update is a no-op, skipping PUT to avoid a version bump", plan.Name.ValueString()))
+		diags = resp.State.Set(ctx, &plan)
+		resp.Diagnostics.Append(diags...)
+		return
+	}
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

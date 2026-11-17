@@ -689,12 +689,7 @@ func (data ServiceRoutingOSPF) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "md5.value", childItem.MessageDigestKey.ValueString())
 						}
 					}
-					if childItem.MessageDigestKeyWo.IsNull() {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "md5.optionType", "default")
-
-						}
-					} else {
+					if !childItem.MessageDigestKeyWo.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "md5.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "md5.value", childItem.MessageDigestKeyWo.ValueString())
@@ -1204,7 +1199,7 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result, 
 							cItem.MessageDigestKeyVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
 							// Masked secrets returned by the Manager must never be written into state.
-							if !helpers.IsEncryptedValue(va.String()) {
+							if fullRead || !helpers.IsEncryptedValue(va.String()) {
 								cItem.MessageDigestKey = types.StringValue(va.String())
 							}
 						}
@@ -1309,6 +1304,8 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result, 
 									matchedC[nci] = true
 									data.Areas[ni].Interfaces[nci].MessageDigestKey = oldCItem.MessageDigestKey
 									data.Areas[ni].Interfaces[nci].MessageDigestKeyVariable = oldCItem.MessageDigestKeyVariable
+
+									data.Areas[ni].Interfaces[nci].MessageDigestKeyWoVersion = oldCItem.MessageDigestKeyWoVersion
 									resultC = append(resultC, data.Areas[ni].Interfaces[nci])
 									break
 								}

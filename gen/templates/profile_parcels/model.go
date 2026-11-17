@@ -473,7 +473,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 	{{- end}}
 	{{ if .Variable}}data.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 	{{- if .NoOptionType}}
-	if va := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); va.Exists() {{if .Encrypted}}&& !helpers.IsEncryptedValue(va.String()) {{end}}{
+	if va := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); va.Exists() {{if .Encrypted}}&& (fullRead || !helpers.IsEncryptedValue(va.String())) {{end}}{
 		data.{{toGoName .TfName}} = types.{{.Type}}Value(va.{{getGjsonType .Type}}())
 	}
 	{{- else}}
@@ -484,7 +484,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 		} else{{end}} if t.String() == "global" {{if .WriteAsDefault}}|| (t.String() == "default" && (!temp{{toGoName .TfName}}.IsNull() || fullRead)){{end}} {{if .DynamicDefault}}|| (t.String() == "default" && (temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}" || (fullRead && temp{{toGoName .TfName}}.ValueString() == ""))){{end}} {
 			{{- if .Encrypted}}
 			// Masked secrets returned by the Manager must never be written into state.
-			if !helpers.IsEncryptedValue(va.String()) {
+			if fullRead || !helpers.IsEncryptedValue(va.String()) {
 			{{- end}}
 			{{- if eq .Type "StringInt64" }}
 			data.{{toGoName .TfName}} = types.StringValue(va.String())
@@ -545,7 +545,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 				item.{{toGoName .TfName}} = helpers.Get{{.ElementType}}{{.Type}}(elems)
 			}
 			{{- else if .NoOptionType}}
-			if va := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); va.Exists() {{if .Encrypted}}&& !helpers.IsEncryptedValue(va.String()) {{end}}{
+			if va := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); va.Exists() {{if .Encrypted}}&& (fullRead || !helpers.IsEncryptedValue(va.String())) {{end}}{
 				item.{{toGoName .TfName}} = types.{{.Type}}Value(va.{{getGjsonType .Type}}())
 			}
 			{{- else}}
@@ -556,7 +556,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 				} else{{end}} if t.String() == "global" {{if .WriteAsDefault}}|| t.String() == "default"{{end}} {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
 					{{- if .Encrypted}}
 					// Masked secrets returned by the Manager must never be written into state.
-					if !helpers.IsEncryptedValue(va.String()) {
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
 					{{- end}}
 					{{- if eq .Type "StringInt64" }}
 					item.{{toGoName .TfName}} = types.StringValue(va.String())
@@ -596,7 +596,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 					{{- end}}
 					{{ if .Variable}}cItem.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 					{{- if .NoOptionType}}
-					if va := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); va.Exists() {{if .Encrypted}}&& !helpers.IsEncryptedValue(va.String()) {{end}}{
+					if va := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); va.Exists() {{if .Encrypted}}&& (fullRead || !helpers.IsEncryptedValue(va.String())) {{end}}{
 						cItem.{{toGoName .TfName}} = types.{{.Type}}Value(va.{{getGjsonType .Type}}())
 					}
 					{{- else}}
@@ -607,7 +607,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 						} else{{end}} if t.String() == "global" {{if .WriteAsDefault}}|| t.String() == "default"{{end}} {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
 							{{- if .Encrypted}}
 							// Masked secrets returned by the Manager must never be written into state.
-							if !helpers.IsEncryptedValue(va.String()) {
+							if fullRead || !helpers.IsEncryptedValue(va.String()) {
 							{{- end}}
 							{{- if eq .Type "StringInt64" }}
 							cItem.{{toGoName .TfName}} = types.StringValue(va.String())
@@ -653,7 +653,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 								} else{{end}} if t.String() == "global" {{if .WriteAsDefault}}|| t.String() == "default"{{end}} {{if .DynamicDefault}}|| (t.String() == "default" && temp{{toGoName .TfName}}.ValueString() == "{{.DefaultValue}}"){{end}} {
 									{{- if .Encrypted}}
 									// Masked secrets returned by the Manager must never be written into state.
-									if !helpers.IsEncryptedValue(va.String()) {
+									if fullRead || !helpers.IsEncryptedValue(va.String()) {
 									{{- end}}
 									{{- if eq .Type "StringInt64" }}
 									ccItem.{{toGoName .TfName}} = types.StringValue(va.String())
@@ -765,6 +765,14 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 					data.{{$list}}[ni].{{toGoName .TfName}}Variable = oldItem.{{toGoName .TfName}}Variable
 					{{- end}}
 					{{- end}}
+					{{- if .WoVersion}}
+					{{/* "_wo_version" is TfOnly, so fromBody never assigns it - but this
+					     list item is rebuilt from the API response, which would leave it
+					     null and produce a permanent "null -> N" diff on every refresh.
+					     Each such apply re-PUTs the parcel and bumps its version, which in
+					     NaC bumps the configuration group and redeploys every device on it. */}}
+					data.{{$list}}[ni].{{toGoName .TfName}} = oldItem.{{toGoName .TfName}}
+					{{- end}}
 					{{- if isNestedListSet .}}
 					{{- $clist := (toGoName .TfName)}}
 					{{- $ccname := toGoName .TfName}}
@@ -824,6 +832,11 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 									data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}}Variable = oldCItem.{{toGoName .TfName}}Variable
 									{{- end}}
 									{{- end}}
+									{{- if .WoVersion}}
+									{{/* See the depth-1 restore: a rebuilt list item would lose
+									     "_wo_version" and cause a permanent diff plus a redeploy. */}}
+									data.{{$list}}[ni].{{$clist}}[nci].{{toGoName .TfName}} = oldCItem.{{toGoName .TfName}}
+									{{- end}}
 									{{- if isNestedListSet .}}
 									{{- $cclist := (toGoName .TfName)}}
 									{{- $ccnoId := not (hasId .Attributes)}}
@@ -881,6 +894,11 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result,
 													{{- if .Variable}}
 													data.{{$list}}[ni].{{$clist}}[nci].{{$cclist}}[ncci].{{toGoName .TfName}}Variable = oldCCItem.{{toGoName .TfName}}Variable
 													{{- end}}
+													{{- end}}
+													{{- if .WoVersion}}
+													{{/* See the depth-1 restore: a rebuilt list item would lose
+													     "_wo_version" and cause a permanent diff plus a redeploy. */}}
+													data.{{$list}}[ni].{{$clist}}[nci].{{$cclist}}[ncci].{{toGoName .TfName}} = oldCCItem.{{toGoName .TfName}}
 													{{- end}}
 													{{- end}}
 													resultCC = append(resultCC, data.{{$list}}[ni].{{$clist}}[nci].{{$cclist}}[ncci])

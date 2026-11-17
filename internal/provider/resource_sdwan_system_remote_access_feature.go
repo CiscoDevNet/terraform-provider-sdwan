@@ -136,7 +136,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 			},
 			"psk_authentication_pre_shared_key": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("PSK Pre Shared Key, Attribute conditional on `psk_authentication_type` equal to `group`").AddMutualExclusivityDescription("Only one of `psk_authentication_pre_shared_key`, `psk_authentication_pre_shared_key_variable` and `psk_authentication_pre_shared_key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `psk_authentication_pre_shared_key_wo` together with `psk_authentication_pre_shared_key_wo_version`, which keeps it out of state.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("PSK Pre Shared Key, Attribute conditional on `psk_authentication_type` equal to `group`").AddNote("Only one of `psk_authentication_pre_shared_key`, `psk_authentication_pre_shared_key_variable` and `psk_authentication_pre_shared_key_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `psk_authentication_pre_shared_key_wo` together with `psk_authentication_pre_shared_key_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 				Validators: []validator.String{
@@ -148,7 +148,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 			},
 			"psk_authentication_pre_shared_key_wo": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("PSK Pre Shared Key, Attribute conditional on `psk_authentication_type` equal to `group`").AddMutualExclusivityDescription("Only one of `psk_authentication_pre_shared_key`, `psk_authentication_pre_shared_key_variable` and `psk_authentication_pre_shared_key_wo` can be set.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("PSK Pre Shared Key, Attribute conditional on `psk_authentication_type` equal to `group`").AddNote("Only one of `psk_authentication_pre_shared_key`, `psk_authentication_pre_shared_key_variable` and `psk_authentication_pre_shared_key_wo` can be set.").String,
 				Sensitive:           true,
 				WriteOnly:           true,
 				Optional:            true,
@@ -183,7 +183,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 			},
 			"aaa_specify_name_policy_password": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").AddMutualExclusivityDescription("Only one of `aaa_specify_name_policy_password`, `aaa_specify_name_policy_password_variable` and `aaa_specify_name_policy_password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `aaa_specify_name_policy_password_wo` together with `aaa_specify_name_policy_password_wo_version`, which keeps it out of state.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("").AddNote("Only one of `aaa_specify_name_policy_password`, `aaa_specify_name_policy_password_variable` and `aaa_specify_name_policy_password_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `aaa_specify_name_policy_password_wo` together with `aaa_specify_name_policy_password_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 				Validators: []validator.String{
@@ -195,7 +195,7 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 			},
 			"aaa_specify_name_policy_password_wo": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").AddMutualExclusivityDescription("Only one of `aaa_specify_name_policy_password`, `aaa_specify_name_policy_password_variable` and `aaa_specify_name_policy_password_wo` can be set.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("").AddNote("Only one of `aaa_specify_name_policy_password`, `aaa_specify_name_policy_password_variable` and `aaa_specify_name_policy_password_wo` can be set.").String,
 				Sensitive:           true,
 				WriteOnly:           true,
 				Optional:            true,
@@ -567,6 +567,23 @@ func (r *SystemRemoteAccessProfileParcelResource) Update(ctx context.Context, re
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
 	body := plan.toBody(ctx)
+
+	// Opting a secret into its write-only twin moves the same value from "x" to
+	// "x_wo". Both spellings serialise to the same payload path, so the body built
+	// from the plan equals the body built from state and there is nothing to send.
+	// PUTting anyway would bump the parcel version, which in Network as Code bumps
+	// the configuration group and redeploys every device attached to it - for a
+	// payload the Manager already has.
+	//
+	// Only this migration case can produce equal bodies. Rotating the secret, or
+	// changing any other attribute, yields a different body and still PUTs.
+	if helpers.JSONEqual(body, state.toBody(ctx)) {
+		plan.Version = state.Version
+		tflog.Debug(ctx, fmt.Sprintf("%s: Update is a no-op, skipping PUT to avoid a version bump", plan.Name.ValueString()))
+		diags = resp.State.Set(ctx, &plan)
+		resp.Diagnostics.Append(diags...)
+		return
+	}
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

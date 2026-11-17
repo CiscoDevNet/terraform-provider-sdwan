@@ -57,3 +57,33 @@ func TestIsEncryptedValue(t *testing.T) {
 		})
 	}
 }
+
+func TestJSONEqual(t *testing.T) {
+	tests := []struct {
+		name     string
+		a, b     string
+		expected bool
+	}{
+		{"identical strings", `{"a":1}`, `{"a":1}`, true},
+		{"key order differs", `{"a":1,"b":2}`, `{"b":2,"a":1}`, true},
+		{"whitespace differs", `{"a": 1}`, `{"a":1}`, true},
+		{"nested key order differs", `{"x":{"p":1,"q":2}}`, `{"x":{"q":2,"p":1}}`, true},
+		// The migration case: the secret moves spelling but lands on the same path.
+		{"same secret via either spelling", `{"password":{"optionType":"global","value":"s"}}`, `{"password":{"value":"s","optionType":"global"}}`, true},
+		{"different value", `{"a":1}`, `{"a":2}`, false},
+		{"rotated secret", `{"password":{"value":"old"}}`, `{"password":{"value":"new"}}`, false},
+		{"extra key", `{"a":1}`, `{"a":1,"b":2}`, false},
+		{"both empty", "", "", true},
+		// Unparseable input must fall through to the request, never be skipped.
+		{"invalid left", `{`, `{"a":1}`, false},
+		{"invalid right", `{"a":1}`, `{`, false},
+		{"both invalid but unequal", `{`, `}`, false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := JSONEqual(tt.a, tt.b); got != tt.expected {
+				t.Errorf("JSONEqual(%q, %q) = %v, want %v", tt.a, tt.b, got, tt.expected)
+			}
+		})
+	}
+}

@@ -451,12 +451,7 @@ func (data SystemAAA) toBody(ctx context.Context, ver *version.Version) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKey.ValueString())
 						}
 					}
-					if childItem.SecretKeyWo.IsNull() {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "default")
-
-						}
-					} else {
+					if !childItem.SecretKeyWo.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKeyWo.ValueString())
@@ -863,7 +858,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 					item.PasswordVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
 					// Masked secrets returned by the Manager must never be written into state.
-					if !helpers.IsEncryptedValue(va.String()) {
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
 						item.Password = types.StringValue(va.String())
 					}
 				}
@@ -932,6 +927,8 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 					matchedUsers[ni] = true
 					data.Users[ni].Password = oldItem.Password
 					data.Users[ni].PasswordVariable = oldItem.PasswordVariable
+
+					data.Users[ni].PasswordWoVersion = oldItem.PasswordWoVersion
 					if data.Users[ni].PublicKeys != nil {
 						resultC := make([]SystemAAAUsersPublicKeys, 0, len(data.Users[ni].PublicKeys))
 						matchedC := make([]bool, len(data.Users[ni].PublicKeys))
@@ -1069,7 +1066,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 							cItem.KeyVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
 							// Masked secrets returned by the Manager must never be written into state.
-							if !helpers.IsEncryptedValue(va.String()) {
+							if fullRead || !helpers.IsEncryptedValue(va.String()) {
 								cItem.Key = types.StringValue(va.String())
 							}
 						}
@@ -1146,6 +1143,10 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 									matchedC[nci] = true
 									data.RadiusGroups[ni].Servers[nci].Key = oldCItem.Key
 									data.RadiusGroups[ni].Servers[nci].KeyVariable = oldCItem.KeyVariable
+
+									data.RadiusGroups[ni].Servers[nci].KeyWoVersion = oldCItem.KeyWoVersion
+
+									data.RadiusGroups[ni].Servers[nci].SecretKeyWoVersion = oldCItem.SecretKeyWoVersion
 									resultC = append(resultC, data.RadiusGroups[ni].Servers[nci])
 									break
 								}
@@ -1261,7 +1262,7 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 							cItem.KeyVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
 							// Masked secrets returned by the Manager must never be written into state.
-							if !helpers.IsEncryptedValue(va.String()) {
+							if fullRead || !helpers.IsEncryptedValue(va.String()) {
 								cItem.Key = types.StringValue(va.String())
 							}
 						}
@@ -1328,6 +1329,10 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 									matchedC[nci] = true
 									data.TacacsGroups[ni].Servers[nci].Key = oldCItem.Key
 									data.TacacsGroups[ni].Servers[nci].KeyVariable = oldCItem.KeyVariable
+
+									data.TacacsGroups[ni].Servers[nci].KeyWoVersion = oldCItem.KeyWoVersion
+
+									data.TacacsGroups[ni].Servers[nci].SecretKeyWoVersion = oldCItem.SecretKeyWoVersion
 									resultC = append(resultC, data.TacacsGroups[ni].Servers[nci])
 									break
 								}

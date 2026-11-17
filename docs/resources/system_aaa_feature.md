@@ -25,6 +25,7 @@ resource "sdwan_system_aaa_feature" "example" {
   users = [
     {
       name      = "User1"
+      password  = "cisco123"
       privilege = "15"
       public_keys = [
         {
@@ -46,6 +47,8 @@ resource "sdwan_system_aaa_feature" "example" {
           acct_port  = 1813
           timeout    = 5
           retransmit = 3
+          key        = "cisco123"
+          secret_key = "cisco123"
           key_enum   = "7"
           key_type   = "key"
         }
@@ -61,10 +64,12 @@ resource "sdwan_system_aaa_feature" "example" {
       source_interface = "GigabitEthernet0"
       servers = [
         {
-          address  = "1.2.3.4"
-          port     = 49
-          timeout  = 5
-          key_enum = "7"
+          address    = "1.2.3.4"
+          port       = 49
+          timeout    = 5
+          key        = "cisco123"
+          secret_key = "cisco123"
+          key_enum   = "7"
         }
       ]
     }

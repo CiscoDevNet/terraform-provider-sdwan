@@ -169,7 +169,7 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `name`, `name_variable` and `name_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `name_wo` together with `name_wo_version`, which keeps it out of state.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddNote("Only one of `name`, `name_variable` and `name_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `name_wo` together with `name_wo_version`, which keeps it out of state.").String,
 							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
@@ -182,7 +182,7 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 						},
 						"name_wo": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `name`, `name_variable` and `name_wo` can be set.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddNote("Only one of `name`, `name_variable` and `name_wo` can be set.").String,
 							Sensitive:           true,
 							WriteOnly:           true,
 							Optional:            true,
@@ -281,7 +281,7 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 						},
 						"authentication_password": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Specify authentication protocol password").AddMutualExclusivityDescription("Only one of `authentication_password`, `authentication_password_variable` and `authentication_password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `authentication_password_wo` together with `authentication_password_wo_version`, which keeps it out of state.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Specify authentication protocol password").AddNote("Only one of `authentication_password`, `authentication_password_variable` and `authentication_password_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `authentication_password_wo` together with `authentication_password_wo_version`, which keeps it out of state.").String,
 							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
@@ -293,7 +293,7 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 						},
 						"authentication_password_wo": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Specify authentication protocol password").AddMutualExclusivityDescription("Only one of `authentication_password`, `authentication_password_variable` and `authentication_password_wo` can be set.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Specify authentication protocol password").AddNote("Only one of `authentication_password`, `authentication_password_variable` and `authentication_password_wo` can be set.").String,
 							Sensitive:           true,
 							WriteOnly:           true,
 							Optional:            true,
@@ -317,7 +317,7 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 						},
 						"privacy_password": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Specify privacy protocol password").AddMutualExclusivityDescription("Only one of `privacy_password`, `privacy_password_variable` and `privacy_password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `privacy_password_wo` together with `privacy_password_wo_version`, which keeps it out of state.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Specify privacy protocol password").AddNote("Only one of `privacy_password`, `privacy_password_variable` and `privacy_password_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `privacy_password_wo` together with `privacy_password_wo_version`, which keeps it out of state.").String,
 							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
@@ -329,7 +329,7 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 						},
 						"privacy_password_wo": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Specify privacy protocol password").AddMutualExclusivityDescription("Only one of `privacy_password`, `privacy_password_variable` and `privacy_password_wo` can be set.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Specify privacy protocol password").AddNote("Only one of `privacy_password`, `privacy_password_variable` and `privacy_password_wo` can be set.").String,
 							Sensitive:           true,
 							WriteOnly:           true,
 							Optional:            true,
@@ -746,6 +746,23 @@ func (r *SystemSNMPProfileParcelResource) Update(ctx context.Context, req resour
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
 	body := plan.toBody(ctx)
+
+	// Opting a secret into its write-only twin moves the same value from "x" to
+	// "x_wo". Both spellings serialise to the same payload path, so the body built
+	// from the plan equals the body built from state and there is nothing to send.
+	// PUTting anyway would bump the parcel version, which in Network as Code bumps
+	// the configuration group and redeploys every device attached to it - for a
+	// payload the Manager already has.
+	//
+	// Only this migration case can produce equal bodies. Rotating the secret, or
+	// changing any other attribute, yields a different body and still PUTs.
+	if helpers.JSONEqual(body, state.toBody(ctx)) {
+		plan.Version = state.Version
+		tflog.Debug(ctx, fmt.Sprintf("%s: Update is a no-op, skipping PUT to avoid a version bump", plan.Name.ValueString()))
+		diags = resp.State.Set(ctx, &plan)
+		resp.Diagnostics.Append(diags...)
+		return
+	}
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

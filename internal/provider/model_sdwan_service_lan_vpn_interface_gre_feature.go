@@ -591,12 +591,7 @@ func (data ServiceLANVPNInterfaceGRE) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"basic.preSharedSecret.value", data.PreSharedSecret.ValueString())
 		}
 	}
-	if data.PreSharedSecretWo.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"basic.preSharedSecret.optionType", "default")
-
-		}
-	} else {
+	if !data.PreSharedSecretWo.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"basic.preSharedSecret.optionType", "global")
 			body, _ = sjson.Set(body, path+"basic.preSharedSecret.value", data.PreSharedSecretWo.ValueString())

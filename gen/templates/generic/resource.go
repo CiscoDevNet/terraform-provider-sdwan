@@ -119,10 +119,10 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 					.AddDefaultValueDescription("{{.DefaultValue}}")
 					{{- end -}}
 					{{- if len .MutualExclusivityNote -}}
-					.AddMutualExclusivityDescription("{{.MutualExclusivityNote}}")
+					.AddNote("{{.MutualExclusivityNote}}")
 					{{- end -}}
 					{{- if len .CoexistenceNote -}}
-					.AddCoexistenceNote("{{.CoexistenceNote}}")
+					.AddNote("{{.CoexistenceNote}}")
 					{{- end -}}
 					.String,
 				{{- if isListSet .}}
@@ -219,10 +219,10 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 								.AddDefaultValueDescription("{{.DefaultValue}}")
 								{{- end -}}
 								{{- if len .MutualExclusivityNote -}}
-								.AddMutualExclusivityDescription("{{.MutualExclusivityNote}}")
+								.AddNote("{{.MutualExclusivityNote}}")
 								{{- end -}}
 								{{- if len .CoexistenceNote -}}
-								.AddCoexistenceNote("{{.CoexistenceNote}}")
+								.AddNote("{{.CoexistenceNote}}")
 								{{- end -}}
 								.String,
 							{{- if isListSet .}}
@@ -319,10 +319,10 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 											.AddDefaultValueDescription("{{.DefaultValue}}")
 											{{- end -}}
 											{{- if len .MutualExclusivityNote -}}
-											.AddMutualExclusivityDescription("{{.MutualExclusivityNote}}")
+											.AddNote("{{.MutualExclusivityNote}}")
 											{{- end -}}
 											{{- if len .CoexistenceNote -}}
-											.AddCoexistenceNote("{{.CoexistenceNote}}")
+											.AddNote("{{.CoexistenceNote}}")
 											{{- end -}}
 											.String,
 										{{- if isListSet .}}
@@ -419,10 +419,10 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 														.AddDefaultValueDescription("{{.DefaultValue}}")
 														{{- end -}}
 														{{- if len .MutualExclusivityNote -}}
-														.AddMutualExclusivityDescription("{{.MutualExclusivityNote}}")
+														.AddNote("{{.MutualExclusivityNote}}")
 														{{- end -}}
 														{{- if len .CoexistenceNote -}}
-														.AddCoexistenceNote("{{.CoexistenceNote}}")
+														.AddNote("{{.CoexistenceNote}}")
 														{{- end -}}
 														.String,
 													{{- if isListSet .}}

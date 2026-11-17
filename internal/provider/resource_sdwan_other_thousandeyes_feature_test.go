@@ -78,6 +78,7 @@ func testAccSdwanOtherThousandEyesProfileParcelConfig_all() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_other_feature_profile.test.id` + "\n"
 	config += `	virtual_application = [{` + "\n"
+	config += `	  account_group_token = "qwerqwerqwerqwerqwerqwerqwerqwer"` + "\n"
 	config += `	  vpn = 1` + "\n"
 	config += `	  management_ip = "10.0.0.2"` + "\n"
 	config += `	  management_subnet_mask = "255.255.255.0"` + "\n"

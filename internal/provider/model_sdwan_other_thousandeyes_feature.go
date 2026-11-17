@@ -400,6 +400,8 @@ func (data *OtherThousandEyes) fromBody(ctx context.Context, res gjson.Result, f
 				}
 				if keyMatch {
 					matchedVirtualApplication[ni] = true
+
+					data.VirtualApplication[ni].AccountGroupTokenWoVersion = oldItem.AccountGroupTokenWoVersion
 					resultVirtualApplication = append(resultVirtualApplication, data.VirtualApplication[ni])
 					break
 				}

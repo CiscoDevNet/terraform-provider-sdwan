@@ -133,7 +133,7 @@ func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Conte
 				Optional:            true,
 			},
 			"profile_password": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.], Attribute conditional on `requires_authentication` equal to `true`").AddMutualExclusivityDescription("Only one of `profile_password`, `profile_password_variable` and `profile_password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `profile_password_wo` together with `profile_password_wo_version`, which keeps it out of state.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.], Attribute conditional on `requires_authentication` equal to `true`").AddNote("Only one of `profile_password`, `profile_password_variable` and `profile_password_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `profile_password_wo` together with `profile_password_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 			},
@@ -142,7 +142,7 @@ func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Conte
 				Optional:            true,
 			},
 			"profile_password_wo": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.], Attribute conditional on `requires_authentication` equal to `true`").AddMutualExclusivityDescription("Only one of `profile_password`, `profile_password_variable` and `profile_password_wo` can be set.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.], Attribute conditional on `requires_authentication` equal to `true`").AddNote("Only one of `profile_password`, `profile_password_variable` and `profile_password_wo` can be set.").String,
 				Sensitive:           true,
 				WriteOnly:           true,
 				Optional:            true,
@@ -381,6 +381,23 @@ func (r *TransportCellularProfileProfileParcelResource) Update(ctx context.Conte
 
 	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
 	body := plan.toBody(ctx, ver)
+
+	// Opting a secret into its write-only twin moves the same value from "x" to
+	// "x_wo". Both spellings serialise to the same payload path, so the body built
+	// from the plan equals the body built from state and there is nothing to send.
+	// PUTting anyway would bump the parcel version, which in Network as Code bumps
+	// the configuration group and redeploys every device attached to it - for a
+	// payload the Manager already has.
+	//
+	// Only this migration case can produce equal bodies. Rotating the secret, or
+	// changing any other attribute, yields a different body and still PUTs.
+	if helpers.JSONEqual(body, state.toBody(ctx, ver)) {
+		plan.Version = state.Version
+		tflog.Debug(ctx, fmt.Sprintf("%s: Update is a no-op, skipping PUT to avoid a version bump", plan.Name.ValueString()))
+		diags = resp.State.Set(ctx, &plan)
+		resp.Diagnostics.Append(diags...)
+		return
+	}
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

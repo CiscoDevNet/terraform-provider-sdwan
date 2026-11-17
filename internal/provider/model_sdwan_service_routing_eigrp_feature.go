@@ -256,12 +256,7 @@ func (data ServiceRoutingEIGRP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"authentication.authKey.value", data.HmacAuthenticationKey.ValueString())
 		}
 	}
-	if data.HmacAuthenticationKeyWo.IsNull() {
-		if true && data.AuthenticationType.ValueString() == "hmac-sha-256" {
-			body, _ = sjson.Set(body, path+"authentication.authKey.optionType", "default")
-
-		}
-	} else {
+	if !data.HmacAuthenticationKeyWo.IsNull() {
 		if true && data.AuthenticationType.ValueString() == "hmac-sha-256" {
 			body, _ = sjson.Set(body, path+"authentication.authKey.optionType", "global")
 			body, _ = sjson.Set(body, path+"authentication.authKey.value", data.HmacAuthenticationKeyWo.ValueString())
@@ -305,12 +300,7 @@ func (data ServiceRoutingEIGRP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "keystring.value", item.KeyString.ValueString())
 				}
 			}
-			if item.KeyStringWo.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "keystring.optionType", "default")
-
-				}
-			} else {
+			if !item.KeyStringWo.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "keystring.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "keystring.value", item.KeyStringWo.ValueString())
@@ -613,7 +603,7 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result,
 				data.HmacAuthenticationKeyVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
 				// Masked secrets returned by the Manager must never be written into state.
-				if !helpers.IsEncryptedValue(va.String()) {
+				if fullRead || !helpers.IsEncryptedValue(va.String()) {
 					data.HmacAuthenticationKey = types.StringValue(va.String())
 				}
 			}
@@ -642,7 +632,7 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result,
 					item.KeyStringVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
 					// Masked secrets returned by the Manager must never be written into state.
-					if !helpers.IsEncryptedValue(va.String()) {
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
 						item.KeyString = types.StringValue(va.String())
 					}
 				}
@@ -675,6 +665,8 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result,
 					matchedMd5Keys[ni] = true
 					data.Md5Keys[ni].KeyString = oldItem.KeyString
 					data.Md5Keys[ni].KeyStringVariable = oldItem.KeyStringVariable
+
+					data.Md5Keys[ni].KeyStringWoVersion = oldItem.KeyStringWoVersion
 					resultMd5Keys = append(resultMd5Keys, data.Md5Keys[ni])
 					break
 				}

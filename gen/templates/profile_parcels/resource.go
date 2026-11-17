@@ -119,10 +119,10 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 					.AddDefaultValueDescription("{{.DefaultValue}}")
 					{{- end -}}
 					{{- if len .MutualExclusivityNote -}}
-					.AddMutualExclusivityDescription("{{.MutualExclusivityNote}}")
+					.AddNote("{{.MutualExclusivityNote}}")
 					{{- end -}}
 					{{- if len .CoexistenceNote -}}
-					.AddCoexistenceNote("{{.CoexistenceNote}}")
+					.AddNote("{{.CoexistenceNote}}")
 					{{- end -}}
 					.String,
 				{{- if isListSet .}}
@@ -211,10 +211,10 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 								.AddDefaultValueDescription("{{.DefaultValue}}")
 								{{- end -}}
 								{{- if len .MutualExclusivityNote -}}
-								.AddMutualExclusivityDescription("{{.MutualExclusivityNote}}")
+								.AddNote("{{.MutualExclusivityNote}}")
 								{{- end -}}
 								{{- if len .CoexistenceNote -}}
-								.AddCoexistenceNote("{{.CoexistenceNote}}")
+								.AddNote("{{.CoexistenceNote}}")
 								{{- end -}}
 								.String,
 							{{- if isListSet .}}
@@ -299,10 +299,10 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 											.AddDefaultValueDescription("{{.DefaultValue}}")
 											{{- end -}}
 											{{- if len .MutualExclusivityNote -}}
-											.AddMutualExclusivityDescription("{{.MutualExclusivityNote}}")
+											.AddNote("{{.MutualExclusivityNote}}")
 											{{- end -}}
 											{{- if len .CoexistenceNote -}}
-											.AddCoexistenceNote("{{.CoexistenceNote}}")
+											.AddNote("{{.CoexistenceNote}}")
 											{{- end -}}
 											.String,
 										{{- if isListSet .}}
@@ -387,10 +387,10 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 														.AddDefaultValueDescription("{{.DefaultValue}}")
 														{{- end -}}
 														{{- if len .MutualExclusivityNote -}}
-														.AddMutualExclusivityDescription("{{.MutualExclusivityNote}}")
+														.AddNote("{{.MutualExclusivityNote}}")
 														{{- end -}}
 														{{- if len .CoexistenceNote -}}
-														.AddCoexistenceNote("{{.CoexistenceNote}}")
+														.AddNote("{{.CoexistenceNote}}")
 														{{- end -}}
 														.String,
 													{{- if isListSet .}}
@@ -938,6 +938,25 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Update(ctx context.Context, r
 	{{- else}}
 
 	body := plan.toBody(ctx)
+	{{- end}}
+	{{- if hasAnyWriteOnlyTF .}}
+
+	// Opting a secret into its write-only twin moves the same value from "x" to
+	// "x_wo". Both spellings serialise to the same payload path, so the body built
+	// from the plan equals the body built from state and there is nothing to send.
+	// PUTting anyway would bump the parcel version, which in Network as Code bumps
+	// the configuration group and redeploys every device attached to it - for a
+	// payload the Manager already has.
+	//
+	// Only this migration case can produce equal bodies. Rotating the secret, or
+	// changing any other attribute, yields a different body and still PUTs.
+	if helpers.JSONEqual(body, state.toBody(ctx{{if hasMinVersionCondition .Attributes}}, ver{{end}})) {
+		plan.Version = state.Version
+		tflog.Debug(ctx, fmt.Sprintf("%s: Update is a no-op, skipping PUT to avoid a version bump", plan.Name.ValueString()))
+		diags = resp.State.Set(ctx, &plan)
+		resp.Diagnostics.Append(diags...)
+		return
+	}
 	{{- end}}
 	res, err := r.client.Put(plan.getPath() + "/" + url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {

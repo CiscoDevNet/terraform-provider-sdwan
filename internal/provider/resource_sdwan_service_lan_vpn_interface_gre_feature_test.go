@@ -134,6 +134,7 @@ func testAccSdwanServiceLANVPNInterfaceGREProfileParcelConfig_all() string {
 	config += `	ike_rekey_interval = 14400` + "\n"
 	config += `	ike_ciphersuite = "aes256-cbc-sha1"` + "\n"
 	config += `	ike_group = "16"` + "\n"
+	config += `	pre_shared_secret = "123"` + "\n"
 	config += `	ike_local_id = "xxx"` + "\n"
 	config += `	ike_remote_id = "xxx"` + "\n"
 	config += `	ipsec_rekey_interval = 3600` + "\n"

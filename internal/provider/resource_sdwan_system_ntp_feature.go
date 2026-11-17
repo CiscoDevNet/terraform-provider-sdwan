@@ -177,7 +177,7 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 							Optional:            true,
 						},
 						"md5_value": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Enter cleartext or AES-encrypted MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `md5_value`, `md5_value_variable` and `md5_value_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `md5_value_wo` together with `md5_value_wo_version`, which keeps it out of state.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Enter cleartext or AES-encrypted MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddNote("Only one of `md5_value`, `md5_value_variable` and `md5_value_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `md5_value_wo` together with `md5_value_wo_version`, which keeps it out of state.").String,
 							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
@@ -189,7 +189,7 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 							Optional:            true,
 						},
 						"md5_value_wo": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Enter cleartext or AES-encrypted MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddMutualExclusivityDescription("Only one of `md5_value`, `md5_value_variable` and `md5_value_wo` can be set.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Enter cleartext or AES-encrypted MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]").AddNote("Only one of `md5_value`, `md5_value_variable` and `md5_value_wo` can be set.").String,
 							Sensitive:           true,
 							WriteOnly:           true,
 							Optional:            true,
@@ -202,7 +202,7 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 							Optional:            true,
 						},
 						"hmac_sha2_value": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").AddMutualExclusivityDescription("Only one of `hmac_sha2_value`, `hmac_sha2_value_variable` and `hmac_sha2_value_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `hmac_sha2_value_wo` together with `hmac_sha2_value_wo_version`, which keeps it out of state.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").AddNote("Only one of `hmac_sha2_value`, `hmac_sha2_value_variable` and `hmac_sha2_value_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `hmac_sha2_value_wo` together with `hmac_sha2_value_wo_version`, which keeps it out of state.").String,
 							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
@@ -214,7 +214,7 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 							Optional:            true,
 						},
 						"hmac_sha2_value_wo": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").AddMutualExclusivityDescription("Only one of `hmac_sha2_value`, `hmac_sha2_value_variable` and `hmac_sha2_value_wo` can be set.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").AddNote("Only one of `hmac_sha2_value`, `hmac_sha2_value_variable` and `hmac_sha2_value_wo` can be set.").String,
 							Sensitive:           true,
 							WriteOnly:           true,
 							Optional:            true,
@@ -227,7 +227,7 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 							Optional:            true,
 						},
 						"cmac_aes128_value": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").AddMutualExclusivityDescription("Only one of `cmac_aes128_value`, `cmac_aes128_value_variable` and `cmac_aes128_value_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `cmac_aes128_value_wo` together with `cmac_aes128_value_wo_version`, which keeps it out of state.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").AddNote("Only one of `cmac_aes128_value`, `cmac_aes128_value_variable` and `cmac_aes128_value_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `cmac_aes128_value_wo` together with `cmac_aes128_value_wo_version`, which keeps it out of state.").String,
 							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
@@ -239,7 +239,7 @@ func (r *SystemNTPProfileParcelResource) Schema(ctx context.Context, req resourc
 							Optional:            true,
 						},
 						"cmac_aes128_value_wo": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").AddMutualExclusivityDescription("Only one of `cmac_aes128_value`, `cmac_aes128_value_variable` and `cmac_aes128_value_wo` can be set.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes), Attribute conditional on SD-WAN Manager version `26.1.1` or higher").AddNote("Only one of `cmac_aes128_value`, `cmac_aes128_value_variable` and `cmac_aes128_value_wo` can be set.").String,
 							Sensitive:           true,
 							WriteOnly:           true,
 							Optional:            true,
@@ -576,6 +576,23 @@ func (r *SystemNTPProfileParcelResource) Update(ctx context.Context, req resourc
 
 	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
 	body := plan.toBody(ctx, ver)
+
+	// Opting a secret into its write-only twin moves the same value from "x" to
+	// "x_wo". Both spellings serialise to the same payload path, so the body built
+	// from the plan equals the body built from state and there is nothing to send.
+	// PUTting anyway would bump the parcel version, which in Network as Code bumps
+	// the configuration group and redeploys every device attached to it - for a
+	// payload the Manager already has.
+	//
+	// Only this migration case can produce equal bodies. Rotating the secret, or
+	// changing any other attribute, yields a different body and still PUTs.
+	if helpers.JSONEqual(body, state.toBody(ctx, ver)) {
+		plan.Version = state.Version
+		tflog.Debug(ctx, fmt.Sprintf("%s: Update is a no-op, skipping PUT to avoid a version bump", plan.Name.ValueString()))
+		diags = resp.State.Set(ctx, &plan)
+		resp.Diagnostics.Append(diags...)
+		return
+	}
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

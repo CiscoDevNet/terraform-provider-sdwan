@@ -47,6 +47,7 @@ resource "sdwan_service_routing_bgp_feature" "example" {
       send_community          = true
       send_extended_community = true
       ebgp_multihop           = 1
+      password                = "myPassword"
       send_label              = true
       as_override             = false
       allowas_in_number       = 1
@@ -75,6 +76,7 @@ resource "sdwan_service_routing_bgp_feature" "example" {
       send_community          = true
       send_extended_community = true
       ebgp_multihop           = 3
+      password                = "myPassword"
       as_override             = true
       allowas_in_number       = 3
       address_families = [

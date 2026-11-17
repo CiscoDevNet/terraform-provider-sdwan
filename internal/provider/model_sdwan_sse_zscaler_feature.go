@@ -478,12 +478,7 @@ func (data SSEZscaler) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "preSharedSecret.value", item.PreSharedSecret.ValueString())
 				}
 			}
-			if item.PreSharedSecretWo.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "preSharedSecret.optionType", "default")
-
-				}
-			} else {
+			if !item.PreSharedSecretWo.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "preSharedSecret.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "preSharedSecret.value", item.PreSharedSecretWo.ValueString())
@@ -1818,6 +1813,8 @@ func (data *SSEZscaler) fromBody(ctx context.Context, res gjson.Result, fullRead
 				}
 				if keyMatch {
 					matchedInterfaces[ni] = true
+
+					data.Interfaces[ni].PreSharedSecretWoVersion = oldItem.PreSharedSecretWoVersion
 					resultInterfaces = append(resultInterfaces, data.Interfaces[ni])
 					break
 				}

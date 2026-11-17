@@ -146,12 +146,7 @@ func (data OtherTrustSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"devicePassword.value", data.DevicePassword.ValueString())
 		}
 	}
-	if data.DevicePasswordWo.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"devicePassword.optionType", "default")
-			body, _ = sjson.Set(body, path+"devicePassword.value", "")
-		}
-	} else {
+	if !data.DevicePasswordWo.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"devicePassword.optionType", "global")
 			body, _ = sjson.Set(body, path+"devicePassword.value", data.DevicePasswordWo.ValueString())
@@ -269,12 +264,7 @@ func (data OtherTrustSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"sxpDefaultPassword.value", data.SxpDefaultPassword.ValueString())
 		}
 	}
-	if data.SxpDefaultPasswordWo.IsNull() {
-		if true {
-			body, _ = sjson.Set(body, path+"sxpDefaultPassword.optionType", "default")
-			body, _ = sjson.Set(body, path+"sxpDefaultPassword.value", "")
-		}
-	} else {
+	if !data.SxpDefaultPasswordWo.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"sxpDefaultPassword.optionType", "global")
 			body, _ = sjson.Set(body, path+"sxpDefaultPassword.value", data.SxpDefaultPasswordWo.ValueString())
@@ -408,12 +398,7 @@ func (data OtherTrustSec) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "connectionPresharedKey.value", item.PresharedKey.ValueString())
 				}
 			}
-			if item.PresharedKeyWo.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "connectionPresharedKey.optionType", "default")
-					itemBody, _ = sjson.Set(itemBody, "connectionPresharedKey.value", "none")
-				}
-			} else {
+			if !item.PresharedKeyWo.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "connectionPresharedKey.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "connectionPresharedKey.value", item.PresharedKeyWo.ValueString())
@@ -529,7 +514,7 @@ func (data *OtherTrustSec) fromBody(ctx context.Context, res gjson.Result, fullR
 				data.DevicePasswordVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
 				// Masked secrets returned by the Manager must never be written into state.
-				if !helpers.IsEncryptedValue(va.String()) {
+				if fullRead || !helpers.IsEncryptedValue(va.String()) {
 					data.DevicePassword = types.StringValue(va.String())
 				}
 			}
@@ -605,7 +590,7 @@ func (data *OtherTrustSec) fromBody(ctx context.Context, res gjson.Result, fullR
 				data.SxpDefaultPasswordVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
 				// Masked secrets returned by the Manager must never be written into state.
-				if !helpers.IsEncryptedValue(va.String()) {
+				if fullRead || !helpers.IsEncryptedValue(va.String()) {
 					data.SxpDefaultPassword = types.StringValue(va.String())
 				}
 			}
@@ -766,6 +751,8 @@ func (data *OtherTrustSec) fromBody(ctx context.Context, res gjson.Result, fullR
 				}
 				if keyMatch {
 					matchedSxpConnections[ni] = true
+
+					data.SxpConnections[ni].PresharedKeyWoVersion = oldItem.PresharedKeyWoVersion
 					resultSxpConnections = append(resultSxpConnections, data.SxpConnections[ni])
 					break
 				}

@@ -81,12 +81,12 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 				},
 			},
 			"umbrella_auth_key_v2": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Authentication Key (v2)").AddMutualExclusivityDescription("Only one of `umbrella_auth_key_v2` and `umbrella_auth_key_v2_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `umbrella_auth_key_v2_wo` together with `umbrella_auth_key_v2_wo_version`, which keeps it out of state.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Authentication Key (v2)").AddNote("Only one of `umbrella_auth_key_v2` and `umbrella_auth_key_v2_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `umbrella_auth_key_v2_wo` together with `umbrella_auth_key_v2_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 			},
 			"umbrella_auth_key_v2_wo": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Authentication Key (v2)").AddMutualExclusivityDescription("Only one of `umbrella_auth_key_v2` and `umbrella_auth_key_v2_wo` can be set.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Authentication Key (v2)").AddNote("Only one of `umbrella_auth_key_v2` and `umbrella_auth_key_v2_wo` can be set.").String,
 				Sensitive:           true,
 				WriteOnly:           true,
 				Optional:            true,
@@ -96,12 +96,12 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 			},
 			"umbrella_auth_secret_v2": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Authentication Secret (v2)").AddMutualExclusivityDescription("Only one of `umbrella_auth_secret_v2` and `umbrella_auth_secret_v2_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `umbrella_auth_secret_v2_wo` together with `umbrella_auth_secret_v2_wo_version`, which keeps it out of state.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Authentication Secret (v2)").AddNote("Only one of `umbrella_auth_secret_v2` and `umbrella_auth_secret_v2_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `umbrella_auth_secret_v2_wo` together with `umbrella_auth_secret_v2_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 			},
 			"umbrella_auth_secret_v2_wo": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Authentication Secret (v2)").AddMutualExclusivityDescription("Only one of `umbrella_auth_secret_v2` and `umbrella_auth_secret_v2_wo` can be set.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella Authentication Secret (v2)").AddNote("Only one of `umbrella_auth_secret_v2` and `umbrella_auth_secret_v2_wo` can be set.").String,
 				Sensitive:           true,
 				WriteOnly:           true,
 				Optional:            true,
@@ -111,12 +111,12 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 			},
 			"umbrella_sig_auth_key": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella SIG Authentication Key").AddMutualExclusivityDescription("Only one of `umbrella_sig_auth_key` and `umbrella_sig_auth_key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `umbrella_sig_auth_key_wo` together with `umbrella_sig_auth_key_wo_version`, which keeps it out of state.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella SIG Authentication Key").AddNote("Only one of `umbrella_sig_auth_key` and `umbrella_sig_auth_key_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `umbrella_sig_auth_key_wo` together with `umbrella_sig_auth_key_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 			},
 			"umbrella_sig_auth_key_wo": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella SIG Authentication Key").AddMutualExclusivityDescription("Only one of `umbrella_sig_auth_key` and `umbrella_sig_auth_key_wo` can be set.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella SIG Authentication Key").AddNote("Only one of `umbrella_sig_auth_key` and `umbrella_sig_auth_key_wo` can be set.").String,
 				Sensitive:           true,
 				WriteOnly:           true,
 				Optional:            true,
@@ -126,12 +126,12 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 			},
 			"umbrella_sig_auth_secret": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella SIG Authentication Secret").AddMutualExclusivityDescription("Only one of `umbrella_sig_auth_secret` and `umbrella_sig_auth_secret_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `umbrella_sig_auth_secret_wo` together with `umbrella_sig_auth_secret_wo_version`, which keeps it out of state.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella SIG Authentication Secret").AddNote("Only one of `umbrella_sig_auth_secret` and `umbrella_sig_auth_secret_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `umbrella_sig_auth_secret_wo` together with `umbrella_sig_auth_secret_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 			},
 			"umbrella_sig_auth_secret_wo": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella SIG Authentication Secret").AddMutualExclusivityDescription("Only one of `umbrella_sig_auth_secret` and `umbrella_sig_auth_secret_wo` can be set.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella SIG Authentication Secret").AddNote("Only one of `umbrella_sig_auth_secret` and `umbrella_sig_auth_secret_wo` can be set.").String,
 				Sensitive:           true,
 				WriteOnly:           true,
 				Optional:            true,
@@ -141,12 +141,12 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 			},
 			"umbrella_dns_auth_key": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella DNS Authentication Key").AddMutualExclusivityDescription("Only one of `umbrella_dns_auth_key` and `umbrella_dns_auth_key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `umbrella_dns_auth_key_wo` together with `umbrella_dns_auth_key_wo_version`, which keeps it out of state.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella DNS Authentication Key").AddNote("Only one of `umbrella_dns_auth_key` and `umbrella_dns_auth_key_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `umbrella_dns_auth_key_wo` together with `umbrella_dns_auth_key_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 			},
 			"umbrella_dns_auth_key_wo": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella DNS Authentication Key").AddMutualExclusivityDescription("Only one of `umbrella_dns_auth_key` and `umbrella_dns_auth_key_wo` can be set.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella DNS Authentication Key").AddNote("Only one of `umbrella_dns_auth_key` and `umbrella_dns_auth_key_wo` can be set.").String,
 				Sensitive:           true,
 				WriteOnly:           true,
 				Optional:            true,
@@ -156,12 +156,12 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 			},
 			"umbrella_dns_auth_secret": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella DNS Authentication Secret").AddMutualExclusivityDescription("Only one of `umbrella_dns_auth_secret` and `umbrella_dns_auth_secret_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `umbrella_dns_auth_secret_wo` together with `umbrella_dns_auth_secret_wo_version`, which keeps it out of state.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella DNS Authentication Secret").AddNote("Only one of `umbrella_dns_auth_secret` and `umbrella_dns_auth_secret_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `umbrella_dns_auth_secret_wo` together with `umbrella_dns_auth_secret_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 			},
 			"umbrella_dns_auth_secret_wo": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Umbrella DNS Authentication Secret").AddMutualExclusivityDescription("Only one of `umbrella_dns_auth_secret` and `umbrella_dns_auth_secret_wo` can be set.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Umbrella DNS Authentication Secret").AddNote("Only one of `umbrella_dns_auth_secret` and `umbrella_dns_auth_secret_wo` can be set.").String,
 				Sensitive:           true,
 				WriteOnly:           true,
 				Optional:            true,
@@ -179,12 +179,12 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 			},
 			"zscaler_partner_key": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Zscaler Partner Key").AddMutualExclusivityDescription("Only one of `zscaler_partner_key` and `zscaler_partner_key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `zscaler_partner_key_wo` together with `zscaler_partner_key_wo_version`, which keeps it out of state.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Zscaler Partner Key").AddNote("Only one of `zscaler_partner_key` and `zscaler_partner_key_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `zscaler_partner_key_wo` together with `zscaler_partner_key_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 			},
 			"zscaler_partner_key_wo": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Zscaler Partner Key").AddMutualExclusivityDescription("Only one of `zscaler_partner_key` and `zscaler_partner_key_wo` can be set.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Zscaler Partner Key").AddNote("Only one of `zscaler_partner_key` and `zscaler_partner_key_wo` can be set.").String,
 				Sensitive:           true,
 				WriteOnly:           true,
 				Optional:            true,
@@ -198,12 +198,12 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 			},
 			"zscaler_password": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Zscaler Password").AddMutualExclusivityDescription("Only one of `zscaler_password` and `zscaler_password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `zscaler_password_wo` together with `zscaler_password_wo_version`, which keeps it out of state.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Zscaler Password").AddNote("Only one of `zscaler_password` and `zscaler_password_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `zscaler_password_wo` together with `zscaler_password_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 			},
 			"zscaler_password_wo": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Zscaler Password").AddMutualExclusivityDescription("Only one of `zscaler_password` and `zscaler_password_wo` can be set.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Zscaler Password").AddNote("Only one of `zscaler_password` and `zscaler_password_wo` can be set.").String,
 				Sensitive:           true,
 				WriteOnly:           true,
 				Optional:            true,
@@ -220,12 +220,12 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 				},
 			},
 			"cisco_sse_auth_key": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Cisco SSE Authentication Key").AddMutualExclusivityDescription("Only one of `cisco_sse_auth_key` and `cisco_sse_auth_key_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `cisco_sse_auth_key_wo` together with `cisco_sse_auth_key_wo_version`, which keeps it out of state.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Cisco SSE Authentication Key").AddNote("Only one of `cisco_sse_auth_key` and `cisco_sse_auth_key_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `cisco_sse_auth_key_wo` together with `cisco_sse_auth_key_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 			},
 			"cisco_sse_auth_key_wo": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Cisco SSE Authentication Key").AddMutualExclusivityDescription("Only one of `cisco_sse_auth_key` and `cisco_sse_auth_key_wo` can be set.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Cisco SSE Authentication Key").AddNote("Only one of `cisco_sse_auth_key` and `cisco_sse_auth_key_wo` can be set.").String,
 				Sensitive:           true,
 				WriteOnly:           true,
 				Optional:            true,
@@ -235,12 +235,12 @@ func (r *CloudProviderSettingsResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 			},
 			"cisco_sse_auth_secret": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Cisco SSE Authentication Secret").AddMutualExclusivityDescription("Only one of `cisco_sse_auth_secret` and `cisco_sse_auth_secret_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `cisco_sse_auth_secret_wo` together with `cisco_sse_auth_secret_wo_version`, which keeps it out of state.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Cisco SSE Authentication Secret").AddNote("Only one of `cisco_sse_auth_secret` and `cisco_sse_auth_secret_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `cisco_sse_auth_secret_wo` together with `cisco_sse_auth_secret_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 			},
 			"cisco_sse_auth_secret_wo": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Cisco SSE Authentication Secret").AddMutualExclusivityDescription("Only one of `cisco_sse_auth_secret` and `cisco_sse_auth_secret_wo` can be set.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Cisco SSE Authentication Secret").AddNote("Only one of `cisco_sse_auth_secret` and `cisco_sse_auth_secret_wo` can be set.").String,
 				Sensitive:           true,
 				WriteOnly:           true,
 				Optional:            true,

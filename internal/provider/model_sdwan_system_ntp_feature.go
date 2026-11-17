@@ -497,7 +497,7 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result, fullRead 
 					item.Md5ValueVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
 					// Masked secrets returned by the Manager must never be written into state.
-					if !helpers.IsEncryptedValue(va.String()) {
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
 						item.Md5Value = types.StringValue(va.String())
 					}
 				}
@@ -510,7 +510,7 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result, fullRead 
 					item.HmacSha2ValueVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
 					// Masked secrets returned by the Manager must never be written into state.
-					if !helpers.IsEncryptedValue(va.String()) {
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
 						item.HmacSha2Value = types.StringValue(va.String())
 					}
 				}
@@ -523,7 +523,7 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result, fullRead 
 					item.CmacAes128ValueVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
 					// Masked secrets returned by the Manager must never be written into state.
-					if !helpers.IsEncryptedValue(va.String()) {
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
 						item.CmacAes128Value = types.StringValue(va.String())
 					}
 				}
@@ -556,10 +556,16 @@ func (data *SystemNTP) fromBody(ctx context.Context, res gjson.Result, fullRead 
 					matchedAuthenticationKeys[ni] = true
 					data.AuthenticationKeys[ni].Md5Value = oldItem.Md5Value
 					data.AuthenticationKeys[ni].Md5ValueVariable = oldItem.Md5ValueVariable
+
+					data.AuthenticationKeys[ni].Md5ValueWoVersion = oldItem.Md5ValueWoVersion
 					data.AuthenticationKeys[ni].HmacSha2Value = oldItem.HmacSha2Value
 					data.AuthenticationKeys[ni].HmacSha2ValueVariable = oldItem.HmacSha2ValueVariable
+
+					data.AuthenticationKeys[ni].HmacSha2ValueWoVersion = oldItem.HmacSha2ValueWoVersion
 					data.AuthenticationKeys[ni].CmacAes128Value = oldItem.CmacAes128Value
 					data.AuthenticationKeys[ni].CmacAes128ValueVariable = oldItem.CmacAes128ValueVariable
+
+					data.AuthenticationKeys[ni].CmacAes128ValueWoVersion = oldItem.CmacAes128ValueWoVersion
 					resultAuthenticationKeys = append(resultAuthenticationKeys, data.AuthenticationKeys[ni])
 					break
 				}

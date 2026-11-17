@@ -85,6 +85,7 @@ func testAccSdwanTransportCellularProfileProfileParcelConfig_all() string {
 	config += `	requires_authentication = true` + "\n"
 	config += `	authentication_type = "pap"` + "\n"
 	config += `	profile_username = "example"` + "\n"
+	config += `	profile_password = "example123!"` + "\n"
 	config += `	packet_data_network_type = "ipv4"` + "\n"
 	config += `	no_overwrite = false` + "\n"
 	if os.Getenv("SDWAN_2018") != "" {

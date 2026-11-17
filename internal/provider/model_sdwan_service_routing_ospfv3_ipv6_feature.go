@@ -1194,6 +1194,8 @@ func (data *ServiceRoutingOSPFv3IPv6) fromBody(ctx context.Context, res gjson.Re
 								}
 								if keyMatchC {
 									matchedC[nci] = true
+
+									data.Areas[ni].Interfaces[nci].AuthenticationKeyWoVersion = oldCItem.AuthenticationKeyWoVersion
 									resultC = append(resultC, data.Areas[ni].Interfaces[nci])
 									break
 								}

@@ -187,7 +187,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 							Optional:            true,
 						},
 						"radius_server_secret": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server shared secret, Attribute conditional on `security_type` equal to `enterprise`").AddMutualExclusivityDescription("Only one of `radius_server_secret`, `radius_server_secret_variable` and `radius_server_secret_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `radius_server_secret_wo` together with `radius_server_secret_wo_version`, which keeps it out of state.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server shared secret, Attribute conditional on `security_type` equal to `enterprise`").AddNote("Only one of `radius_server_secret`, `radius_server_secret_variable` and `radius_server_secret_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `radius_server_secret_wo` together with `radius_server_secret_wo_version`, which keeps it out of state.").String,
 							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
@@ -199,7 +199,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 							Optional:            true,
 						},
 						"radius_server_secret_wo": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server shared secret, Attribute conditional on `security_type` equal to `enterprise`").AddMutualExclusivityDescription("Only one of `radius_server_secret`, `radius_server_secret_variable` and `radius_server_secret_wo` can be set.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server shared secret, Attribute conditional on `security_type` equal to `enterprise`").AddNote("Only one of `radius_server_secret`, `radius_server_secret_variable` and `radius_server_secret_wo` can be set.").String,
 							Sensitive:           true,
 							WriteOnly:           true,
 							Optional:            true,
@@ -212,7 +212,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 							Optional:            true,
 						},
 						"passphrase": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set passphrase, Attribute conditional on `security_type` equal to `personal`").AddMutualExclusivityDescription("Only one of `passphrase`, `passphrase_variable` and `passphrase_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `passphrase_wo` together with `passphrase_wo_version`, which keeps it out of state.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set passphrase, Attribute conditional on `security_type` equal to `personal`").AddNote("Only one of `passphrase`, `passphrase_variable` and `passphrase_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `passphrase_wo` together with `passphrase_wo_version`, which keeps it out of state.").String,
 							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
@@ -224,7 +224,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 							Optional:            true,
 						},
 						"passphrase_wo": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set passphrase, Attribute conditional on `security_type` equal to `personal`").AddMutualExclusivityDescription("Only one of `passphrase`, `passphrase_variable` and `passphrase_wo` can be set.").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set passphrase, Attribute conditional on `security_type` equal to `personal`").AddNote("Only one of `passphrase`, `passphrase_variable` and `passphrase_wo` can be set.").String,
 							Sensitive:           true,
 							WriteOnly:           true,
 							Optional:            true,
@@ -274,7 +274,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 			},
 			"password": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.").AddMutualExclusivityDescription("Only one of `password`, `password_variable` and `password_wo` can be set.").AddCoexistenceNote("This attribute stores the secret in Terraform state. Prefer `password_wo` together with `password_wo_version`, which keeps it out of state.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.").AddNote("Only one of `password`, `password_variable` and `password_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `password_wo` together with `password_wo_version`, which keeps it out of state.").String,
 				Sensitive:           true,
 				Optional:            true,
 			},
@@ -283,7 +283,7 @@ func (r *ServiceWirelessLANProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 			},
 			"password_wo": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.").AddMutualExclusivityDescription("Only one of `password`, `password_variable` and `password_wo` can be set.").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.").AddNote("Only one of `password`, `password_variable` and `password_wo` can be set.").String,
 				Sensitive:           true,
 				WriteOnly:           true,
 				Optional:            true,
@@ -634,6 +634,23 @@ func (r *ServiceWirelessLANProfileParcelResource) Update(ctx context.Context, re
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
 	body := plan.toBody(ctx)
+
+	// Opting a secret into its write-only twin moves the same value from "x" to
+	// "x_wo". Both spellings serialise to the same payload path, so the body built
+	// from the plan equals the body built from state and there is nothing to send.
+	// PUTting anyway would bump the parcel version, which in Network as Code bumps
+	// the configuration group and redeploys every device attached to it - for a
+	// payload the Manager already has.
+	//
+	// Only this migration case can produce equal bodies. Rotating the secret, or
+	// changing any other attribute, yields a different body and still PUTs.
+	if helpers.JSONEqual(body, state.toBody(ctx)) {
+		plan.Version = state.Version
+		tflog.Debug(ctx, fmt.Sprintf("%s: Update is a no-op, skipping PUT to avoid a version bump", plan.Name.ValueString()))
+		diags = resp.State.Set(ctx, &plan)
+		resp.Diagnostics.Append(diags...)
+		return
+	}
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

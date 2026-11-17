@@ -612,7 +612,7 @@ func (data *SystemSecurity) fromBody(ctx context.Context, res gjson.Result, full
 					item.KeyStringVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
 					// Masked secrets returned by the Manager must never be written into state.
-					if !helpers.IsEncryptedValue(va.String()) {
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
 						item.KeyString = types.StringValue(va.String())
 					}
 				}
@@ -733,6 +733,8 @@ func (data *SystemSecurity) fromBody(ctx context.Context, res gjson.Result, full
 					matchedKeys[ni] = true
 					data.Keys[ni].KeyString = oldItem.KeyString
 					data.Keys[ni].KeyStringVariable = oldItem.KeyStringVariable
+
+					data.Keys[ni].KeyStringWoVersion = oldItem.KeyStringWoVersion
 					resultKeys = append(resultKeys, data.Keys[ni])
 					break
 				}

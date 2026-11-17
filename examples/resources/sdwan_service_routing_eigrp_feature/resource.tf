@@ -14,7 +14,8 @@ resource "sdwan_service_routing_eigrp_feature" "example" {
   authentication_type = "md5"
   md5_keys = [
     {
-      key_id = 2
+      key_id     = 2
+      key_string = "password123"
     }
   ]
   interfaces = [

@@ -366,12 +366,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "authPassword.value", item.AuthenticationPassword.ValueString())
 				}
 			}
-			if item.AuthenticationPasswordWo.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "authPassword.optionType", "default")
-
-				}
-			} else {
+			if !item.AuthenticationPasswordWo.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "authPassword.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "authPassword.value", item.AuthenticationPasswordWo.ValueString())
@@ -411,12 +406,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "privPassword.value", item.PrivacyPassword.ValueString())
 				}
 			}
-			if item.PrivacyPasswordWo.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "privPassword.optionType", "default")
-
-				}
-			} else {
+			if !item.PrivacyPasswordWo.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "privPassword.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "privPassword.value", item.PrivacyPasswordWo.ValueString())
@@ -674,7 +664,7 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 					item.NameVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
 					// Masked secrets returned by the Manager must never be written into state.
-					if !helpers.IsEncryptedValue(va.String()) {
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
 						item.Name = types.StringValue(va.String())
 					}
 				}
@@ -731,6 +721,8 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 					matchedCommunities[ni] = true
 					data.Communities[ni].Name = oldItem.Name
 					data.Communities[ni].NameVariable = oldItem.NameVariable
+
+					data.Communities[ni].NameWoVersion = oldItem.NameWoVersion
 					resultCommunities = append(resultCommunities, data.Communities[ni])
 					break
 				}
@@ -839,7 +831,7 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 					item.AuthenticationPasswordVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
 					// Masked secrets returned by the Manager must never be written into state.
-					if !helpers.IsEncryptedValue(va.String()) {
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
 						item.AuthenticationPassword = types.StringValue(va.String())
 					}
 				}
@@ -862,7 +854,7 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 					item.PrivacyPasswordVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
 					// Masked secrets returned by the Manager must never be written into state.
-					if !helpers.IsEncryptedValue(va.String()) {
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
 						item.PrivacyPassword = types.StringValue(va.String())
 					}
 				}
@@ -901,8 +893,12 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result, fullRead
 					matchedUsers[ni] = true
 					data.Users[ni].AuthenticationPassword = oldItem.AuthenticationPassword
 					data.Users[ni].AuthenticationPasswordVariable = oldItem.AuthenticationPasswordVariable
+
+					data.Users[ni].AuthenticationPasswordWoVersion = oldItem.AuthenticationPasswordWoVersion
 					data.Users[ni].PrivacyPassword = oldItem.PrivacyPassword
 					data.Users[ni].PrivacyPasswordVariable = oldItem.PrivacyPasswordVariable
+
+					data.Users[ni].PrivacyPasswordWoVersion = oldItem.PrivacyPasswordWoVersion
 					resultUsers = append(resultUsers, data.Users[ni])
 					break
 				}

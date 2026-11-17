@@ -292,7 +292,7 @@ func (data *TransportCellularProfile) fromBody(ctx context.Context, res gjson.Re
 				data.ProfilePasswordVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
 				// Masked secrets returned by the Manager must never be written into state.
-				if !helpers.IsEncryptedValue(va.String()) {
+				if fullRead || !helpers.IsEncryptedValue(va.String()) {
 					data.ProfilePassword = types.StringValue(va.String())
 				}
 			}

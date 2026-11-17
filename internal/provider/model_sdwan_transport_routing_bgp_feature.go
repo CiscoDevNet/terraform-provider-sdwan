@@ -748,12 +748,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "password.value", item.Password.ValueString())
 				}
 			}
-			if item.PasswordWo.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "password.optionType", "default")
-
-				}
-			} else {
+			if !item.PasswordWo.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "password.value", item.PasswordWo.ValueString())
@@ -1177,12 +1172,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "password.value", item.Password.ValueString())
 				}
 			}
-			if item.PasswordWo.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "password.optionType", "default")
-
-				}
-			} else {
+			if !item.PasswordWo.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "password.value", item.PasswordWo.ValueString())
@@ -2068,7 +2058,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result,
 					item.PasswordVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
 					// Masked secrets returned by the Manager must never be written into state.
-					if !helpers.IsEncryptedValue(va.String()) {
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
 						item.Password = types.StringValue(va.String())
 					}
 				}
@@ -2444,7 +2434,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result,
 					item.PasswordVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
 					// Masked secrets returned by the Manager must never be written into state.
-					if !helpers.IsEncryptedValue(va.String()) {
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
 						item.Password = types.StringValue(va.String())
 					}
 				}

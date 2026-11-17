@@ -781,12 +781,7 @@ func (data ServiceMulticast) toBody(ctx context.Context, ver *version.Version) s
 							itemChildBody, _ = sjson.Set(itemChildBody, "password.value", childItem.PeerAuthenticationPassword.ValueString())
 						}
 					}
-					if childItem.PeerAuthenticationPasswordWo.IsNull() {
-						if true {
-							itemChildBody, _ = sjson.Set(itemChildBody, "password.optionType", "default")
-
-						}
-					} else {
+					if !childItem.PeerAuthenticationPasswordWo.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "password.optionType", "global")
 							itemChildBody, _ = sjson.Set(itemChildBody, "password.value", childItem.PeerAuthenticationPasswordWo.ValueString())
@@ -1622,7 +1617,7 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result, fu
 							cItem.PeerAuthenticationPasswordVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
 							// Masked secrets returned by the Manager must never be written into state.
-							if !helpers.IsEncryptedValue(va.String()) {
+							if fullRead || !helpers.IsEncryptedValue(va.String()) {
 								cItem.PeerAuthenticationPassword = types.StringValue(va.String())
 							}
 						}
@@ -1725,6 +1720,8 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result, fu
 									matchedC[nci] = true
 									data.MsdpGroups[ni].Peers[nci].PeerAuthenticationPassword = oldCItem.PeerAuthenticationPassword
 									data.MsdpGroups[ni].Peers[nci].PeerAuthenticationPasswordVariable = oldCItem.PeerAuthenticationPasswordVariable
+
+									data.MsdpGroups[ni].Peers[nci].PeerAuthenticationPasswordWoVersion = oldCItem.PeerAuthenticationPasswordWoVersion
 									resultC = append(resultC, data.MsdpGroups[ni].Peers[nci])
 									break
 								}

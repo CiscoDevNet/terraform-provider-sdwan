@@ -524,7 +524,7 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result, 
 					item.PassphraseVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
 					// Masked secrets returned by the Manager must never be written into state.
-					if !helpers.IsEncryptedValue(va.String()) {
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
 						item.Passphrase = types.StringValue(va.String())
 					}
 				}
@@ -561,8 +561,12 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result, 
 				}
 				if keyMatch {
 					matchedSsids[ni] = true
+
+					data.Ssids[ni].RadiusServerSecretWoVersion = oldItem.RadiusServerSecretWoVersion
 					data.Ssids[ni].Passphrase = oldItem.Passphrase
 					data.Ssids[ni].PassphraseVariable = oldItem.PassphraseVariable
+
+					data.Ssids[ni].PassphraseWoVersion = oldItem.PassphraseWoVersion
 					resultSsids = append(resultSsids, data.Ssids[ni])
 					break
 				}
@@ -605,7 +609,7 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result, 
 				data.PasswordVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
 				// Masked secrets returned by the Manager must never be written into state.
-				if !helpers.IsEncryptedValue(va.String()) {
+				if fullRead || !helpers.IsEncryptedValue(va.String()) {
 					data.Password = types.StringValue(va.String())
 				}
 			}
