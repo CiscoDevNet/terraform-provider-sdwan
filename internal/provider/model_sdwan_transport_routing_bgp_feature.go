@@ -2289,6 +2289,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result,
 					// Preserve write-only sensitive fields the Manager redacts on GET
 					data.Ipv4Neighbors[ni].Password = oldItem.Password
 					data.Ipv4Neighbors[ni].PasswordVariable = oldItem.PasswordVariable
+					data.Ipv4Neighbors[ni].PasswordWoVersion = oldItem.PasswordWoVersion
 					resultIpv4Neighbors = append(resultIpv4Neighbors, data.Ipv4Neighbors[ni])
 					break
 				}
@@ -2647,6 +2648,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result,
 					// Preserve write-only sensitive fields the Manager redacts on GET
 					data.Ipv6Neighbors[ni].Password = oldItem.Password
 					data.Ipv6Neighbors[ni].PasswordVariable = oldItem.PasswordVariable
+					data.Ipv6Neighbors[ni].PasswordWoVersion = oldItem.PasswordWoVersion
 					resultIpv6Neighbors = append(resultIpv6Neighbors, data.Ipv6Neighbors[ni])
 					break
 				}

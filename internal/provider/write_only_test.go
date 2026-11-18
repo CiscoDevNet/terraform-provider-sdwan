@@ -143,6 +143,29 @@ resource "sdwan_transport_cellular_profile_feature" "test" {
 	})
 }
 
+func TestWriteOnlySIGPreSharedSecretRequiresVersion(t *testing.T) {
+	resource.Test(t, resource.TestCase{
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{{
+			Config: `
+resource "sdwan_sig_feature" "test" {
+  name               = "write_only_test"
+  feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  sig_provider       = "Generic"
+  interfaces = [{
+    interface_name       = "ipsec1"
+    pre_shared_secret_wo = "cisco123"
+  }]
+}
+`,
+			PlanOnly: true,
+			// Match the stable parts of the diagnostic independently of Terraform's
+			// terminal-width line wrapping between "is" and "used".
+			ExpectError: regexp.MustCompile(`(?s)pre_shared_secret_wo_version.*must be set.*pre_shared_secret_wo.*interfaces.*element 0`),
+		}},
+	})
+}
+
 func TestWriteOnlyValidConfigurationPasses(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,

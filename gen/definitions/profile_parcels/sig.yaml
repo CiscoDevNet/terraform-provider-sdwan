@@ -97,6 +97,9 @@ attributes:
       default_value_present: true
       exclude_test: true
     - model_name: preSharedSecret
+      sensitive: true
+      write_only_tf: true
+      encrypted: true
       tf_name: pre_shared_secret
       description: Use preshared key to authenticate IKE peer
       example: MyPreSharedKey1
