@@ -242,7 +242,7 @@ func (r *PolicyGroupDevicesResource) Create(ctx context.Context, req resource.Cr
 	// Deploy to devices
 	if len(plan.Devices) > 0 {
 		// Adopted devices deploy like in Update, against what the Manager has; the others always.
-		r.Deploy(ctx, plan, prior, nil, &resp.Diagnostics)
+		r.Deploy(ctx, plan, prior, nil, nil, &resp.Diagnostics)
 	}
 	if resp.Diagnostics.HasError() {
 		return
@@ -268,7 +268,8 @@ func adoptedPriorState(ctx context.Context, plan PolicyGroupDevices, adopted []s
 			prior.Devices = append(prior.Devices, d)
 		}
 	}
-	prior.fromBodyPolicyGroupDeviceVariables(ctx, res)
+	// Encrypted values can't be compared and keep the planned value (as in Read).
+	prior.fromBodyPolicyGroupDeviceVariables(ctx, res, &plan)
 	return &prior
 }
 
@@ -380,10 +381,29 @@ func (r *PolicyGroupDevicesResource) associateDevices(ctx context.Context, metho
 
 // associated, when set, is a GET .../device/associate/ response the caller has just made; it is used
 // instead of reading the group again.
-func (r *PolicyGroupDevicesResource) Deploy(ctx context.Context, plan PolicyGroupDevices, state *PolicyGroupDevices, associated *sdwan.Res, diag *diag.Diagnostics) {
+// importEncrypted lists, per device, variables that came back encrypted at import: a difference
+// in only those doesn't make a device "updated".
+func (r *PolicyGroupDevicesResource) Deploy(ctx context.Context, plan PolicyGroupDevices, state *PolicyGroupDevices, associated *sdwan.Res, importEncrypted map[string][]string, diag *diag.Diagnostics) {
 	var updatedDevices []string
 	if state != nil {
 		updatedDevices = plan.getUpdatedDevices(ctx, state)
+		if len(importEncrypted) > 0 {
+			kept := updatedDevices[:0]
+			var skipped []string
+			for _, id := range updatedDevices {
+				if names := importEncrypted[id]; len(names) > 0 && onlyPolicyGroupVariablesDiffer(plan, state, id, names) {
+					tflog.Info(ctx, fmt.Sprintf("%s: device %s only differs in variables encrypted at import %v, not redeploying for that", plan.PolicyGroupId.ValueString(), id, names))
+					skipped = append(skipped, fmt.Sprintf("%s %v", id, names))
+					continue
+				}
+				kept = append(kept, id)
+			}
+			updatedDevices = kept
+			if len(skipped) > 0 {
+				diag.AddWarning("Encrypted variables not compared after import",
+					fmt.Sprintf("The Manager returns encrypted variables without their value, so right after an import they can't be compared with the configuration. These devices are not redeployed for them in this apply: %s. If you changed one of these values in this apply, it was written to the Manager but not deployed: run terraform apply -replace on this resource, or change it in a separate apply.", strings.Join(skipped, "; ")))
+			}
+		}
 		// A device not in the prior state is new to this resource: deploy it whatever the Manager reports.
 		inState := make(map[string]bool)
 		for _, d := range state.Devices {
@@ -485,6 +505,7 @@ func (r *PolicyGroupDevicesResource) Read(ctx context.Context, req resource.Read
 	state.fromBodyPolicyGroupDevices(ctx, res)
 
 	// Read policy group device variables (fromBody only updates devices we own)
+	var variablesRes sdwan.Res
 	if len(state.Devices) > 0 {
 		path = fmt.Sprintf("/v1/policy-group/%v/device/variables/", state.PolicyGroupId.ValueString())
 		res, err = r.client.Get(path)
@@ -495,7 +516,8 @@ func (r *PolicyGroupDevicesResource) Read(ctx context.Context, req resource.Read
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
 			return
 		}
-		state.fromBodyPolicyGroupDeviceVariables(ctx, res)
+		state.fromBodyPolicyGroupDeviceVariables(ctx, res, &oldState)
+		variablesRes = res
 	}
 
 	state.updateTfAttributes(ctx, &oldState)
@@ -523,9 +545,20 @@ func (r *PolicyGroupDevicesResource) Read(ctx context.Context, req resource.Read
 	if resp.Diagnostics.Append(diags...); resp.Diagnostics.HasError() {
 		return
 	}
+	importEncrypted, diags := helpers.GetImportEncrypted(ctx, req.Private)
+	resp.Diagnostics.Append(diags...)
 	if imp {
 		state.processImport(ctx)
+		// Encrypted values come back as $CRYPT_CLUSTER and, with no earlier state to keep, are
+		// stored empty, so the clear-text config value looks like a change. Remember which ones,
+		// so the first Update doesn't redeploy for them alone.
+		ids := make([]string, 0, len(state.Devices))
+		for _, d := range state.Devices {
+			ids = append(ids, d.Id.ValueString())
+		}
+		importEncrypted = helpers.EncryptedVariables(variablesRes, ids)
 	}
+	resp.Diagnostics.Append(helpers.SetImportEncrypted(ctx, resp.Private, importEncrypted)...)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.PolicyGroupId.ValueString()))
 
@@ -706,9 +739,13 @@ func (r *PolicyGroupDevicesResource) Update(ctx context.Context, req resource.Up
 		}
 	}
 
+	importEncrypted, diags := helpers.GetImportEncrypted(ctx, req.Private)
+	resp.Diagnostics.Append(diags...)
 	if len(plan.Devices) > 0 {
-		r.Deploy(ctx, plan, &deployState, associated, &resp.Diagnostics)
+		r.Deploy(ctx, plan, &deployState, associated, importEncrypted, &resp.Diagnostics)
 	}
+	// From here the state holds the config values, so the import exception is used up.
+	resp.Diagnostics.Append(helpers.SetImportEncrypted(ctx, resp.Private, nil)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -769,4 +806,34 @@ func (r *PolicyGroupDevicesResource) ImportState(ctx context.Context, req resour
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("devices"), devices)...)
 
 	helpers.SetFlagImporting(ctx, true, resp.Private, &resp.Diagnostics)
+}
+
+// onlyPolicyGroupVariablesDiffer reports whether device id differs between plan and state in the
+// variables named in names only (everything else, including the set of other variables, is equal).
+func onlyPolicyGroupVariablesDiffer(plan PolicyGroupDevices, state *PolicyGroupDevices, id string, names []string) bool {
+	collect := func(devices []PolicyGroupDevicesDevices) (map[string]string, bool) {
+		for _, d := range devices {
+			if d.Id.ValueString() == id {
+				vars := map[string]string{}
+				for _, v := range d.Variables {
+					if !helpers.Contains(names, v.Name.ValueString()) {
+						vars[v.Name.ValueString()] = v.Value.String() + "|" + v.ListValue.String()
+					}
+				}
+				return vars, true
+			}
+		}
+		return nil, false
+	}
+	p, okp := collect(plan.Devices)
+	st, oks := collect(state.Devices)
+	if !okp || !oks || len(p) != len(st) {
+		return false
+	}
+	for k, v := range p {
+		if st[k] != v {
+			return false
+		}
+	}
+	return true
 }

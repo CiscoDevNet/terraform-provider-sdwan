@@ -181,7 +181,27 @@ func (data *PolicyGroupDevices) fromBodyPolicyGroupDevices(ctx context.Context, 
 	}
 }
 
-func (data *PolicyGroupDevices) fromBodyPolicyGroupDeviceVariables(ctx context.Context, res gjson.Result) {
+// priorVariableValue returns the value variable name had for device id in data, if it had one.
+func (data *PolicyGroupDevices) priorVariableValue(id, name string) (types.String, bool) {
+	for _, d := range data.Devices {
+		if d.Id.ValueString() != id {
+			continue
+		}
+		for _, v := range d.Variables {
+			if v.Name.ValueString() == name && !v.Value.IsNull() {
+				return v.Value, true
+			}
+		}
+		break
+	}
+	return types.StringNull(), false
+}
+
+// fromBodyPolicyGroupDeviceVariables reads the variables of the devices in data from the Manager.
+// The Manager returns a secret variable as a placeholder ($cRYPT_CLUSTER1), never its value, so for
+// those the value in original (the earlier state or plan) is kept. With none, e.g. after an import,
+// the value stays null.
+func (data *PolicyGroupDevices) fromBodyPolicyGroupDeviceVariables(ctx context.Context, res gjson.Result, original *PolicyGroupDevices) {
 	if value := res.Get("family"); value.Exists() {
 		data.Solution = types.StringValue(value.String())
 	} else {
@@ -218,6 +238,13 @@ func (data *PolicyGroupDevices) fromBodyPolicyGroupDeviceVariables(ctx context.C
 								cItem.ListValue = types.ListNull(types.StringType)
 								if !strings.Contains(strings.ToLower(ccValue.String()), "$crypt_cluster") {
 									cItem.Value = types.StringValue(ccValue.String())
+								} else {
+									cItem.Value = types.StringNull()
+									if original != nil {
+										if prior, ok := original.priorVariableValue(deviceId, cItem.Name.ValueString()); ok {
+											cItem.Value = prior
+										}
+									}
 								}
 							}
 						} else {
