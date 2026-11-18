@@ -37,6 +37,7 @@ type PolicyObjectFeatureProfileParcels struct {
 	Parcels          []PolicyObjectFeatureProfileParcelsParcels `tfsdk:"parcels"`
 	CreatedBy        types.String                               `tfsdk:"created_by"`
 	ParcelType       types.String                               `tfsdk:"parcel_type"`
+	ParcelNames      types.Set                                  `tfsdk:"parcel_names"`
 }
 
 type PolicyObjectFeatureProfileParcelsParcels struct {
@@ -197,6 +198,14 @@ func (data *PolicyObjectFeatureProfileParcels) processImport(ctx context.Context
 
 // Section below is generated&owned by "gen/generator.go". //template:begin applyFilters
 func (data *PolicyObjectFeatureProfileParcels) applyFilters(ctx context.Context) {
+	filterParcelNames := map[string]bool{}
+	if !data.ParcelNames.IsNull() && !data.ParcelNames.IsUnknown() {
+		var values []string
+		data.ParcelNames.ElementsAs(ctx, &values, false)
+		for _, v := range values {
+			filterParcelNames[v] = true
+		}
+	}
 	filtered := make([]PolicyObjectFeatureProfileParcelsParcels, 0, len(data.Parcels))
 	for _, item := range data.Parcels {
 		match := true
@@ -207,6 +216,11 @@ func (data *PolicyObjectFeatureProfileParcels) applyFilters(ctx context.Context)
 		}
 		if !data.ParcelType.IsNull() && !data.ParcelType.IsUnknown() {
 			if item.ParcelType.ValueString() != data.ParcelType.ValueString() {
+				match = false
+			}
+		}
+		if !data.ParcelNames.IsNull() && !data.ParcelNames.IsUnknown() {
+			if !filterParcelNames[item.ParcelName.ValueString()] {
 				match = false
 			}
 		}
