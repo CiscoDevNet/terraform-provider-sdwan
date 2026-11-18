@@ -24,6 +24,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
@@ -106,6 +107,11 @@ func (d *PolicyObjectFeatureProfileParcelsDataSource) Schema(ctx context.Context
 			},
 			"parcel_type": schema.StringAttribute{
 				MarkdownDescription: "Filter by parcel type (e.g. 'app-list', 'data-prefix')",
+				Optional:            true,
+			},
+			"parcel_names": schema.SetAttribute{
+				MarkdownDescription: "Filter by parcel name; only parcels whose name is in this set are returned (an empty set returns none)",
+				ElementType:         types.StringType,
 				Optional:            true,
 			},
 		},

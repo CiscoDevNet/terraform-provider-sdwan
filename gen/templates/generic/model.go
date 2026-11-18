@@ -63,7 +63,7 @@ Type types.String `tfsdk:"type"`
 {{- end}}
 {{- end}}
 {{- range .DataSourceFilters}}
-	{{toGoName .TfName}} types.String `tfsdk:"{{.TfName}}"`
+	{{toGoName .TfName}} types.{{if eq .Type "Set"}}Set{{else}}String{{end}} `tfsdk:"{{.TfName}}"`
 {{- end}}
 }
 
@@ -819,12 +819,28 @@ func (data *{{$name}}) applyFilters(ctx context.Context) {
 	{{- range .Attributes}}
 	{{- if and (isNestedListSet .) (eq .TfName $listAttr)}}
 	{{- $listField := toGoName .TfName}}
+	{{- range $.DataSourceFilters}}
+	{{- if eq .Type "Set"}}
+	filter{{toGoName .TfName}} := map[string]bool{}
+	if !data.{{toGoName .TfName}}.IsNull() && !data.{{toGoName .TfName}}.IsUnknown() {
+		var values []string
+		data.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
+		for _, v := range values {
+			filter{{toGoName .TfName}}[v] = true
+		}
+	}
+	{{- end}}
+	{{- end}}
 	filtered := make([]{{$name}}{{toGoName .TfName}}, 0, len(data.{{$listField}}))
 	for _, item := range data.{{$listField}} {
 		match := true
 		{{- range $.DataSourceFilters}}
 		if !data.{{toGoName .TfName}}.IsNull() && !data.{{toGoName .TfName}}.IsUnknown() {
-			if item.{{toGoName .TfName}}.ValueString() != data.{{toGoName .TfName}}.ValueString() {
+			{{- if eq .Type "Set"}}
+			if !filter{{toGoName .TfName}}[item.{{toGoName (or .ItemAttribute .TfName)}}.ValueString()] {
+			{{- else}}
+			if item.{{toGoName (or .ItemAttribute .TfName)}}.ValueString() != data.{{toGoName .TfName}}.ValueString() {
+			{{- end}}
 				match = false
 			}
 		}
