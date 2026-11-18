@@ -198,12 +198,7 @@ func (data TransportCellularProfile) toBody(ctx context.Context, ver *version.Ve
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.networkSlicing.sliceType.optionType", "variable")
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.networkSlicing.sliceType.value", data.SliceTypeVariable.ValueString())
 		}
-	} else if data.SliceType.IsNull() {
-		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
-			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.networkSlicing.sliceType.optionType", "default")
-
-		}
-	} else {
+	} else if !data.SliceType.IsNull() {
 		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.1"))) {
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.networkSlicing.sliceType.optionType", "global")
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.networkSlicing.sliceType.value", data.SliceType.ValueInt64())

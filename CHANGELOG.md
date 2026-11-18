@@ -1,5 +1,6 @@
 ## 0.12.0 (unreleased)
 
+- Add `parcel_names` filter to `sdwan_policy_object_feature_profile_parcels` data source: returns only the parcels whose name is in the set
 - Add `sdwan_sig_feature` resource and data source (SIG feature of the SIG Security feature profile, SD-WAN Manager 20.15 and later, `tunnel_route_via` from 20.18.1: `sig_provider` Umbrella, Zscaler or Generic, GRE and IPsec tunnels, interface pairs and trackers)
 - The `devices` in `sdwan_attach_feature_device_template` is now a set instead of a list. Previously, adding or removing a single device caused every device positioned after it in the list to render as changed in the Terraform plan. The configuration syntax is unchanged; existing state is migrated automatically.
 - Mark 95 credential attributes as `Sensitive` across profile parcels, feature templates and generic resources, so passwords, passphrases, pre-shared keys, SNMP community strings and API secrets are redacted in Terraform plan output and CI logs. Note that `Sensitive` controls rendering only: the values are still stored in Terraform state. Write-only support, which keeps them out of state, is being introduced separately (see below). **Breaking for outputs:** a root-module `output` that references one of these attributes must now be declared `sensitive = true`, otherwise Terraform fails with "Output refers to sensitive values"
@@ -9,6 +10,7 @@
 - Fix encrypted parcel attributes storing SD-WAN Manager's masked ciphertext in Terraform state when refreshing a nested list entry that no longer matches any entry in state. Such an entry has no prior value to restore, so the ciphertext was written to state where it could never match the configured secret, producing a diff that could not converge; the attribute is now left null in that case. Import is unaffected and still captures the Manager's ciphertext, so a collected configuration continues to round-trip without an apply. Both masked forms returned by the Manager are detected, `$CRYPT_CLUSTER$...` and the shorter `$CRYPT$...` used by parcels such as Other TrustSec
 - Opting a secret into its write-only spelling no longer sends an update when the value is unchanged. Moving a value from `<attr>` to `<attr>_wo` produces an identical request body, so the provider now skips the request and preserves the parcel version. This prevents a configuration group version bump and an unnecessary redeployment of every device attached to it. Rotating the secret, or changing any other attribute, still sends the update as before
 - Note: UX 1.0 feature template resources (`sdwan_*_feature_template`) are not yet covered by write-only. Their secrets are marked `Sensitive` but remain in Terraform state
+- Fix `sdwan_transport_cellular_profile_feature` failing to create a profile with `profile_id = 1` on SD-WAN Manager 20.18+ (`Invalid Json Payload`, `networkSlicing`): the `networkSlicing` block is no longer sent when `slice_type` is not configured
 
 ## 0.11.7
 
