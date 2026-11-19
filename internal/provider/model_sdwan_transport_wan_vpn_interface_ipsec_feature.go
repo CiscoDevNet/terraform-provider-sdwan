@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -906,14 +907,20 @@ func (data *TransportWANVPNInterfaceIPSEC) fromBody(ctx context.Context, res gjs
 			data.DpdRetries = types.Int64Value(va.Int())
 		}
 	}
-	data.IkePresharedKey = types.StringNull()
-	data.IkePresharedKeyVariable = types.StringNull()
-	if t := res.Get(path + "preSharedSecret.optionType"); t.Exists() {
-		va := res.Get(path + "preSharedSecret.value")
-		if t.String() == "variable" {
-			data.IkePresharedKeyVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.IkePresharedKey = types.StringValue(va.String())
+	// Encrypted top-level attribute: read only on full read (import); on refresh the prior state value is preserved.
+	if fullRead {
+		data.IkePresharedKey = types.StringNull()
+		data.IkePresharedKeyVariable = types.StringNull()
+		if t := res.Get(path + "preSharedSecret.optionType"); t.Exists() {
+			va := res.Get(path + "preSharedSecret.value")
+			if t.String() == "variable" {
+				data.IkePresharedKeyVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				// Masked secrets returned by the Manager must never be written into state.
+				if fullRead || !helpers.IsEncryptedValue(va.String()) {
+					data.IkePresharedKey = types.StringValue(va.String())
+				}
+			}
 		}
 	}
 	data.IkeVersion = types.Int64Null()

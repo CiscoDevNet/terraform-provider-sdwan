@@ -47,6 +47,7 @@ func TestAccSdwanOtherTrustSecProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_trustsec_feature.test", "sxp_source_ip", "10.0.0.1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_trustsec_feature.test", "sxp_connections.0.peer_ip", "10.0.0.2"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_trustsec_feature.test", "sxp_connections.0.source_ip", "10.0.0.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_trustsec_feature.test", "sxp_connections.0.preshared_key", "none"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_trustsec_feature.test", "sxp_connections.0.mode", "peer"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_trustsec_feature.test", "sxp_connections.0.mode_type", "speaker"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_trustsec_feature.test", "sxp_connections.0.vpn_id", "1"))

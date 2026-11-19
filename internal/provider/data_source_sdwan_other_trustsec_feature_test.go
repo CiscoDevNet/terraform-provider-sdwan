@@ -47,6 +47,7 @@ func TestAccDataSourceSdwanOtherTrustSecProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_trustsec_feature.test", "sxp_source_ip", "10.0.0.1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_trustsec_feature.test", "sxp_connections.0.peer_ip", "10.0.0.2"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_trustsec_feature.test", "sxp_connections.0.source_ip", "10.0.0.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_trustsec_feature.test", "sxp_connections.0.preshared_key", "none"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_trustsec_feature.test", "sxp_connections.0.mode", "peer"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_trustsec_feature.test", "sxp_connections.0.mode_type", "speaker"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_trustsec_feature.test", "sxp_connections.0.vpn_id", "1"))
@@ -106,6 +107,7 @@ func testAccDataSourceSdwanOtherTrustSecProfileParcelConfig() string {
 	config += `	sxp_connections = [{` + "\n"
 	config += `	  peer_ip = "10.0.0.2"` + "\n"
 	config += `	  source_ip = "10.0.0.1"` + "\n"
+	config += `	  preshared_key = "none"` + "\n"
 	config += `	  mode = "peer"` + "\n"
 	config += `	  mode_type = "speaker"` + "\n"
 	config += `	  vpn_id = 1` + "\n"
@@ -146,6 +148,7 @@ func testAccDataSourceSdwanOtherTrustSecProfileParcelByNameConfig() string {
 	config += `	sxp_connections = [{` + "\n"
 	config += `	  peer_ip = "10.0.0.2"` + "\n"
 	config += `	  source_ip = "10.0.0.1"` + "\n"
+	config += `	  preshared_key = "none"` + "\n"
 	config += `	  mode = "peer"` + "\n"
 	config += `	  mode_type = "speaker"` + "\n"
 	config += `	  vpn_id = 1` + "\n"

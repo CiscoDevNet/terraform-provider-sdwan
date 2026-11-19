@@ -1090,6 +1090,7 @@ func (data *Sig) fromBody(ctx context.Context, res gjson.Result, fullRead bool) 
 				if t.String() == "variable" {
 					item.PreSharedSecretVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
+					// Masked secrets returned by the Manager must never be written into state.
 					if fullRead || !helpers.IsEncryptedValue(va.String()) {
 						item.PreSharedSecret = types.StringValue(va.String())
 					}

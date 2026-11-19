@@ -67,8 +67,6 @@ attributes:
       mandatory: true
       example: 10.0.0.1
     - model_name: connectionPresharedKey
-      sensitive: true
-      write_only_tf: true
       tf_name: preshared_key
       default_value_present: true
       example: none

@@ -81,9 +81,7 @@ Read-Only:
 - `mode_type` (String) Define Role of a device <speaker/listener/both>
 - `peer_ip` (String) Configure SXP Peer IP address (IPv4)
 - `peer_ip_variable` (String) Variable name
-- `preshared_key` (String, Sensitive) Define Preshared Key type
-- `preshared_key_wo` (String, Sensitive) Define Preshared Key type
-- `preshared_key_wo_version` (Number) Rotation trigger for `preshared_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
+- `preshared_key` (String) Define Preshared Key type
 - `source_ip` (String) Configure SXP Source IP address (IPv4)
 - `source_ip_variable` (String) Variable name
 - `vpn_id` (Number) Configure Connection VPN (VRF) ID

@@ -236,16 +236,6 @@ func (d *OtherTrustSecProfileParcelDataSource) Schema(ctx context.Context, req d
 						},
 						"preshared_key": schema.StringAttribute{
 							MarkdownDescription: "Define Preshared Key type",
-							Sensitive:           true,
-							Computed:            true,
-						},
-						"preshared_key_wo": schema.StringAttribute{
-							MarkdownDescription: "Define Preshared Key type",
-							Sensitive:           true,
-							Computed:            true,
-						},
-						"preshared_key_wo_version": schema.Int64Attribute{
-							MarkdownDescription: "Rotation trigger for `preshared_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 							Computed:            true,
 						},
 						"mode": schema.StringAttribute{

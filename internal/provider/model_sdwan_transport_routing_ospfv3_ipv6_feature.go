@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -1103,7 +1104,10 @@ func (data *TransportRoutingOSPFv3IPv6) fromBody(ctx context.Context, res gjson.
 						if t.String() == "variable" {
 							cItem.AuthenticationKeyVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.AuthenticationKey = types.StringValue(va.String())
+							// Masked secrets returned by the Manager must never be written into state.
+							if fullRead || !helpers.IsEncryptedValue(va.String()) {
+								cItem.AuthenticationKey = types.StringValue(va.String())
+							}
 						}
 					}
 					item.Interfaces = append(item.Interfaces, cItem)
@@ -1194,6 +1198,8 @@ func (data *TransportRoutingOSPFv3IPv6) fromBody(ctx context.Context, res gjson.
 								}
 								if keyMatchC {
 									matchedC[nci] = true
+									data.Areas[ni].Interfaces[nci].AuthenticationKey = oldCItem.AuthenticationKey
+									data.Areas[ni].Interfaces[nci].AuthenticationKeyVariable = oldCItem.AuthenticationKeyVariable
 
 									data.Areas[ni].Interfaces[nci].AuthenticationKeyWoVersion = oldCItem.AuthenticationKeyWoVersion
 									resultC = append(resultC, data.Areas[ni].Interfaces[nci])
