@@ -233,7 +233,7 @@ func (r *ServiceRoutingOSPFv3IPv4ProfileParcelResource) Schema(ctx context.Conte
 				Optional:            true,
 			},
 			"route_policy_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set either route_policy_id or route_policy_id_variable, not both. The variable option requires SD-WAN Manager 20.18.5 or later., Attribute conditional on SD-WAN Manager version `20.18.5` or higher or `route_policy_id` being set").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set either route_policy_id or route_policy_id_variable, not both, and the variable option requires SD-WAN Manager 20.18.5 or later, Attribute conditional on SD-WAN Manager version `20.18.5` or higher or `route_policy_id` being set").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
@@ -276,7 +276,7 @@ func (r *ServiceRoutingOSPFv3IPv4ProfileParcelResource) Schema(ctx context.Conte
 							Optional:            true,
 						},
 						"route_policy_id": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set either route_policy_id or route_policy_id_variable, not both. The variable option requires SD-WAN Manager 20.18.5 or later., Attribute conditional on SD-WAN Manager version `20.18.5` or higher or `route_policy_id` being set").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set either route_policy_id or route_policy_id_variable, not both, and the variable option requires SD-WAN Manager 20.18.5 or later, Attribute conditional on SD-WAN Manager version `20.18.5` or higher or `route_policy_id` being set").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
