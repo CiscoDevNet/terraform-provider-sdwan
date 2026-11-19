@@ -57,7 +57,8 @@ data "sdwan_service_routing_ospfv3_ipv4_feature" "example" {
 - `reference_bandwidth_variable` (String) Variable name
 - `rfc_1583_compatible` (Boolean) Calculate summary route cost based on RFC 1583
 - `rfc_1583_compatible_variable` (String) Variable name
-- `route_policy_id` (String)
+- `route_policy_id` (String) Set either route_policy_id or route_policy_id_variable, not both, and the variable option requires SD-WAN Manager 20.18.5 or later
+- `route_policy_id_variable` (String) Variable name
 - `router_id` (String) Set OSPF router ID to override system IP address
 - `router_id_variable` (String) Variable name
 - `router_lsa_action` (String) Not advertise maximum metric Router LSA policy by default
@@ -137,6 +138,7 @@ Read-Only:
 - `nat_dia_variable` (String) Variable name
 - `protocol` (String) Set the protocol
 - `protocol_variable` (String) Variable name
-- `route_policy_id` (String)
+- `route_policy_id` (String) Set either route_policy_id or route_policy_id_variable, not both, and the variable option requires SD-WAN Manager 20.18.5 or later
+- `route_policy_id_variable` (String) Variable name
 - `translate_rib_metric` (Boolean) Devices within the Cisco Catalyst SD-WAN overlay network use OMP for control plane information. Outside of the overlay, devices use other control plane protocols such as BGP or OSPF. A device at the interface between devices within the overlay network and devices outside of the overlay can translate OMP route metrics when redistributing routes to BGP or OSPF, to be usable by devices outside the overlay network.
 - `translate_rib_metric_variable` (String) Variable name
