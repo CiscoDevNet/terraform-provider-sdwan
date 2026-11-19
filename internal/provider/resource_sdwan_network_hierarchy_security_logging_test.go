@@ -88,6 +88,26 @@ func TestAccSdwanNetworkHierarchySecurityLoggingMultipleHSL(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet("sdwan_network_hierarchy_security_logging.test", "id"),
 					resource.TestCheckResourceAttr("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.#", "4"),
+					resource.TestCheckTypeSetElemNestedAttrs("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.*", map[string]string{
+						"vrf":       "service_lan_vpn1",
+						"server_ip": "10.1.1.1",
+						"port":      "2055",
+					}),
+					resource.TestCheckTypeSetElemNestedAttrs("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.*", map[string]string{
+						"vrf":       "service_lan_vpn2",
+						"server_ip": "10.1.1.2",
+						"port":      "2056",
+					}),
+					resource.TestCheckTypeSetElemNestedAttrs("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.*", map[string]string{
+						"vrf":       "service_lan_vpn3",
+						"server_ip": "10.1.1.3",
+						"port":      "2057",
+					}),
+					resource.TestCheckTypeSetElemNestedAttrs("sdwan_network_hierarchy_security_logging.test", "high_speed_logging.*", map[string]string{
+						"vrf":       "service_lan_vpn4",
+						"server_ip": "10.1.1.4",
+						"port":      "2058",
+					}),
 				),
 			},
 		},
