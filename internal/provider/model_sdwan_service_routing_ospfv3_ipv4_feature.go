@@ -367,12 +367,12 @@ func (data ServiceRoutingOSPFv3IPv4) toBody(ctx context.Context, ver *version.Ve
 	}
 
 	if !data.RoutePolicyIdVariable.IsNull() {
-		if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.5"))) {
+		if true && (ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.5"))) || !(data.RoutePolicyId.IsNull())) {
 			body, _ = sjson.Set(body, path+"advanced.policyName.refId.optionType", "variable")
 			body, _ = sjson.Set(body, path+"advanced.policyName.refId.value", data.RoutePolicyIdVariable.ValueString())
 		}
 	} else if !data.RoutePolicyId.IsNull() {
-		if true {
+		if true && (ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.5"))) || !(data.RoutePolicyId.IsNull())) {
 			body, _ = sjson.Set(body, path+"advanced.policyName.refId.optionType", "global")
 			body, _ = sjson.Set(body, path+"advanced.policyName.refId.value", data.RoutePolicyId.ValueString())
 		}
@@ -429,12 +429,12 @@ func (data ServiceRoutingOSPFv3IPv4) toBody(ctx context.Context, ver *version.Ve
 			}
 
 			if !item.RoutePolicyIdVariable.IsNull() {
-				if true && ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.5"))) {
+				if true && (ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.5"))) || !(item.RoutePolicyId.IsNull())) {
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.value", item.RoutePolicyIdVariable.ValueString())
 				}
 			} else if !item.RoutePolicyId.IsNull() {
-				if true {
+				if true && (ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.5"))) || !(item.RoutePolicyId.IsNull())) {
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.value", item.RoutePolicyId.ValueString())
 				}

@@ -243,14 +243,14 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Schema(ctx context.Context, re
 							Optional:            true,
 						},
 						"route_policy_id": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set either route_policy_id or route_policy_id_variable, not both. The variable option requires SD-WAN Manager 20.18.5 or later., Attribute conditional on SD-WAN Manager version `20.18.5` or higher or `route_policy_id` being set").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 							},
 						},
 						"route_policy_id_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.5` or higher").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.5` or higher or `route_policy_id` being set").String,
 							Optional:            true,
 						},
 						"translate_rib_metric": schema.BoolAttribute{
@@ -291,14 +291,14 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Schema(ctx context.Context, re
 				},
 			},
 			"route_policy_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set either route_policy_id or route_policy_id_variable, not both. The variable option requires SD-WAN Manager 20.18.5 or later., Attribute conditional on SD-WAN Manager version `20.18.5` or higher or `route_policy_id` being set").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 				},
 			},
 			"route_policy_id_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.5` or higher").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on SD-WAN Manager version `20.18.5` or higher or `route_policy_id` being set").String,
 				Optional:            true,
 			},
 			"areas": schema.ListNestedAttribute{

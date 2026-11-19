@@ -65,10 +65,15 @@ attributes:
       variable: true
       exclude_test: true
       example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
-      variable_conditional_attribute:
+      description: Set either route_policy_id or route_policy_id_variable, not both. The variable option requires SD-WAN Manager 20.18.5 or later.
+      conditional_attribute:
+        operator: or
         conditions:
           - type: MinVersion
             value: 20.18.5
+          - name: route_policy_id
+            value: ''
+            negate: true
     - model_name: translateRibMetric
       tf_name: translate_rib_metric
       example: false
@@ -91,10 +96,15 @@ attributes:
     variable: true
     exclude_test: true
     example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
-    variable_conditional_attribute:
+    description: Set either route_policy_id or route_policy_id_variable, not both. The variable option requires SD-WAN Manager 20.18.5 or later.
+    conditional_attribute:
+      operator: or
       conditions:
         - type: MinVersion
           value: 20.18.5
+        - name: route_policy_id
+          value: ''
+          negate: true
   - model_name: area
     tf_name: areas
     attributes: 

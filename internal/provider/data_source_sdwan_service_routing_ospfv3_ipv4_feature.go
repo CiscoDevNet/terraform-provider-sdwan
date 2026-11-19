@@ -194,7 +194,7 @@ func (d *ServiceRoutingOSPFv3IPv4ProfileParcelDataSource) Schema(ctx context.Con
 				Computed:            true,
 			},
 			"route_policy_id": schema.StringAttribute{
-				MarkdownDescription: "",
+				MarkdownDescription: "Set either route_policy_id or route_policy_id_variable, not both. The variable option requires SD-WAN Manager 20.18.5 or later.",
 				Computed:            true,
 			},
 			"route_policy_id_variable": schema.StringAttribute{
@@ -231,7 +231,7 @@ func (d *ServiceRoutingOSPFv3IPv4ProfileParcelDataSource) Schema(ctx context.Con
 							Computed:            true,
 						},
 						"route_policy_id": schema.StringAttribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "Set either route_policy_id or route_policy_id_variable, not both. The variable option requires SD-WAN Manager 20.18.5 or later.",
 							Computed:            true,
 						},
 						"route_policy_id_variable": schema.StringAttribute{
