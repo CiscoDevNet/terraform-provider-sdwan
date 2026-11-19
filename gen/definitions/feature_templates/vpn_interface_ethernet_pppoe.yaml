@@ -288,6 +288,9 @@ attributes:
     example: test
   - model_name: qos-map-vpn
     example: test
+  - model_name: service-provider
+    tf_name: service_provider_name
+    example: MyISP
   - model_name: bandwidth-upstream
     example: 214748300
   - model_name: bandwidth-downstream
