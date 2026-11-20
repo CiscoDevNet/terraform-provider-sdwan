@@ -8,6 +8,10 @@ test_tags: [SDWAN_2015, SDWAN_2018]
 doc_category: Policy Groups
 no_data_source: true
 skip_minimum_test: true
+# Hand-written: devices is a map keyed by device ID, which the generator can't express. The Go
+# files have no generator sections (resource.go can't be skipped: that unregisters the resource).
+# The attributes below document the API mapping only.
+skip_templates: ["model.go", "resource_test.go", "resource.tf"]
 attributes:
   - model_name: policyGroupId
     tf_name: policy_group_id

@@ -17,7 +17,6 @@
 
 package provider
 
-// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"os"
 	"testing"
@@ -25,18 +24,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
-// End of section. //template:end imports
-
-// Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanConfigurationGroupDevices(t *testing.T) {
 	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group_devices.test", "solution", "sdwan"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group_devices.test", "devices.0.id", "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group_devices.test", "devices.0.variables.0.name", "host_name"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group_devices.test", "devices.0.variables.0.value", "edge1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group_devices.test", "devices.%", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group_devices.test", "devices.C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B.deploy", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group_devices.test", "devices.C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B.variables.host_name.value", "edge1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -49,9 +45,6 @@ func TestAccSdwanConfigurationGroupDevices(t *testing.T) {
 	})
 }
 
-// End of section. //template:end testAcc
-
-// Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccSdwanConfigurationGroupDevicesPrerequisitesConfig = `
 resource "sdwan_system_feature_profile" "test" {
   name = "SYSTEM_TF"
@@ -157,38 +150,22 @@ resource "sdwan_configuration_group" "test" {
 
 `
 
-// End of section. //template:end testPrerequisites
-
 func testAccSdwanConfigurationGroupDevicesConfig_all() string {
 	config := `resource "sdwan_configuration_group_devices" "test" {` + "\n"
 	config += `	configuration_group_id = sdwan_configuration_group.test.id` + "\n"
 	config += `	solution = "sdwan"` + "\n"
-	config += `	devices = [{` + "\n"
-	config += `	  id = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"` + "\n"
+	config += `	devices = {` + "\n"
+	config += `	  "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B" = {` + "\n"
 	config += `	  deploy = true` + "\n"
-	config += `	  variables = [` + "\n"
-	config += `	    {` + "\n"
-	config += `	      name = "host_name"` + "\n"
-	config += `	      value = "edge1"` + "\n"
-	config += `	    },` + "\n"
-	config += `	    {` + "\n"
-	config += `	      name = "pseudo_commit_timer"` + "\n"
-	config += `	      value = 0` + "\n"
-	config += `	    },` + "\n"
-	config += `	    {` + "\n"
-	config += `	      name = "site_id"` + "\n"
-	config += `	      value = 1` + "\n"
-	config += `	    },` + "\n"
-	config += `	    {` + "\n"
-	config += `	      name = "system_ip"` + "\n"
-	config += `	      value = "10.1.1.1"` + "\n"
-	config += `	    },` + "\n"
-	config += `	    {` + "\n"
-	config += `	      name = "ipv6_strict_control"` + "\n"
-	config += `	      value = "false"` + "\n"
-	config += `	    }` + "\n"
-	config += `	  ]` + "\n"
-	config += `	}]` + "\n"
+	config += `	  variables = {` + "\n"
+	config += `	    host_name           = { value = "edge1" }` + "\n"
+	config += `	    pseudo_commit_timer = { value = 0 }` + "\n"
+	config += `	    site_id             = { value = 1 }` + "\n"
+	config += `	    system_ip           = { value = "10.1.1.1" }` + "\n"
+	config += `	    ipv6_strict_control = { value = "false" }` + "\n"
+	config += `	  }` + "\n"
+	config += `	  }` + "\n"
+	config += `	}` + "\n"
 	config += `}` + "\n"
 	return config
 }

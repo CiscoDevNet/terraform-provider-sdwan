@@ -18,6 +18,16 @@ This resource can manage a Policy Group Devices .
 resource "sdwan_policy_group_devices" "example" {
   policy_group_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   solution        = "sdwan"
+  devices = {
+    "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B" = {
+      deploy = true
+      variables = {
+        qos_interfaces = {
+          list_value = ["GigabitEthernet1", "GigabitEthernet2"]
+        }
+      }
+    }
+  }
 }
 ```
 
@@ -32,7 +42,7 @@ resource "sdwan_policy_group_devices" "example" {
 
 ### Optional
 
-- `devices` (Attributes List) List of devices (see [below for nested schema](#nestedatt--devices))
+- `devices` (Attributes Map) Devices to associate with the policy group, keyed by device ID (for example `C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B`). Terraform matches each device by its ID, so adding, removing or changing a device shows only that device in the plan. (see [below for nested schema](#nestedatt--devices))
 - `policy_group_version` (Number) The version of the associated policy group. Set this to `sdwan_policy_group.<name>.version` so that a change to the policy group is deployed in the same apply: from SD-WAN Manager 20.15 to the devices the Manager reports out of date, on older versions to all devices managed by this resource.
 - `retain_devices` (Set of String) Device IDs this resource stops managing without releasing them, for a hand-over to another state. A device removed from `devices` and listed here is dropped from the state but stays associated with the policy group, so it is not disassociated and needs no deploy. A device can't be in `devices` and in `retain_devices` at the same time. Not needed with a single state.
 
@@ -47,15 +57,10 @@ Optional:
 
 - `deploy` (Boolean) Deploy to device if enabled.
   - Default value: `false`
-- `id` (String) Device ID
-- `variables` (Attributes Set) List of variables (see [below for nested schema](#nestedatt--devices--variables))
+- `variables` (Attributes Map) Device variables, keyed by variable name (for example `host_name`). Terraform matches each variable by its name, so a changed value shows as a change of that variable only. (see [below for nested schema](#nestedatt--devices--variables))
 
 <a id="nestedatt--devices--variables"></a>
 ### Nested Schema for `devices.variables`
-
-Required:
-
-- `name` (String) Variable name
 
 Optional:
 

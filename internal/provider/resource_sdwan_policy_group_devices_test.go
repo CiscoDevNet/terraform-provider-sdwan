@@ -17,7 +17,6 @@
 
 package provider
 
-// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"os"
 	"testing"
@@ -25,9 +24,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
-// End of section. //template:end imports
-
-// Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanPolicyGroupDevices(t *testing.T) {
 	if os.Getenv("SDWAN_2015") == "" && os.Getenv("SDWAN_2018") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_2015 or SDWAN_2018")
@@ -46,9 +42,6 @@ func TestAccSdwanPolicyGroupDevices(t *testing.T) {
 	})
 }
 
-// End of section. //template:end testAcc
-
-// Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccSdwanPolicyGroupDevicesPrerequisitesConfig = `
 resource "sdwan_system_feature_profile" "test" {
   name = "SYSTEM_PGD_TF"
@@ -153,17 +146,18 @@ resource "sdwan_configuration_group_devices" "test" {
   configuration_group_id      = sdwan_configuration_group.test.id
   solution                    = "sdwan"
   configuration_group_version = sdwan_configuration_group.test.version
-  devices = [{
-    id     = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"
-    deploy = true
-    variables = [
-      { name = "host_name", value = "edge1" },
-      { name = "pseudo_commit_timer", value = 0 },
-      { name = "site_id", value = 1 },
-      { name = "system_ip", value = "10.1.1.1" },
-      { name = "ipv6_strict_control", value = "false" },
-    ]
-  }]
+  devices = {
+    "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B" = {
+      deploy = true
+      variables = {
+        host_name           = { value = "edge1" }
+        pseudo_commit_timer = { value = 0 }
+        site_id             = { value = 1 }
+        system_ip           = { value = "10.1.1.1" }
+        ipv6_strict_control = { value = "false" }
+      }
+    }
+  }
 }
 
 resource "sdwan_application_priority_feature_profile" "test" {
@@ -188,26 +182,19 @@ resource "sdwan_policy_group" "test" {
 
 `
 
-// End of section. //template:end testPrerequisites
-
 func testAccSdwanPolicyGroupDevicesConfig_all() string {
 	config := `resource "sdwan_policy_group_devices" "test" {` + "\n"
 	config += `	policy_group_id = sdwan_policy_group.test.id` + "\n"
 	config += `	solution = "sdwan"` + "\n"
 	config += `	policy_group_version = sdwan_policy_group.test.version` + "\n"
-	config += `	devices = [{` + "\n"
-	config += `	  id = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"` + "\n"
+	config += `	devices = {` + "\n"
+	config += `	  "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B" = {` + "\n"
 	config += `	  deploy = true` + "\n"
-	config += `	  variables = [` + "\n"
-	config += `	    {` + "\n"
-	config += `	      name = "qos_interfaces"` + "\n"
-	config += `	      list_value = [` + "\n"
-	config += `	        "GigabitEthernet1",` + "\n"
-	config += `	        "GigabitEthernet2"` + "\n"
-	config += `	      ]` + "\n"
-	config += `	    },` + "\n"
-	config += `	  ]` + "\n"
-	config += `	}]` + "\n"
+	config += `	  variables = {` + "\n"
+	config += `	    qos_interfaces = { list_value = ["GigabitEthernet1", "GigabitEthernet2"] }` + "\n"
+	config += `	  }` + "\n"
+	config += `	  }` + "\n"
+	config += `	}` + "\n"
 	config += `	depends_on = [sdwan_configuration_group_devices.test]` + "\n"
 	config += `}` + "\n"
 	return config

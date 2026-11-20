@@ -17,7 +17,6 @@
 
 package provider
 
-// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 	"fmt"
@@ -26,6 +25,7 @@ import (
 	"time"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework-validators/mapvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -41,10 +41,6 @@ import (
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
-
-// End of section. //template:end imports
-
-// Section below is generated&owned by "gen/generator.go". //template:begin model
 
 // Ensure provider defined types fully satisfy framework interfaces
 var _ resource.Resource = &PolicyGroupDevicesResource{}
@@ -101,30 +97,28 @@ func (r *PolicyGroupDevicesResource) Schema(ctx context.Context, req resource.Sc
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
-			"devices": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of devices").String,
+			"devices": schema.MapNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Devices to associate with the policy group, keyed by device ID (for example `C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B`). Terraform matches each device by its ID, so adding, removing or changing a device shows only that device in the plan.").String,
 				Optional:            true,
+				Validators: []validator.Map{
+					mapvalidator.KeysAre(stringvalidator.LengthAtLeast(1)),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"id": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Device ID").String,
-							Optional:            true,
-						},
 						"deploy": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Deploy to device if enabled.").AddDefaultValueDescription("false").String,
 							Optional:            true,
 							Computed:            true,
 							Default:             booldefault.StaticBool(false),
 						},
-						"variables": schema.SetNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("List of variables").String,
+						"variables": schema.MapNestedAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Device variables, keyed by variable name (for example `host_name`). Terraform matches each variable by its name, so a changed value shows as a change of that variable only.").String,
 							Optional:            true,
+							Validators: []validator.Map{
+								mapvalidator.KeysAre(stringvalidator.LengthAtLeast(1)),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
-									"name": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-										Required:            true,
-									},
 									"value": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable value").String,
 										Optional:            true,
@@ -155,8 +149,6 @@ func (r *PolicyGroupDevicesResource) Configure(_ context.Context, req resource.C
 	r.deployOnOutOfDate = req.ProviderData.(*SdwanProviderData).DeployOnOutOfDate
 }
 
-// End of section. //template:end model
-
 var _ resource.ResourceWithValidateConfig = &PolicyGroupDevicesResource{}
 
 func (r *PolicyGroupDevicesResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
@@ -166,7 +158,7 @@ func (r *PolicyGroupDevicesResource) ValidateConfig(ctx context.Context, req res
 func (r *PolicyGroupDevicesResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan PolicyGroupDevices
 
-	diags := req.Plan.Get(ctx, &plan)
+	diags := getPolicyGroupDevices(ctx, req.Plan, &plan)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -250,7 +242,7 @@ func (r *PolicyGroupDevicesResource) Create(ctx context.Context, req resource.Cr
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.PolicyGroupId.ValueString()))
 
-	diags = resp.State.Set(ctx, &plan)
+	diags = resp.State.Set(ctx, plan.toConfig())
 	resp.Diagnostics.Append(diags...)
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
@@ -480,7 +472,7 @@ func (r *PolicyGroupDevicesResource) Deploy(ctx context.Context, plan PolicyGrou
 func (r *PolicyGroupDevicesResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var state PolicyGroupDevices
 
-	diags := req.State.Get(ctx, &state)
+	diags := getPolicyGroupDevices(ctx, req.State, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -562,7 +554,7 @@ func (r *PolicyGroupDevicesResource) Read(ctx context.Context, req resource.Read
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.PolicyGroupId.ValueString()))
 
-	diags = resp.State.Set(ctx, &state)
+	diags = resp.State.Set(ctx, state.toConfig())
 	resp.Diagnostics.Append(diags...)
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
@@ -570,12 +562,12 @@ func (r *PolicyGroupDevicesResource) Read(ctx context.Context, req resource.Read
 func (r *PolicyGroupDevicesResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var plan, state PolicyGroupDevices
 
-	diags := req.Plan.Get(ctx, &plan)
+	diags := getPolicyGroupDevices(ctx, req.Plan, &plan)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	diags = req.State.Get(ctx, &state)
+	diags = getPolicyGroupDevices(ctx, req.State, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -588,7 +580,7 @@ func (r *PolicyGroupDevicesResource) Update(ctx context.Context, req resource.Up
 	// unexpected time.
 	if only, err := helpers.OnlyAttributeChanged(req.Plan.Raw, req.State.Raw, "retain_devices"); err == nil && only {
 		tflog.Debug(ctx, fmt.Sprintf("%s: only retain_devices changed, nothing to update", plan.PolicyGroupId.ValueString()))
-		resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
+		resp.Diagnostics.Append(resp.State.Set(ctx, plan.toConfig())...)
 		return
 	}
 
@@ -752,14 +744,14 @@ func (r *PolicyGroupDevicesResource) Update(ctx context.Context, req resource.Up
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.PolicyGroupId.ValueString()))
 
-	diags = resp.State.Set(ctx, &plan)
+	diags = resp.State.Set(ctx, plan.toConfig())
 	resp.Diagnostics.Append(diags...)
 }
 
 func (r *PolicyGroupDevicesResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 	var state PolicyGroupDevices
 
-	diags := req.State.Get(ctx, &state)
+	diags := getPolicyGroupDevices(ctx, req.State, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -794,11 +786,9 @@ func (r *PolicyGroupDevicesResource) ImportState(ctx context.Context, req resour
 		return
 	}
 
-	var devices []PolicyGroupDevicesDevices
+	devices := make(map[string]PolicyGroupDevicesDeviceConfig, len(deviceIds))
 	for _, deviceId := range deviceIds {
-		devices = append(devices, PolicyGroupDevicesDevices{
-			Id: types.StringValue(deviceId),
-		})
+		devices[deviceId] = PolicyGroupDevicesDeviceConfig{}
 	}
 
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), policyGroupId)...)

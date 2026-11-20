@@ -17,53 +17,159 @@
 
 package provider
 
-// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 	"fmt"
+	"maps"
 	"slices"
 	"strconv"
 	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
-// End of section. //template:end imports
-
-// Section below is generated&owned by "gen/generator.go". //template:begin types
-type ConfigurationGroupDevices struct {
-	Id                        types.String                       `tfsdk:"id"`
-	ConfigurationGroupId      types.String                       `tfsdk:"configuration_group_id"`
-	Solution                  types.String                       `tfsdk:"solution"`
-	ConfigurationGroupVersion types.Int64                        `tfsdk:"configuration_group_version"`
-	RetainDevices             types.Set                          `tfsdk:"retain_devices"`
-	Devices                   []ConfigurationGroupDevicesDevices `tfsdk:"devices"`
+// ConfigurationGroupDevicesConfig is the Terraform shape of the resource (plan, state, config).
+// devices is a map keyed by device ID, so Terraform matches a device by its ID: adding, removing
+// or changing one device shows only that device in the plan. The code works on
+// ConfigurationGroupDevices, the same data with the devices as a list sorted by ID; use
+// getConfigurationGroupDevices and toConfig to convert.
+type ConfigurationGroupDevicesConfig struct {
+	Id                        types.String                                     `tfsdk:"id"`
+	ConfigurationGroupId      types.String                                     `tfsdk:"configuration_group_id"`
+	Solution                  types.String                                     `tfsdk:"solution"`
+	ConfigurationGroupVersion types.Int64                                      `tfsdk:"configuration_group_version"`
+	RetainDevices             types.Set                                        `tfsdk:"retain_devices"`
+	Devices                   map[string]ConfigurationGroupDevicesDeviceConfig `tfsdk:"devices"`
 }
 
-type ConfigurationGroupDevicesDevices struct {
-	Id            types.String                                `tfsdk:"id"`
-	TopologyLabel types.String                                `tfsdk:"topology_label"`
-	Deploy        types.Bool                                  `tfsdk:"deploy"`
-	Variables     []ConfigurationGroupDevicesDevicesVariables `tfsdk:"variables"`
+// ConfigurationGroupDevicesDeviceConfig is one device in the map; its ID is the map key.
+type ConfigurationGroupDevicesDeviceConfig struct {
+	TopologyLabel types.String                                       `tfsdk:"topology_label"`
+	Deploy        types.Bool                                         `tfsdk:"deploy"`
+	Variables     map[string]ConfigurationGroupDevicesVariableConfig `tfsdk:"variables"`
 }
 
-type ConfigurationGroupDevicesDevicesVariables struct {
-	Name      types.String `tfsdk:"name"`
+// ConfigurationGroupDevicesVariableConfig is one variable in the map; its name is the map key.
+type ConfigurationGroupDevicesVariableConfig struct {
 	Value     types.String `tfsdk:"value"`
 	ListValue types.List   `tfsdk:"list_value"`
 }
 
-// End of section. //template:end types
+// ConfigurationGroupDevices is the working model: devices as a list sorted by ID.
+type ConfigurationGroupDevices struct {
+	Id                        types.String
+	ConfigurationGroupId      types.String
+	Solution                  types.String
+	ConfigurationGroupVersion types.Int64
+	RetainDevices             types.Set
+	Devices                   []ConfigurationGroupDevicesDevices
+}
 
-// Section below is generated&owned by "gen/generator.go". //template:begin getPath
+type ConfigurationGroupDevicesDevices struct {
+	Id            types.String
+	TopologyLabel types.String
+	Deploy        types.Bool
+	Variables     []ConfigurationGroupDevicesDevicesVariables
+}
+
+type ConfigurationGroupDevicesDevicesVariables struct {
+	Name      types.String
+	Value     types.String
+	ListValue types.List
+}
+
+// stateGetter is tfsdk.Plan, tfsdk.State or tfsdk.Config.
+type stateGetter interface {
+	Get(ctx context.Context, target interface{}) diag.Diagnostics
+}
+
+// getConfigurationGroupDevices reads a plan or state into the working model.
+func getConfigurationGroupDevices(ctx context.Context, src stateGetter, data *ConfigurationGroupDevices) diag.Diagnostics {
+	var config ConfigurationGroupDevicesConfig
+	diags := src.Get(ctx, &config)
+	*data = config.toModel()
+	return diags
+}
+
+func (config ConfigurationGroupDevicesConfig) toModel() ConfigurationGroupDevices {
+	data := ConfigurationGroupDevices{
+		Id:                        config.Id,
+		ConfigurationGroupId:      config.ConfigurationGroupId,
+		Solution:                  config.Solution,
+		ConfigurationGroupVersion: config.ConfigurationGroupVersion,
+		RetainDevices:             config.RetainDevices,
+	}
+	if config.Devices != nil {
+		data.Devices = make([]ConfigurationGroupDevicesDevices, 0, len(config.Devices))
+		for _, id := range slices.Sorted(maps.Keys(config.Devices)) {
+			d := config.Devices[id]
+			data.Devices = append(data.Devices, ConfigurationGroupDevicesDevices{
+				Id:            types.StringValue(id),
+				TopologyLabel: d.TopologyLabel,
+				Deploy:        d.Deploy,
+				Variables:     variablesToModelConfigurationGroupDevices(d.Variables),
+			})
+		}
+	}
+	return data
+}
+
+// toConfig returns the Terraform shape, for resp.State.Set.
+func (data ConfigurationGroupDevices) toConfig() ConfigurationGroupDevicesConfig {
+	config := ConfigurationGroupDevicesConfig{
+		Id:                        data.Id,
+		ConfigurationGroupId:      data.ConfigurationGroupId,
+		Solution:                  data.Solution,
+		ConfigurationGroupVersion: data.ConfigurationGroupVersion,
+		RetainDevices:             data.RetainDevices,
+	}
+	if data.Devices != nil {
+		config.Devices = make(map[string]ConfigurationGroupDevicesDeviceConfig, len(data.Devices))
+		for _, d := range data.Devices {
+			config.Devices[d.Id.ValueString()] = ConfigurationGroupDevicesDeviceConfig{
+				TopologyLabel: d.TopologyLabel,
+				Deploy:        d.Deploy,
+				Variables:     variablesToConfigConfigurationGroupDevices(d.Variables),
+			}
+		}
+	}
+	return config
+}
+
+// variablesToModelConfigurationGroupDevices returns the variables sorted by name; null stays null.
+func variablesToModelConfigurationGroupDevices(vars map[string]ConfigurationGroupDevicesVariableConfig) []ConfigurationGroupDevicesDevicesVariables {
+	if vars == nil {
+		return nil
+	}
+	out := make([]ConfigurationGroupDevicesDevicesVariables, 0, len(vars))
+	for _, name := range slices.Sorted(maps.Keys(vars)) {
+		out = append(out, ConfigurationGroupDevicesDevicesVariables{Name: types.StringValue(name), Value: vars[name].Value, ListValue: vars[name].ListValue})
+	}
+	return out
+}
+
+func variablesToConfigConfigurationGroupDevices(vars []ConfigurationGroupDevicesDevicesVariables) map[string]ConfigurationGroupDevicesVariableConfig {
+	if vars == nil {
+		return nil
+	}
+	out := make(map[string]ConfigurationGroupDevicesVariableConfig, len(vars))
+	for _, v := range vars {
+		listValue := v.ListValue
+		if listValue.IsNull() {
+			listValue = types.ListNull(types.StringType)
+		}
+		out[v.Name.ValueString()] = ConfigurationGroupDevicesVariableConfig{Value: v.Value, ListValue: listValue}
+	}
+	return out
+}
+
 func (data ConfigurationGroupDevices) getPath() string {
 	return "/v1/config-group/"
 }
-
-// End of section. //template:end getPath
 
 func (data ConfigurationGroupDevices) toBodyConfigGroupDevices(ctx context.Context) string {
 	body := ""
@@ -215,32 +321,7 @@ func (data *ConfigurationGroupDevices) fromBodyConfigGroupDevices(ctx context.Co
 			data.Devices = []ConfigurationGroupDevicesDevices{}
 		}
 	}
-	// reorder devices to match original state order
-	slices.Reverse(original.Devices)
-	for i := range original.Devices {
-		keyValues := [...]string{original.Devices[i].Id.ValueString()}
-
-		for y := range data.Devices {
-			found := false
-			for _, keyValue := range keyValues {
-				if !data.Devices[y].Id.IsNull() {
-					if data.Devices[y].Id.ValueString() == keyValue {
-						found = true
-						continue
-					}
-					found = false
-					break
-				}
-				continue
-			}
-			if found {
-				//insert at the beginning
-				device := data.Devices[y]
-				data.Devices = append(data.Devices[:y], data.Devices[y+1:]...)
-				data.Devices = append([]ConfigurationGroupDevicesDevices{device}, data.Devices...)
-			}
-		}
-	}
+	// No reordering: devices are a map in the state, keyed by ID.
 }
 
 func (data *ConfigurationGroupDevices) fromBodyConfigGroupDeviceVariables(ctx context.Context, res gjson.Result, original *ConfigurationGroupDevices) {

@@ -20,6 +20,8 @@ package helpers
 import (
 	"context"
 	"fmt"
+	"maps"
+	"slices"
 
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -73,18 +75,15 @@ func ValidateRetainDevices(ctx context.Context, config tfsdk.Config, diags *diag
 	if len(keep) == 0 {
 		return
 	}
-	var devices types.List
+	// devices is a map keyed by device ID.
+	var devices types.Map
 	if d := config.GetAttribute(ctx, path.Root("devices"), &devices); d.HasError() || devices.IsNull() || devices.IsUnknown() {
 		return
 	}
-	for _, e := range devices.Elements() {
-		obj, ok := e.(types.Object)
-		if !ok || obj.IsNull() || obj.IsUnknown() {
-			continue
-		}
-		if id, ok := obj.Attributes()["id"].(types.String); ok && !id.IsUnknown() && keep[id.ValueString()] {
+	for _, id := range slices.Sorted(maps.Keys(devices.Elements())) {
+		if keep[id] {
 			diags.AddAttributeError(path.Root("retain_devices"), "Device in devices and retain_devices",
-				fmt.Sprintf("Device %s is listed in both devices and retain_devices. A retained device is handed over to another state: list it in only one of them.", id.ValueString()))
+				fmt.Sprintf("Device %s is listed in both devices and retain_devices. A retained device is handed over to another state: list it in only one of them.", id))
 		}
 	}
 }

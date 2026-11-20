@@ -55,26 +55,26 @@ func TestValidateRetainDevices(t *testing.T) {
 	ctx := context.Background()
 	s := schema.Schema{Attributes: map[string]schema.Attribute{
 		"retain_devices": schema.SetAttribute{ElementType: types.StringType, Optional: true},
-		"devices": schema.ListNestedAttribute{Optional: true, NestedObject: schema.NestedAttributeObject{
-			Attributes: map[string]schema.Attribute{"id": schema.StringAttribute{Optional: true}},
+		"devices": schema.MapNestedAttribute{Optional: true, NestedObject: schema.NestedAttributeObject{
+			Attributes: map[string]schema.Attribute{"deploy": schema.BoolAttribute{Optional: true}},
 		}},
 	}}
-	devType := tftypes.Object{AttributeTypes: map[string]tftypes.Type{"id": tftypes.String}}
+	devType := tftypes.Object{AttributeTypes: map[string]tftypes.Type{"deploy": tftypes.Bool}}
 	cfg := func(retain []string, devices []string) tfsdk.Config {
 		r := []tftypes.Value{}
 		for _, s := range retain {
 			r = append(r, tftypes.NewValue(tftypes.String, s))
 		}
-		d := []tftypes.Value{}
+		d := map[string]tftypes.Value{}
 		for _, s := range devices {
-			d = append(d, tftypes.NewValue(devType, map[string]tftypes.Value{"id": tftypes.NewValue(tftypes.String, s)}))
+			d[s] = tftypes.NewValue(devType, map[string]tftypes.Value{"deploy": tftypes.NewValue(tftypes.Bool, true)})
 		}
 		return tfsdk.Config{Schema: s, Raw: tftypes.NewValue(tftypes.Object{AttributeTypes: map[string]tftypes.Type{
 			"retain_devices": tftypes.Set{ElementType: tftypes.String},
-			"devices":        tftypes.List{ElementType: devType},
+			"devices":        tftypes.Map{ElementType: devType},
 		}}, map[string]tftypes.Value{
 			"retain_devices": tftypes.NewValue(tftypes.Set{ElementType: tftypes.String}, r),
-			"devices":        tftypes.NewValue(tftypes.List{ElementType: devType}, d),
+			"devices":        tftypes.NewValue(tftypes.Map{ElementType: devType}, d),
 		})}
 	}
 	cases := []struct {
@@ -84,6 +84,7 @@ func TestValidateRetainDevices(t *testing.T) {
 	}{
 		{"disjoint", []string{"C8K-B"}, []string{"C8K-A"}, 0},
 		{"overlap", []string{"C8K-A", "C8K-B"}, []string{"C8K-A"}, 1},
+		{"two overlaps", []string{"C8K-A", "C8K-B"}, []string{"C8K-A", "C8K-B", "C8K-C"}, 2},
 		{"empty retain", nil, []string{"C8K-A"}, 0},
 	}
 	for _, c := range cases {

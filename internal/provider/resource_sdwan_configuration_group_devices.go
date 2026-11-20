@@ -17,7 +17,6 @@
 
 package provider
 
-// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 	"fmt"
@@ -26,6 +25,7 @@ import (
 	"time"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework-validators/mapvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -41,10 +41,6 @@ import (
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
-
-// End of section. //template:end imports
-
-// Section below is generated&owned by "gen/generator.go". //template:begin model
 
 // Ensure provider defined types fully satisfy framework interfaces
 var _ resource.Resource = &ConfigurationGroupDevicesResource{}
@@ -101,15 +97,14 @@ func (r *ConfigurationGroupDevicesResource) Schema(ctx context.Context, req reso
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
-			"devices": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of devices").String,
+			"devices": schema.MapNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Devices to associate with the configuration group, keyed by device ID (for example `C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B`). Terraform matches each device by its ID, so adding, removing or changing a device shows only that device in the plan.").String,
 				Optional:            true,
+				Validators: []validator.Map{
+					mapvalidator.KeysAre(stringvalidator.LengthAtLeast(1)),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"id": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Device ID").String,
-							Optional:            true,
-						},
 						"topology_label": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Topology label for dual device configuration group (supported from version 20.18.1 onwards)").String,
 							Optional:            true,
@@ -120,15 +115,14 @@ func (r *ConfigurationGroupDevicesResource) Schema(ctx context.Context, req reso
 							Computed:            true,
 							Default:             booldefault.StaticBool(false),
 						},
-						"variables": schema.SetNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("List of variables").String,
+						"variables": schema.MapNestedAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Device variables, keyed by variable name (for example `host_name`). Terraform matches each variable by its name, so a changed value shows as a change of that variable only.").String,
 							Optional:            true,
+							Validators: []validator.Map{
+								mapvalidator.KeysAre(stringvalidator.LengthAtLeast(1)),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
-									"name": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-										Required:            true,
-									},
 									"value": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable value").String,
 										Optional:            true,
@@ -159,8 +153,6 @@ func (r *ConfigurationGroupDevicesResource) Configure(_ context.Context, req res
 	r.deployOnOutOfDate = req.ProviderData.(*SdwanProviderData).DeployOnOutOfDate
 }
 
-// End of section. //template:end model
-
 var _ resource.ResourceWithValidateConfig = &ConfigurationGroupDevicesResource{}
 
 func (r *ConfigurationGroupDevicesResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
@@ -171,7 +163,7 @@ func (r *ConfigurationGroupDevicesResource) Create(ctx context.Context, req reso
 	var plan ConfigurationGroupDevices
 
 	// Read plan
-	diags := req.Plan.Get(ctx, &plan)
+	diags := getConfigurationGroupDevices(ctx, req.Plan, &plan)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -265,7 +257,7 @@ func (r *ConfigurationGroupDevicesResource) Create(ctx context.Context, req reso
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.ConfigurationGroupId.ValueString()))
 
-	diags = resp.State.Set(ctx, &plan)
+	diags = resp.State.Set(ctx, plan.toConfig())
 	resp.Diagnostics.Append(diags...)
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
@@ -503,7 +495,7 @@ func (r *ConfigurationGroupDevicesResource) Read(ctx context.Context, req resour
 	var state ConfigurationGroupDevices
 
 	// Read state
-	diags := req.State.Get(ctx, &state)
+	diags := getConfigurationGroupDevices(ctx, req.State, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -586,7 +578,7 @@ func (r *ConfigurationGroupDevicesResource) Read(ctx context.Context, req resour
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.ConfigurationGroupId.ValueString()))
 
-	diags = resp.State.Set(ctx, &state)
+	diags = resp.State.Set(ctx, state.toConfig())
 	resp.Diagnostics.Append(diags...)
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
 }
@@ -595,13 +587,13 @@ func (r *ConfigurationGroupDevicesResource) Update(ctx context.Context, req reso
 	var plan, state ConfigurationGroupDevices
 
 	// Read plan
-	diags := req.Plan.Get(ctx, &plan)
+	diags := getConfigurationGroupDevices(ctx, req.Plan, &plan)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 	// Read state
-	diags = req.State.Get(ctx, &state)
+	diags = getConfigurationGroupDevices(ctx, req.State, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -614,7 +606,7 @@ func (r *ConfigurationGroupDevicesResource) Update(ctx context.Context, req reso
 	// unexpected time.
 	if only, err := helpers.OnlyAttributeChanged(req.Plan.Raw, req.State.Raw, "retain_devices"); err == nil && only {
 		tflog.Debug(ctx, fmt.Sprintf("%s: only retain_devices changed, nothing to update", plan.ConfigurationGroupId.ValueString()))
-		resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
+		resp.Diagnostics.Append(resp.State.Set(ctx, plan.toConfig())...)
 		return
 	}
 
@@ -798,7 +790,7 @@ func (r *ConfigurationGroupDevicesResource) Update(ctx context.Context, req reso
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.ConfigurationGroupId.ValueString()))
 
-	diags = resp.State.Set(ctx, &plan)
+	diags = resp.State.Set(ctx, plan.toConfig())
 	resp.Diagnostics.Append(diags...)
 }
 
@@ -806,7 +798,7 @@ func (r *ConfigurationGroupDevicesResource) Delete(ctx context.Context, req reso
 	var state ConfigurationGroupDevices
 
 	// Read state
-	diags := req.State.Get(ctx, &state)
+	diags := getConfigurationGroupDevices(ctx, req.State, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -841,11 +833,9 @@ func (r *ConfigurationGroupDevicesResource) ImportState(ctx context.Context, req
 		return
 	}
 
-	var devices []ConfigurationGroupDevicesDevices
+	devices := make(map[string]ConfigurationGroupDevicesDeviceConfig, len(deviceIds))
 	for _, deviceId := range deviceIds {
-		devices = append(devices, ConfigurationGroupDevicesDevices{
-			Id: types.StringValue(deviceId),
-		})
+		devices[deviceId] = ConfigurationGroupDevicesDeviceConfig{}
 	}
 
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), configGroupId)...)
