@@ -337,14 +337,6 @@ func (d *ServiceLANVPNInterfaceIPSecProfileParcelDataSource) Schema(ctx context.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tracker_id": schema.StringAttribute{
-				MarkdownDescription: "Enable tracker for this interface",
-				Computed:            true,
-			},
-			"tracker_id_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Computed:            true,
-			},
 			"tunnel_route_via": schema.StringAttribute{
 				MarkdownDescription: "<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid",
 				Computed:            true,
