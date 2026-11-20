@@ -47,7 +47,7 @@ data "sdwan_cedge_aaa_feature_template" "example" {
 - `radius_dynamic_author_domain_stripping_variable` (String) Variable name
 - `radius_dynamic_author_port` (Number) Specify Radius Dynamic Author Port
 - `radius_dynamic_author_port_variable` (String) Variable name
-- `radius_dynamic_author_server_key` (String) Specify a radius dynamic author server-key
+- `radius_dynamic_author_server_key` (String, Sensitive) Specify a radius dynamic author server-key
 - `radius_dynamic_author_server_key_variable` (String) Variable name
 - `radius_server_groups` (Attributes List) Configure the Radius serverGroup (see [below for nested schema](#nestedatt--radius_server_groups))
 - `radius_trustsec_cts_authorization_list` (String) CTS Authorization List
@@ -102,7 +102,7 @@ Read-Only:
 Read-Only:
 
 - `optional` (Boolean) Indicates if list item is considered optional.
-- `server_key` (String) Specify a RADIUS client server-key
+- `server_key` (String, Sensitive) Specify a RADIUS client server-key
 - `server_key_variable` (String) Variable name
 - `vpn_id` (Number) VPN ID
 - `vpn_id_variable` (String) Variable name
@@ -132,13 +132,13 @@ Read-Only:
 - `authentication_port` (Number) Set Authentication port to use to connect to Radius server
 - `authentication_port_variable` (String) Variable name
 - `encryption_type` (String) Type of encyption. To be used for type 6
-- `key` (String) Set the Radius server shared key
+- `key` (String, Sensitive) Set the Radius server shared key
 - `key_type` (String) key type
 - `key_type_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `retransmit` (Number) Configure how many times to contact this Radius server
 - `retransmit_variable` (String) Variable name
-- `secret_key` (String) Set the Radius server shared type 7 encrypted key
+- `secret_key` (String, Sensitive) Set the Radius server shared type 7 encrypted key
 - `secret_key_variable` (String) Variable name
 - `timeout` (Number) Configure how long to wait for replies from the Radius server
 - `timeout_variable` (String) Variable name
@@ -164,11 +164,11 @@ Read-Only:
 
 - `address` (String) Set IP address of TACACS server
 - `encryption_type` (String) Type of encyption. To be used for type 6
-- `key` (String) Set the TACACS server shared key
+- `key` (String, Sensitive) Set the TACACS server shared key
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `port` (Number) TACACS Port
 - `port_variable` (String) Variable name
-- `secret_key` (String) Set the TACACS server shared type 7 encrypted key
+- `secret_key` (String, Sensitive) Set the TACACS server shared type 7 encrypted key
 - `secret_key_variable` (String) Variable name
 - `timeout` (Number) Configure how long to wait for replies from the TACACS server
 - `timeout_variable` (String) Variable name
@@ -183,10 +183,10 @@ Read-Only:
 - `name` (String) Set the username
 - `name_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
-- `password` (String) Set the user password
+- `password` (String, Sensitive) Set the user password
 - `privilege_level` (String) Set Privilege Level for this user
 - `privilege_level_variable` (String) Variable name
-- `secret` (String) Set the user scrypt password/hash
+- `secret` (String, Sensitive) Set the user scrypt password/hash
 - `ssh_pubkeys` (Attributes List) List of RSA public-keys per user (see [below for nested schema](#nestedatt--users--ssh_pubkeys))
 
 <a id="nestedatt--users--ssh_pubkeys"></a>

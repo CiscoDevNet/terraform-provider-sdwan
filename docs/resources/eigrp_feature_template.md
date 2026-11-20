@@ -82,7 +82,7 @@ resource "sdwan_eigrp_feature_template" "example" {
   - Range: `0`-`65535`
   - Default value: `5`
 - `hello_interval_variable` (String) Variable name
-- `hmac_authentication_key` (String) Set hmac-sha-256 authentication key
+- `hmac_authentication_key` (String, Sensitive) Set hmac-sha-256 authentication key
 - `hmac_authentication_key_variable` (String) Variable name
 - `hold_time` (Number) Set EIGRP hold time
   - Range: `0`-`65535`
@@ -164,7 +164,7 @@ Optional:
 
 Optional:
 
-- `md5_authentication_key` (String) Set MD5 key
+- `md5_authentication_key` (String, Sensitive) Set MD5 key
 - `md5_authentication_key_variable` (String) Variable name
 - `md5_key_id` (Number) Set MD5 key ID
   - Range: `1`-`255`

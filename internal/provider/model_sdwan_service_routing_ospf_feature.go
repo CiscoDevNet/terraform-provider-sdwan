@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -120,6 +121,8 @@ type ServiceRoutingOSPFAreasInterfaces struct {
 	MessageDigestKeyIdVariable       types.String `tfsdk:"message_digest_key_id_variable"`
 	MessageDigestKey                 types.String `tfsdk:"message_digest_key"`
 	MessageDigestKeyVariable         types.String `tfsdk:"message_digest_key_variable"`
+	MessageDigestKeyWo               types.String `tfsdk:"message_digest_key_wo"`
+	MessageDigestKeyWoVersion        types.Int64  `tfsdk:"message_digest_key_wo_version"`
 }
 type ServiceRoutingOSPFAreasRanges struct {
 	IpAddress           types.String `tfsdk:"ip_address"`
@@ -701,6 +704,12 @@ func (data ServiceRoutingOSPF) toBody(ctx context.Context, ver *version.Version)
 							itemChildBody, _ = sjson.Set(itemChildBody, "md5.value", childItem.MessageDigestKey.ValueString())
 						}
 					}
+					if !childItem.MessageDigestKeyWo.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "md5.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "md5.value", childItem.MessageDigestKeyWo.ValueString())
+						}
+					}
 					itemBody, _ = sjson.SetRaw(itemBody, "interface.-1", itemChildBody)
 				}
 			}
@@ -1208,7 +1217,10 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result, 
 						if t.String() == "variable" {
 							cItem.MessageDigestKeyVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.MessageDigestKey = types.StringValue(va.String())
+							// Masked secrets returned by the Manager must never be written into state.
+							if fullRead || !helpers.IsEncryptedValue(va.String()) {
+								cItem.MessageDigestKey = types.StringValue(va.String())
+							}
 						}
 					}
 					item.Interfaces = append(item.Interfaces, cItem)
@@ -1311,6 +1323,8 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result, 
 									matchedC[nci] = true
 									data.Areas[ni].Interfaces[nci].MessageDigestKey = oldCItem.MessageDigestKey
 									data.Areas[ni].Interfaces[nci].MessageDigestKeyVariable = oldCItem.MessageDigestKeyVariable
+
+									data.Areas[ni].Interfaces[nci].MessageDigestKeyWoVersion = oldCItem.MessageDigestKeyWoVersion
 									resultC = append(resultC, data.Areas[ni].Interfaces[nci])
 									break
 								}

@@ -353,10 +353,20 @@ func (d *TransportRoutingOSPFv3IPv6ProfileParcelDataSource) Schema(ctx context.C
 									},
 									"authentication_key": schema.StringAttribute{
 										MarkdownDescription: "Set OSPF interface authentication IPSEC key",
+										Sensitive:           true,
 										Computed:            true,
 									},
 									"authentication_key_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"authentication_key_wo": schema.StringAttribute{
+										MarkdownDescription: "Set OSPF interface authentication IPSEC key",
+										Sensitive:           true,
+										Computed:            true,
+									},
+									"authentication_key_wo_version": schema.Int64Attribute{
+										MarkdownDescription: "Rotation trigger for `authentication_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 										Computed:            true,
 									},
 								},

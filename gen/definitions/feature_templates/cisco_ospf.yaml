@@ -129,6 +129,7 @@ attributes:
             tf_name: authentication_message_digest_key_id
             example: 1
           - model_name: md5
+            sensitive: true
             tf_name: authentication_message_digest_key
             example: cisco123
       - model_name: range

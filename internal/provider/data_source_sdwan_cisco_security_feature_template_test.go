@@ -40,7 +40,6 @@ func TestAccDataSourceSdwanCiscoSecurityFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_id", "0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.receive_id", "0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.crypto_algorithm", "hmac-sha-256"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.key_string", "abc123"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_local", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_start_time", "2022-12-31T23:59"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_end_time_format", "infinite"))
@@ -91,7 +90,6 @@ func testAccDataSourceSdwanCiscoSecurityFeatureTemplateConfig() string {
 	config += `	  send_id = 0` + "\n"
 	config += `	  receive_id = 0` + "\n"
 	config += `	  crypto_algorithm = "hmac-sha-256"` + "\n"
-	config += `	  key_string = "abc123"` + "\n"
 	config += `	  send_lifetime_local = true` + "\n"
 	config += `	  send_lifetime_start_time = "2022-12-31T23:59"` + "\n"
 	config += `	  send_lifetime_end_time_format = "infinite"` + "\n"

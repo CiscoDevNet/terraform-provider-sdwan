@@ -104,6 +104,7 @@ func (d *CiscoThousandEyesFeatureTemplateDataSource) Schema(ctx context.Context,
 						},
 						"te_account_group_token": schema.StringAttribute{
 							MarkdownDescription: "Set the Account Group Token",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"te_account_group_token_variable": schema.StringAttribute{

@@ -225,6 +225,7 @@ func (r *CiscoSecurityFeatureTemplateResource) Schema(ctx context.Context, req r
 						},
 						"key_string": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Specify the Key String").String,
+							Sensitive:           true,
 							Optional:            true,
 						},
 						"key_string_variable": schema.StringAttribute{

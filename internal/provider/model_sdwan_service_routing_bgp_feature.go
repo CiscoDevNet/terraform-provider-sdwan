@@ -118,6 +118,8 @@ type ServiceRoutingBGPIpv4Neighbors struct {
 	EbgpMultihopVariable          types.String                                    `tfsdk:"ebgp_multihop_variable"`
 	Password                      types.String                                    `tfsdk:"password"`
 	PasswordVariable              types.String                                    `tfsdk:"password_variable"`
+	PasswordWo                    types.String                                    `tfsdk:"password_wo"`
+	PasswordWoVersion             types.Int64                                     `tfsdk:"password_wo_version"`
 	SendLabel                     types.Bool                                      `tfsdk:"send_label"`
 	SendLabelVariable             types.String                                    `tfsdk:"send_label_variable"`
 	AsOverride                    types.Bool                                      `tfsdk:"as_override"`
@@ -154,6 +156,8 @@ type ServiceRoutingBGPIpv6Neighbors struct {
 	EbgpMultihopVariable          types.String                                    `tfsdk:"ebgp_multihop_variable"`
 	Password                      types.String                                    `tfsdk:"password"`
 	PasswordVariable              types.String                                    `tfsdk:"password_variable"`
+	PasswordWo                    types.String                                    `tfsdk:"password_wo"`
+	PasswordWoVersion             types.Int64                                     `tfsdk:"password_wo_version"`
 	AsOverride                    types.Bool                                      `tfsdk:"as_override"`
 	AsOverrideVariable            types.String                                    `tfsdk:"as_override_variable"`
 	AllowasInNumber               types.Int64                                     `tfsdk:"allowas_in_number"`
@@ -741,6 +745,12 @@ func (data ServiceRoutingBGP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "password.value", item.Password.ValueString())
 				}
 			}
+			if !item.PasswordWo.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "password.value", item.PasswordWo.ValueString())
+				}
+			}
 
 			if !item.SendLabelVariable.IsNull() {
 				if true {
@@ -1146,6 +1156,12 @@ func (data ServiceRoutingBGP) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "password.value", item.Password.ValueString())
+				}
+			}
+			if !item.PasswordWo.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "password.value", item.PasswordWo.ValueString())
 				}
 			}
 
@@ -2042,7 +2058,10 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 				if t.String() == "variable" {
 					item.PasswordVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.Password = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
+						item.Password = types.StringValue(va.String())
+					}
 				}
 			}
 			item.SendLabel = types.BoolNull()
@@ -2263,6 +2282,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 					// Preserve write-only sensitive fields the Manager redacts on GET
 					data.Ipv4Neighbors[ni].Password = oldItem.Password
 					data.Ipv4Neighbors[ni].PasswordVariable = oldItem.PasswordVariable
+					data.Ipv4Neighbors[ni].PasswordWoVersion = oldItem.PasswordWoVersion
 					resultIpv4Neighbors = append(resultIpv4Neighbors, data.Ipv4Neighbors[ni])
 					break
 				}
@@ -2407,7 +2427,10 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 				if t.String() == "variable" {
 					item.PasswordVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.Password = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
+						item.Password = types.StringValue(va.String())
+					}
 				}
 			}
 			item.AsOverride = types.BoolNull()
@@ -2618,6 +2641,7 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 					// Preserve write-only sensitive fields the Manager redacts on GET
 					data.Ipv6Neighbors[ni].Password = oldItem.Password
 					data.Ipv6Neighbors[ni].PasswordVariable = oldItem.PasswordVariable
+					data.Ipv6Neighbors[ni].PasswordWoVersion = oldItem.PasswordWoVersion
 					resultIpv6Neighbors = append(resultIpv6Neighbors, data.Ipv6Neighbors[ni])
 					break
 				}
@@ -3166,5 +3190,3 @@ func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result, f
 		data.Ipv6Redistributes = resultIpv6Redistributes
 	}
 }
-
-// End of section. //template:end fromBody

@@ -158,7 +158,7 @@ Optional:
   - Choices: `2`, `14`, `15`, `16`
   - Default value: `14`
 - `ike_group_variable` (String) Variable name
-- `ike_pre_shared_key` (String) Use preshared key to authenticate IKE peer
+- `ike_pre_shared_key` (String, Sensitive) Use preshared key to authenticate IKE peer
 - `ike_pre_shared_key_dynamic` (Boolean) Use preshared key to authenticate IKE peer
   - Default value: `true`
 - `ike_pre_shared_key_local_id` (String) IKE ID for the local endpoint. Input IPv4 address, domain name, or email address

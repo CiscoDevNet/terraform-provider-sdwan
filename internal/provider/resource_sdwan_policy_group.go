@@ -395,7 +395,7 @@ func (r *PolicyGroupResource) Read(ctx context.Context, req resource.ReadRequest
 			return
 		}
 
-		state.fromBodyPolicyGroupDeviceVariables(ctx, res)
+		state.fromBodyPolicyGroupDeviceVariables(ctx, res, &oldState)
 	}
 
 	state.updateTfAttributes(ctx, &oldState)

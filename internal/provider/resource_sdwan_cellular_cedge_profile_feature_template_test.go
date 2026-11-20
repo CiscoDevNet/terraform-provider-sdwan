@@ -34,7 +34,6 @@ func TestAccSdwanCellularCEdgeProfileFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_cedge_profile_feature_template.test", "authentication_type", "chap"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_cedge_profile_feature_template.test", "packet_data_network_type", "ipv4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_cedge_profile_feature_template.test", "profile_username", "MyUsername"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_cedge_profile_feature_template.test", "profile_password", "MyPassword"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_cedge_profile_feature_template.test", "no_overwrite", "false"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
@@ -79,7 +78,6 @@ func testAccSdwanCellularCEdgeProfileFeatureTemplateConfig_all() string {
 	config += `	authentication_type = "chap"` + "\n"
 	config += `	packet_data_network_type = "ipv4"` + "\n"
 	config += `	profile_username = "MyUsername"` + "\n"
-	config += `	profile_password = "MyPassword"` + "\n"
 	config += `	no_overwrite = false` + "\n"
 	config += `}` + "\n"
 	return config

@@ -52,10 +52,8 @@ func TestAccDataSourceSdwanVPNInterfaceDSLIPoEFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_dsl_ipoe_feature_template.test", "ppp_authentication_protocol", "chap"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_dsl_ipoe_feature_template.test", "ppp_authentication_protocol_pap", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_dsl_ipoe_feature_template.test", "chap_hostname", "chap-example"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_dsl_ipoe_feature_template.test", "chap_ppp_auth_password", "myPassword"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_dsl_ipoe_feature_template.test", "pap_username", "pap-username"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_dsl_ipoe_feature_template.test", "pap_password", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_dsl_ipoe_feature_template.test", "pap_ppp_auth_password", "myPassword"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_dsl_ipoe_feature_template.test", "tunnel_interface_encapsulations.0.encapsulation", "gre"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_dsl_ipoe_feature_template.test", "tunnel_interface_encapsulations.0.preference", "4294967"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_dsl_ipoe_feature_template.test", "tunnel_interface_encapsulations.0.weight", "250"))
@@ -170,10 +168,8 @@ func testAccDataSourceSdwanVPNInterfaceDSLIPoEFeatureTemplateConfig() string {
 	config += `	ppp_authentication_protocol = "chap"` + "\n"
 	config += `	ppp_authentication_protocol_pap = false` + "\n"
 	config += `	chap_hostname = "chap-example"` + "\n"
-	config += `	chap_ppp_auth_password = "myPassword"` + "\n"
 	config += `	pap_username = "pap-username"` + "\n"
 	config += `	pap_password = true` + "\n"
-	config += `	pap_ppp_auth_password = "myPassword"` + "\n"
 	config += `	tunnel_interface_encapsulations = [{` + "\n"
 	config += `	  encapsulation = "gre"` + "\n"
 	config += `	  preference = 4294967` + "\n"

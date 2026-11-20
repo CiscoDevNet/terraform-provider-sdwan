@@ -44,6 +44,7 @@ attributes:
   - model_name: ike-group
     example: 20
   - model_name: pre-shared-secret
+    sensitive: true
     tf_name: ike_pre_shared_key
     example: cisco123
   - model_name: ike-local-id

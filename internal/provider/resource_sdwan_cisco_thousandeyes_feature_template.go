@@ -117,6 +117,7 @@ func (r *CiscoThousandEyesFeatureTemplateResource) Schema(ctx context.Context, r
 						},
 						"te_account_group_token": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set the Account Group Token").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 210),

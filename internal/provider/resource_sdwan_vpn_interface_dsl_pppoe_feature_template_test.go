@@ -48,10 +48,8 @@ func TestAccSdwanVPNInterfaceDSLPPPoEFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoe_feature_template.test", "ppp_authentication_protocol", "chap"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoe_feature_template.test", "ppp_authentication_protocol_pap", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoe_feature_template.test", "chap_hostname", "chap-example"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoe_feature_template.test", "chap_ppp_auth_password", "myPassword"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoe_feature_template.test", "pap_username", "pap-username"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoe_feature_template.test", "pap_password", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoe_feature_template.test", "pap_ppp_auth_password", "myPassword"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoe_feature_template.test", "ppp_authentication_type", "callin"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoe_feature_template.test", "enable_core_region", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoe_feature_template.test", "core_region", "core"))
@@ -183,10 +181,8 @@ func testAccSdwanVPNInterfaceDSLPPPoEFeatureTemplateConfig_all() string {
 	config += `	ppp_authentication_protocol = "chap"` + "\n"
 	config += `	ppp_authentication_protocol_pap = false` + "\n"
 	config += `	chap_hostname = "chap-example"` + "\n"
-	config += `	chap_ppp_auth_password = "myPassword"` + "\n"
 	config += `	pap_username = "pap-username"` + "\n"
 	config += `	pap_password = true` + "\n"
-	config += `	pap_ppp_auth_password = "myPassword"` + "\n"
 	config += `	ppp_authentication_type = "callin"` + "\n"
 	config += `	enable_core_region = true` + "\n"
 	config += `	core_region = "core"` + "\n"

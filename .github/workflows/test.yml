@@ -41,7 +41,9 @@ jobs:
           cache: true
       - uses: hashicorp/setup-terraform@v4
         with:
-          terraform_version: 1.10.4
+          # Must be >= 1.11, otherwise tfplugindocs cannot read write-only
+          # attributes and the regenerated docs would not match the committed ones.
+          terraform_version: 1.14.6
       - run: pip install yamale
       - run: yamale -s gen/schema/schema.yaml gen/definitions/
       - run: go mod download
@@ -59,11 +61,12 @@ jobs:
       fail-fast: true
       max-parallel: 1
       matrix:
-        # list whatever Terraform versions here you would like to support
+        # List the Terraform versions the acceptance suite should cover once the
+        # test step below is re-enabled.
         terraform:
-          - "1.0.*"
-          - "1.5.*"
           - "1.10.*"
+          - "1.11.*"
+          - "1.14.6"
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-go@v7

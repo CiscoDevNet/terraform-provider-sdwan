@@ -127,7 +127,7 @@ Read-Only:
 
 Read-Only:
 
-- `authentication_key` (String) Set OSPF interface authentication key
+- `authentication_key` (String, Sensitive) Set OSPF interface authentication key
 - `authentication_key_variable` (String) Variable name
 - `authentication_type` (String) Set OSPF interface authentication type
 - `authentication_type_variable` (String) Variable name
@@ -216,7 +216,7 @@ Read-Only:
 
 Read-Only:
 
-- `authentication_key` (String) Set OSPF interface authentication key
+- `authentication_key` (String, Sensitive) Set OSPF interface authentication key
 - `authentication_key_variable` (String) Variable name
 - `authentication_type` (String) Set OSPF interface authentication type
 - `authentication_type_variable` (String) Variable name

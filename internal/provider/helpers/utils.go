@@ -19,8 +19,10 @@ package helpers
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"reflect"
 	"strings"
 	"time"
 
@@ -139,6 +141,51 @@ func GetControllersOutOfSyncCount(ctx context.Context, client *sdwan.Client) (in
 		return 0, err
 	}
 	return res.Get("data.0.ControllersOutOfSync").Int(), nil
+}
+
+// encryptedValueMarker is the prefix Catalyst SD-WAN Manager uses when it returns a
+// masked secret. At least two forms exist in the wild and both must be caught:
+//
+//	$CRYPT_CLUSTER$<base64>==$<base64>==   returned for many profile parcels
+//	$CRYPT$<base64>                        returned e.g. by the Other TrustSec parcel
+//
+// Occasionally only the bare marker is returned. Matching on the common "$CRYPT"
+// prefix covers every observed form; a practitioner's cleartext secret beginning
+// with "$CRYPT" is not a realistic configuration.
+const encryptedValueMarker = "$CRYPT"
+
+// IsEncryptedValue reports whether v is a Catalyst SD-WAN Manager masked
+// secret (e.g. "$CRYPT_CLUSTER$abc==$def==" or "$CRYPT$abc="). Such values must
+// not be written into Terraform state: they can never match the practitioner's
+// cleartext configuration, which would produce a permanent diff.
+func IsEncryptedValue(v string) bool {
+	return strings.HasPrefix(strings.ToUpper(strings.TrimSpace(v)), encryptedValueMarker)
+}
+
+// JSONEqual reports whether two request bodies are semantically identical,
+// ignoring key order and formatting.
+//
+// Used to detect a no-op update. When a practitioner opts a secret into its
+// write-only twin, the same value simply moves from "x" to "x_wo". Both
+// spellings serialise to the same payload path, so the body built from the plan
+// equals the body built from state. Sending it anyway would bump the parcel
+// version, which in Network as Code bumps the configuration group and redeploys
+// every device attached to it, for a payload the Manager already has.
+//
+// Returns false when either side is not valid JSON, so an unparseable body
+// always falls through to the request rather than being silently skipped.
+func JSONEqual(a, b string) bool {
+	if a == b {
+		return true
+	}
+	var av, bv any
+	if err := json.Unmarshal([]byte(a), &av); err != nil {
+		return false
+	}
+	if err := json.Unmarshal([]byte(b), &bv); err != nil {
+		return false
+	}
+	return reflect.DeepEqual(av, bv)
 }
 
 func Must[T any](v T, err error) T {

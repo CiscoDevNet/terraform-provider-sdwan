@@ -107,6 +107,7 @@ func (d *CiscoTrustSecFeatureTemplateDataSource) Schema(ctx context.Context, req
 			},
 			"credentials_password": schema.StringAttribute{
 				MarkdownDescription: "Set the password for the device",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"credentials_password_variable": schema.StringAttribute{
@@ -135,6 +136,7 @@ func (d *CiscoTrustSecFeatureTemplateDataSource) Schema(ctx context.Context, req
 			},
 			"sxp_default_password": schema.StringAttribute{
 				MarkdownDescription: "Configure SXP default password",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"sxp_default_password_variable": schema.StringAttribute{
@@ -228,6 +230,7 @@ func (d *CiscoTrustSecFeatureTemplateDataSource) Schema(ctx context.Context, req
 						},
 						"preshared_key": schema.StringAttribute{
 							MarkdownDescription: "Define Preshared Key type",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"mode": schema.StringAttribute{

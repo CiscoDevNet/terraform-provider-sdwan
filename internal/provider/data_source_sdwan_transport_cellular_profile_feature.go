@@ -123,10 +123,20 @@ func (d *TransportCellularProfileProfileParcelDataSource) Schema(ctx context.Con
 			},
 			"profile_password": schema.StringAttribute{
 				MarkdownDescription: "Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"profile_password_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"profile_password_wo": schema.StringAttribute{
+				MarkdownDescription: "Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"profile_password_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `profile_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 				Computed:            true,
 			},
 			"packet_data_network_type": schema.StringAttribute{

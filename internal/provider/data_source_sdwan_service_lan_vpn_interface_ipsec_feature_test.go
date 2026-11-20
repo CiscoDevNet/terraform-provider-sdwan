@@ -47,7 +47,6 @@ func TestAccDataSourceSdwanServiceLANVPNInterfaceIPSecProfileParcel(t *testing.T
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ipv4_mtu", "1500"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "dpd_interval", "10"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "dpd_retries", "3"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ike_preshared_key", "123"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ike_version", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ike_integrity_protocol", "main"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ike_rekey_interval", "14400"))
@@ -119,7 +118,6 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceIPSecProfileParcelConfig() stri
 	config += `	ipv4_mtu = 1500` + "\n"
 	config += `	dpd_interval = 10` + "\n"
 	config += `	dpd_retries = 3` + "\n"
-	config += `	ike_preshared_key = "123"` + "\n"
 	config += `	ike_version = 1` + "\n"
 	config += `	ike_integrity_protocol = "main"` + "\n"
 	config += `	ike_rekey_interval = 14400` + "\n"
@@ -167,7 +165,6 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceIPSecProfileParcelByNameConfig(
 	config += `	ipv4_mtu = 1500` + "\n"
 	config += `	dpd_interval = 10` + "\n"
 	config += `	dpd_retries = 3` + "\n"
-	config += `	ike_preshared_key = "123"` + "\n"
 	config += `	ike_version = 1` + "\n"
 	config += `	ike_integrity_protocol = "main"` + "\n"
 	config += `	ike_rekey_interval = 14400` + "\n"

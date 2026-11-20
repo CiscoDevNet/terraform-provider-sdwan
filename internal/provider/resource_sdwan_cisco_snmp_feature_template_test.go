@@ -35,7 +35,6 @@ func TestAccSdwanCiscoSNMPFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_snmp_feature_template.test", "views.0.name", "VIEW1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_snmp_feature_template.test", "views.0.object_identifiers.0.id", "1.2.3"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_snmp_feature_template.test", "views.0.object_identifiers.0.exclude", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_snmp_feature_template.test", "communities.0.name", "community1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_snmp_feature_template.test", "communities.0.view", "VIEW1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_snmp_feature_template.test", "communities.0.authorization", "read-only"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_snmp_feature_template.test", "groups.0.name", "GROUP1"))
@@ -50,7 +49,6 @@ func TestAccSdwanCiscoSNMPFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_snmp_feature_template.test", "trap_targets.0.vpn_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_snmp_feature_template.test", "trap_targets.0.ip", "1.1.1.1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_snmp_feature_template.test", "trap_targets.0.udp_port", "12345"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_snmp_feature_template.test", "trap_targets.0.community_name", "community1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_snmp_feature_template.test", "trap_targets.0.user", "user1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_snmp_feature_template.test", "trap_targets.0.source_interface", "e1"))
 	resource.Test(t, resource.TestCase{
@@ -102,7 +100,6 @@ func testAccSdwanCiscoSNMPFeatureTemplateConfig_all() string {
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
 	config += `	communities = [{` + "\n"
-	config += `	  name = "community1"` + "\n"
 	config += `	  view = "VIEW1"` + "\n"
 	config += `	  authorization = "read-only"` + "\n"
 	config += `	}]` + "\n"
@@ -123,7 +120,6 @@ func testAccSdwanCiscoSNMPFeatureTemplateConfig_all() string {
 	config += `	  vpn_id = 1` + "\n"
 	config += `	  ip = "1.1.1.1"` + "\n"
 	config += `	  udp_port = 12345` + "\n"
-	config += `	  community_name = "community1"` + "\n"
 	config += `	  user = "user1"` + "\n"
 	config += `	  source_interface = "e1"` + "\n"
 	config += `	}]` + "\n"

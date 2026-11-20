@@ -19,6 +19,7 @@ attributes:
     tf_name: profile_username
     example: MyUsername
   - model_name: password
+    sensitive: true
     tf_name: profile_password
     example: MyPassword
   - model_name: no-overwrite

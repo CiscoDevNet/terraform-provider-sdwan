@@ -39,7 +39,6 @@ func TestAccDataSourceSdwanEigrpFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "route_policy_name", "RP1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "filter", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "authentication_type", "hmac-sha-256"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "hmac_authentication_key", "myAuthKey"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "interfaces.0.interface_name", "Ethernet1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "interfaces.0.shutdown", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "interfaces.0.summary_addresses.0.prefix", "1.2.3.4/24"))
@@ -79,7 +78,6 @@ func testAccDataSourceSdwanEigrpFeatureTemplateConfig() string {
 	config += `	route_policy_name = "RP1"` + "\n"
 	config += `	filter = false` + "\n"
 	config += `	authentication_type = "hmac-sha-256"` + "\n"
-	config += `	hmac_authentication_key = "myAuthKey"` + "\n"
 	config += `	interfaces = [{` + "\n"
 	config += `	  interface_name = "Ethernet1"` + "\n"
 	config += `	  shutdown = false` + "\n"

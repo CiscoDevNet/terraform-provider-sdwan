@@ -160,6 +160,7 @@ attributes:
       - model_name: ebgp-multihop
         example: 10
       - model_name: password
+        sensitive: true
         example: cisco123
       - model_name: send-label
         example: true
@@ -222,6 +223,7 @@ attributes:
       - model_name: ebgp-multihop
         example: 10
       - model_name: password
+        sensitive: true
         example: cisco123
       - model_name: send-label
         example: true

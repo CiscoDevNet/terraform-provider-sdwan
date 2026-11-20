@@ -164,8 +164,13 @@ Optional:
 
 Optional:
 
-- `authentication_key` (String) Set OSPF interface authentication IPSEC key
+- `authentication_key` (String, Sensitive) Set OSPF interface authentication IPSEC key
+  - Only one of `authentication_key`, `authentication_key_variable` and `authentication_key_wo` can be set.
+  - This attribute stores the secret in Terraform state. Prefer `authentication_key_wo` together with `authentication_key_wo_version`, which keeps it out of state.
 - `authentication_key_variable` (String) Variable name
+- `authentication_key_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Set OSPF interface authentication IPSEC key
+  - Only one of `authentication_key`, `authentication_key_variable` and `authentication_key_wo` can be set.
+- `authentication_key_wo_version` (Number) Rotation trigger for `authentication_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `authentication_spi` (Number) Set OSPF interface authentication IPSec SPI, range 256..4294967295
   - Range: `256`-`4294967295`
 - `authentication_spi_variable` (String) Variable name

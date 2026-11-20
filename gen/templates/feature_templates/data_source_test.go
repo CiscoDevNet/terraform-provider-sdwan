@@ -36,28 +36,28 @@ func TestAccDataSourceSdwan{{camelCase .Name}}FeatureTemplate(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	{{- $name := .Name }}
 	{{- range  .Attributes}}
-	{{- if and (not .WriteOnly) (not .Encrypted) (not .ExcludeTest)}}
+	{{- if and (not .WriteOnly) (not .Encrypted) (not .ExcludeTest) (not .Sensitive)}}
 	{{- if isNestedListSet .}}
 	{{- $list := .TfName }}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	{{- range  .Attributes}}
-	{{- if and (not .WriteOnly) (not .Encrypted) (not .ExcludeTest)}}
+	{{- if and (not .WriteOnly) (not .Encrypted) (not .ExcludeTest) (not .Sensitive)}}
 	{{- if isNestedListSet .}}
 	{{- $clist := .TfName }}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	{{- range  .Attributes}}
-	{{- if and (not .WriteOnly) (not .Encrypted) (not .ExcludeTest)}}
+	{{- if and (not .WriteOnly) (not .Encrypted) (not .ExcludeTest) (not .Sensitive)}}
 	{{- if isNestedListSet .}}
 	{{- $cclist := .TfName }}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	{{- range  .Attributes}}
-	{{- if and (not .WriteOnly) (not .Encrypted) (not .ExcludeTest) (not (isListSet .))}}
+	{{- if and (not .WriteOnly) (not .Encrypted) (not .ExcludeTest) (not .Sensitive) (not (isListSet .))}}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}_feature_template.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}", "{{.Example}}"))
@@ -129,28 +129,28 @@ func testAccDataSourceSdwan{{camelCase .Name}}FeatureTemplateConfig() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += ` device_types = ["vedge-C8000V"]` + "\n"
 	{{- range  .Attributes}}
-	{{- if not .ExcludeTest}}
+	{{- if and (not .ExcludeTest) (not .Sensitive)}}
 	{{- if isNestedListSet .}}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	config += `	{{.TfName}} = [{` + "\n"
 		{{- range  .Attributes}}
-		{{- if not .ExcludeTest}}
+		{{- if and (not .ExcludeTest) (not .Sensitive)}}
 		{{- if isNestedListSet .}}
 		{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		{{- end}}
 	config += `	  {{.TfName}} = [{` + "\n"
 			{{- range  .Attributes}}
-			{{- if not .ExcludeTest}}
+			{{- if and (not .ExcludeTest) (not .Sensitive)}}
 			{{- if isNestedListSet .}}
 			{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 			{{- end}}
 	config += `      {{.TfName}} = [{` + "\n"
 				{{- range  .Attributes}}
-				{{- if not .ExcludeTest}}
+				{{- if and (not .ExcludeTest) (not .Sensitive)}}
 				{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"

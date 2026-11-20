@@ -47,7 +47,6 @@ func TestAccSdwanCiscoVPNInterfaceIPSecFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_rekey_interval", "20000"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_ciphersuite", "aes256-cbc-sha1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_group", "20"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_pre_shared_key", "cisco123"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_pre_shared_key_local_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_pre_shared_key_remote_id", "2"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ipsec_rekey_interval", "7200"))
@@ -111,7 +110,6 @@ func testAccSdwanCiscoVPNInterfaceIPSecFeatureTemplateConfig_all() string {
 	config += `	ike_rekey_interval = 20000` + "\n"
 	config += `	ike_ciphersuite = "aes256-cbc-sha1"` + "\n"
 	config += `	ike_group = "20"` + "\n"
-	config += `	ike_pre_shared_key = "cisco123"` + "\n"
 	config += `	ike_pre_shared_key_local_id = "1"` + "\n"
 	config += `	ike_pre_shared_key_remote_id = "2"` + "\n"
 	config += `	ipsec_rekey_interval = 7200` + "\n"

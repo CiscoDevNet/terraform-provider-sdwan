@@ -35,7 +35,7 @@ data "sdwan_vpn_interface_dsl_ipoe_feature_template" "example" {
 - `bandwidth_upstream_variable` (String) Variable name
 - `chap_hostname` (String) CHAP Hostname
 - `chap_hostname_variable` (String) Variable name
-- `chap_ppp_auth_password` (String) Specify ppp chap authentication Password
+- `chap_ppp_auth_password` (String, Sensitive) Specify ppp chap authentication Password
 - `chap_ppp_auth_password_variable` (String) Variable name
 - `description` (String) The description of the feature template
 - `device_types` (Set of String) List of supported device types
@@ -75,7 +75,7 @@ data "sdwan_vpn_interface_dsl_ipoe_feature_template" "example" {
 - `nat_udp_timeout` (Number) Set NAT UDP session timeout, in minutes
 - `nat_udp_timeout_variable` (String) Variable name
 - `pap_password` (Boolean) PAP outbound Password
-- `pap_ppp_auth_password` (String) Specify ppp pap authentication Password
+- `pap_ppp_auth_password` (String, Sensitive) Specify ppp pap authentication Password
 - `pap_ppp_auth_password_variable` (String) Variable name
 - `pap_username` (String) PAP outbound Sent Username
 - `pap_username_variable` (String) Variable name

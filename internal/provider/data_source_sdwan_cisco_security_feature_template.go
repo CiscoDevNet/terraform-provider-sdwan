@@ -194,6 +194,7 @@ func (d *CiscoSecurityFeatureTemplateDataSource) Schema(ctx context.Context, req
 						},
 						"key_string": schema.StringAttribute{
 							MarkdownDescription: "Specify the Key String",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"key_string_variable": schema.StringAttribute{

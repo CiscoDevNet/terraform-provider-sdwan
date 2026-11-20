@@ -39,12 +39,9 @@ func TestAccSdwanCiscoWirelessLANFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.security_type", "enterprise"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.radius_server_ip", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.radius_server_port", "1812"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.radius_server_secret", "MySecret1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.passphrase", "passphrase"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.qos_profile", "silver"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "country", "AE"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "username", "user1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "password", "myPassword01"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "controller_ip_address", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "controller_subnet_mask", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "controller_default_gateway", "0.0.0.0"))
@@ -97,13 +94,10 @@ func testAccSdwanCiscoWirelessLANFeatureTemplateConfig_all() string {
 	config += `	  security_type = "enterprise"` + "\n"
 	config += `	  radius_server_ip = "1.2.3.4"` + "\n"
 	config += `	  radius_server_port = 1812` + "\n"
-	config += `	  radius_server_secret = "MySecret1"` + "\n"
-	config += `	  passphrase = "passphrase"` + "\n"
 	config += `	  qos_profile = "silver"` + "\n"
 	config += `	}]` + "\n"
 	config += `	country = "AE"` + "\n"
 	config += `	username = "user1"` + "\n"
-	config += `	password = "myPassword01"` + "\n"
 	config += `	controller_ip_address = "0.0.0.0"` + "\n"
 	config += `	controller_subnet_mask = "0.0.0.0"` + "\n"
 	config += `	controller_default_gateway = "0.0.0.0"` + "\n"

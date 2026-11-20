@@ -164,6 +164,7 @@ func (d *CiscoSNMPFeatureTemplateDataSource) Schema(ctx context.Context, req dat
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
 							MarkdownDescription: "Set name of the SNMP community",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"view": schema.StringAttribute{
@@ -304,6 +305,7 @@ func (d *CiscoSNMPFeatureTemplateDataSource) Schema(ctx context.Context, req dat
 						},
 						"community_name": schema.StringAttribute{
 							MarkdownDescription: "Set name of the SNMP community",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"community_name_variable": schema.StringAttribute{

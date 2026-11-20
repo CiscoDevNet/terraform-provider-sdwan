@@ -47,7 +47,6 @@ func TestAccSdwanServiceLANVPNInterfaceIPSecProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ipsec_feature.test", "ipv4_mtu", "1500"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ipsec_feature.test", "dpd_interval", "10"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ipsec_feature.test", "dpd_retries", "3"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ipsec_feature.test", "ike_preshared_key", "123"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ipsec_feature.test", "ike_version", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ipsec_feature.test", "ike_integrity_protocol", "main"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_ipsec_feature.test", "ike_rekey_interval", "14400"))

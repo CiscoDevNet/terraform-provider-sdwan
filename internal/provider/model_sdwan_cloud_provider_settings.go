@@ -30,23 +30,43 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type CloudProviderSettings struct {
-	Id                     types.String `tfsdk:"id"`
-	UmbrellaOrgId          types.String `tfsdk:"umbrella_org_id"`
-	UmbrellaAuthKeyV2      types.String `tfsdk:"umbrella_auth_key_v2"`
-	UmbrellaAuthSecretV2   types.String `tfsdk:"umbrella_auth_secret_v2"`
-	UmbrellaSigAuthKey     types.String `tfsdk:"umbrella_sig_auth_key"`
-	UmbrellaSigAuthSecret  types.String `tfsdk:"umbrella_sig_auth_secret"`
-	UmbrellaDnsAuthKey     types.String `tfsdk:"umbrella_dns_auth_key"`
-	UmbrellaDnsAuthSecret  types.String `tfsdk:"umbrella_dns_auth_secret"`
-	ZscalerOrganization    types.String `tfsdk:"zscaler_organization"`
-	ZscalerPartnerBaseUri  types.String `tfsdk:"zscaler_partner_base_uri"`
-	ZscalerPartnerKey      types.String `tfsdk:"zscaler_partner_key"`
-	ZscalerUsername        types.String `tfsdk:"zscaler_username"`
-	ZscalerPassword        types.String `tfsdk:"zscaler_password"`
-	CiscoSseOrgId          types.String `tfsdk:"cisco_sse_org_id"`
-	CiscoSseAuthKey        types.String `tfsdk:"cisco_sse_auth_key"`
-	CiscoSseAuthSecret     types.String `tfsdk:"cisco_sse_auth_secret"`
-	CiscoSseContextSharing types.Bool   `tfsdk:"cisco_sse_context_sharing"`
+	Id                             types.String `tfsdk:"id"`
+	UmbrellaOrgId                  types.String `tfsdk:"umbrella_org_id"`
+	UmbrellaAuthKeyV2              types.String `tfsdk:"umbrella_auth_key_v2"`
+	UmbrellaAuthKeyV2Wo            types.String `tfsdk:"umbrella_auth_key_v2_wo"`
+	UmbrellaAuthKeyV2WoVersion     types.Int64  `tfsdk:"umbrella_auth_key_v2_wo_version"`
+	UmbrellaAuthSecretV2           types.String `tfsdk:"umbrella_auth_secret_v2"`
+	UmbrellaAuthSecretV2Wo         types.String `tfsdk:"umbrella_auth_secret_v2_wo"`
+	UmbrellaAuthSecretV2WoVersion  types.Int64  `tfsdk:"umbrella_auth_secret_v2_wo_version"`
+	UmbrellaSigAuthKey             types.String `tfsdk:"umbrella_sig_auth_key"`
+	UmbrellaSigAuthKeyWo           types.String `tfsdk:"umbrella_sig_auth_key_wo"`
+	UmbrellaSigAuthKeyWoVersion    types.Int64  `tfsdk:"umbrella_sig_auth_key_wo_version"`
+	UmbrellaSigAuthSecret          types.String `tfsdk:"umbrella_sig_auth_secret"`
+	UmbrellaSigAuthSecretWo        types.String `tfsdk:"umbrella_sig_auth_secret_wo"`
+	UmbrellaSigAuthSecretWoVersion types.Int64  `tfsdk:"umbrella_sig_auth_secret_wo_version"`
+	UmbrellaDnsAuthKey             types.String `tfsdk:"umbrella_dns_auth_key"`
+	UmbrellaDnsAuthKeyWo           types.String `tfsdk:"umbrella_dns_auth_key_wo"`
+	UmbrellaDnsAuthKeyWoVersion    types.Int64  `tfsdk:"umbrella_dns_auth_key_wo_version"`
+	UmbrellaDnsAuthSecret          types.String `tfsdk:"umbrella_dns_auth_secret"`
+	UmbrellaDnsAuthSecretWo        types.String `tfsdk:"umbrella_dns_auth_secret_wo"`
+	UmbrellaDnsAuthSecretWoVersion types.Int64  `tfsdk:"umbrella_dns_auth_secret_wo_version"`
+	ZscalerOrganization            types.String `tfsdk:"zscaler_organization"`
+	ZscalerPartnerBaseUri          types.String `tfsdk:"zscaler_partner_base_uri"`
+	ZscalerPartnerKey              types.String `tfsdk:"zscaler_partner_key"`
+	ZscalerPartnerKeyWo            types.String `tfsdk:"zscaler_partner_key_wo"`
+	ZscalerPartnerKeyWoVersion     types.Int64  `tfsdk:"zscaler_partner_key_wo_version"`
+	ZscalerUsername                types.String `tfsdk:"zscaler_username"`
+	ZscalerPassword                types.String `tfsdk:"zscaler_password"`
+	ZscalerPasswordWo              types.String `tfsdk:"zscaler_password_wo"`
+	ZscalerPasswordWoVersion       types.Int64  `tfsdk:"zscaler_password_wo_version"`
+	CiscoSseOrgId                  types.String `tfsdk:"cisco_sse_org_id"`
+	CiscoSseAuthKey                types.String `tfsdk:"cisco_sse_auth_key"`
+	CiscoSseAuthKeyWo              types.String `tfsdk:"cisco_sse_auth_key_wo"`
+	CiscoSseAuthKeyWoVersion       types.Int64  `tfsdk:"cisco_sse_auth_key_wo_version"`
+	CiscoSseAuthSecret             types.String `tfsdk:"cisco_sse_auth_secret"`
+	CiscoSseAuthSecretWo           types.String `tfsdk:"cisco_sse_auth_secret_wo"`
+	CiscoSseAuthSecretWoVersion    types.Int64  `tfsdk:"cisco_sse_auth_secret_wo_version"`
+	CiscoSseContextSharing         types.Bool   `tfsdk:"cisco_sse_context_sharing"`
 }
 
 // End of section. //template:end types
@@ -67,20 +87,38 @@ func (data CloudProviderSettings) toBody(ctx context.Context) string {
 	if !data.UmbrellaAuthKeyV2.IsNull() {
 		body, _ = sjson.Set(body, "umbrellaAuthKeyV2", data.UmbrellaAuthKeyV2.ValueString())
 	}
+	if !data.UmbrellaAuthKeyV2Wo.IsNull() {
+		body, _ = sjson.Set(body, "umbrellaAuthKeyV2", data.UmbrellaAuthKeyV2Wo.ValueString())
+	}
 	if !data.UmbrellaAuthSecretV2.IsNull() {
 		body, _ = sjson.Set(body, "umbrellaAuthSecretV2", data.UmbrellaAuthSecretV2.ValueString())
+	}
+	if !data.UmbrellaAuthSecretV2Wo.IsNull() {
+		body, _ = sjson.Set(body, "umbrellaAuthSecretV2", data.UmbrellaAuthSecretV2Wo.ValueString())
 	}
 	if !data.UmbrellaSigAuthKey.IsNull() {
 		body, _ = sjson.Set(body, "umbrellaSIGAuthKey", data.UmbrellaSigAuthKey.ValueString())
 	}
+	if !data.UmbrellaSigAuthKeyWo.IsNull() {
+		body, _ = sjson.Set(body, "umbrellaSIGAuthKey", data.UmbrellaSigAuthKeyWo.ValueString())
+	}
 	if !data.UmbrellaSigAuthSecret.IsNull() {
 		body, _ = sjson.Set(body, "umbrellaSIGAuthSecret", data.UmbrellaSigAuthSecret.ValueString())
+	}
+	if !data.UmbrellaSigAuthSecretWo.IsNull() {
+		body, _ = sjson.Set(body, "umbrellaSIGAuthSecret", data.UmbrellaSigAuthSecretWo.ValueString())
 	}
 	if !data.UmbrellaDnsAuthKey.IsNull() {
 		body, _ = sjson.Set(body, "umbrellaDNSAuthKey", data.UmbrellaDnsAuthKey.ValueString())
 	}
+	if !data.UmbrellaDnsAuthKeyWo.IsNull() {
+		body, _ = sjson.Set(body, "umbrellaDNSAuthKey", data.UmbrellaDnsAuthKeyWo.ValueString())
+	}
 	if !data.UmbrellaDnsAuthSecret.IsNull() {
 		body, _ = sjson.Set(body, "umbrellaDNSAuthSecret", data.UmbrellaDnsAuthSecret.ValueString())
+	}
+	if !data.UmbrellaDnsAuthSecretWo.IsNull() {
+		body, _ = sjson.Set(body, "umbrellaDNSAuthSecret", data.UmbrellaDnsAuthSecretWo.ValueString())
 	}
 	if !data.ZscalerOrganization.IsNull() {
 		body, _ = sjson.Set(body, "zscalerOrganization", data.ZscalerOrganization.ValueString())
@@ -91,11 +129,17 @@ func (data CloudProviderSettings) toBody(ctx context.Context) string {
 	if !data.ZscalerPartnerKey.IsNull() {
 		body, _ = sjson.Set(body, "zscalerPartnerKey", data.ZscalerPartnerKey.ValueString())
 	}
+	if !data.ZscalerPartnerKeyWo.IsNull() {
+		body, _ = sjson.Set(body, "zscalerPartnerKey", data.ZscalerPartnerKeyWo.ValueString())
+	}
 	if !data.ZscalerUsername.IsNull() {
 		body, _ = sjson.Set(body, "zscalerUsername", data.ZscalerUsername.ValueString())
 	}
 	if !data.ZscalerPassword.IsNull() {
 		body, _ = sjson.Set(body, "zscalerPassword", data.ZscalerPassword.ValueString())
+	}
+	if !data.ZscalerPasswordWo.IsNull() {
+		body, _ = sjson.Set(body, "zscalerPassword", data.ZscalerPasswordWo.ValueString())
 	}
 	if !data.CiscoSseOrgId.IsNull() {
 		body, _ = sjson.Set(body, "ciscoSSEOrgId", data.CiscoSseOrgId.ValueString())
@@ -103,8 +147,14 @@ func (data CloudProviderSettings) toBody(ctx context.Context) string {
 	if !data.CiscoSseAuthKey.IsNull() {
 		body, _ = sjson.Set(body, "ciscoSSEAuthKey", data.CiscoSseAuthKey.ValueString())
 	}
+	if !data.CiscoSseAuthKeyWo.IsNull() {
+		body, _ = sjson.Set(body, "ciscoSSEAuthKey", data.CiscoSseAuthKeyWo.ValueString())
+	}
 	if !data.CiscoSseAuthSecret.IsNull() {
 		body, _ = sjson.Set(body, "ciscoSSEAuthSecret", data.CiscoSseAuthSecret.ValueString())
+	}
+	if !data.CiscoSseAuthSecretWo.IsNull() {
+		body, _ = sjson.Set(body, "ciscoSSEAuthSecret", data.CiscoSseAuthSecretWo.ValueString())
 	}
 	if !data.CiscoSseContextSharing.IsNull() {
 		if false && data.CiscoSseContextSharing.ValueBool() {
@@ -202,19 +252,37 @@ func (data *CloudProviderSettings) hasChanges(ctx context.Context, state *CloudP
 	if !data.UmbrellaAuthKeyV2.Equal(state.UmbrellaAuthKeyV2) {
 		hasChanges = true
 	}
+	if !data.UmbrellaAuthKeyV2Wo.Equal(state.UmbrellaAuthKeyV2Wo) {
+		hasChanges = true
+	}
 	if !data.UmbrellaAuthSecretV2.Equal(state.UmbrellaAuthSecretV2) {
+		hasChanges = true
+	}
+	if !data.UmbrellaAuthSecretV2Wo.Equal(state.UmbrellaAuthSecretV2Wo) {
 		hasChanges = true
 	}
 	if !data.UmbrellaSigAuthKey.Equal(state.UmbrellaSigAuthKey) {
 		hasChanges = true
 	}
+	if !data.UmbrellaSigAuthKeyWo.Equal(state.UmbrellaSigAuthKeyWo) {
+		hasChanges = true
+	}
 	if !data.UmbrellaSigAuthSecret.Equal(state.UmbrellaSigAuthSecret) {
+		hasChanges = true
+	}
+	if !data.UmbrellaSigAuthSecretWo.Equal(state.UmbrellaSigAuthSecretWo) {
 		hasChanges = true
 	}
 	if !data.UmbrellaDnsAuthKey.Equal(state.UmbrellaDnsAuthKey) {
 		hasChanges = true
 	}
+	if !data.UmbrellaDnsAuthKeyWo.Equal(state.UmbrellaDnsAuthKeyWo) {
+		hasChanges = true
+	}
 	if !data.UmbrellaDnsAuthSecret.Equal(state.UmbrellaDnsAuthSecret) {
+		hasChanges = true
+	}
+	if !data.UmbrellaDnsAuthSecretWo.Equal(state.UmbrellaDnsAuthSecretWo) {
 		hasChanges = true
 	}
 	if !data.ZscalerOrganization.Equal(state.ZscalerOrganization) {
@@ -226,10 +294,16 @@ func (data *CloudProviderSettings) hasChanges(ctx context.Context, state *CloudP
 	if !data.ZscalerPartnerKey.Equal(state.ZscalerPartnerKey) {
 		hasChanges = true
 	}
+	if !data.ZscalerPartnerKeyWo.Equal(state.ZscalerPartnerKeyWo) {
+		hasChanges = true
+	}
 	if !data.ZscalerUsername.Equal(state.ZscalerUsername) {
 		hasChanges = true
 	}
 	if !data.ZscalerPassword.Equal(state.ZscalerPassword) {
+		hasChanges = true
+	}
+	if !data.ZscalerPasswordWo.Equal(state.ZscalerPasswordWo) {
 		hasChanges = true
 	}
 	if !data.CiscoSseOrgId.Equal(state.CiscoSseOrgId) {
@@ -238,7 +312,13 @@ func (data *CloudProviderSettings) hasChanges(ctx context.Context, state *CloudP
 	if !data.CiscoSseAuthKey.Equal(state.CiscoSseAuthKey) {
 		hasChanges = true
 	}
+	if !data.CiscoSseAuthKeyWo.Equal(state.CiscoSseAuthKeyWo) {
+		hasChanges = true
+	}
 	if !data.CiscoSseAuthSecret.Equal(state.CiscoSseAuthSecret) {
+		hasChanges = true
+	}
+	if !data.CiscoSseAuthSecretWo.Equal(state.CiscoSseAuthSecretWo) {
 		hasChanges = true
 	}
 	if !data.CiscoSseContextSharing.Equal(state.CiscoSseContextSharing) {

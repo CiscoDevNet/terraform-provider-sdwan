@@ -48,7 +48,6 @@ func TestAccSdwanCiscoSecureInternetGatewayFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.dead_peer_detection_interval", "30"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.dead_peer_detection_retries", "5"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.ike_version", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.ike_pre_shared_key", "A1234567"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.ike_rekey_interval", "600"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.ike_ciphersuite", "aes256-cbc-sha2"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.ike_group", "14"))
@@ -152,7 +151,6 @@ func testAccSdwanCiscoSecureInternetGatewayFeatureTemplateConfig_all() string {
 	config += `	  dead_peer_detection_interval = 30` + "\n"
 	config += `	  dead_peer_detection_retries = 5` + "\n"
 	config += `	  ike_version = 1` + "\n"
-	config += `	  ike_pre_shared_key = "A1234567"` + "\n"
 	config += `	  ike_rekey_interval = 600` + "\n"
 	config += `	  ike_ciphersuite = "aes256-cbc-sha2"` + "\n"
 	config += `	  ike_group = "14"` + "\n"

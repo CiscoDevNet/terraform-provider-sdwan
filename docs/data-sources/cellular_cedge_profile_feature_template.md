@@ -40,7 +40,7 @@ data "sdwan_cellular_cedge_profile_feature_template" "example" {
 - `packet_data_network_type_variable` (String) Variable name
 - `profile_id` (Number) Set Profile ID
 - `profile_id_variable` (String) Variable name
-- `profile_password` (String) Set the profile password
+- `profile_password` (String, Sensitive) Set the profile password
 - `profile_password_variable` (String) Variable name
 - `profile_username` (String) Set the profile username
 - `profile_username_variable` (String) Variable name

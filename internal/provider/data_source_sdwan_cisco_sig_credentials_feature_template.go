@@ -115,6 +115,7 @@ func (d *CiscoSIGCredentialsFeatureTemplateDataSource) Schema(ctx context.Contex
 			},
 			"zscaler_password": schema.StringAttribute{
 				MarkdownDescription: "Password of Zscaler partner account",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"zscaler_password_variable": schema.StringAttribute{
@@ -139,6 +140,7 @@ func (d *CiscoSIGCredentialsFeatureTemplateDataSource) Schema(ctx context.Contex
 			},
 			"zscaler_partner_password": schema.StringAttribute{
 				MarkdownDescription: "Partner Password",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"zscaler_partner_password_variable": schema.StringAttribute{
@@ -147,6 +149,7 @@ func (d *CiscoSIGCredentialsFeatureTemplateDataSource) Schema(ctx context.Contex
 			},
 			"zscaler_partner_api_key": schema.StringAttribute{
 				MarkdownDescription: "Partner API Key",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"zscaler_partner_api_key_variable": schema.StringAttribute{
@@ -155,6 +158,7 @@ func (d *CiscoSIGCredentialsFeatureTemplateDataSource) Schema(ctx context.Contex
 			},
 			"umbrella_api_key": schema.StringAttribute{
 				MarkdownDescription: "API Key",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"umbrella_api_key_variable": schema.StringAttribute{
@@ -163,6 +167,7 @@ func (d *CiscoSIGCredentialsFeatureTemplateDataSource) Schema(ctx context.Contex
 			},
 			"umbrella_api_secret": schema.StringAttribute{
 				MarkdownDescription: "API Secret",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"umbrella_api_secret_variable": schema.StringAttribute{
