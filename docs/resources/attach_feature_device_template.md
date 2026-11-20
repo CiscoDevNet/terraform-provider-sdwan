@@ -15,9 +15,8 @@ This resource can attach a feature device template. Due to limitations of the AP
 ```terraform
 resource "sdwan_attach_feature_device_template" "example" {
   id = sdwan_feature_device_template.DT1.id
-  devices = [
-    {
-      id = "C8K-CC678D1C-8EDF-3966-4F51-ABFAB64F5ABE"
+  devices = {
+    "C8K-CC678D1C-8EDF-3966-4F51-ABFAB64F5ABE" = {
       variables = {
         system_site_id                                  = "1001"
         system_system_ip                                = "1.1.1.1"
@@ -25,7 +24,7 @@ resource "sdwan_attach_feature_device_template" "example" {
         vpn_if_name_Default_vEdge_DHCP_Tunnel_Interface = "GigabitEthernet1"
       }
     }
-  ]
+  }
 }
 ```
 
@@ -34,7 +33,7 @@ resource "sdwan_attach_feature_device_template" "example" {
 
 ### Required
 
-- `devices` (Attributes Set) List of devices (see [below for nested schema](#nestedatt--devices))
+- `devices` (Attributes Map) Devices attached to the device template, keyed by device ID (chassis ID) (see [below for nested schema](#nestedatt--devices))
 - `id` (String) The ID of the device template
 
 ### Optional
@@ -46,7 +45,6 @@ resource "sdwan_attach_feature_device_template" "example" {
 
 Required:
 
-- `id` (String) Device ID
 - `variables` (Map of String) Device variables
 
 ## Import

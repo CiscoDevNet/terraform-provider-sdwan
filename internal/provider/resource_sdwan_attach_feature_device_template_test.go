@@ -25,6 +25,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
+// devices is keyed by device ID.
+const attachTestDevice = "devices.C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"
+
 func TestAccSdwanAttachFeatureDeviceTemplate(t *testing.T) {
 	if os.Getenv("SDWAN_209") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_209")
@@ -36,22 +39,17 @@ func TestAccSdwanAttachFeatureDeviceTemplate(t *testing.T) {
 			{
 				Config: testAccSdwanAttachFeatureDeviceTemplateConfig_all("1.1.1.1"),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckTypeSetElemNestedAttrs("sdwan_attach_feature_device_template.test", "devices.*", map[string]string{
-						"id":                         "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B",
-						"variables.system_site_id":   "1",
-						"variables.system_system_ip": "1.1.1.1",
-						"variables.system_host_name": "Edge1",
-						"variables.vpn_if_name_Default_vEdge_DHCP_Tunnel_Interface": "GigabitEthernet1",
-					}),
+					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.%", "1"),
+					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", attachTestDevice+".variables.system_site_id", "1"),
+					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", attachTestDevice+".variables.system_system_ip", "1.1.1.1"),
+					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", attachTestDevice+".variables.system_host_name", "Edge1"),
+					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", attachTestDevice+".variables.vpn_if_name_Default_vEdge_DHCP_Tunnel_Interface", "GigabitEthernet1"),
 				),
 			},
 			{
 				Config: testAccSdwanAttachFeatureDeviceTemplateConfig_all("10.0.0.1"),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckTypeSetElemNestedAttrs("sdwan_attach_feature_device_template.test", "devices.*", map[string]string{
-						"id":                         "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B",
-						"variables.system_system_ip": "10.0.0.1",
-					}),
+					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", attachTestDevice+".variables.system_system_ip", "10.0.0.1"),
 				),
 			},
 		},
@@ -143,14 +141,15 @@ func testAccSdwanAttachFeatureDeviceTemplateConfig_all(ip string) string {
 
 		resource "sdwan_attach_feature_device_template" "test" {
 			id      = sdwan_feature_device_template.TF_device_template.id
-			devices = [{
-				id = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"
-				variables = {
-					system_system_ip                                = "%s"
-					system_site_id                                  = "1"
-					system_host_name                                = "Edge1"
-					vpn_if_name_Default_vEdge_DHCP_Tunnel_Interface = "GigabitEthernet1"
+			devices = {
+				"C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B" = {
+					variables = {
+						system_system_ip                                = "%s"
+						system_site_id                                  = "1"
+						system_host_name                                = "Edge1"
+						vpn_if_name_Default_vEdge_DHCP_Tunnel_Interface = "GigabitEthernet1"
+					}
 				}
-			}]
+			}
 		}`, ip)
 }
