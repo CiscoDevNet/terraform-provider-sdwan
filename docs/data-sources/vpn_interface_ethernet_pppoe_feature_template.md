@@ -106,6 +106,8 @@ data "sdwan_vpn_interface_ethernet_pppoe_feature_template" "example" {
 - `qos_map_vpn_variable` (String) Variable name
 - `secondary_region` (String) Enable secondary region
 - `secondary_region_variable` (String) Variable name
+- `service_provider_name` (String) Service Provider Name
+- `service_provider_name_variable` (String) Variable name
 - `shaping_rate` (Number) 1ge  interfaces: [0..1000000]kbps; 10ge interfaces: [0..10000000]kbps
 - `shaping_rate_variable` (String) Variable name
 - `shutdown` (Boolean) Administrative state

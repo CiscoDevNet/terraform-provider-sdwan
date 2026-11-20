@@ -7,6 +7,8 @@
 - BREAKING CHANGE: `devices` in `sdwan_attach_feature_device_template` is now a map keyed by device ID instead of a list: `devices = { "<device-id>" = { variables = { ... } } }` replaces `devices = [{ id = "<device-id>", variables = { ... } }]`. Adding or removing a device, or changing one of its variables, now shows only that device (and only the changed variable) in the plan. Existing state is migrated automatically; configurations must move to the map syntax.
 - Fix `sdwan_transport_cellular_profile_feature` failing to create a profile with `profile_id = 1` on SD-WAN Manager 20.18+ (`Invalid Json Payload`, `networkSlicing`): the `networkSlicing` block is no longer sent when `slice_type` is not configured
 - Add `route_policy_id_variable` attribute to `sdwan_service_routing_ospf_feature`, `sdwan_service_routing_ospfv3_ipv4_feature` and `sdwan_service_routing_ospfv3_ipv6_feature` (device-specific route policy, SD-WAN Manager 20.18.5+). Supported on the top-level route policy and on `redistributes[].route_policy_id`; it is only sent to Managers running 20.18.5 or later
+- `resource/sdwan_vpn_interface_ethernet_pppoe_feature_template` - Added `service_provider_name` attribute
+- `data-source/sdwan_vpn_interface_ethernet_pppoe_feature_template` - Added `service_provider_name` attribute
 
 ## 0.11.7
 
