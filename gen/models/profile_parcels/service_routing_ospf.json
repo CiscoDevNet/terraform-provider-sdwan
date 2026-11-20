@@ -1224,23 +1224,92 @@
                                         {
                                             "properties": {
                                                 "refId": {
-                                                    "properties": {
-                                                        "optionType": {
-                                                            "type": "string",
-                                                            "enum": [
-                                                                "global"
-                                                            ]
+                                                    "oneOf": [
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "default"
+                                                                    ]
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType"
+                                                            ],
+                                                            "additionalProperties": false
                                                         },
-                                                        "value": {
-                                                            "type": "string",
-                                                            "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "global"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "string",
+                                                                    "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "optionType": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "variable"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "string",
+                                                                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                    "minLength": 1,
+                                                                    "maxLength": 128
+                                                                },
+                                                                "default": {
+                                                                    "oneOf": [
+                                                                        {
+                                                                            "minLength": 1,
+                                                                            "type": "string",
+                                                                            "maxLength": 2048
+                                                                        },
+                                                                        {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                ""
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                "description": {
+                                                                    "oneOf": [
+                                                                        {
+                                                                            "minLength": 1,
+                                                                            "type": "string",
+                                                                            "maxLength": 128
+                                                                        },
+                                                                        {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                ""
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ],
+                                                            "additionalProperties": false
                                                         }
-                                                    },
-                                                    "required": [
-                                                        "optionType",
-                                                        "value"
-                                                    ],
-                                                    "additionalProperties": false
+                                                    ]
                                                 }
                                             },
                                             "required": [
@@ -1414,23 +1483,92 @@
                             {
                                 "properties": {
                                     "refId": {
-                                        "properties": {
-                                            "optionType": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "global"
-                                                ]
+                                        "oneOf": [
+                                            {
+                                                "properties": {
+                                                    "optionType": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "default"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType"
+                                                ],
+                                                "additionalProperties": false
                                             },
-                                            "value": {
-                                                "type": "string",
-                                                "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                            {
+                                                "properties": {
+                                                    "optionType": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "global"
+                                                        ]
+                                                    },
+                                                    "value": {
+                                                        "type": "string",
+                                                        "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            },
+                                            {
+                                                "properties": {
+                                                    "optionType": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "variable"
+                                                        ]
+                                                    },
+                                                    "value": {
+                                                        "type": "string",
+                                                        "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                        "minLength": 1,
+                                                        "maxLength": 128
+                                                    },
+                                                    "default": {
+                                                        "oneOf": [
+                                                            {
+                                                                "minLength": 1,
+                                                                "type": "string",
+                                                                "maxLength": 2048
+                                                            },
+                                                            {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    ""
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    "description": {
+                                                        "oneOf": [
+                                                            {
+                                                                "minLength": 1,
+                                                                "type": "string",
+                                                                "maxLength": 128
+                                                            },
+                                                            {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    ""
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
                                             }
-                                        },
-                                        "required": [
-                                            "optionType",
-                                            "value"
-                                        ],
-                                        "additionalProperties": false
+                                        ]
                                     }
                                 },
                                 "required": [
