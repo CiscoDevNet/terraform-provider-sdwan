@@ -1,10 +1,12 @@
 ## 0.12.0 (unreleased)
 
+- Add `sdwan_policy_object_security_ips_signature_set` resource and data source (SD-WAN Manager 20.18.1+)
 - Add `parcel_names` filter to `sdwan_policy_object_feature_profile_parcels` data source: returns only the parcels whose name is in the set
 - Add `sdwan_sig_feature` resource and data source (SIG feature of the SIG Security feature profile, SD-WAN Manager 20.15 and later, `tunnel_route_via` from 20.18.1: `sig_provider` Umbrella, Zscaler or Generic, GRE and IPsec tunnels, interface pairs and trackers)
 - Fix `sdwan_network_hierarchy_security_logging` assigning the same `server1` name to every high speed logging entry on SD-WAN Manager 20.18 and later, causing multiple HSL servers to be rendered inconsistently in the Manager UI. Each entry is now assigned a distinct `server1`-`server4` slot name; Manager versions below 20.18 are unaffected as they do not use this key
 - The `devices` in `sdwan_attach_feature_device_template` is now a set instead of a list. Previously, adding or removing a single device caused every device positioned after it in the list to render as changed in the Terraform plan. The configuration syntax is unchanged; existing state is migrated automatically.
 - Fix `sdwan_transport_cellular_profile_feature` failing to create a profile with `profile_id = 1` on SD-WAN Manager 20.18+ (`Invalid Json Payload`, `networkSlicing`): the `networkSlicing` block is no longer sent when `slice_type` is not configured
+- Add `route_policy_id_variable` attribute to `sdwan_service_routing_ospf_feature`, `sdwan_service_routing_ospfv3_ipv4_feature` and `sdwan_service_routing_ospfv3_ipv6_feature` (device-specific route policy, SD-WAN Manager 20.18.5+). Supported on the top-level route policy and on `redistributes[].route_policy_id`; it is only sent to Managers running 20.18.5 or later
 
 ## 0.11.7
 
