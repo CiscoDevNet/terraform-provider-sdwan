@@ -19,6 +19,7 @@ package provider
 
 import (
 	"context"
+	"maps"
 	"regexp"
 	"slices"
 	"strconv"
@@ -26,6 +27,7 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/netascode/go-sdwan"
 	"github.com/tidwall/gjson"
@@ -41,6 +43,65 @@ type AttachFeatureDeviceTemplate struct {
 type AttachFeatureDeviceTemplateDevice struct {
 	Id        types.String `tfsdk:"id"`
 	Variables types.Map    `tfsdk:"variables"`
+}
+
+// AttachFeatureDeviceTemplateConfig is the Terraform shape: devices keyed by device ID, so a change
+// to one device shows only that device in the plan. The API code works on AttachFeatureDeviceTemplate
+// (devices as a list sorted by ID), converted with toModel and toConfig. AttachFeatureDeviceTemplate
+// also matches the earlier schema versions (devices as a list, then a set) for the state upgrade.
+type AttachFeatureDeviceTemplateConfig struct {
+	Id      types.String                                       `tfsdk:"id"`
+	Version types.Int64                                        `tfsdk:"version"`
+	Devices map[string]AttachFeatureDeviceTemplateDeviceConfig `tfsdk:"devices"`
+}
+
+type AttachFeatureDeviceTemplateDeviceConfig struct {
+	Variables types.Map `tfsdk:"variables"`
+}
+
+// getAttachFeatureDeviceTemplate reads the Terraform shape from a plan, state or config into the
+// working model.
+func getAttachFeatureDeviceTemplate(ctx context.Context, src interface {
+	Get(context.Context, interface{}) diag.Diagnostics
+}, data *AttachFeatureDeviceTemplate) diag.Diagnostics {
+	var config AttachFeatureDeviceTemplateConfig
+	diags := src.Get(ctx, &config)
+	if !diags.HasError() {
+		*data = config.toModel()
+	}
+	return diags
+}
+
+func (config AttachFeatureDeviceTemplateConfig) toModel() AttachFeatureDeviceTemplate {
+	data := AttachFeatureDeviceTemplate{Id: config.Id, Version: config.Version}
+	if config.Devices == nil {
+		return data
+	}
+	data.Devices = make([]AttachFeatureDeviceTemplateDevice, 0, len(config.Devices))
+	for _, id := range slices.Sorted(maps.Keys(config.Devices)) {
+		data.Devices = append(data.Devices, AttachFeatureDeviceTemplateDevice{
+			Id:        types.StringValue(id),
+			Variables: config.Devices[id].Variables,
+		})
+	}
+	return data
+}
+
+func (data AttachFeatureDeviceTemplate) toConfig() AttachFeatureDeviceTemplateConfig {
+	config := AttachFeatureDeviceTemplateConfig{Id: data.Id, Version: data.Version}
+	if data.Devices == nil {
+		return config
+	}
+	config.Devices = make(map[string]AttachFeatureDeviceTemplateDeviceConfig, len(data.Devices))
+	for _, device := range data.Devices {
+		variables := device.Variables
+		if variables.IsNull() || variables.IsUnknown() {
+			// variables is required; a device read back without any keeps an empty map.
+			variables = types.MapValueMust(types.StringType, map[string]attr.Value{})
+		}
+		config.Devices[device.Id.ValueString()] = AttachFeatureDeviceTemplateDeviceConfig{Variables: variables}
+	}
+	return config
 }
 
 // qosAdaptiveLeaf maps one "Adaptive QoS" field's feature-template path (definitionPath, under
