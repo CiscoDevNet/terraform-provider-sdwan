@@ -709,6 +709,14 @@ func (d *VPNInterfaceEthernetPPPoEFeatureTemplateDataSource) Schema(ctx context.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"service_provider_name": schema.StringAttribute{
+				MarkdownDescription: "Service Provider Name",
+				Computed:            true,
+			},
+			"service_provider_name_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 			"bandwidth_upstream": schema.Int64Attribute{
 				MarkdownDescription: "Interface upstream bandwidth capacity, in kbps",
 				Computed:            true,

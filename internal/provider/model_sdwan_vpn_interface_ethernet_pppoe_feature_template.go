@@ -176,6 +176,8 @@ type VPNInterfaceEthernetPPPoE struct {
 	QosMapVariable                                     types.String                                             `tfsdk:"qos_map_variable"`
 	QosMapVpn                                          types.String                                             `tfsdk:"qos_map_vpn"`
 	QosMapVpnVariable                                  types.String                                             `tfsdk:"qos_map_vpn_variable"`
+	ServiceProviderName                                types.String                                             `tfsdk:"service_provider_name"`
+	ServiceProviderNameVariable                        types.String                                             `tfsdk:"service_provider_name_variable"`
 	BandwidthUpstream                                  types.Int64                                              `tfsdk:"bandwidth_upstream"`
 	BandwidthUpstreamVariable                          types.String                                             `tfsdk:"bandwidth_upstream_variable"`
 	BandwidthDownstream                                types.Int64                                              `tfsdk:"bandwidth_downstream"`
@@ -1176,6 +1178,19 @@ func (data VPNInterfaceEthernetPPPoE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipValue", data.QosMapVpn.ValueString())
+	}
+
+	if !data.ServiceProviderNameVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"service-provider."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"service-provider."+"vipType", "variableName")
+		body, _ = sjson.Set(body, path+"service-provider."+"vipVariableName", data.ServiceProviderNameVariable.ValueString())
+	} else if data.ServiceProviderName.IsNull() {
+		body, _ = sjson.Set(body, path+"service-provider."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"service-provider."+"vipType", "ignore")
+	} else {
+		body, _ = sjson.Set(body, path+"service-provider."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"service-provider."+"vipType", "constant")
+		body, _ = sjson.Set(body, path+"service-provider."+"vipValue", data.ServiceProviderName.ValueString())
 	}
 
 	if !data.BandwidthUpstreamVariable.IsNull() {
@@ -2889,6 +2904,25 @@ func (data *VPNInterfaceEthernetPPPoE) fromBody(ctx context.Context, res gjson.R
 		data.QosMapVpn = types.StringNull()
 		data.QosMapVpnVariable = types.StringNull()
 	}
+	if value := res.Get(path + "service-provider.vipType"); value.Exists() {
+		if value.String() == "variableName" {
+			data.ServiceProviderName = types.StringNull()
+
+			v := res.Get(path + "service-provider.vipVariableName")
+			data.ServiceProviderNameVariable = types.StringValue(v.String())
+
+		} else if value.String() == "ignore" {
+			data.ServiceProviderName = types.StringNull()
+			data.ServiceProviderNameVariable = types.StringNull()
+		} else if value.String() == "constant" {
+			v := res.Get(path + "service-provider.vipValue")
+			data.ServiceProviderName = types.StringValue(v.String())
+			data.ServiceProviderNameVariable = types.StringNull()
+		}
+	} else {
+		data.ServiceProviderName = types.StringNull()
+		data.ServiceProviderNameVariable = types.StringNull()
+	}
 	if value := res.Get(path + "bandwidth-upstream.vipType"); value.Exists() {
 		if value.String() == "variableName" {
 			data.BandwidthUpstream = types.Int64Null()
@@ -3377,6 +3411,9 @@ func (data *VPNInterfaceEthernetPPPoE) hasChanges(ctx context.Context, state *VP
 		hasChanges = true
 	}
 	if !data.QosMapVpn.Equal(state.QosMapVpn) {
+		hasChanges = true
+	}
+	if !data.ServiceProviderName.Equal(state.ServiceProviderName) {
 		hasChanges = true
 	}
 	if !data.BandwidthUpstream.Equal(state.BandwidthUpstream) {
